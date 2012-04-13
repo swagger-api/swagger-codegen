@@ -1,0 +1,27 @@
+package {{modelPackage}}
+
+{{#imports}}import {{import}}
+{{/imports}}
+
+import scala.reflect.BeanProperty
+
+class {{classname}} {
+  {{#vars}}
+
+  {{#notes}}/* {{notes}} */
+  {{/notes}}
+  {{#description}}/* {{description}} */
+  {{/description}}
+  @BeanProperty var {{name}}: {{datatype}} = {{defaultValue}}
+  {{/vars}}
+  
+  override def toString: String = {
+    val sb = new StringBuilder
+    sb.append("class {{classname}} {\n")
+    {{#vars}}
+    sb.append("  {{name}}: ").append({{name}}).append("\n")
+    {{/vars}}
+    sb.append("}\n")
+    sb.toString
+  }
+}

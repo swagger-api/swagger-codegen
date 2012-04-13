@@ -1,0 +1,58 @@
+require "uri"
+
+class {{classname}}
+  basePath = "{{basePath}}"
+  # apiInvoker = APIInvoker
+
+  def self.escapeString(string)
+    URI.encode(string.to_s)
+  end
+
+  {{#vars}}
+  def self.{{nickname}} ({{#allParams}}{{paramName}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}},{{/allParams}} opts={})
+    {{#requiredParamCount}}
+    
+    query_param_keys = [
+      {{#queryParams}}:{{paramName}}{{#hasMore}}, {{/hasMore}}{{/queryParams}}
+    ]
+    
+    # verify existence of params
+    {{#requiredParams}}
+    raise "{{{paramName}}} is required" if {{{paramName}}}.nil?
+    {{/requiredParams}}
+    {{/requiredParamCount}}
+    
+    # set default values and merge with input
+    options = {
+      {{#allParams}}
+      :{{{paramName}}}=>{{paramName}},
+    {{/allParams}}
+    }.merge(opts)
+
+    #resource path
+    path = "{{path}}".sub('{format}','json'){{#pathParams}}.sub('{' + '{{baseName}}' + '}', escapeString({{paramName}}))
+    {{/pathParams}}{{newline}}
+    
+    # pull querystring keys from options
+    queryopts = options.select do |key,value|
+      query_param_keys.include? key
+    end
+    
+    {{#headerParams}}headers = {
+      {{{paramName}}}: {{{paramName}}},
+    }
+    {{/headerParams}}
+
+    {{#returnType}}
+    response = Swagger::Request.new(:{{httpMethod}}, path, {:params=>queryopts,:headers=>nil, :body=>{{#bodyParam}}{{bodyParam}}.to_body{{/bodyParam}}{{^bodyParam}}nil{{/bodyParam}} }).make.body
+    {{#returnContainer}}
+    response.map {|response|{{/returnContainer}} {{returnBaseType}}.new(response){{#returnContainer}} }{{/returnContainer}}
+    {{/returnType}}
+    {{^returnType}}
+    Swagger::Request.new(:{{httpMethod}}, path, {:params=>queryopts,:headers=>nil, :body=>{{#bodyParam}}{{bodyParam}}.to_body{{/bodyParam}}{{^bodyParam}}nil{{/bodyParam}} }).make
+    {{/returnType}}
+{{newline}}
+  end
+{{newline}}
+  {{/vars}}
+end
