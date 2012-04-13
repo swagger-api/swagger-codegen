@@ -20,7 +20,7 @@ object WordnikApiScalaCodegen extends ScalaCodegen {
   override def supportingFiles = List(
     ("apiInvoker.mustache", "samples/wordnik-api-scala/src/main/scala/com/wordnik/client", "ApiInvoker.scala"),
     ("pom.mustache", "samples/wordnik-api-scala", "pom.xml"),
-    ("facetValue.mustache", "samples/wordnik-api-scala/src/main/scala/com/wordnik/client", "FacetValue.scala"),
-    ("partOfSpeech.mustache", "samples/wordnik-api-scala/src/main/scala/com/wordnik/client", "PartOfSpeech.scala")
+    ("facetValue.mustache", "samples/wordnik-api-scala/src/main/scala/com/wordnik/client/model", "FacetValue.scala"),
+    ("partOfSpeech.mustache", "samples/wordnik-api-scala/src/main/scala/com/wordnik/client/model", "PartOfSpeech.scala")
   )
 }
