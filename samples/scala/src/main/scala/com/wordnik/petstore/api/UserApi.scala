@@ -1,10 +1,10 @@
-package com.wordnik.petstore
-
-import com.wordnik.client.ApiInvoker
-import com.wordnik.client.ApiException
+package com.wordnik.petstore.api
 
 import com.wordnik.petstore.model.User
+import com.wordnik.client.ApiInvoker
+import com.wordnik.client.ApiException
 import scala.collection.mutable.HashMap
+import scala.reflect.BeanProperty
 
 class UserApi {
   var basePath: String = "http://petstore.swagger.wordnik.com/api"
@@ -13,6 +13,48 @@ class UserApi {
   def createUser (body: User) = {
     // create path and map variables
     val path = "/user.{format}".replaceAll("\\{format\\}","json")// query params
+    val queryParams = new HashMap[String, String]
+    val headerParams = new HashMap[String, String]
+
+    // verify required params are set
+    (Set(body) - null).size match {
+       case 1 => // all required values set
+       case _ => throw new Exception("missing required params")
+    }
+    try {
+      apiInvoker.invokeApi(basePath, path, "POST", queryParams.toMap, body, headerParams.toMap) match {
+        case s: String =>
+          case _ => None
+      }
+    } catch {
+      case ex: ApiException if ex.code == 404 => None
+      case ex: ApiException => throw ex
+    }
+  }
+  def createUsersWithArrayInput (body: Array[User]) = {
+    // create path and map variables
+    val path = "/user.{format}/createWithArray".replaceAll("\\{format\\}","json")// query params
+    val queryParams = new HashMap[String, String]
+    val headerParams = new HashMap[String, String]
+
+    // verify required params are set
+    (Set(body) - null).size match {
+       case 1 => // all required values set
+       case _ => throw new Exception("missing required params")
+    }
+    try {
+      apiInvoker.invokeApi(basePath, path, "POST", queryParams.toMap, body, headerParams.toMap) match {
+        case s: String =>
+          case _ => None
+      }
+    } catch {
+      case ex: ApiException if ex.code == 404 => None
+      case ex: ApiException => throw ex
+    }
+  }
+  def createUsersWithListInput (body: List[User]) = {
+    // create path and map variables
+    val path = "/user.{format}/createWithList".replaceAll("\\{format\\}","json")// query params
     val queryParams = new HashMap[String, String]
     val headerParams = new HashMap[String, String]
 
@@ -142,3 +184,4 @@ class UserApi {
     }
   }
   }
+

@@ -1,11 +1,10 @@
-package com.wordnik.petstore
+package com.wordnik.petstore.api
 
+import com.wordnik.petstore.model.Order
 import com.wordnik.client.ApiInvoker
 import com.wordnik.client.ApiException
-
-import java.util.Date
-import com.wordnik.petstore.model.Order
 import scala.collection.mutable.HashMap
+import scala.reflect.BeanProperty
 
 class StoreApi {
   var basePath: String = "http://petstore.swagger.wordnik.com/api"
@@ -58,7 +57,7 @@ class StoreApi {
       case ex: ApiException => throw ex
     }
   }
-  def placeOrder (body: Order) : Option[Order]= {
+  def placeOrder (body: Order) = {
     // create path and map variables
     val path = "/store.{format}/order".replaceAll("\\{format\\}","json")// query params
     val queryParams = new HashMap[String, String]
@@ -72,8 +71,7 @@ class StoreApi {
     try {
       apiInvoker.invokeApi(basePath, path, "POST", queryParams.toMap, body, headerParams.toMap) match {
         case s: String =>
-          Some(ApiInvoker.deserialize(s, "", classOf[Order]).asInstanceOf[Order])
-        case _ => None
+          case _ => None
       }
     } catch {
       case ex: ApiException if ex.code == 404 => None
@@ -81,3 +79,4 @@ class StoreApi {
     }
   }
   }
+

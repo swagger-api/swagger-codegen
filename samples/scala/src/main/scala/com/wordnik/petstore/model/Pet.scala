@@ -1,5 +1,6 @@
 package com.wordnik.petstore.model
 
+import com.wordnik.petstore.model.Category
 import scala.reflect.BeanProperty
 
 class Pet {
@@ -23,3 +24,4 @@ class Pet {
     sb.toString
   }
 }
+

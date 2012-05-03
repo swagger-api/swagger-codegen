@@ -27,3 +27,4 @@ class User {
     sb.toString
   }
 }
+

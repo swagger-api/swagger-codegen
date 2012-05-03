@@ -1,12 +1,10 @@
-package com.wordnik.petstore
+package com.wordnik.petstore.api
 
+import com.wordnik.petstore.model.Pet
 import com.wordnik.client.ApiInvoker
 import com.wordnik.client.ApiException
-
-import com.wordnik.petstore.model.Category
-import com.wordnik.petstore.model.Pet
-import com.wordnik.petstore.model.Tag
 import scala.collection.mutable.HashMap
+import scala.reflect.BeanProperty
 
 class PetApi {
   var basePath: String = "http://petstore.swagger.wordnik.com/api"
@@ -125,3 +123,4 @@ class PetApi {
     }
   }
   }
+

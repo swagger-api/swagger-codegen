@@ -22,18 +22,27 @@ object ApiInvoker {
   }
 
   def deserialize(json: String, containerType: String, cls: Class[_]) = {
-    containerType match {
-      case "List" => {
-        val typeInfo = org.codehaus.jackson.map.`type`.TypeFactory.collectionType(classOf[java.util.List[_]], cls)
-        val response = JsonUtil.getJsonMapper.readValue(json, typeInfo).asInstanceOf[java.util.List[_]]
-        response.asScala.toList
+    if (cls == classOf[String]) {
+      json
+    } else {
+      containerType match {
+        case "List" => {
+          val typeInfo = org.codehaus.jackson.map.`type`.TypeFactory.collectionType(classOf[java.util.List[_]], cls)
+          val response = JsonUtil.getJsonMapper.readValue(json, typeInfo).asInstanceOf[java.util.List[_]]
+          response.asScala.toList
+        }
+        case _ => JsonUtil.getJsonMapper.readValue(json, cls)
       }
-      case _ => JsonUtil.getJsonMapper.readValue(json, cls)
     }
   }
 
   def serialize(obj: AnyRef): String = {
-    if (obj != null) JsonUtil.getJsonMapper.writeValueAsString(obj)
+    if (obj != null) {
+      obj match {
+        case e:List[_] => JsonUtil.getJsonMapper.writeValueAsString(obj.asInstanceOf[List[_]].asJava)
+        case _ => JsonUtil.getJsonMapper.writeValueAsString(obj)
+      }
+    }
     else null
   }
 
@@ -47,7 +56,7 @@ object ApiInvoker {
     defaultHeaders.map(p => {
       headerParams.contains(p._1) match {
         case true => // override default with supplied header
-        case false => if(p._2 != null) builder.header(p._1, p._2)
+        case false => if (p._2 != null) builder.header(p._1, p._2)
       }
     })
 
@@ -62,7 +71,7 @@ object ApiInvoker {
         builder.put(classOf[ClientResponse], serialize(body))
       }
       case "DELETE" => {
-        builder.delete(classOf[ClientResponse], serialize(body))
+        builder.delete(classOf[ClientResponse])
       }
       case _ => null
     }
