@@ -1,8 +1,9 @@
-package {{modelPackage}};
+package {{package}};
 
 {{#imports}}import {{import}};
 {{/imports}}
-
+{{#models}}
+{{#model}}
 public class {{classname}} {
   {{#vars}}
 
@@ -35,3 +36,5 @@ public class {{classname}} {
     return sb.toString();
   }
 }
+{{/model}}
+{{/models}}

@@ -7,6 +7,7 @@ import com.wordnik.client.ApiInvoker;
 
 import java.util.*;
 
+{{#operations}}
 public class {{classname}} {
   String basePath = "{{basePath}}";
   ApiInvoker apiInvoker = ApiInvoker.getInstance();
@@ -23,7 +24,7 @@ public class {{classname}} {
     return basePath;
   }
 
-  {{#vars}}
+  {{#operation}}
   public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}} {{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws ApiException {
     // create path and map variables
     String path = "{{path}}".replaceAll("\\{format\\}","json"){{#pathParams}}.replaceAll("\\{" + "{{paramName}}" + "\\}", apiInvoker.escapeString({{{paramName}}})){{/pathParams}};
@@ -63,5 +64,6 @@ public class {{classname}} {
       }
     }
   }
-  {{/vars}}
+  {{/operation}}
 }
+{{/operations}}
