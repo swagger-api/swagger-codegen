@@ -5,6 +5,7 @@ import com.wordnik.swagger.codegen._
 import com.wordnik.swagger.codegen.util._
 import com.wordnik.swagger.core._
 import com.wordnik.swagger.core.util.JsonUtil
+import java.io.{ File, FileWriter }
 
 import scala.io._
 import scala.collection.JavaConversions._
@@ -55,57 +56,70 @@ class BasicGenerator extends CodegenConfig {
 
     val allModels = new HashMap[String, DocumentationSchema]
     val operations = new ListBuffer[(String, String, DocumentationOperation)]
+
     subDocs.foreach(subDoc => {
       val basePath = subDoc.basePath
+      val resourcePath = subDoc.resourcePath
       if (subDoc.getApis != null) {
         subDoc.getApis.foreach(api => {
-          ApiExtractor.extractOperations(doc.basePath, api).map(op =>
-            operations += Tuple3(basePath, op._1, op._2))
+          for ((apiPath, operation) <- ApiExtractor.extractOperations(doc.basePath, api))
+            operations += Tuple3(basePath, apiPath, operation)
         })
-        operations.map(op => processOperation(op._2,op._3))
+        operations.map(op => processOperation(op._2, op._3))
         allModels ++= CoreUtils.extractModels(subDoc)
       }
     })
 
-    val apiToOperationMap = generateApiGroups(operations.toList)
+    val bundleList = new ListBuffer[Map[String, AnyRef]]
+    val apiMap = groupApisToFiles(operations.toList)
+    for ((identifier, operationList) <- apiMap) {
+      val basePath = identifier._1
+      val className = identifier._2
+      val map = new HashMap[String, AnyRef]
+      map += "basePath" -> basePath
+      map += "apis" -> Map(className -> operationList.toList)
+      map += "models" -> None
+      map += "package" -> apiPackage
+      map += "outputDirectory" -> (destinationDir + File.separator + apiPackage.getOrElse("").replaceAll("\\.", File.separator))
+      map += "filename" -> (className + fileSuffix)
+      bundleList += map.toMap
+    }
+    for ((name, schema) <- allModels) {
+      val map = new HashMap[String, AnyRef]
+      map += "apis" -> None
+      map += "models" -> List((name, schema))
+      map += "package" -> modelPackage
+      map += "outputDirectory" -> (destinationDir + File.separator + modelPackage.getOrElse("").replaceAll("\\.", File.separator))
+      map += "filename" -> (name + fileSuffix)
+      bundleList += map.toMap
+    }
+    bundleList.foreach(bundle => {
+      val output = codegen.generateSource(bundle)
+      val outputDir = new File(bundle("outputDirectory").asInstanceOf[String])
+      outputDir.mkdirs
 
-    apiToOperationMap.map(a => codegen.writeApis(a._1._1, a._1._2, allModels.toMap, a._2.toList))
-    codegen.writeModels(allModels.toMap)
+      val filename = outputDir + File.separator + bundle("filename")
+
+      val fw = new FileWriter(filename, false)
+      fw.write(output + "\n")
+      fw.close()
+      println("wrote " + filename)
+    })
     codegen.writeSupportingClasses
     exit(0)
   }
 
-  /**
-   * groups the operations.  You can override this if you don't like the default grouping which is:
-   */
-  def generateApiGroups(operations: List[(String, // basePath 
-    String, // apiPath
-    DocumentationOperation)]): // operation
-  Map[(String, // className
-    String), // basePath
-    List[(String, // apiPath
-    DocumentationOperation // operation 
-  )]] = {
-    val output = new HashMap[(String, String), List[(String, DocumentationOperation)]]
-
-    operations.map(op => {
-      val basePath = op._1
-      val apiPath = op._2
-      val operation = op._3
-
-      val classname = apiNameFromPath(apiPath)
-
-      output.contains(classname, basePath) match {
-        case true => output += (classname, basePath) -> (output(classname, basePath) ++ List(Tuple2(apiPath, operation)))
-        case false => output += (classname, basePath) -> List(Tuple2(apiPath, operation))
-      }
-    })
-    apisToProcess.size match {
-      case 0 => output.toMap
-      case i: Int => output.filter(k => {
-        println("looking at " + k._1._1)
-        apisToProcess.contains(k._1._1)
-      }).toMap
+  def groupApisToFiles(operations: List[(String /*basePath*/ , String /*apiPath*/ , DocumentationOperation /* operation*/ )]): Map[(String, String), ListBuffer[(String, DocumentationOperation)]] = {
+    val opMap = new HashMap[(String, String), ListBuffer[(String, DocumentationOperation)]]
+    for ((basePath, apiPath, operation) <- operations) {
+      val className = apiNameFromPath(apiPath)
+      val listToAddTo = opMap.getOrElse((basePath, className), {
+        val l = new ListBuffer[(String, DocumentationOperation)]
+        opMap += (basePath, className) -> l
+        l
+      })
+      listToAddTo += Tuple2(apiPath, operation)
     }
+    opMap.toMap
   }
 }

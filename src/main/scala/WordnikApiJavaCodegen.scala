@@ -8,7 +8,7 @@ object WordnikApiJavaCodegen extends JavaCodegen {
   override def packageName = "com.wordnik.client"
     
   // where to write generated code
-  override def destinationDir = "samples/wordnik-api-java"
+  override def destinationDir = "samples/wordnik-api-java/src/main/java"
 
   // package for models
   override def modelPackage = Some("com.wordnik.client.model")
@@ -20,6 +20,8 @@ object WordnikApiJavaCodegen extends JavaCodegen {
   override def supportingFiles =
     List(
       ("apiInvoker.mustache", "samples/wordnik-api-java/src/main/java/com/wordnik/client", "ApiInvoker.java"),
+      ("partOfSpeech.mustache", "samples/wordnik-api-java/src/main/java/com/wordnik/client/models", "PartOfSpeech.java"),
+      ("facetValue.mustache", "samples/wordnik-api-java/src/main/java/com/wordnik/client/models", "FacetValue.java"),
       ("apiException.mustache", "samples/wordnik-api-java/src/main/java/com/wordnik/client", "ApiException.java"),
       ("pom.mustache", "samples/wordnik-api-java", "pom.xml")
     )

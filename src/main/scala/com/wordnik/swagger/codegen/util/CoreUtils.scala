@@ -23,6 +23,24 @@ object CoreUtils {
     })
     modelObjects.toMap
   }
+  
+  def extractModelNames(op: DocumentationOperation): Set[String] = {
+    val modelNames = new HashSet[String]
+    modelNames += op.responseClass
+    // POST, PUT, DELETE body
+    if (op.getParameters != null) {
+      op.getParameters.filter(p => p.paramType == "body")
+        .foreach(p => modelNames += p.dataType)
+    }
+    // extract all base model names, strip away Containers like List[] and primitives
+    val ComplexTypeMatcher = ".*\\[(.*)\\].*".r
+    val baseNames = (for (modelName <- (modelNames.toList))
+      yield (modelName match {
+      case ComplexTypeMatcher(basePart) => basePart
+      case _ => modelName
+    })).toSet
+    baseNames.toSet
+  }
 
   def extractModelNames(modelObjects: Map[String, DocumentationSchema], ep: DocumentationOperation): Set[String] = {
     val modelNames = new HashSet[String]
@@ -40,7 +58,7 @@ object CoreUtils {
       case ComplexTypeMatcher(basePart) => basePart
       case _ => modelName
     })).toSet
-    
+
     // get complex models from base
     val requiredModels = modelObjects.filter(obj => baseNames.contains(obj._1))
 

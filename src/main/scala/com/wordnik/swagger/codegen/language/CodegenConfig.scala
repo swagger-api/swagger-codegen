@@ -14,7 +14,7 @@ abstract class CodegenConfig {
   def reservedWords: Set[String] = Set()
 
   // swagger primitive types
-  def primitiveTypes = Set("Int", "String", "Long", "Double", "Float", "Boolean")
+  def primitiveTypes = Set("Int", "String", "Long", "Double", "Float", "Boolean", "void")
   def importMapping: Map[String, String] = Map()
   def modelPackage: Option[String] = None
   def escapeReservedWord(word: String) = word
