@@ -70,7 +70,7 @@ abstract class BasicGenerator extends CodegenConfig {
         allModels ++= CoreUtils.extractModels(subDoc)
       }
     })
-
+    
     val apiMap = groupApisToFiles(operations.toList)
     for ((identifier, operationList) <- apiMap) {
       val basePath = identifier._1

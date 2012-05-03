@@ -265,7 +265,7 @@ class Codegen(config: CodegenConfig) {
     model.properties.map(prop => {
       val obj = prop._2
       val dt = obj.getType //.charAt(0).toUpperCase + obj.getType.substring(1)
-      imports += Map("import" -> dt)
+      imports += Map("import" -> CoreUtils.extractBasePartFromType(dt))
       val properties =
         HashMap(
           "name" -> config.toVarName(prop._1),

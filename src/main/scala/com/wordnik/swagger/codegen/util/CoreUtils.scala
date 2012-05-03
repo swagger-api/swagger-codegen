@@ -23,7 +23,7 @@ object CoreUtils {
     })
     modelObjects.toMap
   }
-  
+
   def extractModelNames(op: DocumentationOperation): Set[String] = {
     val modelNames = new HashSet[String]
     modelNames += op.responseClass
@@ -32,13 +32,8 @@ object CoreUtils {
       op.getParameters.filter(p => p.paramType == "body")
         .foreach(p => modelNames += p.dataType)
     }
-    // extract all base model names, strip away Containers like List[] and primitives
-    val ComplexTypeMatcher = ".*\\[(.*)\\].*".r
     val baseNames = (for (modelName <- (modelNames.toList))
-      yield (modelName match {
-      case ComplexTypeMatcher(basePart) => basePart
-      case _ => modelName
-    })).toSet
+      yield (extractBasePartFromType(modelName))).toSet
     baseNames.toSet
   }
 
@@ -50,14 +45,9 @@ object CoreUtils {
     if (ep.getParameters != null)
       ep.getParameters.filter(p => p.paramType == "body")
         .foreach(p => modelNames += p.dataType)
-        
-    // extract all base model names, strip away Containers like List[] and primitives
-    val ComplexTypeMatcher = ".*\\[(.*)\\].*".r
+
     val baseNames = (for (modelName <- (modelNames.toList))
-      yield (modelName match {
-      case ComplexTypeMatcher(basePart) => basePart
-      case _ => modelName
-    })).toSet
+      yield (extractBasePartFromType(modelName))).toSet
 
     // get complex models from base
     val requiredModels = modelObjects.filter(obj => baseNames.contains(obj._1))
@@ -80,6 +70,14 @@ object CoreUtils {
     subNames.toSet
   }
 
+  def extractBasePartFromType(datatype: String): String = {
+    val ComplexTypeMatcher = ".*\\[(.*)\\].*".r
+    datatype match {
+      case ComplexTypeMatcher(basePart) => basePart
+      case _ => datatype
+    }
+  }
+
   def extractModels(sd: Documentation): Map[String, DocumentationSchema] = {
     val modelNames = new HashSet[String]
     val modelObjects = new HashMap[String, DocumentationSchema]
@@ -100,13 +98,9 @@ object CoreUtils {
       for ((name, m) <- sd.getModels) modelObjects += name -> m
 
     // extract all base model names, strip away Containers like List[] and primitives
-    val ComplexTypeMatcher = ".*\\[(.*)\\].*".r
-    
+
     val baseNames = (for (modelName <- (modelNames.toList -- primitives))
-      yield (modelName match {
-      case ComplexTypeMatcher(basePart) => basePart
-      case _ => modelName
-    })).toSet
+      yield (extractBasePartFromType(modelName))).toSet
 
     // get complex models from base
     val requiredModels = modelObjects.filter(obj => baseNames.contains(obj._1))
