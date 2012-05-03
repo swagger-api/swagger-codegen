@@ -1,10 +1,12 @@
-package {{modelPackage}}
+package {{package}}
 
 {{#imports}}import {{import}}
 {{/imports}}
 
+{{#models}}
 import scala.reflect.BeanProperty
 
+{{#model}}
 class {{classname}} {
   {{#vars}}
 
@@ -25,3 +27,5 @@ class {{classname}} {
     sb.toString
   }
 }
+{{/model}}
+{{/models}}
