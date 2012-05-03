@@ -8,17 +8,23 @@ class RubyCodegen extends BasicGenerator {
     name.charAt(0).toUpperCase + name.substring(1) + "_api"
   }
 
-  override def packageName = "lib"
-    
+  override def apiPackage = Some("lib")
+
   // location of templates
   override def templateDir = "src/main/resources/ruby"
+
+  // template used for models
+  override def modelTemplateFile = "model.mustache"
+
+  // template used for models
+  override def apiTemplateFile = "api.mustache"
 
   // where to write generated code
   override def destinationDir = "src/test/ruby"
 
   // file suffix
   override def fileSuffix = ".rb"
-  
+
   // package for models
   override def modelPackage = Some("models")
 
@@ -29,15 +35,15 @@ class RubyCodegen extends BasicGenerator {
       case e: String => Some(e)
     }
   }
-  
+
   override def toVarName(name: String): String = toUnderscore(name)
 
   override def toMethodName(name: String): String = toUnderscore(name)
 
   def toUnderscore(name: String): String = {
     val sb = new StringBuilder
-    for((char) <- super.toVarName(name)){
-      if(char.isUpperCase) sb.append("_").append(char.toLowerCase)
+    for ((char) <- super.toVarName(name)) {
+      if (char.isUpperCase) sb.append("_").append(char.toLowerCase)
       else sb.append(char)
     }
     sb.toString

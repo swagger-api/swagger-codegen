@@ -8,8 +8,11 @@ class ScalaCodegen extends BasicGenerator {
     "List" -> "scala.collection.mutable.ListBuffer",
     "Date" -> "java.util.Date")
 
-  // TODO: make this go away?
-  override def packageName = "com.wordnik.client"
+  // template used for models
+  override def modelTemplateFile = "model.mustache"
+
+  // template used for models
+  override def apiTemplateFile = "api.mustache"
 
   // location of templates
   override def templateDir = "src/main/resources/scala"
@@ -59,13 +62,12 @@ class ScalaCodegen extends BasicGenerator {
     }
     (datatype, defaultValue)
   }
-  
+
   // escape keywords
   override def escapeReservedWord(word: String) = "`" + word + "`"
-  
+
   // supporting classes
   override def supportingFiles = List(
     ("apiInvoker.mustache", "generated-code/scala/src/main/scala/com/wordnik/client", "ApiInvoker.scala"),
-    ("pom.mustache", "generated-code/scala", "pom.xml")
-  )
+    ("pom.mustache", "generated-code/scala", "pom.xml"))
 }

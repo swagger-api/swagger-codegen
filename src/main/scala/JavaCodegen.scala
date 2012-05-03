@@ -12,6 +12,7 @@ class JavaCodegen extends BasicGenerator {
   
   // set imports for common datatypes
   override def imports = Map(
+    "ArrayList" -> "java.util.*",
     "List" -> "java.util.*",
     "Date" -> "java.util.Date",
     "Array" -> "java.util.*")
@@ -20,6 +21,12 @@ class JavaCodegen extends BasicGenerator {
 
   // location of templates
   override def templateDir = "src/main/resources/java"
+    
+  // template used for models
+  override def modelTemplateFile = "model.mustache"
+
+  // template used for models
+  override def apiTemplateFile = "api.mustache"
 
   // where to write generated code
   override def destinationDir = "src/test/java"

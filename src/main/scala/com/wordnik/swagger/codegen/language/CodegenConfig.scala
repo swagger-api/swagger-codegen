@@ -8,6 +8,8 @@ abstract class CodegenConfig {
   def packageName: String
   def templateDir: String
   def destinationDir: String
+  def apiTemplateFile: String
+  def modelTemplateFile: String
 
   // optional configs
   def apiPackage: Option[String] = None
@@ -21,7 +23,7 @@ abstract class CodegenConfig {
   def fileSuffix: String
 
   def apiNameFromPath(apiPath: String) = {
-    val name = apiPath.split("\\.")(0).replaceAll("/", "")
+    val name = apiPath.split("/")(1).split("\\.")(0).replaceAll("/", "")
     name.charAt(0).toUpperCase + name.substring(1) + "Api"
   }
 

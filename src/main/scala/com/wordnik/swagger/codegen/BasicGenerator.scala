@@ -12,7 +12,7 @@ import scala.collection.JavaConversions._
 import scala.collection.mutable.{ ListBuffer, HashMap, HashSet }
 import scala.io.Source
 
-class BasicGenerator extends CodegenConfig {
+abstract class BasicGenerator extends CodegenConfig {
   def imports = Map(
     "List" -> "scala.collection.mutable.ListBuffer",
     "Date" -> "java.util.Date")
@@ -62,15 +62,15 @@ class BasicGenerator extends CodegenConfig {
       val resourcePath = subDoc.resourcePath
       if (subDoc.getApis != null) {
         subDoc.getApis.foreach(api => {
-          for ((apiPath, operation) <- ApiExtractor.extractOperations(doc.basePath, api))
+          for ((apiPath, operation) <- ApiExtractor.extractOperations(doc.basePath, api)) {
             operations += Tuple3(basePath, apiPath, operation)
+          }
         })
         operations.map(op => processOperation(op._2, op._3))
         allModels ++= CoreUtils.extractModels(subDoc)
       }
     })
 
-    val bundleList = new ListBuffer[Map[String, AnyRef]]
     val apiMap = groupApisToFiles(operations.toList)
     for ((identifier, operationList) <- apiMap) {
       val basePath = identifier._1
@@ -82,8 +82,10 @@ class BasicGenerator extends CodegenConfig {
       map += "package" -> apiPackage
       map += "outputDirectory" -> (destinationDir + File.separator + apiPackage.getOrElse("").replaceAll("\\.", File.separator))
       map += "filename" -> (className + fileSuffix)
-      bundleList += map.toMap
+      generateAndWrite(map.toMap, apiTemplateFile)
     }
+
+    val modelBundleList = new ListBuffer[Map[String, AnyRef]]
     for ((name, schema) <- allModels) {
       val map = new HashMap[String, AnyRef]
       map += "apis" -> None
@@ -91,22 +93,23 @@ class BasicGenerator extends CodegenConfig {
       map += "package" -> modelPackage
       map += "outputDirectory" -> (destinationDir + File.separator + modelPackage.getOrElse("").replaceAll("\\.", File.separator))
       map += "filename" -> (name + fileSuffix)
-      bundleList += map.toMap
+      modelBundleList += map.toMap
+      generateAndWrite(map.toMap, modelTemplateFile)
     }
-    bundleList.foreach(bundle => {
-      val output = codegen.generateSource(bundle)
-      val outputDir = new File(bundle("outputDirectory").asInstanceOf[String])
-      outputDir.mkdirs
-
-      val filename = outputDir + File.separator + bundle("filename")
-
-      val fw = new FileWriter(filename, false)
-      fw.write(output + "\n")
-      fw.close()
-      println("wrote " + filename)
-    })
     codegen.writeSupportingClasses
     exit(0)
+  }
+
+  def generateAndWrite(bundle: Map[String, AnyRef], templateFile: String) = {
+    val output = codegen.generateSource(bundle, templateFile)
+    val outputDir = new File(bundle("outputDirectory").asInstanceOf[String])
+    outputDir.mkdirs
+
+    val filename = outputDir + File.separator + bundle("filename")
+    val fw = new FileWriter(filename, false)
+    fw.write(output + "\n")
+    fw.close()
+    println("wrote " + filename)
   }
 
   def groupApisToFiles(operations: List[(String /*basePath*/ , String /*apiPath*/ , DocumentationOperation /* operation*/ )]): Map[(String, String), ListBuffer[(String, DocumentationOperation)]] = {
