@@ -1,6 +1,7 @@
 package com.wordnik.petstore.model;
 
 import java.util.*;
+import com.wordnik.petstore.model.Category;
 public class Pet {
   private long id = 0L;
   private List<Tag> tags = new ArrayList<Tag>();
@@ -65,3 +66,4 @@ public class Pet {
     return sb.toString();
   }
 }
+

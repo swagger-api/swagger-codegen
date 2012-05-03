@@ -28,7 +28,7 @@ public class ApiInvoker {
   }
   
   public void addDefaultHeader(String key, String value) {
-	defaultHeaderMap.put(key, value);
+	   defaultHeaderMap.put(key, value);
   }
 
   public String escapeString(String str) {
@@ -41,6 +41,9 @@ public class ApiInvoker {
         JavaType typeInfo = org.codehaus.jackson.map.type.TypeFactory.collectionType(List.class, cls);
         List response = (List<?>) JsonUtil.getJsonMapper().readValue(json, typeInfo);
         return response;
+      }
+      else if(String.class.equals(cls)) {
+        return json;
       }
       else {
         return JsonUtil.getJsonMapper().readValue(json, cls);

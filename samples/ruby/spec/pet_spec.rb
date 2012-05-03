@@ -54,10 +54,16 @@ describe "Pet" do
 end
 
 describe "Store" do
-  describe "call store" do
-    Swagger.configuration.api_key = 'special-key'
+  before do
+	  Swagger.configure do |config|
+	    config.api_key = 'special-key' 
+	    config.host = 'petstore.swagger.wordnik.com'
+	    config.base_path = '/api'
+	  end
+  end
+
+  it "should fetch an order" do
     item = Store_api.get_order_by_id(1)
     item.id.should == 1
-    
   end
 end

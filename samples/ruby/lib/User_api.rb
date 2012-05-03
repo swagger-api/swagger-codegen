@@ -21,7 +21,6 @@ class User_api
 
     #resource path
     path = "/user.{format}".sub('{format}','json')
-
     
     # pull querystring keys from options
     queryopts = options.select do |key,value|
@@ -30,9 +29,53 @@ class User_api
     
     Swagger::Request.new(:POST, path, {:params=>queryopts,:headers=>nil, :body=>body.to_body}).make
     
-
   end
 
+  def self.create_users_with_array_input (body,opts={})
+    query_param_keys = [
+      ]
+    
+    # verify existence of params
+    raise "body is required" if body.nil?
+    # set default values and merge with input
+    options = {
+      :body=>body,
+    }.merge(opts)
+
+    #resource path
+    path = "/user.{format}/createWithArray".sub('{format}','json')
+    
+    # pull querystring keys from options
+    queryopts = options.select do |key,value|
+      query_param_keys.include? key
+    end
+    
+    Swagger::Request.new(:POST, path, {:params=>queryopts,:headers=>nil, :body=>body.to_body}).make
+    
+  end
+
+  def self.create_users_with_list_input (body,opts={})
+    query_param_keys = [
+      ]
+    
+    # verify existence of params
+    raise "body is required" if body.nil?
+    # set default values and merge with input
+    options = {
+      :body=>body,
+    }.merge(opts)
+
+    #resource path
+    path = "/user.{format}/createWithList".sub('{format}','json')
+    
+    # pull querystring keys from options
+    queryopts = options.select do |key,value|
+      query_param_keys.include? key
+    end
+    
+    Swagger::Request.new(:POST, path, {:params=>queryopts,:headers=>nil, :body=>body.to_body}).make
+    
+  end
 
   def self.update_user (username,body,opts={})
     query_param_keys = [
@@ -50,7 +93,6 @@ class User_api
     #resource path
     path = "/user.{format}/{username}".sub('{format}','json').sub('{' + 'username' + '}', escapeString(username))
     
-
     
     # pull querystring keys from options
     queryopts = options.select do |key,value|
@@ -59,9 +101,7 @@ class User_api
     
     Swagger::Request.new(:PUT, path, {:params=>queryopts,:headers=>nil, :body=>body.to_body}).make
     
-
   end
-
 
   def self.delete_user (username,opts={})
     query_param_keys = [
@@ -77,7 +117,6 @@ class User_api
     #resource path
     path = "/user.{format}/{username}".sub('{format}','json').sub('{' + 'username' + '}', escapeString(username))
     
-
     
     # pull querystring keys from options
     queryopts = options.select do |key,value|
@@ -86,9 +125,7 @@ class User_api
     
     Swagger::Request.new(:DELETE, path, {:params=>queryopts,:headers=>nil, :body=>nil}).make
     
-
   end
-
 
   def self.get_user_by_name (username,opts={})
     query_param_keys = [
@@ -104,7 +141,6 @@ class User_api
     #resource path
     path = "/user.{format}/{username}".sub('{format}','json').sub('{' + 'username' + '}', escapeString(username))
     
-
     
     # pull querystring keys from options
     queryopts = options.select do |key,value|
@@ -113,9 +149,7 @@ class User_api
     
     response = Swagger::Request.new(:GET, path, {:params=>queryopts,:headers=>nil, :body=>nil}).make.body
     User.new(response)
-
   end
-
 
   def self.login_user (username,password,opts={})
     query_param_keys = [
@@ -132,7 +166,6 @@ class User_api
 
     #resource path
     path = "/user.{format}/login".sub('{format}','json')
-
     
     # pull querystring keys from options
     queryopts = options.select do |key,value|
@@ -141,9 +174,7 @@ class User_api
     
     response = Swagger::Request.new(:GET, path, {:params=>queryopts,:headers=>nil, :body=>nil}).make.body
     String.new(response)
-
   end
-
 
   def self.logout_user (opts={})
     # set default values and merge with input
@@ -152,7 +183,6 @@ class User_api
 
     #resource path
     path = "/user.{format}/logout".sub('{format}','json')
-
     
     # pull querystring keys from options
     queryopts = options.select do |key,value|
@@ -161,8 +191,7 @@ class User_api
     
     Swagger::Request.new(:GET, path, {:params=>queryopts,:headers=>nil, :body=>nil}).make
     
+  end
 
   end
 
-
-  end

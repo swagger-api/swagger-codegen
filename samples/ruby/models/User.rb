@@ -33,3 +33,4 @@ class User
     body
   end
 end
+

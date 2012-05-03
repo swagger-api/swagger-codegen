@@ -4,7 +4,6 @@ import com.wordnik.petstore.model.User
 import com.wordnik.client.ApiInvoker
 import com.wordnik.client.ApiException
 import scala.collection.mutable.HashMap
-import scala.reflect.BeanProperty
 
 class UserApi {
   var basePath: String = "http://petstore.swagger.wordnik.com/api"

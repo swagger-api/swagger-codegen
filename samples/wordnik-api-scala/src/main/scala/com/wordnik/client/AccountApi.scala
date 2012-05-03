@@ -63,19 +63,20 @@ class AccountApi {
       case ex: ApiException => throw ex
     }
   }
-  def getWordListsForCurrentUser (auth_token: String, skip: Int, limit: Int) : Option[List[WordList]]= {
+  def getWordListsForCurrentUser (api_key: String, auth_token: String, skip: String, limit: String) : Option[List[WordList]]= {
     // create path and map variables
     val path = "/account.{format}/wordLists".replaceAll("\\{format\\}","json")// query params
     val queryParams = new HashMap[String, String]
     val headerParams = new HashMap[String, String]
 
     // verify required params are set
-    (Set(auth_token) - null).size match {
-       case 1 => // all required values set
+    (Set(api_key, auth_token) - null).size match {
+       case 2 => // all required values set
        case _ => throw new Exception("missing required params")
     }
     if(String.valueOf(skip) != "null") queryParams += "skip" -> skip.toString
     if(String.valueOf(limit) != "null") queryParams += "limit" -> limit.toString
+    headerParams += "api_key" -> api_key
     headerParams += "auth_token" -> auth_token
     try {
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, None, headerParams.toMap) match {

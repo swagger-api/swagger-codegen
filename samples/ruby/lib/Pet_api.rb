@@ -22,7 +22,6 @@ class Pet_api
     #resource path
     path = "/pet.{format}/{petId}".sub('{format}','json').sub('{' + 'petId' + '}', escapeString(pet_id))
     
-
     
     # pull querystring keys from options
     queryopts = options.select do |key,value|
@@ -31,9 +30,7 @@ class Pet_api
     
     response = Swagger::Request.new(:GET, path, {:params=>queryopts,:headers=>nil, :body=>nil}).make.body
     Pet.new(response)
-
   end
-
 
   def self.add_pet (body,opts={})
     query_param_keys = [
@@ -48,7 +45,6 @@ class Pet_api
 
     #resource path
     path = "/pet.{format}".sub('{format}','json')
-
     
     # pull querystring keys from options
     queryopts = options.select do |key,value|
@@ -57,9 +53,7 @@ class Pet_api
     
     Swagger::Request.new(:POST, path, {:params=>queryopts,:headers=>nil, :body=>body.to_body}).make
     
-
   end
-
 
   def self.update_pet (body,opts={})
     query_param_keys = [
@@ -74,7 +68,6 @@ class Pet_api
 
     #resource path
     path = "/pet.{format}".sub('{format}','json')
-
     
     # pull querystring keys from options
     queryopts = options.select do |key,value|
@@ -83,9 +76,7 @@ class Pet_api
     
     Swagger::Request.new(:PUT, path, {:params=>queryopts,:headers=>nil, :body=>body.to_body}).make
     
-
   end
-
 
   def self.find_pets_by_status (status= "available",opts={})
     query_param_keys = [
@@ -100,7 +91,6 @@ class Pet_api
 
     #resource path
     path = "/pet.{format}/findByStatus".sub('{format}','json')
-
     
     # pull querystring keys from options
     queryopts = options.select do |key,value|
@@ -109,9 +99,7 @@ class Pet_api
     
     response = Swagger::Request.new(:GET, path, {:params=>queryopts,:headers=>nil, :body=>nil}).make.body
     response.map {|response|Pet.new(response)}
-
   end
-
 
   def self.find_pets_by_tags (tags,opts={})
     query_param_keys = [
@@ -126,7 +114,6 @@ class Pet_api
 
     #resource path
     path = "/pet.{format}/findByTags".sub('{format}','json')
-
     
     # pull querystring keys from options
     queryopts = options.select do |key,value|
@@ -135,8 +122,7 @@ class Pet_api
     
     response = Swagger::Request.new(:GET, path, {:params=>queryopts,:headers=>nil, :body=>nil}).make.body
     response.map {|response|Pet.new(response)}
+  end
 
   end
 
-
-  end
