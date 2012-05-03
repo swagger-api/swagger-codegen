@@ -1,5 +1,6 @@
 require "uri"
 
+{{#operations}}
 class {{classname}}
   basePath = "{{basePath}}"
   # apiInvoker = APIInvoker
@@ -8,7 +9,7 @@ class {{classname}}
     URI.encode(string.to_s)
   end
 
-  {{#vars}}
+  {{#operation}}
   def self.{{nickname}} ({{#allParams}}{{paramName}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}},{{/allParams}} opts={})
     {{#requiredParamCount}}
     
@@ -54,5 +55,6 @@ class {{classname}}
 {{newline}}
   end
 {{newline}}
-  {{/vars}}
+  {{/operation}}
 end
+{{/operations}}

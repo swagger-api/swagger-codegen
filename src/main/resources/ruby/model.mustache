@@ -1,3 +1,6 @@
+{{#models}}
+
+{{#model}}
 class {{classname}}
   attr_accessor {{#vars}}:{{{name}}}{{#hasMore}}, {{/hasMore}}{{/vars}}{{newline}}
   # :internal => :external
@@ -33,3 +36,5 @@ class {{classname}}
     body
   end
 end
+{{/model}}
+{{/models}}
