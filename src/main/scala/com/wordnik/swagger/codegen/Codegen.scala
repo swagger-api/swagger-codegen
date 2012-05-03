@@ -307,12 +307,10 @@ class Codegen(config: CodegenConfig) {
           Source.fromFile(config.templateDir + File.separator + srcTemplate).mkString))
 
       val output = engine.layout(config.templateDir + File.separator + srcTemplate, template, data.toMap)
+      val filename = outputDir.replaceAll("\\.", File.separator) + File.separator + destFile
 
-      val outputFolder = new File(outputDir.replaceAll("\\.", File.separator))
-      outputFolder.mkdirs
-
-      val filename = outputFolder + File.separator + destFile
-
+      val outputFolder = new File(filename).getParent
+      new File(outputFolder).mkdirs
       val fw = new FileWriter(filename, false)
       fw.write(output + "\n")
       fw.close()
