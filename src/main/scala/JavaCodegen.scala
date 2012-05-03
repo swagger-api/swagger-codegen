@@ -2,6 +2,10 @@ import com.wordnik.swagger.codegen.BasicGenerator
 
 import com.wordnik.swagger.core._
 
+object JavaCodegen extends JavaCodegen {
+  def main(args: Array[String]) = generateClient(args)
+}
+
 class JavaCodegen extends BasicGenerator {
   val typeMapping = Map(
     "Boolean" -> "boolean",

@@ -2,6 +2,10 @@ import com.wordnik.swagger.codegen.BasicGenerator
 
 import com.wordnik.swagger.core._
 
+object RubyCodegen extends RubyCodegen {
+  def main(args: Array[String]) = generateClient(args)
+}
+
 class RubyCodegen extends BasicGenerator {
   override def apiNameFromPath(apiPath: String) = {
     val name = apiPath.split("\\.")(0).replaceAll("/", "")
