@@ -2,6 +2,8 @@ import com.wordnik.swagger.codegen.BasicGenerator
 
 import com.wordnik.swagger.core._
 
+import java.io.File
+
 object RubyCodegen extends RubyCodegen {
   def main(args: Array[String]) = generateClient(args)
 }
@@ -24,7 +26,7 @@ class RubyCodegen extends BasicGenerator {
   override def apiTemplateFile = "api.mustache"
 
   // where to write generated code
-  override def destinationDir = "src/test/ruby"
+  override def destinationDir = "generated-code/ruby"
 
   // file suffix
   override def fileSuffix = ".rb"
@@ -76,5 +78,11 @@ class RubyCodegen extends BasicGenerator {
   }
 
   // supporting classes
-  override def supportingFiles = List()
+  override def supportingFiles = List(
+    ("monkey.mustache", destinationDir + File.separator + apiPackage.get, "monkey.rb"),
+    ("swagger.mustache", destinationDir + File.separator + apiPackage.get, "swagger.rb"),
+    ("swagger" + File.separator + "configuration.mustache", destinationDir + File.separator + apiPackage.get, "swagger" + File.separator + "configuration.rb"),
+    ("swagger" + File.separator + "response.mustache", destinationDir + File.separator + apiPackage.get, "swagger" + File.separator + "response.rb"),
+    ("swagger" + File.separator + "version.mustache", destinationDir + File.separator + apiPackage.get, "swagger" + File.separator + "version.rb"),
+    ("swagger" + File.separator + "request.mustache", destinationDir + File.separator + apiPackage.get, "swagger" + File.separator + "request.rb"))
 }
