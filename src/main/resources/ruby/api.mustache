@@ -11,11 +11,11 @@ class {{classname}}
 
   {{#operation}}
   def self.{{nickname}} ({{#allParams}}{{paramName}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}},{{/allParams}} opts={})
-    {{#requiredParamCount}}
-    
     query_param_keys = [
       {{#queryParams}}:{{paramName}}{{#hasMore}}, {{/hasMore}}{{/queryParams}}
     ]
+
+    {{#requiredParamCount}}
     
     # verify existence of params
     {{#requiredParams}}
