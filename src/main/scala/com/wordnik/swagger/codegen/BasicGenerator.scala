@@ -82,6 +82,7 @@ abstract class BasicGenerator extends CodegenConfig {
       map += "package" -> apiPackage
       map += "outputDirectory" -> (destinationDir + File.separator + apiPackage.getOrElse("").replaceAll("\\.", File.separator))
       map += "filename" -> (className + fileSuffix)
+      map += "newline" -> "\n"
       generateAndWrite(map.toMap, apiTemplateFile)
     }
 
@@ -93,6 +94,7 @@ abstract class BasicGenerator extends CodegenConfig {
       map += "package" -> modelPackage
       map += "outputDirectory" -> (destinationDir + File.separator + modelPackage.getOrElse("").replaceAll("\\.", File.separator))
       map += "filename" -> (name + fileSuffix)
+      map += "newline" -> "\n"
       modelBundleList += map.toMap
       generateAndWrite(map.toMap, modelTemplateFile)
     }
