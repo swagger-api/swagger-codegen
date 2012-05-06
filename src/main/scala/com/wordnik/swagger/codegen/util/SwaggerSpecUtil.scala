@@ -12,6 +12,8 @@ import scala.collection.JavaConversions._
 
 object SwaggerSpecUtil {
   val LOGGER = Logger.getLogger(SwaggerSpecUtil.getClass.getName)
+
+  val primitives = List("Int", "String", "Long", "Double", "Float", "Boolean", "void")
   val containers = List("List", "Map", "Set", "Array")
 
   /**
@@ -199,13 +201,13 @@ object SwaggerSpecUtil {
           None
         }
       }
-    } else if (!config.primitiveTypes.contains(name)) {
+    } else if (!primitives.contains(name)) {
       val pc = toProperCase(name)
       if (validModelNames.contains(pc)) {
         Some(pc)
       } else if (pc == "Ok") {
         Some("void")
-      } else if (config.primitiveTypes.contains(pc)) {
+      } else if (primitives.contains(pc)) {
         Some(pc)
       } else if (config.importMapping.contains(pc)) {
         Some(pc)

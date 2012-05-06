@@ -27,10 +27,10 @@ class JavaCodegen extends BasicGenerator {
   override def templateDir = "src/main/resources/java"
     
   // template used for models
-  override def modelTemplateFile = "model.mustache"
+  modelTemplateFiles += "model.mustache" -> ".java"
 
   // template used for models
-  override def apiTemplateFile = "api.mustache"
+  apiTemplateFiles += "api.mustache" -> ".java"
 
   // where to write generated code
   override def destinationDir = "src/test/java"

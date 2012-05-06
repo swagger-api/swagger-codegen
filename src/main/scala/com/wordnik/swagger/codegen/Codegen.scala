@@ -2,7 +2,7 @@ package com.wordnik.swagger.codegen
 
 import com.wordnik.swagger.core._
 
-import com.wordnik.swagger.codegen.util.CoreUtils
+import com.wordnik.swagger.codegen.util.{ CoreUtils, SwaggerSpecUtil }
 import com.wordnik.swagger.codegen.language.CodegenConfig
 
 import org.fusesource.scalate._
@@ -82,9 +82,8 @@ class Codegen(config: CodegenConfig) {
       }
       case true =>
     })
-    allImports --= config.primitiveTypes
-    allImports --= CoreUtils.primitives
-    allImports --= CoreUtils.containers
+    allImports --= SwaggerSpecUtil.primitives
+    allImports --= SwaggerSpecUtil.containers
     allImports.foreach(i => includedModels.contains(i) match {
       case false => {
         config.importMapping.containsKey(i) match {

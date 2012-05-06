@@ -9,9 +9,6 @@ import scala.collection.JavaConversions._
 import scala.io.Source
 
 object CoreUtils {
-  val primitives = List("ok", "String", "Int")
-  val containers = List("List", "Map", "Set", "Array")
-
   def m = JsonUtil.getJsonMapper
 
   def extractAllModels(baseDoc: Documentation): Map[String, DocumentationSchema] = {
@@ -59,7 +56,7 @@ object CoreUtils {
       subNames += model._1
       model._2.properties.foreach(prop => {
         val subObject = prop._2
-        if (containers.contains(subObject.getType)) {
+        if (SwaggerSpecUtil.containers.contains(subObject.getType)) {
           if (subObject.items.ref != null)
             subNames += subObject.items.ref
           else
@@ -99,7 +96,7 @@ object CoreUtils {
 
     // extract all base model names, strip away Containers like List[] and primitives
 
-    val baseNames = (for (modelName <- (modelNames.toList -- primitives))
+    val baseNames = (for (modelName <- (modelNames.toList -- SwaggerSpecUtil.primitives))
       yield (extractBasePartFromType(modelName))).toSet
 
     // get complex models from base
@@ -110,7 +107,7 @@ object CoreUtils {
     requiredModels.map(model => {
       model._2.properties.foreach(prop => {
         val subObject = prop._2
-        if (containers.contains(subObject.getType)) {
+        if (SwaggerSpecUtil.containers.contains(subObject.getType)) {
           if (subObject.items.ref != null)
             subNames += subObject.items.ref
           else
@@ -120,11 +117,7 @@ object CoreUtils {
     })
 
     val subModels = modelObjects.filter(obj => subNames.contains(obj._1))
-
     val allModels = requiredModels ++ subModels
-
-    // TODO: put these in a base object
-    val primitiveTypes = Set("Int", "String", "Long", "Double", "Float", "Boolean")
-    allModels.filter(m => primitiveTypes.contains(m._1) == false).toMap
+    allModels.filter(m => SwaggerSpecUtil.primitives.contains(m._1) == false).toMap
   }
 }

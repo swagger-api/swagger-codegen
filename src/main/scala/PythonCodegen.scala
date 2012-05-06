@@ -11,10 +11,10 @@ class PythonCodegen extends BasicGenerator {
   override def imports = Map()
 
   // template used for models
-  override def modelTemplateFile = "model.mustache"
+  modelTemplateFiles += "model.mustache" -> ".py"
 
   // template used for models
-  override def apiTemplateFile = "api.mustache"
+  apiTemplateFiles += "api.mustache" -> ".py"
 
   // location of templates
   override def templateDir = "src/main/resources/python"

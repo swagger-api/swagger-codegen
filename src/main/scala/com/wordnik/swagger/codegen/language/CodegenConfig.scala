@@ -2,25 +2,23 @@ package com.wordnik.swagger.codegen.language
 
 import com.wordnik.swagger.core._
 
-import scala.collection.mutable.HashSet
+import scala.collection.mutable.{HashMap, HashSet}
 
 abstract class CodegenConfig {
   def packageName: String
   def templateDir: String
   def destinationDir: String
-  def apiTemplateFile: String
-  def modelTemplateFile: String
+  val apiTemplateFiles = new HashMap[String, String]()
+  val modelTemplateFiles = new HashMap[String, String]()
 
   // optional configs
   def apiPackage: Option[String] = None
   def reservedWords: Set[String] = Set()
 
   // swagger primitive types
-  def primitiveTypes = Set("Int", "String", "Long", "Double", "Float", "Boolean", "void")
   def importMapping: Map[String, String] = Map()
   def modelPackage: Option[String] = None
   def escapeReservedWord(word: String) = word
-  def fileSuffix: String
 
   def apiNameFromPath(apiPath: String) = {
     val name = apiPath.split("/")(1).split("\\.")(0).replaceAll("/", "")

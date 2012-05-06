@@ -20,10 +20,10 @@ class RubyCodegen extends BasicGenerator {
   override def templateDir = "src/main/resources/ruby"
 
   // template used for models
-  override def modelTemplateFile = "model.mustache"
+  modelTemplateFiles += "model.mustache" -> ".rb"
 
   // template used for models
-  override def apiTemplateFile = "api.mustache"
+  apiTemplateFiles += "api.mustache" -> ".rb"
 
   // where to write generated code
   override def destinationDir = "generated-code/ruby"

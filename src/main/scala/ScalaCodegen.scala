@@ -13,10 +13,10 @@ class ScalaCodegen extends BasicGenerator {
     "Date" -> "java.util.Date")
 
   // template used for models
-  override def modelTemplateFile = "model.mustache"
+  modelTemplateFiles += "model.mustache" -> ".scala"
 
   // template used for models
-  override def apiTemplateFile = "api.mustache"
+  apiTemplateFiles += "api.mustache" -> ".scala"
 
   // location of templates
   override def templateDir = "src/main/resources/scala"

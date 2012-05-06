@@ -21,8 +21,8 @@ abstract class BasicGenerator extends CodegenConfig {
   def destinationDir = "generated-code/src/main/scala"
   def fileSuffix = ".scala"
 
-  override def modelPackage = Some("com.wordnik.client.model")
-  override def apiPackage = Some("com.wordnik.client.api")
+  override def modelPackage: Option[String] = Some("com.wordnik.client.model")
+  override def apiPackage: Option[String] = Some("com.wordnik.client.api")
 
   var codegen = new Codegen(this)
   def m = JsonUtil.getJsonMapper
@@ -70,7 +70,7 @@ abstract class BasicGenerator extends CodegenConfig {
         allModels ++= CoreUtils.extractModels(subDoc)
       }
     })
-    
+
     val apiMap = groupApisToFiles(operations.toList)
     for ((identifier, operationList) <- apiMap) {
       val basePath = identifier._1
@@ -81,9 +81,11 @@ abstract class BasicGenerator extends CodegenConfig {
       map += "models" -> None
       map += "package" -> apiPackage
       map += "outputDirectory" -> (destinationDir + File.separator + apiPackage.getOrElse("").replaceAll("\\.", File.separator))
-      map += "filename" -> (className + fileSuffix)
       map += "newline" -> "\n"
-      generateAndWrite(map.toMap, apiTemplateFile)
+      for ((file, suffix) <- apiTemplateFiles) {
+        map += "filename" -> (className + suffix)
+        generateAndWrite(map.toMap, file)
+      }
     }
 
     val modelBundleList = new ListBuffer[Map[String, AnyRef]]
@@ -93,10 +95,12 @@ abstract class BasicGenerator extends CodegenConfig {
       map += "models" -> List((name, schema))
       map += "package" -> modelPackage
       map += "outputDirectory" -> (destinationDir + File.separator + modelPackage.getOrElse("").replaceAll("\\.", File.separator))
-      map += "filename" -> (name + fileSuffix)
       map += "newline" -> "\n"
       modelBundleList += map.toMap
-      generateAndWrite(map.toMap, modelTemplateFile)
+      for ((file, suffix) <- modelTemplateFiles) {
+        map += "filename" -> (name + suffix)
+        generateAndWrite(map.toMap, file)
+      }
     }
     codegen.writeSupportingClasses
     exit(0)
