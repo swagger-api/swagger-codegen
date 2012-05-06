@@ -1,3 +1,5 @@
+require 'rubygems'
+require 'bundler/setup'
 require 'monkey'
 require 'swagger/configuration'
 require 'swagger/request'
