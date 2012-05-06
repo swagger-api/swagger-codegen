@@ -1,0 +1,21 @@
+#import <Foundation/Foundation.h>
+
+{{#models}}
+{{#model}}
+
+@interface {{classname}} : NSObject {
+@private
+    {{#vars}}
+    {{datatype}} _{{name}};
+    {{/vars}}
+}
+{{newline}}
+{{#vars}}
+@property(nonatomic, readonly) {{datatype}} {{name}};
+{{/vars}}
+- (id) {{#vars}}{{name}}: ({{datatype}}) {{name}}{{#hasMore}}{{newline}}     {{/hasMore}}{{^hasMore}};{{/hasMore}}
+       {{/vars}}
+{{newline}}
+@end
+{{/model}}
+{{/models}}

@@ -1,0 +1,22 @@
+{{#models}}
+{{#model}}
+#import "{{classname}}.h"
+
+@implementation {{classname}}
+
+{{#vars}}
+@synthesize {{name}} = _{{name}};
+{{/vars}}
+
+- (id) {{#vars}}{{name}}: ({{datatype}}) {{name}}
+       {{/vars}}
+       {
+          {{#vars}}_{{name}} = {{name}};
+          {{/vars}}
+
+	        return self;
+       }
+
+{{/model}}
+@end
+{{/models}}
