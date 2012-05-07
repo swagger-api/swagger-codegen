@@ -73,11 +73,18 @@ object SwaggerSpecUtil {
             case None =>
           }
         }
+/*      val propertyType = {
+          if (subObject.items != null && subObject.items.getType != "any") {
+            val updatedPropertyType = subObject.getType + "[" + subObject.items.getType + "]"
+            LOGGER.finest("updated property type for " + model.id + " is " + updatedPropertyType + " (" + subObject.id + ")")
+            subObject.setType(updatedPropertyType)
+          }
+        }
+*/
       })
-
       // remove params with invalid names (Pos???)
       model.properties = model.properties.filter(prop => {
-        if(prop._1.indexOf("$") == -1) true
+        if (prop._1.indexOf("$") == -1) true
         else {
           LOGGER.finest("removing invalid property " + prop._1)
           false

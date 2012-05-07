@@ -1,5 +1,7 @@
 #import <Foundation/Foundation.h>
-
+{{#imports}}#import "{{import}}.h"
+{{/imports}}
+{{newline}}
 {{#models}}
 {{#model}}
 
@@ -15,6 +17,8 @@
 {{/vars}}
 - (id) {{#vars}}{{name}}: ({{datatype}}) {{name}}{{#hasMore}}{{newline}}     {{/hasMore}}{{^hasMore}};{{/hasMore}}
        {{/vars}}
+{{newline}}
+- (id) initWithDictionary: (NSDictionary*)dict;
 {{newline}}
 @end
 {{/model}}

@@ -264,7 +264,14 @@ class Codegen(config: CodegenConfig) {
     model.properties.map(prop => {
       val obj = prop._2
       val dt = obj.getType //.charAt(0).toUpperCase + obj.getType.substring(1)
-      imports += Map("import" -> CoreUtils.extractBasePartFromType(dt))
+
+      var baseType = dt
+      // import the object inside the container
+      if (obj.items != null) {
+        if (obj.items.ref != null) baseType = obj.items.ref
+        else if (obj.items.getType != null) baseType = obj.items.getType
+      }
+      imports += Map("import" -> baseType)
       val properties =
         HashMap(
           "name" -> config.toVarName(prop._1),
@@ -277,6 +284,12 @@ class Codegen(config: CodegenConfig) {
           "getter" -> config.toGetter(prop._1, config.toDeclaration(obj)._1),
           "setter" -> config.toSetter(prop._1, config.toDeclaration(obj)._1),
           "hasMore" -> "true")
+
+      SwaggerSpecUtil.primitives.contains(baseType) match {
+        case true => properties += "isPrimitiveType" -> "true"
+        case _ => properties += "complexType" -> baseType
+      }
+
       l += properties
     })
     l.size match {
