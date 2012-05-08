@@ -71,7 +71,6 @@ class Codegen(config: CodegenConfig) {
       case Some(s) => s + "."
       case None => ""
     }
-
     // do the mapping before removing primitives!
     allImports.foreach(i => includedModels.contains(i) match {
       case false => {
@@ -201,6 +200,7 @@ class Codegen(config: CodegenConfig) {
     val sp = {
       val lb = new ListBuffer[AnyRef]
       paramList.foreach(i => {
+        i += "secondaryParam" -> "true"
         i("defaultValue") match {
           case Some(e) =>
           case None => lb += i
@@ -217,7 +217,10 @@ class Codegen(config: CodegenConfig) {
 
     paramList.size match {
       case 0 =>
-      case _ => sp.last.asInstanceOf[HashMap[String, String]] -= "hasMore"
+      case _ => {
+        sp.first.asInstanceOf[HashMap[String, String]] -= "secondaryParam"
+        sp.last.asInstanceOf[HashMap[String, String]] -= "hasMore"
+      }
     }
 
     val properties =
@@ -268,6 +271,8 @@ class Codegen(config: CodegenConfig) {
       var baseType = dt
       // import the object inside the container
       if (obj.items != null) {
+        // import the container
+        imports += Map("import" -> dt)
         if (obj.items.ref != null) baseType = obj.items.ref
         else if (obj.items.getType != null) baseType = obj.items.getType
       }
@@ -314,11 +319,16 @@ class Codegen(config: CodegenConfig) {
       val outputDir = file._2
       val destFile = file._3
 
-      val template = engine.compile(
-        TemplateSource.fromText(config.templateDir + File.separator + srcTemplate,
-          Source.fromFile(config.templateDir + File.separator + srcTemplate).mkString))
+      val output = {
+        if (srcTemplate.endsWith(".mustache")) {
+          val template = engine.compile(
+            TemplateSource.fromText(config.templateDir + File.separator + srcTemplate,
+              Source.fromFile(config.templateDir + File.separator + srcTemplate).mkString))
 
-      val output = engine.layout(config.templateDir + File.separator + srcTemplate, template, data.toMap)
+          engine.layout(config.templateDir + File.separator + srcTemplate, template, data.toMap)
+        }
+        else scala.io.Source.fromFile(config.templateDir + File.separator + srcTemplate).mkString
+      }
       val filename = outputDir.replaceAll("\\.", File.separator) + File.separator + destFile
 
       val outputFolder = new File(filename).getParent
@@ -328,6 +338,5 @@ class Codegen(config: CodegenConfig) {
       fw.close()
       println("wrote " + filename)
     })
-
   }
 }

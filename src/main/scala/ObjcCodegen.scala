@@ -17,13 +17,13 @@ class ObjcCodegen extends BasicGenerator {
     "Float" -> "NSNumber",
     "Long" -> "NSNumber",
     "Double" -> "NSNumber",
+    "Date" -> "NSDate",
     "Array" -> "NSArray")
 
   // set imports for common datatypes
   override def imports = Map(
     "ArrayList" -> "java.util.*",
     "List" -> "java.util.*",
-    "Date" -> "java.util.Date",
     "Array" -> "java.util.*")
 
   override def packageName = "com.wordnik.client"
@@ -50,18 +50,23 @@ class ObjcCodegen extends BasicGenerator {
 
   // response classes
   override def processResponseClass(responseClass: String): Option[String] = {
-    responseClass match {
-      case "void" => Some("void")
-      case e: String => {
-        responseClass.startsWith("List") match {
-          case true => Some("NSArray")
-          case false => Some(responseClass)
+    typeMapping.contains(responseClass) match {
+      case true => Some(typeMapping(responseClass))
+      case false => {
+        responseClass match {
+          case "void" => None
+          case e: String => {
+            responseClass.startsWith("List") match {
+              case true => Some("NSArray")
+              case false => Some(responseClass)
+            }
+          }
         }
       }
     }
   }
 
-  override def processResponseDeclaration(responseClass: String) : Option [String] = {
+  override def processResponseDeclaration(responseClass: String): Option[String] = {
     processResponseClass(responseClass) match {
       case Some("void") => Some("void")
       case Some(e) => Some(e + "*")
@@ -76,6 +81,7 @@ class ObjcCodegen extends BasicGenerator {
         if (dt.substring(0, n) == "Array") {
           "List" + dt.substring(n).replaceAll("\\[", "<").replaceAll("\\]", ">")
         } else dt.charAt(0).toUpperCase + dt.substring(1).replaceAll("\\[", "<").replaceAll("\\]", ">")
+        "NSArray"
       }
       case _ => dt
     }
@@ -104,6 +110,7 @@ class ObjcCodegen extends BasicGenerator {
           else obj.items.getType
         }
         declaredType += "<" + inner + ">"
+        "NSArray"
       }
       case _ =>
     }

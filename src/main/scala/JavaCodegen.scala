@@ -39,7 +39,8 @@ class JavaCodegen extends BasicGenerator {
   override def importMapping = Map(
     "Date" -> "java.util.Date",
     "Array" -> "java.util.*",
-    "ArrayList" -> "java.util.*")
+    "ArrayList" -> "java.util.*",
+    "List" -> "java.util.List")
 
   // package for models
   override def modelPackage = Some("com.wordnik.javaPetstore.model")
