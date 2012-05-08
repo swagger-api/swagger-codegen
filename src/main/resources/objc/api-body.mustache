@@ -9,7 +9,7 @@
 NSString * basePath = @"http://localhost:8002/api";
 
 {{#operation}}
--({{returnType}}) {{nickname}}: ({{#allParams}}{{dataType}}) {{paramName}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}}
+-({{returnType}}) {{nickname}} {{#allParams}}{{#secondaryParam}}{{paramName}}{{/secondaryParam}}:({{{dataType}}}) {{paramName}}
     {{/allParams}} {
     NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@{{path}}?", basePath];
 
@@ -44,10 +44,9 @@ NSString * basePath = @"http://localhost:8002/api";
     
     if (error) {
         NSLog(@"Error performing request %@", requestUrl);
-        return 0;
+        {{#returnBaseType}}return 0;{{/returnBaseType}}
     }
-
-    {{#returnType}}
+    {{#returnBaseType}}
     NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];    
     NSDictionary* results = [jsonString objectFromJSONString];
 
@@ -62,10 +61,10 @@ NSString * basePath = @"http://localhost:8002/api";
     else {
         return [[{{returnBaseType}} alloc]initWithDictionary: results];
     }
-    {{/returnType}}
-    {{^returnType}}
+    {{/returnBaseType}}
+    {{^returnBaseType}}
     return;
-    {{/returnType}}
+    {{/returnBaseType}}
 {{newline}}
 }
 {{/operation}}
