@@ -2,6 +2,7 @@ package com.wordnik.petstore.model;
 
 import java.util.*;
 import com.wordnik.petstore.model.Category;
+import com.wordnik.petstore.model.Tag;
 public class Pet {
   private long id = 0L;
   private List<Tag> tags = new ArrayList<Tag>();

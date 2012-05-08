@@ -1,6 +1,7 @@
 package com.wordnik.petstore.model
 
 import com.wordnik.petstore.model.Category
+import com.wordnik.petstore.model.Tag
 import scala.reflect.BeanProperty
 
 class Pet {
