@@ -36,7 +36,8 @@ class ObjcCodegen extends BasicGenerator {
   modelTemplateFiles += "model-body.mustache" -> ".m"
 
   // template used for models
-  //  apiTemplateFiles += "api.mustache" -> ".h"
+  apiTemplateFiles += "api-header.mustache" -> ".h"
+  apiTemplateFiles += "api-body.mustache" -> ".m"
 
   // where to write generated code
   override def destinationDir = "generated-code/objc/src/main/objc"
@@ -50,8 +51,21 @@ class ObjcCodegen extends BasicGenerator {
   // response classes
   override def processResponseClass(responseClass: String): Option[String] = {
     responseClass match {
-      case "void" => None
-      case e: String => Some(e.replaceAll("\\[", "<").replaceAll("\\]", ">"))
+      case "void" => Some("void")
+      case e: String => {
+        responseClass.startsWith("List") match {
+          case true => Some("NSArray")
+          case false => Some(responseClass)
+        }
+      }
+    }
+  }
+
+  override def processResponseDeclaration(responseClass: String) : Option [String] = {
+    processResponseClass(responseClass) match {
+      case Some("void") => Some("void")
+      case Some(e) => Some(e + "*")
+      case _ => Some(responseClass)
     }
   }
 

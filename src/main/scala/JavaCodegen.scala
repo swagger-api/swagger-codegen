@@ -13,7 +13,7 @@ class JavaCodegen extends BasicGenerator {
     "Float" -> "float",
     "Long" -> "long",
     "Double" -> "double")
-  
+
   // set imports for common datatypes
   override def imports = Map(
     "ArrayList" -> "java.util.*",
@@ -25,7 +25,7 @@ class JavaCodegen extends BasicGenerator {
 
   // location of templates
   override def templateDir = "src/main/resources/java"
-    
+
   // template used for models
   modelTemplateFiles += "model.mustache" -> ".java"
 
@@ -37,9 +37,9 @@ class JavaCodegen extends BasicGenerator {
 
   // import/require statements for specific datatypes
   override def importMapping = Map(
-      "Date" -> "java.util.Date",
-      "Array" -> "java.util.*",
-      "ArrayList" -> "java.util.*")
+    "Date" -> "java.util.Date",
+    "Array" -> "java.util.*",
+    "ArrayList" -> "java.util.*")
 
   // package for models
   override def modelPackage = Some("com.wordnik.javaPetstore.model")
@@ -57,15 +57,21 @@ class JavaCodegen extends BasicGenerator {
       case e: String => Some(e.replaceAll("\\[", "<").replaceAll("\\]", ">"))
     }
   }
-  
+
+  override def processResponseDeclaration(responseClass: String): Option[String] = {
+    responseClass match {
+      case "void" => None
+      case e: String => Some(e.replaceAll("\\[", "<").replaceAll("\\]", ">"))
+    }
+  }
+
   override def toDeclaredType(dt: String): String = {
     val declaredType = dt.indexOf("[") match {
       case -1 => dt.charAt(0).toUpperCase + dt.substring(1)
       case n: Int => {
-        if(dt.substring(0,n) == "Array") {
+        if (dt.substring(0, n) == "Array") {
           "List" + dt.substring(n).replaceAll("\\[", "<").replaceAll("\\]", ">")
-        }
-        else dt.charAt(0).toUpperCase + dt.substring(1).replaceAll("\\[", "<").replaceAll("\\]", ">")
+        } else dt.charAt(0).toUpperCase + dt.substring(1).replaceAll("\\[", "<").replaceAll("\\]", ">")
       }
       case _ => dt
     }

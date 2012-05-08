@@ -43,7 +43,7 @@ class ScalaCodegen extends BasicGenerator {
       case e: String => Some(e)
     }
   }
-
+  
   override def toDeclaration(obj: DocumentationSchema) = {
     var datatype = obj.getType.charAt(0).toUpperCase + obj.getType.substring(1)
     datatype match {

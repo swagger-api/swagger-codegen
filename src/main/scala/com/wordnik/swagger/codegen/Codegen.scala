@@ -238,13 +238,13 @@ class Codegen(config: CodegenConfig) {
     if (requiredParams.size > 0) properties += "requiredParamCount" -> requiredParams.size.toString
     op.responseClass.indexOf("[") match {
       case -1 => {
-        properties += "returnType" -> config.processResponseClass(op.responseClass)
+        properties += "returnType" -> config.processResponseDeclaration(op.responseClass)
         properties += "returnBaseType" -> config.processResponseClass(op.responseClass)
       }
       case n: Int => {
         val ComplexTypeMatcher = ".*\\[(.*)\\].*".r
         val ComplexTypeMatcher(basePart) = op.responseClass
-        properties += "returnType" -> config.processResponseClass(op.responseClass)
+        properties += "returnType" -> config.processResponseDeclaration(op.responseClass)
         properties += "returnContainer" -> (op.responseClass.substring(0, n))
         properties += "returnBaseType" -> Some(basePart)
       }

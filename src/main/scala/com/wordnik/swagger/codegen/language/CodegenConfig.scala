@@ -2,7 +2,7 @@ package com.wordnik.swagger.codegen.language
 
 import com.wordnik.swagger.core._
 
-import scala.collection.mutable.{HashMap, HashSet}
+import scala.collection.mutable.{ HashMap, HashSet }
 
 abstract class CodegenConfig {
   def packageName: String
@@ -30,13 +30,21 @@ abstract class CodegenConfig {
 
   // only process these models
   val modelsToProcess = new HashSet[String]
-  
+
   // method name from operation.nickname
   def toMethodName(name: String): String = name
 
   // override if you want to do something special on processing
   def processOperation(apiPath: String, op: DocumentationOperation) = {}
   def processResponseClass(responseClass: String): Option[String] = Some(responseClass)
+
+  def processResponseDeclaration(responseClass: String): Option[String] = {
+    responseClass match {
+      case "void" => None
+      case e: String => Some(e)
+    }
+  }
+
   def supportingFiles = List(): List[(String, String, String)]
 
   // mapping for datatypes
@@ -64,7 +72,7 @@ abstract class CodegenConfig {
     }
     base + name.charAt(0).toUpperCase + name.substring(1)
   }
-  
+
   def toVarName(name: String): String = {
     name match {
       case _ if (reservedWords.contains(name)) => escapeReservedWord(name)
