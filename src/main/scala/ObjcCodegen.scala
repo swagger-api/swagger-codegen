@@ -7,22 +7,25 @@ object ObjcCodegen extends ObjcCodegen {
 }
 
 class ObjcCodegen extends BasicGenerator {
-  val primitiveTypes = Set("NSInteger")
+  override def defaultIncludes = Set("NSInteger",
+    "NSString", 
+    "NSArray", 
+    "NSNumber")
 
   override def reservedWords = Set("void", "char", "short", "int", "void", "char", "short", "int", "long", "float", "double", "signed", "unsigned", "id", "const", "volatile", "in", "out", "inout", "bycopy", "byref", "oneway", "self", "super")
 
-  val typeMapping = Map(
+  override def typeMapping = Map(
     "String" -> "NSString",
-    "Int" -> "NSInteger",
+    "Int" -> "NSNumber",
     "Float" -> "NSNumber",
     "Long" -> "NSNumber",
     "Double" -> "NSNumber",
-    "Date" -> "NSDate",
+    "Date" -> "Date",
     "Array" -> "NSArray")
 
   // set imports for common datatypes
   override def imports = Map(
-    "ArrayList" -> "java.util.*",
+    "Date" -> "Date",
     "List" -> "java.util.*",
     "Array" -> "java.util.*")
 
@@ -86,7 +89,7 @@ class ObjcCodegen extends BasicGenerator {
       case _ => dt
     }
     val t = typeMapping.getOrElse(declaredType, declaredType)
-    primitiveTypes.contains(t) match {
+    languageSpecificPrimitives.contains(t) match {
       case true => t
       case _ => t + "*" // needs pointer
     }

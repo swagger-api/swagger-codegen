@@ -11,6 +11,10 @@ abstract class CodegenConfig {
   val apiTemplateFiles = new HashMap[String, String]()
   val modelTemplateFiles = new HashMap[String, String]()
 
+  def defaultIncludes = Set[String]()
+  def languageSpecificPrimitives = Set[String]()
+  def typeMapping = Map[String, String]()
+
   // optional configs
   def apiPackage: Option[String] = None
   def reservedWords: Set[String] = Set()

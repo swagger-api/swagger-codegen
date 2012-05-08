@@ -7,7 +7,12 @@ object JavaCodegen extends JavaCodegen {
 }
 
 class JavaCodegen extends BasicGenerator {
-  val typeMapping = Map(
+  override def defaultIncludes = Set("NSInteger",
+    "int", 
+    "long", 
+    "String")
+  
+  override def typeMapping = Map(
     "Boolean" -> "boolean",
     "Int" -> "int",
     "Float" -> "float",

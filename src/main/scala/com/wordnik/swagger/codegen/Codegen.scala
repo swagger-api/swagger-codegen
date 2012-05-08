@@ -81,6 +81,7 @@ class Codegen(config: CodegenConfig) {
       }
       case true =>
     })
+    allImports --= config.defaultIncludes
     allImports --= SwaggerSpecUtil.primitives
     allImports --= SwaggerSpecUtil.containers
     allImports.foreach(i => includedModels.contains(i) match {
@@ -243,6 +244,7 @@ class Codegen(config: CodegenConfig) {
       case -1 => {
         properties += "returnType" -> config.processResponseDeclaration(op.responseClass)
         properties += "returnBaseType" -> config.processResponseClass(op.responseClass)
+        properties += "returnSimpleType" -> "true"
       }
       case n: Int => {
         val ComplexTypeMatcher = ".*\\[(.*)\\].*".r
@@ -276,7 +278,7 @@ class Codegen(config: CodegenConfig) {
         if (obj.items.ref != null) baseType = obj.items.ref
         else if (obj.items.getType != null) baseType = obj.items.getType
       }
-      imports += Map("import" -> baseType)
+      imports += Map("import" -> config.typeMapping.getOrElse(baseType, baseType))
       val properties =
         HashMap(
           "name" -> config.toVarName(prop._1),
@@ -326,8 +328,7 @@ class Codegen(config: CodegenConfig) {
               Source.fromFile(config.templateDir + File.separator + srcTemplate).mkString))
 
           engine.layout(config.templateDir + File.separator + srcTemplate, template, data.toMap)
-        }
-        else scala.io.Source.fromFile(config.templateDir + File.separator + srcTemplate).mkString
+        } else scala.io.Source.fromFile(config.templateDir + File.separator + srcTemplate).mkString
       }
       val filename = outputDir.replaceAll("\\.", File.separator) + File.separator + destFile
 

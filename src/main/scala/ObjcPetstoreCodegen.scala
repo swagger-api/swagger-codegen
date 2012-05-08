@@ -10,5 +10,7 @@ object ObjcPetstoreCodegen extends ObjcCodegen {
   override def supportingFiles =
     List(
       ("JSONKit.h", destinationDir, "JSONKit.h"),
-      ("JSONKit.m", destinationDir, "JSONKit.m"))
+      ("JSONKit.m", destinationDir, "JSONKit.m"),
+      ("Date.h", destinationDir, "Date.h"),
+      ("Date.m", destinationDir, "Date.m"))
 }
