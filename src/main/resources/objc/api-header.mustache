@@ -1,0 +1,15 @@
+#import <Foundation/Foundation.h>
+{{#imports}}#import "{{import}}.h"
+{{/imports}}
+{{newline}}
+
+{{#operations}}
+@interface {{classname}}: NSObject
+NSString* basePath = @"{{basePath}}";
+
+{{#operation}}
+-({{returnType}}) {{nickname}} ({{#allParams}}{{dataType}} {{paramName}}
+    {{/allParams}});
+{{/operation}}
+{{/operations}}
+@end

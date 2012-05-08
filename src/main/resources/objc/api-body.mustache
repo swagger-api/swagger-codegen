@@ -1,0 +1,74 @@
+{{#operations}}
+#import "{{classname}}.h"
+{{#imports}}#import "{{import}}.h"
+{{/imports}}
+{{newline}}
+
+
+@implementation {{classname}}
+NSString * basePath = @"http://localhost:8002/api";
+
+{{#operation}}
+-({{returnType}}) {{nickname}}: ({{#allParams}}{{dataType}}) {{paramName}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}}
+    {{/allParams}} {
+    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@{{path}}?", basePath];
+
+    // remove format in URL
+    [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
+    {{#pathParams}}[requestUrl replaceCharactersInRange: [requestUrl rangeOfString:[NSString stringWithFormat:@"%@%@%@", @"{", @"{{baseName}}", @"}"]] withString:{{paramName}}];
+    {{/pathParams}}
+    
+    
+    {{#requiredParamCount}}
+    {{#requiredParams}}
+    if({{paramName}} == nil) {
+        // error
+    }
+    {{/requiredParams}}
+    {{/requiredParamCount}}
+
+    {{#queryParams}}
+    if({{paramName}} != nil) [requestUrl appendString:[NSString stringWithFormat:@"{{paramName}}=%@", {{paramName}}]];
+    {{/queryParams}}
+
+    NSError* error = nil;
+    NSURLResponse* response = nil;
+    NSMutableURLRequest* request = [[[NSMutableURLRequest alloc] init] autorelease];
+    
+    NSURL* URL = [NSURL URLWithString:requestUrl];
+    [request setURL:URL];
+    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+    [request setTimeoutInterval:30];
+    
+    NSData* data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    
+    if (error) {
+        NSLog(@"Error performing request %@", requestUrl);
+        return 0;
+    }
+
+    {{#returnType}}
+    NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];    
+    NSDictionary* results = [jsonString objectFromJSONString];
+
+    if([results isKindOfClass:[NSArray class]]){
+        NSMutableArray * objs = [[NSMutableArray alloc] initWithCapacity:[results count]];
+        for (NSDictionary* dict in results) {
+            {{{returnBaseType}}}* d = [[{{{returnBaseType}}} alloc]initWithDictionary:dict];
+            [objs addObject:d];
+        }
+        return objs;
+    }
+    else {
+        return [[{{returnBaseType}} alloc]initWithDictionary: results];
+    }
+    {{/returnType}}
+    {{^returnType}}
+    return;
+    {{/returnType}}
+{{newline}}
+}
+{{/operation}}
+{{newline}}
+{{/operations}}
+@end
