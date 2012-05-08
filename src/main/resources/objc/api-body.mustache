@@ -6,7 +6,7 @@
 
 
 @implementation {{classname}}
-NSString * basePath = @"http://localhost:8002/api";
+static NSString * basePath = @"{{basePath}}";
 
 {{#operation}}
 -({{returnType}}) {{nickname}} {{#allParams}}{{#secondaryParam}}{{paramName}}{{/secondaryParam}}:({{{dataType}}}) {{paramName}}
@@ -17,8 +17,7 @@ NSString * basePath = @"http://localhost:8002/api";
     [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
     {{#pathParams}}[requestUrl replaceCharactersInRange: [requestUrl rangeOfString:[NSString stringWithFormat:@"%@%@%@", @"{", @"{{baseName}}", @"}"]] withString:{{paramName}}];
     {{/pathParams}}
-    
-    
+
     {{#requiredParamCount}}
     {{#requiredParams}}
     if({{paramName}} == nil) {
@@ -44,23 +43,26 @@ NSString * basePath = @"http://localhost:8002/api";
     
     if (error) {
         NSLog(@"Error performing request %@", requestUrl);
-        {{#returnBaseType}}return 0;{{/returnBaseType}}
+        {{#returnBaseType}}return 0;
+    {{/returnBaseType}}
     }
     {{#returnBaseType}}
     NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];    
-    NSDictionary* results = [jsonString objectFromJSONString];
+    id results = [jsonString objectFromJSONString];
 
+    {{#returnContainer}}
     if([results isKindOfClass:[NSArray class]]){
         NSMutableArray * objs = [[NSMutableArray alloc] initWithCapacity:[results count]];
         for (NSDictionary* dict in results) {
-            {{{returnBaseType}}}* d = [[{{{returnBaseType}}} alloc]initWithDictionary:dict];
+            {{{returnBaseType}}}* d = [[{{{returnBaseType}}} alloc]initWithValues: dict];
             [objs addObject:d];
         }
         return objs;
     }
-    else {
-        return [[{{returnBaseType}} alloc]initWithDictionary: results];
-    }
+    {{/returnContainer}}
+    {{#returnSimpleType}}
+    return [[{{returnBaseType}} alloc]initWithValues: results];
+    {{/returnSimpleType}}
     {{/returnBaseType}}
     {{^returnBaseType}}
     return;

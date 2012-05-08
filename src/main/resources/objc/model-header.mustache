@@ -18,7 +18,7 @@
 - (id) {{#vars}}{{name}}: ({{datatype}}) {{name}}{{#hasMore}}{{newline}}     {{/hasMore}}{{^hasMore}};{{/hasMore}}
        {{/vars}}
 {{newline}}
-- (id) initWithDictionary: (NSDictionary*)dict;
+- (id) initWithValues: (NSDictionary*)dict;
 {{newline}}
 @end
 {{/model}}

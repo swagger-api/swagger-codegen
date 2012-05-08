@@ -17,25 +17,25 @@
 	        return self;
        }
 
-- (id) initWithDictionary: (NSDictionary*)dict
+- (id) initWithValues: (NSDictionary*)dict
 {
     {{#vars}}
     {{#isPrimitiveType}}_{{name}} = [dict objectForKey:@"{{baseName}}"];
     {{/isPrimitiveType}}
     {{#complexType}}
-    NSDictionary * {{name}}_dict = [dict objectForKey:@"{{name}}"];
-    if([{{name}}_dict count] > 0) {
-        if([{{name}}_dict isKindOfClass:[NSArray class]]){
+    id {{name}}_dict = [dict objectForKey:@"{{name}}"];
+    if([{{name}}_dict isKindOfClass:[NSArray class]]){
+        if([{{name}}_dict count] > 0) {
             NSMutableArray * objs = [[NSMutableArray alloc] initWithCapacity:[{{name}}_dict count]];
             for (NSDictionary* dict in {{name}}_dict) {
-                {{{complexType}}}* d = [[{{{complexType}}} alloc]initWithDictionary:dict];
+                {{{complexType}}}* d = [[{{{complexType}}} alloc]initWithValues:dict];
                 [objs addObject:d];
             }
             _{{{name}}} = [[NSArray alloc] initWithArray:objs];
         }
-        else {
-            _{{name}} = [[{{complexType}} alloc]initWithDictionary:{{name}}_dict];
-        }
+		}
+    else {
+        _{{name}} = [[{{complexType}} alloc]initWithValues:{{name}}_dict];
     }
     {{/complexType}}
     {{/vars}}
