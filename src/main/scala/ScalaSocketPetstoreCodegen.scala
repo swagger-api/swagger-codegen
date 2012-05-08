@@ -8,7 +8,7 @@ object ScalaSocketPetstoreCodegen extends ScalaCodegen {
   override def packageName = "com.wordnik.petstore"
     
   // where to write generated code
-  override def destinationDir = "generated-code/scala-socket/src/main/scala"
+  override def destinationDir = "samples/scala-socket/src/main/scala"
 
   // package for models
   override def modelPackage = Some("com.wordnik.petstore.model")
@@ -18,7 +18,7 @@ object ScalaSocketPetstoreCodegen extends ScalaCodegen {
 
   // supporting classes
   override def supportingFiles = List(
-    ("apiInvoker-socket.mustache", "generated-code/scala-socket/src/main/scala/com/wordnik/client", "ApiInvoker.scala"),
-    ("pom-socket.mustache", "generated-code/scala-socket", "pom.xml")
+    ("apiInvoker-socket.mustache", "samples/scala-socket/src/main/scala/com/wordnik/client", "ApiInvoker.scala"),
+    ("pom-socket.mustache", "samples/scala-socket", "pom.xml")
   )
 }
