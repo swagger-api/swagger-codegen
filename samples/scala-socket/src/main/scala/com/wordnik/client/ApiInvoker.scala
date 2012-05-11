@@ -28,7 +28,7 @@ object ApiInvoker {
 
   def getInvoker(host: String) = {
     invokers.getOrElse(host, {
-      val i = new SocketInvoker(host.replaceAll("http", "ws"))
+      val i = new SocketInvoker(host.replaceAll("http","ws"))
       ApiInvoker.invokers += host -> i
       i
     })

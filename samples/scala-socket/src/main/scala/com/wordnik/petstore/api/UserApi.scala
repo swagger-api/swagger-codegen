@@ -6,7 +6,7 @@ import com.wordnik.client.ApiException
 import scala.collection.mutable.HashMap
 
 class UserApi {
-  var basePath: String = "http://localhost:8000/api"
+  var basePath: String = "http://petstore.swagger.wordnik.com/api"
   var apiInvoker = ApiInvoker
 
   def createUser (body: User) = {
@@ -64,6 +64,52 @@ class UserApi {
     }
     try {
       apiInvoker.invokeApi(basePath, path, "POST", queryParams.toMap, body, headerParams.toMap) match {
+        case s: String =>
+          case _ => None
+      }
+    } catch {
+      case ex: ApiException if ex.code == 404 => None
+      case ex: ApiException => throw ex
+    }
+  }
+  def updateUser (username: String, body: User) = {
+    // create path and map variables
+    val path = "/user.{format}/{username}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "username" + "\\}",apiInvoker.escapeString(username))
+
+    // query params
+    val queryParams = new HashMap[String, String]
+    val headerParams = new HashMap[String, String]
+
+    // verify required params are set
+    (Set(username, body) - null).size match {
+       case 2 => // all required values set
+       case _ => throw new Exception("missing required params")
+    }
+    try {
+      apiInvoker.invokeApi(basePath, path, "PUT", queryParams.toMap, body, headerParams.toMap) match {
+        case s: String =>
+          case _ => None
+      }
+    } catch {
+      case ex: ApiException if ex.code == 404 => None
+      case ex: ApiException => throw ex
+    }
+  }
+  def deleteUser (username: String) = {
+    // create path and map variables
+    val path = "/user.{format}/{username}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "username" + "\\}",apiInvoker.escapeString(username))
+
+    // query params
+    val queryParams = new HashMap[String, String]
+    val headerParams = new HashMap[String, String]
+
+    // verify required params are set
+    (Set(username) - null).size match {
+       case 1 => // all required values set
+       case _ => throw new Exception("missing required params")
+    }
+    try {
+      apiInvoker.invokeApi(basePath, path, "DELETE", queryParams.toMap, None, headerParams.toMap) match {
         case s: String =>
           case _ => None
       }

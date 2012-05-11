@@ -6,7 +6,7 @@ import com.wordnik.client.ApiException
 import scala.collection.mutable.HashMap
 
 class PetApi {
-  var basePath: String = "http://localhost:8000/api"
+  var basePath: String = "http://petstore.swagger.wordnik.com/api"
   var apiInvoker = ApiInvoker
 
   def getPetById (petId: String) : Option[Pet]= {
@@ -27,6 +27,48 @@ class PetApi {
         case s: String =>
           Some(ApiInvoker.deserialize(s, "", classOf[Pet]).asInstanceOf[Pet])
         case _ => None
+      }
+    } catch {
+      case ex: ApiException if ex.code == 404 => None
+      case ex: ApiException => throw ex
+    }
+  }
+  def addPet (body: Pet) = {
+    // create path and map variables
+    val path = "/pet.{format}".replaceAll("\\{format\\}","json")// query params
+    val queryParams = new HashMap[String, String]
+    val headerParams = new HashMap[String, String]
+
+    // verify required params are set
+    (Set(body) - null).size match {
+       case 1 => // all required values set
+       case _ => throw new Exception("missing required params")
+    }
+    try {
+      apiInvoker.invokeApi(basePath, path, "POST", queryParams.toMap, body, headerParams.toMap) match {
+        case s: String =>
+          case _ => None
+      }
+    } catch {
+      case ex: ApiException if ex.code == 404 => None
+      case ex: ApiException => throw ex
+    }
+  }
+  def updatePet (body: Pet) = {
+    // create path and map variables
+    val path = "/pet.{format}".replaceAll("\\{format\\}","json")// query params
+    val queryParams = new HashMap[String, String]
+    val headerParams = new HashMap[String, String]
+
+    // verify required params are set
+    (Set(body) - null).size match {
+       case 1 => // all required values set
+       case _ => throw new Exception("missing required params")
+    }
+    try {
+      apiInvoker.invokeApi(basePath, path, "PUT", queryParams.toMap, body, headerParams.toMap) match {
+        case s: String =>
+          case _ => None
       }
     } catch {
       case ex: ApiException if ex.code == 404 => None
