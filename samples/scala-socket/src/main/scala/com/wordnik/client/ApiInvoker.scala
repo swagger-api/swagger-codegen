@@ -17,6 +17,8 @@ import scala.collection.JavaConversions._
 
 object ApiInvoker {
   val invokers = new HashMap[String, SocketInvoker]()
+  val logger = LoggerFactory.getLogger(classOf[SocketInvoker])
+
   def escapeString(value: String): String = {
     URLEncoder.encode(value, "utf-8").replaceAll("\\+", "%20")
   }
@@ -44,7 +46,10 @@ object ApiInvoker {
           val response = JsonUtil.getJsonMapper.readValue(json, typeInfo).asInstanceOf[java.util.List[_]]
           response.asScala.toList
         }
-        case _ => JsonUtil.getJsonMapper.readValue(json, cls)
+        case _ => {
+          println("Unexpected error {} ", json)
+          JsonUtil.getJsonMapper.readValue(json, cls)
+        }
       }
     }
   }
