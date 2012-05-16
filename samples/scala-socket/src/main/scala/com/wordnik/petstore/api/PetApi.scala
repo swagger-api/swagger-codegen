@@ -6,7 +6,7 @@ import com.wordnik.client.ApiException
 import scala.collection.mutable.HashMap
 
 class PetApi {
-  var basePath: String = "ws://petstore-sockets-603596378.us-west-1.elb.amazonaws.com/api"
+  var basePath: String = "ws://petstore-sockets-603596378.us-west-1.elb.amazonaws.com/api/"
   var apiInvoker = ApiInvoker
 
   def getPetById (petId: String) : Option[Pet]= {
