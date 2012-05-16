@@ -47,7 +47,6 @@ object ApiInvoker {
           response.asScala.toList
         }
         case _ => {
-          println("Unexpected error {} ", json)
           JsonUtil.getJsonMapper.readValue(json, cls)
         }
       }
