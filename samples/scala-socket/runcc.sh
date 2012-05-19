@@ -24,5 +24,5 @@ if [ $WORDNIK_OPTS = NOPE ];
 fi
 
 export CLASSPATH=$(cat classpath.txt)
-export JAVA_OPTS="${JAVA_OPTS} -Xrunjdwp:transport=dt_socket,address=9009,server=y,suspend=y -DrulePath=data -Xmx4096M -DloggerPath=conf/log4j.properties"
+export JAVA_OPTS="${JAVA_OPTS} -Xrunjdwp:transport=dt_socket,address=9009,server=y,suspend=n -DrulePath=data -Xmx4096M -DloggerPath=conf/log4j.properties"
 scala $WORDNIK_OPTS $JAVA_CONFIG_OPTIONS -cp $CLASSPATH "$@"
