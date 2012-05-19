@@ -8,7 +8,81 @@
 @implementation {{classname}}
 static NSString * basePath = @"{{basePath}}";
 
+@synthesize queue = _queue;
+
+- (id) init {
+    [super init];
+    _queue = [[NSOperationQueue alloc] init];
+    return self;
+}
+
 {{#operation}}
+-(void) {{nickname}}WithCompletionBlock {{^allParams}}:{{/allParams}}{{#allParams}}{{#secondaryParam}} {{paramName}}{{/secondaryParam}}:({{{dataType}}}) {{paramName}} {{#hasMore}}{{newline}}{{/hasMore}}{{/allParams}}{{newline}}
+        {{#returnBaseType}}completionHandler:(void (^)({{returnType}}, NSError *))completionBlock{{/returnBaseType}}
+        {{^returnBaseType}}completionHandler:(void (^)(NSError *))completionBlock{{/returnBaseType}} {
+
+    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@{{path}}?", basePath];
+
+    // remove format in URL
+    [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
+    {{#pathParams}}[requestUrl replaceCharactersInRange: [requestUrl rangeOfString:[NSString stringWithFormat:@"%@%@%@", @"{", @"{{baseName}}", @"}"]] withString:{{paramName}}];
+    {{/pathParams}}
+
+    {{#requiredParamCount}}
+    {{#requiredParams}}
+    if({{paramName}} == nil) {
+        // error
+    }
+    {{/requiredParams}}
+    {{/requiredParamCount}}
+
+    {{#queryParams}}
+    if({{paramName}} != nil) [requestUrl appendString:[NSString stringWithFormat:@"{{paramName}}=%@", {{paramName}}]];
+    {{/queryParams}}
+
+    NSError* error = nil;
+    NSURLResponse* response = nil;
+    NSMutableURLRequest* request = [[[NSMutableURLRequest alloc] init] autorelease];
+    
+    NSURL* URL = [NSURL URLWithString:requestUrl];
+    [request setURL:URL];
+    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+    [request setTimeoutInterval:30];
+
+    [NSURLConnection sendAsynchronousRequest:request queue:_queue completionHandler:
+        ^(NSURLResponse *response, NSData *data, NSError *error) {
+        if (error) {
+            {{#returnBaseType}}completionBlock(nil, error);{{/returnBaseType}}
+            {{^returnBaseType}}completionBlock(error);{{/returnBaseType}}
+            return;
+        }
+        
+        
+        {{#returnBaseType}}
+        NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];    
+        id results = [jsonString objectFromJSONString];
+    
+        {{#returnContainer}}
+        if([results isKindOfClass:[NSArray class]]){
+            NSMutableArray * objs = [[NSMutableArray alloc] initWithCapacity:[results count]];
+            for (NSDictionary* dict in results) {
+                {{{returnBaseType}}}* d = [[{{{returnBaseType}}} alloc]initWithValues: dict];
+                [objs addObject:d];
+            }
+            completionBlock(objs, nil);
+        }
+        {{/returnContainer}}
+        {{#returnSimpleType}}
+        {{#returnBaseType}}completionBlock( [[{{returnBaseType}} alloc]initWithValues: results], nil);{{/returnBaseType}}
+
+        {{/returnSimpleType}}
+        {{/returnBaseType}}
+        
+        {{^returnBaseType}}completionBlock(nil);{{/returnBaseType}}
+    }];
+}
+
+{{newline}}
 -({{returnType}}) {{nickname}} {{#allParams}}{{#secondaryParam}}{{paramName}}{{/secondaryParam}}:({{{dataType}}}) {{paramName}}
     {{/allParams}} {
     NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@{{path}}?", basePath];
