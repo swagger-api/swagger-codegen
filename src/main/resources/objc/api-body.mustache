@@ -9,11 +9,19 @@
 static NSString * basePath = @"{{basePath}}";
 
 @synthesize queue = _queue;
+@synthesize api = _api;
 
 - (id) init {
     [super init];
     _queue = [[NSOperationQueue alloc] init];
+    _api = [[ApiInvoker alloc] init];
+
     return self;
+}
+
+-(void) addHeader:(NSString*) value
+           forKey:(NSString*)key {
+    [_api addHeader:value forKey:key];
 }
 
 {{#operation}}
@@ -21,12 +29,21 @@ static NSString * basePath = @"{{basePath}}";
         {{#returnBaseType}}completionHandler:(void (^)({{returnType}}, NSError *))completionBlock{{/returnBaseType}}
         {{^returnBaseType}}completionHandler:(void (^)(NSError *))completionBlock{{/returnBaseType}} {
 
-    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@{{path}}?", basePath];
+    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@{{path}}", basePath];
 
     // remove format in URL
     [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
-    {{#pathParams}}[requestUrl replaceCharactersInRange: [requestUrl rangeOfString:[NSString stringWithFormat:@"%@%@%@", @"{", @"{{baseName}}", @"}"]] withString:{{paramName}}];
+    {{#pathParams}}[requestUrl replaceCharactersInRange: [requestUrl rangeOfString:[NSString stringWithFormat:@"%@%@%@", @"{", @"{{baseName}}", @"}"]] withString: [_api escapeString:{{paramName}}]];
     {{/pathParams}}
+
+		NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    {{#queryParams}}if({{paramName}} != nil)
+        [queryParams setValue:{{paramName}} forKey:@"{{baseName}}"];
+    {{/queryParams}}
+		NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
+    {{#headerParams}}if({{paramName}} != nil)
+        [headerParams setValue:{{paramName}} forKey:@"{{baseName}}"];
+    {{/headerParams}}
 
     {{#requiredParamCount}}
     {{#requiredParams}}
@@ -36,34 +53,23 @@ static NSString * basePath = @"{{basePath}}";
     {{/requiredParams}}
     {{/requiredParamCount}}
 
-    {{#queryParams}}
-    if({{paramName}} != nil) [requestUrl appendString:[NSString stringWithFormat:@"{{paramName}}=%@", {{paramName}}]];
-    {{/queryParams}}
-
-    NSMutableURLRequest* request = [[[NSMutableURLRequest alloc] init] autorelease];
-    
-    NSURL* URL = [NSURL URLWithString:requestUrl];
-    [request setURL:URL];
-    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-    [request setTimeoutInterval:30];
-
-    [NSURLConnection sendAsynchronousRequest:request queue:_queue completionHandler:
-        ^(NSURLResponse *response, NSData *data, NSError *error) {
+    [_api invokeWithCompletionBlock:requestUrl 
+            method: @"GET" 
+       queryParams: queryParams 
+              body: nil 
+      headerParams: headerParams
+ completionHandler: ^(NSDictionary *data, NSError *error) {
         if (error) {
             {{#returnBaseType}}completionBlock(nil, error);{{/returnBaseType}}
             {{^returnBaseType}}completionBlock(error);{{/returnBaseType}}
             return;
         }
         
-        
         {{#returnBaseType}}
-        NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];    
-        id results = [jsonString objectFromJSONString];
-    
         {{#returnContainer}}
-        if([results isKindOfClass:[NSArray class]]){
-            NSMutableArray * objs = [[NSMutableArray alloc] initWithCapacity:[results count]];
-            for (NSDictionary* dict in results) {
+        if([data isKindOfClass:[NSArray class]]){
+            NSMutableArray * objs = [[NSMutableArray alloc] initWithCapacity:[data count]];
+            for (NSDictionary* dict in data) {
                 {{{returnBaseType}}}* d = [[{{{returnBaseType}}} alloc]initWithValues: dict];
                 [objs addObject:d];
             }
@@ -71,12 +77,12 @@ static NSString * basePath = @"{{basePath}}";
         }
         {{/returnContainer}}
         {{#returnSimpleType}}
-        {{#returnBaseType}}completionBlock( [[{{returnBaseType}} alloc]initWithValues: results], nil);{{/returnBaseType}}
+        {{#returnBaseType}}completionBlock( [[{{returnBaseType}} alloc]initWithValues: data], nil);{{/returnBaseType}}
 
         {{/returnSimpleType}}
         {{/returnBaseType}}
         
-        {{^returnBaseType}}completionBlock(nil);{{/returnBaseType}}
+        {{^returnBaseType}}completionBlock(nil);{{/returnBaseType}}{{newline}}
     }];
 }
 

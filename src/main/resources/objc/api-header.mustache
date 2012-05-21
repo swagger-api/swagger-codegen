@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import "ApiInvoker.h"
 {{#imports}}#import "{{import}}.h"
 {{/imports}}
 {{newline}}
@@ -8,8 +9,13 @@
 
 @private
     NSOperationQueue *_queue;
+    ApiInvoker * _api;
 }
 @property(nonatomic, readonly) NSOperationQueue* queue;
+@property(nonatomic, readonly) ApiInvoker* api;
+
+-(void) addHeader:(NSString*) value
+           forKey:(NSString*)key;
 
 {{#operation}}
 -({{returnType}}) {{nickname}} {{#allParams}}{{#secondaryParam}} {{paramName}}{{/secondaryParam}}:({{{dataType}}}) {{paramName}} {{#hasMore}}{{newline}}{{/hasMore}}{{/allParams}};
