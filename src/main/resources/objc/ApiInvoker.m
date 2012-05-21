@@ -52,25 +52,32 @@
             [request setValue:[headerParams valueForKey:key] forHTTPHeaderField:key];            
         }
     }
-    
-    if([method isEqualToString:@"GET"]) {
-        [request setHTTPMethod:method];
-
-        NSLog(@"all headers: %@", _defaultHeaders);
-
-        [NSURLConnection sendAsynchronousRequest:request queue:_queue completionHandler:
-         ^(NSURLResponse *response, NSData *data, NSError *error) {
-             if (error) {
-                 completionBlock(nil, error);
-                 return;
-             }
-             else {
-                 NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];    
-                 id results = [jsonString objectFromJSONString];
-                 completionBlock(results, nil);
-             }
-         }];
+    [request setHTTPMethod:method];
+    if(body != nil) {
+        NSString * json = [body JSONString];
+        NSData *data = [json dataUsingEncoding:NSUTF8StringEncoding];
+        NSString *postLength = [NSString stringWithFormat:@"%d", [data length]];
+        
+        [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        [request setHTTPBody:data];
+        [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+        
+        NSLog(@"request: %@", request);
     }
+
+    [NSURLConnection sendAsynchronousRequest:request queue:_queue completionHandler:
+     ^(NSURLResponse *response, NSData *data, NSError *error) {
+         if (error) {
+             completionBlock(nil, error);
+             return;
+         }
+         else {
+             NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];    
+             id results = [jsonString objectFromJSONString];
+             completionBlock(results, nil);
+         }
+     }];
     return nil;
 }
 @end

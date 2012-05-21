@@ -61,7 +61,7 @@
     }
     else {
     {{/complexType}}
-        [dict setObject:{{#complexType}}[{{/complexType}}_{{name}} {{#complexType}}asDictionary]{{/complexType}} forKey:@"{{baseName}}"];
+        if(_{{name}} != nil) [dict setObject:{{#complexType}}[{{/complexType}}_{{name}} {{#complexType}}asDictionary]{{/complexType}} forKey:@"{{baseName}}"];
     {{#complexType}}
     }
     {{/complexType}}

@@ -45,6 +45,29 @@ static NSString * basePath = @"{{basePath}}";
         [headerParams setValue:{{paramName}} forKey:@"{{baseName}}"];
     {{/headerParams}}
 
+    NSDictionary* bodyDictionary = nil;
+		{{#bodyParam}}
+    if(body != nil && [body isKindOfClass:[NSArray class]]){
+        NSMutableArray * objs = [[NSMutableArray alloc] init];
+        for (id dict in body) {
+            if([dict respondsToSelector:@selector(asDictionary:)]) {
+                [objs addObject:[dict asDictionary]];
+            }
+            else{
+                [objs addObject:dict];
+            }
+        }
+        bodyDictionary = objs;
+    }
+    else if([body respondsToSelector:@selector(asDictionary)]) {
+        bodyDictionary = [body asDictionary];
+    }
+    else{
+        NSLog(@"don't know what to do with %@", body);
+    }
+
+    {{/bodyParam}}
+    
     {{#requiredParamCount}}
     {{#requiredParams}}
     if({{paramName}} == nil) {
@@ -53,12 +76,12 @@ static NSString * basePath = @"{{basePath}}";
     {{/requiredParams}}
     {{/requiredParamCount}}
 
-    [_api invokeWithCompletionBlock:requestUrl 
-            method: @"GET" 
-       queryParams: queryParams 
-              body: nil 
-      headerParams: headerParams
- completionHandler: ^(NSDictionary *data, NSError *error) {
+    [_api invokeWithCompletionBlock: requestUrl 
+                             method: @"{{httpMethod}}" 
+                        queryParams: queryParams 
+                               body: bodyDictionary 
+                       headerParams: headerParams
+                  completionHandler: ^(NSDictionary *data, NSError *error) {
         if (error) {
             {{#returnBaseType}}completionBlock(nil, error);{{/returnBaseType}}
             {{^returnBaseType}}completionBlock(error);{{/returnBaseType}}
@@ -78,7 +101,6 @@ static NSString * basePath = @"{{basePath}}";
         {{/returnContainer}}
         {{#returnSimpleType}}
         {{#returnBaseType}}completionBlock( [[{{returnBaseType}} alloc]initWithValues: data], nil);{{/returnBaseType}}
-
         {{/returnSimpleType}}
         {{/returnBaseType}}
         
