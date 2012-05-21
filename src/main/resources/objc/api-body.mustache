@@ -40,8 +40,6 @@ static NSString * basePath = @"{{basePath}}";
     if({{paramName}} != nil) [requestUrl appendString:[NSString stringWithFormat:@"{{paramName}}=%@", {{paramName}}]];
     {{/queryParams}}
 
-    NSError* error = nil;
-    NSURLResponse* response = nil;
     NSMutableURLRequest* request = [[[NSMutableURLRequest alloc] init] autorelease];
     
     NSURL* URL = [NSURL URLWithString:requestUrl];
