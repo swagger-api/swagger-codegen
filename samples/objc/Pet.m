@@ -38,7 +38,10 @@
             _tags = [[NSArray alloc] initWithArray:objs];
         }
 		}
-    else if([tags_dict count] > 0) {
+    else if([tags_dict isKindOfClass:[NSDictionary class]] && [tags_dict count] > 0) {
+        _tags = [[Tag alloc]initWithValues:tags_dict];
+    }
+    else {
         _tags = [[Tag alloc]initWithValues:tags_dict];
     }
     id category_dict = [dict objectForKey:@"category"];
@@ -52,7 +55,10 @@
             _category = [[NSArray alloc] initWithArray:objs];
         }
 		}
-    else if([category_dict count] > 0) {
+    else if([category_dict isKindOfClass:[NSDictionary class]] && [category_dict count] > 0) {
+        _category = [[Category alloc]initWithValues:category_dict];
+    }
+    else {
         _category = [[Category alloc]initWithValues:category_dict];
     }
     _status = [dict objectForKey:@"status"];

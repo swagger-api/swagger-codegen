@@ -7,42 +7,46 @@
 static NSString * basePath = @"http://petstore.swagger.wordnik.com/api";
 
 @synthesize queue = _queue;
+@synthesize api = _api;
 
 - (id) init {
     [super init];
     _queue = [[NSOperationQueue alloc] init];
+    _api = [[ApiInvoker alloc] init];
+
     return self;
+}
+
+-(void) addHeader:(NSString*) value
+           forKey:(NSString*)key {
+    [_api addHeader:value forKey:key];
 }
 
 -(void) getOrderByIdWithCompletionBlock :(NSString*) orderId 
         completionHandler:(void (^)(Order*, NSError *))completionBlock{
 
-    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/store.{format}/order/{orderId}?", basePath];
+    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/store.{format}/order/{orderId}", basePath];
 
     // remove format in URL
     [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
-    [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:[NSString stringWithFormat:@"%@%@%@", @"{", @"orderId", @"}"]] withString:orderId];
+    [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:[NSString stringWithFormat:@"%@%@%@", @"{", @"orderId", @"}"]] withString: [_api escapeString:orderId]];
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     if(orderId == nil) {
         // error
     }
-    NSMutableURLRequest* request = [[[NSMutableURLRequest alloc] init] autorelease];
-    
-    NSURL* URL = [NSURL URLWithString:requestUrl];
-    [request setURL:URL];
-    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-    [request setTimeoutInterval:30];
-
-    [NSURLConnection sendAsynchronousRequest:request queue:_queue completionHandler:
-        ^(NSURLResponse *response, NSData *data, NSError *error) {
+    [_api invokeWithCompletionBlock:requestUrl 
+            method: @"GET" 
+       queryParams: queryParams 
+              body: nil 
+      headerParams: headerParams
+ completionHandler: ^(NSDictionary *data, NSError *error) {
         if (error) {
             completionBlock(nil, error);return;
         }
         
-        
-        NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];    
-        id results = [jsonString objectFromJSONString];
-    
-        completionBlock( [[Order alloc]initWithValues: results], nil);}];
+        completionBlock( [[Order alloc]initWithValues: data], nil);
+    }];
 }
 
 
@@ -80,29 +84,28 @@ static NSString * basePath = @"http://petstore.swagger.wordnik.com/api";
 -(void) deleteOrderWithCompletionBlock :(NSString*) orderId 
         completionHandler:(void (^)(NSError *))completionBlock{
 
-    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/store.{format}/order/{orderId}?", basePath];
+    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/store.{format}/order/{orderId}", basePath];
 
     // remove format in URL
     [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
-    [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:[NSString stringWithFormat:@"%@%@%@", @"{", @"orderId", @"}"]] withString:orderId];
+    [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:[NSString stringWithFormat:@"%@%@%@", @"{", @"orderId", @"}"]] withString: [_api escapeString:orderId]];
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     if(orderId == nil) {
         // error
     }
-    NSMutableURLRequest* request = [[[NSMutableURLRequest alloc] init] autorelease];
-    
-    NSURL* URL = [NSURL URLWithString:requestUrl];
-    [request setURL:URL];
-    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-    [request setTimeoutInterval:30];
-
-    [NSURLConnection sendAsynchronousRequest:request queue:_queue completionHandler:
-        ^(NSURLResponse *response, NSData *data, NSError *error) {
+    [_api invokeWithCompletionBlock:requestUrl 
+            method: @"GET" 
+       queryParams: queryParams 
+              body: nil 
+      headerParams: headerParams
+ completionHandler: ^(NSDictionary *data, NSError *error) {
         if (error) {
             completionBlock(error);return;
         }
         
-        
-        completionBlock(nil);}];
+        completionBlock(nil);
+    }];
 }
 
 
@@ -136,28 +139,27 @@ static NSString * basePath = @"http://petstore.swagger.wordnik.com/api";
 -(void) placeOrderWithCompletionBlock :(Order*) body 
         completionHandler:(void (^)(NSError *))completionBlock{
 
-    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/store.{format}/order?", basePath];
+    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/store.{format}/order", basePath];
 
     // remove format in URL
     [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     if(body == nil) {
         // error
     }
-    NSMutableURLRequest* request = [[[NSMutableURLRequest alloc] init] autorelease];
-    
-    NSURL* URL = [NSURL URLWithString:requestUrl];
-    [request setURL:URL];
-    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-    [request setTimeoutInterval:30];
-
-    [NSURLConnection sendAsynchronousRequest:request queue:_queue completionHandler:
-        ^(NSURLResponse *response, NSData *data, NSError *error) {
+    [_api invokeWithCompletionBlock:requestUrl 
+            method: @"GET" 
+       queryParams: queryParams 
+              body: nil 
+      headerParams: headerParams
+ completionHandler: ^(NSDictionary *data, NSError *error) {
         if (error) {
             completionBlock(error);return;
         }
         
-        
-        completionBlock(nil);}];
+        completionBlock(nil);
+    }];
 }
 
 

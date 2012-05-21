@@ -7,38 +7,45 @@
 static NSString * basePath = @"http://petstore.swagger.wordnik.com/api";
 
 @synthesize queue = _queue;
+@synthesize api = _api;
 
 - (id) init {
     [super init];
     _queue = [[NSOperationQueue alloc] init];
+    _api = [[ApiInvoker alloc] init];
+
     return self;
+}
+
+-(void) addHeader:(NSString*) value
+           forKey:(NSString*)key {
+    [_api addHeader:value forKey:key];
 }
 
 -(void) createUsersWithArrayInputWithCompletionBlock :(NSArray*) body 
         completionHandler:(void (^)(NSError *))completionBlock{
 
-    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/user.{format}/createWithArray?", basePath];
+    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/user.{format}/createWithArray", basePath];
 
     // remove format in URL
     [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     if(body == nil) {
         // error
     }
-    NSMutableURLRequest* request = [[[NSMutableURLRequest alloc] init] autorelease];
-    
-    NSURL* URL = [NSURL URLWithString:requestUrl];
-    [request setURL:URL];
-    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-    [request setTimeoutInterval:30];
-
-    [NSURLConnection sendAsynchronousRequest:request queue:_queue completionHandler:
-        ^(NSURLResponse *response, NSData *data, NSError *error) {
+    [_api invokeWithCompletionBlock:requestUrl 
+            method: @"GET" 
+       queryParams: queryParams 
+              body: nil 
+      headerParams: headerParams
+ completionHandler: ^(NSDictionary *data, NSError *error) {
         if (error) {
             completionBlock(error);return;
         }
         
-        
-        completionBlock(nil);}];
+        completionBlock(nil);
+    }];
 }
 
 
@@ -71,28 +78,27 @@ static NSString * basePath = @"http://petstore.swagger.wordnik.com/api";
 -(void) createUserWithCompletionBlock :(User*) body 
         completionHandler:(void (^)(NSError *))completionBlock{
 
-    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/user.{format}?", basePath];
+    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/user.{format}", basePath];
 
     // remove format in URL
     [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     if(body == nil) {
         // error
     }
-    NSMutableURLRequest* request = [[[NSMutableURLRequest alloc] init] autorelease];
-    
-    NSURL* URL = [NSURL URLWithString:requestUrl];
-    [request setURL:URL];
-    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-    [request setTimeoutInterval:30];
-
-    [NSURLConnection sendAsynchronousRequest:request queue:_queue completionHandler:
-        ^(NSURLResponse *response, NSData *data, NSError *error) {
+    [_api invokeWithCompletionBlock:requestUrl 
+            method: @"GET" 
+       queryParams: queryParams 
+              body: nil 
+      headerParams: headerParams
+ completionHandler: ^(NSDictionary *data, NSError *error) {
         if (error) {
             completionBlock(error);return;
         }
         
-        
-        completionBlock(nil);}];
+        completionBlock(nil);
+    }];
 }
 
 
@@ -125,28 +131,27 @@ static NSString * basePath = @"http://petstore.swagger.wordnik.com/api";
 -(void) createUsersWithListInputWithCompletionBlock :(NSArray*) body 
         completionHandler:(void (^)(NSError *))completionBlock{
 
-    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/user.{format}/createWithList?", basePath];
+    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/user.{format}/createWithList", basePath];
 
     // remove format in URL
     [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     if(body == nil) {
         // error
     }
-    NSMutableURLRequest* request = [[[NSMutableURLRequest alloc] init] autorelease];
-    
-    NSURL* URL = [NSURL URLWithString:requestUrl];
-    [request setURL:URL];
-    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-    [request setTimeoutInterval:30];
-
-    [NSURLConnection sendAsynchronousRequest:request queue:_queue completionHandler:
-        ^(NSURLResponse *response, NSData *data, NSError *error) {
+    [_api invokeWithCompletionBlock:requestUrl 
+            method: @"GET" 
+       queryParams: queryParams 
+              body: nil 
+      headerParams: headerParams
+ completionHandler: ^(NSDictionary *data, NSError *error) {
         if (error) {
             completionBlock(error);return;
         }
         
-        
-        completionBlock(nil);}];
+        completionBlock(nil);
+    }];
 }
 
 
@@ -179,32 +184,31 @@ static NSString * basePath = @"http://petstore.swagger.wordnik.com/api";
 -(void) updateUserWithCompletionBlock :(NSString*) username body:(User*) body 
         completionHandler:(void (^)(NSError *))completionBlock{
 
-    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/user.{format}/{username}?", basePath];
+    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/user.{format}/{username}", basePath];
 
     // remove format in URL
     [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
-    [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:[NSString stringWithFormat:@"%@%@%@", @"{", @"username", @"}"]] withString:username];
+    [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:[NSString stringWithFormat:@"%@%@%@", @"{", @"username", @"}"]] withString: [_api escapeString:username]];
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     if(username == nil) {
         // error
     }
     if(body == nil) {
         // error
     }
-    NSMutableURLRequest* request = [[[NSMutableURLRequest alloc] init] autorelease];
-    
-    NSURL* URL = [NSURL URLWithString:requestUrl];
-    [request setURL:URL];
-    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-    [request setTimeoutInterval:30];
-
-    [NSURLConnection sendAsynchronousRequest:request queue:_queue completionHandler:
-        ^(NSURLResponse *response, NSData *data, NSError *error) {
+    [_api invokeWithCompletionBlock:requestUrl 
+            method: @"GET" 
+       queryParams: queryParams 
+              body: nil 
+      headerParams: headerParams
+ completionHandler: ^(NSDictionary *data, NSError *error) {
         if (error) {
             completionBlock(error);return;
         }
         
-        
-        completionBlock(nil);}];
+        completionBlock(nil);
+    }];
 }
 
 
@@ -242,29 +246,28 @@ static NSString * basePath = @"http://petstore.swagger.wordnik.com/api";
 -(void) deleteUserWithCompletionBlock :(NSString*) username 
         completionHandler:(void (^)(NSError *))completionBlock{
 
-    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/user.{format}/{username}?", basePath];
+    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/user.{format}/{username}", basePath];
 
     // remove format in URL
     [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
-    [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:[NSString stringWithFormat:@"%@%@%@", @"{", @"username", @"}"]] withString:username];
+    [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:[NSString stringWithFormat:@"%@%@%@", @"{", @"username", @"}"]] withString: [_api escapeString:username]];
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     if(username == nil) {
         // error
     }
-    NSMutableURLRequest* request = [[[NSMutableURLRequest alloc] init] autorelease];
-    
-    NSURL* URL = [NSURL URLWithString:requestUrl];
-    [request setURL:URL];
-    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-    [request setTimeoutInterval:30];
-
-    [NSURLConnection sendAsynchronousRequest:request queue:_queue completionHandler:
-        ^(NSURLResponse *response, NSData *data, NSError *error) {
+    [_api invokeWithCompletionBlock:requestUrl 
+            method: @"GET" 
+       queryParams: queryParams 
+              body: nil 
+      headerParams: headerParams
+ completionHandler: ^(NSDictionary *data, NSError *error) {
         if (error) {
             completionBlock(error);return;
         }
         
-        
-        completionBlock(nil);}];
+        completionBlock(nil);
+    }];
 }
 
 
@@ -298,32 +301,28 @@ static NSString * basePath = @"http://petstore.swagger.wordnik.com/api";
 -(void) getUserByNameWithCompletionBlock :(NSString*) username 
         completionHandler:(void (^)(User*, NSError *))completionBlock{
 
-    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/user.{format}/{username}?", basePath];
+    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/user.{format}/{username}", basePath];
 
     // remove format in URL
     [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
-    [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:[NSString stringWithFormat:@"%@%@%@", @"{", @"username", @"}"]] withString:username];
+    [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:[NSString stringWithFormat:@"%@%@%@", @"{", @"username", @"}"]] withString: [_api escapeString:username]];
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     if(username == nil) {
         // error
     }
-    NSMutableURLRequest* request = [[[NSMutableURLRequest alloc] init] autorelease];
-    
-    NSURL* URL = [NSURL URLWithString:requestUrl];
-    [request setURL:URL];
-    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-    [request setTimeoutInterval:30];
-
-    [NSURLConnection sendAsynchronousRequest:request queue:_queue completionHandler:
-        ^(NSURLResponse *response, NSData *data, NSError *error) {
+    [_api invokeWithCompletionBlock:requestUrl 
+            method: @"GET" 
+       queryParams: queryParams 
+              body: nil 
+      headerParams: headerParams
+ completionHandler: ^(NSDictionary *data, NSError *error) {
         if (error) {
             completionBlock(nil, error);return;
         }
         
-        
-        NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];    
-        id results = [jsonString objectFromJSONString];
-    
-        completionBlock( [[User alloc]initWithValues: results], nil);}];
+        completionBlock( [[User alloc]initWithValues: data], nil);
+    }];
 }
 
 
@@ -361,36 +360,34 @@ static NSString * basePath = @"http://petstore.swagger.wordnik.com/api";
 -(void) loginUserWithCompletionBlock :(NSString*) username password:(NSString*) password 
         completionHandler:(void (^)(NSString*, NSError *))completionBlock{
 
-    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/user.{format}/login?", basePath];
+    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/user.{format}/login", basePath];
 
     // remove format in URL
     [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if(username != nil)
+        [queryParams setValue:username forKey:@"username"];
+    if(password != nil)
+        [queryParams setValue:password forKey:@"password"];
+    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     if(username == nil) {
         // error
     }
     if(password == nil) {
         // error
     }
-    if(username != nil) [requestUrl appendString:[NSString stringWithFormat:@"username=%@", username]];
-    if(password != nil) [requestUrl appendString:[NSString stringWithFormat:@"password=%@", password]];
-    NSMutableURLRequest* request = [[[NSMutableURLRequest alloc] init] autorelease];
-    
-    NSURL* URL = [NSURL URLWithString:requestUrl];
-    [request setURL:URL];
-    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-    [request setTimeoutInterval:30];
-
-    [NSURLConnection sendAsynchronousRequest:request queue:_queue completionHandler:
-        ^(NSURLResponse *response, NSData *data, NSError *error) {
+    [_api invokeWithCompletionBlock:requestUrl 
+            method: @"GET" 
+       queryParams: queryParams 
+              body: nil 
+      headerParams: headerParams
+ completionHandler: ^(NSDictionary *data, NSError *error) {
         if (error) {
             completionBlock(nil, error);return;
         }
         
-        
-        NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];    
-        id results = [jsonString objectFromJSONString];
-    
-        completionBlock( [[NSString alloc]initWithValues: results], nil);}];
+        completionBlock( [[NSString alloc]initWithValues: data], nil);
+    }];
 }
 
 
@@ -433,25 +430,24 @@ static NSString * basePath = @"http://petstore.swagger.wordnik.com/api";
 -(void) logoutUserWithCompletionBlock :
         completionHandler:(void (^)(NSError *))completionBlock{
 
-    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/user.{format}/logout?", basePath];
+    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/user.{format}/logout", basePath];
 
     // remove format in URL
     [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
-    NSMutableURLRequest* request = [[[NSMutableURLRequest alloc] init] autorelease];
-    
-    NSURL* URL = [NSURL URLWithString:requestUrl];
-    [request setURL:URL];
-    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-    [request setTimeoutInterval:30];
-
-    [NSURLConnection sendAsynchronousRequest:request queue:_queue completionHandler:
-        ^(NSURLResponse *response, NSData *data, NSError *error) {
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
+    [_api invokeWithCompletionBlock:requestUrl 
+            method: @"GET" 
+       queryParams: queryParams 
+              body: nil 
+      headerParams: headerParams
+ completionHandler: ^(NSDictionary *data, NSError *error) {
         if (error) {
             completionBlock(error);return;
         }
         
-        
-        completionBlock(nil);}];
+        completionBlock(nil);
+    }];
 }
 
 

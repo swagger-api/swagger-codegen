@@ -7,42 +7,46 @@
 static NSString * basePath = @"http://petstore.swagger.wordnik.com/api";
 
 @synthesize queue = _queue;
+@synthesize api = _api;
 
 - (id) init {
     [super init];
     _queue = [[NSOperationQueue alloc] init];
+    _api = [[ApiInvoker alloc] init];
+
     return self;
+}
+
+-(void) addHeader:(NSString*) value
+           forKey:(NSString*)key {
+    [_api addHeader:value forKey:key];
 }
 
 -(void) getPetByIdWithCompletionBlock :(NSString*) petId 
         completionHandler:(void (^)(Pet*, NSError *))completionBlock{
 
-    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/pet.{format}/{petId}?", basePath];
+    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/pet.{format}/{petId}", basePath];
 
     // remove format in URL
     [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
-    [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:[NSString stringWithFormat:@"%@%@%@", @"{", @"petId", @"}"]] withString:petId];
+    [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:[NSString stringWithFormat:@"%@%@%@", @"{", @"petId", @"}"]] withString: [_api escapeString:petId]];
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     if(petId == nil) {
         // error
     }
-    NSMutableURLRequest* request = [[[NSMutableURLRequest alloc] init] autorelease];
-    
-    NSURL* URL = [NSURL URLWithString:requestUrl];
-    [request setURL:URL];
-    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-    [request setTimeoutInterval:30];
-
-    [NSURLConnection sendAsynchronousRequest:request queue:_queue completionHandler:
-        ^(NSURLResponse *response, NSData *data, NSError *error) {
+    [_api invokeWithCompletionBlock:requestUrl 
+            method: @"GET" 
+       queryParams: queryParams 
+              body: nil 
+      headerParams: headerParams
+ completionHandler: ^(NSDictionary *data, NSError *error) {
         if (error) {
             completionBlock(nil, error);return;
         }
         
-        
-        NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];    
-        id results = [jsonString objectFromJSONString];
-    
-        completionBlock( [[Pet alloc]initWithValues: results], nil);}];
+        completionBlock( [[Pet alloc]initWithValues: data], nil);
+    }];
 }
 
 
@@ -80,28 +84,27 @@ static NSString * basePath = @"http://petstore.swagger.wordnik.com/api";
 -(void) addPetWithCompletionBlock :(Pet*) body 
         completionHandler:(void (^)(NSError *))completionBlock{
 
-    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/pet.{format}?", basePath];
+    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/pet.{format}", basePath];
 
     // remove format in URL
     [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     if(body == nil) {
         // error
     }
-    NSMutableURLRequest* request = [[[NSMutableURLRequest alloc] init] autorelease];
-    
-    NSURL* URL = [NSURL URLWithString:requestUrl];
-    [request setURL:URL];
-    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-    [request setTimeoutInterval:30];
-
-    [NSURLConnection sendAsynchronousRequest:request queue:_queue completionHandler:
-        ^(NSURLResponse *response, NSData *data, NSError *error) {
+    [_api invokeWithCompletionBlock:requestUrl 
+            method: @"GET" 
+       queryParams: queryParams 
+              body: nil 
+      headerParams: headerParams
+ completionHandler: ^(NSDictionary *data, NSError *error) {
         if (error) {
             completionBlock(error);return;
         }
         
-        
-        completionBlock(nil);}];
+        completionBlock(nil);
+    }];
 }
 
 
@@ -134,28 +137,27 @@ static NSString * basePath = @"http://petstore.swagger.wordnik.com/api";
 -(void) updatePetWithCompletionBlock :(Pet*) body 
         completionHandler:(void (^)(NSError *))completionBlock{
 
-    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/pet.{format}?", basePath];
+    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/pet.{format}", basePath];
 
     // remove format in URL
     [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     if(body == nil) {
         // error
     }
-    NSMutableURLRequest* request = [[[NSMutableURLRequest alloc] init] autorelease];
-    
-    NSURL* URL = [NSURL URLWithString:requestUrl];
-    [request setURL:URL];
-    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-    [request setTimeoutInterval:30];
-
-    [NSURLConnection sendAsynchronousRequest:request queue:_queue completionHandler:
-        ^(NSURLResponse *response, NSData *data, NSError *error) {
+    [_api invokeWithCompletionBlock:requestUrl 
+            method: @"GET" 
+       queryParams: queryParams 
+              body: nil 
+      headerParams: headerParams
+ completionHandler: ^(NSDictionary *data, NSError *error) {
         if (error) {
             completionBlock(error);return;
         }
         
-        
-        completionBlock(nil);}];
+        completionBlock(nil);
+    }];
 }
 
 
@@ -188,40 +190,37 @@ static NSString * basePath = @"http://petstore.swagger.wordnik.com/api";
 -(void) findPetsByStatusWithCompletionBlock :(NSString*) status 
         completionHandler:(void (^)(NSArray*, NSError *))completionBlock{
 
-    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/pet.{format}/findByStatus?", basePath];
+    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/pet.{format}/findByStatus", basePath];
 
     // remove format in URL
     [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if(status != nil)
+        [queryParams setValue:status forKey:@"status"];
+    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     if(status == nil) {
         // error
     }
-    if(status != nil) [requestUrl appendString:[NSString stringWithFormat:@"status=%@", status]];
-    NSMutableURLRequest* request = [[[NSMutableURLRequest alloc] init] autorelease];
-    
-    NSURL* URL = [NSURL URLWithString:requestUrl];
-    [request setURL:URL];
-    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-    [request setTimeoutInterval:30];
-
-    [NSURLConnection sendAsynchronousRequest:request queue:_queue completionHandler:
-        ^(NSURLResponse *response, NSData *data, NSError *error) {
+    [_api invokeWithCompletionBlock:requestUrl 
+            method: @"GET" 
+       queryParams: queryParams 
+              body: nil 
+      headerParams: headerParams
+ completionHandler: ^(NSDictionary *data, NSError *error) {
         if (error) {
             completionBlock(nil, error);return;
         }
         
-        
-        NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];    
-        id results = [jsonString objectFromJSONString];
-    
-        if([results isKindOfClass:[NSArray class]]){
-            NSMutableArray * objs = [[NSMutableArray alloc] initWithCapacity:[results count]];
-            for (NSDictionary* dict in results) {
+        if([data isKindOfClass:[NSArray class]]){
+            NSMutableArray * objs = [[NSMutableArray alloc] initWithCapacity:[data count]];
+            for (NSDictionary* dict in data) {
                 Pet* d = [[Pet alloc]initWithValues: dict];
                 [objs addObject:d];
             }
             completionBlock(objs, nil);
         }
-        }];
+        
+    }];
 }
 
 
@@ -266,40 +265,37 @@ static NSString * basePath = @"http://petstore.swagger.wordnik.com/api";
 -(void) findPetsByTagsWithCompletionBlock :(NSString*) tags 
         completionHandler:(void (^)(NSArray*, NSError *))completionBlock{
 
-    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/pet.{format}/findByTags?", basePath];
+    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/pet.{format}/findByTags", basePath];
 
     // remove format in URL
     [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if(tags != nil)
+        [queryParams setValue:tags forKey:@"tags"];
+    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     if(tags == nil) {
         // error
     }
-    if(tags != nil) [requestUrl appendString:[NSString stringWithFormat:@"tags=%@", tags]];
-    NSMutableURLRequest* request = [[[NSMutableURLRequest alloc] init] autorelease];
-    
-    NSURL* URL = [NSURL URLWithString:requestUrl];
-    [request setURL:URL];
-    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-    [request setTimeoutInterval:30];
-
-    [NSURLConnection sendAsynchronousRequest:request queue:_queue completionHandler:
-        ^(NSURLResponse *response, NSData *data, NSError *error) {
+    [_api invokeWithCompletionBlock:requestUrl 
+            method: @"GET" 
+       queryParams: queryParams 
+              body: nil 
+      headerParams: headerParams
+ completionHandler: ^(NSDictionary *data, NSError *error) {
         if (error) {
             completionBlock(nil, error);return;
         }
         
-        
-        NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];    
-        id results = [jsonString objectFromJSONString];
-    
-        if([results isKindOfClass:[NSArray class]]){
-            NSMutableArray * objs = [[NSMutableArray alloc] initWithCapacity:[results count]];
-            for (NSDictionary* dict in results) {
+        if([data isKindOfClass:[NSArray class]]){
+            NSMutableArray * objs = [[NSMutableArray alloc] initWithCapacity:[data count]];
+            for (NSDictionary* dict in data) {
                 Pet* d = [[Pet alloc]initWithValues: dict];
                 [objs addObject:d];
             }
             completionBlock(objs, nil);
         }
-        }];
+        
+    }];
 }
 
 

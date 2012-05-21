@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import "ApiInvoker.h"
 #import "Pet.h"
 
 
@@ -6,8 +7,13 @@
 
 @private
     NSOperationQueue *_queue;
+    ApiInvoker * _api;
 }
 @property(nonatomic, readonly) NSOperationQueue* queue;
+@property(nonatomic, readonly) ApiInvoker* api;
+
+-(void) addHeader:(NSString*) value
+           forKey:(NSString*)key;
 
 -(Pet*) getPetById :(NSString*) petId ;
 -(void) getPetByIdWithCompletionBlock :(NSString*) petId 

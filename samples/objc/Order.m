@@ -38,7 +38,10 @@
             _shipDate = [[NSArray alloc] initWithArray:objs];
         }
 		}
-    else if([shipDate_dict count] > 0) {
+    else if([shipDate_dict isKindOfClass:[NSDictionary class]] && [shipDate_dict count] > 0) {
+        _shipDate = [[Date alloc]initWithValues:shipDate_dict];
+    }
+    else {
         _shipDate = [[Date alloc]initWithValues:shipDate_dict];
     }
     return self;
