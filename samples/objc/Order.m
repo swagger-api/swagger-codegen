@@ -49,10 +49,10 @@
 
 -(NSDictionary*) asDictionary {
     NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
-    [dict setObject:__id forKey:@"id"];
-    [dict setObject:_petId forKey:@"petId"];
-    [dict setObject:_status forKey:@"status"];
-    [dict setObject:_quantity forKey:@"quantity"];
+    if(__id != nil) [dict setObject:__id forKey:@"id"];
+    if(_petId != nil) [dict setObject:_petId forKey:@"petId"];
+    if(_status != nil) [dict setObject:_status forKey:@"status"];
+    if(_quantity != nil) [dict setObject:_quantity forKey:@"quantity"];
     if(_shipDate != nil){
         if([_shipDate isKindOfClass:[NSArray class]]){
             NSMutableArray * array = [[NSMutableArray alloc] init];
@@ -63,7 +63,7 @@
         }
     }
     else {
-    [dict setObject:[_shipDate asDictionary]forKey:@"shipDate"];
+    if(_shipDate != nil) [dict setObject:[_shipDate asDictionary]forKey:@"shipDate"];
     }
     NSDictionary* output = [[dict copy] autorelease];
     return output;

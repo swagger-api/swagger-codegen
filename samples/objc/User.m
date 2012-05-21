@@ -45,14 +45,14 @@
 
 -(NSDictionary*) asDictionary {
     NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
-    [dict setObject:__id forKey:@"id"];
-    [dict setObject:_lastName forKey:@"lastName"];
-    [dict setObject:_username forKey:@"username"];
-    [dict setObject:_phone forKey:@"phone"];
-    [dict setObject:_email forKey:@"email"];
-    [dict setObject:_userStatus forKey:@"userStatus"];
-    [dict setObject:_firstName forKey:@"firstName"];
-    [dict setObject:_password forKey:@"password"];
+    if(__id != nil) [dict setObject:__id forKey:@"id"];
+    if(_lastName != nil) [dict setObject:_lastName forKey:@"lastName"];
+    if(_username != nil) [dict setObject:_username forKey:@"username"];
+    if(_phone != nil) [dict setObject:_phone forKey:@"phone"];
+    if(_email != nil) [dict setObject:_email forKey:@"email"];
+    if(_userStatus != nil) [dict setObject:_userStatus forKey:@"userStatus"];
+    if(_firstName != nil) [dict setObject:_firstName forKey:@"firstName"];
+    if(_password != nil) [dict setObject:_password forKey:@"password"];
     NSDictionary* output = [[dict copy] autorelease];
     return output;
 }

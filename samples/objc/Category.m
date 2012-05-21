@@ -21,8 +21,8 @@
 
 -(NSDictionary*) asDictionary {
     NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
-    [dict setObject:__id forKey:@"id"];
-    [dict setObject:_name forKey:@"name"];
+    if(__id != nil) [dict setObject:__id forKey:@"id"];
+    if(_name != nil) [dict setObject:_name forKey:@"name"];
     NSDictionary* output = [[dict copy] autorelease];
     return output;
 }

@@ -69,7 +69,7 @@
 
 -(NSDictionary*) asDictionary {
     NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
-    [dict setObject:__id forKey:@"id"];
+    if(__id != nil) [dict setObject:__id forKey:@"id"];
     if(_tags != nil){
         if([_tags isKindOfClass:[NSArray class]]){
             NSMutableArray * array = [[NSMutableArray alloc] init];
@@ -80,7 +80,7 @@
         }
     }
     else {
-    [dict setObject:[_tags asDictionary]forKey:@"tags"];
+    if(_tags != nil) [dict setObject:[_tags asDictionary]forKey:@"tags"];
     }
     if(_category != nil){
         if([_category isKindOfClass:[NSArray class]]){
@@ -92,11 +92,11 @@
         }
     }
     else {
-    [dict setObject:[_category asDictionary]forKey:@"category"];
+    if(_category != nil) [dict setObject:[_category asDictionary]forKey:@"category"];
     }
-    [dict setObject:_status forKey:@"status"];
-    [dict setObject:_name forKey:@"name"];
-    [dict setObject:_photoUrls forKey:@"photoUrls"];
+    if(_status != nil) [dict setObject:_status forKey:@"status"];
+    if(_name != nil) [dict setObject:_name forKey:@"name"];
+    if(_photoUrls != nil) [dict setObject:_photoUrls forKey:@"photoUrls"];
     NSDictionary* output = [[dict copy] autorelease];
     return output;
 }
