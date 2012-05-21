@@ -8,33 +8,10 @@ class User_api
     URI.encode(string.to_s)
   end
 
-  def self.create_user (body,opts={})
-    query_param_keys = [
-      ]
-    
-    # verify existence of params
-    raise "body is required" if body.nil?
-    # set default values and merge with input
-    options = {
-      :body=>body,
-    }.merge(opts)
-
-    #resource path
-    path = "/user.{format}".sub('{format}','json')
-    
-    # pull querystring keys from options
-    queryopts = options.select do |key,value|
-      query_param_keys.include? key
-    end
-    
-    Swagger::Request.new(:POST, path, {:params=>queryopts,:headers=>nil, :body=>body.to_body}).make
-    
-  end
-
   def self.create_users_with_array_input (body,opts={})
     query_param_keys = [
       ]
-    
+
     # verify existence of params
     raise "body is required" if body.nil?
     # set default values and merge with input
@@ -54,10 +31,33 @@ class User_api
     
   end
 
+  def self.create_user (body,opts={})
+    query_param_keys = [
+      ]
+
+    # verify existence of params
+    raise "body is required" if body.nil?
+    # set default values and merge with input
+    options = {
+      :body=>body,
+    }.merge(opts)
+
+    #resource path
+    path = "/user.{format}".sub('{format}','json')
+    
+    # pull querystring keys from options
+    queryopts = options.select do |key,value|
+      query_param_keys.include? key
+    end
+    
+    Swagger::Request.new(:POST, path, {:params=>queryopts,:headers=>nil, :body=>body.to_body}).make
+    
+  end
+
   def self.create_users_with_list_input (body,opts={})
     query_param_keys = [
       ]
-    
+
     # verify existence of params
     raise "body is required" if body.nil?
     # set default values and merge with input
@@ -80,7 +80,7 @@ class User_api
   def self.update_user (username,body,opts={})
     query_param_keys = [
       ]
-    
+
     # verify existence of params
     raise "username is required" if username.nil?
     raise "body is required" if body.nil?
@@ -106,7 +106,7 @@ class User_api
   def self.delete_user (username,opts={})
     query_param_keys = [
       ]
-    
+
     # verify existence of params
     raise "username is required" if username.nil?
     # set default values and merge with input
@@ -130,7 +130,7 @@ class User_api
   def self.get_user_by_name (username,opts={})
     query_param_keys = [
       ]
-    
+
     # verify existence of params
     raise "username is required" if username.nil?
     # set default values and merge with input
@@ -154,7 +154,7 @@ class User_api
   def self.login_user (username,password,opts={})
     query_param_keys = [
       :username, :password]
-    
+
     # verify existence of params
     raise "username is required" if username.nil?
     raise "password is required" if password.nil?
@@ -177,6 +177,9 @@ class User_api
   end
 
   def self.logout_user (opts={})
+    query_param_keys = [
+      ]
+
     # set default values and merge with input
     options = {
       }.merge(opts)
