@@ -27,6 +27,7 @@
      photoUrls: (NSArray*) photoUrls;
 
 - (id) initWithValues: (NSDictionary*)dict;
+- (NSDictionary*) asDictionary;
 
 
 @end

@@ -23,6 +23,7 @@
      shipDate: (Date*) shipDate;
 
 - (id) initWithValues: (NSDictionary*)dict;
+- (NSDictionary*) asDictionary;
 
 
 @end

@@ -13,6 +13,7 @@
      name: (NSString*) name;
 
 - (id) initWithValues: (NSDictionary*)dict;
+- (NSDictionary*) asDictionary;
 
 
 @end

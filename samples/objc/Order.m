@@ -28,7 +28,7 @@
     _status = [dict objectForKey:@"status"];
     _quantity = [dict objectForKey:@"quantity"];
     id shipDate_dict = [dict objectForKey:@"shipDate"];
-    if([shipDate_dict isKindOfClass:[NSArray class]]){
+    if([shipDate_dict isKindOfClass:[NSArray class]]) {
         if([shipDate_dict count] > 0) {
             NSMutableArray * objs = [[NSMutableArray alloc] initWithCapacity:[shipDate_dict count]];
             for (NSDictionary* dict in shipDate_dict) {
@@ -38,10 +38,33 @@
             _shipDate = [[NSArray alloc] initWithArray:objs];
         }
 		}
-    else {
+    else if([shipDate_dict count] > 0) {
         _shipDate = [[Date alloc]initWithValues:shipDate_dict];
     }
     return self;
 }
+
+-(NSDictionary*) asDictionary {
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
+    [dict setObject:__id forKey:@"id"];
+    [dict setObject:_petId forKey:@"petId"];
+    [dict setObject:_status forKey:@"status"];
+    [dict setObject:_quantity forKey:@"quantity"];
+    if(_shipDate != nil){
+        if([_shipDate isKindOfClass:[NSArray class]]){
+            NSMutableArray * array = [[NSMutableArray alloc] init];
+            for( Date * shipDate in _shipDate) {
+                [array addObject:[shipDate asDictionary]];
+            }
+            [dict setObject:array forKey:@"shipDate"];
+        }
+    }
+    else {
+    [dict setObject:[_shipDate asDictionary]forKey:@"shipDate"];
+    }
+    NSDictionary* output = [[dict copy] autorelease];
+    return output;
+}
+
 @end
 
