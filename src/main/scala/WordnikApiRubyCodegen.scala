@@ -8,7 +8,7 @@ object WordnikApiRubyCodegen extends RubyCodegen {
   override def packageName = "lib"
 
   // where to write generated code
-  override def destinationDir = "samples/wordnik-api-ruby"
+  override def destinationDir = "wordnik-api/ruby"
 
   // package for models
   override def modelPackage = Some("models")
