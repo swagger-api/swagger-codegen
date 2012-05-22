@@ -28,11 +28,16 @@
                    headerParams:(NSDictionary*) headerParams
               completionHandler:(void (^)(NSDictionary*, NSError *))completionBlock
 {
-    NSMutableString * requestUrl = [NSMutableString stringWithFormat:@"%@?", path];
+    NSMutableString * requestUrl = [NSMutableString stringWithFormat:@"%@", path];
+    NSString * separator = nil;
+    int counter = 0;
     if(queryParams != nil){
         for(NSString * key in [queryParams keyEnumerator]){
-            [requestUrl appendFormat:[NSString stringWithFormat:@"%@=%@",
+            if(counter == 0) separator = @"?";
+            else separator = @"&";
+            [requestUrl appendFormat:[NSString stringWithFormat:@"%@%@=%@", separator,
                                       [self escapeString:key], [self escapeString:[queryParams valueForKey:key]]]];
+            counter += 1;
         }
     }
     NSLog(@"request url: %@", requestUrl);
@@ -81,3 +86,4 @@
     return nil;
 }
 @end
+
