@@ -148,6 +148,9 @@ class Codegen(config: CodegenConfig) {
         params += "dataType" -> config.toDeclaredType(param.dataType)
         params += "description" -> param.description
         params += "hasMore" -> "true"
+        if (! param.required) {
+          params += "optional" -> "true"
+        }
         param.paramType match {
           case "body" => {
             params += "paramName" -> "body"
