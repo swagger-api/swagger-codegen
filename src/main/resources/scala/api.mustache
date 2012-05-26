@@ -10,6 +10,8 @@ import scala.collection.mutable.HashMap
 class {{classname}} {
   var basePath: String = "{{basePath}}"
   var apiInvoker = ApiInvoker
+  
+  def addHeader(key: String, value: String) = apiInvoker.defaultHeaders += key -> value 
 
   {{#operation}}
   def {{nickname}} ({{#allParams}}{{paramName}}: {{dataType}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {{#returnType}}: Option[{{returnType}}]{{/returnType}} = {
