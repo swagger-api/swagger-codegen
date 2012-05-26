@@ -11,7 +11,7 @@ class Store_api
   def self.get_order_by_id (order_id,opts={})
     query_param_keys = [
       ]
-    
+
     # verify existence of params
     raise "order_id is required" if order_id.nil?
     # set default values and merge with input
@@ -35,7 +35,7 @@ class Store_api
   def self.delete_order (order_id,opts={})
     query_param_keys = [
       ]
-    
+
     # verify existence of params
     raise "order_id is required" if order_id.nil?
     # set default values and merge with input
@@ -59,7 +59,7 @@ class Store_api
   def self.place_order (body,opts={})
     query_param_keys = [
       ]
-    
+
     # verify existence of params
     raise "body is required" if body.nil?
     # set default values and merge with input

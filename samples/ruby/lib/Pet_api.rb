@@ -11,7 +11,7 @@ class Pet_api
   def self.get_pet_by_id (pet_id,opts={})
     query_param_keys = [
       ]
-    
+
     # verify existence of params
     raise "pet_id is required" if pet_id.nil?
     # set default values and merge with input
@@ -35,7 +35,7 @@ class Pet_api
   def self.add_pet (body,opts={})
     query_param_keys = [
       ]
-    
+
     # verify existence of params
     raise "body is required" if body.nil?
     # set default values and merge with input
@@ -58,7 +58,7 @@ class Pet_api
   def self.update_pet (body,opts={})
     query_param_keys = [
       ]
-    
+
     # verify existence of params
     raise "body is required" if body.nil?
     # set default values and merge with input
@@ -81,7 +81,7 @@ class Pet_api
   def self.find_pets_by_status (status= "available",opts={})
     query_param_keys = [
       :status]
-    
+
     # verify existence of params
     raise "status is required" if status.nil?
     # set default values and merge with input
@@ -104,7 +104,7 @@ class Pet_api
   def self.find_pets_by_tags (tags,opts={})
     query_param_keys = [
       :tags]
-    
+
     # verify existence of params
     raise "tags is required" if tags.nil?
     # set default values and merge with input

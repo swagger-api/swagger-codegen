@@ -6,9 +6,11 @@ object WordnikApiScalaCodegen extends ScalaCodegen {
   def main(args: Array[String]) = generateClient(args)
 
   override def packageName = "com.wordnik.client"
-    
+
+  def destinationRoot = "wordnik-api/scala"
+
   // where to write generated code
-  override def destinationDir = "samples/wordnik-api-scala/src/main/scala"
+  override def destinationDir = destinationRoot + "/src/main/scala"
 
   // package for models
   override def modelPackage = Some("com.wordnik.client.model")
@@ -18,9 +20,9 @@ object WordnikApiScalaCodegen extends ScalaCodegen {
 
   // supporting classes
   override def supportingFiles = List(
-    ("apiInvoker.mustache", "samples/wordnik-api-scala/src/main/scala/com/wordnik/client", "ApiInvoker.scala"),
-    ("pom.mustache", "samples/wordnik-api-scala", "pom.xml"),
-    ("facetValue.mustache", "samples/wordnik-api-scala/src/main/scala/com/wordnik/client/model", "FacetValue.scala"),
-    ("partOfSpeech.mustache", "samples/wordnik-api-scala/src/main/scala/com/wordnik/client/model", "PartOfSpeech.scala")
+    ("apiInvoker.mustache", destinationRoot + "/src/main/scala/com/wordnik/client", "ApiInvoker.scala"),
+    ("pom.mustache", destinationRoot, "pom.xml"),
+    ("facetValue.mustache", destinationRoot + "/src/main/scala/com/wordnik/client/model", "FacetValue.scala"),
+    ("partOfSpeech.mustache", destinationRoot + "/src/main/scala/com/wordnik/client/model", "PartOfSpeech.scala")
   )
 }

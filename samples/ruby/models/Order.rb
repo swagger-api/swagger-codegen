@@ -13,8 +13,8 @@ class Order
     # Morph attribute keys into undescored rubyish style
     if attributes.to_s != ""
       Order.attribute_map.each_pair do |internal, external|
-        if attributes.has_key? external
-          attributes[internal] = attributes.delete(external)
+        if attributes.has_key? external.to_s
+          attributes[internal.to_s] = attributes.delete(external.to_s)
         end
       end
 

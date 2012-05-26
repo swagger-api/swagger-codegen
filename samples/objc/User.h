@@ -31,6 +31,7 @@
      password: (NSString*) password;
 
 - (id) initWithValues: (NSDictionary*)dict;
+- (NSDictionary*) asDictionary;
 
 
 @end

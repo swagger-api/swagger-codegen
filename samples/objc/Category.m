@@ -18,5 +18,14 @@
     _name = [dict objectForKey:@"name"];
     return self;
 }
+
+-(NSDictionary*) asDictionary {
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
+    if(__id != nil) [dict setObject:__id forKey:@"id"];
+    if(_name != nil) [dict setObject:_name forKey:@"name"];
+    NSDictionary* output = [[dict copy] autorelease];
+    return output;
+}
+
 @end
 

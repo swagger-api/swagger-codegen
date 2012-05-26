@@ -6,9 +6,11 @@ object WordnikApiJavaCodegen extends JavaCodegen {
   def main(args: Array[String]) = generateClient(args)
 
   override def packageName = "com.wordnik.client"
-    
+
+  def destinationRoot = "wordnik-api/java"
+
   // where to write generated code
-  override def destinationDir = "samples/wordnik-api-java/src/main/java"
+  override def destinationDir =  destinationRoot + "/src/main/java"
 
   // package for models
   override def modelPackage = Some("com.wordnik.client.model")
@@ -19,10 +21,10 @@ object WordnikApiJavaCodegen extends JavaCodegen {
   // supporting classes
   override def supportingFiles =
     List(
-      ("apiInvoker.mustache", "samples/wordnik-api-java/src/main/java/com/wordnik/client", "ApiInvoker.java"),
-      ("partOfSpeech.mustache", "samples/wordnik-api-java/src/main/java/com/wordnik/client/models", "PartOfSpeech.java"),
-      ("facetValue.mustache", "samples/wordnik-api-java/src/main/java/com/wordnik/client/models", "FacetValue.java"),
-      ("apiException.mustache", "samples/wordnik-api-java/src/main/java/com/wordnik/client", "ApiException.java"),
-      ("pom.mustache", "samples/wordnik-api-java", "pom.xml")
+      ("apiInvoker.mustache", destinationRoot + "/src/main/java/com/wordnik/client", "ApiInvoker.java"),
+      ("partOfSpeech.mustache", destinationRoot + "/src/main/java/com/wordnik/client/models", "PartOfSpeech.java"),
+      ("facetValue.mustache", destinationRoot + "/src/main/java/com/wordnik/client/models", "FacetValue.java"),
+      ("apiException.mustache", destinationRoot + "/src/main/java/com/wordnik/client", "ApiException.java"),
+      ("pom.mustache", destinationRoot, "pom.xml")
     )
 }
