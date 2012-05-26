@@ -50,10 +50,23 @@ class {{classname}}
     post_body = nil
     {{#bodyParam}}
     if body != nil
-      if body.respond_to?("to_body")
-        post_body = body.to_body
-      else
-        post_body = body
+      if body.is_a?(Array)
+        array = Array.new
+        body.each do |item|
+          if item.respond_to?("to_body".to_sym)
+            array.push item.to_body
+          else
+            array.push item
+          end
+        end
+        post_body = array
+
+      else 
+        if body.respond_to?("to_body".to_sym)
+	        post_body = body.to_body
+	      else
+	        post_body = body
+	      end
       end
     end
     {{/bodyParam}}
@@ -64,7 +77,7 @@ class {{classname}}
     response.map {|response|{{/returnContainer}} {{returnBaseType}}.new(response){{#returnContainer}} }{{/returnContainer}}
     {{/returnType}}
     {{^returnType}}
-    Swagger::Request.new(:{{httpMethod}}, path, {:params=>queryopts,:headers=>headers, :body=>{{#bodyParam}}{{bodyParam}}.to_body{{/bodyParam}}{{^bodyParam}}nil{{/bodyParam}} }).make
+    Swagger::Request.new(:{{httpMethod}}, path, {:params=>queryopts,:headers=>headers, :body=>post_body}).make
     {{/returnType}}
 {{newline}}
   end
