@@ -46,7 +46,6 @@ class ApiClient:
                     if value != None:
                         sentQueryParams[param] = value
                 url = url + '?' + urllib.urlencode(sentQueryParams)
-            request = urllib2.Request(url=url, headers=headers)
         elif method in ['POST', 'PUT', 'DELETE']:
             data = postData
             if data:
@@ -54,13 +53,10 @@ class ApiClient:
                     data = json.dumps(postData)
                 elif type(postData) not in [str, int, float, bool]:
                     data = json.dumps(postData.__dict__)
-            request = urllib2.Request(url=url, headers=headers, data=data)
-            if method in ['PUT', 'DELETE']:
-                # Monkey patch alert! Urllib2 doesn't really do PUT / DELETE
-                request.get_method = lambda: method
-
         else:
             raise Exception('Method ' + method + ' is not recognized.')
+
+        request = MethodRequest(method=method, url=url, headers=headers, data=data)
 
         # Make the request
         response = urllib2.urlopen(request).read()
@@ -141,3 +137,18 @@ class ApiClient:
 
         return instance
 
+
+class MethodRequest(urllib2.Request):
+
+    def __init__(self, *args, **kwargs):
+        """Construct a MethodRequest. Usage is the same as for
+        `urllib2.Request` except it also takes an optional `method`
+        keyword argument. If supplied, `method` will be used instead of
+        the default."""
+
+        if 'method' in kwargs:
+            self.method = kwargs.pop('method')
+        return urllib2.Request.__init__(self, *args, **kwargs)
+
+    def get_method(self):
+        return getattr(self, 'method', urllib2.Request.get_method(self))
