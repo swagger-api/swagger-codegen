@@ -27,6 +27,22 @@ abstract class BasicGenerator extends CodegenConfig {
   var codegen = new Codegen(this)
   def m = JsonUtil.getJsonMapper
 
+  def getResourcePath(host: String) = {
+    System.getProperty("fileMap") match {
+      case s: String => {
+        s + "/resources.json"
+      }
+      case _ => host
+    }
+  }
+
+  def getBasePath(basePath: String) = {
+    System.getProperty("fileMap") match {
+      case s: String => s
+      case _ => basePath
+    }
+  }
+
   def generateClient(args: Array[String]) = {
     val host = args(0)
     val apiKey = {
@@ -35,14 +51,16 @@ abstract class BasicGenerator extends CodegenConfig {
     }
     val doc = {
       try {
-        m.readValue(Source.fromURL(host + apiKey.getOrElse("")).mkString, classOf[Documentation])
+        val json = ResourceExtractor.extractListing(getResourcePath(host), apiKey)
+        m.readValue(json, classOf[Documentation])
       } catch {
         case e: Exception => throw new Exception("unable to read from " + host)
       }
     }
 
-    val subDocs = ApiExtractor.extractApiDocs(doc.basePath, doc.getApis().toList, apiKey)
-    val models = CoreUtils.extractAllModels(doc)
+    val basePath = getBasePath(doc.basePath)
+    val subDocs = ApiExtractor.extractApiDocs(basePath, doc.getApis().toList, apiKey)
+    val models = CoreUtils.extractAllModels(subDocs)
 
     // lets get rid of this loop of uglyness
     subDocs.foreach(subDoc => {

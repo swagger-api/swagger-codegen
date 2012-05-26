@@ -21,6 +21,7 @@ object SwaggerSpecUtil {
    */
   def fixModels(config: CodegenConfig, models: Map[String, DocumentationSchema]) = {
     val validModelNames = models.map(_._1).toSet
+    LOGGER.finest("all valid models: " + validModelNames)
     for ((name, model) <- models) {
       // id of model
       getUpdatedType(config, validModelNames, model.id) match {
@@ -73,14 +74,6 @@ object SwaggerSpecUtil {
             case None =>
           }
         }
-/*      val propertyType = {
-          if (subObject.items != null && subObject.items.getType != "any") {
-            val updatedPropertyType = subObject.getType + "[" + subObject.items.getType + "]"
-            LOGGER.finest("updated property type for " + model.id + " is " + updatedPropertyType + " (" + subObject.id + ")")
-            subObject.setType(updatedPropertyType)
-          }
-        }
-*/
       })
       // remove params with invalid names (Pos???)
       model.properties = model.properties.filter(prop => {
@@ -125,7 +118,7 @@ object SwaggerSpecUtil {
                 case "body" => {
                   getUpdatedType(config, validModelNames, dataType) match {
                     case Some(updatedName) => {
-                      LOGGER.finest("--> updated " + dataType + " to " + updatedName)
+//                      LOGGER.finest("--> updated " + dataType + " to " + updatedName)
                       p.dataType = updatedName
                     }
                     case _ => LOGGER.finest("rats!") // leave it alone
@@ -134,7 +127,7 @@ object SwaggerSpecUtil {
                 case "path" => {
                   getUpdatedType(config, validModelNames, dataType) match {
                     case Some(updatedName) => {
-                      LOGGER.finest("--> updated " + dataType + " to " + updatedName)
+//                      LOGGER.finest("--> updated " + dataType + " to " + updatedName)
                       p.dataType = updatedName
                     }
                     case _ => // leave it alone
@@ -143,7 +136,7 @@ object SwaggerSpecUtil {
                 case "query" => {
                   getUpdatedType(config, validModelNames, dataType) match {
                     case Some(updatedName) => {
-                      LOGGER.finest("--> updated " + dataType + " to " + updatedName)
+//                      LOGGER.finest("--> updated " + dataType + " to " + updatedName)
                       p.dataType = updatedName
                     }
                     case _ => // leave it alone

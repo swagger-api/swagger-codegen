@@ -11,12 +11,22 @@ import scala.io.Source
 object CoreUtils {
   def m = JsonUtil.getJsonMapper
 
-  def extractAllModels(baseDoc: Documentation): Map[String, DocumentationSchema] = {
+  def fetchAndExtractAllModels(baseDoc: Documentation): Map[String, DocumentationSchema] = {
     val modelObjects = new HashMap[String, DocumentationSchema]
     baseDoc.getApis.foreach(api => {
       val apiPath = (baseDoc.basePath + api.path).replaceAll(".\\{format\\}", ".json")
       val sd = m.readValue(Source.fromURL(apiPath).mkString, classOf[Documentation])
       for ((nm, model) <- extractModels(sd)) modelObjects += nm -> model
+      if (sd.getModels != null) sd.getModels.foreach(sm => modelObjects += sm._1 -> sm._2)
+    })
+    modelObjects.toMap
+  }
+
+  def extractAllModels(docs: List[Documentation]): Map[String, DocumentationSchema] = {
+    val modelObjects = new HashMap[String, DocumentationSchema]
+    docs.foreach(sd => {
+      for ((nm, model) <- extractModels(sd)) modelObjects += nm -> model
+      if (sd.getModels != null) sd.getModels.foreach(sm => modelObjects += sm._1 -> sm._2)
     })
     modelObjects.toMap
   }
