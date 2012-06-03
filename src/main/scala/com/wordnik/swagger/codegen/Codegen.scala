@@ -16,6 +16,10 @@ import scala.io.Source
 import scala.collection.mutable.{ HashMap, ListBuffer, HashSet }
 import scala.collection.JavaConversions._
 
+object Codegen {
+  val templates = new HashMap[String, (TemplateEngine, Template)]
+}
+
 class Codegen(config: CodegenConfig) {
   val m = com.wordnik.swagger.core.util.JsonUtil.getJsonMapper
 
@@ -95,11 +99,18 @@ class Codegen(config: CodegenConfig) {
     })
 
     val rootDir = new java.io.File(".")
-    val engine = new TemplateEngine(Some(rootDir))
-
-    val template = engine.compile(
-      TemplateSource.fromText(config.templateDir + File.separator + templateFile,
-        Source.fromFile(config.templateDir + File.separator + templateFile).mkString))
+    val engineData = Codegen.templates.getOrElse(templateFile, {
+      val engine = new TemplateEngine(Some(rootDir))
+      val template = engine.compile(
+        TemplateSource.fromText(config.templateDir + File.separator + templateFile,
+          Source.fromFile(config.templateDir + File.separator + templateFile).mkString))
+      val t = Tuple2(engine, template)
+      Codegen.templates += templateFile -> t
+      t
+    })
+    
+    val engine = engineData._1
+    val template = engineData._2
 
     var data = Map[String, AnyRef](
       "package" -> bundle("package"),

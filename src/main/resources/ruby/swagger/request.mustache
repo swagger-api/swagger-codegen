@@ -141,7 +141,6 @@ module Swagger
         Typhoeus::Request.get(
           self.url,
           :headers => self.headers.stringify_keys,
-          :user_agent => Swagger.configuration.user_agent
         )
 
       when :post,:POST
@@ -149,7 +148,6 @@ module Swagger
           self.url,
           :body => self.outgoing_body,
           :headers => self.headers.stringify_keys,
-          :user_agent => Swagger.configuration.user_agent
         )
 
       when :put,:PUT
@@ -157,7 +155,6 @@ module Swagger
           self.url,
           :body => self.outgoing_body,
           :headers => self.headers.stringify_keys,
-          :user_agent => Swagger.configuration.user_agent
         )
       
       when :delete,:DELETE
@@ -165,7 +162,6 @@ module Swagger
           self.url,
           :body => self.outgoing_body,
           :headers => self.headers.stringify_keys,
-          :user_agent => Swagger.configuration.user_agent
         )
       end
       Response.new(response)

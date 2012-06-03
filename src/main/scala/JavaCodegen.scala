@@ -7,11 +7,14 @@ object JavaCodegen extends JavaCodegen {
 }
 
 class JavaCodegen extends BasicGenerator {
-  override def defaultIncludes = Set("NSInteger",
-    "int", 
-    "long", 
-    "String")
-  
+  override def defaultIncludes = Set(
+    "double",
+    "int",
+    "long",
+    "float",
+    "String",
+    "boolean")
+
   override def typeMapping = Map(
     "Boolean" -> "boolean",
     "Int" -> "int",

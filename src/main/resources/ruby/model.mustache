@@ -15,16 +15,26 @@ class {{classname}}
   def initialize(attributes = {})
     # Morph attribute keys into undescored rubyish style
     if attributes.to_s != ""
-      {{classname}}.attribute_map.each_pair do |internal, external|
-        if attributes.has_key? external.to_s
-          attributes[internal.to_s] = attributes.delete(external.to_s)
-        end
-      end
 
-      # Assign attributes
-      attributes.each do |name, value|
-        send("#{name}=", value) if self.respond_to?(name.to_sym)
-      end
+      {{#vars}}
+      if {{classname}}.attribute_map["{{{name}}}".to_sym] != nil
+        name = "{{{name}}}".to_sym
+        value = attributes["{{{baseName}}}"]
+
+	      if value.is_a?(Array)
+	        array = Array.new
+	        value.each do |arrayValue|
+	          {{#isPrimitiveType}}array.push arrayValue
+	        {{/isPrimitiveType}}
+	          {{#complexType}}array.push {{complexType}}.new(arrayValue)
+	        {{/complexType}}
+	        end
+	        send("#{name}=", array) if self.respond_to?(name)
+	      else
+	        send("#{name}=", value) if self.respond_to?(name)
+	      end
+	    end
+      {{/vars}}
     end
   end
 
