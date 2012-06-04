@@ -91,10 +91,22 @@ class PythonCodegen extends BasicGenerator {
     "Double" -> "float",
     "Array" -> "list",
     "Boolean" -> "bool",
-    "Date" -> "str")
+    "Date" -> "str",
+    "string" -> "str"
+    )
 
   override def toDeclaredType(dt: String): String = {
-    typeMapping.getOrElse(dt, dt)
+    val declaredType = typeMapping.getOrElse(dt, dt)
+    declaredType.startsWith("Array") match {
+      case true => {
+        val innerType = dt.dropRight(1).substring(6)
+        typeMapping.contains(innerType) match {
+          case true => "list[" + typeMapping(innerType) + "]"
+          case false => "list[" + innerType + "]"
+        }
+      }
+      case _ => declaredType
+    }
   }
 
   override def toDeclaration(obj: DocumentationSchema) = {

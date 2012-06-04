@@ -38,6 +38,8 @@ class ApiClient:
         headers['api_key'] = self.apiKey
 
         data = None
+        # What can safely be JSON serialized?
+        safeToDump = [str, int, float, bool]
         if method == 'GET':
             if queryParams:
                 # Need to remove None values, these should not be sent
@@ -50,8 +52,12 @@ class ApiClient:
             data = postData
             if data:
                 if type(postData) == list:
-                    data = json.dumps(postData)
-                elif type(postData) not in [str, int, float, bool]:
+                    # Could be a list of objects
+                    if type(postData[0]) in safeToDump:
+                        data = json.dumps(postData)
+                    else:
+                        data = json.dumps([datum.__dict__ for datum in postData])
+                elif type(postData) not in safeToDump:
                     data = json.dumps(postData.__dict__)
         else:
             raise Exception('Method ' + method + ' is not recognized.')
