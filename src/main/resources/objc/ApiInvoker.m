@@ -6,7 +6,7 @@
 @synthesize defaultHeaders = _defaultHeaders;
 
 - (id) init {
-    [super init];
+    self = [super init];
     _queue = [[NSOperationQueue alloc] init];
     _defaultHeaders = [[NSMutableDictionary alloc] init];
     return self;
@@ -18,13 +18,19 @@
 }
 
 -(NSString*) escapeString:(NSString*) string{
-    return string;
+    if(string == nil)
+        return nil;
+    if([string isKindOfClass:[NSString class]])
+        return [string stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    else {
+        return string;
+    }
 }
 
 -(id) invokeWithCompletionBlock:(NSString*) path
                          method:(NSString*) method
                     queryParams:(NSDictionary*) queryParams
-                           body:(NSDictionary*) body
+                           body:(id) body
                    headerParams:(NSDictionary*) headerParams
               completionHandler:(void (^)(NSDictionary*, NSError *))completionBlock
 {
@@ -41,14 +47,14 @@
         }
     }
     NSLog(@"request url: %@", requestUrl);
-
+    
     NSURL* URL = [NSURL URLWithString:requestUrl];
     
-    NSMutableURLRequest* request = [[[NSMutableURLRequest alloc] init] autorelease];
+    NSMutableURLRequest* request = [[NSMutableURLRequest alloc] init];
     [request setURL:URL];
     [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     [request setTimeoutInterval:30];
-
+    
     for(NSString * key in [_defaultHeaders keyEnumerator]){
         [request setValue:[_defaultHeaders valueForKey:key] forHTTPHeaderField:key];            
     }
@@ -59,18 +65,25 @@
     }
     [request setHTTPMethod:method];
     if(body != nil) {
-        NSString * json = [body JSONString];
-        NSData *data = [json dataUsingEncoding:NSUTF8StringEncoding];
+        NSError * error = [NSError new];
+        NSData * data = nil;
+        if([body isKindOfClass:[NSDictionary class]]){
+            data = [NSJSONSerialization dataWithJSONObject:body 
+                                                   options:kNilOptions error:&error];
+        }
+        else {
+            data = [body dataUsingEncoding:NSUTF8StringEncoding];
+        }
         NSString *postLength = [NSString stringWithFormat:@"%d", [data length]];
-        
         [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
-        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
         [request setHTTPBody:data];
+        
+        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
         [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
         
         NSLog(@"request: %@", request);
     }
-
+    
     [NSURLConnection sendAsynchronousRequest:request queue:_queue completionHandler:
      ^(NSURLResponse *response, NSData *data, NSError *error) {
          if (error) {
@@ -78,12 +91,12 @@
              return;
          }
          else {
-             NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];    
-             id results = [jsonString objectFromJSONString];
+             NSDictionary* results = [NSJSONSerialization JSONObjectWithData:data
+                                                                     options:kNilOptions 
+                                                                       error:&error];
              completionBlock(results, nil);
          }
      }];
     return nil;
 }
 @end
-

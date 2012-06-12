@@ -12,7 +12,7 @@ static NSString * basePath = @"{{basePath}}";
 @synthesize api = _api;
 
 - (id) init {
-    [super init];
+    self = [super init];
     _queue = [[NSOperationQueue alloc] init];
     _api = [[ApiInvoker alloc] init];
 
@@ -45,13 +45,13 @@ static NSString * basePath = @"{{basePath}}";
         [headerParams setValue:{{paramName}} forKey:@"{{baseName}}"];
     {{/headerParams}}
 
-    NSDictionary* bodyDictionary = nil;
+    id bodyDictionary = nil;
 		{{#bodyParam}}
     if(body != nil && [body isKindOfClass:[NSArray class]]){
         NSMutableArray * objs = [[NSMutableArray alloc] init];
         for (id dict in body) {
             if([dict respondsToSelector:@selector(asDictionary:)]) {
-                [objs addObject:[dict asDictionary]];
+                [objs addObject:[(SwaggerObject*)dict asDictionary]];
             }
             else{
                 [objs addObject:dict];
@@ -60,7 +60,10 @@ static NSString * basePath = @"{{basePath}}";
         bodyDictionary = objs;
     }
     else if([body respondsToSelector:@selector(asDictionary)]) {
-        bodyDictionary = [body asDictionary];
+        bodyDictionary = [(SwaggerObject*)body asDictionary];
+    }
+    else if([body isKindOfClass:[NSString class]]) {
+        bodyDictionary = body;
     }
     else{
         NSLog(@"don't know what to do with %@", body);
@@ -132,7 +135,7 @@ static NSString * basePath = @"{{basePath}}";
 
     NSError* error = nil;
     NSURLResponse* response = nil;
-    NSMutableURLRequest* request = [[[NSMutableURLRequest alloc] init] autorelease];
+    NSMutableURLRequest* request = [[NSMutableURLRequest alloc] init];
     
     NSURL* URL = [NSURL URLWithString:requestUrl];
     [request setURL:URL];
@@ -147,8 +150,12 @@ static NSString * basePath = @"{{basePath}}";
     {{/returnBaseType}}
     }
     {{#returnBaseType}}
-    NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];    
-    id results = [jsonString objectFromJSONString];
+//  NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];    
+//  id results = [jsonString objectFromJSONString];
+
+    NSDictionary* results = [NSJSONSerialization JSONObjectWithData:data
+                                                            options:kNilOptions 
+                                                              error:&error];
 
     {{#returnContainer}}
     if([results isKindOfClass:[NSArray class]]){

@@ -25,8 +25,8 @@
     {{#complexType}}
     id {{name}}_dict = [dict objectForKey:@"{{name}}"];
     if([{{name}}_dict isKindOfClass:[NSArray class]]) {
-        if([{{name}}_dict count] > 0) {
-            NSMutableArray * objs = [[NSMutableArray alloc] initWithCapacity:[{{name}}_dict count]];
+        if([(NSArray*){{name}}_dict count] > 0) {
+            NSMutableArray * objs = [[NSMutableArray alloc] initWithCapacity:[(NSArray*){{name}}_dict count]];
             for (NSDictionary* dict in {{name}}_dict) {
                 {{{complexType}}}* d = [[{{{complexType}}} alloc]initWithValues:dict];
                 [objs addObject:d];
@@ -34,7 +34,7 @@
             _{{{name}}} = [[NSArray alloc] initWithArray:objs];
         }
 		}
-    else if([{{name}}_dict isKindOfClass:[NSDictionary class]] && [{{name}}_dict count] > 0) {
+    else if([{{name}}_dict isKindOfClass:[NSDictionary class]] && [(NSDictionary*){{name}}_dict count] > 0) {
         _{{name}} = [[{{complexType}} alloc]initWithValues:{{name}}_dict];
     }
     else {
@@ -54,20 +54,20 @@
         if([_{{name}} isKindOfClass:[NSArray class]]){
             NSMutableArray * array = [[NSMutableArray alloc] init];
             for( {{complexType}} * {{name}} in _{{name}}) {
-                [array addObject:[{{name}} asDictionary]];
+                [array addObject:[(SwaggerObject*){{name}} asDictionary]];
             }
             [dict setObject:array forKey:@"{{baseName}}"];
         }
     }
     else {
     {{/complexType}}
-        if(_{{name}} != nil) [dict setObject:{{#complexType}}[{{/complexType}}_{{name}} {{#complexType}}asDictionary]{{/complexType}} forKey:@"{{baseName}}"];
+        if(_{{name}} != nil) [dict setObject:{{#complexType}}[(SwaggerObject*){{/complexType}}_{{name}} {{#complexType}}asDictionary]{{/complexType}} forKey:@"{{baseName}}"];
     {{#complexType}}
     }
     {{/complexType}}
     {{/vars}}
 
-    NSDictionary* output = [[dict copy] autorelease];
+    NSDictionary* output = [dict copy];
     return output;
 }
 

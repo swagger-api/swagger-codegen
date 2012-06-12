@@ -19,7 +19,7 @@
 -(id) invokeWithCompletionBlock:(NSString*) path
                          method:(NSString*) method
                     queryParams:(NSDictionary*) queryParams
-                           body:(NSDictionary*)body
+                           body:(id)body
                    headerParams:(NSDictionary*) headerParams
               completionHandler:(void (^)(NSDictionary*, NSError *))completionBlock;
 @end

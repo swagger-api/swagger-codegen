@@ -1,14 +1,15 @@
 #import <Foundation/Foundation.h>
+#import "SwaggerObject.h"
 {{#imports}}#import "{{import}}.h"
 {{/imports}}
 {{newline}}
 {{#models}}
 {{#model}}
 
-@interface {{classname}} : NSObject {
+@interface {{classname}} : SwaggerObject {
 @private
     {{#vars}}
-    {{datatype}} _{{name}};
+    {{datatype}} _{{name}}; //{{baseType}}
     {{/vars}}
 }
 {{newline}}
