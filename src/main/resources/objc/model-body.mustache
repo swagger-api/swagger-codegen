@@ -27,7 +27,7 @@
     if([{{name}}_dict isKindOfClass:[NSArray class]]) {
         if([(NSArray*){{name}}_dict count] > 0) {
             NSMutableArray * objs = [[NSMutableArray alloc] initWithCapacity:[(NSArray*){{name}}_dict count]];
-            for (NSDictionary* dict in {{name}}_dict) {
+            for (NSDictionary* dict in (NSArray*){{name}}_dict) {
                 {{{complexType}}}* d = [[{{{complexType}}} alloc]initWithValues:dict];
                 [objs addObject:d];
             }
@@ -53,10 +53,16 @@
     if(_{{name}} != nil){
         if([_{{name}} isKindOfClass:[NSArray class]]){
             NSMutableArray * array = [[NSMutableArray alloc] init];
-            for( {{complexType}} * {{name}} in _{{name}}) {
+            for( {{complexType}} * {{name}} in (NSArray*)_{{name}}) {
                 [array addObject:[(SwaggerObject*){{name}} asDictionary]];
             }
             [dict setObject:array forKey:@"{{baseName}}"];
+        }
+        else if([_{{name}} isKindOfClass:[Date class]]) {
+            NSString * dateString = [(Date*)_{{name}} toString];
+            if(dateString){
+                [dict setObject:dateString forKey:@"{{name}}"];   
+            }
         }
     }
     else {

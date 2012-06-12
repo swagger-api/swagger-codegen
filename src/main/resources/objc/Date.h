@@ -1,10 +1,13 @@
 #import <Foundation/Foundation.h>
+#import "SwaggerObject.h"
 
-@interface Date : NSObject{
+@interface Date : SwaggerObject {
 @private
     NSDate *_date;
 }
 @property(nonatomic, readonly) NSDate* date;
 
-- (id) initWithValues: (NSNumber*)input;
+- (id) initWithValues: (NSString*)input;
+-(NSString*) toString;
 @end
+
