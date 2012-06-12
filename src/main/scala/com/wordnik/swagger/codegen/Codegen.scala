@@ -108,7 +108,7 @@ class Codegen(config: CodegenConfig) {
       Codegen.templates += templateFile -> t
       t
     })
-    
+
     val engine = engineData._1
     val template = engineData._2
 
@@ -159,7 +159,7 @@ class Codegen(config: CodegenConfig) {
         params += "dataType" -> config.toDeclaredType(param.dataType)
         params += "description" -> param.description
         params += "hasMore" -> "true"
-        if (! param.required) {
+        if (!param.required) {
           params += "optional" -> "true"
         }
         param.paramType match {
@@ -283,7 +283,7 @@ class Codegen(config: CodegenConfig) {
     val imports = new HashSet[AnyRef]
     model.properties.map(prop => {
       val obj = prop._2
-      val dt = obj.getType //.charAt(0).toUpperCase + obj.getType.substring(1)
+      val dt = obj.getType
 
       var baseType = dt
       // import the object inside the container
@@ -293,7 +293,11 @@ class Codegen(config: CodegenConfig) {
         if (obj.items.ref != null) baseType = obj.items.ref
         else if (obj.items.getType != null) baseType = obj.items.getType
       }
-      imports += Map("import" -> config.typeMapping.getOrElse(baseType, baseType))
+      config.typeMapping.contains(baseType) match {
+        case true =>
+        case false => imports += Map("import" -> config.typeMapping.getOrElse(baseType, baseType))
+      }
+
       val properties =
         HashMap(
           "name" -> config.toVarName(prop._1),
@@ -320,6 +324,7 @@ class Codegen(config: CodegenConfig) {
     }
     data += "vars" -> l
     data += "imports" -> imports.toSet
+
     data.toMap
   }
 

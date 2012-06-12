@@ -59,12 +59,14 @@ abstract class CodegenConfig {
   }
 
   def toDeclaredType(dataType: String): String = {
-    dataType.charAt(0).toUpperCase + dataType.substring(1)
+    var f = typeMapping.getOrElse(dataType,
+      dataType.charAt(0).toUpperCase + dataType.substring(1))
+    f
   }
 
   def toGetter(name: String, datatype: String) = {
     val base = datatype match {
-      case "Boolean" => "is"
+      case "boolean" => "is"
       case _ => "get"
     }
     base + name.charAt(0).toUpperCase + name.substring(1)
@@ -80,17 +82,17 @@ abstract class CodegenConfig {
   def toVarName(name: String): String = {
     name match {
       case _ if (reservedWords.contains(name)) => escapeReservedWord(name)
-      case _ => name
+      case _ => typeMapping.getOrElse(name, name)
     }
   }
 
   def toDefaultValue(datatype: String, defaultValue: String): Option[String] = {
     if (defaultValue != "" && defaultValue != null) {
       toDeclaredType(datatype) match {
-        case "Int" => Some(defaultValue)
-        case "Long" => Some(defaultValue)
-        case "Double" => Some(defaultValue)
-        case "String" => {
+        case "int" => Some(defaultValue)
+        case "long" => Some(defaultValue)
+        case "double" => Some(defaultValue)
+        case "string" => {
           defaultValue match {
             case e: String => Some("\"" + defaultValue + "\"")
             case _ => None
@@ -103,15 +105,15 @@ abstract class CodegenConfig {
 
   def toDefaultValue(properCase: String, obj: DocumentationSchema) = {
     properCase match {
-      case "Int" => "0"
-      case "Long" => "0L"
-      case "Double" => "0.0"
+      case "int" => "0"
+      case "long" => "0L"
+      case "double" => "0.0"
       case e: String if (Set("List").contains(e)) => {
         val inner = {
           if (obj.items.ref != null) obj.items.ref
           else obj.items.getType
         }
-        "new java.util.ArrayList[" + inner + "]" + "()"
+        "new java.util.ArrayList[" + toDeclaredType(inner) + "]" + "()"
       }
       case _ => "_"
     }

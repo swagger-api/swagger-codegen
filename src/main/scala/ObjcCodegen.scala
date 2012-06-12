@@ -7,27 +7,30 @@ object ObjcCodegen extends ObjcCodegen {
 }
 
 class ObjcCodegen extends BasicGenerator {
-  override def defaultIncludes = Set("NSInteger",
-    "NSString", 
-    "NSArray", 
+  override def defaultIncludes = Set(
+    "bool",
+    "int",
+    "NSString",
+    "NSArray",
     "NSNumber")
+
+  override def languageSpecificPrimitives = Set(
+    "bool")
 
   override def reservedWords = Set("void", "char", "short", "int", "void", "char", "short", "int", "long", "float", "double", "signed", "unsigned", "id", "const", "volatile", "in", "out", "inout", "bycopy", "byref", "oneway", "self", "super")
 
   override def typeMapping = Map(
-    "String" -> "NSString",
-    "Int" -> "NSNumber",
-    "Float" -> "NSNumber",
-    "Long" -> "NSNumber",
-    "Double" -> "NSNumber",
-    "Date" -> "Date",
+    "boolean" -> "NSNumber",
+    "string" -> "NSString",
+    "integer" -> "NSNumber",
+    "int" -> "NSNumber",
+    "float" -> "NSNumber",
+    "long" -> "NSNumber",
+    "double" -> "NSNumber",
     "Array" -> "NSArray")
 
-  // set imports for common datatypes
-  override def imports = Map(
-    "Date" -> "Date",
-    "List" -> "java.util.*",
-    "Array" -> "java.util.*")
+  override def importMapping = Map(
+    "Date" -> "Date")
 
   override def packageName = "com.wordnik.client"
 
@@ -79,16 +82,14 @@ class ObjcCodegen extends BasicGenerator {
 
   override def toDeclaredType(dt: String): String = {
     val declaredType = dt.indexOf("[") match {
-      case -1 => dt.charAt(0).toUpperCase + dt.substring(1)
+      case -1 => dt
       case n: Int => {
-        if (dt.substring(0, n) == "Array") {
-          "List" + dt.substring(n).replaceAll("\\[", "<").replaceAll("\\]", ">")
-        } else dt.charAt(0).toUpperCase + dt.substring(1).replaceAll("\\[", "<").replaceAll("\\]", ">")
         "NSArray"
       }
       case _ => dt
     }
     val t = typeMapping.getOrElse(declaredType, declaredType)
+
     languageSpecificPrimitives.contains(t) match {
       case true => t
       case _ => t + "*" // needs pointer
@@ -97,7 +98,6 @@ class ObjcCodegen extends BasicGenerator {
 
   override def toDeclaration(obj: DocumentationSchema) = {
     var declaredType = toDeclaredType(obj.getType)
-
     declaredType match {
       case "Array" => {
         declaredType = "List"

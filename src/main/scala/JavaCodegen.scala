@@ -16,18 +16,8 @@ class JavaCodegen extends BasicGenerator {
     "boolean")
 
   override def typeMapping = Map(
-    "Boolean" -> "boolean",
     "Int" -> "int",
-    "Float" -> "float",
-    "Long" -> "long",
-    "Double" -> "double")
-
-  // set imports for common datatypes
-  override def imports = Map(
-    "ArrayList" -> "java.util.*",
-    "List" -> "java.util.*",
-    "Date" -> "java.util.Date",
-    "Array" -> "java.util.*")
+    "string" -> "String")
 
   override def packageName = "com.wordnik.client"
 
@@ -76,14 +66,15 @@ class JavaCodegen extends BasicGenerator {
 
   override def toDeclaredType(dt: String): String = {
     val declaredType = dt.indexOf("[") match {
-      case -1 => dt.charAt(0).toUpperCase + dt.substring(1)
+      case -1 => dt
       case n: Int => {
         if (dt.substring(0, n) == "Array") {
           "List" + dt.substring(n).replaceAll("\\[", "<").replaceAll("\\]", ">")
-        } else dt.charAt(0).toUpperCase + dt.substring(1).replaceAll("\\[", "<").replaceAll("\\]", ">")
+        } else dt + dt.substring(1).replaceAll("\\[", "<").replaceAll("\\]", ">")
       }
       case _ => dt
     }
+    println("mapping: ", declaredType, typeMapping.getOrElse(declaredType, declaredType))
     typeMapping.getOrElse(declaredType, declaredType)
   }
 
@@ -104,7 +95,7 @@ class JavaCodegen extends BasicGenerator {
           if (obj.items.ref != null) obj.items.ref
           else obj.items.getType
         }
-        declaredType += "<" + inner + ">"
+        declaredType += "<" + toDeclaredType(inner) + ">"
       }
       case _ =>
     }
@@ -124,7 +115,7 @@ class JavaCodegen extends BasicGenerator {
           if (obj.items.ref != null) obj.items.ref
           else obj.items.getType
         }
-        "new ArrayList<" + inner + ">" + "()"
+        "new ArrayList<" + toDeclaredType(inner) + ">" + "()"
       }
       case _ => "null"
     }

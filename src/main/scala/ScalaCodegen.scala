@@ -7,11 +7,20 @@ object ScalaCodegen extends ScalaCodegen {
 }
 
 class ScalaCodegen extends BasicGenerator {
-  // set imports for common datatypes
-  override def imports = Map(
-    "List" -> "scala.collection.mutable.ListBuffer",
-    "Date" -> "java.util.Date")
+  override def defaultIncludes = Set("Int",
+    "String", 
+    "Long",
+    "Float",
+    "Double",
+    "Boolean")
 
+  override def typeMapping = Map(
+    "string" -> "String",
+    "int" -> "Int",
+    "float" -> "Float",
+    "long" -> "Long",
+    "double" -> "Double")
+    
   // template used for models
   modelTemplateFiles += "model.mustache" -> ".scala"
 
@@ -43,7 +52,7 @@ class ScalaCodegen extends BasicGenerator {
       case e: String => Some(e)
     }
   }
-  
+
   override def toDeclaration(obj: DocumentationSchema) = {
     var datatype = obj.getType.charAt(0).toUpperCase + obj.getType.substring(1)
     datatype match {
@@ -60,7 +69,7 @@ class ScalaCodegen extends BasicGenerator {
           if (obj.items.ref != null) obj.items.ref
           else obj.items.getType
         }
-        datatype = "java.util.List[" + inner + "]"
+        datatype = "java.util.List[" + toDeclaredType(inner) + "]"
       }
       case _ =>
     }

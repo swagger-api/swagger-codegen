@@ -13,7 +13,7 @@ import scala.collection.JavaConversions._
 object SwaggerSpecUtil {
   val LOGGER = Logger.getLogger(SwaggerSpecUtil.getClass.getName)
 
-  val primitives = List("Int", "String", "Long", "Double", "Float", "Boolean", "void")
+  val primitives = List("int", "string", "long", "double", "float", "boolean", "void")
   val containers = List("List", "Map", "Set", "Array")
 
   /**
@@ -212,7 +212,7 @@ object SwaggerSpecUtil {
       } else if (config.importMapping.contains(pc)) {
         Some(pc)
       } else if ("Integer" == pc) {
-        Some("Int")
+        Some("int")
       } else {
         LOGGER.finest("? couldn't figure out what to do with " + name)
         None
