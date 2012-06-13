@@ -49,7 +49,7 @@ static NSString * basePath = @"{{basePath}}";
 		{{#bodyParam}}
     if(body != nil && [body isKindOfClass:[NSArray class]]){
         NSMutableArray * objs = [[NSMutableArray alloc] init];
-        for (id dict in body) {
+        for (id dict in (NSArray*)body) {
             if([dict respondsToSelector:@selector(asDictionary:)]) {
                 [objs addObject:[(SwaggerObject*)dict asDictionary]];
             }
@@ -95,7 +95,7 @@ static NSString * basePath = @"{{basePath}}";
         {{#returnContainer}}
         if([data isKindOfClass:[NSArray class]]){
             NSMutableArray * objs = [[NSMutableArray alloc] initWithCapacity:[data count]];
-            for (NSDictionary* dict in data) {
+            for (NSDictionary* dict in (NSArray*)data) {
                 {{{returnBaseType}}}* d = [[{{{returnBaseType}}} alloc]initWithValues: dict];
                 [objs addObject:d];
             }
@@ -160,7 +160,7 @@ static NSString * basePath = @"{{basePath}}";
     {{#returnContainer}}
     if([results isKindOfClass:[NSArray class]]){
         NSMutableArray * objs = [[NSMutableArray alloc] initWithCapacity:[results count]];
-        for (NSDictionary* dict in results) {
+        for (NSDictionary* dict in (NSArray*)results) {
             {{{returnBaseType}}}* d = [[{{{returnBaseType}}} alloc]initWithValues: dict];
             [objs addObject:d];
         }

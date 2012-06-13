@@ -86,7 +86,17 @@
     
     [NSURLConnection sendAsynchronousRequest:request queue:_queue completionHandler:
      ^(NSURLResponse *response, NSData *data, NSError *error) {
+         int statusCode = [(NSHTTPURLResponse*)response statusCode];
          if (error) {
+             completionBlock(nil, error);
+             return;
+         }
+         else if (!NSLocationInRange(statusCode, NSMakeRange(200, 99))){
+             error = [NSError errorWithDomain:@"swagger" 
+                                         code:statusCode 
+                                     userInfo:[NSJSONSerialization JSONObjectWithData:data
+                                                                              options:kNilOptions 
+                                                                                error:&error]];
              completionBlock(nil, error);
              return;
          }

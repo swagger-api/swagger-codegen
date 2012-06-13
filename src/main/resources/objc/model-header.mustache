@@ -14,7 +14,7 @@
 }
 {{newline}}
 {{#vars}}
-@property(nonatomic, readonly) {{datatype}} {{name}};
+@property(nonatomic) {{datatype}} {{name}};
 {{/vars}}
 - (id) {{#vars}}{{name}}: ({{datatype}}) {{name}}{{#hasMore}}{{newline}}     {{/hasMore}}{{^hasMore}};{{/hasMore}}
        {{/vars}}
