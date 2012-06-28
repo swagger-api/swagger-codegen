@@ -169,7 +169,12 @@
 			<scope>compile</scope>
 		</dependency>
 
-		<dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.3</version>
+        </dependency>
+        <dependency>
 			<groupId>org.fusesource.scalate</groupId>
 			<artifactId>scalate-wikitext</artifactId>
 			<version>1.5.3</version>

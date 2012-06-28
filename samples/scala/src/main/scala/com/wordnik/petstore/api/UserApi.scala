@@ -8,10 +8,12 @@ import scala.collection.mutable.HashMap
 class UserApi {
   var basePath: String = "http://petstore.swagger.wordnik.com/api"
   var apiInvoker = ApiInvoker
+  
+  def addHeader(key: String, value: String) = apiInvoker.defaultHeaders += key -> value 
 
-  def createUser (body: User) = {
+  def createUsersWithArrayInput (body: Array[User]) = {
     // create path and map variables
-    val path = "/user.{format}".replaceAll("\\{format\\}","json")// query params
+    val path = "/user.{format}/createWithArray".replaceAll("\\{format\\}","json")// query params
     val queryParams = new HashMap[String, String]
     val headerParams = new HashMap[String, String]
 
@@ -30,9 +32,9 @@ class UserApi {
       case ex: ApiException => throw ex
     }
   }
-  def createUsersWithArrayInput (body: Array[User]) = {
+  def createUser (body: User) = {
     // create path and map variables
-    val path = "/user.{format}/createWithArray".replaceAll("\\{format\\}","json")// query params
+    val path = "/user.{format}".replaceAll("\\{format\\}","json")// query params
     val queryParams = new HashMap[String, String]
     val headerParams = new HashMap[String, String]
 

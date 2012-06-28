@@ -13,9 +13,6 @@ import scala.collection.mutable.{ ListBuffer, HashMap, HashSet }
 import scala.io.Source
 
 abstract class BasicGenerator extends CodegenConfig {
-  def imports = Map(
-    "List" -> "scala.collection.mutable.ListBuffer",
-    "Date" -> "java.util.Date")
   def packageName = "com.wordnik.client"
   def templateDir = "src/main/resources/scala"
   def destinationDir = "generated-code/src/main/scala"
@@ -54,7 +51,7 @@ abstract class BasicGenerator extends CodegenConfig {
         val json = ResourceExtractor.extractListing(getResourcePath(host), apiKey)
         m.readValue(json, classOf[Documentation])
       } catch {
-        case e: Exception => throw new Exception("unable to read from " + host)
+        case e: Exception => throw new Exception("unable to read from " + host, e)
       }
     }
 

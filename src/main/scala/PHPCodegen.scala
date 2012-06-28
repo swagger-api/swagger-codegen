@@ -9,9 +9,6 @@ object PHPCodegen extends PHPCodegen {
 }
 
 class PHPCodegen extends BasicGenerator {
-  // set imports for common datatypes
-  override def imports = Map()
-
   // template used for models
   modelTemplateFiles += "model.mustache" -> ".php"
 

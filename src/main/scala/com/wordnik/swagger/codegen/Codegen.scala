@@ -15,6 +15,7 @@ import java.io.FileWriter
 import scala.io.Source
 import scala.collection.mutable.{ HashMap, ListBuffer, HashSet }
 import scala.collection.JavaConversions._
+import org.apache.commons.io.FileUtils
 
 object Codegen {
   val templates = new HashMap[String, (TemplateEngine, Template)]
@@ -341,23 +342,26 @@ class Codegen(config: CodegenConfig) {
       val outputDir = file._2
       val destFile = file._3
 
-      val output = {
-        if (srcTemplate.endsWith(".mustache")) {
+      val outputFilename = outputDir.replaceAll("\\.", File.separator) + File.separator + destFile
+      val outputFolder = new File(outputFilename).getParent
+      new File(outputFolder).mkdirs
+
+      if (srcTemplate.endsWith(".mustache")) {
+        val output = {
           val template = engine.compile(
             TemplateSource.fromText(config.templateDir + File.separator + srcTemplate,
               Source.fromFile(config.templateDir + File.separator + srcTemplate).mkString))
 
           engine.layout(config.templateDir + File.separator + srcTemplate, template, data.toMap)
-        } else scala.io.Source.fromFile(config.templateDir + File.separator + srcTemplate).mkString
+        }
+        val fw = new FileWriter(outputFilename, false)
+        fw.write(output + "\n")
+        fw.close()
+        println("wrote " + outputFilename)
+      } else {
+        FileUtils.copyFile(new File(config.templateDir + File.separator + srcTemplate), new File(outputFilename))
+        println("copied " + outputFilename)
       }
-      val filename = outputDir.replaceAll("\\.", File.separator) + File.separator + destFile
-
-      val outputFolder = new File(filename).getParent
-      new File(outputFolder).mkdirs
-      val fw = new FileWriter(filename, false)
-      fw.write(output + "\n")
-      fw.close()
-      println("wrote " + filename)
     })
   }
 }

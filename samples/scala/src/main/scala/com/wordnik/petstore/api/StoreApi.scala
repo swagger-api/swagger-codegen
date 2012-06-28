@@ -8,6 +8,8 @@ import scala.collection.mutable.HashMap
 class StoreApi {
   var basePath: String = "http://petstore.swagger.wordnik.com/api"
   var apiInvoker = ApiInvoker
+  
+  def addHeader(key: String, value: String) = apiInvoker.defaultHeaders += key -> value 
 
   def getOrderById (orderId: String) : Option[Order]= {
     // create path and map variables
