@@ -53,27 +53,17 @@ class ScalaCodegen extends BasicGenerator {
     }
   }
 
-  override def toDeclaration(obj: DocumentationSchema) = {
-    var datatype = obj.getType.charAt(0).toUpperCase + obj.getType.substring(1)
-    datatype match {
+  override def toDeclaration(obj: DocumentationSchema): (String, String) = {
+    val datatype = (obj.getType.charAt(0).toUpperCase + obj.getType.substring(1)) match {
       case "Array" => {
-        datatype = "List"
+        "java.util.List[%s]" format toDeclaredType(
+	  if (obj.items.ref != null) obj.items.ref
+          else obj.items.getType
+	)
       }
       case e: String => e
-    }
-
-    val defaultValue = toDefaultValue(datatype, obj)
-    datatype match {
-      case "List" => {
-        val inner = {
-          if (obj.items.ref != null) obj.items.ref
-          else obj.items.getType
-        }
-        datatype = "java.util.List[" + toDeclaredType(inner) + "]"
-      }
-      case _ =>
-    }
-    (datatype, defaultValue)
+    } 
+    (datatype, toDefaultValue(datatype, obj))
   }
 
   // escape keywords
