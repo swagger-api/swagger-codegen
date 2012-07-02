@@ -38,7 +38,8 @@
 
     -->
 
-    <target name="clean" description="DELETE the existing output folder and files and then re-generate the output folder">
+    <target name="clean"
+            description="DELETE the existing output folder and files and then re-generate the output folder">
 
         <delete dir="${basedir}/${docsoutputfolder}" failonerror="true" includeemptydirs="true"/>
         <delete file="${basedir}/${liboutputfolder}/${liboutputfile}"/>
@@ -100,16 +101,16 @@
                    Include the path to any external SWC files used in the sdk, you may have to place name of SWC (ASAXB-0.1.1.swc) at end of path.
                    So file path would be file="${basedir}/${libpath}/ASAXB-0.1.1.swc"
                 -->
-            <include-libraries file="${basedir}/${libpath}/" />
+            <include-libraries file="${basedir}/${libpath}/"/>
 
-            <source-path path-element="${sourcepath}" />
+            <source-path path-element="${sourcepath}"/>
 
             <keep-as3-metadata name="XmlRootNode"/>
             <keep-as3-metadata name="XmlElement"/>
             <keep-as3-metadata name="XmlElements"/>
 
             <!-- include our Class packages into the build (com folder) -->
-            <include-sources dir="${sourcepath}" includes="*" />
+            <include-sources dir="${sourcepath}" includes="*"/>
 
         </compc>
 
@@ -129,7 +130,7 @@
         </copy>
 
 
-        <zip destfile="sample-as3-sdk.zip" basedir="${basedir}/dist" />
+        <zip destfile="sample-as3-sdk.zip" basedir="${basedir}/dist"/>
     </target>
 
     <!-- Compiles and creates a test app that can be run using the adl - AIR Debug Launcher from command line
@@ -153,30 +154,36 @@
             <compiler.debug>true</compiler.debug>
 
 
-            <source-path path-element="${testsourcepath}" />
+            <source-path path-element="${testsourcepath}"/>
             <!--<source-path path-element="${APP_ROOT}/locale/{locale}" />-->
 
             <library-path dir="${FLEX_HOME}/frameworks/libs" append="true">
-                <include name="*.swc" />
+                <include name="*.swc"/>
             </library-path>
             <library-path dir="${FLEX_HOME}/frameworks/libs/air" append="true">
-                <include name="*.swc" />
+                <include name="*.swc"/>
             </library-path>
             <library-path dir="${FLEX_HOME}/frameworks/locale" append="true">
-                <include name="{locale}" />
+                <include name="{locale}"/>
             </library-path>
             <library-path dir="${basedir}/${libpath}" append="true">
-                <include name="*.swc" />
+                <include name="*.swc"/>
             </library-path>
             <library-path dir="${basedir}/${liboutputfolder}" append="true">
-                <include name="*.swc" />
+                <include name="*.swc"/>
             </library-path>
             <library-path dir="${basedir}/${libpath}/ext" append="true">
-                <include name="*.swc" />
+                <include name="*.swc"/>
             </library-path>
 
             <verbose-stacktraces>true</verbose-stacktraces>
         </mxmlc>
+    </target>
+
+    <target name="test" depends="compile-test">
+        <exec executable="${FLEX_HOME}/bin/adl" failonerror="true">
+            <arg value="${basedir}/bin/AirExecutorApp-app.xml"/>
+        </exec>
     </target>
 
 </project>

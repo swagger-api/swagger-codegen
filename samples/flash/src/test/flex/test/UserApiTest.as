@@ -48,6 +48,7 @@ package test
             eventListener.addEventListener(UserApi.event_getUserByName, on_getUserByName);
             eventListener.addEventListener(UserApi.event_createUser, on_createUser);
             eventListener.addEventListener(UserApi.event_createUsersWithArrayInput, on_createUsersWithArrayInput);
+            eventListener.addEventListener(UserApi.event_createUsersWithListInput, on_createUsersWithListInput);
 
             userApi = new UserApi(cred, eventListener);
 
@@ -89,6 +90,15 @@ package test
 
         public function on_createUsersWithArrayInput(e: ApiClientEvent): void {
             validateResponse("UserApiTest.createUsersWithArrayInput", e);
+
+            // next
+            var usersToCreate: Array = new Array();
+            usersToCreate.push(getTestUser(), getTestUser(), getTestUser(), getTestUser())
+            userApi.createUsersWithListInput(usersToCreate);
+        }
+
+        public function on_createUsersWithListInput(e: ApiClientEvent): void {
+            validateResponse("UserApiTest.createUsersWithListInput", e);
 
         }
 

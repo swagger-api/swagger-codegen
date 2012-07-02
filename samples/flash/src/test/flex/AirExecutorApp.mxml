@@ -19,8 +19,7 @@
             trace("AirExecutorApp.runMe");
             core = new FlexUnitCore();
             core.addListener(new AirCIListener());
-            core.run(test.UserApiTest);
-//            core.run(test.PetApiTest);
+            core.run(test.PetStoreSuite);
         }
 
         public function onInvoke(event: InvokeEvent): void{
