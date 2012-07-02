@@ -8,6 +8,8 @@ import scala.collection.mutable.HashMap
 class PetApi {
   var basePath: String = "http://petstore.swagger.wordnik.com/api"
   var apiInvoker = ApiInvoker
+  
+  def addHeader(key: String, value: String) = apiInvoker.defaultHeaders += key -> value 
 
   def getPetById (petId: String) : Option[Pet]= {
     // create path and map variables
@@ -75,7 +77,7 @@ class PetApi {
       case ex: ApiException => throw ex
     }
   }
-  def findPetsByStatus (status: String= "available") : Option[List[Pet]]= {
+  def findPetsByStatus (status: String) : Option[List[Pet]]= {
     // create path and map variables
     val path = "/pet.{format}/findByStatus".replaceAll("\\{format\\}","json")// query params
     val queryParams = new HashMap[String, String]

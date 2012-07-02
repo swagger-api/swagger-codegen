@@ -9,9 +9,6 @@ object PythonCodegen extends PythonCodegen {
 }
 
 class PythonCodegen extends BasicGenerator {
-  // set imports for common datatypes
-  override def imports = Map()
-
   // template used for models
   modelTemplateFiles += "model.mustache" -> ".py"
 
