@@ -275,7 +275,9 @@ class Codegen(config: CodegenConfig) {
 
   def modelToMap(className: String, model: DocumentationSchema): Map[String, AnyRef] = {
     val data: HashMap[String, AnyRef] =
-      HashMap("classname" -> className,
+      HashMap(
+        "classname" -> className,
+        "classVarName" -> config.toVarName(className), // suggested name of object created from this class
         "modelPackage" -> config.modelPackage,
         "newline" -> "\n")
 
@@ -283,36 +285,54 @@ class Codegen(config: CodegenConfig) {
 
     val imports = new HashSet[AnyRef]
     model.properties.map(prop => {
-      val obj = prop._2
-      val dt = obj.getType
+      val propertyDocSchema = prop._2
+      val dt = propertyDocSchema.getType
 
       var baseType = dt
       // import the object inside the container
-      if (obj.items != null) {
+      if (propertyDocSchema.items != null) {
         // import the container
         imports += Map("import" -> dt)
-        if (obj.items.ref != null) baseType = obj.items.ref
-        else if (obj.items.getType != null) baseType = obj.items.getType
+        if (propertyDocSchema.items.ref != null) baseType = propertyDocSchema.items.ref
+        else if (propertyDocSchema.items.getType != null) baseType = propertyDocSchema.items.getType
       }
-      config.typeMapping.contains(baseType) match {
-        case true =>
-        case false => imports += Map("import" -> config.typeMapping.getOrElse(baseType, baseType))
+      baseType = config.typeMapping.contains(baseType) match {
+        case true =>  config.typeMapping(baseType)
+        case false => imports += Map("import" -> config.typeMapping.getOrElse(baseType, baseType)); baseType
       }
+
+      val isList = (if(isListType(propertyDocSchema.getType)) true else None)
+      val isMap = (if(isMapType(propertyDocSchema.getType)) true else None)
+      val isNotContainer = if(!isListType(propertyDocSchema.getType) && !isMapType(propertyDocSchema.getType)) true else None
+      val isContainer = if(isListType(propertyDocSchema.getType) || isMapType(propertyDocSchema.getType)) true else None
 
       val properties =
         HashMap(
           "name" -> config.toVarName(prop._1),
+          "baseType" -> {
+            if(SwaggerSpecUtil.primitives.contains(baseType.toLowerCase))
+              baseType
+            else
+              config.modelPackage match {
+                case Some(p) => p + "." + baseType
+                case _ => baseType
+              }
+          },
           "baseName" -> prop._1,
-          "datatype" -> config.toDeclaration(obj)._1,
-          "defaultValue" -> config.toDeclaration(obj)._2,
-          "description" -> obj.description,
-          "notes" -> obj.notes,
-          "required" -> obj.required.toString,
-          "getter" -> config.toGetter(prop._1, config.toDeclaration(obj)._1),
-          "setter" -> config.toSetter(prop._1, config.toDeclaration(obj)._1),
+          "datatype" -> config.toDeclaration(propertyDocSchema)._1,
+          "defaultValue" -> config.toDeclaration(propertyDocSchema)._2,
+          "description" -> propertyDocSchema.description,
+          "notes" -> propertyDocSchema.notes,
+          "required" -> propertyDocSchema.required.toString,
+          "getter" -> config.toGetter(prop._1, config.toDeclaration(propertyDocSchema)._1),
+          "setter" -> config.toSetter(prop._1, config.toDeclaration(propertyDocSchema)._1),
+          "isList" -> isList,
+          "isMap" -> isMap,
+          "isContainer" -> isContainer,
+          "isNotContainer" -> isNotContainer,
           "hasMore" -> "true")
 
-      SwaggerSpecUtil.primitives.contains(baseType) match {
+      SwaggerSpecUtil.primitives.contains(baseType.toLowerCase) match {
         case true => properties += "isPrimitiveType" -> "true"
         case _ => properties += "complexType" -> baseType
       }
@@ -363,5 +383,24 @@ class Codegen(config: CodegenConfig) {
         println("copied " + outputFilename)
       }
     })
+  }
+
+  protected def isListType(dt: String) = isCollectionType(dt, "List") || isCollectionType(dt, "Array")
+
+  protected def isMapType(dt: String) = isCollectionType(dt, "Map")
+
+  protected def isCollectionType(dt: String, str: String) = {
+    if(dt.equals(str))
+      true
+    else
+      dt.indexOf("[") match {
+        case -1 => false
+        case n: Int => {
+          if (dt.substring(0, n) == str) {
+            true
+          } else false
+        }
+        case _ => false
+      }
   }
 }

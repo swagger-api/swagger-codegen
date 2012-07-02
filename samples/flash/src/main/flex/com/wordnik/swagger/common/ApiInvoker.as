@@ -57,7 +57,7 @@ package com.wordnik.swagger.common
 				resourceURL = resourceURL = _apiProxyServerUrl + resourceURL; 
 			}
 			else{
-				resourceURL = resourceURL = "http://"+ _proxyHostName + _apiPath + resourceURL; 
+				resourceURL = resourceURL = "http://"+ _proxyHostName + _apiPath + resourceURL;
 			}			
 
 			var counter: int = 0;
@@ -195,7 +195,20 @@ package com.wordnik.swagger.common
 		}
 		
 		
-		public function marshal(source:Object):XML
+		public function marshal(source:Object):XML {
+            trace("marshal got - "  + source)
+            if(source is Array) {
+                var sourceArray: Array = source as Array;
+                for (var i:int = 0; i < sourceArray.length; i++) {
+                    var o: Object = sourceArray[i];
+                    trace("marshal obj - "  + marshalObject(o))
+                }
+                return marshalObject(source);
+            } else
+                return marshalObject(source);
+        }
+
+		public function marshalObject(source:Object):XML
 		{
 			var writer:XMLWriter=new XMLWriter();
 			var objDescriptor:XML=describeType(source);
@@ -218,8 +231,8 @@ package com.wordnik.swagger.common
 					else {
 						writer.addProperty(property.@name, marshal(propertyValue).toXMLString());
 					}						
-				}					
-			}	
+				}
+			}
 			for each(property in objDescriptor.elements("accessor")){
 				if (property.@access=="readonly"){
 					continue;

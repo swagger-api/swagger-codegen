@@ -1,0 +1,21 @@
+package {{package}} {
+
+import com.wordnik.swagger.common.ListWrapper;
+{{#imports}}import {{import}};
+{{/imports}}
+
+{{#models}}
+{{#model}}
+    public class {{classname}}List implements ListWrapper {
+        [XmlElements(name="{{classVarName}}", type="{{package}}.{{classname}}")]
+        public var {{classVarName}}: Array = new Array();
+
+        public function getList(): Array{
+            return {{classVarName}};
+        }
+
+}
+{{/model}}
+        {{/models}}
+
+}

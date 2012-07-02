@@ -41,6 +41,9 @@ abstract class BasicGenerator extends CodegenConfig {
   }
 
   def generateClient(args: Array[String]) = {
+    if(args.length == 0) {
+      throw new RuntimeException("Need url to resources.json as argument. You can also specify VM Argument -DfileMap=/path/to/folder/containing.resources.json/")
+    }
     val host = args(0)
     val apiKey = {
       if (args.length > 1) Some("?api_key=" + args(1))

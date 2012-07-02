@@ -1,9 +1,9 @@
-object WordnikApiFlashCodegen extends FlashCodegen {
+object FlashPetstoreCodegen extends FlashCodegen {
   def main(args: Array[String]) = generateClient(args)
 
   override def packageName = "com.wordnik.client"
 
-  override def destinationRoot = "wordnik-api/flash"
+  override def destinationRoot = "samples/flash"
 
   // where to write generated code
   override def destinationDir = destinationRoot + "/src/main/flex"
@@ -15,13 +15,11 @@ object WordnikApiFlashCodegen extends FlashCodegen {
   override def apiPackage = Some("com.wordnik.client.api")
 
   // supporting classes
-  override def supportingFiles = baseSupportingFiles ++ List(
-      ("FacetValue.as", destinationRoot + "/src/main/flex/com/wordnik/client.model", "FacetValue.as")
-    )
+  override def supportingFiles = baseSupportingFiles ++ List()
 }
 
-object WordnikApiFlashCodegenRunner {
+object FlashPetstoreCodegenRunner {
   def main(args: Array[String]) {
-    WordnikApiFlashCodegen.main(args)
+    FlashPetstoreCodegen.main(args)
   }
 }

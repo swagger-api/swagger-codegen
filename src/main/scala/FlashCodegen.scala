@@ -2,11 +2,7 @@ import com.wordnik.swagger.codegen.BasicGenerator
 
 import com.wordnik.swagger.core._
 
-object FlashCodegen extends FlashCodegen {
-  def main(args: Array[String]) = generateClient(args)
-}
-
-class FlashCodegen extends BasicGenerator {
+abstract class FlashCodegen extends BasicGenerator {
   override def defaultIncludes = Set(
     "Date",
     "double",
@@ -31,6 +27,7 @@ class FlashCodegen extends BasicGenerator {
 
   // template used for models
   modelTemplateFiles += "model.mustache" -> ".as"
+  modelTemplateFiles += "modelList.mustache" -> "List.as"
 
   // template used for models
   apiTemplateFiles += "api.mustache" -> ".as"
@@ -40,9 +37,7 @@ class FlashCodegen extends BasicGenerator {
 
 
   // import/require statements for specific datatypes
-  override def importMapping = Map(
-    "Array" -> "mx.collections.ArrayCollection",
-    "List" -> "mx.collections.ArrayCollection")
+  override def importMapping = Map()
 
 
   // package for models
@@ -53,6 +48,10 @@ class FlashCodegen extends BasicGenerator {
 
   // file suffix
   override def fileSuffix = ".as"
+
+  override def toVarName(name: String): String = {
+    name.substring(0, 1).toLowerCase + name.substring(1, name.length)
+  }
 
   // response classes
   override def processResponseClass(responseClass: String): Option[String] = {
@@ -65,7 +64,19 @@ class FlashCodegen extends BasicGenerator {
   override def processResponseDeclaration(responseClass: String): Option[String] = {
     responseClass match {
       case "void" => None
-      case e: String => Some(e)
+      case e: String => {
+        responseClass.startsWith("List") match {
+          case true => {
+            val responseSubClass = responseClass.dropRight(1).substring(5)
+            typeMapping.contains(responseSubClass) match {
+              case true => Some("Array")
+              case false => Some(packageName + ".model." +
+                responseSubClass + "List")
+            }
+          }
+          case false => Some(responseClass)
+        }
+      }
     }
   }
 
@@ -74,7 +85,9 @@ class FlashCodegen extends BasicGenerator {
       case -1 => dt
       case n: Int => {
         if (dt.substring(0, n) == "Array") {
-          "ArrayCollection"
+          "Array"
+        } else if (dt.substring(0, n) == "List") {
+          "Array"
         } else dt
       }
       case _ => dt
@@ -88,14 +101,17 @@ class FlashCodegen extends BasicGenerator {
 
     declaredType match {
       case "Array" => {
-        declaredType = "ArrayCollection"
+        declaredType = "Array"
+      }
+      case "List" => {
+        declaredType = "Array"
       }
       case e: String => e
     }
 
     val defaultValue = toDefaultValue(declaredType, obj)
     declaredType match {
-      case "List" => "ArrayCollection"
+      case "List" => "Array"
       case _ =>
     }
     (declaredType, defaultValue)
@@ -106,9 +122,38 @@ class FlashCodegen extends BasicGenerator {
     properCase match {
       case "Boolean" => "false"
       case "Number" => "0.0"
-      case "List" => "new ArrayCollection()"
-      case "Array" => "new ArrayCollection()"
+      case "List" => "new Array()"
+      case "Array" => "new Array()"
       case _ => "null"
     }
   }
+
+  def destinationRoot: String
+
+  // supporting classes
+  def baseSupportingFiles = List(
+    ("ApiInvoker.as", destinationRoot + "/src/main/flex/com/wordnik/swagger/common", "ApiInvoker.as"),
+    ("ApiUrlHelper.as", destinationRoot + "/src/main/flex/com/wordnik/swagger/common", "ApiUrlHelper.as"),
+    ("ApiUserCredentials.as", destinationRoot + "/src/main/flex/com/wordnik/swagger/common", "ApiUserCredentials.as"),
+    ("ListWrapper.as", destinationRoot + "/src/main/flex/com/wordnik/swagger/common", "ListWrapper.as"),
+    ("SwaggerApi.as", destinationRoot + "/src/main/flex/com/wordnik/swagger/common", "SwaggerApi.as"),
+    ("XMLWriter.as", destinationRoot + "/src/main/flex/com/wordnik/swagger/common", "XMLWriter.as"),
+
+    ("ApiError.as", destinationRoot + "/src/main/flex/com/wordnik/swagger/exception", "ApiError.as"),
+    ("ApiErrorCodes.as", destinationRoot + "/src/main/flex/com/wordnik/swagger/exception", "ApiErrorCodes.as"),
+
+    ("ApiClientEvent.as", destinationRoot + "/src/main/flex/com/wordnik/swagger/event", "ApiClientEvent.as"),
+    ("Response.as", destinationRoot + "/src/main/flex/com/wordnik/swagger/event", "Response.as"),
+
+    ("build.properties", destinationRoot, "build.properties"),
+    ("build.xml", destinationRoot, "build.xml"),
+    ("AirExecutorApp-app.xml", destinationRoot + "/bin", "AirExecutorApp-app.xml"),
+
+    ("ASAXB-0.1.1.swc", destinationRoot + "/lib", "ASAXB-0.1.1.swc"),
+    ("as3corelib.swc", destinationRoot + "/lib/ext", "as3corelib.swc"),
+    ("flexunit-4.1.0_RC2-28-flex_3.5.0.12683.swc", destinationRoot + "/lib/ext", "flexunit-4.1.0_RC2-28-flex_3.5.0.12683.swc"),
+    ("flexunit-aircilistener-4.1.0_RC2-28-3.5.0.12683.swc", destinationRoot + "/lib/ext", "flexunit-aircilistener-4.1.0_RC2-28-3.5.0.12683.swc"),
+    ("flexunit-cilistener-4.1.0_RC2-28-3.5.0.12683.swc", destinationRoot + "/lib/ext", "flexunit-cilistener-4.1.0_RC2-28-3.5.0.12683.swc"),
+    ("flexunit-core-flex-4.0.0.2-sdk3.5.0.12683.swc", destinationRoot + "/lib/ext", "flexunit-core-flex-4.0.0.2-sdk3.5.0.12683.swc")
+  )
 }

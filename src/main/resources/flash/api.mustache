@@ -13,10 +13,9 @@ import mx.rpc.AsyncToken;
 import mx.utils.UIDUtil;
 import flash.utils.Dictionary;
 import flash.events.EventDispatcher;
-import mx.collections.ArrayCollection;
 
 {{#operations}}
-public class {{classname}} extends com.wordnik.swagger.common.SwaggerApi {
+public class {{classname}} extends SwaggerApi {
     /**
     * Constructor for the {{classname}} api client
     * @param apiCredentials Wrapper object for tokens and hostName required towards authentication
@@ -27,14 +26,17 @@ public class {{classname}} extends com.wordnik.swagger.common.SwaggerApi {
     }
 
 {{#operation}}
-    public var event_{{nickname}}: String = "{{nickname}}";
+        public static const event_{{nickname}}: String = "{{nickname}}";
+{{/operation}}
+
+{{#operation}}
 
     /*
      * Returns {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}
      */
     public function {{nickname}} ({{#allParams}}{{paramName}}: {{{dataType}}}{{#hasMore}}, {{/hasMore}}{{/allParams}}): String {
         // create path and map variables
-        var path: String = "{{path}}".replace(/{format}/g,"xml"){{#pathParams}}.replace("/{" + "{{paramName}}" + "/g}", getApiInvoker().escapeString({{{paramName}}})){{/pathParams}};
+        var path: String = "{{path}}".replace(/{format}/g,"xml"){{#pathParams}}.replace("{" + "{{paramName}}" + "}", getApiInvoker().escapeString({{{paramName}}})){{/pathParams}};
 
         // query params
         var queryParams: Dictionary = new Dictionary();
@@ -47,11 +49,11 @@ public class {{classname}} extends com.wordnik.swagger.common.SwaggerApi {
         }
         {{/requiredParamCount}}
 
-        {{#queryParams}}if(!"null" == {{paramName}}.toString())
-        queryParams["{{paramName}}"] = {{paramName}}.toString();
+        {{#queryParams}}if(null != {{paramName}})
+            queryParams["{{paramName}}"] = toPathValue({{paramName}});
         {{/queryParams}}
 
-        {{#headerParams}}headerParams["{{paramName}}"] = {{paramName}};
+        {{#headerParams}}headerParams["{{paramName}}"] = toPathValue({{paramName}});
         {{/headerParams}}
 
         var token:AsyncToken = getApiInvoker().invokeAPI(path, "{{httpMethod}}", queryParams, {{#bodyParam}}{{bodyParam}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}}, headerParams);
@@ -61,7 +63,7 @@ public class {{classname}} extends com.wordnik.swagger.common.SwaggerApi {
         token.requestId = requestId;
         token.completionEventType = "{{nickname}}";
 
-        token.returnType = {{#returnType}}"{{{returnType}}}"{{/returnType}}{{^returnType}}null {{/returnType}};
+        token.returnType = {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}null {{/returnType}};
         return requestId;
 
     }
