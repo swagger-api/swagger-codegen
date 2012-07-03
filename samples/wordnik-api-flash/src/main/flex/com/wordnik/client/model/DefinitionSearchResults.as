@@ -6,7 +6,7 @@ import com.wordnik.client.model.Definition;
     // This declaration below of _results_obj_class is to force flash compiler to include this class
         private var _results_obj_class: com.wordnik.client.model.Definition = null;
         [XmlElementWrapper(name="results")]
-        [XmlElements(name="definition", type="com.wordnik.client.model.Definition")]
+        [XmlElements(name="result", type="com.wordnik.client.model.Definition")]
         public var results: Array = new Array();
 
     [XmlElement(name="totalResults")]

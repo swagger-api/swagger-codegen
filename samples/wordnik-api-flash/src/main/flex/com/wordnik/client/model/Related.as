@@ -17,7 +17,7 @@ package com.wordnik.client.model {
     // This declaration below of _words_obj_class is to force flash compiler to include this class
         private var _words_obj_class: String = null;
         [XmlElementWrapper(name="words")]
-        [XmlElements(name="string", type="String")]
+        [XmlElements(name="word", type="String")]
         public var words: Array = new Array();
 
     [XmlElement(name="label4")]

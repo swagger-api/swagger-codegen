@@ -104,7 +104,8 @@ class Codegen(config: CodegenConfig) {
       val engine = new TemplateEngine(Some(rootDir))
       val template = engine.compile(
         TemplateSource.fromText(config.templateDir + File.separator + templateFile,
-          Source.fromInputStream(getClass.getClassLoader.getResourceAsStream(config.templateDir + File.separator + templateFile)).mkString))
+          Source.fromFile(config.templateDir + File.separator + templateFile).mkString))
+//          Source.fromInputStream(getClass.getClassLoader.getResourceAsStream(config.templateDir + File.separator + templateFile)).mkString))
       val t = Tuple2(engine, template)
       Codegen.templates += templateFile -> t
       t
@@ -309,6 +310,10 @@ class Codegen(config: CodegenConfig) {
       val properties =
         HashMap(
           "name" -> config.toVarName(prop._1),
+          "nameSingular" ->  {
+            val name = config.toVarName(prop._1)
+            if (name.endsWith("s") && name.length > 1) name.substring(0, name.length - 1) else name
+          },
           "baseType" -> {
             if(SwaggerSpecUtil.primitives.contains(baseType.toLowerCase))
               baseType
@@ -371,7 +376,8 @@ class Codegen(config: CodegenConfig) {
         val output = {
           val template = engine.compile(
             TemplateSource.fromText(config.templateDir + File.separator + srcTemplate,
-          Source.fromInputStream(getClass.getClassLoader.getResourceAsStream(config.templateDir + File.separator + srcTemplate)).mkString))
+            Source.fromFile(config.templateDir + File.separator + srcTemplate).mkString))
+//          Source.fromInputStream(getClass.getClassLoader.getResourceAsStream(config.templateDir + File.separator + srcTemplate)).mkString))
           engine.layout(config.templateDir + File.separator + srcTemplate, template, data.toMap)
         }
         val fw = new FileWriter(outputFilename, false)

@@ -8,7 +8,7 @@ package com.wordnik.client.model {
     // This declaration below of _appliesTo_obj_class is to force flash compiler to include this class
         private var _appliesTo_obj_class: String = null;
         [XmlElementWrapper(name="appliesTo")]
-        [XmlElements(name="string", type="String")]
+        [XmlElements(name="appliesTo", type="String")]
         public var appliesTo: Array = new Array();
 
     [XmlElement(name="value")]

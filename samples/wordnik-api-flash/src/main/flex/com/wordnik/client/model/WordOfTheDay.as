@@ -32,13 +32,13 @@ import com.wordnik.client.model.ContentProvider;
     // This declaration below of _definitions_obj_class is to force flash compiler to include this class
         private var _definitions_obj_class: com.wordnik.client.model.SimpleDefinition = null;
         [XmlElementWrapper(name="definitions")]
-        [XmlElements(name="simpleDefinition", type="com.wordnik.client.model.SimpleDefinition")]
+        [XmlElements(name="definition", type="com.wordnik.client.model.SimpleDefinition")]
         public var definitions: Array = new Array();
 
     // This declaration below of _examples_obj_class is to force flash compiler to include this class
         private var _examples_obj_class: com.wordnik.client.model.SimpleExample = null;
         [XmlElementWrapper(name="examples")]
-        [XmlElements(name="simpleExample", type="com.wordnik.client.model.SimpleExample")]
+        [XmlElements(name="example", type="com.wordnik.client.model.SimpleExample")]
         public var examples: Array = new Array();
 
     [XmlElement(name="publishDate")]

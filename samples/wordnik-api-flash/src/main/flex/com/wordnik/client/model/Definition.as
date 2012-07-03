@@ -35,7 +35,7 @@ import com.wordnik.client.model.Related;
     // This declaration below of _exampleUses_obj_class is to force flash compiler to include this class
         private var _exampleUses_obj_class: com.wordnik.client.model.ExampleUsage = null;
         [XmlElementWrapper(name="exampleUses")]
-        [XmlElements(name="exampleUsage", type="com.wordnik.client.model.ExampleUsage")]
+        [XmlElements(name="exampleUse", type="com.wordnik.client.model.ExampleUsage")]
         public var exampleUses: Array = new Array();
 
     [XmlElement(name="attributionUrl")]
@@ -50,7 +50,7 @@ import com.wordnik.client.model.Related;
     // This declaration below of _relatedWords_obj_class is to force flash compiler to include this class
         private var _relatedWords_obj_class: com.wordnik.client.model.Related = null;
         [XmlElementWrapper(name="relatedWords")]
-        [XmlElements(name="related", type="com.wordnik.client.model.Related")]
+        [XmlElements(name="relatedWord", type="com.wordnik.client.model.Related")]
         public var relatedWords: Array = new Array();
 
     [XmlElement(name="sequence")]

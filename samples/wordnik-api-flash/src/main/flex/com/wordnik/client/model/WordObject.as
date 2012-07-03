@@ -14,7 +14,7 @@ package com.wordnik.client.model {
     // This declaration below of _suggestions_obj_class is to force flash compiler to include this class
         private var _suggestions_obj_class: String = null;
         [XmlElementWrapper(name="suggestions")]
-        [XmlElements(name="string", type="String")]
+        [XmlElements(name="suggestion", type="String")]
         public var suggestions: Array = new Array();
 
     [XmlElement(name="canonicalForm")]
