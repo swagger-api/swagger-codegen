@@ -180,10 +180,13 @@
         </mxmlc>
     </target>
 
-    <target name="test" depends="compile-test">
+    <target name="do-test">
         <exec executable="${FLEX_HOME}/bin/adl" failonerror="true">
             <arg value="${basedir}/bin/AirExecutorApp-app.xml"/>
         </exec>
+    </target>
+
+    <target name="test" depends="compile-test, do-test">
     </target>
 
 </project>

@@ -178,7 +178,7 @@ object SwaggerSpecUtil {
     }
   }
 
-  def getUpdatedType(config: CodegenConfig, validModelNames: Set[String], name: String): Option[String] = {
+  private def getUpdatedType(config: CodegenConfig, validModelNames: Set[String], name: String): Option[String] = {
     if (validModelNames.contains(name)) Some(name)
     else if (name.indexOf("[") > 0) {
       // it's a complex value

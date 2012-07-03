@@ -104,7 +104,7 @@ public static const event_findPetsByTags: String = "findPetsByTags";
     }
     /*
      * Returns com.wordnik.client.model.PetList */
-    public function findPetsByStatus (status: String): String {
+    public function findPetsByStatus (status: String= "available"): String {
         // create path and map variables
         var path: String = "/pet.{format}/findByStatus".replace(/{format}/g,"xml");
 

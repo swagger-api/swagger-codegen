@@ -26,7 +26,7 @@ import com.wordnik.client.model.Tag;
     // This declaration below of _photoUrls_obj_class is to force flash compiler to include this class
         private var _photoUrls_obj_class: String = null;
         [XmlElementWrapper(name="photoUrls")]
-        [XmlElements(name="string", type="String")]
+        [XmlElements(name="photoUrl", type="String")]
         public var photoUrls: Array = new Array();
 
     public function toString(): String {

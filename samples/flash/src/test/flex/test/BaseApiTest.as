@@ -34,7 +34,7 @@ import mx.utils.StringUtil;
 
 public class BaseApiTest extends TestCase
 {
-    protected var cred: ApiUserCredentials = new ApiUserCredentials("petstore.swagger.wordnik.com", "/api", "special-key");
+    protected var cred: ApiUserCredentials = new ApiUserCredentials("localhost:8002", "/api", "special-key");
 
     protected function applicationExit():void {
         var exitingEvent:Event = new Event(Event.EXITING, false, true);
@@ -53,7 +53,7 @@ public class BaseApiTest extends TestCase
         var newUser = new User()
         newUser.firstName = "Max";
         newUser.lastName = "Payne";
-        newUser.username = username == ("user-" + Math.random()) ? "maxpayne" : username;
+        newUser.username = username == null ? "user-" + Math.random() : username;
         newUser.phone = "4489989797";
         newUser.email = "maxpayne@hiltonresorts.com";
         newUser.userStatus = "available";

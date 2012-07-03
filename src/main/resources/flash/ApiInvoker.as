@@ -111,6 +111,9 @@ public class ApiInvoker extends EventDispatcher
                 headers[X_HTTP_OVERRIDE_KEY]= HTTPRequestMessage.DELETE_METHOD;
                 bodyData = DELETE_DATA_DUMMY;
             }
+            else if(restMethod == HTTPRequestMessage.PUT_METHOD){
+                headers[X_HTTP_OVERRIDE_KEY]= HTTPRequestMessage.PUT_METHOD;
+            }
             else{
                 headers[CONTENT_TYPE_HEADER_KEY]= contentType;
             }

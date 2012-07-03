@@ -33,6 +33,7 @@ public class ApiInvoker extends EventDispatcher
     internal var _useProxyServer: Boolean = true;
     private var _proxyHostName:String = "";
     private var _apiPath: String = "";
+    private var _proxyPath: String = "";
 
     public var _apiEventNotifier:EventDispatcher;
 
@@ -47,6 +48,7 @@ public class ApiInvoker extends EventDispatcher
             _proxyHostName = _apiUsageCredentials.hostName;
         }
         _apiPath = _apiUsageCredentials.apiPath;
+        _proxyPath = _apiUsageCredentials.proxyPath;
         _apiProxyServerUrl = _apiUsageCredentials.apiProxyServerUrl;
         _apiEventNotifier = eventNotifier;
     }
@@ -109,6 +111,9 @@ public class ApiInvoker extends EventDispatcher
                 headers[X_HTTP_OVERRIDE_KEY]= HTTPRequestMessage.DELETE_METHOD;
                 bodyData = DELETE_DATA_DUMMY;
             }
+            else if(restMethod == HTTPRequestMessage.PUT_METHOD){
+                headers[X_HTTP_OVERRIDE_KEY]= HTTPRequestMessage.PUT_METHOD;
+            }
             else{
                 headers[CONTENT_TYPE_HEADER_KEY]= contentType;
             }
@@ -133,7 +138,7 @@ public class ApiInvoker extends EventDispatcher
 
             var channelSet: ChannelSet = new ChannelSet();
             var httpChannel: HTTPChannel = new HTTPChannel();
-            httpChannel.uri = ApiUrlHelper.getProxyUrl(_proxyHostName, _apiPath);
+            httpChannel.uri = ApiUrlHelper.getProxyUrl(_proxyHostName, _proxyPath);
             channelSet.addChannel(httpChannel);
             httpService.channelSet = channelSet;
         }

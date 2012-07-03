@@ -34,9 +34,6 @@ import mx.core.ClassFactory;
 import mx.rpc.events.FaultEvent;
 import mx.utils.StringUtil;
 
-// Not testing delete order since it uses Http DELETE
-// and thats not supported by flash runtime
-// there ain't no blazeds proxy on the server to enable that.
 public class StoreApiTest extends BaseApiTest
 {
     private var storeApi: StoreApi;
@@ -46,7 +43,7 @@ public class StoreApiTest extends BaseApiTest
 
         var eventListener: EventDispatcher = new EventDispatcher();
         eventListener.addEventListener(StoreApi.event_getOrderById, on_getOrderById);
-//        eventListener.addEventListener(StoreApi.event_deleteOrder, on_deleteOrder);
+        eventListener.addEventListener(StoreApi.event_deleteOrder, on_deleteOrder);
         eventListener.addEventListener(StoreApi.event_placeOrder, on_placeOrder);
 
         storeApi = new StoreApi(cred, eventListener);
@@ -63,6 +60,7 @@ public class StoreApiTest extends BaseApiTest
         assertTrue("placeOrder did not get the right order", order.status == "placed");
 
         var newOrder: Order = new Order();
+        newOrder.id = 79;
         newOrder.petId = 1;
         newOrder.quantity = 2;
 
@@ -72,6 +70,13 @@ public class StoreApiTest extends BaseApiTest
 
     public function on_placeOrder(e: ApiClientEvent): void {
         validateResponse("StoreApiTest.placeOrder", e);
+
+        // next
+        storeApi.deleteOrder("79")
+    }
+
+    public function on_deleteOrder(e: ApiClientEvent): void {
+        validateResponse("StoreApiTest.deleteOrder", e);
     }
 
 

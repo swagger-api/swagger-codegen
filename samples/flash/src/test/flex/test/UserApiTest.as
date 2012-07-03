@@ -31,10 +31,6 @@ package test
     import mx.rpc.events.FaultEvent;
     import mx.utils.StringUtil;
 
-    // Not testing Update user or delete user
-    // since they use PUT and DELETE respectively
-    // and thats not supported by flash runtime
-    // there ain't no blazeds proxy on the server to enable that.
     public class UserApiTest extends BaseApiTest
     {
         private var userApi: UserApi;
@@ -49,6 +45,8 @@ package test
             eventListener.addEventListener(UserApi.event_createUser, on_createUser);
             eventListener.addEventListener(UserApi.event_createUsersWithArrayInput, on_createUsersWithArrayInput);
             eventListener.addEventListener(UserApi.event_createUsersWithListInput, on_createUsersWithListInput);
+            eventListener.addEventListener(UserApi.event_updateUser, on_updateUser);
+            eventListener.addEventListener(UserApi.event_deleteUser, on_deleteUser);
 
             userApi = new UserApi(cred, eventListener);
 
@@ -99,6 +97,20 @@ package test
 
         public function on_createUsersWithListInput(e: ApiClientEvent): void {
             validateResponse("UserApiTest.createUsersWithListInput", e);
+
+            // next
+            userApi.updateUser("maxpayne", getTestUser("maxpayne"));
+        }
+
+        public function on_updateUser(e: ApiClientEvent): void {
+            validateResponse("UserApiTest.updateUser", e);
+
+            // next
+            userApi.deleteUser("maxpayne");
+        }
+
+        public function on_deleteUser(e: ApiClientEvent): void {
+            validateResponse("UserApiTest.deleteUser", e);
 
         }
 
