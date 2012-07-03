@@ -36,6 +36,7 @@ import com.wordnik.client.model.*;
 
 public class AccountApiTest extends BaseApiTest {
     private var accountApi:AccountApi;
+    private var authenticationToken: AuthenticationToken;
 
     public function testAccountApi():void {
         trace("AccountApiTest");
@@ -43,53 +44,59 @@ public class AccountApiTest extends BaseApiTest {
         var eventListener:EventDispatcher = new EventDispatcher();
         eventListener.addEventListener(AccountApi.event_authenticate, on_authenticate);
         eventListener.addEventListener(AccountApi.event_authenticatePost, on_authenticatePost);
-//        eventListener.addEventListener(AccountApi.event_getWordListsForLoggedInUser, on_getWordListsForLoggedInUser);
+        eventListener.addEventListener(AccountApi.event_getWordListsForLoggedInUser, on_getWordListsForLoggedInUser);
         eventListener.addEventListener(AccountApi.event_getApiTokenStatus, on_getApiTokenStatus);
         eventListener.addEventListener(AccountApi.event_getLoggedInUser, on_getLoggedInUser);
 
         accountApi = new AccountApi(cred, eventListener);
         accountApi.useProxyServer(super.useProxy);
 
-        accountApi.getApiTokenStatus("XXXX")
-//        accountApi.authenticate("sam", "XXXXX")
+        accountApi.authenticate(username, password)
     }
 
     public function on_authenticate(e:ApiClientEvent):void {
-        trace("AccountApiTest.authenticate " + e.response);
-        assertTrue("AccountApiTest.authenticate did not succeed", !e.response.isSuccess);
-//        validateResponse("AccountApiTest.authenticate", e);
+        validateResponse("AccountApiTest.authenticate", e);
+        this.authenticationToken = e.response.payload as AuthenticationToken;
+        assertTrue("AccountApiTest.authenticate did not get authenticationToken", this.authenticationToken != null);
 
         // next
-        accountApi.authenticatePost("sam", "XXXXX")
+        accountApi.authenticatePost(username, password)
     }
 
     public function on_authenticatePost(e:ApiClientEvent):void {
-        trace("AccountApiTest.authenticatePost " + e.response);
-        assertTrue("AccountApiTest.authenticatePost did not succeed", !e.response.isSuccess);
+        validateResponse("AccountApiTest.authenticatePost", e);
+        this.authenticationToken = e.response.payload as AuthenticationToken;
+        assertTrue("AccountApiTest.authenticate did not get authenticationToken", this.authenticationToken != null);
 
         // next
-        accountApi.getApiTokenStatus("XXXX")
+        accountApi.getApiTokenStatus(apiKey)
 
     }
 
     public function on_getApiTokenStatus(e:ApiClientEvent):void {
         validateResponse("AccountApiTest.getApiTokenStatus", e);
+        var apiTokenStatus: ApiTokenStatus = e.response.payload as ApiTokenStatus;
+        assertTrue("AccountApiTest.getApiTokenStatus did not return ApiTokenStatus", apiTokenStatus != null)
 
         // next
+        accountApi.getWordListsForLoggedInUser(this.authenticationToken.token, 0, 10);
+    }
+
+    public function on_getWordListsForLoggedInUser(e:ApiClientEvent):void {
+        validateResponse("AccountApiTest.getWordListsForLoggedInUser", e);
+
+        var list: Array = e.response.payload as Array;
+        assertTrue("AccountApiTest.getWordListsForLoggedInUser did not get any lists", list != null && list.length > 0)
+
+        // next
+        accountApi.getLoggedInUser(this.authenticationToken.token);
 
     }
 
-//    public function on_getWordListsForLoggedInUser(e:ApiClientEvent):void {
-//        validateResponse("AccountApiTest.getWordListsForLoggedInUser", e);
-//
-//        // next
-//
-//    }
-
     public function on_getLoggedInUser(e:ApiClientEvent):void {
         validateResponse("AccountApiTest.getLoggedInUser", e);
-
-        // next
+        var user: User = e.response.payload as User;
+        assertTrue("AccountApiTest.getLoggedInUser did not return the expected user", user != null && user.username == username)
 
     }
 

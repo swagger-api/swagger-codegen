@@ -80,8 +80,15 @@ public class ApiInvoker extends EventDispatcher
 //        trace(resourceURL);
         //create a httpservice and invoke the rest url waiting for response
         var requestHeader:Object = new Object();
+        if(headerParams != null) {
+            for(var key: String in headerParams) {
+                requestHeader[key] = headerParams[key];
+            }
+        }
+
         resourceURL = ApiUrlHelper.appendTokenInfo(resourceURL, requestHeader, _apiUsageCredentials);
-        var bodyData:String = marshal( postObject);//restRequest.postData;
+
+        var bodyData:String = marshal(postObject).toString();//restRequest.postData;
 
         return doRestCall(resourceURL, onApiRequestResult, onApiRequestFault, method, bodyData, requestHeader, "application/xml");
 
@@ -111,6 +118,9 @@ public class ApiInvoker extends EventDispatcher
                 headers[X_HTTP_OVERRIDE_KEY]= HTTPRequestMessage.DELETE_METHOD;
                 bodyData = DELETE_DATA_DUMMY;
             }
+            else if(restMethod == HTTPRequestMessage.PUT_METHOD){
+                headers[X_HTTP_OVERRIDE_KEY]= HTTPRequestMessage.PUT_METHOD;
+            }
             else{
                 headers[CONTENT_TYPE_HEADER_KEY]= contentType;
             }
@@ -139,6 +149,7 @@ public class ApiInvoker extends EventDispatcher
             channelSet.addChannel(httpChannel);
             httpService.channelSet = channelSet;
         }
+
         return httpService.send( bodyData );
     }
 
@@ -167,8 +178,8 @@ public class ApiInvoker extends EventDispatcher
             if(resultObject is ListWrapper){
                 resultObject = ListWrapper(resultObject).getList();
             }
-
         }
+
         var response : Response = new Response(true, resultObject);
         response.requestId = event.token.requestId;
         var successEventType: String = event.token.completionEventType != null ? event.token.completionEventType : ApiClientEvent.SUCCESS_EVENT;
@@ -197,9 +208,11 @@ public class ApiInvoker extends EventDispatcher
     }
 
 
-    public function marshal(source:Object):XML {
+    public function marshal(source:Object):Object {
 //        trace("marshal got - "  + source)
-        if(source is Array && source.length > 0) {
+        if(source is String) {
+            return source;
+        } else if(source is Array && source.length > 0) {
             var writer:XMLWriter=new XMLWriter();
             var sourceArray: Array = source as Array;
             var arrayEnclosure: String = getArrayEnclosure(sourceArray);

@@ -76,7 +76,7 @@ public static const event_getLoggedInUser: String = "getLoggedInUser";
         var requestId: String = getUniqueId();
 
         token.requestId = requestId;
-        token.completionEventType = "authenticatePost";
+            token.completionEventType = "authenticatePost";
 
         token.returnType = AuthenticationToken;
         return requestId;
