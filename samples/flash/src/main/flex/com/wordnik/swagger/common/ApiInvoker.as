@@ -133,7 +133,7 @@ public class ApiInvoker extends EventDispatcher
 
             var channelSet: ChannelSet = new ChannelSet();
             var httpChannel: HTTPChannel = new HTTPChannel();
-            httpChannel.uri = ApiUrlHelper.getProxyUrl(_proxyHostName);
+            httpChannel.uri = ApiUrlHelper.getProxyUrl(_proxyHostName, _apiPath);
             channelSet.addChannel(httpChannel);
             httpService.channelSet = channelSet;
         }

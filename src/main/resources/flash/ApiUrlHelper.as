@@ -10,7 +10,6 @@ internal class ApiUrlHelper {
     private static const API_URL_KEY:String = "api_key";
     private static const AUTH_TOKEN_URL_KEY:String = "auth_token";
 
-    private static const HOST_PROXY_PATH:String = "/v4/messagebroker/restproxy";
     private static const HTTP_URL_PREFIX:String = "http://";
 
     internal static function appendTokenInfo(restUrl:String, requestHeader: Object, credentials: ApiUserCredentials): String {
@@ -31,12 +30,12 @@ internal class ApiUrlHelper {
         return restUrl;
     }
 
-    internal static function getProxyUrl(hostName: String): String{
+    internal static function getProxyUrl(hostName: String, proxyPath: String): String{
         if (hostName.charAt(hostName.length - 1) == "/") //remove trailing slash
         {
-          hostName = hostName.substring(0, hostName.length - 1);
+            hostName = hostName.substring(0, hostName.length - 1);
         }
-        return HTTP_URL_PREFIX + hostName + HOST_PROXY_PATH;
+        return HTTP_URL_PREFIX + hostName + proxyPath;
     }
 }
 }

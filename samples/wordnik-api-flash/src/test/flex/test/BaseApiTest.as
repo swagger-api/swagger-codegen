@@ -30,7 +30,25 @@ import mx.utils.StringUtil;
 
 public class BaseApiTest extends TestCase
 {
-    protected var cred: ApiUserCredentials = new ApiUserCredentials("api.wordnik.com", "/v4", "api-key", null, -1, "http://apihost.wordnik.com");
+//    ELB without proxy
+    protected var cred: ApiUserCredentials = new ApiUserCredentials("api.wordnik.com", "/v4", "[api-key]", null, -1);
+    protected var useProxy = false;
+
+//    ELB with proxy
+//    protected var cred: ApiUserCredentials = new ApiUserCredentials("api.wordnik.com", "/v4", "[api-key]", null, -1, "http://apihost.wordnik.com", "/v4/messagebroker/restproxy");
+//    protected var useProxy = true;
+
+//    Direct to api-server-2
+//    protected var cred: ApiUserCredentials = new ApiUserCredentials("ec2-204-236-137-186.us-west-1.compute.amazonaws.com:8000", "/api", "[api-key]", null, -1, "http://apihost.wordnik.com", "/messagebroker/restproxy");
+//    protected var useProxy = true;
+
+//    Direct to api-server-1
+//    protected var cred: ApiUserCredentials = new ApiUserCredentials("ec2-50-18-19-128.us-west-1.compute.amazonaws.com:8000", "/api", "[api-key]", null, -1, "http://apihost.wordnik.com", "/messagebroker/restproxy");
+//    protected var useProxy = true;
+
+//    Beta
+//    protected var cred: ApiUserCredentials = new ApiUserCredentials("beta.api.wordnik.com", "/api", "[api-key]", null, -1, "http://apihost.wordnik.com", "/messagebroker/restproxy");
+//    protected var useProxy = true;
 
     protected function applicationExit():void {
         var exitingEvent:Event = new Event(Event.EXITING, false, true);

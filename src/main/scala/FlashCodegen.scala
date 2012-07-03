@@ -23,7 +23,7 @@ abstract class FlashCodegen extends BasicGenerator {
   override def packageName = "com.wordnik.client"
 
   // location of templates
-  override def templateDir = "src/main/resources/flash"
+  override def templateDir = "flash"
 
   // template used for models
   modelTemplateFiles += "model.mustache" -> ".as"

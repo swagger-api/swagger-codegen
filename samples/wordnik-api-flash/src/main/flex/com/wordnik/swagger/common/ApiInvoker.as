@@ -33,6 +33,7 @@ public class ApiInvoker extends EventDispatcher
     internal var _useProxyServer: Boolean = true;
     private var _proxyHostName:String = "";
     private var _apiPath: String = "";
+    private var _proxyPath: String = "";
 
     public var _apiEventNotifier:EventDispatcher;
 
@@ -47,6 +48,7 @@ public class ApiInvoker extends EventDispatcher
             _proxyHostName = _apiUsageCredentials.hostName;
         }
         _apiPath = _apiUsageCredentials.apiPath;
+        _proxyPath = _apiUsageCredentials.proxyPath;
         _apiProxyServerUrl = _apiUsageCredentials.apiProxyServerUrl;
         _apiEventNotifier = eventNotifier;
     }
@@ -133,7 +135,7 @@ public class ApiInvoker extends EventDispatcher
 
             var channelSet: ChannelSet = new ChannelSet();
             var httpChannel: HTTPChannel = new HTTPChannel();
-            httpChannel.uri = ApiUrlHelper.getProxyUrl(_proxyHostName);
+            httpChannel.uri = ApiUrlHelper.getProxyUrl(_proxyHostName, _proxyPath);
             channelSet.addChannel(httpChannel);
             httpService.channelSet = channelSet;
         }

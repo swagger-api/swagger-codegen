@@ -29,6 +29,12 @@ public class ApiUserCredentials {
 	public var apiPath: String;
 	
 	/**
+	 * The base path to the blazeds proxy
+	 * eg. /v4/messagebroker/restproxy
+	 */
+	public var proxyPath: String;
+
+	/**
 	 * If a proxy server has been set up for the services specify the URL here. This value is used when the Api is invoked with 
 	 * the value useProxy as true
 	 */ 
@@ -42,13 +48,15 @@ public class ApiUserCredentials {
      * @param userId The userId which is required for certain operations - currently, get user lists
      */
     public function ApiUserCredentials(hostName: String, apiPath: String, apiToken: String,
-                                       authToken: String = null, userId: Number = -1, apiProxyServerUrl: String="") {
+                                       authToken: String = null, userId: Number = -1, apiProxyServerUrl: String="",
+                                       proxyPath: String = null) {
         this.hostName = hostName;
         this.apiToken = apiToken;
         this.authToken = authToken;
         this.userId = userId;
 		this.apiPath = apiPath;
 		this.apiProxyServerUrl = apiProxyServerUrl;
+		this.proxyPath = proxyPath;
     }
 
 }

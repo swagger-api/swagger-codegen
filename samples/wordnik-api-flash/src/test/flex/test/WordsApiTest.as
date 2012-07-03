@@ -48,7 +48,7 @@ public class WordsApiTest extends BaseApiTest {
         eventListener.addEventListener(WordsApi.event_getRandomWord, on_getRandomWord);
 
         wordsApi = new WordsApi(cred, eventListener);
-//        wordApi.useProxyServer(true);
+        wordsApi.useProxyServer(super.useProxy);
 
         wordsApi.searchWords("free", null, null, null, null, null, null, null, null, null, null)
     }
