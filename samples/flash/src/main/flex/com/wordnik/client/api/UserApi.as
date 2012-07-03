@@ -194,9 +194,9 @@ public static const event_logoutUser: String = "logoutUser";
         if(username == null || password == null ) {
             throw new ApiError(400, "missing required params");
         }
-        if(null != username)
+        if("null" != String(username))
             queryParams["username"] = toPathValue(username);
-        if(null != password)
+        if("null" != String(password))
             queryParams["password"] = toPathValue(password);
         var token:AsyncToken = getApiInvoker().invokeAPI(path, "GET", queryParams, null, headerParams);
 

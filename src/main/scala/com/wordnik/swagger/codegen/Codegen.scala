@@ -318,6 +318,7 @@ class Codegen(config: CodegenConfig) {
                 case _ => baseType
               }
           },
+          "baseTypeVarName" -> config.toVarName(baseType),
           "baseName" -> prop._1,
           "datatype" -> config.toDeclaration(propertyDocSchema)._1,
           "defaultValue" -> config.toDeclaration(propertyDocSchema)._2,

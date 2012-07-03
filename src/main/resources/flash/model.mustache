@@ -17,7 +17,8 @@ package {{package}} {
         {{#isList}}
         // This declaration below of _{{name}}_obj_class is to force flash compiler to include this class
         private var _{{name}}_obj_class: {{baseType}} = null;
-        [XmlElements(name="{{name}}", type="{{baseType}}")]
+        [XmlElementWrapper(name="{{name}}")]
+        [XmlElements(name="{{baseTypeVarName}}", type="{{baseType}}")]
         {{/isList}}
         {{#isNotContainer}}[XmlElement(name="{{name}}")]
         {{/isNotContainer}}

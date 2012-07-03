@@ -9,7 +9,8 @@ import com.wordnik.client.model.Tag;
 
     // This declaration below of _tags_obj_class is to force flash compiler to include this class
         private var _tags_obj_class: com.wordnik.client.model.Tag = null;
-        [XmlElements(name="tags", type="com.wordnik.client.model.Tag")]
+        [XmlElementWrapper(name="tags")]
+        [XmlElements(name="tag", type="com.wordnik.client.model.Tag")]
         public var tags: Array = new Array();
 
     [XmlElement(name="category")]
@@ -24,7 +25,8 @@ import com.wordnik.client.model.Tag;
 
     // This declaration below of _photoUrls_obj_class is to force flash compiler to include this class
         private var _photoUrls_obj_class: String = null;
-        [XmlElements(name="photoUrls", type="String")]
+        [XmlElementWrapper(name="photoUrls")]
+        [XmlElements(name="string", type="String")]
         public var photoUrls: Array = new Array();
 
     public function toString(): String {

@@ -54,10 +54,10 @@ public class ApiInvoker extends EventDispatcher
     public function invokeAPI(resourceURL: String, method: String, queryParams: Dictionary, postObject: Object, headerParams: Dictionary): AsyncToken {
         //make the communication
         if(_useProxyServer) {
-            resourceURL = resourceURL = _apiProxyServerUrl + resourceURL;
+            resourceURL = _apiProxyServerUrl + resourceURL;
         }
         else{
-            resourceURL = resourceURL = "http://"+ _proxyHostName + _apiPath + resourceURL;
+            resourceURL = "http://"+ _proxyHostName + _apiPath + resourceURL;
         }
 
         var counter: int = 0;
@@ -75,7 +75,7 @@ public class ApiInvoker extends EventDispatcher
             counter++;
 
         }
-        trace(resourceURL);
+//        trace(resourceURL);
         //create a httpservice and invoke the rest url waiting for response
         var requestHeader:Object = new Object();
         resourceURL = ApiUrlHelper.appendTokenInfo(resourceURL, requestHeader, _apiUsageCredentials);
@@ -196,7 +196,7 @@ public class ApiInvoker extends EventDispatcher
 
 
     public function marshal(source:Object):XML {
-        trace("marshal got - "  + source)
+//        trace("marshal got - "  + source)
         if(source is Array && source.length > 0) {
             var writer:XMLWriter=new XMLWriter();
             var sourceArray: Array = source as Array;

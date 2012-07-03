@@ -116,7 +116,7 @@ public static const event_findPetsByTags: String = "findPetsByTags";
         if(status == null ) {
             throw new ApiError(400, "missing required params");
         }
-        if(null != status)
+        if("null" != String(status))
             queryParams["status"] = toPathValue(status);
         var token:AsyncToken = getApiInvoker().invokeAPI(path, "GET", queryParams, null, headerParams);
 
@@ -143,7 +143,7 @@ public static const event_findPetsByTags: String = "findPetsByTags";
         if(tags == null ) {
             throw new ApiError(400, "missing required params");
         }
-        if(null != tags)
+        if("null" != String(tags))
             queryParams["tags"] = toPathValue(tags);
         var token:AsyncToken = getApiInvoker().invokeAPI(path, "GET", queryParams, null, headerParams);
 

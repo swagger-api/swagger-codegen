@@ -3,7 +3,7 @@ object WordnikApiFlashCodegen extends FlashCodegen {
 
   override def packageName = "com.wordnik.client"
 
-  override def destinationRoot = "wordnik-api/flash"
+  override def destinationRoot = "samples/wordnik-api-flash"
 
   // where to write generated code
   override def destinationDir = destinationRoot + "/src/main/flex"
