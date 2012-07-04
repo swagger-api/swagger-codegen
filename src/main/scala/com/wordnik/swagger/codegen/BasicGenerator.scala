@@ -11,6 +11,7 @@ import scala.io._
 import scala.collection.JavaConversions._
 import scala.collection.mutable.{ ListBuffer, HashMap, HashSet }
 import scala.io.Source
+import spec.SwaggerSpecValidator
 
 abstract class BasicGenerator extends CodegenConfig {
   def packageName = "com.wordnik.client"
@@ -64,11 +65,11 @@ abstract class BasicGenerator extends CodegenConfig {
 
     // lets get rid of this loop of uglyness
     subDocs.foreach(subDoc => {
-      SwaggerSpecUtil.fixSubDocs(doc, subDoc)
+      SwaggerSpecValidator.fixSubDocs(doc, subDoc)
       if (subDoc.getModels != null) {
-        SwaggerSpecUtil.fixReturnModels(this, subDoc.getModels.toMap, subDoc)
-        SwaggerSpecUtil.fixInputDataTypes(this, subDoc.getModels.toMap, subDoc.getApis.toList)
-        SwaggerSpecUtil.fixModels(this, subDoc.getModels.toMap)
+        SwaggerSpecValidator.fixReturnModels(this, subDoc.getModels.toMap, subDoc)
+        SwaggerSpecValidator.fixInputDataTypes(this, subDoc.getModels.toMap, subDoc.getApis.toList)
+        SwaggerSpecValidator.fixModels(this, subDoc.getModels.toMap)
       }
     })
 

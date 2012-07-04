@@ -2,8 +2,9 @@ package com.wordnik.swagger.codegen
 
 import com.wordnik.swagger.core._
 
-import com.wordnik.swagger.codegen.util.{ CoreUtils, SwaggerSpecUtil }
+import com.wordnik.swagger.codegen.util.CoreUtils
 import com.wordnik.swagger.codegen.language.CodegenConfig
+import com.wordnik.swagger.codegen.spec.SwaggerSpec._
 
 import org.fusesource.scalate._
 import org.fusesource.scalate.layout.DefaultLayoutStrategy
@@ -87,8 +88,8 @@ class Codegen(config: CodegenConfig) {
       case true =>
     })
     allImports --= config.defaultIncludes
-    allImports --= SwaggerSpecUtil.primitives
-    allImports --= SwaggerSpecUtil.containers
+    allImports --= primitives
+    allImports --= containers
     allImports.foreach(i => includedModels.contains(i) match {
       case false => {
         config.importMapping.containsKey(i) match {
@@ -315,7 +316,7 @@ class Codegen(config: CodegenConfig) {
             if (name.endsWith("s") && name.length > 1) name.substring(0, name.length - 1) else name
           },
           "baseType" -> {
-            if(SwaggerSpecUtil.primitives.contains(baseType.toLowerCase))
+            if(primitives.contains(baseType.toLowerCase))
               baseType
             else
               config.modelPackage match {
@@ -338,7 +339,7 @@ class Codegen(config: CodegenConfig) {
           "isNotContainer" -> isNotContainer,
           "hasMore" -> "true")
 
-      SwaggerSpecUtil.primitives.contains(baseType.toLowerCase) match {
+      primitives.contains(baseType.toLowerCase) match {
         case true => properties += "isPrimitiveType" -> "true"
         case _ => properties += "complexType" -> baseType
       }

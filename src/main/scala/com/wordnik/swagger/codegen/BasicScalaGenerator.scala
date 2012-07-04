@@ -1,6 +1,5 @@
 package com.wordnik.swagger.codegen
 
-import com.wordnik.swagger.codegen.BasicGenerator
 import com.wordnik.swagger.core._
 
 object BasicScalaGenerator extends BasicScalaGenerator {

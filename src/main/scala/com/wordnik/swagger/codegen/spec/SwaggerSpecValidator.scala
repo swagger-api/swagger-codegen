@@ -1,20 +1,17 @@
-package com.wordnik.swagger.codegen.util
+package com.wordnik.swagger.codegen.spec
 
 import com.wordnik.swagger.core._
 
-import com.wordnik.swagger.core.util.JsonUtil
 import com.wordnik.swagger.codegen.language.CodegenConfig
+import com.wordnik.swagger.codegen.spec.SwaggerSpec._
 
 import java.util.logging.Logger
 
-import scala.collection.mutable.{ HashSet, ListBuffer, HashMap }
+import scala.collection.mutable.ListBuffer
 import scala.collection.JavaConversions._
 
-object SwaggerSpecUtil {
-  val LOGGER = Logger.getLogger(SwaggerSpecUtil.getClass.getName)
-
-  val primitives = List("int", "string", "long", "double", "float", "boolean", "void")
-  val containers = List("List", "Map", "Set", "Array")
+object SwaggerSpecValidator {
+  val LOGGER = Logger.getLogger(SwaggerSpecValidator.getClass.getName)
 
   /**
    * this is here because models don't have the proper references to types
@@ -118,7 +115,7 @@ object SwaggerSpecUtil {
                 case "body" => {
                   getUpdatedType(config, validModelNames, dataType) match {
                     case Some(updatedName) => {
-//                      LOGGER.finest("--> updated " + dataType + " to " + updatedName)
+                      //                      LOGGER.finest("--> updated " + dataType + " to " + updatedName)
                       p.dataType = updatedName
                     }
                     case _ => LOGGER.finest("rats!") // leave it alone
@@ -127,7 +124,7 @@ object SwaggerSpecUtil {
                 case "path" => {
                   getUpdatedType(config, validModelNames, dataType) match {
                     case Some(updatedName) => {
-//                      LOGGER.finest("--> updated " + dataType + " to " + updatedName)
+                      //                      LOGGER.finest("--> updated " + dataType + " to " + updatedName)
                       p.dataType = updatedName
                     }
                     case _ => // leave it alone
@@ -136,7 +133,7 @@ object SwaggerSpecUtil {
                 case "query" => {
                   getUpdatedType(config, validModelNames, dataType) match {
                     case Some(updatedName) => {
-//                      LOGGER.finest("--> updated " + dataType + " to " + updatedName)
+                      //                      LOGGER.finest("--> updated " + dataType + " to " + updatedName)
                       p.dataType = updatedName
                     }
                     case _ => // leave it alone

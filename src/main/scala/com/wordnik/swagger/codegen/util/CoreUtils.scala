@@ -5,6 +5,7 @@ import com.wordnik.swagger.core.util.JsonUtil
 
 import scala.collection.mutable.{ HashSet, ListBuffer, HashMap }
 import scala.collection.JavaConversions._
+import com.wordnik.swagger.codegen.spec.SwaggerSpec._
 
 import scala.io.Source
 
@@ -66,7 +67,7 @@ object CoreUtils {
       subNames += model._1
       model._2.properties.foreach(prop => {
         val subObject = prop._2
-        if (SwaggerSpecUtil.containers.contains(subObject.getType)) {
+        if (containers.contains(subObject.getType)) {
           if (subObject.items.ref != null)
             subNames += subObject.items.ref
           else
@@ -106,7 +107,7 @@ object CoreUtils {
 
     // extract all base model names, strip away Containers like List[] and primitives
 
-    val baseNames = (for (modelName <- (modelNames.toList -- SwaggerSpecUtil.primitives))
+    val baseNames = (for (modelName <- (modelNames.toList -- primitives))
       yield (extractBasePartFromType(modelName))).toSet
 
     // get complex models from base
@@ -117,7 +118,7 @@ object CoreUtils {
     requiredModels.map(model => {
       model._2.properties.foreach(prop => {
         val subObject = prop._2
-        if (SwaggerSpecUtil.containers.contains(subObject.getType)) {
+        if (containers.contains(subObject.getType)) {
           if (subObject.items.ref != null)
             subNames += subObject.items.ref
           else
@@ -128,6 +129,6 @@ object CoreUtils {
 
     val subModels = modelObjects.filter(obj => subNames.contains(obj._1))
     val allModels = requiredModels ++ subModels
-    allModels.filter(m => SwaggerSpecUtil.primitives.contains(m._1) == false).toMap
+    allModels.filter(m => primitives.contains(m._1) == false).toMap
   }
 }
