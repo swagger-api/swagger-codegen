@@ -63,15 +63,7 @@ abstract class BasicGenerator extends CodegenConfig {
     val subDocs = ApiExtractor.extractApiDocs(basePath, doc.getApis().toList, apiKey)
     val models = CoreUtils.extractAllModels(subDocs)
 
-    // lets get rid of this loop of uglyness
-    subDocs.foreach(subDoc => {
-      SwaggerSpecValidator.fixSubDocs(doc, subDoc)
-      if (subDoc.getModels != null) {
-        SwaggerSpecValidator.fixReturnModels(this, subDoc.getModels.toMap, subDoc)
-        SwaggerSpecValidator.fixInputDataTypes(this, subDoc.getModels.toMap, subDoc.getApis.toList)
-        SwaggerSpecValidator.fixModels(this, subDoc.getModels.toMap)
-      }
-    })
+    new SwaggerSpecValidator(this, doc, subDocs).validate()
 
     val allModels = new HashMap[String, DocumentationSchema]
     val operations = new ListBuffer[(String, String, DocumentationOperation)]
