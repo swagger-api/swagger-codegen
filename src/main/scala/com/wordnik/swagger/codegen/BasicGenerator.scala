@@ -13,7 +13,7 @@ import scala.collection.mutable.{ ListBuffer, HashMap, HashSet }
 import scala.io.Source
 import spec.SwaggerSpecValidator
 
-abstract class BasicGenerator extends CodegenConfig {
+abstract class BasicGenerator extends CodegenConfig with PathUtil {
   def packageName = "com.wordnik.client"
   def templateDir = "src/main/resources/scala"
   def destinationDir = "generated-code/src/main/scala"
@@ -24,22 +24,6 @@ abstract class BasicGenerator extends CodegenConfig {
 
   var codegen = new Codegen(this)
   def m = JsonUtil.getJsonMapper
-
-  def getResourcePath(host: String) = {
-    System.getProperty("fileMap") match {
-      case s: String => {
-        s + "/resources.json"
-      }
-      case _ => host
-    }
-  }
-
-  def getBasePath(basePath: String) = {
-    System.getProperty("fileMap") match {
-      case s: String => s
-      case _ => basePath
-    }
-  }
 
   def generateClient(args: Array[String]) = {
     if(args.length == 0) {
@@ -63,7 +47,7 @@ abstract class BasicGenerator extends CodegenConfig {
     val subDocs = ApiExtractor.extractApiDocs(basePath, doc.getApis().toList, apiKey)
     val models = CoreUtils.extractAllModels(subDocs)
 
-    new SwaggerSpecValidator(this, doc, subDocs).validate()
+    new SwaggerSpecValidator(doc, subDocs).validate()
 
     val allModels = new HashMap[String, DocumentationSchema]
     val operations = new ListBuffer[(String, String, DocumentationOperation)]
@@ -116,6 +100,8 @@ abstract class BasicGenerator extends CodegenConfig {
     codegen.writeSupportingClasses
     exit(0)
   }
+
+  def apiNameFromPath(apiPath: String) = makeApiNameFromPath(apiPath)
 
   def generateAndWrite(bundle: Map[String, AnyRef], templateFile: String) = {
     val output = codegen.generateSource(bundle, templateFile)

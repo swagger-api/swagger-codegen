@@ -2,7 +2,6 @@ package com.wordnik.swagger.codegen.spec
 
 import com.wordnik.swagger.core._
 
-import com.wordnik.swagger.codegen.language.CodegenConfig
 import com.wordnik.swagger.codegen.spec.SwaggerSpec._
 
 import java.util.logging.Logger
@@ -10,19 +9,25 @@ import String.format
 
 import scala.collection.mutable.ListBuffer
 import scala.collection.JavaConversions._
+import com.wordnik.swagger.codegen.PathUtil
+import org.fusesource.scalate.{TemplateSource, TemplateEngine}
+import java.io.{FileWriter, File}
+import io.Source
+import collection.immutable.HashMap
 
-class SwaggerSpecValidator(private val config: CodegenConfig,
-                           private val doc: Documentation,
+class SwaggerSpecValidator(private val doc: Documentation,
                            private val subDocs: List[Documentation],
-                           private val fix: Boolean = true) {
+                           private val fix: Boolean = true) extends PathUtil {
   import ValidationMessage._
   private val validationMessages = ListBuffer.empty[ValidationMessage]
 
   private val LOGGER = Logger.getLogger(classOf[SwaggerSpecValidator].getName)
 
   def validate() {
+    checkRootProperties()
+
     subDocs.foreach(subDoc => {
-      fixSubDocs(doc, subDoc)
+      fixSubDoc(subDoc)
 
       if (subDoc.getModels != null) {
         fixReturnModels(subDoc.getModels.toMap, subDoc)
@@ -35,16 +40,65 @@ class SwaggerSpecValidator(private val config: CodegenConfig,
     println(this)
   }
 
+  def generateReport(host: String, outputFilename: Option[String]) {
+    outputFilename match {
+      case Some(o) => {
+        val rootDir = new java.io.File(".")
+        val engine = new TemplateEngine(Some(rootDir))
+        val templateLocation = "validator" + File.separator + "index.mustache"
+        val template = engine.compile(
+          TemplateSource.fromText(templateLocation, Source.fromInputStream(getClass.getClassLoader.getResourceAsStream(templateLocation)).mkString))
+        val output = engine.layout(templateLocation, template, HashMap(
+            "messages" -> validationMessages,
+            "host" -> host,
+            "basePath" -> doc.basePath,
+            "swaggerVersion" -> doc.swaggerVersion,
+            "apiVersion" -> doc.apiVersion
+        ))
+        val fw = new FileWriter(o, false)
+        fw.write(output + "\n")
+        fw.close()
+        println("wrote " + o)
+
+      }
+
+      case None =>
+        println("Output file location not passed as program argument")
+    }
+
+  }
+
+  /**
+   * Checks the swagger.version, basePath and api.version which is
+   * expected to be present in root resource listing
+   *
+   */
+  private def checkRootProperties() {
+    doc.swaggerVersion match {
+      case e: String => println("swagger version: " + e)
+      case _ => !!(doc, RESOURCE_LISTING, "Properties", "Missing swagger version")
+    }
+    doc.basePath match {
+      case e: String => println("basePath: " + e)
+      case _ => !!(doc, RESOURCE_LISTING, "Properties", "Missing base path")
+    }
+    doc.apiVersion match {
+      case e: String => println("api version: " + e)
+      case _ => !!(doc, RESOURCE_LISTING, "Properties", "Missing api version", WARNING)
+    }
+
+  }
+
   /**
    * this is here because sub documents don't have the same resourcePath as declared in
    * the main resource listing
    */
-  private def fixSubDocs(baseDoc: Documentation, subDoc: Documentation) = {
+  private def fixSubDoc(subDoc: Documentation) = {
     if (subDoc.resourcePath.indexOf(".{format}") == -1) {
-      baseDoc.getApis.foreach(api => {
+      doc.getApis.foreach(api => {
         if (api.path.indexOf(".{format}") > 0 && api.path.replaceAll(".\\{format\\}", "") == subDoc.resourcePath) {
           LOGGER.finest("--> added subdoc format string to " + subDoc.resourcePath)
-          !!(subDoc, format("Resource Path %s - must be %s.{format}", subDoc.resourcePath, subDoc.resourcePath))
+          !!(subDoc, RESOURCE, "Path " + subDoc.resourcePath, format("Must be %s.{format}", subDoc.resourcePath), WARNING)
           if(fix) subDoc.resourcePath = subDoc.resourcePath + ".{format}"
         }
       })
@@ -62,14 +116,14 @@ class SwaggerSpecValidator(private val config: CodegenConfig,
       getUpdatedType(validModelNames, model.id) match {
         case Some(updatedType) => {
           if(!model.id.equals(updatedType)) {
-            !!(model, format("Model %s - id appears to be incorrect. Best guess: %s", model.id, updatedType))
+            !!(model, MODEL, model.id, format("Invalid id. Best guess: %s", updatedType))
             LOGGER.finest("updated " + model.id + " to " + updatedType)
             if(fix) model.id = updatedType
           }
         }
         case None => {
           LOGGER.finest("can't find type for " + model.name + ", type " + model.id)
-          !!(model, format("Model %s's type (%s) appears to be missing", model.name, model.id))
+          !!(model, MODEL, model.name, format("Missing type (%s)", model.id))
         }
       }
 
@@ -84,7 +138,7 @@ class SwaggerSpecValidator(private val config: CodegenConfig,
             getUpdatedType(validModelNames, subObject.items.ref) match {
               case Some(updatedType) => {
                 if(!subObject.items.ref.equals(updatedType)) {
-                  !!(model, format("Model %s.%s: %s - ref (%s) appears to be incorrect. Best guess: %s", model.id, subObjectName, subObject.getType, subObject.items.ref, updatedType))
+                  !!(model, MODEL_PROPERTY, format("%s->%s: %s", model.id, subObjectName, subObject.getType), format("Invalid ref (%s). Best guess: %s", subObject.items.ref, updatedType))
                   LOGGER.finest("updated subObject.items.ref " + subObject.items.ref + " to " + updatedType)
                   if(fix) subObject.items.ref = updatedType
                 }
@@ -99,13 +153,13 @@ class SwaggerSpecValidator(private val config: CodegenConfig,
             getUpdatedType(validModelNames, subObject.items.ref) match {
               case Some(updatedType) => {
                 if(!subObject.items.ref.equals(updatedType)) {
-                  !!(model, format("Model %s.%s: %s - ref (%s) appears to be incorrect. Best guess: %s", model.id, subObjectName, subObject.getType, subObject.items.ref, updatedType))
+                  !!(model, MODEL_PROPERTY, format("%s->%s: %s", model.id, subObjectName, subObject.getType), format("Invalid ref (%s). Best guess: %s", subObject.items.ref, updatedType))
                   LOGGER.finest("updated subObject.items.ref " + subObject.items.ref + " to " + updatedType)
                   if(fix) subObject.items.ref = updatedType
                 }
               }
               case None => {
-                !!(model, format("Model %s.%s: %s - ref (%s) appears to be incorrect.", model.id, subObjectName, subObject.getType, subObject.items.ref), ERROR)
+                !!(model, MODEL_PROPERTY, format("%s->%s: %s", model.id, subObjectName, subObject.getType), format("Invalid ref (%s).", subObject.items.ref))
                 LOGGER.finest("didn't know what to do with " + subObject.items.ref)
               }
             }
@@ -113,13 +167,13 @@ class SwaggerSpecValidator(private val config: CodegenConfig,
             getUpdatedType(validModelNames, subObject.items.getType) match {
               case Some(updatedType) => {
                 if(!subObject.items.getType.equals(updatedType)) {
-                  !!(model, format("Model %s.%s: %s - type (%s) appears to be incorrect. Best guess: %s", model.id, subObjectName, subObject.getType, subObject.items.getType, updatedType))
+                  !!(model, MODEL_PROPERTY, format("%s->%s: %s", model.id, subObjectName, subObject.getType), format("Invalid type (%s). Best guess: %s", subObject.items.getType, updatedType))
                   LOGGER.finest("updated subObject.items.type" + subObject.items.getType + " to " + updatedType)
                   if(fix) subObject.items.setType(updatedType)
                 }
               }
               case None => {
-                !!(model, format("Model %s.%s: %s - ref (%s) appears to be incorrect.", model.id, subObjectName, subObject.getType, subObject.items.ref), ERROR)
+                !!(model, MODEL_PROPERTY, format("%s->%s: %s", model.id, subObjectName, subObject.getType), format("Invalid ref (%s).", subObject.items.ref))
                 LOGGER.finest("didn't know what to do with " + subObject.items.ref)
               }
             }
@@ -128,7 +182,7 @@ class SwaggerSpecValidator(private val config: CodegenConfig,
           getUpdatedType(validModelNames, subObject.getType) match {
             case Some(updatedType) => {
               if(!subObject.getType.equals(updatedType)) {
-                !!(model, format("Model %s.%s: %s - type (%s) appears to be incorrect. Best guess: %s", model.id, subObjectName, subObject.getType, subObject.getType, updatedType))
+                !!(model, MODEL_PROPERTY, format("%s->%s: %s", model.id, subObjectName, subObject.getType), format("Invalid type (%s). Best guess: %s", subObject.getType, updatedType))
                 LOGGER.finest("updated subObject.getType " + subObject.getType + " to " + updatedType)
                 if(fix) subObject.setType(updatedType)
               }
@@ -141,7 +195,7 @@ class SwaggerSpecValidator(private val config: CodegenConfig,
       model.properties = model.properties.filter(prop => {
         if (prop._1.indexOf("$") == -1) true
         else {
-          !!(model, format("Model %s.%s property appears to be incorrect. Removing it", model.id, prop._1))
+          !!(model, MODEL, model.id, format("Invalid property %s. Removing it", prop._1))
           LOGGER.finest("removing invalid property " + prop._1)
           if(fix) false else true
         }
@@ -169,7 +223,7 @@ class SwaggerSpecValidator(private val config: CodegenConfig,
                     case Some(updatedName) => {
                       if (!p.dataType.equals(updatedName)) {
                         //                      LOGGER.finest("--> updated " + dataType + " to " + updatedName)
-                        !!(p, format("Parameter %s.%s(body: %s) - The data type %s appears to be incorrect. Best guess: %s", config.apiNameFromPath(api.getPath()), op.nickname, p.dataType, p.dataType, updatedName))
+                        !!(p, OPERATION_PARAM, format("%s.%s(body: %s)", makeApiNameFromPath(api.getPath()), op.nickname, p.dataType), format("Invalid data type %s. Best guess: %s", p.dataType, updatedName))
                         if(fix) p.dataType = updatedName
                       }
                     }
@@ -180,7 +234,7 @@ class SwaggerSpecValidator(private val config: CodegenConfig,
                   getUpdatedType(validModelNames, dataType) match {
                     case Some(updatedName) => {
                       //                      LOGGER.finest("--> updated " + dataType + " to " + updatedName)
-                      !!(p, format("Parameter %s.%s(path_%s: %s) - The data type %s appears to be incorrect. Best guess: %s", config.apiNameFromPath(api.getPath()), op.nickname, p.name, p.dataType, p.dataType, updatedName))
+                      !!(p, OPERATION_PARAM, format("%s.%s(path_%s: %s)", makeApiNameFromPath(api.getPath()), op.nickname, p.name, p.dataType), format("Invalid data type %s. Best guess: %s", p.dataType, updatedName))
                       if(fix) p.dataType = updatedName
                     }
                     case _ => // leave it alone
@@ -190,7 +244,7 @@ class SwaggerSpecValidator(private val config: CodegenConfig,
                   getUpdatedType(validModelNames, dataType) match {
                     case Some(updatedName) => {
                       //                      LOGGER.finest("--> updated " + dataType + " to " + updatedName)
-                      !!(p, format("Parameter %s.%s(query_%s: %s) - The data type %s appears to be incorrect. Best guess: %s", config.apiNameFromPath(api.getPath()), op.nickname, p.name, p.dataType, p.dataType, updatedName))
+                      !!(p, OPERATION_PARAM, format("%s.%s(query_%s: %s)", makeApiNameFromPath(api.getPath()), op.nickname, p.name, p.dataType), format("Invalid %s. Best guess: %s", p.dataType, updatedName))
                       if(fix) p.dataType = updatedName
                     }
                     case _ => // leave it alone
@@ -222,7 +276,7 @@ class SwaggerSpecValidator(private val config: CodegenConfig,
                 case Some(updatedName) => {
                   if(!responseClass.equals(updatedName)) {
                     LOGGER.finest("--> updated " + responseClass + " to " + updatedName)
-                    !!(op, format("Operation %s.%s - The response class %s appears to be incorrect. Best guess: %s", config.apiNameFromPath(api.getPath()), op.nickname, op.responseClass, updatedName))
+                    !!(op, OPERATION, format("%s.%s(): %s", makeApiNameFromPath(api.getPath()), op.nickname, op.responseClass), format("Invalid response class. Best guess: %s", updatedName))
                     if(fix) op.responseClass = updatedName
                   }
                 }
@@ -266,9 +320,11 @@ class SwaggerSpecValidator(private val config: CodegenConfig,
         Some("void")
       } else if (primitives.contains(pc)) {
         Some(pc)
-      } else if (config.importMapping.contains(pc)) {
-        Some(pc)
-      } else if ("Integer" == pc) {
+      }
+//      else if (config.importMapping.contains(pc)) {
+//        Some(pc)
+//      }
+      else if ("Integer" == pc) {
         Some("int")
       } else {
         LOGGER.finest("? couldn't figure out what to do with " + name)
@@ -284,8 +340,8 @@ class SwaggerSpecValidator(private val config: CodegenConfig,
     str.charAt(0).toUpperCase + str.substring(1)
   }
 
-  private def !!(element: AnyRef, message: String, level: String = ValidationMessage.WARNING) {
-    validationMessages += new ValidationMessage(element, message, level)
+  private def !!(element: AnyRef, elementType: String, elementId: String, message: String, level: String = ERROR) {
+    validationMessages += new ValidationMessage(element, elementType, elementId, message, level)
   }
 
   override def toString = {
@@ -299,11 +355,18 @@ class SwaggerSpecValidator(private val config: CodegenConfig,
   }
 }
 
-class ValidationMessage(val element: AnyRef, val message: String, val level: String = ValidationMessage.WARNING) {
-  override def toString = level + ": " + message
+class ValidationMessage(val element: AnyRef, val elementType: String, val elementId: String, val message: String, val level: String) {
+  override def toString = level + ": " + elementType + " - " + elementId + " | " + message
 }
 
 object ValidationMessage {
   val WARNING = "Warning"
   val ERROR = "Error"
+
+  val RESOURCE_LISTING = "Root Resources Listing"
+  val RESOURCE = "Resource"
+  val OPERATION = "Operation"
+  val OPERATION_PARAM = "Operation Parameter"
+  val MODEL = "Model"
+  val MODEL_PROPERTY = "Model Property"
 }
