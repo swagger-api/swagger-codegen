@@ -16,7 +16,7 @@ class BasicPythonGenerator extends BasicGenerator {
   apiTemplateFiles += "api.mustache" -> ".py"
 
   // location of templates
-  override def templateDir = "src/main/resources/python"
+  override def templateDir = "python"
 
   // where to write generated code
   override def destinationDir = "generated-code/python"
