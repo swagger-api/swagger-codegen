@@ -103,10 +103,14 @@ class Codegen(config: CodegenConfig) {
     val rootDir = new java.io.File(".")
     val engineData = Codegen.templates.getOrElse(templateFile, {
       val engine = new TemplateEngine(Some(rootDir))
+      val srcName = config.templateDir + File.separator + templateFile
+      val srcStream = getClass.getClassLoader.getResourceAsStream(srcName)
+      if(srcStream == null)
+        throw new Exception("Missing template: " + srcName)
       val template = engine.compile(
         TemplateSource.fromText(config.templateDir + File.separator + templateFile,
 //          Source.fromFile(config.templateDir + File.separator + templateFile).mkString))
-          Source.fromInputStream(getClass.getClassLoader.getResourceAsStream(config.templateDir + File.separator + templateFile)).mkString))
+          Source.fromInputStream(srcStream).mkString))
       val t = Tuple2(engine, template)
       Codegen.templates += templateFile -> t
       t
@@ -380,9 +384,9 @@ class Codegen(config: CodegenConfig) {
           if (resourceStream == null)
             throw new Exception("Resource not found: " + resourceName)
           val template = engine.compile(
-            TemplateSource.fromText(config.templateDir + File.separator + srcTemplate,
+            TemplateSource.fromText(resourceName,
           Source.fromInputStream(resourceStream).mkString))
-          engine.layout(config.templateDir + File.separator + srcTemplate, template, data.toMap)
+          engine.layout(resourceName, template, data.toMap)
         }
         val fw = new FileWriter(outputFilename, false)
         fw.write(output + "\n")
