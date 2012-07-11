@@ -375,10 +375,13 @@ class Codegen(config: CodegenConfig) {
 
       if (srcTemplate.endsWith(".mustache")) {
         val output = {
+          val resourceName = config.templateDir + File.separator + srcTemplate
+          val resourceStream = getClass.getClassLoader.getResourceAsStream(resourceName)
+          if (resourceStream == null)
+            throw new Exception("Resource not found: " + resourceName)
           val template = engine.compile(
             TemplateSource.fromText(config.templateDir + File.separator + srcTemplate,
-//            Source.fromFile(config.templateDir + File.separator + srcTemplate).mkString))
-          Source.fromInputStream(getClass.getClassLoader.getResourceAsStream(config.templateDir + File.separator + srcTemplate)).mkString))
+          Source.fromInputStream(resourceStream).mkString))
           engine.layout(config.templateDir + File.separator + srcTemplate, template, data.toMap)
         }
         val fw = new FileWriter(outputFilename, false)
