@@ -331,11 +331,6 @@ public class LibraryCodeGenerator {
     
     private void generateOutputWrappers(List<Resource> resources, StringTemplateGroup templateGroup) {
         List<String> generatedClasses = new ArrayList<String>();
-        StringTemplate template = templateGroup.getInstanceOf(languageConfig.getTemplateLocation()+"/"+WRAPPER_OBJECT_TEMPLATE);
-        if(template == null){
-            System.out.println("WrapperObject template not found to generate output wrappers");
-            return;
-        }
 
         for(Resource resource: resources) {
             if(resource.getEndPoints() != null) {
@@ -361,7 +356,11 @@ public class LibraryCodeGenerator {
                                                 }
                                             }
                                         }
-                                        template = templateGroup.getInstanceOf(WRAPPER_OBJECT_TEMPLATE);
+					StringTemplate template = templateGroup.getInstanceOf(languageConfig.getTemplateLocation()+"/"+WRAPPER_OBJECT_TEMPLATE);
+					if(template == null){
+					    System.out.println("WrapperObject template not found to generate output wrappers");
+					    return;
+					}
 
                                         template.setAttribute("fields", model.getFields());
                                         template.setAttribute("imports", imports);

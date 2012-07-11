@@ -80,7 +80,7 @@ public class CamelCaseNamingPolicyProvider implements NamingPolicyProvider {
          String className = null;
          int index = resourcePath.indexOf(".");
          if(index >= 0) {
-             String resourceName = resourcePath.substring(1,index);
+             String resourceName = resourcePath.substring(0,index);
              className = applyClassNamingPolicy(resourceName);
          }else{
              String[] paths = resourcePath.split("/");

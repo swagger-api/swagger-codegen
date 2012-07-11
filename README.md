@@ -38,7 +38,7 @@ mvn package
 
 #### javascript
 <pre>
-./bin/generate-js-lib.sh http://petstore.swagger.wordnik.com/api "" "" "generated-files"
+./bin/generate-js-lib.sh http://petstore.swagger.wordnik.com/api "" "generated-files"
 </pre>
 
 #### actionscript
