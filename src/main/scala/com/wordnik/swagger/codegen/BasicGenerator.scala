@@ -44,7 +44,11 @@ abstract class BasicGenerator extends CodegenConfig with PathUtil {
     }
 
     val basePath = getBasePath(doc.basePath)
-    val subDocs = ApiExtractor.extractApiDocs(basePath, doc.getApis().toList, apiKey)
+    val apis = doc.getApis
+    if(apis == null)
+      throw new Exception("No APIs specified by resource")
+
+    val subDocs = ApiExtractor.extractApiDocs(basePath, apis.toList, apiKey)
     val models = CoreUtils.extractAllModels(subDocs)
 
     new SwaggerSpecValidator(doc, subDocs).validate()
