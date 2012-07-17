@@ -7,8 +7,7 @@ import com.wordnik.client.ApiException
 import scala.collection.mutable.HashMap
 
 {{#operations}}
-class {{classname}} {
-  var basePath: String = "{{basePath}}"
+class {{classname}}(val basePath: String = "{{basePath}}") {
   var apiInvoker = ApiInvoker
   
   def addHeader(key: String, value: String) = apiInvoker.defaultHeaders += key -> value 
