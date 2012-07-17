@@ -197,6 +197,7 @@ class Codegen(config: CodegenConfig) {
             params += "required" -> param.required.toString
             headerParams += params.clone
           }
+	  case x @ _ => throw new Exception("Unknown parameter type: " + x)
         }
         paramList += params
       })
