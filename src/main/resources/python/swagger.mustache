@@ -40,15 +40,16 @@ class ApiClient:
         data = None
         # What can safely be JSON serialized?
         safeToDump = [str, int, float, bool]
-        if method == 'GET':
-            if queryParams:
-                # Need to remove None values, these should not be sent
-                sentQueryParams = {}
-                for param, value in queryParams.iteritems():
-                    if value != None:
-                        sentQueryParams[param] = value
-                url = url + '?' + urllib.urlencode(sentQueryParams)
-        elif method in ['POST', 'PUT', 'DELETE']:
+
+        if queryParams:
+            # Need to remove None values, these should not be sent
+            sentQueryParams = {}
+            for param, value in queryParams.iteritems():
+                if value != None:
+                    sentQueryParams[param] = value
+            url = url + '?' + urllib.urlencode(sentQueryParams)
+
+        if method in ['POST', 'PUT', 'DELETE']:
             data = postData
             if data:
                 if type(postData) == list:
