@@ -34,7 +34,6 @@ class ApiClient:
             for param, value in headerParams.iteritems():
                 headers[param] = value
 
-        headers['Content-type'] = 'application/json'
         headers['api_key'] = self.apiKey
 
         data = None
@@ -52,6 +51,7 @@ class ApiClient:
         if method in ['POST', 'PUT', 'DELETE']:
             data = postData
             if data:
+                headers['Content-type'] = 'application/json'
                 if type(postData) == list:
                     # Could be a list of objects
                     if type(postData[0]) in safeToDump:
