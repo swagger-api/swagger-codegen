@@ -24,6 +24,7 @@ class ApiClient:
                             'APIClient')
         self.apiKey = apiKey
         self.apiServer = apiServer
+        self.cookie = None
 
     def callAPI(self, resourcePath, method, queryParams, postData,
                 headerParams=None):
@@ -35,6 +36,9 @@ class ApiClient:
                 headers[param] = value
 
         headers['api_key'] = self.apiKey
+
+        if self.cookie:
+            headers['Cookie'] = self.cookie
 
         data = None
         # What can safely be JSON serialized?
@@ -66,10 +70,13 @@ class ApiClient:
         request = MethodRequest(method=method, url=url, headers=headers, data=data)
 
         # Make the request
-        response = urllib2.urlopen(request).read()
+        response = urllib2.urlopen(request)
+        if 'Set-Cookie' in response.headers:
+            self.cookie = response.headers['Set-Cookie']  
+        string = response.read()
 
         try:
-            data = json.loads(response)
+            data = json.loads(string)
         except ValueError: # PUT requests don't return anything
             data = None
 
