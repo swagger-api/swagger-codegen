@@ -1,4 +1,6 @@
 class Tag
+  # alan comment
+
   attr_accessor :id, :name
 
   # :internal => :external
