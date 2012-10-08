@@ -1,5 +1,4 @@
 class User
-  # alan comment
 
   attr_accessor :id, :last_name, :username, :phone, :email, :user_status, :first_name, :password
 

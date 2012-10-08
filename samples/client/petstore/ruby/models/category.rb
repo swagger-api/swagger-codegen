@@ -1,5 +1,4 @@
 class Category
-  # alan comment
 
   attr_accessor :id, :name
 
