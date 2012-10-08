@@ -1,4 +1,5 @@
-class Category
+class Tag
+
   attr_accessor :id, :name
 
   # :internal => :external
@@ -13,12 +14,12 @@ class Category
     # Morph attribute keys into undescored rubyish style
     if attributes.to_s != ""
 
-      if Category.attribute_map["id".to_sym] != nil
+      if Tag.attribute_map["id".to_sym] != nil
         name = "id".to_sym
         value = attributes["id"]
         send("#{name}=", value) if self.respond_to?(name)
 	      end
-      if Category.attribute_map["name".to_sym] != nil
+      if Tag.attribute_map["name".to_sym] != nil
         name = "name".to_sym
         value = attributes["name"]
         send("#{name}=", value) if self.respond_to?(name)
@@ -28,7 +29,7 @@ class Category
 
   def to_body
     body = {}
-    Category.attribute_map.each_pair do |key,value|
+    Tag.attribute_map.each_pair do |key,value|
       body[value] = self.send(key) unless self.send(key).nil?
     end
     body

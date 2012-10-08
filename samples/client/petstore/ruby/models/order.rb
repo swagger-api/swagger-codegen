@@ -1,4 +1,5 @@
 class Order
+
   attr_accessor :id, :pet_id, :status, :quantity, :ship_date
 
   # :internal => :external

@@ -1,4 +1,5 @@
 class Pet
+
   attr_accessor :id, :tags, :category, :status, :name, :photo_urls
 
   # :internal => :external

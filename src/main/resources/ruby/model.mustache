@@ -2,6 +2,7 @@
 
 {{#model}}
 class {{classname}}
+
   attr_accessor {{#vars}}:{{{name}}}{{#hasMore}}, {{/hasMore}}{{/vars}}{{newline}}
   # :internal => :external
   def self.attribute_map
