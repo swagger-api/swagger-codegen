@@ -103,6 +103,9 @@
                 dict[@"actions"] = dateString;
             }
         }
+        else if(_actions && [_actions isKindOfClass:[NIKSwaggerObject class]]) {
+            dict[@"actions"] = [(NIKSwaggerObject*)_actions asDictionary];
+        }
     }
     else {
     if(_actions != nil) dict[@"actions"] = [(NIKSwaggerObject*)_actions asDictionary];

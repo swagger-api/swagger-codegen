@@ -137,55 +137,6 @@ static NSString * basePath = @"http://localhost:9000";
 
 }
 
--(void) adRequestWithCompletionBlock:(NIKAdRequestCall*) body
-        completionHandler: (void (^)(NIKAdRequestReply* output, NSError* error))completionBlock{
-
-    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/rest/xapp_session/ad_request", basePath];
-
-    // remove format in URL if needed
-    if ([requestUrl rangeOfString:@".{format}"].location != NSNotFound)
-        [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
-
-    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
-    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
-    id bodyDictionary = nil;
-        if(body != nil && [body isKindOfClass:[NSArray class]]){
-        NSMutableArray * objs = [[NSMutableArray alloc] init];
-        for (id dict in (NSArray*)body) {
-            if([dict respondsToSelector:@selector(asDictionary)]) {
-                [objs addObject:[(NIKSwaggerObject*)dict asDictionary]];
-            }
-            else{
-                [objs addObject:dict];
-            }
-        }
-        bodyDictionary = objs;
-    }
-    else if([body respondsToSelector:@selector(asDictionary)]) {
-        bodyDictionary = [(NIKSwaggerObject*)body asDictionary];
-    }
-    else if([body isKindOfClass:[NSString class]]) {
-        bodyDictionary = body;
-    }
-    else{
-        NSLog(@"don't know what to do with %@", body);
-    }
-
-    [_api dictionary:requestUrl 
-              method:@"POST" 
-         queryParams:queryParams 
-                body:bodyDictionary 
-        headerParams:headerParams
-     completionBlock:^(NSDictionary *data, NSError *error) {
-        if (error) {
-            completionBlock(nil, error);return;
-        }
-
-        completionBlock( [[NIKAdRequestReply alloc]initWithValues: data], nil);}];
-    
-
-}
-
 -(void) adResponseWithCompletionBlock:(NIKAdResponseCall*) body
         completionHandler: (void (^)(NIKAdResponseReply* output, NSError* error))completionBlock{
 
@@ -231,6 +182,55 @@ static NSString * basePath = @"http://localhost:9000";
         }
 
         completionBlock( [[NIKAdResponseReply alloc]initWithValues: data], nil);}];
+    
+
+}
+
+-(void) adRequestWithCompletionBlock:(NIKAdRequestCall*) body
+        completionHandler: (void (^)(NIKAdRequestReply* output, NSError* error))completionBlock{
+
+    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/rest/xapp_session/ad_request", basePath];
+
+    // remove format in URL if needed
+    if ([requestUrl rangeOfString:@".{format}"].location != NSNotFound)
+        [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
+
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
+    id bodyDictionary = nil;
+        if(body != nil && [body isKindOfClass:[NSArray class]]){
+        NSMutableArray * objs = [[NSMutableArray alloc] init];
+        for (id dict in (NSArray*)body) {
+            if([dict respondsToSelector:@selector(asDictionary)]) {
+                [objs addObject:[(NIKSwaggerObject*)dict asDictionary]];
+            }
+            else{
+                [objs addObject:dict];
+            }
+        }
+        bodyDictionary = objs;
+    }
+    else if([body respondsToSelector:@selector(asDictionary)]) {
+        bodyDictionary = [(NIKSwaggerObject*)body asDictionary];
+    }
+    else if([body isKindOfClass:[NSString class]]) {
+        bodyDictionary = body;
+    }
+    else{
+        NSLog(@"don't know what to do with %@", body);
+    }
+
+    [_api dictionary:requestUrl 
+              method:@"POST" 
+         queryParams:queryParams 
+                body:bodyDictionary 
+        headerParams:headerParams
+     completionBlock:^(NSDictionary *data, NSError *error) {
+        if (error) {
+            completionBlock(nil, error);return;
+        }
+
+        completionBlock( [[NIKAdRequestReply alloc]initWithValues: data], nil);}];
     
 
 }
@@ -361,11 +361,11 @@ static NSString * basePath = @"http://localhost:9000";
 
 }
 
--(void) adRequestAsJsonWithCompletionBlock :(NIKAdRequestCall*) body 
+-(void) adResponseAsJsonWithCompletionBlock :(NIKAdResponseCall*) body 
 
         completionHandler:(void (^)(NSString*, NSError *))completionBlock{
 
-    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/rest/xapp_session/ad_request", basePath];
+    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/rest/xapp_session/ad_response", basePath];
 
     // remove format in URL if needed
     if ([requestUrl rangeOfString:@".{format}"].location != NSNotFound)
@@ -424,11 +424,11 @@ static NSString * basePath = @"http://localhost:9000";
 
 }
 
--(void) adResponseAsJsonWithCompletionBlock :(NIKAdResponseCall*) body 
+-(void) adRequestAsJsonWithCompletionBlock :(NIKAdRequestCall*) body 
 
         completionHandler:(void (^)(NSString*, NSError *))completionBlock{
 
-    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/rest/xapp_session/ad_response", basePath];
+    NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/rest/xapp_session/ad_request", basePath];
 
     // remove format in URL if needed
     if ([requestUrl rangeOfString:@".{format}"].location != NSNotFound)

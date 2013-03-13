@@ -7,7 +7,7 @@ name := "swagger-codegen"
 
 version := "2.0.2-SNAPSHOT"
 
-scalaVersion := "2.9.2"
+scalaVersion := "2.9.1"
 
 javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation")
 

@@ -44,6 +44,9 @@
                 dict[@"location"] = dateString;
             }
         }
+        else if(_location && [_location isKindOfClass:[NIKSwaggerObject class]]) {
+            dict[@"location"] = [(NIKSwaggerObject*)_location asDictionary];
+        }
     }
     else {
     if(_location != nil) dict[@"location"] = [(NIKSwaggerObject*)_location asDictionary];

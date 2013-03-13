@@ -3,8 +3,8 @@
 
 @implementation NIKXSCoordinates
 
--(id)longitude: (NIKNumber*) longitude
-    latitude: (NIKNumber*) latitude
+-(id)longitude: (NSDecimalNumber*) longitude
+    latitude: (NSDecimalNumber*) latitude
 {
   _longitude = longitude;
   _latitude = latitude;
@@ -16,9 +16,9 @@
     self = [super init];
     if(self) {
         id longitude_dict = dict[@"longitude"];
-        _longitude = [[NIKNumber alloc]initWithValues:longitude_dict];
+        _longitude = [[NSDecimalNumber alloc]initWithValues:longitude_dict];
         id latitude_dict = dict[@"latitude"];
-        _latitude = [[NIKNumber alloc]initWithValues:latitude_dict];
+        _latitude = [[NSDecimalNumber alloc]initWithValues:latitude_dict];
         
 
     }
@@ -30,7 +30,7 @@
     if(_longitude != nil){
         if([_longitude isKindOfClass:[NSArray class]]){
             NSMutableArray * array = [[NSMutableArray alloc] init];
-            for( NIKNumber *longitude in (NSArray*)_longitude) {
+            for( NSDecimalNumber *longitude in (NSArray*)_longitude) {
                 [array addObject:[(NIKSwaggerObject*)longitude asDictionary]];
             }
             dict[@"longitude"] = array;
@@ -41,6 +41,9 @@
                 dict[@"longitude"] = dateString;
             }
         }
+        else if(_longitude && [_longitude isKindOfClass:[NIKSwaggerObject class]]) {
+            dict[@"longitude"] = [(NIKSwaggerObject*)_longitude asDictionary];
+        }
     }
     else {
     if(_longitude != nil) dict[@"longitude"] = [(NIKSwaggerObject*)_longitude asDictionary];
@@ -48,7 +51,7 @@
     if(_latitude != nil){
         if([_latitude isKindOfClass:[NSArray class]]){
             NSMutableArray * array = [[NSMutableArray alloc] init];
-            for( NIKNumber *latitude in (NSArray*)_latitude) {
+            for( NSDecimalNumber *latitude in (NSArray*)_latitude) {
                 [array addObject:[(NIKSwaggerObject*)latitude asDictionary]];
             }
             dict[@"latitude"] = array;
@@ -58,6 +61,9 @@
             if(dateString){
                 dict[@"latitude"] = dateString;
             }
+        }
+        else if(_latitude && [_latitude isKindOfClass:[NIKSwaggerObject class]]) {
+            dict[@"latitude"] = [(NIKSwaggerObject*)_latitude asDictionary];
         }
     }
     else {

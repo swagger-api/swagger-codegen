@@ -18,4 +18,18 @@ object ObjcXappServerCodegen extends BasicObjcGenerator {
       ("NIKApiInvoker.m", destinationDir, "NIKApiInvoker.m"),
       ("NIKDate.h", destinationDir, "NIKDate.h"),
       ("NIKDate.m", destinationDir, "NIKDate.m"))
+
+  override def typeMapping = Map(
+      "Date" -> "NIKDate",
+      "boolean" -> "NSNumber",
+      "string" -> "NSString",
+      "integer" -> "NSNumber",
+      "int" -> "NSNumber",
+      "float" -> "NSNumber",
+      "long" -> "NSNumber",
+      "double" -> "NSNumber",
+      "Array" -> "NSArray",
+      "List" -> "NSArray",
+      "object" -> "NSObject",
+      "Number" -> "NSDecimalNumber")
 }

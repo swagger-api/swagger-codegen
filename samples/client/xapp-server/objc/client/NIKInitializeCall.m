@@ -61,6 +61,9 @@
                 dict[@"location"] = dateString;
             }
         }
+        else if(_location && [_location isKindOfClass:[NIKSwaggerObject class]]) {
+            dict[@"location"] = [(NIKSwaggerObject*)_location asDictionary];
+        }
     }
     else {
     if(_location != nil) dict[@"location"] = [(NIKSwaggerObject*)_location asDictionary];
@@ -81,6 +84,9 @@
                 dict[@"device"] = dateString;
             }
         }
+        else if(_device && [_device isKindOfClass:[NIKSwaggerObject class]]) {
+            dict[@"device"] = [(NIKSwaggerObject*)_device asDictionary];
+        }
     }
     else {
     if(_device != nil) dict[@"device"] = [(NIKSwaggerObject*)_device asDictionary];
@@ -98,6 +104,9 @@
             if(dateString){
                 dict[@"user"] = dateString;
             }
+        }
+        else if(_user && [_user isKindOfClass:[NIKSwaggerObject class]]) {
+            dict[@"user"] = [(NIKSwaggerObject*)_user asDictionary];
         }
     }
     else {

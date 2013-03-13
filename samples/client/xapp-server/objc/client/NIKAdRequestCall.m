@@ -47,6 +47,9 @@
                 dict[@"context"] = dateString;
             }
         }
+        else if(_context && [_context isKindOfClass:[NIKSwaggerObject class]]) {
+            dict[@"context"] = [(NIKSwaggerObject*)_context asDictionary];
+        }
     }
     else {
     if(_context != nil) dict[@"context"] = [(NIKSwaggerObject*)_context asDictionary];

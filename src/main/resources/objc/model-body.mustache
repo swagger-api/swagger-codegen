@@ -71,6 +71,9 @@
                 dict[@"{{name}}"] = dateString;
             }
         }
+        else if(_{{name}} && [_{{name}} isKindOfClass:[NIKSwaggerObject class]]) {
+            dict[@"{{baseName}}"] = [(NIKSwaggerObject*)_{{name}} asDictionary];
+        }
     }
     else {
     {{/complexType}}
