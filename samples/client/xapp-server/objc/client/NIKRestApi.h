@@ -37,20 +37,20 @@
 
 /**
 
- Receives information about how the listener interacted with the ad.
- 
- @param  
- */
--(void) adResponseWithCompletionBlock :(NIKAdResponseCall*)  
-        completionHandler: (void (^)(NIKAdResponseReply* output, NSError* error))completionBlock;
-
-/**
-
  Provides information about an ad to be played.
  
  @param  
  */
 -(void) adRequestWithCompletionBlock :(NIKAdRequestCall*)  
         completionHandler: (void (^)(NIKAdRequestReply* output, NSError* error))completionBlock;
+
+/**
+
+ Receives information about how the listener interacted with the ad.
+ 
+ @param  
+ */
+-(void) adResponseWithCompletionBlock :(NIKAdResponseCall*)  
+        completionHandler: (void (^)(NIKAdResponseReply* output, NSError* error))completionBlock;
 
 @end

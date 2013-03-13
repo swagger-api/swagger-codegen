@@ -1,6 +1,5 @@
 #import <Foundation/Foundation.h>
 #import "NIKSwaggerObject.h"
-#import "NIKArray[String].h"
 
 @interface NIKAdRequestAction : NIKSwaggerObject
 
