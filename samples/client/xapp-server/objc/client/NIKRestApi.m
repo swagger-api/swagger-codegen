@@ -1,8 +1,12 @@
 #import "NIKRestApi.h"
 #import "NIKTerminateReply.h"
+#import "NIKAdResponseCall.h"
+#import "NIKInitializeCall.h"
+#import "NIKTerminateCall.h"
 #import "NIKAdRequestReply.h"
 #import "NIKAdResponseReply.h"
 #import "NIKInitializeReply.h"
+#import "NIKAdRequestCall.h"
 
 
 
@@ -35,7 +39,7 @@ static NSString * basePath = @"http://localhost:9000";
     [_api addHeader:value forKey:key];
 }
 
--(void) initializeWithCompletionBlock:(NIKInitializeCall*) 
+-(void) initializeWithCompletionBlock:(NIKInitializeCall*) body
         completionHandler: (void (^)(NIKInitializeReply* output, NSError* error))completionBlock{
 
     NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/rest/xapp_session/initialize", basePath];
@@ -45,11 +49,31 @@ static NSString * basePath = @"http://localhost:9000";
         [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
-    if( != nil)
-        queryParams[@""] = ;
     NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     id bodyDictionary = nil;
-        [_api dictionary:requestUrl 
+        if(body != nil && [body isKindOfClass:[NSArray class]]){
+        NSMutableArray * objs = [[NSMutableArray alloc] init];
+        for (id dict in (NSArray*)body) {
+            if([dict respondsToSelector:@selector(asDictionary)]) {
+                [objs addObject:[(NIKSwaggerObject*)dict asDictionary]];
+            }
+            else{
+                [objs addObject:dict];
+            }
+        }
+        bodyDictionary = objs;
+    }
+    else if([body respondsToSelector:@selector(asDictionary)]) {
+        bodyDictionary = [(NIKSwaggerObject*)body asDictionary];
+    }
+    else if([body isKindOfClass:[NSString class]]) {
+        bodyDictionary = body;
+    }
+    else{
+        NSLog(@"don't know what to do with %@", body);
+    }
+
+    [_api dictionary:requestUrl 
               method:@"POST" 
          queryParams:queryParams 
                 body:bodyDictionary 
@@ -64,7 +88,7 @@ static NSString * basePath = @"http://localhost:9000";
 
 }
 
--(void) terminateWithCompletionBlock:(NIKTerminateCall*) 
+-(void) terminateWithCompletionBlock:(NIKTerminateCall*) body
         completionHandler: (void (^)(NIKTerminateReply* output, NSError* error))completionBlock{
 
     NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/rest/xapp_session/terminate", basePath];
@@ -74,11 +98,31 @@ static NSString * basePath = @"http://localhost:9000";
         [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
-    if( != nil)
-        queryParams[@""] = ;
     NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     id bodyDictionary = nil;
-        [_api dictionary:requestUrl 
+        if(body != nil && [body isKindOfClass:[NSArray class]]){
+        NSMutableArray * objs = [[NSMutableArray alloc] init];
+        for (id dict in (NSArray*)body) {
+            if([dict respondsToSelector:@selector(asDictionary)]) {
+                [objs addObject:[(NIKSwaggerObject*)dict asDictionary]];
+            }
+            else{
+                [objs addObject:dict];
+            }
+        }
+        bodyDictionary = objs;
+    }
+    else if([body respondsToSelector:@selector(asDictionary)]) {
+        bodyDictionary = [(NIKSwaggerObject*)body asDictionary];
+    }
+    else if([body isKindOfClass:[NSString class]]) {
+        bodyDictionary = body;
+    }
+    else{
+        NSLog(@"don't know what to do with %@", body);
+    }
+
+    [_api dictionary:requestUrl 
               method:@"POST" 
          queryParams:queryParams 
                 body:bodyDictionary 
@@ -93,7 +137,7 @@ static NSString * basePath = @"http://localhost:9000";
 
 }
 
--(void) adRequestWithCompletionBlock:(NIKAdRequestCall*) 
+-(void) adRequestWithCompletionBlock:(NIKAdRequestCall*) body
         completionHandler: (void (^)(NIKAdRequestReply* output, NSError* error))completionBlock{
 
     NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/rest/xapp_session/ad_request", basePath];
@@ -103,11 +147,31 @@ static NSString * basePath = @"http://localhost:9000";
         [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
-    if( != nil)
-        queryParams[@""] = ;
     NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     id bodyDictionary = nil;
-        [_api dictionary:requestUrl 
+        if(body != nil && [body isKindOfClass:[NSArray class]]){
+        NSMutableArray * objs = [[NSMutableArray alloc] init];
+        for (id dict in (NSArray*)body) {
+            if([dict respondsToSelector:@selector(asDictionary)]) {
+                [objs addObject:[(NIKSwaggerObject*)dict asDictionary]];
+            }
+            else{
+                [objs addObject:dict];
+            }
+        }
+        bodyDictionary = objs;
+    }
+    else if([body respondsToSelector:@selector(asDictionary)]) {
+        bodyDictionary = [(NIKSwaggerObject*)body asDictionary];
+    }
+    else if([body isKindOfClass:[NSString class]]) {
+        bodyDictionary = body;
+    }
+    else{
+        NSLog(@"don't know what to do with %@", body);
+    }
+
+    [_api dictionary:requestUrl 
               method:@"POST" 
          queryParams:queryParams 
                 body:bodyDictionary 
@@ -122,7 +186,7 @@ static NSString * basePath = @"http://localhost:9000";
 
 }
 
--(void) adResponseWithCompletionBlock:(NIKAdResponseCall*) 
+-(void) adResponseWithCompletionBlock:(NIKAdResponseCall*) body
         completionHandler: (void (^)(NIKAdResponseReply* output, NSError* error))completionBlock{
 
     NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/rest/xapp_session/ad_response", basePath];
@@ -132,11 +196,31 @@ static NSString * basePath = @"http://localhost:9000";
         [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@".json"];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
-    if( != nil)
-        queryParams[@""] = ;
     NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     id bodyDictionary = nil;
-        [_api dictionary:requestUrl 
+        if(body != nil && [body isKindOfClass:[NSArray class]]){
+        NSMutableArray * objs = [[NSMutableArray alloc] init];
+        for (id dict in (NSArray*)body) {
+            if([dict respondsToSelector:@selector(asDictionary)]) {
+                [objs addObject:[(NIKSwaggerObject*)dict asDictionary]];
+            }
+            else{
+                [objs addObject:dict];
+            }
+        }
+        bodyDictionary = objs;
+    }
+    else if([body respondsToSelector:@selector(asDictionary)]) {
+        bodyDictionary = [(NIKSwaggerObject*)body asDictionary];
+    }
+    else if([body isKindOfClass:[NSString class]]) {
+        bodyDictionary = body;
+    }
+    else{
+        NSLog(@"don't know what to do with %@", body);
+    }
+
+    [_api dictionary:requestUrl 
               method:@"POST" 
          queryParams:queryParams 
                 body:bodyDictionary 
@@ -151,7 +235,7 @@ static NSString * basePath = @"http://localhost:9000";
 
 }
 
--(void) initializeAsJsonWithCompletionBlock :(NIKInitializeCall*)  
+-(void) initializeAsJsonWithCompletionBlock :(NIKInitializeCall*) body 
 
         completionHandler:(void (^)(NSString*, NSError *))completionBlock{
 
@@ -162,10 +246,30 @@ static NSString * basePath = @"http://localhost:9000";
         [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@""];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
-    if( != nil)
-        queryParams[@""] = ;
     NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     id bodyDictionary = nil;
+    if(body != nil && [body isKindOfClass:[NSArray class]]){
+        NSMutableArray * objs = [[NSMutableArray alloc] init];
+        for (id dict in (NSArray*)body) {
+            if([dict respondsToSelector:@selector(asDictionary)]) {
+                [objs addObject:[(NIKSwaggerObject*)dict asDictionary]];
+            }
+            else{
+                [objs addObject:dict];
+            }
+        }
+        bodyDictionary = objs;
+    }
+    else if([body respondsToSelector:@selector(asDictionary)]) {
+        bodyDictionary = [(NIKSwaggerObject*)body asDictionary];
+    }
+    else if([body isKindOfClass:[NSString class]]) {
+        bodyDictionary = body;
+    }
+    else{
+        NSLog(@"don't know what to do with %@", body);
+    }
+
     [_api dictionary:requestUrl 
               method:@"POST" 
          queryParams:queryParams 
@@ -194,7 +298,7 @@ static NSString * basePath = @"http://localhost:9000";
 
 }
 
--(void) terminateAsJsonWithCompletionBlock :(NIKTerminateCall*)  
+-(void) terminateAsJsonWithCompletionBlock :(NIKTerminateCall*) body 
 
         completionHandler:(void (^)(NSString*, NSError *))completionBlock{
 
@@ -205,10 +309,30 @@ static NSString * basePath = @"http://localhost:9000";
         [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@""];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
-    if( != nil)
-        queryParams[@""] = ;
     NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     id bodyDictionary = nil;
+    if(body != nil && [body isKindOfClass:[NSArray class]]){
+        NSMutableArray * objs = [[NSMutableArray alloc] init];
+        for (id dict in (NSArray*)body) {
+            if([dict respondsToSelector:@selector(asDictionary)]) {
+                [objs addObject:[(NIKSwaggerObject*)dict asDictionary]];
+            }
+            else{
+                [objs addObject:dict];
+            }
+        }
+        bodyDictionary = objs;
+    }
+    else if([body respondsToSelector:@selector(asDictionary)]) {
+        bodyDictionary = [(NIKSwaggerObject*)body asDictionary];
+    }
+    else if([body isKindOfClass:[NSString class]]) {
+        bodyDictionary = body;
+    }
+    else{
+        NSLog(@"don't know what to do with %@", body);
+    }
+
     [_api dictionary:requestUrl 
               method:@"POST" 
          queryParams:queryParams 
@@ -237,7 +361,7 @@ static NSString * basePath = @"http://localhost:9000";
 
 }
 
--(void) adRequestAsJsonWithCompletionBlock :(NIKAdRequestCall*)  
+-(void) adRequestAsJsonWithCompletionBlock :(NIKAdRequestCall*) body 
 
         completionHandler:(void (^)(NSString*, NSError *))completionBlock{
 
@@ -248,10 +372,30 @@ static NSString * basePath = @"http://localhost:9000";
         [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@""];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
-    if( != nil)
-        queryParams[@""] = ;
     NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     id bodyDictionary = nil;
+    if(body != nil && [body isKindOfClass:[NSArray class]]){
+        NSMutableArray * objs = [[NSMutableArray alloc] init];
+        for (id dict in (NSArray*)body) {
+            if([dict respondsToSelector:@selector(asDictionary)]) {
+                [objs addObject:[(NIKSwaggerObject*)dict asDictionary]];
+            }
+            else{
+                [objs addObject:dict];
+            }
+        }
+        bodyDictionary = objs;
+    }
+    else if([body respondsToSelector:@selector(asDictionary)]) {
+        bodyDictionary = [(NIKSwaggerObject*)body asDictionary];
+    }
+    else if([body isKindOfClass:[NSString class]]) {
+        bodyDictionary = body;
+    }
+    else{
+        NSLog(@"don't know what to do with %@", body);
+    }
+
     [_api dictionary:requestUrl 
               method:@"POST" 
          queryParams:queryParams 
@@ -280,7 +424,7 @@ static NSString * basePath = @"http://localhost:9000";
 
 }
 
--(void) adResponseAsJsonWithCompletionBlock :(NIKAdResponseCall*)  
+-(void) adResponseAsJsonWithCompletionBlock :(NIKAdResponseCall*) body 
 
         completionHandler:(void (^)(NSString*, NSError *))completionBlock{
 
@@ -291,10 +435,30 @@ static NSString * basePath = @"http://localhost:9000";
         [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:@".{format}"] withString:@""];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
-    if( != nil)
-        queryParams[@""] = ;
     NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     id bodyDictionary = nil;
+    if(body != nil && [body isKindOfClass:[NSArray class]]){
+        NSMutableArray * objs = [[NSMutableArray alloc] init];
+        for (id dict in (NSArray*)body) {
+            if([dict respondsToSelector:@selector(asDictionary)]) {
+                [objs addObject:[(NIKSwaggerObject*)dict asDictionary]];
+            }
+            else{
+                [objs addObject:dict];
+            }
+        }
+        bodyDictionary = objs;
+    }
+    else if([body respondsToSelector:@selector(asDictionary)]) {
+        bodyDictionary = [(NIKSwaggerObject*)body asDictionary];
+    }
+    else if([body isKindOfClass:[NSString class]]) {
+        bodyDictionary = body;
+    }
+    else{
+        NSLog(@"don't know what to do with %@", body);
+    }
+
     [_api dictionary:requestUrl 
               method:@"POST" 
          queryParams:queryParams 
