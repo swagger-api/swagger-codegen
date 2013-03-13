@@ -7,7 +7,7 @@
 
 
 @implementation NIKRestApi
-static NSString * basePath = @"http://ci.xappmedia.com";
+static NSString * basePath = @"http://localhost:9000";
 
 @synthesize queue = _queue;
 @synthesize api = _api;

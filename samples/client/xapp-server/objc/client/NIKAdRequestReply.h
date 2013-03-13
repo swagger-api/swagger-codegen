@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "NIKSwaggerObject.h"
-#import "NIKArray[AdRequestAction].h"
+#import "NIKAdRequestAction.h"
 
 @interface NIKAdRequestReply : NIKSwaggerObject
 

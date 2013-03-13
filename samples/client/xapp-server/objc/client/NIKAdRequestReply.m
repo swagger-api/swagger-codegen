@@ -56,7 +56,7 @@
 
             if([(NSArray*)actions_dict count] > 0) {
                 for (NSDictionary* dict in (NSArray*)actions_dict) {
-                    NIKArray[AdRequestAction]* d = [[NIKArray[AdRequestAction] alloc] initWithValues:dict];
+                    NIKAdRequestAction* d = [[NIKAdRequestAction alloc] initWithValues:dict];
                     [objs addObject:d];
                 }
                 
@@ -92,7 +92,7 @@
     if(_actions != nil){
         if([_actions isKindOfClass:[NSArray class]]){
             NSMutableArray * array = [[NSMutableArray alloc] init];
-            for( NIKArray[AdRequestAction] *actions in (NSArray*)_actions) {
+            for( NIKAdRequestAction *actions in (NSArray*)_actions) {
                 [array addObject:[(NIKSwaggerObject*)actions asDictionary]];
             }
             dict[@"actions"] = array;
