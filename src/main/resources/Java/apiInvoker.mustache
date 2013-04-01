@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 public class ApiInvoker {
   private static ApiInvoker INSTANCE = new ApiInvoker();
@@ -70,6 +71,32 @@ public class ApiInvoker {
       throw new ApiException(500, e.getMessage());
     }
   }
+  
+  public static String serializeURLEncoded(Object obj) throws ApiException {
+      try {
+      if(obj != null && obj instanceof Map) {
+        StringBuilder ret = new StringBuilder();
+      	Map mobj = (Map)obj;
+      	int Count = 0;
+      	for(Object key: mobj.keySet()) {
+      	    Object value=mobj.get(key);
+      	    if(key != null && value != null) {
+      	       if(Count >= 1)
+      	           ret.append("&");
+      	       ret.append(URLEncoder.encode(key.toString(),"UTF-8"));
+      	       ret.append("=");
+      	       ret.append(URLEncoder.encode(value.toString(),"UTF-8"));
+      	       ++Count;      	      
+      	    }
+       }
+       return ret.toString();
+      }
+      else return null;
+    }
+    catch (Exception e) {
+      throw new ApiException(500, e.getMessage());
+    }
+  }
 
   public String invokeAPI(String host, String path, String method, Map<String, String> queryParams, Object body, Map<String, String> headerParams) throws ApiException {
     Client client = getClient(host);
@@ -85,8 +112,20 @@ public class ApiInvoker {
       }
     }
     String querystring = b.toString();
+    String encodingtype = null;    
+    String encodedbody = null;
+    
+    if(body != null && body instanceof Map) {
+    	encodingtype = "application/x-www-form-urlencoded";
+    	encodedbody = serializeURLEncoded(body);
+    } else {
+        encodingtype = "application/json";
+    	encodedbody = serialize(body);    
+    }
+    	
+    
 
-    Builder builder = client.resource(host + path + querystring).type("application/json");
+    Builder builder = client.resource(host + path + querystring).type(encodingtype);
     for(String key : headerParams.keySet()) {
       builder.header(key, headerParams.get(key));
     }
@@ -102,13 +141,13 @@ public class ApiInvoker {
       response = (ClientResponse) builder.get(ClientResponse.class);
     }
     else if ("POST".equals(method)) {
-        response = builder.post(ClientResponse.class, serialize(body));
+        response = builder.post(ClientResponse.class, encodedbody);
     }
     else if ("PUT".equals(method)) {
-      response = builder.put(ClientResponse.class, serialize(body));
+      response = builder.put(ClientResponse.class, encodedbody);
       }
     else if ("DELETE".equals(method)) {
-        response = builder.delete(ClientResponse.class, serialize(body));
+        response = builder.delete(ClientResponse.class, encodedbody);
     }
     else {
       throw new ApiException(500, "unknown method type " + method);

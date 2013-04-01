@@ -32,6 +32,7 @@ public class {{classname}} {
     // query params
     Map<String, String> queryParams = new HashMap<String, String>();
     Map<String, String> headerParams = new HashMap<String, String>();
+    Map<String, Object> formParams = new HashMap<String, Object>();
 
     {{#requiredParamCount}}
     // verify required params are set
@@ -43,12 +44,15 @@ public class {{classname}} {
     {{#queryParams}}if(!"null".equals(String.valueOf({{paramName}})))
       queryParams.put("{{paramName}}", String.valueOf({{paramName}}));
     {{/queryParams}}
-
+    
     {{#headerParams}}headerParams.put("{{paramName}}", {{paramName}});
     {{/headerParams}}
+    
+    {{#formParams}}formParams.put("{{paramName}}", {{paramName}});
+    {{/formParams}}
 
     try {
-      String response = apiInvoker.invokeAPI(basePath, path, "{{httpMethod}}", queryParams, {{#bodyParam}}{{bodyParam}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}}, headerParams);
+      String response = apiInvoker.invokeAPI(basePath, path, "{{httpMethod}}", queryParams, {{#bodyParam}}{{bodyParam}}{{/bodyParam}}{{^bodyParam}}formParams{{/bodyParam}}, headerParams);
       if(response != null){
         return {{#returnType}}({{{returnType}}}) ApiInvoker.deserialize(response, "{{returnContainer}}", {{returnBaseType}}.class){{/returnType}};
       }
