@@ -71,8 +71,7 @@ class BasicCSharpGenerator extends BasicGenerator {
       "this", "break", "double", "implements", "protected", "throw", "byte", "else", 
       "import", "public", "throws", "case", "enum", "instanceof", "return", "transient", 
       "catch", "extends", "short", "try", "char", "final", "interface", "static", 
-      "void", "class", "finally", "strictfp", "volatile", "const", "float", 
-      "native", "super", "while")
+      "void", "class", "finally", "strictfp", "volatile", "const", "native", "super", "while")
 
   // import/require statements for specific datatypes
   override def importMapping = Map()
