@@ -287,7 +287,7 @@ class OperationSerializersTest extends FlatSpec with ShouldMatchers {
         op.method should be ("GET")
         op.summary should be ("the summary")
         op.notes should be ("the notes")
-        op.responseClass should be ("array[Pet]")
+        op.responseClass should be ("string")
         op.nickname should be ("getMeSomePets")
         op.parameters.size should be (1)
 
@@ -297,7 +297,7 @@ class OperationSerializersTest extends FlatSpec with ShouldMatchers {
           m.defaultValue should be (Some("-1"))
           m.required should be (false)
           m.allowMultiple should be (true)
-          m.dataType should be ("string")
+          m.dataType should be ("Array[Pet]")
           m.paramType should be ("query")
         })
       }
