@@ -150,6 +150,14 @@ class BasicJavaGenerator extends BasicGenerator {
     }
     (declaredType, defaultValue)
   }
+  
+  override def toVarName(name: String): String = {
+    name match {
+      case _ if (reservedWords.contains(name)) => escapeReservedWord(name)
+      case _ => name.replaceAll("-","_")
+    }
+  }
+  
 
   /**
    * we are defaulting to null values since the codegen uses java objects instead of primitives
