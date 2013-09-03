@@ -7,15 +7,15 @@
     _id: (NSNumber*) _id
     tags: (NSArray*) tags
     status: (NSString*) status
-    photoUrls: (NSArray*) photoUrls
     category: (RVBCategory*) category
+    photoUrls: (NSArray*) photoUrls
 {
   _name = name;
   __id = _id;
   _tags = tags;
   _status = status;
-  _photoUrls = photoUrls;
   _category = category;
+  _photoUrls = photoUrls;
   return self;
 }
 
@@ -46,9 +46,9 @@
             _tags = [[NSArray alloc] init];
         }
         _status = dict[@"status"]; 
-        _photoUrls = dict[@"photoUrls"]; 
         id category_dict = dict[@"category"];
         _category = [[RVBCategory alloc]initWithValues:category_dict];
+        _photoUrls = dict[@"photoUrls"]; 
         
 
     }
@@ -78,7 +78,6 @@
     if(_tags != nil) dict[@"tags"] = [(NIKSwaggerObject*)_tags asDictionary];
     }
     if(_status != nil) dict[@"status"] = _status ;
-    if(_photoUrls != nil) dict[@"photoUrls"] = _photoUrls ;
     if(_category != nil){
         if([_category isKindOfClass:[NSArray class]]){
             NSMutableArray * array = [[NSMutableArray alloc] init];
@@ -97,6 +96,7 @@
     else {
     if(_category != nil) dict[@"category"] = [(NIKSwaggerObject*)_category asDictionary];
     }
+    if(_photoUrls != nil) dict[@"photoUrls"] = _photoUrls ;
     NSDictionary* output = [dict copy];
     return output;
 }

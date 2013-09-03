@@ -8,6 +8,6 @@ case class Pet (
   tags: List[Tag],
   /* pet status in the store */
   status: String,
-  photoUrls: List[String],
-  category: Category)
+  category: Category,
+  photoUrls: List[String])
 

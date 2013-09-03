@@ -54,13 +54,8 @@ object ApiInvoker {
         case _ => null
       }
     } else {
-      containerType.toLowerCase match {
-        case "list" => {
-          val typeInfo = mapper.getTypeFactory().constructCollectionType(classOf[java.util.List[_]], cls)
-          val response = mapper.readValue(json, typeInfo).asInstanceOf[java.util.List[_]]
-          response.asScala.toList
-        }
-        case "array" => {
+      containerType match {
+        case "List" => {
           val typeInfo = mapper.getTypeFactory().constructCollectionType(classOf[java.util.List[_]], cls)
           val response = mapper.readValue(json, typeInfo).asInstanceOf[java.util.List[_]]
           response.asScala.toList

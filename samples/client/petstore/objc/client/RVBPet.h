@@ -1,5 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "NIKSwaggerObject.h"
+#import "RVBRVBCategory*.h"
+#import "RVBRVBTag*.h"
 #import "RVBCategory.h"
 #import "RVBTag.h"
 
@@ -9,14 +11,14 @@
 @property(nonatomic) NSNumber* _id;
 @property(nonatomic) NSArray* tags;
 @property(nonatomic) NSString* status;
-@property(nonatomic) NSArray* photoUrls;
 @property(nonatomic) RVBCategory* category;
+@property(nonatomic) NSArray* photoUrls;
 - (id) name: (NSString*) name
      _id: (NSNumber*) _id
      tags: (NSArray*) tags
      status: (NSString*) status
-     photoUrls: (NSArray*) photoUrls
-     category: (RVBCategory*) category;
+     category: (RVBCategory*) category
+     photoUrls: (NSArray*) photoUrls;
 
 - (id) initWithValues: (NSDictionary*)dict;
 - (NSDictionary*) asDictionary;
