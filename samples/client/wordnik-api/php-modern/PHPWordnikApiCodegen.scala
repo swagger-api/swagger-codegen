@@ -14,26 +14,32 @@
  *  limitations under the License.
  */
 
-import com.wordnik.swagger.codegen.BasicScalaGenerator
+import com.wordnik.swagger.codegen.BasicPHPGenerator
 
-object ScalaPetstoreCodegen extends BasicScalaGenerator {
+import java.io.File
+
+object PHPWordnikApiCodegen extends BasicPHPGenerator {
   def main(args: Array[String]) = generateClient(args)
 
-  // package for api invoker, error files
-  override def invokerPackage = Some("com.wordnik.client")
+  // PHP uses backslash and not the dot as namespace separator
+  override def packageSeparator = "\\"
+
+  // location of templates
+  override def templateDir = "php-modern"
 
   // where to write generated code
-  override def destinationDir = "samples/client/petstore/scala/src/main/scala"
+  override def destinationDir = "samples/client/wordnik-api/php-modern/wordnik"
+
+  // package for invoker
+  override def invokerPackage = Some("com\\wordnik\\client\\common")
 
   // package for models
-  override def modelPackage = Some("com.wordnik.petstore.model")
+  override def modelPackage = Some("com\\wordnik\\client\\model")
 
   // package for api classes
-  override def apiPackage = Some("com.wordnik.petstore.api")
+  override def apiPackage = Some("com\\wordnik\\client\\api")
 
-  // supporting classes
   override def supportingFiles = List(
-    ("apiInvoker.mustache", destinationDir + java.io.File.separator + toPathName(invokerPackage.get) + java.io.File.separator, "ApiInvoker.scala"),
-    ("pom.mustache", "samples/client/petstore/scala", "pom.xml")
+    ("APIClient.mustache", destinationDir + File.separator + toPathName(invokerPackage.get) + File.separator, "APIClient.php")
   )
 }

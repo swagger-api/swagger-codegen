@@ -29,6 +29,7 @@ import scala.reflect.BeanProperty
 class CodegenConfigTest extends FlatSpec with ShouldMatchers {
   class SampleCodegenConfig extends CodegenConfig with PathUtil {
     override def packageName = "com.test"
+    override def packageSeparator = "."
     override def templateDir = "src/test/resources/sampleConfigTemplates"
     override def destinationDir = {
       val tmpFile = java.io.File.createTempFile("test",".tmp")
@@ -43,6 +44,11 @@ class CodegenConfigTest extends FlatSpec with ShouldMatchers {
     override def modelPackage = Some("com.wordnik.models")
     override def reservedWords = Set("special")
     override def importMapping = super.importMapping ++ Map("User" -> "com.mypackage.User")
+  }
+
+  class PHPCodegenConfig extends SampleCodegenConfig with PathUtil {
+    override def packageSeparator = "\\"
+    override def modelPackage = Some("com\\wordnik\\models")
   }
 
   val config = new SampleCodegenConfig
@@ -107,6 +113,25 @@ class CodegenConfigTest extends FlatSpec with ShouldMatchers {
    */
   it should "get the model package" in {
     config.modelPackage should be (Some("com.wordnik.models"))
+  }
+
+  /*
+   * the package separator in a Java package name should be replaced with the file separator
+   */
+  it should "convert Java package name to path name" in {
+    config.toPathName(config.modelPackage.get) should be (
+      "com" + java.io.File.separator + "wordnik" + java.io.File.separator + "models"
+    )
+  }
+
+  /*
+   * the package separator in a PHP package name should be replaced with the file separator
+   */
+  it should "convert PHP package name to path name" in {
+    val config = new PHPCodegenConfig
+    config.toPathName(config.modelPackage.get) should be (
+      "com" + java.io.File.separator + "wordnik" + java.io.File.separator + "models"
+    )
   }
 
   /*

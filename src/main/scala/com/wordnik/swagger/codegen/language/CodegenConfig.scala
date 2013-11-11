@@ -25,6 +25,7 @@ abstract class CodegenConfig {
    * abstract methods
    */
   def packageName: String
+  def packageSeparator: String = "."
   def templateDir: String
   def destinationDir: String
   def toModelName(name: String): String
@@ -63,6 +64,9 @@ abstract class CodegenConfig {
 
   // method name from operation.nickname
   def toMethodName(name: String): String = name
+
+  // replace the package separator in a package name with a the file separator
+  def toPathName(packageName: String): String = packageName.replace(packageSeparator, java.io.File.separator)
 
   // override if you want to do something special on processing
   // def processOperation(apiPath: String, op: DocumentationOperation) = {}
