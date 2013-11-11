@@ -211,6 +211,7 @@ class APIClient {
 			settype($object, $class);
 			return $object;
 		} else {
+			$class = '\com\wordnik\petstore\model\\' . $class;
 			$instance = new $class(); // this instantiates class named $class
 			$classVars = get_class_vars($class);
 		}
