@@ -93,7 +93,7 @@ class Codegen(config: CodegenConfig) {
     // This function forces AnyRef to a String for purposes of sorting
     val forceString = (x: AnyRef) => x match { case y: String => y case z: AnyRef => ""}
 
-    val f = new ListBuffer[AnyRef]
+    val f = new ListBuffer[Map[String, AnyRef]]
     classNameToOperationList.map(m =>
       f += Map(
         "classname" -> m._1,
