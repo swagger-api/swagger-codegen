@@ -67,7 +67,7 @@ class Codegen(config: CodegenConfig) {
 
     val modelData = Map[String, AnyRef]("model" -> modelList.toList)
     val operationList = new ListBuffer[Map[String, AnyRef]]
-    val classNameToOperationList = new HashMap[String, ListBuffer[AnyRef]]
+    val classNameToOperationList = new HashMap[String, ListBuffer[Map[String, AnyRef]]]
     val apis = bundle("apis")
     apis match {
       case a: Map[String, List[(String, Operation)]] => {
@@ -76,22 +76,32 @@ class Codegen(config: CodegenConfig) {
           val ops = op._2
           for ((apiPath, operation) <- ops) {
             val opList = classNameToOperationList.getOrElse(classname, {
-              val lb = new ListBuffer[AnyRef]
+              val lb = new ListBuffer[Map[String, AnyRef]]
               classNameToOperationList += classname -> lb
               lb
             })
             opList += apiToMap(apiPath, operation)
-          
+
             CoreUtils.extractModelNames(operation).foreach(i => allImports += i)
           }
         })
       }
-     
+
       case None =>
     }
 
+    // This function forces AnyRef to a String for purposes of sorting
+    val forceString = (x: AnyRef) => x match { case y: String => y case z: AnyRef => ""}
+
     val f = new ListBuffer[AnyRef]
-    classNameToOperationList.map(m => f += Map("classname" -> m._1, "operation" -> m._2))
+    classNameToOperationList.map(m =>
+      f += Map(
+        "classname" -> m._1,
+        // Sort the operation list so that the order of operations is deterministic
+        "operation" -> m._2.sortBy(x => (
+          forceString(x.getOrElse("path", "")),
+          forceString(x.getOrElse("httpMethod", "")),
+          forceString(x.getOrElse("nickname", ""))))))
 
     val imports = new ListBuffer[Map[String, String]]
     val importScope = config.modelPackage match {
@@ -223,14 +233,14 @@ class Codegen(config: CodegenConfig) {
     var paramList = new ListBuffer[HashMap[String, AnyRef]]
     var errorList = new ListBuffer[HashMap[String, AnyRef]]
     var bodyParamRequired: Option[String] = Some("true")
-    
+
     if (operation.responseMessages != null) {
-  		operation.responseMessages.foreach(param => { 
+  		operation.responseMessages.foreach(param => {
         val params = new HashMap[String, AnyRef]
         params += "code" -> param.code.toString()
         params += "reason" -> param.message
         params += "hasMore" -> "true"
-        errorList += params	 
+        errorList += params
       })
     }
 
