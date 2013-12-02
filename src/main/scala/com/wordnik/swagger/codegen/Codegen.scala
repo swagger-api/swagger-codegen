@@ -81,12 +81,12 @@ class Codegen(config: CodegenConfig) {
               lb
             })
             opList += apiToMap(apiPath, operation)
-          
+
             CoreUtils.extractModelNames(operation).foreach(i => allImports += i)
           }
         })
       }
-     
+
       case None =>
     }
 
@@ -95,7 +95,7 @@ class Codegen(config: CodegenConfig) {
 
     val imports = new ListBuffer[Map[String, String]]
     val importScope = config.modelPackage match {
-      case Some(s) => s + "."
+      case Some(s) => s + config.packageSeparator
       case None => ""
     }
     // do the mapping before removing primitives!
@@ -223,14 +223,14 @@ class Codegen(config: CodegenConfig) {
     var paramList = new ListBuffer[HashMap[String, AnyRef]]
     var errorList = new ListBuffer[HashMap[String, AnyRef]]
     var bodyParamRequired: Option[String] = Some("true")
-    
+
     if (operation.responseMessages != null) {
-  		operation.responseMessages.foreach(param => { 
+  		operation.responseMessages.foreach(param => {
         val params = new HashMap[String, AnyRef]
         params += "code" -> param.code.toString()
         params += "reason" -> param.message
         params += "hasMore" -> "true"
-        errorList += params	 
+        errorList += params
       })
     }
 
@@ -474,7 +474,7 @@ class Codegen(config: CodegenConfig) {
               baseType
             else
               config.modelPackage match {
-                case Some(p) => p + "." + baseType
+                case Some(p) => p + config.packageSeparator + baseType
                 case _ => baseType
               }
           },

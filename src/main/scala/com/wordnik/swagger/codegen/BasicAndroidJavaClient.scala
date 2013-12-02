@@ -43,7 +43,7 @@ object BasicAndroidJavaClient extends BasicJavaGenerator {
     "Any")
 
   additionalParams ++= Map(
-    "artifactId" -> "swagger-android-client", 
+    "artifactId" -> "swagger-android-client",
     "artifactVersion" -> "1.0.0",
     "groupId" -> "com.wordnik"
   )
@@ -63,9 +63,9 @@ object BasicAndroidJavaClient extends BasicJavaGenerator {
 
   // supporting classes
   override def supportingFiles = List(
-    ("apiInvoker.mustache", destinationDir + java.io.File.separator + invokerPackage.get.replace(".", java.io.File.separator) + java.io.File.separator, "ApiInvoker.java"),
-    ("jsonUtil.mustache", destinationDir + java.io.File.separator + invokerPackage.get.replace(".", java.io.File.separator) + java.io.File.separator, "JsonUtil.java"),
-    ("ApiException.mustache", destinationDir + java.io.File.separator + invokerPackage.get.replace(".", java.io.File.separator) + java.io.File.separator, "ApiException.java"),
+    ("apiInvoker.mustache", destinationDir + java.io.File.separator + toPathName(invokerPackage.get) + java.io.File.separator, "ApiInvoker.java"),
+    ("jsonUtil.mustache", destinationDir + java.io.File.separator + toPathName(invokerPackage.get) + java.io.File.separator, "JsonUtil.java"),
+    ("ApiException.mustache", destinationDir + java.io.File.separator + toPathName(invokerPackage.get) + java.io.File.separator, "ApiException.java"),
     ("pom.mustache", "android-java", "pom.xml")
   )
 }

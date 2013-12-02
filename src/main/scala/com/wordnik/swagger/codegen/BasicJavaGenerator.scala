@@ -40,7 +40,7 @@ class BasicJavaGenerator extends BasicGenerator {
    * We are using java objects instead of primitives to avoid showing default
    * primitive values when the API returns missing data.  For instance, having a
    * {"count":0} != count is unknown.  You can change this to use primitives if you
-   * desire, but update the default values as well or they'll be set to null in 
+   * desire, but update the default values as well or they'll be set to null in
    * variable declarations.
    */
   override def typeMapping = Map(
@@ -68,12 +68,12 @@ class BasicJavaGenerator extends BasicGenerator {
   // template used for models
   apiTemplateFiles += "api.mustache" -> ".java"
 
-  override def reservedWords = Set("abstract", "continue", "for", "new", "switch", "assert", 
-      "default", "if", "package", "synchronized", "boolean", "do", "goto", "private", 
-      "this", "break", "double", "implements", "protected", "throw", "byte", "else", 
-      "import", "public", "throws", "case", "enum", "instanceof", "return", "transient", 
-      "catch", "extends", "int", "short", "try", "char", "final", "interface", "static", 
-      "void", "class", "finally", "long", "strictfp", "volatile", "const", "float", 
+  override def reservedWords = Set("abstract", "continue", "for", "new", "switch", "assert",
+      "default", "if", "package", "synchronized", "boolean", "do", "goto", "private",
+      "this", "break", "double", "implements", "protected", "throw", "byte", "else",
+      "import", "public", "throws", "case", "enum", "instanceof", "return", "transient",
+      "catch", "extends", "int", "short", "try", "char", "final", "interface", "static",
+      "void", "class", "finally", "long", "strictfp", "volatile", "const", "float",
       "native", "super", "while")
 
   // import/require statements for specific datatypes
@@ -202,7 +202,7 @@ class BasicJavaGenerator extends BasicGenerator {
   }
 
   override def escapeReservedWord(word: String) = {
-    if (reservedWords.contains(word)) 
+    if (reservedWords.contains(word))
       throw new Exception("reserved word " + "\"" + word + "\" not allowed")
     else word
   }
@@ -210,8 +210,8 @@ class BasicJavaGenerator extends BasicGenerator {
   // supporting classes
   override def supportingFiles =
     List(
-      ("apiInvoker.mustache", destinationDir + java.io.File.separator + invokerPackage.get.replace(".", java.io.File.separator) + java.io.File.separator, "ApiInvoker.java"),
-      ("JsonUtil.mustache", destinationDir + java.io.File.separator + invokerPackage.get.replace(".", java.io.File.separator) + java.io.File.separator, "JsonUtil.java"),
-      ("apiException.mustache", destinationDir + java.io.File.separator + invokerPackage.get.replace(".", java.io.File.separator) + java.io.File.separator, "ApiException.java"),
+      ("apiInvoker.mustache", destinationDir + java.io.File.separator + toPathName(invokerPackage.get) + java.io.File.separator, "ApiInvoker.java"),
+      ("JsonUtil.mustache", destinationDir + java.io.File.separator + toPathName(invokerPackage.get) + java.io.File.separator, "JsonUtil.java"),
+      ("apiException.mustache", destinationDir + java.io.File.separator + toPathName(invokerPackage.get) + java.io.File.separator, "ApiException.java"),
       ("pom.mustache", "generated-code/java", "pom.xml"))
 }

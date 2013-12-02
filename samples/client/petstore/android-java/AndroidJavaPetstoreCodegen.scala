@@ -35,15 +35,15 @@ object AndroidJavaPetstoreCodegen extends BasicJavaGenerator {
   override def apiPackage = Some("com.wordnik.petstore.api")
 
   additionalParams ++= Map(
-    "artifactId" -> "swagger-petstore", 
+    "artifactId" -> "swagger-petstore",
     "artifactVersion" -> "1.0.0",
     "groupId" -> "com.wordnik")
 
   // supporting classes
   override def supportingFiles = List(
-    ("apiInvoker.mustache", destinationDir + java.io.File.separator + invokerPackage.get.replace(".", java.io.File.separator) + java.io.File.separator, "ApiInvoker.java"),
-    ("jsonUtil.mustache", destinationDir + java.io.File.separator + invokerPackage.get.replace(".", java.io.File.separator) + java.io.File.separator, "JsonUtil.java"),
-    ("apiException.mustache", destinationDir + java.io.File.separator + invokerPackage.get.replace(".", java.io.File.separator) + java.io.File.separator, "ApiException.java"),
+    ("apiInvoker.mustache", destinationDir + java.io.File.separator + toPathName(invokerPackage.get) + java.io.File.separator, "ApiInvoker.java"),
+    ("jsonUtil.mustache", destinationDir + java.io.File.separator + toPathName(invokerPackage.get) + java.io.File.separator, "JsonUtil.java"),
+    ("apiException.mustache", destinationDir + java.io.File.separator + toPathName(invokerPackage.get) + java.io.File.separator, "ApiException.java"),
     ("pom.mustache", "samples/client/petstore/android-java", "pom.xml")
   )
 }

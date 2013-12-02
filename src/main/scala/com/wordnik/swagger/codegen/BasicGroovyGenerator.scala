@@ -49,7 +49,7 @@ class BasicGroovyGenerator extends BasicJavaGenerator {
 
   override def supportingFiles =
     List(
-      ("ApiUtils.mustache", destinationDir + java.io.File.separator + invokerPackage.get.replace(".", java.io.File.separator) + java.io.File.separator, "ApiUtils.groovy"),
+      ("ApiUtils.mustache", destinationDir + java.io.File.separator + toPathName(invokerPackage.get) + java.io.File.separator, "ApiUtils.groovy"),
       ("build.gradle.mustache", "generated-code/groovy", "build.gradle"))
 
 }
