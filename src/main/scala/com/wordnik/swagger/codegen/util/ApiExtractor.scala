@@ -29,7 +29,7 @@ import scala.collection.mutable.{ ListBuffer, HashMap, HashSet }
 
 object ApiExtractor extends RemoteUrl {
   def fetchApiListings(version: String, basePath: String, apis: List[ApiListingReference], authorization: Option[AuthorizationValue] = None): List[ApiListing] = {
-    implicit val formats = SwaggerSerializers.formats(version)
+    implicit val formats = SwaggerModelSerializer.formats(version)
     (for (api <- apis) yield {
       try{
         val json = (basePath.startsWith("http")) match {
@@ -57,7 +57,7 @@ object ApiExtractor extends RemoteUrl {
   }
 
   def extractApiOperations(version: String, basePath: String, references: List[ApiListingReference], authorization: Option[AuthorizationValue] = None) = {
-    implicit val formats = SwaggerSerializers.formats(version)
+    implicit val formats = SwaggerModelSerializer.formats(version)
     for (api <- references) yield {
       val json = basePath.startsWith("http") match {
         case true => {

@@ -11,7 +11,7 @@ import org.json4s.jackson.Serialization.{ read, write }
 
 object SpecConverter {
   def main(args: Array[String]) = {
-    implicit val formats = SwaggerSerializers.formats("1.2")
+    implicit val formats = SwaggerModelSerializer.formats("1.2")
 
     if(args == null || args.length < 2) {
       println("Usage: SpecConverter {host} {outputDir}\nIf no API key is required, use an empty string")

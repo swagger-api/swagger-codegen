@@ -37,7 +37,7 @@ object ResourceExtractor extends RemoteUrl {
         case e: JString => e.s
         case _ => ""
       }
-      SwaggerSerializers.formats(version)
+      SwaggerModelSerializer.formats(version)
     }
 		parse(json).extract[ResourceListing]
 	}

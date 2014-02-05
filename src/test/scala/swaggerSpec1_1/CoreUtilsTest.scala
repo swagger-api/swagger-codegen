@@ -58,7 +58,7 @@ class CoreUtilsTest extends FlatSpec with ShouldMatchers {
 }
 
 object CoreUtilsTest {
-  implicit val formats = SwaggerSerializers.formats("1.1")
+  implicit val formats = SwaggerModelSerializer.formats("1.1")
 
 	def sampleApis1 = {
 		parse("""
