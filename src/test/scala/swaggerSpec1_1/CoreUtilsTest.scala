@@ -2,7 +2,7 @@ package swaggerSpec1_1
 
 import com.wordnik.swagger.codegen.util.CoreUtils
 
-import com.wordnik.swagger.model._
+import com.wordnik.swagger.codegen.model._
 import com.wordnik.swagger.codegen.util._
 
 import org.junit.runner.RunWith
@@ -58,7 +58,7 @@ class CoreUtilsTest extends FlatSpec with ShouldMatchers {
 }
 
 object CoreUtilsTest {
-  implicit val formats = SwaggerSerializers.formats("1.1")
+  implicit val formats = SwaggerModelSerializer.formats("1.1")
 
 	def sampleApis1 = {
 		parse("""

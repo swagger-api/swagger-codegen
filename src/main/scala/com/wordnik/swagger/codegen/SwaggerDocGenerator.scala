@@ -16,7 +16,7 @@
 
 import com.wordnik.swagger.codegen.BasicGenerator
 import com.wordnik.swagger.codegen.spec.SwaggerSpec
-import com.wordnik.swagger.model._
+import com.wordnik.swagger.codegen.model._
 
 import scala.collection.mutable.{ HashMap, ListBuffer }
 

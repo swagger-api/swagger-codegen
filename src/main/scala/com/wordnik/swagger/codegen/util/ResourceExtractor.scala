@@ -16,7 +16,7 @@
 
 package com.wordnik.swagger.codegen.util
 
-import com.wordnik.swagger.model._
+import com.wordnik.swagger.codegen.model._
 
 import org.json4s._
 import org.json4s.jackson.JsonMethods._
@@ -37,7 +37,7 @@ object ResourceExtractor extends RemoteUrl {
         case e: JString => e.s
         case _ => ""
       }
-      SwaggerSerializers.formats(version)
+      SwaggerModelSerializer.formats(version)
     }
 		parse(json).extract[ResourceListing]
 	}

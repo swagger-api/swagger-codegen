@@ -15,7 +15,7 @@
  */
 package swaggerSpec1_1
 
-import com.wordnik.swagger.model._
+import com.wordnik.swagger.codegen.model._
 
 import org.json4s.jackson.JsonMethods._
 import org.json4s.jackson.Serialization.read
@@ -29,7 +29,7 @@ import scala.io._
 
 @RunWith(classOf[JUnitRunner])
 class SwaggerModelTest extends FlatSpec with ShouldMatchers {
-  implicit val formats = SwaggerSerializers.formats("1.1")
+  implicit val formats = SwaggerModelSerializer.formats("1.1")
 
 	behavior of "Swagger Model"
 

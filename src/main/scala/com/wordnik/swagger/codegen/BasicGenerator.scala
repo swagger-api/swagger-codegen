@@ -20,8 +20,8 @@ import com.wordnik.swagger.codegen._
 import com.wordnik.swagger.codegen.util._
 import com.wordnik.swagger.codegen.language.CodegenConfig
 import com.wordnik.swagger.codegen.spec.SwaggerSpecValidator
-import com.wordnik.swagger.model._
-import com.wordnik.swagger.model.SwaggerSerializers
+import com.wordnik.swagger.codegen.model._
+import com.wordnik.swagger.codegen.model.SwaggerModelSerializer
 import com.wordnik.swagger.codegen.spec.ValidationMessage
 
 import java.io.{ File, FileWriter }
@@ -63,12 +63,15 @@ abstract class BasicGenerator extends CodegenConfig with PathUtil {
       }
     }
 
+    implicit val basePath = getBasePath(host, doc.basePath)
+    println("base path is " + basePath)
+
     val apis: List[ApiListing] = getApis(host, doc, authorization)
 
-    SwaggerSerializers.validationMessages.filter(_.level == ValidationMessage.ERROR).size match {
+    SwaggerModelSerializer.validationMessages.filter(_.level == ValidationMessage.ERROR).size match {
       case i: Int if i > 0 => {
         println("********* Failed to read swagger json!")
-        SwaggerSerializers.validationMessages.foreach(msg => {
+        SwaggerModelSerializer.validationMessages.foreach(msg => {
           println(msg)
         })
         Option(System.getProperty("skipErrors")) match {
@@ -118,10 +121,7 @@ abstract class BasicGenerator extends CodegenConfig with PathUtil {
   }
 
 
-  def getApis(host: String, doc: ResourceListing, authorization: Option[ApiKeyValue]): List[ApiListing] = {
-    implicit val basePath = getBasePath(host, doc.basePath)
-    println("base path is " + basePath)
-
+  def getApis(host: String, doc: ResourceListing, authorization: Option[ApiKeyValue])(implicit basePath: String): List[ApiListing] = {
     val apiReferences = doc.apis
     if (apiReferences == null)
       throw new Exception("No APIs specified by resource")
