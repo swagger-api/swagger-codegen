@@ -61,24 +61,6 @@ class BasicPHPGenerator extends BasicGenerator {
     "DateTime" -> "DateTime"
   )
 
- // response classes
-  override def processResponseClass(responseClass: String): Option[String] = {
-    typeMapping.contains(responseClass) match {
-      case true => Some(typeMapping(responseClass))
-      case false => {
-        responseClass match {
-          case "void" => None
-          case e: String => {
-            responseClass.startsWith("List") match {
-              case true => Some("array")
-              case false => Some(responseClass)
-            }
-          }
-        }
-      }
-    }
-  }
-
   override def processResponseDeclaration(responseClass: String): Option[String] = {
     typeMapping.contains(responseClass) match {
       case true => Some(typeMapping(responseClass))
@@ -86,15 +68,20 @@ class BasicPHPGenerator extends BasicGenerator {
         responseClass match {
           case "void" => None
           case e: String => {
-            responseClass.startsWith("List") match {
+            val found = "^([Aa]rray|List)\\[(.*)\\]$".r.findFirstMatchIn(e)
+
+            found.isEmpty match {
               case true => {
-                val responseSubClass = responseClass.dropRight(1).substring(5)
-                typeMapping.contains(responseSubClass) match {
-                  case true => Some("array[" + typeMapping(responseSubClass) + "]")
-                  case false => Some("array[" + responseSubClass + "]")
+                val importScope = modelPackage match {
+                  case Some(s) => s + packageSeparator
+                  case _ => ""
                 }
+                Some(importScope + responseClass)
               }
-              case false => Some(responseClass)
+              case false => {
+                val responseSubClass = found.get.group(2);
+                Some("array[" + processResponseDeclaration(responseSubClass).getOrElse("") + "]")
+              }
             }
           }
         }
