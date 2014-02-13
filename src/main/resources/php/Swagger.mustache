@@ -10,6 +10,10 @@
  *
  * @param string $className the class to attempt to load
  */
+
+{{#package}}namespace {{package}};
+{{/package}}
+
 function swagger_autoloader($className) {
 	$currentDir = dirname(__FILE__);
 	if (file_exists($currentDir . '/' . $className . '.php')) {

@@ -444,7 +444,7 @@ class Codegen(config: CodegenConfig) {
 
       var baseType = dt
       // import the object inside the container
-      if (propertyDocSchema.items != null) {
+      if (!propertyDocSchema.items.isEmpty) {
         // import the container
         imports += Map("import" -> dt)
         propertyDocSchema.items match {

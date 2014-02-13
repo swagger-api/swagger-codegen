@@ -45,10 +45,10 @@ abstract class CodegenConfig {
   def typeMapping = Map[String, String]()
 
   // optional configs
+  def packageSeparator: String = "."
   def invokerPackage: Option[String] = None
   def apiPackage: Option[String] = None
   def modelPackage: Option[String] = None
-  def packageSeparator: String = "."
 
   def reservedWords: Set[String] = Set()
 

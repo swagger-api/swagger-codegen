@@ -25,6 +25,9 @@ object BasicPHPGenerator extends BasicPHPGenerator {
 }
 
 class BasicPHPGenerator extends BasicGenerator {
+
+  override def packageName = null;
+
   // template used for models
   modelTemplateFiles += "model.mustache" -> ".php"
 
@@ -37,13 +40,13 @@ class BasicPHPGenerator extends BasicGenerator {
   // where to write generated code
   override def destinationDir = "generated-code/php"
 
+  override def packageSeparator = "\\"
+
   // package for models
   override def modelPackage = Some("models")
 
   // package for apis
-  override def apiPackage = Some("")
-
-  override def packageSeparator = "\\"
+  override def apiPackage = None
 
   // file suffix
   override def fileSuffix = ".php"
@@ -54,8 +57,9 @@ class BasicPHPGenerator extends BasicGenerator {
   override def reservedWords = Set()
 
   // import/require statements for specific datatypes
-  override def importMapping = Map()
-
+  override def importMapping = Map(
+    "DateTime" -> "DateTime"
+  )
 
  // response classes
   override def processResponseClass(responseClass: String): Option[String] = {
@@ -74,7 +78,6 @@ class BasicPHPGenerator extends BasicGenerator {
       }
     }
   }
-
 
   override def processResponseDeclaration(responseClass: String): Option[String] = {
     typeMapping.contains(responseClass) match {
@@ -98,6 +101,7 @@ class BasicPHPGenerator extends BasicGenerator {
       }
     }
   }
+
   override def typeMapping = Map(
     "string" -> "string",
     "str" -> "string",
@@ -159,7 +163,7 @@ class BasicPHPGenerator extends BasicGenerator {
 
   // supporting classes
   override def supportingFiles = List(
-    ("Swagger.mustache", destinationDir + File.separator + apiPackage.get,
+    ("Swagger.mustache", destinationDir + File.separator + packageName.replace(packageSeparator, File.separator),
      "Swagger.php")
   )
 }
