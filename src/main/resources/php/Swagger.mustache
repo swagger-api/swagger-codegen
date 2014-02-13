@@ -15,15 +15,12 @@
 {{/package}}
 
 function swagger_autoloader($className) {
-	$currentDir = dirname(__FILE__);
-	if (file_exists($currentDir . '/' . $className . '.php')) {
-		include $currentDir . '/' . $className . '.php';
-	} elseif (file_exists($currentDir . '/models/' . $className . '.php')) {
-		include $currentDir . '/models/' . $className . '.php';
+    $path = __DIR__ . '/' . str_replace("\\", DIRECTORY_SEPARATOR, $className) . '.php';
+	if (file_exists($path)) {
+		require($path);
 	}
 }
 spl_autoload_register('swagger_autoloader');
-
 
 class APIClient {
 

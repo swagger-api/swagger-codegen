@@ -574,7 +574,7 @@ class Codegen(config: CodegenConfig) {
     val data: HashMap[String, AnyRef] =
       HashMap(
         "invokerPackage" -> config.invokerPackage,
-        "package" -> config.packageName,
+        "package" -> getPackageOrNone(config.packageName),
         "modelPackage" -> config.modelPackage,
         "apiPackage" -> config.apiPackage,
         "apis" -> apiList,
@@ -638,4 +638,12 @@ class Codegen(config: CodegenConfig) {
         }
       }
   }
+
+  protected def getPackageOrNone(name: String): Option[String] = {
+    name.isEmpty match {
+      case true => None
+      case _ => Some(name)
+    }
+  }
+
 }

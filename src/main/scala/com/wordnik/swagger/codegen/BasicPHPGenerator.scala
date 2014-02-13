@@ -26,7 +26,7 @@ object BasicPHPGenerator extends BasicPHPGenerator {
 
 class BasicPHPGenerator extends BasicGenerator {
 
-  override def packageName = null;
+  override def packageName = "";
 
   // template used for models
   modelTemplateFiles += "model.mustache" -> ".php"
