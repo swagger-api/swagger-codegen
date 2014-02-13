@@ -43,6 +43,8 @@ class BasicPHPGenerator extends BasicGenerator {
   // package for apis
   override def apiPackage = Some("")
 
+  override def packageSeparator = "\\"
+
   // file suffix
   override def fileSuffix = ".php"
 

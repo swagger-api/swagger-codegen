@@ -48,6 +48,7 @@ abstract class CodegenConfig {
   def invokerPackage: Option[String] = None
   def apiPackage: Option[String] = None
   def modelPackage: Option[String] = None
+  def packageSeparator: String = "."
 
   def reservedWords: Set[String] = Set()
 

@@ -95,8 +95,8 @@ class Codegen(config: CodegenConfig) {
 
     val imports = new ListBuffer[Map[String, String]]
     val importScope = config.modelPackage match {
-      case Some(s) => s + "."
-      case None => ""
+      case Some(s) => s + config.packageSeparator
+      case _ => ""
     }
     // do the mapping before removing primitives!
     allImports.foreach(i => {
@@ -483,7 +483,7 @@ class Codegen(config: CodegenConfig) {
               baseType
             else
               config.modelPackage match {
-                case Some(p) => p + "." + baseType
+                case Some(p) => p + config.packageSeparator + baseType
                 case _ => baseType
               }
           },
