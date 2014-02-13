@@ -43,7 +43,7 @@ class BasicPHPGenerator extends BasicGenerator {
   override def packageSeparator = "\\"
 
   // package for models
-  override def modelPackage = Some("models")
+  override def modelPackage = Some("Model")
 
   // package for apis
   override def apiPackage = None
