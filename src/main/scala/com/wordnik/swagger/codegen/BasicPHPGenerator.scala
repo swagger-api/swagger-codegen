@@ -101,33 +101,15 @@ class BasicPHPGenerator extends BasicGenerator {
     "Date" -> "DateTime"
     )
 
-  override def toDeclaredType(dt: String): String = {
-    val declaredType = typeMapping.getOrElse(dt, dt)
-    declaredType.startsWith("Array") match {
-      case true => {
-        val innerType = dt.dropRight(1).substring(6)
-        typeMapping.contains(innerType) match {
-          case true => "array[" + typeMapping(innerType) + "]"
-          case false => "array[" + innerType + "]"
-        }
-      }
-      case _ => declaredType
-    }
+  override def toDeclaredType(declaredType: String): String = {
+    processResponseDeclaration(declaredType).getOrElse(declaredType)
   }
 
   override def toDeclaration(obj: ModelProperty) = {
-    var declaredType = toDeclaredType(obj.`type`)
+    var declaredType = obj.`type`
 
     declaredType match {
-      case "Array" => declaredType = "array"
-      case e: String => {
-        e
-      }
-    }
-
-    val defaultValue = toDefaultValue(declaredType, obj)
-    declaredType match {
-      case "array" => {
+      case "Array" | "List" => {
         val inner = {
           obj.items match {
             case Some(items) => items.ref.getOrElse(items.`type`)
@@ -137,11 +119,13 @@ class BasicPHPGenerator extends BasicGenerator {
             }
           }
         }
-        declaredType += "[" + toDeclaredType(inner) + "]"
-        "array"
+        declaredType += "[" + inner + "]"
       }
       case _ =>
     }
+    declaredType = processResponseDeclaration(declaredType).getOrElse(declaredType)
+
+    val defaultValue = toDefaultValue(declaredType, obj)
     (declaredType, defaultValue)
   }
 
