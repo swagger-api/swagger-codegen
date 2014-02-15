@@ -43,10 +43,10 @@ class BasicPHPGenerator extends BasicGenerator {
   override def packageSeparator = "\\"
 
   // package for models
-  override def modelPackage = Some("Model")
+  override def modelPackage: Option[String] = Some("Model")
 
   // package for apis
-  override def apiPackage = None
+  override def apiPackage: Option[String] = None
 
   // file suffix
   override def fileSuffix = ".php"
