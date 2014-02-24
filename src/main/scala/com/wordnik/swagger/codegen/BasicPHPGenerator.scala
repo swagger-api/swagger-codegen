@@ -1,5 +1,5 @@
 /**
- *  Copyright 2013 Wordnik, Inc.
+ *  Copyright 2014 Wordnik, Inc.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package com.wordnik.swagger.codegen
 import com.wordnik.swagger.model._
 
 import java.io.File
+import sun.reflect.generics.reflectiveObjects.NotImplementedException
 
 object BasicPHPGenerator extends BasicPHPGenerator {
   def main(args: Array[String]) = generateClient(args)
@@ -26,7 +27,7 @@ object BasicPHPGenerator extends BasicPHPGenerator {
 
 class BasicPHPGenerator extends BasicGenerator {
 
-  override def packageName = "";
+  override def packageName = ""
 
   // template used for models
   modelTemplateFiles += "model.mustache" -> ".php"
@@ -79,7 +80,7 @@ class BasicPHPGenerator extends BasicGenerator {
                 Some(importScope + responseClass)
               }
               case false => {
-                val responseSubClass = found.get.group(2);
+                val responseSubClass = found.get.group(2)
                 Some("array[" + processResponseDeclaration(responseSubClass).getOrElse("") + "]")
               }
             }
