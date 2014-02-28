@@ -3,6 +3,8 @@
 
 @implementation SWGApiClient
 
+NSString *const SWGResponseObjectErrorKey = @"SWGResponseObject";
+
 static long requestId = 0;
 static bool offlineState = true;
 static NSMutableSet * queuedRequests = nil;
@@ -318,9 +320,16 @@ static bool loggingEnabled = false;
          }
      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
          if([self executeRequestWithId:requestId]) {
+             NSMutableDictionary *userInfo = [error.userInfo mutableCopy];
+             if(operation.responseObject) {
+                 // Add in the (parsed) response body.
+                 userInfo[SWGResponseObjectErrorKey] = operation.responseObject;
+             }
+             NSError *augmentedError = [error initWithDomain:error.domain code:error.code userInfo:userInfo];
+             
              if(self.logServerResponses)
-                 [self logResponse:nil forRequest:request error:error];
-             completionBlock(nil, error);
+                 [self logResponse:nil forRequest:request error:augmentedError];
+             completionBlock(nil, augmentedError);
          }
      }
      ];
@@ -411,9 +420,16 @@ static bool loggingEnabled = false;
          }
      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
          if([self executeRequestWithId:requestId]) {
+             NSMutableDictionary *userInfo = [error.userInfo mutableCopy];
+             if(operation.responseObject) {
+                 // Add in the (parsed) response body.
+                 userInfo[SWGResponseObjectErrorKey] = operation.responseObject;
+             }
+             NSError *augmentedError = [error initWithDomain:error.domain code:error.code userInfo:userInfo];
+             
              if(self.logServerResponses)
-                 [self logResponse:nil forRequest:request error:error];
-             completionBlock(nil, error);
+                 [self logResponse:nil forRequest:request error:augmentedError];
+             completionBlock(nil, augmentedError);
          }
      }];
     
