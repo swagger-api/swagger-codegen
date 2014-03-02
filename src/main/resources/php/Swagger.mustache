@@ -128,7 +128,7 @@ class APIClient {
 	public static function sanitizeForSerialization($postData) {
 		foreach ($postData as $key => $value) {
 			if (is_a($value, "DateTime")) {
-				$postData->{$key} = $value->format(DateTime::ISO8601);
+				$postData->{$key} = $value->format(\DateTime::ISO8601);
 			}
 		}
 		return $postData;
@@ -192,7 +192,7 @@ class APIClient {
       }
       return $sub_objects;
     } elseif ($class == 'DateTime') {
-      		return new DateTime($object);
+      		return new \DateTime($object);
 		} elseif (in_array($class, array('string', 'int', 'float', 'bool'))) {
 			settype($object, $class);
 			return $object;
