@@ -89,7 +89,7 @@ class APIClient {
 			curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
 			curl_setopt($curl, CURLOPT_POSTFIELDS, $postData);
 		} else if ($method != self::$GET) {
-			throw new Exception('Method ' . $method . ' is not recognized.');
+			throw new \Exception('Method ' . $method . ' is not recognized.');
 		}
 		curl_setopt($curl, CURLOPT_URL, $url);
 
@@ -99,17 +99,17 @@ class APIClient {
 
 		// Handle the response
 		if ($response_info['http_code'] == 0) {
-			throw new Exception("TIMEOUT: api call to " . $url .
+			throw new \Exception("TIMEOUT: api call to " . $url .
 				" took more than 5s to return" );
 		} else if ($response_info['http_code'] == 200) {
 			$data = json_decode($response);
 		} else if ($response_info['http_code'] == 401) {
-			throw new Exception("Unauthorized API request to " . $url .
+			throw new \Exception("Unauthorized API request to " . $url .
 					": ".json_decode($response)->message );
 		} else if ($response_info['http_code'] == 404) {
 			$data = null;
 		} else {
-			throw new Exception("Can't connect to the api: " . $url .
+			throw new \Exception("Can't connect to the api: " . $url .
 				" response code: " .
 				$response_info['http_code']);
 		}
