@@ -18,18 +18,6 @@
 {{#package}}namespace {{package}};
 {{/package}}
 
-/* Autoload the model definition files */
-/**
- * @param string $className the class to attempt to load
- */
-function swagger_autoloader($className) {
-    $path = __DIR__ . '/' . str_replace("\\", DIRECTORY_SEPARATOR, $className) . '.php';
-	if (file_exists($path)) {
-		require($path);
-	}
-}
-spl_autoload_register('swagger_autoloader');
-
 class APIClient {
 
 	public static $POST = "POST";
