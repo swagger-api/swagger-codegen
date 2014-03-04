@@ -390,7 +390,7 @@ class Codegen(config: CodegenConfig) {
       properties += "consume" -> "application/json"
     }
     if (0 < operation.produces.length) {
-      properties += "produces" -> operation.produces
+      properties += "produces" -> operation.produces.mkString(",")
     } else {
       properties += "produces" -> "application/json"
     }
