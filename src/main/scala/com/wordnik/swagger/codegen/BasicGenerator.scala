@@ -244,4 +244,12 @@ abstract class BasicGenerator extends CodegenConfig with PathUtil {
     }
     opMap.map(m => (m._1, m._2.toList)).toMap
   }
+
+  def consumeMatcher(consume: String): Boolean = {
+    !"^application/.*json$".r.findFirstIn(consume).isEmpty
+  }
+
+  def produceMatcher(produce: String): Boolean = {
+    !"^application/.*json$".r.findFirstIn(produce).isEmpty
+  }
 }

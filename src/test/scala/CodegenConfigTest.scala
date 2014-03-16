@@ -43,6 +43,8 @@ class CodegenConfigTest extends FlatSpec with ShouldMatchers {
     override def modelPackage = Some("com.wordnik.models")
     override def reservedWords = Set("special")
     override def importMapping = super.importMapping ++ Map("User" -> "com.mypackage.User")
+    override def consumeMatcher(consume: String): Boolean = true
+    override def produceMatcher(produce: String): Boolean = true
   }
 
   val config = new SampleCodegenConfig
