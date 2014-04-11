@@ -1,5 +1,5 @@
 /**
- *  Copyright 2013 Wordnik, Inc.
+ *  Copyright 2014 Wordnik, Inc.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,12 +19,16 @@ package com.wordnik.swagger.codegen
 import com.wordnik.swagger.model._
 
 import java.io.File
+import sun.reflect.generics.reflectiveObjects.NotImplementedException
 
 object BasicPHPGenerator extends BasicPHPGenerator {
   def main(args: Array[String]) = generateClient(args)
 }
 
 class BasicPHPGenerator extends BasicGenerator {
+
+  override def packageName = ""
+
   // template used for models
   modelTemplateFiles += "model.mustache" -> ".php"
 
@@ -37,11 +41,13 @@ class BasicPHPGenerator extends BasicGenerator {
   // where to write generated code
   override def destinationDir = "generated-code/php"
 
+  override def packageSeparator = "\\"
+
   // package for models
-  override def modelPackage = Some("models")
+  override def modelPackage: Option[String] = Some("Model")
 
   // package for apis
-  override def apiPackage = Some("")
+  override def apiPackage: Option[String] = None
 
   // file suffix
   override def fileSuffix = ".php"
@@ -52,27 +58,9 @@ class BasicPHPGenerator extends BasicGenerator {
   override def reservedWords = Set()
 
   // import/require statements for specific datatypes
-  override def importMapping = Map()
-
-
- // response classes
-  override def processResponseClass(responseClass: String): Option[String] = {
-    typeMapping.contains(responseClass) match {
-      case true => Some(typeMapping(responseClass))
-      case false => {
-        responseClass match {
-          case "void" => None
-          case e: String => {
-            responseClass.startsWith("List") match {
-              case true => Some("array")
-              case false => Some(responseClass)
-            }
-          }
-        }
-      }
-    }
-  }
-
+  override def importMapping = Map(
+    "DateTime" -> "DateTime"
+  )
 
   override def processResponseDeclaration(responseClass: String): Option[String] = {
     typeMapping.contains(responseClass) match {
@@ -81,21 +69,27 @@ class BasicPHPGenerator extends BasicGenerator {
         responseClass match {
           case "void" => None
           case e: String => {
-            responseClass.startsWith("List") match {
+            val found = "^([Aa]rray|List)\\[(.*)\\]$".r.findFirstMatchIn(e)
+
+            found.isEmpty match {
               case true => {
-                val responseSubClass = responseClass.dropRight(1).substring(5)
-                typeMapping.contains(responseSubClass) match {
-                  case true => Some("array[" + typeMapping(responseSubClass) + "]")
-                  case false => Some("array[" + responseSubClass + "]")
+                val importScope = modelPackage match {
+                  case Some(s) => s + packageSeparator
+                  case _ => ""
                 }
+                Some(importScope + responseClass)
               }
-              case false => Some(responseClass)
+              case false => {
+                val responseSubClass = found.get.group(2)
+                Some("array[" + processResponseDeclaration(responseSubClass).getOrElse("") + "]")
+              }
             }
           }
         }
       }
     }
   }
+
   override def typeMapping = Map(
     "string" -> "string",
     "str" -> "string",
@@ -108,33 +102,15 @@ class BasicPHPGenerator extends BasicGenerator {
     "Date" -> "DateTime"
     )
 
-  override def toDeclaredType(dt: String): String = {
-    val declaredType = typeMapping.getOrElse(dt, dt)
-    declaredType.startsWith("Array") match {
-      case true => {
-        val innerType = dt.dropRight(1).substring(6)
-        typeMapping.contains(innerType) match {
-          case true => "array[" + typeMapping(innerType) + "]"
-          case false => "array[" + innerType + "]"
-        }
-      }
-      case _ => declaredType
-    }
+  override def toDeclaredType(declaredType: String): String = {
+    processResponseDeclaration(declaredType).getOrElse(declaredType)
   }
 
   override def toDeclaration(obj: ModelProperty) = {
-    var declaredType = toDeclaredType(obj.`type`)
+    var declaredType = obj.`type`
 
     declaredType match {
-      case "Array" => declaredType = "array"
-      case e: String => {
-        e
-      }
-    }
-
-    val defaultValue = toDefaultValue(declaredType, obj)
-    declaredType match {
-      case "array" => {
+      case "Array" | "List" => {
         val inner = {
           obj.items match {
             case Some(items) => items.ref.getOrElse(items.`type`)
@@ -144,17 +120,19 @@ class BasicPHPGenerator extends BasicGenerator {
             }
           }
         }
-        declaredType += "[" + toDeclaredType(inner) + "]"
-        "array"
+        declaredType += "[" + inner + "]"
       }
       case _ =>
     }
+    declaredType = processResponseDeclaration(declaredType).getOrElse(declaredType)
+
+    val defaultValue = toDefaultValue(declaredType, obj)
     (declaredType, defaultValue)
   }
 
   // supporting classes
   override def supportingFiles = List(
-    ("Swagger.mustache", destinationDir + File.separator + apiPackage.get,
+    ("Swagger.mustache", destinationDir + File.separator + packageName.replace(packageSeparator, File.separator),
      "Swagger.php")
   )
 }

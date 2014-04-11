@@ -95,8 +95,8 @@ class Codegen(config: CodegenConfig) {
 
     val imports = new ListBuffer[Map[String, String]]
     val importScope = config.modelPackage match {
-      case Some(s) => s + "."
-      case None => ""
+      case Some(s) => s + config.packageSeparator
+      case _ => ""
     }
     // do the mapping before removing primitives!
     allImports.foreach(i => {
@@ -460,7 +460,7 @@ class Codegen(config: CodegenConfig) {
 
       var baseType = dt
       // import the object inside the container
-      if (propertyDocSchema.items != null) {
+      if (!propertyDocSchema.items.isEmpty) {
         // import the container
         imports += Map("import" -> dt)
         propertyDocSchema.items match {
@@ -499,7 +499,7 @@ class Codegen(config: CodegenConfig) {
               baseType
             else
               config.modelPackage match {
-                case Some(p) => p + "." + baseType
+                case Some(p) => p + config.packageSeparator + baseType
                 case _ => baseType
               }
           },
@@ -590,7 +590,7 @@ class Codegen(config: CodegenConfig) {
     val data: HashMap[String, AnyRef] =
       HashMap(
         "invokerPackage" -> config.invokerPackage,
-        "package" -> config.packageName,
+        "package" -> getPackageOrNone(config.packageName),
         "modelPackage" -> config.modelPackage,
         "apiPackage" -> config.apiPackage,
         "apis" -> apiList,
@@ -655,4 +655,12 @@ class Codegen(config: CodegenConfig) {
         }
       }
   }
+
+  protected def getPackageOrNone(name: String): Option[String] = {
+    name.isEmpty match {
+      case true => None
+      case _ => Some(name)
+    }
+  }
+
 }
