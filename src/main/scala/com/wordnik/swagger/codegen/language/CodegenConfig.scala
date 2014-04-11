@@ -44,6 +44,9 @@ abstract class CodegenConfig {
   def languageSpecificPrimitives = Set[String]()
   def typeMapping = Map[String, String]()
 
+  def consumeMatcher(consume: String): Boolean
+  def produceMatcher(produce: String): Boolean
+
   // optional configs
   def invokerPackage: Option[String] = None
   def apiPackage: Option[String] = None
