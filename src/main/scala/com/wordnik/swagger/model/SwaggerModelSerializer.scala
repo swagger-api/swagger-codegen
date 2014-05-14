@@ -10,7 +10,7 @@ import org.json4s.jackson.Serialization.{read, write}
 
 import scala.collection.mutable.{ListBuffer, LinkedHashMap}
 
-object SwaggerSerializers {
+object SwaggerModelSerializer {
   import ValidationMessage._
 
   val jsonSchemaTypeMap = Map(
@@ -44,7 +44,7 @@ object SwaggerSerializers {
       case _           => {
         val ComplexTypeMatcher = "([a-zA-Z]*)\\[([a-zA-Z\\.\\-]*)\\].*".r
         `type` match {
-          case ComplexTypeMatcher(container, value) => 
+          case ComplexTypeMatcher(container, value) =>
             toJsonSchemaContainer(container) ~ {
               ("items" -> {if(isSimpleType(value))
                   toJsonSchema("type", value)
@@ -74,11 +74,11 @@ object SwaggerSerializers {
     version match {
       case "1.1" => LegacySerializers.formats
       case "1.2" => {
-        DefaultFormats + 
-          new ModelSerializer + 
+        DefaultFormats +
+          new ModelSerializer +
           new ModelPropertySerializer +
-          new ModelRefSerializer + 
-          new AllowableValuesSerializer + 
+          new ModelRefSerializer +
+          new AllowableValuesSerializer +
           new ParameterSerializer +
           new OperationSerializer +
           new ResponseMessageSerializer +
@@ -246,7 +246,7 @@ object SwaggerSerializers {
         case Some(m) => m.values.toList
         case _ => List.empty
       }
-      val t =  SwaggerSerializers.jsonSchemaTypeMap.getOrElse(
+      val t =  SwaggerModelSerializer.jsonSchemaTypeMap.getOrElse(
             ((json \ "type").extractOrElse(""), (json \ "format").extractOrElse(""))
           , (json \ "type").extractOrElse(""))
 
@@ -309,7 +309,7 @@ object SwaggerSerializers {
 
       val ComplexTypeMatcher = "([a-zA-Z]*)\\[([a-zA-Z\\.\\-]*)\\].*".r
       val output = x.responseClass match {
-        case ComplexTypeMatcher(container, value) => 
+        case ComplexTypeMatcher(container, value) =>
           toJsonSchemaContainer(container) ~ {
             ("items" -> {if(isSimpleType(value))
                 toJsonSchema("type", value)
@@ -357,14 +357,14 @@ object SwaggerSerializers {
             case e: JObject => e.extract[String]
             case e: JString => e.s
             case e: JInt => e.num.toString
-            case e: JDouble => e.num.toString          
+            case e: JDouble => e.num.toString
             case _ => ""
           }
           val max = (json \ "max") match {
             case e: JObject => e.extract[String]
             case e: JString => e.s
             case e: JInt => e.num.toString
-            case e: JDouble => e.num.toString          
+            case e: JDouble => e.num.toString
             case _ => ""
           }
           if(min != "" && max != "")
@@ -374,7 +374,7 @@ object SwaggerSerializers {
         }
       }
 
-      val t =  SwaggerSerializers.jsonSchemaTypeMap.getOrElse(
+      val t =  SwaggerModelSerializer.jsonSchemaTypeMap.getOrElse(
             ((json \ "type").extractOrElse(""), (json \ "format").extractOrElse(""))
           , (json \ "type").extractOrElse(""))
 
@@ -442,9 +442,9 @@ object SwaggerSerializers {
       ("paramType" -> x.paramType)
 
       x.allowableValues match {
-        case AllowableListValues(values, "LIST") => 
+        case AllowableListValues(values, "LIST") =>
           output ~ ("enum" -> Extraction.decompose(values))
-        case AllowableRangeValues(min, max)  => 
+        case AllowableRangeValues(min, max)  =>
           output ~ ("minimum" -> min) ~ ("maximum" -> max)
         case _ => output
       }
@@ -508,7 +508,7 @@ object SwaggerSerializers {
         case e: JString => e.s
         case _ => {
           // convert the jsonschema types into swagger types.  Note, this logic will move elsewhere soon
-          val t = SwaggerSerializers.jsonSchemaTypeMap.getOrElse(
+          val t = SwaggerModelSerializer.jsonSchemaTypeMap.getOrElse(
             ((json \ "type").extractOrElse(""), (json \ "format").extractOrElse(""))
           , (json \ "type").extractOrElse(""))
           val isUnique = (json \ "uniqueItems") match {
@@ -573,9 +573,9 @@ object SwaggerSerializers {
       ("items" -> Extraction.decompose(x.items))
 
       x.allowableValues match {
-        case AllowableListValues(values, "LIST") => 
+        case AllowableListValues(values, "LIST") =>
           output ~ ("enum" -> Extraction.decompose(values))
-        case AllowableRangeValues(min, max)  => 
+        case AllowableRangeValues(min, max)  =>
           output ~ ("minimum" -> min) ~ ("maximum" -> max)
         case _ => output
       }
@@ -636,9 +636,9 @@ object SwaggerSerializers {
         case _ => AnyAllowableValues
       }
     }, {
-      case AllowableListValues(values, "LIST") => 
+      case AllowableListValues(values, "LIST") =>
         ("valueType" -> "LIST") ~ ("values" -> Extraction.decompose(values))
-      case AllowableRangeValues(min, max)  => 
+      case AllowableRangeValues(min, max)  =>
         ("valueType" -> "RANGE") ~ ("min" -> min) ~ ("max" -> max)
     }
   ))
