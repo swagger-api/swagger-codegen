@@ -16,7 +16,7 @@
 
 package com.wordnik.swagger.codegen
 
-import com.wordnik.swagger.model._
+import com.wordnik.swagger.codegen.model._
 import com.wordnik.swagger.codegen.util.CoreUtils
 import com.wordnik.swagger.codegen.language.CodegenConfig
 import com.wordnik.swagger.codegen.spec.SwaggerSpec._
@@ -42,7 +42,7 @@ object Codegen {
 }
 
 class Codegen(config: CodegenConfig) {
-  implicit val formats = SwaggerSerializers.formats("1.2")
+  implicit val formats = SwaggerModelSerializer.formats("1.2")
 
   def generateSource(bundle: Map[String, AnyRef], templateFile: String): String = {
     val allImports = new HashSet[String]
@@ -551,7 +551,7 @@ class Codegen(config: CodegenConfig) {
   }
 
   def write1_1(m: AnyRef): String = {
-    implicit val formats = SwaggerSerializers.formats("1.1")
+    implicit val formats = SwaggerModelSerializer.formats("1.1")
     write(m)
   }
 

@@ -1,4 +1,4 @@
-package com.wordnik.swagger.model
+package com.wordnik.swagger.codegen.model
 
 import com.wordnik.swagger.codegen.spec.ValidationMessage
 import legacy.LegacySerializers
@@ -10,7 +10,7 @@ import org.json4s.jackson.Serialization.{read, write}
 
 import scala.collection.mutable.{ListBuffer, LinkedHashMap}
 
-object SwaggerSerializers {
+object SwaggerModelSerializer {
   import ValidationMessage._
 
   val jsonSchemaTypeMap = Map(
@@ -246,7 +246,7 @@ object SwaggerSerializers {
         case Some(m) => m.values.toList
         case _ => List.empty
       }
-      val t =  SwaggerSerializers.jsonSchemaTypeMap.getOrElse(
+      val t =  SwaggerModelSerializer.jsonSchemaTypeMap.getOrElse(
             ((json \ "type").extractOrElse(""), (json \ "format").extractOrElse(""))
           , (json \ "type").extractOrElse(""))
 
@@ -374,7 +374,7 @@ object SwaggerSerializers {
         }
       }
 
-      val t =  SwaggerSerializers.jsonSchemaTypeMap.getOrElse(
+      val t =  SwaggerModelSerializer.jsonSchemaTypeMap.getOrElse(
             ((json \ "type").extractOrElse(""), (json \ "format").extractOrElse(""))
           , (json \ "type").extractOrElse(""))
 
@@ -508,7 +508,7 @@ object SwaggerSerializers {
         case e: JString => e.s
         case _ => {
           // convert the jsonschema types into swagger types.  Note, this logic will move elsewhere soon
-          val t = SwaggerSerializers.jsonSchemaTypeMap.getOrElse(
+          val t = SwaggerModelSerializer.jsonSchemaTypeMap.getOrElse(
             ((json \ "type").extractOrElse(""), (json \ "format").extractOrElse(""))
           , (json \ "type").extractOrElse(""))
           val isUnique = (json \ "uniqueItems") match {
