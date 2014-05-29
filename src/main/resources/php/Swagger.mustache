@@ -50,19 +50,21 @@ class APIClient {
 		$headerParams) {
 
 		$headers = array();
-
+		$headers[] = 'User-Agent: ftb-api';
         # Allow API key from $headerParams to override default
         $added_api_key = False;
 		if ($headerParams != null) {
-			foreach ($headerParams as $key => $val) {
-				$headers[] = "$key: $val";
+			foreach ($headerParams as $key => $val) {				
 				if ($key == 'api_key') {
+				    $headers[] = "Token: $val";
 				    $added_api_key = True;
+				} else {
+					$headers[] = "$key: $val";
 				}
 			}
 		}
 		if (! $added_api_key) {
-		    $headers[] = "api_key: " . $this->apiKey;
+		    $headers[] = "Token: " . $this->apiKey;
 		}
 
 		if (is_object($postData) or is_array($postData)) {
