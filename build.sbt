@@ -7,7 +7,7 @@ name := "swagger-codegen"
 
 version := "2.0.14"
 
-scalaVersion := "2.10.0"
+scalaVersion := "2.9.1"
 
 crossVersion := CrossVersion.full
 

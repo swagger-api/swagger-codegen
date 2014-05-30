@@ -81,10 +81,12 @@ class {{classname}} {
       if(! $response){
           return null;
         }
+          if (!is_object($response)) {
+                  $response = $this->apiClient->deserialize($response,
+                          'string');
+          }
 
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                '{{returnType}}');
-  		return $responseObject;
+          return $response;
 
       {{/returnType}}
   }
