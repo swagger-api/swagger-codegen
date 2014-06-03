@@ -6,6 +6,7 @@ import {{invokerPackage}}.ApiInvoker;
 {{/imports}}
 
 import java.util.*;
+import java.io.File;
 
 {{#operations}}
 public class {{classname}} {
@@ -45,10 +46,10 @@ public class {{classname}} {
       queryParams.put("{{baseName}}", String.valueOf({{paramName}}));
     {{/queryParams}}
 
-    {{#headerParams}}headerParams.put("{{baseName}}", {{paramName}});
+    {{#headerParams}}headerParams.put("{{baseName}}", String.valueOf({{paramName}}));
     {{/headerParams}}
 
-    {{#formParams}}formParams.put("{{baseName}}", {{paramName}});
+    {{#formParams}}formParams.put("{{baseName}}", String.valueOf({{paramName}}));
     {{/formParams}}
 
     String[] contentTypes = {
