@@ -48,18 +48,13 @@ abstract class CodegenConfig {
   def invokerPackage: Option[String] = None
   def apiPackage: Option[String] = None
   def modelPackage: Option[String] = None
+  val apiFilter: (ApiListingReference) => Boolean = (api) => true // Include all APIs by default.
 
   def reservedWords: Set[String] = Set()
 
   // swagger primitive types
   def importMapping: Map[String, String] = Map()
   def escapeReservedWord(word: String) = word
-
-  // only process these apis (by name)
-  val apisToProcess = new HashSet[String]
-
-  // only process these models
-  val modelsToProcess = new HashSet[String]
 
   // method name from operation.nickname
   def toMethodName(name: String): String = name

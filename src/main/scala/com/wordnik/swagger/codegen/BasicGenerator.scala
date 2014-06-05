@@ -55,13 +55,14 @@ abstract class BasicGenerator extends CodegenConfig with PathUtil {
     val host = args(0)
     val apiKey = if(args.length > 1) Some(args(1)) else None
     val authorization = authenticate(apiKey)
-    val doc = {
+    val unfilteredDoc = {
       try {
         ResourceExtractor.fetchListing(getResourcePath(host), authorization)
       } catch {
         case e: Exception => throw new Exception("unable to read from " + host, e)
       }
     }
+    val doc: ResourceListing = unfilteredDoc.copy(apis = unfilteredDoc.apis.filter(apiFilter))
 
     val apis: List[ApiListing] = getApis(host, doc, authorization)
 
