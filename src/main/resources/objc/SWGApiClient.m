@@ -194,6 +194,7 @@ static bool loggingEnabled = false;
             reachabilityChangeBlock(status);
         }
     }];
+    [[SWGApiClient sharedClientFromPool:host].reachabilityManager startMonitoring];
 }
 
 -(NSString*) pathWithQueryParamsToString:(NSString*) path
