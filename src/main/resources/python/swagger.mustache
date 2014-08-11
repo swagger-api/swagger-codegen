@@ -37,7 +37,7 @@ class ApiClient:
                 headers[param] = value
 
         #headers['Content-type'] = 'application/json'
-        headers['Token'] = self.apiKey
+        headers['Token'] = self.apiKey or headers['Token']
         headers['User-Agent'] = 'ftb-api'
 
         if self.cookie:
