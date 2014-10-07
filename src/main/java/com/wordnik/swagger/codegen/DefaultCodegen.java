@@ -7,7 +7,6 @@ import com.wordnik.swagger.models.properties.*;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.*;
-import java.io.File;
 
 public class DefaultCodegen {
   protected String outputFolder = "";
@@ -567,20 +566,20 @@ public class DefaultCodegen {
       }
       for(String responseCode: operation.getResponses().keySet()) {
         Response response = operation.getResponses().get(responseCode);
-        if(response != methodResponse) {
-          CodegenResponse r = new CodegenResponse();
-          if("default".equals(responseCode))
-            r.code = "0";
-          else
-            r.code = responseCode;
-          r.message = response.getDescription();
-          r.schema = response.getSchema();
-          op.responses.add(r);
-        }
-        for(int i = 0; i < op.responses.size() - 1; i++) {
-          CodegenResponse r = op.responses.get(i);
-          r.hasMore = new Boolean(true);
-        }
+        CodegenResponse r = new CodegenResponse();
+        r.hasMore = false;
+        if("default".equals(responseCode))
+          r.code = "0";
+        else
+          r.code = responseCode;
+        r.message = response.getDescription();
+        // TODO use fromProperty("response", response.getSchema()) instead?!
+        r.schema = response.getSchema();
+        op.responses.add(r);
+      }
+      for(int i = 0; i < op.responses.size() - 1; i++) {
+        CodegenResponse r = op.responses.get(i);
+        r.hasMore = new Boolean(true);
       }
     }
 
