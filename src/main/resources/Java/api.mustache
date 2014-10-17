@@ -18,14 +18,18 @@ public class {{classname}} {
   String basePath = "{{basePath}}";
   ApiInvoker apiInvoker = ApiInvoker.getInstance();
 
+  public {{classname}}(String semappBasePath) {
+        this.basePath = semappBasePath;
+  }
+
   public ApiInvoker getInvoker() {
     return apiInvoker;
   }
-  
+
   public void setBasePath(String basePath) {
     this.basePath = basePath;
   }
-  
+
   public String getBasePath() {
     return basePath;
   }
@@ -34,7 +38,7 @@ public class {{classname}} {
   {{#errorList}} //error info- code: {{code}} reason: "{{reason}}" model: {{#responseModel}}{{responseModel}}
   {{/responseModel}}{{^responseModel}}<none>
   {{/responseModel}}
-  {{/errorList}}  
+  {{/errorList}}
   public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}} {{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws ApiException {
     Object postBody = {{#bodyParam}}{{bodyParam}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
     {{#requiredParamCount}}

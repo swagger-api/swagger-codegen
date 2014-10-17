@@ -52,7 +52,7 @@ class CodegenConfigTest extends FlatSpec with Matchers {
    * We will take an api in the spec and create an API name from it
    */
   it should "convert an api name" in {
-    config.toApiName("fun") should be ("FunApi")
+    config.toApiName("fun") should be ("FunAPI")
   }
 
   /*
@@ -60,7 +60,7 @@ class CodegenConfigTest extends FlatSpec with Matchers {
    * i.e. /foo will follow rules to become FooApi
   */
   it should "convert a path" in {
-    config.apiNameFromPath("/foo/bar/cats/dogs") should be ("FooApi")
+    config.apiNameFromPath("/foo/bar/cats/dogs") should be ("FooAPI")
   }
 
   behavior of "CodegenConfig"

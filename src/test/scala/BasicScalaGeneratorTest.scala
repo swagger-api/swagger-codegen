@@ -64,21 +64,21 @@ class BasicScalaGeneratorTest extends FlatSpec with Matchers {
    * returns the invoker package from the config
    */
   it should "get the invoker package" in {
-  	config.invokerPackage should be (Some("com.wordnik.client.common"))
+  	config.invokerPackage should be (Some("org.imintel.client.common"))
   }
 
   /*
    * returns the api package
    */
   it should "get the api package" in {
-  	config.apiPackage should be (Some("com.wordnik.client.api"))
+  	config.apiPackage should be (Some("org.imintel.client.api"))
   }
 
   /*
    * returns the model package
    */
   it should "get the model package" in {
-  	config.modelPackage should be (Some("com.wordnik.client.model"))
+  	config.modelPackage should be (Some("org.imintel.client.model"))
   }
 
   /*

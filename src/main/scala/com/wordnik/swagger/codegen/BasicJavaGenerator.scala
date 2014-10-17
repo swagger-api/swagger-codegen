@@ -1,17 +1,17 @@
 /**
- *  Copyright 2014 Wordnik, Inc.
+ * Copyright 2014 Wordnik, Inc.
  *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package com.wordnik.swagger.codegen
@@ -73,12 +73,12 @@ class BasicJavaGenerator extends BasicGenerator {
   // template used for models
   apiTemplateFiles += "api.mustache" -> ".java"
 
-  override def reservedWords = Set("abstract", "continue", "for", "new", "switch", "assert", 
-    "default", "if", "package", "synchronized", "boolean", "do", "goto", "private", 
-    "this", "break", "double", "implements", "protected", "throw", "byte", "else", 
-    "import", "public", "throws", "case", "enum", "instanceof", "return", "transient", 
-    "catch", "extends", "int", "short", "try", "char", "final", "interface", "static", 
-    "void", "class", "finally", "long", "strictfp", "volatile", "const", "float", 
+  override def reservedWords = Set("abstract", "continue", "for", "new", "switch", "assert",
+    "default", "if", "package", "synchronized", "boolean", "do", "goto", "private",
+    "this", "break", "double", "implements", "protected", "throw", "byte", "else",
+    "import", "public", "throws", "case", "enum", "instanceof", "return", "transient",
+    "catch", "extends", "int", "short", "try", "char", "final", "interface", "static",
+    "void", "class", "finally", "long", "strictfp", "volatile", "const", "float",
     "native", "super", "while")
 
   // import/require statements for specific datatypes
@@ -99,26 +99,26 @@ class BasicJavaGenerator extends BasicGenerator {
   )
 
   // package for models
-  override def modelPackage: Option[String] = Some("com.wordnik.client.model")
+  override def modelPackage: Option[String] = Some("org.imintel.client.model")
 
   // package for api classes
-  override def apiPackage: Option[String] = Some("com.wordnik.client.api")
+  override def apiPackage: Option[String] = Some("org.imintel.client.api")
 
   // file suffix
   override def fileSuffix = ".java"
 
   override def toVarName(name: String): String = {
-    val paramName = name.replaceAll("[^a-zA-Z0-9_]","")
+    val paramName = name.replaceAll("[^a-zA-Z0-9_]", "")
     super.toVarName(paramName)
   }
 
   override def toApiFilename(name: String): String = {
-    val paramName = name.replaceAll("[^a-zA-Z0-9_]","")
+    val paramName = name.replaceAll("[^a-zA-Z0-9_]", "")
     super.toApiFilename(paramName)
   }
 
   override def toApiName(name: String): String = {
-    val paramName = name.replaceAll("[^a-zA-Z0-9_]","")
+    val paramName = name.replaceAll("[^a-zA-Z0-9_]", "")
     super.toApiName(paramName)
   }
 
@@ -203,9 +203,9 @@ class BasicJavaGenerator extends BasicGenerator {
    * additional params
    **/
   additionalParams ++= Map(
-    "artifactId" -> "java-client", 
-    "artifactVersion" -> "1.0.0",
-    "groupId" -> "com.wordnik")
+    "artifactId" -> "semapp-java-client",
+    "artifactVersion" -> ("1.0.0."+System.currentTimeMillis().toString()),
+    "groupId" -> "org.imintel")
 
   /**
    * we are defaulting to null values since the codegen uses java objects instead of primitives
@@ -236,7 +236,7 @@ class BasicJavaGenerator extends BasicGenerator {
   }
 
   override def escapeReservedWord(word: String) = {
-    if (reservedWords.contains(word)) 
+    if (reservedWords.contains(word))
       throw new Exception("reserved word " + "\"" + word + "\" not allowed")
     else word
   }

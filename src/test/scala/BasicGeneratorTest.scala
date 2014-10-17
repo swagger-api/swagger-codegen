@@ -105,8 +105,8 @@ class BasicGeneratorTest extends FlatSpec with Matchers {
     // inspect properties
     bundle("name") should be ("SampleObject")
     bundle("className") should be ("SampleObject")
-    bundle("invokerPackage") should be (Some("com.wordnik.client.common"))
-    bundle("package") should be (Some("com.wordnik.client.model"))
+    bundle("invokerPackage") should be (Some("org.imintel.client.common"))
+    bundle("package") should be (Some("org.imintel.client.model"))
 
     // inspect models
     val modelList = bundle("models").asInstanceOf[List[Map[String, AnyRef]]]
@@ -127,7 +127,7 @@ class BasicGeneratorTest extends FlatSpec with Matchers {
     val name = modelFileContents.keys.filter(_.endsWith("SampleObject.test")).head
 
     val fileContents = modelFileContents(name)
-    fileContents.indexOf("case class SampleObject") should not be (-1)
+    fileContents.indexOf("class SampleObject") should not be (-1)
     fileContents.indexOf("longValue: Long") should not be (-1)
     fileContents.indexOf("intValue: Int") should not be (-1)
     fileContents.indexOf("doubleValue: Double") should not be (-1)

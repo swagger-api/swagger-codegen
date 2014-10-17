@@ -1,17 +1,17 @@
 /**
- *  Copyright 2014 Wordnik, Inc.
+ * Copyright 2014 Wordnik, Inc.
  *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package com.wordnik.swagger.codegen
@@ -114,10 +114,10 @@ class BasicScalaGenerator extends BasicGenerator {
   )
 
   // package for models
-  override def modelPackage: Option[String] = Some("com.wordnik.client.model")
+  override def modelPackage: Option[String] = Some("org.imintel.client.model")
 
   // package for api classes
-  override def apiPackage: Option[String] = Some("com.wordnik.client.api")
+  override def apiPackage: Option[String] = Some("org.imintel.client.api")
 
   // response classes--if you don't want a response class, override and set to None
   override def processResponseClass(responseClass: String): Option[String] = {
@@ -210,12 +210,12 @@ class BasicScalaGenerator extends BasicGenerator {
    * additional params
    **/
   additionalParams ++= Map(
-    "artifactId" -> "scala-client", 
-    "artifactVersion" -> "1.0.0",
-    "groupId" -> "com.wordnik")
+    "artifactId" -> "semapp-scala-client",
+    "artifactVersion" -> ("1.0.0."+System.currentTimeMillis().toString()),
+    "groupId" -> "org.imintel")
 
   // supporting classes
   override def supportingFiles = List(
-    ("apiInvoker.mustache", destinationDir + "/com/wordnik/client", "ApiInvoker.scala"),
+    ("apiInvoker.mustache", destinationDir + "/org/imintel/client", "ApiInvoker.scala"),
     ("pom.mustache", "generated-code/scala", "pom.xml"))
 }
