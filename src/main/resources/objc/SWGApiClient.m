@@ -409,10 +409,8 @@ static bool loggingEnabled = false;
     [request setHTTPShouldHandleCookies:NO];
     
     NSNumber* requestId = [SWGApiClient queueRequest];
-    AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [op setCompletionBlockWithSuccess:
-     ^(AFHTTPRequestOperation *operation,
-       id responseObject) {
+    AFHTTPRequestOperation *op = [self HTTPRequestOperationWithRequest:request
+     success:^(AFHTTPRequestOperation *operation, id responseObject) {
          NSString *response = [operation responseString];
          if([self executeRequestWithId:requestId]) {
              if(self.logServerResponses)
