@@ -495,7 +495,7 @@ class Codegen(config: CodegenConfig) {
       val outputFolder = outputFile.getParent
       new File(outputFolder).mkdirs
 
-      if (supportingFile.endsWith(".mustache")) {
+      if (supportingFile.endsWith(".mustache") || supportingFile.endsWith(".ssp")) {
         val output = {
           val (resourceName, (_, template)) = compileTemplate(supportingFile, rootDir, Some(engine))
           engine.layout(resourceName, template, data.toMap)
