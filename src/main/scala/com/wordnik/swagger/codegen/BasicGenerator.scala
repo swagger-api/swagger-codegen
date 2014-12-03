@@ -228,7 +228,7 @@ abstract class BasicGenerator extends CodegenConfig with PathUtil {
    */
   def prepareModelMap(models: Map[String, Model]): List[Map[String, AnyRef]] = {
     val allImports = new HashSet[String]
-    val outputDirectory = (destinationDir + File.separator + modelPackage.getOrElse("").replace(".", File.separator))
+    val outputDirectory = (destinationDir + File.separator + toFilePath(modelPackage))
     (for ((name, schema) <- models) yield {
       if (!defaultIncludes.contains(name)) {
         val modelMap: Map[String, AnyRef] = codegen.modelToMap(name, schema)
@@ -371,7 +371,7 @@ abstract class BasicGenerator extends CodegenConfig with PathUtil {
       m += "invokerPackage" -> invokerPackage
       m += "operations" -> operations
       m += "models" -> None
-      m += "outputDirectory" -> (destinationDir + File.separator + apiPackage.getOrElse("").replace(".", File.separator))
+      m += "outputDirectory" -> (destinationDir + File.separator + toFilePath(apiPackage))
       m += "newline" -> "\n"
       m += "modelPackage" -> modelPackage
 
