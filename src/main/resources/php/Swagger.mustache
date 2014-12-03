@@ -107,7 +107,7 @@ class APIClient {
 			$data = json_decode($response);
 		} else if ($response_info['http_code'] == 401) {
 			throw new Exception("Unauthorized API request to " . $url .
-					": ".json_decode($response)->message );
+					": ".json_decode($response)->error );
 		} else if ($response_info['http_code'] == 404) {
 			$data = null;
 		} else {
