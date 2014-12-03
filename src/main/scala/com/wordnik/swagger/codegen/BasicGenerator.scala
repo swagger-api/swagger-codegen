@@ -52,13 +52,13 @@ abstract class BasicGenerator extends CodegenConfig with PathUtil {
   var codegen = new Codegen(this)
   var fileMap: Option[String] = None
 
-  @deprecated(message = "please use the generate function", since = "2.0.16")
+//  @deprecated(message = "please use the generate function", since = "2.0.16")
   def generateClient(args: Array[String]): Unit = {
     generateClientWithoutExit(args)
     System.exit(0)
   }
 
-  @deprecated(message = "please use the generate function", since = "2.0.16")
+//  @deprecated(message = "please use the generate function", since = "2.0.16")
   def generateClientWithoutExit(args: Array[String]): Seq[File] = {
     if (args.length == 0) {
       throw new RuntimeException("Need url to resource listing as argument. You can also specify VM Argument -DfileMap=/path/to/folder/containing.resources.json/")
@@ -366,6 +366,7 @@ abstract class BasicGenerator extends CodegenConfig with PathUtil {
       m += "name" -> toApiName(name)
       m += "classname" -> className
       m += "className" -> className
+      m += "classVarName" -> toVarName(className)
       m += "basePath" -> basePath
       m += "package" -> apiPackage
       m += "invokerPackage" -> invokerPackage
