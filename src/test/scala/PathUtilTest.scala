@@ -24,14 +24,15 @@ import org.scalatest.Matchers
 
 @RunWith(classOf[JUnitRunner])
 class PathUtilTest extends FlatSpec with Matchers {
-  val config = new BasicScalaGenerator
+  val pathUtil = new PathUtil {
+  }
 
   behavior of "PathUtil"
   /*
    * We will take an api in the spec and create an API name from it
    */
   it should "convert an api name" in {
-  	config.toApiName("fun") should be ("FunApi")
+  	pathUtil.toApiName("fun") should be ("FunApi")
   }
 
   /*
@@ -39,7 +40,7 @@ class PathUtilTest extends FlatSpec with Matchers {
    * i.e. /foo will follow rules to become FooApi
   */
   it should "convert a path" in {
-  	config.apiNameFromPath("/foo/bar/cats/dogs") should be ("FooApi")
+  	pathUtil.apiNameFromPath("/foo/bar/cats/dogs") should be ("FooApi")
   }
 
   /**
@@ -48,8 +49,7 @@ class PathUtilTest extends FlatSpec with Matchers {
    **/
   it should "get determine the basePath implicitly" in {
     sys.props -= "fileMap"
-    new PathUtilImpl().getBasePath("http://foo.com/api-docs", "") should be ("http://foo.com/api-docs")
+    pathUtil.getBasePath("http://foo.com/api-docs", "") should be ("http://foo.com/api-docs")
   }
-}
 
-class PathUtilImpl extends PathUtil
+}
