@@ -52,9 +52,12 @@ class PathUtilTest extends FlatSpec with Matchers {
     pathUtil.getBasePath("http://foo.com/api-docs", "") should be ("http://foo.com/api-docs")
   }
 
+  /**
+   * We need convert package path to file path to place generated files to right place.
+   */
   it should "be able to convert package path to file path" in {
-    pathUtil.toFilePath(Some("com.example.package")) should be ("com/example/package")
-    pathUtil.toFilePath(None) should be ("")
+    pathUtil.pathFromPackage(Some("com.example.package")) should be ("com/example/package")
+    pathUtil.pathFromPackage(None) should be ("")
   }
 
 }
