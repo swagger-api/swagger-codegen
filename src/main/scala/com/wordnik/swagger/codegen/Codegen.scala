@@ -380,7 +380,7 @@ class Codegen(config: CodegenConfig) {
               baseType
             else
               config.modelPackage match {
-                case Some(p) => p + "." + baseType
+                case Some(p) => p + config.packageSeparator + baseType
                 case _ => baseType
               }
           },

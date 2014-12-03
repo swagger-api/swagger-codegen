@@ -63,7 +63,9 @@ trait PathUtil {
     apiPath.split("/")(1).split("\\.")(0).replaceAll("/", "")
   }
 
-  def pathFromPackage(packagePath:Option[String]):String = packagePath.getOrElse("").replace(packageSeparator, File.separator)
+  def pathFromPackage(packagePath:Option[String]):String = {
+    packagePath.getOrElse("").replace(packageSeparator, File.separator)
+  }
 
   def packageSeparator:String = "."
 
