@@ -327,6 +327,7 @@ class Codegen(config: CodegenConfig) {
         "classname" -> config.toModelName(className),
         "className" -> config.toModelName(className),
         "classVarName" -> config.toVarName(className), // suggested name of object created from this class
+        "instanceVarName" -> config.toInstanceVarName(className),
         "modelPackage" -> config.modelPackage,
         "description" -> model.description,
         "modelJson" -> writeJson(model),
