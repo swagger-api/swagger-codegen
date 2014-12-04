@@ -367,6 +367,7 @@ abstract class BasicGenerator extends CodegenConfig with PathUtil {
       m += "classname" -> className
       m += "className" -> className
       m += "classVarName" -> toVarName(className)
+      m += "instanceVarName" -> toInstanceVarName(className)
       m += "basePath" -> basePath
       m += "package" -> apiPackage
       m += "invokerPackage" -> invokerPackage

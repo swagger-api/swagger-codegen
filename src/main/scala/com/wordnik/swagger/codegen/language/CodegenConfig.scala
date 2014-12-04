@@ -115,11 +115,13 @@ abstract class CodegenConfig {
   def toVarName(name: String): String = {
     name match {
       case _ if (reservedWords.contains(name)) => escapeReservedWord(name)
-      case _ => {
-        if (name.length > 0) name(0).toLower + name.substring(1)
-        else ""
-      }
+      case _ => name
     }
+  }
+
+  def toInstanceVarName(name: String): String = {
+    if (name.length > 0) name(0).toLower + name.substring(1)
+    else name
   }
 
   def toDefaultValue(datatype: String, v: String): Option[String] = {
