@@ -203,7 +203,7 @@ class BasicScalaGenerator extends BasicGenerator {
   }
 
   // escape keywords
-  override def escapeReservedWord(word: String) = "`" + word + "`"
+  override def escapeReservedWord(word: String) = "_" + word
 
   /**
    * you should override these params for generating the pom.xml and processing

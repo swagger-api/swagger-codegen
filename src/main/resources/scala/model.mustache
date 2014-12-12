@@ -7,12 +7,20 @@ package {{package}}
 
 {{#model}}
 
-case class {{classname}} (
+class {{classname}} (
   {{#vars}}
 
   {{#description}}/* {{{description}}} */
   {{/description}}
-  {{name}}: {{datatype}}{{#hasMore}},{{newline}}  {{/hasMore}}
+  _{{name}}: {{datatype}}{{#hasMore}},{{newline}}  {{/hasMore}}
   {{/vars}})
+{
+  {{#vars}}
+  def {{name}} : {{datatype}} = _{{name}}
+
+  
+  {{/vars}}
+}
+
 {{/model}}
 {{/models}}

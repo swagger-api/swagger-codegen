@@ -124,7 +124,7 @@ class BasicScalaGeneratorTest extends FlatSpec with Matchers {
    * single tick reserved words
    */
   it should "quote a reserved var name" in {
-  	config.toVarName("package") should be ("`package`")
+  	config.toVarName("package") should be ("_package")
   }
 
   /*
