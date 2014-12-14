@@ -57,10 +57,17 @@ java -cp ./target/*:./target/lib/* com.wordnik.swagger.codegen.Codegen \
 With a number of options.  You can get the options with the -h flag:
 ```
 usage: Codegen
- -i,--input-spec <arg>     location of the swagger spec, as URL or file
- -l,--lang <arg>           client language to generate
- -o,--output <arg>         where to write the generated files
- -t,--template-dir <arg>   folder containing the template files
+ -ap,--apiPackage <arg>     package for api classes
+ -h,--help                  shows this message
+ -i,--input-spec <arg>      location of the swagger spec, as URL or file
+ -l,--lang <arg>            client language to generate.
+                            Available languages include:
+                            [android, java, jaxrs, nodejs, objc, scalatra,
+                            dynamic-html, html, swagger, tizen]
+ -mp,--modelPackage <arg>   package for model classes
+ -o,--output <arg>          where to write the generated files
+ -t,--template-dir <arg>    folder containing the template files
+
  ```
 
 You can then compile and run the client, as well as unit tests against it:

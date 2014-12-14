@@ -30,6 +30,8 @@ public class Codegen extends DefaultGenerator {
     options.addOption("o", "output", true, "where to write the generated files");
     options.addOption("i", "input-spec", true, "location of the swagger spec, as URL or file");
     options.addOption("t", "template-dir", true, "folder containing the template files");
+    options.addOption("ap", "apiPackage", true, "package for api classes");
+    options.addOption("mp", "modelPackage", true, "package for model classes");
 
     ClientOptInput clientOptInput = new ClientOptInput();
     ClientOpts clientOpts = new ClientOpts();
@@ -63,6 +65,14 @@ public class Codegen extends DefaultGenerator {
         swagger = new SwaggerParser().read(cmd.getOptionValue("i"));
       if (cmd.hasOption("t"))
         clientOpts.getProperties().put("templateDir", String.valueOf(cmd.getOptionValue("t")));
+      if (cmd.hasOption("ap"))
+          clientOpts.getProperties().put("apiPackage", String.valueOf(cmd.getOptionValue("ap")));
+      if (cmd.hasOption("mp"))
+          clientOpts.getProperties().put("modelPackage", String.valueOf(cmd.getOptionValue("mp")));
+      if (swagger == null) {
+          usage(options);
+          return;
+      }
     }
     catch (Exception e) {
       usage(options);

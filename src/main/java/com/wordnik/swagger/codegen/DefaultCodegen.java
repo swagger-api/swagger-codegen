@@ -27,6 +27,12 @@ public class DefaultCodegen {
     if(additionalProperties.containsKey("templateDir")) {
       this.setTemplateDir((String)additionalProperties.get("templateDir"));
     }
+    if (additionalProperties.containsKey("apiPackage")) {
+    	apiPackage = (String) additionalProperties.get("apiPackage"); 
+    }
+    if (additionalProperties.containsKey("modelPackage")) {
+    	modelPackage = (String) additionalProperties.get("modelPackage"); 
+    }
   }
 
   // override with any special post-processing
@@ -209,6 +215,7 @@ public class DefaultCodegen {
     importMapping.put("LocalDateTime", "org.joda.time.*");
     importMapping.put("LocalDate", "org.joda.time.*");
     importMapping.put("LocalTime", "org.joda.time.*");
+    importMapping.put("Object", "java.lang.Object");
   }
 
   public String toInstantiationType(Property p) {
@@ -282,6 +289,8 @@ public class DefaultCodegen {
       datatype = "map";
     else if (p instanceof DecimalProperty)
       datatype = "number";
+    else if (p instanceof ObjectProperty)
+        datatype = "object";    
     else if (p instanceof RefProperty) {
       RefProperty r = (RefProperty)p;
       datatype = r.get$ref();

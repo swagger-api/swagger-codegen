@@ -40,6 +40,21 @@ public class JaxRSServerCodegen extends JavaClientCodegen implements CodegenConf
     additionalProperties.put("artifactVersion", artifactVersion);
     additionalProperties.put("title", title);
 
+    languageSpecificPrimitives = new HashSet<String>(
+      Arrays.asList(
+        "String",
+        "boolean",
+        "Boolean",
+        "Double",
+        "Integer",
+        "Long",
+        "Float")
+      );
+  }
+  
+  @Override
+  public void processOpts(){
+	  super.processOpts();
     supportingFiles.clear();
     supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
     supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
@@ -53,17 +68,6 @@ public class JaxRSServerCodegen extends JavaClientCodegen implements CodegenConf
       (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "NotFoundException.java"));
     supportingFiles.add(new SupportingFile("web.mustache", 
       ("src/main/webapp/WEB-INF"), "web.xml"));
-
-    languageSpecificPrimitives = new HashSet<String>(
-      Arrays.asList(
-        "String",
-        "boolean",
-        "Boolean",
-        "Double",
-        "Integer",
-        "Long",
-        "Float")
-      );
   }
 
   @Override
