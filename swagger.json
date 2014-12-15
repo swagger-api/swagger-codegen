@@ -125,25 +125,33 @@
           "type": "integer",
           "format": "int32"
         }
-      },
-    "subTypes" : ["User", "User2"],
-    "discriminator" : "type"
+      }
     },
     "User": {
-      "properties": {
-        "lastUpdated": {
-          "type": "string",
-          "format": "date-time"
-        }
-      }
+    	"allOf": [ 
+         	{ "$ref": "#/models/Person" }, 
+         	{
+	      "properties": {
+	        "lastUpdated": {
+	          "type": "string",
+	          "format": "date-time"
+		        }
+		      }
+			}
+       ]
     },
     "User2": {
-      "properties": {
-        "firstUpdated": {
-          "type": "string",
-          "format": "date-time"
-        }
-      }
+    	"allOf": [ 
+         	{ "$ref": "#/models/Person" },   
+         	{  
+	      "properties": {
+	        "firstUpdated": {
+	          "type": "string",
+	          "format": "date-time"
+		        }
+		      }
+		  }
+       ]
     }
   }
 }

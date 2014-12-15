@@ -71,7 +71,6 @@ public class DefaultGenerator implements Generator {
 
       List<Object> allOperations = new ArrayList<Object>();
       List<Object> allModels = new ArrayList<Object>();
-
       Map<String, Model> parents = new HashMap<String, Model>();       
       // models
       Map<String, Model> definitions = swagger.getDefinitions();
@@ -293,7 +292,7 @@ public class DefaultGenerator implements Generator {
 
   public Reader getTemplateReader(String name) {
     try{
-      InputStream is = this.getClass().getClassLoader().getResourceAsStream(name);
+      InputStream is = getClass().getClassLoader().getResourceAsStream(name);
       if(is == null)
         is = new FileInputStream(new File(name));
       if(is == null)
