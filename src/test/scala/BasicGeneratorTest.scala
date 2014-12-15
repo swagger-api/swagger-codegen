@@ -127,7 +127,6 @@ class BasicGeneratorTest extends FlatSpec with Matchers {
     val name = modelFileContents.keys.filter(_.endsWith("SampleObject.test")).head
 
     val fileContents = modelFileContents(name)
-    fileContents.indexOf("class SampleObject") should not be (-1)
     fileContents.indexOf("longValue: Long") should not be (-1)
     fileContents.indexOf("intValue: Int") should not be (-1)
     fileContents.indexOf("doubleValue: Double") should not be (-1)
