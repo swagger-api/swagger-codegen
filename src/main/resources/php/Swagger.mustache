@@ -32,9 +32,10 @@ class APIClient {
 	 * @param string $apiKey your API key
 	 * @param string $apiServer the address of the API server
 	 */
-	function __construct($apiKey, $apiServer) {
+	function __construct($apiKey, $apiServer, $apiKeyName='api_key') {
 		$this->apiKey = $apiKey;
 		$this->apiServer = $apiServer;
+		$this->apiKeyName = $apiKeyName;
 	}
 
 
@@ -56,13 +57,13 @@ class APIClient {
 		if ($headerParams != null) {
 			foreach ($headerParams as $key => $val) {
 				$headers[] = "$key: $val";
-				if ($key == 'api_key') {
+				if ($key == $this->apiKeyName) {
 				    $added_api_key = True;
 				}
 			}
 		}
 		if (! $added_api_key) {
-		    $headers[] = "api_key: " . $this->apiKey;
+		    $headers[] = $this->apiKeyName . ": " . $this->apiKey;
 		}
 
 		if (is_object($postData) or is_array($postData)) {
