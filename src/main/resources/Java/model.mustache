@@ -13,10 +13,7 @@ import com.wordnik.swagger.annotations.*;
 @ApiModel(description = "{{{description}}}")
 public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} { {{#vars}}
   private {{{datatype}}} {{name}} = {{{defaultValue}}};{{#allowableValues}}
-  
-  //{{^min}}public enum {{name}}Enum { {{#values}} {{.}}, {{/values}} }; 
-  {{/min}}{{/allowableValues}}{{/vars}}
-  
+  {{^min}}{{#isEnum}}public enum {{datatype}} { {{#_enum}}{{.}}{{^-last}}, {{/-last}}{{/_enum}} };{{/isEnum}}{{/min}}{{/allowableValues}}{{/vars}}
   {{#vars}}
   /**{{#description}}
    * {{{description}}}{{/description}}{{#minimum}}

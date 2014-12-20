@@ -22,9 +22,10 @@ public class DefaultGenerator implements Generator {
 
     this.swagger = opts.getSwagger();
     ClientOpts clientOpts = opts.getOpts();
-    this.config = opts.getConfig();
-    this.config.additionalProperties().putAll(clientOpts.getProperties());
-
+    if (opts.getConfig()!=null) {
+	    this.config = opts.getConfig();
+	    this.config.additionalProperties().putAll(clientOpts.getProperties());
+    }
     return this;
   }
 
@@ -70,14 +71,25 @@ public class DefaultGenerator implements Generator {
 
       List<Object> allOperations = new ArrayList<Object>();
       List<Object> allModels = new ArrayList<Object>();
-
+      Map<String, Model> parents = new HashMap<String, Model>();       
       // models
       Map<String, Model> definitions = swagger.getDefinitions();
+      for (Map.Entry<String, Model> mm : definitions.entrySet()) {
+          if (mm.getValue() instanceof ModelImpl) {
+        	  ModelImpl mi = (ModelImpl)mm.getValue();
+        	  if (!mi.getSubTypes().isEmpty()) {
+        		  mi.setName(mm.getKey());
+        		  for (String derived :mi.getSubTypes()) {
+        			  parents.put(derived, mi);
+        		  }
+        	  }
+          }
+      }
       for(String name: definitions.keySet()) {
         Model model = definitions.get(name);
         Map<String, Model> modelMap = new HashMap<String, Model>();
         modelMap.put(name, model);
-        Map<String, Object> models = processModels(config, modelMap);
+        Map<String, Object> models = processModels(config, modelMap, parents);
         models.putAll(config.additionalProperties());
 
         allModels.add(((List<Object>)models.get("models")).get(0));
@@ -225,14 +237,12 @@ public class DefaultGenerator implements Generator {
         tags = new ArrayList<String>();
         tags.add("default");
       }
-
+      CodegenOperation co = config.fromOperation(resourcePath, httpMethod, operation);
       for(String tag : tags) {
-        CodegenOperation co = config.fromOperation(resourcePath, httpMethod, operation);
         co.tags = new ArrayList<String>();
         co.tags.add(sanitizeTag(tag));
-
-        config.addOperationToGroup(sanitizeTag(tag), resourcePath, operation, co, operations);
       }
+      config.addOperationToGroup(sanitizeTag(tags.get(0)), resourcePath, operation, co, operations);      
     }
   }
 
@@ -282,7 +292,7 @@ public class DefaultGenerator implements Generator {
 
   public Reader getTemplateReader(String name) {
     try{
-      InputStream is = this.getClass().getClassLoader().getResourceAsStream(name);
+      InputStream is = getClass().getClassLoader().getResourceAsStream(name);
       if(is == null)
         is = new FileInputStream(new File(name));
       if(is == null)
@@ -325,7 +335,7 @@ public class DefaultGenerator implements Generator {
     return operations;
   }
 
-  public Map<String, Object> processModels(CodegenConfig config, Map<String, Model> definitions) {
+  public Map<String, Object> processModels(CodegenConfig config, Map<String, Model> definitions, Map<String, Model> parents) {
     Map<String, Object> objs = new HashMap<String, Object>();
     objs.put("package", config.modelPackage());
     List<Object> models = new ArrayList<Object>();
@@ -333,7 +343,11 @@ public class DefaultGenerator implements Generator {
     Set<String> allImports = new HashSet<String>();
     for(String key: definitions.keySet()) {
       Model mm = definitions.get(key);
+      Model parent = parents.get(key);
       CodegenModel cm = config.fromModel(key, mm);
+      if (parent!=null) {
+    	  cm.parent = ((ModelImpl)parent).getName();
+      }
       Map<String, Object> mo = new HashMap<String, Object>();
       mo.put("model", cm);
       models.add(mo);

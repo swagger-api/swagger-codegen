@@ -4,6 +4,7 @@ import com.wordnik.swagger.models.*;
 import com.wordnik.swagger.models.parameters.*;
 import com.wordnik.swagger.models.properties.*;
 import com.wordnik.swagger.util.Json;
+
 import org.apache.commons.lang.StringUtils;
 
 import java.util.*;
@@ -26,6 +27,12 @@ public class DefaultCodegen {
   public void processOpts(){
     if(additionalProperties.containsKey("templateDir")) {
       this.setTemplateDir((String)additionalProperties.get("templateDir"));
+    }
+    if (additionalProperties.containsKey("apiPackage")) {
+    	apiPackage = (String) additionalProperties.get("apiPackage"); 
+    }
+    if (additionalProperties.containsKey("modelPackage")) {
+    	modelPackage = (String) additionalProperties.get("modelPackage"); 
     }
   }
 
@@ -209,6 +216,7 @@ public class DefaultCodegen {
     importMapping.put("LocalDateTime", "org.joda.time.*");
     importMapping.put("LocalDate", "org.joda.time.*");
     importMapping.put("LocalTime", "org.joda.time.*");
+    importMapping.put("Object", "java.lang.Object");
   }
 
   public String toInstantiationType(Property p) {
@@ -282,6 +290,8 @@ public class DefaultCodegen {
       datatype = "map";
     else if (p instanceof DecimalProperty)
       datatype = "number";
+    else if (p instanceof ObjectProperty)
+        datatype = "object";    
     else if (p instanceof RefProperty) {
       RefProperty r = (RefProperty)p;
       datatype = r.get$ref();
@@ -351,8 +361,24 @@ public class DefaultCodegen {
     else if (model instanceof RefModel) {
       // TODO
     }
+    else if (model instanceof ComposedModel) {
+        ModelImpl derrived = (ModelImpl) ((ComposedModel)model).getChild();
+        processModelImpl(name, derrived, m, count);
+        String reference = ((RefModel)((ComposedModel)model).getParent()).getSimpleRef();
+        if (reference != null && reference.length()>0) {
+        	int i = reference.lastIndexOf("/");
+        	m.parent = reference.substring(i+1);
+        }
+      }
     else {
-      ModelImpl impl = (ModelImpl) model;
+	   processModelImpl(name, model, m, count);
+    }
+    return m;
+  }
+
+private void processModelImpl(String name, Model model, CodegenModel m,
+		int count) {
+	ModelImpl impl = (ModelImpl) model;
       if(impl.getAdditionalProperties() != null) {
         MapProperty mapProperty = new MapProperty(impl.getAdditionalProperties());
         CodegenProperty cp = fromProperty(name, mapProperty);
@@ -415,9 +441,7 @@ public class DefaultCodegen {
       else {
         m.emptyVars = true;
       }
-    }
-    return m;
-  }
+}
 
   public CodegenProperty fromProperty(String name, Property p) {
     if(p == null) {
