@@ -28,7 +28,7 @@ class PetApi(object):
     def __init__(self, apiClient):
       self.apiClient = apiClient
 
-    
+
 
     def getPetById(self, petId, **kwargs):
         """Find pet by ID
@@ -36,7 +36,7 @@ class PetApi(object):
         Args:
             petId, long: ID of pet that needs to be fetched (required)
 
-            
+
 
         Returns: Pet
         """
@@ -71,9 +71,9 @@ class PetApi(object):
 
         responseObject = self.apiClient.deserialize(response, 'Pet')
         return responseObject
-        
 
-        
+
+
 
     def deletePet(self, petId, **kwargs):
         """Deletes a pet
@@ -81,9 +81,9 @@ class PetApi(object):
         Args:
             petId, str: Pet id to delete (required)
 
-            
 
-        Returns: 
+
+        Returns:
         """
 
         allParams = ['petId']
@@ -111,9 +111,9 @@ class PetApi(object):
         response = self.apiClient.callAPI(resourcePath, method, queryParams,
                                           postData, headerParams)
 
-        
 
-        
+
+
 
     def partialUpdate(self, petId, body, **kwargs):
         """partial updates to a pet
@@ -123,7 +123,7 @@ class PetApi(object):
 
             body, Pet: Pet object that needs to be added to the store (required)
 
-            
+
 
         Returns: Array[Pet]
         """
@@ -158,9 +158,9 @@ class PetApi(object):
 
         responseObject = self.apiClient.deserialize(response, 'Array[Pet]')
         return responseObject
-        
 
-        
+
+
 
     def updatePetWithForm(self, petId, **kwargs):
         """Updates a pet in the store with form data
@@ -172,9 +172,9 @@ class PetApi(object):
 
             status, str: Updated status of the pet (optional)
 
-            
 
-        Returns: 
+
+        Returns:
         """
 
         allParams = ['petId', 'name', 'status']
@@ -202,9 +202,9 @@ class PetApi(object):
         response = self.apiClient.callAPI(resourcePath, method, queryParams,
                                           postData, headerParams)
 
-        
 
-        
+
+
 
     def uploadFile(self, **kwargs):
         """uploads an image
@@ -214,9 +214,9 @@ class PetApi(object):
 
             body, File: file to upload (optional)
 
-            
 
-        Returns: 
+
+        Returns:
         """
 
         allParams = ['additionalMetadata', 'body']
@@ -240,9 +240,9 @@ class PetApi(object):
         response = self.apiClient.callAPI(resourcePath, method, queryParams,
                                           postData, headerParams)
 
-        
 
-        
+
+
 
     def addPet(self, body, **kwargs):
         """Add a new pet to the store
@@ -250,9 +250,9 @@ class PetApi(object):
         Args:
             body, Pet: Pet object that needs to be added to the store (required)
 
-            
 
-        Returns: 
+
+        Returns:
         """
 
         allParams = ['body']
@@ -276,9 +276,9 @@ class PetApi(object):
         response = self.apiClient.callAPI(resourcePath, method, queryParams,
                                           postData, headerParams)
 
-        
 
-        
+
+
 
     def updatePet(self, body, **kwargs):
         """Update an existing pet
@@ -286,9 +286,9 @@ class PetApi(object):
         Args:
             body, Pet: Pet object that needs to be updated in the store (required)
 
-            
 
-        Returns: 
+
+        Returns:
         """
 
         allParams = ['body']
@@ -312,9 +312,9 @@ class PetApi(object):
         response = self.apiClient.callAPI(resourcePath, method, queryParams,
                                           postData, headerParams)
 
-        
 
-        
+
+
 
     def findPetsByStatus(self, status= None, **kwargs):
         """Finds Pets by status
@@ -322,7 +322,7 @@ class PetApi(object):
         Args:
             status, str: Status values that need to be considered for filter (required)
 
-            
+
 
         Returns: Array[Pet]
         """
@@ -353,11 +353,11 @@ class PetApi(object):
         if not response:
             return None
 
-        responseObject = self.apiClient.deserialize(response, 'Array[Pet]')
+        responseObject = self.apiClient.deserialize(response, 'list[Pet]')
         return responseObject
-        
 
-        
+
+
 
     def findPetsByTags(self, tags, **kwargs):
         """Finds Pets by tags
@@ -365,7 +365,7 @@ class PetApi(object):
         Args:
             tags, str: Tags to filter by (required)
 
-            
+
 
         Returns: Array[Pet]
         """
@@ -396,14 +396,5 @@ class PetApi(object):
         if not response:
             return None
 
-        responseObject = self.apiClient.deserialize(response, 'Array[Pet]')
+        responseObject = self.apiClient.deserialize(response, 'list[Pet]')
         return responseObject
-        
-
-        
-
-    
-
-
-
-
