@@ -553,6 +553,10 @@ object SwaggerSerializers {
             case Some(e: ModelRef) if(e.`type` != null || e.ref != None) => Some(e)
             case _ => None
           }
+        },
+        isRef = (json \ "$ref") match {
+          case e: JString => true
+          case _ => false
         }
       )
     }, {
