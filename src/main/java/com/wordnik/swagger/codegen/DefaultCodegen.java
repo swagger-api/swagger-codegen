@@ -581,6 +581,10 @@ public class DefaultCodegen {
         Response response = operation.getResponses().get(responseCode);
         if("200".equals(responseCode)) {
           methodResponse = response;
+          op.successResponse = fromResponse(responseCode, response);
+          if(operation.getResponses().keySet().size() > 1) {
+            op.successResponse.hasMore = new Boolean(true);
+          }
         }
       }
       if(methodResponse == null && operation.getResponses().keySet().contains("default")) {
