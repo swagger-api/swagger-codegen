@@ -41,6 +41,12 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         "native", "super", "while")
     );
 
+    invalidVariableNameCharacters = new HashSet<String> (
+      Arrays.asList(
+        "-"
+      )
+    );
+
     additionalProperties.put("invokerPackage", invokerPackage);
     additionalProperties.put("groupId", groupId);
     additionalProperties.put("artifactId", artifactId);
