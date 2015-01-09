@@ -125,6 +125,14 @@ public class ApiInvoker {
       else
         response = builder.type(contentType).post(ClientResponse.class, serialize(body));
     }
+        else if ("PATCH".equals(method)) {
+            if (body == null)
+                response = builder.method("PATCH", ClientResponse.class, null);
+            else if (body instanceof FormDataMultiPart) {
+                response = builder.type(contentType).method("PATCH", ClientResponse.class, body);
+            } else
+                response = builder.type(contentType).method("PATCH", ClientResponse.class, serialize(body));
+        }
     else if ("PUT".equals(method)) {
       if(body == null)
         response = builder.put(ClientResponse.class, serialize(body));
