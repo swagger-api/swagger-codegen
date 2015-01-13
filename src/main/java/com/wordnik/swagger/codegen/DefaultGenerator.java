@@ -294,18 +294,23 @@ public class DefaultGenerator implements Generator {
         tags.add("default");
       }
       
-      //build up with a set of parameter names defined at the operation level
-      Set<String> operationParamaterNames = new HashSet<String>();
+      /*
+        build up a set of parameter "ids" defined at the operation level
+        per the swagger 2.0 spec "A unique parameter is defined by a combination of a name and location"
+        i'm assuming "location" == "in"
+       */
+       
+      Set<String> operationParameters = new HashSet<String>();
       if(operation.getParameters() != null) {
         for(Parameter parameter : operation.getParameters()) {
-          operationParamaterNames.add(parameter.getName());
+          operationParameters.add(generateParameterId(parameter));
         }
       }
 
-      //need to propagate path level pathLevelParams down to the operation
+      //need to propagate path level down to the operation
       for(Parameter parameter : path.getParameters()) {
-        if(!operationParamaterNames.contains(parameter.getName())) {
-          //only add the parameter defined at the path level if it is not already defined at the operation level
+        //skip propagation if a parameter with the same name is already defined at the operation level
+        if(!operationParameters.contains(generateParameterId(parameter))) {
           operation.addParameter(parameter);
         }
       }
@@ -318,6 +323,10 @@ public class DefaultGenerator implements Generator {
         config.addOperationToGroup(sanitizeTag(tag), resourcePath, operation, co, operations);
       }
     }
+  }
+
+  private String generateParameterId(Parameter parameter) {
+    return parameter.getName()+":"+parameter.getIn();
   }
 
   protected String sanitizeTag(String tag) {
