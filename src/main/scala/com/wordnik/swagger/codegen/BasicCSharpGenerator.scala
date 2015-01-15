@@ -56,10 +56,13 @@ class BasicCSharpGenerator extends BasicGenerator {
     "Date" -> "DateTime?",
     "date" -> "DateTime?",
     "File" -> "byte[]",
-    "file" -> "byte[]")
+    "file" -> "byte[]",
+    "integer" -> "int?",
+    "datetime" -> "DateTime?"
+  )
 
   // location of templates
-  override def templateDir = "csharp"
+  override def templateDir = "src/main/resources/csharp"
 
   // where to write generated code
   override def destinationDir = "generated-code/csharp/src"
@@ -187,17 +190,10 @@ class BasicCSharpGenerator extends BasicGenerator {
     else word
   }
 
-  /*override def toVarName(name: String): String = {
-    name match {
-      case _ if (reservedWords.contains(name)) => escapeReservedWord(name)
-      case _ => typeMapping.getOrElse(name, name)
-    }
-    capitalize(name)
+  override def toVarName(name: String): String = {
+    val paramName = name.replaceAll("[^a-zA-Z0-9_]","")
+    super.toVarName(paramName)
   }
-
-  def capitalize(s: String) = {
-    s(0).toUpper + s.substring(1, s.length).toLowerCase
-  }*/
 
   // supporting classes
   override def supportingFiles =
