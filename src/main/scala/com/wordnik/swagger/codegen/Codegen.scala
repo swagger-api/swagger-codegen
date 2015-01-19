@@ -240,6 +240,16 @@ class Codegen(config: CodegenConfig) {
       }
     }
 
+    val sortedParams = {
+      requiredParams.toList.sortBy(_.get("defaultValue") match{
+        case Some(defaultValue) => defaultValue match{
+          case Some(value) => 1
+          case None => 0
+        }
+        case None => 0
+      })
+    }
+
     val writeMethods = Set("POST", "PUT", "PATCH")
     val properties =
       HashMap[String, AnyRef](
@@ -257,7 +267,7 @@ class Codegen(config: CodegenConfig) {
         "queryParams" -> queryParams.toList,
         "headerParams" -> headerParams.toList,
         "formParams" -> formParams.toList,
-        "requiredParams" -> requiredParams.toList,
+        "requiredParams" -> sortedParams,
         "errorList" -> errorList,
         "httpMethod" -> operation.method.toUpperCase,
         "httpMethodLowerCase" -> operation.method.toLowerCase,
