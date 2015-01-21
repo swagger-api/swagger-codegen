@@ -2,6 +2,7 @@ package com.wordnik.swagger.codegen;
 
 import com.wordnik.swagger.models.*;
 import com.wordnik.swagger.models.properties.*;
+import com.wordnik.swagger.models.parameters.*;
 import com.wordnik.swagger.util.*;
 
 import com.wordnik.swagger.codegen.languages.*;
@@ -101,7 +102,7 @@ public class DefaultGenerator implements Generator {
         System.out.println("############ Model info ############");
         Json.prettyPrint(allModels);
       }
-
+      
       // apis
       Map<String, List<CodegenOperation>> paths = processPaths(swagger.getPaths());
       for(String tag : paths.keySet()) {
@@ -208,22 +209,110 @@ public class DefaultGenerator implements Generator {
 
     for(String resourcePath : paths.keySet()) {
       Path path = paths.get(resourcePath);
-      processOperation(resourcePath, "get", path.getGet(), ops);
-      processOperation(resourcePath, "put", path.getPut(), ops);
-      processOperation(resourcePath, "post", path.getPost(), ops);
-      processOperation(resourcePath, "delete", path.getDelete(), ops);
-      processOperation(resourcePath, "patch", path.getPatch(), ops);
-      processOperation(resourcePath, "options", path.getOptions(), ops);
+      /*
+        go through the path and all of its operations and resolve refs now, 
+        before we ever convert them to the Codegen data model types 
+       */
+      resolveRefParamsInPathTree(resourcePath, path);
+      processOperation(resourcePath, "get", path.getGet(), ops, path);
+      processOperation(resourcePath, "put", path.getPut(), ops, path);
+      processOperation(resourcePath, "post", path.getPost(), ops, path);
+      processOperation(resourcePath, "delete", path.getDelete(), ops, path);
+      processOperation(resourcePath, "patch", path.getPatch(), ops, path);
+      processOperation(resourcePath, "options", path.getOptions(), ops, path);
     }
     return ops;
   }
 
-  public void processOperation(String resourcePath, String httpMethod, Operation operation, Map<String, List<CodegenOperation>> operations) {
+  private void resolveRefParamsInPathTree(String resourcePath, Path path) {
+    //resolve any path level ref parameters
+    resolveRefParams(resourcePath, path.getParameters());
+    
+    //resolve ref params for each operation defined
+    if(path.getGet() != null) {
+      resolveRefParams(resourcePath+":GET", path.getGet().getParameters());
+    }
+
+    if(path.getPut() != null) {
+      resolveRefParams(resourcePath+":PUT", path.getPut().getParameters());
+    }
+
+    if(path.getPost() != null) {
+      resolveRefParams(resourcePath+":POST", path.getPost().getParameters());
+    }
+
+    if(path.getDelete() != null) {
+      resolveRefParams(resourcePath+":DELETE", path.getDelete().getParameters());
+    }
+
+    if(path.getPatch() != null) {
+      resolveRefParams(resourcePath+":PUT", path.getPatch().getParameters());
+    }
+
+    if(path.getOptions() != null) {
+      resolveRefParams(resourcePath+":OPTIONS", path.getOptions().getParameters());
+    }
+    
+  }
+
+  private void resolveRefParams(String resourcePath, List<Parameter> parameters) {
+    
+    if(parameters == null) return;
+    
+    Iterator<Parameter> iterator = parameters.iterator();
+    
+    List<Parameter> parametersToAdd = new ArrayList<Parameter>();
+    
+    while (iterator.hasNext()) {
+      Parameter parameter = iterator.next();
+      
+      if(parameter instanceof RefParameter) {
+        RefParameter refParameter = (RefParameter) parameter;
+        String simpleRef = refParameter.getSimpleRef();
+
+        Parameter globalParameter = swagger.getParameter(simpleRef);
+        
+        if(globalParameter == null) {
+          throw new RuntimeException(resourcePath + " defined referenced a global parameter, " + refParameter.get$ref() + " that was not defined in the global parameters section.");  
+        }
+
+        //remove the ref parameter
+        iterator.remove();
+        //add the global parameter to the list
+        parametersToAdd.add(globalParameter);
+      }
+    }
+    
+    parameters.addAll(parametersToAdd);
+  }
+
+  public void processOperation(String resourcePath, String httpMethod, Operation operation, Map<String, List<CodegenOperation>> operations, Path path) {
     if(operation != null) {
       List<String> tags = operation.getTags();
       if(tags == null) {
         tags = new ArrayList<String>();
         tags.add("default");
+      }
+      
+      /*
+        build up a set of parameter "ids" defined at the operation level
+        per the swagger 2.0 spec "A unique parameter is defined by a combination of a name and location"
+        i'm assuming "location" == "in"
+       */
+       
+      Set<String> operationParameters = new HashSet<String>();
+      if(operation.getParameters() != null) {
+        for(Parameter parameter : operation.getParameters()) {
+          operationParameters.add(generateParameterId(parameter));
+        }
+      }
+
+      //need to propagate path level down to the operation
+      for(Parameter parameter : path.getParameters()) {
+        //skip propagation if a parameter with the same name is already defined at the operation level
+        if(!operationParameters.contains(generateParameterId(parameter))) {
+          operation.addParameter(parameter);
+        }
       }
 
       for(String tag : tags) {
@@ -234,6 +323,10 @@ public class DefaultGenerator implements Generator {
         config.addOperationToGroup(sanitizeTag(tag), resourcePath, operation, co, operations);
       }
     }
+  }
+
+  private String generateParameterId(Parameter parameter) {
+    return parameter.getName()+":"+parameter.getIn();
   }
 
   protected String sanitizeTag(String tag) {
