@@ -39,7 +39,14 @@ public class {{classname}} {
   {{#errorList}} //error info- code: {{code}} reason: "{{reason}}" model: {{#responseModel}}{{responseModel}}
   {{/responseModel}}{{^responseModel}}<none>
   {{/responseModel}}
-  {{/errorList}}  
+  {{/errorList}}
+  /**
+   * {{notes}}
+   *
+{{#allParams}}
+   * @param {{paramName}} {{description}} {{^optional}}(required){{/optional}}{{#optional}}(optional){{/optional}}
+{{/allParams}}
+   */
   public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws ApiException {
     Object postBody = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
     {{#requiredParamCount}}
