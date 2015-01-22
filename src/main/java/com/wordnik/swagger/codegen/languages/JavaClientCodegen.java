@@ -1,10 +1,10 @@
 package com.wordnik.swagger.codegen.languages;
 
+import java.io.*;
+import java.util.*;
+
 import com.wordnik.swagger.codegen.*;
 import com.wordnik.swagger.models.properties.*;
-
-import java.util.*;
-import java.io.File;
 
 public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
   protected String invokerPackage = "com.wordnik.client";
@@ -111,5 +111,20 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
     else
       type = swaggerType;
     return toModelName(type);
+  }
+
+  public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
+    Map<String, Object> operations = (Map<String, Object>)objs.get("operations");
+    if(operations != null) {
+      List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
+      for(CodegenOperation operation : ops) {
+    	if (operation.returnType == null)
+    	  continue;
+        if(operation.returnType.startsWith("List<")) {
+          operation.returnContainer = "List";
+        }
+      }
+    }
+    return objs;
   }
 }
