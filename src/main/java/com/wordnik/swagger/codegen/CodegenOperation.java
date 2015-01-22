@@ -18,6 +18,7 @@ public class CodegenOperation {
   public List<CodegenParameter> headerParams = new ArrayList<CodegenParameter>();
   public List<CodegenParameter> formParams = new ArrayList<CodegenParameter>();
   public List<String> tags;
+  public CodegenResponse successResponse;
   public List<CodegenResponse> responses = new ArrayList<CodegenResponse>();
   public final List<CodegenProperty> responseHeaders = new ArrayList<CodegenProperty>();
   public Set<String> imports = new HashSet<String>();

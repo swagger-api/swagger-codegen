@@ -22,9 +22,16 @@ public class {{classname}} {
   @{{httpMethod}}
   {{#subresourceOperation}}@Path("{{path}}"){{/subresourceOperation}}
   @ApiOperation(value = "{{{summary}}}", notes = "{{{notes}}}", response = {{{returnType}}}.class{{#returnContainer}}, responseContainer = "{{{returnContainer}}}"{{/returnContainer}})
-  @ApiResponses(value = { {{#responses}}
+  @ApiResponses(value = {
+{{#successResponse}}
     @ApiResponse(code = {{{code}}}, message = "{{{message}}}"){{#hasMore}},
-    {{/hasMore}}{{/responses}} })
+    {{/hasMore}}
+{{/successResponse}}
+{{#responses}}
+    @ApiResponse(code = {{{code}}}, message = "{{{message}}}"){{#hasMore}},
+    {{/hasMore}}
+{{/responses}}
+  })
 
   public Response {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{#hasMore}},
     {{/hasMore}}{{/allParams}})
