@@ -6,42 +6,54 @@ package {{package}};
 import com.wordnik.swagger.annotations.*;
 {{#models}}
 
-{{#model}}{{#description}}
+    {{#model}}
+{{#description}}
 /**
- * {{description}}
- **/{{/description}}
+* {{description}}
+**/
+{{/description}}
 @ApiModel(description = "{{{description}}}")
-public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} { {{#vars}}
-  private {{{datatype}}} {{name}} = {{{defaultValue}}};{{#allowableValues}}
-  
-  //{{^min}}public enum {{name}}Enum { {{#values}} {{.}}, {{/values}} }; 
-  {{/min}}{{/allowableValues}}{{/vars}}
-  
-  {{#vars}}
-  /**{{#description}}
-   * {{{description}}}{{/description}}{{#minimum}}
-   * minimum: {{minimum}}{{/minimum}}{{#maximum}}
-   * maximum: {{maximum}}{{/maximum}}
-   **/
-  @ApiModelProperty(required = {{required}}, value = "{{{description}}}")
-  public {{{datatype}}} {{getter}}() {
+public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} { 
+{{#vars}}
+    private {{{datatype}}} {{name}} = {{{defaultValue}}};
+{{#allowableValues}}
+{{#isEnum}}
+    public enum {{datatype}} { {{#values}} {{.}}, {{/values}} };
+{{/isEnum}}
+{{/allowableValues}}
+{{/vars}}
+
+{{#vars}}
+    /**
+{{#description}}
+     * {{{description}}}
+{{/description}}
+{{#minimum}}
+     * minimum: {{minimum}}
+{{/minimum}}
+{{#maximum}}
+     * maximum: {{maximum}}
+{{/maximum}}
+    **/
+    @ApiModelProperty(required = {{required}}, value = "{{{description}}}")
+    public {{{datatype}}} {{getter}}() {
     return {{name}};
-  }
-  public void {{setter}}({{{datatype}}} {{name}}) {
+    }
+    public void {{setter}}({{{datatype}}} {{name}}) {
     this.{{name}} = {{name}};
-  }
+    }
 
-  {{/vars}}
+{{/vars}}
 
-  @Override
-  public String toString()  {
+    @Override
+    public String toString()  {
     StringBuilder sb = new StringBuilder();
     sb.append("class {{classname}} {\n");
     {{#parent}}sb.append("  " + super.toString()).append("\n");{{/parent}}
     {{#vars}}sb.append("  {{name}}: ").append({{name}}).append("\n");
     {{/vars}}sb.append("}\n");
     return sb.toString();
-  }
-}
+    }
+    }
 {{/model}}
 {{/models}}
