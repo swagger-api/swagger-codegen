@@ -19,13 +19,14 @@ from models import *
 class ApiClient:
     """Generic API client for Swagger client library builds"""
 
-    def __init__(self, apiKey=None, apiServer=None):
+    def __init__(self, apiKey=None, apiServer=None, apiKeyName='api_key', cookie=None):
         if apiKey == None:
             raise Exception('You must pass an apiKey when instantiating the '
                             'APIClient')
         self.apiKey = apiKey
+        self.apiKeyName = apiKeyName
         self.apiServer = apiServer
-        self.cookie = None
+        self.cookie = cookie
 
     def callAPI(self, resourcePath, method, queryParams, postData,
                 headerParams=None):
@@ -37,7 +38,7 @@ class ApiClient:
                 headers[param] = value
 
         #headers['Content-type'] = 'application/json'
-        headers['api_key'] = self.apiKey
+        headers[self.apiKeyName] = self.apiKey
 
         if self.cookie:
             headers['Cookie'] = self.cookie
