@@ -114,6 +114,7 @@ class BasicGeneratorTest extends FlatSpec with Matchers {
 
     val m = modelList.head("model").asInstanceOf[Map[String, AnyRef]]
     m("classVarName") should be ("SampleObject")
+    m("instanceVarName") should be ("sampleObject")
   }
 
   it should "create a model file" in {

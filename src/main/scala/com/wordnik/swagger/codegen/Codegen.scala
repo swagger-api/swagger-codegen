@@ -329,6 +329,7 @@ class Codegen(config: CodegenConfig) {
         "classname" -> config.toModelName(className),
         "className" -> config.toModelName(className),
         "classVarName" -> config.toVarName(className), // suggested name of object created from this class
+        "instanceVarName" -> config.toInstanceVarName(className),
         "modelPackage" -> config.modelPackage,
         "description" -> model.description,
         "modelJson" -> writeJson(model),
@@ -500,7 +501,7 @@ class Codegen(config: CodegenConfig) {
       val outputFolder = outputFile.getParent
       new File(outputFolder).mkdirs
 
-      if (supportingFile.endsWith(".mustache")) {
+      if (supportingFile.endsWith(".mustache") || supportingFile.endsWith(".ssp")) {
         val output = {
           val (resourceName, (_, template)) = compileTemplate(supportingFile, rootDir, Some(engine))
           engine.layout(resourceName, template, data.toMap)

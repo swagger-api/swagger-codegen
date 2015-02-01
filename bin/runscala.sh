@@ -20,6 +20,8 @@ fi
 cd $APP_DIR
 SCALA_RUNNER_VERSION=$(scala ./bin/Version.scala)
 
+echo Using Scala: $SCALA_RUNNER_VERSION
+
 
 # if you've executed sbt assembly previously it will use that instead.
 export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -DloggerPath=conf/log4j.properties"

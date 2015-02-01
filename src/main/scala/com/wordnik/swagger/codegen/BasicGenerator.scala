@@ -13,7 +13,6 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package com.wordnik.swagger.codegen
 
 import com.wordnik.swagger.codegen._
@@ -366,6 +365,8 @@ abstract class BasicGenerator extends CodegenConfig with PathUtil {
       m += "name" -> toApiName(name)
       m += "classname" -> className
       m += "className" -> className
+      m += "classVarName" -> toVarName(className)
+      m += "instanceVarName" -> toInstanceVarName(className)
       m += "basePath" -> basePath
       m += "package" -> apiPackage
       m += "invokerPackage" -> invokerPackage

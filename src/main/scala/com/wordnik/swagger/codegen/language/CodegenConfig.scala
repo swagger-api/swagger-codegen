@@ -119,6 +119,11 @@ abstract class CodegenConfig {
     }
   }
 
+  def toInstanceVarName(name: String): String = {
+    if (name.length > 0) name(0).toLower + name.substring(1)
+    else name
+  }
+
   def toDefaultValue(datatype: String, v: String): Option[String] = {
     if (v != "" && v != null) {
       datatype match {
