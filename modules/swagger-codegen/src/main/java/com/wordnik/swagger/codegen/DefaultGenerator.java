@@ -56,6 +56,8 @@ public class DefaultGenerator implements Generator {
         }
       }
 
+      config.additionalProperties().put("parameterDefinitions", swagger.getParameters());
+
       StringBuilder hostBuilder = new StringBuilder();
       if(swagger.getSchemes() != null && swagger.getSchemes().size() > 0) {
         hostBuilder.append(swagger.getSchemes().get(0).toValue());
