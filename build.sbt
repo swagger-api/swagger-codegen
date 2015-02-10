@@ -15,7 +15,7 @@ scalacOptions ++= Seq("-optimize", "-unchecked", "-deprecation", "-Xcheckinit", 
 
 crossScalaVersions := Seq("2.10.4", "2.11.0", "2.11.1")
 
-scalaVersion := "2.10.4"
+scalaVersion := "2.11.5"
 
 libraryDependencies ++= Seq(
   "org.json4s"                  %% "json4s-jackson"     % "3.2.10",
@@ -29,11 +29,11 @@ libraryDependencies ++= Seq(
 )
 
 libraryDependencies <+= scalaVersion {
-  case v if v.startsWith("2.9") => 
+  case v if v.startsWith("2.9") =>
     "org.fusesource.scalate" % "scalate-core_2.9" % "1.6.1"
-  case v if v.startsWith("2.10") => 
+  case v if v.startsWith("2.10") =>
     "org.scalatra.scalate" %% "scalate-core" % "1.7.0"
-  case v if v.startsWith("2.11") => 
+  case v if v.startsWith("2.11") =>
     "org.scalatra.scalate" %% "scalate-core" % "1.7.0"
 }
 
