@@ -15,19 +15,19 @@ import java.util.*;
 
 {{#operations}}
 public class {{classname}} {
-  String basePath = "{{basePath}}";
-  ApiInvoker apiInvoker = ApiInvoker.getInstance();
+  String _basePath = "{{basePath}}";
+  ApiInvoker _apiInvoker = ApiInvoker.getInstance();
 
   public ApiInvoker getInvoker() {
-    return apiInvoker;
+    return _apiInvoker;
   }
   
-  public void setBasePath(String basePath) {
-    this.basePath = basePath;
+  public void setBasePath(String _basePath) {
+    this._basePath = _basePath;
   }
   
   public String getBasePath() {
-    return basePath;
+    return _basePath;
   }
 
   {{#operation}}
@@ -39,7 +39,7 @@ public class {{classname}} {
   {{/errorList}}  
    */
   public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}} {{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws ApiException {
-    Object postBody = {{#bodyParam}}{{bodyParam}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
+    Object _postBody = {{#bodyParam}}{{bodyParam}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
     {{#requiredParamCount}}
     // verify required params are set
     if({{/requiredParamCount}}{{#requiredParams}} {{paramName}} == null {{#hasMore}}|| {{/hasMore}}{{/requiredParams}}{{#requiredParamCount}}) {
@@ -48,52 +48,52 @@ public class {{classname}} {
     {{/requiredParamCount}}
 
     // create path and map variables
-    String path = "{{path}}".replaceAll("\\{format\\}","json"){{#pathParams}}.replaceAll("\\{" + "{{paramName}}" + "\\}", apiInvoker.escapeString({{{paramName}}}.toString())){{/pathParams}};
+    String _path = "{{path}}".replaceAll("\\{format\\}","json"){{#pathParams}}.replaceAll("\\{" + "{{paramName}}" + "\\}", _apiInvoker.escapeString({{{paramName}}}.toString())){{/pathParams}};
 
     // query params
-    Map<String, String> queryParams = new HashMap<String, String>();
-    Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Map<String, String> _queryParams = new HashMap<String, String>();
+    Map<String, String> _headerParams = new HashMap<String, String>();
+    Map<String, String> _formParams = new HashMap<String, String>();
 
     {{#queryParams}}if(!"null".equals(String.valueOf({{paramName}})))
-      queryParams.put("{{baseName}}", String.valueOf({{paramName}}));
+      _queryParams.put("{{baseName}}", String.valueOf({{paramName}}));
     {{/queryParams}}
 
-    {{#headerParams}}headerParams.put("{{baseName}}", {{paramName}});
+    {{#headerParams}}_headerParams.put("{{baseName}}", {{paramName}});
     {{/headerParams}}
 
-    String[] contentTypes = {
+    String[] _contentTypes = {
       {{#consumes}}"{{mediaType}}"{{#hasMore}},{{/hasMore}}{{/consumes}}
     };
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String _contentType = _contentTypes.length > 0 ? _contentTypes[0] : "application/json";
 
-    if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
+    if(_contentType.startsWith("multipart/form-data")) {
+      boolean _hasFields = false;
+      FormDataMultiPart _mp = new FormDataMultiPart();
       {{#formParams}}
       {{#notFile}}
-      hasFields = true;
-      mp.field("{{baseName}}", {{paramName}}, MediaType.MULTIPART_FORM_DATA_TYPE);
+      _hasFields = true;
+      _mp.field("{{baseName}}", {{paramName}}, MediaType.MULTIPART_FORM_DATA_TYPE);
       {{/notFile}}
       {{#isFile}}
-      hasFields = true;
-      mp.field("{{baseName}}", {{paramName}}, MediaType.MULTIPART_FORM_DATA_TYPE);
+      _hasFields = true;
+      _mp.field("{{baseName}}", {{paramName}}, MediaType.MULTIPART_FORM_DATA_TYPE);
       {{/isFile}}
       {{/formParams}}
-      if(hasFields)
-        postBody = mp;
+      if(_hasFields)
+        _postBody = _mp;
     }
     else {
       {{#formParams}}
       {{#notFile}}
-      formParams.put("{{baseName}}", String.valueOf({{paramName}}));
+      _formParams.put("{{baseName}}", String.valueOf({{paramName}}));
       {{/notFile}}
       {{/formParams}}
     }
 
     try {
-      String response = apiInvoker.invokeAPI(basePath, path, "{{httpMethod}}", queryParams, postBody, headerParams, formParams, contentType);
+      String response = _apiInvoker.invokeAPI(_basePath, _path, "{{httpMethod}}", _queryParams, _postBody, _headerParams, _formParams, _contentType);
       if(response != null){
         return {{#returnType}}({{{returnType}}}) ApiInvoker.deserialize(response, "{{returnContainer}}", {{returnBaseType}}.class){{/returnType}};
       }
