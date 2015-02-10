@@ -46,6 +46,8 @@ class BasicPHPGenerator extends BasicGenerator {
   // file suffix
   override def fileSuffix = ".php"
 
+  override def packageSeparator = "\\"
+
   // reserved words which need special quoting
   // These will all be object properties, in which context we don't need
   // to worry about escaping them for PHP.
@@ -154,7 +156,7 @@ class BasicPHPGenerator extends BasicGenerator {
 
   // supporting classes
   override def supportingFiles = List(
-    ("Swagger.mustache", destinationDir + File.separator + apiPackage.get,
+    ("Swagger.mustache", destinationDir + File.separator + pathFromPackage(apiPackage),
      "Swagger.php")
   )
 }

@@ -16,6 +16,8 @@
 
 package com.wordnik.swagger.codegen
 
+import java.io.File
+
 trait PathUtil {
   def getResourcePath(host: String, fileMap: Option[String] = None) = {
     fileMap match {
@@ -60,4 +62,11 @@ trait PathUtil {
   def resourceNameFromFullPath(apiPath: String) = {
     apiPath.split("/")(1).split("\\.")(0).replaceAll("/", "")
   }
+
+  def pathFromPackage(packagePath:Option[String]):String = {
+    packagePath.getOrElse("").replace(packageSeparator, File.separator)
+  }
+
+  def packageSeparator:String = "."
+
 }

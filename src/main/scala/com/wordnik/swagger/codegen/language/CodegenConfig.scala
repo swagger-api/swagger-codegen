@@ -29,6 +29,7 @@ abstract class CodegenConfig {
   def destinationDir: String
   def toModelName(name: String): String
   def toApiName(name: String): String
+  def packageSeparator:String
 
   def toModelFilename(name: String) = name
   def toApiFilename(name: String) = toApiName(name)
