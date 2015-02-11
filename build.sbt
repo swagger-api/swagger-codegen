@@ -5,7 +5,7 @@ organization := "com.wordnik"
 
 name := "swagger-codegen"
 
-version := "2.0.18-SNAPSHOT"
+version := "2.0.17.spnego"
 
 crossVersion := CrossVersion.full
 
@@ -13,7 +13,7 @@ javacOptions ++= Seq("-target", "1.6", "-source", "1.6", "-Xlint:unchecked", "-X
 
 scalacOptions ++= Seq("-optimize", "-unchecked", "-deprecation", "-Xcheckinit", "-encoding", "utf8")
 
-crossScalaVersions := Seq("2.10.4", "2.11.0", "2.11.1")
+crossScalaVersions := Seq("2.10.4", "2.11.4", "2.11.5")
 
 scalaVersion := "2.10.4"
 

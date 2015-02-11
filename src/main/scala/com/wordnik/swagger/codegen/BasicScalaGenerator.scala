@@ -23,6 +23,10 @@ object BasicScalaGenerator extends BasicScalaGenerator {
 }
 
 class BasicScalaGenerator extends BasicGenerator {
+  def authScheme: String = ""
+  def authPreemptive: Boolean = false
+  def asyncHttpClient: Boolean = !authScheme.isEmpty
+  
   override def defaultIncludes = Set(
     "Int",
     "String",
@@ -213,7 +217,9 @@ class BasicScalaGenerator extends BasicGenerator {
     "artifactId" -> "scala-client", 
     "artifactVersion" -> "1.0.0",
     "groupId" -> "com.wordnik",
-    "asyncHttpClient" -> "false")
+    "asyncHttpClient" -> asyncHttpClient.toString,
+    "authScheme" -> authScheme,
+    "authPreemptive" -> authPreemptive.toString)
 
   // supporting classes
   override def supportingFiles = List(
