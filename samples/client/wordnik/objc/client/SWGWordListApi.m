@@ -7,7 +7,7 @@
 
 
 @implementation SWGWordListApi
-static NSString * basePath = @"http://api.wordnik.com/v4";
+static NSString * basePath = @"https://api.wordnik.com/v4";
 
 +(SWGWordListApi*) apiWithHeader:(NSString*)headerValue key:(NSString*)key {
     static SWGWordListApi* singletonAPI = nil;
@@ -51,9 +51,11 @@ static NSString * basePath = @"http://api.wordnik.com/v4";
 }
 
 
--(NSNumber*) getWordListByPermalinkWithCompletionBlock:(NSString*) permalink         auth_token:(NSString*) auth_token        
+-(NSNumber*) getWordListByPermalinkWithCompletionBlock:(NSString*) permalink
+         auth_token:(NSString*) auth_token
         
-        completionHandler: (void (^)(NSError* error))completionBlock {
+        completionHandler: (void (^)(SWGWordList* output, NSError* error))completionBlock
+         {
 
     NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/wordList.json/{permalink}", basePath];
 
@@ -67,48 +69,54 @@ static NSString * basePath = @"http://api.wordnik.com/v4";
     NSString* requestContentType = @"application/json";
     NSString* responseContentType = @"application/json";
 
-        NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-        NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     if(auth_token != nil)
         headerParams[@"auth_token"] = auth_token;
     
 
     id bodyDictionary = nil;
-        
+    
     
     
 
     SWGApiClient* client = [SWGApiClient sharedClientFromPool:basePath];
 
     
-
     
     
+        
+    // comples response type
+    return [client dictionary:requestUrl 
+                       method:@"GET" 
+                  queryParams:queryParams 
+                         body:bodyDictionary 
+                 headerParams:headerParams
+           requestContentType:requestContentType
+          responseContentType:responseContentType
+              completionBlock:^(NSDictionary *data, NSError *error) {
+                if (error) {
+                    completionBlock(nil, error);
+                    
+                    return;
+                }
+                
+                SWGWordList *result = nil;
+                if (data) {
+                    result = [[SWGWordList    alloc]initWithValues: data];
+                }
+                completionBlock(result , nil);
+                
+              }];
     
     
-    return [client stringWithCompletionBlock:requestUrl 
-                                             method:@"GET" 
-                                        queryParams:queryParams 
-                                               body:bodyDictionary 
-                                       headerParams:headerParams
-                                 requestContentType: requestContentType
-                                responseContentType: responseContentType
-                                    completionBlock:^(NSString *data, NSError *error) {
-                        if (error) {
-                            completionBlock(error);
-                            return;
-                        }
-                        completionBlock(nil);
-                    }];
-    
-    
-    
-    
-
 }
 
--(NSNumber*) updateWordListWithCompletionBlock:(NSString*) permalink         body:(SWGWordList*) body         auth_token:(NSString*) auth_token        
+-(NSNumber*) updateWordListWithCompletionBlock:(NSString*) permalink
+         body:(SWGWordList*) body
+         auth_token:(NSString*) auth_token
+        
         
         completionHandler: (void (^)(NSError* error))completionBlock {
 
@@ -124,18 +132,20 @@ static NSString * basePath = @"http://api.wordnik.com/v4";
     NSString* requestContentType = @"application/json";
     NSString* responseContentType = @"application/json";
 
-        NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-        NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     if(auth_token != nil)
         headerParams[@"auth_token"] = auth_token;
     
 
     id bodyDictionary = nil;
-        
-    if(body != nil && [body isKindOfClass:[NSArray class]]){
+    
+    id __body = body;
+
+    if(__body != nil && [__body isKindOfClass:[NSArray class]]){
         NSMutableArray * objs = [[NSMutableArray alloc] init];
-        for (id dict in (NSArray*)body) {
+        for (id dict in (NSArray*)__body) {
             if([dict respondsToSelector:@selector(asDictionary)]) {
                 [objs addObject:[(SWGObject*)dict asDictionary]];
             }
@@ -145,27 +155,26 @@ static NSString * basePath = @"http://api.wordnik.com/v4";
         }
         bodyDictionary = objs;
     }
-    else if([body respondsToSelector:@selector(asDictionary)]) {
-        bodyDictionary = [(SWGObject*)body asDictionary];
+    else if([__body respondsToSelector:@selector(asDictionary)]) {
+        bodyDictionary = [(SWGObject*)__body asDictionary];
     }
-    else if([body isKindOfClass:[NSString class]]) {
+    else if([__body isKindOfClass:[NSString class]]) {
         // convert it to a dictionary
         NSError * error;
-        NSString * str = (NSString*)body;
+        NSString * str = (NSString*)__body;
         NSDictionary *JSON =
             [NSJSONSerialization JSONObjectWithData:[str dataUsingEncoding:NSUTF8StringEncoding]
                                             options:NSJSONReadingMutableContainers
                                               error:&error];
         bodyDictionary = JSON;
     }
-    else if([body isKindOfClass: [SWGFile class]]) {
+    else if([__body isKindOfClass: [SWGFile class]]) {
         requestContentType = @"form-data";
-        bodyDictionary = body;
+        bodyDictionary = __body;
     }
     else{
-        NSLog(@"don't know what to do with %@", body);
+        NSLog(@"don't know what to do with %@", __body);
     }
-
     
     
     
@@ -173,11 +182,11 @@ static NSString * basePath = @"http://api.wordnik.com/v4";
     SWGApiClient* client = [SWGApiClient sharedClientFromPool:basePath];
 
     
-
+    
+            // primitive response type
     
     
-    
-    
+    // no return base type
     return [client stringWithCompletionBlock:requestUrl 
                                              method:@"PUT" 
                                         queryParams:queryParams 
@@ -196,10 +205,11 @@ static NSString * basePath = @"http://api.wordnik.com/v4";
     
     
     
-
 }
 
--(NSNumber*) deleteWordListWithCompletionBlock:(NSString*) permalink         auth_token:(NSString*) auth_token        
+-(NSNumber*) deleteWordListWithCompletionBlock:(NSString*) permalink
+         auth_token:(NSString*) auth_token
+        
         
         completionHandler: (void (^)(NSError* error))completionBlock {
 
@@ -215,26 +225,26 @@ static NSString * basePath = @"http://api.wordnik.com/v4";
     NSString* requestContentType = @"application/json";
     NSString* responseContentType = @"application/json";
 
-        NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-        NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     if(auth_token != nil)
         headerParams[@"auth_token"] = auth_token;
     
 
     id bodyDictionary = nil;
-        
+    
     
     
 
     SWGApiClient* client = [SWGApiClient sharedClientFromPool:basePath];
 
     
-
+    
+            // primitive response type
     
     
-    
-    
+    // no return base type
     return [client stringWithCompletionBlock:requestUrl 
                                              method:@"DELETE" 
                                         queryParams:queryParams 
@@ -253,10 +263,12 @@ static NSString * basePath = @"http://api.wordnik.com/v4";
     
     
     
-
 }
 
--(NSNumber*) deleteWordsFromWordListWithCompletionBlock:(NSString*) permalink         body:(NSArray*) body         auth_token:(NSString*) auth_token        
+-(NSNumber*) deleteWordsFromWordListWithCompletionBlock:(NSString*) permalink
+         body:(NSArray*) body
+         auth_token:(NSString*) auth_token
+        
         
         completionHandler: (void (^)(NSError* error))completionBlock {
 
@@ -272,18 +284,20 @@ static NSString * basePath = @"http://api.wordnik.com/v4";
     NSString* requestContentType = @"application/json";
     NSString* responseContentType = @"application/json";
 
-        NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-        NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     if(auth_token != nil)
         headerParams[@"auth_token"] = auth_token;
     
 
     id bodyDictionary = nil;
-        
-    if(body != nil && [body isKindOfClass:[NSArray class]]){
+    
+    id __body = body;
+
+    if(__body != nil && [__body isKindOfClass:[NSArray class]]){
         NSMutableArray * objs = [[NSMutableArray alloc] init];
-        for (id dict in (NSArray*)body) {
+        for (id dict in (NSArray*)__body) {
             if([dict respondsToSelector:@selector(asDictionary)]) {
                 [objs addObject:[(SWGObject*)dict asDictionary]];
             }
@@ -293,27 +307,26 @@ static NSString * basePath = @"http://api.wordnik.com/v4";
         }
         bodyDictionary = objs;
     }
-    else if([body respondsToSelector:@selector(asDictionary)]) {
-        bodyDictionary = [(SWGObject*)body asDictionary];
+    else if([__body respondsToSelector:@selector(asDictionary)]) {
+        bodyDictionary = [(SWGObject*)__body asDictionary];
     }
-    else if([body isKindOfClass:[NSString class]]) {
+    else if([__body isKindOfClass:[NSString class]]) {
         // convert it to a dictionary
         NSError * error;
-        NSString * str = (NSString*)body;
+        NSString * str = (NSString*)__body;
         NSDictionary *JSON =
             [NSJSONSerialization JSONObjectWithData:[str dataUsingEncoding:NSUTF8StringEncoding]
                                             options:NSJSONReadingMutableContainers
                                               error:&error];
         bodyDictionary = JSON;
     }
-    else if([body isKindOfClass: [SWGFile class]]) {
+    else if([__body isKindOfClass: [SWGFile class]]) {
         requestContentType = @"form-data";
-        bodyDictionary = body;
+        bodyDictionary = __body;
     }
     else{
-        NSLog(@"don't know what to do with %@", body);
+        NSLog(@"don't know what to do with %@", __body);
     }
-
     
     
     
@@ -321,11 +334,11 @@ static NSString * basePath = @"http://api.wordnik.com/v4";
     SWGApiClient* client = [SWGApiClient sharedClientFromPool:basePath];
 
     
-
+    
+            // primitive response type
     
     
-    
-    
+    // no return base type
     return [client stringWithCompletionBlock:requestUrl 
                                              method:@"POST" 
                                         queryParams:queryParams 
@@ -344,10 +357,15 @@ static NSString * basePath = @"http://api.wordnik.com/v4";
     
     
     
-
 }
 
--(NSNumber*) getWordListWordsWithCompletionBlock:(NSString*) permalink         sortBy:(NSString*) sortBy         sortOrder:(NSString*) sortOrder         skip:(NSNumber*) skip         limit:(NSNumber*) limit         auth_token:(NSString*) auth_token        
+-(NSNumber*) getWordListWordsWithCompletionBlock:(NSString*) permalink
+         sortBy:(NSString*) sortBy
+         sortOrder:(NSString*) sortOrder
+         skip:(NSNumber*) skip
+         limit:(NSNumber*) limit
+         auth_token:(NSString*) auth_token
+        
         
         completionHandler: (void (^)(NSError* error))completionBlock {
 
@@ -363,7 +381,7 @@ static NSString * basePath = @"http://api.wordnik.com/v4";
     NSString* requestContentType = @"application/json";
     NSString* responseContentType = @"application/json";
 
-        NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     if(sortBy != nil)
         queryParams[@"sortBy"] = sortBy;
     if(sortOrder != nil)
@@ -373,24 +391,24 @@ static NSString * basePath = @"http://api.wordnik.com/v4";
     if(limit != nil)
         queryParams[@"limit"] = limit;
     
-        NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     if(auth_token != nil)
         headerParams[@"auth_token"] = auth_token;
     
 
     id bodyDictionary = nil;
-        
+    
     
     
 
     SWGApiClient* client = [SWGApiClient sharedClientFromPool:basePath];
 
     
-
+    
+            // primitive response type
     
     
-    
-    
+    // no return base type
     return [client stringWithCompletionBlock:requestUrl 
                                              method:@"GET" 
                                         queryParams:queryParams 
@@ -409,10 +427,12 @@ static NSString * basePath = @"http://api.wordnik.com/v4";
     
     
     
-
 }
 
--(NSNumber*) addWordsToWordListWithCompletionBlock:(NSString*) permalink         body:(NSArray*) body         auth_token:(NSString*) auth_token        
+-(NSNumber*) addWordsToWordListWithCompletionBlock:(NSString*) permalink
+         body:(NSArray*) body
+         auth_token:(NSString*) auth_token
+        
         
         completionHandler: (void (^)(NSError* error))completionBlock {
 
@@ -428,18 +448,20 @@ static NSString * basePath = @"http://api.wordnik.com/v4";
     NSString* requestContentType = @"application/json";
     NSString* responseContentType = @"application/json";
 
-        NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-        NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
     if(auth_token != nil)
         headerParams[@"auth_token"] = auth_token;
     
 
     id bodyDictionary = nil;
-        
-    if(body != nil && [body isKindOfClass:[NSArray class]]){
+    
+    id __body = body;
+
+    if(__body != nil && [__body isKindOfClass:[NSArray class]]){
         NSMutableArray * objs = [[NSMutableArray alloc] init];
-        for (id dict in (NSArray*)body) {
+        for (id dict in (NSArray*)__body) {
             if([dict respondsToSelector:@selector(asDictionary)]) {
                 [objs addObject:[(SWGObject*)dict asDictionary]];
             }
@@ -449,27 +471,26 @@ static NSString * basePath = @"http://api.wordnik.com/v4";
         }
         bodyDictionary = objs;
     }
-    else if([body respondsToSelector:@selector(asDictionary)]) {
-        bodyDictionary = [(SWGObject*)body asDictionary];
+    else if([__body respondsToSelector:@selector(asDictionary)]) {
+        bodyDictionary = [(SWGObject*)__body asDictionary];
     }
-    else if([body isKindOfClass:[NSString class]]) {
+    else if([__body isKindOfClass:[NSString class]]) {
         // convert it to a dictionary
         NSError * error;
-        NSString * str = (NSString*)body;
+        NSString * str = (NSString*)__body;
         NSDictionary *JSON =
             [NSJSONSerialization JSONObjectWithData:[str dataUsingEncoding:NSUTF8StringEncoding]
                                             options:NSJSONReadingMutableContainers
                                               error:&error];
         bodyDictionary = JSON;
     }
-    else if([body isKindOfClass: [SWGFile class]]) {
+    else if([__body isKindOfClass: [SWGFile class]]) {
         requestContentType = @"form-data";
-        bodyDictionary = body;
+        bodyDictionary = __body;
     }
     else{
-        NSLog(@"don't know what to do with %@", body);
+        NSLog(@"don't know what to do with %@", __body);
     }
-
     
     
     
@@ -477,11 +498,11 @@ static NSString * basePath = @"http://api.wordnik.com/v4";
     SWGApiClient* client = [SWGApiClient sharedClientFromPool:basePath];
 
     
-
+    
+            // primitive response type
     
     
-    
-    
+    // no return base type
     return [client stringWithCompletionBlock:requestUrl 
                                              method:@"POST" 
                                         queryParams:queryParams 
@@ -500,7 +521,6 @@ static NSString * basePath = @"http://api.wordnik.com/v4";
     
     
     
-
 }
 
 
