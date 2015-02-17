@@ -1,6 +1,6 @@
 <?php
 /**
- *  Copyright 2014 Reverb Technologies, Inc.
+ *  Copyright 2015 Reverb Technologies, Inc.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -49,21 +49,21 @@ class {{classname}} {
       $headerParams['Content-Type'] = '{{#consumes}}{{mediaType}}{{#hasMore}},{{/hasMore}}{{/consumes}}';
 
       {{#queryParams}}// query params
-      if(${{paramName}} != null) {
+      if(${{paramName}} !== null) {
   		  $queryParams['{{paramName}}'] = $this->apiClient->toQueryValue(${{paramName}});
   		}{{/queryParams}}
       {{#headerParams}}// header params
-      if(${{paramName}} != null) {
+      if(${{paramName}} !== null) {
   		 	$headerParams['{{paramName}}'] = $this->apiClient->toHeaderValue(${{paramName}});
   		}{{/headerParams}}
       {{#pathParams}}// path params
-      if(${{paramName}} != null) {
+      if(${{paramName}} !== null) {
   			$resourcePath = str_replace("{" . "{{paramName}}" . "}",
   			                            $this->apiClient->toPathValue(${{paramName}}), $resourcePath);
   		}{{/pathParams}}
       {{#formParams}}
-      if (${{paramName}} != null) {
-        $formParams[{{paramName}}] = {{#isFile}}'@' . {{/isFile}}${{paramName}}
+      if (${{paramName}} !== null) {
+        $formParams[{{paramName}}] = {{#isFile}}'@' . {{/isFile}}${{paramName}};
       }{{/formParams}}
       {{#bodyParams}}// body params
       $body = null;

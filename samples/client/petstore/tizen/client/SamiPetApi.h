@@ -5,10 +5,10 @@
 #include "SamiApiClient.h"
 #include "SamiError.h"
 
+#include "SamiPet.h"
+using Tizen::Base::String;
 using Tizen::Base::Long;
 #include "SamiFile.h"
-using Tizen::Base::String;
-#include "SamiPet.h"
 
 using namespace Tizen::Net::Http;
 
@@ -42,7 +42,7 @@ public:
   deletePetWithCompletion(String* api_key, Long* petId, void(* handler)(SamiError*));
   
   void 
-  uploadFileWithCompletion(String* additionalMetadata, SamiFile* file, void(* handler)(SamiError*));
+  uploadFileWithCompletion(Long* petId, String* additionalMetadata, SamiFile* file, void(* handler)(SamiError*));
   
   static String getBasePath() {
     return L"http://petstore.swagger.io/v2";

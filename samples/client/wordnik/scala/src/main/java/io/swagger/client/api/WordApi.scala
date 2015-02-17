@@ -1,11 +1,11 @@
 package io.swagger.client.api
 
-import io.swagger.client.model.Example
-import io.swagger.client.model.AudioFile
-import io.swagger.client.model.Bigram
 import io.swagger.client.model.WordObject
-import io.swagger.client.model.FrequencySummary
+import io.swagger.client.model.AudioFile
 import io.swagger.client.model.Definition
+import io.swagger.client.model.FrequencySummary
+import io.swagger.client.model.Bigram
+import io.swagger.client.model.Example
 import io.swagger.client.ApiInvoker
 import io.swagger.client.ApiException
 
@@ -14,10 +14,11 @@ import java.util.Date
 
 import scala.collection.mutable.HashMap
 
-class WordApi {
-  var basePath: String = "https://api.wordnik.com/v4"
-  var apiInvoker = ApiInvoker
-  
+class WordApi(val defBasePath: String = "https://api.wordnik.com/v4",
+                        defApiInvoker: ApiInvoker = ApiInvoker) {
+  var basePath = defBasePath
+  var apiInvoker = defApiInvoker
+
   def addHeader(key: String, value: String) = apiInvoker.defaultHeaders += key -> value 
 
   

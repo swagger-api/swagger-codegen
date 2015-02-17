@@ -1,9 +1,9 @@
 package io.swagger.client.api
 
+import io.swagger.client.model.WordObject
+import io.swagger.client.model.DefinitionSearchResults
 import io.swagger.client.model.WordSearchResults
 import io.swagger.client.model.WordOfTheDay
-import io.swagger.client.model.DefinitionSearchResults
-import io.swagger.client.model.WordObject
 import io.swagger.client.ApiInvoker
 import io.swagger.client.ApiException
 
@@ -12,10 +12,11 @@ import java.util.Date
 
 import scala.collection.mutable.HashMap
 
-class WordsApi {
-  var basePath: String = "https://api.wordnik.com/v4"
-  var apiInvoker = ApiInvoker
-  
+class WordsApi(val defBasePath: String = "https://api.wordnik.com/v4",
+                        defApiInvoker: ApiInvoker = ApiInvoker) {
+  var basePath = defBasePath
+  var apiInvoker = defApiInvoker
+
   def addHeader(key: String, value: String) = apiInvoker.defaultHeaders += key -> value 
 
   

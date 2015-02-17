@@ -45,6 +45,11 @@ public class DefaultCodegen {
     return objs;
   }
 
+  // override with any special post-processing
+  public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
+    return objs;
+  }
+
   // override with any special handling of the entire swagger spec
   public void processSwagger(Swagger swagger) {}
   
@@ -475,9 +480,14 @@ public class DefaultCodegen {
       }
     }
 
-    property.datatype = property.isEnum
-      ? StringUtils.capitalize(property.name) + "Enum"
-      : getTypeDeclaration(p);
+    property.datatype = getTypeDeclaration(p);
+
+    // this can cause issues for clients which don't support enums
+    if(property.isEnum)
+      property.datatypeWithEnum = StringUtils.capitalize(property.name) + "Enum";
+    else
+      property.datatypeWithEnum = property.datatype;
+
     property.baseType = getSwaggerType(p);
 
     if(p instanceof ArrayProperty) {
@@ -631,6 +641,10 @@ public class DefaultCodegen {
       op.returnType = cm.datatype;
       if(cm.isContainer != null) {
         op.returnContainer = cm.containerType;
+        if("map".equals(cm.containerType))
+          op.isMapContainer = Boolean.TRUE;
+        else if ("list".equalsIgnoreCase(cm.containerType))
+          op.isListContainer = Boolean.TRUE;
       }
       else
         op.returnSimpleType = true;
@@ -699,7 +713,7 @@ public class DefaultCodegen {
           bodyParams.add(p.copy());
         }
         else if(param instanceof FormParameter) {
-          if("file".equalsIgnoreCase(p.dataType))
+          if("file".equalsIgnoreCase(((FormParameter)param).getType()))
             p.isFile = true;
           else
             p.notFile = true;

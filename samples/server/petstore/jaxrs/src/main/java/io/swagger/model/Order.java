@@ -3,35 +3,27 @@ package io.swagger.model;
 import java.util.Date;
 
 import com.wordnik.swagger.annotations.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-public class Order  { 
-  /**
-   **/
+public class Order  {
+  
   private Long id = null;
-  /**
-   **/
   private Long petId = null;
-  /**
-   **/
   private Integer quantity = null;
-  /**
-   **/
   private Date shipDate = null;
-  /**
-   * Order Status
-   **/
+  public enum StatusEnum {
+     placed,  approved,  delivered, 
+  };
   private StatusEnum status = null;
-  
-  public enum StatusEnum { placed, approved, delivered };
+  private Boolean complete = null;
+
   
   /**
    **/
-  private Boolean complete = null;
-  
-  
   @ApiModelProperty(required = false, value = "")
+  @JsonProperty("id")
   public Long getId() {
     return id;
   }
@@ -40,7 +32,10 @@ public class Order  {
   }
 
   
+  /**
+   **/
   @ApiModelProperty(required = false, value = "")
+  @JsonProperty("petId")
   public Long getPetId() {
     return petId;
   }
@@ -49,7 +44,10 @@ public class Order  {
   }
 
   
+  /**
+   **/
   @ApiModelProperty(required = false, value = "")
+  @JsonProperty("quantity")
   public Integer getQuantity() {
     return quantity;
   }
@@ -58,7 +56,10 @@ public class Order  {
   }
 
   
+  /**
+   **/
   @ApiModelProperty(required = false, value = "")
+  @JsonProperty("shipDate")
   public Date getShipDate() {
     return shipDate;
   }
@@ -67,7 +68,11 @@ public class Order  {
   }
 
   
+  /**
+   * Order Status
+   **/
   @ApiModelProperty(required = false, value = "Order Status")
+  @JsonProperty("status")
   public StatusEnum getStatus() {
     return status;
   }
@@ -76,7 +81,10 @@ public class Order  {
   }
 
   
+  /**
+   **/
   @ApiModelProperty(required = false, value = "")
+  @JsonProperty("complete")
   public Boolean getComplete() {
     return complete;
   }
