@@ -630,9 +630,9 @@ public class DefaultCodegen {
 
     if(methodResponse != null) {
      if (methodResponse.getSchema() != null) {
-      CodegenProperty cm = fromProperty("response", methodResponse.getSchema());
-
       Property responseProperty = methodResponse.getSchema();
+      responseProperty.setRequired(true);
+      CodegenProperty cm = fromProperty("response", responseProperty);
 
       if(responseProperty instanceof ArrayProperty) {
         ArrayProperty ap = (ArrayProperty) responseProperty;
@@ -783,6 +783,7 @@ public class DefaultCodegen {
         LOGGER.warn("warning!  Property type \"" + qp.getType() + "\" not found for parameter \"" + param.getName() + "\", using String");
         property = new StringProperty().description("//TODO automatically added by swagger-codegen.  Type was " + qp.getType() + " but not supported");
       }
+      property.setRequired(param.getRequired());
       CodegenProperty model = fromProperty(qp.getName(), property);
       p.collectionFormat = collectionFormat;
       p.dataType = model.datatype;
@@ -806,6 +807,7 @@ public class DefaultCodegen {
         else {
           // TODO: missing format, so this will not always work
           Property prop = PropertyBuilder.build(impl.getType(), null, null);
+          prop.setRequired(bp.getRequired());
           CodegenProperty cp = fromProperty("property", prop);
           if(cp != null) {
             p.dataType = cp.datatype;
@@ -819,6 +821,7 @@ public class DefaultCodegen {
         CodegenModel cm = fromModel(bp.getName(), impl);
         // get the single property
         ArrayProperty ap = new ArrayProperty().items(impl.getItems());
+        ap.setRequired(param.getRequired());
         CodegenProperty cp = fromProperty("inner", ap);
         if(cp.complexType != null) {
           imports.add(cp.complexType);
