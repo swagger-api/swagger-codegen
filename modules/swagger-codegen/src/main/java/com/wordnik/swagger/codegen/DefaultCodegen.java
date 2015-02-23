@@ -10,6 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.beans.Introspector;
 import java.util.*;
 
 public class DefaultCodegen {
@@ -440,8 +441,8 @@ public class DefaultCodegen {
     property.name = toVarName(name);
     property.baseName = name;
     property.description = escapeText(p.getDescription());
-    property.getter = "get" + initialCaps(name);
-    property.setter = "set" + initialCaps(name);
+    property.getter = "get" + Introspector.decapitalize(name);
+    property.setter = "set" + Introspector.decapitalize(name);
     property.example = p.getExample();
     property.defaultValue = toDefaultValue(p);
 
