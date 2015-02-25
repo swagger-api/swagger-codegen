@@ -107,13 +107,40 @@ class CodegenTest extends FlatSpec with Matchers {
     val op = codegen.fromOperation(path, "get", p)
 
     val formParams = op.formParams
-    formParams.size should be (2)
+    formParams.size should be(2)
     val requiredParam = formParams.get(0)
-    requiredParam.dataType should be ("Long")
+    requiredParam.dataType should be("Long")
 
     val optionalParam = formParams.get(1)
-    optionalParam.dataType should be ("Optional<string>")
+    optionalParam.dataType should be("Optional<string>")
 
-    op.returnType should be ("Long")
+    op.returnType should be("Long")
   }
+
+  it should "select main response from a 2.0 spec using the lowest 2XX code" in {
+    val model = new SwaggerParser()
+      .read("src/test/resources/2_0/responseSelectionTest.json")
+
+    val codegen = new DefaultCodegen()
+
+    val path = "/tests/withTwoHundredAndDefault"
+    val p = model.getPaths().get(path).getGet()
+    val op = codegen.fromOperation(path, "get", p)
+    op.returnType should be("String")
+
+  }
+
+  it should "select main response from a 2.0 spec using the default keyword when no 2XX code" in {
+    val model = new SwaggerParser()
+      .read("src/test/resources/2_0/responseSelectionTest.json")
+
+    val codegen = new DefaultCodegen()
+
+    val path = "/tests/withoutTwoHundredButDefault"
+    val p = model.getPaths().get(path).getGet()
+    val op = codegen.fromOperation(path, "get", p)
+    op.returnType should be("String")
+
+  }
+
 }
