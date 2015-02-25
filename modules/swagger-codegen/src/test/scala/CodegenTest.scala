@@ -1,15 +1,11 @@
-import com.wordnik.swagger.models._
-import com.wordnik.swagger.util.Json
+import java.util
+
+import com.wordnik.swagger.codegen.{CodegenParameter, DefaultCodegen}
+import com.wordnik.swagger.models.properties.Property
 import io.swagger.parser._
-
-import com.wordnik.swagger.codegen.DefaultCodegen
-
 import org.junit.runner.RunWith
+import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.FlatSpec
-import org.scalatest.Matchers
-
-import scala.collection.JavaConverters._
 
 @RunWith(classOf[JUnitRunner])
 class CodegenTest extends FlatSpec with Matchers {
@@ -94,4 +90,57 @@ class CodegenTest extends FlatSpec with Matchers {
     statusParam.required should equal (false)    
     statusParam.hasMore should be (null)    
   }
+
+  it should "handle required parameters from a 2.0 spec as required when figuring out Swagger types" in {
+    val model = new SwaggerParser()
+      .read("src/test/resources/2_0/requiredTest.json")
+
+    val codegen = new DefaultCodegen() {
+      override def getSwaggerType(p: Property) = Option(p) match {
+        case Some(property) if !property.getRequired =>
+          "Optional<" + super.getSwaggerType(p) + ">"
+        case other => super.getSwaggerType(p)
+      }
+    }
+    val path = "/tests/requiredParams"
+    val p = model.getPaths().get(path).getGet()
+    val op = codegen.fromOperation(path, "get", p)
+
+    val formParams = op.formParams
+    formParams.size should be(2)
+    val requiredParam = formParams.get(0)
+    requiredParam.dataType should be("Long")
+
+    val optionalParam = formParams.get(1)
+    optionalParam.dataType should be("Optional<string>")
+
+    op.returnType should be("Long")
+  }
+
+  it should "select main response from a 2.0 spec using the lowest 2XX code" in {
+    val model = new SwaggerParser()
+      .read("src/test/resources/2_0/responseSelectionTest.json")
+
+    val codegen = new DefaultCodegen()
+
+    val path = "/tests/withTwoHundredAndDefault"
+    val p = model.getPaths().get(path).getGet()
+    val op = codegen.fromOperation(path, "get", p)
+    op.returnType should be("String")
+
+  }
+
+  it should "select main response from a 2.0 spec using the default keyword when no 2XX code" in {
+    val model = new SwaggerParser()
+      .read("src/test/resources/2_0/responseSelectionTest.json")
+
+    val codegen = new DefaultCodegen()
+
+    val path = "/tests/withoutTwoHundredButDefault"
+    val p = model.getPaths().get(path).getGet()
+    val op = codegen.fromOperation(path, "get", p)
+    op.returnType should be("String")
+
+  }
+
 }
