@@ -5,7 +5,7 @@ organization := "com.wordnik"
 
 name := "swagger-codegen"
 
-version := "2.0.17.spnego"
+version := "2.0.18.spnego"
 
 crossVersion := CrossVersion.full
 

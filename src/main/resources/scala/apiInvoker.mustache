@@ -41,6 +41,7 @@ class ApiInvoker(val mapper: ObjectMapper = ScalaJsonUtil.getJsonMapper,
                  asyncHttpClient: Boolean = false,
                  authScheme: String = "",
                  authPreemptive: Boolean = false) {
+  val SystemEnforcedAuthSchemeProperty = "apiInvokerAuthScheme"
 
   var defaultHeaders: HashMap[String, String] = httpHeaders
 
@@ -170,11 +171,14 @@ class ApiInvoker(val mapper: ObjectMapper = ScalaJsonUtil.getJsonMapper,
       import com.ning.http.client.Realm
 
       val config: DefaultAhcConfig = new DefaultAhcConfig()
-      if (!authScheme.isEmpty) {
-        val authSchemeEnum = Realm.AuthScheme.valueOf(authScheme)
+      val enforcedAuthScheme = System.getProperty(SystemEnforcedAuthSchemeProperty)
+      val scheme = if(enforcedAuthScheme == null) authScheme else enforcedAuthScheme
+      val preemptive = if(enforcedAuthScheme == null) authPreemptive else true
+      if (!scheme.isEmpty) {
+        val authSchemeEnum = Realm.AuthScheme.valueOf(scheme)
         config.getAsyncHttpClientConfigBuilder
           .setRealm(new Realm.RealmBuilder().setScheme(authSchemeEnum)
-          .setUsePreemptiveAuth(authPreemptive).build)
+          .setUsePreemptiveAuth(preemptive).build)
       }
       AhcHttpClient.create(config)
     }
