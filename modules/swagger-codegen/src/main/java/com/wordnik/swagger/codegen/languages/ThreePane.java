@@ -28,7 +28,7 @@ public class ThreePane extends DefaultCodegen implements CodegenConfig {
 
   public ThreePane() {
     super();
-    outputFolder = "docs";
+    outputFolder = "threepane";
     templateDir = "threepane";
 
     defaultIncludes = new HashSet<String>();
@@ -44,7 +44,21 @@ public class ThreePane extends DefaultCodegen implements CodegenConfig {
     additionalProperties.put("artifactId", artifactId);
     additionalProperties.put("artifactVersion", artifactVersion);
   
+    supportingFiles.add(new SupportingFile("api-class.mustache", "", "api-class.html")); 
+    supportingFiles.add(new SupportingFile("api-endpoint-description.mustache", "", "api-endpoint-description.html")); 
+    supportingFiles.add(new SupportingFile("api-endpoint.mustache", "", "api-endpoint.html")); 
+    supportingFiles.add(new SupportingFile("app_js.mustache", "", "app_js.js")); 
+    supportingFiles.add(new SupportingFile("code-bar.mustache", "", "code-bar.html")); 
+    supportingFiles.add(new SupportingFile("code-samples.mustache", "", "code-samples.html")); 
+    supportingFiles.add(new SupportingFile("core.mustache", "", "core.html")); 
     supportingFiles.add(new SupportingFile("index.mustache", "", "index.html")); 
+    supportingFiles.add(new SupportingFile("intro.mustache", "", "intro.html")); 
+    supportingFiles.add(new SupportingFile("logo.mustache", "", "logo.html")); 
+    supportingFiles.add(new SupportingFile("model.mustache", "", "model.html")); 
+    supportingFiles.add(new SupportingFile("toc.mustache", "", "toc.html")); 
+    supportingFiles.add(new SupportingFile("top-bar.mustache", "", "top-bar.html"));
+    supportingFiles.add(new SupportingFile("images/logo_swagger.png", "images", "logo_swagger.png"));
+
     reservedWords = new HashSet<String>();
 
     languageSpecificPrimitives = new HashSet<String>();
