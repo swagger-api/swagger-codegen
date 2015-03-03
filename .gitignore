@@ -23,6 +23,9 @@ samples/server-generator/node/output/node_modules
 samples/server-generator/scalatra/target
 samples/server-generator/scalatra/output/.history
 
+samples/threepane/
+npm-debug.log
+
 target
 .idea
 .lib
