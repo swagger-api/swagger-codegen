@@ -196,8 +196,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
           files.add(new File(outputFilename));
         }
         else {
-          String template = readTemplate(config.templateDir() + File.separator + support.templateFile);
-          FileUtils.writeStringToFile(new File(outputFilename), template);
+          InputStream is = this.getClass().getClassLoader().getResourceAsStream(config.templateDir() + File.separator + support.templateFile);
+
+          FileUtils.copyInputStreamToFile(is, new File(outputFilename));
           System.out.println("copying file to " + outputFilename);
           files.add(new File(outputFilename));
         }
