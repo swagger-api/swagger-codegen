@@ -44,6 +44,12 @@ public class ThreePane extends DefaultCodegen implements CodegenConfig {
     additionalProperties.put("artifactId", artifactId);
     additionalProperties.put("artifactVersion", artifactVersion);
   
+    supportingFiles.add(new SupportingFile("assets/app.css", "", "app.css")); 
+    supportingFiles.add(new SupportingFile("assets/highlight.css", "", "highlight.css")); 
+    supportingFiles.add(new SupportingFile("assets/highlight.min.js", "", "highlight.min.js")); 
+    supportingFiles.add(new SupportingFile("assets/jquery.min.js", "", "jquery.min.js")); 
+    supportingFiles.add(new SupportingFile("assets/logo_swagger.png", "", "logo_swagger.png")); 
+
     supportingFiles.add(new SupportingFile("api-class.mustache", "", "api-class.html")); 
     supportingFiles.add(new SupportingFile("api-endpoint-description.mustache", "", "api-endpoint-description.html")); 
     supportingFiles.add(new SupportingFile("api-endpoint.mustache", "", "api-endpoint.html")); 
