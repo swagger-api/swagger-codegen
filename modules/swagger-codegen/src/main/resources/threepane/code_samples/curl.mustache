@@ -1,0 +1,23 @@
+window.code = window.code || {};
+
+window.code.curl = {
+{{#apiInfo}}
+{{#apis}}
+  "{{classname}}": {
+{{#operations}}
+{{#operation}}
+    "{{nickname}}": {
+      "curl": [
+        {
+          "header": "request",
+          "syntax": "bash", // see segmentio/highlight for a list of supported syntaxes
+          "content": "curl 'http://example.com/some/path' \\\n  -d bob=\"hello\" \\\n  -X GET"
+        }
+      ]
+    },
+{{/operation}}
+{{/operations}}
+  },
+{{/apis}}
+{{/apiInfo}}
+}
