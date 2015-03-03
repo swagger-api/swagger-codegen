@@ -43,8 +43,16 @@ public class ThreePane extends DefaultCodegen implements CodegenConfig {
     additionalProperties.put("groupId", groupId);
     additionalProperties.put("artifactId", artifactId);
     additionalProperties.put("artifactVersion", artifactVersion);
-  
-    supportingFiles.add(new SupportingFile("index.mustache", "", "index.html")); 
+
+    String assetsFolder = "assets";
+    supportingFiles.add(new SupportingFile("index.mustache", "", "index.html"));
+
+    supportingFiles.add(new SupportingFile("assets/app.css", assetsFolder, "app.css"));
+    supportingFiles.add(new SupportingFile("assets/logo_swagger.png", assetsFolder, "logo_swagger.png"));
+    supportingFiles.add(new SupportingFile("assets/jquery.min.js", assetsFolder, "jquery.min.js"));
+    supportingFiles.add(new SupportingFile("assets/highlight.min.js", assetsFolder, "highlight.min.js"));
+    supportingFiles.add(new SupportingFile("assets/highlight.css", assetsFolder, "highlight.css"));
+
     reservedWords = new HashSet<String>();
 
     languageSpecificPrimitives = new HashSet<String>();
