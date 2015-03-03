@@ -1,0 +1,16 @@
+<div id="api-class-{{classname}}" class="api-class">
+
+<div class="api-section">
+  <header class="api-section-left api-class-header">
+    <h3 class="api-class-name">{{classname}}</h3>
+    <h5 class="left">Base:&emsp;</h5><code class="left">{{basePath}}</code>
+  </header>
+</div>
+
+  {{# operations }}
+    {{# operation }}
+      {{>api-endpoint}}
+    {{/ operation }}
+  {{/ operations }}
+
+</div>

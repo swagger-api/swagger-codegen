@@ -1,0 +1,51 @@
+<div class="api-section">
+<div class="api-section-left api-model">
+
+  <a class="anchor" id="api-model-{{name}}">&nbsp;</a>
+  <header class="api-class-header">
+    <h3 class="api-class-name">{{name}} Model</h3>
+    <h6 class="inline-h">Contains:</h6>
+    {{#imports}} <span class="code">{{.}}</span> {{/imports}}
+  </header>
+
+    <div class="params params-vars" {{^ vars }}style="display: none;"{{/vars}}>
+      <h6> Variables </h6>
+
+      <table class="middle-list">
+
+      {{#vars}}
+
+      <tr>
+        <td class="name">{{name}}</td>
+        <td class="type">{{datatype}}</td>
+      </tr>
+      {{#description}}
+        <tr>
+          <td colspan="2" class="extra description">{{description}}</td>
+        </tr>
+      {{/description}}
+      {{#required}}
+        <tr>
+          <td colspan="2" class="extra required">Required</td>
+        </tr>
+      {{/required}}
+
+      <!-- spacer -->
+      <tr><td>&nbsp;</td></tr>
+
+      {{/vars}}
+
+      </table>
+    </div>
+
+  </div>
+
+  <div class="api-section-right api-section-example">
+    <section>
+      <h6 class="section-header">Raw JSON for model</h6>
+      <pre><code class="javascript">{{modelJson}}</code></pre>
+    </section>
+  </div>
+
+</div>
+

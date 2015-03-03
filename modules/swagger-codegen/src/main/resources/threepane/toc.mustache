@@ -1,0 +1,24 @@
+<nav role="navigation" >
+  <dl class="toc side-nav">
+    {{#apiInfo.apis}}
+      <dt> {{classname}} </dt>
+        <div>
+          {{# operations }}
+            {{# operation }}
+              <dd> <a href="#api-path-{{operationId}}" class="side-nav-item method-icon method-{{httpMethod}}">{{operationId}}</a> </dd>
+            {{/ operation }}
+          {{/ operations }}
+        </div>
+    {{/apiInfo.apis}}
+
+      <dt>Models</dt>
+      <div>
+        {{#models}}
+          {{#model}}
+            <dd> <a data-toc-jump-to href="#api-model-{{name}}" class="side-nav-item method-icon method-model">{{name}}</a> </dd>
+          {{/model}}
+        {{/models}}
+      </div>
+
+  </dl>
+</nav>

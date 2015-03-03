@@ -1,0 +1,42 @@
+
+<div id="wrapper" class="show-lang-curl">
+
+  <header >
+    {{>top-bar}}
+    {{>code-bar}}
+  </header>
+
+  <aside id="nav-wrapper">
+    {{>logo}}
+    {{>toc}}
+  </aside>
+
+  <div id="main-wrapper">
+    <section role="main">
+
+    {{>intro}}
+
+      <div id="api-classes">
+        {{#apiInfo.apis}}
+          {{>api-class }}
+        {{/apiInfo.apis}}
+      </div>
+
+      <div id="api-models">
+        {{#models}}
+          {{#model}}
+            {{>model}}
+          {{/model}}
+        {{/models}}
+     </div>
+
+    </section>
+  </div>
+
+</div>
+
+{{>code-samples}}
+
+<script>
+  {{>app_js}}
+</script>

@@ -1,0 +1,13 @@
+{{#code-samples}}
+  <script src="code_samples/{{.}}.js"></script>
+{{/code-samples}}
+
+<style>
+  .lang {
+    display: none;
+  }
+
+  {{#code-samples}}
+    [data-show-lang="{{.}}"] .lang-{{.}} { display: initial;}
+  {{/code-samples}}
+</style>

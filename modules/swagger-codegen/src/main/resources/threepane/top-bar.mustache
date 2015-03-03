@@ -1,0 +1,35 @@
+<nav class="top-bar" id="top-bar" >
+
+  <section class="top-bar-section">
+    <!-- Left Nav Section -->
+    <ul class="left mobile-only">
+      <li><a href="#" class="menu-icon">&ensp;&#9776;&ensp;</a></li>
+    </ul>
+
+    <div class="two-pane-only">
+      <ul class="right">
+        {{#infoEmail}}
+        <li><a href="mailto:{{infoEmail}}">{{infoEmail}}
+        </a></li>
+        {{/infoEmail}}
+
+        {{#infoUrl}}
+        <li><a href="{{infoUrl}}">{{infoUrl}}</a></li>
+        {{/infoUrl}}
+
+        {{#licenseInfo}}
+        <li><a href="{{licenseUrl}}"> {{licenseInfo}}
+        </a></li>
+        {{/licenseInfo}}
+      </ul>
+    </div>
+
+  </section>
+
+  <ul class="title-area">
+    <li class="name">
+      <h1><a href="#"><i>API for </i> {{appName}}</a></h1>
+    </li>
+  </ul>
+
+</nav>

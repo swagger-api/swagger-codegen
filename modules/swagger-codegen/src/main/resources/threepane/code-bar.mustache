@@ -1,0 +1,7 @@
+<nav id="code-bar" {{^code-samples}} style="display: none;"{{/code-samples}}>
+  <dl class="sub-nav">
+{{#code-samples}}
+    <dd data-lang="{{.}}" ><a class="title-case"  >{{.}}</a></dd>
+{{/code-samples}}
+  </dl>
+</nav>

@@ -1,0 +1,58 @@
+<div class="api-section">
+
+<a class="anchor" id="api-path-{{operationId}}">&nbsp;</a>
+
+  <div class="api-section-description api-section-left">
+
+    <header class="method-{{httpMethod}}">
+      <h4 class="classname">{{classname}}</h4>
+      <span class="method">{{httpMethod}}</span>
+      <span class="path path-{{httpMethod}}"> {{path}} </span>
+      <p class="summary">{{summary}}</p>
+    </header>
+
+
+    <div class="params params-path" {{^ pathParams }}style="display: none;"{{/pathParams }}>
+      <h6> Path Params </h6>
+
+      <dl class="middle-list">
+      {{#pathParams}}
+
+        <dt> {{paramName}} </dt>
+        <p class="type">{{dataType}}</p>
+        <dd> {{description}} </dd>
+
+      {{/pathParams}}
+      </dl>
+    </div>
+
+    <div class="params params-body" {{^ bodyParams }}style="display: none;"{{/bodyParams }} >
+      <h6> Body Params </h6>
+      {{#bodyParams}}
+      <dl class="middle-list">
+
+        <dt> {{paramName}} </dt>
+        <p class="type">{{dataType}}</p>
+        <dd> {{description}} </dd>
+
+      </dl>
+      {{/bodyParams}}
+    </div>
+
+    <div class="params params-response" {{^ responses }}style="display: none;"{{/responses }} >
+      <h6> Error Responses </h6>
+      {{#responses}}
+      <dl class="middle-list">
+
+        <dt> {{code}} </dt>
+        <dd> {{message}} </dd>
+
+      </dl>
+      {{/responses}}
+    </div>
+  </div>
+
+  <div id="code-samples-{{classname}}-{{operationId}}" class="api-section-example api-section-right"> </div>
+
+</div>
+
