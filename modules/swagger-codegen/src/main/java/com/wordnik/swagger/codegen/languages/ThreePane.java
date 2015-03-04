@@ -49,26 +49,16 @@ public class ThreePane extends DefaultCodegen implements CodegenConfig {
     additionalProperties.put("artifactVersion", artifactVersion);
 
     // languages
-    supportingFiles.add(new SupportingFile("code_samples/curl.mustache", "code_samples", "curl.js")); 
-  
-    supportingFiles.add(new SupportingFile("assets/app.css", "", "app.css")); 
-    supportingFiles.add(new SupportingFile("assets/highlight.css", "", "highlight.css")); 
-    supportingFiles.add(new SupportingFile("assets/highlight.min.js", "assets", "highlight.min.js")); 
-    supportingFiles.add(new SupportingFile("assets/jquery.min.js", "assets", "jquery.min.js")); 
+    supportingFiles.add(new SupportingFile("code_samples/curl.mustache", "code_samples", "curl.js"));
 
-    supportingFiles.add(new SupportingFile("api-class.mustache", "", "api-class.html")); 
-    supportingFiles.add(new SupportingFile("api-endpoint-description.mustache", "", "api-endpoint-description.html")); 
-    supportingFiles.add(new SupportingFile("api-endpoint.mustache", "", "api-endpoint.html")); 
-    supportingFiles.add(new SupportingFile("app_js.mustache", "", "app_js.js")); 
-    supportingFiles.add(new SupportingFile("code-bar.mustache", "", "code-bar.html")); 
-    supportingFiles.add(new SupportingFile("code-samples.mustache", "", "code-samples.html")); 
-    supportingFiles.add(new SupportingFile("core.mustache", "", "core.html")); 
-    supportingFiles.add(new SupportingFile("index.mustache", "", "index.html")); 
-    supportingFiles.add(new SupportingFile("intro.mustache", "", "intro.html")); 
-    supportingFiles.add(new SupportingFile("logo.mustache", "", "logo.html")); 
-    supportingFiles.add(new SupportingFile("model.mustache", "", "model.html")); 
-    supportingFiles.add(new SupportingFile("toc.mustache", "", "toc.html")); 
-    supportingFiles.add(new SupportingFile("top-bar.mustache", "", "top-bar.html"));
+    // Main template
+    supportingFiles.add(new SupportingFile("index.mustache", "", "index.html"));
+    // Supporting files
+    supportingFiles.add(new SupportingFile("assets/app.css", "", "app.css"));
+    supportingFiles.add(new SupportingFile("assets/highlight.css", "", "highlight.css"));
+    supportingFiles.add(new SupportingFile("assets/highlight.min.js", "assets", "highlight.min.js"));
+    supportingFiles.add(new SupportingFile("assets/jquery.min.js", "assets", "jquery.min.js"));
+
     supportingFiles.add(new SupportingFile("images/logo_swagger.png", "images", "logo_swagger.png"));
 
     reservedWords = new HashSet<String>();
