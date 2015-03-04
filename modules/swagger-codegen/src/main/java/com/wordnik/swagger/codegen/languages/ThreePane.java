@@ -33,6 +33,10 @@ public class ThreePane extends DefaultCodegen implements CodegenConfig {
 
     defaultIncludes = new HashSet<String>();
 
+    List<String> codeSamples = new ArrayList<String>();
+    codeSamples.add("curl");
+
+    additionalProperties.put("code-samples", codeSamples);
     additionalProperties.put("appName", "Swagger Sample");
     additionalProperties.put("appDescription", "A sample swagger server");
     additionalProperties.put("infoUrl", "https://helloreverb.com");
