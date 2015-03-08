@@ -1,0 +1,29 @@
+window.code = window.code || {};
+
+window.code.java = {
+{{#apiInfo}}
+{{#apis}}
+  "{{classname}}": {
+{{#operations}}
+{{#operation}}
+    "{{nickname}}": {
+      "java": [
+        {
+          "header": "request",
+          "syntax": "java",
+          "content": "new {{classname}}().{{nickname}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})"
+        }{{#examples}}
+        , {
+          "header": "response: {{contentType}}",
+          "syntax": "java",
+          "content": "{{example}}"
+        }
+        {{/examples}}
+      ]
+    },
+{{/operation}}
+{{/operations}}
+  },
+{{/apis}}
+{{/apiInfo}}
+}
