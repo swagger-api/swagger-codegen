@@ -6,8 +6,8 @@ window.code.curl = {
       "curl": [
         {
           "header": "request",
-          "syntax": "bash", // see segmentio/highlight for a list of supported syntaxes
-          "content": "curl 'http://example.com/some/path' \\\n  -d bob=\"hello\" \\\n  -X GET"
+          "syntax": "bash",
+          "content": "curl -X post \'http://petstore.swagger.io/v2/user\'"
         }
       ]
     },
@@ -15,8 +15,8 @@ window.code.curl = {
       "curl": [
         {
           "header": "request",
-          "syntax": "bash", // see segmentio/highlight for a list of supported syntaxes
-          "content": "curl 'http://example.com/some/path' \\\n  -d bob=\"hello\" \\\n  -X GET"
+          "syntax": "bash",
+          "content": "curl -X post \'http://petstore.swagger.io/v2/user/createWithArray\'"
         }
       ]
     },
@@ -24,8 +24,8 @@ window.code.curl = {
       "curl": [
         {
           "header": "request",
-          "syntax": "bash", // see segmentio/highlight for a list of supported syntaxes
-          "content": "curl 'http://example.com/some/path' \\\n  -d bob=\"hello\" \\\n  -X GET"
+          "syntax": "bash",
+          "content": "curl -X post \'http://petstore.swagger.io/v2/user/createWithList\'"
         }
       ]
     },
@@ -33,8 +33,8 @@ window.code.curl = {
       "curl": [
         {
           "header": "request",
-          "syntax": "bash", // see segmentio/highlight for a list of supported syntaxes
-          "content": "curl 'http://example.com/some/path' \\\n  -d bob=\"hello\" \\\n  -X GET"
+          "syntax": "bash",
+          "content": "curl -X get \'http://petstore.swagger.io/v2/user/login?[username={username}],[password={password}]\'"
         }
       ]
     },
@@ -42,8 +42,8 @@ window.code.curl = {
       "curl": [
         {
           "header": "request",
-          "syntax": "bash", // see segmentio/highlight for a list of supported syntaxes
-          "content": "curl 'http://example.com/some/path' \\\n  -d bob=\"hello\" \\\n  -X GET"
+          "syntax": "bash",
+          "content": "curl -X get \'http://petstore.swagger.io/v2/user/logout\'"
         }
       ]
     },
@@ -51,8 +51,8 @@ window.code.curl = {
       "curl": [
         {
           "header": "request",
-          "syntax": "bash", // see segmentio/highlight for a list of supported syntaxes
-          "content": "curl 'http://example.com/some/path' \\\n  -d bob=\"hello\" \\\n  -X GET"
+          "syntax": "bash",
+          "content": "curl -X get \'http://petstore.swagger.io/v2/user/{username}\'"
         }
       ]
     },
@@ -60,8 +60,8 @@ window.code.curl = {
       "curl": [
         {
           "header": "request",
-          "syntax": "bash", // see segmentio/highlight for a list of supported syntaxes
-          "content": "curl 'http://example.com/some/path' \\\n  -d bob=\"hello\" \\\n  -X GET"
+          "syntax": "bash",
+          "content": "curl -X put \'http://petstore.swagger.io/v2/user/{username}\'"
         }
       ]
     },
@@ -69,8 +69,8 @@ window.code.curl = {
       "curl": [
         {
           "header": "request",
-          "syntax": "bash", // see segmentio/highlight for a list of supported syntaxes
-          "content": "curl 'http://example.com/some/path' \\\n  -d bob=\"hello\" \\\n  -X GET"
+          "syntax": "bash",
+          "content": "curl -X delete \'http://petstore.swagger.io/v2/user/{username}\'"
         }
       ]
     },
@@ -80,8 +80,8 @@ window.code.curl = {
       "curl": [
         {
           "header": "request",
-          "syntax": "bash", // see segmentio/highlight for a list of supported syntaxes
-          "content": "curl 'http://example.com/some/path' \\\n  -d bob=\"hello\" \\\n  -X GET"
+          "syntax": "bash",
+          "content": "curl -X put \'http://petstore.swagger.io/v2/pet\'"
         }
       ]
     },
@@ -89,8 +89,8 @@ window.code.curl = {
       "curl": [
         {
           "header": "request",
-          "syntax": "bash", // see segmentio/highlight for a list of supported syntaxes
-          "content": "curl 'http://example.com/some/path' \\\n  -d bob=\"hello\" \\\n  -X GET"
+          "syntax": "bash",
+          "content": "curl -X post \'http://petstore.swagger.io/v2/pet\'"
         }
       ]
     },
@@ -98,8 +98,8 @@ window.code.curl = {
       "curl": [
         {
           "header": "request",
-          "syntax": "bash", // see segmentio/highlight for a list of supported syntaxes
-          "content": "curl 'http://example.com/some/path' \\\n  -d bob=\"hello\" \\\n  -X GET"
+          "syntax": "bash",
+          "content": "curl -X get \'http://petstore.swagger.io/v2/pet/findByStatus?[status={status1&amp;status=status2}]\'"
         }
       ]
     },
@@ -107,8 +107,8 @@ window.code.curl = {
       "curl": [
         {
           "header": "request",
-          "syntax": "bash", // see segmentio/highlight for a list of supported syntaxes
-          "content": "curl 'http://example.com/some/path' \\\n  -d bob=\"hello\" \\\n  -X GET"
+          "syntax": "bash",
+          "content": "curl -X get \'http://petstore.swagger.io/v2/pet/findByTags?[tags={tags1&amp;tags=tags2}]\'"
         }
       ]
     },
@@ -116,8 +116,8 @@ window.code.curl = {
       "curl": [
         {
           "header": "request",
-          "syntax": "bash", // see segmentio/highlight for a list of supported syntaxes
-          "content": "curl 'http://example.com/some/path' \\\n  -d bob=\"hello\" \\\n  -X GET"
+          "syntax": "bash",
+          "content": "curl -X get \'http://petstore.swagger.io/v2/pet/{petId}\'"
         }
       ]
     },
@@ -125,8 +125,8 @@ window.code.curl = {
       "curl": [
         {
           "header": "request",
-          "syntax": "bash", // see segmentio/highlight for a list of supported syntaxes
-          "content": "curl 'http://example.com/some/path' \\\n  -d bob=\"hello\" \\\n  -X GET"
+          "syntax": "bash",
+          "content": "curl -X post \'http://petstore.swagger.io/v2/pet/{petId}\'"
         }
       ]
     },
@@ -134,8 +134,8 @@ window.code.curl = {
       "curl": [
         {
           "header": "request",
-          "syntax": "bash", // see segmentio/highlight for a list of supported syntaxes
-          "content": "curl 'http://example.com/some/path' \\\n  -d bob=\"hello\" \\\n  -X GET"
+          "syntax": "bash",
+          "content": "curl -X delete \'http://petstore.swagger.io/v2/pet/{petId}\'\ \n  -H 'api_key:{ api_key }'"
         }
       ]
     },
@@ -143,8 +143,8 @@ window.code.curl = {
       "curl": [
         {
           "header": "request",
-          "syntax": "bash", // see segmentio/highlight for a list of supported syntaxes
-          "content": "curl 'http://example.com/some/path' \\\n  -d bob=\"hello\" \\\n  -X GET"
+          "syntax": "bash",
+          "content": "curl -X post \'http://petstore.swagger.io/v2/pet/{petId}/uploadImage\'"
         }
       ]
     },
@@ -154,8 +154,8 @@ window.code.curl = {
       "curl": [
         {
           "header": "request",
-          "syntax": "bash", // see segmentio/highlight for a list of supported syntaxes
-          "content": "curl 'http://example.com/some/path' \\\n  -d bob=\"hello\" \\\n  -X GET"
+          "syntax": "bash",
+          "content": "curl -X get \'http://petstore.swagger.io/v2/store/inventory\'"
         }
       ]
     },
@@ -163,8 +163,8 @@ window.code.curl = {
       "curl": [
         {
           "header": "request",
-          "syntax": "bash", // see segmentio/highlight for a list of supported syntaxes
-          "content": "curl 'http://example.com/some/path' \\\n  -d bob=\"hello\" \\\n  -X GET"
+          "syntax": "bash",
+          "content": "curl -X post \'http://petstore.swagger.io/v2/store/order\'"
         }
       ]
     },
@@ -172,8 +172,8 @@ window.code.curl = {
       "curl": [
         {
           "header": "request",
-          "syntax": "bash", // see segmentio/highlight for a list of supported syntaxes
-          "content": "curl 'http://example.com/some/path' \\\n  -d bob=\"hello\" \\\n  -X GET"
+          "syntax": "bash",
+          "content": "curl -X get \'http://petstore.swagger.io/v2/store/order/{orderId}\'"
         }
       ]
     },
@@ -181,8 +181,8 @@ window.code.curl = {
       "curl": [
         {
           "header": "request",
-          "syntax": "bash", // see segmentio/highlight for a list of supported syntaxes
-          "content": "curl 'http://example.com/some/path' \\\n  -d bob=\"hello\" \\\n  -X GET"
+          "syntax": "bash",
+          "content": "curl -X delete \'http://petstore.swagger.io/v2/store/order/{orderId}\'"
         }
       ]
     },

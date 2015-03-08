@@ -1,5 +1,6 @@
 package com.wordnik.swagger.codegen;
 
+import com.wordnik.swagger.codegen.examples.ExampleGenerator;
 import com.wordnik.swagger.models.*;
 import com.wordnik.swagger.models.parameters.*;
 import com.wordnik.swagger.models.properties.*;
@@ -241,6 +242,54 @@ public class DefaultCodegen {
     }
     else
       return null;
+  }
+
+  public String generateExamplePath(String path, Operation operation) {
+    StringBuilder sb = new StringBuilder();
+    sb.append(path);
+
+    if(operation.getParameters() != null) {
+      int count = 0;
+
+      for(Parameter param : operation.getParameters()) {
+        if(param instanceof QueryParameter) {
+          StringBuilder paramPart = new StringBuilder();
+          QueryParameter qp = (QueryParameter) param;
+
+          if(count == 0)
+            paramPart.append("?");
+          else
+            paramPart.append(",");
+          count += 1;
+          if(!param.getRequired())
+            paramPart.append("[");
+          paramPart.append(param.getName()).append("=");
+          paramPart.append("{");
+          if(qp.getCollectionFormat() != null) {
+            paramPart.append(param.getName() + "1");
+            if("csv".equals(qp.getCollectionFormat()))
+              paramPart.append(",");
+            else if("pipes".equals(qp.getCollectionFormat()))
+              paramPart.append("|");
+            else if("tsv".equals(qp.getCollectionFormat()))
+              paramPart.append("\t");
+            else if("multi".equals(qp.getCollectionFormat())) {
+              paramPart.append("&").append(param.getName()).append("=");
+              paramPart.append(param.getName() + "2");
+            }
+          }
+          else {
+            paramPart.append(param.getName());
+          }
+          paramPart.append("}");
+          if(!param.getRequired())
+            paramPart.append("]");
+          sb.append(paramPart.toString());
+        }
+      }
+    }
+
+    return sb.toString();
   }
 
   public String toDefaultValue(Property p) {
@@ -537,7 +586,7 @@ public class DefaultCodegen {
     return property;
   }
 
-  public CodegenOperation fromOperation(String path, String httpMethod, Operation operation){
+  public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, Map<String, Model> definitions){
     CodegenOperation op = CodegenModelFactory.newInstance(CodegenModelType.OPERATION);
     Set<String> imports = new HashSet<String>();
 
@@ -572,6 +621,8 @@ public class DefaultCodegen {
     op.tags = operation.getTags();
 
     Response methodResponse = null;
+
+    op.exampleUrl = generateExamplePath(path, operation);
 
     if(operation.getConsumes() != null && operation.getConsumes().size() > 0) {
       List<Map<String, String>> c = new ArrayList<Map<String, String>>();
@@ -618,7 +669,7 @@ public class DefaultCodegen {
       for(String responseCode: operation.getResponses().keySet()) {
         Response response = operation.getResponses().get(responseCode);
         if(response != methodResponse) {
-          CodegenResponse r = fromResponse(responseCode, response);
+          CodegenResponse r = fromResponse(responseCode, operation.getProduces(), response, definitions);
           op.responses.add(r);
         }
         for(int i = 0; i < op.responses.size() - 1; i++) {
@@ -645,7 +696,7 @@ public class DefaultCodegen {
         else
           op.returnBaseType = cm.baseType;
       }
-      op.examples = toExamples(methodResponse.getExamples());
+      op.examples = new ExampleGenerator(definitions).generate(methodResponse.getExamples(), operation.getProduces(), responseProperty);
       op.defaultResponse = toDefaultValue(responseProperty);
       op.returnType = cm.datatype;
       if(cm.isContainer != null) {
@@ -743,7 +794,7 @@ public class DefaultCodegen {
     return op;
   }
 
-  public CodegenResponse fromResponse(String responseCode, Response response) {
+  public CodegenResponse fromResponse(String responseCode, List<String> produces, Response response, Map<String, Model> definitions) {
     CodegenResponse r = CodegenModelFactory.newInstance(CodegenModelType.RESPONSE);
     if("default".equals(responseCode))
       r.code = "0";
@@ -751,7 +802,7 @@ public class DefaultCodegen {
       r.code = responseCode;
     r.message = response.getDescription();
     r.schema = response.getSchema();
-    r.examples = toExamples(response.getExamples());
+    r.examples = new ExampleGenerator(definitions).generate(response.getExamples(), produces, response.getSchema());
     return r;
   }
 
@@ -847,22 +898,6 @@ public class DefaultCodegen {
       p.paramName = toParamName(bp.getName());
     }
     return p;
-  }
-
-  protected List<Map<String, String>> toExamples(Map<String, String> examples) {
-    if(examples == null)
-      return null;
-
-    List<Map<String, String>> output = new ArrayList<Map<String, String>>();
-    for(String key: examples.keySet()) {
-      String value = examples.get(key);
-
-      Map<String, String> kv = new HashMap<String, String>();
-      kv.put("contentType", key);
-      kv.put("example", value);
-      output.add(kv);
-    }
-    return output;
   }
 
   private void addHeaders(Response response, List<CodegenProperty> target) {

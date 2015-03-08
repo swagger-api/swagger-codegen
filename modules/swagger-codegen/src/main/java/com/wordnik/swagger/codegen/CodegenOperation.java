@@ -8,7 +8,7 @@ public class CodegenOperation {
   public Boolean hasConsumes, hasProduces, hasParams, returnTypeIsPrimitive,
     returnSimpleType, subresourceOperation, isMapContainer, isListContainer;
   public String path, operationId, returnType, httpMethod, returnBaseType,
-    returnContainer, summary, notes, baseName, defaultResponse;
+    returnContainer, summary, notes, baseName, defaultResponse, exampleUrl;
 
   public List<Map<String, String>> consumes, produces;
   public CodegenParameter bodyParam;

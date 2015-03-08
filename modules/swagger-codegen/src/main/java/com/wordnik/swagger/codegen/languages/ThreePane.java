@@ -35,6 +35,7 @@ public class ThreePane extends DefaultCodegen implements CodegenConfig {
 
     List<String> codeSamples = new ArrayList<String>();
     codeSamples.add("curl");
+    codeSamples.add("java");
 
     additionalProperties.put("code-samples", codeSamples);
     additionalProperties.put("appName", "Swagger Sample");
@@ -50,6 +51,7 @@ public class ThreePane extends DefaultCodegen implements CodegenConfig {
 
     // languages
     supportingFiles.add(new SupportingFile("code_samples/curl.mustache", "code_samples", "curl.js"));
+    supportingFiles.add(new SupportingFile("code_samples/java.mustache", "code_samples", "java.js"));
 
     // Main template
     supportingFiles.add(new SupportingFile("index.mustache", "", "index.html"));

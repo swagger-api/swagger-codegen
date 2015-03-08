@@ -196,11 +196,23 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
           files.add(new File(outputFilename));
         }
         else {
-          InputStream is = this.getClass().getClassLoader().getResourceAsStream(config.templateDir() + File.separator + support.templateFile);
+          File file = new File(config.templateDir() + File.separator + support.templateFile);
+          if(file.exists()) {
+            FileUtils.copyFile(file, new File(outputFilename));
+            System.out.println("copying file to " + outputFilename);
+            files.add(new File(outputFilename));            
+          }
+          else {
+            InputStream is = this.getClass().getClassLoader().getResourceAsStream(config.templateDir() + File.separator + support.templateFile);
 
-          FileUtils.copyInputStreamToFile(is, new File(outputFilename));
-          System.out.println("copying file to " + outputFilename);
-          files.add(new File(outputFilename));
+            if(is != null) {
+              FileUtils.copyInputStreamToFile(is, new File(outputFilename));
+              System.out.println("copying file to " + outputFilename);
+              files.add(new File(outputFilename));            
+            }
+            else 
+              System.out.println("failed to copy " + config.templateDir() + File.separator + support.templateFile);
+          }
         }
       }
 
@@ -237,7 +249,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
       }
 
       for(String tag : tags) {
-        CodegenOperation co = config.fromOperation(resourcePath, httpMethod, operation);
+        CodegenOperation co = config.fromOperation(resourcePath, httpMethod, operation, swagger.getDefinitions());
         co.tags = new ArrayList<String>();
         co.tags.add(sanitizeTag(tag));
 

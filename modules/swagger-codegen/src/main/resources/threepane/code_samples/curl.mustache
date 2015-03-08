@@ -10,8 +10,8 @@ window.code.curl = {
       "curl": [
         {
           "header": "request",
-          "syntax": "bash", // see segmentio/highlight for a list of supported syntaxes
-          "content": "curl 'http://example.com/some/path' \\\n  -d bob=\"hello\" \\\n  -X GET"
+          "syntax": "bash",
+          "content": "curl -X {{httpMethod}} \'{{basePath}}{{exampleUrl}}\'{{#headerParams}}\ \n  -H '{{paramName}}:{ {{paramName}} }'{{/headerParams}}"
         }
       ]
     },
