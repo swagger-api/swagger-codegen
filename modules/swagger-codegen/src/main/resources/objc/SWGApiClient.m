@@ -305,11 +305,9 @@ static bool loggingEnabled = true;
         [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     }
 
-    AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
-
     if(body != nil) {
         if([body isKindOfClass:[NSDictionary class]] || [body isKindOfClass:[NSArray class]]){
-            [requestSerializer setValue:requestContentType forHTTPHeaderField:@"Content-Type"];
+            [request setValue:requestContentType forHTTPHeaderField:@"Content-Type"];
         }
         else if ([body isKindOfClass:[SWGFile class]]) {}
         else {
@@ -321,7 +319,8 @@ static bool loggingEnabled = true;
             [request setValue:[headerParams valueForKey:key] forHTTPHeaderField:key];
         }
     }
-    [requestSerializer setValue:responseContentType forHTTPHeaderField:@"Accept"];
+
+    [request setValue:responseContentType forHTTPHeaderField:@"Accept"];
     
     // Always disable cookies!
     [request setHTTPShouldHandleCookies:NO];
@@ -429,13 +428,10 @@ static bool loggingEnabled = true;
         NSLog(@"%@ cache disabled", path);
         [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     }
-    
-    
-    AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
 
     if(body != nil) {
         if([body isKindOfClass:[NSDictionary class]] || [body isKindOfClass:[NSArray class]]){
-            [requestSerializer setValue:requestContentType forHTTPHeaderField:@"Content-Type"];
+            [request setValue:requestContentType forHTTPHeaderField:@"Content-Type"];
         }
         else if ([body isKindOfClass:[SWGFile class]]){}
         else {
@@ -447,8 +443,8 @@ static bool loggingEnabled = true;
             [request setValue:[headerParams valueForKey:key] forHTTPHeaderField:key];
         }
     }
-    [requestSerializer setValue:responseContentType forHTTPHeaderField:@"Accept"];
 
+    [request setValue:responseContentType forHTTPHeaderField:@"Accept"];
     
     // Always disable cookies!
     [request setHTTPShouldHandleCookies:NO];
