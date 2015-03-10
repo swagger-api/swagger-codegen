@@ -61,7 +61,7 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
         "void", "char", "short", "int", "void", "char", "short", "int",
         "long", "float", "double", "signed", "unsigned", "id", "const",
         "volatile", "in", "out", "inout", "bycopy", "byref", "oneway",
-        "self", "super", "description"
+        "self", "super", "description", "default"
       ));
 
     typeMapping = new HashMap<String, String>();
