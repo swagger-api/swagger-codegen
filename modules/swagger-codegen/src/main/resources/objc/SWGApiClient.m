@@ -244,41 +244,47 @@ static bool loggingEnabled = true;
          completionBlock: (void (^)(NSDictionary*, NSError *))completionBlock {
     
     NSMutableURLRequest * request = nil;
-    if (body != nil && [body isKindOfClass:[NSArray class]]){
-        SWGFile * file;
-        NSMutableDictionary * params = [[NSMutableDictionary alloc] init];
-        for(id obj in body) {
-            if([obj isKindOfClass:[SWGFile class]]) {
-                file = (SWGFile*) obj;
-                requestContentType = @"multipart/form-data";
-            }
-            else if([obj isKindOfClass:[NSDictionary class]]) {
-                for(NSString * key in obj) {
-                    params[key] = obj[key];
-                }
-            }
-        }
-        NSString * urlString = [[NSURL URLWithString:path relativeToURL:self.baseURL] absoluteString];
-        
-        if(file != nil) {
-            request = [self.requestSerializer multipartFormRequestWithMethod: @"POST"
-                                                                   URLString: urlString
-                                                                  parameters: nil
-                                                   constructingBodyWithBlock: ^(id<AFMultipartFormData> formData) {
 
-                                                       for(NSString * key in params) {
-                                                           NSData* data = [params[key] dataUsingEncoding:NSUTF8StringEncoding];
-                                                           [formData appendPartWithFormData: data name: key];
-                                                       }
-                                                       
-                                                       [formData appendPartWithFileData: [file data]
-                                                                                   name: [file paramName]
-                                                                               fileName: [file name]
-                                                                               mimeType: [file mimeType]];
-                                                       
-                                                   }
-                                                                       error:nil];
+    BOOL multipartForm = NO;
+    if ([requestContentType isEqualToString:@"multipart/form-data"]) {
+        multipartForm = YES;
+    }
+    else if (body != nil && [body isKindOfClass:[NSArray class]]) {
+        for (id obj in body) {
+            if ([obj isKindOfClass:[SWGFile class]]) {
+                multipartForm = YES;
+                break;
+            }
         }
+    }
+
+    if (multipartForm) {
+        requestContentType = @"multipart/form-data";
+
+        NSString * urlString = [[NSURL URLWithString:path relativeToURL:self.baseURL] absoluteString];
+        request = [self.requestSerializer multipartFormRequestWithMethod: @"POST"
+                                                               URLString: urlString
+                                                              parameters: nil
+                                               constructingBodyWithBlock: ^(id<AFMultipartFormData> formData) {
+
+                                                   for (id obj in body) {
+                                                       if ([obj isKindOfClass:[NSDictionary class]]) {
+                                                           NSDictionary *dict = (NSDictionary *)obj;
+                                                           for (NSString *key in dict) {
+                                                               NSData *data = [dict[key] dataUsingEncoding:NSUTF8StringEncoding];
+                                                               [formData appendPartWithFormData:data name:key];
+                                                           }
+                                                       }
+                                                       else if ([obj isKindOfClass:[SWGFile class]]) {
+                                                           SWGFile *file = (SWGFile *)obj;
+                                                           [formData appendPartWithFileData:[file data]
+                                                                                       name:[file paramName]
+                                                                                   fileName:[file name]
+                                                                                   mimeType:[file mimeType]];
+                                                       }
+                                                   }
+                                               }
+                                                                   error:nil];
     }
     else {
         NSString * pathWithQueryParams = [self pathWithQueryParamsToString:path queryParams:queryParams];
@@ -289,6 +295,7 @@ static bool loggingEnabled = true;
                                                  parameters:body
                                                       error:nil];
     }
+
     BOOL hasHeaderParams = false;
     if(headerParams != nil && [headerParams count] > 0)
         hasHeaderParams = true;
@@ -368,51 +375,58 @@ static bool loggingEnabled = true;
                     responseContentType: (NSString*) responseContentType
                         completionBlock: (void (^)(NSString*, NSError *))completionBlock {
     NSMutableURLRequest * request = nil;
-    if (body != nil && [body isKindOfClass:[NSArray class]]){
-        SWGFile * file;
-        NSMutableDictionary * params = [[NSMutableDictionary alloc] init];
-        for(id obj in body) {
-            if([obj isKindOfClass:[SWGFile class]]) {
-                file = (SWGFile*) obj;
-                requestContentType = @"multipart/form-data";
-            }
-            else if([obj isKindOfClass:[NSDictionary class]]) {
-                for(NSString * key in obj) {
-                    params[key] = obj[key];
-                }
+
+    BOOL multipartForm = NO;
+    if ([requestContentType isEqualToString:@"multipart/form-data"]) {
+        multipartForm = YES;
+    }
+    else if (body != nil && [body isKindOfClass:[NSArray class]]) {
+        for (id obj in body) {
+            if ([obj isKindOfClass:[SWGFile class]]) {
+                multipartForm = YES;
+                break;
             }
         }
+    }
+
+    if (multipartForm) {
+        requestContentType = @"multipart/form-data";
+
         NSString * urlString = [[NSURL URLWithString:path relativeToURL:self.baseURL] absoluteString];
-        
-        if(file != nil) {
-            request = [self.requestSerializer multipartFormRequestWithMethod: @"POST"
-                                                                   URLString: urlString
-                                                                  parameters: nil
-                                                   constructingBodyWithBlock: ^(id<AFMultipartFormData> formData) {
-                                                       
-                                                       for(NSString * key in params) {
-                                                           NSData* data = [params[key] dataUsingEncoding:NSUTF8StringEncoding];
-                                                           [formData appendPartWithFormData: data name: key];
+        request = [self.requestSerializer multipartFormRequestWithMethod: @"POST"
+                                                               URLString: urlString
+                                                              parameters: nil
+                                               constructingBodyWithBlock: ^(id<AFMultipartFormData> formData) {
+
+                                                   for (id obj in body) {
+                                                       if ([obj isKindOfClass:[NSDictionary class]]) {
+                                                           NSDictionary *dict = (NSDictionary *)obj;
+                                                           for (NSString *key in dict) {
+                                                               NSData *data = [dict[key] dataUsingEncoding:NSUTF8StringEncoding];
+                                                               [formData appendPartWithFormData:data name:key];
+                                                           }
                                                        }
-                                                       
-                                                       [formData appendPartWithFileData: [file data]
-                                                                                   name: [file paramName]
-                                                                               fileName: [file name]
-                                                                               mimeType: [file mimeType]];
-                                                       
+                                                       else if ([obj isKindOfClass:[SWGFile class]]) {
+                                                           SWGFile *file = (SWGFile *)obj;
+                                                           [formData appendPartWithFileData:[file data]
+                                                                                       name:[file paramName]
+                                                                                   fileName:[file name]
+                                                                                   mimeType:[file mimeType]];
+                                                       }
                                                    }
-                                                                       error:nil];
-        }
+                                               }
+                                                                   error:nil];
     }
     else {
         NSString * pathWithQueryParams = [self pathWithQueryParamsToString:path queryParams:queryParams];
         NSString * urlString = [[NSURL URLWithString:pathWithQueryParams relativeToURL:self.baseURL] absoluteString];
-        
-        request = [self.requestSerializer requestWithMethod: method
-                                                  URLString: urlString
-                                                 parameters: body
-                                                      error: nil];
+
+        request = [self.requestSerializer requestWithMethod:method
+                                                  URLString:urlString
+                                                 parameters:body
+                                                      error:nil];
     }
+
     BOOL hasHeaderParams = false;
     if(headerParams != nil && [headerParams count] > 0)
         hasHeaderParams = true;
