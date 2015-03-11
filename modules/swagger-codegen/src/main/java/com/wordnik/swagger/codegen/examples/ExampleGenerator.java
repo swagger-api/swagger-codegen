@@ -6,6 +6,12 @@ import com.wordnik.swagger.util.Json;
 
 import java.text.SimpleDateFormat;
 
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+ 
+
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -15,6 +21,7 @@ public class ExampleGenerator {
   public ExampleGenerator(Map<String, Model> examples) {
     this.examples = examples;
   }
+
   public List<Map<String, String>> generate(Map<String, String> examples, List<String> mediaTypes, Property property) {
     List<Map<String, String>> output = new ArrayList<Map<String, String>>();
     if(examples == null ) {
@@ -28,6 +35,14 @@ public class ExampleGenerator {
         if(property != null && mediaType.startsWith("application/json")) {
           String example = Json.pretty(resolvePropertyToExample(mediaType, property));
 
+          if(example != null) {
+            example = example.replaceAll("\n", "\\\\n");
+            kv.put("example", example);
+            output.add(kv);
+          }
+        }
+        else if(property != null && mediaType.startsWith("application/xml")) {
+          String example = new XmlExampleGenerator(this.examples).toXml(property);
           if(example != null) {
             example = example.replaceAll("\n", "\\\\n");
             kv.put("example", example);
@@ -67,7 +82,10 @@ public class ExampleGenerator {
     else if(property instanceof ArrayProperty) {
       Property innerType = ((ArrayProperty)property).getItems();
       if(innerType != null) {
-        return Arrays.asList(resolvePropertyToExample(mediaType, innerType));
+        Object[] output = new Object[]{
+          resolvePropertyToExample(mediaType, innerType)
+        };
+        return output;
       }
     }
     else if(property instanceof DateProperty) {
