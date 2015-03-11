@@ -58,7 +58,7 @@ public class XmlExampleGenerator {
     }
     for(String pName : model.getProperties().keySet()) {
       Property p = model.getProperties().get(pName);
-      if(p.getXml() != null && p.getXml().getAttribute())
+      if(p != null && p.getXml() != null && p.getXml().getAttribute() != null && p.getXml().getAttribute())
         attributes.put(pName, p);
       else
         elements.put(pName, p);
@@ -90,9 +90,7 @@ public class XmlExampleGenerator {
       return "";
     }
     StringBuilder sb = new StringBuilder();
-    if(property.getXml() != null) {
 
-    }
     if(property instanceof IntegerProperty) {
       IntegerProperty p = (IntegerProperty) property;
       if(name != null) {
@@ -180,10 +178,15 @@ public class XmlExampleGenerator {
       if(wrapped) {
         if(name != null) {
           sb.append(indent(indent));
-          sb.append(openTag(name + "s"));
+          sb.append(openTag(name));
+          sb.append(NEWLINE);
         }
-        if(name != null)
-          sb.append(closeTag(name + "s"));
+        sb.append(toXml(name, inner, indent + 1));
+        if(name != null) {
+          sb.append(NEWLINE);
+          sb.append(indent(indent));
+          sb.append(closeTag(name));
+        }
       }
       else
         sb.append(toXml(name, inner, indent));
