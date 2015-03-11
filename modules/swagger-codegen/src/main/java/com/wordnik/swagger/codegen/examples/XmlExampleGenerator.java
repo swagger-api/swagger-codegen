@@ -91,85 +91,7 @@ public class XmlExampleGenerator {
     }
     StringBuilder sb = new StringBuilder();
 
-    if(property instanceof IntegerProperty) {
-      IntegerProperty p = (IntegerProperty) property;
-      if(name != null) {
-        sb.append(indent(indent));
-        sb.append(openTag(name));
-      }
-      if(property.getExample() != null)
-        sb.append(property.getExample());
-      else
-        sb.append("0");
-      if(name != null)
-        sb.append(closeTag(name));
-    }
-    else if(property instanceof BooleanProperty) {
-      BooleanProperty p = (BooleanProperty) property;
-      if(name != null) {
-        sb.append(indent(indent));
-        sb.append(openTag(name));
-      }
-      if(property.getExample() != null)
-        sb.append(property.getExample());
-      else
-        sb.append("true");
-      if(name != null)
-        sb.append(closeTag(name));
-    }
-    else if(property instanceof LongProperty) {
-      LongProperty p = (LongProperty) property;
-      if(name != null) {
-        sb.append(indent(indent));
-        sb.append(openTag(name));
-      }
-      if(property.getExample() != null)
-        sb.append(property.getExample());
-      else
-        sb.append("123456");
-      if(name != null)
-        sb.append(closeTag(name));
-    }
-    else if(property instanceof DateProperty) {
-      DateProperty p = (DateProperty) property;
-      if(name != null) {
-        sb.append(indent(indent));
-        sb.append(openTag(name));
-      }
-      if(property.getExample() != null)
-        sb.append(property.getExample());
-      else
-        sb.append(dateFormat.format(new Date()));
-      if(name != null)
-        sb.append(closeTag(name));
-    }
-    else if(property instanceof DateTimeProperty) {
-      DateTimeProperty p = (DateTimeProperty) property;
-      if(name != null) {
-        sb.append(indent(indent));
-        sb.append(openTag(name));
-      }
-      if(property.getExample() != null)
-        sb.append(property.getExample());
-      else
-        sb.append(dtFormat.format(new Date()));
-      if(name != null)
-        sb.append(closeTag(name));
-    }
-    else if(property instanceof StringProperty) {
-      StringProperty p = (StringProperty) property;
-      if(name != null) {
-        sb.append(indent(indent));
-        sb.append(openTag(name));
-      }
-      if(property.getExample() != null)
-        sb.append(property.getExample());
-      else
-        sb.append("string");
-      if(name != null)
-        sb.append(closeTag(name));
-    }
-    else if(property instanceof ArrayProperty) {
+    if(property instanceof ArrayProperty) {
       ArrayProperty p = (ArrayProperty) property;
       Property inner = p.getItems();
       boolean wrapped = false;
@@ -197,9 +119,55 @@ public class XmlExampleGenerator {
       sb.append(toXml(actualModel, indent));
     }
     else {
-      System.out.println(property);
+      if(name != null) {
+        sb.append(indent(indent));
+        sb.append(openTag(name));
+      }
+      sb.append(getExample(property));
+      if(name != null)
+        sb.append(closeTag(name));
     }
     return sb.toString();
+  }
+
+  protected String getExample(Property property) {
+    if(property instanceof DateTimeProperty) {
+      if(property.getExample() != null)
+        return property.getExample();
+      else
+        return dtFormat.format(new Date());
+    }
+    else if(property instanceof StringProperty) {
+      if(property.getExample() != null)
+        return property.getExample();
+      else
+        return "string";
+    }
+    else if(property instanceof DateProperty) {
+      if(property.getExample() != null)
+        return property.getExample();
+      else
+        return dateFormat.format(new Date());
+    }
+    else if(property instanceof IntegerProperty) {
+      if(property.getExample() != null)
+        return property.getExample();
+      else
+        return "0";
+    }
+    else if(property instanceof BooleanProperty) {
+      if(property.getExample() != null)
+        return property.getExample();
+      else
+        return "true";
+    }
+    else if(property instanceof LongProperty) {
+      if(property.getExample() != null)
+        return property.getExample();
+      else
+        return "123456";
+    }
+    return "not implemented " + property;
   }
 
   protected String openTag(String name) {
