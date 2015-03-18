@@ -154,10 +154,10 @@ public class DefaultCodegen {
   }
 
   public String toParamName(String name) {
-    if(reservedWords.contains(name))
+    if(reservedWords.contains(name)) {
       return escapeReservedWord(name);
-    else
-      return name;
+    }
+    return name;
   }
 
 
