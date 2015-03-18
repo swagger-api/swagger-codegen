@@ -6,8 +6,8 @@
 #include "SamiError.h"
 
 #include "SamiUser.h"
-using Tizen::Base::String;
 using Tizen::Base::Collection::IList;
+using Tizen::Base::String;
 
 using namespace Tizen::Net::Http;
 
@@ -44,7 +44,7 @@ public:
   deleteUserWithCompletion(String* username, void(* handler)(SamiError*));
   
   static String getBasePath() {
-    return L"http://petstore.swagger.wordnik.com/v2";
+    return L"http://petstore.swagger.io/v2";
   }
 
 private:

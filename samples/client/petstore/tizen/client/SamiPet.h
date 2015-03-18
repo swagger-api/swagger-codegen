@@ -17,11 +17,11 @@
 using namespace Tizen::Web::Json;
 
 
-using Tizen::Base::Long;
 #include "SamiCategory.h"
+using Tizen::Base::Long;
 using Tizen::Base::String;
-using Tizen::Base::Collection::IList;
 #include "SamiTag.h"
+using Tizen::Base::Collection::IList;
 
 
 namespace Swagger {

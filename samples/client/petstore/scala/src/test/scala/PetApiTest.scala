@@ -3,15 +3,14 @@ import com.wordnik.petstore.model._
 
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest._
 
 import scala.collection.mutable.{ ListBuffer, HashMap }
 import scala.collection.JavaConverters._
 import scala.beans.BeanProperty
 
 @RunWith(classOf[JUnitRunner])
-class PetApiTest extends FlatSpec with ShouldMatchers {
+class PetApiTest extends FlatSpec with Matchers {
   behavior of "PetApi"
   val api = new PetApi
 
@@ -31,7 +30,7 @@ class PetApiTest extends FlatSpec with ShouldMatchers {
       Category(1, "sold"),
       "dragon",
       (for (i <- (1 to 10)) yield "http://foo.com/photo/" + i).toList,
-      (for (i <- (1 to 5)) yield Tag(i, "tag-" + i)).toList,
+      (for (i <- (1 to 5)) yield com.wordnik.petstore.model.Tag(i, "tag-" + i)).toList,
       "lost"
     )
 
@@ -56,7 +55,7 @@ class PetApiTest extends FlatSpec with ShouldMatchers {
       Category(1, "sold"),
       "programmer",
       (for (i <- (1 to 10)) yield "http://foo.com/photo/" + i).toList,
-      (for (i <- (1 to 5)) yield Tag(i, "tag-" + i)).toList,
+      (for (i <- (1 to 5)) yield com.wordnik.petstore.model.Tag(i, "tag-" + i)).toList,
       "confused"
     )
 
