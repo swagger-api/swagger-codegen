@@ -152,7 +152,7 @@ public class DefaultCodegen {
     String result = name;
 
     if(reservedWords.contains(name)) {
-      escapeReservedWord(name);
+      result = escapeReservedWord(name);
     }
 
     for(String invalidCharacter : invalidVariableNameCharacters) {
@@ -163,10 +163,17 @@ public class DefaultCodegen {
   }
 
   public String toParamName(String name) {
+    String result = name;
+
     if(reservedWords.contains(name)) {
-      return escapeReservedWord(name);
+      result = escapeReservedWord(name);
     }
-    return name;
+
+    for(String invalidCharacter : invalidVariableNameCharacters) {
+      result = result.replaceAll(invalidCharacter, "");
+    }
+
+    return result;
   }
 
 
