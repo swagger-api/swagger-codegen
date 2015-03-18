@@ -45,12 +45,6 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         "native", "super", "while")
     );
 
-    invalidVariableNameCharacters = new HashSet<String> (
-      Arrays.asList(
-        "-"
-      )
-    );
-
     additionalProperties.put("invokerPackage", invokerPackage);
     additionalProperties.put("groupId", groupId);
     additionalProperties.put("artifactId", artifactId);
@@ -95,6 +89,15 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
 
   @Override
   public String toVarName(String name) {
+    if(reservedWords.contains(name))
+      return escapeReservedWord(name);
+    else {
+      return name.replaceAll("-", "_");
+    }
+  }
+
+  @Override
+  public String toParamName(String name) {
     if(reservedWords.contains(name))
       return escapeReservedWord(name);
     else {

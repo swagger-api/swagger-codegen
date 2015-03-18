@@ -23,7 +23,6 @@ public class DefaultCodegen {
   protected Map<String, String> typeMapping = new HashMap<String, String>();
   protected Map<String, String> instantiationTypes = new HashMap<String, String>();
   protected Set<String> reservedWords = new HashSet<String>();
-  protected Set<String> invalidVariableNameCharacters = new HashSet<String>();
   protected Set<String> languageSpecificPrimitives = new HashSet<String>();
   protected Map<String, String> importMapping = new HashMap<String, String>();
   protected String modelPackage = "", apiPackage = "", fileSuffix;
@@ -148,32 +147,18 @@ public class DefaultCodegen {
   public String toOperationId(String operationId) { return operationId; }
 
   public String toVarName(String name) {
-
-    String result = name;
-
     if(reservedWords.contains(name)) {
-      result = escapeReservedWord(name);
+      return escapeReservedWord(name);
     }
 
-    for(String invalidCharacter : invalidVariableNameCharacters) {
-      result = result.replaceAll(invalidCharacter, "");
-    }
-
-    return result;
+    return name;
   }
 
   public String toParamName(String name) {
-    String result = name;
-
     if(reservedWords.contains(name)) {
-      result = escapeReservedWord(name);
+      return escapeReservedWord(name);
     }
-
-    for(String invalidCharacter : invalidVariableNameCharacters) {
-      result = result.replaceAll(invalidCharacter, "");
-    }
-
-    return result;
+    return name;
   }
 
 
