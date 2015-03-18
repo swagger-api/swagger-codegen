@@ -147,18 +147,17 @@ public class DefaultCodegen {
   public String toOperationId(String operationId) { return operationId; }
 
   public String toVarName(String name) {
-    if(reservedWords.contains(name)) {
+    if(reservedWords.contains(name))
       return escapeReservedWord(name);
-    }
-
-    return name;
+    else
+      return name;
   }
 
   public String toParamName(String name) {
-    if(reservedWords.contains(name)) {
+    if(reservedWords.contains(name))
       return escapeReservedWord(name);
-    }
-    return name;
+    else
+      return name;
   }
 
 
