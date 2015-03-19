@@ -97,6 +97,15 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
   }
 
   @Override
+  public String toParamName(String name) {
+    if(reservedWords.contains(name))
+      return escapeReservedWord(name);
+    else {
+      return name.replaceAll("-", "_");
+    }
+  }
+
+  @Override
   public String getTypeDeclaration(Property p) {
     if(p instanceof ArrayProperty) {
       ArrayProperty ap = (ArrayProperty) p;

@@ -57,7 +57,7 @@ public class DefaultCodegen {
 
   // override with any special handling of the entire swagger spec
   public void processSwagger(Swagger swagger) {}
-  
+
   // override with any special text escaping logic
   public String escapeText(String input) {
     if(input != null) {
@@ -429,18 +429,18 @@ public class DefaultCodegen {
             if(cp.isContainer != null) {
               String arrayImport = typeMapping.get("array");
               if(arrayImport != null &&
-                !languageSpecificPrimitives.contains(arrayImport) && 
+                !languageSpecificPrimitives.contains(arrayImport) &&
                 !defaultIncludes.contains(arrayImport))
                 m.imports.add(arrayImport);
             }
 
             if(cp.complexType != null &&
-              !languageSpecificPrimitives.contains(cp.complexType) && 
+              !languageSpecificPrimitives.contains(cp.complexType) &&
               !defaultIncludes.contains(cp.complexType))
               m.imports.add(cp.complexType);
 
             if(cp.baseType != null &&
-              !languageSpecificPrimitives.contains(cp.baseType) && 
+              !languageSpecificPrimitives.contains(cp.baseType) &&
               !defaultIncludes.contains(cp.baseType))
               m.imports.add(cp.baseType);
           }
@@ -754,7 +754,7 @@ public class DefaultCodegen {
     // legacy support
     op.nickname = operationId;
 
-    if(op.allParams.size() > 0) 
+    if(op.allParams.size() > 0)
       op.hasParams = true;
     op.externalDocs = operation.getExternalDocs();
 
@@ -814,7 +814,6 @@ public class DefaultCodegen {
     p.baseName = param.getName();
     p.description = param.getDescription();
     p.required = param.getRequired();
-    p.jsonSchema = Json.pretty(param);
 
     if(param instanceof SerializableParameter) {
       SerializableParameter qp = (SerializableParameter) param;
@@ -992,6 +991,6 @@ public class DefaultCodegen {
       operations.put(tag, opList);
     }
     opList.add(co);
-    co.baseName = tag;    
+    co.baseName = tag;
   }
 }
