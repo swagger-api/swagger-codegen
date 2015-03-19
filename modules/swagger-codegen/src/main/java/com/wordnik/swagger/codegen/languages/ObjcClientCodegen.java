@@ -152,19 +152,40 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
         ArrayProperty ap = (ArrayProperty) p;
         Property inner = ap.getItems();
         String innerType = getSwaggerType(inner);
+
+        // In this codition, type of property p is array of primitive,
+        // return container type with pointer, e.g. `NSArray*'
         if (languageSpecificPrimitives.contains(innerType))
             return getSwaggerType(p) + "*";
+
+        // In this codition, type of property p is array of model,
+        // return container type combine inner type with pointer, e.g. `NSArray<SWGTag>*'
         String innerTypeDeclaration = getTypeDeclaration(inner);
+        
         if (innerTypeDeclaration.endsWith("*"))
             innerTypeDeclaration = innerTypeDeclaration.substring(0, innerTypeDeclaration.length() - 1);
+        
         return getSwaggerType(p) + "<" + innerTypeDeclaration + ">*";
     }
     else {
         String swaggerType = getSwaggerType(p);
-        if(languageSpecificPrimitives.contains(swaggerType) && !foundationClasses.contains(swaggerType))
-            return toModelName(swaggerType);
-        else
+
+        // In this codition, type of p is objective-c primitive type, e.g. `NSSNumber',
+        // return type of p with pointer, e.g. `NSNumber*'
+        if (languageSpecificPrimitives.contains(swaggerType) &&
+            foundationClasses.contains(swaggerType)) {
             return swaggerType + "*";
+        }
+        // In this codition, type of p is c primitive type, e.g. `bool',
+        // return type of p, e.g. `bool'
+        else if (languageSpecificPrimitives.contains(swaggerType)) {
+            return swaggerType;
+        }
+        // In this codition, type of p is objective-c object type, e.g. `SWGPet',
+        // return type of p with pointer, e.g. `'
+        else {
+            return swaggerType + "*";
+        }
     }
   }
 
