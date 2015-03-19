@@ -131,7 +131,7 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
     
 }
 
--(NSNumber*) createUsersWithArrayInputWithCompletionBlock: (NSArray*) body
+-(NSNumber*) createUsersWithArrayInputWithCompletionBlock: (NSArray<SWGUser>*) body
         
         
         completionHandler: (void (^)(NSError* error))completionBlock {
@@ -212,7 +212,7 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
     
 }
 
--(NSNumber*) createUsersWithListInputWithCompletionBlock: (NSArray*) body
+-(NSNumber*) createUsersWithListInputWithCompletionBlock: (NSArray<SWGUser>*) body
         
         
         completionHandler: (void (^)(NSError* error))completionBlock {
