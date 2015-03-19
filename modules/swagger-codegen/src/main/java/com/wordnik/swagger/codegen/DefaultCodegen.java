@@ -826,6 +826,18 @@ public class DefaultCodegen {
         p.baseType = pr.datatype;
         imports.add(pr.baseType);
       }
+      else if("object".equals(qp.getType())) {
+        Property inner = qp.getItems();
+        if(inner == null) {
+          LOGGER.warn("warning!  No inner type supplied for map parameter \"" + qp.getName() + "\", using String");
+          inner = new StringProperty().description("//TODO automatically added by swagger-codegen");
+        }
+        property = new MapProperty(inner);
+        collectionFormat = qp.getCollectionFormat();
+        CodegenProperty pr = fromProperty("inner", inner);
+        p.baseType = pr.datatype;
+        imports.add(pr.baseType);
+      }
       else
         property = PropertyBuilder.build(qp.getType(), qp.getFormat(), null);
       if(property == null) {
