@@ -697,6 +697,18 @@ public class DefaultCodegen {
 
     if(parameters != null) {
       for(Parameter param : parameters) {
+        // de-reference parameters from the parameter definitions.
+        if(param instanceof RefParameter) {
+            String name = ((RefParameter)param).getSimpleRef();
+            Map<String, Parameter> parameterDefinitions = (Map<String, Parameter>)additionalProperties().get("parameterDefinitions");
+            if (parameterDefinitions == null) {
+                throw new RuntimeException(path+" "+httpMethod+" uses ref parameter "+name+", but there are no parameter definitions.");
+            }
+            param = parameterDefinitions.get(name);
+            if (param == null) {
+                throw new RuntimeException(path+" "+httpMethod+" uses ref parameter "+name+", but it doesn't exist.");
+            }
+        }
         CodegenParameter p = fromParameter(param, imports);
         allParams.add(p);
         if(param instanceof QueryParameter) {
