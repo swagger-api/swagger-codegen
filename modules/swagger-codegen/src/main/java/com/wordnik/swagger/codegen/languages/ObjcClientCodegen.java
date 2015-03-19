@@ -44,6 +44,7 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
         "NSObject", 
         "NSArray",
         "NSNumber",
+        "NSDate",
         "NSDictionary",
         "NSMutableArray",
         "NSMutableDictionary")
@@ -52,6 +53,7 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
       Arrays.asList(
         "NSNumber",
         "NSString",
+        "NSDate",
         "NSObject",
         "bool")
       );
@@ -66,9 +68,8 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     typeMapping = new HashMap<String, String>();
     typeMapping.put("enum", "NSString");
-    typeMapping.put("Date", "SWGDate");
-    typeMapping.put("DateTime", "SWGDate");
-    // typeMapping.put("Date", "SWGDate");
+    typeMapping.put("Date", "NSDate");
+    typeMapping.put("DateTime", "NSDate");
     typeMapping.put("boolean", "NSNumber");
     typeMapping.put("string", "NSString");
     typeMapping.put("integer", "NSNumber");
@@ -83,13 +84,13 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
     typeMapping.put("object", "NSObject");
 
     importMapping = new HashMap<String, String> ();
-    importMapping.put("Date", "SWGDate");
 
     foundationClasses = new HashSet<String> (
       Arrays.asList(
         "NSNumber",
         "NSObject",
         "NSString",
+        "NSDate",
         "NSDictionary")
       );
 
@@ -147,11 +148,24 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
 
   @Override
   public String getTypeDeclaration(Property p) {
-    String swaggerType = getSwaggerType(p);
-    if(languageSpecificPrimitives.contains(swaggerType) && !foundationClasses.contains(swaggerType))
-      return toModelName(swaggerType);
-    else
-      return swaggerType + "*";
+    if (p instanceof ArrayProperty) {
+        ArrayProperty ap = (ArrayProperty) p;
+        Property inner = ap.getItems();
+        String innerType = getSwaggerType(inner);
+        if (languageSpecificPrimitives.contains(innerType))
+            return getSwaggerType(p) + "*";
+        String innerTypeDeclaration = getTypeDeclaration(inner);
+        if (innerTypeDeclaration.endsWith("*"))
+            innerTypeDeclaration = innerTypeDeclaration.substring(0, innerTypeDeclaration.length() - 1);
+        return getSwaggerType(p) + "<" + innerTypeDeclaration + ">*";
+    }
+    else {
+        String swaggerType = getSwaggerType(p);
+        if(languageSpecificPrimitives.contains(swaggerType) && !foundationClasses.contains(swaggerType))
+            return toModelName(swaggerType);
+        else
+            return swaggerType + "*";
+    }
   }
 
   @Override

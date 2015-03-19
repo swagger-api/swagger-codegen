@@ -175,7 +175,7 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
 
 -(NSNumber*) findPetsByStatusWithCompletionBlock: (NSArray*) status
         
-        completionHandler: (void (^)(NSArray* output, NSError* error))completionBlock
+        completionHandler: (void (^)(NSArray&lt;SWGPet&gt;* output, NSError* error))completionBlock
          {
 
     NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/pet/findByStatus", basePath];
@@ -232,7 +232,7 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
 
 -(NSNumber*) findPetsByTagsWithCompletionBlock: (NSArray*) tags
         
-        completionHandler: (void (^)(NSArray* output, NSError* error))completionBlock
+        completionHandler: (void (^)(NSArray&lt;SWGPet&gt;* output, NSError* error))completionBlock
          {
 
     NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/pet/findByTags", basePath];
