@@ -1,10 +1,12 @@
 package {{package}};
-
+/* hi joe*/
 {{#imports}}import {{import}};
 {{/imports}}
 
 import com.wordnik.swagger.annotations.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.xml.bind.annotation.XmlRootElement;
+
 {{#models}}
 
 {{#model}}{{#description}}
@@ -12,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * {{description}}
  **/{{/description}}
 @ApiModel(description = "{{{description}}}")
+@XmlRootElement
 public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {
   {{#vars}}{{#isEnum}}
   public enum {{datatypeWithEnum}} {
