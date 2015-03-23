@@ -18,7 +18,7 @@
 {
     self = [super init];
     if(self) {
-        {{#vars}}{{#isPrimitiveType}}_{{name}} = dict[@"{{baseName}}"];{{/isPrimitiveType}}
+        {{#vars}}{{#isPrimitiveType}}_{{name}} = dict[@"{{baseName}}"]; _{{name}} = [_{{name}} isEqual:[NSNull null]] ? nil : _{{name}};{{/isPrimitiveType}}
         {{#complexType}}
         id {{name}}_dict = dict[@"{{baseName}}"];
         {{#isContainer}}
@@ -67,7 +67,7 @@
         }
         else {
         {{/complexType}}
-            if(_{{name}} != nil) dict[@"{{baseName}}"] = {{#complexType}}[(SWGObject*){{/complexType}}_{{name}} {{#complexType}}asDictionary]{{/complexType}};
+            if(_{{name}} != nil && ![_{{name}} isEqual:[NSNull null]]) dict[@"{{baseName}}"] = {{#complexType}}[(SWGObject*){{/complexType}}_{{name}} {{#complexType}}asDictionary]{{/complexType}};
         {{#complexType}}
         }
     }
