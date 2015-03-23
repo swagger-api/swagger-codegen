@@ -5,8 +5,8 @@ import com.wordnik.swagger.models.parameters.*;
 import com.wordnik.swagger.models.properties.*;
 import com.wordnik.swagger.util.Json;
 
+import org.apache.commons.cli.CommandLine;
 import org.apache.commons.lang.StringUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -907,4 +907,6 @@ public class DefaultCodegen {
     opList.add(co);
     co.baseName = tag;    
   }
+	public void init(CommandLine cmd) {
+	}
 }
