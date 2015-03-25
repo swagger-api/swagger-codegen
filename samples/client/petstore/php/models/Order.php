@@ -22,24 +22,58 @@
  *
  */
 
-class Order {
+class Order implements ArrayAccess {
   static $swaggerTypes = array(
       'id' => 'int',
-      'petId' => 'int',
+      'pet_id' => 'int',
       'quantity' => 'int',
-      'shipDate' => 'DateTime',
+      'ship_date' => 'DateTime',
       'status' => 'string',
       'complete' => 'boolean'
-    );
+  );
+
+  static $attributeMap = array(
+      'id' => 'id',
+      'pet_id' => 'petId',
+      'quantity' => 'quantity',
+      'ship_date' => 'shipDate',
+      'status' => 'status',
+      'complete' => 'complete'
+  );
 
   
   public $id; /* int */
-  public $petId; /* int */
+  public $pet_id; /* int */
   public $quantity; /* int */
-  public $shipDate; /* DateTime */
+  public $ship_date; /* DateTime */
   /**
   * Order Status
   */
   public $status; /* string */
   public $complete; /* boolean */
+
+  public function __construct(array $data) {
+    $this->id = $data["id"];
+    $this->pet_id = $data["pet_id"];
+    $this->quantity = $data["quantity"];
+    $this->ship_date = $data["ship_date"];
+    $this->status = $data["status"];
+    $this->complete = $data["complete"];
+  }
+
+  public function offsetExists($offset) {
+    return isset($this->$offset);
+  }
+
+  public function offsetGet($offset) {
+    return $this->$offset;
+  }
+
+  public function offsetSet($offset, $value) {
+    $this->$offset = $value;
+  }
+
+  public function offsetUnset($offset) {
+    unset($this->$offset);
+  }
 }

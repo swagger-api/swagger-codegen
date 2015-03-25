@@ -22,24 +22,58 @@
  *
  */
 
-class Pet {
+class Pet implements ArrayAccess {
   static $swaggerTypes = array(
       'id' => 'int',
       'category' => 'Category',
       'name' => 'string',
-      'photoUrls' => 'array[string]',
+      'photo_urls' => 'array[string]',
       'tags' => 'array[Tag]',
       'status' => 'string'
-    );
+  );
+
+  static $attributeMap = array(
+      'id' => 'id',
+      'category' => 'category',
+      'name' => 'name',
+      'photo_urls' => 'photoUrls',
+      'tags' => 'tags',
+      'status' => 'status'
+  );
 
   
   public $id; /* int */
   public $category; /* Category */
   public $name; /* string */
-  public $photoUrls; /* array[string] */
+  public $photo_urls; /* array[string] */
   public $tags; /* array[Tag] */
   /**
   * pet status in the store
   */
   public $status; /* string */
+
+  public function __construct(array $data) {
+    $this->id = $data["id"];
+    $this->category = $data["category"];
+    $this->name = $data["name"];
+    $this->photo_urls = $data["photo_urls"];
+    $this->tags = $data["tags"];
+    $this->status = $data["status"];
+  }
+
+  public function offsetExists($offset) {
+    return isset($this->$offset);
+  }
+
+  public function offsetGet($offset) {
+    return $this->$offset;
+  }
+
+  public function offsetSet($offset, $value) {
+    $this->$offset = $value;
+  }
+
+  public function offsetUnset($offset) {
+    unset($this->$offset);
+  }
 }

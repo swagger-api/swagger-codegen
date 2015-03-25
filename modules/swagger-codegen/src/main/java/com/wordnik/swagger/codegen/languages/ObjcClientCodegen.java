@@ -34,7 +34,11 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
     templateDir = "objc";
     modelPackage = "";
 
-    additionalProperties.put("projectName", "swaggerClient");
+    String appName = System.getProperty("appName");
+    if(appName == null) {
+      appName = "swaggerClient";
+    }
+    additionalProperties.put("projectName", appName);
 
     defaultIncludes = new HashSet<String>(
       Arrays.asList(
@@ -168,7 +172,18 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
     }
   }
 
-  @Override
+    @Override
+    protected void setNonArrayMapProperty(CodegenProperty property, String type) {
+        super.setNonArrayMapProperty(property, type);
+        if("NSDictionary".equals(type)) {
+            property.setter = "initWithDictionary";
+        }
+        else {
+            property.setter = "initWithValues";
+        }
+    }
+
+    @Override
   public String toModelImport(String name) {
     if("".equals(modelPackage()))
       return name;

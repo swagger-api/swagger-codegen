@@ -52,6 +52,7 @@ class StoreApi {
       
       
 
+      // for HTTP post (form)
       $body = $body ?: $formParams;
 
       if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") > -1) {
@@ -103,6 +104,7 @@ class StoreApi {
         $body = $body;
       }
 
+      // for HTTP post (form)
       $body = $body ?: $formParams;
 
       if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") > -1) {
@@ -127,12 +129,12 @@ class StoreApi {
 	 * getOrderById
    *
 	 * Find purchase order by ID
-   * orderId, string: ID of pet that needs to be fetched (required)
+   * order_id, string: ID of pet that needs to be fetched (required)
    * 
 	 * @return Order
 	 */
 
-   public function getOrderById($orderId) {
+   public function getOrderById($order_id) {
 
   		// parse inputs
   		$resourcePath = "/store/order/{orderId}";
@@ -147,13 +149,14 @@ class StoreApi {
       
       
       // path params
-      if($orderId !== null) {
+      if($order_id !== null) {
   			$resourcePath = str_replace("{" . "orderId" . "}",
-  			                            $this->apiClient->toPathValue($orderId), $resourcePath);
+  			                            $this->apiClient->toPathValue($order_id), $resourcePath);
   		}
       
       
 
+      // for HTTP post (form)
       $body = $body ?: $formParams;
 
       if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") > -1) {
@@ -178,12 +181,12 @@ class StoreApi {
 	 * deleteOrder
    *
 	 * Delete purchase order by ID
-   * orderId, string: ID of the order that needs to be deleted (required)
+   * order_id, string: ID of the order that needs to be deleted (required)
    * 
 	 * @return 
 	 */
 
-   public function deleteOrder($orderId) {
+   public function deleteOrder($order_id) {
 
   		// parse inputs
   		$resourcePath = "/store/order/{orderId}";
@@ -198,13 +201,14 @@ class StoreApi {
       
       
       // path params
-      if($orderId !== null) {
+      if($order_id !== null) {
   			$resourcePath = str_replace("{" . "orderId" . "}",
-  			                            $this->apiClient->toPathValue($orderId), $resourcePath);
+  			                            $this->apiClient->toPathValue($order_id), $resourcePath);
   		}
       
       
 
+      // for HTTP post (form)
       $body = $body ?: $formParams;
 
       if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") > -1) {

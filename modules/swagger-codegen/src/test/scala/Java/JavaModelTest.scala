@@ -14,7 +14,6 @@ import scala.collection.JavaConverters._
 
 @RunWith(classOf[JUnitRunner])
 class JavaModelTest extends FlatSpec with Matchers {
-
   it should "convert a simple java model" in {
     val model = new ModelImpl()
       .description("a sample model")
@@ -295,5 +294,45 @@ class JavaModelTest extends FlatSpec with Matchers {
     vars.get(0).hasMore should equal (null)
     vars.get(0).required should equal (true)
     vars.get(0).isNotContainer should equal (true)
+  }
+
+  it should "convert a model with a 2nd char upper-case property names" in {
+    val model = new ModelImpl()
+      .description("a model with a 2nd char upper-case property names")
+      .property("pId", new StringProperty())
+      .required("pId")
+
+    val codegen = new JavaClientCodegen()
+    val cm = codegen.fromModel("sample", model)
+
+    cm.name should be ("sample")
+    cm.classname should be ("Sample")
+    cm.vars.size should be (1)
+
+    val vars = cm.vars
+    vars.get(0).baseName should be ("pId")
+    vars.get(0).getter should be ("getPId")
+    vars.get(0).setter should be ("setPId")
+    vars.get(0).datatype should be ("String")
+    vars.get(0).name should be ("pId")
+    vars.get(0).defaultValue should be ("null")
+    vars.get(0).baseType should be ("String")
+    vars.get(0).hasMore should equal (null)
+    vars.get(0).required should equal (true)
+    vars.get(0).isNotContainer should equal (true)
+  }
+
+  it should "convert hyphens per issue 503" in {
+    val model = new ModelImpl()
+      .description("a sample model")
+      .property("created-at", new DateTimeProperty())
+
+    val codegen = new JavaClientCodegen()
+    val cm = codegen.fromModel("sample", model)
+    val vars = cm.vars
+    vars.get(0).baseName should be("created-at")
+    vars.get(0).getter should be ("getCreatedAt")
+    vars.get(0).setter should be ("setCreatedAt")
+    vars.get(0).name should be ("createdAt")
   }
 }

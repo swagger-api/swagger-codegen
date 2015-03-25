@@ -16,7 +16,7 @@ Check out [Swagger-Spec](https://github.com/swagger-api/swagger-spec) for additi
 ## Compatability
 The Swagger Specification has undergone 3 revisions since initial creation in 2010.  The swagger-codegen project has the following compatibilies with the swagger specification:
 
-Swagger Codegen Version | Release Date | Swagger Spec compatability | Notes
+Swagger Codegen Version | Release Date | Swagger Spec compatibility | Notes
 ----------------------- | ------------ | -------------------------- | -----
 2.1.3-M1-SNAPSHOT                | 2015-02-23   | 1.0, 1.1, 1.2, 2.0   | [tag v2.1.0-M1](https://github.com/swagger-api/swagger-codegen)
 2.0.17                  | 2014-08-22   | 1.1, 1.2      | [tag v2.0.17](https://github.com/swagger-api/swagger-codegen/tree/v2.0.17)
@@ -46,7 +46,7 @@ You can build a client against the swagger sample [petstore](http://petstore.swa
 This will run the generator with this command:
 
 ```
-java -jar modules/swagger-codegen-distribution/target/swagger-codegen-distribution-2.1.0-M1.jar \
+java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -i http://petstore.swagger.io/v2/swagger.json \
   -l java \
   -o samples/client/petstore/java
@@ -64,9 +64,9 @@ usage: Codegen
  -i,--input-spec <arg>     location of the swagger spec, as URL or file
  -l,--lang <arg>           client language to generate.
                            Available languages include:
-                           [android, java, jaxrs, nodejs, objc, scalatra,
-                           scala, dynamic-html, html, swagger, tizen, php,
-                           python]
+                           [android, async-scala, java, jaxrs, nodejs,
+                           objc, scalatra, scala, dynamic-html, html,
+                           swagger, tizen, php, ruby, python]
  -o,--output <arg>         where to write the generated files
  -t,--template-dir <arg>   folder containing the template files
  ```
@@ -97,7 +97,7 @@ You can look at `modules/swagger-codegen/src/main/resources/${your-language}` fo
 If you're starting a project with a new language and don't see what you need, swagger-codegen can help you create a project to generate your own libraries:
 
 ```
-java -cp modules/swagger-codegen-distribution/target/swagger-codegen-distribution-2.1.3-M1-SNAPSHOT.jar \
+java -cp modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   com.wordnik.swagger.codegen.MetaGenerator \
   -o output/myLibrary -n myClientCodegen -p com.my.company.codegen
 ```
@@ -160,7 +160,7 @@ public class MyObjcCodegen extends ObjcClientCodegen {
 and specify the `classname` when running the generator:
 
 ```
--i com.mycompany.swagger.codegen.MyObjcCodegen
+-l com.mycompany.swagger.codegen.MyObjcCodegen
 ```
 
 Your subclass will now be loaded and overrides the `PREFIX` value in the superclass.
@@ -200,7 +200,7 @@ You can also use the codegen to generate a server for a couple different framewo
 
 ### node.js
 ```
-java -jar modules/swagger-codegen-distribution/target/swagger-codegen-distribution-2.1.0-M1.jar \
+java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -i http://petstore.swagger.io/v2/swagger.json \
   -l nodejs \
   -o samples/server/petstore/nodejs
@@ -212,7 +212,7 @@ java -jar modules/swagger-codegen-distribution/target/swagger-codegen-distributi
 
 ### scala scalatra
 ```
-java -jar modules/swagger-codegen-distribution/target/swagger-codegen-distribution-2.1.0-M1.jar \
+java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -i http://petstore.swagger.io/v2/swagger.json \
   -l scalatra \
   -o samples/server/petstore/scalatra
@@ -221,7 +221,7 @@ java -jar modules/swagger-codegen-distribution/target/swagger-codegen-distributi
 ### java jax-rs
 
 ```
-java -jar modules/swagger-codegen-distribution/target/swagger-codegen-distribution-2.1.0-M1.jar \
+java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -i http://petstore.swagger.io/v2/swagger.json \
   -l jaxrs \
   -o samples/server/petstore/jaxrs
