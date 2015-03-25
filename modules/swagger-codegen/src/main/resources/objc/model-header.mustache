@@ -6,11 +6,14 @@
 {{#models}}
 {{#model}}
 
+@protocol {{classname}}
+@end
+
 @interface {{classname}} : SWGObject
 
 {{#vars}}
 {{#description}}/* {{{description}}} {{#isNotRequired}}[optional]{{/isNotRequired}} */{{/description}}
-@property(nonatomic) {{{ datatype }}}{{#isNotRequired}}<Optional>{{/isNotRequired}} {{name}};  
+@property(nonatomic) {{{ datatype }}}{{#isNotRequired}}<Optional>{{/isNotRequired}} {{name}};
 {{/vars}}
 
 @end
