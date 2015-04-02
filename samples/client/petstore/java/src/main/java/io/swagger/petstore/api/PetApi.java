@@ -1,13 +1,13 @@
-package io.swagger.client.api;
+package io.swagger.petstore.api;
 
-import io.swagger.client.ApiException;
-import io.swagger.client.ApiInvoker;
+import io.swagger.petstore.ApiException;
+import io.swagger.petstore.ApiInvoker;
 
-import io.swagger.client.model.*;
+import io.swagger.petstore.model.*;
 
 import java.util.*;
 
-import io.swagger.client.model.Pet;
+import io.swagger.petstore.model.Pet;
 import java.io.File;
 
 import com.sun.jersey.multipart.FormDataMultiPart;
@@ -57,7 +57,7 @@ public class PetApi {
     
     
     String[] contentTypes = {
-      "application/json","application/xml"
+      "application/json","application/xml",
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
@@ -107,7 +107,7 @@ public class PetApi {
     
     
     String[] contentTypes = {
-      "application/json","application/xml"
+      "application/json","application/xml",
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
@@ -315,7 +315,7 @@ public class PetApi {
     
     
     String[] contentTypes = {
-      "application/x-www-form-urlencoded"
+      "application/x-www-form-urlencoded",
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
@@ -429,7 +429,7 @@ public class PetApi {
     
     
     String[] contentTypes = {
-      "multipart/form-data"
+      "multipart/form-data",
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";

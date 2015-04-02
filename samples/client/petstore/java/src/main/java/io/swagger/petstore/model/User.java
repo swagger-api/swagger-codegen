@@ -1,4 +1,4 @@
-package io.swagger.client.model;
+package io.swagger.petstore.model;
 
 
 import com.wordnik.swagger.annotations.*;

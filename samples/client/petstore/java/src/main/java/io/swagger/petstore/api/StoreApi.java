@@ -1,14 +1,14 @@
-package io.swagger.client.api;
+package io.swagger.petstore.api;
 
-import io.swagger.client.ApiException;
-import io.swagger.client.ApiInvoker;
+import io.swagger.petstore.ApiException;
+import io.swagger.petstore.ApiInvoker;
 
-import io.swagger.client.model.*;
+import io.swagger.petstore.model.*;
 
 import java.util.*;
 
 import java.util.Map;
-import io.swagger.client.model.Order;
+import io.swagger.petstore.model.Order;
 
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.FileDataBodyPart;

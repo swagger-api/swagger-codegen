@@ -1,4 +1,4 @@
-package io.swagger.client;
+package io.swagger.petstore;
 
 public class ApiException extends Exception {
   int code = 0;

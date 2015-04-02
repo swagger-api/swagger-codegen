@@ -33,6 +33,8 @@ public class ClientOptInput {
 
   public ClientOptInput swagger(Swagger swagger) {
     this.setSwagger(swagger);
+    if (config != null)
+      config.configureWithSwagger(swagger);
     return this;
   }
   public ClientOptInput opts(ClientOpts opts) {

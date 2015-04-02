@@ -1,7 +1,7 @@
-package io.swagger.client.model;
+package io.swagger.petstore.model;
 
-import io.swagger.client.model.Category;
-import io.swagger.client.model.Tag;
+import io.swagger.petstore.model.Category;
+import io.swagger.petstore.model.Tag;
 import java.util.*;
 
 import com.wordnik.swagger.annotations.*;
