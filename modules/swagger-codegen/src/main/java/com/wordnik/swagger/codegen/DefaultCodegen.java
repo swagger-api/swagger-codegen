@@ -1156,8 +1156,12 @@ public class DefaultCodegen {
 
   /**
    * Generate package name from the host for the programming language.
+   * Examples:
+   *   hostToPackage("petstore.swagger.io:80")     // "io.swagger.petstore"
+   *   hostToPackage("hacker-news.firebaseio.com") // "com.firebaseio.hacker_news"
+   *   hostToPackage("123.45.67.89")               // null
    * @param host The host which could be a domain name or IP address, and might include a port
-   * @param lang The language
+   * @param lang The programming language
    * @return The package name generated, or null if the given host is blank or an IP address
    */
   public static String hostToPackage(String host, String lang) {
@@ -1169,7 +1173,7 @@ public class DefaultCodegen {
 
     if (lang == "java") {
       // replace unacceptable characters (e.g. hyphen) with underscore
-      host = host.replaceAll(":\\d+", "").replaceAll("[^\\w.]", "_");
+      host = host.replaceAll("[^\\w.]", "_");
     }
 
     List<String> domainPieces = Arrays.asList(host.split("\\."));
