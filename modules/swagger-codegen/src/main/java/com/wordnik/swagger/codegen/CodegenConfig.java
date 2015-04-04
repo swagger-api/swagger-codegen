@@ -55,4 +55,6 @@ public interface CodegenConfig {
   Map<String, Object> postProcessModels(Map<String, Object> objs);
   Map<String, Object> postProcessOperations(Map<String, Object> objs);
   Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs);
+
+  void configureWithSwagger(Swagger swagger);
 }

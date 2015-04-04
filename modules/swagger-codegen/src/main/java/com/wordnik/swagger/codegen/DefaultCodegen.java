@@ -6,6 +6,7 @@ import com.wordnik.swagger.models.auth.ApiKeyAuthDefinition;
 import com.wordnik.swagger.models.auth.BasicAuthDefinition;
 import com.wordnik.swagger.models.auth.In;
 import com.wordnik.swagger.models.auth.SecuritySchemeDefinition;
+import com.wordnik.swagger.models.Swagger;
 import com.wordnik.swagger.models.parameters.*;
 import com.wordnik.swagger.models.properties.*;
 import com.wordnik.swagger.util.Json;
@@ -37,6 +38,8 @@ public class DefaultCodegen {
   protected String templateDir;
   protected Map<String, Object> additionalProperties = new HashMap<String, Object>();
   protected List<SupportingFile> supportingFiles = new ArrayList<SupportingFile>();
+
+  protected Swagger swagger = null;
 
   public void processOpts(){
     if(additionalProperties.containsKey("templateDir")) {
@@ -180,6 +183,10 @@ public class DefaultCodegen {
 
   public String toApiImport(String name) {
     return apiPackage() + "." + name;
+  }
+
+  public void configureWithSwagger(Swagger swagger) {
+    this.swagger = swagger;
   }
 
   public DefaultCodegen() {
@@ -1147,5 +1154,31 @@ public class DefaultCodegen {
     return word;
   }
 
+  /**
+   * Generate package name from the host for the programming language.
+   * Examples:
+   *   hostToPackage("petstore.swagger.io:80")     // "io.swagger.petstore"
+   *   hostToPackage("hacker-news.firebaseio.com") // "com.firebaseio.hacker_news"
+   *   hostToPackage("123.45.67.89")               // null
+   * @param host The host which could be a domain name or IP address, and might include a port
+   * @param lang The programming language
+   * @return The package name generated, or null if the given host is blank or an IP address
+   */
+  public static String hostToPackage(String host, String lang) {
+    if (StringUtils.isBlank(host) || host.matches(".+\\.\\d+"))
+      return null;
 
+    // remove the port part, e.g. ":80"
+    host = host.replaceAll(":\\d+", "");
+
+    if (lang == "java") {
+      // replace unacceptable characters (e.g. hyphen) with underscore
+      host = host.replaceAll("[^\\w.]", "_");
+    }
+
+    List<String> domainPieces = Arrays.asList(host.split("\\."));
+    Collections.reverse(domainPieces);
+
+    return StringUtils.join(domainPieces, ".");
+  }
 }

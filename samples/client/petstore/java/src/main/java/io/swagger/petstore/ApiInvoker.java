@@ -1,4 +1,4 @@
-package io.swagger.client;
+package io.swagger.petstore;
 
 import com.fasterxml.jackson.core.JsonGenerator.Feature;
 import com.fasterxml.jackson.databind.*;

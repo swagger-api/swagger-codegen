@@ -1,10 +1,13 @@
 package com.wordnik.swagger.codegen.languages;
 
 import com.wordnik.swagger.codegen.*;
+import com.wordnik.swagger.models.Swagger;
 import com.wordnik.swagger.models.properties.*;
 
 import java.util.*;
 import java.io.File;
+
+import org.apache.commons.lang.StringUtils;
 
 public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
   protected String invokerPackage = "io.swagger.client";
@@ -27,6 +30,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
 
   public JavaClientCodegen() {
     super();
+
     outputFolder = "generated-code/java";
     modelTemplateFiles.put("model.mustache", ".java");
     apiTemplateFiles.put("api.mustache", ".java");
@@ -71,6 +75,41 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
       );
     instantiationTypes.put("array", "ArrayList");
     instantiationTypes.put("map", "HashMap");
+  }
+
+  @Override
+  public void configureWithSwagger(Swagger swagger) {
+    super.configureWithSwagger(swagger);
+
+    String basePackage = DefaultCodegen.hostToPackage(swagger.getHost(), "java");
+    if (basePackage == null)
+      basePackage = "io.swagger.client";
+
+    invokerPackage = basePackage;
+    groupId = basePackage;
+    String title = swagger.getInfo().getTitle();
+    artifactId = DefaultCodegen.underscore(title).replaceAll("[^\\w]+", "-");
+    artifactVersion = swagger.getInfo().getVersion();
+    if (StringUtils.isBlank(artifactVersion))
+      artifactVersion = "1.0.0";
+
+    apiPackage = basePackage + ".api";
+    modelPackage = basePackage + ".model";
+
+    additionalProperties.put("invokerPackage", invokerPackage);
+    additionalProperties.put("groupId", groupId);
+    additionalProperties.put("artifactId", artifactId);
+    additionalProperties.put("artifactVersion", artifactVersion);
+
+    // NOTE: clear the default supporting files added in constructor
+    supportingFiles.clear();
+    supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
+    supportingFiles.add(new SupportingFile("apiInvoker.mustache", 
+      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiInvoker.java"));
+    supportingFiles.add(new SupportingFile("JsonUtil.mustache", 
+      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "JsonUtil.java"));
+    supportingFiles.add(new SupportingFile("apiException.mustache", 
+      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiException.java"));
   }
 
   @Override

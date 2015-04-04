@@ -1,8 +1,8 @@
 package io.swagger.petstore.test;
 
-import io.swagger.client.ApiException;
-import io.swagger.client.api.*;
-import io.swagger.client.model.*;
+import io.swagger.petstore.ApiException;
+import io.swagger.petstore.api.*;
+import io.swagger.petstore.model.*;
 
 import java.util.*;
 import java.io.*;
