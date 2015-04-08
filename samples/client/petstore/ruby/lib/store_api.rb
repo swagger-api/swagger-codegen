@@ -8,7 +8,7 @@ class StoreApi
   # Returns pet inventories by status
   # Returns a map of status codes to quantities
   # @return map[string,int]
-  def self.getInventory (opts={})
+  def self.get_inventory (opts={})
     query_param_keys = []
     headerParams = {}
 
@@ -58,7 +58,7 @@ class StoreApi
   # 
   # @param body order placed for purchasing the pet
   # @return Order
-  def self.placeOrder (body, opts={})
+  def self.place_order (body, opts={})
     query_param_keys = []
     headerParams = {}
 
@@ -128,7 +128,7 @@ class StoreApi
   # For valid response try integer IDs with value &lt;= 5 or &gt; 10. Other values will generated exceptions
   # @param order_id ID of pet that needs to be fetched
   # @return Order
-  def self.getOrderById (order_id, opts={})
+  def self.get_order_by_id (order_id, opts={})
     query_param_keys = []
     headerParams = {}
 
@@ -179,7 +179,7 @@ class StoreApi
   # For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
   # @param order_id ID of the order that needs to be deleted
   # @return void
-  def self.deleteOrder (order_id, opts={})
+  def self.delete_order (order_id, opts={})
     query_param_keys = []
     headerParams = {}
 

@@ -9,7 +9,7 @@ class UserApi
   # This can only be done by the logged in user.
   # @param body Created user object
   # @return void
-  def self.createUser (body, opts={})
+  def self.create_user (body, opts={})
     query_param_keys = []
     headerParams = {}
 
@@ -78,7 +78,7 @@ class UserApi
   # 
   # @param body List of user object
   # @return void
-  def self.createUsersWithArrayInput (body, opts={})
+  def self.create_users_with_array_input (body, opts={})
     query_param_keys = []
     headerParams = {}
 
@@ -147,7 +147,7 @@ class UserApi
   # 
   # @param body List of user object
   # @return void
-  def self.createUsersWithListInput (body, opts={})
+  def self.create_users_with_list_input (body, opts={})
     query_param_keys = []
     headerParams = {}
 
@@ -217,7 +217,7 @@ class UserApi
   # @param username The user name for login
   # @param password The password for login in clear text
   # @return string
-  def self.loginUser (username, password, opts={})
+  def self.login_user (username, password, opts={})
     query_param_keys = [:username,:password]
     headerParams = {}
 
@@ -267,7 +267,7 @@ class UserApi
   # Logs out current logged in user session
   # 
   # @return void
-  def self.logoutUser (opts={})
+  def self.logout_user (opts={})
     query_param_keys = []
     headerParams = {}
 
@@ -315,7 +315,7 @@ class UserApi
   # 
   # @param username The name that needs to be fetched. Use user1 for testing. 
   # @return User
-  def self.getUserByName (username, opts={})
+  def self.get_user_by_name (username, opts={})
     query_param_keys = []
     headerParams = {}
 
@@ -367,7 +367,7 @@ class UserApi
   # @param username name that need to be deleted
   # @param body Updated user object
   # @return void
-  def self.updateUser (username, body, opts={})
+  def self.update_user (username, body, opts={})
     query_param_keys = []
     headerParams = {}
 
@@ -438,7 +438,7 @@ class UserApi
   # This can only be done by the logged in user.
   # @param username The name that needs to be deleted
   # @return void
-  def self.deleteUser (username, opts={})
+  def self.delete_user (username, opts={})
     query_param_keys = []
     headerParams = {}
 

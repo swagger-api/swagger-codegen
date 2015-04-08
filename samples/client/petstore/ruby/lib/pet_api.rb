@@ -9,7 +9,7 @@ class PetApi
   # 
   # @param body Pet object that needs to be added to the store
   # @return void
-  def self.updatePet (body, opts={})
+  def self.update_pet (body, opts={})
     query_param_keys = []
     headerParams = {}
 
@@ -78,7 +78,7 @@ class PetApi
   # 
   # @param body Pet object that needs to be added to the store
   # @return void
-  def self.addPet (body, opts={})
+  def self.add_pet (body, opts={})
     query_param_keys = []
     headerParams = {}
 
@@ -147,7 +147,7 @@ class PetApi
   # Multiple status values can be provided with comma seperated strings
   # @param status Status values that need to be considered for filter
   # @return array[Pet]
-  def self.findPetsByStatus (status, opts={})
+  def self.find_pets_by_status (status, opts={})
     query_param_keys = [:status]
     headerParams = {}
 
@@ -198,7 +198,7 @@ class PetApi
   # Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
   # @param tags Tags to filter by
   # @return array[Pet]
-  def self.findPetsByTags (tags, opts={})
+  def self.find_pets_by_tags (tags, opts={})
     query_param_keys = [:tags]
     headerParams = {}
 
@@ -249,7 +249,7 @@ class PetApi
   # Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
   # @param pet_id ID of pet that needs to be fetched
   # @return Pet
-  def self.getPetById (pet_id, opts={})
+  def self.get_pet_by_id (pet_id, opts={})
     query_param_keys = []
     headerParams = {}
 
@@ -302,7 +302,7 @@ class PetApi
   # @param name Updated name of the pet
   # @param status Updated status of the pet
   # @return void
-  def self.updatePetWithForm (pet_id, name, status, opts={})
+  def self.update_pet_with_form (pet_id, name, status, opts={})
     query_param_keys = []
     headerParams = {}
 
@@ -357,7 +357,7 @@ class PetApi
   # @param api_key 
   # @param pet_id Pet id to delete
   # @return void
-  def self.deletePet (api_key, pet_id, opts={})
+  def self.delete_pet (api_key, pet_id, opts={})
     query_param_keys = []
     headerParams = {}
 
@@ -410,7 +410,7 @@ class PetApi
   # @param additional_metadata Additional data to pass to server
   # @param file file to upload
   # @return void
-  def self.uploadFile (pet_id, additional_metadata, file, opts={})
+  def self.upload_file (pet_id, additional_metadata, file, opts={})
     query_param_keys = []
     headerParams = {}
 

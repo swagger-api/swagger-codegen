@@ -154,7 +154,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
   public String toModelName(String name) {
     // model name cannot use reserved keyword, e.g. return
     if(reservedWords.contains(name))
-      throw new RuntimeException(name + " (reserved word) cannot be used as a model name");
+      throw new RuntimeException(name + " (reserved word) cannot be used as model name");
  
     // camelize the model name
     // phone_number => PhoneNumber
@@ -165,7 +165,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
   public String toModelFilename(String name) {
     // model name cannot use reserved keyword, e.g. return
     if(reservedWords.contains(name))
-      throw new RuntimeException(name + " (reserved word) cannot be used as a model name");
+      throw new RuntimeException(name + " (reserved word) cannot be used as model name");
  
     // underscore the model file name
     // PhoneNumber.rb => phone_number.rb
@@ -187,6 +187,15 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
       return "DefaultApi";
     // e.g. phone_number_api => PhoneNumberApi 
     return camelize(name) + "Api";
+  }
+
+  @Override
+  public String toOperationId(String operationId) {
+    // method name cannot use reserved keyword, e.g. return
+    if(reservedWords.contains(operationId))
+      throw new RuntimeException(operationId + " (reserved word) cannot be used as method name");
+
+    return underscore(operationId); 
   }
 
 }
