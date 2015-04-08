@@ -44,6 +44,7 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
     $api_client = new SwaggerPetstore\APIClient('http://petstore.swagger.io/v2');
     $petId = 99;  // ID of pet that needs to be fetched
     $pet_api = new SwaggerPetstore\PetAPI($api_client);
+    // update Pet (form)
     $update_response = $pet_api->updatePetWithForm($petId, 'programmer', 'coding');
     // return nothing (void)
     $this->assertSame($update_response, NULL);
@@ -56,7 +57,7 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
     $this->assertSame($response->name, 'programmer');
   }
 
-  // test updatePet and verify by the "id" of the response
+  // test addPet and verify by the "id" and "name" of the response
   public function testAddPet()
   {
     // initialize the API client
@@ -67,11 +68,12 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
     $new_pet->name = "PHP Unit Test";
 
     $pet_api = new SwaggerPetstore\PetAPI($api_client);
+    // add a new pet (model)
     $add_response = $pet_api->addPet($new_pet);
     // return nothing (void)
     $this->assertSame($add_response, NULL);
 
-    // verify updated Pet
+    // verify added Pet
     $response = $pet_api->getPetById(10001);
 
     $this->assertSame($response->id, $new_pet_id);
