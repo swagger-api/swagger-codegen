@@ -59,19 +59,12 @@ class PetApi {
       
       
       // body params
-      $body = null;
       if (isset($body)) {
-        $body = $body;
+        $httpBody = $body;
       }
 
-      // for model (json/xml)
-      if (isset($body)) {
-        $httpBody = $body; // $body is the method argument, if present
-      }
-      
-      // for HTTP post (form)
-      if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") > -1) {
-        $httpBody = http_build_query($formParams);
+      if (count($formParams) > 0) {
+        $httpBody = $formParams;
       }
 
       // make the API Call
@@ -112,19 +105,12 @@ class PetApi {
       
       
       // body params
-      $body = null;
       if (isset($body)) {
-        $body = $body;
+        $httpBody = $body;
       }
 
-      // for model (json/xml)
-      if (isset($body)) {
-        $httpBody = $body; // $body is the method argument, if present
-      }
-      
-      // for HTTP post (form)
-      if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") > -1) {
-        $httpBody = http_build_query($formParams);
+      if (count($formParams) > 0) {
+        $httpBody = $formParams;
       }
 
       // make the API Call
@@ -169,14 +155,8 @@ class PetApi {
       
       
 
-      // for model (json/xml)
-      if (isset($body)) {
-        $httpBody = $body; // $body is the method argument, if present
-      }
-      
-      // for HTTP post (form)
-      if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") > -1) {
-        $httpBody = http_build_query($formParams);
+      if (count($formParams) > 0) {
+        $httpBody = $formParams;
       }
 
       // make the API Call
@@ -227,14 +207,8 @@ class PetApi {
       
       
 
-      // for model (json/xml)
-      if (isset($body)) {
-        $httpBody = $body; // $body is the method argument, if present
-      }
-      
-      // for HTTP post (form)
-      if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") > -1) {
-        $httpBody = http_build_query($formParams);
+      if (count($formParams) > 0) {
+        $httpBody = $formParams;
       }
 
       // make the API Call
@@ -286,14 +260,8 @@ class PetApi {
       
       
 
-      // for model (json/xml)
-      if (isset($body)) {
-        $httpBody = $body; // $body is the method argument, if present
-      }
-      
-      // for HTTP post (form)
-      if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") > -1) {
-        $httpBody = http_build_query($formParams);
+      if (count($formParams) > 0) {
+        $httpBody = $formParams;
       }
 
       // make the API Call
@@ -353,14 +321,8 @@ class PetApi {
       }
       
 
-      // for model (json/xml)
-      if (isset($body)) {
-        $httpBody = $body; // $body is the method argument, if present
-      }
-      
-      // for HTTP post (form)
-      if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") > -1) {
-        $httpBody = http_build_query($formParams);
+      if (count($formParams) > 0) {
+        $httpBody = $formParams;
       }
 
       // make the API Call
@@ -410,14 +372,8 @@ class PetApi {
       
       
 
-      // for model (json/xml)
-      if (isset($body)) {
-        $httpBody = $body; // $body is the method argument, if present
-      }
-      
-      // for HTTP post (form)
-      if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") > -1) {
-        $httpBody = http_build_query($formParams);
+      if (count($formParams) > 0) {
+        $httpBody = $formParams;
       }
 
       // make the API Call
@@ -471,14 +427,8 @@ class PetApi {
       }
       
 
-      // for model (json/xml)
-      if (isset($body)) {
-        $httpBody = $body; // $body is the method argument, if present
-      }
-      
-      // for HTTP post (form)
-      if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") > -1) {
-        $httpBody = http_build_query($formParams);
+      if (count($formParams) > 0) {
+        $httpBody = $formParams;
       }
 
       // make the API Call
