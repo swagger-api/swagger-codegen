@@ -58,21 +58,17 @@ class PetApi {
       
       
       // body params
-      $body = null;
       if (isset($body)) {
-        $body = $body;
+        $httpBody = $body;
       }
 
-      // for HTTP post (form)
-      $body = $body ?: $formParams;
-
-      if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") > -1) {
-        $body = http_build_query($body);
+      if (count($formParams) > 0) {
+        $httpBody = $formParams;
       }
 
       // make the API Call
       $response = $this->apiClient->callAPI($resourcePath, $method,
-                                            $queryParams, $body,
+                                            $queryParams, $httpBody,
                                             $headerParams);
 
       
@@ -107,21 +103,17 @@ class PetApi {
       
       
       // body params
-      $body = null;
       if (isset($body)) {
-        $body = $body;
+        $httpBody = $body;
       }
 
-      // for HTTP post (form)
-      $body = $body ?: $formParams;
-
-      if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") > -1) {
-        $body = http_build_query($body);
+      if (count($formParams) > 0) {
+        $httpBody = $formParams;
       }
 
       // make the API Call
       $response = $this->apiClient->callAPI($resourcePath, $method,
-                                            $queryParams, $body,
+                                            $queryParams, $httpBody,
                                             $headerParams);
 
       
@@ -160,16 +152,13 @@ class PetApi {
       
       
 
-      // for HTTP post (form)
-      $body = $body ?: $formParams;
-
-      if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") > -1) {
-        $body = http_build_query($body);
+      if (count($formParams) > 0) {
+        $httpBody = $formParams;
       }
 
       // make the API Call
       $response = $this->apiClient->callAPI($resourcePath, $method,
-                                            $queryParams, $body,
+                                            $queryParams, $httpBody,
                                             $headerParams);
 
       if(! $response) {
@@ -214,16 +203,13 @@ class PetApi {
       
       
 
-      // for HTTP post (form)
-      $body = $body ?: $formParams;
-
-      if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") > -1) {
-        $body = http_build_query($body);
+      if (count($formParams) > 0) {
+        $httpBody = $formParams;
       }
 
       // make the API Call
       $response = $this->apiClient->callAPI($resourcePath, $method,
-                                            $queryParams, $body,
+                                            $queryParams, $httpBody,
                                             $headerParams);
 
       if(! $response) {
@@ -269,16 +255,13 @@ class PetApi {
       
       
 
-      // for HTTP post (form)
-      $body = $body ?: $formParams;
-
-      if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") > -1) {
-        $body = http_build_query($body);
+      if (count($formParams) > 0) {
+        $httpBody = $formParams;
       }
 
       // make the API Call
       $response = $this->apiClient->callAPI($resourcePath, $method,
-                                            $queryParams, $body,
+                                            $queryParams, $httpBody,
                                             $headerParams);
 
       if(! $response) {
@@ -332,16 +315,13 @@ class PetApi {
       }
       
 
-      // for HTTP post (form)
-      $body = $body ?: $formParams;
-
-      if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") > -1) {
-        $body = http_build_query($body);
+      if (count($formParams) > 0) {
+        $httpBody = $formParams;
       }
 
       // make the API Call
       $response = $this->apiClient->callAPI($resourcePath, $method,
-                                            $queryParams, $body,
+                                            $queryParams, $httpBody,
                                             $headerParams);
 
       
@@ -385,16 +365,13 @@ class PetApi {
       
       
 
-      // for HTTP post (form)
-      $body = $body ?: $formParams;
-
-      if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") > -1) {
-        $body = http_build_query($body);
+      if (count($formParams) > 0) {
+        $httpBody = $formParams;
       }
 
       // make the API Call
       $response = $this->apiClient->callAPI($resourcePath, $method,
-                                            $queryParams, $body,
+                                            $queryParams, $httpBody,
                                             $headerParams);
 
       
@@ -442,16 +419,13 @@ class PetApi {
       }
       
 
-      // for HTTP post (form)
-      $body = $body ?: $formParams;
-
-      if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") > -1) {
-        $body = http_build_query($body);
+      if (count($formParams) > 0) {
+        $httpBody = $formParams;
       }
 
       // make the API Call
       $response = $this->apiClient->callAPI($resourcePath, $method,
-                                            $queryParams, $body,
+                                            $queryParams, $httpBody,
                                             $headerParams);
 
       
