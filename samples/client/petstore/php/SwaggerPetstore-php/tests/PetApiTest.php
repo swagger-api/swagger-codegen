@@ -34,7 +34,7 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
 
     // test invalid status 
     $response = $pet_api->findPetsByStatus("unknown_and_incorrect_status");
-    $this->assertSame(count($response[0]), 0); // verify the object is Pet
+    $this->assertSame(count($response[0]), 0); // confirm no object returned
   }
 
   // test updatePet and verify by the "id" of the response
@@ -74,7 +74,7 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
     $this->assertSame($add_response, NULL);
 
     // verify added Pet
-    $response = $pet_api->getPetById(10001);
+    $response = $pet_api->getPetById($new_pet_id);
 
     $this->assertSame($response->id, $new_pet_id);
     $this->assertSame($response->name, 'PHP Unit Test');
