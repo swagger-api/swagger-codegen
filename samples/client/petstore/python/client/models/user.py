@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# coding: utf-8
+
 """
 Copyright 2015 Reverb Technologies, Inc.
 
@@ -71,7 +73,7 @@ class User(object):
             
             'user_status': 'userStatus'
             
-        }       
+        }
 
         
         

@@ -2,33 +2,28 @@ require 'spec_helper'
 
 describe "Pet" do
   before do
-    Swagger.configure do |config|
-      config.api_key = 'special-key' 
-      config.host = 'petstore.swagger.io'
-      config.base_path = '/v2'
-    end
+    configure_swagger
   end
   
   describe "pet methods" do
     it "should fetch a pet object" do
-      pet = PetApi.getPetById(5)
-      pet.should be_a(Pet)
-      pet.id.should == 5
-      pet.name.should == "panda"
+      pet = PetApi.get_pet_by_id(10002)
+      pet.id.should == 10002 
+      pet.name.should == "RUBY UNIT TESTING"
     end
 
     it "should find pets by status" do
-      pets = PetApi.findPetsByStatus('available')
+      pets = PetApi.find_pets_by_status('available')
       pets.length.should >= 3
     end
     
     it "should not find a pet with invalid status" do
-      pets = PetApi.findPetsByStatus('invalid-status')
+      pets = PetApi.find_pets_by_status('invalid_status123')
       pets.length.should == 0
     end
 
     it "should find a pet by status" do
-      pets = PetApi.findPetsByStatus("available,sold")
+      pets = PetApi.find_pets_by_status("available,sold")
       pets.map {|pet| 
         if(pet.status != 'available' && pet.status != 'sold') 
           raise "pet status wasn't right"
@@ -37,36 +32,21 @@ describe "Pet" do
     end
     
     it "should update a pet" do
-      pet = Pet.new({'id' => 99, 'name' => 'programmer', 'status' => 'coding'})
-      PetApi.addPet(pet)
+      pet = Pet.new({'id' => 10002, 'status' => 'sold'})
+      PetApi.add_pet(pet)
       
-      fetched = PetApi.getPetById(99)
-      fetched.id.should == 99
+      fetched = PetApi.get_pet_by_id(10002)
+      fetched.id.should == 10002
     end
 
     it "should create a pet" do 
-      pet = Pet.new('id' => 100, 'name' => "Gorilla")
-      #raise pet.inspect
-      PetApi.addPet(pet)
+      pet = Pet.new('id' => 10002, 'name' => "RUBY UNIT TESTING")
+      PetApi.add_pet(pet)
 
-      pet = PetApi.getPetById(100)
-      pet.id.should == 100
-      pet.name.should == "Gorilla"
+      pet = PetApi.get_pet_by_id(10002)
+      pet.id.should == 10002
+      pet.name.should == "RUBY UNIT TESTING"
     end
   end
 end
 
-describe "Store" do
-  before do
-    Swagger.configure do |config|
-      config.api_key = 'special-key' 
-      config.host = 'petstore.swagger.io'
-      config.base_path = '/v2'
-    end
-  end
-
-  it "should fetch an order" do
-    item = StoreApi.getOrderById(5)
-    item.id.should == 5
-  end
-end

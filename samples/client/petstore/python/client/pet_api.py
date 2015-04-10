@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# coding: utf-8
+
 """
 PetApi.py
 Copyright 2015 Reverb Technologies, Inc.
@@ -31,7 +33,7 @@ class PetApi(object):
 
     
     
-    def updatePet(self, **kwargs):
+    def update_pet(self, **kwargs):
         """Update an existing pet
 
         Args:
@@ -48,7 +50,7 @@ class PetApi(object):
         params = locals()
         for (key, val) in params['kwargs'].iteritems():
             if key not in allParams:
-                raise TypeError("Got an unexpected keyword argument '%s' to method updatePet" % key)
+                raise TypeError("Got an unexpected keyword argument '%s' to method update_pet" % key)
             params[key] = val
         del params['kwargs']
 
@@ -87,7 +89,7 @@ class PetApi(object):
         
         
     
-    def addPet(self, **kwargs):
+    def add_pet(self, **kwargs):
         """Add a new pet to the store
 
         Args:
@@ -104,7 +106,7 @@ class PetApi(object):
         params = locals()
         for (key, val) in params['kwargs'].iteritems():
             if key not in allParams:
-                raise TypeError("Got an unexpected keyword argument '%s' to method addPet" % key)
+                raise TypeError("Got an unexpected keyword argument '%s' to method add_pet" % key)
             params[key] = val
         del params['kwargs']
 
@@ -143,7 +145,7 @@ class PetApi(object):
         
         
     
-    def findPetsByStatus(self, **kwargs):
+    def find_pets_by_status(self, **kwargs):
         """Finds Pets by status
 
         Args:
@@ -160,7 +162,7 @@ class PetApi(object):
         params = locals()
         for (key, val) in params['kwargs'].iteritems():
             if key not in allParams:
-                raise TypeError("Got an unexpected keyword argument '%s' to method findPetsByStatus" % key)
+                raise TypeError("Got an unexpected keyword argument '%s' to method find_pets_by_status" % key)
             params[key] = val
         del params['kwargs']
 
@@ -205,7 +207,7 @@ class PetApi(object):
         
         
     
-    def findPetsByTags(self, **kwargs):
+    def find_pets_by_tags(self, **kwargs):
         """Finds Pets by tags
 
         Args:
@@ -222,7 +224,7 @@ class PetApi(object):
         params = locals()
         for (key, val) in params['kwargs'].iteritems():
             if key not in allParams:
-                raise TypeError("Got an unexpected keyword argument '%s' to method findPetsByTags" % key)
+                raise TypeError("Got an unexpected keyword argument '%s' to method find_pets_by_tags" % key)
             params[key] = val
         del params['kwargs']
 
@@ -267,7 +269,7 @@ class PetApi(object):
         
         
     
-    def getPetById(self, **kwargs):
+    def get_pet_by_id(self, **kwargs):
         """Find pet by ID
 
         Args:
@@ -284,7 +286,7 @@ class PetApi(object):
         params = locals()
         for (key, val) in params['kwargs'].iteritems():
             if key not in allParams:
-                raise TypeError("Got an unexpected keyword argument '%s' to method getPetById" % key)
+                raise TypeError("Got an unexpected keyword argument '%s' to method get_pet_by_id" % key)
             params[key] = val
         del params['kwargs']
 
@@ -332,7 +334,7 @@ class PetApi(object):
         
         
     
-    def updatePetWithForm(self, **kwargs):
+    def update_pet_with_form(self, **kwargs):
         """Updates a pet in the store with form data
 
         Args:
@@ -355,7 +357,7 @@ class PetApi(object):
         params = locals()
         for (key, val) in params['kwargs'].iteritems():
             if key not in allParams:
-                raise TypeError("Got an unexpected keyword argument '%s' to method updatePetWithForm" % key)
+                raise TypeError("Got an unexpected keyword argument '%s' to method update_pet_with_form" % key)
             params[key] = val
         del params['kwargs']
 
@@ -403,7 +405,7 @@ class PetApi(object):
         
         
     
-    def deletePet(self, **kwargs):
+    def delete_pet(self, **kwargs):
         """Deletes a pet
 
         Args:
@@ -423,7 +425,7 @@ class PetApi(object):
         params = locals()
         for (key, val) in params['kwargs'].iteritems():
             if key not in allParams:
-                raise TypeError("Got an unexpected keyword argument '%s' to method deletePet" % key)
+                raise TypeError("Got an unexpected keyword argument '%s' to method delete_pet" % key)
             params[key] = val
         del params['kwargs']
 
@@ -468,7 +470,7 @@ class PetApi(object):
         
         
     
-    def uploadFile(self, **kwargs):
+    def upload_file(self, **kwargs):
         """uploads an image
 
         Args:
@@ -491,7 +493,7 @@ class PetApi(object):
         params = locals()
         for (key, val) in params['kwargs'].iteritems():
             if key not in allParams:
-                raise TypeError("Got an unexpected keyword argument '%s' to method uploadFile" % key)
+                raise TypeError("Got an unexpected keyword argument '%s' to method upload_file" % key)
             params[key] = val
         del params['kwargs']
 
