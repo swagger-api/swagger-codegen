@@ -11,16 +11,9 @@ describe "Pet" do
   
   describe "pet methods" do
     it "should fetch a pet object" do
-<<<<<<< HEAD
-      pet = PetApi.getPetById(5)
-      pet.should be_a(Pet)
-      pet.id.should == 5
-      pet.name.should == "panda"
-=======
       pet = PetApi.get_pet_by_id(10002)
       pet.id.should == 10002 
       pet.name.should == "RUBY UNIT TESTING"
->>>>>>> update method naming convention for csharp, ruby, python, fix rspec for
     end
 
     it "should find pets by status" do
@@ -29,11 +22,7 @@ describe "Pet" do
     end
     
     it "should not find a pet with invalid status" do
-<<<<<<< HEAD
-      pets = PetApi.findPetsByStatus('invalid-status')
-=======
       pets = PetApi.find_pets_by_status('invalid_status123')
->>>>>>> update method naming convention for csharp, ruby, python, fix rspec for
       pets.length.should == 0
     end
 
