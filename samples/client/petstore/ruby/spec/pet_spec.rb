@@ -32,16 +32,15 @@ describe "Pet" do
     end
     
     it "should update a pet" do
-      pet = Pet.new({'id' => 99, 'name' => 'programmer', 'status' => 'coding'})
+      pet = Pet.new({'id' => 10002, 'status' => 'sold'})
       PetApi.add_pet(pet)
       
-      fetched = PetApi.get_pet_by_id(99)
-      fetched.id.should == 99
+      fetched = PetApi.get_pet_by_id(10002)
+      fetched.id.should == 10002
     end
 
     it "should create a pet" do 
       pet = Pet.new('id' => 10002, 'name' => "RUBY UNIT TESTING")
-      #raise pet.inspect
       PetApi.add_pet(pet)
 
       pet = PetApi.get_pet_by_id(10002)
