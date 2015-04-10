@@ -2,11 +2,7 @@ require 'spec_helper'
 
 describe "Pet" do
   before do
-    Swagger.configure do |config|
-      config.api_key = 'special-key' 
-      config.host = 'petstore.swagger.io'
-      config.base_path = '/v2'
-    end
+    configure_swagger
   end
   
   describe "pet methods" do

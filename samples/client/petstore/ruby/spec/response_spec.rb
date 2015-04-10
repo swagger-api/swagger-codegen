@@ -5,7 +5,7 @@ describe Swagger::Response do
   before(:each) do
 
     VCR.use_cassette('pet_resource', :record => :new_episodes) do
-      @raw = Typhoeus::Request.get("http://petstore.swagger.io/v2/pet/5")
+      @raw = Typhoeus::Request.get("http://petstore.swagger.io/v2/pet/10002")
     end
 
     @response = Swagger::Response.new(@raw)
@@ -35,7 +35,7 @@ describe Swagger::Response do
 
     it "recognizes xml" do
       VCR.use_cassette('xml_response_request', :record => :new_episodes) do
-        @raw = Typhoeus::Request.get("http://petstore.swagger.io/v2/pet/5",
+        @raw = Typhoeus::Request.get("http://petstore.swagger.io/v2/pet/10002",
                                     :headers => {'Accept'=> "application/xml"})
       end
       @response = Swagger::Response.new(@raw)

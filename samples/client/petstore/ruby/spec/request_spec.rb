@@ -3,12 +3,7 @@ require 'spec_helper'
 describe Swagger::Request do
 
   before(:each) do 
-    Swagger.configure do |config|
-      inject_format = true
-      config.api_key = 'special-key'
-      config.host = 'petstore.swagger.io'
-      config.base_path = '/v2'
-    end
+    configure_swagger
 
     @default_http_method = :get
     @default_path = "pet.{format}/fancy"
