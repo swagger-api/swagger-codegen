@@ -3,6 +3,7 @@ require 'spec_helper'
 describe "Store" do
   before do
     configure_swagger
+    prepare_store
   end
 
   it "should fetch an order" do

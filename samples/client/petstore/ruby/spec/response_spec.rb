@@ -2,6 +2,11 @@ require 'spec_helper'
 
 describe Swagger::Response do
 
+  before do
+    configure_swagger
+    prepare_pet
+  end
+
   before(:each) do
 
     VCR.use_cassette('pet_resource', :record => :new_episodes) do

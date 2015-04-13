@@ -3,6 +3,7 @@ require 'spec_helper'
 describe "Pet" do
   before do
     configure_swagger
+    prepare_pet
   end
   
   describe "pet methods" do
