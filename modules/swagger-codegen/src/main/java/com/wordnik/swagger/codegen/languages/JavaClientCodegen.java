@@ -37,8 +37,8 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         modelTemplateFiles.put("model.mustache", ".java");
         apiTemplateFiles.put("api.mustache", ".java");
         templateDir = "Java";
-        apiPackage = "io.swagger.client.api";
-        modelPackage = "io.swagger.client.model";
+        apiPackage = "org.imintel.client.api";
+        modelPackage = "org.imintel.client.model";
 
         reservedWords = new HashSet<String>(
                 Arrays.asList(

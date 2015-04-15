@@ -412,8 +412,8 @@ public class DefaultCodegen {
 
   public String toApiName(String name) {
     if(name.length() == 0)
-      return "DefaultApi";
-    return initialCaps(name) + "Api";
+      return "DefaultAPI";
+    return initialCaps(name) + "API";
   }
 
   public String toModelName(String name) {

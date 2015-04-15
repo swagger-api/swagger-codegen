@@ -28,6 +28,10 @@ public class {{classname}} {
     return apiInvoker;
   }
 
+  public {{classname}}(String basePath) {
+    this.basePath = basePath;
+  }
+
   public void setBasePath(String basePath) {
     this.basePath = basePath;
   }
