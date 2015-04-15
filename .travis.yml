@@ -1,3 +1,5 @@
-language: scala
-scala:
-   - 2.10.0
+sudo: false
+language: java
+script: mvn verify
+jdk:
+  - oraclejdk7

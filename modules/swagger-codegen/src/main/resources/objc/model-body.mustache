@@ -1,0 +1,14 @@
+{{#models}}
+{{#model}}
+#import "{{classname}}.h"
+
+@implementation {{classname}}
+  
++ (JSONKeyMapper *)keyMapper
+{
+  return [[JSONKeyMapper alloc] initWithDictionary:@{ {{#vars}}@"{{baseName}}": @"{{name}}"{{#hasMore}}, {{/hasMore}}{{/vars}} }];
+}
+
+{{/model}}
+@end
+{{/models}}
