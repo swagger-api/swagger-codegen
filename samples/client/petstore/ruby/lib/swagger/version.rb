@@ -1,4 +1,4 @@
 module Swagger
-  VERSION = "4.06.08"
+  VERSION = "1.0.0"
 end
 
