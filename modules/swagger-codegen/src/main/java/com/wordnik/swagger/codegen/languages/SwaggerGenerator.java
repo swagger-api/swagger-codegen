@@ -30,7 +30,7 @@ public class SwaggerGenerator extends DefaultCodegen implements CodegenConfig {
   }
 
   @Override
-  public void processSwagger(Swagger swagger) {
+  public void postGenerate(Swagger swagger) {
     String swaggerString = Json.pretty(swagger);
 
     try{

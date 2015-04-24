@@ -2,14 +2,9 @@ package com.wordnik.swagger.codegen;
 
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
-import com.wordnik.swagger.models.Contact;
-import com.wordnik.swagger.models.Info;
-import com.wordnik.swagger.models.License;
-import com.wordnik.swagger.models.Model;
-import com.wordnik.swagger.models.Operation;
-import com.wordnik.swagger.models.Path;
-import com.wordnik.swagger.models.Swagger;
+import com.wordnik.swagger.models.*;
 import com.wordnik.swagger.models.auth.SecuritySchemeDefinition;
+import com.wordnik.swagger.models.properties.Property;
 import com.wordnik.swagger.util.Json;
 
 import org.apache.commons.io.FileUtils;
@@ -57,7 +52,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     }
     List<File> files = new ArrayList<File>();
     try {
-      config.processOpts();
+      config.preGenerate(swagger);
       if (swagger.getInfo() != null) {
         Info info = swagger.getInfo();
         if (info.getTitle() != null) {
@@ -279,12 +274,29 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
       }
 
-      config.processSwagger(swagger);
+      config.postGenerate(swagger);
     } catch (Exception e) {
       e.printStackTrace();
     }
     return files;
   }
+
+  protected Model recompose(ComposedModel composed, Map<String, Model> allModels) {
+    ModelImpl impl = new ModelImpl();
+
+    for (Model referred : composed.getAllOf()) {
+      Model instance = allModels.get(((RefModel) referred).getSimpleRef());
+
+      // avoid null pointers here.  Yeesh.
+      if (instance.getProperties() != null) {
+        for (Map.Entry<String, Property> entry : instance.getProperties().entrySet()) {
+          impl.addProperty(entry.getKey(), entry.getValue());
+        }
+      }
+    }
+    return impl;
+  }
+
 
   public Map<String, List<CodegenOperation>> processPaths(Map<String, Path> paths) {
     Map<String, List<CodegenOperation>> ops = new HashMap<String, List<CodegenOperation>>();
