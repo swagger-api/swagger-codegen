@@ -281,23 +281,6 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     return files;
   }
 
-  protected Model recompose(ComposedModel composed, Map<String, Model> allModels) {
-    ModelImpl impl = new ModelImpl();
-
-    for (Model referred : composed.getAllOf()) {
-      Model instance = allModels.get(((RefModel) referred).getSimpleRef());
-
-      // avoid null pointers here.  Yeesh.
-      if (instance.getProperties() != null) {
-        for (Map.Entry<String, Property> entry : instance.getProperties().entrySet()) {
-          impl.addProperty(entry.getKey(), entry.getValue());
-        }
-      }
-    }
-    return impl;
-  }
-
-
   public Map<String, List<CodegenOperation>> processPaths(Map<String, Path> paths) {
     Map<String, List<CodegenOperation>> ops = new HashMap<String, List<CodegenOperation>>();
 
