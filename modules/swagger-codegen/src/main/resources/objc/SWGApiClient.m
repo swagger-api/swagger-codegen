@@ -283,15 +283,21 @@ static bool loggingEnabled = true;
     if(headerParams != nil && [headerParams count] > 0)
         hasHeaderParams = true;
     if(offlineState) {
-        NSLog(@"%@ cache forced", path);
+        if(loggingEnabled) {
+            NSLog(@"%@ cache forced", path);
+        }
         [request setCachePolicy:NSURLRequestReturnCacheDataDontLoad];
     }
     else if(!hasHeaderParams && [method isEqualToString:@"GET"] && cacheEnabled) {
-        NSLog(@"%@ cache enabled", path);
+        if(loggingEnabled) {
+            NSLog(@"%@ cache enabled", path);
+        }
         [request setCachePolicy:NSURLRequestUseProtocolCachePolicy];
     }
     else {
-        NSLog(@"%@ cache disabled", path);
+        if(loggingEnabled) {
+            NSLog(@"%@ cache disabled", path);
+        }
         [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     }
 
@@ -414,15 +420,21 @@ static bool loggingEnabled = true;
     if(headerParams != nil && [headerParams count] > 0)
         hasHeaderParams = true;
     if(offlineState) {
-        NSLog(@"%@ cache forced", path);
+        if(loggingEnabled) {
+            NSLog(@"%@ cache forced", path);
+        }
         [request setCachePolicy:NSURLRequestReturnCacheDataDontLoad];
     }
     else if(!hasHeaderParams && [method isEqualToString:@"GET"] && cacheEnabled) {
-        NSLog(@"%@ cache enabled", path);
+        if(loggingEnabled) {
+            NSLog(@"%@ cache enabled", path);
+        }
         [request setCachePolicy:NSURLRequestUseProtocolCachePolicy];
     }
     else {
-        NSLog(@"%@ cache disabled", path);
+        if(loggingEnabled) {
+            NSLog(@"%@ cache disabled", path);
+        }
         [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     }
 
