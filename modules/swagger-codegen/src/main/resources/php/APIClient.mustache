@@ -253,6 +253,12 @@ class APIClient {
 
   public static function deserialize($data, $class)
   {
+    $translateTypes = array(
+      "boolean" => "bool",
+      "integer" => "int",
+      "number"  => "float",
+    );
+
     if (null === $data) {
       $deserialized = null;
     } elseif (substr($class, 0, 4) == 'map[') {
@@ -277,6 +283,9 @@ class APIClient {
       $deserialized = new \DateTime($data);
     } elseif (in_array($class, array('string', 'int', 'float', 'bool'))) {
       settype($data, $class);
+      $deserialized = $data;
+    } elseif (isset($translateTypes[$class])) {
+      settype($data, $translateTypes[$class]);
       $deserialized = $data;
     } else {
       $class = "{{invokerPackage}}\\models\\".$class;
