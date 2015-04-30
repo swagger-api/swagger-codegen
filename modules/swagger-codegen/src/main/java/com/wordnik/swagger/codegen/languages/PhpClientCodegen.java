@@ -91,7 +91,7 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
     sfm.add(new SupportingFile("composer.mustache", packagePath, "composer.json"));
     sfm.add(new SupportingFile("APIClient.mustache", packagePath + "/lib", "APIClient.php"));
     sfm.add(new SupportingFile("APIClientException.mustache", packagePath + "/lib", "APIClientException.php"));
-    //sfm.add(new SupportingFile("require.mustache", packagePath, getInvokerPackage() + ".php"));
+    sfm.add(new SupportingFile("require.mustache", packagePath, slashReplace(invokerPackage, ".") + ".php"));
 
     // let's delete anything from supportingFiles which matches.
     // this is in case supportingFiles has been modified outside of
@@ -102,7 +102,7 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
           it.remove();
         }
     }
-    // now add yournew ones back in
+    // now add your new ones back in
     supportingFiles.addAll(sfm.values());
   }
 
