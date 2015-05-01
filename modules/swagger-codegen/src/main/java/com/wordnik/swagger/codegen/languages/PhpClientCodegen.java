@@ -41,7 +41,8 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
       }
   }
 
-  protected String hostToNamespace(String hostname) {
+  // public for unit testing purposes
+  public String hostToNamespace(String hostname) {
     // fix the name space to be reverse, minus io, swap dots for backslash:
     //  db.yoyodyne.com -> yoyodyne/db
     String namespace = "SwaggerPetstore";
