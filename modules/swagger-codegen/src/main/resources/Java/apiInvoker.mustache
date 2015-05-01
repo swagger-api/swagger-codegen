@@ -10,7 +10,9 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.LoggingFilter;
+import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.WebResource.Builder;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
 import com.sun.jersey.multipart.FormDataMultiPart;
 
 import javax.ws.rs.core.Response.Status.Family;
@@ -164,22 +166,14 @@ public class ApiInvoker {
 
   public String invokeAPI(String host, String path, String method, Map<String, String> queryParams, Object body, Map<String, String> headerParams, Map<String, String> formParams, String contentType) throws ApiException {
     Client client = getClient(host);
-
-    StringBuilder b = new StringBuilder();
+    WebResource resource = client.resource(host + path);
 
     for(String key : queryParams.keySet()) {
-      String value = queryParams.get(key);
-      if (value != null){
-        if(b.toString().length() == 0)
-          b.append("?");
-        else
-          b.append("&");
-        b.append(escapeString(key)).append("=").append(escapeString(value));
-      }
+      resource = resource.queryParam(key, queryParams.get(key));
     }
-    String querystring = b.toString();
 
-    Builder builder = client.resource(host + path + querystring).accept("application/json");
+    Builder builder = resource.accept("application/json");
+
     for(String key : headerParams.keySet()) {
       builder = builder.header(key, headerParams.get(key));
     }
@@ -189,13 +183,24 @@ public class ApiInvoker {
         builder = builder.header(key, defaultHeaderMap.get(key));
       }
     }
+
+    MultivaluedMapImpl formData = null;
+    if("application/x-www-form-urlencoded".equals(contentType)) {
+      formData = new MultivaluedMapImpl();
+      for(String key : formParams.keySet()) {
+        formData.add(key, formParams.get(key));
+      }
+    }
+
     ClientResponse response = null;
 
     if("GET".equals(method)) {
       response = (ClientResponse) builder.get(ClientResponse.class);
     }
     else if ("POST".equals(method)) {
-      if(body == null)
+      if(formData != null)
+        response = builder.post(ClientResponse.class, formData);
+      else if(body == null)
         response = builder.post(ClientResponse.class, null);
       else if(body instanceof FormDataMultiPart) {
         response = builder.type(contentType).post(ClientResponse.class, body);
@@ -204,32 +209,12 @@ public class ApiInvoker {
         response = builder.type(contentType).post(ClientResponse.class, serialize(body));
     }
     else if ("PUT".equals(method)) {
-      if(body == null)
+      if(formData != null)
+        response = builder.put(ClientResponse.class, formData);
+      else if(body == null)
         response = builder.put(ClientResponse.class, serialize(body));
-      else {
-        if("application/x-www-form-urlencoded".equals(contentType)) {
-          StringBuilder formParamBuilder = new StringBuilder();
-
-          // encode the form params
-          for(String key : formParams.keySet()) {
-            String value = formParams.get(key);
-            if(value != null && !"".equals(value.trim())) {
-              if(formParamBuilder.length() > 0) {
-                formParamBuilder.append("&");
-              }
-              try {
-                formParamBuilder.append(URLEncoder.encode(key, "utf8")).append("=").append(URLEncoder.encode(value, "utf8"));
-              }
-              catch (Exception e) {
-                // move on to next
-              }
-            }
-          }
-          response = builder.type(contentType).put(ClientResponse.class, formParamBuilder.toString());
-        }
-        else
-          response = builder.type(contentType).put(ClientResponse.class, serialize(body));
-      }
+      else
+        response = builder.type(contentType).put(ClientResponse.class, serialize(body));
     }
     else if ("DELETE".equals(method)) {
       if(body == null)
