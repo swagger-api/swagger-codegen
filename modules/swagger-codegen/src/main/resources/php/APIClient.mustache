@@ -33,6 +33,9 @@ class APIClient {
     $this->host = $host;
     $this->headerName = $headerName;
     $this->headerValue = $headerValue;
+    // set to null to avoid E_STRICT warnings
+    $this->curl_timeout = null;
+    $this->user_agent = null;
   }
 
   /**
@@ -54,7 +57,7 @@ class APIClient {
     if (!is_numeric($seconds)) {
       throw new Exception('Timeout variable must be numeric.');
     }
-    $this->curl_timout = $seconds;
+    $this->curl_timeout = $seconds;
   }
 
   /**
@@ -84,15 +87,19 @@ class APIClient {
       $headers[] = $this->headerName . ": " . $this->headerValue;
     }
 
-    if (strpos($headers['Content-Type'], "multipart/form-data") < 0 and (is_object($postData) or is_array($postData))) {
-      $postData = json_encode($this->sanitizeForSerialization($postData));
+    if (isset($headers['Content-Type'])) {
+      if (strpos($headers['Content-Type'], "multipart/form-data") !== false) {
+        if (is_object($postData) or is_array($postData)) {
+          $postData = json_encode($this->sanitizeForSerialization($postData));
+        }
+      }
     }
 
     $url = $this->host . $resourcePath;
 
     $curl = curl_init();
-    if ($this->curl_timout) {
-      curl_setopt($curl, CURLOPT_TIMEOUT, $this->curl_timout);
+    if ($this->curl_timeout) {
+      curl_setopt($curl, CURLOPT_TIMEOUT, $this->curl_timeout);
     }
     // return the result on success, rather than just TRUE
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -253,6 +260,7 @@ class APIClient {
 
   public static function deserialize($data, $class)
   {
+    // translate json schema types to valid php types
     $translateTypes = array(
       "boolean" => "bool",
       "integer" => "int",

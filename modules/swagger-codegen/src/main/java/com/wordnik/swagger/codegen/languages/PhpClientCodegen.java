@@ -91,7 +91,7 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
     sfm.add(new SupportingFile("composer.mustache", packagePath, "composer.json"));
     sfm.add(new SupportingFile("APIClient.mustache", packagePath + "/lib", "APIClient.php"));
     sfm.add(new SupportingFile("APIClientException.mustache", packagePath + "/lib", "APIClientException.php"));
-    sfm.add(new SupportingFile("require.mustache", packagePath, slashReplace(invokerPackage, ".") + ".php"));
+    sfm.add(new SupportingFile("require.mustache", packagePath, "loader.php"));
 
     // let's delete anything from supportingFiles which matches.
     // this is in case supportingFiles has been modified outside of
