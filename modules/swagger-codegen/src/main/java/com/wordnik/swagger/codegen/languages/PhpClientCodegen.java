@@ -153,17 +153,17 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
     return "_" + name;
   }
 
-  private String moreDots(String inVar) {
+  private String dotToSlash(String inVar) {
       return inVar.replace('.', File.separatorChar);
   }
 
   @Override
   public String apiFileFolder() {
-    return outputFolder + "/" + moreDots(apiPackage());
+    return outputFolder + "/" + dotToSlash(apiPackage());
   }
 
   public String modelFileFolder() {
-    return outputFolder + "/" + moreDots(modelPackage());
+    return outputFolder + "/" + dotToSlash(modelPackage());
   }
 
   @Override
