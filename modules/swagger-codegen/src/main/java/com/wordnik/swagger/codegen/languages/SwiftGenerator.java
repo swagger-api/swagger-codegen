@@ -38,6 +38,8 @@ public class SwiftGenerator extends DefaultCodegen implements CodegenConfig {
     additionalProperties.put("projectName", appName);
     sourceFolder = appName + "/" + sourceFolder;
 
+    supportingFiles.add(new SupportingFile("Podfile.mustache", "", "Podfile"));
+
     languageSpecificPrimitives = new HashSet<String>(
       Arrays.asList(
         "Int",
