@@ -134,4 +134,43 @@ public class SwiftGenerator extends DefaultCodegen implements CodegenConfig {
       type = swaggerType;
     return toModelName(type);
   }
+
+  @Override
+  public String toDefaultValue(Property p) {
+    // nil
+    return null;
+  }
+
+  @Override
+  public String toInstantiationType(Property p) {
+    if (p instanceof MapProperty) {
+      MapProperty ap = (MapProperty) p;
+      String inner = getSwaggerType(ap.getAdditionalProperties());
+      return "[String:" + inner + "]";
+    } else if (p instanceof ArrayProperty) {
+      ArrayProperty ap = (ArrayProperty) p;
+      String inner = getSwaggerType(ap.getItems());
+      return "[" + inner + "]";
+    } else
+      return null;
+  }
+
+  @Override
+  public CodegenProperty fromProperty(String name, Property p) {
+    CodegenProperty codegenProperty = super.fromProperty(name, p);
+    if (codegenProperty.isEnum) {
+      List<Map<String, String>> swiftEnums = new ArrayList<Map<String, String>>();
+      List<String> values = (List<String>) codegenProperty.allowableValues.get("values");
+      for (String value : values) {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("enum", StringUtils.capitalize(value));
+        map.put("raw", value);
+        swiftEnums.add(map);
+      }
+      codegenProperty.allowableValues.put("values", swiftEnums);
+      codegenProperty.datatypeWithEnum =
+              StringUtils.left(codegenProperty.datatypeWithEnum, codegenProperty.datatypeWithEnum.length() - "Enum".length());
+    }
+    return codegenProperty;
+  }
 }
