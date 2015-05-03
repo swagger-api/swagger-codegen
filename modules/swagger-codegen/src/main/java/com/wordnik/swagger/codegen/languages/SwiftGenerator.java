@@ -91,40 +91,21 @@ public class SwiftGenerator extends DefaultCodegen implements CodegenConfig {
     importMapping = new HashMap<String, String>();
   }
 
-  /**
-   * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping
-   * those terms here.  This logic is only called if a variable matches the reseved words
-   * 
-   * @return the escaped term
-   */
   @Override
   public String escapeReservedWord(String name) {
     return "_" + name;  // add an underscore to the name
   }
 
-  /**
-   * Location to write model files.  You can use the modelPackage() as defined when the class is
-   * instantiated
-   */
+  @Override
   public String modelFileFolder() {
     return outputFolder + "/" + sourceFolder + "/" + modelPackage().replace('.', File.separatorChar);
   }
 
-  /**
-   * Location to write api files.  You can use the apiPackage() as defined when the class is
-   * instantiated
-   */
   @Override
   public String apiFileFolder() {
     return outputFolder + "/" + sourceFolder + "/" + apiPackage().replace('.', File.separatorChar);
   }
 
-  /**
-   * Optional - type declaration.  This is a String which is used by the templates to instantiate your
-   * types.  There is typically special handling for different property types
-   *
-   * @return a string value used as the `dataType` field for model templates, `returnType` for api templates
-   */
   @Override
   public String getTypeDeclaration(Property p) {
     if(p instanceof ArrayProperty) {
@@ -140,13 +121,6 @@ public class SwiftGenerator extends DefaultCodegen implements CodegenConfig {
     return super.getTypeDeclaration(p);
   }
 
-  /**
-   * Optional - swagger type conversion.  This is used to map swagger types in a `Property` into 
-   * either language specific types via `typeMapping` or into complex models if there is not a mapping.
-   *
-   * @return a string value of the type or complex model for this property
-   * @see com.wordnik.swagger.models.properties.Property
-   */
   @Override
   public String getSwaggerType(Property p) {
     String swaggerType = super.getSwaggerType(p);
