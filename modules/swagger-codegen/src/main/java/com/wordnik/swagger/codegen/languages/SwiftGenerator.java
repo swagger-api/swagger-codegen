@@ -2,6 +2,8 @@ package com.wordnik.swagger.codegen.languages;
 
 import com.wordnik.swagger.codegen.*;
 import com.wordnik.swagger.models.properties.*;
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.*;
 import java.io.File;
@@ -32,7 +34,7 @@ public class SwiftGenerator extends DefaultCodegen implements CodegenConfig {
 
     // from ObjcClientCodegen.java
     String appName = System.getProperty("appName");
-    if(appName == null) {
+    if (appName == null) {
       appName = "swaggerClient";
     }
     additionalProperties.put("projectName", appName);
@@ -108,12 +110,11 @@ public class SwiftGenerator extends DefaultCodegen implements CodegenConfig {
 
   @Override
   public String getTypeDeclaration(Property p) {
-    if(p instanceof ArrayProperty) {
+    if (p instanceof ArrayProperty) {
       ArrayProperty ap = (ArrayProperty) p;
       Property inner = ap.getItems();
       return "[" + getTypeDeclaration(inner) + "]";
-    }
-    else if (p instanceof MapProperty) {
+    } else if (p instanceof MapProperty) {
       MapProperty mp = (MapProperty) p;
       Property inner = mp.getAdditionalProperties();
       return "[String:" + getTypeDeclaration(inner) + "]";
@@ -125,12 +126,11 @@ public class SwiftGenerator extends DefaultCodegen implements CodegenConfig {
   public String getSwaggerType(Property p) {
     String swaggerType = super.getSwaggerType(p);
     String type = null;
-    if(typeMapping.containsKey(swaggerType)) {
+    if (typeMapping.containsKey(swaggerType)) {
       type = typeMapping.get(swaggerType);
-      if(languageSpecificPrimitives.contains(type))
+      if (languageSpecificPrimitives.contains(type))
         return toModelName(type);
-    }
-    else
+    } else
       type = swaggerType;
     return toModelName(type);
   }
@@ -151,8 +151,8 @@ public class SwiftGenerator extends DefaultCodegen implements CodegenConfig {
       ArrayProperty ap = (ArrayProperty) p;
       String inner = getSwaggerType(ap.getItems());
       return "[" + inner + "]";
-    } else
-      return null;
+    }
+    return null;
   }
 
   @Override
