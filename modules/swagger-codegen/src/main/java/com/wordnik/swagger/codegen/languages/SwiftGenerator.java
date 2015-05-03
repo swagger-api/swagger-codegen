@@ -7,116 +7,86 @@ import java.util.*;
 import java.io.File;
 
 public class SwiftGenerator extends DefaultCodegen implements CodegenConfig {
+  protected String sourceFolder = "Classes";
 
-  // source folder where to write the files
-  protected String sourceFolder = "src";
-  protected String apiVersion = "1.0.0";
-
-  /**
-   * Configures the type of generator.
-   * 
-   * @return  the CodegenType for this generator
-   * @see     com.wordnik.swagger.codegen.CodegenType
-   */
   public CodegenType getTag() {
     return CodegenType.CLIENT;
   }
 
-  /**
-   * Configures a friendly name for the generator.  This will be used by the generator
-   * to select the library with the -l flag.
-   * 
-   * @return the friendly name for the generator
-   */
   public String getName() {
     return "swift";
   }
 
-  /**
-   * Returns human-friendly help for the generator.  Provide the consumer with help
-   * tips, parameters here
-   * 
-   * @return A string value for the help message
-   */
   public String getHelp() {
     return "Generates a swift client library.";
   }
 
   public SwiftGenerator() {
     super();
-
-    // set the output folder here
     outputFolder = "generated-code/swift";
-
-    /**
-     * Models.  You can write model files using the modelTemplateFiles map.
-     * if you want to create one template for file, you can do so here.
-     * for multiple files for model, just put another entry in the `modelTemplateFiles` with
-     * a different extension
-     */
-    modelTemplateFiles.put(
-      "model.mustache", // the template to use
-      ".sample");       // the extension for each file to write
-
-    /**
-     * Api classes.  You can write classes for each Api file with the apiTemplateFiles map.
-     * as with models, add multiple entries with different extensions for multiple files per
-     * class
-     */
-    apiTemplateFiles.put(
-      "api.mustache",   // the template to use
-      ".sample");       // the extension for each file to write
-
-    /**
-     * Template Location.  This is the location which templates will be read from.  The generator
-     * will use the resource stream to attempt to read the templates.
-     */
+    modelTemplateFiles.put("model.mustache", ".swift");
+    apiTemplateFiles.put("api.mustache", ".swift");
     templateDir = "swift";
-
-    /**
-     * Api Package.  Optional, if needed, this can be used in templates
-     */
     apiPackage = "io.swagger.client.api";
-
-    /**
-     * Model Package.  Optional, if needed, this can be used in templates
-     */
     modelPackage = "io.swagger.client.model";
 
-    /**
-     * Reserved words.  Override this with reserved words specific to your language
-     */
-    reservedWords = new HashSet<String> (
-      Arrays.asList(
-        "sample1",  // replace with static values
-        "sample2")
-    );
+    // from ObjcClientCodegen.java
+    String appName = System.getProperty("appName");
+    if(appName == null) {
+      appName = "swaggerClient";
+    }
+    additionalProperties.put("projectName", appName);
+    sourceFolder = appName + "/" + sourceFolder;
 
-    /**
-     * Additional Properties.  These values can be passed to the templates and
-     * are available in models, apis, and supporting files
-     */
-    additionalProperties.put("apiVersion", apiVersion);
-
-    /**
-     * Supporting Files.  You can write single files for the generator with the
-     * entire object tree available.  If the input file has a suffix of `.mustache
-     * it will be processed by the template engine.  Otherwise, it will be copied
-     */
-    supportingFiles.add(new SupportingFile("myFile.mustache",   // the input template or file
-      "",                                                       // the destination folder, relative `outputFolder`
-      "myFile.sample")                                          // the output file
-    );
-
-    /**
-     * Language Specific Primitives.  These types will not trigger imports by
-     * the client generator
-     */
     languageSpecificPrimitives = new HashSet<String>(
       Arrays.asList(
-        "Type1",      // replace these with your types
-        "Type2")
+        "Int",
+        "Float",
+        "Double",
+        "Bool",
+        "Void",
+        "String",
+        "Character")
     );
+    defaultIncludes = new HashSet<String>(
+      Arrays.asList(
+        "NSDate",
+        "Array",
+        "Dictionary",
+        "Set",
+        "Any",
+        "AnyObject")
+    );
+    reservedWords = new HashSet<String>(
+      Arrays.asList(
+        "class", "break", "as", "associativity", "deinit", "case", "dynamicType", "convenience", "enum", "continue",
+        "false", "dynamic", "extension", "default", "is", "didSet", "func", "do", "nil", "final", "import", "else",
+        "self", "get", "init", "fallthrough", "Self", "infix", "internal", "for", "super", "inout", "let", "if",
+        "true", "lazy", "operator", "in", "COLUMN", "left", "private", "return", "FILE", "mutating", "protocol",
+        "switch", "FUNCTION", "none", "public", "where", "LINE", "nonmutating", "static", "while", "optional",
+        "struct", "override", "subscript", "postfix", "typealias", "precedence", "var", "prefix", "Protocol",
+        "required", "right", "set", "Type", "unowned", "weak")
+    );
+
+    typeMapping = new HashMap<String, String>();
+    typeMapping.put("array", "Array");
+    typeMapping.put("List", "Array");
+    typeMapping.put("map", "Dictionary");
+    typeMapping.put("Date", "NSDate");
+    typeMapping.put("DateTime", "NSDate");
+    typeMapping.put("boolean", "Bool");
+    typeMapping.put("string", "String");
+    typeMapping.put("char", "Character");
+    typeMapping.put("short", "Int");
+    typeMapping.put("int", "Int");
+    typeMapping.put("long", "Int");
+    typeMapping.put("integer", "Int");
+    typeMapping.put("float", "Float");
+    typeMapping.put("number", "Double");
+    typeMapping.put("double", "Double");
+    typeMapping.put("object", "AnyObject");
+
+    importMapping = new HashMap<String, String>();
   }
 
   /**
