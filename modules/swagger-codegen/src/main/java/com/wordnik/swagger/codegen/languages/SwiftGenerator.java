@@ -27,8 +27,8 @@ public class SwiftGenerator extends DefaultCodegen implements CodegenConfig {
     modelTemplateFiles.put("model.mustache", ".swift");
     apiTemplateFiles.put("api.mustache", ".swift");
     templateDir = "swift";
-    apiPackage = "io.swagger.client.api";
-    modelPackage = "io.swagger.client.model";
+    apiPackage = "Apis";
+    modelPackage = "Models";
 
     // from ObjcClientCodegen.java
     String appName = System.getProperty("appName");
