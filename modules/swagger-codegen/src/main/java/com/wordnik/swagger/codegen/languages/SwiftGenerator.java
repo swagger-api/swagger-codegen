@@ -197,7 +197,7 @@ public class SwiftGenerator extends DefaultCodegen implements CodegenConfig {
         return StringUtils.capitalize(s);
       }
     }), "");
-    if (name.length() > 1) {
+    if (name.length() >= 1) {
       name = name.substring(0, 1).toLowerCase() + name.substring(1);
     }
     return name;
