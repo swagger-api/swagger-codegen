@@ -1,14 +1,19 @@
 package com.wordnik.swagger.codegen.languages;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.wordnik.swagger.codegen.*;
 import com.wordnik.swagger.models.properties.*;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
+import javax.annotation.Nullable;
 import java.util.*;
 import java.io.File;
 
 public class SwiftGenerator extends DefaultCodegen implements CodegenConfig {
+  public static final String NON_NAME_ELEMENT = "[-_:;#]";
   protected String sourceFolder = "Classes";
 
   public CodegenType getTag() {
@@ -172,5 +177,29 @@ public class SwiftGenerator extends DefaultCodegen implements CodegenConfig {
               StringUtils.left(codegenProperty.datatypeWithEnum, codegenProperty.datatypeWithEnum.length() - "Enum".length());
     }
     return codegenProperty;
+  }
+
+  @Override
+  public String toParamName(String name) {
+    return camel(super.toParamName(name));
+  }
+
+  @Override
+  public String toOperationId(String operationId) {
+    return camel(super.toOperationId(operationId));
+  }
+
+  protected static String camel(String name) {
+    name = StringUtils.join(Lists.transform(Lists.newArrayList(name.split(NON_NAME_ELEMENT)), new Function<String, String>() {
+      @Nullable
+      @Override
+      public String apply(String s) {
+        return StringUtils.capitalize(s);
+      }
+    }), "");
+    if (name.length() > 1) {
+      name = name.substring(0, 1).toLowerCase() + name.substring(1);
+    }
+    return name;
   }
 }
