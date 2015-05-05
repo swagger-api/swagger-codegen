@@ -73,7 +73,6 @@ class {{classname}} {
         $formParams['{{baseName}}'] = {{#isFile}}'@' . {{/isFile}}$this->apiClient->toFormValue(${{paramName}});
       }{{/formParams}}
       {{#bodyParams}}// body params
-      $body = null;
       if (isset(${{paramName}})) {
         $body = ${{paramName}};
       }{{/bodyParams}}
@@ -89,14 +88,14 @@ class {{classname}} {
       $response = $this->apiClient->callAPI($resourcePath, $method,
                                             $queryParams, $body,
                                             $headerParams);
-
-      {{#returnType}}if(! $response) {
+      {{#returnType}}
+      if(! $response) {
         return null;
       }
 
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                '{{returnType}}');
-  		return $responseObject;{{/returnType}}
+      $responseObject = $this->apiClient->deserialize($response,
+                                                       '{{returnType}}');
+      return $responseObject;{{/returnType}}
   }
   {{/operation}}
 {{newline}}
