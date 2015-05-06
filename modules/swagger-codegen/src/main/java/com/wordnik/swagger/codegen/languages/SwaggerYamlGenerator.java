@@ -30,7 +30,7 @@ public class SwaggerYamlGenerator extends DefaultCodegen implements CodegenConfi
   }
 
   @Override
-  public void processSwagger(Swagger swagger) {
+  public void postGenerate(Swagger swagger) {
     try{
       String swaggerString = Yaml.mapper().writeValueAsString(swagger);
       String outputFile = outputFolder + File.separator + "swagger.yaml";

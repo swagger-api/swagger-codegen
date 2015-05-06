@@ -26,7 +26,7 @@ public interface CodegenConfig {
   String escapeReservedWord(String name);
   String getTypeDeclaration(Property p);
   String getTypeDeclaration(String name);
-  void processOpts();
+  void preGenerate(Swagger swagger);
   String generateExamplePath(String path, Operation operation);
 
   Set<String> reservedWords();
@@ -46,7 +46,7 @@ public interface CodegenConfig {
   Map<String, String> importMapping();
   Map<String, String> apiTemplateFiles();
   Map<String, String> modelTemplateFiles();
-  void processSwagger(Swagger swagger);
+  void postGenerate(Swagger swagger);
 
   String toApiFilename(String name);
   String toModelFilename(String name);
