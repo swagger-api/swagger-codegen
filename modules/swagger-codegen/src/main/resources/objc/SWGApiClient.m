@@ -242,8 +242,6 @@ static bool loggingEnabled = true;
     }
 
     if (multipartForm) {
-        requestContentType = @"multipart/form-data";
-
         NSString * urlString = [[NSURL URLWithString:path relativeToURL:self.baseURL] absoluteString];
         request = [self.requestSerializer multipartFormRequestWithMethod: @"POST"
                                                                URLString: urlString
@@ -303,7 +301,9 @@ static bool loggingEnabled = true;
 
     if(body != nil) {
         if([body isKindOfClass:[NSDictionary class]] || [body isKindOfClass:[NSArray class]]){
-            [request setValue:requestContentType forHTTPHeaderField:@"Content-Type"];
+            if (!multipartForm) {
+                [request setValue:requestContentType forHTTPHeaderField:@"Content-Type"];
+            }
         }
         else if ([body isKindOfClass:[SWGFile class]]) {}
         else {
@@ -379,8 +379,6 @@ static bool loggingEnabled = true;
     }
 
     if (multipartForm) {
-        requestContentType = @"multipart/form-data";
-
         NSString * urlString = [[NSURL URLWithString:path relativeToURL:self.baseURL] absoluteString];
         request = [self.requestSerializer multipartFormRequestWithMethod: @"POST"
                                                                URLString: urlString
@@ -440,7 +438,9 @@ static bool loggingEnabled = true;
 
     if(body != nil) {
         if([body isKindOfClass:[NSDictionary class]] || [body isKindOfClass:[NSArray class]]){
-            [request setValue:requestContentType forHTTPHeaderField:@"Content-Type"];
+            if (!multipartForm) {
+                [request setValue:requestContentType forHTTPHeaderField:@"Content-Type"];
+            }
         }
         else if ([body isKindOfClass:[SWGFile class]]){}
         else {
