@@ -5,6 +5,9 @@
 #import "SWGUser.h"
 
 
+@interface SWGUserApi ()
+    @property (readwrite, nonatomic, strong) NSMutableDictionary *defaultHeaders;
+@end
 
 @implementation SWGUserApi
 static NSString * basePath = @"http://petstore.swagger.io/v2";
@@ -32,18 +35,19 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
 }
 
 -(void) addHeader:(NSString*)value forKey:(NSString*)key {
-    [[self apiClient] setHeaderValue:value forKey:key];
+    [self.defaultHeaders setValue:value forKey:key];
 }
 
 -(id) init {
     self = [super init];
+    self.defaultHeaders = [NSMutableDictionary dictionary];
     [self apiClient];
     return self;
 }
 
 -(void) setHeaderValue:(NSString*) value
            forKey:(NSString*)key {
-    [[self apiClient] setHeaderValue:value forKey:key];
+    [self.defaultHeaders setValue:value forKey:key];
 }
 
 -(unsigned long) requestQueueSize {
@@ -51,6 +55,12 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
 }
 
 
+/*!
+ * Create user
+ * This can only be done by the logged in user.
+ * \param body Created user object
+ * \returns void
+ */
 -(NSNumber*) createUserWithCompletionBlock: (SWGUser*) body
         
         
@@ -72,7 +82,8 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.defaultHeaders];
+
     
 
     id bodyDictionary = nil;
@@ -135,6 +146,12 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
     
 }
 
+/*!
+ * Creates list of users with given input array
+ * 
+ * \param body List of user object
+ * \returns void
+ */
 -(NSNumber*) createUsersWithArrayInputWithCompletionBlock: (NSArray<SWGUser>*) body
         
         
@@ -156,7 +173,8 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.defaultHeaders];
+
     
 
     id bodyDictionary = nil;
@@ -219,6 +237,12 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
     
 }
 
+/*!
+ * Creates list of users with given input array
+ * 
+ * \param body List of user object
+ * \returns void
+ */
 -(NSNumber*) createUsersWithListInputWithCompletionBlock: (NSArray<SWGUser>*) body
         
         
@@ -240,7 +264,8 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.defaultHeaders];
+
     
 
     id bodyDictionary = nil;
@@ -303,6 +328,13 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
     
 }
 
+/*!
+ * Logs user into the system
+ * 
+ * \param username The user name for login
+ * \param password The password for login in clear text
+ * \returns NSString*
+ */
 -(NSNumber*) loginUserWithCompletionBlock: (NSString*) username
          password: (NSString*) password
         
@@ -333,7 +365,8 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
         queryParams[@"password"] = password;
     }
     
-    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.defaultHeaders];
+
     
 
     id bodyDictionary = nil;
@@ -385,6 +418,11 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
     
 }
 
+/*!
+ * Logs out current logged in user session
+ * 
+ * \returns void
+ */
 -(NSNumber*) logoutUserWithCompletionBlock: 
         
         (void (^)(NSError* error))completionBlock {
@@ -405,7 +443,8 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.defaultHeaders];
+
     
 
     id bodyDictionary = nil;
@@ -445,6 +484,12 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
     
 }
 
+/*!
+ * Get user by user name
+ * 
+ * \param username The name that needs to be fetched. Use user1 for testing. 
+ * \returns SWGUser*
+ */
 -(NSNumber*) getUserByNameWithCompletionBlock: (NSString*) username
         
         completionHandler: (void (^)(SWGUser* output, NSError* error))completionBlock
@@ -467,7 +512,8 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.defaultHeaders];
+
     
 
     id bodyDictionary = nil;
@@ -521,6 +567,13 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
     
 }
 
+/*!
+ * Updated user
+ * This can only be done by the logged in user.
+ * \param username name that need to be deleted
+ * \param body Updated user object
+ * \returns void
+ */
 -(NSNumber*) updateUserWithCompletionBlock: (NSString*) username
          body: (SWGUser*) body
         
@@ -544,7 +597,8 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.defaultHeaders];
+
     
 
     id bodyDictionary = nil;
@@ -607,6 +661,12 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
     
 }
 
+/*!
+ * Delete user
+ * This can only be done by the logged in user.
+ * \param username The name that needs to be deleted
+ * \returns void
+ */
 -(NSNumber*) deleteUserWithCompletionBlock: (NSString*) username
         
         
@@ -629,7 +689,8 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.defaultHeaders];
+
     
 
     id bodyDictionary = nil;

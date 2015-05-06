@@ -5,6 +5,9 @@
 #import "SWGOrder.h"
 
 
+@interface SWGStoreApi ()
+    @property (readwrite, nonatomic, strong) NSMutableDictionary *defaultHeaders;
+@end
 
 @implementation SWGStoreApi
 static NSString * basePath = @"http://petstore.swagger.io/v2";
@@ -32,18 +35,19 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
 }
 
 -(void) addHeader:(NSString*)value forKey:(NSString*)key {
-    [[self apiClient] setHeaderValue:value forKey:key];
+    [self.defaultHeaders setValue:value forKey:key];
 }
 
 -(id) init {
     self = [super init];
+    self.defaultHeaders = [NSMutableDictionary dictionary];
     [self apiClient];
     return self;
 }
 
 -(void) setHeaderValue:(NSString*) value
            forKey:(NSString*)key {
-    [[self apiClient] setHeaderValue:value forKey:key];
+    [self.defaultHeaders setValue:value forKey:key];
 }
 
 -(unsigned long) requestQueueSize {
@@ -51,6 +55,11 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
 }
 
 
+/*!
+ * Returns pet inventories by status
+ * Returns a map of status codes to quantities
+ * \returns NSDictionary*
+ */
 -(NSNumber*) getInventoryWithCompletionBlock: 
         (void (^)(NSDictionary* output, NSError* error))completionBlock
          {
@@ -71,7 +80,8 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.defaultHeaders];
+
     
 
     id bodyDictionary = nil;
@@ -117,6 +127,12 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
     
 }
 
+/*!
+ * Place an order for a pet
+ * 
+ * \param body order placed for purchasing the pet
+ * \returns SWGOrder*
+ */
 -(NSNumber*) placeOrderWithCompletionBlock: (SWGOrder*) body
         
         completionHandler: (void (^)(SWGOrder* output, NSError* error))completionBlock
@@ -138,7 +154,8 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.defaultHeaders];
+
     
 
     id bodyDictionary = nil;
@@ -215,6 +232,12 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
     
 }
 
+/*!
+ * Find purchase order by ID
+ * For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions
+ * \param orderId ID of pet that needs to be fetched
+ * \returns SWGOrder*
+ */
 -(NSNumber*) getOrderByIdWithCompletionBlock: (NSString*) orderId
         
         completionHandler: (void (^)(SWGOrder* output, NSError* error))completionBlock
@@ -237,7 +260,8 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.defaultHeaders];
+
     
 
     id bodyDictionary = nil;
@@ -291,6 +315,12 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
     
 }
 
+/*!
+ * Delete purchase order by ID
+ * For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
+ * \param orderId ID of the order that needs to be deleted
+ * \returns void
+ */
 -(NSNumber*) deleteOrderWithCompletionBlock: (NSString*) orderId
         
         
@@ -313,7 +343,8 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-    NSMutableDictionary* headerParams = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.defaultHeaders];
+
     
 
     id bodyDictionary = nil;

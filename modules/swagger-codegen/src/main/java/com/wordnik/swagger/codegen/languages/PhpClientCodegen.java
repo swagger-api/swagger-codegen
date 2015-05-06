@@ -115,7 +115,7 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
   public PhpClientCodegen() {
     super();
 
-    setInvokerPackage(camelize("SwaggerPetstore"));
+    setInvokerPackage(camelize("SwaggerClient"));
 
     outputFolder = "generated-code/php";
     modelTemplateFiles.put("model.mustache", ".php");

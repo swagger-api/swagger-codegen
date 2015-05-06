@@ -36,7 +36,7 @@ namespace io.swagger.Api {
     /// <param name="Body">Created user object</param>
     
     /// <returns></returns>
-    public void  createUser (User Body) {
+    public void  CreateUser (User Body) {
       // create path and map variables
       var path = "/user".Replace("{format}","json");
 
@@ -84,7 +84,7 @@ namespace io.swagger.Api {
     /// <param name="Body">List of user object</param>
     
     /// <returns></returns>
-    public void  createUsersWithArrayInput (List<User> Body) {
+    public void  CreateUsersWithArrayInput (List<User> Body) {
       // create path and map variables
       var path = "/user/createWithArray".Replace("{format}","json");
 
@@ -132,7 +132,7 @@ namespace io.swagger.Api {
     /// <param name="Body">List of user object</param>
     
     /// <returns></returns>
-    public void  createUsersWithListInput (List<User> Body) {
+    public void  CreateUsersWithListInput (List<User> Body) {
       // create path and map variables
       var path = "/user/createWithList".Replace("{format}","json");
 
@@ -181,7 +181,7 @@ namespace io.swagger.Api {
      /// <param name="Password">The password for login in clear text</param>
     
     /// <returns></returns>
-    public string  loginUser (string Username, string Password) {
+    public string  LoginUser (string Username, string Password) {
       // create path and map variables
       var path = "/user/login".Replace("{format}","json");
 
@@ -193,12 +193,10 @@ namespace io.swagger.Api {
       
 
       if (Username != null){
-        string paramStr = (Username is DateTime) ? ((DateTime)(object)Username).ToString("u") : Convert.ToString(Username);
-        queryParams.Add("username", paramStr);
+        queryParams.Add("username", apiInvoker.ParameterToString(Username));
       }
       if (Password != null){
-        string paramStr = (Password is DateTime) ? ((DateTime)(object)Password).ToString("u") : Convert.ToString(Password);
-        queryParams.Add("password", paramStr);
+        queryParams.Add("password", apiInvoker.ParameterToString(Password));
       }
       
 
@@ -241,7 +239,7 @@ namespace io.swagger.Api {
     /// </summary>
     
     /// <returns></returns>
-    public void  logoutUser () {
+    public void  LogoutUser () {
       // create path and map variables
       var path = "/user/logout".Replace("{format}","json");
 
@@ -289,9 +287,9 @@ namespace io.swagger.Api {
     /// <param name="Username">The name that needs to be fetched. Use user1 for testing. </param>
     
     /// <returns></returns>
-    public User  getUserByName (string Username) {
+    public User  GetUserByName (string Username) {
       // create path and map variables
-      var path = "/user/{username}".Replace("{format}","json").Replace("{" + "username" + "}", apiInvoker.escapeString(Username.ToString()));
+      var path = "/user/{username}".Replace("{format}","json").Replace("{" + "username" + "}", apiInvoker.ParameterToString(Username));
 
       // query params
       var queryParams = new Dictionary<String, String>();
@@ -343,9 +341,9 @@ namespace io.swagger.Api {
      /// <param name="Body">Updated user object</param>
     
     /// <returns></returns>
-    public void  updateUser (string Username, User Body) {
+    public void  UpdateUser (string Username, User Body) {
       // create path and map variables
-      var path = "/user/{username}".Replace("{format}","json").Replace("{" + "username" + "}", apiInvoker.escapeString(Username.ToString()));
+      var path = "/user/{username}".Replace("{format}","json").Replace("{" + "username" + "}", apiInvoker.ParameterToString(Username));
 
       // query params
       var queryParams = new Dictionary<String, String>();
@@ -391,9 +389,9 @@ namespace io.swagger.Api {
     /// <param name="Username">The name that needs to be deleted</param>
     
     /// <returns></returns>
-    public void  deleteUser (string Username) {
+    public void  DeleteUser (string Username) {
       // create path and map variables
-      var path = "/user/{username}".Replace("{format}","json").Replace("{" + "username" + "}", apiInvoker.escapeString(Username.ToString()));
+      var path = "/user/{username}".Replace("{format}","json").Replace("{" + "username" + "}", apiInvoker.ParameterToString(Username));
 
       // query params
       var queryParams = new Dictionary<String, String>();

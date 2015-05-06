@@ -19,6 +19,7 @@ import java.io.FileOutputStream;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -87,12 +88,14 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
       }
 
       StringBuilder hostBuilder = new StringBuilder();
+      String scheme;
       if (swagger.getSchemes() != null && swagger.getSchemes().size() > 0) {
-        hostBuilder.append(swagger.getSchemes().get(0).toValue());
-        hostBuilder.append("://");
+        scheme = swagger.getSchemes().get(0).toValue();
       } else {
-        hostBuilder.append("https://");
+        scheme = "https";
       }
+      hostBuilder.append(scheme);
+      hostBuilder.append("://");
       if (swagger.getHost() != null) {
         hostBuilder.append(swagger.getHost());
       } else {
@@ -149,6 +152,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
       for (String tag : paths.keySet()) {
         List<CodegenOperation> ops = paths.get(tag);
         Map<String, Object> operation = processOperations(config, tag, ops);
+
         operation.put("basePath", basePath);
         operation.put("contextPath", contextPath);
         operation.put("baseName", tag);
@@ -202,6 +206,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         bundle.put("host", swagger.getHost());
       }
       bundle.put("basePath", basePath);
+      bundle.put("scheme", scheme);
       bundle.put("contextPath", contextPath);
       bundle.put("apiInfo", apis);
       bundle.put("models", allModels);
@@ -358,9 +363,23 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     Map<String, Object> operations = new HashMap<String, Object>();
     Map<String, Object> objs = new HashMap<String, Object>();
     objs.put("classname", config.toApiName(tag));
+
+    // check for operationId uniqueness
+    Set<String> opIds = new HashSet<String>();
+    int counter = 0;
+    for(CodegenOperation op : ops) {
+      String opId = op.nickname;
+      if(opIds.contains(opId)) {
+        counter ++;
+        op.nickname += "_" + counter;
+      }
+      opIds.add(opId);
+    }
     objs.put("operation", ops);
+
     operations.put("operations", objs);
     operations.put("package", config.apiPackage());
+
 
     Set<String> allImports = new LinkedHashSet<String>();
     for (CodegenOperation op : ops) {
