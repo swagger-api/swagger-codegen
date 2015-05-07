@@ -39,7 +39,7 @@ public class DefaultCodegen {
   protected Map<String, Object> additionalProperties = new HashMap<String, Object>();
   protected List<SupportingFile> supportingFiles = new ArrayList<SupportingFile>();
 
-	public void init(CommandLine cmd) {
+	public void init(Runnable generate) {
 		
 	}
  public void processOpts(){

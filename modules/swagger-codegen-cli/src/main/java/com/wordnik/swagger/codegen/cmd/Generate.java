@@ -32,33 +32,33 @@ public class Generate implements Runnable {
     public static final String TEMPLATE_DIR_PARAM = "templateDir";
 
     @Option(name = {"-v", "--verbose"}, description = "verbose mode")
-    private boolean verbose;
+    protected boolean verbose;
 
     @Option(name = {"-l", "--lang"}, title = "language", required = true,
             description = "client language to generate (maybe class name in classpath, required)")
-    private String lang;
+    protected String lang;
 
     @Option(name = {"-o", "--output"}, title = "output directory",
             description = "where to write the generated files (current dir by default)")
-    private String output = "";
+    protected String output = "";
 
     @Option(name = {"-i", "--input-spec"}, title = "spec file", required = true,
             description = "location of the swagger spec, as URL or file (required)")
-    private String spec;
+    protected String spec;
 
     @Option(name = {"-t", "--template-dir"}, title = "template directory",
             description = "folder containing the template files")
-    private String templateDir;
+    protected String templateDir;
 
     @Option(name = {"-a", "--auth"}, title = "authorization",
             description = "adds authorization headers when fetching the swagger definitions remotely. " +
                     "Pass in a URL-encoded string of name:header with a comma separating multiple values")
-    private String auth;
+    protected String auth;
 
     @Option(name = {"-b", "--basic-auth"}, title = "basic auth",
             description = "adds basic auth headers when fetching swagger defenitions remotly and server is user basic auth to authenticate. " +
                     "Pass in arguments in the following format <username>:<password>")
-    private String basicAuth;
+    protected String basicAuth;
 
     @Override
     public void run() {
@@ -76,6 +76,7 @@ public class Generate implements Runnable {
         }
 
         CodegenConfig config = forName(lang);
+        config.init(this);
         config.setOutputDir(new File(output).getAbsolutePath());
 
         if (null != templateDir) {
@@ -92,7 +93,7 @@ public class Generate implements Runnable {
      * If true parameter, adds system properties which enables debug mode in generator
      * @param verbose - if true, enables debug mode
      */
-    private void verbosed(boolean verbose) {
+    protected void verbosed(boolean verbose) {
         if (!verbose) {
             return;
         }
@@ -113,7 +114,7 @@ public class Generate implements Runnable {
      * @param name name of config, or full qualified class name in classpath
      * @return config class
      */
-    private static CodegenConfig forName(String name) {
+    protected static CodegenConfig forName(String name) {
         ServiceLoader<CodegenConfig> loader = load(CodegenConfig.class);
         for (CodegenConfig config : loader) {
             if (config.getName().equals(name)) {

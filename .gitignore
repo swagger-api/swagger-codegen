@@ -6,6 +6,7 @@ classpath.txt
 version.properties
 .project
 .classpath
+.factorypath
 lib/*
 build/*
 generated-files/*
@@ -28,3 +29,15 @@ target
 .lib
 atlassian-ide-plugin.xml
 .DS_Store
+.metadata/
+modules/swagger-codegen/.settings/
+modules/swagger-codegen-cli/.settings/
+modules/swagger-codegen-cli/gen/
+modules/swagger-generator/.settings/
+samples/client/petstore/android-java/.settings/
+samples/client/petstore/java/.settings/
+samples/client/petstore/objc/.settings/
+samples/client/petstore/ruby/.settings/
+samples/server/petstore/jaxrs/.settings/
+samples/server/petstore/spring-mvc/.settings/
+modules/swagger-generator/.factorypath

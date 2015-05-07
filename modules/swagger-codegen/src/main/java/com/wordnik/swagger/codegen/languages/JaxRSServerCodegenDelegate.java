@@ -2,38 +2,64 @@ package com.wordnik.swagger.codegen.languages;
 
 import java.io.File;
 
-import org.apache.commons.cli.BasicParser;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wordnik.swagger.codegen.Codegen;
-import com.wordnik.swagger.codegen.CodegenConfig;
 import com.wordnik.swagger.codegen.SupportingFile;
-import com.wordnik.swagger.codegen.languages.JaxRSServerCodegen;
 
 public class JaxRSServerCodegenDelegate extends JaxRSServerCodegen {
-	
-	static String argApiPackage="gen.api";
-	static String argModelPackage="gen.model";
-	
+	@Override
 	public String getName() {
 		return "jaxrsDelegate";
 	}
+	protected String getArgApiPackage(){
+		return "gen.api";
+	}
+	protected String getArgModelPackage(){
+		return "gen.model";
+	}
+	private String resourcePath=null;
+	protected String getArgResourcePath(){
+		return resourcePath;
+	}
+
+
 
 	public JaxRSServerCodegenDelegate() {
 		super();
-	}
+		String resourcePath=getArgResourcePath();
+		if(resourcePath!=null){
+			apiPackage = getArgApiPackage() +"."+ resourcePath;
+			modelPackage = getArgModelPackage() +"."+ resourcePath;
+		}
+		else{
+			apiPackage = getArgApiPackage() ;
+			modelPackage = getArgModelPackage() ;
+		}
+		templateDir = "JavaJaxRSDelegate";
+		apiTemplateFiles.clear();
+		apiTemplateFiles.put("api.mustache", ".java");
+		apiTemplateFiles.put("api.interface.mustache", "Interface.java");
+		apiTemplateFiles.put("api.stub.mustache", "STUB.java");
+//		apiTemplateFiles.put("api.stub.mustache", "STUB.java");
 
+
+
+	    supportingFiles.clear();
+	    supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
+	    supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
+	    supportingFiles.add(new SupportingFile("ApiException.mustache", (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiException.java"));
+	    supportingFiles.add(new SupportingFile("ApiOriginFilter.mustache",
+	      (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiOriginFilter.java"));
+	    supportingFiles.add(new SupportingFile("ApiResponseMessage.mustache",
+	      (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiResponseMessage.java"));
+	    supportingFiles.add(new SupportingFile("NotFoundException.mustache",
+	      (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "NotFoundException.java"));
+	    supportingFiles.add(new SupportingFile("web.mustache",
+	      ("src/main/webapp/WEB-INF"), "web.xml"));
+
+	}
+/*
 	public void init(CommandLine cmd) {
 		super.init(cmd);
-		String jsonFileName = null;
-		jsonFileName = cmd.getOptionValue("i");
-
-		String resourcePath = getResourcePathFromFile(jsonFileName);
+		 resourcePath= getResourcePathFromFile(cmd.getOptionValue("i"));
 		if (resourcePath == null) {
 			resourcePath = "";
 		} else if (resourcePath.length() > 0) {
@@ -46,33 +72,9 @@ public class JaxRSServerCodegenDelegate extends JaxRSServerCodegen {
 			resourcePath = resourcePath.replace('/', '.');
 			resourcePath = "." + resourcePath;
 		}
-		apiPackage = argApiPackage + resourcePath;
-		modelPackage = argModelPackage + resourcePath;
-		templateDir = "JavaJaxRSDelegate";
-		apiTemplateFiles.clear();
-		apiTemplateFiles.put("api.mustache", ".java");
-		apiTemplateFiles.put("api.interface.mustache", "Interface.java");
-		apiTemplateFiles.put("api.stub.mustache", "STUB.java");
-//		apiTemplateFiles.put("api.stub.mustache", "STUB.java");
-		
-		
-		
-	    supportingFiles.clear();
-	    supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
-	    supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
-	    supportingFiles.add(new SupportingFile("ApiException.mustache", (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiException.java"));
-	    supportingFiles.add(new SupportingFile("ApiOriginFilter.mustache", 
-	      (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiOriginFilter.java"));
-	    supportingFiles.add(new SupportingFile("ApiResponseMessage.mustache", 
-	      (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiResponseMessage.java"));
-	    supportingFiles.add(new SupportingFile("NotFoundException.mustache", 
-	      (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "NotFoundException.java"));
-	    supportingFiles.add(new SupportingFile("web.mustache", 
-	      ("src/main/webapp/WEB-INF"), "web.xml"));
 
-	    
-	    
-	    
+
+
 	}
 
 	private static String getResourcePathFromFile(String jsonFileName) {
@@ -101,5 +103,5 @@ public class JaxRSServerCodegenDelegate extends JaxRSServerCodegen {
 
 		return null;
 	}
-
+*/
 }
