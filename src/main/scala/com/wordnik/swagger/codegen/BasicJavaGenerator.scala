@@ -204,7 +204,7 @@ class BasicJavaGenerator extends BasicGenerator {
    **/
   additionalParams ++= Map(
     "artifactId" -> "semapp-java-client",
-    "artifactVersion" -> ("0.28.0-SNAPSHOT"),
+    "artifactVersion" -> ("0.29.0-SNAPSHOT"),
     "groupId" -> "org.imintel")
 
   /**

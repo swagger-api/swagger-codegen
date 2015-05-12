@@ -16,7 +16,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
     protected String invokerPackage = "org.imintel.client";
     protected String groupId = "org.imintel";
     protected String artifactId = "semapp-java-client";
-    protected String artifactVersion = "0.28.0-SNAPSHOT";
+    protected String artifactVersion = "0.29.0-SNAPSHOT";
     protected String sourceFolder = "src/main/java";
 
     public CodegenType getTag() {
