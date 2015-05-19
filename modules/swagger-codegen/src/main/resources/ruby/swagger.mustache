@@ -28,6 +28,8 @@ module Swagger
     #
     def configure
       self.configuration ||= Configuration.new
+      self.configuration.host = '{{host}}'
+      self.configuration.base_path = '{{basePath}}'
       yield(configuration) if block_given?
 
       # Configure logger.  Default to use Rails
