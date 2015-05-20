@@ -148,7 +148,8 @@
           try
           {
               var webResponse = (HttpWebResponse)client.GetResponse();
-              if (webResponse.StatusCode != HttpStatusCode.OK)
+              int statusCode = (int)webResponse.StatusCode;
+              if (statusCode / 100 != 2) // non-success status
               {
                   webResponse.Close();
                   throw new ApiException((int)webResponse.StatusCode, webResponse.StatusDescription);
