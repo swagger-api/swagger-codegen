@@ -216,6 +216,7 @@ public class DefaultCodegen {
     typeMapping.put("double", "Double");
     typeMapping.put("object", "Object");
     typeMapping.put("integer", "Integer");
+    typeMapping.put("ByteArray", "byte[]");
 
     instantiationTypes = new HashMap<String, String>();
 
@@ -361,6 +362,8 @@ public class DefaultCodegen {
     String datatype = null;
     if(p instanceof StringProperty)
       datatype = "string";
+    else if (p instanceof ByteArrayProperty)
+      datatype = "ByteArray";
     else if (p instanceof BooleanProperty)
       datatype = "boolean";
     else if(p instanceof DateProperty)
@@ -605,7 +608,7 @@ public class DefaultCodegen {
       }
       else {
         property.baseType = getSwaggerType(p);
-        if(!languageSpecificPrimitives.contains(cp.baseType))
+         if(!languageSpecificPrimitives.contains(cp.baseType))
           property.complexType = cp.baseType;
         else
           property.isPrimitiveType = true;
@@ -618,7 +621,7 @@ public class DefaultCodegen {
       CodegenProperty cp = fromProperty("inner", ap.getAdditionalProperties());
 
       property.baseType = getSwaggerType(p);
-      if(!languageSpecificPrimitives.contains(cp.baseType))
+       if(!languageSpecificPrimitives.contains(cp.baseType))
         property.complexType = cp.baseType;
       else
         property.isPrimitiveType = true;
@@ -759,6 +762,7 @@ public class DefaultCodegen {
         op.examples = new ExampleGenerator(definitions).generate(methodResponse.getExamples(), operation.getProduces(), responseProperty);
         op.defaultResponse = toDefaultValue(responseProperty);
         op.returnType = cm.datatype;
+        op.isResponseBinary = (cm.datatype.equals("byte[]"));
         if(cm.isContainer != null) {
           op.returnContainer = cm.containerType;
           if("map".equals(cm.containerType))
@@ -829,6 +833,7 @@ public class DefaultCodegen {
       }
     }
     op.bodyParam = bodyParam;
+    op.isBodyInputBinary = (bodyParam != null) && bodyParam.dataType.equals("byte[]");
     op.httpMethod = httpMethod.toUpperCase();
     op.allParams = addHasMore(allParams);
     op.bodyParams = addHasMore(bodyParams);
@@ -948,7 +953,7 @@ public class DefaultCodegen {
         }
         else {
           // TODO: missing format, so this will not always work
-          Property prop = PropertyBuilder.build(impl.getType(), null, null);
+          Property prop = PropertyBuilder.build(impl.getType(), impl.getFormat(), null);
           CodegenProperty cp = fromProperty("property", prop);
           if(cp != null) {
             p.dataType = cp.datatype;

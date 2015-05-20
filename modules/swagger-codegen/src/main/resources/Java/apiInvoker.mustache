@@ -27,6 +27,7 @@ import java.net.URLEncoder;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.io.DataInputStream;
 
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
@@ -162,7 +163,7 @@ public class ApiInvoker {
     }
   }
 
-  public String invokeAPI(String host, String path, String method, Map<String, String> queryParams, Object body, Map<String, String> headerParams, Map<String, String> formParams, String contentType) throws ApiException {
+  public String invokeAPI(String host, String path, String method, Map<String, String> queryParams, Object body, byte[] binaryBody, Map<String, String> headerParams, Map<String, String> formParams, String contentType) throws ApiException {
     Client client = getClient(host);
 
     StringBuilder b = new StringBuilder();
@@ -249,6 +250,94 @@ public class ApiInvoker {
       }
       else {
         return "";
+      }
+    }
+    else {
+      String message = "error";
+      if(response.hasEntity()) {
+        try{
+          message = String.valueOf(response.getEntity(String.class));
+        }
+        catch (RuntimeException e) {
+          // e.printStackTrace();
+        }
+      }
+      throw new ApiException(
+                response.getClientResponseStatus().getStatusCode(),
+                message);
+    }
+  }
+
+  public byte[] invokeBinaryAPI(String host, String path, String method, Map<String, String> queryParams, Object body, byte[] binaryBody, Map<String, String> headerParams, Map<String, String> formParams, String contentType) throws ApiException {
+    Client client = getClient(host);
+
+    StringBuilder b = new StringBuilder();
+
+    for(String key : queryParams.keySet()) {
+      String value = queryParams.get(key);
+      if (value != null){
+        if(b.toString().length() == 0 && !path.contains("?"))
+          b.append("?");
+        else
+          b.append("&");
+        b.append(escapeString(key)).append("=").append(escapeString(value));
+      }
+    }
+    String querystring = b.toString();
+
+    Builder builder = client.resource(host + path + querystring).accept("application/octet-stream");
+    for(String key : headerParams.keySet()) {
+      builder = builder.header(key, headerParams.get(key));
+    }
+
+    for(String key : defaultHeaderMap.keySet()) {
+      if(!headerParams.containsKey(key)) {
+        builder = builder.header(key, defaultHeaderMap.get(key));
+      }
+    }
+    ClientResponse response = null;
+
+    if("GET".equals(method)) {
+      response = (ClientResponse) builder.get(ClientResponse.class);
+    }
+    else if ("POST".equals(method)) {
+      if(binaryBody == null)
+        response = builder.post(ClientResponse.class, null);
+      else
+        response = builder.type(contentType).post(ClientResponse.class, binaryBody);
+    }
+    else if ("PUT".equals(method)) {
+      if(binaryBody == null)
+        response = builder.put(ClientResponse.class);
+      else {
+          response = builder.type(contentType).put(ClientResponse.class, binaryBody);
+      }
+    }
+    else if ("DELETE".equals(method)) {
+      if(binaryBody == null)
+        response = builder.delete(ClientResponse.class);
+      else
+        response = builder.type(contentType).delete(ClientResponse.class, binaryBody);
+    }
+    else {
+      throw new ApiException(405, "unknown method " + method);
+    }
+    if(response.getClientResponseStatus() == ClientResponse.Status.NO_CONTENT) {
+      return null;
+    }
+    else if(response.getClientResponseStatus().getFamily() == Family.SUCCESSFUL) {
+      if(response.hasEntity()) {
+	DataInputStream stream = new DataInputStream(response.getEntityInputStream());
+	byte[] data = new byte[response.getLength()];
+	try {
+	  stream.readFully(data);
+	} catch (IOException ex) {
+	  throw new ApiException(500, "Error obtaining binary response data");
+	}
+        return data;
+      }
+      else {
+        return new byte[0];
       }
     }
     else {
