@@ -83,7 +83,7 @@ class {{classname}} {
       if (isset($_tempBody)) {
         $httpBody = $_tempBody; // $_tempBody is the method argument, if present
       }
-      
+
       // for HTTP post (form)
       if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") !== FALSE) {
         $httpBody = http_build_query($formParams);
