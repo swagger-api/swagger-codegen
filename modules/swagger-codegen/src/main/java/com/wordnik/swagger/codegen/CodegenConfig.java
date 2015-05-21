@@ -6,6 +6,8 @@ import com.wordnik.swagger.models.properties.*;
 
 import java.util.*;
 
+import org.apache.commons.cli.CommandLine;
+
 public interface CodegenConfig {
   CodegenType getTag();
   String getName();
@@ -56,4 +58,7 @@ public interface CodegenConfig {
   Map<String, Object> postProcessModels(Map<String, Object> objs);
   Map<String, Object> postProcessOperations(Map<String, Object> objs);
   Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs);
+
+void init(Runnable generate);
+
 }

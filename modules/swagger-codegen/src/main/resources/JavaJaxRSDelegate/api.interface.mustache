@@ -1,0 +1,24 @@
+package {{package}};
+
+import {{modelPackage}}.*;
+
+
+{{#imports}}import {{import}};
+{{/imports}}
+
+import java.util.List;
+import {{package}}.NotFoundException;
+import java.io.InputStream;
+import com.sun.jersey.core.header.FormDataContentDisposition;
+
+
+{{#operations}}
+public interface {{classname}}Interface {
+  {{#operation}}
+  public {{#returnBaseType}}{{{returnType}}}{{/returnBaseType}}{{^returnBaseType}}void{{/returnBaseType}}{{#returnContainer}} []/*{{{returnContainer}}}*/{{/returnContainer}} {{nickname}}Impl({{#allParams}}{{>methodParams}}{{#hasMore}},{{/hasMore}}{{/allParams}})
+      throws NotFoundException ;
+
+  {{/operation}}
+}
+{{/operations}}
+

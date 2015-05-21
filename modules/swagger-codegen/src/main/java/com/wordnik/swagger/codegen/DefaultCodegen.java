@@ -10,6 +10,7 @@ import com.wordnik.swagger.models.parameters.*;
 import com.wordnik.swagger.models.properties.*;
 import com.wordnik.swagger.util.Json;
 
+import org.apache.commons.cli.CommandLine;
 import org.apache.commons.lang.StringUtils;
 
 import org.slf4j.Logger;
@@ -38,7 +39,10 @@ public class DefaultCodegen {
   protected Map<String, Object> additionalProperties = new HashMap<String, Object>();
   protected List<SupportingFile> supportingFiles = new ArrayList<SupportingFile>();
 
-  public void processOpts(){
+	public void init(Runnable generate) {
+		
+	}
+ public void processOpts(){
     if(additionalProperties.containsKey("templateDir")) {
       this.setTemplateDir((String)additionalProperties.get("templateDir"));
     }
