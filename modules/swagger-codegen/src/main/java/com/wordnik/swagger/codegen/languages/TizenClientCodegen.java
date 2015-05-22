@@ -91,6 +91,11 @@ public class TizenClientCodegen extends DefaultCodegen implements CodegenConfig 
         "Integer",
         "Float")
       );
+    
+    init();
+  }
+
+  protected void init() {
     supportingFiles.clear();
     supportingFiles.add(new SupportingFile("modelFactory.mustache", sourceFolder, PREFIX + "ModelFactory.h"));
     supportingFiles.add(new SupportingFile("helpers-header.mustache", sourceFolder, PREFIX + "Helpers.h"));
@@ -99,9 +104,9 @@ public class TizenClientCodegen extends DefaultCodegen implements CodegenConfig 
     supportingFiles.add(new SupportingFile("apiclient-body.mustache", sourceFolder, PREFIX + "ApiClient.cpp"));
     supportingFiles.add(new SupportingFile("object.mustache", sourceFolder, PREFIX + "Object.h"));
     supportingFiles.add(new SupportingFile("error-header.mustache", sourceFolder, PREFIX + "Error.h"));
-    supportingFiles.add(new SupportingFile("error-body.mustache", sourceFolder, PREFIX + "Error.cpp"));
+    supportingFiles.add(new SupportingFile("error-body.mustache", sourceFolder, PREFIX + "Error.cpp"));	  
   }
-
+  
   @Override
   public String toInstantiationType(Property p) {
     if (p instanceof MapProperty) {
@@ -244,4 +249,38 @@ public class TizenClientCodegen extends DefaultCodegen implements CodegenConfig 
   public String escapeReservedWord(String name) {
     return "_" + name;
   }
+
+  public Set<String> getFoundationClasses() {
+    return foundationClasses;
+  }
+
+  public void setFoundationClasses(Set<String> foundationClasses) {
+    this.foundationClasses = foundationClasses;
+  }
+
+  public String getSourceFolder() {
+    return sourceFolder;
+  }
+
+  public void setSourceFolder(String sourceFolder) {
+    this.sourceFolder = sourceFolder;
+    init();
+  }
+
+  public static String getPREFIX() {
+    return PREFIX;
+  }
+
+  public static void setPREFIX(String pREFIX) {
+    PREFIX = pREFIX;
+  }
+
+  public Map<String, String> getNamespaces() {
+    return namespaces;
+  }
+
+  public void setNamespaces(Map<String, String> namespaces) {
+    this.namespaces = namespaces;
+  }
+
 }

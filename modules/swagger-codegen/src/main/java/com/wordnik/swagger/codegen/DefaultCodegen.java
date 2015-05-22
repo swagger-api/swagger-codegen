@@ -1167,5 +1167,121 @@ public class DefaultCodegen {
     return word;
   }
 
+public String getOutputFolder() {
+	return outputFolder;
+}
+
+public void setOutputFolder(String outputFolder) {
+	this.outputFolder = outputFolder;
+}
+
+public Set<String> getDefaultIncludes() {
+	return defaultIncludes;
+}
+
+public void setDefaultIncludes(Set<String> defaultIncludes) {
+	this.defaultIncludes = defaultIncludes;
+}
+
+public Map<String, String> getTypeMapping() {
+	return typeMapping;
+}
+
+public void setTypeMapping(Map<String, String> typeMapping) {
+	this.typeMapping = typeMapping;
+}
+
+public Map<String, String> getInstantiationTypes() {
+	return instantiationTypes;
+}
+
+public void setInstantiationTypes(Map<String, String> instantiationTypes) {
+	this.instantiationTypes = instantiationTypes;
+}
+
+public Set<String> getReservedWords() {
+	return reservedWords;
+}
+
+public void setReservedWords(Set<String> reservedWords) {
+	this.reservedWords = reservedWords;
+}
+
+public Set<String> getLanguageSpecificPrimitives() {
+	return languageSpecificPrimitives;
+}
+
+public void setLanguageSpecificPrimitives(Set<String> languageSpecificPrimitives) {
+	this.languageSpecificPrimitives = languageSpecificPrimitives;
+}
+
+public Map<String, String> getImportMapping() {
+	return importMapping;
+}
+
+public void setImportMapping(Map<String, String> importMapping) {
+	this.importMapping = importMapping;
+}
+
+public String getModelPackage() {
+	return modelPackage;
+}
+
+public void setModelPackage(String modelPackage) {
+	this.modelPackage = modelPackage;
+}
+
+public String getApiPackage() {
+	return apiPackage;
+}
+
+public void setApiPackage(String apiPackage) {
+	this.apiPackage = apiPackage;
+}
+
+public String getFileSuffix() {
+	return fileSuffix;
+}
+
+public void setFileSuffix(String fileSuffix) {
+	this.fileSuffix = fileSuffix;
+}
+
+public Map<String, String> getApiTemplateFiles() {
+	return apiTemplateFiles;
+}
+
+public void setApiTemplateFiles(Map<String, String> apiTemplateFiles) {
+	this.apiTemplateFiles = apiTemplateFiles;
+}
+
+public Map<String, String> getModelTemplateFiles() {
+	return modelTemplateFiles;
+}
+
+public void setModelTemplateFiles(Map<String, String> modelTemplateFiles) {
+	this.modelTemplateFiles = modelTemplateFiles;
+}
+
+public Map<String, Object> getAdditionalProperties() {
+	return additionalProperties;
+}
+
+public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+	this.additionalProperties = additionalProperties;
+}
+
+public List<SupportingFile> getSupportingFiles() {
+	return supportingFiles;
+}
+
+public void setSupportingFiles(List<SupportingFile> supportingFiles) {
+	this.supportingFiles = supportingFiles;
+}
+
+public String getTemplateDir() {
+	return templateDir;
+}
+
 
 }

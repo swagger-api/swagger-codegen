@@ -38,6 +38,21 @@ public class JaxRSServerCodegen extends JavaClientCodegen implements CodegenConf
     apiPackage = "io.swagger.api";
     modelPackage = "io.swagger.model";
 
+    init();
+
+    languageSpecificPrimitives = new HashSet<String>(
+      Arrays.asList(
+        "String",
+        "boolean",
+        "Boolean",
+        "Double",
+        "Integer",
+        "Long",
+        "Float")
+      );
+  }
+
+  protected void init() {
     additionalProperties.put("invokerPackage", invokerPackage);
     additionalProperties.put("groupId", groupId);
     additionalProperties.put("artifactId", artifactId);
@@ -56,20 +71,9 @@ public class JaxRSServerCodegen extends JavaClientCodegen implements CodegenConf
     supportingFiles.add(new SupportingFile("NotFoundException.mustache", 
       (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "NotFoundException.java"));
     supportingFiles.add(new SupportingFile("web.mustache", 
-      ("src/main/webapp/WEB-INF"), "web.xml"));
-
-    languageSpecificPrimitives = new HashSet<String>(
-      Arrays.asList(
-        "String",
-        "boolean",
-        "Boolean",
-        "Double",
-        "Integer",
-        "Long",
-        "Float")
-      );
+      ("src/main/webapp/WEB-INF"), "web.xml"));	  
   }
-
+  
   @Override
   public String getTypeDeclaration(Property p) {
     if(p instanceof ArrayProperty) {
@@ -146,4 +150,59 @@ public class JaxRSServerCodegen extends JavaClientCodegen implements CodegenConf
     }
     return objs;
   }
+
+  public String getInvokerPackage() {
+    return invokerPackage;
+  }
+
+  public void setInvokerPackage(String invokerPackage) {
+    this.invokerPackage = invokerPackage;
+    init();
+  }
+
+  public String getGroupId() {
+    return groupId;
+  }
+
+  public void setGroupId(String groupId) {
+    this.groupId = groupId;
+    init();
+  }
+
+  public String getArtifactId() {
+    return artifactId;
+  }
+
+  public void setArtifactId(String artifactId) {
+    this.artifactId = artifactId;
+    init();
+  }
+
+  public String getArtifactVersion() {
+    return artifactVersion;
+  }
+
+  public void setArtifactVersion(String artifactVersion) {
+    this.artifactVersion = artifactVersion;
+    init();
+  }
+
+  public String getSourceFolder() {
+    return sourceFolder;
+  }
+
+  public void setSourceFolder(String sourceFolder) {
+    this.sourceFolder = sourceFolder;
+    init();
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+    init();
+  }
+
 }
