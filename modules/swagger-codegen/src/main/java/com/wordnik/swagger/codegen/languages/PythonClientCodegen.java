@@ -113,5 +113,15 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
   public String toDefaultValue(Property p) {
 	// TODO: Support Python def value
     return "null";
-  }	
+  }
+
+public String getModule() {
+	return module;
+}
+
+public void setModule(String module) {
+	this.module = module;
+}	
+  
+
 }

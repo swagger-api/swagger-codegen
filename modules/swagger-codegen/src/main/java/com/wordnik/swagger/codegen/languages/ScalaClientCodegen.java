@@ -189,4 +189,70 @@ public class ScalaClientCodegen extends DefaultCodegen implements CodegenConfig 
     else
       return "null";
   }
+
+public String getInvokerPackage() {
+	return invokerPackage;
+}
+
+public void setInvokerPackage(String invokerPackage) {
+	this.invokerPackage = invokerPackage;
+}
+
+public String getGroupId() {
+	return groupId;
+}
+
+public void setGroupId(String groupId) {
+	this.groupId = groupId;
+}
+
+public String getArtifactId() {
+	return artifactId;
+}
+
+public void setArtifactId(String artifactId) {
+	this.artifactId = artifactId;
+}
+
+public String getArtifactVersion() {
+	return artifactVersion;
+}
+
+public void setArtifactVersion(String artifactVersion) {
+	this.artifactVersion = artifactVersion;
+}
+
+public String getSourceFolder() {
+	return sourceFolder;
+}
+
+public void setSourceFolder(String sourceFolder) {
+	this.sourceFolder = sourceFolder;
+}
+
+public String getAuthScheme() {
+	return authScheme;
+}
+
+public void setAuthScheme(String authScheme) {
+	this.authScheme = authScheme;
+}
+
+public boolean isAuthPreemptive() {
+	return authPreemptive;
+}
+
+public void setAuthPreemptive(boolean authPreemptive) {
+	this.authPreemptive = authPreemptive;
+}
+
+public boolean isAsyncHttpClient() {
+	return asyncHttpClient;
+}
+
+public void setAsyncHttpClient(boolean asyncHttpClient) {
+	this.asyncHttpClient = asyncHttpClient;
+}
+  
+
 }

@@ -159,4 +159,37 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
     return toModelName(name);
   }
 
+public String getInvokerPackage() {
+	return invokerPackage;
+}
+
+public void setInvokerPackage(String invokerPackage) {
+	this.invokerPackage = invokerPackage;
+}
+
+public String getGroupId() {
+	return groupId;
+}
+
+public void setGroupId(String groupId) {
+	this.groupId = groupId;
+}
+
+public String getArtifactId() {
+	return artifactId;
+}
+
+public void setArtifactId(String artifactId) {
+	this.artifactId = artifactId;
+}
+
+public String getArtifactVersion() {
+	return artifactVersion;
+}
+
+public void setArtifactVersion(String artifactVersion) {
+	this.artifactVersion = artifactVersion;
+}
+
+
 }

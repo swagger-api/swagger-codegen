@@ -189,4 +189,30 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
     }
     return objs;
   }
+
+public String getApiVersion() {
+	return apiVersion;
+}
+
+public void setApiVersion(String apiVersion) {
+	this.apiVersion = apiVersion;
+}
+
+public int getServerPort() {
+	return serverPort;
+}
+
+public void setServerPort(int serverPort) {
+	this.serverPort = serverPort;
+}
+
+public String getProjectName() {
+	return projectName;
+}
+
+public void setProjectName(String projectName) {
+	this.projectName = projectName;
+}
+  
+
 }

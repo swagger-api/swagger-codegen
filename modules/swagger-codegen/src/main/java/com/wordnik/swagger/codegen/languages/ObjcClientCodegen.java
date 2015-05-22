@@ -270,4 +270,30 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
   public String escapeReservedWord(String name) {
     return "_" + name;
   }
+
+public Set<String> getFoundationClasses() {
+	return foundationClasses;
+}
+
+public void setFoundationClasses(Set<String> foundationClasses) {
+	this.foundationClasses = foundationClasses;
+}
+
+public String getSourceFolder() {
+	return sourceFolder;
+}
+
+public void setSourceFolder(String sourceFolder) {
+	this.sourceFolder = sourceFolder;
+}
+
+public static String getPREFIX() {
+	return PREFIX;
+}
+
+public static void setPREFIX(String pREFIX) {
+	PREFIX = pREFIX;
+}
+
+
 }
