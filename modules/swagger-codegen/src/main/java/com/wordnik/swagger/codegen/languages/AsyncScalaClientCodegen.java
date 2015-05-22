@@ -47,19 +47,8 @@ public class AsyncScalaClientCodegen extends DefaultCodegen implements CodegenCo
         "trait", "try", "true", "type", "val", "var", "while", "with", "yield")
     );
 
-    additionalProperties.put("invokerPackage", invokerPackage);
-    additionalProperties.put("groupId", groupId);
-    additionalProperties.put("artifactId", artifactId);
-    additionalProperties.put("artifactVersion", artifactVersion);
-    additionalProperties.put("asyncHttpClient", asyncHttpClient);
-    additionalProperties.put("authScheme", authScheme);
-    additionalProperties.put("authPreemptive", authPreemptive);
-    additionalProperties.put("clientName", clientName);
-
-    supportingFiles.add(new SupportingFile("sbt.mustache", "", "build.sbt"));
-    supportingFiles.add(new SupportingFile("client.mustache", 
-      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), clientName + ".scala"));
-
+    init();
+    
     importMapping.remove("List");
     importMapping.remove("Set");
     importMapping.remove("Map");
@@ -101,6 +90,23 @@ public class AsyncScalaClientCodegen extends DefaultCodegen implements CodegenCo
     instantiationTypes.put("map", "HashMap");
   }
 
+  protected void init() {
+	    additionalProperties.put("invokerPackage", invokerPackage);
+	    additionalProperties.put("groupId", groupId);
+	    additionalProperties.put("artifactId", artifactId);
+	    additionalProperties.put("artifactVersion", artifactVersion);
+	    additionalProperties.put("asyncHttpClient", asyncHttpClient);
+	    additionalProperties.put("authScheme", authScheme);
+	    additionalProperties.put("authPreemptive", authPreemptive);
+	    additionalProperties.put("clientName", clientName);
+
+	    supportingFiles.clear();
+	    supportingFiles.add(new SupportingFile("sbt.mustache", "", "build.sbt"));
+	    supportingFiles.add(new SupportingFile("client.mustache", 
+	      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), clientName + ".scala"));
+	  
+  }
+  
   @Override
   public String escapeReservedWord(String name) {
     return "_" + name;
@@ -198,6 +204,7 @@ public String getInvokerPackage() {
 
 public void setInvokerPackage(String invokerPackage) {
 	this.invokerPackage = invokerPackage;
+	init();
 }
 
 public String getGroupId() {
@@ -206,6 +213,7 @@ public String getGroupId() {
 
 public void setGroupId(String groupId) {
 	this.groupId = groupId;
+	init();
 }
 
 public String getArtifactId() {
@@ -214,6 +222,7 @@ public String getArtifactId() {
 
 public void setArtifactId(String artifactId) {
 	this.artifactId = artifactId;
+	init();
 }
 
 public String getArtifactVersion() {
@@ -222,6 +231,7 @@ public String getArtifactVersion() {
 
 public void setArtifactVersion(String artifactVersion) {
 	this.artifactVersion = artifactVersion;
+	init();
 }
 
 public String getSourceFolder() {
@@ -230,6 +240,7 @@ public String getSourceFolder() {
 
 public void setSourceFolder(String sourceFolder) {
 	this.sourceFolder = sourceFolder;
+	init();
 }
 
 public String getClientName() {
@@ -238,6 +249,7 @@ public String getClientName() {
 
 public void setClientName(String clientName) {
 	this.clientName = clientName;
+	init();
 }
 
 public String getAuthScheme() {
@@ -246,6 +258,7 @@ public String getAuthScheme() {
 
 public void setAuthScheme(String authScheme) {
 	this.authScheme = authScheme;
+	init();
 }
 
 public boolean isAuthPreemptive() {
@@ -254,6 +267,7 @@ public boolean isAuthPreemptive() {
 
 public void setAuthPreemptive(boolean authPreemptive) {
 	this.authPreemptive = authPreemptive;
+	init();
 }
 
 public boolean isAsyncHttpClient() {
@@ -262,6 +276,7 @@ public boolean isAsyncHttpClient() {
 
 public void setAsyncHttpClient(boolean asyncHttpClient) {
 	this.asyncHttpClient = asyncHttpClient;
+	init();
 }
   
 

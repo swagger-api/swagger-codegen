@@ -91,17 +91,22 @@ public class TizenClientCodegen extends DefaultCodegen implements CodegenConfig 
         "Integer",
         "Float")
       );
-    supportingFiles.clear();
-    supportingFiles.add(new SupportingFile("modelFactory.mustache", sourceFolder, PREFIX + "ModelFactory.h"));
-    supportingFiles.add(new SupportingFile("helpers-header.mustache", sourceFolder, PREFIX + "Helpers.h"));
-    supportingFiles.add(new SupportingFile("helpers-body.mustache", sourceFolder, PREFIX + "Helpers.cpp"));
-    supportingFiles.add(new SupportingFile("apiclient-header.mustache", sourceFolder, PREFIX + "ApiClient.h"));
-    supportingFiles.add(new SupportingFile("apiclient-body.mustache", sourceFolder, PREFIX + "ApiClient.cpp"));
-    supportingFiles.add(new SupportingFile("object.mustache", sourceFolder, PREFIX + "Object.h"));
-    supportingFiles.add(new SupportingFile("error-header.mustache", sourceFolder, PREFIX + "Error.h"));
-    supportingFiles.add(new SupportingFile("error-body.mustache", sourceFolder, PREFIX + "Error.cpp"));
+    
+    init();
   }
 
+  protected void init() {
+	    supportingFiles.clear();
+	    supportingFiles.add(new SupportingFile("modelFactory.mustache", sourceFolder, PREFIX + "ModelFactory.h"));
+	    supportingFiles.add(new SupportingFile("helpers-header.mustache", sourceFolder, PREFIX + "Helpers.h"));
+	    supportingFiles.add(new SupportingFile("helpers-body.mustache", sourceFolder, PREFIX + "Helpers.cpp"));
+	    supportingFiles.add(new SupportingFile("apiclient-header.mustache", sourceFolder, PREFIX + "ApiClient.h"));
+	    supportingFiles.add(new SupportingFile("apiclient-body.mustache", sourceFolder, PREFIX + "ApiClient.cpp"));
+	    supportingFiles.add(new SupportingFile("object.mustache", sourceFolder, PREFIX + "Object.h"));
+	    supportingFiles.add(new SupportingFile("error-header.mustache", sourceFolder, PREFIX + "Error.h"));
+	    supportingFiles.add(new SupportingFile("error-body.mustache", sourceFolder, PREFIX + "Error.cpp"));	  
+  }
+  
   @Override
   public String toInstantiationType(Property p) {
     if (p instanceof MapProperty) {
@@ -259,6 +264,7 @@ public String getSourceFolder() {
 
 public void setSourceFolder(String sourceFolder) {
 	this.sourceFolder = sourceFolder;
+	init();
 }
 
 public static String getPREFIX() {

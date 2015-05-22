@@ -34,12 +34,6 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
     templateDir = "objc";
     modelPackage = "";
 
-    String appName = System.getProperty("appName");
-    if(appName == null) {
-      appName = "swaggerClient";
-    }
-    additionalProperties.put("projectName", appName);
-
     defaultIncludes = new HashSet<String>(
       Arrays.asList(
         "bool",
@@ -101,19 +95,28 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
     instantiationTypes.put("array", "NSMutableArray");
     instantiationTypes.put("map", "NSMutableDictionary");
 
-    supportingFiles.add(new SupportingFile("SWGObject.h", sourceFolder, "SWGObject.h"));
-    supportingFiles.add(new SupportingFile("SWGObject.m", sourceFolder, "SWGObject.m"));
-    supportingFiles.add(new SupportingFile("SWGQueryParamCollection.h", sourceFolder, "SWGQueryParamCollection.h"));
-    supportingFiles.add(new SupportingFile("SWGQueryParamCollection.m", sourceFolder, "SWGQueryParamCollection.m"));
-    supportingFiles.add(new SupportingFile("SWGApiClient.h", sourceFolder, "SWGApiClient.h"));
-    supportingFiles.add(new SupportingFile("SWGApiClient.m", sourceFolder, "SWGApiClient.m"));
-    supportingFiles.add(new SupportingFile("SWGFile.h", sourceFolder, "SWGFile.h"));
-    supportingFiles.add(new SupportingFile("SWGFile.m", sourceFolder, "SWGFile.m"));
-    supportingFiles.add(new SupportingFile("SWGDate.h", sourceFolder, "SWGDate.h"));
-    supportingFiles.add(new SupportingFile("SWGDate.m", sourceFolder, "SWGDate.m"));
-    supportingFiles.add(new SupportingFile("Podfile.mustache", "", "Podfile"));
+    init();
   }
 
+  protected void init() {
+	    String appName = System.getProperty("appName");
+	    if(appName == null) {
+	      appName = "swaggerClient";
+	    }	  
+	    additionalProperties.put("projectName", appName);
+	  supportingFiles.clear();
+	    supportingFiles.add(new SupportingFile("SWGObject.h", sourceFolder, "SWGObject.h"));
+	    supportingFiles.add(new SupportingFile("SWGObject.m", sourceFolder, "SWGObject.m"));
+	    supportingFiles.add(new SupportingFile("SWGQueryParamCollection.h", sourceFolder, "SWGQueryParamCollection.h"));
+	    supportingFiles.add(new SupportingFile("SWGQueryParamCollection.m", sourceFolder, "SWGQueryParamCollection.m"));
+	    supportingFiles.add(new SupportingFile("SWGApiClient.h", sourceFolder, "SWGApiClient.h"));
+	    supportingFiles.add(new SupportingFile("SWGApiClient.m", sourceFolder, "SWGApiClient.m"));
+	    supportingFiles.add(new SupportingFile("SWGFile.h", sourceFolder, "SWGFile.h"));
+	    supportingFiles.add(new SupportingFile("SWGFile.m", sourceFolder, "SWGFile.m"));
+	    supportingFiles.add(new SupportingFile("SWGDate.h", sourceFolder, "SWGDate.h"));
+	    supportingFiles.add(new SupportingFile("SWGDate.m", sourceFolder, "SWGDate.m"));
+	    supportingFiles.add(new SupportingFile("Podfile.mustache", "", "Podfile"));	  
+  }
   @Override
   public String toInstantiationType(Property p) {
     if (p instanceof MapProperty) {
@@ -285,6 +288,7 @@ public String getSourceFolder() {
 
 public void setSourceFolder(String sourceFolder) {
 	this.sourceFolder = sourceFolder;
+	init();
 }
 
 public static String getPREFIX() {

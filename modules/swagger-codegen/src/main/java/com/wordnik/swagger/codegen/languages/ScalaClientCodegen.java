@@ -46,18 +46,8 @@ public class ScalaClientCodegen extends DefaultCodegen implements CodegenConfig 
         "trait", "try", "true", "type", "val", "var", "while", "with", "yield")
     );
 
-    additionalProperties.put("invokerPackage", invokerPackage);
-    additionalProperties.put("groupId", groupId);
-    additionalProperties.put("artifactId", artifactId);
-    additionalProperties.put("artifactVersion", artifactVersion);
-    additionalProperties.put("asyncHttpClient", asyncHttpClient);
-    additionalProperties.put("authScheme", authScheme);
-    additionalProperties.put("authPreemptive", authPreemptive);
-
-    supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
-    supportingFiles.add(new SupportingFile("apiInvoker.mustache", 
-      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiInvoker.scala"));
-
+    init();
+    
     importMapping.remove("List");
     importMapping.remove("Set");
     importMapping.remove("Map");
@@ -99,6 +89,21 @@ public class ScalaClientCodegen extends DefaultCodegen implements CodegenConfig 
     instantiationTypes.put("map", "HashMap");
   }
 
+  protected void init() {
+	    additionalProperties.put("invokerPackage", invokerPackage);
+	    additionalProperties.put("groupId", groupId);
+	    additionalProperties.put("artifactId", artifactId);
+	    additionalProperties.put("artifactVersion", artifactVersion);
+	    additionalProperties.put("asyncHttpClient", asyncHttpClient);
+	    additionalProperties.put("authScheme", authScheme);
+	    additionalProperties.put("authPreemptive", authPreemptive);
+
+	    supportingFiles.clear();
+	    supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
+	    supportingFiles.add(new SupportingFile("apiInvoker.mustache", 
+	      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiInvoker.scala"));	  
+  }
+  
   @Override
   public String escapeReservedWord(String name) {
     return "_" + name;
@@ -196,6 +201,7 @@ public String getInvokerPackage() {
 
 public void setInvokerPackage(String invokerPackage) {
 	this.invokerPackage = invokerPackage;
+	init();
 }
 
 public String getGroupId() {
@@ -204,6 +210,7 @@ public String getGroupId() {
 
 public void setGroupId(String groupId) {
 	this.groupId = groupId;
+	init();
 }
 
 public String getArtifactId() {
@@ -212,6 +219,7 @@ public String getArtifactId() {
 
 public void setArtifactId(String artifactId) {
 	this.artifactId = artifactId;
+	init();
 }
 
 public String getArtifactVersion() {
@@ -220,6 +228,7 @@ public String getArtifactVersion() {
 
 public void setArtifactVersion(String artifactVersion) {
 	this.artifactVersion = artifactVersion;
+	init();
 }
 
 public String getSourceFolder() {
@@ -228,6 +237,7 @@ public String getSourceFolder() {
 
 public void setSourceFolder(String sourceFolder) {
 	this.sourceFolder = sourceFolder;
+	init();
 }
 
 public String getAuthScheme() {
@@ -236,6 +246,7 @@ public String getAuthScheme() {
 
 public void setAuthScheme(String authScheme) {
 	this.authScheme = authScheme;
+	init();
 }
 
 public boolean isAuthPreemptive() {
@@ -244,6 +255,7 @@ public boolean isAuthPreemptive() {
 
 public void setAuthPreemptive(boolean authPreemptive) {
 	this.authPreemptive = authPreemptive;
+	init();
 }
 
 public boolean isAsyncHttpClient() {
@@ -252,6 +264,7 @@ public boolean isAsyncHttpClient() {
 
 public void setAsyncHttpClient(boolean asyncHttpClient) {
 	this.asyncHttpClient = asyncHttpClient;
+	init();
 }
   
 

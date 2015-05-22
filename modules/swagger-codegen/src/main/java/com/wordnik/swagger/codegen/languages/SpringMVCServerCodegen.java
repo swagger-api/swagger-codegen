@@ -41,7 +41,21 @@ public class SpringMVCServerCodegen extends JavaClientCodegen implements Codegen
         modelPackage = "io.swagger.model";
         configPackage = "io.swagger.configuration";
 
+        init();
+        
+        languageSpecificPrimitives = new HashSet<String>(
+          Arrays.asList(
+            "String",
+            "boolean",
+            "Boolean",
+            "Double",
+            "Integer",
+            "Long",
+            "Float")
+        );
+    }
 
+    protected void init() {
         additionalProperties.put("invokerPackage", invokerPackage);
         additionalProperties.put("groupId", groupId);
         additionalProperties.put("artifactId", artifactId);
@@ -72,19 +86,9 @@ public class SpringMVCServerCodegen extends JavaClientCodegen implements Codegen
                 (sourceFolder + File.separator + configPackage).replace(".", java.io.File.separator), "SwaggerUiConfiguration.java"));
         supportingFiles.add(new SupportingFile("swagger.properties",
                 ("src.main.resources").replace(".", java.io.File.separator), "swagger.properties"));
-
-        languageSpecificPrimitives = new HashSet<String>(
-          Arrays.asList(
-            "String",
-            "boolean",
-            "Boolean",
-            "Double",
-            "Integer",
-            "Long",
-            "Float")
-        );
+    	
     }
-
+    
     @Override
     public String getTypeDeclaration(Property p) {
         if(p instanceof ArrayProperty) {
@@ -168,6 +172,7 @@ public class SpringMVCServerCodegen extends JavaClientCodegen implements Codegen
 
 	public void setInvokerPackage(String invokerPackage) {
 		this.invokerPackage = invokerPackage;
+		init();
 	}
 
 	public String getGroupId() {
@@ -176,6 +181,7 @@ public class SpringMVCServerCodegen extends JavaClientCodegen implements Codegen
 
 	public void setGroupId(String groupId) {
 		this.groupId = groupId;
+		init();
 	}
 
 	public String getArtifactId() {
@@ -184,6 +190,7 @@ public class SpringMVCServerCodegen extends JavaClientCodegen implements Codegen
 
 	public void setArtifactId(String artifactId) {
 		this.artifactId = artifactId;
+		init();
 	}
 
 	public String getArtifactVersion() {
@@ -192,6 +199,7 @@ public class SpringMVCServerCodegen extends JavaClientCodegen implements Codegen
 
 	public void setArtifactVersion(String artifactVersion) {
 		this.artifactVersion = artifactVersion;
+		init();
 	}
 
 	public String getSourceFolder() {
@@ -200,6 +208,7 @@ public class SpringMVCServerCodegen extends JavaClientCodegen implements Codegen
 
 	public void setSourceFolder(String sourceFolder) {
 		this.sourceFolder = sourceFolder;
+		init();
 	}
 
 	public String getTitle() {
@@ -208,6 +217,7 @@ public class SpringMVCServerCodegen extends JavaClientCodegen implements Codegen
 
 	public void setTitle(String title) {
 		this.title = title;
+		init();
 	}
 
 	public String getConfigPackage() {
@@ -216,6 +226,7 @@ public class SpringMVCServerCodegen extends JavaClientCodegen implements Codegen
 
 	public void setConfigPackage(String configPackage) {
 		this.configPackage = configPackage;
+		init();
 	}
     
 

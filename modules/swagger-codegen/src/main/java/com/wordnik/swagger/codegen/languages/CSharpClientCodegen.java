@@ -39,15 +39,8 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
         "abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char", "checked", "class", "const", "continue", "decimal", "default", "delegate", "do", "double", "else", "enum", "event", "explicit", "extern", "false", "finally", "fixed", "float", "for", "foreach", "goto", "if", "implicit", "in", "int", "interface", "internal", "is", "lock", "long", "namespace", "new", "null", "object", "operator", "out", "override", "params", "private", "protected", "public", "readonly", "ref", "return", "sbyte", "sealed", "short", "sizeof", "stackalloc", "static", "string", "struct", "switch", "this", "throw", "true", "try", "typeof", "uint", "ulong", "unchecked", "unsafe", "ushort", "using", "virtual", "void", "volatile", "while")
     );
 
-    additionalProperties.put("invokerPackage", invokerPackage);
-
-    supportingFiles.add(new SupportingFile("apiInvoker.mustache", 
-      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiInvoker.cs"));
-    supportingFiles.add(new SupportingFile("apiException.mustache", 
-      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiException.cs"));
-    supportingFiles.add(new SupportingFile("Newtonsoft.Json.dll", "bin", "Newtonsoft.Json.dll"));
-    supportingFiles.add(new SupportingFile("compile.mustache", "", "compile.bat"));
-
+    init();
+    
     languageSpecificPrimitives = new HashSet<String>(
       Arrays.asList(
         "String",
@@ -74,6 +67,19 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
     typeMapping.put("array", "List");
     typeMapping.put("map", "Dictionary");
 
+  }
+
+  protected void init() {
+	    additionalProperties.put("invokerPackage", invokerPackage);
+
+	    supportingFiles.clear();
+	    supportingFiles.add(new SupportingFile("apiInvoker.mustache", 
+	      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiInvoker.cs"));
+	    supportingFiles.add(new SupportingFile("apiException.mustache", 
+	      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiException.cs"));
+	    supportingFiles.add(new SupportingFile("Newtonsoft.Json.dll", "bin", "Newtonsoft.Json.dll"));
+	    supportingFiles.add(new SupportingFile("compile.mustache", "", "compile.bat"));
+	  
   }
 
   @Override
@@ -170,6 +176,7 @@ public String getInvokerPackage() {
 
 public void setInvokerPackage(String invokerPackage) {
 	this.invokerPackage = invokerPackage;
+	init();
 }
 
 public String getGroupId() {
@@ -178,6 +185,7 @@ public String getGroupId() {
 
 public void setGroupId(String groupId) {
 	this.groupId = groupId;
+	init();
 }
 
 public String getArtifactId() {
@@ -186,6 +194,7 @@ public String getArtifactId() {
 
 public void setArtifactId(String artifactId) {
 	this.artifactId = artifactId;
+	init();
 }
 
 public String getArtifactVersion() {
@@ -194,6 +203,7 @@ public String getArtifactVersion() {
 
 public void setArtifactVersion(String artifactVersion) {
 	this.artifactVersion = artifactVersion;
+	init();
 }
 
 public String getSourceFolder() {
@@ -202,6 +212,7 @@ public String getSourceFolder() {
 
 public void setSourceFolder(String sourceFolder) {
 	this.sourceFolder = sourceFolder;
+	init();
 }
   
 

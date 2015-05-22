@@ -46,11 +46,8 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         "if", "not", "return", "undef", "yield")
     );
 
-    additionalProperties.put("invokerPackage", invokerPackage);
-    additionalProperties.put("groupId", groupId);
-    additionalProperties.put("artifactId", artifactId);
-    additionalProperties.put("artifactVersion", artifactVersion);
-
+    init();
+    
     languageSpecificPrimitives.add("int");
     languageSpecificPrimitives.add("array");
     languageSpecificPrimitives.add("map");
@@ -72,6 +69,13 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     supportingFiles.add(new SupportingFile("swagger/configuration.mustache", "", "lib/swagger/configuration.rb"));
   }
 
+  protected void init() {
+	    additionalProperties.put("invokerPackage", invokerPackage);
+	    additionalProperties.put("groupId", groupId);
+	    additionalProperties.put("artifactId", artifactId);
+	    additionalProperties.put("artifactVersion", artifactVersion);	  
+  }
+  
   @Override
   public String escapeReservedWord(String name) {
     return "_" + name;
@@ -201,6 +205,7 @@ public String getGroupId() {
 
 public void setGroupId(String groupId) {
 	this.groupId = groupId;
+	init();
 }
 
 public String getArtifactId() {
@@ -209,6 +214,7 @@ public String getArtifactId() {
 
 public void setArtifactId(String artifactId) {
 	this.artifactId = artifactId;
+	init();
 }
 
 public String getArtifactVersion() {
@@ -217,6 +223,7 @@ public String getArtifactVersion() {
 
 public void setArtifactVersion(String artifactVersion) {
 	this.artifactVersion = artifactVersion;
+	init();
 }
 
 }
