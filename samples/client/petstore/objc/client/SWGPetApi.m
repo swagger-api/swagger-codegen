@@ -67,6 +67,8 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
         
         completionHandler: (void (^)(NSError* error))completionBlock {
 
+    
+
     NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/pet", basePath];
 
     // remove format in URL if needed
@@ -75,7 +77,7 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
 
     
 
-    NSArray* requestContentTypes = @[@"application/json", @"application/xml", ];
+    NSArray* requestContentTypes = @[@"application/json", @"application/xml"];
     NSString* requestContentType = [requestContentTypes count] > 0 ? requestContentTypes[0] : @"application/json";
 
     NSArray* responseContentTypes = @[@"application/json", @"application/xml"];
@@ -158,6 +160,8 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
         
         completionHandler: (void (^)(NSError* error))completionBlock {
 
+    
+
     NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/pet", basePath];
 
     // remove format in URL if needed
@@ -166,7 +170,7 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
 
     
 
-    NSArray* requestContentTypes = @[@"application/json", @"application/xml", ];
+    NSArray* requestContentTypes = @[@"application/json", @"application/xml"];
     NSString* requestContentType = [requestContentTypes count] > 0 ? requestContentTypes[0] : @"application/json";
 
     NSArray* responseContentTypes = @[@"application/json", @"application/xml"];
@@ -248,6 +252,8 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
         
         completionHandler: (void (^)(NSArray<SWGPet>* output, NSError* error))completionBlock
          {
+
+    
 
     NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/pet/findByStatus", basePath];
 
@@ -336,6 +342,8 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
         completionHandler: (void (^)(NSArray<SWGPet>* output, NSError* error))completionBlock
          {
 
+    
+
     NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/pet/findByTags", basePath];
 
     // remove format in URL if needed
@@ -422,6 +430,11 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
         
         completionHandler: (void (^)(SWGPet* output, NSError* error))completionBlock
          {
+
+    
+    // verify the required parameter 'petId' is set
+    NSAssert(petId != nil, @"Missing the required parameter `petId` when calling getPetById");
+    
 
     NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/pet/{petId}", basePath];
 
@@ -510,6 +523,11 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
         
         completionHandler: (void (^)(NSError* error))completionBlock {
 
+    
+    // verify the required parameter 'petId' is set
+    NSAssert(petId != nil, @"Missing the required parameter `petId` when calling updatePetWithForm");
+    
+
     NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/pet/{petId}", basePath];
 
     // remove format in URL if needed
@@ -519,7 +537,7 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
     [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:[NSString stringWithFormat:@"%@%@%@", @"{", @"petId", @"}"]] withString: [SWGApiClient escape:petId]];
     
 
-    NSArray* requestContentTypes = @[@"application/x-www-form-urlencoded", ];
+    NSArray* requestContentTypes = @[@"application/x-www-form-urlencoded"];
     NSString* requestContentType = [requestContentTypes count] > 0 ? requestContentTypes[0] : @"application/json";
 
     NSArray* responseContentTypes = @[@"application/json", @"application/xml"];
@@ -587,15 +605,20 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
 /*!
  * Deletes a pet
  * 
- * \param api_key 
+ * \param apiKey 
  * \param petId Pet id to delete
  * \returns void
  */
--(NSNumber*) deletePetWithCompletionBlock: (NSString*) api_key
+-(NSNumber*) deletePetWithCompletionBlock: (NSString*) apiKey
          petId: (NSNumber*) petId
         
         
         completionHandler: (void (^)(NSError* error))completionBlock {
+
+    
+    // verify the required parameter 'petId' is set
+    NSAssert(petId != nil, @"Missing the required parameter `petId` when calling deletePet");
+    
 
     NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/pet/{petId}", basePath];
 
@@ -616,8 +639,8 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
     
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.defaultHeaders];
 
-    if(api_key != nil)
-        headerParams[@"api_key"] = api_key;
+    if(apiKey != nil)
+        headerParams[@"api_key"] = apiKey;
     
 
     id bodyDictionary = nil;
@@ -672,6 +695,11 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
         
         completionHandler: (void (^)(NSError* error))completionBlock {
 
+    
+    // verify the required parameter 'petId' is set
+    NSAssert(petId != nil, @"Missing the required parameter `petId` when calling uploadFile");
+    
+
     NSMutableString* requestUrl = [NSMutableString stringWithFormat:@"%@/pet/{petId}/uploadImage", basePath];
 
     // remove format in URL if needed
@@ -681,7 +709,7 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
     [requestUrl replaceCharactersInRange: [requestUrl rangeOfString:[NSString stringWithFormat:@"%@%@%@", @"{", @"petId", @"}"]] withString: [SWGApiClient escape:petId]];
     
 
-    NSArray* requestContentTypes = @[@"multipart/form-data", ];
+    NSArray* requestContentTypes = @[@"multipart/form-data"];
     NSString* requestContentType = [requestContentTypes count] > 0 ? requestContentTypes[0] : @"application/json";
 
     NSArray* responseContentTypes = @[@"application/json", @"application/xml"];

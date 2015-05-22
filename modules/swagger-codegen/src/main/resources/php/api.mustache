@@ -39,6 +39,12 @@ class {{classname}} {
 {{/allParams}}   * @return {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}
    */
    public function {{nickname}}({{#allParams}}${{paramName}}{{#optional}}=null{{/optional}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {
+      {{#allParams}}{{#required}}
+      // verify the required parameter '{{paramName}}' is set
+      if (${{paramName}} === null) {
+        throw new \InvalidArgumentException('Missing the required parameter ${{paramName}} when calling {{nickname}}');
+      }
+      {{/required}}{{/allParams}}
 
       $body = null;
       // parse inputs
@@ -49,12 +55,11 @@ class {{classname}} {
       $queryParams = array();
       $headerParams = array();
       $formParams = array();
-      $_header_accept = '{{#produces}}{{mediaType}}{{#hasMore}}, {{/hasMore}}{{/produces}}';
-      if ($_header_accept !== '') {
+      $_header_accept = $this->apiClient->selectHeaderAccept(array({{#produces}}'{{mediaType}}'{{#hasMore}}, {{/hasMore}}{{/produces}}));
+      if (!is_null($_header_accept)) {
         $headerParams['Accept'] = $_header_accept;
       }
-      $_header_content_type = array({{#consumes}}'{{mediaType}}'{{#hasMore}},{{/hasMore}}{{/consumes}});
-      $headerParams['Content-Type'] = count($_header_content_type) > 0 ? $_header_content_type[0] : 'application/json';
+      $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array({{#consumes}}'{{mediaType}}'{{#hasMore}},{{/hasMore}}{{/consumes}}));
 
       {{#queryParams}}// query params
       if(${{paramName}} !== null) {
@@ -82,24 +87,24 @@ class {{classname}} {
       // for model (json/xml)
       if (isset($_tempBody)) {
         $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+      } else if (count($formParams) > 0) {
+        // for HTTP post (form)
+        $httpBody = $formParams;
       }
 
-      // for HTTP post (form)
-      if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") !== FALSE) {
-        $httpBody = http_build_query($formParams);
-      }
+      // authentication setting, if any
+      $authSettings = array({{#authMethods}}'{{name}}'{{#hasMore}}, {{/hasMore}}{{/authMethods}});
 
       // make the API Call
       $response = $this->apiClient->callAPI($resourcePath, $method,
                                             $queryParams, $httpBody,
-                                            $headerParams);
-      {{#returnType}}
-      if(! $response) {
+                                            $headerParams, $authSettings);
+
+      {{#returnType}}if(! $response) {
         return null;
       }
 
-      $responseObject = $this->apiClient->deserialize($response,
-                                                       '{{returnType}}');
+      $responseObject = $this->apiClient->deserialize($response,'{{returnType}}');
       return $responseObject;{{/returnType}}
   }
   {{/operation}}

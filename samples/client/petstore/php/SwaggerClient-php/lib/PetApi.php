@@ -38,6 +38,7 @@ class PetApi {
    * @return void
    */
    public function updatePet($body) {
+      
 
       // parse inputs
       $resourcePath = "/pet";
@@ -47,12 +48,11 @@ class PetApi {
       $queryParams = array();
       $headerParams = array();
       $formParams = array();
-      $_header_accept = 'application/json, application/xml';
-      if ($_header_accept !== '') {
+      $_header_accept = $this->apiClient->selectHeaderAccept(array('application/json', 'application/xml'));
+      if (!is_null($_header_accept)) {
         $headerParams['Accept'] = $_header_accept;
       }
-      $_header_content_type = array('application/json','application/xml',);
-      $headerParams['Content-Type'] = count($_header_content_type) > 0 ? $_header_content_type[0] : 'application/json';
+      $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('application/json','application/xml'));
 
       
       
@@ -67,17 +67,18 @@ class PetApi {
       // for model (json/xml)
       if (isset($_tempBody)) {
         $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+      } else if (count($formParams) > 0) {
+        // for HTTP post (form)
+        $httpBody = $formParams;
       }
-      
-      // for HTTP post (form)
-      if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") !== FALSE) {
-        $httpBody = http_build_query($formParams);
-      }
+
+      // authentication setting, if any
+      $authSettings = array('petstore_auth');
 
       // make the API Call
       $response = $this->apiClient->callAPI($resourcePath, $method,
                                             $queryParams, $httpBody,
-                                            $headerParams);
+                                            $headerParams, $authSettings);
 
       
   }
@@ -91,6 +92,7 @@ class PetApi {
    * @return void
    */
    public function addPet($body) {
+      
 
       // parse inputs
       $resourcePath = "/pet";
@@ -100,12 +102,11 @@ class PetApi {
       $queryParams = array();
       $headerParams = array();
       $formParams = array();
-      $_header_accept = 'application/json, application/xml';
-      if ($_header_accept !== '') {
+      $_header_accept = $this->apiClient->selectHeaderAccept(array('application/json', 'application/xml'));
+      if (!is_null($_header_accept)) {
         $headerParams['Accept'] = $_header_accept;
       }
-      $_header_content_type = array('application/json','application/xml',);
-      $headerParams['Content-Type'] = count($_header_content_type) > 0 ? $_header_content_type[0] : 'application/json';
+      $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('application/json','application/xml'));
 
       
       
@@ -120,17 +121,18 @@ class PetApi {
       // for model (json/xml)
       if (isset($_tempBody)) {
         $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+      } else if (count($formParams) > 0) {
+        // for HTTP post (form)
+        $httpBody = $formParams;
       }
-      
-      // for HTTP post (form)
-      if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") !== FALSE) {
-        $httpBody = http_build_query($formParams);
-      }
+
+      // authentication setting, if any
+      $authSettings = array('petstore_auth');
 
       // make the API Call
       $response = $this->apiClient->callAPI($resourcePath, $method,
                                             $queryParams, $httpBody,
-                                            $headerParams);
+                                            $headerParams, $authSettings);
 
       
   }
@@ -144,6 +146,7 @@ class PetApi {
    * @return array[Pet]
    */
    public function findPetsByStatus($status) {
+      
 
       // parse inputs
       $resourcePath = "/pet/findByStatus";
@@ -153,12 +156,11 @@ class PetApi {
       $queryParams = array();
       $headerParams = array();
       $formParams = array();
-      $_header_accept = 'application/json, application/xml';
-      if ($_header_accept !== '') {
+      $_header_accept = $this->apiClient->selectHeaderAccept(array('application/json', 'application/xml'));
+      if (!is_null($_header_accept)) {
         $headerParams['Accept'] = $_header_accept;
       }
-      $_header_content_type = array();
-      $headerParams['Content-Type'] = count($_header_content_type) > 0 ? $_header_content_type[0] : 'application/json';
+      $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array());
 
       // query params
       if($status !== null) {
@@ -172,25 +174,25 @@ class PetApi {
       // for model (json/xml)
       if (isset($_tempBody)) {
         $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+      } else if (count($formParams) > 0) {
+        // for HTTP post (form)
+        $httpBody = $formParams;
       }
-      
-      // for HTTP post (form)
-      if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") !== FALSE) {
-        $httpBody = http_build_query($formParams);
-      }
+
+      // authentication setting, if any
+      $authSettings = array('petstore_auth');
 
       // make the API Call
       $response = $this->apiClient->callAPI($resourcePath, $method,
                                             $queryParams, $httpBody,
-                                            $headerParams);
+                                            $headerParams, $authSettings);
 
       if(! $response) {
         return null;
       }
 
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'array[Pet]');
-  		return $responseObject;
+      $responseObject = $this->apiClient->deserialize($response,'array[Pet]');
+      return $responseObject;
   }
   
   /**
@@ -202,6 +204,7 @@ class PetApi {
    * @return array[Pet]
    */
    public function findPetsByTags($tags) {
+      
 
       // parse inputs
       $resourcePath = "/pet/findByTags";
@@ -211,12 +214,11 @@ class PetApi {
       $queryParams = array();
       $headerParams = array();
       $formParams = array();
-      $_header_accept = 'application/json, application/xml';
-      if ($_header_accept !== '') {
+      $_header_accept = $this->apiClient->selectHeaderAccept(array('application/json', 'application/xml'));
+      if (!is_null($_header_accept)) {
         $headerParams['Accept'] = $_header_accept;
       }
-      $_header_content_type = array();
-      $headerParams['Content-Type'] = count($_header_content_type) > 0 ? $_header_content_type[0] : 'application/json';
+      $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array());
 
       // query params
       if($tags !== null) {
@@ -230,25 +232,25 @@ class PetApi {
       // for model (json/xml)
       if (isset($_tempBody)) {
         $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+      } else if (count($formParams) > 0) {
+        // for HTTP post (form)
+        $httpBody = $formParams;
       }
-      
-      // for HTTP post (form)
-      if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") !== FALSE) {
-        $httpBody = http_build_query($formParams);
-      }
+
+      // authentication setting, if any
+      $authSettings = array('petstore_auth');
 
       // make the API Call
       $response = $this->apiClient->callAPI($resourcePath, $method,
                                             $queryParams, $httpBody,
-                                            $headerParams);
+                                            $headerParams, $authSettings);
 
       if(! $response) {
         return null;
       }
 
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'array[Pet]');
-  		return $responseObject;
+      $responseObject = $this->apiClient->deserialize($response,'array[Pet]');
+      return $responseObject;
   }
   
   /**
@@ -260,6 +262,12 @@ class PetApi {
    * @return Pet
    */
    public function getPetById($pet_id) {
+      
+      // verify the required parameter 'pet_id' is set
+      if ($pet_id === null) {
+        throw new \InvalidArgumentException('Missing the required parameter $pet_id when calling getPetById');
+      }
+      
 
       // parse inputs
       $resourcePath = "/pet/{petId}";
@@ -269,12 +277,11 @@ class PetApi {
       $queryParams = array();
       $headerParams = array();
       $formParams = array();
-      $_header_accept = 'application/json, application/xml';
-      if ($_header_accept !== '') {
+      $_header_accept = $this->apiClient->selectHeaderAccept(array('application/json', 'application/xml'));
+      if (!is_null($_header_accept)) {
         $headerParams['Accept'] = $_header_accept;
       }
-      $_header_content_type = array();
-      $headerParams['Content-Type'] = count($_header_content_type) > 0 ? $_header_content_type[0] : 'application/json';
+      $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array());
 
       
       
@@ -289,25 +296,25 @@ class PetApi {
       // for model (json/xml)
       if (isset($_tempBody)) {
         $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+      } else if (count($formParams) > 0) {
+        // for HTTP post (form)
+        $httpBody = $formParams;
       }
-      
-      // for HTTP post (form)
-      if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") !== FALSE) {
-        $httpBody = http_build_query($formParams);
-      }
+
+      // authentication setting, if any
+      $authSettings = array('api_key', 'petstore_auth');
 
       // make the API Call
       $response = $this->apiClient->callAPI($resourcePath, $method,
                                             $queryParams, $httpBody,
-                                            $headerParams);
+                                            $headerParams, $authSettings);
 
       if(! $response) {
         return null;
       }
 
-  		$responseObject = $this->apiClient->deserialize($response,
-  		                                                'Pet');
-  		return $responseObject;
+      $responseObject = $this->apiClient->deserialize($response,'Pet');
+      return $responseObject;
   }
   
   /**
@@ -321,6 +328,12 @@ class PetApi {
    * @return void
    */
    public function updatePetWithForm($pet_id, $name, $status) {
+      
+      // verify the required parameter 'pet_id' is set
+      if ($pet_id === null) {
+        throw new \InvalidArgumentException('Missing the required parameter $pet_id when calling updatePetWithForm');
+      }
+      
 
       // parse inputs
       $resourcePath = "/pet/{petId}";
@@ -330,12 +343,11 @@ class PetApi {
       $queryParams = array();
       $headerParams = array();
       $formParams = array();
-      $_header_accept = 'application/json, application/xml';
-      if ($_header_accept !== '') {
+      $_header_accept = $this->apiClient->selectHeaderAccept(array('application/json', 'application/xml'));
+      if (!is_null($_header_accept)) {
         $headerParams['Accept'] = $_header_accept;
       }
-      $_header_content_type = array('application/x-www-form-urlencoded',);
-      $headerParams['Content-Type'] = count($_header_content_type) > 0 ? $_header_content_type[0] : 'application/json';
+      $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('application/x-www-form-urlencoded'));
 
       
       
@@ -356,17 +368,18 @@ class PetApi {
       // for model (json/xml)
       if (isset($_tempBody)) {
         $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+      } else if (count($formParams) > 0) {
+        // for HTTP post (form)
+        $httpBody = $formParams;
       }
-      
-      // for HTTP post (form)
-      if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") !== FALSE) {
-        $httpBody = http_build_query($formParams);
-      }
+
+      // authentication setting, if any
+      $authSettings = array('petstore_auth');
 
       // make the API Call
       $response = $this->apiClient->callAPI($resourcePath, $method,
                                             $queryParams, $httpBody,
-                                            $headerParams);
+                                            $headerParams, $authSettings);
 
       
   }
@@ -381,6 +394,12 @@ class PetApi {
    * @return void
    */
    public function deletePet($api_key, $pet_id) {
+      
+      // verify the required parameter 'pet_id' is set
+      if ($pet_id === null) {
+        throw new \InvalidArgumentException('Missing the required parameter $pet_id when calling deletePet');
+      }
+      
 
       // parse inputs
       $resourcePath = "/pet/{petId}";
@@ -390,12 +409,11 @@ class PetApi {
       $queryParams = array();
       $headerParams = array();
       $formParams = array();
-      $_header_accept = 'application/json, application/xml';
-      if ($_header_accept !== '') {
+      $_header_accept = $this->apiClient->selectHeaderAccept(array('application/json', 'application/xml'));
+      if (!is_null($_header_accept)) {
         $headerParams['Accept'] = $_header_accept;
       }
-      $_header_content_type = array();
-      $headerParams['Content-Type'] = count($_header_content_type) > 0 ? $_header_content_type[0] : 'application/json';
+      $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array());
 
       
       // header params
@@ -413,17 +431,18 @@ class PetApi {
       // for model (json/xml)
       if (isset($_tempBody)) {
         $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+      } else if (count($formParams) > 0) {
+        // for HTTP post (form)
+        $httpBody = $formParams;
       }
-      
-      // for HTTP post (form)
-      if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") !== FALSE) {
-        $httpBody = http_build_query($formParams);
-      }
+
+      // authentication setting, if any
+      $authSettings = array('petstore_auth');
 
       // make the API Call
       $response = $this->apiClient->callAPI($resourcePath, $method,
                                             $queryParams, $httpBody,
-                                            $headerParams);
+                                            $headerParams, $authSettings);
 
       
   }
@@ -435,10 +454,16 @@ class PetApi {
    *
    * @param int $pet_id ID of pet to update (required)
    * @param string $additional_metadata Additional data to pass to server (required)
-   * @param file $file file to upload (required)
+   * @param string $file file to upload (required)
    * @return void
    */
    public function uploadFile($pet_id, $additional_metadata, $file) {
+      
+      // verify the required parameter 'pet_id' is set
+      if ($pet_id === null) {
+        throw new \InvalidArgumentException('Missing the required parameter $pet_id when calling uploadFile');
+      }
+      
 
       // parse inputs
       $resourcePath = "/pet/{petId}/uploadImage";
@@ -448,12 +473,11 @@ class PetApi {
       $queryParams = array();
       $headerParams = array();
       $formParams = array();
-      $_header_accept = 'application/json, application/xml';
-      if ($_header_accept !== '') {
+      $_header_accept = $this->apiClient->selectHeaderAccept(array('application/json', 'application/xml'));
+      if (!is_null($_header_accept)) {
         $headerParams['Accept'] = $_header_accept;
       }
-      $_header_content_type = array('multipart/form-data',);
-      $headerParams['Content-Type'] = count($_header_content_type) > 0 ? $_header_content_type[0] : 'application/json';
+      $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('multipart/form-data'));
 
       
       
@@ -474,17 +498,18 @@ class PetApi {
       // for model (json/xml)
       if (isset($_tempBody)) {
         $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+      } else if (count($formParams) > 0) {
+        // for HTTP post (form)
+        $httpBody = $formParams;
       }
-      
-      // for HTTP post (form)
-      if (strpos($headerParams['Content-Type'], "application/x-www-form-urlencoded") !== FALSE) {
-        $httpBody = http_build_query($formParams);
-      }
+
+      // authentication setting, if any
+      $authSettings = array('petstore_auth');
 
       // make the API Call
       $response = $this->apiClient->callAPI($resourcePath, $method,
                                             $queryParams, $httpBody,
-                                            $headerParams);
+                                            $headerParams, $authSettings);
 
       
   }

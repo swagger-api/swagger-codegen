@@ -57,7 +57,7 @@ public class PetApi {
     
     
     String[] contentTypes = {
-      "application/json","application/xml",
+      "application/json","application/xml"
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
@@ -107,7 +107,7 @@ public class PetApi {
     
     
     String[] contentTypes = {
-      "application/json","application/xml",
+      "application/json","application/xml"
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
@@ -249,6 +249,11 @@ public class PetApi {
   public Pet getPetById (Long petId) throws ApiException {
     Object postBody = null;
     
+    // verify the required parameter 'petId' is set
+    if (petId == null) {
+       throw new ApiException(400, "Missing the required parameter 'petId' when calling getPetById");
+    }
+    
 
     // create path and map variables
     String path = "/pet/{petId}".replaceAll("\\{format\\}","json")
@@ -302,6 +307,11 @@ public class PetApi {
   public void updatePetWithForm (String petId, String name, String status) throws ApiException {
     Object postBody = null;
     
+    // verify the required parameter 'petId' is set
+    if (petId == null) {
+       throw new ApiException(400, "Missing the required parameter 'petId' when calling updatePetWithForm");
+    }
+    
 
     // create path and map variables
     String path = "/pet/{petId}".replaceAll("\\{format\\}","json")
@@ -315,7 +325,7 @@ public class PetApi {
     
     
     String[] contentTypes = {
-      "application/x-www-form-urlencoded",
+      "application/x-www-form-urlencoded"
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
@@ -361,6 +371,11 @@ public class PetApi {
    */
   public void deletePet (String apiKey, Long petId) throws ApiException {
     Object postBody = null;
+    
+    // verify the required parameter 'petId' is set
+    if (petId == null) {
+       throw new ApiException(400, "Missing the required parameter 'petId' when calling deletePet");
+    }
     
 
     // create path and map variables
@@ -416,6 +431,11 @@ public class PetApi {
   public void uploadFile (Long petId, String additionalMetadata, File file) throws ApiException {
     Object postBody = null;
     
+    // verify the required parameter 'petId' is set
+    if (petId == null) {
+       throw new ApiException(400, "Missing the required parameter 'petId' when calling uploadFile");
+    }
+    
 
     // create path and map variables
     String path = "/pet/{petId}/uploadImage".replaceAll("\\{format\\}","json")
@@ -429,7 +449,7 @@ public class PetApi {
     
     
     String[] contentTypes = {
-      "multipart/form-data",
+      "multipart/form-data"
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
