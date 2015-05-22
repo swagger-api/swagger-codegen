@@ -45,19 +45,6 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         "native", "super", "while")
     );
 
-    additionalProperties.put("invokerPackage", invokerPackage);
-    additionalProperties.put("groupId", groupId);
-    additionalProperties.put("artifactId", artifactId);
-    additionalProperties.put("artifactVersion", artifactVersion);
-
-    supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
-    supportingFiles.add(new SupportingFile("apiInvoker.mustache", 
-      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiInvoker.java"));
-    supportingFiles.add(new SupportingFile("JsonUtil.mustache", 
-      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "JsonUtil.java"));
-    supportingFiles.add(new SupportingFile("apiException.mustache", 
-      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiException.java"));
-
     languageSpecificPrimitives = new HashSet<String>(
       Arrays.asList(
         "String",
@@ -71,8 +58,26 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
       );
     instantiationTypes.put("array", "ArrayList");
     instantiationTypes.put("map", "HashMap");
+    
+    init();
   }
 
+  protected void init() {
+	    additionalProperties.put("invokerPackage", invokerPackage);
+	    additionalProperties.put("groupId", groupId);
+	    additionalProperties.put("artifactId", artifactId);
+	    additionalProperties.put("artifactVersion", artifactVersion);
+
+	    supportingFiles.clear();
+	    supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
+	    supportingFiles.add(new SupportingFile("apiInvoker.mustache", 
+	      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiInvoker.java"));
+	    supportingFiles.add(new SupportingFile("JsonUtil.mustache", 
+	      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "JsonUtil.java"));
+	    supportingFiles.add(new SupportingFile("apiException.mustache", 
+	      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiException.java"));
+  }
+  
   @Override
   public String escapeReservedWord(String name) {
     return "_" + name;
@@ -167,6 +172,7 @@ public String getInvokerPackage() {
 
 public void setInvokerPackage(String invokerPackage) {
 	this.invokerPackage = invokerPackage;
+	init();
 }
 
 public String getGroupId() {
@@ -175,6 +181,7 @@ public String getGroupId() {
 
 public void setGroupId(String groupId) {
 	this.groupId = groupId;
+	init();
 }
 
 public String getArtifactId() {
@@ -183,6 +190,7 @@ public String getArtifactId() {
 
 public void setArtifactId(String artifactId) {
 	this.artifactId = artifactId;
+	init();
 }
 
 public String getArtifactVersion() {
@@ -191,6 +199,7 @@ public String getArtifactVersion() {
 
 public void setArtifactVersion(String artifactVersion) {
 	this.artifactVersion = artifactVersion;
+	init();
 }
 
 public String getSourceFolder() {
@@ -199,6 +208,7 @@ public String getSourceFolder() {
 
 public void setSourceFolder(String sourceFolder) {
 	this.sourceFolder = sourceFolder;
+	init();
 }
   
   

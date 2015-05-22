@@ -38,26 +38,7 @@ public class JaxRSServerCodegen extends JavaClientCodegen implements CodegenConf
     apiPackage = "io.swagger.api";
     modelPackage = "io.swagger.model";
 
-    additionalProperties.put("invokerPackage", invokerPackage);
-    additionalProperties.put("groupId", groupId);
-    additionalProperties.put("artifactId", artifactId);
-    additionalProperties.put("artifactVersion", artifactVersion);
-    additionalProperties.put("title", title);
-
-    supportingFiles.clear();
-    supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
-    supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
-    supportingFiles.add(new SupportingFile("ApiException.mustache", 
-      (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiException.java"));
-    supportingFiles.add(new SupportingFile("ApiOriginFilter.mustache", 
-      (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiOriginFilter.java"));
-    supportingFiles.add(new SupportingFile("ApiResponseMessage.mustache", 
-      (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiResponseMessage.java"));
-    supportingFiles.add(new SupportingFile("NotFoundException.mustache", 
-      (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "NotFoundException.java"));
-    supportingFiles.add(new SupportingFile("web.mustache", 
-      ("src/main/webapp/WEB-INF"), "web.xml"));
-
+    init();
     languageSpecificPrimitives = new HashSet<String>(
       Arrays.asList(
         "String",
@@ -70,6 +51,28 @@ public class JaxRSServerCodegen extends JavaClientCodegen implements CodegenConf
       );
   }
 
+  protected void init() {
+	    additionalProperties.put("invokerPackage", invokerPackage);
+	    additionalProperties.put("groupId", groupId);
+	    additionalProperties.put("artifactId", artifactId);
+	    additionalProperties.put("artifactVersion", artifactVersion);
+	    additionalProperties.put("title", title);
+
+	    supportingFiles.clear();
+	    supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
+	    supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
+	    supportingFiles.add(new SupportingFile("ApiException.mustache", 
+	      (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiException.java"));
+	    supportingFiles.add(new SupportingFile("ApiOriginFilter.mustache", 
+	      (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiOriginFilter.java"));
+	    supportingFiles.add(new SupportingFile("ApiResponseMessage.mustache", 
+	      (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiResponseMessage.java"));
+	    supportingFiles.add(new SupportingFile("NotFoundException.mustache", 
+	      (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "NotFoundException.java"));
+	    supportingFiles.add(new SupportingFile("web.mustache", 
+	      ("src/main/webapp/WEB-INF"), "web.xml"));	  
+  }
+  
   @Override
   public String getTypeDeclaration(Property p) {
     if(p instanceof ArrayProperty) {
@@ -153,6 +156,7 @@ public String getInvokerPackage() {
 
 public void setInvokerPackage(String invokerPackage) {
 	this.invokerPackage = invokerPackage;
+	init();
 }
 
 public String getGroupId() {
@@ -161,6 +165,7 @@ public String getGroupId() {
 
 public void setGroupId(String groupId) {
 	this.groupId = groupId;
+	init();
 }
 
 public String getArtifactId() {
@@ -169,6 +174,7 @@ public String getArtifactId() {
 
 public void setArtifactId(String artifactId) {
 	this.artifactId = artifactId;
+	init();
 }
 
 public String getArtifactVersion() {
@@ -177,6 +183,7 @@ public String getArtifactVersion() {
 
 public void setArtifactVersion(String artifactVersion) {
 	this.artifactVersion = artifactVersion;
+	init();
 }
 
 public String getSourceFolder() {
@@ -185,6 +192,7 @@ public String getSourceFolder() {
 
 public void setSourceFolder(String sourceFolder) {
 	this.sourceFolder = sourceFolder;
+	init();
 }
 
 public String getTitle() {
@@ -193,6 +201,7 @@ public String getTitle() {
 
 public void setTitle(String title) {
 	this.title = title;
+	init();
 }
 
 
