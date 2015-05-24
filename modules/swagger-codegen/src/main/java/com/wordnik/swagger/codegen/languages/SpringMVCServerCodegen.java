@@ -41,7 +41,21 @@ public class SpringMVCServerCodegen extends JavaClientCodegen implements Codegen
         modelPackage = "io.swagger.model";
         configPackage = "io.swagger.configuration";
 
+        init();
+        
+        languageSpecificPrimitives = new HashSet<String>(
+          Arrays.asList(
+            "String",
+            "boolean",
+            "Boolean",
+            "Double",
+            "Integer",
+            "Long",
+            "Float")
+        );
+    }
 
+    protected void init() {
         additionalProperties.put("invokerPackage", invokerPackage);
         additionalProperties.put("groupId", groupId);
         additionalProperties.put("artifactId", artifactId);
@@ -72,19 +86,9 @@ public class SpringMVCServerCodegen extends JavaClientCodegen implements Codegen
                 (sourceFolder + File.separator + configPackage).replace(".", java.io.File.separator), "SwaggerUiConfiguration.java"));
         supportingFiles.add(new SupportingFile("swagger.properties",
                 ("src.main.resources").replace(".", java.io.File.separator), "swagger.properties"));
-
-        languageSpecificPrimitives = new HashSet<String>(
-          Arrays.asList(
-            "String",
-            "boolean",
-            "Boolean",
-            "Double",
-            "Integer",
-            "Long",
-            "Float")
-        );
+    	
     }
-
+    
     @Override
     public String getTypeDeclaration(Property p) {
         if(p instanceof ArrayProperty) {
@@ -161,5 +165,70 @@ public class SpringMVCServerCodegen extends JavaClientCodegen implements Codegen
         }
         return objs;
     }
+
+	public String getInvokerPackage() {
+		return invokerPackage;
+	}
+
+	public void setInvokerPackage(String invokerPackage) {
+		this.invokerPackage = invokerPackage;
+		init();
+	}
+
+	public String getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
+		init();
+	}
+
+	public String getArtifactId() {
+		return artifactId;
+	}
+
+	public void setArtifactId(String artifactId) {
+		this.artifactId = artifactId;
+		init();
+	}
+
+	public String getArtifactVersion() {
+		return artifactVersion;
+	}
+
+	public void setArtifactVersion(String artifactVersion) {
+		this.artifactVersion = artifactVersion;
+		init();
+	}
+
+	public String getSourceFolder() {
+		return sourceFolder;
+	}
+
+	public void setSourceFolder(String sourceFolder) {
+		this.sourceFolder = sourceFolder;
+		init();
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+		init();
+	}
+
+	public String getConfigPackage() {
+		return configPackage;
+	}
+
+	public void setConfigPackage(String configPackage) {
+		this.configPackage = configPackage;
+		init();
+	}
+    
+
 }
 

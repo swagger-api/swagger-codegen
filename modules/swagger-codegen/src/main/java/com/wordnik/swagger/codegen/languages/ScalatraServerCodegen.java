@@ -76,21 +76,8 @@ public class ScalatraServerCodegen extends DefaultCodegen implements CodegenConf
     additionalProperties.put("infoEmail", "hello@helloreverb.com");
     additionalProperties.put("licenseInfo", "All rights reserved");
     additionalProperties.put("licenseUrl", "http://apache.org/licenses/LICENSE-2.0.html");
-    additionalProperties.put("invokerPackage", invokerPackage);
-    additionalProperties.put("groupId", groupId);
-    additionalProperties.put("artifactId", artifactId);
-    additionalProperties.put("artifactVersion", artifactVersion);
 
-    supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
-    supportingFiles.add(new SupportingFile("build.sbt", "", "build.sbt")); 
-    supportingFiles.add(new SupportingFile("web.xml", "/src/main/webapp/WEB-INF", "web.xml"));
-    supportingFiles.add(new SupportingFile("JettyMain.scala", sourceFolder, "JettyMain.scala"));
-    supportingFiles.add(new SupportingFile("Bootstrap.mustache", sourceFolder, "ScalatraBootstrap.scala"));
-    supportingFiles.add(new SupportingFile("ServletApp.mustache", sourceFolder, "ServletApp.scala"));
-    supportingFiles.add(new SupportingFile("project/build.properties", "project", "build.properties"));
-    supportingFiles.add(new SupportingFile("project/plugins.sbt", "project", "plugins.sbt"));
-    supportingFiles.add(new SupportingFile("sbt", "", "sbt"));
-
+    init();
     languageSpecificPrimitives = new HashSet<String>(
       Arrays.asList(
         "String",
@@ -119,8 +106,28 @@ public class ScalatraServerCodegen extends DefaultCodegen implements CodegenConf
     importMapping.put("LocalDateTime", "org.joda.time.LocalDateTime");
     importMapping.put("LocalDate", "org.joda.time.LocalDate");
     importMapping.put("LocalTime", "org.joda.time.LocalTime");
+    
+    init();
   }
 
+  protected void init() {
+    additionalProperties.put("invokerPackage", invokerPackage);
+    additionalProperties.put("groupId", groupId);
+    additionalProperties.put("artifactId", artifactId);
+    additionalProperties.put("artifactVersion", artifactVersion);
+
+    supportingFiles.clear();
+    supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
+    supportingFiles.add(new SupportingFile("build.sbt", "", "build.sbt")); 
+    supportingFiles.add(new SupportingFile("web.xml", "/src/main/webapp/WEB-INF", "web.xml"));
+    supportingFiles.add(new SupportingFile("JettyMain.scala", sourceFolder, "JettyMain.scala"));
+    supportingFiles.add(new SupportingFile("Bootstrap.mustache", sourceFolder, "ScalatraBootstrap.scala"));
+    supportingFiles.add(new SupportingFile("ServletApp.mustache", sourceFolder, "ServletApp.scala"));
+    supportingFiles.add(new SupportingFile("project/build.properties", "project", "build.properties"));
+    supportingFiles.add(new SupportingFile("project/plugins.sbt", "project", "plugins.sbt"));
+    supportingFiles.add(new SupportingFile("sbt", "", "sbt"));	  
+  }
+  
   @Override
   public String escapeReservedWord(String name) {
     return "_" + name;
@@ -175,4 +182,50 @@ public class ScalatraServerCodegen extends DefaultCodegen implements CodegenConf
       type = swaggerType;
     return toModelName(type);
   }
+
+  public String getInvokerPackage() {
+    return invokerPackage;
+  }
+
+  public void setInvokerPackage(String invokerPackage) {
+    this.invokerPackage = invokerPackage;
+    init();
+  }
+
+  public String getGroupId() {
+    return groupId;
+  }
+
+  public void setGroupId(String groupId) {
+    this.groupId = groupId;
+    init();
+  }
+
+  public String getArtifactId() {
+    return artifactId;
+  }
+
+  public void setArtifactId(String artifactId) {
+    this.artifactId = artifactId;
+    init();
+  }
+
+  public String getArtifactVersion() {
+    return artifactVersion;
+  }
+
+  public void setArtifactVersion(String artifactVersion) {
+    this.artifactVersion = artifactVersion;
+    init();
+  }
+
+  public String getSourceFolder() {
+    return sourceFolder;
+  }
+
+  public void setSourceFolder(String sourceFolder) {
+    this.sourceFolder = sourceFolder;
+    init();
+  }
+
 }

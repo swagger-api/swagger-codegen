@@ -46,11 +46,8 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         "if", "not", "return", "undef", "yield")
     );
 
-    additionalProperties.put("invokerPackage", invokerPackage);
-    additionalProperties.put("groupId", groupId);
-    additionalProperties.put("artifactId", artifactId);
-    additionalProperties.put("artifactVersion", artifactVersion);
-
+    init();
+    
     languageSpecificPrimitives.add("int");
     languageSpecificPrimitives.add("array");
     languageSpecificPrimitives.add("map");
@@ -72,6 +69,13 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     supportingFiles.add(new SupportingFile("swagger/configuration.mustache", "", "lib/swagger/configuration.rb"));
   }
 
+  protected void init() {
+    additionalProperties.put("invokerPackage", invokerPackage);
+    additionalProperties.put("groupId", groupId);
+    additionalProperties.put("artifactId", artifactId);
+    additionalProperties.put("artifactVersion", artifactVersion);
+  }
+  
   @Override
   public String escapeReservedWord(String name) {
     return "_" + name;
@@ -185,6 +189,41 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
       return "DefaultApi";
     // e.g. phone_number_api => PhoneNumberApi 
     return camelize(name) + "Api";
+  }
+
+  public String getInvokerPackage() {
+    return invokerPackage;
+  }
+
+  public void setInvokerPackage(String invokerPackage) {
+    this.invokerPackage = invokerPackage;
+  }
+
+  public String getGroupId() {
+    return groupId;
+  }
+
+  public void setGroupId(String groupId) {
+    this.groupId = groupId;
+    init();
+  }
+
+  public String getArtifactId() {
+    return artifactId;
+  }
+
+  public void setArtifactId(String artifactId) {
+    this.artifactId = artifactId;
+    init();
+  }
+
+  public String getArtifactVersion() {
+    return artifactVersion;
+  }
+
+  public void setArtifactVersion(String artifactVersion) {
+    this.artifactVersion = artifactVersion;
+    init();
   }
 
 }

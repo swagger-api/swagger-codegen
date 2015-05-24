@@ -34,12 +34,6 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
     templateDir = "objc";
     modelPackage = "";
 
-    String appName = System.getProperty("appName");
-    if(appName == null) {
-      appName = "swaggerClient";
-    }
-    additionalProperties.put("projectName", appName);
-
     defaultIncludes = new HashSet<String>(
       Arrays.asList(
         "bool",
@@ -101,6 +95,16 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
     instantiationTypes.put("array", "NSMutableArray");
     instantiationTypes.put("map", "NSMutableDictionary");
 
+    init();
+  }
+
+  protected void init() {
+    String appName = System.getProperty("appName");
+    if(appName == null) {
+      appName = "swaggerClient";
+    }
+    additionalProperties.put("projectName", appName);
+    supportingFiles.clear();
     supportingFiles.add(new SupportingFile("SWGObject.h", sourceFolder, "SWGObject.h"));
     supportingFiles.add(new SupportingFile("SWGObject.m", sourceFolder, "SWGObject.m"));
     supportingFiles.add(new SupportingFile("SWGQueryParamCollection.h", sourceFolder, "SWGQueryParamCollection.h"));
@@ -111,7 +115,7 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
     supportingFiles.add(new SupportingFile("SWGFile.m", sourceFolder, "SWGFile.m"));
     supportingFiles.add(new SupportingFile("SWGDate.h", sourceFolder, "SWGDate.h"));
     supportingFiles.add(new SupportingFile("SWGDate.m", sourceFolder, "SWGDate.m"));
-    supportingFiles.add(new SupportingFile("Podfile.mustache", "", "Podfile"));
+    supportingFiles.add(new SupportingFile("Podfile.mustache", "", "Podfile"));	  
   }
 
   @Override
@@ -209,18 +213,18 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
     }
   }
 
-    @Override
-    protected void setNonArrayMapProperty(CodegenProperty property, String type) {
-        super.setNonArrayMapProperty(property, type);
-        if("NSDictionary".equals(type)) {
-            property.setter = "initWithDictionary";
-        }
-        else {
-            property.setter = "initWithValues";
-        }
+  @Override
+  protected void setNonArrayMapProperty(CodegenProperty property, String type) {
+    super.setNonArrayMapProperty(property, type);
+    if("NSDictionary".equals(type)) {
+      property.setter = "initWithDictionary";
     }
+    else {
+      property.setter = "initWithValues";
+    }
+  }
 
-    @Override
+  @Override
   public String toModelImport(String name) {
     if("".equals(modelPackage()))
       return name;
@@ -270,4 +274,30 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
   public String escapeReservedWord(String name) {
     return "_" + name;
   }
+
+  public Set<String> getFoundationClasses() {
+    return foundationClasses;
+  }
+
+  public void setFoundationClasses(Set<String> foundationClasses) {
+    this.foundationClasses = foundationClasses;
+  }
+
+  public String getSourceFolder() {
+    return sourceFolder;
+  }
+
+  public void setSourceFolder(String sourceFolder) {
+    this.sourceFolder = sourceFolder;
+    init();
+  }
+
+  public static String getPREFIX() {
+    return PREFIX;
+  }
+
+  public static void setPREFIX(String pREFIX) {
+    PREFIX = pREFIX;
+  }
+
 }

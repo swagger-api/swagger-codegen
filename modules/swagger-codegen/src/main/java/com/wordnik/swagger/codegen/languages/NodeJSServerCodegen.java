@@ -88,12 +88,7 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
         "void", "while", "with", "yield")
     );
 
-    /**
-     * Additional Properties.  These values can be passed to the templates and
-     * are available in models, apis, and supporting files
-     */
-    additionalProperties.put("apiVersion", apiVersion);
-    additionalProperties.put("serverPort", serverPort);
+    init();
 
     /**
      * Supporting Files.  You can write single files for the generator with the
@@ -123,6 +118,15 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
     }
   }
 
+  protected void init() {
+	    /**
+	     * Additional Properties.  These values can be passed to the templates and
+	     * are available in models, apis, and supporting files
+	     */
+	    additionalProperties.put("apiVersion", apiVersion);
+	    additionalProperties.put("serverPort", serverPort);	  
+  }
+  
   @Override
   public String toApiName(String name) {
     if(name.length() == 0)
@@ -189,4 +193,31 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
     }
     return objs;
   }
+
+  public String getApiVersion() {
+    return apiVersion;
+  }
+
+  public void setApiVersion(String apiVersion) {
+    this.apiVersion = apiVersion;
+    init();
+  }
+
+  public int getServerPort() {
+    return serverPort;
+  }
+
+  public void setServerPort(int serverPort) {
+    this.serverPort = serverPort;
+    init();
+  }
+
+  public String getProjectName() {
+    return projectName;
+  }
+
+  public void setProjectName(String projectName) {
+    this.projectName = projectName;
+  }
+
 }

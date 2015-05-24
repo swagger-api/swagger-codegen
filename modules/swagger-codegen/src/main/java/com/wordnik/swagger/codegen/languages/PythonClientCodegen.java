@@ -28,8 +28,7 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
     apiTemplateFiles.put("api.mustache", ".py");
     templateDir = "python";
     
-    apiPackage = module;
-    modelPackage = module + ".models";
+    init();
     
     languageSpecificPrimitives.clear();
     languageSpecificPrimitives.add("int");
@@ -59,12 +58,18 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         "print", "class", "exec", "in", "raise", "continue", "finally", "is",
         "return", "def", "for", "lambda", "try"));
 
-    supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
-    supportingFiles.add(new SupportingFile("swagger.mustache", module, "swagger.py"));
-    supportingFiles.add(new SupportingFile("__init__.mustache", module, "__init__.py"));
-    supportingFiles.add(new SupportingFile("__init__.mustache", modelPackage.replace('.', File.separatorChar), "__init__.py"));
   }
 
+  protected void init() {
+	    apiPackage = module;
+	    modelPackage = module + ".models";
+	    supportingFiles.clear();
+	    supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
+	    supportingFiles.add(new SupportingFile("swagger.mustache", module, "swagger.py"));
+	    supportingFiles.add(new SupportingFile("__init__.mustache", module, "__init__.py"));
+	    supportingFiles.add(new SupportingFile("__init__.mustache", modelPackage.replace('.', File.separatorChar), "__init__.py"));	   	  
+  }
+  
   @Override
   public String escapeReservedWord(String name) {
     return "_" + name;
@@ -113,5 +118,15 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
   public String toDefaultValue(Property p) {
 	// TODO: Support Python def value
     return "null";
-  }	
+  }
+
+  public String getModule() {
+    return module;
+  }
+
+  public void setModule(String module) {
+    this.module = module;
+    init();
+  }
+
 }
