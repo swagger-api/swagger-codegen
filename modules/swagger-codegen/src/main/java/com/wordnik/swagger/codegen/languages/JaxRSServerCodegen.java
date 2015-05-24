@@ -39,6 +39,7 @@ public class JaxRSServerCodegen extends JavaClientCodegen implements CodegenConf
     modelPackage = "io.swagger.model";
 
     init();
+
     languageSpecificPrimitives = new HashSet<String>(
       Arrays.asList(
         "String",
@@ -52,25 +53,25 @@ public class JaxRSServerCodegen extends JavaClientCodegen implements CodegenConf
   }
 
   protected void init() {
-	    additionalProperties.put("invokerPackage", invokerPackage);
-	    additionalProperties.put("groupId", groupId);
-	    additionalProperties.put("artifactId", artifactId);
-	    additionalProperties.put("artifactVersion", artifactVersion);
-	    additionalProperties.put("title", title);
+    additionalProperties.put("invokerPackage", invokerPackage);
+    additionalProperties.put("groupId", groupId);
+    additionalProperties.put("artifactId", artifactId);
+    additionalProperties.put("artifactVersion", artifactVersion);
+    additionalProperties.put("title", title);
 
-	    supportingFiles.clear();
-	    supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
-	    supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
-	    supportingFiles.add(new SupportingFile("ApiException.mustache", 
-	      (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiException.java"));
-	    supportingFiles.add(new SupportingFile("ApiOriginFilter.mustache", 
-	      (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiOriginFilter.java"));
-	    supportingFiles.add(new SupportingFile("ApiResponseMessage.mustache", 
-	      (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiResponseMessage.java"));
-	    supportingFiles.add(new SupportingFile("NotFoundException.mustache", 
-	      (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "NotFoundException.java"));
-	    supportingFiles.add(new SupportingFile("web.mustache", 
-	      ("src/main/webapp/WEB-INF"), "web.xml"));	  
+    supportingFiles.clear();
+    supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
+    supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
+    supportingFiles.add(new SupportingFile("ApiException.mustache", 
+      (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiException.java"));
+    supportingFiles.add(new SupportingFile("ApiOriginFilter.mustache", 
+      (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiOriginFilter.java"));
+    supportingFiles.add(new SupportingFile("ApiResponseMessage.mustache", 
+      (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiResponseMessage.java"));
+    supportingFiles.add(new SupportingFile("NotFoundException.mustache", 
+      (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "NotFoundException.java"));
+    supportingFiles.add(new SupportingFile("web.mustache", 
+      ("src/main/webapp/WEB-INF"), "web.xml"));	  
   }
   
   @Override
@@ -150,59 +151,58 @@ public class JaxRSServerCodegen extends JavaClientCodegen implements CodegenConf
     return objs;
   }
 
-public String getInvokerPackage() {
-	return invokerPackage;
-}
+  public String getInvokerPackage() {
+    return invokerPackage;
+  }
 
-public void setInvokerPackage(String invokerPackage) {
-	this.invokerPackage = invokerPackage;
-	init();
-}
+  public void setInvokerPackage(String invokerPackage) {
+    this.invokerPackage = invokerPackage;
+    init();
+  }
 
-public String getGroupId() {
-	return groupId;
-}
+  public String getGroupId() {
+    return groupId;
+  }
 
-public void setGroupId(String groupId) {
-	this.groupId = groupId;
-	init();
-}
+  public void setGroupId(String groupId) {
+    this.groupId = groupId;
+    init();
+  }
 
-public String getArtifactId() {
-	return artifactId;
-}
+  public String getArtifactId() {
+    return artifactId;
+  }
 
-public void setArtifactId(String artifactId) {
-	this.artifactId = artifactId;
-	init();
-}
+  public void setArtifactId(String artifactId) {
+    this.artifactId = artifactId;
+    init();
+  }
 
-public String getArtifactVersion() {
-	return artifactVersion;
-}
+  public String getArtifactVersion() {
+    return artifactVersion;
+  }
 
-public void setArtifactVersion(String artifactVersion) {
-	this.artifactVersion = artifactVersion;
-	init();
-}
+  public void setArtifactVersion(String artifactVersion) {
+    this.artifactVersion = artifactVersion;
+    init();
+  }
 
-public String getSourceFolder() {
-	return sourceFolder;
-}
+  public String getSourceFolder() {
+    return sourceFolder;
+  }
 
-public void setSourceFolder(String sourceFolder) {
-	this.sourceFolder = sourceFolder;
-	init();
-}
+  public void setSourceFolder(String sourceFolder) {
+    this.sourceFolder = sourceFolder;
+    init();
+  }
 
-public String getTitle() {
-	return title;
-}
+  public String getTitle() {
+    return title;
+  }
 
-public void setTitle(String title) {
-	this.title = title;
-	init();
-}
-
+  public void setTitle(String title) {
+    this.title = title;
+    init();
+  }
 
 }

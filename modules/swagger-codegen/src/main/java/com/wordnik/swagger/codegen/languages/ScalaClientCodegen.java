@@ -47,7 +47,7 @@ public class ScalaClientCodegen extends DefaultCodegen implements CodegenConfig 
     );
 
     init();
-    
+
     importMapping.remove("List");
     importMapping.remove("Set");
     importMapping.remove("Map");
@@ -90,18 +90,18 @@ public class ScalaClientCodegen extends DefaultCodegen implements CodegenConfig 
   }
 
   protected void init() {
-	    additionalProperties.put("invokerPackage", invokerPackage);
-	    additionalProperties.put("groupId", groupId);
-	    additionalProperties.put("artifactId", artifactId);
-	    additionalProperties.put("artifactVersion", artifactVersion);
-	    additionalProperties.put("asyncHttpClient", asyncHttpClient);
-	    additionalProperties.put("authScheme", authScheme);
-	    additionalProperties.put("authPreemptive", authPreemptive);
+    additionalProperties.put("invokerPackage", invokerPackage);
+    additionalProperties.put("groupId", groupId);
+    additionalProperties.put("artifactId", artifactId);
+    additionalProperties.put("artifactVersion", artifactVersion);
+    additionalProperties.put("asyncHttpClient", asyncHttpClient);
+    additionalProperties.put("authScheme", authScheme);
+    additionalProperties.put("authPreemptive", authPreemptive);
 
-	    supportingFiles.clear();
-	    supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
-	    supportingFiles.add(new SupportingFile("apiInvoker.mustache", 
-	      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiInvoker.scala"));	  
+    supportingFiles.clear();
+    supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
+    supportingFiles.add(new SupportingFile("apiInvoker.mustache", 
+      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiInvoker.scala"));
   }
   
   @Override
@@ -195,77 +195,76 @@ public class ScalaClientCodegen extends DefaultCodegen implements CodegenConfig 
       return "null";
   }
 
-public String getInvokerPackage() {
-	return invokerPackage;
-}
+  public String getInvokerPackage() {
+    return invokerPackage;
+  }
 
-public void setInvokerPackage(String invokerPackage) {
-	this.invokerPackage = invokerPackage;
-	init();
-}
+  public void setInvokerPackage(String invokerPackage) {
+    this.invokerPackage = invokerPackage;
+    init();
+  }
 
-public String getGroupId() {
-	return groupId;
-}
+  public String getGroupId() {
+    return groupId;
+  }
 
-public void setGroupId(String groupId) {
-	this.groupId = groupId;
-	init();
-}
+  public void setGroupId(String groupId) {
+    this.groupId = groupId;
+    init();
+  }
 
-public String getArtifactId() {
-	return artifactId;
-}
+  public String getArtifactId() {
+    return artifactId;
+  }
 
-public void setArtifactId(String artifactId) {
-	this.artifactId = artifactId;
-	init();
-}
+  public void setArtifactId(String artifactId) {
+    this.artifactId = artifactId;
+    init();
+  }
 
-public String getArtifactVersion() {
-	return artifactVersion;
-}
+  public String getArtifactVersion() {
+    return artifactVersion;
+  }
 
-public void setArtifactVersion(String artifactVersion) {
-	this.artifactVersion = artifactVersion;
-	init();
-}
+  public void setArtifactVersion(String artifactVersion) {
+    this.artifactVersion = artifactVersion;
+    init();
+  }
 
-public String getSourceFolder() {
-	return sourceFolder;
-}
+  public String getSourceFolder() {
+    return sourceFolder;
+  }
 
-public void setSourceFolder(String sourceFolder) {
-	this.sourceFolder = sourceFolder;
-	init();
-}
+  public void setSourceFolder(String sourceFolder) {
+    this.sourceFolder = sourceFolder;
+    init();
+  }
 
-public String getAuthScheme() {
-	return authScheme;
-}
+  public String getAuthScheme() {
+    return authScheme;
+  }
 
-public void setAuthScheme(String authScheme) {
-	this.authScheme = authScheme;
-	init();
-}
+  public void setAuthScheme(String authScheme) {
+    this.authScheme = authScheme;
+    init();
+  }
 
-public boolean isAuthPreemptive() {
-	return authPreemptive;
-}
+  public boolean isAuthPreemptive() {
+    return authPreemptive;
+  }
 
-public void setAuthPreemptive(boolean authPreemptive) {
-	this.authPreemptive = authPreemptive;
-	init();
-}
+  public void setAuthPreemptive(boolean authPreemptive) {
+    this.authPreemptive = authPreemptive;
+    init();
+  }
 
-public boolean isAsyncHttpClient() {
-	return asyncHttpClient;
-}
+  public boolean isAsyncHttpClient() {
+    return asyncHttpClient;
+  }
 
-public void setAsyncHttpClient(boolean asyncHttpClient) {
-	this.asyncHttpClient = asyncHttpClient;
-	init();
-}
-  
+  public void setAsyncHttpClient(boolean asyncHttpClient) {
+    this.asyncHttpClient = asyncHttpClient;
+    init();
+  }
 
 }

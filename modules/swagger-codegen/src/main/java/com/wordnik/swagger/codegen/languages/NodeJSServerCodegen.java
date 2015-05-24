@@ -89,6 +89,7 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
     );
 
     init();
+
     /**
      * Supporting Files.  You can write single files for the generator with the
      * entire object tree available.  If the input file has a suffix of `.mustache
@@ -193,31 +194,30 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
     return objs;
   }
 
-public String getApiVersion() {
-	return apiVersion;
-}
+  public String getApiVersion() {
+    return apiVersion;
+  }
 
-public void setApiVersion(String apiVersion) {
-	this.apiVersion = apiVersion;
-	init();
-}
+  public void setApiVersion(String apiVersion) {
+    this.apiVersion = apiVersion;
+    init();
+  }
 
-public int getServerPort() {
-	return serverPort;
-}
+  public int getServerPort() {
+    return serverPort;
+  }
 
-public void setServerPort(int serverPort) {
-	this.serverPort = serverPort;
-	init();
-}
+  public void setServerPort(int serverPort) {
+    this.serverPort = serverPort;
+    init();
+  }
 
-public String getProjectName() {
-	return projectName;
-}
+  public String getProjectName() {
+    return projectName;
+  }
 
-public void setProjectName(String projectName) {
-	this.projectName = projectName;
-}
-  
+  public void setProjectName(String projectName) {
+    this.projectName = projectName;
+  }
 
 }

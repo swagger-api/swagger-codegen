@@ -74,43 +74,43 @@ public class StaticDocCodegen extends DefaultCodegen implements CodegenConfig {
     return outputFolder + File.separator + sourceFolder + File.separator + "models";
   }
 
-public String getInvokerPackage() {
+  public String getInvokerPackage() {
 	return invokerPackage;
 }
 
-public void setInvokerPackage(String invokerPackage) {
+  public void setInvokerPackage(String invokerPackage) {
 	this.invokerPackage = invokerPackage;
 }
 
-public String getGroupId() {
+  public String getGroupId() {
 	return groupId;
 }
 
-public void setGroupId(String groupId) {
+  public void setGroupId(String groupId) {
 	this.groupId = groupId;
 }
 
-public String getArtifactId() {
+  public String getArtifactId() {
 	return artifactId;
 }
 
-public void setArtifactId(String artifactId) {
+  public void setArtifactId(String artifactId) {
 	this.artifactId = artifactId;
 }
 
-public String getArtifactVersion() {
+  public String getArtifactVersion() {
 	return artifactVersion;
 }
 
-public void setArtifactVersion(String artifactVersion) {
+  public void setArtifactVersion(String artifactVersion) {
 	this.artifactVersion = artifactVersion;
 }
 
-public String getSourceFolder() {
+  public String getSourceFolder() {
 	return sourceFolder;
 }
 
-public void setSourceFolder(String sourceFolder) {
+  public void setSourceFolder(String sourceFolder) {
 	this.sourceFolder = sourceFolder;
 }
   

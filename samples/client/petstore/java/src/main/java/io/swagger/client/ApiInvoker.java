@@ -1,35 +1,25 @@
 package io.swagger.client;
 
-import com.fasterxml.jackson.core.JsonGenerator.Feature;
-import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
+
+import javax.ws.rs.core.Response.Status.Family;
+
+import com.fasterxml.jackson.databind.JavaType;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.api.client.WebResource.Builder;
+import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.multipart.FormDataMultiPart;
-
-import javax.ws.rs.core.Response.Status.Family;
-import javax.ws.rs.core.MediaType;
-
-import java.util.Collection;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Date;
-import java.util.TimeZone;
-
-import java.net.URLEncoder;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
 
 public class ApiInvoker {
   private static ApiInvoker INSTANCE = new ApiInvoker();

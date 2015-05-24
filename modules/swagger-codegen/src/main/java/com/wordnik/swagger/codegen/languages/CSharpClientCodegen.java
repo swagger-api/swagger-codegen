@@ -70,16 +70,16 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
   }
 
   protected void init() {
-	    additionalProperties.put("invokerPackage", invokerPackage);
+      additionalProperties.put("invokerPackage", invokerPackage);
 
-	    supportingFiles.clear();
-	    supportingFiles.add(new SupportingFile("apiInvoker.mustache", 
-	      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiInvoker.cs"));
-	    supportingFiles.add(new SupportingFile("apiException.mustache", 
-	      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiException.cs"));
-	    supportingFiles.add(new SupportingFile("Newtonsoft.Json.dll", "bin", "Newtonsoft.Json.dll"));
-	    supportingFiles.add(new SupportingFile("compile.mustache", "", "compile.bat"));
-	  
+      supportingFiles.clear();
+      supportingFiles.add(new SupportingFile("apiInvoker.mustache", 
+        (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiInvoker.cs"));
+      supportingFiles.add(new SupportingFile("apiException.mustache", 
+        (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiException.cs"));
+      supportingFiles.add(new SupportingFile("Newtonsoft.Json.dll", "bin", "Newtonsoft.Json.dll"));
+      supportingFiles.add(new SupportingFile("compile.mustache", "", "compile.bat"));
+    
   }
 
   @Override
@@ -170,50 +170,49 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
     return type;
   }
 
-public String getInvokerPackage() {
-	return invokerPackage;
-}
+  public String getInvokerPackage() {
+    return invokerPackage;
+  }
 
-public void setInvokerPackage(String invokerPackage) {
-	this.invokerPackage = invokerPackage;
-	init();
-}
+  public void setInvokerPackage(String invokerPackage) {
+    this.invokerPackage = invokerPackage;
+    init();
+  }
 
-public String getGroupId() {
-	return groupId;
-}
+  public String getGroupId() {
+    return groupId;
+  }
 
-public void setGroupId(String groupId) {
-	this.groupId = groupId;
-	init();
-}
+  public void setGroupId(String groupId) {
+    this.groupId = groupId;
+    init();
+  }
 
-public String getArtifactId() {
-	return artifactId;
-}
+  public String getArtifactId() {
+    return artifactId;
+  }
 
-public void setArtifactId(String artifactId) {
-	this.artifactId = artifactId;
-	init();
-}
+  public void setArtifactId(String artifactId) {
+    this.artifactId = artifactId;
+    init();
+  }
 
-public String getArtifactVersion() {
-	return artifactVersion;
-}
+  public String getArtifactVersion() {
+    return artifactVersion;
+  }
 
-public void setArtifactVersion(String artifactVersion) {
-	this.artifactVersion = artifactVersion;
-	init();
-}
+  public void setArtifactVersion(String artifactVersion) {
+    this.artifactVersion = artifactVersion;
+    init();
+  }
 
-public String getSourceFolder() {
-	return sourceFolder;
-}
+  public String getSourceFolder() {
+    return sourceFolder;
+  }
 
-public void setSourceFolder(String sourceFolder) {
-	this.sourceFolder = sourceFolder;
-	init();
-}
-  
+  public void setSourceFolder(String sourceFolder) {
+    this.sourceFolder = sourceFolder;
+    init();
+  }
 
 }

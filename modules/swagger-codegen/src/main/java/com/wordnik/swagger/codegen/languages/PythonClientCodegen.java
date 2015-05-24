@@ -120,14 +120,13 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
     return "null";
   }
 
-public String getModule() {
-	return module;
-}
+  public String getModule() {
+    return module;
+  }
 
-public void setModule(String module) {
-	this.module = module;
-	init();
-}	
-  
+  public void setModule(String module) {
+    this.module = module;
+    init();
+  }
 
 }

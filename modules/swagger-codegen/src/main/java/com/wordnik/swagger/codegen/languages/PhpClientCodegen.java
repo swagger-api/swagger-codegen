@@ -62,22 +62,22 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
   }
 
   protected void init() {
-	    String packagePath = invokerPackage + "-php";
+    String packagePath = invokerPackage + "-php";
 
-	    modelPackage = packagePath + "/lib/models";
-	    apiPackage = packagePath + "/lib";
-	  
-	    additionalProperties.put("invokerPackage", invokerPackage);
-	    additionalProperties.put("groupId", groupId);
-	    additionalProperties.put("artifactId", artifactId);
-	    additionalProperties.put("artifactVersion", artifactVersion);
+    modelPackage = packagePath + "/lib/models";
+    apiPackage = packagePath + "/lib";
+  
+    additionalProperties.put("invokerPackage", invokerPackage);
+    additionalProperties.put("groupId", groupId);
+    additionalProperties.put("artifactId", artifactId);
+    additionalProperties.put("artifactVersion", artifactVersion);
 
-	    supportingFiles.clear();
-	    supportingFiles.add(new SupportingFile("composer.mustache", packagePath, "composer.json"));
-	    supportingFiles.add(new SupportingFile("APIClient.mustache", packagePath + "/lib", "APIClient.php"));
-	    supportingFiles.add(new SupportingFile("APIClientException.mustache", packagePath + "/lib", "APIClientException.php"));
-	    supportingFiles.add(new SupportingFile("require.mustache", packagePath, invokerPackage + ".php"));
-	  
+    supportingFiles.clear();
+    supportingFiles.add(new SupportingFile("composer.mustache", packagePath, "composer.json"));
+    supportingFiles.add(new SupportingFile("APIClient.mustache", packagePath + "/lib", "APIClient.php"));
+    supportingFiles.add(new SupportingFile("APIClientException.mustache", packagePath + "/lib", "APIClientException.php"));
+    supportingFiles.add(new SupportingFile("require.mustache", packagePath, invokerPackage + ".php"));
+  
   }
 
   @Override
@@ -167,41 +167,40 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
     return toModelName(name);
   }
 
-public String getInvokerPackage() {
-	return invokerPackage;
-}
+  public String getInvokerPackage() {
+    return invokerPackage;
+  }
 
-public void setInvokerPackage(String invokerPackage) {
-	this.invokerPackage = invokerPackage;
-	init();
-}
+  public void setInvokerPackage(String invokerPackage) {
+    this.invokerPackage = invokerPackage;
+    init();
+  }
 
-public String getGroupId() {
-	return groupId;
-}
+  public String getGroupId() {
+    return groupId;
+  }
 
-public void setGroupId(String groupId) {
-	this.groupId = groupId;
-	init();
-}
+  public void setGroupId(String groupId) {
+    this.groupId = groupId;
+    init();
+  }
 
-public String getArtifactId() {
-	return artifactId;
-}
+  public String getArtifactId() {
+    return artifactId;
+  }
 
-public void setArtifactId(String artifactId) {
-	this.artifactId = artifactId;
-	init();
-}
+  public void setArtifactId(String artifactId) {
+    this.artifactId = artifactId;
+    init();
+  }
 
-public String getArtifactVersion() {
-	return artifactVersion;
-}
+  public String getArtifactVersion() {
+    return artifactVersion;
+  }
 
-public void setArtifactVersion(String artifactVersion) {
-	this.artifactVersion = artifactVersion;
-	init();
-}
-
+  public void setArtifactVersion(String artifactVersion) {
+    this.artifactVersion = artifactVersion;
+    init();
+  }
 
 }

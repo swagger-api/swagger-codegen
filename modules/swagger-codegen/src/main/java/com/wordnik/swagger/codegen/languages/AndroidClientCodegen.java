@@ -46,6 +46,7 @@ public class AndroidClientCodegen extends DefaultCodegen implements CodegenConfi
     );
 
     init();
+
     languageSpecificPrimitives = new HashSet<String>(
       Arrays.asList(
         "String",
@@ -62,21 +63,21 @@ public class AndroidClientCodegen extends DefaultCodegen implements CodegenConfi
   }
 
   protected void init() {
-	    additionalProperties.put("invokerPackage", invokerPackage);
-	    additionalProperties.put("groupId", groupId);
-	    additionalProperties.put("artifactId", artifactId);
-	    additionalProperties.put("artifactVersion", artifactVersion);
+    additionalProperties.put("invokerPackage", invokerPackage);
+    additionalProperties.put("groupId", groupId);
+    additionalProperties.put("artifactId", artifactId);
+    additionalProperties.put("artifactVersion", artifactVersion);
 
-	    supportingFiles.clear();
-	    supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
-	    supportingFiles.add(new SupportingFile("apiInvoker.mustache", 
-	      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiInvoker.java"));
-	    supportingFiles.add(new SupportingFile("httpPatch.mustache", 
-	      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "HttpPatch.java"));
-	    supportingFiles.add(new SupportingFile("jsonUtil.mustache", 
-	      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "JsonUtil.java"));
-	    supportingFiles.add(new SupportingFile("apiException.mustache", 
-	      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiException.java"));	  
+    supportingFiles.clear();
+    supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
+    supportingFiles.add(new SupportingFile("apiInvoker.mustache", 
+      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiInvoker.java"));
+    supportingFiles.add(new SupportingFile("httpPatch.mustache", 
+      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "HttpPatch.java"));
+    supportingFiles.add(new SupportingFile("jsonUtil.mustache", 
+      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "JsonUtil.java"));
+    supportingFiles.add(new SupportingFile("apiException.mustache", 
+      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiException.java"));    
   }
   
   @Override
@@ -166,50 +167,49 @@ public class AndroidClientCodegen extends DefaultCodegen implements CodegenConfi
     return toModelName(name);
   }
 
-public String getInvokerPackage() {
-	return invokerPackage;
-}
+  public String getInvokerPackage() {
+    return invokerPackage;
+  }
 
-public void setInvokerPackage(String invokerPackage) {
-	this.invokerPackage = invokerPackage;
-	init();
-}
+  public void setInvokerPackage(String invokerPackage) {
+    this.invokerPackage = invokerPackage;
+    init();
+  }
 
-public String getGroupId() {
-	return groupId;
-}
+  public String getGroupId() {
+    return groupId;
+  }
 
-public void setGroupId(String groupId) {
-	this.groupId = groupId;
-	init();
-}
+  public void setGroupId(String groupId) {
+    this.groupId = groupId;
+    init();
+  }
 
-public String getArtifactId() {
-	return artifactId;
-}
+  public String getArtifactId() {
+    return artifactId;
+  }
 
-public void setArtifactId(String artifactId) {
-	this.artifactId = artifactId;
-	init();
-}
+  public void setArtifactId(String artifactId) {
+    this.artifactId = artifactId;
+    init();
+  }
 
-public String getArtifactVersion() {
-	return artifactVersion;
-}
+  public String getArtifactVersion() {
+    return artifactVersion;
+  }
 
-public void setArtifactVersion(String artifactVersion) {
-	this.artifactVersion = artifactVersion;
-	init();
-}
+  public void setArtifactVersion(String artifactVersion) {
+    this.artifactVersion = artifactVersion;
+    init();
+  }
 
-public String getSourceFolder() {
-	return sourceFolder;
-}
+  public String getSourceFolder() {
+    return sourceFolder;
+  }
 
-public void setSourceFolder(String sourceFolder) {
-	this.sourceFolder = sourceFolder;
-	init();
-}
-
+  public void setSourceFolder(String sourceFolder) {
+    this.sourceFolder = sourceFolder;
+    init();
+  }
 
 }

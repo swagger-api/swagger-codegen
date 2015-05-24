@@ -34,6 +34,8 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
     apiPackage = "io.swagger.client.api";
     modelPackage = "io.swagger.client.model";
 
+    init();
+
     reservedWords = new HashSet<String> (
       Arrays.asList(
         "abstract", "continue", "for", "new", "switch", "assert", 
@@ -58,8 +60,6 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
       );
     instantiationTypes.put("array", "ArrayList");
     instantiationTypes.put("map", "HashMap");
-    
-    init();
   }
 
   protected void init() {

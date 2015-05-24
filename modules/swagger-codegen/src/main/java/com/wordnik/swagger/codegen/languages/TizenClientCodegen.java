@@ -96,15 +96,15 @@ public class TizenClientCodegen extends DefaultCodegen implements CodegenConfig 
   }
 
   protected void init() {
-	    supportingFiles.clear();
-	    supportingFiles.add(new SupportingFile("modelFactory.mustache", sourceFolder, PREFIX + "ModelFactory.h"));
-	    supportingFiles.add(new SupportingFile("helpers-header.mustache", sourceFolder, PREFIX + "Helpers.h"));
-	    supportingFiles.add(new SupportingFile("helpers-body.mustache", sourceFolder, PREFIX + "Helpers.cpp"));
-	    supportingFiles.add(new SupportingFile("apiclient-header.mustache", sourceFolder, PREFIX + "ApiClient.h"));
-	    supportingFiles.add(new SupportingFile("apiclient-body.mustache", sourceFolder, PREFIX + "ApiClient.cpp"));
-	    supportingFiles.add(new SupportingFile("object.mustache", sourceFolder, PREFIX + "Object.h"));
-	    supportingFiles.add(new SupportingFile("error-header.mustache", sourceFolder, PREFIX + "Error.h"));
-	    supportingFiles.add(new SupportingFile("error-body.mustache", sourceFolder, PREFIX + "Error.cpp"));	  
+    supportingFiles.clear();
+    supportingFiles.add(new SupportingFile("modelFactory.mustache", sourceFolder, PREFIX + "ModelFactory.h"));
+    supportingFiles.add(new SupportingFile("helpers-header.mustache", sourceFolder, PREFIX + "Helpers.h"));
+    supportingFiles.add(new SupportingFile("helpers-body.mustache", sourceFolder, PREFIX + "Helpers.cpp"));
+    supportingFiles.add(new SupportingFile("apiclient-header.mustache", sourceFolder, PREFIX + "ApiClient.h"));
+    supportingFiles.add(new SupportingFile("apiclient-body.mustache", sourceFolder, PREFIX + "ApiClient.cpp"));
+    supportingFiles.add(new SupportingFile("object.mustache", sourceFolder, PREFIX + "Object.h"));
+    supportingFiles.add(new SupportingFile("error-header.mustache", sourceFolder, PREFIX + "Error.h"));
+    supportingFiles.add(new SupportingFile("error-body.mustache", sourceFolder, PREFIX + "Error.cpp"));	  
   }
   
   @Override
@@ -250,38 +250,37 @@ public class TizenClientCodegen extends DefaultCodegen implements CodegenConfig 
     return "_" + name;
   }
 
-public Set<String> getFoundationClasses() {
-	return foundationClasses;
-}
+  public Set<String> getFoundationClasses() {
+    return foundationClasses;
+  }
 
-public void setFoundationClasses(Set<String> foundationClasses) {
-	this.foundationClasses = foundationClasses;
-}
+  public void setFoundationClasses(Set<String> foundationClasses) {
+    this.foundationClasses = foundationClasses;
+  }
 
-public String getSourceFolder() {
-	return sourceFolder;
-}
+  public String getSourceFolder() {
+    return sourceFolder;
+  }
 
-public void setSourceFolder(String sourceFolder) {
-	this.sourceFolder = sourceFolder;
-	init();
-}
+  public void setSourceFolder(String sourceFolder) {
+    this.sourceFolder = sourceFolder;
+    init();
+  }
 
-public static String getPREFIX() {
-	return PREFIX;
-}
+  public static String getPREFIX() {
+    return PREFIX;
+  }
 
-public static void setPREFIX(String pREFIX) {
-	PREFIX = pREFIX;
-}
+  public static void setPREFIX(String pREFIX) {
+    PREFIX = pREFIX;
+  }
 
-public Map<String, String> getNamespaces() {
-	return namespaces;
-}
+  public Map<String, String> getNamespaces() {
+    return namespaces;
+  }
 
-public void setNamespaces(Map<String, String> namespaces) {
-	this.namespaces = namespaces;
-}
-  
+  public void setNamespaces(Map<String, String> namespaces) {
+    this.namespaces = namespaces;
+  }
 
 }

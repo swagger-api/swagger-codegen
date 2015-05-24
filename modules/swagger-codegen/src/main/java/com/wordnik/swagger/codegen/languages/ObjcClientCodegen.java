@@ -99,24 +99,25 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
   }
 
   protected void init() {
-	    String appName = System.getProperty("appName");
-	    if(appName == null) {
-	      appName = "swaggerClient";
-	    }	  
-	    additionalProperties.put("projectName", appName);
-	  supportingFiles.clear();
-	    supportingFiles.add(new SupportingFile("SWGObject.h", sourceFolder, "SWGObject.h"));
-	    supportingFiles.add(new SupportingFile("SWGObject.m", sourceFolder, "SWGObject.m"));
-	    supportingFiles.add(new SupportingFile("SWGQueryParamCollection.h", sourceFolder, "SWGQueryParamCollection.h"));
-	    supportingFiles.add(new SupportingFile("SWGQueryParamCollection.m", sourceFolder, "SWGQueryParamCollection.m"));
-	    supportingFiles.add(new SupportingFile("SWGApiClient.h", sourceFolder, "SWGApiClient.h"));
-	    supportingFiles.add(new SupportingFile("SWGApiClient.m", sourceFolder, "SWGApiClient.m"));
-	    supportingFiles.add(new SupportingFile("SWGFile.h", sourceFolder, "SWGFile.h"));
-	    supportingFiles.add(new SupportingFile("SWGFile.m", sourceFolder, "SWGFile.m"));
-	    supportingFiles.add(new SupportingFile("SWGDate.h", sourceFolder, "SWGDate.h"));
-	    supportingFiles.add(new SupportingFile("SWGDate.m", sourceFolder, "SWGDate.m"));
-	    supportingFiles.add(new SupportingFile("Podfile.mustache", "", "Podfile"));	  
+    String appName = System.getProperty("appName");
+    if(appName == null) {
+      appName = "swaggerClient";
+    }
+    additionalProperties.put("projectName", appName);
+    supportingFiles.clear();
+    supportingFiles.add(new SupportingFile("SWGObject.h", sourceFolder, "SWGObject.h"));
+    supportingFiles.add(new SupportingFile("SWGObject.m", sourceFolder, "SWGObject.m"));
+    supportingFiles.add(new SupportingFile("SWGQueryParamCollection.h", sourceFolder, "SWGQueryParamCollection.h"));
+    supportingFiles.add(new SupportingFile("SWGQueryParamCollection.m", sourceFolder, "SWGQueryParamCollection.m"));
+    supportingFiles.add(new SupportingFile("SWGApiClient.h", sourceFolder, "SWGApiClient.h"));
+    supportingFiles.add(new SupportingFile("SWGApiClient.m", sourceFolder, "SWGApiClient.m"));
+    supportingFiles.add(new SupportingFile("SWGFile.h", sourceFolder, "SWGFile.h"));
+    supportingFiles.add(new SupportingFile("SWGFile.m", sourceFolder, "SWGFile.m"));
+    supportingFiles.add(new SupportingFile("SWGDate.h", sourceFolder, "SWGDate.h"));
+    supportingFiles.add(new SupportingFile("SWGDate.m", sourceFolder, "SWGDate.m"));
+    supportingFiles.add(new SupportingFile("Podfile.mustache", "", "Podfile"));	  
   }
+
   @Override
   public String toInstantiationType(Property p) {
     if (p instanceof MapProperty) {
@@ -212,18 +213,18 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
     }
   }
 
-    @Override
-    protected void setNonArrayMapProperty(CodegenProperty property, String type) {
-        super.setNonArrayMapProperty(property, type);
-        if("NSDictionary".equals(type)) {
-            property.setter = "initWithDictionary";
-        }
-        else {
-            property.setter = "initWithValues";
-        }
+  @Override
+  protected void setNonArrayMapProperty(CodegenProperty property, String type) {
+    super.setNonArrayMapProperty(property, type);
+    if("NSDictionary".equals(type)) {
+      property.setter = "initWithDictionary";
     }
+    else {
+      property.setter = "initWithValues";
+    }
+  }
 
-    @Override
+  @Override
   public String toModelImport(String name) {
     if("".equals(modelPackage()))
       return name;
@@ -274,30 +275,29 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
     return "_" + name;
   }
 
-public Set<String> getFoundationClasses() {
-	return foundationClasses;
-}
+  public Set<String> getFoundationClasses() {
+    return foundationClasses;
+  }
 
-public void setFoundationClasses(Set<String> foundationClasses) {
-	this.foundationClasses = foundationClasses;
-}
+  public void setFoundationClasses(Set<String> foundationClasses) {
+    this.foundationClasses = foundationClasses;
+  }
 
-public String getSourceFolder() {
-	return sourceFolder;
-}
+  public String getSourceFolder() {
+    return sourceFolder;
+  }
 
-public void setSourceFolder(String sourceFolder) {
-	this.sourceFolder = sourceFolder;
-	init();
-}
+  public void setSourceFolder(String sourceFolder) {
+    this.sourceFolder = sourceFolder;
+    init();
+  }
 
-public static String getPREFIX() {
-	return PREFIX;
-}
+  public static String getPREFIX() {
+    return PREFIX;
+  }
 
-public static void setPREFIX(String pREFIX) {
-	PREFIX = pREFIX;
-}
-
+  public static void setPREFIX(String pREFIX) {
+    PREFIX = pREFIX;
+  }
 
 }
