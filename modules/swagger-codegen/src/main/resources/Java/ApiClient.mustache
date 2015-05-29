@@ -5,16 +5,14 @@ import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.api.client.filter.LoggingFilter;
-import com.sun.jersey.api.client.WebResource.Builder;
-import com.sun.jersey.multipart.FormDataMultiPart;
-
-import javax.ws.rs.core.Response.Status.Family;
-import javax.ws.rs.core.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.MultipartBuilder;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.Headers;
 
 import java.util.Collection;
 import java.util.Map;
@@ -25,7 +23,9 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import java.net.URLEncoder;
+import java.net.URLConnection;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
@@ -34,7 +34,6 @@ import java.text.SimpleDateFormat;
 import java.text.ParseException;
 
 public class ApiClient {
-  private Map<String, Client> hostMap = new HashMap<String, Client>();
   private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
   private boolean isDebug = false;
   private String basePath = "{{basePath}}";
@@ -42,18 +41,22 @@ public class ApiClient {
   private DateFormat dateFormat;
   private DateFormat datetimeFormat;
 
+  private OkHttpClient httpClient;
+
   public ApiClient() {
     // Use ISO 8601 format for date and datetime.
     // See https://en.wikipedia.org/wiki/ISO_8601
-    this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    this.datetimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+    dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    datetimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
     // Use UTC as the default time zone.
-    this.dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-    this.datetimeFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+    dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+    datetimeFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
     // Set default User-Agent.
     setUserAgent("Java-Swagger");
+
+    httpClient = new OkHttpClient();
   }
 
   public String getBasePath() {
@@ -128,183 +131,204 @@ public class ApiClient {
   }
 
   public String escapeString(String str) {
-    try{
+    try {
       return URLEncoder.encode(str, "utf8").replaceAll("\\+", "%20");
-    }
-    catch(UnsupportedEncodingException e) {
+    } catch (UnsupportedEncodingException e) {
       return str;
     }
   }
 
   public Object deserialize(String json, String containerType, Class cls) throws ApiException {
-    if(null != containerType) {
-        containerType = containerType.toLowerCase();
+    if (containerType != null) {
+      containerType = containerType.toLowerCase();
     }
-    try{
-      if("list".equals(containerType) || "array".equals(containerType)) {
+    try {
+      if ("list".equals(containerType) || "array".equals(containerType)) {
         JavaType typeInfo = JsonUtil.getJsonMapper().getTypeFactory().constructCollectionType(List.class, cls);
         List response = (List<?>) JsonUtil.getJsonMapper().readValue(json, typeInfo);
         return response;
-      }
-      else if(String.class.equals(cls)) {
-        if(json != null && json.startsWith("\"") && json.endsWith("\"") && json.length() > 1)
+      } else if (String.class.equals(cls)) {
+        if (json != null && json.startsWith("\"") && json.endsWith("\"") && json.length() > 1)
           return json.substring(1, json.length() - 2);
         else
           return json;
-      }
-      else {
+      } else {
         return JsonUtil.getJsonMapper().readValue(json, cls);
       }
-    }
-    catch (IOException e) {
+    } catch (IOException e) {
       throw new ApiException(500, e.getMessage());
     }
   }
 
-  public String serialize(Object obj) throws ApiException {
-    try {
-      if (obj != null)
-        return JsonUtil.getJsonMapper().writeValueAsString(obj);
-      else
-        return null;
-    }
-    catch (Exception e) {
-      throw new ApiException(500, e.getMessage());
-    }
-  }
-
-  public String invokeAPI(String path, String method, Map<String, String> queryParams, Object body, Map<String, String> headerParams, Map<String, String> formParams, String contentType) throws ApiException {
-    Client client = getClient();
-
-    StringBuilder b = new StringBuilder();
-
-    for(String key : queryParams.keySet()) {
-      String value = queryParams.get(key);
-      if (value != null){
-        if(b.toString().length() == 0)
-          b.append("?");
+  public String serialize(Object obj, String contentType) throws ApiException {
+    if ("application/json".equals(contentType)) {
+      try {
+        if (obj != null)
+          return JsonUtil.getJsonMapper().writeValueAsString(obj);
         else
-          b.append("&");
-        b.append(escapeString(key)).append("=").append(escapeString(value));
+          return null;
       }
-    }
-    String querystring = b.toString();
-
-    Builder builder = client.resource(basePath + path + querystring).accept("application/json");
-    for(String key : headerParams.keySet()) {
-      builder = builder.header(key, headerParams.get(key));
-    }
-
-    for(String key : defaultHeaderMap.keySet()) {
-      if(!headerParams.containsKey(key)) {
-        builder = builder.header(key, defaultHeaderMap.get(key));
+      catch (Exception e) {
+        throw new ApiException(500, e.getMessage());
       }
+    } else {
+      throw new ApiException(500, "Content type \"" + contentType + "\" is not supported");
     }
-    ClientResponse response = null;
+  }
 
-    if("GET".equals(method)) {
-      response = (ClientResponse) builder.get(ClientResponse.class);
+  public String invokeAPI(String path, String method, Map<String, Object> queryParams, Object body, Map<String, Object> headerParams, Map<String, Object> formParams, String contentType) throws ApiException {
+    final String url = buildUrl(path, queryParams);
+    Request.Builder reqBuilder = new Request.Builder().url(url);
+    processHeaderParams(headerParams, reqBuilder);
+
+    if (contentType == null) {
+      // ensuring a default content type
+      contentType = "application/json";
     }
-    else if ("POST".equals(method)) {
-      if (contentType.startsWith("application/x-www-form-urlencoded")) {
-        String encodedFormParams = this
-            .getXWWWFormUrlencodedParams(formParams);
-        response = builder.type(contentType).post(ClientResponse.class,
-            encodedFormParams);
-      } else if (body == null) {
-        response = builder.post(ClientResponse.class, null);
-      } else if(body instanceof FormDataMultiPart) {
-        response = builder.type(contentType).post(ClientResponse.class, body);
-      }
-      else
-        response = builder.type(contentType).post(ClientResponse.class, serialize(body));
-    }
-    else if ("PUT".equals(method)) {
-      if ("application/x-www-form-urlencoded".equals(contentType)) {
-          String encodedFormParams = this
-              .getXWWWFormUrlencodedParams(formParams);
-          response = builder.type(contentType).put(ClientResponse.class,
-              encodedFormParams);
-      } else if(body == null) {
-        response = builder.put(ClientResponse.class, serialize(body));
+
+    RequestBody reqBody;
+    if ("GET".equals(method) || "HEAD".equals(method)) {
+      reqBody = null;
+    } else if ("application/x-www-form-urlencoded".equals(contentType)) {
+      reqBody = buildRequestBodyFormEncoding(formParams);
+    } else if ("multipart/form-data".equals(contentType)) {
+      reqBody = buildRequestBodyMultipart(formParams);
+    } else if (body == null) {
+      if ("DELETE".equals(method)) {
+        // allow calling DELETE without sending a request body
+        reqBody = null;
       } else {
-          response = builder.type(contentType).put(ClientResponse.class, serialize(body));
+        // use an empty request body (for POST, PUT and PATCH)
+        reqBody = RequestBody.create(MediaType.parse(contentType), "");
       }
+    } else {
+      reqBody = RequestBody.create(MediaType.parse(contentType), serialize(body, contentType));
     }
-    else if ("DELETE".equals(method)) {
-      if ("application/x-www-form-urlencoded".equals(contentType)) {
-        String encodedFormParams = this
-            .getXWWWFormUrlencodedParams(formParams);
-        response = builder.type(contentType).delete(ClientResponse.class,
-            encodedFormParams);
-      } else if(body == null) {
-        response = builder.delete(ClientResponse.class);
+
+    Request request;
+    if ("GET".equals(method)) {
+      request = reqBuilder.get().build();
+    } else if ("HEAD".equals(method)) {
+      request = reqBuilder.head().build();
+    } else if ("POST".equals(method)) {
+      request = reqBuilder.post(reqBody).build();
+    } else if ("PUT".equals(method)) {
+      request = reqBuilder.put(reqBody).build();
+    } else if ("PATCH".equals(method)) {
+      request = reqBuilder.patch(reqBody).build();
+    } else if ("DELETE".equals(method)) {
+      if (reqBody == null) {
+        // calling DELETE without sending a request body
+        request = reqBuilder.delete().build();
       } else {
-        response = builder.type(contentType).delete(ClientResponse.class, serialize(body));
+        request = reqBuilder.delete(reqBody).build();
       }
-    }
-    else {
+    } else {
       throw new ApiException(500, "unknown method type " + method);
     }
 
-    if(response.getClientResponseStatus() == ClientResponse.Status.NO_CONTENT) {
-      return null;
-    }
-    else if(response.getClientResponseStatus().getFamily() == Family.SUCCESSFUL) {
-      if(response.hasEntity()) {
-        return (String) response.getEntity(String.class);
-      }
-      else {
-        return "";
-      }
-    }
-    else {
-      String message = "error";
-      if(response.hasEntity()) {
-        try{
-          message = String.valueOf(response.getEntity(String.class));
+    try {
+      Response response = httpClient.newCall(request).execute();
+      if (response.isSuccessful()) {
+        if (response.code() == 204) {
+          // returning null for status code 204 (No Content)
+          return null;
+        } else if (response.body() != null) {
+          return response.body().string();
+        } else {
+          return "";
         }
-        catch (RuntimeException e) {
-          // e.printStackTrace();
-        }
+      } else {
+        String message = null;
+        if (response.body() != null)
+          message = response.body().string();
+        if (message == null)
+          message = "error";
+        throw new ApiException(response.code(), message);
       }
-      throw new ApiException(
-                response.getClientResponseStatus().getStatusCode(),
-                message);
+    } catch (IOException e) {
+      throw new ApiException(500, e.getMessage());
     }
   }
 
-  private String getXWWWFormUrlencodedParams(Map<String, String> formParams) {
-    StringBuilder formParamBuilder = new StringBuilder();
-
-    for (Entry<String, String> param : formParams.entrySet()) {
-      String keyStr = parameterToString(param.getKey());
-      String valueStr = parameterToString(param.getValue());
-
-      try {
-        formParamBuilder.append(URLEncoder.encode(keyStr, "utf8"))
-            .append("=")
-            .append(URLEncoder.encode(valueStr, "utf8"));
-        formParamBuilder.append("&");
-      } catch (UnsupportedEncodingException e) {
-        // move on to next
+  /**
+   * Build full URL by concatenating base path, the given sub path and query parameters.
+   *
+   * @param path The sub path
+   * @param queryParams The query parameters
+   * @return The full URL
+   */
+  protected String buildUrl(String path, Map<String, Object> queryParams) {
+    StringBuilder query = new StringBuilder();
+    for (Entry<String, Object> param : queryParams.entrySet()) {
+      if (param.getValue() != null) {
+        if (query.toString().length() == 0)
+          query.append("?");
+        else
+          query.append("&");
+        String value = parameterToString(param.getValue());
+        query.append(escapeString(param.getKey())).append("=").append(escapeString(value));
       }
     }
-    String encodedFormParams = formParamBuilder.toString();
-    if (encodedFormParams.endsWith("&")) {
-      encodedFormParams = encodedFormParams.substring(0,
-          encodedFormParams.length() - 1);
-    }
-    return encodedFormParams;
+    return basePath + path + query.toString();
   }
 
-  private Client getClient() {
-    if(!hostMap.containsKey(basePath)) {
-      Client client = Client.create();
-      if(isDebug)
-        client.addFilter(new LoggingFilter());
-      hostMap.put(basePath, client);
+  /**
+   * Set header parameters to the request builder, including default headers.
+   */
+  protected void processHeaderParams(Map<String, Object> headerParams, Request.Builder reqBuilder) {
+    for (Entry<String, Object> param : headerParams.entrySet()) {
+      reqBuilder.header(param.getKey(), parameterToString(param.getValue()));
     }
-    return hostMap.get(basePath);
+    for (Entry<String, String> header : defaultHeaderMap.entrySet()) {
+      if (!headerParams.containsKey(header.getKey())) {
+        reqBuilder.header(header.getKey(), parameterToString(header.getValue()));
+      }
+    }
+  }
+
+  /**
+   * Build a form-encoding request body with the given form parameters.
+   */
+  protected RequestBody buildRequestBodyFormEncoding(Map<String, Object> formParams) {
+    FormEncodingBuilder formBuilder  = new FormEncodingBuilder();
+    for (Entry<String, Object> param : formParams.entrySet()) {
+      formBuilder.add(param.getKey(), parameterToString(param.getValue()));
+    }
+    return formBuilder.build();
+  }
+
+  /**
+   * Build a multipart (file uploading) request body with the given form parameters,
+   * which could contain text fields and file fields.
+   */
+  protected RequestBody buildRequestBodyMultipart(Map<String, Object> formParams) {
+    MultipartBuilder mpBuilder = new MultipartBuilder().type(MultipartBuilder.FORM);
+    for (Entry<String, Object> param : formParams.entrySet()) {
+      Headers partHeaders = Headers.of("Content-Disposition", "form-data; name=\"" + param.getKey() + "\"");
+      if (param.getValue() instanceof File) {
+        File file = (File) param.getValue();
+        MediaType mediaType = MediaType.parse(guessContentTypeFromFile(file));
+        mpBuilder.addPart(partHeaders, RequestBody.create(mediaType, file));
+      } else {
+        mpBuilder.addPart(partHeaders, RequestBody.create(null, parameterToString(param.getValue())));
+      }
+    }
+    return mpBuilder.build();
+  }
+
+  /**
+   * Guess Content-Type header from the given file (defaults to "application/octet-stream").
+   *
+   * @param file The given file
+   * @return The Content-Type guessed
+   */
+  protected String guessContentTypeFromFile(File file) {
+    String contentType = URLConnection.guessContentTypeFromName(file.getName());
+    if (contentType == null) {
+      return "application/octet-stream";
+    } else {
+      return contentType;
+    }
   }
 }

@@ -11,11 +11,6 @@ import java.util.*;
 {{#imports}}import {{import}};
 {{/imports}}
 
-import com.sun.jersey.multipart.FormDataMultiPart;
-import com.sun.jersey.multipart.file.FileDataBodyPart;
-
-import javax.ws.rs.core.MediaType;
-
 import java.io.File;
 import java.util.Map;
 import java.util.HashMap;
@@ -47,7 +42,7 @@ public class {{classname}} {
 {{#allParams}}   * @param {{paramName}} {{description}}
 {{/allParams}}   * @return {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}
    */
-  public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws ApiException {
+  public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{nickname}}({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws ApiException {
     Object postBody = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
     {{#allParams}}{{#required}}
     // verify the required parameter '{{paramName}}' is set
@@ -60,47 +55,27 @@ public class {{classname}} {
     String path = "{{path}}".replaceAll("\\{format\\}","json"){{#pathParams}}
       .replaceAll("\\{" + "{{paramName}}" + "\\}", apiClient.escapeString({{{paramName}}}.toString())){{/pathParams}};
 
-    // query params
-    Map<String, String> queryParams = new HashMap<String, String>();
-    Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Map<String, Object> queryParams = new HashMap<String, Object>();{{#queryParams}}
+    if ({{paramName}} != null)
+      queryParams.put("{{baseName}}", {{paramName}});{{/queryParams}}
 
-    {{#queryParams}}if ({{paramName}} != null)
-      queryParams.put("{{baseName}}", apiClient.parameterToString({{paramName}}));
-    {{/queryParams}}
-    {{#headerParams}}headerParams.put("{{baseName}}", apiClient.parameterToString({{paramName}}));
-    {{/headerParams}}
+    Map<String, Object> headerParams = new HashMap<String, Object>();{{#headerParams}}
+    headerParams.put("{{baseName}}", {{paramName}});{{/headerParams}}
+
+    Map<String, Object> formParams = new HashMap<String, Object>();{{#formParams}}
+    formParams.put("{{baseName}}", {{paramName}});{{/formParams}}
+
     String[] contentTypes = {
       {{#consumes}}"{{mediaType}}"{{#hasMore}},{{/hasMore}}{{/consumes}}
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
-      {{#formParams}}{{#notFile}}
-      hasFields = true;
-      mp.field("{{baseName}}", apiClient.parameterToString({{paramName}}), MediaType.MULTIPART_FORM_DATA_TYPE);
-      {{/notFile}}{{#isFile}}
-      hasFields = true;
-      mp.field("{{baseName}}", file.getName());
-      mp.bodyPart(new FileDataBodyPart("{{baseName}}", {{paramName}}, MediaType.MULTIPART_FORM_DATA_TYPE));
-      {{/isFile}}{{/formParams}}
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-      {{#formParams}}{{#notFile}}formParams.put("{{baseName}}", apiClient.parameterToString({{paramName}}));{{/notFile}}
-      {{/formParams}}
-    }
-
     try {
       String response = apiClient.invokeAPI(path, "{{httpMethod}}", queryParams, postBody, headerParams, formParams, contentType);
-      if(response != null){
+      if (response != null) {
         return {{#returnType}}({{{returnType}}}) apiClient.deserialize(response, "{{returnContainer}}", {{returnBaseType}}.class){{/returnType}};
-      }
-      else {
+      } else {
         return {{#returnType}}null{{/returnType}};
       }
     } catch (ApiException ex) {
