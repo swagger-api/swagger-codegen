@@ -11,11 +11,6 @@ import java.util.*;
 import io.swagger.client.model.User;
 import java.util.*;
 
-import com.sun.jersey.multipart.FormDataMultiPart;
-import com.sun.jersey.multipart.file.FileDataBodyPart;
-
-import javax.ws.rs.core.MediaType;
-
 import java.io.File;
 import java.util.Map;
 import java.util.HashMap;
@@ -46,43 +41,30 @@ public class UserApi {
    * @param body Created user object
    * @return void
    */
-  public void createUser (User body) throws ApiException {
+  public void createUser(User body) throws ApiException {
     Object postBody = body;
     
 
     // create path and map variables
     String path = "/user".replaceAll("\\{format\\}","json");
 
-    // query params
-    Map<String, String> queryParams = new HashMap<String, String>();
-    Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Map<String, Object> queryParams = new HashMap<String, Object>();
 
-    
-    
+    Map<String, Object> headerParams = new HashMap<String, Object>();
+
+    Map<String, Object> formParams = new HashMap<String, Object>();
+
     String[] contentTypes = {
       
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
-      
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-      
-    }
-
     try {
       String response = apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType);
-      if(response != null){
+      if (response != null) {
         return ;
-      }
-      else {
+      } else {
         return ;
       }
     } catch (ApiException ex) {
@@ -96,43 +78,30 @@ public class UserApi {
    * @param body List of user object
    * @return void
    */
-  public void createUsersWithArrayInput (List<User> body) throws ApiException {
+  public void createUsersWithArrayInput(List<User> body) throws ApiException {
     Object postBody = body;
     
 
     // create path and map variables
     String path = "/user/createWithArray".replaceAll("\\{format\\}","json");
 
-    // query params
-    Map<String, String> queryParams = new HashMap<String, String>();
-    Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Map<String, Object> queryParams = new HashMap<String, Object>();
 
-    
-    
+    Map<String, Object> headerParams = new HashMap<String, Object>();
+
+    Map<String, Object> formParams = new HashMap<String, Object>();
+
     String[] contentTypes = {
       
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
-      
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-      
-    }
-
     try {
       String response = apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType);
-      if(response != null){
+      if (response != null) {
         return ;
-      }
-      else {
+      } else {
         return ;
       }
     } catch (ApiException ex) {
@@ -146,43 +115,30 @@ public class UserApi {
    * @param body List of user object
    * @return void
    */
-  public void createUsersWithListInput (List<User> body) throws ApiException {
+  public void createUsersWithListInput(List<User> body) throws ApiException {
     Object postBody = body;
     
 
     // create path and map variables
     String path = "/user/createWithList".replaceAll("\\{format\\}","json");
 
-    // query params
-    Map<String, String> queryParams = new HashMap<String, String>();
-    Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Map<String, Object> queryParams = new HashMap<String, Object>();
 
-    
-    
+    Map<String, Object> headerParams = new HashMap<String, Object>();
+
+    Map<String, Object> formParams = new HashMap<String, Object>();
+
     String[] contentTypes = {
       
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
-      
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-      
-    }
-
     try {
       String response = apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType);
-      if(response != null){
+      if (response != null) {
         return ;
-      }
-      else {
+      } else {
         return ;
       }
     } catch (ApiException ex) {
@@ -197,47 +153,34 @@ public class UserApi {
    * @param password The password for login in clear text
    * @return String
    */
-  public String loginUser (String username, String password) throws ApiException {
+  public String loginUser(String username, String password) throws ApiException {
     Object postBody = null;
     
 
     // create path and map variables
     String path = "/user/login".replaceAll("\\{format\\}","json");
 
-    // query params
-    Map<String, String> queryParams = new HashMap<String, String>();
-    Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
-
+    Map<String, Object> queryParams = new HashMap<String, Object>();
     if (username != null)
-      queryParams.put("username", apiClient.parameterToString(username));
+      queryParams.put("username", username);
     if (password != null)
-      queryParams.put("password", apiClient.parameterToString(password));
-    
-    
+      queryParams.put("password", password);
+
+    Map<String, Object> headerParams = new HashMap<String, Object>();
+
+    Map<String, Object> formParams = new HashMap<String, Object>();
+
     String[] contentTypes = {
       
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
-      
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-      
-    }
-
     try {
       String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType);
-      if(response != null){
+      if (response != null) {
         return (String) apiClient.deserialize(response, "", String.class);
-      }
-      else {
+      } else {
         return null;
       }
     } catch (ApiException ex) {
@@ -250,43 +193,30 @@ public class UserApi {
    * 
    * @return void
    */
-  public void logoutUser () throws ApiException {
+  public void logoutUser() throws ApiException {
     Object postBody = null;
     
 
     // create path and map variables
     String path = "/user/logout".replaceAll("\\{format\\}","json");
 
-    // query params
-    Map<String, String> queryParams = new HashMap<String, String>();
-    Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Map<String, Object> queryParams = new HashMap<String, Object>();
 
-    
-    
+    Map<String, Object> headerParams = new HashMap<String, Object>();
+
+    Map<String, Object> formParams = new HashMap<String, Object>();
+
     String[] contentTypes = {
       
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
-      
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-      
-    }
-
     try {
       String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType);
-      if(response != null){
+      if (response != null) {
         return ;
-      }
-      else {
+      } else {
         return ;
       }
     } catch (ApiException ex) {
@@ -300,7 +230,7 @@ public class UserApi {
    * @param username The name that needs to be fetched. Use user1 for testing. 
    * @return User
    */
-  public User getUserByName (String username) throws ApiException {
+  public User getUserByName(String username) throws ApiException {
     Object postBody = null;
     
     // verify the required parameter 'username' is set
@@ -313,36 +243,23 @@ public class UserApi {
     String path = "/user/{username}".replaceAll("\\{format\\}","json")
       .replaceAll("\\{" + "username" + "\\}", apiClient.escapeString(username.toString()));
 
-    // query params
-    Map<String, String> queryParams = new HashMap<String, String>();
-    Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Map<String, Object> queryParams = new HashMap<String, Object>();
 
-    
-    
+    Map<String, Object> headerParams = new HashMap<String, Object>();
+
+    Map<String, Object> formParams = new HashMap<String, Object>();
+
     String[] contentTypes = {
       
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
-      
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-      
-    }
-
     try {
       String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType);
-      if(response != null){
+      if (response != null) {
         return (User) apiClient.deserialize(response, "", User.class);
-      }
-      else {
+      } else {
         return null;
       }
     } catch (ApiException ex) {
@@ -357,7 +274,7 @@ public class UserApi {
    * @param body Updated user object
    * @return void
    */
-  public void updateUser (String username, User body) throws ApiException {
+  public void updateUser(String username, User body) throws ApiException {
     Object postBody = body;
     
     // verify the required parameter 'username' is set
@@ -370,36 +287,23 @@ public class UserApi {
     String path = "/user/{username}".replaceAll("\\{format\\}","json")
       .replaceAll("\\{" + "username" + "\\}", apiClient.escapeString(username.toString()));
 
-    // query params
-    Map<String, String> queryParams = new HashMap<String, String>();
-    Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Map<String, Object> queryParams = new HashMap<String, Object>();
 
-    
-    
+    Map<String, Object> headerParams = new HashMap<String, Object>();
+
+    Map<String, Object> formParams = new HashMap<String, Object>();
+
     String[] contentTypes = {
       
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
-      
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-      
-    }
-
     try {
       String response = apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formParams, contentType);
-      if(response != null){
+      if (response != null) {
         return ;
-      }
-      else {
+      } else {
         return ;
       }
     } catch (ApiException ex) {
@@ -413,7 +317,7 @@ public class UserApi {
    * @param username The name that needs to be deleted
    * @return void
    */
-  public void deleteUser (String username) throws ApiException {
+  public void deleteUser(String username) throws ApiException {
     Object postBody = null;
     
     // verify the required parameter 'username' is set
@@ -426,36 +330,23 @@ public class UserApi {
     String path = "/user/{username}".replaceAll("\\{format\\}","json")
       .replaceAll("\\{" + "username" + "\\}", apiClient.escapeString(username.toString()));
 
-    // query params
-    Map<String, String> queryParams = new HashMap<String, String>();
-    Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Map<String, Object> queryParams = new HashMap<String, Object>();
 
-    
-    
+    Map<String, Object> headerParams = new HashMap<String, Object>();
+
+    Map<String, Object> formParams = new HashMap<String, Object>();
+
     String[] contentTypes = {
       
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
-      
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-      
-    }
-
     try {
       String response = apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, contentType);
-      if(response != null){
+      if (response != null) {
         return ;
-      }
-      else {
+      } else {
         return ;
       }
     } catch (ApiException ex) {

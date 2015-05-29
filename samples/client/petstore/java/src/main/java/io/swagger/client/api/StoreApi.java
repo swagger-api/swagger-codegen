@@ -11,11 +11,6 @@ import java.util.*;
 import java.util.Map;
 import io.swagger.client.model.Order;
 
-import com.sun.jersey.multipart.FormDataMultiPart;
-import com.sun.jersey.multipart.file.FileDataBodyPart;
-
-import javax.ws.rs.core.MediaType;
-
 import java.io.File;
 import java.util.Map;
 import java.util.HashMap;
@@ -45,43 +40,30 @@ public class StoreApi {
    * Returns a map of status codes to quantities
    * @return Map<String, Integer>
    */
-  public Map<String, Integer> getInventory () throws ApiException {
+  public Map<String, Integer> getInventory() throws ApiException {
     Object postBody = null;
     
 
     // create path and map variables
     String path = "/store/inventory".replaceAll("\\{format\\}","json");
 
-    // query params
-    Map<String, String> queryParams = new HashMap<String, String>();
-    Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Map<String, Object> queryParams = new HashMap<String, Object>();
 
-    
-    
+    Map<String, Object> headerParams = new HashMap<String, Object>();
+
+    Map<String, Object> formParams = new HashMap<String, Object>();
+
     String[] contentTypes = {
       
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
-      
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-      
-    }
-
     try {
       String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType);
-      if(response != null){
+      if (response != null) {
         return (Map<String, Integer>) apiClient.deserialize(response, "map", Map.class);
-      }
-      else {
+      } else {
         return null;
       }
     } catch (ApiException ex) {
@@ -95,43 +77,30 @@ public class StoreApi {
    * @param body order placed for purchasing the pet
    * @return Order
    */
-  public Order placeOrder (Order body) throws ApiException {
+  public Order placeOrder(Order body) throws ApiException {
     Object postBody = body;
     
 
     // create path and map variables
     String path = "/store/order".replaceAll("\\{format\\}","json");
 
-    // query params
-    Map<String, String> queryParams = new HashMap<String, String>();
-    Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Map<String, Object> queryParams = new HashMap<String, Object>();
 
-    
-    
+    Map<String, Object> headerParams = new HashMap<String, Object>();
+
+    Map<String, Object> formParams = new HashMap<String, Object>();
+
     String[] contentTypes = {
       
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
-      
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-      
-    }
-
     try {
       String response = apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType);
-      if(response != null){
+      if (response != null) {
         return (Order) apiClient.deserialize(response, "", Order.class);
-      }
-      else {
+      } else {
         return null;
       }
     } catch (ApiException ex) {
@@ -145,7 +114,7 @@ public class StoreApi {
    * @param orderId ID of pet that needs to be fetched
    * @return Order
    */
-  public Order getOrderById (String orderId) throws ApiException {
+  public Order getOrderById(String orderId) throws ApiException {
     Object postBody = null;
     
     // verify the required parameter 'orderId' is set
@@ -158,36 +127,23 @@ public class StoreApi {
     String path = "/store/order/{orderId}".replaceAll("\\{format\\}","json")
       .replaceAll("\\{" + "orderId" + "\\}", apiClient.escapeString(orderId.toString()));
 
-    // query params
-    Map<String, String> queryParams = new HashMap<String, String>();
-    Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Map<String, Object> queryParams = new HashMap<String, Object>();
 
-    
-    
+    Map<String, Object> headerParams = new HashMap<String, Object>();
+
+    Map<String, Object> formParams = new HashMap<String, Object>();
+
     String[] contentTypes = {
       
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
-      
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-      
-    }
-
     try {
       String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType);
-      if(response != null){
+      if (response != null) {
         return (Order) apiClient.deserialize(response, "", Order.class);
-      }
-      else {
+      } else {
         return null;
       }
     } catch (ApiException ex) {
@@ -201,7 +157,7 @@ public class StoreApi {
    * @param orderId ID of the order that needs to be deleted
    * @return void
    */
-  public void deleteOrder (String orderId) throws ApiException {
+  public void deleteOrder(String orderId) throws ApiException {
     Object postBody = null;
     
     // verify the required parameter 'orderId' is set
@@ -214,36 +170,23 @@ public class StoreApi {
     String path = "/store/order/{orderId}".replaceAll("\\{format\\}","json")
       .replaceAll("\\{" + "orderId" + "\\}", apiClient.escapeString(orderId.toString()));
 
-    // query params
-    Map<String, String> queryParams = new HashMap<String, String>();
-    Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Map<String, Object> queryParams = new HashMap<String, Object>();
 
-    
-    
+    Map<String, Object> headerParams = new HashMap<String, Object>();
+
+    Map<String, Object> formParams = new HashMap<String, Object>();
+
     String[] contentTypes = {
       
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
-      
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-      
-    }
-
     try {
       String response = apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, contentType);
-      if(response != null){
+      if (response != null) {
         return ;
-      }
-      else {
+      } else {
         return ;
       }
     } catch (ApiException ex) {

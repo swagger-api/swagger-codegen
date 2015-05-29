@@ -11,11 +11,6 @@ import java.util.*;
 import io.swagger.client.model.Pet;
 import java.io.File;
 
-import com.sun.jersey.multipart.FormDataMultiPart;
-import com.sun.jersey.multipart.file.FileDataBodyPart;
-
-import javax.ws.rs.core.MediaType;
-
 import java.io.File;
 import java.util.Map;
 import java.util.HashMap;
@@ -46,43 +41,30 @@ public class PetApi {
    * @param body Pet object that needs to be added to the store
    * @return void
    */
-  public void updatePet (Pet body) throws ApiException {
+  public void updatePet(Pet body) throws ApiException {
     Object postBody = body;
     
 
     // create path and map variables
     String path = "/pet".replaceAll("\\{format\\}","json");
 
-    // query params
-    Map<String, String> queryParams = new HashMap<String, String>();
-    Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Map<String, Object> queryParams = new HashMap<String, Object>();
 
-    
-    
+    Map<String, Object> headerParams = new HashMap<String, Object>();
+
+    Map<String, Object> formParams = new HashMap<String, Object>();
+
     String[] contentTypes = {
       "application/json","application/xml"
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
-      
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-      
-    }
-
     try {
       String response = apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formParams, contentType);
-      if(response != null){
+      if (response != null) {
         return ;
-      }
-      else {
+      } else {
         return ;
       }
     } catch (ApiException ex) {
@@ -96,43 +78,30 @@ public class PetApi {
    * @param body Pet object that needs to be added to the store
    * @return void
    */
-  public void addPet (Pet body) throws ApiException {
+  public void addPet(Pet body) throws ApiException {
     Object postBody = body;
     
 
     // create path and map variables
     String path = "/pet".replaceAll("\\{format\\}","json");
 
-    // query params
-    Map<String, String> queryParams = new HashMap<String, String>();
-    Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Map<String, Object> queryParams = new HashMap<String, Object>();
 
-    
-    
+    Map<String, Object> headerParams = new HashMap<String, Object>();
+
+    Map<String, Object> formParams = new HashMap<String, Object>();
+
     String[] contentTypes = {
       "application/json","application/xml"
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
-      
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-      
-    }
-
     try {
       String response = apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType);
-      if(response != null){
+      if (response != null) {
         return ;
-      }
-      else {
+      } else {
         return ;
       }
     } catch (ApiException ex) {
@@ -146,45 +115,32 @@ public class PetApi {
    * @param status Status values that need to be considered for filter
    * @return List<Pet>
    */
-  public List<Pet> findPetsByStatus (List<String> status) throws ApiException {
+  public List<Pet> findPetsByStatus(List<String> status) throws ApiException {
     Object postBody = null;
     
 
     // create path and map variables
     String path = "/pet/findByStatus".replaceAll("\\{format\\}","json");
 
-    // query params
-    Map<String, String> queryParams = new HashMap<String, String>();
-    Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
-
+    Map<String, Object> queryParams = new HashMap<String, Object>();
     if (status != null)
-      queryParams.put("status", apiClient.parameterToString(status));
-    
-    
+      queryParams.put("status", status);
+
+    Map<String, Object> headerParams = new HashMap<String, Object>();
+
+    Map<String, Object> formParams = new HashMap<String, Object>();
+
     String[] contentTypes = {
       
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
-      
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-      
-    }
-
     try {
       String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType);
-      if(response != null){
+      if (response != null) {
         return (List<Pet>) apiClient.deserialize(response, "array", Pet.class);
-      }
-      else {
+      } else {
         return null;
       }
     } catch (ApiException ex) {
@@ -198,45 +154,32 @@ public class PetApi {
    * @param tags Tags to filter by
    * @return List<Pet>
    */
-  public List<Pet> findPetsByTags (List<String> tags) throws ApiException {
+  public List<Pet> findPetsByTags(List<String> tags) throws ApiException {
     Object postBody = null;
     
 
     // create path and map variables
     String path = "/pet/findByTags".replaceAll("\\{format\\}","json");
 
-    // query params
-    Map<String, String> queryParams = new HashMap<String, String>();
-    Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
-
+    Map<String, Object> queryParams = new HashMap<String, Object>();
     if (tags != null)
-      queryParams.put("tags", apiClient.parameterToString(tags));
-    
-    
+      queryParams.put("tags", tags);
+
+    Map<String, Object> headerParams = new HashMap<String, Object>();
+
+    Map<String, Object> formParams = new HashMap<String, Object>();
+
     String[] contentTypes = {
       
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
-      
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-      
-    }
-
     try {
       String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType);
-      if(response != null){
+      if (response != null) {
         return (List<Pet>) apiClient.deserialize(response, "array", Pet.class);
-      }
-      else {
+      } else {
         return null;
       }
     } catch (ApiException ex) {
@@ -250,7 +193,7 @@ public class PetApi {
    * @param petId ID of pet that needs to be fetched
    * @return Pet
    */
-  public Pet getPetById (Long petId) throws ApiException {
+  public Pet getPetById(Long petId) throws ApiException {
     Object postBody = null;
     
     // verify the required parameter 'petId' is set
@@ -263,36 +206,23 @@ public class PetApi {
     String path = "/pet/{petId}".replaceAll("\\{format\\}","json")
       .replaceAll("\\{" + "petId" + "\\}", apiClient.escapeString(petId.toString()));
 
-    // query params
-    Map<String, String> queryParams = new HashMap<String, String>();
-    Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Map<String, Object> queryParams = new HashMap<String, Object>();
 
-    
-    
+    Map<String, Object> headerParams = new HashMap<String, Object>();
+
+    Map<String, Object> formParams = new HashMap<String, Object>();
+
     String[] contentTypes = {
       
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
-      
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-      
-    }
-
     try {
       String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType);
-      if(response != null){
+      if (response != null) {
         return (Pet) apiClient.deserialize(response, "", Pet.class);
-      }
-      else {
+      } else {
         return null;
       }
     } catch (ApiException ex) {
@@ -308,7 +238,7 @@ public class PetApi {
    * @param status Updated status of the pet
    * @return void
    */
-  public void updatePetWithForm (String petId, String name, String status) throws ApiException {
+  public void updatePetWithForm(String petId, String name, String status) throws ApiException {
     Object postBody = null;
     
     // verify the required parameter 'petId' is set
@@ -321,44 +251,25 @@ public class PetApi {
     String path = "/pet/{petId}".replaceAll("\\{format\\}","json")
       .replaceAll("\\{" + "petId" + "\\}", apiClient.escapeString(petId.toString()));
 
-    // query params
-    Map<String, String> queryParams = new HashMap<String, String>();
-    Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Map<String, Object> queryParams = new HashMap<String, Object>();
 
-    
-    
+    Map<String, Object> headerParams = new HashMap<String, Object>();
+
+    Map<String, Object> formParams = new HashMap<String, Object>();
+    formParams.put("name", name);
+    formParams.put("status", status);
+
     String[] contentTypes = {
       "application/x-www-form-urlencoded"
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
-      
-      hasFields = true;
-      mp.field("name", apiClient.parameterToString(name), MediaType.MULTIPART_FORM_DATA_TYPE);
-      
-      hasFields = true;
-      mp.field("status", apiClient.parameterToString(status), MediaType.MULTIPART_FORM_DATA_TYPE);
-      
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-      formParams.put("name", apiClient.parameterToString(name));
-      formParams.put("status", apiClient.parameterToString(status));
-      
-    }
-
     try {
       String response = apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType);
-      if(response != null){
+      if (response != null) {
         return ;
-      }
-      else {
+      } else {
         return ;
       }
     } catch (ApiException ex) {
@@ -373,7 +284,7 @@ public class PetApi {
    * @param petId Pet id to delete
    * @return void
    */
-  public void deletePet (String apiKey, Long petId) throws ApiException {
+  public void deletePet(String apiKey, Long petId) throws ApiException {
     Object postBody = null;
     
     // verify the required parameter 'petId' is set
@@ -386,37 +297,24 @@ public class PetApi {
     String path = "/pet/{petId}".replaceAll("\\{format\\}","json")
       .replaceAll("\\{" + "petId" + "\\}", apiClient.escapeString(petId.toString()));
 
-    // query params
-    Map<String, String> queryParams = new HashMap<String, String>();
-    Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Map<String, Object> queryParams = new HashMap<String, Object>();
 
-    
-    headerParams.put("api_key", apiClient.parameterToString(apiKey));
-    
+    Map<String, Object> headerParams = new HashMap<String, Object>();
+    headerParams.put("api_key", apiKey);
+
+    Map<String, Object> formParams = new HashMap<String, Object>();
+
     String[] contentTypes = {
       
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
-      
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-      
-    }
-
     try {
       String response = apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, contentType);
-      if(response != null){
+      if (response != null) {
         return ;
-      }
-      else {
+      } else {
         return ;
       }
     } catch (ApiException ex) {
@@ -432,7 +330,7 @@ public class PetApi {
    * @param file file to upload
    * @return void
    */
-  public void uploadFile (Long petId, String additionalMetadata, File file) throws ApiException {
+  public void uploadFile(Long petId, String additionalMetadata, File file) throws ApiException {
     Object postBody = null;
     
     // verify the required parameter 'petId' is set
@@ -445,45 +343,25 @@ public class PetApi {
     String path = "/pet/{petId}/uploadImage".replaceAll("\\{format\\}","json")
       .replaceAll("\\{" + "petId" + "\\}", apiClient.escapeString(petId.toString()));
 
-    // query params
-    Map<String, String> queryParams = new HashMap<String, String>();
-    Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Map<String, Object> queryParams = new HashMap<String, Object>();
 
-    
-    
+    Map<String, Object> headerParams = new HashMap<String, Object>();
+
+    Map<String, Object> formParams = new HashMap<String, Object>();
+    formParams.put("additionalMetadata", additionalMetadata);
+    formParams.put("file", file);
+
     String[] contentTypes = {
       "multipart/form-data"
     };
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
-      
-      hasFields = true;
-      mp.field("additionalMetadata", apiClient.parameterToString(additionalMetadata), MediaType.MULTIPART_FORM_DATA_TYPE);
-      
-      hasFields = true;
-      mp.field("file", file.getName());
-      mp.bodyPart(new FileDataBodyPart("file", file, MediaType.MULTIPART_FORM_DATA_TYPE));
-      
-      if(hasFields)
-        postBody = mp;
-    }
-    else {
-      formParams.put("additionalMetadata", apiClient.parameterToString(additionalMetadata));
-      
-      
-    }
-
     try {
       String response = apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType);
-      if(response != null){
+      if (response != null) {
         return ;
-      }
-      else {
+      } else {
         return ;
       }
     } catch (ApiException ex) {
