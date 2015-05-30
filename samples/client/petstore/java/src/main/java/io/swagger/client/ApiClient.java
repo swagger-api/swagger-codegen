@@ -68,6 +68,15 @@ public class ApiClient {
     return this;
   }
 
+  public OkHttpClient getHttpClient() {
+    return httpClient;
+  }
+
+  public ApiClient setHttpClient(OkHttpClient httpClient) {
+    this.httpClient = httpClient;
+    return this;
+  }
+
   public ApiClient setUserAgent(String userAgent) {
     addDefaultHeader("User-Agent", userAgent);
     return this;
