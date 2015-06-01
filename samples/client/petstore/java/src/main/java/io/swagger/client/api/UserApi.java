@@ -6,6 +6,10 @@ import io.swagger.client.Configuration;
 
 import io.swagger.client.model.*;
 
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+
 import java.util.*;
 
 import io.swagger.client.model.User;
@@ -60,16 +64,7 @@ public class UserApi {
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    try {
-      String response = apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType);
-      if (response != null) {
-        return ;
-      } else {
-        return ;
-      }
-    } catch (ApiException ex) {
-      throw ex;
-    }
+    apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType, null);
   }
   
   /**
@@ -97,16 +92,7 @@ public class UserApi {
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    try {
-      String response = apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType);
-      if (response != null) {
-        return ;
-      } else {
-        return ;
-      }
-    } catch (ApiException ex) {
-      throw ex;
-    }
+    apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType, null);
   }
   
   /**
@@ -134,16 +120,7 @@ public class UserApi {
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    try {
-      String response = apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType);
-      if (response != null) {
-        return ;
-      } else {
-        return ;
-      }
-    } catch (ApiException ex) {
-      throw ex;
-    }
+    apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType, null);
   }
   
   /**
@@ -176,16 +153,8 @@ public class UserApi {
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    try {
-      String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType);
-      if (response != null) {
-        return (String) apiClient.deserialize(response, "", String.class);
-      } else {
-        return null;
-      }
-    } catch (ApiException ex) {
-      throw ex;
-    }
+    Type returnType = new TypeToken<String>(){}.getType();
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType, returnType);
   }
   
   /**
@@ -212,16 +181,7 @@ public class UserApi {
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    try {
-      String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType);
-      if (response != null) {
-        return ;
-      } else {
-        return ;
-      }
-    } catch (ApiException ex) {
-      throw ex;
-    }
+    apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType, null);
   }
   
   /**
@@ -255,16 +215,8 @@ public class UserApi {
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    try {
-      String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType);
-      if (response != null) {
-        return (User) apiClient.deserialize(response, "", User.class);
-      } else {
-        return null;
-      }
-    } catch (ApiException ex) {
-      throw ex;
-    }
+    Type returnType = new TypeToken<User>(){}.getType();
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType, returnType);
   }
   
   /**
@@ -299,16 +251,7 @@ public class UserApi {
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    try {
-      String response = apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formParams, contentType);
-      if (response != null) {
-        return ;
-      } else {
-        return ;
-      }
-    } catch (ApiException ex) {
-      throw ex;
-    }
+    apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formParams, contentType, null);
   }
   
   /**
@@ -342,16 +285,7 @@ public class UserApi {
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    try {
-      String response = apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, contentType);
-      if (response != null) {
-        return ;
-      } else {
-        return ;
-      }
-    } catch (ApiException ex) {
-      throw ex;
-    }
+    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, contentType, null);
   }
   
 }

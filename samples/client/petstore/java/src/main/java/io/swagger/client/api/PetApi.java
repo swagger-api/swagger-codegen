@@ -6,6 +6,10 @@ import io.swagger.client.Configuration;
 
 import io.swagger.client.model.*;
 
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+
 import java.util.*;
 
 import io.swagger.client.model.Pet;
@@ -60,16 +64,7 @@ public class PetApi {
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    try {
-      String response = apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formParams, contentType);
-      if (response != null) {
-        return ;
-      } else {
-        return ;
-      }
-    } catch (ApiException ex) {
-      throw ex;
-    }
+    apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formParams, contentType, null);
   }
   
   /**
@@ -97,16 +92,7 @@ public class PetApi {
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    try {
-      String response = apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType);
-      if (response != null) {
-        return ;
-      } else {
-        return ;
-      }
-    } catch (ApiException ex) {
-      throw ex;
-    }
+    apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType, null);
   }
   
   /**
@@ -136,16 +122,8 @@ public class PetApi {
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    try {
-      String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType);
-      if (response != null) {
-        return (List<Pet>) apiClient.deserialize(response, "array", Pet.class);
-      } else {
-        return null;
-      }
-    } catch (ApiException ex) {
-      throw ex;
-    }
+    Type returnType = new TypeToken<List<Pet>>(){}.getType();
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType, returnType);
   }
   
   /**
@@ -175,16 +153,8 @@ public class PetApi {
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    try {
-      String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType);
-      if (response != null) {
-        return (List<Pet>) apiClient.deserialize(response, "array", Pet.class);
-      } else {
-        return null;
-      }
-    } catch (ApiException ex) {
-      throw ex;
-    }
+    Type returnType = new TypeToken<List<Pet>>(){}.getType();
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType, returnType);
   }
   
   /**
@@ -218,16 +188,8 @@ public class PetApi {
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    try {
-      String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType);
-      if (response != null) {
-        return (Pet) apiClient.deserialize(response, "", Pet.class);
-      } else {
-        return null;
-      }
-    } catch (ApiException ex) {
-      throw ex;
-    }
+    Type returnType = new TypeToken<Pet>(){}.getType();
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType, returnType);
   }
   
   /**
@@ -265,16 +227,7 @@ public class PetApi {
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    try {
-      String response = apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType);
-      if (response != null) {
-        return ;
-      } else {
-        return ;
-      }
-    } catch (ApiException ex) {
-      throw ex;
-    }
+    apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType, null);
   }
   
   /**
@@ -310,16 +263,7 @@ public class PetApi {
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    try {
-      String response = apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, contentType);
-      if (response != null) {
-        return ;
-      } else {
-        return ;
-      }
-    } catch (ApiException ex) {
-      throw ex;
-    }
+    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, contentType, null);
   }
   
   /**
@@ -357,16 +301,7 @@ public class PetApi {
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    try {
-      String response = apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType);
-      if (response != null) {
-        return ;
-      } else {
-        return ;
-      }
-    } catch (ApiException ex) {
-      throw ex;
-    }
+    apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType, null);
   }
   
 }

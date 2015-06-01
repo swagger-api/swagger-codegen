@@ -1,9 +1,8 @@
 package io.swagger.client;
 
-import com.fasterxml.jackson.core.JsonGenerator.Feature;
-import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonReader;
 
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -13,6 +12,8 @@ import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.MultipartBuilder;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.Headers;
+
+import java.lang.reflect.Type;
 
 import java.util.Collection;
 import java.util.Map;
@@ -26,6 +27,7 @@ import java.net.URLEncoder;
 import java.net.URLConnection;
 
 import java.io.File;
+import java.io.StringReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
@@ -36,12 +38,14 @@ import java.text.ParseException;
 public class ApiClient {
   private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
   private boolean isDebug = false;
+  private boolean lenientOnJson = false;
   private String basePath = "http://petstore.swagger.io/v2";
 
   private DateFormat dateFormat;
   private DateFormat datetimeFormat;
 
   private OkHttpClient httpClient;
+  private Gson gson;
 
   public ApiClient() {
     // Use ISO 8601 format for date and datetime.
@@ -57,6 +61,11 @@ public class ApiClient {
     setUserAgent("Java-Swagger");
 
     httpClient = new OkHttpClient();
+
+    gson = new GsonBuilder()
+      .serializeNulls()
+      .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+      .create();
   }
 
   public String getBasePath() {
@@ -77,6 +86,15 @@ public class ApiClient {
     return this;
   }
 
+	public Gson getGson() {
+		return gson;
+	}
+
+	public ApiClient setGson(Gson gson) {
+		this.gson = gson;
+    return this;
+	}
+
   public ApiClient setUserAgent(String userAgent) {
     addDefaultHeader("User-Agent", userAgent);
     return this;
@@ -84,6 +102,18 @@ public class ApiClient {
 
   public ApiClient addDefaultHeader(String key, String value) {
     defaultHeaderMap.put(key, value);
+    return this;
+  }
+
+  /**
+   * @see https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/stream/JsonReader.html#setLenient(boolean)
+   */
+  public boolean isLenientOnJson() {
+    return lenientOnJson;
+  }
+
+  public ApiClient setLenientOnJson(boolean lenient) {
+    this.lenientOnJson = lenient;
     return this;
   }
 
@@ -127,8 +157,8 @@ public class ApiClient {
       return formatDateTime((Date) param);
     } else if (param instanceof Collection) {
       StringBuilder b = new StringBuilder();
-      for(Object o : (Collection)param) {
-        if(b.length() > 0) {
+      for (Object o : (Collection)param) {
+        if (b.length() > 0) {
           b.append(",");
         }
         b.append(String.valueOf(o));
@@ -147,45 +177,53 @@ public class ApiClient {
     }
   }
 
-  public Object deserialize(String json, String containerType, Class cls) throws ApiException {
-    if (containerType != null) {
-      containerType = containerType.toLowerCase();
-    }
+  public <T> T deserialize(Response response, Type returnType) throws ApiException {
+    if (response == null || returnType == null)
+      return null;
+
+    String respBody;
     try {
-      if ("list".equals(containerType) || "array".equals(containerType)) {
-        JavaType typeInfo = JsonUtil.getJsonMapper().getTypeFactory().constructCollectionType(List.class, cls);
-        List response = (List<?>) JsonUtil.getJsonMapper().readValue(json, typeInfo);
-        return response;
-      } else if (String.class.equals(cls)) {
-        if (json != null && json.startsWith("\"") && json.endsWith("\"") && json.length() > 1)
-          return json.substring(1, json.length() - 2);
-        else
-          return json;
-      } else {
-        return JsonUtil.getJsonMapper().readValue(json, cls);
-      }
+      if (response.body() != null)
+        respBody = response.body().string();
+      else
+        respBody = null;
     } catch (IOException e) {
       throw new ApiException(500, e.getMessage());
     }
+
+    if (respBody == null || "".equals(respBody))
+      return null;
+
+    String contentType = response.headers().get("Content-Type");
+    if (contentType == null) {
+      // ensuring a default content type
+      contentType = "application/json";
+    }
+    if (contentType.startsWith("application/json"))
+      if (lenientOnJson) {
+        JsonReader jsonReader = new JsonReader(new StringReader(respBody));
+        // see https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/stream/JsonReader.html#setLenient(boolean)
+        jsonReader.setLenient(true);
+        return gson.fromJson(jsonReader, returnType);
+      } else {
+        return gson.fromJson(respBody, returnType);
+      }
+    else
+      throw new ApiException(500, "Content type \"" + contentType + "\" is not supported");
   }
 
   public String serialize(Object obj, String contentType) throws ApiException {
-    if ("application/json".equals(contentType)) {
-      try {
-        if (obj != null)
-          return JsonUtil.getJsonMapper().writeValueAsString(obj);
-        else
-          return null;
-      }
-      catch (Exception e) {
-        throw new ApiException(500, e.getMessage());
-      }
+    if (contentType.startsWith("application/json")) {
+      if (obj != null)
+        return gson.toJson(obj);
+      else
+        return null;
     } else {
       throw new ApiException(500, "Content type \"" + contentType + "\" is not supported");
     }
   }
 
-  public String invokeAPI(String path, String method, Map<String, Object> queryParams, Object body, Map<String, Object> headerParams, Map<String, Object> formParams, String contentType) throws ApiException {
+  public <T> T invokeAPI(String path, String method, Map<String, Object> queryParams, Object body, Map<String, Object> headerParams, Map<String, Object> formParams, String contentType, Type returnType) throws ApiException {
     final String url = buildUrl(path, queryParams);
     Request.Builder reqBuilder = new Request.Builder().url(url);
     processHeaderParams(headerParams, reqBuilder);
@@ -239,13 +277,12 @@ public class ApiClient {
     try {
       Response response = httpClient.newCall(request).execute();
       if (response.isSuccessful()) {
-        if (response.code() == 204) {
-          // returning null for status code 204 (No Content)
+        if (returnType == null || response.code() == 204) {
+          // returning null if the returnType is not defined,
+          // or the status code is 204 (No Content)
           return null;
-        } else if (response.body() != null) {
-          return response.body().string();
         } else {
-          return "";
+          return deserialize(response, returnType);
         }
       } else {
         String message = null;
