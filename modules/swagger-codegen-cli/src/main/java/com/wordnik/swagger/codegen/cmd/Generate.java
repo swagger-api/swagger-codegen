@@ -1,5 +1,6 @@
 package com.wordnik.swagger.codegen.cmd;
 
+import com.fasterxml.jackson.dataformat.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 import com.wordnik.swagger.codegen.ClientOptInput;
 import com.wordnik.swagger.codegen.ClientOpts;
 import com.wordnik.swagger.codegen.CodegenConfig;
@@ -54,9 +55,15 @@ public class Generate implements Runnable {
                     "Pass in a URL-encoded string of name:header with a comma separating multiple values")
     private String auth;
 
+    @Option(name = {"-b", "--basic-auth"}, title = "basic auth",
+            description = "adds basic auth headers when fetching swagger defenitions remotly and server is user basic auth to authenticate. " +
+                    "Pass in arguments in the following format <username>:<password>")
+    private String basicAuth;
+
     @Option( name= {"-D"}, title = "system properties", description = "sets specified system properties in " +
             "the format of name=value,name=value")
     private String systemProperties;
+
 
     @Override
     public void run() {
@@ -68,6 +75,11 @@ public class Generate implements Runnable {
 
         if (isNotEmpty(auth)) {
             input.setAuth(auth);
+        }
+
+        if (isNotEmpty(basicAuth)) {
+            String authorization = new String(Base64Coder.encode(basicAuth.getBytes()));
+            input.setAuth("Authorization:" + "Basic "+ authorization);
         }
 
         CodegenConfig config = forName(lang);

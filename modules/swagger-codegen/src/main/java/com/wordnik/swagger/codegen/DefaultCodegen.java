@@ -78,7 +78,7 @@ public class DefaultCodegen {
   protected Map<String, Object> additionalProperties = new HashMap<String, Object>();
   protected List<SupportingFile> supportingFiles = new ArrayList<SupportingFile>();
 
-  public void processOpts(){
+  public void preGenerate(Swagger swagger){
     if(additionalProperties.containsKey("templateDir")) {
       this.setTemplateDir((String)additionalProperties.get("templateDir"));
     }
@@ -100,7 +100,7 @@ public class DefaultCodegen {
   }
 
   // override with any special handling of the entire swagger spec
-  public void processSwagger(Swagger swagger) {}
+  public void postGenerate(Swagger swagger) {}
   
   // override with any special text escaping logic
   public String escapeText(String input) {

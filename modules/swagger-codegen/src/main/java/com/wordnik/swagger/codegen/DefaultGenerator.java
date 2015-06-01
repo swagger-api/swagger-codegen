@@ -2,14 +2,9 @@ package com.wordnik.swagger.codegen;
 
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
-import com.wordnik.swagger.models.Contact;
-import com.wordnik.swagger.models.Info;
-import com.wordnik.swagger.models.License;
-import com.wordnik.swagger.models.Model;
-import com.wordnik.swagger.models.Operation;
-import com.wordnik.swagger.models.Path;
-import com.wordnik.swagger.models.Swagger;
+import com.wordnik.swagger.models.*;
 import com.wordnik.swagger.models.auth.SecuritySchemeDefinition;
+import com.wordnik.swagger.models.properties.Property;
 import com.wordnik.swagger.util.Json;
 
 import org.apache.commons.io.FileUtils;
@@ -58,7 +53,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     }
     List<File> files = new ArrayList<File>();
     try {
-      config.processOpts();
+      config.preGenerate(swagger);
       if (swagger.getInfo() != null) {
         Info info = swagger.getInfo();
         if (info.getTitle() != null) {
@@ -289,7 +284,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
       }
 
-      config.processSwagger(swagger);
+      config.postGenerate(swagger);
     } catch (Exception e) {
       e.printStackTrace();
     }
