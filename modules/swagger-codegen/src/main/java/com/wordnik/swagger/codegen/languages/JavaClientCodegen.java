@@ -55,8 +55,6 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
       (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiClient.java"));
     supportingFiles.add(new SupportingFile("Configuration.mustache",
       (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "Configuration.java"));
-    supportingFiles.add(new SupportingFile("JsonUtil.mustache",
-      (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "JsonUtil.java"));
     supportingFiles.add(new SupportingFile("apiException.mustache",
       (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiException.java"));
 

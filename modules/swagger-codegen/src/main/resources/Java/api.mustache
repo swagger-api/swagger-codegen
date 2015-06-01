@@ -6,6 +6,10 @@ import {{invokerPackage}}.Configuration;
 
 import {{modelPackage}}.*;
 
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+
 import java.util.*;
 
 {{#imports}}import {{import}};
@@ -71,16 +75,8 @@ public class {{classname}} {
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
-    try {
-      String response = apiClient.invokeAPI(path, "{{httpMethod}}", queryParams, postBody, headerParams, formParams, contentType);
-      if (response != null) {
-        return {{#returnType}}({{{returnType}}}) apiClient.deserialize(response, "{{returnContainer}}", {{returnBaseType}}.class){{/returnType}};
-      } else {
-        return {{#returnType}}null{{/returnType}};
-      }
-    } catch (ApiException ex) {
-      throw ex;
-    }
+    {{#returnType}}Type returnType = new TypeToken<{{{returnType}}}>(){}.getType();
+    return apiClient.invokeAPI(path, "{{httpMethod}}", queryParams, postBody, headerParams, formParams, contentType, returnType);{{/returnType}}{{^returnType}}apiClient.invokeAPI(path, "{{httpMethod}}", queryParams, postBody, headerParams, formParams, contentType, null);{{/returnType}}
   }
   {{/operation}}
 }
