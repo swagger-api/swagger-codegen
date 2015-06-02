@@ -21,8 +21,12 @@ import java.util.HashMap;
 
 {{#operations}}
 public class {{classname}} {
-  String basePath = "{{basePath}}";
-  ApiInvoker apiInvoker = ApiInvoker.getInstance();
+  private String basePath = "{{basePath}}";
+  private ApiInvoker apiInvoker;
+
+  public {{classname}}(ApiInvoker apiInvoker) {
+      this.apiInvoker = apiInvoker;
+  }  
 
   public ApiInvoker getInvoker() {
     return apiInvoker;
