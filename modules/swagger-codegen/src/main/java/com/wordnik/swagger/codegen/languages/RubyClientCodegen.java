@@ -36,7 +36,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     super();
     modelPackage = "models";
     apiPackage = "api";
-    outputFolder = "generated-code/ruby";
+    outputFolder = "generated-code" + File.separator + "ruby";
     modelTemplateFiles.put("model.mustache", ".rb");
     apiTemplateFiles.put("api.mustache", ".rb");
     templateDir = "ruby";
@@ -103,9 +103,9 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
       additionalProperties.put("gemVersion", gemVersion);
     }
 
-    // add gem name to front of model package and api package
-    setModelPackage(gemName + "/" + modelPackage.replace(".", "/"));
-    setApiPackage(gemName + "/" + apiPackage.replace(".", "/"));
+    // ruby uses slash ("/") to in package path
+    setModelPackage(modelPackage.replace(".", "/"));
+    setApiPackage(apiPackage.replace(".", "/"));
 
     supportingFiles.add(new SupportingFile("swagger_client.gemspec.mustache", "", gemName + ".gemspec"));
     supportingFiles.add(new SupportingFile("swagger_client.mustache", libFolder, gemName + ".rb"));
@@ -113,11 +113,11 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     supportingFiles.add(new SupportingFile("monkey.mustache", baseFolder, "monkey.rb"));
     supportingFiles.add(new SupportingFile("swagger.mustache", baseFolder, "swagger.rb"));
     String swaggerFolder = baseFolder + File.separator + "swagger";
-    supportingFiles.add(new SupportingFile("swagger/request.mustache", swaggerFolder, "request.rb"));
-    supportingFiles.add(new SupportingFile("swagger/response.mustache", swaggerFolder, "response.rb"));
-    supportingFiles.add(new SupportingFile("swagger/version.mustache", swaggerFolder, "version.rb"));
-    supportingFiles.add(new SupportingFile("swagger/configuration.mustache", swaggerFolder, "configuration.rb"));
-    String modelFolder = libFolder + File.separator + modelPackage.replace("/", File.separator);
+    supportingFiles.add(new SupportingFile("swagger" + File.separator + "request.mustache", swaggerFolder, "request.rb"));
+    supportingFiles.add(new SupportingFile("swagger" + File.separator + "response.mustache", swaggerFolder, "response.rb"));
+    supportingFiles.add(new SupportingFile("swagger" + File.separator + "version.mustache", swaggerFolder, "version.rb"));
+    supportingFiles.add(new SupportingFile("swagger" + File.separator + "configuration.mustache", swaggerFolder, "configuration.rb"));
+    String modelFolder = baseFolder + File.separator + modelPackage.replace("/", File.separator);
     supportingFiles.add(new SupportingFile("base_object.mustache", modelFolder, "base_object.rb"));
   }
 
@@ -128,11 +128,11 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
 
   @Override
   public String apiFileFolder() {
-    return outputFolder + File.separator + libFolder + File.separator + apiPackage.replace("/", File.separator);
+    return outputFolder + File.separator + libFolder + File.separator + gemName + File.separator + apiPackage.replace("/", File.separator);
   }
 
   public String modelFileFolder() {
-    return outputFolder + File.separator + libFolder + File.separator + modelPackage.replace("/", File.separator);
+    return outputFolder + File.separator + libFolder + File.separator + gemName + File.separator + modelPackage.replace("/", File.separator);
   }
 
   @Override
@@ -247,12 +247,12 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
 
   @Override
   public String toModelImport(String name) {
-    return modelPackage() + "/" + toModelFilename(name);
+    return gemName + "/" + modelPackage() + "/" + toModelFilename(name);
   }
 
   @Override
   public String toApiImport(String name) {
-    return apiPackage() + "/" + toApiFilename(name);
+    return gemName + "/" + apiPackage() + "/" + toApiFilename(name);
   }
 
   public void setGemName(String gemName) {

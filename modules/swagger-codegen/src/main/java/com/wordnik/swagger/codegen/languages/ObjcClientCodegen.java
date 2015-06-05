@@ -26,7 +26,7 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
 
   public ObjcClientCodegen() {
     super();
-    outputFolder = "generated-code/objc";
+    outputFolder = "generated-code" + File.separator + "objc";
     modelTemplateFiles.put("model-header.mustache", ".h");
     modelTemplateFiles.put("model-body.mustache", ".m");
     apiTemplateFiles.put("api-header.mustache", ".h");
@@ -140,6 +140,8 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
     supportingFiles.add(new SupportingFile("SWGFile.m", sourceFolder, "SWGFile.m"));
     supportingFiles.add(new SupportingFile("JSONValueTransformer+ISO8601.m", sourceFolder, "JSONValueTransformer+ISO8601.m"));
     supportingFiles.add(new SupportingFile("JSONValueTransformer+ISO8601.h", sourceFolder, "JSONValueTransformer+ISO8601.h"));
+    supportingFiles.add(new SupportingFile("SWGConfiguration-body.mustache", sourceFolder, "SWGConfiguration.m"));
+    supportingFiles.add(new SupportingFile("SWGConfiguration-header.mustache", sourceFolder, "SWGConfiguration.h"));
     supportingFiles.add(new SupportingFile("Podfile.mustache", "", "Podfile"));
   }
 
