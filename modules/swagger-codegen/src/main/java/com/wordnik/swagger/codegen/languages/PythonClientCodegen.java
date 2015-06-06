@@ -100,8 +100,9 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
     }
     else if (p instanceof MapProperty) {
       MapProperty mp = (MapProperty) p;
-
-      return getSwaggerType(mp);
+      Property inner = mp.getAdditionalProperties();
+ 
+      return getSwaggerType(p) + "(str, " + getTypeDeclaration(inner) + ")";
     }
     return super.getTypeDeclaration(p);
   }
