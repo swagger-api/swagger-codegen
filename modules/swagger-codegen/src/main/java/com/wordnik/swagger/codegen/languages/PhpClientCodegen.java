@@ -7,6 +7,8 @@ import com.wordnik.swagger.models.properties.*;
 import java.util.*;
 import java.io.File;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
   protected String invokerPackage = "com.wordnik.client";
   protected String groupId = "com.wordnik";
@@ -64,6 +66,10 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
         "number")
     );
 
+    // provide primitives to mustache template
+    String primitives = "'" + StringUtils.join(languageSpecificPrimitives, "', '") + "'";
+    additionalProperties.put("primitives", primitives);
+    
     instantiationTypes.put("array", "array");
     instantiationTypes.put("map", "map");
 
