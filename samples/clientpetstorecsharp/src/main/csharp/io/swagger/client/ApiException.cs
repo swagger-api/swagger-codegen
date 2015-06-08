@@ -1,7 +1,8 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace io.swagger.client {
+namespace io.swagger.client 
+{
     [Serializable]
     public class ApiException : Exception
     {
@@ -19,6 +20,12 @@ namespace io.swagger.client {
 
         public ApiException(int errorCode, string message)
             : base(message)
+        {
+            _errorCode = errorCode;
+        }
+        
+        public ApiException(int errorCode, Exception inner)
+            :base("Failed Response", inner)
         {
             _errorCode = errorCode;
         }
@@ -43,3 +50,4 @@ namespace io.swagger.client {
             }
         }
     }
+}

@@ -1,21 +1,53 @@
 using System;
+using System.Runtime.Serialization;
 
-namespace {{invokerPackage}} {
-  public class ApiException : Exception {
-    
-  	private int errorCode = 0;
+namespace {{invokerPackage}} 
+{
+    [Serializable]
+    public class ApiException : Exception
+    {
+        //
+        // For guidelines regarding the creation of new exception types, see
+        //    http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpgenref/html/cpconerrorraisinghandlingguidelines.asp
+        // and
+        //    http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dncscol/html/csharp07192001.asp
+        //
+        private readonly int _errorCode = 0;
 
-    public ApiException() {}
+        public ApiException()
+        {
+        }
 
-    public int ErrorCode { 
-    	get
-    	{
-    		return errorCode;
-    	}
+        public ApiException(int errorCode, string message)
+            : base(message)
+        {
+            _errorCode = errorCode;
+        }
+        
+        public ApiException(int errorCode, Exception inner)
+            :base("Failed Response", inner)
+        {
+            _errorCode = errorCode;
+        }
+
+        public ApiException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+
+        protected ApiException(
+            SerializationInfo info,
+            StreamingContext context)
+            : base(info, context)
+        {
+        }
+
+        public int ErrorCode
+        {
+            get
+            {
+                return _errorCode;
+            }
+        }
     }
-
-    public ApiException(int errorCode, string message) : base(message) {
-    	this.errorCode = errorCode;
-    }
-  }
 }

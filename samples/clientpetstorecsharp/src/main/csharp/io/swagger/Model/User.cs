@@ -70,7 +70,7 @@ namespace io.swagger.Model {
       
       sb.Append("  UserStatus: ").Append(UserStatus).Append(Environment.NewLine);
       
-      sb.Append("}")
+      sb.Append("}");
       sb.Append(Environment.NewLine);
       return sb.ToString();
     }

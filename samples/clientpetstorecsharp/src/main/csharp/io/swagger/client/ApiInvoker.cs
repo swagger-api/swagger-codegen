@@ -7,7 +7,7 @@ using System.Net;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace {{invokerPackage}} 
+namespace io.swagger.client 
 {
 public class ApiInvoker
     {

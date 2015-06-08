@@ -1,207 +1,227 @@
-  using System;
-  using System.Collections.Generic;
-  using System.IO;
-  using System.Linq;
-  using System.Net;
-  using System.Text;
-  using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
+using Newtonsoft.Json;
 
-  namespace io.swagger.client {
-    public class ApiInvoker {
-      private static readonly ApiInvoker _instance = new ApiInvoker();
-      private Dictionary<String, String> defaultHeaderMap = new Dictionary<String, String>();
+namespace io.swagger.client 
+{
+public class ApiInvoker
+    {
+        private static readonly ApiInvoker Instance = new ApiInvoker();
+        private readonly Dictionary<String, String> _defaultHeaderMap = new Dictionary<String, String>();
 
-      public static ApiInvoker GetInstance() {
-        return _instance;
-      }
-
-      public void addDefaultHeader(string key, string value) {
-         defaultHeaderMap.Add(key, value);
-      }
-
-      public string escapeString(string str) {
-        return str;
-      }
-
-      public static object deserialize(string json, Type type) {
-        try
+        public static ApiInvoker GetInstance()
         {
-            return JsonConvert.DeserializeObject(json, type);
-        }
-        catch (IOException e) {
-          throw new ApiException(500, e.Message);
+            return Instance;
         }
 
-      }
-
-      public static string serialize(object obj) {
-        try
+        public void AddDefaultHeader(string key, string value)
         {
-            return obj != null ? JsonConvert.SerializeObject(obj) : null;
+            _defaultHeaderMap.Add(key, value);
         }
-        catch (Exception e) {
-          throw new ApiException(500, e.Message);
-        }
-      }
 
-      public string invokeAPI(string host, string path, string method, Dictionary<String, String> queryParams, object body, Dictionary<String, String> headerParams, Dictionary<String, object> formParams)
-      {
-          return invokeAPIInternal(host, path, method, false, queryParams, body, headerParams, formParams) as string;
-      }
-
-      public byte[] invokeBinaryAPI(string host, string path, string method, Dictionary<String, String> queryParams, object body, Dictionary<String, String> headerParams, Dictionary<String, object> formParams)
-      {
-          return invokeAPIInternal(host, path, method, true, queryParams, body, headerParams, formParams) as byte[];
-      }
-
-      private object invokeAPIInternal(string host, string path, string method, bool binaryResponse, Dictionary<String, String> queryParams, object body, Dictionary<String, String> headerParams, Dictionary<String, object> formParams) {
-        var b = new StringBuilder();
-
-        foreach (var queryParamItem in queryParams)
+        public string EscapeString(string str)
         {
-            var value = queryParamItem.Value;
-            if (value == null) continue;
-            b.Append(b.ToString().Length == 0 ? "?" : "&");
-            b.Append(escapeString(queryParamItem.Key)).Append("=").Append(escapeString(value));
+            return str;
         }
 
-        var querystring = b.ToString();
+        public static object Deserialize(string json, Type type)
+        {
+            try
+            {
+                return JsonConvert.DeserializeObject(json, type);
+            }
+            catch (IOException e)
+            {
+                throw new ApiException(500, e.Message);
+            }
+        }
 
-          host = host.EndsWith("/") ? host.Substring(0, host.Length - 1) : host;
+        public static string Serialize(object obj)
+        {
+            try
+            {
+                return obj != null ? JsonConvert.SerializeObject(obj) : null;
+            }
+            catch (Exception e)
+            {
+                throw new ApiException(500, e.Message);
+            }
+        }
 
-          var client = WebRequest.Create(host + path + querystring);
-          client.Method = method;
+        public string InvokeApi(string host, string path, string method, Dictionary<String, String> queryParams, object body, Dictionary<String, String> headerParams, Dictionary<String, object> formParams)
+        {
+            return InvokeApiInternal(host, path, method, false, queryParams, body, headerParams, formParams) as string;
+        }
 
-          byte[] formData = null;
-          if (formParams.Count > 0)
-          {
-              string formDataBoundary = String.Format("----------{0:N}", Guid.NewGuid());
-              client.ContentType = "multipart/form-data; boundary=" + formDataBoundary;
-              formData = GetMultipartFormData(formParams, formDataBoundary);
-              client.ContentLength = formData.Length;
-          }
-          else
-          {
-              client.ContentType = "application/json";
-          }
+        public byte[] InvokeBinaryApi(string host, string path, string method, Dictionary<String, String> queryParams, object body, Dictionary<String, String> headerParams, Dictionary<String, object> formParams)
+        {
+            return InvokeApiInternal(host, path, method, true, queryParams, body, headerParams, formParams) as byte[];
+        }
 
-          foreach (var headerParamsItem in headerParams)
-          {
-              client.Headers.Add(headerParamsItem.Key, headerParamsItem.Value);
-          }
-          foreach (var defaultHeaderMapItem in defaultHeaderMap.Where(defaultHeaderMapItem => !headerParams.ContainsKey(defaultHeaderMapItem.Key)))
-          {
-              client.Headers.Add(defaultHeaderMapItem.Key, defaultHeaderMapItem.Value);
-          }
+        private object InvokeApiInternal(string host, string path, string method, bool binaryResponse, Dictionary<String, String> queryParams, object body, Dictionary<String, String> headerParams, Dictionary<String, object> formParams)
+        {
+            var querystring = CreateQueryString(queryParams);
 
-          switch (method)
-          {
-              case "GET":
-                  break;
-              case "POST":
-              case "PUT":
-              case "DELETE":
-                  using (Stream requestStream = client.GetRequestStream())
-                  {
-                      if (formData != null)
-                      {
-                          requestStream.Write(formData, 0, formData.Length);
-                      }
+            host = host.EndsWith("/") ? host.Substring(0, host.Length - 1) : host;
 
-                      var swRequestWriter = new StreamWriter(requestStream);
-                      swRequestWriter.Write(serialize(body));
-                      swRequestWriter.Close();
-                  }
-                  break;
-              default:
-                  throw new ApiException(500, "unknown method type " + method);
-          }
+            var client = WebRequest.Create(host + path + querystring);
+            client.Method = method;
 
-          try
-          {
-              var webResponse = (HttpWebResponse)client.GetResponse();
-              if (webResponse.StatusCode != HttpStatusCode.OK)
-              {
-                  webResponse.Close();
-                  throw new ApiException((int)webResponse.StatusCode, webResponse.StatusDescription);
-              }
+            byte[] formData = null;
+            if (formParams.Count > 0)
+            {
+                var formDataBoundary = String.Format("----------{0:N}", Guid.NewGuid());
+                client.ContentType = "multipart/form-data; boundary=" + formDataBoundary;
+                formData = GetMultipartFormData(formParams, formDataBoundary);
+                client.ContentLength = formData.Length;
+            }
+            else
+            {
+                client.ContentType = "application/json";
+            }
 
-              if (binaryResponse)
-              {
-                  using (var memoryStream = new MemoryStream())
-                  {
-                      webResponse.GetResponseStream().CopyTo(memoryStream);
-                      return memoryStream.ToArray();
-                  }
-              }
-              else
-              {
-                  using (var responseReader = new StreamReader(webResponse.GetResponseStream()))
-                  {
-                      var responseData = responseReader.ReadToEnd();
-                      return responseData;
-                  }
-              }
-          }
-          catch(WebException ex)
-          {
-              var response = ex.Response as HttpWebResponse;
-              int statusCode = 0;
-              if (response != null)
-              {
-                  statusCode = (int)response.StatusCode;
-                  response.Close();
-              }
-              throw new ApiException(statusCode, ex.Message);
-          }
-      }
+            foreach (var headerParamsItem in headerParams)
+            {
+                client.Headers.Add(headerParamsItem.Key, headerParamsItem.Value);
+            }
+            foreach (var defaultHeaderMapItem in _defaultHeaderMap.Where(defaultHeaderMapItem => !headerParams.ContainsKey(defaultHeaderMapItem.Key)))
+            {
+                client.Headers.Add(defaultHeaderMapItem.Key, defaultHeaderMapItem.Value);
+            }
 
-      private static byte[] GetMultipartFormData(Dictionary<string, object> postParameters, string boundary)
-      {
-          Stream formDataStream = new System.IO.MemoryStream();
-          bool needsCLRF = false;
+            switch (method)
+            {
+                case "GET":
+                    break;
+                case "POST":
+                case "PUT":
+                case "DELETE":
+                    using (var requestStream = client.GetRequestStream())
+                    {
+                        if (formData != null)
+                        {
+                            requestStream.Write(formData, 0, formData.Length);
+                        }
 
-          foreach (var param in postParameters)
-          {
-              // Thanks to feedback from commenters, add a CRLF to allow multiple parameters to be added.
-              // Skip it on the first parameter, add it to subsequent parameters.
-              if (needsCLRF)
-                  formDataStream.Write(Encoding.UTF8.GetBytes("\r\n"), 0, Encoding.UTF8.GetByteCount("\r\n"));
+                        var swRequestWriter = new StreamWriter(requestStream);
+                        swRequestWriter.Write(Serialize(body));
+                        swRequestWriter.Close();
+                    }
+                    break;
+                default:
+                    throw new ApiException(500, "unknown method type " + method);
+            }
 
-              needsCLRF = true;
+            try
+            {
+                var webResponse = (HttpWebResponse)client.GetResponse();
+                if (webResponse.StatusCode != HttpStatusCode.OK)
+                {
+                    webResponse.Close();
+                    throw new ApiException((int)webResponse.StatusCode, webResponse.StatusDescription);
+                }
 
-              if (param.Value is byte[])
-              {
-                  string postData = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{1}\"\r\nContent-Type: {2}\r\n\r\n",
-                      boundary,
-                      param.Key,
-                      "application/octet-stream");
-                  formDataStream.Write(Encoding.UTF8.GetBytes(postData), 0, Encoding.UTF8.GetByteCount(postData));
+                if (binaryResponse)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        webResponse.GetResponseStream().CopyTo(memoryStream);
+                        return memoryStream.ToArray();
+                    }
+                }
+                else
+                {
+                    using (var responseReader = new StreamReader(webResponse.GetResponseStream()))
+                    {
+                        var responseData = responseReader.ReadToEnd();
+                        return responseData;
+                    }
+                }
+            }
+            catch (WebException ex)
+            {
+                using (var response = ex.Response as HttpWebResponse)
+                {
+                    var statusCode = 0;
+                    if (response != null)
+                    {
+                        statusCode = (int)response.StatusCode;
+                    }
+                    throw new ApiException(statusCode, ex);
+                }
+            }
+        }
 
-                  // Write the file data directly to the Stream, rather than serializing it to a string.
-                  formDataStream.Write((param.Value as byte[]), 0, (param.Value as byte[]).Length);
-              }
-              else
-              {
-                  string postData = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"\r\n\r\n{2}",
-                      boundary,
-                      param.Key,
-                      param.Value);
-                  formDataStream.Write(Encoding.UTF8.GetBytes(postData), 0, Encoding.UTF8.GetByteCount(postData));
-              }
-          }
+        private string CreateQueryString(Dictionary<string, string> queryParams)
+        {
+            var builder = new StringBuilder();
 
-          // Add the end of the request.  Start with a newline
-          string footer = "\r\n--" + boundary + "--\r\n";
-          formDataStream.Write(Encoding.UTF8.GetBytes(footer), 0, Encoding.UTF8.GetByteCount(footer));
+            foreach (var queryParamItem in queryParams)
+            {
+                var value = queryParamItem.Value;
+                if (value == null) continue;
+                builder.Append(builder.Length == 0 ? "?" : "&");
+                builder.Append(EscapeString(queryParamItem.Key))
+                    .Append("=")
+                    .Append(EscapeString(value));
+            }
 
-          // Dump the Stream into a byte[]
-          formDataStream.Position = 0;
-          byte[] formData = new byte[formDataStream.Length];
-          formDataStream.Read(formData, 0, formData.Length);
-          formDataStream.Close();
+            var querystring = builder.ToString();
+            return querystring;
+        }
 
-          return formData;
-      }
+        private static byte[] GetMultipartFormData(Dictionary<string, object> postParameters, string boundary)
+        {
+            var formDataStream = new MemoryStream();
+            var needsCLRF = false;
+
+            foreach (var param in postParameters)
+            {
+                // Thanks to feedback from commenters, add a CRLF to allow multiple parameters to be added.
+                // Skip it on the first parameter, add it to subsequent parameters.
+                if (needsCLRF)
+                    formDataStream.Write(Encoding.UTF8.GetBytes(Environment.NewLine), 0, Encoding.UTF8.GetByteCount(Environment.NewLine));
+
+                needsCLRF = true;
+
+                if (param.Value is byte[])
+                {
+                    var postData = string.Format("--{0}{1}Content-Disposition: form-data; name=\"{2}\"; filename=\"{2}\"{1}Content-Type: {3}{1}{1}",
+                        boundary,
+                        Environment.NewLine,
+                        param.Key,
+                        "application/octet-stream");
+                    formDataStream.Write(Encoding.UTF8.GetBytes(postData), 0, Encoding.UTF8.GetByteCount(postData));
+
+                    // Write the file data directly to the Stream, rather than serializing it to a string.
+                    formDataStream.Write((param.Value as byte[]), 0, (param.Value as byte[]).Length);
+                }
+                else
+                {
+                    var postData = string.Format("--{0}{1}Content-Disposition: form-data; name=\"{2}\"{1}{3}",
+                        boundary,
+                        Environment.NewLine,
+                        param.Key,
+                        param.Value);
+                    formDataStream.Write(Encoding.UTF8.GetBytes(postData), 0, Encoding.UTF8.GetByteCount(postData));
+                }
+            }
+
+            // Add the end of the request.  Start with a newline
+            var footer = string.Format("{0}--{1}--{0}", Environment.NewLine, boundary);
+            formDataStream.Write(Encoding.UTF8.GetBytes(footer), 0, Encoding.UTF8.GetByteCount(footer));
+
+            // Dump the Stream into a byte[]
+            formDataStream.Position = 0;
+            var formData = new byte[formDataStream.Length];
+            formDataStream.Read(formData, 0, formData.Length);
+            formDataStream.Close();
+
+            return formData;
+        }
     }
-  }
+}

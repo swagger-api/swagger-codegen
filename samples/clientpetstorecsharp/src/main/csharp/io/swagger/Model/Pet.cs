@@ -56,7 +56,7 @@ namespace io.swagger.Model {
       
       sb.Append("  Status: ").Append(Status).Append(Environment.NewLine);
       
-      sb.Append("}")
+      sb.Append("}");
       sb.Append(Environment.NewLine);
       return sb.ToString();
     }

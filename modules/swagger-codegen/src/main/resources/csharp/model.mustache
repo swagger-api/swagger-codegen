@@ -19,9 +19,10 @@ namespace {{package}} {
       var sb = new StringBuilder();
       sb.Append("class {{classname}} {\n");
       {{#vars}}
-      sb.Append("  {{name}}: ").Append({{name}}).Append("\n");
+      sb.Append("  {{name}}: ").Append({{name}}).Append(Environment.NewLine);
       {{/vars}}
-      sb.Append("}\n");
+      sb.Append("}");
+      sb.Append(Environment.NewLine);
       return sb.ToString();
     }
   }

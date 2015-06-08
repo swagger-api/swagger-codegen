@@ -8,27 +8,18 @@ using {{modelPackage}};
 namespace {{package}} {
   {{#operations}}
   public class {{classname}} {
-    string basePath;
-    private readonly ApiInvoker apiInvoker = ApiInvoker.GetInstance();
+    private readonly ApiInvoker _apiInvoker = ApiInvoker.GetInstance();
 
     public {{classname}}(String basePath = "{{basePath}}")
     {
-      this.basePath = basePath;
+      BasePath = basePath;
     }
 
-    public ApiInvoker getInvoker() {
-      return apiInvoker;
+    public ApiInvoker GetInvoker() {
+      return _apiInvoker;
     }
 
-    // Sets the endpoint base url for the services being accessed
-    public void setBasePath(string basePath) {
-      this.basePath = basePath;
-    }
-
-    // Gets the endpoint base url for the services being accessed
-    public String getBasePath() {
-      return basePath;
-    }
+    public string BasePath { get; set; }
 
     {{#operation}}
 
@@ -40,7 +31,7 @@ namespace {{package}} {
     /// <returns></returns>
     public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}} {{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {
       // create path and map variables
-      var path = "{{path}}".Replace("{format}","json"){{#pathParams}}.Replace("{" + "{{baseName}}" + "}", apiInvoker.escapeString({{{paramName}}}.ToString())){{/pathParams}};
+      var path = "{{path}}".Replace("{format}","json"){{#pathParams}}.Replace("{" + "{{baseName}}" + "}", _apiInvoker.EscapeString({{{paramName}}}.ToString())){{/pathParams}};
 
       // query params
       var queryParams = new Dictionary<String, String>();
@@ -55,7 +46,7 @@ namespace {{package}} {
       {{/requiredParamCount}}
 
       {{#queryParams}}if ({{paramName}} != null){
-        string paramStr = ({{paramName}} is DateTime) ? ((DateTime)(object){{paramName}}).ToString("u") : Convert.ToString({{paramName}});
+        string paramStr = ApiInvoker.ParameterToQueryString({{paramName}});
         queryParams.Add("{{baseName}}", paramStr);
       }
       {{/queryParams}}
@@ -76,25 +67,25 @@ namespace {{package}} {
       try {
         if (typeof({{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}) == typeof(byte[])) {
           {{#returnType}}
-          var response = apiInvoker.invokeBinaryAPI(basePath, path, "GET", queryParams, null, headerParams, formParams);
+          var response = _apiInvoker.InvokeBinaryApi(BasePath, path, "GET", queryParams, null, headerParams, formParams);
           return ((object)response) as {{{returnType}}};
           {{/returnType}}
           {{^returnType}}
-          apiInvoker.invokeBinaryAPI(basePath, path, "GET", queryParams, null, headerParams, formParams);
+          _apiInvoker.InvokeBinaryApi(BasePath, path, "GET", queryParams, null, headerParams, formParams);
           return;
           {{/returnType}}
         } else {
           {{#returnType}}
-          var response = apiInvoker.invokeAPI(basePath, path, "{{httpMethod}}", queryParams, {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}}, headerParams, formParams);
+          var response = _apiInvoker.InvokeApi(BasePath, path, "{{httpMethod}}", queryParams, {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}}, headerParams, formParams);
           if (response != null){
-             return ({{{returnType}}}) ApiInvoker.deserialize(response, typeof({{{returnType}}}));
+             return ({{{returnType}}}) ApiInvoker.Deserialize(response, typeof({{{returnType}}}));
           }
           else {
             return null;
           }
           {{/returnType}}
           {{^returnType}}
-          apiInvoker.invokeAPI(basePath, path, "{{httpMethod}}", queryParams, {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}}, headerParams, formParams);
+          _apiInvoker.InvokeApi(BasePath, path, "{{httpMethod}}", queryParams, {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}}, headerParams, formParams);
           return;
           {{/returnType}}
         }
@@ -103,7 +94,7 @@ namespace {{package}} {
           return {{#returnType}}null{{/returnType}};
         }
         else {
-          throw ex;
+          throw;
         }
       }
     }
