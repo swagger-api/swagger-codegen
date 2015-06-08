@@ -27,7 +27,7 @@ namespace io.swagger.Model {
       
       sb.Append("  Name: ").Append(Name).Append(Environment.NewLine);
       
-      sb.Append("}")
+      sb.Append("}");
       sb.Append(Environment.NewLine);
       return sb.ToString();
     }

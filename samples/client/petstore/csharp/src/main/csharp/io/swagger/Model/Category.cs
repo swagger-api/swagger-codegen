@@ -3,6 +3,8 @@ using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 
+
+
 namespace io.swagger.Model {
   public class Category {
     
@@ -21,11 +23,12 @@ namespace io.swagger.Model {
       var sb = new StringBuilder();
       sb.Append("class Category {\n");
       
-      sb.Append("  Id: ").Append(Id).Append("\n");
+      sb.Append("  Id: ").Append(Id).Append(Environment.NewLine);
       
-      sb.Append("  Name: ").Append(Name).Append("\n");
+      sb.Append("  Name: ").Append(Name).Append(Environment.NewLine);
       
-      sb.Append("}\n");
+      sb.Append("}")
+      sb.Append(Environment.NewLine);
       return sb.ToString();
     }
   }

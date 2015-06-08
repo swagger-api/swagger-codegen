@@ -54,13 +54,13 @@ namespace io.swagger.Api {
         if (typeof(void) == typeof(byte[])) {
           
           
-          _apiInvoker.InvokeBinaryAPI(basePath, path, "GET", queryParams, null, headerParams, formParams);
+          _apiInvoker.InvokeBinaryApi(BasePath, path, "GET", queryParams, null, headerParams, formParams);
           return;
           
         } else {
           
           
-          _apiInvoker.InvokeAPI(basePath, path, "PUT", queryParams, Body, headerParams, formParams);
+          _apiInvoker.InvokeApi(BasePath, path, "PUT", queryParams, Body, headerParams, formParams);
           return;
           
         }
@@ -102,13 +102,13 @@ namespace io.swagger.Api {
         if (typeof(void) == typeof(byte[])) {
           
           
-          _apiInvoker.InvokeBinaryAPI(basePath, path, "GET", queryParams, null, headerParams, formParams);
+          _apiInvoker.InvokeBinaryApi(BasePath, path, "GET", queryParams, null, headerParams, formParams);
           return;
           
         } else {
           
           
-          _apiInvoker.InvokeAPI(basePath, path, "POST", queryParams, Body, headerParams, formParams);
+          _apiInvoker.InvokeApi(BasePath, path, "POST", queryParams, Body, headerParams, formParams);
           return;
           
         }
@@ -141,7 +141,7 @@ namespace io.swagger.Api {
       
 
       if (Status != null){
-        string paramStr = (Status is DateTime) ? ((DateTime)(object)Status).ToString("u") : Convert.ToString(Status);
+        string paramStr = ApiInvoker.ParameterToQueryString(Status);
         queryParams.Add("status", paramStr);
       }
       
@@ -153,13 +153,13 @@ namespace io.swagger.Api {
       try {
         if (typeof(List<Pet>) == typeof(byte[])) {
           
-          var response = _apiInvoker.InvokeBinaryAPI(basePath, path, "GET", queryParams, null, headerParams, formParams);
+          var response = _apiInvoker.InvokeBinaryApi(BasePath, path, "GET", queryParams, null, headerParams, formParams);
           return ((object)response) as List<Pet>;
           
           
         } else {
           
-          var response = _apiInvoker.InvokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams);
+          var response = _apiInvoker.InvokeApi(BasePath, path, "GET", queryParams, null, headerParams, formParams);
           if (response != null){
              return (List<Pet>) ApiInvoker.Deserialize(response, typeof(List<Pet>));
           }
@@ -198,7 +198,7 @@ namespace io.swagger.Api {
       
 
       if (Tags != null){
-        string paramStr = (Tags is DateTime) ? ((DateTime)(object)Tags).ToString("u") : Convert.ToString(Tags);
+        string paramStr = ApiInvoker.ParameterToQueryString(Tags);
         queryParams.Add("tags", paramStr);
       }
       
@@ -210,13 +210,13 @@ namespace io.swagger.Api {
       try {
         if (typeof(List<Pet>) == typeof(byte[])) {
           
-          var response = _apiInvoker.InvokeBinaryAPI(basePath, path, "GET", queryParams, null, headerParams, formParams);
+          var response = _apiInvoker.InvokeBinaryApi(BasePath, path, "GET", queryParams, null, headerParams, formParams);
           return ((object)response) as List<Pet>;
           
           
         } else {
           
-          var response = _apiInvoker.InvokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams);
+          var response = _apiInvoker.InvokeApi(BasePath, path, "GET", queryParams, null, headerParams, formParams);
           if (response != null){
              return (List<Pet>) ApiInvoker.Deserialize(response, typeof(List<Pet>));
           }
@@ -263,13 +263,13 @@ namespace io.swagger.Api {
       try {
         if (typeof(Pet) == typeof(byte[])) {
           
-          var response = _apiInvoker.InvokeBinaryAPI(basePath, path, "GET", queryParams, null, headerParams, formParams);
+          var response = _apiInvoker.InvokeBinaryApi(BasePath, path, "GET", queryParams, null, headerParams, formParams);
           return ((object)response) as Pet;
           
           
         } else {
           
-          var response = _apiInvoker.InvokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams);
+          var response = _apiInvoker.InvokeApi(BasePath, path, "GET", queryParams, null, headerParams, formParams);
           if (response != null){
              return (Pet) ApiInvoker.Deserialize(response, typeof(Pet));
           }
@@ -335,13 +335,13 @@ namespace io.swagger.Api {
         if (typeof(void) == typeof(byte[])) {
           
           
-          _apiInvoker.InvokeBinaryAPI(basePath, path, "GET", queryParams, null, headerParams, formParams);
+          _apiInvoker.InvokeBinaryApi(BasePath, path, "GET", queryParams, null, headerParams, formParams);
           return;
           
         } else {
           
           
-          _apiInvoker.InvokeAPI(basePath, path, "POST", queryParams, null, headerParams, formParams);
+          _apiInvoker.InvokeApi(BasePath, path, "POST", queryParams, null, headerParams, formParams);
           return;
           
         }
@@ -385,13 +385,13 @@ namespace io.swagger.Api {
         if (typeof(void) == typeof(byte[])) {
           
           
-          _apiInvoker.InvokeBinaryAPI(basePath, path, "GET", queryParams, null, headerParams, formParams);
+          _apiInvoker.InvokeBinaryApi(BasePath, path, "GET", queryParams, null, headerParams, formParams);
           return;
           
         } else {
           
           
-          _apiInvoker.InvokeAPI(basePath, path, "DELETE", queryParams, null, headerParams, formParams);
+          _apiInvoker.InvokeApi(BasePath, path, "DELETE", queryParams, null, headerParams, formParams);
           return;
           
         }
@@ -450,13 +450,13 @@ namespace io.swagger.Api {
       try {
         if (typeof(ApiResponse) == typeof(byte[])) {
           
-          var response = _apiInvoker.InvokeBinaryAPI(basePath, path, "GET", queryParams, null, headerParams, formParams);
+          var response = _apiInvoker.InvokeBinaryApi(BasePath, path, "GET", queryParams, null, headerParams, formParams);
           return ((object)response) as ApiResponse;
           
           
         } else {
           
-          var response = _apiInvoker.InvokeAPI(basePath, path, "POST", queryParams, null, headerParams, formParams);
+          var response = _apiInvoker.InvokeApi(BasePath, path, "POST", queryParams, null, headerParams, formParams);
           if (response != null){
              return (ApiResponse) ApiInvoker.Deserialize(response, typeof(ApiResponse));
           }

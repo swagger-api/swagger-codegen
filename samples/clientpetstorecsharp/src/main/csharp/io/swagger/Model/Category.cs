@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 
 namespace io.swagger.Model {
-  public class Tag {
+  public class Category {
     
 
     
@@ -21,13 +21,13 @@ namespace io.swagger.Model {
 
     public override string ToString()  {
       var sb = new StringBuilder();
-      sb.Append("class Tag {\n");
+      sb.Append("class Category {\n");
       
       sb.Append("  Id: ").Append(Id).Append(Environment.NewLine);
       
       sb.Append("  Name: ").Append(Name).Append(Environment.NewLine);
       
-      sb.Append("}")
+      sb.Append("}");
       sb.Append(Environment.NewLine);
       return sb.ToString();
     }
