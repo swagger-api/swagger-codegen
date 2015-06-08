@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class OAuth implements Authentication {
   @Override
-  public void applyToParams(Map<String, String> queryParams, Map<String, String> headerParams) {
+  public void applyToParams(Map<String, Object> queryParams, Map<String, Object> headerParams) {
     // TODO: support oauth
   }
 }

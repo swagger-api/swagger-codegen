@@ -402,7 +402,7 @@ public class ApiClient {
     final Request.Builder reqBuilder = new Request.Builder().url(url);
     processHeaderParams(headerParams, reqBuilder);
 
-    String contentType = headerParams.get("Content-Type");
+    String contentType = (String) headerParams.get("Content-Type");
     // ensuring a default content type
     if (contentType == null) contentType = "application/json";
 
@@ -512,7 +512,7 @@ public class ApiClient {
    *
    * @param authNames The authentications to apply
    */
-  public void updateParamsForAuth(String[] authNames, Map<String, String> queryParams, Map<String, String> headerParams) {
+  public void updateParamsForAuth(String[] authNames, Map<String, Object> queryParams, Map<String, Object> headerParams) {
     for (String authName : authNames) {
       Authentication auth = authentications.get(authName);
       if (auth == null) throw new RuntimeException("Authentication undefined: " + authName);

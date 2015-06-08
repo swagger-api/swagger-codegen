@@ -7,11 +7,17 @@ import static org.junit.Assert.*;
 import org.junit.*;
 
 public class ApiKeyAuthTest {
+  Map<String, Object> queryParams;
+  Map<String, Object> headerParams;
+
+  @Before
+  public void setup() {
+    queryParams = new HashMap<String, Object>();
+    headerParams = new HashMap<String, Object>();
+  }
+
   @Test
   public void testApplyToParamsInQuery() {
-    Map<String, String> queryParams = new HashMap<String, String>();
-    Map<String, String> headerParams = new HashMap<String, String>();
-
     ApiKeyAuth auth = new ApiKeyAuth("query", "api_key");
     auth.setApiKey("my-api-key");
     auth.applyToParams(queryParams, headerParams);
@@ -24,9 +30,6 @@ public class ApiKeyAuthTest {
 
   @Test
   public void testApplyToParamsInHeaderWithPrefix() {
-    Map<String, String> queryParams = new HashMap<String, String>();
-    Map<String, String> headerParams = new HashMap<String, String>();
-
     ApiKeyAuth auth = new ApiKeyAuth("header", "X-API-TOKEN");
     auth.setApiKey("my-api-token");
     auth.setApiKeyPrefix("Token");
