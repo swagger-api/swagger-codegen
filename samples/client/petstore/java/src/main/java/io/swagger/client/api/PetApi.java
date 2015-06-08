@@ -58,13 +58,20 @@ public class PetApi {
 
     Map<String, Object> formParams = new HashMap<String, Object>();
 
-    String[] contentTypes = {
-      "application/json","application/xml"
+    final String[] accepts = {
+      "application/json", "application/xml"
     };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+    if (accept != null) headerParams.put("Accept", accept);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    final String[] contentTypes = {
+      "application/json", "application/xml"
+    };
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
+    headerParams.put("Content-Type", contentType);
 
-    apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formParams, contentType, null);
+    String[] authNames = new String[] { "petstore_auth" };
+    apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formParams, null, authNames);
   }
   
   /**
@@ -86,13 +93,20 @@ public class PetApi {
 
     Map<String, Object> formParams = new HashMap<String, Object>();
 
-    String[] contentTypes = {
-      "application/json","application/xml"
+    final String[] accepts = {
+      "application/json", "application/xml"
     };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+    if (accept != null) headerParams.put("Accept", accept);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    final String[] contentTypes = {
+      "application/json", "application/xml"
+    };
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
+    headerParams.put("Content-Type", contentType);
 
-    apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType, null);
+    String[] authNames = new String[] { "petstore_auth" };
+    apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, null, authNames);
   }
   
   /**
@@ -116,14 +130,21 @@ public class PetApi {
 
     Map<String, Object> formParams = new HashMap<String, Object>();
 
-    String[] contentTypes = {
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+    if (accept != null) headerParams.put("Accept", accept);
+
+    final String[] contentTypes = {
       
     };
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
+    headerParams.put("Content-Type", contentType);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
-
+    String[] authNames = new String[] { "petstore_auth" };
     Type returnType = new TypeToken<List<Pet>>(){}.getType();
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType, returnType);
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, returnType, authNames);
   }
   
   /**
@@ -147,14 +168,21 @@ public class PetApi {
 
     Map<String, Object> formParams = new HashMap<String, Object>();
 
-    String[] contentTypes = {
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+    if (accept != null) headerParams.put("Accept", accept);
+
+    final String[] contentTypes = {
       
     };
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
+    headerParams.put("Content-Type", contentType);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
-
+    String[] authNames = new String[] { "petstore_auth" };
     Type returnType = new TypeToken<List<Pet>>(){}.getType();
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType, returnType);
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, returnType, authNames);
   }
   
   /**
@@ -182,14 +210,21 @@ public class PetApi {
 
     Map<String, Object> formParams = new HashMap<String, Object>();
 
-    String[] contentTypes = {
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+    if (accept != null) headerParams.put("Accept", accept);
+
+    final String[] contentTypes = {
       
     };
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
+    headerParams.put("Content-Type", contentType);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
-
+    String[] authNames = new String[] { "api_key", "petstore_auth" };
     Type returnType = new TypeToken<Pet>(){}.getType();
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType, returnType);
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, returnType, authNames);
   }
   
   /**
@@ -218,16 +253,25 @@ public class PetApi {
     Map<String, Object> headerParams = new HashMap<String, Object>();
 
     Map<String, Object> formParams = new HashMap<String, Object>();
-    formParams.put("name", name);
-    formParams.put("status", status);
+    if (name != null)
+      formParams.put("name", name);
+    if (status != null)
+      formParams.put("status", status);
 
-    String[] contentTypes = {
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+    if (accept != null) headerParams.put("Accept", accept);
+
+    final String[] contentTypes = {
       "application/x-www-form-urlencoded"
     };
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
+    headerParams.put("Content-Type", contentType);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
-
-    apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType, null);
+    String[] authNames = new String[] { "petstore_auth" };
+    apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, null, authNames);
   }
   
   /**
@@ -253,17 +297,25 @@ public class PetApi {
     Map<String, Object> queryParams = new HashMap<String, Object>();
 
     Map<String, Object> headerParams = new HashMap<String, Object>();
-    headerParams.put("api_key", apiKey);
+    if (apiKey != null)
+      headerParams.put("api_key", apiKey);
 
     Map<String, Object> formParams = new HashMap<String, Object>();
 
-    String[] contentTypes = {
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+    if (accept != null) headerParams.put("Accept", accept);
+
+    final String[] contentTypes = {
       
     };
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
+    headerParams.put("Content-Type", contentType);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
-
-    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, contentType, null);
+    String[] authNames = new String[] { "petstore_auth" };
+    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, null, authNames);
   }
   
   /**
@@ -292,16 +344,25 @@ public class PetApi {
     Map<String, Object> headerParams = new HashMap<String, Object>();
 
     Map<String, Object> formParams = new HashMap<String, Object>();
-    formParams.put("additionalMetadata", additionalMetadata);
-    formParams.put("file", file);
+    if (additionalMetadata != null)
+      formParams.put("additionalMetadata", additionalMetadata);
+    if (file != null)
+      formParams.put("file", file);
 
-    String[] contentTypes = {
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+    if (accept != null) headerParams.put("Accept", accept);
+
+    final String[] contentTypes = {
       "multipart/form-data"
     };
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
+    headerParams.put("Content-Type", contentType);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
-
-    apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType, null);
+    String[] authNames = new String[] { "petstore_auth" };
+    apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, null, authNames);
   }
   
 }

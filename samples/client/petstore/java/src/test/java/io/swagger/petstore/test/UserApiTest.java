@@ -4,6 +4,7 @@ import io.swagger.client.ApiException;
 import io.swagger.client.ApiClient;
 import io.swagger.client.api.*;
 import io.swagger.client.model.*;
+import io.swagger.client.auth.*;
 
 import java.util.*;
 import java.io.*;
@@ -17,6 +18,9 @@ public class UserApiTest {
   @Before
   public void setup() {
     api = new UserApi();
+    // setup authentication
+    ApiKeyAuth apiKeyAuth = (ApiKeyAuth) api.getApiClient().getAuthentication("api_key");
+    apiKeyAuth.setApiKey("special-key");
   }
 
   @Test

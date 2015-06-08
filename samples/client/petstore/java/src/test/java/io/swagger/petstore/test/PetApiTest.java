@@ -5,6 +5,7 @@ import io.swagger.client.ApiClient;
 import io.swagger.client.Configuration;
 import io.swagger.client.api.*;
 import io.swagger.client.model.*;
+import io.swagger.client.auth.*;
 
 import java.util.*;
 import java.io.*;
@@ -18,6 +19,9 @@ public class PetApiTest {
   @Before
   public void setup() {
     api = new PetApi();
+    // setup authentication
+    ApiKeyAuth apiKeyAuth = (ApiKeyAuth) api.getApiClient().getAuthentication("api_key");
+    apiKeyAuth.setApiKey("special-key");
   }
 
   @Test
@@ -26,25 +30,25 @@ public class PetApiTest {
     assertEquals(Configuration.getDefaultApiClient(), api.getApiClient());
     assertNotNull(api.getApiClient());
     assertEquals("http://petstore.swagger.io/v2", api.getApiClient().getBasePath());
-    assertFalse(api.getApiClient().isDebug());
+    assertFalse(api.getApiClient().isDebugging());
 
     ApiClient oldClient = api.getApiClient();
 
     ApiClient newClient = new ApiClient();
     newClient.setBasePath("http://example.com");
-    newClient.enableDebug();
+    newClient.setDebugging(true);
 
     // set api client via constructor
     api = new PetApi(newClient);
     assertNotNull(api.getApiClient());
     assertEquals("http://example.com", api.getApiClient().getBasePath());
-    assertTrue(api.getApiClient().isDebug());
+    assertTrue(api.getApiClient().isDebugging());
 
     // set api client via setter method
     api.setApiClient(oldClient);
     assertNotNull(api.getApiClient());
     assertEquals("http://petstore.swagger.io/v2", api.getApiClient().getBasePath());
-    assertFalse(api.getApiClient().isDebug());
+    assertFalse(api.getApiClient().isDebugging());
   }
 
   @Test
@@ -129,7 +133,7 @@ public class PetApiTest {
     api.addPet(pet);
 
     Pet fetched = api.getPetById(pet.getId());
-    
+
     api.updatePetWithForm(String.valueOf(fetched.getId()), "furt", null);
     Pet updated = api.getPetById(fetched.getId());
 

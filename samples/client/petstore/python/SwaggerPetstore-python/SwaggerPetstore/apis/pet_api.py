@@ -27,14 +27,19 @@ import os
 # python 2 and python 3 compatibility library
 from six import iteritems
 
-from ..util import remove_none
-
-from ..swagger import ApiClient
+from .. import configuration
+from ..api_client import ApiClient
 
 class PetApi(object):
 
-    def __init__(self, api_client):
-        self.api_client = api_client
+    def __init__(self, api_client=None):
+        if api_client:
+            self.api_client = api_client
+        else:
+            if not configuration.api_client:
+                configuration.api_client = ApiClient('http://petstore.swagger.io/v2')
+            self.api_client = configuration.api_client
+    
     
     def update_pet(self, **kwargs):
         """
@@ -58,24 +63,34 @@ class PetApi(object):
         resource_path = '/pet'.replace('{format}', 'json')
         method = 'PUT'
 
-        path_params = remove_none(dict())
-        query_params = remove_none(dict())
-        header_params = remove_none(dict())
-        form_params = remove_none(dict())
-        files = remove_none(dict())
-        body_params = params.get('body')
-
+        path_params = {}
+        
+        query_params = {}
+        
+        header_params = {}
+        
+        form_params = {}
+        files = {}
+        
+        body_params = None
+        
+        if 'body' in params:
+            body_params = params['body']
+        
         # HTTP header `Accept`
-        header_params['Accept'] = ApiClient.select_header_accept(['application/json', 'application/xml'])
+        header_params['Accept'] = self.api_client.select_header_accept(['application/json', 'application/xml'])
         if not header_params['Accept']:
             del header_params['Accept']
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = ApiClient.select_header_content_type(['application/json', 'application/xml'])
+        header_params['Content-Type'] = self.api_client.select_header_content_type(['application/json', 'application/xml'])
+
+        # Authentication setting
+        auth_settings = ['petstore_auth']
 
         response = self.api_client.call_api(resource_path, method, path_params, query_params, header_params,
                                             body=body_params, post_params=form_params, files=files,
-                                            response=None)
+                                            response=None, auth_settings=auth_settings)
         
     def add_pet(self, **kwargs):
         """
@@ -99,24 +114,34 @@ class PetApi(object):
         resource_path = '/pet'.replace('{format}', 'json')
         method = 'POST'
 
-        path_params = remove_none(dict())
-        query_params = remove_none(dict())
-        header_params = remove_none(dict())
-        form_params = remove_none(dict())
-        files = remove_none(dict())
-        body_params = params.get('body')
-
+        path_params = {}
+        
+        query_params = {}
+        
+        header_params = {}
+        
+        form_params = {}
+        files = {}
+        
+        body_params = None
+        
+        if 'body' in params:
+            body_params = params['body']
+        
         # HTTP header `Accept`
-        header_params['Accept'] = ApiClient.select_header_accept(['application/json', 'application/xml'])
+        header_params['Accept'] = self.api_client.select_header_accept(['application/json', 'application/xml'])
         if not header_params['Accept']:
             del header_params['Accept']
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = ApiClient.select_header_content_type(['application/json', 'application/xml'])
+        header_params['Content-Type'] = self.api_client.select_header_content_type(['application/json', 'application/xml'])
+
+        # Authentication setting
+        auth_settings = ['petstore_auth']
 
         response = self.api_client.call_api(resource_path, method, path_params, query_params, header_params,
                                             body=body_params, post_params=form_params, files=files,
-                                            response=None)
+                                            response=None, auth_settings=auth_settings)
         
     def find_pets_by_status(self, **kwargs):
         """
@@ -140,24 +165,34 @@ class PetApi(object):
         resource_path = '/pet/findByStatus'.replace('{format}', 'json')
         method = 'GET'
 
-        path_params = remove_none(dict())
-        query_params = remove_none(dict(status=params.get('status')))
-        header_params = remove_none(dict())
-        form_params = remove_none(dict())
-        files = remove_none(dict())
+        path_params = {}
+        
+        query_params = {}
+        
+        if 'status' in params:
+            query_params['status'] = params['status']
+        
+        header_params = {}
+        
+        form_params = {}
+        files = {}
+        
         body_params = None
-
+        
         # HTTP header `Accept`
-        header_params['Accept'] = ApiClient.select_header_accept(['application/json', 'application/xml'])
+        header_params['Accept'] = self.api_client.select_header_accept(['application/json', 'application/xml'])
         if not header_params['Accept']:
             del header_params['Accept']
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = ApiClient.select_header_content_type([])
+        header_params['Content-Type'] = self.api_client.select_header_content_type([])
+
+        # Authentication setting
+        auth_settings = ['petstore_auth']
 
         response = self.api_client.call_api(resource_path, method, path_params, query_params, header_params,
                                             body=body_params, post_params=form_params, files=files,
-                                            response='list[Pet]')
+                                            response='list[Pet]', auth_settings=auth_settings)
         
         return response
         
@@ -183,24 +218,34 @@ class PetApi(object):
         resource_path = '/pet/findByTags'.replace('{format}', 'json')
         method = 'GET'
 
-        path_params = remove_none(dict())
-        query_params = remove_none(dict(tags=params.get('tags')))
-        header_params = remove_none(dict())
-        form_params = remove_none(dict())
-        files = remove_none(dict())
+        path_params = {}
+        
+        query_params = {}
+        
+        if 'tags' in params:
+            query_params['tags'] = params['tags']
+        
+        header_params = {}
+        
+        form_params = {}
+        files = {}
+        
         body_params = None
-
+        
         # HTTP header `Accept`
-        header_params['Accept'] = ApiClient.select_header_accept(['application/json', 'application/xml'])
+        header_params['Accept'] = self.api_client.select_header_accept(['application/json', 'application/xml'])
         if not header_params['Accept']:
             del header_params['Accept']
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = ApiClient.select_header_content_type([])
+        header_params['Content-Type'] = self.api_client.select_header_content_type([])
+
+        # Authentication setting
+        auth_settings = ['petstore_auth']
 
         response = self.api_client.call_api(resource_path, method, path_params, query_params, header_params,
                                             body=body_params, post_params=form_params, files=files,
-                                            response='list[Pet]')
+                                            response='list[Pet]', auth_settings=auth_settings)
         
         return response
         
@@ -230,24 +275,34 @@ class PetApi(object):
         resource_path = '/pet/{petId}'.replace('{format}', 'json')
         method = 'GET'
 
-        path_params = remove_none(dict(petId=params.get('pet_id')))
-        query_params = remove_none(dict())
-        header_params = remove_none(dict())
-        form_params = remove_none(dict())
-        files = remove_none(dict())
+        path_params = {}
+        
+        if 'pet_id' in params:
+            path_params['petId'] = params['pet_id']  
+        
+        query_params = {}
+        
+        header_params = {}
+        
+        form_params = {}
+        files = {}
+        
         body_params = None
-
+        
         # HTTP header `Accept`
-        header_params['Accept'] = ApiClient.select_header_accept(['application/json', 'application/xml'])
+        header_params['Accept'] = self.api_client.select_header_accept(['application/json', 'application/xml'])
         if not header_params['Accept']:
             del header_params['Accept']
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = ApiClient.select_header_content_type([])
+        header_params['Content-Type'] = self.api_client.select_header_content_type([])
+
+        # Authentication setting
+        auth_settings = ['api_key', 'petstore_auth']
 
         response = self.api_client.call_api(resource_path, method, path_params, query_params, header_params,
                                             body=body_params, post_params=form_params, files=files,
-                                            response='Pet')
+                                            response='Pet', auth_settings=auth_settings)
         
         return response
         
@@ -279,24 +334,40 @@ class PetApi(object):
         resource_path = '/pet/{petId}'.replace('{format}', 'json')
         method = 'POST'
 
-        path_params = remove_none(dict(petId=params.get('pet_id')))
-        query_params = remove_none(dict())
-        header_params = remove_none(dict())
-        form_params = remove_none(dict(name=params.get('name'), status=params.get('status')))
-        files = remove_none(dict())
+        path_params = {}
+        
+        if 'pet_id' in params:
+            path_params['petId'] = params['pet_id']  
+        
+        query_params = {}
+        
+        header_params = {}
+        
+        form_params = {}
+        files = {}
+        
+        if 'name' in params:
+            form_params['name'] = params['name']
+        
+        if 'status' in params:
+            form_params['status'] = params['status']
+        
         body_params = None
-
+        
         # HTTP header `Accept`
-        header_params['Accept'] = ApiClient.select_header_accept(['application/json', 'application/xml'])
+        header_params['Accept'] = self.api_client.select_header_accept(['application/json', 'application/xml'])
         if not header_params['Accept']:
             del header_params['Accept']
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = ApiClient.select_header_content_type(['application/x-www-form-urlencoded'])
+        header_params['Content-Type'] = self.api_client.select_header_content_type(['application/x-www-form-urlencoded'])
+
+        # Authentication setting
+        auth_settings = ['petstore_auth']
 
         response = self.api_client.call_api(resource_path, method, path_params, query_params, header_params,
                                             body=body_params, post_params=form_params, files=files,
-                                            response=None)
+                                            response=None, auth_settings=auth_settings)
         
     def delete_pet(self, pet_id, **kwargs):
         """
@@ -325,24 +396,37 @@ class PetApi(object):
         resource_path = '/pet/{petId}'.replace('{format}', 'json')
         method = 'DELETE'
 
-        path_params = remove_none(dict(petId=params.get('pet_id')))
-        query_params = remove_none(dict())
-        header_params = remove_none(dict(api_key=params.get('api_key')))
-        form_params = remove_none(dict())
-        files = remove_none(dict())
+        path_params = {}
+        
+        if 'pet_id' in params:
+            path_params['petId'] = params['pet_id']  
+        
+        query_params = {}
+        
+        header_params = {}
+        
+        if 'api_key' in params:
+            header_params['api_key'] = params['api_key']
+        
+        form_params = {}
+        files = {}
+        
         body_params = None
-
+        
         # HTTP header `Accept`
-        header_params['Accept'] = ApiClient.select_header_accept(['application/json', 'application/xml'])
+        header_params['Accept'] = self.api_client.select_header_accept(['application/json', 'application/xml'])
         if not header_params['Accept']:
             del header_params['Accept']
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = ApiClient.select_header_content_type([])
+        header_params['Content-Type'] = self.api_client.select_header_content_type([])
+
+        # Authentication setting
+        auth_settings = ['petstore_auth']
 
         response = self.api_client.call_api(resource_path, method, path_params, query_params, header_params,
                                             body=body_params, post_params=form_params, files=files,
-                                            response=None)
+                                            response=None, auth_settings=auth_settings)
         
     def upload_file(self, pet_id, **kwargs):
         """
@@ -372,24 +456,40 @@ class PetApi(object):
         resource_path = '/pet/{petId}/uploadImage'.replace('{format}', 'json')
         method = 'POST'
 
-        path_params = remove_none(dict(petId=params.get('pet_id')))
-        query_params = remove_none(dict())
-        header_params = remove_none(dict())
-        form_params = remove_none(dict(additionalMetadata=params.get('additional_metadata'), ))
-        files = remove_none(dict(file=params.get('file')))
+        path_params = {}
+        
+        if 'pet_id' in params:
+            path_params['petId'] = params['pet_id']  
+        
+        query_params = {}
+        
+        header_params = {}
+        
+        form_params = {}
+        files = {}
+        
+        if 'additional_metadata' in params:
+            form_params['additionalMetadata'] = params['additional_metadata']
+        
+        if 'file' in params:
+            files['file'] = params['file']
+        
         body_params = None
-
+        
         # HTTP header `Accept`
-        header_params['Accept'] = ApiClient.select_header_accept(['application/json', 'application/xml'])
+        header_params['Accept'] = self.api_client.select_header_accept(['application/json', 'application/xml'])
         if not header_params['Accept']:
             del header_params['Accept']
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = ApiClient.select_header_content_type(['multipart/form-data'])
+        header_params['Content-Type'] = self.api_client.select_header_content_type(['multipart/form-data'])
+
+        # Authentication setting
+        auth_settings = ['petstore_auth']
 
         response = self.api_client.call_api(resource_path, method, path_params, query_params, header_params,
                                             body=body_params, post_params=form_params, files=files,
-                                            response=None)
+                                            response=None, auth_settings=auth_settings)
         
 
 

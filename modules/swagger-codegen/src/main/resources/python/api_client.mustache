@@ -28,6 +28,7 @@ except ImportError:
   # for python2
   from urllib import quote
 
+from . import configuration
 
 class ApiClient(object):
   """
@@ -37,7 +38,7 @@ class ApiClient(object):
   :param header_name: a header to pass when making calls to the API
   :param header_value: a header value to pass when making calls to the API
   """
-  def __init__(self, host=None, header_name=None, header_value=None):
+  def __init__(self, host=configuration.host, header_name=None, header_value=None):
     self.default_headers = {}
     if header_name is not None:
       self.default_headers[header_name] = header_value
@@ -58,42 +59,45 @@ class ApiClient(object):
     self.default_headers[header_name] = header_value
 
   def call_api(self, resource_path, method, path_params=None, query_params=None, header_params=None,
-               body=None, post_params=None, files=None, response=None):
+               body=None, post_params=None, files=None, response=None, auth_settings=None):
 
     # headers parameters
-    headers = self.default_headers.copy()
-    headers.update(header_params)
+    header_params = header_params or {}
+    header_params.update(self.default_headers)
     if self.cookie:
-      headers['Cookie'] = self.cookie
-    if headers:
-      headers = ApiClient.sanitize_for_serialization(headers)
+      header_params['Cookie'] = self.cookie
+    if header_params:
+      header_params = self.sanitize_for_serialization(header_params)
 
     # path parameters
     if path_params:
-      path_params = ApiClient.sanitize_for_serialization(path_params)
+      path_params = self.sanitize_for_serialization(path_params)
       for k, v in iteritems(path_params):
         replacement = quote(str(self.to_path_value(v)))
         resource_path = resource_path.replace('{' + k + '}', replacement)
 
     # query parameters
     if query_params:
-      query_params = ApiClient.sanitize_for_serialization(query_params)
+      query_params = self.sanitize_for_serialization(query_params)
       query_params = {k: self.to_path_value(v) for k, v in iteritems(query_params)}
 
     # post parameters
     if post_params:
       post_params = self.prepare_post_parameters(post_params, files)
-      post_params = ApiClient.sanitize_for_serialization(post_params)
+      post_params = self.sanitize_for_serialization(post_params)
+
+    # auth setting
+    self.update_params_for_auth(header_params, query_params, auth_settings)
 
     # body
     if body:
-      body = ApiClient.sanitize_for_serialization(body)
+      body = self.sanitize_for_serialization(body)
 
     # request url
     url = self.host + resource_path
 
     # perform request and return response
-    response_data = self.request(method, url, query_params=query_params, headers=headers,
+    response_data = self.request(method, url, query_params=query_params, headers=header_params,
                                  post_params=post_params, body=body)
 
     # deserialize response data
@@ -115,8 +119,7 @@ class ApiClient(object):
     else:
       return str(obj)
 
-  @staticmethod
-  def sanitize_for_serialization(obj):
+  def sanitize_for_serialization(self, obj):
     """
     Sanitize an object for Request.
 
@@ -132,7 +135,7 @@ class ApiClient(object):
     elif isinstance(obj, (str, int, float, bool, tuple)):
       return obj
     elif isinstance(obj, list):
-      return [ApiClient.sanitize_for_serialization(sub_obj) for sub_obj in obj]
+      return [self.sanitize_for_serialization(sub_obj) for sub_obj in obj]
     elif isinstance(obj, (datetime.datetime, datetime.date)):
       return obj.isoformat()
     else:
@@ -145,7 +148,7 @@ class ApiClient(object):
         obj_dict = {obj.attribute_map[key]: val
                     for key, val in iteritems(obj.__dict__)
                     if key != 'swagger_types' and key != 'attribute_map' and val is not None}
-      return {key: ApiClient.sanitize_for_serialization(val)
+      return {key: self.sanitize_for_serialization(val)
               for key, val in iteritems(obj_dict)}
 
   def deserialize(self, obj, obj_class):
@@ -245,16 +248,16 @@ class ApiClient(object):
 
     if files:
       for k, v in iteritems(files):
-        with open(v, 'rb') as f:
-          filename = os.path.basename(f.name)
-          filedata = f.read()
-          mimetype = mimetypes.guess_type(filename)[0] or 'application/octet-stream'
-        params[k] = tuple([filename, filedata, mimetype])
+        if v:
+          with open(v, 'rb') as f:
+            filename = os.path.basename(f.name)
+            filedata = f.read()
+            mimetype = mimetypes.guess_type(filename)[0] or 'application/octet-stream'
+            params[k] = tuple([filename, filedata, mimetype])
 
     return params
 
-  @staticmethod
-  def select_header_accept(accepts):
+  def select_header_accept(self, accepts):
     """
     Return `Accept` based on an array of accepts provided
     """
@@ -268,8 +271,7 @@ class ApiClient(object):
     else:
       return ', '.join(accepts)
 
-  @staticmethod
-  def select_header_content_type(content_types):
+  def select_header_content_type(self, content_types):
     """
     Return `Content-Type` baseed on an array of content_types provided
     """
@@ -282,3 +284,20 @@ class ApiClient(object):
       return 'application/json'
     else:
       return content_types[0]
+
+  def update_params_for_auth(self, headers, querys, auth_settings):
+    """
+    Update header and query params based on authentication setting
+    """
+    if not auth_settings:
+      return
+    
+    for auth in auth_settings:
+      auth_setting = configuration.auth_settings().get(auth)
+      if auth_setting:
+        if auth_setting['in'] == 'header':
+          headers[auth_setting['key']] = auth_setting['value']
+        elif auth_setting['in'] == 'query':
+          querys[auth_setting['key']] = auth_setting['value']
+        else:
+          raise ValueError('Authentication token must be in `query` or `header`')

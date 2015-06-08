@@ -16,6 +16,7 @@ import com.squareup.okhttp.Headers;
 import java.lang.reflect.Type;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.HashMap;
@@ -35,14 +36,20 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 
+import {{invokerPackage}}.auth.Authentication;
+import {{invokerPackage}}.auth.HttpBasicAuth;
+import {{invokerPackage}}.auth.ApiKeyAuth;
+import {{invokerPackage}}.auth.OAuth;
+
 public class ApiClient {
-  private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
-  private boolean isDebug = false;
-  private boolean lenientOnJson = false;
   private String basePath = "{{basePath}}";
+  private boolean lenientOnJson = false;
+  private boolean debugging = false;
+  private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
+
+  private Map<String, Authentication> authentications;
 
   private DateFormat dateFormat;
-  private DateFormat datetimeFormat;
 
   private OkHttpClient httpClient;
   private Gson gson;
@@ -50,12 +57,10 @@ public class ApiClient {
   public ApiClient() {
     // Use ISO 8601 format for date and datetime.
     // See https://en.wikipedia.org/wiki/ISO_8601
-    dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    datetimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+    dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
     // Use UTC as the default time zone.
     dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-    datetimeFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
     // Set default User-Agent.
     setUserAgent("Java-Swagger");
@@ -66,6 +71,14 @@ public class ApiClient {
       .serializeNulls()
       .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
       .create();
+
+    // Setup authentications (key: authentication name, value: authentication).
+    authentications = new HashMap<String, Authentication>();{{#authMethods}}{{#isBasic}}
+    authentications.put("{{name}}", new HttpBasicAuth());{{/isBasic}}{{#isApiKey}}
+    authentications.put("{{name}}", new ApiKeyAuth({{#isKeyInHeader}}"header"{{/isKeyInHeader}}{{^isKeyInHeader}}"query"{{/isKeyInHeader}}, "{{keyParamName}}"));{{/isApiKey}}{{#isOAuth}}
+    authentications.put("{{name}}", new OAuth());{{/isOAuth}}{{/authMethods}}
+    // Prevent the authentications from being modified.
+    authentications = Collections.unmodifiableMap(authentications);
   }
 
   public String getBasePath() {
@@ -86,20 +99,98 @@ public class ApiClient {
     return this;
   }
 
-	public Gson getGson() {
-		return gson;
-	}
+  public Gson getGson() {
+    return gson;
+  }
 
-	public ApiClient setGson(Gson gson) {
-		this.gson = gson;
+  public ApiClient setGson(Gson gson) {
+    this.gson = gson;
     return this;
-	}
+  }
 
+  /**
+   * Get authentications (key: authentication name, value: authentication).
+   */
+  public Map<String, Authentication> getAuthentications() {
+    return authentications;
+  }
+
+  /**
+   * Get authentication for the given name.
+   *
+   * @param authName The authentication name
+   * @return The authentication, null if not found
+   */
+  public Authentication getAuthentication(String authName) {
+    return authentications.get(authName);
+  }
+
+  /**
+   * Helper method to set username for the first HTTP basic authentication.
+   */
+  public void setUsername(String username) {
+    for (Authentication auth : authentications.values()) {
+      if (auth instanceof HttpBasicAuth) {
+        ((HttpBasicAuth) auth).setUsername(username);
+        return;
+      }
+    }
+    throw new RuntimeException("No HTTP basic authentication configured!");
+  }
+
+  /**
+   * Helper method to set password for the first HTTP basic authentication.
+   */
+  public void setPassword(String password) {
+    for (Authentication auth : authentications.values()) {
+      if (auth instanceof HttpBasicAuth) {
+        ((HttpBasicAuth) auth).setPassword(password);
+        return;
+      }
+    }
+    throw new RuntimeException("No HTTP basic authentication configured!");
+  }
+
+  /**
+   * Helper method to set API key value for the first API key authentication.
+   */
+  public void setApiKey(String apiKey) {
+    for (Authentication auth : authentications.values()) {
+      if (auth instanceof ApiKeyAuth) {
+        ((ApiKeyAuth) auth).setApiKey(apiKey);
+        return;
+      }
+    }
+    throw new RuntimeException("No API key authentication configured!");
+  }
+
+  /**
+   * Helper method to set API key prefix for the first API key authentication.
+   */
+  public void setApiKeyPrefix(String apiKeyPrefix) {
+    for (Authentication auth : authentications.values()) {
+      if (auth instanceof ApiKeyAuth) {
+        ((ApiKeyAuth) auth).setApiKeyPrefix(apiKeyPrefix);
+        return;
+      }
+    }
+    throw new RuntimeException("No API key authentication configured!");
+  }
+
+  /**
+   * Set the User-Agent header's value (by adding to the default header map).
+   */
   public ApiClient setUserAgent(String userAgent) {
     addDefaultHeader("User-Agent", userAgent);
     return this;
   }
 
+  /**
+   * Add a default header.
+   *
+   * @param key The header's key
+   * @param value The header's value
+   */
   public ApiClient addDefaultHeader(String key, String value) {
     defaultHeaderMap.put(key, value);
     return this;
@@ -117,23 +208,41 @@ public class ApiClient {
     return this;
   }
 
-  public boolean isDebug() {
-    return isDebug;
+  /**
+   * Check that whether debugging is enabled for this API client.
+   */
+  public boolean isDebugging() {
+    return debugging;
   }
 
-  public ApiClient enableDebug() {
-    isDebug = true;
+  /**
+   * Enable/disable debugging for this API client.
+   *
+   * @param debugging To enable (true) or disable (false) debugging
+   */
+  public ApiClient setDebugging(boolean debugging) {
+    this.debugging = debugging;
     return this;
   }
 
-  public Date parseDateTime(String str) {
-    try {
-      return datetimeFormat.parse(str);
-    } catch (java.text.ParseException e) {
-      throw new RuntimeException(e);
-    }
+  /**
+   * Get the date format used to parse/format date parameters.
+   */
+  public DateFormat getDateFormat() {
+    return dateFormat;
   }
 
+  /**
+   * Set the date format used to parse/format date parameters.
+   */
+  public ApiClient getDateFormat(DateFormat dateFormat) {
+    this.dateFormat = dateFormat;
+    return this;
+  }
+
+  /**
+   * Parse the given string into Date object.
+   */
   public Date parseDate(String str) {
     try {
       return dateFormat.parse(str);
@@ -142,19 +251,21 @@ public class ApiClient {
     }
   }
 
-  public String formatDateTime(Date datetime) {
-    return datetimeFormat.format(datetime);
-  }
-
+  /**
+   * Format the given Date object into string.
+   */
   public String formatDate(Date date) {
     return dateFormat.format(date);
   }
 
+  /**
+   * Format the given parameter object into string.
+   */
   public String parameterToString(Object param) {
     if (param == null) {
       return "";
     } else if (param instanceof Date) {
-      return formatDateTime((Date) param);
+      return formatDate((Date) param);
     } else if (param instanceof Collection) {
       StringBuilder b = new StringBuilder();
       for (Object o : (Collection)param) {
@@ -169,6 +280,39 @@ public class ApiClient {
     }
   }
 
+  /**
+   * Select the Accept header's value from the given accepts array:
+   *   if JSON exists in the given array, use it;
+   *   otherwise use all of them (joining into a string)
+   *
+   * @param accepts The accepts array to select from
+   * @return The Accept header to use. If the given array is empty,
+   *   null will be returned (not to set the Accept header explicitly).
+   */
+  public String selectHeaderAccept(String[] accepts) {
+    if (accepts.length == 0) return null;
+    if (StringUtil.containsIgnoreCase(accepts, "application/json")) return "application/json";
+    return StringUtil.join(accepts, ",");
+  }
+
+  /**
+   * Select the Content-Type header's value from the given array:
+   *   if JSON exists in the given array, use it;
+   *   otherwise use the first one of the array.
+   *
+   * @param contentTypes The Content-Type array to select from
+   * @return The Content-Type header to use. If the given array is empty,
+   *   JSON will be used.
+   */
+  public String selectHeaderContentType(String[] contentTypes) {
+    if (contentTypes.length == 0) return "application/json";
+    if (StringUtil.containsIgnoreCase(contentTypes, "application/json")) return "application/json";
+    return contentTypes[0];
+  }
+
+  /**
+   * Escape the given string to be used as URL query value.
+   */
   public String escapeString(String str) {
     try {
       return URLEncoder.encode(str, "utf8").replaceAll("\\+", "%20");
@@ -177,6 +321,14 @@ public class ApiClient {
     }
   }
 
+  /**
+   * Deserialize response body to Java object, according the Content-Type
+   * response header.
+   *
+   * @param response HTTP response
+   * @param returnType The type of the Java object
+   * @return The deserialized Java object
+   */
   public <T> T deserialize(Response response, Type returnType) throws ApiException {
     if (response == null || returnType == null)
       return null;
@@ -199,7 +351,7 @@ public class ApiClient {
       // ensuring a default content type
       contentType = "application/json";
     }
-    if (contentType.startsWith("application/json"))
+    if (contentType.startsWith("application/json")) {
       if (lenientOnJson) {
         JsonReader jsonReader = new JsonReader(new StringReader(respBody));
         // see https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/stream/JsonReader.html#setLenient(boolean)
@@ -208,10 +360,19 @@ public class ApiClient {
       } else {
         return gson.fromJson(respBody, returnType);
       }
-    else
+    } else {
       throw new ApiException(500, "Content type \"" + contentType + "\" is not supported");
+    }
   }
 
+  /**
+   * Serialize the given Java object into request body string, according to the
+   * request Content-Type.
+   *
+   * @param obj The Java object
+   * @param contentType The request Content-Type
+   * @return The serialized string
+   */
   public String serialize(Object obj, String contentType) throws ApiException {
     if (contentType.startsWith("application/json")) {
       if (obj != null)
@@ -223,15 +384,28 @@ public class ApiClient {
     }
   }
 
-  public <T> T invokeAPI(String path, String method, Map<String, Object> queryParams, Object body, Map<String, Object> headerParams, Map<String, Object> formParams, String contentType, Type returnType) throws ApiException {
+  /**
+   * Invoke API by sending HTTP request with the given options.
+   *
+   * @param path The sub-path of the HTTP URL
+   * @param method The request method, one of "GET", "HEAD", "POST", "PUT", "PATCH" and "DELETE"
+   * @param queryParams The query parameters
+   * @param body The request body object
+   * @param headerParams The header parameters
+   * @param formParams The form parameters
+   * @param authNames The authentications to apply
+   * @return The Java object deserialized from response body. Returns null if returnType is null.
+   */
+  public <T> T invokeAPI(String path, String method, Map<String, Object> queryParams, Object body, Map<String, Object> headerParams, Map<String, Object> formParams, Type returnType, String[] authNames) throws ApiException {
+    updateParamsForAuth(authNames, queryParams, headerParams);
+
     final String url = buildUrl(path, queryParams);
-    Request.Builder reqBuilder = new Request.Builder().url(url);
+    final Request.Builder reqBuilder = new Request.Builder().url(url);
     processHeaderParams(headerParams, reqBuilder);
 
-    if (contentType == null) {
-      // ensuring a default content type
-      contentType = "application/json";
-    }
+    String contentType = headerParams.get("Content-Type");
+    // ensuring a default content type
+    if (contentType == null) contentType = "application/json";
 
     RequestBody reqBody;
     if ("GET".equals(method) || "HEAD".equals(method)) {
@@ -285,12 +459,13 @@ public class ApiClient {
           return deserialize(response, returnType);
         }
       } else {
-        String message = null;
-        if (response.body() != null)
-          message = response.body().string();
-        if (message == null)
-          message = "error";
-        throw new ApiException(response.code(), message);
+        String message = "error";
+        String respBody = null;
+        if (response.body() != null) {
+          respBody = response.body().string();
+          message = respBody;
+        }
+        throw new ApiException(response.code(), message, response.headers().toMultimap(), respBody);
       }
     } catch (IOException e) {
       throw new ApiException(500, e.getMessage());
@@ -304,7 +479,7 @@ public class ApiClient {
    * @param queryParams The query parameters
    * @return The full URL
    */
-  protected String buildUrl(String path, Map<String, Object> queryParams) {
+  public String buildUrl(String path, Map<String, Object> queryParams) {
     StringBuilder query = new StringBuilder();
     for (Entry<String, Object> param : queryParams.entrySet()) {
       if (param.getValue() != null) {
@@ -322,7 +497,7 @@ public class ApiClient {
   /**
    * Set header parameters to the request builder, including default headers.
    */
-  protected void processHeaderParams(Map<String, Object> headerParams, Request.Builder reqBuilder) {
+  public void processHeaderParams(Map<String, Object> headerParams, Request.Builder reqBuilder) {
     for (Entry<String, Object> param : headerParams.entrySet()) {
       reqBuilder.header(param.getKey(), parameterToString(param.getValue()));
     }
@@ -334,9 +509,22 @@ public class ApiClient {
   }
 
   /**
+   * Update query and header parameters based on authentication settings.
+   *
+   * @param authNames The authentications to apply
+   */
+  public void updateParamsForAuth(String[] authNames, Map<String, String> queryParams, Map<String, String> headerParams) {
+    for (String authName : authNames) {
+      Authentication auth = authentications.get(authName);
+      if (auth == null) throw new RuntimeException("Authentication undefined: " + authName);
+      auth.applyToParams(queryParams, headerParams);
+    }
+  }
+
+  /**
    * Build a form-encoding request body with the given form parameters.
    */
-  protected RequestBody buildRequestBodyFormEncoding(Map<String, Object> formParams) {
+  public RequestBody buildRequestBodyFormEncoding(Map<String, Object> formParams) {
     FormEncodingBuilder formBuilder  = new FormEncodingBuilder();
     for (Entry<String, Object> param : formParams.entrySet()) {
       formBuilder.add(param.getKey(), parameterToString(param.getValue()));
@@ -348,7 +536,7 @@ public class ApiClient {
    * Build a multipart (file uploading) request body with the given form parameters,
    * which could contain text fields and file fields.
    */
-  protected RequestBody buildRequestBodyMultipart(Map<String, Object> formParams) {
+  public RequestBody buildRequestBodyMultipart(Map<String, Object> formParams) {
     MultipartBuilder mpBuilder = new MultipartBuilder().type(MultipartBuilder.FORM);
     for (Entry<String, Object> param : formParams.entrySet()) {
       if (param.getValue() instanceof File) {
@@ -370,7 +558,7 @@ public class ApiClient {
    * @param file The given file
    * @return The Content-Type guessed
    */
-  protected String guessContentTypeFromFile(File file) {
+  public String guessContentTypeFromFile(File file) {
     String contentType = URLConnection.guessContentTypeFromName(file.getName());
     if (contentType == null) {
       return "application/octet-stream";

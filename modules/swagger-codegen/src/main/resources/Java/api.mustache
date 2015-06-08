@@ -64,19 +64,28 @@ public class {{classname}} {
       queryParams.put("{{baseName}}", {{paramName}});{{/queryParams}}
 
     Map<String, Object> headerParams = new HashMap<String, Object>();{{#headerParams}}
-    headerParams.put("{{baseName}}", {{paramName}});{{/headerParams}}
+    if ({{paramName}} != null)
+      headerParams.put("{{baseName}}", {{paramName}});{{/headerParams}}
 
     Map<String, Object> formParams = new HashMap<String, Object>();{{#formParams}}
-    formParams.put("{{baseName}}", {{paramName}});{{/formParams}}
+    if ({{paramName}} != null)
+      formParams.put("{{baseName}}", {{paramName}});{{/formParams}}
 
-    String[] contentTypes = {
-      {{#consumes}}"{{mediaType}}"{{#hasMore}},{{/hasMore}}{{/consumes}}
+    final String[] accepts = {
+      {{#produces}}"{{mediaType}}"{{#hasMore}}, {{/hasMore}}{{/produces}}
     };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+    if (accept != null) headerParams.put("Accept", accept);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    final String[] contentTypes = {
+      {{#consumes}}"{{mediaType}}"{{#hasMore}}, {{/hasMore}}{{/consumes}}
+    };
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
+    headerParams.put("Content-Type", contentType);
 
+    String[] authNames = new String[] { {{#authMethods}}"{{name}}"{{#hasMore}}, {{/hasMore}}{{/authMethods}} };
     {{#returnType}}Type returnType = new TypeToken<{{{returnType}}}>(){}.getType();
-    return apiClient.invokeAPI(path, "{{httpMethod}}", queryParams, postBody, headerParams, formParams, contentType, returnType);{{/returnType}}{{^returnType}}apiClient.invokeAPI(path, "{{httpMethod}}", queryParams, postBody, headerParams, formParams, contentType, null);{{/returnType}}
+    return apiClient.invokeAPI(path, "{{httpMethod}}", queryParams, postBody, headerParams, formParams, returnType, authNames);{{/returnType}}{{^returnType}}apiClient.invokeAPI(path, "{{httpMethod}}", queryParams, postBody, headerParams, formParams, null, authNames);{{/returnType}}
   }
   {{/operation}}
 }

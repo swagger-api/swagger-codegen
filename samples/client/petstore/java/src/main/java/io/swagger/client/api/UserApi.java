@@ -58,13 +58,20 @@ public class UserApi {
 
     Map<String, Object> formParams = new HashMap<String, Object>();
 
-    String[] contentTypes = {
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+    if (accept != null) headerParams.put("Accept", accept);
+
+    final String[] contentTypes = {
       
     };
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
+    headerParams.put("Content-Type", contentType);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
-
-    apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType, null);
+    String[] authNames = new String[] {  };
+    apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, null, authNames);
   }
   
   /**
@@ -86,13 +93,20 @@ public class UserApi {
 
     Map<String, Object> formParams = new HashMap<String, Object>();
 
-    String[] contentTypes = {
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+    if (accept != null) headerParams.put("Accept", accept);
+
+    final String[] contentTypes = {
       
     };
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
+    headerParams.put("Content-Type", contentType);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
-
-    apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType, null);
+    String[] authNames = new String[] {  };
+    apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, null, authNames);
   }
   
   /**
@@ -114,13 +128,20 @@ public class UserApi {
 
     Map<String, Object> formParams = new HashMap<String, Object>();
 
-    String[] contentTypes = {
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+    if (accept != null) headerParams.put("Accept", accept);
+
+    final String[] contentTypes = {
       
     };
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
+    headerParams.put("Content-Type", contentType);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
-
-    apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType, null);
+    String[] authNames = new String[] {  };
+    apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, null, authNames);
   }
   
   /**
@@ -147,14 +168,21 @@ public class UserApi {
 
     Map<String, Object> formParams = new HashMap<String, Object>();
 
-    String[] contentTypes = {
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+    if (accept != null) headerParams.put("Accept", accept);
+
+    final String[] contentTypes = {
       
     };
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
+    headerParams.put("Content-Type", contentType);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
-
+    String[] authNames = new String[] {  };
     Type returnType = new TypeToken<String>(){}.getType();
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType, returnType);
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, returnType, authNames);
   }
   
   /**
@@ -175,13 +203,20 @@ public class UserApi {
 
     Map<String, Object> formParams = new HashMap<String, Object>();
 
-    String[] contentTypes = {
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+    if (accept != null) headerParams.put("Accept", accept);
+
+    final String[] contentTypes = {
       
     };
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
+    headerParams.put("Content-Type", contentType);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
-
-    apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType, null);
+    String[] authNames = new String[] {  };
+    apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, null, authNames);
   }
   
   /**
@@ -209,14 +244,21 @@ public class UserApi {
 
     Map<String, Object> formParams = new HashMap<String, Object>();
 
-    String[] contentTypes = {
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+    if (accept != null) headerParams.put("Accept", accept);
+
+    final String[] contentTypes = {
       
     };
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
+    headerParams.put("Content-Type", contentType);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
-
+    String[] authNames = new String[] {  };
     Type returnType = new TypeToken<User>(){}.getType();
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType, returnType);
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, returnType, authNames);
   }
   
   /**
@@ -245,13 +287,20 @@ public class UserApi {
 
     Map<String, Object> formParams = new HashMap<String, Object>();
 
-    String[] contentTypes = {
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+    if (accept != null) headerParams.put("Accept", accept);
+
+    final String[] contentTypes = {
       
     };
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
+    headerParams.put("Content-Type", contentType);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
-
-    apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formParams, contentType, null);
+    String[] authNames = new String[] {  };
+    apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formParams, null, authNames);
   }
   
   /**
@@ -279,13 +328,20 @@ public class UserApi {
 
     Map<String, Object> formParams = new HashMap<String, Object>();
 
-    String[] contentTypes = {
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+    if (accept != null) headerParams.put("Accept", accept);
+
+    final String[] contentTypes = {
       
     };
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
+    headerParams.put("Content-Type", contentType);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
-
-    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, contentType, null);
+    String[] authNames = new String[] {  };
+    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, null, authNames);
   }
   
 }
