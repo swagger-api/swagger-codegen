@@ -58,12 +58,18 @@ public class StoreApi {
     Map<String, String> formParams = new HashMap<String, String>();
 
     
+
     
-    String[] contentTypes = {
+
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+
+    final String[] contentTypes = {
       
     };
-
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
     if(contentType.startsWith("multipart/form-data")) {
       boolean hasFields = false;
@@ -77,7 +83,8 @@ public class StoreApi {
     }
 
     try {
-      String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType);
+      String[] authNames = new String[] { "api_key" };
+      String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames);
       if(response != null){
         return (Map<String, Integer>) apiClient.deserialize(response, "map", Map.class);
       }
@@ -108,12 +115,18 @@ public class StoreApi {
     Map<String, String> formParams = new HashMap<String, String>();
 
     
+
     
-    String[] contentTypes = {
+
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+
+    final String[] contentTypes = {
       
     };
-
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
     if(contentType.startsWith("multipart/form-data")) {
       boolean hasFields = false;
@@ -127,7 +140,8 @@ public class StoreApi {
     }
 
     try {
-      String response = apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, contentType);
+      String[] authNames = new String[] {  };
+      String response = apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, accept, contentType, authNames);
       if(response != null){
         return (Order) apiClient.deserialize(response, "", Order.class);
       }
@@ -164,12 +178,18 @@ public class StoreApi {
     Map<String, String> formParams = new HashMap<String, String>();
 
     
+
     
-    String[] contentTypes = {
+
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+
+    final String[] contentTypes = {
       
     };
-
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
     if(contentType.startsWith("multipart/form-data")) {
       boolean hasFields = false;
@@ -183,7 +203,8 @@ public class StoreApi {
     }
 
     try {
-      String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, contentType);
+      String[] authNames = new String[] {  };
+      String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames);
       if(response != null){
         return (Order) apiClient.deserialize(response, "", Order.class);
       }
@@ -220,12 +241,18 @@ public class StoreApi {
     Map<String, String> formParams = new HashMap<String, String>();
 
     
+
     
-    String[] contentTypes = {
+
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+
+    final String[] contentTypes = {
       
     };
-
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
     if(contentType.startsWith("multipart/form-data")) {
       boolean hasFields = false;
@@ -239,7 +266,8 @@ public class StoreApi {
     }
 
     try {
-      String response = apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, contentType);
+      String[] authNames = new String[] {  };
+      String response = apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, accept, contentType, authNames);
       if(response != null){
         return ;
       }
