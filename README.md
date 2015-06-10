@@ -5,20 +5,15 @@
 ## Overview
 This is the swagger codegen project, which allows generation of client libraries automatically from a Swagger-compliant server.  
 
-## What's Swagger?
-
-The goal of Swagger™ is to define a standard, language-agnostic interface to REST APIs which allows both humans and computers to discover and understand the capabilities of the service without access to source code, documentation, or through network traffic inspection. When properly defined via Swagger, a consumer can understand and interact with the remote service with a minimal amount of implementation logic. Similar to what interfaces have done for lower-level programming, Swagger removes the guesswork in calling the service.
-
-
 Check out [Swagger-Spec](https://github.com/swagger-api/swagger-spec) for additional information about the Swagger project, including additional libraries with support for other languages and more. 
 
 
-## Compatability
+## Compatibility
 The Swagger Specification has undergone 3 revisions since initial creation in 2010.  The swagger-codegen project has the following compatibilies with the swagger specification:
 
 Swagger Codegen Version | Release Date | Swagger Spec compatibility | Notes
 ----------------------- | ------------ | -------------------------- | -----
-2.1.1-M2-SNAPSHOT                | 2015-04-06   | 1.0, 1.1, 1.2, 2.0   | [master](https://github.com/swagger-api/swagger-codegen)
+2.1.0                   | 2015-06-09   | 1.0, 1.1, 1.2, 2.0   | [master](https://github.com/swagger-api/swagger-codegen)
 2.0.17                  | 2014-08-22   | 1.1, 1.2      | [tag v2.0.17](https://github.com/swagger-api/swagger-codegen/tree/v2.0.17)
 1.0.4                   | 2012-04-12   | 1.0, 1.1      | [tag v1.0.4](https://github.com/swagger-api/swagger-codegen/tree/swagger-codegen_2.9.1-1.1)
 
@@ -29,6 +24,17 @@ You need the following installed and available in your $PATH:
 * [Java 7](http://java.oracle.com)
 
 * [Apache maven 3.0.3 or greater](http://maven.apache.org/)
+ 
+#### OS X Users
+Don't forget to install Java 7. You probably have 1.6 or 1.8.
+
+Export JAVA_HOME in order to user proper Java version:
+```
+export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
+export PATH=${JAVA_HOME}/bin:$PATH
+```
+
+#### Building
 
 After cloning the project, you can build it from source with this command:
 
@@ -154,7 +160,8 @@ Great for creating libraries on your ci server, from the [Swagger Editor](http:/
 There are different aspects of customizing the code generator beyond just creating or modifying templates.  Each language has a supporting configuration file to handle different type mappings, etc:
 
 ```
-$ ls -1 modules/swagger-codegen/src/main/java/com/wordnik/swagger/codegen/languages/
+$ ls -1 modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/
+AkkaScalaClientCodegen.java
 AndroidClientCodegen.java
 AsyncScalaClientCodegen.java
 CSharpClientCodegen.java
@@ -167,6 +174,7 @@ PhpClientCodegen.java
 Python3ClientCodegen.java
 PythonClientCodegen.java
 Qt5CPPGenerator.java
+RetrofitClientCodegen.java
 RubyClientCodegen.java
 ScalaClientCodegen.java
 ScalatraServerCodegen.java
@@ -175,6 +183,7 @@ StaticDocCodegen.java
 StaticHtmlGenerator.java
 SwaggerGenerator.java
 SwaggerYamlGenerator.java
+SwiftGenerator.java
 TizenClientCodegen.java
 ```
 
@@ -237,7 +246,7 @@ To change, for example, the prefix for the Objective-C generated files, simply s
 ```
 package com.mycompany.swagger.codegen;
 
-import com.wordnik.swagger.codegen.languages.*;
+import io.swagger.codegen.languages.*;
 
 public class MyObjcCodegen extends ObjcClientCodegen {
   static {

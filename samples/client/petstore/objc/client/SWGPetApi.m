@@ -544,7 +544,7 @@ static NSString * basePath = @"http://petstore.swagger.io/v2";
     NSString *requestContentType = [SWGApiClient selectHeaderContentType:@[]];
 
     // Authentication setting
-    NSArray *authSettings = @[@"api_key", @"petstore_auth"];
+    NSArray *authSettings = @[@"petstore_auth", @"api_key"];
     
     id bodyDictionary = nil;
     

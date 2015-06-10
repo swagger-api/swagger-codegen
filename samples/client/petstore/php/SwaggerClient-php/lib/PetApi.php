@@ -1,6 +1,6 @@
 <?php
 /**
- *  Copyright 2015 Reverb Technologies, Inc.
+ *  Copyright 2015 SmartBear Software
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -327,7 +327,7 @@ class PetApi {
       }
 
       // authentication setting, if any
-      $authSettings = array('api_key', 'petstore_auth');
+      $authSettings = array('petstore_auth', 'api_key');
 
       // make the API Call
       $response = $this->apiClient->callAPI($resourcePath, $method,

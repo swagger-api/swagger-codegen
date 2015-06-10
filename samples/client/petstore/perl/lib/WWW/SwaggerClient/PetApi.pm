@@ -1,5 +1,5 @@
 #
-# Copyright 2015 Reverb Technologies, Inc.
+# Copyright 2015 SmartBear Software
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -317,7 +317,7 @@ sub new {
       
 
       # authentication setting, if any
-      my $auth_settings = ['api_key', 'petstore_auth'];
+      my $auth_settings = ['petstore_auth', 'api_key'];
 
       # make the API Call
       my $response = $self->{api_client}->call_api($_resource_path, $_method,

@@ -4,7 +4,7 @@ import io.swagger.client.model.Category;
 import java.util.*;
 import io.swagger.client.model.Tag;
 
-import com.wordnik.swagger.annotations.*;
+import io.swagger.annotations.*;
 import com.google.gson.annotations.SerializedName;
 
 

@@ -1,8 +1,10 @@
 package io.swagger.client.model;
 
 
-import com.wordnik.swagger.annotations.*;
 import com.google.gson.annotations.SerializedName;
+
+import io.swagger.annotations.*;
+
 
 
 @ApiModel(description = "")

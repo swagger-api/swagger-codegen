@@ -7,7 +7,7 @@
   <h1>Swagger Petstore</h1>
     <div class="app-desc">This is a sample server Petstore server.  You can find out more about Swagger at <a href=\"http://swagger.io\">http://swagger.io</a> or on irc.freenode.net, #swagger.  For this sample, you can use the api key \"special-key\" to test the authorization filters for </div>
     
-    <div class="app-desc">Contact Info: <a href="apiteam@wordnik.com">apiteam@wordnik.com</a></div>
+    <div class="app-desc">Contact Info: <a href="apiteam@swagger.io">apiteam@swagger.io</a></div>
     <div class="app-desc">Version: 1.0.0</div>
     <div class="license-info">Apache 2.0</div>
     <div class="license-url">http://www.apache.org/licenses/LICENSE-2.0.html</div>
@@ -80,18 +80,18 @@
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>[ {
-  &quot;tags&quot; : [ {
-    &quot;id&quot; : 123456789,
-    &quot;name&quot; : &quot;aeiou&quot;
-  } ],
+  &quot;photoUrls&quot; : [ &quot;aeiou&quot; ],
+  &quot;name&quot; : &quot;doggie&quot;,
   &quot;id&quot; : 123456789,
   &quot;category&quot; : {
-    &quot;id&quot; : 123456789,
-    &quot;name&quot; : &quot;aeiou&quot;
+    &quot;name&quot; : &quot;aeiou&quot;,
+    &quot;id&quot; : 123456789
   },
-  &quot;status&quot; : &quot;aeiou&quot;,
-  &quot;name&quot; : &quot;doggie&quot;,
-  &quot;photoUrls&quot; : [ &quot;aeiou&quot; ]
+  &quot;tags&quot; : [ {
+    &quot;name&quot; : &quot;aeiou&quot;,
+    &quot;id&quot; : 123456789
+  } ],
+  &quot;status&quot; : &quot;aeiou&quot;
 } ]</code></pre>
     
     <h3 class="field-label">Example data</h3>
@@ -127,18 +127,18 @@
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>[ {
-  &quot;tags&quot; : [ {
-    &quot;id&quot; : 123456789,
-    &quot;name&quot; : &quot;aeiou&quot;
-  } ],
+  &quot;photoUrls&quot; : [ &quot;aeiou&quot; ],
+  &quot;name&quot; : &quot;doggie&quot;,
   &quot;id&quot; : 123456789,
   &quot;category&quot; : {
-    &quot;id&quot; : 123456789,
-    &quot;name&quot; : &quot;aeiou&quot;
+    &quot;name&quot; : &quot;aeiou&quot;,
+    &quot;id&quot; : 123456789
   },
-  &quot;status&quot; : &quot;aeiou&quot;,
-  &quot;name&quot; : &quot;doggie&quot;,
-  &quot;photoUrls&quot; : [ &quot;aeiou&quot; ]
+  &quot;tags&quot; : [ {
+    &quot;name&quot; : &quot;aeiou&quot;,
+    &quot;id&quot; : 123456789
+  } ],
+  &quot;status&quot; : &quot;aeiou&quot;
 } ]</code></pre>
     
     <h3 class="field-label">Example data</h3>
@@ -174,18 +174,18 @@
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
-  &quot;tags&quot; : [ {
-    &quot;id&quot; : 123456789,
-    &quot;name&quot; : &quot;aeiou&quot;
-  } ],
+  &quot;photoUrls&quot; : [ &quot;aeiou&quot; ],
+  &quot;name&quot; : &quot;doggie&quot;,
   &quot;id&quot; : 123456789,
   &quot;category&quot; : {
-    &quot;id&quot; : 123456789,
-    &quot;name&quot; : &quot;aeiou&quot;
+    &quot;name&quot; : &quot;aeiou&quot;,
+    &quot;id&quot; : 123456789
   },
-  &quot;status&quot; : &quot;aeiou&quot;,
-  &quot;name&quot; : &quot;doggie&quot;,
-  &quot;photoUrls&quot; : [ &quot;aeiou&quot; ]
+  &quot;tags&quot; : [ {
+    &quot;name&quot; : &quot;aeiou&quot;,
+    &quot;id&quot; : 123456789
+  } ],
+  &quot;status&quot; : &quot;aeiou&quot;
 }</code></pre>
     
     <h3 class="field-label">Example data</h3>
@@ -301,7 +301,7 @@
     
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/xml</div>
-    <pre class="example"><code>not implemented com.wordnik.swagger.models.properties.MapProperty@3e</code></pre>
+    <pre class="example"><code>not implemented io.swagger.models.properties.MapProperty@3e</code></pre>
     
   </div> <!-- method -->
   <hr>
@@ -327,12 +327,12 @@
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
-  &quot;id&quot; : 123456789,
   &quot;petId&quot; : 123456789,
-  &quot;complete&quot; : true,
-  &quot;status&quot; : &quot;aeiou&quot;,
   &quot;quantity&quot; : 123,
-  &quot;shipDate&quot; : &quot;2015-05-23T15:56:49.441+0000&quot;
+  &quot;id&quot; : 123456789,
+  &quot;shipDate&quot; : &quot;2015-06-09T07:23:55.625+0000&quot;,
+  &quot;complete&quot; : true,
+  &quot;status&quot; : &quot;aeiou&quot;
 }</code></pre>
     
     <h3 class="field-label">Example data</h3>
@@ -341,7 +341,7 @@
   &lt;id&gt;123456&lt;/id&gt;
   &lt;petId&gt;123456&lt;/petId&gt;
   &lt;quantity&gt;0&lt;/quantity&gt;
-  &lt;shipDate&gt;2015-05-23T08:56:49.444Z&lt;/shipDate&gt;
+  &lt;shipDate&gt;2015-06-09T00:23:55.631Z&lt;/shipDate&gt;
   &lt;status&gt;string&lt;/status&gt;
   &lt;complete&gt;true&lt;/complete&gt;
 &lt;/Order&gt;</code></pre>
@@ -370,12 +370,12 @@
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
-  &quot;id&quot; : 123456789,
   &quot;petId&quot; : 123456789,
-  &quot;complete&quot; : true,
-  &quot;status&quot; : &quot;aeiou&quot;,
   &quot;quantity&quot; : 123,
-  &quot;shipDate&quot; : &quot;2015-05-23T15:56:49.445+0000&quot;
+  &quot;id&quot; : 123456789,
+  &quot;shipDate&quot; : &quot;2015-06-09T07:23:55.632+0000&quot;,
+  &quot;complete&quot; : true,
+  &quot;status&quot; : &quot;aeiou&quot;
 }</code></pre>
     
     <h3 class="field-label">Example data</h3>
@@ -384,7 +384,7 @@
   &lt;id&gt;123456&lt;/id&gt;
   &lt;petId&gt;123456&lt;/petId&gt;
   &lt;quantity&gt;0&lt;/quantity&gt;
-  &lt;shipDate&gt;2015-05-23T08:56:49.445Z&lt;/shipDate&gt;
+  &lt;shipDate&gt;2015-06-09T00:23:55.633Z&lt;/shipDate&gt;
   &lt;status&gt;string&lt;/status&gt;
   &lt;complete&gt;true&lt;/complete&gt;
 &lt;/Order&gt;</code></pre>
