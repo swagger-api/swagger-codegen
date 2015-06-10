@@ -2,6 +2,7 @@ package {{invokerPackage}};
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
 
 import com.squareup.okhttp.OkHttpClient;
@@ -352,13 +353,20 @@ public class ApiClient {
       contentType = "application/json";
     }
     if (contentType.startsWith("application/json")) {
-      if (lenientOnJson) {
-        JsonReader jsonReader = new JsonReader(new StringReader(respBody));
-        // see https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/stream/JsonReader.html#setLenient(boolean)
-        jsonReader.setLenient(true);
-        return gson.fromJson(jsonReader, returnType);
-      } else {
-        return gson.fromJson(respBody, returnType);
+      try {
+        if (lenientOnJson) {
+          JsonReader jsonReader = new JsonReader(new StringReader(respBody));
+          // see https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/stream/JsonReader.html#setLenient(boolean)
+          jsonReader.setLenient(true);
+          return gson.fromJson(jsonReader, returnType);
+        } else {
+          return gson.fromJson(respBody, returnType);
+        }
+      } catch (JsonSyntaxException e) {
+        // for the String return type, return the response body string directly
+        // if failed to deserialize JSON
+        if (returnType.equals(String.class)) return (T) respBody;
+        else throw(e);
       }
     } else {
       throw new ApiException(500, "Content type \"" + contentType + "\" is not supported");
