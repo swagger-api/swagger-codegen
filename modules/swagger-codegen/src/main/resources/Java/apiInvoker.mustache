@@ -163,84 +163,102 @@ public class ApiInvoker {
     }
   }
 
-  public String invokeAPI(String host, String path, String method, Map<String, String> queryParams, Object body, byte[] binaryBody, Map<String, String> headerParams, Map<String, String> formParams, String contentType) throws ApiException {
-    Client client = getClient(host);
+  private ClientResponse getAPIResponse(String host, String path, String method, Map<String, String> queryParams, Object body, byte[] binaryBody, Map<String, String> headerParams, Map<String, String> formParams, String contentType) throws ApiException {
+     Client client = getClient(host);
 
-    StringBuilder b = new StringBuilder();
+      StringBuilder b = new StringBuilder();
 
-    for(String key : queryParams.keySet()) {
-      String value = queryParams.get(key);
-      if (value != null){
-        if(b.toString().length() == 0)
-          b.append("?");
-        else
-          b.append("&");
-        b.append(escapeString(key)).append("=").append(escapeString(value));
+      for(String key : queryParams.keySet()) {
+        String value = queryParams.get(key);
+        if (value != null){
+          if(b.toString().length() == 0)
+            b.append("?");
+          else
+            b.append("&");
+          b.append(escapeString(key)).append("=").append(escapeString(value));
+        }
       }
-    }
-    String querystring = b.toString();
+      String querystring = b.toString();
 
-    Builder builder = client.resource(host + path + querystring).accept("application/json");
-    for(String key : headerParams.keySet()) {
-      builder = builder.header(key, headerParams.get(key));
-    }
-
-    for(String key : defaultHeaderMap.keySet()) {
-      if(!headerParams.containsKey(key)) {
-        builder = builder.header(key, defaultHeaderMap.get(key));
+      Builder builder = client.resource(host + path + querystring).accept("application/json");
+      for(String key : headerParams.keySet()) {
+        builder = builder.header(key, headerParams.get(key));
       }
-    }
-    ClientResponse response = null;
 
-    if("GET".equals(method)) {
-      response = (ClientResponse) builder.get(ClientResponse.class);
-    }
-    else if ("POST".equals(method)) {
-      if(body == null)
-        response = builder.post(ClientResponse.class, null);
-      else if(body instanceof FormDataMultiPart) {
-        response = builder.type(contentType).post(ClientResponse.class, body);
+      for(String key : defaultHeaderMap.keySet()) {
+        if(!headerParams.containsKey(key)) {
+          builder = builder.header(key, defaultHeaderMap.get(key));
+        }
       }
-      else
-        response = builder.type(contentType).post(ClientResponse.class, serialize(body));
-    }
-    else if ("PUT".equals(method)) {
-      if(body == null)
-        response = builder.put(ClientResponse.class, serialize(body));
-      else {
-        if("application/x-www-form-urlencoded".equals(contentType)) {
-          StringBuilder formParamBuilder = new StringBuilder();
+      ClientResponse response = null;
 
-          // encode the form params
-          for(String key : formParams.keySet()) {
-            String value = formParams.get(key);
-            if(value != null && !"".equals(value.trim())) {
-              if(formParamBuilder.length() > 0) {
-                formParamBuilder.append("&");
-              }
-              try {
-                formParamBuilder.append(URLEncoder.encode(key, "utf8")).append("=").append(URLEncoder.encode(value, "utf8"));
-              }
-              catch (Exception e) {
-                // move on to next
-              }
-            }
-          }
-          response = builder.type(contentType).put(ClientResponse.class, formParamBuilder.toString());
+      if("GET".equals(method)) {
+        response = (ClientResponse) builder.get(ClientResponse.class);
+      }
+      else if ("POST".equals(method)) {
+        if(body == null){
+            if(binaryBody == null)
+               response = builder.post(ClientResponse.class, null);
+             else
+               response = builder.type(contentType).post(ClientResponse.class, binaryBody);
+        }
+        else if(body instanceof FormDataMultiPart) {
+          response = builder.type(contentType).post(ClientResponse.class, body);
         }
         else
-          response = builder.type(contentType).put(ClientResponse.class, serialize(body));
+          response = builder.type(contentType).post(ClientResponse.class, serialize(body));
       }
-    }
-    else if ("DELETE".equals(method)) {
-      if(body == null)
-        response = builder.delete(ClientResponse.class);
-      else
-        response = builder.type(contentType).delete(ClientResponse.class, serialize(body));
-    }
-    else {
-      throw new ApiException(500, "unknown method type " + method);
-    }
+      else if ("PUT".equals(method)) {
+        if(body == null){
+            if(binaryBody == null)
+               response = builder.put(ClientResponse.class, null);
+             else
+               response = builder.type(contentType).put(ClientResponse.class, binaryBody);
+        }
+        else {
+          if("application/x-www-form-urlencoded".equals(contentType)) {
+            StringBuilder formParamBuilder = new StringBuilder();
+
+            // encode the form params
+            for(String key : formParams.keySet()) {
+              String value = formParams.get(key);
+              if(value != null && !"".equals(value.trim())) {
+                if(formParamBuilder.length() > 0) {
+                  formParamBuilder.append("&");
+                }
+                try {
+                  formParamBuilder.append(URLEncoder.encode(key, "utf8")).append("=").append(URLEncoder.encode(value, "utf8"));
+                }
+                catch (Exception e) {
+                  // move on to next
+                }
+              }
+            }
+            response = builder.type(contentType).put(ClientResponse.class, formParamBuilder.toString());
+          }
+          else
+            response = builder.type(contentType).put(ClientResponse.class, serialize(body));
+        }
+      }
+      else if ("DELETE".equals(method)) {
+        if(body == null){
+            if(binaryBody == null)
+               response = builder.delete(ClientResponse.class);
+            else
+               response = builder.type(contentType).delete(ClientResponse.class, binaryBody);
+        }
+        else
+          response = builder.type(contentType).delete(ClientResponse.class, serialize(body));
+      }
+      else {
+        throw new ApiException(500, "unknown method type " + method);
+      }
+      return response;
+  }
+  public String invokeAPI(String host, String path, String method, Map<String, String> queryParams, Object body, byte[] binaryBody, Map<String, String> headerParams, Map<String, String> formParams, String contentType) throws ApiException {
+
+    ClientResponse response = getAPIResponse(host, path, method, queryParams, body, binaryBody, headerParams, formParams, contentType);
+
     if(response.getClientResponseStatus() == ClientResponse.Status.NO_CONTENT) {
       return null;
     }
@@ -269,71 +287,21 @@ public class ApiInvoker {
   }
 
   public byte[] invokeBinaryAPI(String host, String path, String method, Map<String, String> queryParams, Object body, byte[] binaryBody, Map<String, String> headerParams, Map<String, String> formParams, String contentType) throws ApiException {
-    Client client = getClient(host);
 
-    StringBuilder b = new StringBuilder();
+    ClientResponse response = getAPIResponse(host, path, method, queryParams, body, binaryBody, headerParams, formParams, contentType);
 
-    for(String key : queryParams.keySet()) {
-      String value = queryParams.get(key);
-      if (value != null){
-        if(b.toString().length() == 0 && !path.contains("?"))
-          b.append("?");
-        else
-          b.append("&");
-        b.append(escapeString(key)).append("=").append(escapeString(value));
-      }
-    }
-    String querystring = b.toString();
-
-    Builder builder = client.resource(host + path + querystring).accept("application/octet-stream");
-    for(String key : headerParams.keySet()) {
-      builder = builder.header(key, headerParams.get(key));
-    }
-
-    for(String key : defaultHeaderMap.keySet()) {
-      if(!headerParams.containsKey(key)) {
-        builder = builder.header(key, defaultHeaderMap.get(key));
-      }
-    }
-    ClientResponse response = null;
-
-    if("GET".equals(method)) {
-      response = (ClientResponse) builder.get(ClientResponse.class);
-    }
-    else if ("POST".equals(method)) {
-      if(binaryBody == null)
-        response = builder.post(ClientResponse.class, null);
-      else
-        response = builder.type(contentType).post(ClientResponse.class, binaryBody);
-    }
-    else if ("PUT".equals(method)) {
-      if(binaryBody == null)
-        response = builder.put(ClientResponse.class);
-      else {
-          response = builder.type(contentType).put(ClientResponse.class, binaryBody);
-      }
-    }
-    else if ("DELETE".equals(method)) {
-      if(binaryBody == null)
-        response = builder.delete(ClientResponse.class);
-      else
-        response = builder.type(contentType).delete(ClientResponse.class, binaryBody);
-    }
-    else {
-      throw new ApiException(405, "unknown method " + method);
-    }
     if(response.getClientResponseStatus() == ClientResponse.Status.NO_CONTENT) {
       return null;
     }
     else if(response.getClientResponseStatus().getFamily() == Family.SUCCESSFUL) {
       if(response.hasEntity()) {
-	DataInputStream stream = new DataInputStream(response.getEntityInputStream());
-	byte[] data = new byte[response.getLength()];
-	try {
-	  stream.readFully(data);
-	} catch (IOException ex) {
-	  throw new ApiException(500, "Error obtaining binary response data");
-	}
+    	DataInputStream stream = new DataInputStream(response.getEntityInputStream());
+    	byte[] data = new byte[response.getLength()];
+    	try {
+    	  stream.readFully(data);
+    	} catch (IOException ex) {
+    	  throw new ApiException(500, "Error obtaining binary response data");
+    	}
         return data;
       }
       else {

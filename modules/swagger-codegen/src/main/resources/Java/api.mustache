@@ -19,6 +19,8 @@ import java.io.File;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.apache.commons.codec.binary.Base64;
+
 {{#operations}}
 public class {{classname}} {
   String basePath = "{{basePath}}";
@@ -91,12 +93,24 @@ public class {{classname}} {
       {{#formParams}}{{#notFile}}formParams.put("{{baseName}}", ApiInvoker.parameterToString({{paramName}}));{{/notFile}}
       {{/formParams}}
     }
+    if(postBinaryBody != null && !contentType.equals("application/octet-stream")){
+      postBody = postBinaryBody;
+      postBinaryBody = null;
+    }
 
     try {
 
       {{#isResponseBinary}}
-       byte[] response = apiInvoker.invokeBinaryAPI(basePath, path, "{{httpMethod}}", queryParams, postBody, postBinaryBody, headerParams, formParams, contentType);
-       return response;
+      String responseMimeType = {{#produces}}"{{mediaType}}"{{/produces}}{{^produces}}"application/json"{{/produces}};
+      byte[] response = null;
+      if(!responseMimeType.equals("application/octet-stream")){
+        String responseEncoded = apiInvoker.invokeAPI(basePath, path, "{{httpMethod}}", queryParams, postBody, postBinaryBody, headerParams, formParams, contentType);
+        response = Base64.decodeBase64(responseEncoded);
+      }
+      else{
+        response = apiInvoker.invokeBinaryAPI(basePath, path, "{{httpMethod}}", queryParams, postBody, postBinaryBody, headerParams, formParams, contentType);
+      }
+      return response;
 
       {{/isResponseBinary}}
       {{^isResponseBinary}}
