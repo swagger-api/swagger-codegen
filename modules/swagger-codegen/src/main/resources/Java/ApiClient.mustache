@@ -377,11 +377,12 @@ public class ApiClient {
           b.append(escapeString(queryParam.getName()));
           b.append("=");
           b.append(escapeString(queryParam.getValue()));
+          b.append("&");
         }
       }
     }
 
-    String querystring = b.toString();
+    String querystring = b.substring(0, b.length() - 1);
 
     Builder builder;
     if (accept == null)
