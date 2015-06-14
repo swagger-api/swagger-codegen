@@ -1,10 +1,10 @@
 package io.swagger.client.model;
 
 import io.swagger.client.model.Category;
-import io.swagger.client.model.Tag;
 import java.util.*;
+import io.swagger.client.model.Tag;
 
-import com.wordnik.swagger.annotations.*;
+import io.swagger.annotations.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 

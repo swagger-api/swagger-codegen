@@ -1,7 +1,8 @@
 package io.swagger.client.api;
 
 import io.swagger.client.ApiException;
-import io.swagger.client.ApiInvoker;
+import io.swagger.client.ApiClient;
+import io.swagger.client.Configuration;
 
 import io.swagger.client.model.*;
 
@@ -20,19 +21,22 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class UserApi {
-  String basePath = "http://petstore.swagger.io/v2";
-  ApiInvoker apiInvoker = ApiInvoker.getInstance();
+  private ApiClient apiClient;
 
-  public ApiInvoker getInvoker() {
-    return apiInvoker;
+  public UserApi() {
+    this(Configuration.getDefaultApiClient());
   }
 
-  public void setBasePath(String basePath) {
-    this.basePath = basePath;
+  public UserApi(ApiClient apiClient) {
+    this.apiClient = apiClient;
   }
 
-  public String getBasePath() {
-    return basePath;
+  public ApiClient getApiClient() {
+    return apiClient;
+  }
+
+  public void setApiClient(ApiClient apiClient) {
+    this.apiClient = apiClient;
   }
 
   
@@ -55,12 +59,18 @@ public class UserApi {
     Map<String, String> formParams = new HashMap<String, String>();
 
     
+
     
-    String[] contentTypes = {
+
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+
+    final String[] contentTypes = {
       
     };
-
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
     if(contentType.startsWith("multipart/form-data")) {
       boolean hasFields = false;
@@ -74,7 +84,8 @@ public class UserApi {
     }
 
     try {
-      String response = apiInvoker.invokeAPI(basePath, path, "POST", queryParams, postBody, headerParams, formParams, contentType);
+      String[] authNames = new String[] {  };
+      String response = apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, accept, contentType, authNames);
       if(response != null){
         return ;
       }
@@ -105,12 +116,18 @@ public class UserApi {
     Map<String, String> formParams = new HashMap<String, String>();
 
     
+
     
-    String[] contentTypes = {
+
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+
+    final String[] contentTypes = {
       
     };
-
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
     if(contentType.startsWith("multipart/form-data")) {
       boolean hasFields = false;
@@ -124,7 +141,8 @@ public class UserApi {
     }
 
     try {
-      String response = apiInvoker.invokeAPI(basePath, path, "POST", queryParams, postBody, headerParams, formParams, contentType);
+      String[] authNames = new String[] {  };
+      String response = apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, accept, contentType, authNames);
       if(response != null){
         return ;
       }
@@ -155,12 +173,18 @@ public class UserApi {
     Map<String, String> formParams = new HashMap<String, String>();
 
     
+
     
-    String[] contentTypes = {
+
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+
+    final String[] contentTypes = {
       
     };
-
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
     if(contentType.startsWith("multipart/form-data")) {
       boolean hasFields = false;
@@ -174,7 +198,8 @@ public class UserApi {
     }
 
     try {
-      String response = apiInvoker.invokeAPI(basePath, path, "POST", queryParams, postBody, headerParams, formParams, contentType);
+      String[] authNames = new String[] {  };
+      String response = apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, accept, contentType, authNames);
       if(response != null){
         return ;
       }
@@ -206,16 +231,22 @@ public class UserApi {
     Map<String, String> formParams = new HashMap<String, String>();
 
     if (username != null)
-      queryParams.put("username", ApiInvoker.parameterToString(username));
+      queryParams.put("username", apiClient.parameterToString(username));
     if (password != null)
-      queryParams.put("password", ApiInvoker.parameterToString(password));
+      queryParams.put("password", apiClient.parameterToString(password));
     
+
     
-    String[] contentTypes = {
+
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+
+    final String[] contentTypes = {
       
     };
-
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
     if(contentType.startsWith("multipart/form-data")) {
       boolean hasFields = false;
@@ -229,9 +260,10 @@ public class UserApi {
     }
 
     try {
-      String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, postBody, headerParams, formParams, contentType);
+      String[] authNames = new String[] {  };
+      String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames);
       if(response != null){
-        return (String) ApiInvoker.deserialize(response, "", String.class);
+        return (String) apiClient.deserialize(response, "", String.class);
       }
       else {
         return null;
@@ -259,12 +291,18 @@ public class UserApi {
     Map<String, String> formParams = new HashMap<String, String>();
 
     
+
     
-    String[] contentTypes = {
+
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+
+    final String[] contentTypes = {
       
     };
-
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
     if(contentType.startsWith("multipart/form-data")) {
       boolean hasFields = false;
@@ -278,7 +316,8 @@ public class UserApi {
     }
 
     try {
-      String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, postBody, headerParams, formParams, contentType);
+      String[] authNames = new String[] {  };
+      String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames);
       if(response != null){
         return ;
       }
@@ -307,7 +346,7 @@ public class UserApi {
 
     // create path and map variables
     String path = "/user/{username}".replaceAll("\\{format\\}","json")
-      .replaceAll("\\{" + "username" + "\\}", apiInvoker.escapeString(username.toString()));
+      .replaceAll("\\{" + "username" + "\\}", apiClient.escapeString(username.toString()));
 
     // query params
     Map<String, String> queryParams = new HashMap<String, String>();
@@ -315,12 +354,18 @@ public class UserApi {
     Map<String, String> formParams = new HashMap<String, String>();
 
     
+
     
-    String[] contentTypes = {
+
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+
+    final String[] contentTypes = {
       
     };
-
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
     if(contentType.startsWith("multipart/form-data")) {
       boolean hasFields = false;
@@ -334,9 +379,10 @@ public class UserApi {
     }
 
     try {
-      String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, postBody, headerParams, formParams, contentType);
+      String[] authNames = new String[] {  };
+      String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames);
       if(response != null){
-        return (User) ApiInvoker.deserialize(response, "", User.class);
+        return (User) apiClient.deserialize(response, "", User.class);
       }
       else {
         return null;
@@ -364,7 +410,7 @@ public class UserApi {
 
     // create path and map variables
     String path = "/user/{username}".replaceAll("\\{format\\}","json")
-      .replaceAll("\\{" + "username" + "\\}", apiInvoker.escapeString(username.toString()));
+      .replaceAll("\\{" + "username" + "\\}", apiClient.escapeString(username.toString()));
 
     // query params
     Map<String, String> queryParams = new HashMap<String, String>();
@@ -372,12 +418,18 @@ public class UserApi {
     Map<String, String> formParams = new HashMap<String, String>();
 
     
+
     
-    String[] contentTypes = {
+
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+
+    final String[] contentTypes = {
       
     };
-
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
     if(contentType.startsWith("multipart/form-data")) {
       boolean hasFields = false;
@@ -391,7 +443,8 @@ public class UserApi {
     }
 
     try {
-      String response = apiInvoker.invokeAPI(basePath, path, "PUT", queryParams, postBody, headerParams, formParams, contentType);
+      String[] authNames = new String[] {  };
+      String response = apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formParams, accept, contentType, authNames);
       if(response != null){
         return ;
       }
@@ -420,7 +473,7 @@ public class UserApi {
 
     // create path and map variables
     String path = "/user/{username}".replaceAll("\\{format\\}","json")
-      .replaceAll("\\{" + "username" + "\\}", apiInvoker.escapeString(username.toString()));
+      .replaceAll("\\{" + "username" + "\\}", apiClient.escapeString(username.toString()));
 
     // query params
     Map<String, String> queryParams = new HashMap<String, String>();
@@ -428,12 +481,18 @@ public class UserApi {
     Map<String, String> formParams = new HashMap<String, String>();
 
     
+
     
-    String[] contentTypes = {
+
+    final String[] accepts = {
+      "application/json", "application/xml"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+
+    final String[] contentTypes = {
       
     };
-
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
     if(contentType.startsWith("multipart/form-data")) {
       boolean hasFields = false;
@@ -447,7 +506,8 @@ public class UserApi {
     }
 
     try {
-      String response = apiInvoker.invokeAPI(basePath, path, "DELETE", queryParams, postBody, headerParams, formParams, contentType);
+      String[] authNames = new String[] {  };
+      String response = apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, accept, contentType, authNames);
       if(response != null){
         return ;
       }

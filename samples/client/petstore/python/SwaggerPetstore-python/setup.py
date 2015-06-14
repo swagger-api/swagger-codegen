@@ -12,13 +12,13 @@ from setuptools import setup, find_packages
 # Try reading the setuptools documentation:
 # http://pypi.python.org/pypi/setuptools
 
-REQUIRES = []
+REQUIRES = ["urllib3 >= 1.10", "six >= 1.9", "certifi"]
 
 setup(
     name="SwaggerPetstore",
     version="1.0.0",
     description="Swagger Petstore",
-    author_email="apiteam@wordnik.com",
+    author_email="apiteam@swagger.io",
     url="",
     keywords=["Swagger", "Swagger Petstore"],
     install_requires=REQUIRES,
@@ -28,5 +28,13 @@ setup(
     This is a sample server Petstore server.  You can find out more about Swagger at &lt;a href=\&quot;http://swagger.io\&quot;&gt;http://swagger.io&lt;/a&gt; or on irc.freenode.net, #swagger.  For this sample, you can use the api key \&quot;special-key\&quot; to test the authorization filters
     """
 )
+
+
+
+
+
+
+
+
 
 

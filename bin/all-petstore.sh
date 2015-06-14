@@ -25,8 +25,10 @@ cd $APP_DIR
 ./bin/jaxrs-petstore-server.sh
 ./bin/java-petstore.sh
 ./bin/qt5-petstore.sh
+./bin/perl-petstore.sh
 ./bin/php-petstore.sh
 ./bin/python-petstore.sh
+./bin/retrofit-petstore.sh
 ./bin/ruby-petstore.sh
 ./bin/objc-petstore.sh
 ./bin/scala-petstore.sh

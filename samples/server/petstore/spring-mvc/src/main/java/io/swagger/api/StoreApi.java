@@ -5,11 +5,11 @@ import io.swagger.model.*;
 import java.util.Map;
 import io.swagger.model.Order;
 
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
-import com.wordnik.swagger.annotations.ApiParam;
-import com.wordnik.swagger.annotations.ApiResponse;
-import com.wordnik.swagger.annotations.ApiResponses;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,7 +56,9 @@ public class StoreApi {
     produces = { "application/json", "application/xml" }, 
     
     method = RequestMethod.POST)
-  public ResponseEntity<Order> placeOrder(@ApiParam(value = "order placed for purchasing the pet"  ) Order body)
+  public ResponseEntity<Order> placeOrder(
+
+@ApiParam(value = "order placed for purchasing the pet"  ) Order body)
       throws NotFoundException {
       // do some magic!
       return new ResponseEntity<Order>(HttpStatus.OK);
@@ -73,7 +75,9 @@ public class StoreApi {
     produces = { "application/json", "application/xml" }, 
     
     method = RequestMethod.GET)
-  public ResponseEntity<Order> getOrderById(@ApiParam(value = "ID of pet that needs to be fetched",required=true ) @PathVariable("orderId") String orderId)
+  public ResponseEntity<Order> getOrderById(
+@ApiParam(value = "ID of pet that needs to be fetched",required=true ) @PathVariable("orderId") String orderId
+)
       throws NotFoundException {
       // do some magic!
       return new ResponseEntity<Order>(HttpStatus.OK);
@@ -89,7 +93,9 @@ public class StoreApi {
     produces = { "application/json", "application/xml" }, 
     
     method = RequestMethod.DELETE)
-  public ResponseEntity<Void> deleteOrder(@ApiParam(value = "ID of the order that needs to be deleted",required=true ) @PathVariable("orderId") String orderId)
+  public ResponseEntity<Void> deleteOrder(
+@ApiParam(value = "ID of the order that needs to be deleted",required=true ) @PathVariable("orderId") String orderId
+)
       throws NotFoundException {
       // do some magic!
       return new ResponseEntity<Void>(HttpStatus.OK);
