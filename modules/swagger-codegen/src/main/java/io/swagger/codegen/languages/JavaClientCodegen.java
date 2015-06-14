@@ -49,7 +49,8 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
                         "Integer",
                         "Long",
                         "Float",
-                        "Object")
+                        "Object",
+                        "byte[]")
         );
         instantiationTypes.put("array", "ArrayList");
         instantiationTypes.put("map", "HashMap");
@@ -207,7 +208,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         if (typeMapping.containsKey(swaggerType)) {
             type = typeMapping.get(swaggerType);
             if (languageSpecificPrimitives.contains(type)) {
-                return toModelName(type);
+                return type;
             }
         } else {
             type = swaggerType;
