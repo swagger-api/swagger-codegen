@@ -151,7 +151,7 @@ class CodegenTest extends FlatSpec with Matchers {
       val op = codegen.fromOperation(path, "post", p, model.getDefinitions())
       op.returnType should be("byte[]")
       op.bodyParam.dataType should be ("byte[]")
-      op.isBodyInputBinary should equal (true);
-      op.isResponseBinary should equal (true);
+      op.bodyParam.isBinary should equal (true);
+      op.responses.get(0).isBinary should equal(true);
     }
 }

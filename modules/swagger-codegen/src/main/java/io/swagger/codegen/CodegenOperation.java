@@ -12,7 +12,6 @@ public class CodegenOperation {
     public final List<CodegenProperty> responseHeaders = new ArrayList<CodegenProperty>();
     public Boolean hasConsumes, hasProduces, hasParams, returnTypeIsPrimitive,
             returnSimpleType, subresourceOperation, isMapContainer, isListContainer,
-            isBodyInputBinary, isResponseBinary,
             hasMore = Boolean.TRUE, isMultipart;
     public String path, operationId, returnType, httpMethod, returnBaseType,
             returnContainer, summary, notes, baseName, defaultResponse;

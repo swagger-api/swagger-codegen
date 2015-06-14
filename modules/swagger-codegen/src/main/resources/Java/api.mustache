@@ -50,8 +50,8 @@ public class {{classname}} {
 {{/allParams}}   * @return {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}
    */
   public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws ApiException {
-    Object postBody = {{^isBodyInputBinary}}{{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}}{{/isBodyInputBinary}}{{#isBodyInputBinary}}null{{/isBodyInputBinary}};
-    byte[] postBinaryBody = {{#isBodyInputBinary}}{{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}}{{/isBodyInputBinary}}{{^isBodyInputBinary}}null{{/isBodyInputBinary}};
+    Object postBody = {{#bodyParam}}{{^isBinary}}{{paramName}}{{/isBinary}}{{#isBinary}}null{{/isBinary}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
+    byte[] postBinaryBody = {{#bodyParam}}{{#isBinary}}{{paramName}}{{/isBinary}}{{^isBinary}}null{{/isBinary}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
     {{#allParams}}{{#required}}
      // verify the required parameter '{{paramName}}' is set
      if ({{paramName}} == null) {
@@ -117,8 +117,8 @@ public class {{classname}} {
 
       String[] authNames = new String[] { {{#authMethods}}"{{name}}"{{#hasMore}}, {{/hasMore}}{{/authMethods}} };
 
-
-      {{#isResponseBinary}}
+      {{#responses}}{{#isDefault}}
+      {{#isBinary}}
       String responseMimeType = {{#produces}}"{{mediaType}}"{{/produces}}{{^produces}}"application/json"{{/produces}};
       byte[] response = null;
       if(!responseMimeType.equals("application/octet-stream")){
@@ -130,8 +130,8 @@ public class {{classname}} {
       }
       return response;
 
-      {{/isResponseBinary}}
-      {{^isResponseBinary}}
+      {{/isBinary}}
+      {{^isBinary}}
 
        String response = apiClient.invokeAPI(path, "{{httpMethod}}", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames);
        if(response != null){
@@ -140,7 +140,9 @@ public class {{classname}} {
        else {
             return {{#returnType}}null{{/returnType}};
        }
-     {{/isResponseBinary}}
+     {{/isBinary}}
+     {{/isDefault}}
+     {{/responses}}
 
     } catch (ApiException ex) {
       throw ex;

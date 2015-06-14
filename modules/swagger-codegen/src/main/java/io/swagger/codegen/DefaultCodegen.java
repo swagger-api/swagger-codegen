@@ -786,7 +786,6 @@ public class DefaultCodegen {
                     op.examples = new ExampleGenerator(definitions).generate(methodResponse.getExamples(), operation.getProduces(), responseProperty);
                     op.defaultResponse = toDefaultValue(responseProperty);
                     op.returnType = cm.datatype;
-                    op.isResponseBinary = (cm.datatype.equals("byte[]"));
                     if (cm.isContainer != null) {
                         op.returnContainer = cm.containerType;
                         if ("map".equals(cm.containerType)) {
@@ -855,7 +854,6 @@ public class DefaultCodegen {
             }
         }
         op.bodyParam = bodyParam;
-        op.isBodyInputBinary = (bodyParam != null) && bodyParam.dataType.equals("byte[]");
         op.httpMethod = httpMethod.toUpperCase();
         op.allParams = addHasMore(allParams);
         op.bodyParams = addHasMore(bodyParams);
@@ -906,6 +904,7 @@ public class DefaultCodegen {
                 }
             }
             r.dataType = cm.datatype;
+            r.isBinary = cm.datatype.equals("byte[]");
             if (cm.isContainer != null) {
                 r.simpleType = false;
                 r.containerType = cm.containerType;
@@ -997,12 +996,17 @@ public class DefaultCodegen {
                     p.dataType = getTypeDeclaration(cm.classname);
                     imports.add(p.dataType);
                 } else {
-                    // TODO: missing format, so this will not always work
                     Property prop = PropertyBuilder.build(impl.getType(), impl.getFormat(), null);
                     prop.setRequired(bp.getRequired());
                     CodegenProperty cp = fromProperty("property", prop);
                     if (cp != null) {
                         p.dataType = cp.datatype;
+                        if (p.dataType.equals("byte[]")) {
+                            p.isBinary = true;
+                        }
+                        else {
+                            p.isBinary = false;
+                        }
                     }
                 }
             } else if (model instanceof ArrayModel) {
