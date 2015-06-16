@@ -1,5 +1,6 @@
 package io.swagger.client.model;
 
+import io.swagger.client.StringUtil;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -44,9 +45,9 @@ public class Category  {
     StringBuilder sb = new StringBuilder();
     sb.append("class Category {\n");
     
-    sb.append("  id: ").append(id).append("\n");
-    sb.append("  name: ").append(name).append("\n");
-    sb.append("}\n");
+    sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
+    sb.append("    name: ").append(StringUtil.toIndentedString(name)).append("\n");
+    sb.append("}");
     return sb.toString();
   }
 }

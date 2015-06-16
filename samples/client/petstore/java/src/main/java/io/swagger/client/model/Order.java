@@ -1,5 +1,6 @@
 package io.swagger.client.model;
 
+import io.swagger.client.StringUtil;
 import java.util.Date;
 
 import com.google.gson.annotations.SerializedName;
@@ -101,13 +102,13 @@ public class Order  {
     StringBuilder sb = new StringBuilder();
     sb.append("class Order {\n");
     
-    sb.append("  id: ").append(id).append("\n");
-    sb.append("  petId: ").append(petId).append("\n");
-    sb.append("  quantity: ").append(quantity).append("\n");
-    sb.append("  shipDate: ").append(shipDate).append("\n");
-    sb.append("  status: ").append(status).append("\n");
-    sb.append("  complete: ").append(complete).append("\n");
-    sb.append("}\n");
+    sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
+    sb.append("    petId: ").append(StringUtil.toIndentedString(petId)).append("\n");
+    sb.append("    quantity: ").append(StringUtil.toIndentedString(quantity)).append("\n");
+    sb.append("    shipDate: ").append(StringUtil.toIndentedString(shipDate)).append("\n");
+    sb.append("    status: ").append(StringUtil.toIndentedString(status)).append("\n");
+    sb.append("    complete: ").append(StringUtil.toIndentedString(complete)).append("\n");
+    sb.append("}");
     return sb.toString();
   }
 }

@@ -1,5 +1,6 @@
 package io.swagger.client.model;
 
+import io.swagger.client.StringUtil;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -123,15 +124,15 @@ public class User  {
     StringBuilder sb = new StringBuilder();
     sb.append("class User {\n");
     
-    sb.append("  id: ").append(id).append("\n");
-    sb.append("  username: ").append(username).append("\n");
-    sb.append("  firstName: ").append(firstName).append("\n");
-    sb.append("  lastName: ").append(lastName).append("\n");
-    sb.append("  email: ").append(email).append("\n");
-    sb.append("  password: ").append(password).append("\n");
-    sb.append("  phone: ").append(phone).append("\n");
-    sb.append("  userStatus: ").append(userStatus).append("\n");
-    sb.append("}\n");
+    sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
+    sb.append("    username: ").append(StringUtil.toIndentedString(username)).append("\n");
+    sb.append("    firstName: ").append(StringUtil.toIndentedString(firstName)).append("\n");
+    sb.append("    lastName: ").append(StringUtil.toIndentedString(lastName)).append("\n");
+    sb.append("    email: ").append(StringUtil.toIndentedString(email)).append("\n");
+    sb.append("    password: ").append(StringUtil.toIndentedString(password)).append("\n");
+    sb.append("    phone: ").append(StringUtil.toIndentedString(phone)).append("\n");
+    sb.append("    userStatus: ").append(StringUtil.toIndentedString(userStatus)).append("\n");
+    sb.append("}");
     return sb.toString();
   }
 }
