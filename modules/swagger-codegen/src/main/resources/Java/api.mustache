@@ -67,11 +67,11 @@ public class {{classname}} {
     Map<String, String> formParams = new HashMap<String, String>();
 
     {{#queryParams}}
-      queryParams.addAll(apiClient.parameterToQueryParams("{{baseName}}", {{paramName}}));
+    queryParams.addAll(apiClient.parameterToQueryParams("{{baseName}}", {{paramName}}));
     {{/queryParams}}
 
     {{#headerParams}}if ({{paramName}} != null)
-      headerParams.put("{{baseName}}", apiClient.parameterToString({{paramName}}));
+    headerParams.put("{{baseName}}", apiClient.parameterToString({{paramName}}));
     {{/headerParams}}
 
     final String[] accepts = {
