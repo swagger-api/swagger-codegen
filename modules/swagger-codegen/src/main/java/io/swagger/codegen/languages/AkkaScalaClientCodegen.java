@@ -3,14 +3,7 @@ package io.swagger.codegen.languages;
 import com.google.common.base.CaseFormat;
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenProperty;
-import io.swagger.codegen.CodegenResponse;
-import io.swagger.codegen.CodegenSecurity;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.DefaultCodegen;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.*;
 import io.swagger.models.auth.SecuritySchemeDefinition;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.BooleanProperty;
@@ -80,10 +73,6 @@ public class AkkaScalaClientCodegen extends DefaultCodegen implements CodegenCon
                         "trait", "try", "true", "type", "val", "var", "while", "with", "yield")
         );
 
-        additionalProperties.put("invokerPackage", invokerPackage);
-        additionalProperties.put("groupId", groupId);
-        additionalProperties.put("artifactId", artifactId);
-        additionalProperties.put("artifactVersion", artifactVersion);
         additionalProperties.put("configKey", configKey);
         additionalProperties.put("configKeyPath", configKeyPath);
         additionalProperties.put("defaultTimeout", defaultTimeoutInMs);
@@ -94,16 +83,6 @@ public class AkkaScalaClientCodegen extends DefaultCodegen implements CodegenCon
         additionalProperties.put("fnCamelize", new CamelizeLambda(false));
         additionalProperties.put("fnEnumEntry", new EnumEntryLambda());
         additionalProperties.put("onlyOneSuccess", onlyOneSuccess);
-
-        supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
-        supportingFiles.add(new SupportingFile("reference.mustache", resourcesFolder, "reference.conf"));
-        final String invokerFolder = (sourceFolder + File.separator + invokerPackage).replace(".", File.separator);
-        supportingFiles.add(new SupportingFile("apiRequest.mustache", invokerFolder, "ApiRequest.scala"));
-        supportingFiles.add(new SupportingFile("apiInvoker.mustache", invokerFolder, "ApiInvoker.scala"));
-        supportingFiles.add(new SupportingFile("requests.mustache", invokerFolder, "requests.scala"));
-        supportingFiles.add(new SupportingFile("apiSettings.mustache", invokerFolder, "ApiSettings.scala"));
-        final String apiFolder = (sourceFolder + File.separator + apiPackage).replace(".", File.separator);
-        supportingFiles.add(new SupportingFile("enumsSerializers.mustache", apiFolder, "EnumsSerializers.scala"));
 
         importMapping.remove("Seq");
         importMapping.remove("List");
@@ -146,6 +125,60 @@ public class AkkaScalaClientCodegen extends DefaultCodegen implements CodegenCon
         );
         instantiationTypes.put("array", "ListBuffer");
         instantiationTypes.put("map", "Map");
+
+        cliOptions.add(new CliOption("invokerPackage", "root package for generated code. defaults to " + invokerPackage));
+        cliOptions.add(new CliOption("groupId", "groupId in generated pom.xml. defaults to " + groupId));
+        cliOptions.add(new CliOption("artifactId", "artifactId in generated pom.xml. defaults to " + artifactId));
+        cliOptions.add(new CliOption("artifactVersion", "artifact version in generated pom.xml. defaults to " + artifactVersion));
+        cliOptions.add(new CliOption("sourceFolder", "source folder for generated code. Can be relative path. defaults to " + sourceFolder));
+    }
+    @Override
+    public void processOpts() {
+        super.processOpts();
+
+        if (additionalProperties.containsKey("invokerPackage")) {
+            this.invokerPackage = (String) additionalProperties.get("invokerPackage");
+        } else {
+            //not set, use default to be passed to template
+            additionalProperties.put("invokerPackage", invokerPackage);
+        }
+
+        if (additionalProperties.containsKey("groupId")) {
+            this.groupId = (String) additionalProperties.get("groupId");
+        } else {
+            //not set, use to be passed to template
+            additionalProperties.put("groupId", groupId);
+        }
+
+        if (additionalProperties.containsKey("artifactId")) {
+            this.artifactId = (String) additionalProperties.get("artifactId");
+        } else {
+            //not set, use to be passed to template
+            additionalProperties.put("artifactId", artifactId);
+        }
+
+        if (additionalProperties.containsKey("artifactVersion")) {
+            this.artifactVersion = (String) additionalProperties.get("artifactVersion");
+        } else {
+            //not set, use to be passed to template
+            additionalProperties.put("artifactVersion", artifactVersion);
+        }
+
+        if (additionalProperties.containsKey("sourceFolder")) {
+            this.sourceFolder = (String) additionalProperties.get("sourceFolder");
+        }
+
+        final String invokerFolder = (sourceFolder + File.separator + invokerPackage).replace(".", File.separator);
+        supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
+        supportingFiles.add(new SupportingFile("reference.mustache", resourcesFolder, "reference.conf"));
+        supportingFiles.add(new SupportingFile("apiRequest.mustache", invokerFolder, "ApiRequest.scala"));
+        supportingFiles.add(new SupportingFile("apiInvoker.mustache", invokerFolder, "ApiInvoker.scala"));
+        supportingFiles.add(new SupportingFile("requests.mustache", invokerFolder, "requests.scala"));
+        supportingFiles.add(new SupportingFile("apiSettings.mustache", invokerFolder, "ApiSettings.scala"));
+
+        final String apiFolder = (sourceFolder + File.separator + apiPackage).replace(".", File.separator);
+        supportingFiles.add(new SupportingFile("enumsSerializers.mustache", apiFolder, "EnumsSerializers.scala"));
+
     }
 
     public CodegenType getTag() {
@@ -228,6 +261,9 @@ public class AkkaScalaClientCodegen extends DefaultCodegen implements CodegenCon
             return codegenSecurities;
         }
 
+        if (codegenSecurities == null) {
+            return codegenSecurities;
+        }
         // Remove OAuth securities
         Iterator<CodegenSecurity> it = codegenSecurities.iterator();
         while (it.hasNext()) {

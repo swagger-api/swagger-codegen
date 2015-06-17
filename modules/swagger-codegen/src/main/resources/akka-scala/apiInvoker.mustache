@@ -88,8 +88,8 @@ object ApiInvoker {
 
 class ApiInvoker(formats: Formats)(implicit system: ActorSystem) extends UntrustedSslContext with CustomContentTypes {
 
-  import io.swagger.client.core.ApiInvoker._
-  import io.swagger.client.core.ParametersMap._
+  import ApiInvoker._
+  import ParametersMap._
 
   implicit val ec = system.dispatcher
   implicit val jsonFormats = formats
