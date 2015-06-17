@@ -73,6 +73,13 @@ public class AkkaScalaClientCodegen extends DefaultCodegen implements CodegenCon
                         "trait", "try", "true", "type", "val", "var", "while", "with", "yield")
         );
 
+<<<<<<< HEAD
+=======
+        //additionalProperties.put("invokerPackage", invokerPackage);
+        //additionalProperties.put("groupId", groupId);
+        //additionalProperties.put("artifactId", artifactId);
+        //additionalProperties.put("artifactVersion", artifactVersion);
+>>>>>>> 8b55a9809c8c80a08c7a53d8904d1a7bfb826333
         additionalProperties.put("configKey", configKey);
         additionalProperties.put("configKeyPath", configKeyPath);
         additionalProperties.put("defaultTimeout", defaultTimeoutInMs);
@@ -131,6 +138,11 @@ public class AkkaScalaClientCodegen extends DefaultCodegen implements CodegenCon
         cliOptions.add(new CliOption("artifactId", "artifactId in generated pom.xml. defaults to " + artifactId));
         cliOptions.add(new CliOption("artifactVersion", "artifact version in generated pom.xml. defaults to " + artifactVersion));
         cliOptions.add(new CliOption("sourceFolder", "source folder for generated code. Can be relative path. defaults to " + sourceFolder));
+        cliOptions.add(new CliOption("invokerPackage", "root package for generated code"));
+        cliOptions.add(new CliOption("groupId", "groupId in generated pom.xml"));
+        cliOptions.add(new CliOption("artifactId", "artifactId in generated pom.xml"));
+        cliOptions.add(new CliOption("artifactVersion", "artifact version in generated pom.xml"));
+        cliOptions.add(new CliOption("sourceFolder", "source folder for generated code"));
     }
     @Override
     public void processOpts() {
