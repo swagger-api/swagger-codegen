@@ -22,6 +22,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -237,6 +239,28 @@ public class ApiClient {
     }
   }
 
+  /*
+    Format to {@code QueryParam} objects.
+  */
+  public Set<QueryParam> parameterToQueryParams(String name, Object value){
+    Set<QueryParam> params = new HashSet<QueryParam>();
+
+    if (value == null) return params;
+
+    if (value instanceof List){
+      List<String> values = (List) value;
+
+      for (String item : values) {
+        params.add(new QueryParam(name, item));
+      }
+
+    } else {
+        params.add(new QueryParam(name, value.toString()));
+    }
+
+    return params;
+  }
+
   /**
    * Select the Accept header's value from the given accepts array:
    *   if JSON exists in the given array, use it;
@@ -340,23 +364,25 @@ public class ApiClient {
    * @param authNames The authentications to apply
    * @return The response body in type of string
    */
-  public String invokeAPI(String path, String method, Map<String, String> queryParams, Object body, Map<String, String> headerParams, Map<String, String> formParams, String accept, String contentType, String[] authNames) throws ApiException {
+  public String invokeAPI(String path, String method, Set<QueryParam> queryParams, Object body, Map<String, String> headerParams, Map<String, String> formParams, String accept, String contentType, String[] authNames) throws ApiException {
     updateParamsForAuth(authNames, queryParams, headerParams);
 
     Client client = getClient();
 
     StringBuilder b = new StringBuilder();
-    for(String key : queryParams.keySet()) {
-      String value = queryParams.get(key);
-      if (value != null){
-        if(b.toString().length() == 0)
-          b.append("?");
-        else
+    b.append("?");
+    if (queryParams != null){
+      for (QueryParam queryParam : queryParams){
+        if (!queryParam.getName().isEmpty()) {
+          b.append(escapeString(queryParam.getName()));
+          b.append("=");
+          b.append(escapeString(queryParam.getValue()));
           b.append("&");
-        b.append(escapeString(key)).append("=").append(escapeString(value));
+        }
       }
     }
-    String querystring = b.toString();
+
+    String querystring = b.substring(0, b.length() - 1);
 
     Builder builder;
     if (accept == null)
@@ -456,7 +482,7 @@ public class ApiClient {
    *
    * @param authNames The authentications to apply
    */
-  private void updateParamsForAuth(String[] authNames, Map<String, String> queryParams, Map<String, String> headerParams) {
+  private void updateParamsForAuth(String[] authNames, Set<QueryParam> queryParams, Map<String, String> headerParams) {
     for (String authName : authNames) {
       Authentication auth = authentications.get(authName);
       if (auth == null) throw new RuntimeException("Authentication undefined: " + authName);
