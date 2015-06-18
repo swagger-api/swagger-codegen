@@ -1,12 +1,15 @@
 package {{package}};
 
-import {{invokerPackage}}.ApiException;
+import {{invokerPackage}}.ApiCallback;
 import {{invokerPackage}}.ApiClient;
+import {{invokerPackage}}.ApiException;
 import {{invokerPackage}}.Configuration;
 
 import {{modelPackage}}.*;
 
 import com.google.gson.reflect.TypeToken;
+
+import com.squareup.okhttp.Call;
 
 import java.lang.reflect.Type;
 
@@ -40,18 +43,13 @@ public class {{classname}} {
   }
 
   {{#operation}}
-  /**
-   * {{summary}}
-   * {{notes}}
-{{#allParams}}   * @param {{paramName}} {{description}}
-{{/allParams}}   * @return {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}
-   */
-  public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{nickname}}({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws ApiException {
+  /* Build call for {{nickname}} */
+  private Call {{nickname}}Call({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws ApiException {
     Object postBody = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
     {{#allParams}}{{#required}}
     // verify the required parameter '{{paramName}}' is set
     if ({{paramName}} == null) {
-       throw new ApiException(400, "Missing the required parameter '{{paramName}}' when calling {{nickname}}");
+       throw new ApiException("Missing the required parameter '{{paramName}}' when calling {{nickname}}(Async)");
     }
     {{/required}}{{/allParams}}
 
@@ -84,8 +82,33 @@ public class {{classname}} {
     headerParams.put("Content-Type", contentType);
 
     String[] authNames = new String[] { {{#authMethods}}"{{name}}"{{#hasMore}}, {{/hasMore}}{{/authMethods}} };
+    return apiClient.buildCall(path, "{{httpMethod}}", queryParams, postBody, headerParams, formParams, authNames);
+  }
+
+  /**
+   * {{summary}}
+   * {{notes}}{{#allParams}}
+   * @param {{paramName}} {{description}}{{/allParams}}{{#returnType}}
+   * @return {{{returnType}}}{{/returnType}}
+   */
+  public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{nickname}}({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws ApiException {
+    Call call = {{nickname}}Call({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
     {{#returnType}}Type returnType = new TypeToken<{{{returnType}}}>(){}.getType();
-    return apiClient.invokeAPI(path, "{{httpMethod}}", queryParams, postBody, headerParams, formParams, returnType, authNames);{{/returnType}}{{^returnType}}apiClient.invokeAPI(path, "{{httpMethod}}", queryParams, postBody, headerParams, formParams, null, authNames);{{/returnType}}
+    return apiClient.execute(call, returnType);{{/returnType}}{{^returnType}}apiClient.execute(call);{{/returnType}}
+  }
+
+  /**
+   * {{summary}} (asynchronously)
+   * {{notes}}{{#allParams}}
+   * @param {{paramName}} {{description}}{{/allParams}}
+   * @param callback The callback to be executed when the API call finishes
+   * @return The request call
+   */
+  public Call {{nickname}}Async({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}ApiCallback<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> callback) throws ApiException {
+    Call call = {{nickname}}Call({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+    {{#returnType}}Type returnType = new TypeToken<{{{returnType}}}>(){}.getType();
+    apiClient.executeAsync(call, returnType, callback);{{/returnType}}{{^returnType}}apiClient.executeAsync(call, callback);{{/returnType}}
+    return call;
   }
   {{/operation}}
 }
