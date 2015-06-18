@@ -5,30 +5,40 @@ import java.util.List;
 
 public class ApiException extends Exception {
   private int code = 0;
-  private String message = null;
   private Map<String, List<String>> responseHeaders = null;
   private String responseBody = null;
 
   public ApiException() {}
 
-  public ApiException(int code, String message) {
-    this.code = code;
-    this.message = message;
+  public ApiException(Throwable throwable) {
+    super(throwable);
   }
 
-  public ApiException(int code, String message, Map<String, List<String>> responseHeaders, String responseBody) {
+  public ApiException(String message) {
+    super(message);
+  }
+
+  public ApiException(String message, Throwable throwable, int code, Map<String, List<String>> responseHeaders, String responseBody) {
+    super(message, throwable);
     this.code = code;
-    this.message = message;
     this.responseHeaders = responseHeaders;
     this.responseBody = responseBody;
   }
 
-  public int getCode() {
-    return code;
+  public ApiException(String message, int code, Map<String, List<String>> responseHeaders, String responseBody) {
+    this(message, (Throwable) null, code, responseHeaders, responseBody);
   }
 
-  public String getMessage() {
-    return message;
+  public ApiException(String message, Throwable throwable, int code, Map<String, List<String>> responseHeaders) {
+    this(message, throwable, code, responseHeaders, null);
+  }
+
+  public ApiException(int code, Map<String, List<String>> responseHeaders, String responseBody) {
+    this((String) null, (Throwable) null, code, responseHeaders, responseBody);
+  }
+
+  public int getCode() {
+    return code;
   }
 
   /**

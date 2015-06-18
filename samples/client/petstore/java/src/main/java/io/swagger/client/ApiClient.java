@@ -5,6 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
 
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -340,7 +342,7 @@ public class ApiClient {
       else
         respBody = null;
     } catch (IOException e) {
-      throw new ApiException(500, e.getMessage());
+      throw new ApiException(e);
     }
 
     if (respBody == null || "".equals(respBody))
@@ -368,7 +370,11 @@ public class ApiClient {
         else throw(e);
       }
     } else {
-      throw new ApiException(500, "Content type \"" + contentType + "\" is not supported");
+      throw new ApiException(
+        "Content type \"" + contentType + "\" is not supported",
+        response.code(),
+        response.headers().toMultimap(),
+        respBody);
     }
   }
 
@@ -387,12 +393,91 @@ public class ApiClient {
       else
         return null;
     } else {
-      throw new ApiException(500, "Content type \"" + contentType + "\" is not supported");
+      throw new ApiException("Content type \"" + contentType + "\" is not supported");
     }
   }
 
   /**
-   * Invoke API by sending HTTP request with the given options.
+   * @see #execute(Call, Type)
+   */
+  public <T> T execute(Call call) throws ApiException {
+    return execute(call, null);
+  }
+
+  /**
+   * Execute HTTP call and deserialize the HTTP response body into the given return type.
+   *
+   * @param returnType The return type used to deserialize HTTP response body
+   * @param <T> The return type corresponding to (same with) returnType
+   * @return The Java object deserialized from response body. Returns null if returnType is null.
+   */
+  public <T> T execute(Call call, Type returnType) throws ApiException {
+    try {
+      Response response = call.execute();
+      return handleResponse(response, returnType);
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+  }
+
+  /**
+   * #see executeAsync(Call, Type, ApiCallback)
+   */
+  public <T> void executeAsync(Call call, ApiCallback<T> callback) throws ApiException {
+    executeAsync(call, null, callback);
+  }
+
+  /**
+   * Execute HTTP call asynchronously.
+   *
+   * @see #execute(Call, Type)
+   * @param The callback to be executed when the API call finishes
+   */
+  public <T> void executeAsync(Call call, final Type returnType, final ApiCallback<T> callback) {
+    call.enqueue(new Callback() {
+      @Override
+      public void onFailure(Request request, IOException e) {
+        callback.onFailure(new ApiException(e));
+      }
+
+      @Override
+      public void onResponse(Response response) throws IOException {
+        T result;
+        try {
+          result = (T) handleResponse(response, returnType);
+        } catch (ApiException e) {
+          callback.onFailure(e);
+          return;
+        }
+        callback.onSuccess(result);
+      }
+    });
+  }
+
+  public <T> T handleResponse(Response response, Type returnType) throws ApiException {
+    if (response.isSuccessful()) {
+      if (returnType == null || response.code() == 204) {
+        // returning null if the returnType is not defined,
+        // or the status code is 204 (No Content)
+        return null;
+      } else {
+        return deserialize(response, returnType);
+      }
+    } else {
+      String respBody = null;
+      if (response.body() != null) {
+        try {
+          respBody = response.body().string();
+        } catch (IOException e) {
+          throw new ApiException(response.message(), e, response.code(), response.headers().toMultimap());
+        }
+      }
+      throw new ApiException(response.message(), response.code(), response.headers().toMultimap(), respBody);
+    }
+  }
+
+  /**
+   * Build HTTP call with the given options.
    *
    * @param path The sub-path of the HTTP URL
    * @param method The request method, one of "GET", "HEAD", "POST", "PUT", "PATCH" and "DELETE"
@@ -401,9 +486,9 @@ public class ApiClient {
    * @param headerParams The header parameters
    * @param formParams The form parameters
    * @param authNames The authentications to apply
-   * @return The Java object deserialized from response body. Returns null if returnType is null.
+   * @return The HTTP call
    */
-  public <T> T invokeAPI(String path, String method, Map<String, Object> queryParams, Object body, Map<String, Object> headerParams, Map<String, Object> formParams, Type returnType, String[] authNames) throws ApiException {
+  public Call buildCall(String path, String method, Map<String, Object> queryParams, Object body, Map<String, Object> headerParams, Map<String, Object> formParams, String[] authNames) throws ApiException {
     updateParamsForAuth(authNames, queryParams, headerParams);
 
     final String url = buildUrl(path, queryParams);
@@ -452,31 +537,10 @@ public class ApiClient {
         request = reqBuilder.delete(reqBody).build();
       }
     } else {
-      throw new ApiException(500, "unknown method type " + method);
+      throw new ApiException("unknown method type: " + method);
     }
 
-    try {
-      Response response = httpClient.newCall(request).execute();
-      if (response.isSuccessful()) {
-        if (returnType == null || response.code() == 204) {
-          // returning null if the returnType is not defined,
-          // or the status code is 204 (No Content)
-          return null;
-        } else {
-          return deserialize(response, returnType);
-        }
-      } else {
-        String message = "error";
-        String respBody = null;
-        if (response.body() != null) {
-          respBody = response.body().string();
-          message = respBody;
-        }
-        throw new ApiException(response.code(), message, response.headers().toMultimap(), respBody);
-      }
-    } catch (IOException e) {
-      throw new ApiException(500, e.getMessage());
-    }
+    return httpClient.newCall(request);
   }
 
   /**
