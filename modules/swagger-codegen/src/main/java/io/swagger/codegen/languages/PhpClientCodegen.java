@@ -1,5 +1,6 @@
 package io.swagger.codegen.languages;
 
+import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
@@ -7,31 +8,34 @@ import io.swagger.codegen.SupportingFile;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
+import io.swagger.models.properties.RefProperty;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
-    protected String invokerPackage = "io.swagger.client";
-    protected String groupId = "io.swagger";
+    protected String invokerPackage = "Swagger\\Client";
+    protected String groupId = "swagger";
     protected String artifactId = "swagger-client";
-    protected String artifactVersion = "1.0.0";
+    protected String packagePath = "SwaggerClient-php";
+    protected String artifactVersion = null;
+    protected String srcBasePath = "lib";
 
     public PhpClientCodegen() {
         super();
 
-        invokerPackage = camelize("SwaggerClient");
-
-        String packagePath = invokerPackage + "-php";
-
-        modelPackage = packagePath + "/lib/models";
-        apiPackage = packagePath + "/lib";
         outputFolder = "generated-code/php";
         modelTemplateFiles.put("model.mustache", ".php");
         apiTemplateFiles.put("api.mustache", ".php");
         templateDir = "php";
+        apiPackage = "Api";
+        modelPackage = "Model";
 
         reservedWords = new HashSet<String>(
                 Arrays.asList(
@@ -39,6 +43,10 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
         );
 
         additionalProperties.put("invokerPackage", invokerPackage);
+        additionalProperties.put("modelPackage", modelPackage);
+        additionalProperties.put("apiPackage", apiPackage);
+        additionalProperties.put("srcBasePath", srcBasePath);
+        additionalProperties.put("escapedInvokerPackage", invokerPackage.replace("\\", "\\\\"));
         additionalProperties.put("groupId", groupId);
         additionalProperties.put("artifactId", artifactId);
         additionalProperties.put("artifactVersion", artifactVersion);
@@ -46,6 +54,7 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
         // ref: http://php.net/manual/en/language.types.intro.php
         languageSpecificPrimitives = new HashSet<String>(
                 Arrays.asList(
+                        "bool",
                         "boolean",
                         "int",
                         "integer",
@@ -55,7 +64,9 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
                         "object",
                         "DateTime",
                         "mixed",
-                        "number")
+                        "number",
+                        "void",
+                        "byte")
         );
 
         instantiationTypes.put("array", "array");
@@ -69,20 +80,37 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("double", "double");
         typeMapping.put("string", "string");
         typeMapping.put("byte", "int");
-        typeMapping.put("boolean", "boolean");
-        typeMapping.put("date", "DateTime");
-        typeMapping.put("datetime", "DateTime");
+        typeMapping.put("boolean", "bool");
+        typeMapping.put("date", "\\DateTime");
+        typeMapping.put("datetime", "\\DateTime");
         typeMapping.put("file", "string");
         typeMapping.put("map", "map");
         typeMapping.put("array", "array");
         typeMapping.put("list", "array");
         typeMapping.put("object", "object");
+        typeMapping.put("DateTime", "\\DateTime");
+        
+        cliOptions.add(new CliOption("packagePath", "main package name for classes"));
+        cliOptions.add(new CliOption("srcBasePath", "directory directory under packagePath to serve as source root"));
+    }
 
-        supportingFiles.add(new SupportingFile("composer.mustache", packagePath.replace('/', File.separatorChar), "composer.json"));
-        supportingFiles.add(new SupportingFile("configuration.mustache", (packagePath + "/lib").replace('/', File.separatorChar), "Configuration.php"));
-        supportingFiles.add(new SupportingFile("ApiClient.mustache", (packagePath + "/lib").replace('/', File.separatorChar), "ApiClient.php"));
-        supportingFiles.add(new SupportingFile("ApiException.mustache", (packagePath + "/lib").replace('/', File.separatorChar), "ApiException.php"));
-        supportingFiles.add(new SupportingFile("require.mustache", packagePath.replace('/', File.separatorChar), invokerPackage + ".php"));
+    public String getPackagePath() {
+        return packagePath;
+    }
+
+    public String toPackagePath(String packageName, String basePath) {
+        packageName = packageName.replace(invokerPackage, "");
+        if (basePath != null && basePath.length() > 0) {
+            basePath = basePath.replaceAll("[\\\\/]?$", "") + File.separatorChar;
+        }
+
+        return (getPackagePath() + File.separatorChar + basePath
+                    // Replace period, backslash, forward slash with file separator in package name
+                    + packageName.replaceAll("[\\.\\\\/]", File.separator)
+                    // Trim prefix file separators from package path
+                    .replaceAll("^" + File.separator, ""))
+                // Trim trailing file separators from the overall path
+                .replaceAll(File.separator + "$", "");
     }
 
     public CodegenType getTag() {
@@ -98,17 +126,50 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
+    public void processOpts() {
+        super.processOpts();
+
+        if (additionalProperties.containsKey("packagePath")) {
+            this.setPackagePath((String) additionalProperties.get("packagePath"));
+        }
+
+        if (additionalProperties.containsKey("srcBasePath")) {
+            this.setSrcBasePath((String) additionalProperties.get("srcBasePath"));
+        }
+
+        if (additionalProperties.containsKey("modelPackage")) {
+            this.setModelPackage(invokerPackage + "\\" + additionalProperties.get("modelPackage"));
+        }
+
+        if (additionalProperties.containsKey("apiPackage")) {
+            this.setApiPackage(invokerPackage + "\\" + additionalProperties.get("apiPackage"));
+        }
+
+        additionalProperties.replace("srcBasePath", srcBasePath);
+        additionalProperties.replace("modelPackage", modelPackage);
+        additionalProperties.replace("apiPackage", apiPackage);
+        additionalProperties.put("escapedInvokerPackage", invokerPackage.replace("\\", "\\\\"));
+
+        supportingFiles.add(new SupportingFile("ApiClientConfiguration.mustache", toPackagePath(invokerPackage, srcBasePath), "ApiClientConfiguration.php"));
+        supportingFiles.add(new SupportingFile("ApiClient.mustache", toPackagePath(invokerPackage, srcBasePath), "ApiClient.php"));
+        supportingFiles.add(new SupportingFile("ApiException.mustache", toPackagePath(invokerPackage, srcBasePath), "ApiException.php"));
+        supportingFiles.add(new SupportingFile("ObjectSerializer.mustache", toPackagePath(invokerPackage, srcBasePath), "ObjectSerializer.php"));
+        supportingFiles.add(new SupportingFile("composer.mustache", getPackagePath(), "composer.json"));
+        supportingFiles.add(new SupportingFile("autoload.mustache", getPackagePath(), "autoload.php"));
+    }
+
+    @Override
     public String escapeReservedWord(String name) {
         return "_" + name;
     }
 
     @Override
     public String apiFileFolder() {
-        return (outputFolder + "/" + apiPackage()).replace('/', File.separatorChar);
+        return (outputFolder + "/" + toPackagePath(apiPackage(), srcBasePath));
     }
 
     public String modelFileFolder() {
-        return (outputFolder + "/" + modelPackage()).replace('/', File.separatorChar);
+        return (outputFolder + "/" + toPackagePath(modelPackage(), srcBasePath));
     }
 
     @Override
@@ -116,13 +177,25 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
         if (p instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) p;
             Property inner = ap.getItems();
-            return getSwaggerType(p) + "[" + getTypeDeclaration(inner) + "]";
+            return getTypeDeclaration(inner) + "[]";
         } else if (p instanceof MapProperty) {
             MapProperty mp = (MapProperty) p;
             Property inner = mp.getAdditionalProperties();
             return getSwaggerType(p) + "[string," + getTypeDeclaration(inner) + "]";
+        } else if (p instanceof RefProperty) {
+            String type = super.getTypeDeclaration(p);
+            return (!languageSpecificPrimitives.contains(type))
+                    ? "\\" + modelPackage + "\\" + type : type;
         }
         return super.getTypeDeclaration(p);
+    }
+
+    @Override
+    public String getTypeDeclaration(String name) {
+        if (!languageSpecificPrimitives.contains(name)) {
+            return "\\" + modelPackage + "\\" + name;
+        }
+        return super.getTypeDeclaration(name);
     }
 
     @Override
@@ -149,6 +222,17 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
         return "null";
     }
 
+    public void setInvokerPackage(String invokerPackage) {
+        this.invokerPackage = invokerPackage;
+    }
+
+    public void setPackagePath(String packagePath) {
+        this.packagePath = packagePath;
+    }
+
+    public void setSrcBasePath(String srcBasePath) {
+        this.srcBasePath = srcBasePath;
+    }
 
     @Override
     public String toVarName(String name) {
@@ -186,5 +270,4 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
         // should be the same as the model name
         return toModelName(name);
     }
-
 }
