@@ -193,7 +193,10 @@ class ApiClient(object):
               value = value
             setattr(instance, attr, value)
           elif attr_type == 'datetime':
-            setattr(instance, attr, self.__parse_string_to_datetime(value))
+            try:
+              setattr(instance, attr, self.__parse_string_to_datetime(value))
+            except AttributeError:
+              setattr(instance, attr, None)
           elif 'list[' in attr_type:
             match = re.match('list\[(.*)\]', attr_type)
             sub_class = match.group(1)
