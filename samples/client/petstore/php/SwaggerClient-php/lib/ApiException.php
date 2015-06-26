@@ -15,26 +15,27 @@
  *  limitations under the License.
  */
 
-namespace SwaggerClient;
+namespace Swagger\Client;
 
 use \Exception;
 
 class ApiException extends Exception {
 
-  /**
-   * The HTTP body of the server response.
-   */
-  protected $response_body;
+  /** @var string The HTTP body of the server response. */
+  protected $responseBody;
+
+  /** @var string[] The HTTP header of the server response. */
+  protected $responseHeaders;
 
   /**
-   * The HTTP header of the server response.
+   * The deserialized response object
    */
-  protected $response_headers;
+  protected $responseObject;
 
   public function __construct($message="", $code=0, $responseHeaders=null, $responseBody=null) {
     parent::__construct($message, $code);
-    $this->response_headers = $responseHeaders;
-    $this->response_body = $responseBody;
+    $this->responseHeaders = $responseHeaders;
+    $this->responseBody = $responseBody;
   }
 
   /**
@@ -43,7 +44,7 @@ class ApiException extends Exception {
    * @return string HTTP response header
    */
   public function getResponseHeaders() {
-    return $this->response_headers;
+    return $this->responseHeaders;
   }
 
   /**
@@ -52,7 +53,18 @@ class ApiException extends Exception {
    * @return string HTTP response body
    */
   public function getResponseBody() {
-    return $this->response_body;
+    return $this->responseBody;
   }
 
+  /**
+   * sets the deseralized response object (during deserialization)
+   * @param mixed $obj
+   */
+  public function setResponseObject($obj) {
+    $this->responseObject = $obj;
+  }
+
+  public function getResponseObject() {
+    return $this->responseObject;
+  }
 }
