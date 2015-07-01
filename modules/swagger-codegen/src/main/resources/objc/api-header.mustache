@@ -1,19 +1,14 @@
 #import <Foundation/Foundation.h>
 {{#imports}}#import "{{import}}.h"
 {{/imports}}
+#import "SWGApi.h"
 #import "SWGObject.h"
 #import "SWGApiClient.h"
 {{newline}}
 
 {{#operations}}
-@interface {{classname}}: NSObject
+@interface {{classname}}: SWGApi
 
--(void) addHeader:(NSString*)value forKey:(NSString*)key;
--(unsigned long) requestQueueSize;
-+({{classname}}*) apiWithHeader:(NSString*)headerValue key:(NSString*)key;
-+(void) setBasePath:(NSString*)basePath;
-+(NSString*) getBasePath;
--(SWGApiClient*) apiClient;
 {{#operation}}
 /**
 
