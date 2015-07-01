@@ -72,14 +72,6 @@ public class AkkaScalaClientCodegen extends DefaultCodegen implements CodegenCon
                         "private", "protected", "return", "sealed", "super", "this", "throw",
                         "trait", "try", "true", "type", "val", "var", "while", "with", "yield")
         );
-
-<<<<<<< HEAD
-=======
-        //additionalProperties.put("invokerPackage", invokerPackage);
-        //additionalProperties.put("groupId", groupId);
-        //additionalProperties.put("artifactId", artifactId);
-        //additionalProperties.put("artifactVersion", artifactVersion);
->>>>>>> 8b55a9809c8c80a08c7a53d8904d1a7bfb826333
         additionalProperties.put("configKey", configKey);
         additionalProperties.put("configKeyPath", configKeyPath);
         additionalProperties.put("defaultTimeout", defaultTimeoutInMs);
