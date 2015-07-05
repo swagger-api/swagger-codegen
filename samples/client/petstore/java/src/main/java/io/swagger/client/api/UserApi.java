@@ -11,9 +11,13 @@ import java.util.*;
 import io.swagger.client.model.User;
 import java.util.*;
 
-import com.sun.jersey.multipart.FormDataMultiPart;
-import com.sun.jersey.multipart.file.FileDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import org.glassfish.jersey.media.multipart.MultiPart;
+import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
 
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 
 import java.io.File;
@@ -56,7 +60,7 @@ public class UserApi {
     // query params
     Map<String, String> queryParams = new HashMap<String, String>();
     Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Entity<?> formEntity = null;
 
     
 
@@ -73,19 +77,25 @@ public class UserApi {
     final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
     if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
+      boolean hasParams = false;
+      MultiPart multipart = new MultiPart();
+
       
-      if(hasFields)
-        postBody = mp;
+      if(hasParams)
+        formEntity = Entity.entity(multipart, MediaType.MULTIPART_FORM_DATA_TYPE);
     }
     else {
+      boolean hasValues = false;
+      Form form = new Form();
       
+      if(hasValues) {
+        formEntity = Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE);
+      }
     }
 
     try {
       String[] authNames = new String[] {  };
-      String response = apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, accept, contentType, authNames);
+      String response = apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formEntity, accept, contentType, authNames);
       if(response != null){
         return ;
       }
@@ -113,7 +123,7 @@ public class UserApi {
     // query params
     Map<String, String> queryParams = new HashMap<String, String>();
     Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Entity<?> formEntity = null;
 
     
 
@@ -130,19 +140,25 @@ public class UserApi {
     final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
     if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
+      boolean hasParams = false;
+      MultiPart multipart = new MultiPart();
+
       
-      if(hasFields)
-        postBody = mp;
+      if(hasParams)
+        formEntity = Entity.entity(multipart, MediaType.MULTIPART_FORM_DATA_TYPE);
     }
     else {
+      boolean hasValues = false;
+      Form form = new Form();
       
+      if(hasValues) {
+        formEntity = Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE);
+      }
     }
 
     try {
       String[] authNames = new String[] {  };
-      String response = apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, accept, contentType, authNames);
+      String response = apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formEntity, accept, contentType, authNames);
       if(response != null){
         return ;
       }
@@ -170,7 +186,7 @@ public class UserApi {
     // query params
     Map<String, String> queryParams = new HashMap<String, String>();
     Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Entity<?> formEntity = null;
 
     
 
@@ -187,19 +203,25 @@ public class UserApi {
     final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
     if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
+      boolean hasParams = false;
+      MultiPart multipart = new MultiPart();
+
       
-      if(hasFields)
-        postBody = mp;
+      if(hasParams)
+        formEntity = Entity.entity(multipart, MediaType.MULTIPART_FORM_DATA_TYPE);
     }
     else {
+      boolean hasValues = false;
+      Form form = new Form();
       
+      if(hasValues) {
+        formEntity = Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE);
+      }
     }
 
     try {
       String[] authNames = new String[] {  };
-      String response = apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, accept, contentType, authNames);
+      String response = apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formEntity, accept, contentType, authNames);
       if(response != null){
         return ;
       }
@@ -228,7 +250,7 @@ public class UserApi {
     // query params
     Map<String, String> queryParams = new HashMap<String, String>();
     Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Entity<?> formEntity = null;
 
     if (username != null)
       queryParams.put("username", apiClient.parameterToString(username));
@@ -249,19 +271,25 @@ public class UserApi {
     final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
     if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
+      boolean hasParams = false;
+      MultiPart multipart = new MultiPart();
+
       
-      if(hasFields)
-        postBody = mp;
+      if(hasParams)
+        formEntity = Entity.entity(multipart, MediaType.MULTIPART_FORM_DATA_TYPE);
     }
     else {
+      boolean hasValues = false;
+      Form form = new Form();
       
+      if(hasValues) {
+        formEntity = Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE);
+      }
     }
 
     try {
       String[] authNames = new String[] {  };
-      String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames);
+      String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formEntity, accept, contentType, authNames);
       if(response != null){
         return (String) apiClient.deserialize(response, "", String.class);
       }
@@ -288,7 +316,7 @@ public class UserApi {
     // query params
     Map<String, String> queryParams = new HashMap<String, String>();
     Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Entity<?> formEntity = null;
 
     
 
@@ -305,19 +333,25 @@ public class UserApi {
     final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
     if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
+      boolean hasParams = false;
+      MultiPart multipart = new MultiPart();
+
       
-      if(hasFields)
-        postBody = mp;
+      if(hasParams)
+        formEntity = Entity.entity(multipart, MediaType.MULTIPART_FORM_DATA_TYPE);
     }
     else {
+      boolean hasValues = false;
+      Form form = new Form();
       
+      if(hasValues) {
+        formEntity = Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE);
+      }
     }
 
     try {
       String[] authNames = new String[] {  };
-      String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames);
+      String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formEntity, accept, contentType, authNames);
       if(response != null){
         return ;
       }
@@ -351,7 +385,7 @@ public class UserApi {
     // query params
     Map<String, String> queryParams = new HashMap<String, String>();
     Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Entity<?> formEntity = null;
 
     
 
@@ -368,19 +402,25 @@ public class UserApi {
     final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
     if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
+      boolean hasParams = false;
+      MultiPart multipart = new MultiPart();
+
       
-      if(hasFields)
-        postBody = mp;
+      if(hasParams)
+        formEntity = Entity.entity(multipart, MediaType.MULTIPART_FORM_DATA_TYPE);
     }
     else {
+      boolean hasValues = false;
+      Form form = new Form();
       
+      if(hasValues) {
+        formEntity = Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE);
+      }
     }
 
     try {
       String[] authNames = new String[] {  };
-      String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames);
+      String response = apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formEntity, accept, contentType, authNames);
       if(response != null){
         return (User) apiClient.deserialize(response, "", User.class);
       }
@@ -415,7 +455,7 @@ public class UserApi {
     // query params
     Map<String, String> queryParams = new HashMap<String, String>();
     Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Entity<?> formEntity = null;
 
     
 
@@ -432,19 +472,25 @@ public class UserApi {
     final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
     if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
+      boolean hasParams = false;
+      MultiPart multipart = new MultiPart();
+
       
-      if(hasFields)
-        postBody = mp;
+      if(hasParams)
+        formEntity = Entity.entity(multipart, MediaType.MULTIPART_FORM_DATA_TYPE);
     }
     else {
+      boolean hasValues = false;
+      Form form = new Form();
       
+      if(hasValues) {
+        formEntity = Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE);
+      }
     }
 
     try {
       String[] authNames = new String[] {  };
-      String response = apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formParams, accept, contentType, authNames);
+      String response = apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formEntity, accept, contentType, authNames);
       if(response != null){
         return ;
       }
@@ -478,7 +524,7 @@ public class UserApi {
     // query params
     Map<String, String> queryParams = new HashMap<String, String>();
     Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Entity<?> formEntity = null;
 
     
 
@@ -495,19 +541,25 @@ public class UserApi {
     final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
     if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
+      boolean hasParams = false;
+      MultiPart multipart = new MultiPart();
+
       
-      if(hasFields)
-        postBody = mp;
+      if(hasParams)
+        formEntity = Entity.entity(multipart, MediaType.MULTIPART_FORM_DATA_TYPE);
     }
     else {
+      boolean hasValues = false;
+      Form form = new Form();
       
+      if(hasValues) {
+        formEntity = Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE);
+      }
     }
 
     try {
       String[] authNames = new String[] {  };
-      String response = apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, accept, contentType, authNames);
+      String response = apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formEntity, accept, contentType, authNames);
       if(response != null){
         return ;
       }

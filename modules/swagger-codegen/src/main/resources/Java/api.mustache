@@ -11,9 +11,13 @@ import java.util.*;
 {{#imports}}import {{import}};
 {{/imports}}
 
-import com.sun.jersey.multipart.FormDataMultiPart;
-import com.sun.jersey.multipart.file.FileDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import org.glassfish.jersey.media.multipart.MultiPart;
+import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
 
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 
 import java.io.File;
@@ -63,7 +67,7 @@ public class {{classname}} {
     // query params
     Map<String, String> queryParams = new HashMap<String, String>();
     Map<String, String> headerParams = new HashMap<String, String>();
-    Map<String, String> formParams = new HashMap<String, String>();
+    Entity<?> formEntity = null;
 
     {{#queryParams}}if ({{paramName}} != null)
       queryParams.put("{{baseName}}", apiClient.parameterToString({{paramName}}));
@@ -84,32 +88,42 @@ public class {{classname}} {
     final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
     if(contentType.startsWith("multipart/form-data")) {
-      boolean hasFields = false;
-      FormDataMultiPart mp = new FormDataMultiPart();
+      boolean hasParams = false;
+      MultiPart multipart = new MultiPart();
+
       {{#formParams}}{{#notFile}}
       if ({{paramName}} != null) {
-        hasFields = true;
-        mp.field("{{baseName}}", apiClient.parameterToString({{paramName}}), MediaType.MULTIPART_FORM_DATA_TYPE);
+        hasParams = true;
+
+        FormDataMultiPart mp = new FormDataMultiPart();
+        mp.bodyPart(new FormDataBodyPart("{{{baseName}}}", apiClient.parameterToString({{paramName}})));
+        multipart.bodyPart(mp, MediaType.MULTIPART_FORM_DATA_TYPE);
       }
       {{/notFile}}{{#isFile}}
       if ({{paramName}} != null) {
-        hasFields = true;
-        mp.field("{{baseName}}", {{paramName}}.getName());
-        mp.bodyPart(new FileDataBodyPart("{{baseName}}", {{paramName}}, MediaType.MULTIPART_FORM_DATA_TYPE));
+        hasParams = true;
+        multipart.bodyPart(new FileDataBodyPart("{{baseName}}", new java.io.File({{paramName}}.getName()), MediaType.APPLICATION_OCTET_STREAM_TYPE));
       }
       {{/isFile}}{{/formParams}}
-      if(hasFields)
-        postBody = mp;
+      if(hasParams)
+        formEntity = Entity.entity(multipart, MediaType.MULTIPART_FORM_DATA_TYPE);
     }
     else {
-      {{#formParams}}{{#notFile}}if ({{paramName}} != null)
-        formParams.put("{{baseName}}", apiClient.parameterToString({{paramName}}));{{/notFile}}
+      boolean hasValues = false;
+      Form form = new Form();
+      {{#formParams}}{{#notFile}}if ({{paramName}} != null) {
+        form.param("{{baseName}}", apiClient.parameterToString({{paramName}}));
+        hasValues = true;
+      }{{/notFile}}
       {{/formParams}}
+      if(hasValues) {
+        formEntity = Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE);
+      }
     }
 
     try {
       String[] authNames = new String[] { {{#authMethods}}"{{name}}"{{#hasMore}}, {{/hasMore}}{{/authMethods}} };
-      String response = apiClient.invokeAPI(path, "{{httpMethod}}", queryParams, postBody, headerParams, formParams, accept, contentType, authNames);
+      String response = apiClient.invokeAPI(path, "{{httpMethod}}", queryParams, postBody, headerParams, formEntity, accept, contentType, authNames);
       if(response != null){
         return {{#returnType}}({{{returnType}}}) apiClient.deserialize(response, "{{returnContainer}}", {{returnBaseType}}.class){{/returnType}};
       }
