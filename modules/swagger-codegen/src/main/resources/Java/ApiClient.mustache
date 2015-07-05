@@ -14,6 +14,7 @@ import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.filter.LoggingFilter;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -412,15 +413,33 @@ public class ApiClient {
     }
     else {
       String message = "error";
+      String respBody = null;
+      Map<String, List<String>> responseHeaders = new HashMap<String, List<String>>();
+
       if(response.hasEntity()) {
         try{
           message = String.valueOf(response.readEntity(String.class));
+          for(String key: response.getHeaders().keySet()) {
+            List<Object> values = response.getHeaders().get(key);
+            for(Object o : values) {
+              List<String> headers = responseHeaders.get(key);
+              if(headers == null) {
+                headers = new ArrayList<String>();
+                responseHeaders.put(key, headers);
+              }
+              headers.add(String.valueOf(o));
+            }
+          }
         }
         catch (RuntimeException e) {
           // e.printStackTrace();
         }
       }
-      throw new ApiException(response.getStatus(), message);
+      throw new ApiException(
+                response.getStatusInfo().getStatusCode(),
+                message,
+                responseHeaders,
+                respBody);
     }
   }
 
