@@ -483,7 +483,7 @@ static bool loggingEnabled = true;
                             authSettings: (NSArray *) authSettings
                       requestContentType: (NSString*) requestContentType
                      responseContentType: (NSString*) responseContentType
-                         completionBlock: (void (^)(id, NSError *))completionBlock {
+                         completionBlock: (void (^)(NSDictionary *, id, NSError *))completionBlock {
     // setting request serializer
     if ([requestContentType isEqualToString:@"application/json"]) {
         self.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -613,7 +613,8 @@ static bool loggingEnabled = true;
              if(self.logServerResponses) {
                  [self logResponse:response forRequest:request error:nil];
              }
-             completionBlock(response, nil);
+             NSDictionary *responseHeaders = [[operation response] allHeaderFields];
+             completionBlock(responseHeaders, response, nil);
          }
      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
          if([self executeRequestWithId:requestId]) {
@@ -623,10 +624,10 @@ static bool loggingEnabled = true;
                  userInfo[SWGResponseObjectErrorKey] = operation.responseObject;
              }
              NSError *augmentedError = [error initWithDomain:error.domain code:error.code userInfo:userInfo];
-
+             NSDictionary *responseHeaders = [[operation response] allHeaderFields];
              if(self.logServerResponses)
                  [self logResponse:nil forRequest:request error:augmentedError];
-             completionBlock(nil, augmentedError);
+             completionBlock(responseHeaders, nil, augmentedError);
          }
      }];
 
