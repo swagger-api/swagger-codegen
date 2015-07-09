@@ -268,7 +268,7 @@ static bool loggingEnabled = true;
         for(NSString * key in [queryParams keyEnumerator]){
             if(counter == 0) separator = @"?";
             else separator = @"&";
-            NSString * value;
+            
             id queryParam = [queryParams valueForKey:key];
             if([queryParam isKindOfClass:[NSString class]]){
                 [requestUrl appendString:[NSString stringWithFormat:@"%@%@=%@", separator,
