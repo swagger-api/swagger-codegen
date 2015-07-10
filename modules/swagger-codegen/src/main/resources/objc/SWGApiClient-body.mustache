@@ -3,6 +3,13 @@
 #import "SWGQueryParamCollection.h"
 #import "SWGConfiguration.h"
 
+
+@interface SWGApiClient () 
+
+@property (readwrite, nonatomic, strong) NSDictionary *httpResponseHeaders;
+
+@end
+
 @implementation SWGApiClient
 
 NSString *const SWGResponseObjectErrorKey = @"SWGResponseObject";
@@ -483,7 +490,7 @@ static bool loggingEnabled = true;
                             authSettings: (NSArray *) authSettings
                       requestContentType: (NSString*) requestContentType
                      responseContentType: (NSString*) responseContentType
-                         completionBlock: (void (^)(NSDictionary *, id, NSError *))completionBlock {
+                         completionBlock: (void (^)(id, NSError *))completionBlock {
     // setting request serializer
     if ([requestContentType isEqualToString:@"application/json"]) {
         self.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -614,7 +621,8 @@ static bool loggingEnabled = true;
                  [self logResponse:response forRequest:request error:nil];
              }
              NSDictionary *responseHeaders = [[operation response] allHeaderFields];
-             completionBlock(responseHeaders, response, nil);
+             self.httpResponseHeaders = responseHeaders;
+             completionBlock(response, nil);
          }
      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
          if([self executeRequestWithId:requestId]) {
@@ -627,7 +635,8 @@ static bool loggingEnabled = true;
              NSDictionary *responseHeaders = [[operation response] allHeaderFields];
              if(self.logServerResponses)
                  [self logResponse:nil forRequest:request error:augmentedError];
-             completionBlock(responseHeaders, nil, augmentedError);
+             self.httpResponseHeaders = responseHeaders;
+             completionBlock(nil, augmentedError);
          }
      }];
 

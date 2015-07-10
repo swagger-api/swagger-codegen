@@ -29,9 +29,9 @@
 -(NSNumber*) {{nickname}}WithCompletionBlock {{^allParams}}:{{/allParams}}{{#allParams}}{{#secondaryParam}}     {{paramName}}{{/secondaryParam}}:({{{dataType}}}) {{paramName}} {{#hasMore}}
 {{/hasMore}}{{/allParams}}
     {{#returnBaseType}}{{#hasParams}}
-    completionHandler: {{/hasParams}}(void (^)(NSDictionary *responseHeaders, {{{returnType}}} output, NSError* error))completionBlock;{{/returnBaseType}}
+    completionHandler: {{/hasParams}}(void (^)({{{returnType}}} output, NSError* error))completionBlock;{{/returnBaseType}}
     {{^returnBaseType}}{{#hasParams}}
-    completionHandler: {{/hasParams}}(void (^)(NSDictionary *responseHeaders, NSError* error))completionBlock;{{/returnBaseType}}
+    completionHandler: {{/hasParams}}(void (^)(NSError* error))completionBlock;{{/returnBaseType}}
 
 {{newline}}
 {{/operation}}

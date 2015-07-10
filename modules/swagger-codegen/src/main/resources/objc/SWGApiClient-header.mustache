@@ -24,6 +24,7 @@ extern NSString *const SWGResponseObjectErrorKey;
 @property(nonatomic, assign) BOOL logJSON;
 @property(nonatomic, assign) BOOL logHTTP;
 @property(nonatomic, readonly) NSOperationQueue* queue;
+@property(nonatomic, readonly, strong) NSDictionary* httpResponseHeaders;
 
 /**
  * Get the Api Client instance from pool
@@ -194,7 +195,7 @@ extern NSString *const SWGResponseObjectErrorKey;
                             authSettings: (NSArray *) authSettings
                       requestContentType:(NSString*) requestContentType
                      responseContentType:(NSString*) responseContentType
-                         completionBlock:(void (^)(NSDictionary *, id, NSError *))completionBlock;
+                         completionBlock:(void (^)(id, NSError *))completionBlock;
 
 
 @end

@@ -84,8 +84,8 @@ static NSString * basePath = @"{{basePath}}";
 ///
 -(NSNumber*) {{nickname}}WithCompletionBlock{{^allParams}}: {{/allParams}}{{#allParams}}{{#secondaryParam}} {{paramName}}{{/secondaryParam}}: ({{{dataType}}}) {{paramName}}
         {{/allParams}}
-        {{#returnBaseType}}{{#hasParams}}completionHandler: {{/hasParams}}(void (^)(NSDictionary *responseHeaders, {{{returnType}}} output, NSError* error))completionBlock{{/returnBaseType}}
-        {{^returnBaseType}}{{#hasParams}}completionHandler: {{/hasParams}}(void (^)(NSDictionary *responseHeaders, NSError* error))completionBlock{{/returnBaseType}} {
+        {{#returnBaseType}}{{#hasParams}}completionHandler: {{/hasParams}}(void (^)({{{returnType}}} output, NSError* error))completionBlock{{/returnBaseType}}
+        {{^returnBaseType}}{{#hasParams}}completionHandler: {{/hasParams}}(void (^)(NSError* error))completionBlock{{/returnBaseType}} {
 
     {{#allParams}}{{#required}}
     // verify the required parameter '{{paramName}}' is set
@@ -211,9 +211,9 @@ static NSString * basePath = @"{{basePath}}";
                                          authSettings: authSettings
                                    requestContentType: requestContentType
                                   responseContentType: responseContentType
-                                      completionBlock: ^(NSDictionary *responseHeaders, id data, NSError *error) {
-                  {{^returnType}}completionBlock(responseHeaders, error);{{/returnType}}
-                  {{#returnType}}completionBlock(responseHeaders, [self.apiClient deserialize: data class:@"{{{returnType}}}"], error);{{/returnType}}
+                                      completionBlock: ^(id data, NSError *error) {
+                  {{^returnType}}completionBlock(error);{{/returnType}}
+                  {{#returnType}}completionBlock([self.apiClient deserialize: data class:@"{{{returnType}}}"], error);{{/returnType}}
               }
           ];
 }
