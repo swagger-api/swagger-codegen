@@ -5,20 +5,15 @@
 ## Overview
 This is the swagger codegen project, which allows generation of client libraries automatically from a Swagger-compliant server.  
 
-## What's Swagger?
-
-The goal of Swagger™ is to define a standard, language-agnostic interface to REST APIs which allows both humans and computers to discover and understand the capabilities of the service without access to source code, documentation, or through network traffic inspection. When properly defined via Swagger, a consumer can understand and interact with the remote service with a minimal amount of implementation logic. Similar to what interfaces have done for lower-level programming, Swagger removes the guesswork in calling the service.
-
-
 Check out [Swagger-Spec](https://github.com/swagger-api/swagger-spec) for additional information about the Swagger project, including additional libraries with support for other languages and more. 
 
 
-## Compatability
+## Compatibility
 The Swagger Specification has undergone 3 revisions since initial creation in 2010.  The swagger-codegen project has the following compatibilies with the swagger specification:
 
 Swagger Codegen Version | Release Date | Swagger Spec compatibility | Notes
 ----------------------- | ------------ | -------------------------- | -----
-2.1.0-M2                | 2015-04-06   | 1.0, 1.1, 1.2, 2.0   | [master](https://github.com/swagger-api/swagger-codegen)
+2.1.2                   | 2015-06-09   | 1.0, 1.1, 1.2, 2.0   | [master](https://github.com/swagger-api/swagger-codegen)
 2.0.17                  | 2014-08-22   | 1.1, 1.2      | [tag v2.0.17](https://github.com/swagger-api/swagger-codegen/tree/v2.0.17)
 1.0.4                   | 2012-04-12   | 1.0, 1.1      | [tag v1.0.4](https://github.com/swagger-api/swagger-codegen/tree/swagger-codegen_2.9.1-1.1)
 
@@ -29,6 +24,17 @@ You need the following installed and available in your $PATH:
 * [Java 7](http://java.oracle.com)
 
 * [Apache maven 3.0.3 or greater](http://maven.apache.org/)
+ 
+#### OS X Users
+Don't forget to install Java 7. You probably have 1.6 or 1.8.
+
+Export JAVA_HOME in order to user proper Java version:
+```
+export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
+export PATH=${JAVA_HOME}/bin:$PATH
+```
+
+#### Building
 
 After cloning the project, you can build it from source with this command:
 
@@ -60,6 +66,8 @@ NAME
 
 SYNOPSIS
         swagger generate [(-a <authorization> | --auth <authorization>)]
+                [(-c <configuration file> | --config <configuration file>)]
+                [-D <system properties>]
                 (-i <spec file> | --input-spec <spec file>)
                 (-l <language> | --lang <language>)
                 [(-o <output directory> | --output <output directory>)]
@@ -71,6 +79,16 @@ OPTIONS
             adds authorization headers when fetching the swagger definitions
             remotely. Pass in a URL-encoded string of name:header with a comma
             separating multiple values
+
+        -c <configuration file>, --config <configuration file>
+            Path to json configuration file. File content should be in a json
+            format {"optionKey":"optionValue", "optionKey1":"optionValue1"...}
+            Supported options can be different for each language. Run
+            config-help -l {lang} command for language specific config options.
+
+        -D <system properties>
+            sets specified system properties in the format of
+            name=value,name=value
 
         -i <spec file>, --input-spec <spec file>
             location of the swagger spec, as URL or file (required)
@@ -142,7 +160,8 @@ Great for creating libraries on your ci server, from the [Swagger Editor](http:/
 There are different aspects of customizing the code generator beyond just creating or modifying templates.  Each language has a supporting configuration file to handle different type mappings, etc:
 
 ```
-$ ls -1 modules/swagger-codegen/src/main/java/com/wordnik/swagger/codegen/languages/
+$ ls -1 modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/
+AkkaScalaClientCodegen.java
 AndroidClientCodegen.java
 AsyncScalaClientCodegen.java
 CSharpClientCodegen.java
@@ -150,8 +169,12 @@ JavaClientCodegen.java
 JaxRSServerCodegen.java
 NodeJSServerCodegen.java
 ObjcClientCodegen.java
+PerlClientCodegen.java
 PhpClientCodegen.java
+Python3ClientCodegen.java
 PythonClientCodegen.java
+Qt5CPPGenerator.java
+RetrofitClientCodegen.java
 RubyClientCodegen.java
 ScalaClientCodegen.java
 ScalatraServerCodegen.java
@@ -160,17 +183,70 @@ StaticDocCodegen.java
 StaticHtmlGenerator.java
 SwaggerGenerator.java
 SwaggerYamlGenerator.java
+SwiftGenerator.java
 TizenClientCodegen.java
 ```
 
-Each of these files creates reasonable defaults so you can get running quickly.  But if you want to configure package names, prefixes, model folders, etc., you may want to extend these.
+Each of these files creates reasonable defaults so you can get running quickly.  But if you want to configure package names, prefixes, model folders, etc. you can use a json config file to pass the values.
 
+```
+java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
+  -i http://petstore.swagger.io/v2/swagger.json \
+  -l java \
+  -o samples/client/petstore/java \
+  -c path/to/config.json
+```
+Supported config options can be different per language. Running `config-help -l {lang}` will show available options.
+
+```
+java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar config-help -l java
+```
+
+Output
+
+```
+CONFIG OPTIONS
+	modelPackage
+	    package for generated models
+
+	apiPackage
+	    package for generated api classes
+
+	invokerPackage
+	    root package for generated code
+
+	groupId
+	    groupId in generated pom.xml
+
+	artifactId
+	    artifactId in generated pom.xml
+
+	artifactVersion
+	    artifact version in generated pom.xml
+
+	sourceFolder
+	    source folder for generated code
+```
+
+Your config file for java can look like
+
+```
+{
+  "groupId":"com.my.company",
+  "artifactId":"MyClent",
+  "artifactVersion":"1.2.0"
+}
+```
+
+For all the unspecified options default values will be used.
+
+Another way to override default options is to extend config class for specific language.
 To change, for example, the prefix for the Objective-C generated files, simply subclass the ObjcClientCodegen.java:
 
 ```
 package com.mycompany.swagger.codegen;
 
-import com.wordnik.swagger.codegen.languages.*;
+import io.swagger.codegen.languages.*;
 
 public class MyObjcCodegen extends ObjcClientCodegen {
   static {
@@ -270,7 +346,7 @@ Note!  The templates are included in the library generated.  If you want to modi
 License
 -------
 
-Copyright 2015 Reverb Technologies, Inc.
+Copyright 2015 SmartBear Software
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

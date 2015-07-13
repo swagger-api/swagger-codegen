@@ -1,7 +1,7 @@
 package {{package}};
 
 import {{invokerPackage}}.ApiException;
-import {{invokerPackage}}.ApiInvoker;
+import {{invokerPackage}}.ApiClient;
 
 import {{modelPackage}}.*;
 
@@ -21,23 +21,36 @@ import java.util.HashMap;
 
 {{#operations}}
 public class {{classname}} {
-  String basePath = "{{basePath}}";
-  ApiInvoker apiInvoker = ApiInvoker.getInstance();
+  private ApiClient apiClient;
 
-  public ApiInvoker getInvoker() {
-    return apiInvoker;
+  public {{classname}}() {
+    this(org.imintel.client.Configuration.getDefaultApiClient());
+  }
+
+  public {{classname}}(String basePath, ApiClient apiClient) {
+    this.apiClient = apiClient;
+    apiClient.setBasePath(basePath);
   }
 
   public {{classname}}(String basePath) {
-    this.basePath = basePath;
+    this.apiClient = org.imintel.client.Configuration.getDefaultApiClient();
+    apiClient.setBasePath(basePath);
   }
 
   public void setBasePath(String basePath) {
-    this.basePath = basePath;
+    apiClient.setBasePath(basePath);
   }
 
-  public String getBasePath() {
-    return basePath;
+  public {{classname}}(ApiClient apiClient) {
+    this.apiClient = apiClient;
+  }
+
+  public ApiClient getApiClient() {
+    return apiClient;
+  }
+
+  public void setApiClient(ApiClient apiClient) {
+    this.apiClient = apiClient;
   }
 
   {{#operation}}
@@ -49,16 +62,16 @@ public class {{classname}} {
    */
   public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws ApiException {
     Object postBody = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
-    {{#requiredParamCount}}
-    // verify required params are set
-    if({{/requiredParamCount}}{{#requiredParams}} {{paramName}} == null {{#hasMore}}|| {{/hasMore}}{{/requiredParams}}{{#requiredParamCount}}) {
-       throw new ApiException(400, "missing required params");
+    {{#allParams}}{{#required}}
+    // verify the required parameter '{{paramName}}' is set
+    if ({{paramName}} == null) {
+       throw new ApiException(400, "Missing the required parameter '{{paramName}}' when calling {{nickname}}");
     }
-    {{/requiredParamCount}}
+    {{/required}}{{/allParams}}
 
     // create path and map variables
     String path = "{{path}}".replaceAll("\\{format\\}","json"){{#pathParams}}
-      .replaceAll("\\{" + "{{paramName}}" + "\\}", apiInvoker.escapeString({{{paramName}}}.toString())){{/pathParams}};
+      .replaceAll("\\{" + "{{paramName}}" + "\\}", apiClient.escapeString({{{paramName}}}.toString())){{/pathParams}};
 
     // query params
     Map<String, String> queryParams = new HashMap<String, String>();
@@ -66,39 +79,52 @@ public class {{classname}} {
     Map<String, String> formParams = new HashMap<String, String>();
 
     {{#queryParams}}if ({{paramName}} != null)
-      queryParams.put("{{baseName}}", ApiInvoker.parameterToString({{paramName}}));
+      queryParams.put("{{baseName}}", apiClient.parameterToString({{paramName}}));
     {{/queryParams}}
-    {{#headerParams}}headerParams.put("{{baseName}}", ApiInvoker.parameterToString({{paramName}}));
-    {{/headerParams}}
-    String[] contentTypes = {
-      {{#consumes}}"{{mediaType}}"{{#hasMore}},{{/hasMore}}{{/consumes}}
-    };
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    {{#headerParams}}if ({{paramName}} != null)
+      headerParams.put("{{baseName}}", apiClient.parameterToString({{paramName}}));
+    {{/headerParams}}
+
+    final String[] accepts = {
+      {{#produces}}"{{mediaType}}"{{#hasMore}}, {{/hasMore}}{{/produces}}
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+
+    final String[] contentTypes = {
+      {{#consumes}}"{{mediaType}}"{{#hasMore}}, {{/hasMore}}{{/consumes}}
+    };
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
     if(contentType.startsWith("multipart/form-data")) {
       boolean hasFields = false;
       FormDataMultiPart mp = new FormDataMultiPart();
       {{#formParams}}{{#notFile}}
-      hasFields = true;
-      mp.field("{{baseName}}", ApiInvoker.parameterToString({{paramName}}), MediaType.MULTIPART_FORM_DATA_TYPE);
+      if ({{paramName}} != null) {
+        hasFields = true;
+        mp.field("{{baseName}}", apiClient.parameterToString({{paramName}}), MediaType.MULTIPART_FORM_DATA_TYPE);
+      }
       {{/notFile}}{{#isFile}}
-      hasFields = true;
-      mp.field("{{baseName}}", file.getName());
-      mp.bodyPart(new FileDataBodyPart("{{baseName}}", {{paramName}}, MediaType.MULTIPART_FORM_DATA_TYPE));
+      if ({{paramName}} != null) {
+        hasFields = true;
+        mp.field("{{baseName}}", {{paramName}}.getName());
+        mp.bodyPart(new FileDataBodyPart("{{baseName}}", {{paramName}}, MediaType.MULTIPART_FORM_DATA_TYPE));
+      }
       {{/isFile}}{{/formParams}}
       if(hasFields)
         postBody = mp;
     }
     else {
-      {{#formParams}}{{#notFile}}formParams.put("{{baseName}}", ApiInvoker.parameterToString({{paramName}}));{{/notFile}}
+      {{#formParams}}{{#notFile}}if ({{paramName}} != null)
+        formParams.put("{{baseName}}", apiClient.parameterToString({{paramName}}));{{/notFile}}
       {{/formParams}}
     }
 
     try {
-      String response = apiInvoker.invokeAPI(basePath, path, "{{httpMethod}}", queryParams, postBody, headerParams, formParams, contentType);
+      String[] authNames = new String[] { {{#authMethods}}"{{name}}"{{#hasMore}}, {{/hasMore}}{{/authMethods}} };
+      String response = apiClient.invokeAPI(path, "{{httpMethod}}", queryParams, postBody, headerParams, formParams, accept, contentType, authNames);
       if(response != null){
-        return {{#returnType}}({{{returnType}}}) ApiInvoker.deserialize(response, "{{returnContainer}}", {{returnBaseType}}.class){{/returnType}};
+        return {{#returnType}}({{{returnType}}}) apiClient.deserialize(response, "{{returnContainer}}", {{returnBaseType}}.class){{/returnType}};
       }
       else {
         return {{#returnType}}null{{/returnType}};

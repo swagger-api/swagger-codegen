@@ -1,3 +1,4 @@
+/*
 package com.wordnik.swagger.codegen.languages;
 
 import com.wordnik.swagger.codegen.CodegenConfig;
@@ -165,3 +166,4 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         return toModelName(type);
     }
 }
+*/

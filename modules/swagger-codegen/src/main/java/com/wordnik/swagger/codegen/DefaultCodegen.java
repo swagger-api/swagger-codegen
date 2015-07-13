@@ -1,3 +1,4 @@
+/*
 package com.wordnik.swagger.codegen;
 
 import com.wordnik.swagger.codegen.examples.ExampleGenerator;
@@ -354,9 +355,11 @@ public class DefaultCodegen {
       return "null";
   }
 
-  /**
+  */
+/**
    * returns the swagger type for the property
-   **/
+   **//*
+
   public String getSwaggerType(Property p) {
     String datatype = null;
     if(p instanceof StringProperty)
@@ -1082,15 +1085,19 @@ public class DefaultCodegen {
     co.baseName = tag;    
   }
 
-  /* underscore and camelize are copied from Twitter elephant bird
+  */
+/* underscore and camelize are copied from Twitter elephant bird
    * https://github.com/twitter/elephant-bird/blob/master/core/src/main/java/com/twitter/elephantbird/util/Strings.java
-   */
+   *//*
 
-  /**
+
+  */
+/**
    * Underscore the given word.
    * @param word The word
    * @return The underscored version of the word
-   */
+   *//*
+
   public static String underscore(String word) {
     String firstPattern = "([A-Z]+)([A-Z][a-z])";
     String secondPattern = "([a-z\\d])([A-Z])";
@@ -1116,7 +1123,9 @@ public class DefaultCodegen {
     Pattern p = Pattern.compile("\\/(.?)");
     Matcher m = p.matcher(word);
     while (m.find()) {
-      word = m.replaceFirst("." + m.group(1)/*.toUpperCase()*/);
+      word = m.replaceFirst("." + m.group(1)*/
+/*.toUpperCase()*//*
+);
       m = p.matcher(word);
     }
 
@@ -1131,7 +1140,9 @@ public class DefaultCodegen {
 
     m = p.matcher(word);
     while (m.find()) {
-      word = m.replaceFirst("" + Character.toUpperCase(m.group(1).charAt(0)) + m.group(1).substring(1)/*.toUpperCase()*/);
+      word = m.replaceFirst("" + Character.toUpperCase(m.group(1).charAt(0)) + m.group(1).substring(1)*/
+/*.toUpperCase()*//*
+);
       m = p.matcher(word);
     }
 
@@ -1169,3 +1180,4 @@ public class DefaultCodegen {
 
 
 }
+*/
