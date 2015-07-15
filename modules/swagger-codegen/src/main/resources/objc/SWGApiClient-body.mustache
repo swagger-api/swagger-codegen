@@ -3,6 +3,13 @@
 #import "SWGQueryParamCollection.h"
 #import "SWGConfiguration.h"
 
+
+@interface SWGApiClient () 
+
+@property (readwrite, nonatomic, strong) NSDictionary *httpResponseHeaders;
+
+@end
+
 @implementation SWGApiClient
 
 NSString *const SWGResponseObjectErrorKey = @"SWGResponseObject";
@@ -268,7 +275,7 @@ static bool loggingEnabled = true;
         for(NSString * key in [queryParams keyEnumerator]){
             if(counter == 0) separator = @"?";
             else separator = @"&";
-            NSString * value;
+            
             id queryParam = [queryParams valueForKey:key];
             if([queryParam isKindOfClass:[NSString class]]){
                 [requestUrl appendString:[NSString stringWithFormat:@"%@%@=%@", separator,
@@ -613,6 +620,8 @@ static bool loggingEnabled = true;
              if(self.logServerResponses) {
                  [self logResponse:response forRequest:request error:nil];
              }
+             NSDictionary *responseHeaders = [[operation response] allHeaderFields];
+             self.httpResponseHeaders = responseHeaders;
              completionBlock(response, nil);
          }
      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -623,9 +632,10 @@ static bool loggingEnabled = true;
                  userInfo[SWGResponseObjectErrorKey] = operation.responseObject;
              }
              NSError *augmentedError = [error initWithDomain:error.domain code:error.code userInfo:userInfo];
-
+             NSDictionary *responseHeaders = [[operation response] allHeaderFields];
              if(self.logServerResponses)
                  [self logResponse:nil forRequest:request error:augmentedError];
+             self.httpResponseHeaders = responseHeaders;
              completionBlock(nil, augmentedError);
          }
      }];

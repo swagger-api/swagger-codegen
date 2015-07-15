@@ -24,6 +24,7 @@ extern NSString *const SWGResponseObjectErrorKey;
 @property(nonatomic, assign) BOOL logJSON;
 @property(nonatomic, assign) BOOL logHTTP;
 @property(nonatomic, readonly) NSOperationQueue* queue;
+@property(nonatomic, readonly, strong) NSDictionary* httpResponseHeaders;
 
 /**
  * Get the Api Client instance from pool

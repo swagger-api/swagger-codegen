@@ -188,6 +188,11 @@ static NSString * basePath = @"{{basePath}}";
     }
     [bodyDictionary addObject:formParams];
     {{/formParams}}
+
+    // removes warnings in case formParams is unused
+    if (formParams.count == 0) {
+        formParams = nil;
+    }
     {{/bodyParam}}
 
     {{#requiredParamCount}}
@@ -197,6 +202,7 @@ static NSString * basePath = @"{{basePath}}";
     }
     {{/requiredParams}}
     {{/requiredParamCount}}
+
     return [self.apiClient requestWithCompletionBlock: requestUrl
                                                method: @"{{httpMethod}}"
                                           queryParams: queryParams
