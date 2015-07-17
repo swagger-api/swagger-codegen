@@ -116,8 +116,9 @@ public class RetrofitClientCodegen extends DefaultCodegen implements CodegenConf
 
     @Override
     public String toParamName(String name) {
-        // should be the same as variable name
-        return toVarName(name);
+        // param name needs to be the same as in the spec,
+        //otherwise the api tries to access a wrong field
+        return name;
     }
 
     @Override
