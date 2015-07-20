@@ -139,16 +139,16 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
             additionalProperties.put("projectName", projectName);
         }
 
-        supportingFiles.add(new SupportingFile("SWGObject.h", sourceFolder, "SWGObject.h"));
-        supportingFiles.add(new SupportingFile("SWGObject.m", sourceFolder, "SWGObject.m"));
-        supportingFiles.add(new SupportingFile("SWGQueryParamCollection.h", sourceFolder, "SWGQueryParamCollection.h"));
-        supportingFiles.add(new SupportingFile("SWGQueryParamCollection.m", sourceFolder, "SWGQueryParamCollection.m"));
-        supportingFiles.add(new SupportingFile("SWGApiClient.h", sourceFolder, "SWGApiClient.h"));
-        supportingFiles.add(new SupportingFile("SWGApiClient.m", sourceFolder, "SWGApiClient.m"));
-        supportingFiles.add(new SupportingFile("SWGFile.h", sourceFolder, "SWGFile.h"));
-        supportingFiles.add(new SupportingFile("SWGFile.m", sourceFolder, "SWGFile.m"));
-        supportingFiles.add(new SupportingFile("JSONValueTransformer+ISO8601.m", sourceFolder, "JSONValueTransformer+ISO8601.m"));
-        supportingFiles.add(new SupportingFile("JSONValueTransformer+ISO8601.h", sourceFolder, "JSONValueTransformer+ISO8601.h"));
+        supportingFiles.add(new SupportingFile("SWGObject.h.mustache", sourceFolder, "SWGObject.h"));
+        supportingFiles.add(new SupportingFile("SWGObject.m.mustache", sourceFolder, "SWGObject.m"));
+        supportingFiles.add(new SupportingFile("SWGQueryParamCollection.h.mustache", sourceFolder, "SWGQueryParamCollection.h"));
+        supportingFiles.add(new SupportingFile("SWGQueryParamCollection.m.mustache", sourceFolder, "SWGQueryParamCollection.m"));
+        supportingFiles.add(new SupportingFile("SWGApiClient.h.mustache", sourceFolder, "SWGApiClient.h"));
+        supportingFiles.add(new SupportingFile("SWGApiClient.m.mustache", sourceFolder, "SWGApiClient.m"));
+        supportingFiles.add(new SupportingFile("SWGFile.h.mustache", sourceFolder, "SWGFile.h"));
+        supportingFiles.add(new SupportingFile("SWGFile.m.mustache", sourceFolder, "SWGFile.m"));
+        supportingFiles.add(new SupportingFile("JSONValueTransformer+ISO8601.m.mustache", sourceFolder, "JSONValueTransformer+ISO8601.m"));
+        supportingFiles.add(new SupportingFile("JSONValueTransformer+ISO8601.h.mustache", sourceFolder, "JSONValueTransformer+ISO8601.h"));
         supportingFiles.add(new SupportingFile("SWGConfiguration-body.mustache", sourceFolder, "SWGConfiguration.m"));
         supportingFiles.add(new SupportingFile("SWGConfiguration-header.mustache", sourceFolder, "SWGConfiguration.h"));
         supportingFiles.add(new SupportingFile("Podfile.mustache", "", "Podfile"));
