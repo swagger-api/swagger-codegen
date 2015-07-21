@@ -18,7 +18,7 @@ namespace {{packageName}}.Client
     /// </summary>
     public class ApiClient
     {
-        private readonly Dictionary<String, String> _defaultHeaderMap = new Dictionary<String, String>();
+        private readonly Dictionary<String, String> defaultHeaderMap = new Dictionary<String, String>();
   
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiClient" /> class.
@@ -47,93 +47,179 @@ namespace {{packageName}}.Client
         /// </summary>
         public Dictionary<String, String> DefaultHeader
         {
-            get { return _defaultHeaderMap; }
-        }
-    
-        // Creates and sets up a RestRequest prior to a call.
-        private RestRequest PrepareRequest(
-            String path, RestSharp.Method method, Dictionary<String, String> queryParams, String postBody,
-            Dictionary<String, String> headerParams, Dictionary<String, String> formParams,
-            Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams, String[] authSettings)
-        {
-            var request = new RestRequest(path, method);
-   
-            UpdateParamsForAuth(queryParams, headerParams, authSettings);
-
-            // add default header, if any
-            foreach(var defaultHeader in _defaultHeaderMap)
-                request.AddHeader(defaultHeader.Key, defaultHeader.Value);
-
-            // add path parameter, if any
-            foreach(var param in pathParams)
-                request.AddParameter(param.Key, param.Value, ParameterType.UrlSegment); 
-
-            // add header parameter, if any
-            foreach(var param in headerParams)
-                request.AddHeader(param.Key, param.Value);
-
-            // add query parameter, if any
-            foreach(var param in queryParams)
-                request.AddQueryParameter(param.Key, param.Value);
-
-            // add form parameter, if any
-            foreach(var param in formParams)
-                request.AddParameter(param.Key, param.Value);
-
-            // add file parameter, if any
-            foreach(var param in fileParams)
-                request.AddFile(param.Value.Name, param.Value.Writer, param.Value.FileName, param.Value.ContentType);
-
-            if (postBody != null) // http body (model) parameter
-                request.AddParameter("application/json", postBody, ParameterType.RequestBody);
-    
-            return request;
+            get { return defaultHeaderMap; }
         }
 
-        /// <summary>
-        /// Makes the HTTP request (Sync).
-        /// </summary>
-        /// <param name="path">URL path.</param>
-        /// <param name="method">HTTP method.</param>
-        /// <param name="queryParams">Query parameters.</param>
-        /// <param name="postBody">HTTP body (POST request).</param>
-        /// <param name="headerParams">Header parameters.</param>
-        /// <param name="formParams">Form parameters.</param>
-        /// <param name="fileParams">File parameters.</param>
-        /// <param name="pathParams">Path parameters.</param>
-        /// <param name="authSettings">Authentication settings.</param>
-        /// <returns>Object</returns>
-        public Object CallApi(
-            String path, RestSharp.Method method, Dictionary<String, String> queryParams, String postBody,
-            Dictionary<String, String> headerParams, Dictionary<String, String> formParams,
-            Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams, String[] authSettings)
+        // Collects request parameters, then uses the collected data to implement void/non-void and sync/async calls.
+        internal class RequestBuilder
         {
-            var request = PrepareRequest(
-                path, method, queryParams, postBody, headerParams, formParams, fileParams, pathParams, authSettings);
-            return (Object)RestClient.Execute(request);
-        }
+            private ApiClient apiClient;
+            private String path;
+            private RestSharp.Method method;
+            private String nickname;
+            private String postBody = null;
 
-        /// <summary>
-        /// Makes the asynchronous HTTP request.
-        /// </summary>
-        /// <param name="path">URL path.</param>
-        /// <param name="method">HTTP method.</param>
-        /// <param name="queryParams">Query parameters.</param>
-        /// <param name="postBody">HTTP body (POST request).</param>
-        /// <param name="headerParams">Header parameters.</param>
-        /// <param name="formParams">Form parameters.</param>
-        /// <param name="fileParams">File parameters.</param>
-        /// <param name="pathParams">Path parameters.</param>
-        /// <param name="authSettings">Authentication settings.</param>
-        /// <returns>The Task instance.</returns>
-        public async System.Threading.Tasks.Task<Object> CallApiAsync(
-            String path, RestSharp.Method method, Dictionary<String, String> queryParams, String postBody,
-            Dictionary<String, String> headerParams, Dictionary<String, String> formParams,
-            Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams, String[] authSettings)
-        {
-            var request = PrepareRequest(
-                path, method, queryParams, postBody, headerParams, formParams, fileParams, pathParams, authSettings);
-            return (Object) await RestClient.ExecuteTaskAsync(request);
+            private Dictionary<String, String> queryParams = new Dictionary<String, String>();
+            private Dictionary<String, String> headerParams = new Dictionary<String, String>();
+            private Dictionary<String, String> formParams = new Dictionary<String, String>();
+            private Dictionary<String, FileParameter> fileParams = new Dictionary<String, FileParameter>();
+            private Dictionary<String, String> pathParams = new Dictionary<String, String>();
+            private List<String> authSettings = new List<String>();
+
+            public RequestBuilder(ApiClient apiClient, String path, RestSharp.Method method, String nickname)
+            {
+                this.apiClient = apiClient;
+                this.path = path;
+                this.method = method;
+                this.nickname = nickname;
+
+                pathParams.Add("format", "json");
+            }
+
+            public void AddPathParam(String name, Object value)
+            {
+                if (value != null)
+                {
+                    pathParams.Add(name, apiClient.ParameterToString(value));
+                }
+            }
+
+            public void AddQueryParam(String name, Object value)
+            {
+                if (value != null)
+                {
+                    queryParams.Add(name, apiClient.ParameterToString(value));
+                }
+            }
+
+            public void AddHeaderParam(String name, Object value)
+            {
+                if (value != null)
+                {
+                    headerParams.Add(name, apiClient.ParameterToString(value));
+                }
+            }
+
+            public void AddFormParam(String name, Object value)
+            {
+                if (value != null)
+                {
+                    formParams.Add(name, apiClient.ParameterToString(value));
+                }
+            }
+
+            public void AddFileParam(String name, Stream stream)
+            {
+                if (stream != null)
+                {
+                    fileParams.Add(name, apiClient.ParameterToFile(name, stream));
+                }
+            }
+
+            public void SetPostBody(object value)
+            {
+                postBody = apiClient.Serialize(value);
+            }
+
+            public void AddAuthSettings(params String[] authMethod)
+            {
+                authSettings.AddRange(authMethod);
+            }
+
+            private RestRequest CreateRequest()
+            {
+                var request = new RestRequest(path, method);
+
+                var queryParamsCopy = new Dictionary<String, String>(queryParams);
+                var headerParamsCopy = new Dictionary<String, String>(headerParams);
+
+                apiClient.UpdateParamsForAuth(queryParamsCopy, headerParamsCopy, authSettings.ToArray());
+
+                RequestAddParameters(request, ParameterType.HttpHeader, apiClient.defaultHeaderMap);
+                RequestAddParameters(request, ParameterType.HttpHeader, headerParamsCopy);
+                RequestAddParameters(request, ParameterType.UrlSegment, pathParams);
+                RequestAddParameters(request, ParameterType.QueryString, queryParamsCopy);
+                RequestAddParameters(request, ParameterType.GetOrPost, formParams);
+                RequestAddFileParameters(request, fileParams);
+
+                if (postBody != null)
+                {
+                    // http body (model) parameter
+                    request.AddParameter("application/json", postBody, ParameterType.RequestBody);
+                }
+
+                return request;
+            }
+
+            private static void RequestAddFileParameters(RestRequest request, Dictionary<string, FileParameter> parameters)
+            {
+                foreach (var param in parameters)
+                {
+                    request.AddFile(param.Value.Name, param.Value.Writer, param.Value.FileName, param.Value.ContentType);
+                }
+            }
+
+            private static void RequestAddParameters(RestRequest request, ParameterType parameterType, Dictionary<String, String> parameters)
+            {
+                foreach (var param in parameters)
+                {
+                    request.AddParameter(param.Key, param.Value, parameterType);
+                }
+            }
+
+            private IRestResponse CallForResponse()
+            {
+                var request = CreateRequest();
+                var response = apiClient.RestClient.Execute(request);
+                ThrowIfFailed(response);
+                return response;
+            }
+
+            public async System.Threading.Tasks.Task<IRestResponse> CallForResponseAsync()
+            {
+                var request = CreateRequest();
+                var response = await apiClient.RestClient.ExecuteTaskAsync(request);
+                ThrowIfFailed(response);
+                return response;
+            }
+
+            public void Call()
+            {
+                CallForResponse();
+            }
+
+            public async System.Threading.Tasks.Task CallAsync()
+            {
+                await CallForResponseAsync();
+            }
+
+            public TResult Call<TResult>()
+            {
+                return ExtractResult<TResult>(CallForResponse());
+            }
+
+            public async System.Threading.Tasks.Task<TResult> CallAsync<TResult>()
+            {
+                return ExtractResult<TResult>(await CallForResponseAsync());
+            }
+
+            private void ThrowIfFailed(IRestResponse response)
+            {
+                var statusCode = (int)response.StatusCode;
+                if (statusCode >= 400)
+                {
+                    throw new ApiException(statusCode, "Error calling " + nickname + ": " + response.Content, response.Content);
+                }
+                else if (statusCode == 0)
+                {
+                    throw new ApiException(statusCode, "Error calling " + nickname + ": " + response.ErrorMessage, response.ErrorMessage);
+                }
+            }
+
+            private TResult ExtractResult<TResult>(IRestResponse response)
+            {
+                return (TResult)apiClient.Deserialize(response.Content, typeof(TResult), response.Headers);
+            }
         }
     
         /// <summary>
@@ -144,17 +230,7 @@ namespace {{packageName}}.Client
         /// <returns></returns>
         public void AddDefaultHeader(string key, string value)
         {
-            _defaultHeaderMap.Add(key, value);
-        }
-    
-        /// <summary>
-        /// Escape string (url-encoded).
-        /// </summary>
-        /// <param name="str">String to be escaped.</param>
-        /// <returns>Escaped string.</returns>
-        public string EscapeString(string str)
-        {
-            return RestSharp.Contrib.HttpUtility.UrlEncode(str);
+            defaultHeaderMap.Add(key, value);
         }
     
         /// <summary>
@@ -301,17 +377,6 @@ namespace {{packageName}}.Client
                         break;
                 }
             }
-        }
- 
-        /// <summary>
-        /// Encode string in base64 format.
-        /// </summary>
-        /// <param name="text">String to be encoded.</param>
-        /// <returns>Encoded string.</returns>
-        public static string Base64Encode(string text)
-        {
-            var textByte = System.Text.Encoding.UTF8.GetBytes(text);
-            return System.Convert.ToBase64String(textByte);
         }
     
         /// <summary>
