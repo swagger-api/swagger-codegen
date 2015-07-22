@@ -76,46 +76,47 @@ namespace {{packageName}}.Client
                 pathParams.Add("format", "json");
             }
 
-            public void AddPathParam(String name, Object value)
+            private void AddParam(Dictionary<string, string> parameterMap, String name, Object value)
             {
                 if (value != null)
                 {
-                    pathParams.Add(name, apiClient.ParameterToString(value));
+                    parameterMap.Add(name, apiClient.ParameterToString(value));
                 }
             }
 
+            private void AddParam(Dictionary<string, FileParameter> parameterMap, String name, Stream stream)
+            {
+                if (stream != null)
+                {
+                    parameterMap.Add(name, apiClient.ParameterToFile(name, stream));
+                }
+            }
+
+            public void AddPathParam(String name, Object value)
+            {
+                AddParam(pathParams, name, value);
+            }
+            
             public void AddQueryParam(String name, Object value)
             {
-                if (value != null)
-                {
-                    queryParams.Add(name, apiClient.ParameterToString(value));
-                }
+                AddParam(queryParams, name, value);
             }
 
             public void AddHeaderParam(String name, Object value)
             {
-                if (value != null)
-                {
-                    headerParams.Add(name, apiClient.ParameterToString(value));
-                }
+                AddParam(headerParams, name, value);
             }
 
             public void AddFormParam(String name, Object value)
             {
-                if (value != null)
-                {
-                    formParams.Add(name, apiClient.ParameterToString(value));
-                }
+                AddParam(formParams, name, value);
             }
 
             public void AddFileParam(String name, Stream stream)
             {
-                if (stream != null)
-                {
-                    fileParams.Add(name, apiClient.ParameterToFile(name, stream));
-                }
+                AddParam(fileParams, name, stream);
             }
-
+            
             public void SetPostBody(object value)
             {
                 postBody = apiClient.Serialize(value);
@@ -206,13 +207,13 @@ namespace {{packageName}}.Client
             private void ThrowIfFailed(IRestResponse response)
             {
                 var statusCode = (int)response.StatusCode;
-                if (statusCode >= 400)
+                var isErrorWithContent = (statusCode >= 400);
+                var isError = isErrorWithContent | (statusCode == 0);
+
+                if (isError)
                 {
-                    throw new ApiException(statusCode, "Error calling " + nickname + ": " + response.Content, response.Content);
-                }
-                else if (statusCode == 0)
-                {
-                    throw new ApiException(statusCode, "Error calling " + nickname + ": " + response.ErrorMessage, response.ErrorMessage);
+                    var message = isErrorWithContent ? response.Content : response.ErrorMessage;
+                    throw new ApiException(statusCode, "Error calling " + nickname + ": " + message, message);
                 }
             }
 
