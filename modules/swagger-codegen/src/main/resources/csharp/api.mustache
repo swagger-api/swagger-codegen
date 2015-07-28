@@ -82,6 +82,31 @@ namespace {{packageName}}.Api
         public ApiClient ApiClient {get; set;}
     
         {{#operation}}
+        private ApiClient.RequestBuilder BuildRequest{{nickname}}({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+        {
+            {{#allParams}}{{#required}}
+            // verify the required parameter '{{paramName}}' is set
+            if ({{paramName}} == null) throw new ApiException(400, "Missing required parameter '{{paramName}}' when calling {{nickname}}");
+            {{/required}}{{/allParams}}
+
+            var builder = new ApiClient.RequestBuilder(ApiClient, "{{path}}", Method.{{httpMethod}}, "{{nickname}}");
+
+            {{#pathParams}}builder.AddPathParam("{{baseName}}", {{paramName}});
+            {{/pathParams}}
+            {{#queryParams}}builder.AddQueryParam("{{baseName}}", {{paramName}});
+            {{/queryParams}}
+            {{#headerParams}}builder.AddHeaderParam("{{baseName}}", {{paramName}});
+            {{/headerParams}}
+            {{#formParams}}builder.Add{{#isFile}}File{{/isFile}}{{^isFile}}Form{{/isFile}}Param("{{baseName}}", {{paramName}});
+            {{/formParams}}
+            {{#bodyParam}}builder.SetPostBody({{paramName}});
+            {{/bodyParam}}
+    
+            builder.AddAuthSettings({{#authMethods}}"{{name}}"{{#hasMore}}, {{/hasMore}}{{/authMethods}});
+
+            return builder;
+        }
+
         /// <summary>
         /// {{summary}} {{notes}}
         /// </summary>
@@ -89,44 +114,8 @@ namespace {{packageName}}.Api
         {{/allParams}}/// <returns>{{#returnType}}{{{returnType}}}{{/returnType}}</returns>            
         public {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}} {{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
         {
-            {{#allParams}}{{#required}}
-            // verify the required parameter '{{paramName}}' is set
-            if ({{paramName}} == null) throw new ApiException(400, "Missing required parameter '{{paramName}}' when calling {{nickname}}");
-            {{/required}}{{/allParams}}
-    
-            var path = "{{path}}";
-    
-            var pathParams = new Dictionary<String, String>();
-            var queryParams = new Dictionary<String, String>();
-            var headerParams = new Dictionary<String, String>();
-            var formParams = new Dictionary<String, String>();
-            var fileParams = new Dictionary<String, FileParameter>();
-            String postBody = null;
-
-            pathParams.Add("format", "json");
-            {{#pathParams}}if ({{paramName}} != null) pathParams.Add("{{baseName}}", ApiClient.ParameterToString({{paramName}})); // path parameter
-            {{/pathParams}}
-            {{#queryParams}}if ({{paramName}} != null) queryParams.Add("{{baseName}}", ApiClient.ParameterToString({{paramName}})); // query parameter
-            {{/queryParams}}
-            {{#headerParams}}if ({{paramName}} != null) headerParams.Add("{{baseName}}", ApiClient.ParameterToString({{paramName}})); // header parameter
-            {{/headerParams}}
-            {{#formParams}}if ({{paramName}} != null) {{#isFile}}fileParams.Add("{{baseName}}", ApiClient.ParameterToFile("{{baseName}}", {{paramName}}));{{/isFile}}{{^isFile}}formParams.Add("{{baseName}}", ApiClient.ParameterToString({{paramName}})); // form parameter{{/isFile}}
-            {{/formParams}}
-            {{#bodyParam}}postBody = ApiClient.Serialize({{paramName}}); // http body (model) parameter
-            {{/bodyParam}}
-    
-            // authentication setting, if any
-            String[] authSettings = new String[] { {{#authMethods}}"{{name}}"{{#hasMore}}, {{/hasMore}}{{/authMethods}} };
-    
-            // make the HTTP request
-            IRestResponse response = (IRestResponse) ApiClient.CallApi(path, Method.{{httpMethod}}, queryParams, postBody, headerParams, formParams, fileParams, pathParams, authSettings);
-    
-            if (((int)response.StatusCode) >= 400)
-                throw new ApiException ((int)response.StatusCode, "Error calling {{nickname}}: " + response.Content, response.Content);
-            else if (((int)response.StatusCode) == 0)
-                throw new ApiException ((int)response.StatusCode, "Error calling {{nickname}}: " + response.ErrorMessage, response.ErrorMessage);
-    
-            {{#returnType}}return ({{{returnType}}}) ApiClient.Deserialize(response.Content, typeof({{{returnType}}}), response.Headers);{{/returnType}}{{^returnType}}return;{{/returnType}}
+            var builder = BuildRequest{{nickname}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+            {{#returnType}}return builder.Call<{{{returnType}}}>();{{/returnType}}{{^returnType}}builder.Call();{{/returnType}}
         }
     
         /// <summary>
@@ -136,41 +125,8 @@ namespace {{packageName}}.Api
         {{/allParams}}/// <returns>{{#returnType}}{{{returnType}}}{{/returnType}}</returns>
         {{#returnType}}public async System.Threading.Tasks.Task<{{{returnType}}}>{{/returnType}}{{^returnType}}public async System.Threading.Tasks.Task{{/returnType}} {{nickname}}Async ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
         {
-            {{#allParams}}{{#required}}// verify the required parameter '{{paramName}}' is set
-            if ({{paramName}} == null) throw new ApiException(400, "Missing required parameter '{{paramName}}' when calling {{nickname}}");
-            {{/required}}{{/allParams}}
-    
-            var path = "{{path}}";
-    
-            var pathParams = new Dictionary<String, String>();
-            var queryParams = new Dictionary<String, String>();
-            var headerParams = new Dictionary<String, String>();
-            var formParams = new Dictionary<String, String>();
-            var fileParams = new Dictionary<String, FileParameter>();
-            String postBody = null;
-    
-            pathParams.Add("format", "json");
-            {{#pathParams}}if ({{paramName}} != null) pathParams.Add("{{baseName}}", ApiClient.ParameterToString({{paramName}})); // path parameter
-            {{/pathParams}}
-            {{#queryParams}}if ({{paramName}} != null) queryParams.Add("{{baseName}}", ApiClient.ParameterToString({{paramName}})); // query parameter
-            {{/queryParams}}
-            {{#headerParams}}if ({{paramName}} != null) headerParams.Add("{{baseName}}", ApiClient.ParameterToString({{paramName}})); // header parameter
-            {{/headerParams}}
-            {{#formParams}}if ({{paramName}} != null) {{#isFile}}fileParams.Add("{{baseName}}", ApiClient.ParameterToFile("{{baseName}}", {{paramName}}));{{/isFile}}{{^isFile}}formParams.Add("{{baseName}}", ApiClient.ParameterToString({{paramName}})); // form parameter{{/isFile}}
-            {{/formParams}}
-            {{#bodyParam}}postBody = ApiClient.Serialize({{paramName}}); // http body (model) parameter
-            {{/bodyParam}}
-    
-            // authentication setting, if any
-            String[] authSettings = new String[] { {{#authMethods}}"{{name}}"{{#hasMore}}, {{/hasMore}}{{/authMethods}} };
-    
-            // make the HTTP request
-            IRestResponse response = (IRestResponse) await ApiClient.CallApiAsync(path, Method.{{httpMethod}}, queryParams, postBody, headerParams, formParams, fileParams, pathParams, authSettings);
-            if (((int)response.StatusCode) >= 400)
-                throw new ApiException ((int)response.StatusCode, "Error calling {{nickname}}: " + response.Content, response.Content);
-
-            {{#returnType}}return ({{{returnType}}}) ApiClient.Deserialize(response.Content, typeof({{{returnType}}}), response.Headers);{{/returnType}}{{^returnType}}
-            return;{{/returnType}}
+            var builder = BuildRequest{{nickname}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+            {{#returnType}}return await builder.CallAsync<{{{returnType}}}>();{{/returnType}}{{^returnType}}await builder.CallAsync();{{/returnType}}
         }
         {{/operation}}
     }
