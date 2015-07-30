@@ -49,7 +49,6 @@ use \Swagger\Client\ObjectSerializer;
  */
 class UserApi
 {
-
     /**
      * API Client
      * @var \Swagger\Client\ApiClient instance of the ApiClient
@@ -112,11 +111,8 @@ class UserApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+        $acceptTypes = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
+        $contentTypes = ApiClient::selectHeaderContentType(array());
   
         
         
@@ -141,6 +137,7 @@ class UserApi
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
+                $acceptTypes, $contentTypes,
                 $headerParams
             );
         } catch (ApiException $e) {
@@ -173,11 +170,8 @@ class UserApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+        $acceptTypes = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
+        $contentTypes = ApiClient::selectHeaderContentType(array());
   
         
         
@@ -202,6 +196,7 @@ class UserApi
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
+                $acceptTypes, $contentTypes,
                 $headerParams
             );
         } catch (ApiException $e) {
@@ -234,11 +229,8 @@ class UserApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+        $acceptTypes = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
+        $contentTypes = ApiClient::selectHeaderContentType(array());
   
         
         
@@ -263,6 +255,7 @@ class UserApi
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
+                $acceptTypes, $contentTypes,
                 $headerParams
             );
         } catch (ApiException $e) {
@@ -296,11 +289,8 @@ class UserApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+        $acceptTypes = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
+        $contentTypes = ApiClient::selectHeaderContentType(array());
   
         // query params
         if ($username !== null) {
@@ -327,6 +317,7 @@ class UserApi
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
+                $acceptTypes, $contentTypes,
                 $headerParams, 'string'
             );
         } catch (ApiException $e) {
@@ -368,11 +359,8 @@ class UserApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+        $acceptTypes = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
+        $contentTypes = ApiClient::selectHeaderContentType(array());
   
         
         
@@ -393,6 +381,7 @@ class UserApi
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
+                $acceptTypes, $contentTypes,
                 $headerParams
             );
         } catch (ApiException $e) {
@@ -429,11 +418,8 @@ class UserApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+        $acceptTypes = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
+        $contentTypes = ApiClient::selectHeaderContentType(array());
   
         
         
@@ -461,6 +447,7 @@ class UserApi
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
+                $acceptTypes, $contentTypes,
                 $headerParams, '\Swagger\Client\Model\User'
             );
         } catch (ApiException $e) {
@@ -508,11 +495,8 @@ class UserApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+        $acceptTypes = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
+        $contentTypes = ApiClient::selectHeaderContentType(array());
   
         
         
@@ -544,6 +528,7 @@ class UserApi
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
+                $acceptTypes, $contentTypes,
                 $headerParams
             );
         } catch (ApiException $e) {
@@ -580,11 +565,8 @@ class UserApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+        $acceptTypes = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
+        $contentTypes = ApiClient::selectHeaderContentType(array());
   
         
         
@@ -612,6 +594,7 @@ class UserApi
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
+                $acceptTypes, $contentTypes,
                 $headerParams
             );
         } catch (ApiException $e) {

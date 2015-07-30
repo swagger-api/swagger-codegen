@@ -49,7 +49,6 @@ use \{{invokerPackage}}\ObjectSerializer;
  */
 {{#operations}}class {{classname}}
 {
-
     /**
      * API Client
      * @var \{{invokerPackage}}\ApiClient instance of the ApiClient
@@ -116,11 +115,8 @@ use \{{invokerPackage}}\ObjectSerializer;
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array({{#produces}}'{{mediaType}}'{{#hasMore}}, {{/hasMore}}{{/produces}}));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array({{#consumes}}'{{mediaType}}'{{#hasMore}},{{/hasMore}}{{/consumes}}));
+        $acceptTypes = ApiClient::selectHeaderAccept(array({{#produces}}'{{mediaType}}'{{#hasMore}}, {{/hasMore}}{{/produces}}));
+        $contentTypes = ApiClient::selectHeaderContentType(array({{#consumes}}'{{mediaType}}'{{#hasMore}},{{/hasMore}}{{/consumes}}));
   
         {{#queryParams}}// query params
         if (${{paramName}} !== null) {
@@ -168,6 +164,7 @@ use \{{invokerPackage}}\ObjectSerializer;
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
+                $acceptTypes, $contentTypes,
                 $headerParams{{#returnType}}, '{{returnType}}'{{/returnType}}
             );
         } catch (ApiException $e) {
