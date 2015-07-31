@@ -1,46 +1,48 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.*;
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.SupportingFile;
 import io.swagger.models.Operation;
+import io.swagger.models.Swagger;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
+import io.swagger.util.Json;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-public class SpringMVCServerCodegen extends JavaClientCodegen implements CodegenConfig {
-    protected String invokerPackage = "io.swagger.api";
+public class JavaInflectorServerCodegen extends JavaClientCodegen implements CodegenConfig {
+    protected String invokerPackage = "io.swagger.handler";
     protected String groupId = "io.swagger";
-    protected String artifactId = "swagger-spring-mvc-server";
+    protected String artifactId = "swagger-inflector-server";
     protected String artifactVersion = "1.0.0";
-    protected String sourceFolder = "src/main/java";
-    protected String title = "Petstore Server";
+    protected String title = "Swagger Inflector";
 
-    protected String configPackage = "";
-
-    public SpringMVCServerCodegen() {
+    public JavaInflectorServerCodegen() {
         super();
-        outputFolder = "generated-code/javaSpringMVC";
+
+        sourceFolder = "src/main/java";
         modelTemplateFiles.put("model.mustache", ".java");
         apiTemplateFiles.put("api.mustache", ".java");
-        templateDir = "JavaSpringMVC";
-        apiPackage = "io.swagger.api";
-        modelPackage = "io.swagger.model";
-        configPackage = "io.swagger.configuration";
+        templateDir = "JavaInflector";
 
+        apiPackage = System.getProperty("swagger.codegen.inflector.apipackage", "io.swagger.handler");
+        modelPackage = System.getProperty("swagger.codegen.inflector.modelpackage", "io.swagger.model");
 
         additionalProperties.put("invokerPackage", invokerPackage);
         additionalProperties.put("groupId", groupId);
         additionalProperties.put("artifactId", artifactId);
         additionalProperties.put("artifactVersion", artifactVersion);
         additionalProperties.put("title", title);
-        additionalProperties.put("apiPackage", apiPackage);
-        additionalProperties.put("configPackage", configPackage);
 
         languageSpecificPrimitives = new HashSet<String>(
                 Arrays.asList(
@@ -52,9 +54,6 @@ public class SpringMVCServerCodegen extends JavaClientCodegen implements Codegen
                         "Long",
                         "Float")
         );
-
-        cliOptions.add(new CliOption("configPackage", "configuration package for generated code"));
-
     }
 
     public CodegenType getTag() {
@@ -62,44 +61,22 @@ public class SpringMVCServerCodegen extends JavaClientCodegen implements Codegen
     }
 
     public String getName() {
-        return "spring-mvc";
+        return "inflector";
     }
 
     public String getHelp() {
-        return "Generates a Java Spring-MVC Server application using the SpringFox integration.";
+        return "Generates a Java Inflector Server application.";
     }
 
     @Override
     public void processOpts() {
         super.processOpts();
 
-        if (additionalProperties.containsKey("configPackage")) {
-            this.setConfigPackage((String) additionalProperties.get("configPackage"));
-        }
-
         supportingFiles.clear();
         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
-        supportingFiles.add(new SupportingFile("apiException.mustache",
-                (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiException.java"));
-        supportingFiles.add(new SupportingFile("apiOriginFilter.mustache",
-                (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiOriginFilter.java"));
-        supportingFiles.add(new SupportingFile("apiResponseMessage.mustache",
-                (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiResponseMessage.java"));
-        supportingFiles.add(new SupportingFile("notFoundException.mustache",
-                (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "NotFoundException.java"));
-
-        supportingFiles.add(new SupportingFile("swaggerConfig.mustache",
-                (sourceFolder + File.separator + configPackage).replace(".", java.io.File.separator), "SwaggerConfig.java"));
-        supportingFiles.add(new SupportingFile("webApplication.mustache",
-                (sourceFolder + File.separator + configPackage).replace(".", java.io.File.separator), "WebApplication.java"));
-        supportingFiles.add(new SupportingFile("webMvcConfiguration.mustache",
-                (sourceFolder + File.separator + configPackage).replace(".", java.io.File.separator), "WebMvcConfiguration.java"));
-        supportingFiles.add(new SupportingFile("swaggerUiConfiguration.mustache",
-                (sourceFolder + File.separator + configPackage).replace(".", java.io.File.separator), "SwaggerUiConfiguration.java"));
-        supportingFiles.add(new SupportingFile("swagger.properties",
-                ("src.main.resources").replace(".", java.io.File.separator), "swagger.properties"));
-
+        supportingFiles.add(new SupportingFile("web.mustache", "src/main/webapp/WEB-INF", "web.xml"));
+        supportingFiles.add(new SupportingFile("inflector.mustache", "", "inflector.yaml"));
     }
 
     @Override
@@ -150,14 +127,6 @@ public class SpringMVCServerCodegen extends JavaClientCodegen implements Codegen
         if (operations != null) {
             List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
             for (CodegenOperation operation : ops) {
-                List<CodegenResponse> responses = operation.responses;
-                if (responses != null) {
-                    for (CodegenResponse resp : responses) {
-                        if ("0".equals(resp.code)) {
-                            resp.code = "200";
-                        }
-                    }
-                }
                 if (operation.returnType == null) {
                     operation.returnType = "Void";
                 } else if (operation.returnType.startsWith("List")) {
@@ -187,8 +156,33 @@ public class SpringMVCServerCodegen extends JavaClientCodegen implements Codegen
         return objs;
     }
 
-    public void setConfigPackage(String configPackage) {
-        this.configPackage = configPackage;
+    @Override
+    public void processSwagger(Swagger swagger) {
+        super.processSwagger(swagger);
+
+        try {
+            File file = new File( outputFolder + "/src/main/swagger/swagger.json" );
+            file.getParentFile().mkdirs();
+
+            FileWriter swaggerFile = new FileWriter(file);
+            swaggerFile.write( Json.pretty( swagger ));
+            swaggerFile.flush();
+            swaggerFile.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public String toApiName(String name) {
+        if (name.length() == 0) {
+            return "DefaultController";
+        }
+        name = name.replaceAll("[^a-zA-Z0-9]+", "_");
+        return camelize(name)+ "Controller";
+    }
+
+    public boolean shouldOverwrite(String filename) {
+        return super.shouldOverwrite(filename);
     }
 }
-
