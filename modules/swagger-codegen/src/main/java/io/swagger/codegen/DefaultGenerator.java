@@ -1,8 +1,10 @@
 package io.swagger.codegen;
 
+import static org.apache.commons.lang3.StringUtils.capitalize;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
-
 import io.swagger.models.ComposedModel;
 import io.swagger.models.Contact;
 import io.swagger.models.Info;
@@ -14,7 +16,6 @@ import io.swagger.models.Swagger;
 import io.swagger.models.auth.OAuth2Definition;
 import io.swagger.models.auth.SecuritySchemeDefinition;
 import io.swagger.util.Json;
-
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
@@ -34,9 +35,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.apache.commons.lang3.StringUtils.capitalize;
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
-
 public class DefaultGenerator extends AbstractGenerator implements Generator {
     protected CodegenConfig config;
     protected ClientOptInput opts = null;
@@ -52,7 +50,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         return this;
     }
 
-    public List<File> generate() {
+    public List<File> generate() throws Exception {
         if (swagger == null || config == null) {
             throw new RuntimeException("missing swagger input or config!");
         }
@@ -306,7 +304,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
             config.processSwagger(swagger);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new Exception("Code generation failed");
         }
         return files;
     }

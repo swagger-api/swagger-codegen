@@ -29,7 +29,7 @@ public class Codegen extends DefaultGenerator {
             "\n -DdebugOperations prints operations passed to the template engine" +
             "\n -DdebugSupportingFiles prints additional data passed to the template engine";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         StringBuilder sb = new StringBuilder();
 
@@ -97,7 +97,7 @@ public class Codegen extends DefaultGenerator {
                     .swagger(swagger);
             new Codegen().opts(clientOptInput).generate();
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new Exception("Code generation failed");
         }
     }
 

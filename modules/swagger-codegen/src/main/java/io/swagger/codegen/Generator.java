@@ -6,5 +6,5 @@ import java.util.List;
 public interface Generator {
     Generator opts(ClientOptInput opts);
 
-    List<File> generate();
+    List<File> generate() throws Exception;
 }
