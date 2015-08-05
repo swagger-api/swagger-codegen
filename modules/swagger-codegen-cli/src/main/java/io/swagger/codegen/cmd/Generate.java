@@ -93,7 +93,7 @@ public class Generate implements Runnable {
     }
 
     @Override
-    public void run() {
+    public void run() throws Exception {
         verbosed(verbose);
 
         setSystemProperties();
