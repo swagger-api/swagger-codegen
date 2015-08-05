@@ -1,5 +1,6 @@
 package io.swagger.codegen.languages;
 
+import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
@@ -33,8 +34,6 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
                 Arrays.asList(
                         "abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char", "checked", "class", "const", "continue", "decimal", "default", "delegate", "do", "double", "else", "enum", "event", "explicit", "extern", "false", "finally", "fixed", "float", "for", "foreach", "goto", "if", "implicit", "in", "int", "interface", "internal", "is", "lock", "long", "namespace", "new", "null", "object", "operator", "out", "override", "params", "private", "protected", "public", "readonly", "ref", "return", "sbyte", "sealed", "short", "sizeof", "stackalloc", "static", "string", "struct", "switch", "this", "throw", "true", "try", "typeof", "uint", "ulong", "unchecked", "unsafe", "ushort", "using", "virtual", "void", "volatile", "while")
         );
-
-        additionalProperties.put("invokerPackage", invokerPackage);
 
         supportingFiles.add(new SupportingFile("Configuration.mustache",
                 (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "Configuration.cs"));
@@ -85,6 +84,7 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
         typeMapping.put("map", "Dictionary");
         typeMapping.put("object", "Object");
 
+        cliOptions.add(new CliOption("invokerPackage", "root package for generated code"));
     }
 
     public CodegenType getTag() {
@@ -200,4 +200,19 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
         return camelize(operationId);
     }
 
+    @Override
+    public void processOpts() {
+        super.processOpts();
+
+        if (additionalProperties.containsKey("invokerPackage")) {
+            this.setInvokerPackage((String) additionalProperties.get("invokerPackage"));
+        } else {
+            //not set, use default to be passed to template
+            additionalProperties.put("invokerPackage", invokerPackage);
+        }
+    }
+
+    public void setInvokerPackage(String invokerPackage) {
+        this.invokerPackage = invokerPackage;
+    }
 }
