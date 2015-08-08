@@ -385,7 +385,7 @@ public class ApiClient {
     }
   }
 
-  private ClientResponse getAPIResponse(String path, String method, Map<String, String> queryParams, Object body, byte[] binaryBody, Map<String, String> headerParams, Map<String, String> formParams, String accept, String contentType, String[] authNames) throws ApiException {
+  private ClientResponse getAPIResponse(String path, String method, List<Pair> queryParams, Object body, byte[] binaryBody, Map<String, String> headerParams, Map<String, String> formParams, String accept, String contentType, String[] authNames) throws ApiException {
 
     if (body != null && binaryBody != null){
       throw new ApiException(500, "either body or binaryBody must be null");
@@ -498,11 +498,10 @@ public class ApiClient {
    * @param authNames The authentications to apply
    * @return The response body in type of string
    */
-  public String invokeAPI(String path, String method, Map<String, String> queryParams, Object body, byte[] binaryBody, Map<String, String> headerParams, Map<String, String> formParams, String accept, String contentType, String[] authNames) throws ApiException {
+  public String invokeAPI(String path, String method, List<Pair> queryParams, Object body, byte[] binaryBody, Map<String, String> headerParams, Map<String, String> formParams, String accept, String contentType, String[] authNames) throws ApiException {
 
     ClientResponse response = getAPIResponse(path, method, queryParams, body, binaryBody, headerParams, formParams, accept, contentType, authNames);
 
-    if(response.getClientResponseStatus() == ClientResponse.Status.NO_CONTENT) {
     if(response.getStatusInfo() == ClientResponse.Status.NO_CONTENT) {
       return null;
     }
@@ -548,14 +547,14 @@ public class ApiClient {
    * @param authNames The authentications to apply
    * @return The response body in type of string
    */
- public byte[] invokeBinaryAPI(String path, String method, Map<String, String> queryParams, Object body, byte[] binaryBody, Map<String, String> headerParams, Map<String, String> formParams, String accept, String contentType, String[]authNames) throws ApiException {
+ public byte[] invokeBinaryAPI(String path, String method, List<Pair> queryParams, Object body, byte[] binaryBody, Map<String, String> headerParams, Map<String, String> formParams, String accept, String contentType, String[]authNames) throws ApiException {
 
     ClientResponse response = getAPIResponse(path, method, queryParams, body, binaryBody, headerParams, formParams, accept, contentType, authNames);
 
-    if(response.getClientResponseStatus() == ClientResponse.Status.NO_CONTENT) {
+    if(response.getStatusInfo() == ClientResponse.Status.NO_CONTENT) {
       return null;
     }
-    else if(response.getClientResponseStatus().getFamily() == Family.SUCCESSFUL) {
+    else if(response.getStatusInfo().getFamily() == Family.SUCCESSFUL) {
       if(response.hasEntity()) {
     	DataInputStream stream = new DataInputStream(response.getEntityInputStream());
     	byte[] data = new byte[response.getLength()];
@@ -581,7 +580,7 @@ public class ApiClient {
         }
       }
       throw new ApiException(
-                response.getClientResponseStatus().getStatusCode(),
+                response.getStatusInfo().getStatusCode(),
                 message);
     }
   }

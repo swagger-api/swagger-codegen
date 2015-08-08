@@ -32,7 +32,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "byte"
+              "format": "binary"
             }
           }
         ],
@@ -41,7 +41,7 @@
             "description": "OutputBinaryData",
             "schema": {
               "type": "string",
-              "format": "byte"
+              "format": "binary"
             }
           }
         }

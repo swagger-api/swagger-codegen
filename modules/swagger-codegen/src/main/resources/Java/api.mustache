@@ -21,8 +21,6 @@ import java.io.File;
 import java.util.Map;
 import java.util.HashMap;
 
-import org.apache.commons.codec.binary.Base64;
-
 {{#operations}}
 public class {{classname}} {
   private ApiClient apiClient;
@@ -61,8 +59,8 @@ public class {{classname}} {
     {{/required}}{{/allParams}}
 
     // create path and map variables
-   
-    String path = "{{path}}".replaceAll("\\{format\\}","json"){{#pathParams}}
+
+     String path = "{{{path}}}".replaceAll("\\{format\\}","json"){{#pathParams}}
       .replaceAll("\\{" + "{{baseName}}" + "\\}", apiClient.escapeString({{{paramName}}}.toString())){{/pathParams}};
 
     // query params
@@ -111,10 +109,6 @@ public class {{classname}} {
         formParams.put("{{baseName}}", apiClient.parameterToString({{paramName}}));{{/notFile}}
       {{/formParams}}
     }
-    if(postBinaryBody != null && !contentType.equals("application/octet-stream")){
-      postBody = postBinaryBody;
-      postBinaryBody = null;
-    }
 
     try {
 
@@ -124,13 +118,7 @@ public class {{classname}} {
       {{#isBinary}}
       String responseMimeType = {{#produces}}"{{mediaType}}"{{/produces}}{{^produces}}"application/json"{{/produces}};
       byte[] response = null;
-      if(!responseMimeType.equals("application/octet-stream")){
-        String responseEncoded = apiClient.invokeAPI(path, "{{httpMethod}}", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames);
-        response = Base64.decodeBase64(responseEncoded);
-      }
-      else{
-        response = apiClient.invokeBinaryAPI(path, "{{httpMethod}}", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames);
-      }
+      response = apiClient.invokeBinaryAPI(path, "{{httpMethod}}", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames);
       return response;
 
       {{/isBinary}}
