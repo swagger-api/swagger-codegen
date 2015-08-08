@@ -49,7 +49,8 @@ public class {{classname}} {
 {{/allParams}}   * @return {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}
    */
   public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws ApiException {
-    Object postBody = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
+    Object postBody = {{#bodyParam}}{{^isBinary}}{{paramName}}{{/isBinary}}{{#isBinary}}null{{/isBinary}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
+    byte[] postBinaryBody = {{#bodyParam}}{{#isBinary}}{{paramName}}{{/isBinary}}{{^isBinary}}null{{/isBinary}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
     {{#allParams}}{{#required}}
     // verify the required parameter '{{paramName}}' is set
     if ({{paramName}} == null) {
@@ -58,7 +59,8 @@ public class {{classname}} {
     {{/required}}{{/allParams}}
 
     // create path and map variables
-    String path = "{{path}}".replaceAll("\\{format\\}","json"){{#pathParams}}
+
+     String path = "{{{path}}}".replaceAll("\\{format\\}","json"){{#pathParams}}
       .replaceAll("\\{" + "{{baseName}}" + "\\}", apiClient.escapeString({{{paramName}}}.toString())){{/pathParams}};
 
     // query params
@@ -109,14 +111,30 @@ public class {{classname}} {
     }
 
     try {
+
       String[] authNames = new String[] { {{#authMethods}}"{{name}}"{{#hasMore}}, {{/hasMore}}{{/authMethods}} };
-      String response = apiClient.invokeAPI(path, "{{httpMethod}}", queryParams, postBody, headerParams, formParams, accept, contentType, authNames);
-      if(response != null){
-        return {{#returnType}}({{{returnType}}}) apiClient.deserialize(response, "{{returnContainer}}", {{returnBaseType}}.class){{/returnType}};
-      }
-      else {
-        return {{#returnType}}null{{/returnType}};
-      }
+
+      {{#responses}}{{#isDefault}}
+      {{#isBinary}}
+      String responseMimeType = {{#produces}}"{{mediaType}}"{{/produces}}{{^produces}}"application/json"{{/produces}};
+      byte[] response = null;
+      response = apiClient.invokeBinaryAPI(path, "{{httpMethod}}", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames);
+      return response;
+
+      {{/isBinary}}
+      {{^isBinary}}
+
+       String response = apiClient.invokeAPI(path, "{{httpMethod}}", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames);
+       if(response != null){
+         return {{#returnType}}({{{returnType}}}) apiClient.deserialize(response, "{{returnContainer}}", {{returnBaseType}}.class){{/returnType}};
+       }
+       else {
+            return {{#returnType}}null{{/returnType}};
+       }
+     {{/isBinary}}
+     {{/isDefault}}
+     {{/responses}}
+
     } catch (ApiException ex) {
       throw ex;
     }
