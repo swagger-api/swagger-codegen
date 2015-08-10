@@ -4,6 +4,7 @@ import {{invokerPackage}}.ApiCallback;
 import {{invokerPackage}}.ApiClient;
 import {{invokerPackage}}.ApiException;
 import {{invokerPackage}}.Configuration;
+import {{invokerPackage}}.Pair;
 
 import {{modelPackage}}.*;
 
@@ -55,11 +56,11 @@ public class {{classname}} {
 
     // create path and map variables
     String path = "{{path}}".replaceAll("\\{format\\}","json"){{#pathParams}}
-      .replaceAll("\\{" + "{{paramName}}" + "\\}", apiClient.escapeString({{{paramName}}}.toString())){{/pathParams}};
+      .replaceAll("\\{" + "{{baseName}}" + "\\}", apiClient.escapeString({{{paramName}}}.toString())){{/pathParams}};
 
-    Map<String, Object> queryParams = new HashMap<String, Object>();{{#queryParams}}
+    List<Pair> queryParams = new ArrayList<Pair>();{{#queryParams}}
     if ({{paramName}} != null)
-      queryParams.put("{{baseName}}", {{paramName}});{{/queryParams}}
+      queryParams.addAll(apiClient.parameterToPairs("{{#collectionFormat}}{{{collectionFormat}}}{{/collectionFormat}}", "{{baseName}}", {{paramName}}));{{/queryParams}}
 
     Map<String, Object> headerParams = new HashMap<String, Object>();{{#headerParams}}
     if ({{paramName}} != null)

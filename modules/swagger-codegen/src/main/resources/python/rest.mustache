@@ -1,6 +1,20 @@
 # coding: utf-8
 
 """
+Copyright 2015 SmartBear Software
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
 Credit: this file (rest.py) is modified based on rest.py in Dropbox Python SDK:
 https://www.dropbox.com/developers/core/sdks/python
 """
@@ -10,6 +24,7 @@ import io
 import json
 import ssl
 import certifi
+import logging
 
 # python 2 and python 3 compatibility library
 from six import iteritems
@@ -25,6 +40,9 @@ try:
 except ImportError:
     # for python2
     from urllib import urlencode
+
+
+logger = logging.getLogger(__name__)
 
 
 class RESTResponse(io.IOBase):
@@ -47,6 +65,7 @@ class RESTResponse(io.IOBase):
         """
         return self.urllib3_response.getheader(name, default)
 
+
 class RESTClientObject(object):
 
     def __init__(self, pools_size=4):
@@ -65,9 +84,10 @@ class RESTClientObject(object):
 
     def agent(self, url):
         """
-        Return proper pool manager for the http\https schemes.
+        Use `urllib3.util.parse_url` for backward compatibility.
+        Return proper pool manager for the http/https schemes.
         """
-        url = urllib3.util.url.parse_url(url)
+        url = urllib3.util.parse_url(url)
         scheme = url.scheme
         if scheme == 'https':
             return self.ssl_pool_manager
@@ -82,14 +102,17 @@ class RESTClientObject(object):
         :param query_params: query parameters in the url
         :param headers: http request headers
         :param body: request json body, for `application/json`
-        :param post_params: request post parameters, `application/x-www-form-urlencode`
+        :param post_params: request post parameters,
+                            `application/x-www-form-urlencode`
                             and `multipart/form-data`
         """
         method = method.upper()
         assert method in ['GET', 'HEAD', 'DELETE', 'POST', 'PUT', 'PATCH']
 
         if post_params and body:
-            raise ValueError("body parameter cannot be used with post_params parameter.")
+            raise ValueError(
+                "body parameter cannot be used with post_params parameter."
+            )
 
         post_params = post_params or {}
         headers = headers or {}
@@ -125,76 +148,81 @@ class RESTClientObject(object):
                                         headers=headers)
         r = RESTResponse(r)
 
-        if r.status not in range(200, 206):
-            raise ApiException(r)
-
-        return self.process_response(r)
-
-    def process_response(self, response):
         # In the python 3, the response.data is bytes.
         # we need to decode it to string.
         if sys.version_info > (3,):
-            data = response.data.decode('utf8')
-        else:
-            data = response.data
-        try:
-            resp = json.loads(data)
-        except ValueError:
-            resp = data
+            r.data = r.data.decode('utf8')
 
-        return resp
+        # log response body
+        logger.debug("response body: %s" % r.data)
+
+        if r.status not in range(200, 206):
+            raise ApiException(http_resp=r)
+
+        return r
 
     def GET(self, url, headers=None, query_params=None):
-        return self.request("GET", url, headers=headers, query_params=query_params)
+        return self.request("GET", url,
+                            headers=headers,
+                            query_params=query_params)
 
     def HEAD(self, url, headers=None, query_params=None):
-        return self.request("HEAD", url, headers=headers, query_params=query_params)
+        return self.request("HEAD", url,
+                            headers=headers,
+                            query_params=query_params)
 
     def DELETE(self, url, headers=None, query_params=None):
-        return self.request("DELETE", url, headers=headers, query_params=query_params)
+        return self.request("DELETE", url,
+                            headers=headers,
+                            query_params=query_params)
 
     def POST(self, url, headers=None, post_params=None, body=None):
-        return self.request("POST", url, headers=headers, post_params=post_params, body=body)
+        return self.request("POST", url,
+                            headers=headers,
+                            post_params=post_params,
+                            body=body)
 
     def PUT(self, url, headers=None, post_params=None, body=None):
-        return self.request("PUT", url, headers=headers, post_params=post_params, body=body)
+        return self.request("PUT", url,
+                            headers=headers,
+                            post_params=post_params,
+                            body=body)
 
     def PATCH(self, url, headers=None, post_params=None, body=None):
-        return self.request("PATCH", url, headers=headers, post_params=post_params, body=body)
+        return self.request("PATCH", url,
+                            headers=headers,
+                            post_params=post_params,
+                            body=body)
 
 
 class ApiException(Exception):
-    """
-    Non-2xx HTTP response
-    """
 
-    def __init__(self, http_resp):
-        self.status = http_resp.status
-        self.reason = http_resp.reason
-        self.body = http_resp.data
-        self.headers = http_resp.getheaders()
-
-        # In the python 3, the self.body is bytes.
-        # we need to decode it to string.
-        if sys.version_info > (3,):
-            data = self.body.decode('utf8')
+    def __init__(self, status=None, reason=None, http_resp=None):
+        if http_resp:
+            self.status = http_resp.status
+            self.reason = http_resp.reason
+            self.body = http_resp.data
+            self.headers = http_resp.getheaders()
         else:
-            data = self.body
-            
-        try:
-            self.body = json.loads(data)
-        except ValueError:
-            self.body = data
+            self.status = status
+            self.reason = reason
+            self.body = None
+            self.headers = None
 
     def __str__(self):
         """
-        Custom error response messages
+        Custom error messages for exception
         """
-        return "({0})\n"\
-            "Reason: {1}\n"\
-            "HTTP response headers: {2}\n"\
-            "HTTP response body: {3}\n".\
-            format(self.status, self.reason, self.headers, self.body)
+        error_message = "({0})\n"\
+                        "Reason: {1}\n".format(self.status, self.reason)
+        if self.headers:
+            error_message += "HTTP response headers: {0}".format(self.headers)
+
+        if self.body:
+            error_message += "HTTP response body: {0}".format(self.body)
+
+        return error_message
+
 
 class RESTClient(object):
     """

@@ -4,6 +4,7 @@ import io.swagger.client.ApiCallback;
 import io.swagger.client.ApiClient;
 import io.swagger.client.ApiException;
 import io.swagger.client.Configuration;
+import io.swagger.client.Pair;
 
 import io.swagger.client.model.*;
 
@@ -50,7 +51,7 @@ public class StoreApi {
     // create path and map variables
     String path = "/store/inventory".replaceAll("\\{format\\}","json");
 
-    Map<String, Object> queryParams = new HashMap<String, Object>();
+    List<Pair> queryParams = new ArrayList<Pair>();
 
     Map<String, Object> headerParams = new HashMap<String, Object>();
 
@@ -104,7 +105,7 @@ public class StoreApi {
     // create path and map variables
     String path = "/store/order".replaceAll("\\{format\\}","json");
 
-    Map<String, Object> queryParams = new HashMap<String, Object>();
+    List<Pair> queryParams = new ArrayList<Pair>();
 
     Map<String, Object> headerParams = new HashMap<String, Object>();
 
@@ -166,7 +167,7 @@ public class StoreApi {
     String path = "/store/order/{orderId}".replaceAll("\\{format\\}","json")
       .replaceAll("\\{" + "orderId" + "\\}", apiClient.escapeString(orderId.toString()));
 
-    Map<String, Object> queryParams = new HashMap<String, Object>();
+    List<Pair> queryParams = new ArrayList<Pair>();
 
     Map<String, Object> headerParams = new HashMap<String, Object>();
 
@@ -228,7 +229,7 @@ public class StoreApi {
     String path = "/store/order/{orderId}".replaceAll("\\{format\\}","json")
       .replaceAll("\\{" + "orderId" + "\\}", apiClient.escapeString(orderId.toString()));
 
-    Map<String, Object> queryParams = new HashMap<String, Object>();
+    List<Pair> queryParams = new ArrayList<Pair>();
 
     Map<String, Object> headerParams = new HashMap<String, Object>();
 

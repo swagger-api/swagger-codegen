@@ -4,6 +4,7 @@ import io.swagger.client.ApiCallback;
 import io.swagger.client.ApiClient;
 import io.swagger.client.ApiException;
 import io.swagger.client.Configuration;
+import io.swagger.client.Pair;
 
 import io.swagger.client.model.*;
 
@@ -50,7 +51,7 @@ public class PetApi {
     // create path and map variables
     String path = "/pet".replaceAll("\\{format\\}","json");
 
-    Map<String, Object> queryParams = new HashMap<String, Object>();
+    List<Pair> queryParams = new ArrayList<Pair>();
 
     Map<String, Object> headerParams = new HashMap<String, Object>();
 
@@ -103,7 +104,7 @@ public class PetApi {
     // create path and map variables
     String path = "/pet".replaceAll("\\{format\\}","json");
 
-    Map<String, Object> queryParams = new HashMap<String, Object>();
+    List<Pair> queryParams = new ArrayList<Pair>();
 
     Map<String, Object> headerParams = new HashMap<String, Object>();
 
@@ -156,9 +157,9 @@ public class PetApi {
     // create path and map variables
     String path = "/pet/findByStatus".replaceAll("\\{format\\}","json");
 
-    Map<String, Object> queryParams = new HashMap<String, Object>();
+    List<Pair> queryParams = new ArrayList<Pair>();
     if (status != null)
-      queryParams.put("status", status);
+      queryParams.addAll(apiClient.parameterToPairs("multi", "status", status));
 
     Map<String, Object> headerParams = new HashMap<String, Object>();
 
@@ -214,9 +215,9 @@ public class PetApi {
     // create path and map variables
     String path = "/pet/findByTags".replaceAll("\\{format\\}","json");
 
-    Map<String, Object> queryParams = new HashMap<String, Object>();
+    List<Pair> queryParams = new ArrayList<Pair>();
     if (tags != null)
-      queryParams.put("tags", tags);
+      queryParams.addAll(apiClient.parameterToPairs("multi", "tags", tags));
 
     Map<String, Object> headerParams = new HashMap<String, Object>();
 
@@ -278,7 +279,7 @@ public class PetApi {
     String path = "/pet/{petId}".replaceAll("\\{format\\}","json")
       .replaceAll("\\{" + "petId" + "\\}", apiClient.escapeString(petId.toString()));
 
-    Map<String, Object> queryParams = new HashMap<String, Object>();
+    List<Pair> queryParams = new ArrayList<Pair>();
 
     Map<String, Object> headerParams = new HashMap<String, Object>();
 
@@ -296,7 +297,7 @@ public class PetApi {
     final String contentType = apiClient.selectHeaderContentType(contentTypes);
     headerParams.put("Content-Type", contentType);
 
-    String[] authNames = new String[] { "api_key", "petstore_auth" };
+    String[] authNames = new String[] { "petstore_auth", "api_key" };
     return apiClient.buildCall(path, "GET", queryParams, postBody, headerParams, formParams, authNames);
   }
 
@@ -340,7 +341,7 @@ public class PetApi {
     String path = "/pet/{petId}".replaceAll("\\{format\\}","json")
       .replaceAll("\\{" + "petId" + "\\}", apiClient.escapeString(petId.toString()));
 
-    Map<String, Object> queryParams = new HashMap<String, Object>();
+    List<Pair> queryParams = new ArrayList<Pair>();
 
     Map<String, Object> headerParams = new HashMap<String, Object>();
 
@@ -394,7 +395,7 @@ public class PetApi {
   }
   
   /* Build call for deletePet */
-  private Call deletePetCall(String apiKey, Long petId) throws ApiException {
+  private Call deletePetCall(Long petId, String apiKey) throws ApiException {
     Object postBody = null;
     
     // verify the required parameter 'petId' is set
@@ -407,7 +408,7 @@ public class PetApi {
     String path = "/pet/{petId}".replaceAll("\\{format\\}","json")
       .replaceAll("\\{" + "petId" + "\\}", apiClient.escapeString(petId.toString()));
 
-    Map<String, Object> queryParams = new HashMap<String, Object>();
+    List<Pair> queryParams = new ArrayList<Pair>();
 
     Map<String, Object> headerParams = new HashMap<String, Object>();
     if (apiKey != null)
@@ -434,24 +435,24 @@ public class PetApi {
   /**
    * Deletes a pet
    * 
-   * @param apiKey 
    * @param petId Pet id to delete
+   * @param apiKey 
    */
-  public void deletePet(String apiKey, Long petId) throws ApiException {
-    Call call = deletePetCall(apiKey, petId);
+  public void deletePet(Long petId, String apiKey) throws ApiException {
+    Call call = deletePetCall(petId, apiKey);
     apiClient.execute(call);
   }
 
   /**
    * Deletes a pet (asynchronously)
    * 
-   * @param apiKey 
    * @param petId Pet id to delete
+   * @param apiKey 
    * @param callback The callback to be executed when the API call finishes
    * @return The request call
    */
-  public Call deletePetAsync(String apiKey, Long petId, ApiCallback<Void> callback) throws ApiException {
-    Call call = deletePetCall(apiKey, petId);
+  public Call deletePetAsync(Long petId, String apiKey, ApiCallback<Void> callback) throws ApiException {
+    Call call = deletePetCall(petId, apiKey);
     apiClient.executeAsync(call, callback);
     return call;
   }
@@ -470,7 +471,7 @@ public class PetApi {
     String path = "/pet/{petId}/uploadImage".replaceAll("\\{format\\}","json")
       .replaceAll("\\{" + "petId" + "\\}", apiClient.escapeString(petId.toString()));
 
-    Map<String, Object> queryParams = new HashMap<String, Object>();
+    List<Pair> queryParams = new ArrayList<Pair>();
 
     Map<String, Object> headerParams = new HashMap<String, Object>();
 

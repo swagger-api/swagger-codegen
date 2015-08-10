@@ -35,7 +35,7 @@ public class PetApiTest {
 
     @After
     public void teardown() throws ApiException {
-        api.deletePet(null, pet.getId());
+        api.deletePet(pet.getId(), null);
     }
 
     @Test
@@ -222,7 +222,7 @@ public class PetApiTest {
     @Test
     public void testDeletePet() throws Exception {
         Pet fetched = api.getPetById(pet.getId());
-        api.deletePet(null, fetched.getId());
+        api.deletePet(fetched.getId(), null);
 
         try {
             fetched = api.getPetById(fetched.getId());

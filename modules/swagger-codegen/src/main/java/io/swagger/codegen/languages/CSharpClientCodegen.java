@@ -14,6 +14,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import org.apache.commons.lang.StringUtils;
+
 public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig {
     protected String packageName = "IO.Swagger";
     protected String packageVersion = "1.0.0";
@@ -37,6 +39,7 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
 
         languageSpecificPrimitives = new HashSet<String>(
                 Arrays.asList(
+                        "String",
                         "string",
                         "bool?",
                         "double?",
@@ -53,6 +56,7 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
                         "Integer",
                         "Long",
                         "Float",
+                        "Stream", // not really a primitive, we include it to avoid model import
                         "Object")
         );
         instantiationTypes.put("array", "List");
@@ -68,7 +72,7 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
         typeMapping.put("number", "double?");
         typeMapping.put("datetime", "DateTime?");
         typeMapping.put("date", "DateTime?");
-        typeMapping.put("file", "string"); // path to file
+        typeMapping.put("file", "Stream");
         typeMapping.put("array", "List");
         typeMapping.put("list", "List");
         typeMapping.put("map", "Dictionary");
@@ -110,6 +114,7 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
         supportingFiles.add(new SupportingFile("Newtonsoft.Json.dll", "bin", "Newtonsoft.Json.dll"));
         supportingFiles.add(new SupportingFile("RestSharp.dll", "bin", "RestSharp.dll"));
         supportingFiles.add(new SupportingFile("compile.mustache", "", "compile.bat"));
+        supportingFiles.add(new SupportingFile("README.md", "", "README.md"));
 
     }
 
@@ -163,8 +168,24 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
 
     @Override
     public String toParamName(String name) {
-        // should be the same as variable name
-        return toVarName(name);
+        // replace - with _ e.g. created-at => created_at
+        name = name.replaceAll("-", "_");
+
+        // if it's all uppper case, do nothing
+        if (name.matches("^[A-Z_]*$")) {
+            return name;
+        }
+
+        // camelize(lower) the variable name
+        // pet_id => petId
+        name = camelize(name, true);
+
+        // for reserved word or word starting with number, append _
+        if (reservedWords.contains(name) || name.matches("^\\d.*")) {
+            name = escapeReservedWord(name);
+        }
+
+        return name;
     }
 
     @Override
@@ -218,6 +239,11 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
 
     @Override
     public String toOperationId(String operationId) {
+        // throw exception if method name is empty
+        if (StringUtils.isEmpty(operationId)) {
+            throw new RuntimeException("Empty method name (operationId) not allowed");
+        }
+
         // method name cannot use reserved keyword, e.g. return
         if (reservedWords.contains(operationId)) {
             throw new RuntimeException(operationId + " (reserved word) cannot be used as method name");

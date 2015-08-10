@@ -1,3 +1,5 @@
+# coding: utf-8
+
 import sys
 from setuptools import setup, find_packages
 
@@ -15,7 +17,7 @@ VERSION = "1.0.0"
 # Try reading the setuptools documentation:
 # http://pypi.python.org/pypi/setuptools
 
-REQUIRES = ["urllib3 >= 1.10", "six >= 1.9", "certifi"]
+REQUIRES = ["urllib3 >= 1.10", "six >= 1.9", "certifi", "python-dateutil"]
 
 setup(
     name=NAME,
@@ -31,13 +33,5 @@ setup(
     This is a sample server Petstore server.  You can find out more about Swagger at &lt;a href=\&quot;http://swagger.io\&quot;&gt;http://swagger.io&lt;/a&gt; or on irc.freenode.net, #swagger.  For this sample, you can use the api key \&quot;special-key\&quot; to test the authorization filters
     """
 )
-
-
-
-
-
-
-
-
 
 

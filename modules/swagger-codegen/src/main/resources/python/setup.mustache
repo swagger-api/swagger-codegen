@@ -1,3 +1,5 @@
+# coding: utf-8
+
 import sys
 from setuptools import setup, find_packages
 
@@ -15,7 +17,7 @@ VERSION = "{{packageVersion}}"
 # Try reading the setuptools documentation:
 # http://pypi.python.org/pypi/setuptools
 
-REQUIRES = ["urllib3 >= 1.10", "six >= 1.9", "certifi"]
+REQUIRES = ["urllib3 >= 1.10", "six >= 1.9", "certifi", "python-dateutil"]
 
 setup(
     name=NAME,
@@ -33,11 +35,3 @@ setup(
 )
 
 {{/hasMore}}{{/apis}}{{/apiInfo}}
-
-
-
-
-
-
-
-

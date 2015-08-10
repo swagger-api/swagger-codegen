@@ -1,19 +1,22 @@
 package io.swagger.client.auth;
 
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.List;
 
+import io.swagger.client.Pair;
 import org.junit.*;
 import static org.junit.Assert.*;
 
 
 public class ApiKeyAuthTest {
-    Map<String, Object> queryParams;
+    List<Pair> queryParams;
     Map<String, Object> headerParams;
 
     @Before
     public void setup() {
-        queryParams = new HashMap<String, Object>();
+        queryParams = new ArrayList<Pair>();
         headerParams = new HashMap<String, Object>();
     }
 
@@ -24,7 +27,10 @@ public class ApiKeyAuthTest {
         auth.applyToParams(queryParams, headerParams);
 
         assertEquals(1, queryParams.size());
-        assertEquals("my-api-key", queryParams.get("api_key"));
+        for (Pair queryParam : queryParams) {
+            assertEquals("my-api-key", queryParam.getValue());
+        }
+
         // no changes to header parameters
         assertEquals(0, headerParams.size());
     }

@@ -6,13 +6,13 @@
 module {{package}} {
     'use strict';
 
-    {{#description}}
+{{#description}}
     /**
     * {{&description}}
     */
-    {{/description}}
+{{/description}}
     export class {{classname}} {
-        private basePath = '{{basePath}}';
+        private basePath = '{{contextPath}}';
 
         static $inject: string[] = ['$http'];
 
@@ -21,24 +21,37 @@ module {{package}} {
                 this.basePath = basePath;
             }
         }
-        {{#operation}}
-        public {{nickname}} ({{#allParams}}{{paramName}}: {{{dataType}}}, {{/allParams}} extraHttpRequestParams?: any ) : ng.IHttpPromise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}> {
+{{#operation}}
+
+        public {{nickname}} ({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}extraHttpRequestParams?: any ) : ng.IHttpPromise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}> {
             var path = this.basePath + '{{path}}';
-            {{#pathParams}}
+
+{{#pathParams}}
             path = path.replace('{' + '{{paramName}}' + '}', String({{paramName}}));
-            {{/pathParams}}
+
+{{/pathParams}}
             var queryParameters: any = {};
             var headerParams: any = {};
-            {{#allParams}}{{#required}}
+
+{{#allParams}}
+{{#required}}
             // verify required parameter '{{paramName}}' is set
             if (!{{paramName}}) {
                 throw new Error('Missing required parameter {{paramName}} when calling {{nickname}}');
             }
-            {{/required}}{{/allParams}}
-            {{#queryParams}}if ({{paramName}} !== undefined) {
+
+{{/required}}
+{{/allParams}}
+{{#queryParams}}
+            if ({{paramName}} !== undefined) {
                 queryParameters['{{paramName}}'] = {{paramName}};
-            }{{/queryParams}}
-            {{#headerParams}}headerParams['{{paramName}}'] = {{paramName}};{{/headerParams}}
+            }
+
+{{/queryParams}}
+{{#headerParams}}
+            headerParams['{{paramName}}'] = {{paramName}};
+
+{{/headerParams}}
             var httpRequestParams: any = {
                 method: '{{httpMethod}}',
                 url: path,
@@ -50,7 +63,7 @@ module {{package}} {
             };
 
             if (extraHttpRequestParams) {
-                for (var k in extraHttpRequestParams){
+                for (var k in extraHttpRequestParams) {
                     if (extraHttpRequestParams.hasOwnProperty(k)) {
                         httpRequestParams[k] = extraHttpRequestParams[k];
                     }
@@ -59,10 +72,7 @@ module {{package}} {
 
             return this.$http(httpRequestParams);
         }
-		{{/operation}}
+{{/operation}}
     }
-
-    angular.module('{{package}}_{{classname}}', ['$http'])
-        .service('{{classname}}', {{classname}});
 }
 {{/operations}}
