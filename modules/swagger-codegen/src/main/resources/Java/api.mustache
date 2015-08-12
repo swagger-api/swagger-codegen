@@ -25,28 +25,28 @@ import java.util.HashMap;
 
 {{#operations}}
 public class {{classname}} {
-  private ApiClient apiClient;
+  private ApiClient {{localVariablePrefix}}apiClient;
 
   public {{classname}}() {
     this(Configuration.getDefaultApiClient());
   }
 
   public {{classname}}(ApiClient apiClient) {
-    this.apiClient = apiClient;
+    this.{{localVariablePrefix}}apiClient = apiClient;
   }
 
   public ApiClient getApiClient() {
-    return apiClient;
+    return {{localVariablePrefix}}apiClient;
   }
 
   public void setApiClient(ApiClient apiClient) {
-    this.apiClient = apiClient;
+    this.{{localVariablePrefix}}apiClient = apiClient;
   }
 
   {{#operation}}
   /* Build call for {{nickname}} */
   private Call {{nickname}}Call({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws ApiException {
-    Object postBody = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
+    Object {{localVariablePrefix}}postBody = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
     {{#allParams}}{{#required}}
     // verify the required parameter '{{paramName}}' is set
     if ({{paramName}} == null) {
@@ -55,35 +55,35 @@ public class {{classname}} {
     {{/required}}{{/allParams}}
 
     // create path and map variables
-    String path = "{{path}}".replaceAll("\\{format\\}","json"){{#pathParams}}
-      .replaceAll("\\{" + "{{baseName}}" + "\\}", apiClient.escapeString({{{paramName}}}.toString())){{/pathParams}};
+    String {{localVariablePrefix}}path = "{{path}}".replaceAll("\\{format\\}","json"){{#pathParams}}
+      .replaceAll("\\{" + "{{baseName}}" + "\\}", {{localVariablePrefix}}apiClient.escapeString({{{paramName}}}.toString())){{/pathParams}};
 
-    List<Pair> queryParams = new ArrayList<Pair>();{{#queryParams}}
+    List<Pair> {{localVariablePrefix}}queryParams = new ArrayList<Pair>();{{#queryParams}}
     if ({{paramName}} != null)
-      queryParams.addAll(apiClient.parameterToPairs("{{#collectionFormat}}{{{collectionFormat}}}{{/collectionFormat}}", "{{baseName}}", {{paramName}}));{{/queryParams}}
+      {{localVariablePrefix}}queryParams.addAll({{localVariablePrefix}}apiClient.parameterToPairs("{{#collectionFormat}}{{{collectionFormat}}}{{/collectionFormat}}", "{{baseName}}", {{paramName}}));{{/queryParams}}
 
-    Map<String, Object> headerParams = new HashMap<String, Object>();{{#headerParams}}
+    Map<String, Object> {{localVariablePrefix}}headerParams = new HashMap<String, Object>();{{#headerParams}}
     if ({{paramName}} != null)
-      headerParams.put("{{baseName}}", {{paramName}});{{/headerParams}}
+      {{localVariablePrefix}}headerParams.put("{{baseName}}", {{paramName}});{{/headerParams}}
 
-    Map<String, Object> formParams = new HashMap<String, Object>();{{#formParams}}
+    Map<String, Object> {{localVariablePrefix}}formParams = new HashMap<String, Object>();{{#formParams}}
     if ({{paramName}} != null)
-      formParams.put("{{baseName}}", {{paramName}});{{/formParams}}
+      {{localVariablePrefix}}formParams.put("{{baseName}}", {{paramName}});{{/formParams}}
 
-    final String[] accepts = {
+    final String[] {{localVariablePrefix}}accepts = {
       {{#produces}}"{{mediaType}}"{{#hasMore}}, {{/hasMore}}{{/produces}}
     };
-    final String accept = apiClient.selectHeaderAccept(accepts);
-    if (accept != null) headerParams.put("Accept", accept);
+    final String {{localVariablePrefix}}accept = {{localVariablePrefix}}apiClient.selectHeaderAccept({{localVariablePrefix}}accepts);
+    if ({{localVariablePrefix}}accept != null) {{localVariablePrefix}}headerParams.put("Accept", {{localVariablePrefix}}accept);
 
-    final String[] contentTypes = {
+    final String[] {{localVariablePrefix}}contentTypes = {
       {{#consumes}}"{{mediaType}}"{{#hasMore}}, {{/hasMore}}{{/consumes}}
     };
-    final String contentType = apiClient.selectHeaderContentType(contentTypes);
-    headerParams.put("Content-Type", contentType);
+    final String {{localVariablePrefix}}contentType = {{localVariablePrefix}}apiClient.selectHeaderContentType({{localVariablePrefix}}contentTypes);
+    {{localVariablePrefix}}headerParams.put("Content-Type", {{localVariablePrefix}}contentType);
 
-    String[] authNames = new String[] { {{#authMethods}}"{{name}}"{{#hasMore}}, {{/hasMore}}{{/authMethods}} };
-    return apiClient.buildCall(path, "{{httpMethod}}", queryParams, postBody, headerParams, formParams, authNames);
+    String[] {{localVariablePrefix}}authNames = new String[] { {{#authMethods}}"{{name}}"{{#hasMore}}, {{/hasMore}}{{/authMethods}} };
+    return {{localVariablePrefix}}apiClient.buildCall({{localVariablePrefix}}path, "{{httpMethod}}", {{localVariablePrefix}}queryParams, {{localVariablePrefix}}postBody, {{localVariablePrefix}}headerParams, {{localVariablePrefix}}formParams, {{localVariablePrefix}}authNames);
   }
 
   /**
@@ -93,9 +93,9 @@ public class {{classname}} {
    * @return {{{returnType}}}{{/returnType}}
    */
   public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{nickname}}({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws ApiException {
-    Call call = {{nickname}}Call({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
-    {{#returnType}}Type returnType = new TypeToken<{{{returnType}}}>(){}.getType();
-    return apiClient.execute(call, returnType);{{/returnType}}{{^returnType}}apiClient.execute(call);{{/returnType}}
+    Call {{localVariablePrefix}}call = {{nickname}}Call({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+    {{#returnType}}Type {{localVariablePrefix}}returnType = new TypeToken<{{{returnType}}}>(){}.getType();
+    return {{localVariablePrefix}}apiClient.execute({{localVariablePrefix}}call, {{localVariablePrefix}}returnType);{{/returnType}}{{^returnType}}{{localVariablePrefix}}apiClient.execute({{localVariablePrefix}}call);{{/returnType}}
   }
 
   /**
@@ -105,11 +105,11 @@ public class {{classname}} {
    * @param callback The callback to be executed when the API call finishes
    * @return The request call
    */
-  public Call {{nickname}}Async({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}ApiCallback<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> callback) throws ApiException {
-    Call call = {{nickname}}Call({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
-    {{#returnType}}Type returnType = new TypeToken<{{{returnType}}}>(){}.getType();
-    apiClient.executeAsync(call, returnType, callback);{{/returnType}}{{^returnType}}apiClient.executeAsync(call, callback);{{/returnType}}
-    return call;
+  public Call {{nickname}}Async({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}ApiCallback<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{localVariablePrefix}}callback) throws ApiException {
+    Call {{localVariablePrefix}}call = {{nickname}}Call({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+    {{#returnType}}Type {{localVariablePrefix}}returnType = new TypeToken<{{{returnType}}}>(){}.getType();
+    {{localVariablePrefix}}apiClient.executeAsync({{localVariablePrefix}}call, {{localVariablePrefix}}returnType, {{localVariablePrefix}}callback);{{/returnType}}{{^returnType}}{{localVariablePrefix}}apiClient.executeAsync({{localVariablePrefix}}call, {{localVariablePrefix}}callback);{{/returnType}}
+    return {{localVariablePrefix}}call;
   }
   {{/operation}}
 }
