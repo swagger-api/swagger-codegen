@@ -113,7 +113,7 @@ public class PetApiTest {
 
         // test getting a nonexistent pet
         result.clear();
-        api.getPetByIdAsync(new Long(-1), new ApiCallback<Pet>() {
+        api.getPetByIdAsync(new Long(-10000), new ApiCallback<Pet>() {
             @Override
             public void onFailure(ApiException e) {
                 result.put("exception", e);
