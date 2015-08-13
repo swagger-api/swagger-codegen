@@ -5,7 +5,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.google.gson.stream.JsonReader;
 
 import com.squareup.okhttp.Call;
@@ -72,8 +76,7 @@ public class ApiClient {
 
     gson = new GsonBuilder()
       .serializeNulls()
-      .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-      .registerTypeAdapter(Date.class, new JsonDateDeserializer(this))
+      .registerTypeAdapter(Date.class, new DateAdapter(this))
       .create();
 
     // Use ISO 8601 format for date and datetime.
@@ -358,7 +361,7 @@ public class ApiClient {
     if (param == null) {
       return "";
     } else if (param instanceof Date) {
-      return formatDate((Date) param);
+      return formatDatetime((Date) param);
     } else if (param instanceof Collection) {
       StringBuilder b = new StringBuilder();
       for (Object o : (Collection)param) {
@@ -792,14 +795,24 @@ public class ApiClient {
   }
 }
 
-class JsonDateDeserializer implements JsonDeserializer<Date> {
+class DateAdapter implements JsonSerializer<Date>, JsonDeserializer<Date> {
     private final ApiClient apiClient;
 
-    public JsonDateDeserializer(ApiClient apiClient) {
+    public DateAdapter(ApiClient apiClient) {
         super();
         this.apiClient = apiClient;
     }
 
+    @Override
+    public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
+        if (src == null) {
+            return new JsonNull();
+        } else {
+            return new JsonPrimitive(apiClient.formatDatetime(src));
+        }
+    }
+
+    @Override
     public Date deserialize(JsonElement json, Type date, JsonDeserializationContext context) throws JsonParseException {
         String str = json.getAsJsonPrimitive().getAsString();
         try {
