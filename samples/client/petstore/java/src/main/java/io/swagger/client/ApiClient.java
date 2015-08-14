@@ -146,8 +146,7 @@ public class ApiClient {
     this.datetimeFormat = datetimeFormat;
 
     this.datetimeFormatter = new SimpleDateFormat(datetimeFormat);
-    // Use UTC as the default time zone.
-    this.datetimeFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+    // Note: The datetime formatter uses the system's default time zone.
 
     return this;
   }
@@ -806,7 +805,7 @@ class DateAdapter implements JsonSerializer<Date>, JsonDeserializer<Date> {
     @Override
     public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
         if (src == null) {
-            return new JsonNull();
+            return JsonNull.INSTANCE;
         } else {
             return new JsonPrimitive(apiClient.formatDatetime(src));
         }
