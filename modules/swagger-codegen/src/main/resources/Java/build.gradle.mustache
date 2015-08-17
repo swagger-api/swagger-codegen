@@ -21,3 +21,8 @@ install {
         pom.artifactId = '{{artifactId}}'
     }
 }
+
+task execute(type:JavaExec) {
+   main = System.getProperty('mainClass')
+   classpath = sourceSets.main.runtimeClasspath
+}
