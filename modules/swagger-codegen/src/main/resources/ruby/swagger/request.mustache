@@ -24,7 +24,10 @@ module {{moduleName}}
 
         # Stick in the auth token if there is one
         if Swagger.authenticated?
-          attributes[:headers].merge!({:auth_token => Swagger.configuration.auth_token})
+            {{#authMethods}}
+            {{#isOAuth}}attributes[:headers].merge!({:Authorization => "Bearer #{Swagger.configuration.auth_token}"}){{/isOAuth}}
+            {{^isOAuth}}attributes[:headers].merge!({:auth_token => Swagger.configuration.auth_token}){{/isOAuth}}
+            {{/authMethods}}
         end
 
         self.http_method = http_method.to_sym
@@ -45,7 +48,8 @@ module {{moduleName}}
             @headers['{{keyParamName}}'] = get_api_key_with_prefix('{{keyParamName}}'){{/isKeyInHeader}}{{#isKeyInQuery}}@params ||= {}
             @params['{{keyParamName}}'] = get_api_key_with_prefix('{{keyParamName}}'){{/isKeyInQuery}}{{/isApiKey}}{{#isBasic}}@headers ||= {}
             http_auth_header = 'Basic ' + ["#{Swagger.configuration.username}:#{Swagger.configuration.password}"].pack('m').delete("\r\n")
-            @headers['Authorization'] = http_auth_header{{/isBasic}}{{#isOAuth}}attributes[:headers].merge!({:Authorization => "Bearer #{Swagger.configuration.auth_token}"}){{/isOAuth}}
+            @headers['Authorization'] = http_auth_header{{/isBasic}}
+            {{#isOAuth}}attributes[:headers].merge!({:Authorization => "Bearer #{Swagger.configuration.auth_token}"}){{/isOAuth}}
           {{/authMethods}}
           end
         end

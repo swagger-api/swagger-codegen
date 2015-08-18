@@ -16,11 +16,8 @@ module {{moduleName}}
       return nil unless attributes.is_a?(Hash)
       self.class.swagger_types.each_pair do |key, type|
         if type =~ /^array\[(.*)\]/i
-          if attributes[self.class.attribute_map[key]].is_a?(Array)
-            self.send("#{key}=", attributes[self.class.attribute_map[key]].map{ |v| _deserialize($1, v) } )
-          else
-            #TODO show warning in debug mode
-          end
+          # Deserialize array types to lowest denomination
+          self.send("#{key}=", attributes[self.class.attribute_map[key]].map{ |v| _deserialize($1, v) } )
         elsif !attributes[self.class.attribute_map[key]].nil?
           self.send("#{key}=", _deserialize(type, attributes[self.class.attribute_map[key]]))
         else
@@ -47,6 +44,8 @@ module {{moduleName}}
         else
           false
         end
+      when /^map\[(.*)\]/i
+        value
       else # model
         _model = {{moduleName}}.const_get(type).new
         _model.build_from_hash(value)

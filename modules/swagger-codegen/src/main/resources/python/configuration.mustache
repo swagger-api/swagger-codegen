@@ -32,14 +32,14 @@ def auth_settings():
                    'key': 'Authorization',
                    'value': get_basic_auth_token()
                },
-             {{/isBasic}}{{#isOauth}}
+             {{/isBasic}}{{#isOAuth}}
                 '{{name}}': {
                     'type': 'oauth2',
                     'in': 'header',
                     'key': 'Authorization',
                     'value': 'Bearer' + get_basic_auth_token()
                 },
-             {{/isOauth}}{{/authMethods}}
+             {{/isOAuth}}{{/authMethods}}
            }
 
 # Default Base url
