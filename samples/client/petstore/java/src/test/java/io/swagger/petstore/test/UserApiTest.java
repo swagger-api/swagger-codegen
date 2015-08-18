@@ -1,5 +1,6 @@
 package io.swagger.petstore.test;
 
+import io.swagger.client.ApiClient;
 import io.swagger.client.api.*;
 import io.swagger.client.auth.*;
 import io.swagger.client.model.*;

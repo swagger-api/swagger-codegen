@@ -1,20 +1,29 @@
 package {{invokerPackage}};
 
-import com.fasterxml.jackson.core.JsonGenerator.Feature;
-import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+import com.google.gson.stream.JsonReader;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.api.client.filter.LoggingFilter;
-import com.sun.jersey.api.client.WebResource.Builder;
-import com.sun.jersey.multipart.FormDataMultiPart;
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.MultipartBuilder;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.Headers;
 
-import javax.ws.rs.core.Response.Status.Family;
-import javax.ws.rs.core.MediaType;
+import java.lang.reflect.Type;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -25,9 +34,13 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.regex.Pattern;
 
 import java.net.URLEncoder;
+import java.net.URLConnection;
 
+import java.io.File;
+import java.io.StringReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
@@ -41,22 +54,35 @@ import {{invokerPackage}}.auth.ApiKeyAuth;
 import {{invokerPackage}}.auth.OAuth;
 
 public class ApiClient {
-  private Map<String, Client> hostMap = new HashMap<String, Client>();
-  private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
-  private boolean debugging = false;
   private String basePath = "{{basePath}}";
+  private boolean lenientOnJson = false;
+  private boolean debugging = false;
+  private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
 
   private Map<String, Authentication> authentications;
 
-  private DateFormat dateFormat;
+  private String dateFormat;
+  private DateFormat dateFormatter;
+  private int dateLength;
+
+  private String datetimeFormat;
+  private DateFormat datetimeFormatter;
+
+  private OkHttpClient httpClient;
+  private Gson gson;
 
   public ApiClient() {
+    httpClient = new OkHttpClient();
+
+    gson = new GsonBuilder()
+      .serializeNulls()
+      .registerTypeAdapter(Date.class, new DateAdapter(this))
+      .create();
+
     // Use ISO 8601 format for date and datetime.
     // See https://en.wikipedia.org/wiki/ISO_8601
-    this.dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-
-    // Use UTC as the default time zone.
-    this.dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+    setDateFormat("yyyy-MM-dd");
+    setDatetimeFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
     // Set default User-Agent.
     setUserAgent("Java-Swagger");
@@ -77,6 +103,138 @@ public class ApiClient {
   public ApiClient setBasePath(String basePath) {
     this.basePath = basePath;
     return this;
+  }
+
+  public OkHttpClient getHttpClient() {
+    return httpClient;
+  }
+
+  public ApiClient setHttpClient(OkHttpClient httpClient) {
+    this.httpClient = httpClient;
+    return this;
+  }
+
+  public Gson getGson() {
+    return gson;
+  }
+
+  public ApiClient setGson(Gson gson) {
+    this.gson = gson;
+    return this;
+  }
+
+  public String getDateFormat() {
+    return dateFormat;
+  }
+
+  public ApiClient setDateFormat(String dateFormat) {
+    this.dateFormat = dateFormat;
+
+    this.dateFormatter = new SimpleDateFormat(dateFormat);
+    // Use UTC as the default time zone.
+    this.dateFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+    this.dateLength = this.dateFormatter.format(new Date()).length();
+
+    return this;
+  }
+
+  public String getDatetimeFormat() {
+    return datetimeFormat;
+  }
+
+  public ApiClient setDatetimeFormat(String datetimeFormat) {
+    this.datetimeFormat = datetimeFormat;
+
+    this.datetimeFormatter = new SimpleDateFormat(datetimeFormat);
+    // Note: The datetime formatter uses the system's default time zone.
+
+    return this;
+  }
+
+  /**
+   * Parse the given date string into Date object.
+   * The default <code>dateFormat</code> supports these ISO 8601 date formats:
+   *   2015-08-16
+   *   2015-8-16
+   */
+  public Date parseDate(String str) {
+    if (str == null)
+      return null;
+    try {
+      return dateFormatter.parse(str);
+    } catch (ParseException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  /**
+   * Parse the given date-time string into Date object.
+   * The default <code>datetimeFormat</code> supports these ISO 8601 datetime formats:
+   *   2015-08-16T08:20:05Z
+   *   2015-8-16T8:20:05Z
+   *   2015-08-16T08:20:05+00:00
+   *   2015-08-16T08:20:05+0000
+   *   2015-08-16T08:20:05.376Z
+   *   2015-08-16T08:20:05.376+00:00
+   *   2015-08-16T08:20:05.376+00
+   * Note: The 3-digit milli-seconds is optional. Time zone is required and can be in one of
+   *   these formats:
+   *   Z (same with +0000)
+   *   +08:00 (same with +0800)
+   *   -02 (same with -0200)
+   *   -0200
+   * @see https://en.wikipedia.org/wiki/ISO_8601
+   */
+  public Date parseDatetime(String str) {
+    if (str == null)
+      return null;
+
+    if ("yyyy-MM-dd'T'HH:mm:ss.SSSZ".equals(datetimeFormat)) {
+      /*
+       * When the default datetime format is used, process the given string
+       * to support various formats defined by ISO 8601.
+       */
+      // normalize time zone
+      //   trailing "Z": 2015-08-16T08:20:05Z => 2015-08-16T08:20:05+0000
+      str = str.replaceAll("[zZ]\\z", "+0000");
+      //   remove colon: 2015-08-16T08:20:05+00:00 => 2015-08-16T08:20:05+0000
+      str = str.replaceAll("([+-]\\d{2}):(\\d{2})\\z", "$1$2");
+      //   expand time zone: 2015-08-16T08:20:05+00 => 2015-08-16T08:20:05+0000
+      str = str.replaceAll("([+-]\\d{2})\\z", "$100");
+      // add milliseconds when missing
+      //   2015-08-16T08:20:05+0000 => 2015-08-16T08:20:05.000+0000
+      str = str.replaceAll("(:\\d{1,2})([+-]\\d{4})\\z", "$1.000$2");
+    }
+
+    try {
+      return datetimeFormatter.parse(str);
+    } catch (ParseException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public Date parseDateOrDatetime(String str) {
+    if (str == null)
+      return null;
+    else if (str.length() <= dateLength)
+      return parseDate(str);
+    else
+      return parseDatetime(str);
+  }
+
+  /**
+   * Format the given Date object into string.
+   */
+  public String formatDate(Date date) {
+    return dateFormatter.format(date);
+  }
+
+  /**
+   * Format the given Date object into string.
+   */
+  public String formatDatetime(Date date) {
+    return datetimeFormatter.format(date);
   }
 
   /**
@@ -168,6 +326,18 @@ public class ApiClient {
   }
 
   /**
+   * @see https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/stream/JsonReader.html#setLenient(boolean)
+   */
+  public boolean isLenientOnJson() {
+    return lenientOnJson;
+  }
+
+  public ApiClient setLenientOnJson(boolean lenient) {
+    this.lenientOnJson = lenient;
+    return this;
+  }
+
+  /**
    * Check that whether debugging is enabled for this API client.
    */
   public boolean isDebugging() {
@@ -185,50 +355,17 @@ public class ApiClient {
   }
 
   /**
-   * Get the date format used to parse/format date parameters.
-   */
-  public DateFormat getDateFormat() {
-    return dateFormat;
-  }
-
-  /**
-   * Set the date format used to parse/format date parameters.
-   */
-  public ApiClient getDateFormat(DateFormat dateFormat) {
-    this.dateFormat = dateFormat;
-    return this;
-  }
-
-  /**
-   * Parse the given string into Date object.
-   */
-  public Date parseDate(String str) {
-    try {
-      return dateFormat.parse(str);
-    } catch (java.text.ParseException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  /**
-   * Format the given Date object into string.
-   */
-  public String formatDate(Date date) {
-    return dateFormat.format(date);
-  }
-
-  /**
    * Format the given parameter object into string.
    */
   public String parameterToString(Object param) {
     if (param == null) {
       return "";
     } else if (param instanceof Date) {
-      return formatDate((Date) param);
+      return formatDatetime((Date) param);
     } else if (param instanceof Collection) {
       StringBuilder b = new StringBuilder();
-      for(Object o : (Collection)param) {
-        if(b.length() > 0) {
+      for (Object o : (Collection)param) {
+        if (b.length() > 0) {
           b.append(",");
         }
         b.append(String.valueOf(o));
@@ -337,177 +474,264 @@ public class ApiClient {
   }
 
   /**
-   * Deserialize the given JSON string to Java object.
+   * Deserialize response body to Java object, according the Content-Type
+   * response header.
    *
-   * @param json The JSON string
-   * @param containerType The container type, one of "list", "array" or ""
-   * @param cls The type of the Java object
+   * @param response HTTP response
+   * @param returnType The type of the Java object
    * @return The deserialized Java object
    */
-  public Object deserialize(String json, String containerType, Class cls) throws ApiException {
-    if(null != containerType) {
-        containerType = containerType.toLowerCase();
+  public <T> T deserialize(Response response, Type returnType) throws ApiException {
+    if (response == null || returnType == null)
+      return null;
+
+    String respBody;
+    try {
+      if (response.body() != null)
+        respBody = response.body().string();
+      else
+        respBody = null;
+    } catch (IOException e) {
+      throw new ApiException(e);
     }
-    try{
-      if("list".equals(containerType) || "array".equals(containerType)) {
-        JavaType typeInfo = JsonUtil.getJsonMapper().getTypeFactory().constructCollectionType(List.class, cls);
-        List response = (List<?>) JsonUtil.getJsonMapper().readValue(json, typeInfo);
-        return response;
-      }
-      else if(String.class.equals(cls)) {
-        if(json != null && json.startsWith("\"") && json.endsWith("\"") && json.length() > 1)
-          return json.substring(1, json.length() - 1);
-        else
-          return json;
-      }
-      else {
-        return JsonUtil.getJsonMapper().readValue(json, cls);
-      }
+
+    if (respBody == null || "".equals(respBody))
+      return null;
+
+    String contentType = response.headers().get("Content-Type");
+    if (contentType == null) {
+      // ensuring a default content type
+      contentType = "application/json";
     }
-    catch (IOException e) {
-      throw new ApiException(500, e.getMessage(), null, json);
+    if (contentType.startsWith("application/json")) {
+      try {
+        if (lenientOnJson) {
+          JsonReader jsonReader = new JsonReader(new StringReader(respBody));
+          // see https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/stream/JsonReader.html#setLenient(boolean)
+          jsonReader.setLenient(true);
+          return gson.fromJson(jsonReader, returnType);
+        } else {
+          return gson.fromJson(respBody, returnType);
+        }
+      } catch (JsonParseException e) {
+        // Fallback processing when failed to parse JSON form response body:
+        //   return the response body string directly for the String return type;
+        //   parse response body into date or datetime for the Date return type.
+        if (returnType.equals(String.class))
+          return (T) respBody;
+        else if (returnType.equals(Date.class))
+          return (T) parseDateOrDatetime(respBody);
+        else throw(e);
+      }
+    } else {
+      throw new ApiException(
+        "Content type \"" + contentType + "\" is not supported",
+        response.code(),
+        response.headers().toMultimap(),
+        respBody);
     }
   }
 
   /**
-   * Serialize the given Java object into JSON string.
+   * Serialize the given Java object into request body string, according to the
+   * request Content-Type.
+   *
+   * @param obj The Java object
+   * @param contentType The request Content-Type
+   * @return The serialized string
    */
-  public String serialize(Object obj) throws ApiException {
-    try {
+  public String serialize(Object obj, String contentType) throws ApiException {
+    if (contentType.startsWith("application/json")) {
       if (obj != null)
-        return JsonUtil.getJsonMapper().writeValueAsString(obj);
+        return gson.toJson(obj);
       else
         return null;
-    }
-    catch (Exception e) {
-      throw new ApiException(500, e.getMessage());
+    } else {
+      throw new ApiException("Content type \"" + contentType + "\" is not supported");
     }
   }
 
   /**
-   * Invoke API by sending HTTP request with the given options.
+   * @see #execute(Call, Type)
+   */
+  public <T> T execute(Call call) throws ApiException {
+    return execute(call, null);
+  }
+
+  /**
+   * Execute HTTP call and deserialize the HTTP response body into the given return type.
+   *
+   * @param returnType The return type used to deserialize HTTP response body
+   * @param <T> The return type corresponding to (same with) returnType
+   * @return The Java object deserialized from response body. Returns null if returnType is null.
+   */
+  public <T> T execute(Call call, Type returnType) throws ApiException {
+    try {
+      Response response = call.execute();
+      return handleResponse(response, returnType);
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+  }
+
+  /**
+   * #see executeAsync(Call, Type, ApiCallback)
+   */
+  public <T> void executeAsync(Call call, ApiCallback<T> callback) throws ApiException {
+    executeAsync(call, null, callback);
+  }
+
+  /**
+   * Execute HTTP call asynchronously.
+   *
+   * @see #execute(Call, Type)
+   * @param The callback to be executed when the API call finishes
+   */
+  public <T> void executeAsync(Call call, final Type returnType, final ApiCallback<T> callback) {
+    call.enqueue(new Callback() {
+      @Override
+      public void onFailure(Request request, IOException e) {
+        callback.onFailure(new ApiException(e));
+      }
+
+      @Override
+      public void onResponse(Response response) throws IOException {
+        T result;
+        try {
+          result = (T) handleResponse(response, returnType);
+        } catch (ApiException e) {
+          callback.onFailure(e);
+          return;
+        }
+        callback.onSuccess(result);
+      }
+    });
+  }
+
+  public <T> T handleResponse(Response response, Type returnType) throws ApiException {
+    if (response.isSuccessful()) {
+      if (returnType == null || response.code() == 204) {
+        // returning null if the returnType is not defined,
+        // or the status code is 204 (No Content)
+        return null;
+      } else {
+        return deserialize(response, returnType);
+      }
+    } else {
+      String respBody = null;
+      if (response.body() != null) {
+        try {
+          respBody = response.body().string();
+        } catch (IOException e) {
+          throw new ApiException(response.message(), e, response.code(), response.headers().toMultimap());
+        }
+      }
+      throw new ApiException(response.message(), response.code(), response.headers().toMultimap(), respBody);
+    }
+  }
+
+  /**
+   * Build HTTP call with the given options.
    *
    * @param path The sub-path of the HTTP URL
-   * @param method The request method, one of "GET", "POST", "PUT", and "DELETE"
+   * @param method The request method, one of "GET", "HEAD", "POST", "PUT", "PATCH" and "DELETE"
    * @param queryParams The query parameters
    * @param body The request body object
    * @param headerParams The header parameters
    * @param formParams The form parameters
-   * @param accept The request's Accept header
-   * @param contentType The request's Content-Type header
    * @param authNames The authentications to apply
-   * @return The response body in type of string
+   * @return The HTTP call
    */
-  public String invokeAPI(String path, String method, List<Pair> queryParams, Object body, Map<String, String> headerParams, Map<String, String> formParams, String accept, String contentType, String[] authNames) throws ApiException {
+  public Call buildCall(String path, String method, List<Pair> queryParams, Object body, Map<String, Object> headerParams, Map<String, Object> formParams, String[] authNames) throws ApiException {
     updateParamsForAuth(authNames, queryParams, headerParams);
 
-    Client client = getClient();
+    final String url = buildUrl(path, queryParams);
+    final Request.Builder reqBuilder = new Request.Builder().url(url);
+    processHeaderParams(headerParams, reqBuilder);
 
-    StringBuilder b = new StringBuilder();
-    b.append("?");
-    if (queryParams != null){
-      for (Pair queryParam : queryParams){
-        if (!queryParam.getName().isEmpty()) {
-          b.append(escapeString(queryParam.getName()));
-          b.append("=");
-          b.append(escapeString(queryParam.getValue()));
-          b.append("&");
-        }
-      }
-    }
+    String contentType = (String) headerParams.get("Content-Type");
+    // ensuring a default content type
+    if (contentType == null) contentType = "application/json";
 
-    String querystring = b.substring(0, b.length() - 1);
-
-    Builder builder;
-    if (accept == null)
-      builder = client.resource(basePath + path + querystring).getRequestBuilder();
-    else
-      builder = client.resource(basePath + path + querystring).accept(accept);
-
-    for(String key : headerParams.keySet()) {
-      builder = builder.header(key, headerParams.get(key));
-    }
-    for(String key : defaultHeaderMap.keySet()) {
-      if(!headerParams.containsKey(key)) {
-        builder = builder.header(key, defaultHeaderMap.get(key));
-      }
-    }
-
-    ClientResponse response = null;
-
-    if("GET".equals(method)) {
-      response = (ClientResponse) builder.get(ClientResponse.class);
-    }
-    else if ("POST".equals(method)) {
-      if (contentType.startsWith("application/x-www-form-urlencoded")) {
-        String encodedFormParams = this
-            .getXWWWFormUrlencodedParams(formParams);
-        response = builder.type(contentType).post(ClientResponse.class,
-            encodedFormParams);
-      } else if (body == null) {
-        response = builder.post(ClientResponse.class, null);
-      } else if(body instanceof FormDataMultiPart) {
-        response = builder.type(contentType).post(ClientResponse.class, body);
-      }
-      else
-        response = builder.type(contentType).post(ClientResponse.class, serialize(body));
-    }
-    else if ("PUT".equals(method)) {
-      if ("application/x-www-form-urlencoded".equals(contentType)) {
-          String encodedFormParams = this
-              .getXWWWFormUrlencodedParams(formParams);
-          response = builder.type(contentType).put(ClientResponse.class,
-              encodedFormParams);
-      } else if(body == null) {
-        response = builder.put(ClientResponse.class, serialize(body));
+    RequestBody reqBody;
+    if ("GET".equals(method) || "HEAD".equals(method)) {
+      reqBody = null;
+    } else if ("application/x-www-form-urlencoded".equals(contentType)) {
+      reqBody = buildRequestBodyFormEncoding(formParams);
+    } else if ("multipart/form-data".equals(contentType)) {
+      reqBody = buildRequestBodyMultipart(formParams);
+    } else if (body == null) {
+      if ("DELETE".equals(method)) {
+        // allow calling DELETE without sending a request body
+        reqBody = null;
       } else {
-          response = builder.type(contentType).put(ClientResponse.class, serialize(body));
+        // use an empty request body (for POST, PUT and PATCH)
+        reqBody = RequestBody.create(MediaType.parse(contentType), "");
       }
-    }
-    else if ("DELETE".equals(method)) {
-      if ("application/x-www-form-urlencoded".equals(contentType)) {
-        String encodedFormParams = this
-            .getXWWWFormUrlencodedParams(formParams);
-        response = builder.type(contentType).delete(ClientResponse.class,
-            encodedFormParams);
-      } else if(body == null) {
-        response = builder.delete(ClientResponse.class);
-      } else {
-        response = builder.type(contentType).delete(ClientResponse.class, serialize(body));
-      }
-    }
-    else {
-      throw new ApiException(500, "unknown method type " + method);
+    } else {
+      reqBody = RequestBody.create(MediaType.parse(contentType), serialize(body, contentType));
     }
 
-    if(response.getStatusInfo() == ClientResponse.Status.NO_CONTENT) {
-      return null;
+    Request request;
+    if ("GET".equals(method)) {
+      request = reqBuilder.get().build();
+    } else if ("HEAD".equals(method)) {
+      request = reqBuilder.head().build();
+    } else if ("POST".equals(method)) {
+      request = reqBuilder.post(reqBody).build();
+    } else if ("PUT".equals(method)) {
+      request = reqBuilder.put(reqBody).build();
+    } else if ("PATCH".equals(method)) {
+      request = reqBuilder.patch(reqBody).build();
+    } else if ("DELETE".equals(method)) {
+      if (reqBody == null) {
+        // calling DELETE without sending a request body
+        request = reqBuilder.delete().build();
+      } else {
+        request = reqBuilder.delete(reqBody).build();
+      }
+    } else {
+      throw new ApiException("unknown method type: " + method);
     }
-    else if(response.getStatusInfo().getFamily() == Family.SUCCESSFUL) {
-      if(response.hasEntity()) {
-        return (String) response.getEntity(String.class);
-      }
-      else {
-        return "";
+
+    return httpClient.newCall(request);
+  }
+
+  /**
+   * Build full URL by concatenating base path, the given sub path and query parameters.
+   *
+   * @param path The sub path
+   * @param queryParams The query parameters
+   * @return The full URL
+   */
+  public String buildUrl(String path, List<Pair> queryParams) {
+    StringBuilder query = new StringBuilder();
+    if (queryParams != null) {
+      for (Pair param : queryParams) {
+        if (param.getValue() != null) {
+          if (query.toString().length() == 0)
+            query.append("?");
+          else
+            query.append("&");
+          String value = parameterToString(param.getValue());
+          query.append(escapeString(param.getName())).append("=").append(escapeString(value));
+        }
       }
     }
-    else {
-      String message = "error";
-      String respBody = null;
-      if(response.hasEntity()) {
-        try{
-          respBody = String.valueOf(response.getEntity(String.class));
-          message = respBody;
-        }
-        catch (RuntimeException e) {
-          // e.printStackTrace();
-        }
+    return basePath + path + query.toString();
+  }
+
+  /**
+   * Set header parameters to the request builder, including default headers.
+   */
+  public void processHeaderParams(Map<String, Object> headerParams, Request.Builder reqBuilder) {
+    for (Entry<String, Object> param : headerParams.entrySet()) {
+      reqBuilder.header(param.getKey(), parameterToString(param.getValue()));
+    }
+    for (Entry<String, String> header : defaultHeaderMap.entrySet()) {
+      if (!headerParams.containsKey(header.getKey())) {
+        reqBuilder.header(header.getKey(), parameterToString(header.getValue()));
       }
-      throw new ApiException(
-                response.getStatusInfo().getStatusCode(),
-                message,
-                response.getHeaders(),
-                respBody);
     }
   }
 
@@ -516,7 +740,7 @@ public class ApiClient {
    *
    * @param authNames The authentications to apply
    */
-  private void updateParamsForAuth(String[] authNames, List<Pair> queryParams, Map<String, String> headerParams) {
+  public void updateParamsForAuth(String[] authNames, List<Pair> queryParams, Map<String, Object> headerParams) {
     for (String authName : authNames) {
       Authentication auth = authentications.get(authName);
       if (auth == null) throw new RuntimeException("Authentication undefined: " + authName);
@@ -525,42 +749,76 @@ public class ApiClient {
   }
 
   /**
-   * Encode the given form parameters as request body.
+   * Build a form-encoding request body with the given form parameters.
    */
-  private String getXWWWFormUrlencodedParams(Map<String, String> formParams) {
-    StringBuilder formParamBuilder = new StringBuilder();
-
-    for (Entry<String, String> param : formParams.entrySet()) {
-      String keyStr = parameterToString(param.getKey());
-      String valueStr = parameterToString(param.getValue());
-
-      try {
-        formParamBuilder.append(URLEncoder.encode(keyStr, "utf8"))
-            .append("=")
-            .append(URLEncoder.encode(valueStr, "utf8"));
-        formParamBuilder.append("&");
-      } catch (UnsupportedEncodingException e) {
-        // move on to next
-      }
+  public RequestBody buildRequestBodyFormEncoding(Map<String, Object> formParams) {
+    FormEncodingBuilder formBuilder  = new FormEncodingBuilder();
+    for (Entry<String, Object> param : formParams.entrySet()) {
+      formBuilder.add(param.getKey(), parameterToString(param.getValue()));
     }
-    String encodedFormParams = formParamBuilder.toString();
-    if (encodedFormParams.endsWith("&")) {
-      encodedFormParams = encodedFormParams.substring(0,
-          encodedFormParams.length() - 1);
-    }
-    return encodedFormParams;
+    return formBuilder.build();
   }
 
   /**
-   * Get an existing client or create a new client to handle HTTP request.
+   * Build a multipart (file uploading) request body with the given form parameters,
+   * which could contain text fields and file fields.
    */
-  private Client getClient() {
-    if(!hostMap.containsKey(basePath)) {
-      Client client = Client.create();
-      if (debugging)
-        client.addFilter(new LoggingFilter());
-      hostMap.put(basePath, client);
+  public RequestBody buildRequestBodyMultipart(Map<String, Object> formParams) {
+    MultipartBuilder mpBuilder = new MultipartBuilder().type(MultipartBuilder.FORM);
+    for (Entry<String, Object> param : formParams.entrySet()) {
+      if (param.getValue() instanceof File) {
+        File file = (File) param.getValue();
+        Headers partHeaders = Headers.of("Content-Disposition", "form-data; name=\"" + param.getKey() + "\"; filename=\"" + file.getName() + "\"");
+        MediaType mediaType = MediaType.parse(guessContentTypeFromFile(file));
+        mpBuilder.addPart(partHeaders, RequestBody.create(mediaType, file));
+      } else {
+        Headers partHeaders = Headers.of("Content-Disposition", "form-data; name=\"" + param.getKey() + "\"");
+        mpBuilder.addPart(partHeaders, RequestBody.create(null, parameterToString(param.getValue())));
+      }
     }
-    return hostMap.get(basePath);
+    return mpBuilder.build();
   }
+
+  /**
+   * Guess Content-Type header from the given file (defaults to "application/octet-stream").
+   *
+   * @param file The given file
+   * @return The Content-Type guessed
+   */
+  public String guessContentTypeFromFile(File file) {
+    String contentType = URLConnection.guessContentTypeFromName(file.getName());
+    if (contentType == null) {
+      return "application/octet-stream";
+    } else {
+      return contentType;
+    }
+  }
+}
+
+class DateAdapter implements JsonSerializer<Date>, JsonDeserializer<Date> {
+    private final ApiClient apiClient;
+
+    public DateAdapter(ApiClient apiClient) {
+        super();
+        this.apiClient = apiClient;
+    }
+
+    @Override
+    public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
+        if (src == null) {
+            return JsonNull.INSTANCE;
+        } else {
+            return new JsonPrimitive(apiClient.formatDatetime(src));
+        }
+    }
+
+    @Override
+    public Date deserialize(JsonElement json, Type date, JsonDeserializationContext context) throws JsonParseException {
+        String str = json.getAsJsonPrimitive().getAsString();
+        try {
+            return apiClient.parseDateOrDatetime(str);
+        } catch (RuntimeException e) {
+            throw new JsonParseException(e);
+        }
+    }
 }

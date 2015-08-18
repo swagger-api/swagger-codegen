@@ -119,10 +119,12 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         final String invokerFolder = (sourceFolder + File.separator + invokerPackage).replace(".", File.separator);
         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
+        supportingFiles.add(new SupportingFile("build.gradle.mustache", "", "build.gradle"));
+        supportingFiles.add(new SupportingFile("build.sbt.mustache", "", "build.sbt"));
         supportingFiles.add(new SupportingFile("ApiClient.mustache", invokerFolder, "ApiClient.java"));
         supportingFiles.add(new SupportingFile("apiException.mustache", invokerFolder, "ApiException.java"));
+        supportingFiles.add(new SupportingFile("ApiCallback.mustache", invokerFolder, "ApiCallback.java"));
         supportingFiles.add(new SupportingFile("Configuration.mustache", invokerFolder, "Configuration.java"));
-        supportingFiles.add(new SupportingFile("JsonUtil.mustache", invokerFolder, "JsonUtil.java"));
         supportingFiles.add(new SupportingFile("StringUtil.mustache", invokerFolder, "StringUtil.java"));
         supportingFiles.add(new SupportingFile("Pair.mustache", invokerFolder, "Pair.java"));
 

@@ -1,31 +1,39 @@
 package io.swagger.client.model;
 
+import io.swagger.client.StringUtil;
 import io.swagger.client.model.Category;
-import io.swagger.client.model.Tag;
 import java.util.*;
+import io.swagger.client.model.Tag;
+
+import com.google.gson.annotations.SerializedName;
 
 import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 
 @ApiModel(description = "")
 public class Pet  {
   
+  @SerializedName("id")
   private Long id = null;
+  @SerializedName("category")
   private Category category = null;
+  @SerializedName("name")
   private String name = null;
+  @SerializedName("photoUrls")
   private List<String> photoUrls = new ArrayList<String>();
+  @SerializedName("tags")
   private List<Tag> tags = new ArrayList<Tag>();
   public enum StatusEnum {
      available,  pending,  sold, 
   };
+  @SerializedName("status")
   private StatusEnum status = null;
 
   
   /**
    **/
   @ApiModelProperty(value = "")
-  @JsonProperty("id")
   public Long getId() {
     return id;
   }
@@ -37,7 +45,6 @@ public class Pet  {
   /**
    **/
   @ApiModelProperty(value = "")
-  @JsonProperty("category")
   public Category getCategory() {
     return category;
   }
@@ -49,7 +56,6 @@ public class Pet  {
   /**
    **/
   @ApiModelProperty(required = true, value = "")
-  @JsonProperty("name")
   public String getName() {
     return name;
   }
@@ -61,7 +67,6 @@ public class Pet  {
   /**
    **/
   @ApiModelProperty(required = true, value = "")
-  @JsonProperty("photoUrls")
   public List<String> getPhotoUrls() {
     return photoUrls;
   }
@@ -73,7 +78,6 @@ public class Pet  {
   /**
    **/
   @ApiModelProperty(value = "")
-  @JsonProperty("tags")
   public List<Tag> getTags() {
     return tags;
   }
@@ -86,7 +90,6 @@ public class Pet  {
    * pet status in the store
    **/
   @ApiModelProperty(value = "pet status in the store")
-  @JsonProperty("status")
   public StatusEnum getStatus() {
     return status;
   }
@@ -101,13 +104,13 @@ public class Pet  {
     StringBuilder sb = new StringBuilder();
     sb.append("class Pet {\n");
     
-    sb.append("  id: ").append(id).append("\n");
-    sb.append("  category: ").append(category).append("\n");
-    sb.append("  name: ").append(name).append("\n");
-    sb.append("  photoUrls: ").append(photoUrls).append("\n");
-    sb.append("  tags: ").append(tags).append("\n");
-    sb.append("  status: ").append(status).append("\n");
-    sb.append("}\n");
+    sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
+    sb.append("    category: ").append(StringUtil.toIndentedString(category)).append("\n");
+    sb.append("    name: ").append(StringUtil.toIndentedString(name)).append("\n");
+    sb.append("    photoUrls: ").append(StringUtil.toIndentedString(photoUrls)).append("\n");
+    sb.append("    tags: ").append(StringUtil.toIndentedString(tags)).append("\n");
+    sb.append("    status: ").append(StringUtil.toIndentedString(status)).append("\n");
+    sb.append("}");
     return sb.toString();
   }
 }

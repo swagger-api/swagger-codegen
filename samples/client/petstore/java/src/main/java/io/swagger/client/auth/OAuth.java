@@ -7,7 +7,7 @@ import java.util.List;
 
 public class OAuth implements Authentication {
   @Override
-  public void applyToParams(List<Pair> queryParams, Map<String, String> headerParams) {
+  public void applyToParams(List<Pair> queryParams, Map<String, Object> headerParams) {
     // TODO: support oauth
   }
 }

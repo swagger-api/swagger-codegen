@@ -1,10 +1,13 @@
 package {{package}};
 
+import {{invokerPackage}}.StringUtil;
 {{#imports}}import {{import}};
 {{/imports}}
 
+import com.google.gson.annotations.SerializedName;
+
 import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 {{#models}}
 
 {{#model}}{{#description}}
@@ -17,7 +20,9 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {
   public enum {{datatypeWithEnum}} {
     {{#allowableValues}}{{#values}} {{.}}, {{/values}}{{/allowableValues}}
   };
+  @SerializedName("{{baseName}}")
   private {{{datatypeWithEnum}}} {{name}} = {{{defaultValue}}};{{/isEnum}}{{^isEnum}}
+  @SerializedName("{{baseName}}")
   private {{{datatype}}} {{name}} = {{{defaultValue}}};{{/isEnum}}{{/vars}}
 
   {{#vars}}
@@ -27,7 +32,6 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {
    * maximum: {{maximum}}{{/maximum}}
    **/
   @ApiModelProperty({{#required}}required = {{required}}, {{/required}}value = "{{{description}}}")
-  @JsonProperty("{{baseName}}")
   public {{{datatypeWithEnum}}} {{getter}}() {
     return {{name}};
   }
@@ -41,9 +45,9 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {
   public String toString()  {
     StringBuilder sb = new StringBuilder();
     sb.append("class {{classname}} {\n");
-    {{#parent}}sb.append("  " + super.toString()).append("\n");{{/parent}}
-    {{#vars}}sb.append("  {{name}}: ").append({{name}}).append("\n");
-    {{/vars}}sb.append("}\n");
+    {{#parent}}sb.append("    ").append(StringUtil.toIndentedString(super.toString())).append("\n");{{/parent}}
+    {{#vars}}sb.append("    {{name}}: ").append(StringUtil.toIndentedString({{name}})).append("\n");
+    {{/vars}}sb.append("}");
     return sb.toString();
   }
 }

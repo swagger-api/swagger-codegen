@@ -21,7 +21,7 @@ public class HttpBasicAuthTest {
     @Test
     public void testApplyToParams() {
         List<Pair> queryParams = new ArrayList<Pair>();
-        Map<String, String> headerParams = new HashMap<String, String>();
+        Map<String, Object> headerParams = new HashMap<String, Object>();
 
         auth.setUsername("my-username");
         auth.setPassword("my-password");
