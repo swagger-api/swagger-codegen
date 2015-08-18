@@ -37,7 +37,7 @@ def auth_settings():
                     'type': 'oauth2',
                     'in': 'header',
                     'key': 'Authorization',
-                    'value': 'Bearer' + get_basic_auth_token()
+                    'value': 'Bearer ' + auth_token
                 },
              {{/isOAuth}}{{/authMethods}}
            }
@@ -55,4 +55,8 @@ api_key_prefix = {}
 username = ''
 password = ''
 
-
+{{#authMethods}}
+{{#isOAuth}}
+auth_token = ''
+{{/isOAuth}}
+{{/authMethods}}
