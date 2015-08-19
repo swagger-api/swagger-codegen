@@ -1,0 +1,17 @@
+package {{apiPackage}};
+
+import io.undertow.Undertow;
+import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
+
+public class Startup {
+    
+    private static final String PORT_PROPERTY = "br.com.sickdev.microservice.port";
+    
+    public static void main(String ... args){
+        int port = Integer.parseInt(System.getProperty(PORT_PROPERTY, "9000"));
+        UndertowJaxrsServer server = new UndertowJaxrsServer().
+                start(Undertow.builder().addHttpListener(port, "0.0.0.0"));
+        
+        server.deploy(new App());
+    }
+}
