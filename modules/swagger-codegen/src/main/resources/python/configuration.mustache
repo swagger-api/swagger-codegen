@@ -2,6 +2,25 @@ from __future__ import absolute_import
 import base64
 import urllib3
 
+# Default Base url
+host = "{{basePath}}"
+
+# Default api client
+api_client = None
+
+# Authentication settings
+
+api_key = {}
+api_key_prefix = {}
+username = ''
+password = ''
+
+{{#authMethods}}
+{{#isOAuth}}
+auth_token = ''
+{{/isOAuth}}
+{{/authMethods}}
+
 def get_api_key_with_prefix(key):
     global api_key
     global api_key_prefix
@@ -41,22 +60,3 @@ def auth_settings():
                 },
              {{/isOAuth}}{{/authMethods}}
            }
-
-# Default Base url
-host = "{{basePath}}"
-
-# Default api client
-api_client = None
-             
-# Authentication settings
-
-api_key = {}
-api_key_prefix = {}
-username = ''
-password = ''
-
-{{#authMethods}}
-{{#isOAuth}}
-auth_token = ''
-{{/isOAuth}}
-{{/authMethods}}

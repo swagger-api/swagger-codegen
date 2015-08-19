@@ -146,6 +146,12 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
             name = name.toLowerCase();
         }
 
+        // remove random dollar sign???
+        // TODO: wtf
+        if (name.contains("$")) {
+            name = name.replace("$", "");
+        }
+
         // underscore the variable name
         // petId => pet_id
         name = underscore(dropDots(name));
@@ -166,6 +172,11 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
 
     @Override
     public String toModelName(String name) {
+        // see line 150
+        if (name.contains("$")) {
+            name = name.replace("$", "");
+        }
+
         // model name cannot use reserved keyword, e.g. return
         if (reservedWords.contains(name)) {
             throw new RuntimeException(name + " (reserved word) cannot be used as a model name");
@@ -179,6 +190,12 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
     @Override
     public String toModelFilename(String name) {
         // model name cannot use reserved keyword, e.g. return
+
+        // see line 150
+        if (name.contains("$")) {
+            name = name.replace("$", "");
+        }
+
         if (reservedWords.contains(name)) {
             throw new RuntimeException(name + " (reserved word) cannot be used as a model name");
         }
