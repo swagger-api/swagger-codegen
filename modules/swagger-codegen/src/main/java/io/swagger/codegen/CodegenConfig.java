@@ -103,6 +103,8 @@ public interface CodegenConfig {
 
     String apiFilename(String templateName, String tag);
 
+    boolean shouldSkipOverwrite(String filename);
+    
     boolean shouldOverwrite(String filename);
 
     boolean isSkipOverwrite();
