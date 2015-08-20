@@ -176,6 +176,12 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
             escapeReservedWord(name); // e.g. return => _return
         }
 
+        // remove random dollar sign???
+        // TODO: wtf
+        if (name.contains("$")) {
+            name = name.replace("$", "");
+        }
+
         // camelize the model name
         // phone_number => PhoneNumber
         return camelize(name);
@@ -183,6 +189,11 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String toModelFilename(String name) {
+        // see line 179
+        if (name.contains("$")) {
+            name = name.replace("$", "");
+        }
+
         // should be the same as the model name
         return toModelName(name);
     }

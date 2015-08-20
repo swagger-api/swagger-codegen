@@ -156,7 +156,7 @@ class ApiClient {
         {{#authMethods}}
         case '{{name}}':
           {{#isApiKey}}{{#isKeyInHeader}}$headerParams['{{keyParamName}}'] = $this->getApiKeyWithPrefix('{{keyParamName}}');{{/isKeyInHeader}}{{#isKeyInQuery}}$queryParams['{{keyParamName}}'] = $this->getApiKeyWithPrefix('{{keyParamName}}');{{/isKeyInQuery}}{{/isApiKey}}{{#isBasic}}$headerParams['Authorization'] = 'Basic '.base64_encode(Configuration::$username.":".Configuration::$password);{{/isBasic}}
-          {{#isOAuth}}//TODO support oauth{{/isOAuth}}
+          {{#isOAuth}}$headerParams['Authorization'] = 'Bearer ' . Configuration::$auth_token; {{/isOAuth}}
           break;
         {{/authMethods}}
         default:
@@ -183,6 +183,11 @@ class ApiClient {
 
     # construct the http header
     $headerParams = array_merge((array)self::$default_header, (array)$headerParams);
+
+    {{#authMethods}}{{#isOAuth}}
+    # oauth support
+    $headerParams['Authorization'] = 'Bearer ' . Configuration::$auth_token;
+    {{/isOAuth}}{{/authMethods}}
 
     foreach ($headerParams as $key => $val) {
       $headers[] = "$key: $val";
