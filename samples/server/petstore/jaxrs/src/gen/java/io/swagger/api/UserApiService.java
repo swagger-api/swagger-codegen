@@ -18,31 +18,30 @@ import com.sun.jersey.multipart.FormDataParam;
 
 import javax.ws.rs.core.Response;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JaxRSServerCodegen", date = "2015-08-23T23:29:16.812-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JaxRSServerCodegen", date = "2015-08-24T10:58:17.716+01:00")
 public abstract class UserApiService {
-  
-      public abstract Response createUser(User body)
-      throws NotFoundException;
-  
-      public abstract Response createUsersWithArrayInput(List<User> body)
-      throws NotFoundException;
-  
-      public abstract Response createUsersWithListInput(List<User> body)
-      throws NotFoundException;
-  
-      public abstract Response loginUser(String username,String password)
-      throws NotFoundException;
-  
-      public abstract Response logoutUser()
-      throws NotFoundException;
-  
-      public abstract Response getUserByName(String username)
-      throws NotFoundException;
-  
-      public abstract Response updateUser(String username,User body)
-      throws NotFoundException;
-  
-      public abstract Response deleteUser(String username)
-      throws NotFoundException;
-  
+
+    public abstract Response createUser(User body)
+    throws NotFoundException;
+
+    public abstract Response createUsersWithArrayInput(List<User> body)
+    throws NotFoundException;
+
+    public abstract Response createUsersWithListInput(List<User> body)
+    throws NotFoundException;
+
+    public abstract Response loginUser(String username,String password)
+    throws NotFoundException;
+
+    public abstract Response logoutUser()
+    throws NotFoundException;
+
+    public abstract Response getUserByName(String username)
+    throws NotFoundException;
+
+    public abstract Response updateUser(String username,User body)
+    throws NotFoundException;
+
+    public abstract Response deleteUser(String username)
+    throws NotFoundException;
 }
