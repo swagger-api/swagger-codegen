@@ -101,7 +101,7 @@ class RESTClientObject(object):
         if method in ['POST', 'PUT', 'PATCH']:
             if query_params:
                 url += '?' + urlencode(query_params)
-            if headers['Content-Type'] == 'application/json':
+            if 'json' in headers['Content-Type']:
                 r = self.agent(url).request(method, url,
                                             body=json.dumps(body),
                                             headers=headers)
