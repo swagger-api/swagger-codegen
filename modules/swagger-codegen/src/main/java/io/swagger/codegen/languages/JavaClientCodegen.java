@@ -13,13 +13,15 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
 
+import org.apache.commons.lang.StringUtils;
+
 public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
     protected String invokerPackage = "io.swagger.client";
     protected String groupId = "io.swagger";
     protected String artifactId = "swagger-java-client";
     protected String artifactVersion = "1.0.0";
     protected String sourceFolder = "src/main/java";
-
+    protected String localVariablePrefix = "";
     public JavaClientCodegen() {
         super();
         outputFolder = "generated-code/java";
@@ -59,6 +61,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         cliOptions.add(new CliOption("artifactId", "artifactId in generated pom.xml"));
         cliOptions.add(new CliOption("artifactVersion", "artifact version in generated pom.xml"));
         cliOptions.add(new CliOption("sourceFolder", "source folder for generated code"));
+        cliOptions.add(new CliOption("localVariablePrefix", "prefix for generated code members and local variables"));
     }
 
     public CodegenType getTag() {
@@ -109,6 +112,11 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
             this.setSourceFolder((String) additionalProperties.get("sourceFolder"));
         }
 
+
+        if (additionalProperties.containsKey("localVariablePrefix")) {
+            this.setLocalVariablePrefix((String) additionalProperties.get("localVariablePrefix"));
+        }
+
         final String invokerFolder = (sourceFolder + File.separator + invokerPackage).replace(".", File.separator);
         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
         supportingFiles.add(new SupportingFile("ApiClient.mustache", invokerFolder, "ApiClient.java"));
@@ -116,6 +124,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("Configuration.mustache", invokerFolder, "Configuration.java"));
         supportingFiles.add(new SupportingFile("JsonUtil.mustache", invokerFolder, "JsonUtil.java"));
         supportingFiles.add(new SupportingFile("StringUtil.mustache", invokerFolder, "StringUtil.java"));
+        supportingFiles.add(new SupportingFile("Pair.mustache", invokerFolder, "Pair.java"));
 
         final String authFolder = (sourceFolder + File.separator + invokerPackage + ".auth").replace(".", File.separator);
         supportingFiles.add(new SupportingFile("auth/Authentication.mustache", authFolder, "Authentication.java"));
@@ -143,6 +152,10 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
     public String toVarName(String name) {
         // replace - with _ e.g. created-at => created_at
         name = name.replaceAll("-", "_");
+
+        if("_".equals(name)) {
+          name = "_u";
+        }
 
         // if it's all uppper case, do nothing
         if (name.matches("^[A-Z_]*$")) {
@@ -201,6 +214,18 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
+    public String toDefaultValue(Property p) {
+        if (p instanceof ArrayProperty) {
+            final ArrayProperty ap = (ArrayProperty) p;
+            return String.format("new ArrayList<%s>()", getTypeDeclaration(ap.getItems()));
+        } else if (p instanceof MapProperty) {
+            final MapProperty ap = (MapProperty) p;
+            return String.format("new HashMap<String, %s>()", getTypeDeclaration(ap.getAdditionalProperties()));
+        }
+        return super.toDefaultValue(p);
+    }
+
+    @Override
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
         String type = null;
@@ -217,6 +242,11 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String toOperationId(String operationId) {
+        // throw exception if method name is empty
+        if (StringUtils.isEmpty(operationId)) {
+            throw new RuntimeException("Empty method name (operationId) not allowed");
+        }
+
         // method name cannot use reserved keyword, e.g. return
         if (reservedWords.contains(operationId)) {
             throw new RuntimeException(operationId + " (reserved word) cannot be used as method name");
@@ -243,5 +273,9 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     public void setSourceFolder(String sourceFolder) {
         this.sourceFolder = sourceFolder;
+    }
+
+    public void setLocalVariablePrefix(String localVariablePrefix) {
+        this.localVariablePrefix = localVariablePrefix;
     }
 }
