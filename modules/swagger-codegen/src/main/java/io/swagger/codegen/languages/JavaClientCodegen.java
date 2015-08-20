@@ -24,6 +24,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
     protected String localVariablePrefix = "";
     public JavaClientCodegen() {
         super();
+        supportsInheritance = true;
         outputFolder = "generated-code/java";
         modelTemplateFiles.put("model.mustache", ".java");
         apiTemplateFiles.put("api.mustache", ".java");
