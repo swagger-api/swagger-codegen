@@ -428,7 +428,7 @@ public class DefaultCodegen {
             return "new HashMap<String, " + inner + ">() ";
         } else if (p instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) p;
-            String inner = getSwaggerType(ap.getItems());
+            String inner = getTypeDeclaration(ap.getItems());
             return "new ArrayList<" + inner + ">() ";
         } else {
             return "null";
