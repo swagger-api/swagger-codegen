@@ -49,7 +49,6 @@ use \Swagger\Client\ObjectSerializer;
  */
 class PetApi
 {
-
     /**
      * API Client
      * @var \Swagger\Client\ApiClient instance of the ApiClient
@@ -112,11 +111,8 @@ class PetApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array('application/json','application/xml'));
+        $acceptTypes = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
+        $contentTypes = ApiClient::selectHeaderContentType(array('application/json','application/xml'));
   
         
         
@@ -144,6 +140,7 @@ class PetApi
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
+                $acceptTypes, $contentTypes,
                 $headerParams
             );
         } catch (ApiException $e) {
@@ -176,11 +173,8 @@ class PetApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array('application/json','application/xml'));
+        $acceptTypes = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
+        $contentTypes = ApiClient::selectHeaderContentType(array('application/json','application/xml'));
   
         
         
@@ -208,6 +202,7 @@ class PetApi
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
+                $acceptTypes, $contentTypes,
                 $headerParams
             );
         } catch (ApiException $e) {
@@ -240,11 +235,8 @@ class PetApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+        $acceptTypes = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
+        $contentTypes = ApiClient::selectHeaderContentType(array());
   
         // query params
         if ($status !== null) {
@@ -271,6 +263,7 @@ class PetApi
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
+                $acceptTypes, $contentTypes,
                 $headerParams, '\Swagger\Client\Model\Pet[]'
             );
         } catch (ApiException $e) {
@@ -313,11 +306,8 @@ class PetApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+        $acceptTypes = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
+        $contentTypes = ApiClient::selectHeaderContentType(array());
   
         // query params
         if ($tags !== null) {
@@ -344,6 +334,7 @@ class PetApi
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
+                $acceptTypes, $contentTypes,
                 $headerParams, '\Swagger\Client\Model\Pet[]'
             );
         } catch (ApiException $e) {
@@ -390,11 +381,8 @@ class PetApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+        $acceptTypes = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
+        $contentTypes = ApiClient::selectHeaderContentType(array());
   
         
         
@@ -416,6 +404,9 @@ class PetApi
             $httpBody = $formParams; // for HTTP post (form)
         }
         
+        
+        //TODO support oauth
+        
         $apiKey = $this->apiClient->getApiKeyWithPrefix('api_key');
         if (isset($apiKey)) {
             $headerParams['api_key'] = $apiKey;
@@ -423,15 +414,13 @@ class PetApi
         
         
         
-        
-        //TODO support oauth
-        
         // make the API Call
         try
         {
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
+                $acceptTypes, $contentTypes,
                 $headerParams, '\Swagger\Client\Model\Pet'
             );
         } catch (ApiException $e) {
@@ -480,11 +469,8 @@ class PetApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array('application/x-www-form-urlencoded'));
+        $acceptTypes = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
+        $contentTypes = ApiClient::selectHeaderContentType(array('application/x-www-form-urlencoded'));
   
         
         
@@ -521,6 +507,7 @@ class PetApi
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
+                $acceptTypes, $contentTypes,
                 $headerParams
             );
         } catch (ApiException $e) {
@@ -558,11 +545,8 @@ class PetApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+        $acceptTypes = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
+        $contentTypes = ApiClient::selectHeaderContentType(array());
   
         
         // header params
@@ -596,6 +580,7 @@ class PetApi
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
+                $acceptTypes, $contentTypes,
                 $headerParams
             );
         } catch (ApiException $e) {
@@ -634,11 +619,8 @@ class PetApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array('multipart/form-data'));
+        $acceptTypes = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
+        $contentTypes = ApiClient::selectHeaderContentType(array('multipart/form-data'));
   
         
         
@@ -675,6 +657,7 @@ class PetApi
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
+                $acceptTypes, $contentTypes,
                 $headerParams
             );
         } catch (ApiException $e) {

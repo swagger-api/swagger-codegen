@@ -49,7 +49,6 @@ use \Swagger\Client\ObjectSerializer;
  */
 class StoreApi
 {
-
     /**
      * API Client
      * @var \Swagger\Client\ApiClient instance of the ApiClient
@@ -111,11 +110,8 @@ class StoreApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+        $acceptTypes = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
+        $contentTypes = ApiClient::selectHeaderContentType(array());
   
         
         
@@ -143,6 +139,7 @@ class StoreApi
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
+                $acceptTypes, $contentTypes,
                 $headerParams, 'map[string,int]'
             );
         } catch (ApiException $e) {
@@ -185,11 +182,8 @@ class StoreApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+        $acceptTypes = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
+        $contentTypes = ApiClient::selectHeaderContentType(array());
   
         
         
@@ -214,6 +208,7 @@ class StoreApi
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
+                $acceptTypes, $contentTypes,
                 $headerParams, '\Swagger\Client\Model\Order'
             );
         } catch (ApiException $e) {
@@ -260,11 +255,8 @@ class StoreApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+        $acceptTypes = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
+        $contentTypes = ApiClient::selectHeaderContentType(array());
   
         
         
@@ -292,6 +284,7 @@ class StoreApi
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
+                $acceptTypes, $contentTypes,
                 $headerParams, '\Swagger\Client\Model\Order'
             );
         } catch (ApiException $e) {
@@ -338,11 +331,8 @@ class StoreApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+        $acceptTypes = ApiClient::selectHeaderAccept(array('application/json', 'application/xml'));
+        $contentTypes = ApiClient::selectHeaderContentType(array());
   
         
         
@@ -370,6 +360,7 @@ class StoreApi
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
+                $acceptTypes, $contentTypes,
                 $headerParams
             );
         } catch (ApiException $e) {
