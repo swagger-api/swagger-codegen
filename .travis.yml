@@ -1,5 +1,0 @@
-sudo: false
-language: java
-script: mvn verify -Psamples
-jdk:
-  - oraclejdk7
