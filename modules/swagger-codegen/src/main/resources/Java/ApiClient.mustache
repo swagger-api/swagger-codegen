@@ -148,6 +148,19 @@ public class ApiClient {
   }
 
   /**
+   * Helper method to set OAuth authorization token
+   */
+  public void setAuthToken(String token) {
+    for (Authentication auth : authentications.values()) {
+      if (auth instanceof OAuth) {
+        ((OAuth) auth).setAuthToken(token);
+        return;
+      }
+    }
+    throw new RuntimeException("No OAuth2 authentication configured!");
+  }
+
+  /**
    * Set the User-Agent header's value (by adding to the default header map).
    */
   public ApiClient setUserAgent(String userAgent) {
@@ -380,7 +393,7 @@ public class ApiClient {
       response = (ClientResponse) builder.get(ClientResponse.class);
     }
     else if ("POST".equals(method)) {
-      if (contentType.startsWith("application/x-www-form-urlencoded")) {
+      if (contentType.contains("json")) {
         String encodedFormParams = this
             .getXWWWFormUrlencodedParams(formParams);
         response = builder.type(contentType).post(ClientResponse.class,
