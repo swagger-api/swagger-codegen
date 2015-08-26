@@ -369,7 +369,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                         authMethods.put(securityName, securityDefinition);
                     }
                 }
-                if (!authMethods.isEmpty()) {
+                if (!authMethods.isEmpty() && authMethods != null) {
                     co.authMethods = config.fromSecurity(authMethods);
                 }
             }
