@@ -163,6 +163,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 operation.put("classname", config.toApiName(tag));
                 operation.put("classVarName", config.toApiVarName(tag));
                 operation.put("importPath", config.toApiImport(tag));
+                // Add authMethods mustache tag to API gen under {{#operations}}
+                // NOT {{#operation}}!
+                operation.put("authMethods", config.fromSecurity(swagger.getSecurityDefinitions()));
 
                 processMimeTypes(swagger.getConsumes(), operation, "consumes");
                 processMimeTypes(swagger.getProduces(), operation, "produces");
