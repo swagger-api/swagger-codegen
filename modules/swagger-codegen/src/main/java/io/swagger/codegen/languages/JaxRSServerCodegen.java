@@ -118,17 +118,22 @@ public class JaxRSServerCodegen extends JavaClientCodegen implements CodegenConf
         co.baseName = basePath;
     }
 
+    @Override
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
         Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
         if (operations != null) {
             List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
             for (CodegenOperation operation : ops) {
                 List<CodegenResponse> responses = operation.responses;
+                operation.summary = escapeText(operation.summary.trim());
+
                 if (responses != null) {
                     for (CodegenResponse resp : responses) {
                         if ("0".equals(resp.code)) {
                             resp.code = "200";
                         }
+
+                        resp.message = escapeText(resp.message.trim());
                     }
                 }
                 if (operation.returnType == null) {
