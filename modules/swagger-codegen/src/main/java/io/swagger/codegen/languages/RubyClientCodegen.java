@@ -123,15 +123,15 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         if (typeMapping.containsKey(swaggerType)) {
             type = typeMapping.get(swaggerType);
             if (languageSpecificPrimitives.contains(type)) {
-                return type;
+                return stripDollar(type);
             }
         } else {
-            type = swaggerType;
+            type = stripDollar(swaggerType);
         }
         if (type == null) {
             return null;
         }
-        return type;
+        return stripDollar(type);
     }
 
     public String toDefaultValue(Property p) {
@@ -226,6 +226,13 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public String toApiImport(String name) {
         return apiPackage() + "/" + toApiFilename(name);
+    }
+
+    public String stripDollar(String dollarized) {
+        if (dollarized.contains("$")) {
+            dollarized = dollarized.replace("$", "");
+        }
+        return dollarized;
     }
 
 }

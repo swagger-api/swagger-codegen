@@ -44,6 +44,8 @@ module {{moduleName}}
         else
           false
         end
+      when :object
+        value
       when /^map\[(.*)\]/i
         value
       else # model
