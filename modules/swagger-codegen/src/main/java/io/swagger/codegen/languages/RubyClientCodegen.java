@@ -175,7 +175,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         // camelize the model name
         // phone_number => PhoneNumber
-        return camelize(name);
+        return stripDollar(camelize(name));
     }
 
     @Override
