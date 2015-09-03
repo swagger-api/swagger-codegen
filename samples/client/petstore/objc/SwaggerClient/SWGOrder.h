@@ -9,23 +9,32 @@
 
 
 
+
+typedef enum : NSInteger { 
+	PLACED, 
+	APPROVED, 
+	DELIVERED,   
+} StatusEnum;
+
+
 @protocol SWGOrder
 @end
 
 @interface SWGOrder : SWGObject
-
-
+   
 @property(nonatomic) NSNumber* _id;
-
+   
 @property(nonatomic) NSNumber* petId;
-
+   
 @property(nonatomic) NSNumber* quantity;
-
+   
 @property(nonatomic) NSDate* shipDate;
-/* Order Status [optional]
- */
+ /* Order Status [optional] 
+  */ 
+@property(nonatomic) StatusEnum status;
+ 
 @property(nonatomic) NSString* status;
-
+   
 @property(nonatomic) NSNumber* complete;
 
 @end

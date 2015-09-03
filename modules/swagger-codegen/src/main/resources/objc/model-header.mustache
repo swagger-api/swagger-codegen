@@ -22,7 +22,7 @@
 
 @interface {{classname}} : {{classPrefix}}Object
 {{#vars}} {{#description}}/* {{{description}}} {{^required}}[optional]{{/required}} 
-*/{{/description}} {{#isEnum}}
+  */{{/description}} {{#isEnum}}
 @property(nonatomic) {{{datatypeWithEnum}}} {{name}};
 {{/isEnum}} {{#items.isEnum}}{{#items}}
 @property(nonatomic) {{{datatypeWithEnum}}} {{name}};
