@@ -34,7 +34,7 @@ public class JavaInflectorServerCodegen extends JavaClientCodegen implements Cod
         sourceFolder = "src/main/java";
         modelTemplateFiles.put("model.mustache", ".java");
         apiTemplateFiles.put("api.mustache", ".java");
-        templateDir = "JavaInflector";
+        embeddedTemplateDir = templateDir = "JavaInflector";
 
         apiPackage = System.getProperty("swagger.codegen.inflector.apipackage", "io.swagger.handler");
         modelPackage = System.getProperty("swagger.codegen.inflector.modelpackage", "io.swagger.model");
