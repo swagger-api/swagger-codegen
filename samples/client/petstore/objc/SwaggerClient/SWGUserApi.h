@@ -18,6 +18,7 @@
 -(void) addHeader:(NSString*)value forKey:(NSString*)key;
 -(unsigned long) requestQueueSize;
 +(SWGUserApi*) apiWithHeader:(NSString*)headerValue key:(NSString*)key;
++(SWGUserApi*) sharedAPI;
 ///
 ///
 /// Create user
