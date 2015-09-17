@@ -16,7 +16,12 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {
     {{#vars}}{{#isEnum}}
     public enum {{datatypeWithEnum}} {
         {{#allowableValues}}{{#values}} {{.}}, {{/values}}{{/allowableValues}}
-    };{{/isEnum}}
+    };{{/isEnum}}{{#items.isEnum}}{{#items}}
+    public enum {{datatypeWithEnum}} {
+        {{#allowableValues}}{{#values}} {{.}}, {{/values}}{{/allowableValues}}
+    };
+    {{/items}}{{/items.isEnum}}
+
 
     /**{{#description}}
      * {{{description}}}{{/description}}{{#minimum}}
@@ -24,9 +29,8 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {
      * maximum: {{maximum}}{{/maximum}}
      **/
     @ApiModelProperty({{#required}}required = {{required}}, {{/required}}value = "{{{description}}}")  
-    @SerializedName("{{baseName}}"){{#isEnum}}    
-    private {{{datatypeWithEnum}}} {{name}} = {{{defaultValue}}};{{/isEnum}}{{^isEnum}}
-    private {{{datatype}}} {{name}} = {{{defaultValue}}};{{/isEnum}}{{/vars}}
+    @SerializedName("{{baseName}}")    
+    private {{{datatypeWithEnum}}} {{name}} = {{{defaultValue}}};{{/vars}}
 
     {{#vars}}    
     public {{{datatypeWithEnum}}} {{getter}}() {
