@@ -40,6 +40,8 @@ class {{classname}}(object):
             if not configuration.api_client:
                 configuration.api_client = ApiClient('{{basePath}}')
             self.api_client = configuration.api_client
+        # Authentication methods
+        self.auth_settings = [{{#authMethods}}'{{name}}'{{#hasMore}}, {{/hasMore}}{{/authMethods}}]
     
     {{#operation}}
     def {{nickname}}(self, {{#allParams}}{{#required}}{{paramName}}, {{/required}}{{/allParams}}**kwargs):
@@ -102,12 +104,10 @@ class {{classname}}(object):
         # HTTP header `Content-Type`
         header_params['Content-Type'] = self.api_client.select_header_content_type([{{#consumes}}'{{mediaType}}'{{#hasMore}}, {{/hasMore}}{{/consumes}}])
 
-        # Authentication setting
-        auth_settings = [{{#authMethods}}'{{name}}'{{#hasMore}}, {{/hasMore}}{{/authMethods}}]
 
         response = self.api_client.call_api(resource_path, method, path_params, query_params, header_params,
                                             body=body_params, post_params=form_params, files=files,
-                                            response={{#returnType}}'{{returnType}}'{{/returnType}}{{^returnType}}None{{/returnType}}, auth_settings=auth_settings)
+                                            response={{#returnType}}'{{returnType}}'{{/returnType}}{{^returnType}}None{{/returnType}}, auth_settings=self.auth_settings)
         {{#returnType}}
         return response
         {{/returnType}}{{/operation}}

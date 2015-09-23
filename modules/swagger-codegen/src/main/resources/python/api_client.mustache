@@ -64,12 +64,6 @@ class ApiClient(object):
     # headers parameters
     header_params = header_params or {}
 
-    {{#authMethods}}
-    {{#isOAuth}}
-    header_params['Authorization'] = 'Bearer ' + self.auth_token
-    {{/isOAuth}}
-    {{/authMethods}}
-
     header_params.update(self.default_headers)
     if self.cookie:
       header_params['Cookie'] = self.cookie
@@ -109,7 +103,7 @@ class ApiClient(object):
 
     # deserialize response data
     if response:
-      return self.deserialize(response_data, response)
+      return response_data if method == 'POST' else self.deserialize(response_data, response)
     else:
       return None
 
