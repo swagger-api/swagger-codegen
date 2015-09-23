@@ -394,10 +394,7 @@ public class ApiClient {
     }
     else if ("POST".equals(method)) {
       if (contentType.contains("json")) {
-        String encodedFormParams = this
-            .getXWWWFormUrlencodedParams(formParams);
-        response = builder.type(contentType).post(ClientResponse.class,
-            encodedFormParams);
+        response = builder.type(contentType).post(ClientResponse.class, serialize(body));
       } else if (body == null) {
         response = builder.post(ClientResponse.class, null);
       } else if(body instanceof FormDataMultiPart) {
@@ -441,6 +438,14 @@ public class ApiClient {
       if(response.hasEntity()) {
         return (String) response.getEntity(String.class);
       }
+    else if ("POST".equals(method)) {
+        try {
+            return JsonUtil.getJsonMapper().writeValueAsString(response.getHeaders());
+        }
+            catch (IOException e) {
+            return "";
+        }
+    }
       else {
         return "";
       }
