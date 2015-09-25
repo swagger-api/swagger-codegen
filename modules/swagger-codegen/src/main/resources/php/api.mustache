@@ -36,6 +36,9 @@ class {{classname}} {
     } else {
       $this->apiClient = $apiClient; // use the one provided by the user
     }
+
+    // Authentication methods
+    $this->authSettings = array({{#authMethods}}'{{name}}'{{#hasMore}}, {{/hasMore}}{{/authMethods}});
   }
 
   private $apiClient; // instance of the ApiClient
@@ -116,13 +119,10 @@ class {{classname}} {
         $httpBody = $formParams;
       }
 
-      // authentication setting, if any
-      $authSettings = array({{#authMethods}}'{{name}}'{{#hasMore}}, {{/hasMore}}{{/authMethods}});
-
       // make the API Call
       $response = $this->apiClient->callAPI($resourcePath, $method,
                                             $queryParams, $httpBody,
-                                            $headerParams, $authSettings);
+                                            $headerParams, $this->authSettings);
 
       {{#returnType}}if(! $response) {
         return null;

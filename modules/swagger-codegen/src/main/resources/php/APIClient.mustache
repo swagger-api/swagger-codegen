@@ -184,11 +184,6 @@ class ApiClient {
     # construct the http header
     $headerParams = array_merge((array)self::$default_header, (array)$headerParams);
 
-    {{#authMethods}}{{#isOAuth}}
-    # oauth support
-    $headerParams['Authorization'] = 'Bearer ' . Configuration::$auth_token;
-    {{/isOAuth}}{{/authMethods}}
-
     foreach ($headerParams as $key => $val) {
       $headers[] = "$key: $val";
     }
