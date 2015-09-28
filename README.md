@@ -7,6 +7,18 @@ This is the swagger codegen project, which allows generation of client libraries
 
 Check out [Swagger-Spec](https://github.com/swagger-api/swagger-spec) for additional information about the Swagger project, including additional libraries with support for other languages and more. 
 
+## Customizations
+This fork is modified with the following fixes to make it more suitable for consuming OAuth APIs with complex schemas. Currently, these fixes have only been rolled out to **Ruby**, **Python 2.7.x**, **Java**, and **PHP**.
+
+- Serialization 
+	- Nested complex containers can be serialized.
+	- DAOs in complex containers can be serialized.
+- OAuth 2 standard
+	- Authentication methods are now generated at `{{operations}}` level.
+	- The `Authorization` header automatically gets populated with `Bearer [token]` when the `oauth2` operation is present.
+- Bug fixes
+	- Java style `Outer$Inner` stripped from other languages.
+	- Python fixed "petstore" nomenclature replaced with generic name. 
 
 ## Compatibility
 The Swagger Specification has undergone 3 revisions since initial creation in 2010.  The swagger-codegen project has the following compatibilies with the swagger specification:
@@ -143,7 +155,6 @@ This will write, in the folder `output/myLibrary`, all the files you need to get
 See our [javascript library](http://github.com/swagger-api/swagger-js)--it's completely dynamic and doesn't require
 static code generation.
 There is a third-party component called [swagger-js-codegen](https://github.com/wcandillon/swagger-js-codegen) that can generate angularjs or nodejs source code from a swagger specification.
-
 
 #### Generating a client from flat files (i.e. no remote server calls)
 If you don't want to call your server, you can save the swagger spec files into a directory and pass an argument
