@@ -128,8 +128,7 @@ class {{classname}} {
         return null;
       }
 
-      $responseObject = $this->apiClient->deserialize($response,'{{returnType}}');
-      return $responseObject;{{/returnType}}
+      return ($method == "POST") ? $response : $this->apiClient->deserialize($response,'{{returnType}}');{{/returnType}}
   }
   {{/operation}}
 {{newline}}
