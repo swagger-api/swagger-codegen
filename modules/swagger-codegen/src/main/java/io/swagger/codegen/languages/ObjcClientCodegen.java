@@ -2,6 +2,8 @@ package io.swagger.codegen.languages;
 
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
@@ -11,10 +13,13 @@ import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Map;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -60,9 +65,10 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
         languageSpecificPrimitives.add("NSURL");
         languageSpecificPrimitives.add("bool");
         languageSpecificPrimitives.add("BOOL");
+        languageSpecificPrimitives.add("enum");
 
         typeMapping.clear();
-        typeMapping.put("enum", "NSString");
+        typeMapping.put("enum", "enum");
         typeMapping.put("date", "NSDate");
         typeMapping.put("DateTime", "NSDate");
         typeMapping.put("boolean", "NSNumber");
@@ -324,6 +330,32 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
             property.setter = "initWithValues";
         }
     }
+    
+    @Override
+    public Map<String, Object> postProcessModels(Map<String, Object> objs) {
+        List<Object> models = (List<Object>) objs.get("models");
+        for (Object _mo : models) {
+            Map<String, Object> mo = (Map<String, Object>) _mo;
+            CodegenModel cm = (CodegenModel) mo.get("model");
+            for (CodegenProperty var : cm.vars) {
+                Map<String, Object> allowableValues = var.allowableValues;
+                if (allowableValues == null)
+                    continue;
+                List<String> values = (List<String>) allowableValues.get("values");
+                // put "enumVars" map into `allowableValues", including `name` and `value`
+                if (values == null)
+                    continue;
+                List<Map<String, String>> enumVars = new ArrayList<Map<String, String>>();
+                for (String value : values) {
+                    Map<String, String> enumVar = new HashMap<String, String>();
+                    enumVar.put("name", toEnumName(value.toUpperCase()));
+                    enumVars.add(enumVar);
+                }
+                allowableValues.put("enumVars", enumVars);
+            }
+        }
+        return objs;
+    }
 
     @Override
     public String toModelImport(String name) {
@@ -373,6 +405,29 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
             name = escapeReservedWord(name);
         }
 
+        return name;
+    }
+    
+    public String toEnumName(String name) {
+        
+        // sanitize name
+        name = sanitizeName(name);
+        
+        // if it's all upper case, do noting
+        if (name.matches("^[A-Z_]$")) {
+            return name;
+        }
+        
+        // camelize the variable name (but with uppercase first character),
+        // since in Obj-C we dont want `true` camelcase in enums.
+        // e.g. `pet_id` to `PetId`
+        name = camelize(name, false);
+        
+        // for reserved word or word starting with number, prepend `_`
+        if (reservedWords.contains(name) || name.matches("^\\d.*")) {
+            name = escapeReservedWord(name);
+        }
+        
         return name;
     }
 

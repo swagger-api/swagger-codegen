@@ -11,23 +11,32 @@
 #import "SWGTag.h"
 
 
+
+typedef enum : NSInteger { 
+	AVAILABLE, 
+	PENDING, 
+	SOLD,   
+} StatusEnum;
+
+
 @protocol SWGPet
 @end
 
 @interface SWGPet : SWGObject
-
-
+   
 @property(nonatomic) NSNumber* _id;
-
+   
 @property(nonatomic) SWGCategory* category;
-
+   
 @property(nonatomic) NSString* name;
-
+   
 @property(nonatomic) NSArray* /* NSString */ photoUrls;
-
+   
 @property(nonatomic) NSArray<SWGTag>* tags;
-/* pet status in the store [optional]
- */
+ /* pet status in the store [optional] 
+  */ 
+@property(nonatomic) StatusEnum status;
+ 
 @property(nonatomic) NSString* status;
 
 @end
