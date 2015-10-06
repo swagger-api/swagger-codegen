@@ -8,10 +8,11 @@ import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
 
 public class Startup {
     
-    private static final String PORT_PROPERTY = "br.com.sickdev.microservice.port";
+    private static final String PORT_PROPERTY = "MICROSERVICE_PORT";
     
     public static void main(String ... args){
-        int port = Integer.parseInt(System.getProperty(PORT_PROPERTY, "9000"));
+	String portValue = System.getenv(PORT_PROPERTY) != null ? System.getenv(PORT_PROPERTY) : "9000";
+        int port = Integer.parseInt(portValue);
         UndertowJaxrsServer server = new UndertowJaxrsServer().
                 start(Undertow.builder().addHttpListener(port, "0.0.0.0"));
 
