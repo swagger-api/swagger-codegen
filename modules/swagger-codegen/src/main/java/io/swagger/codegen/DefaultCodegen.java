@@ -1007,6 +1007,9 @@ public class DefaultCodegen {
 
         if (parameters != null) {
             for (Parameter param : parameters) {
+            	if (!includeParameter(param))
+            		continue;
+            	
                 CodegenParameter p = fromParameter(param, imports);
                 allParams.add(p);
                 if (param instanceof QueryParameter) {
@@ -1127,6 +1130,29 @@ public class DefaultCodegen {
         return r;
     }
 
+    public boolean includeParameter(Parameter param)
+    {
+    	Map<String, Object> extensions = param.getVendorExtensions();
+    	if (extensions.size() > 0)
+    	{
+    		Object excludeFromBindings = extensions.get("x-exclude-from-bindings");
+    		if (excludeFromBindings != null)
+    		{
+    			if (excludeFromBindings instanceof Boolean)
+    			{
+    				if (((Boolean)excludeFromBindings).booleanValue())
+    					return false;
+    			}
+    			else
+    			{
+    				String msg = "Invalid value for x-exclude-from-bindings, only booleans are allowed\n";      
+    				throw new RuntimeException(msg);
+    			}
+    		}
+    	}
+    	return true;
+    }
+    
     public CodegenParameter fromParameter(Parameter param, Set<String> imports) {
         CodegenParameter p = CodegenModelFactory.newInstance(CodegenModelType.PARAMETER);
         p.baseName = param.getName();
