@@ -1153,10 +1153,56 @@ public class DefaultCodegen {
     	return true;
     }
     
+    public String getParameterName(Parameter param)
+    {
+    	Map<String, Object> extensions = param.getVendorExtensions();
+    	if (extensions.size() > 0)
+    	{
+    		Object bindingName = extensions.get("x-binding-name");
+    		if (bindingName != null)
+    		{
+    			if (bindingName instanceof String)
+    			{
+    				return (String)bindingName;
+    			}
+    			else
+    			{
+    				String msg = "Invalid value for x-binding-name, only strings are allowed\n";      
+    				throw new RuntimeException(msg);
+    			}
+    		}
+    	}
+    	
+    	return param.getName();
+    }
+    
+    public String getParameterDescription(Parameter param)
+    {
+    	Map<String, Object> extensions = param.getVendorExtensions();
+    	if (extensions.size() > 0)
+    	{
+    		Object bindingName = extensions.get("x-binding-description");
+    		if (bindingName != null)
+    		{
+    			if (bindingName instanceof String)
+    			{
+    				return (String)bindingName;
+    			}
+    			else
+    			{
+    				String msg = "Invalid value for x-binding-description, only strings are allowed\n";      
+    				throw new RuntimeException(msg);
+    			}
+    		}
+    	}
+    	
+    	return param.getDescription();
+    }
+    
     public CodegenParameter fromParameter(Parameter param, Set<String> imports) {
         CodegenParameter p = CodegenModelFactory.newInstance(CodegenModelType.PARAMETER);
         p.baseName = param.getName();
-        p.description = escapeText(param.getDescription());
+        p.description = escapeText(getParameterDescription(param));
         if (param.getRequired()) {
             p.required = param.getRequired();
         }
@@ -1225,7 +1271,7 @@ public class DefaultCodegen {
             p._enum = model._enum;
             p.allowableValues = model.allowableValues;
             p.collectionFormat = collectionFormat;
-            p.paramName = toParamName(qp.getName());
+            p.paramName = toParamName(getParameterName(param));
 
             if (model.complexType != null) {
                 imports.add(model.complexType);
@@ -1290,7 +1336,7 @@ public class DefaultCodegen {
                     p.dataType = name;
                 }
             }
-            p.paramName = toParamName(bp.getName());
+            p.paramName = toParamName(getParameterName(param));
         }
         return p;
     }
