@@ -450,6 +450,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
              per the swagger 2.0 spec "A unique parameter is defined by a combination of a name and location"
               i'm assuming "location" == "in"
             */
+            System.out.println("Processing " + httpMethod.toUpperCase() + " " + resourcePath);
             Set<String> operationParameters = new HashSet<String>();
             if (operation.getParameters() != null) {
                 for (Parameter parameter : operation.getParameters()) {
