@@ -1264,6 +1264,9 @@ public class DefaultCodegen {
         {
         	SerializableParameter qp = (SerializableParameter) param;
         	
+        	//TODO: Do better
+        	p.pattern = (String)p.vendorExtensions.get("x-name-pattern");
+        	
         	String type = qp.getType();
         	Map<PropertyId, Object> args = new HashMap<PropertyId, Object>();
             String format = qp.getFormat();
