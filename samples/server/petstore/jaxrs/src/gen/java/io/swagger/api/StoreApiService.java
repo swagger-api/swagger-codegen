@@ -18,19 +18,18 @@ import com.sun.jersey.multipart.FormDataParam;
 
 import javax.ws.rs.core.Response;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JaxRSServerCodegen", date = "2015-08-23T23:29:16.812-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JaxRSServerCodegen", date = "2015-08-24T10:58:17.716+01:00")
 public abstract class StoreApiService {
-  
-      public abstract Response getInventory()
-      throws NotFoundException;
-  
-      public abstract Response placeOrder(Order body)
-      throws NotFoundException;
-  
-      public abstract Response getOrderById(String orderId)
-      throws NotFoundException;
-  
-      public abstract Response deleteOrder(String orderId)
-      throws NotFoundException;
-  
+
+    public abstract Response getInventory()
+    throws NotFoundException;
+
+    public abstract Response placeOrder(Order body)
+    throws NotFoundException;
+
+    public abstract Response getOrderById(String orderId)
+    throws NotFoundException;
+
+    public abstract Response deleteOrder(String orderId)
+    throws NotFoundException;
 }

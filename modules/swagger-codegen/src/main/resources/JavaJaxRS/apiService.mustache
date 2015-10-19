@@ -21,9 +21,10 @@ import javax.ws.rs.core.Response;
 {{>generatedAnnotation}}
 {{#operations}}
 public abstract class {{classname}}Service {
-  {{#operation}}
-      public abstract Response {{nickname}}({{#allParams}}{{>serviceQueryParams}}{{>servicePathParams}}{{>serviceHeaderParams}}{{>serviceBodyParams}}{{>serviceFormParams}}{{#hasMore}},{{/hasMore}}{{/allParams}})
-      throws NotFoundException;
-  {{/operation}}
+{{#operation}}
+
+    public abstract Response {{nickname}}({{#allParams}}{{>serviceQueryParams}}{{>servicePathParams}}{{>serviceHeaderParams}}{{>serviceBodyParams}}{{>serviceFormParams}}{{#hasMore}},{{/hasMore}}{{/allParams}})
+    throws NotFoundException;
+{{/operation}}
 }
 {{/operations}}

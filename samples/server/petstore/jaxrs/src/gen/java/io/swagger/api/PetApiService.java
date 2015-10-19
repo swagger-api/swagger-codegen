@@ -18,31 +18,30 @@ import com.sun.jersey.multipart.FormDataParam;
 
 import javax.ws.rs.core.Response;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JaxRSServerCodegen", date = "2015-08-23T23:29:16.812-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JaxRSServerCodegen", date = "2015-08-24T10:58:17.716+01:00")
 public abstract class PetApiService {
-  
-      public abstract Response updatePet(Pet body)
-      throws NotFoundException;
-  
-      public abstract Response addPet(Pet body)
-      throws NotFoundException;
-  
-      public abstract Response findPetsByStatus(List<String> status)
-      throws NotFoundException;
-  
-      public abstract Response findPetsByTags(List<String> tags)
-      throws NotFoundException;
-  
-      public abstract Response getPetById(Long petId)
-      throws NotFoundException;
-  
-      public abstract Response updatePetWithForm(String petId,String name,String status)
-      throws NotFoundException;
-  
-      public abstract Response deletePet(Long petId,String apiKey)
-      throws NotFoundException;
-  
-      public abstract Response uploadFile(Long petId,String additionalMetadata,FormDataContentDisposition fileDetail)
-      throws NotFoundException;
-  
+
+    public abstract Response updatePet(Pet body)
+    throws NotFoundException;
+
+    public abstract Response addPet(Pet body)
+    throws NotFoundException;
+
+    public abstract Response findPetsByStatus(List<String> status)
+    throws NotFoundException;
+
+    public abstract Response findPetsByTags(List<String> tags)
+    throws NotFoundException;
+
+    public abstract Response getPetById(Long petId)
+    throws NotFoundException;
+
+    public abstract Response updatePetWithForm(String petId,String name,String status)
+    throws NotFoundException;
+
+    public abstract Response deletePet(Long petId,String apiKey)
+    throws NotFoundException;
+
+    public abstract Response uploadFile(Long petId,String additionalMetadata,FormDataContentDisposition fileDetail)
+    throws NotFoundException;
 }

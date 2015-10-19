@@ -1596,8 +1596,12 @@ public class DefaultCodegen {
         return apiFileFolder() + File.separator + toApiFilename(tag) + suffix;
     }
 
+    public boolean shouldSkipOverwrite(String filename) {
+        return new File(filename).exists() && !shouldOverwrite(filename);
+    }
+    
     public boolean shouldOverwrite(String filename) {
-        return !(skipOverwrite && new File(filename).exists());
+        return !isSkipOverwrite();
     }
 
     public boolean isSkipOverwrite() {

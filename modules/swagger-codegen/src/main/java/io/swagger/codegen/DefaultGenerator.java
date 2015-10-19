@@ -154,7 +154,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     for (String templateName : config.modelTemplateFiles().keySet()) {
                         String suffix = config.modelTemplateFiles().get(templateName);
                         String filename = config.modelFileFolder() + File.separator + config.toModelFilename(name) + suffix;
-                        if (!config.shouldOverwrite(filename)) {
+                        if (config.shouldSkipOverwrite(filename)) {
                             continue;
                         }
                         String templateFile = getFullTemplateFile(config, templateName);
@@ -210,7 +210,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
                 for (String templateName : config.apiTemplateFiles().keySet()) {
                     String filename = config.apiFilename(templateName, tag);
-                    if (!config.shouldOverwrite(filename) && new File(filename).exists()) {
+                    if (config.shouldSkipOverwrite(filename)) {
                         continue;
                     }
 
@@ -287,7 +287,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     of.mkdirs();
                 }
                 String outputFilename = outputFolder + File.separator + support.destinationFilename;
-                if (!config.shouldOverwrite(outputFilename)) {
+                if (config.shouldSkipOverwrite(outputFilename)) {
                     continue;
                 }
 
