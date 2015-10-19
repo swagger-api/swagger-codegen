@@ -363,6 +363,20 @@ namespace {{packageName}}.Client
         public static dynamic ConvertType(dynamic source, Type dest) {
             return Convert.ChangeType(source, dest);
         }
+        
+        public void AddPatternQueryParameters<T>(Dictionary<String, T> parameters, string pattern, Dictionary<String, String> queryParams)
+        {
+            Regex regex = new Regex(pattern);
+            foreach (KeyValuePair<String, T> entry in parameters)
+            {
+                if (!regex.IsMatch(entry.Key))
+                {
+                    queryParams.Add(entry.Key, ParameterToString(entry.Value));
+                }
+                else
+                    throw new ApiException((int)400, "Invalid parameter " + entry.Key + ", parameter name must match the regular expression \"" + pattern + "\"");
+            }
+        }
   
     }
 }

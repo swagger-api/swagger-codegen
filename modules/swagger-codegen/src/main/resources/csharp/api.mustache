@@ -126,6 +126,8 @@ namespace {{packageName}}.Api
             {{/pathParams}}
             {{#queryParams}}if ({{paramName}} != null) queryParams.Add("{{baseName}}", ApiClient.ParameterToString({{paramName}})); // query parameter
             {{/queryParams}}
+            {{#patternQueryParams}}if ({{paramName}} != null) ApiClient.AddPatternQueryParameters({{paramName}}, "{{pattern}}", queryParams); // pattern query parameter
+            {{/patternQueryParams}}
             {{#headerParams}}if ({{paramName}} != null) headerParams.Add("{{baseName}}", ApiClient.ParameterToString({{paramName}})); // header parameter
             {{/headerParams}}
             {{#formParams}}if ({{paramName}} != null) {{#isFile}}fileParams.Add("{{baseName}}", ApiClient.ParameterToFile("{{baseName}}", {{paramName}}));{{/isFile}}{{^isFile}}formParams.Add("{{baseName}}", ApiClient.ParameterToString({{paramName}})); // form parameter{{/isFile}}
@@ -182,6 +184,8 @@ namespace {{packageName}}.Api
             {{/pathParams}}
             {{#queryParams}}if ({{paramName}} != null) queryParams.Add("{{baseName}}", ApiClient.ParameterToString({{paramName}})); // query parameter
             {{/queryParams}}
+            {{#patternQueryParams}}if ({{paramName}} != null) ApiClient.AddPatternQueryParameters({{paramName}}, "{{pattern}}", queryParams); // pattern query parameter
+            {{/patternQueryParams}}
             {{#headerParams}}if ({{paramName}} != null) headerParams.Add("{{baseName}}", ApiClient.ParameterToString({{paramName}})); // header parameter
             {{/headerParams}}
             {{#formParams}}if ({{paramName}} != null) {{#isFile}}fileParams.Add("{{baseName}}", ApiClient.ParameterToFile("{{baseName}}", {{paramName}}));{{/isFile}}{{^isFile}}formParams.Add("{{baseName}}", ApiClient.ParameterToString({{paramName}})); // form parameter{{/isFile}}

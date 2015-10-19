@@ -1004,6 +1004,7 @@ public class DefaultCodegen {
         List<CodegenParameter> headerParams = new ArrayList<CodegenParameter>();
         List<CodegenParameter> cookieParams = new ArrayList<CodegenParameter>();
         List<CodegenParameter> formParams = new ArrayList<CodegenParameter>();
+        List<CodegenParameter> patternQueryParams = new ArrayList<CodegenParameter>();
 
         if (parameters != null) {
             for (Parameter param : parameters) {
@@ -1013,8 +1014,16 @@ public class DefaultCodegen {
                 CodegenParameter p = fromParameter(param, imports);
                 allParams.add(p);
                 if (param instanceof QueryParameter) {
-                    p.isQueryParam = new Boolean(true);
-                    queryParams.add(p.copy());
+                	if (hasParameterNamePattern(param))
+                	{
+                	  p.isQueryParam = new Boolean(true);
+                	  patternQueryParams.add(p.copy());
+                	}
+                	else
+                	{
+                      p.isQueryParam = new Boolean(true);
+                      queryParams.add(p.copy());
+                	}
                 } else if (param instanceof PathParameter) {
                     p.required = true;
                     p.isPathParam = new Boolean(true);
@@ -1068,6 +1077,7 @@ public class DefaultCodegen {
         op.headerParams = addHasMore(headerParams);
         // op.cookieParams = cookieParams;
         op.formParams = addHasMore(formParams);
+        op.patternQueryParams = addHasMore(patternQueryParams);
         // legacy support
         op.nickname = op.operationId;
 
@@ -1199,7 +1209,34 @@ public class DefaultCodegen {
     	return param.getDescription();
     }
     
-    public CodegenParameter fromParameter(Parameter param, Set<String> imports) {
+    public boolean hasParameterNamePattern(Parameter param)
+    {
+    	Map<String, Object> extensions = param.getVendorExtensions();
+    	if (extensions.size() > 0)
+    	{
+    		Object bindingName = extensions.get("x-name-pattern");
+    		if (bindingName != null)
+    		{
+    			if (!(param instanceof QueryParameter))
+    			{
+    				String msg = "x-name-pattern only allowed for query parameters\n";      
+    				throw new RuntimeException(msg);
+    			}
+    			QueryParameter qp = (QueryParameter)param;
+    			if ("integer".equals(qp.getType()) ||
+    				"number".equals(qp.getType()) ||
+    				"string".equals(qp.getType()) ||
+    				"boolean".equals(qp.getType()))
+    			return true;
+    			String msg = "x-name-pattern only allowed for parameters of type integer, number, string, boolean\n";      
+				throw new RuntimeException(msg);
+    		}
+    	}
+    	return false;    	
+    }
+    
+    public CodegenParameter fromParameter(Parameter param, Set<String> imports) 
+    {
         CodegenParameter p = CodegenModelFactory.newInstance(CodegenModelType.PARAMETER);
         p.baseName = param.getName();
         p.description = escapeText(getParameterDescription(param));
@@ -1211,7 +1248,7 @@ public class DefaultCodegen {
         if (System.getProperty("debugParser") != null) {
             LOGGER.info("working on Parameter " + param);
         }
-
+        
         // move the defaultValue for headers, forms and params
         if (param instanceof QueryParameter) {
             p.defaultValue = ((QueryParameter) param).getDefaultValue();
@@ -1222,6 +1259,42 @@ public class DefaultCodegen {
         }
 
         p.vendorExtensions = param.getVendorExtensions();
+        
+        if (hasParameterNamePattern(param))
+        {
+        	SerializableParameter qp = (SerializableParameter) param;
+        	
+        	//TODO: Do better
+        	p.pattern = (String)p.vendorExtensions.get("x-name-pattern");
+        	
+        	String type = qp.getType();
+        	Map<PropertyId, Object> args = new HashMap<PropertyId, Object>();
+            String format = qp.getFormat();
+            args.put(PropertyId.ENUM, qp.getEnum());
+            Property inner = PropertyBuilder.build(type, format, args);        	           
+            Property property = new MapProperty(inner);
+            
+            //collectionFormat = qp.getCollectionFormat();
+            CodegenProperty pr = fromProperty("inner", inner);
+            p.baseType = pr.datatype;
+            p.isContainer = true;
+            imports.add(pr.baseType);
+            property.setRequired(param.getRequired());
+            CodegenProperty model = fromProperty(qp.getName(), property);
+            p.dataType = model.datatype;
+            p.isEnum = model.isEnum;
+            p._enum = model._enum;
+            p.allowableValues = model.allowableValues;
+            //p.collectionFormat = collectionFormat;
+            p.paramName = toParamName(getParameterName(param));
+
+            if (model.complexType != null) {
+                imports.add(model.complexType);
+            }
+            return p;
+        }
+        else
+        {
 
         if (param instanceof SerializableParameter) {
             SerializableParameter qp = (SerializableParameter) param;
@@ -1339,6 +1412,7 @@ public class DefaultCodegen {
             p.paramName = toParamName(getParameterName(param));
         }
         return p;
+        }
     }
 
     public List<CodegenSecurity> fromSecurity(Map<String, SecuritySchemeDefinition> schemes) {
