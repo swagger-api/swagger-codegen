@@ -364,7 +364,7 @@ namespace {{packageName}}.Client
             return Convert.ChangeType(source, dest);
         }
         
-        public static void AddPatternQueryParameters<T>(Dictionary<String, T> parameters, string pattern, Dictionary<String, String> queryParams)
+        public void AddPatternQueryParameters<T>(Dictionary<String, T> parameters, string pattern, Dictionary<String, String> queryParams)
         {
             Regex regex = new Regex(pattern);
             foreach (KeyValuePair<String, T> entry in parameters)
