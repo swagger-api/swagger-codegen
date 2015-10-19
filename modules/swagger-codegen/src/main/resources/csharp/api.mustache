@@ -95,7 +95,7 @@ namespace {{packageName}}.Api
         /// </summary>
         {{#allParams}}/// <param name="{{paramName}}">{{description}}</param> 
         {{/allParams}}/// <returns>{{#returnType}}{{^returnContainer}}{{{returnType}}}{{/returnContainer}}{{/returnType}}</returns>            
-        public {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}} {{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+        public {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}} {{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}} = {{defaultValue}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
         {
             {{#allParams}}{{#required}}
             // verify the required parameter '{{paramName}}' is set
@@ -119,6 +119,8 @@ namespace {{packageName}}.Api
             if (http_header_accept != null)
                 headerParams.Add("Accept", ApiClient.SelectHeaderAccept(http_header_accepts));
 
+            {{#hardcodedQueryParams}}queryParams.Add("{{baseName}}", ApiClient.ParameterToString("{{defaultValue}}")); // hardcoded query parameter
+            {{/hardcodedQueryParams}}
             {{#pathParams}}if ({{paramName}} != null) pathParams.Add("{{baseName}}", ApiClient.ParameterToString({{paramName}})); // path parameter
             {{/pathParams}}
             {{#queryParams}}if ({{paramName}} != null) queryParams.Add("{{baseName}}", ApiClient.ParameterToString({{paramName}})); // query parameter
@@ -174,9 +176,8 @@ namespace {{packageName}}.Api
             if (http_header_accept != null)
                 headerParams.Add("Accept", ApiClient.SelectHeaderAccept(http_header_accepts));
 
-            // set "format" to json by default
-            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
-            pathParams.Add("format", "json");
+            {{#hardcodedQueryParams}}queryParams.Add("{{baseName}}", ApiClient.ParameterToString("{{defaultValue}}")); // hardcoded query parameter
+            {{/hardcodedQueryParams}}            
             {{#pathParams}}if ({{paramName}} != null) pathParams.Add("{{baseName}}", ApiClient.ParameterToString({{paramName}})); // path parameter
             {{/pathParams}}
             {{#queryParams}}if ({{paramName}} != null) queryParams.Add("{{baseName}}", ApiClient.ParameterToString({{paramName}})); // query parameter

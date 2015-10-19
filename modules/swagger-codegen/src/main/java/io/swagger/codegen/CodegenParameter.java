@@ -14,13 +14,22 @@ public class CodegenParameter {
     public List<String> _enum;
     public Map<String, Object> allowableValues;
     public Map<String, Object> vendorExtensions;
-
+    
     /**
      * Determines whether this parameter is mandatory. If the parameter is in "path",
      * this property is required and its value MUST be true. Otherwise, the property
      * MAY be included and its default value is false.
      */
     public Boolean required;
+    
+    public Kind parameterKind;
+    
+    public enum Kind 
+    {
+    	NORMAL,
+    	PATTERN,
+    	HARDCODED
+    }    
 
     public CodegenParameter copy() {
         CodegenParameter output = new CodegenParameter();
@@ -53,6 +62,7 @@ public class CodegenParameter {
             output.allowableValues = new HashMap<String, Object>(this.allowableValues);
         }
         output.vendorExtensions = this.vendorExtensions;
+        output.parameterKind = this.parameterKind;
 
         return output;
     }
