@@ -153,7 +153,7 @@ namespace {{packageName}}.Api
         /// </summary>
         {{#allParams}}/// <param name="{{paramName}}">{{description}}</param>
         {{/allParams}}/// <returns>{{#returnType}}{{^returnContainer}}{{{returnType}}}{{/returnContainer}}{{/returnType}}</returns>
-        {{#returnType}}public async System.Threading.Tasks.Task<{{{returnType}}}>{{/returnType}}{{^returnType}}public async System.Threading.Tasks.Task{{/returnType}} {{nickname}}Async ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+        {{#returnType}}public async System.Threading.Tasks.Task<{{{returnType}}}>{{/returnType}}{{^returnType}}public async System.Threading.Tasks.Task{{/returnType}} {{nickname}}Async ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}} = {{defaultValue}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
         {
             {{#allParams}}{{#required}}// verify the required parameter '{{paramName}}' is set
             if ({{paramName}} == null) throw new ApiException(400, "Missing required parameter '{{paramName}}' when calling {{nickname}}");
