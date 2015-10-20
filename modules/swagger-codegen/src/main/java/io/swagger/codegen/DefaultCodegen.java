@@ -2,6 +2,8 @@ package io.swagger.codegen;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+
+import io.swagger.codegen.CodegenParameter.Kind;
 import io.swagger.codegen.examples.ExampleGenerator;
 import io.swagger.models.ArrayModel;
 import io.swagger.models.ComposedModel;
@@ -1005,6 +1007,7 @@ public class DefaultCodegen {
         List<CodegenParameter> cookieParams = new ArrayList<CodegenParameter>();
         List<CodegenParameter> formParams = new ArrayList<CodegenParameter>();
         List<CodegenParameter> patternQueryParams = new ArrayList<CodegenParameter>();
+        List<CodegenParameter> hardcodedQueryParams = new ArrayList<CodegenParameter>();
 
         if (parameters != null) {
             for (Parameter param : parameters) {
@@ -1013,16 +1016,21 @@ public class DefaultCodegen {
             	
                 CodegenParameter p = fromParameter(param, imports);
                 allParams.add(p);
-                if (param instanceof QueryParameter) {
-                	if (hasParameterNamePattern(param))
+                if (param instanceof QueryParameter) 
+                {
+                	p.isQueryParam = new Boolean(true);
+                	switch (p.parameterKind)
                 	{
-                	  p.isQueryParam = new Boolean(true);
-                	  patternQueryParams.add(p.copy());
-                	}
-                	else
-                	{
-                      p.isQueryParam = new Boolean(true);
-                      queryParams.add(p.copy());
+                	case NORMAL:
+                		queryParams.add(p.copy());
+                		break;
+                	case HARDCODED:
+                		hardcodedQueryParams.add(p.copy());
+                		allParams.remove(p);
+                		break;
+                	case PATTERN:
+                		patternQueryParams.add(p.copy());
+                		break;
                 	}
                 } else if (param instanceof PathParameter) {
                     p.required = true;
@@ -1078,6 +1086,7 @@ public class DefaultCodegen {
         // op.cookieParams = cookieParams;
         op.formParams = addHasMore(formParams);
         op.patternQueryParams = addHasMore(patternQueryParams);
+        op.hardcodedQueryParams = addHasMore(hardcodedQueryParams);
         // legacy support
         op.nickname = op.operationId;
 
@@ -1209,30 +1218,214 @@ public class DefaultCodegen {
     	return param.getDescription();
     }
     
-    public boolean hasParameterNamePattern(Parameter param)
+    public CodegenParameter.Kind computeParameterKind(Parameter param)
     {
     	Map<String, Object> extensions = param.getVendorExtensions();
     	if (extensions.size() > 0)
     	{
     		Object bindingName = extensions.get("x-name-pattern");
+    		Object hardcodedValue = extensions.get("x-binding-value");
+    		if (bindingName != null && hardcodedValue != null)
+    			throw new RuntimeException("x-name-pattern and x-binding-value are not allowed on the same parameter");
+    		
+    		if (bindingName == null && hardcodedValue == null)
+    			return Kind.NORMAL;
+    		
+    		if (!(param instanceof QueryParameter))
+				throw new RuntimeException("x-name-pattern and x-binding-value are only allowed on query parameters");
+    		
+    		QueryParameter qp = (QueryParameter)param;
+			if (!"integer".equals(qp.getType()) &&
+				!"number".equals(qp.getType()) &&
+				!"string".equals(qp.getType()) &&
+				!"boolean".equals(qp.getType()))
+			  throw new RuntimeException("x-name-pattern and x-binding-value are only allowed for parameters of type integer, number, string, boolean");
+    		
     		if (bindingName != null)
-    		{
-    			if (!(param instanceof QueryParameter))
-    			{
-    				String msg = "x-name-pattern only allowed for query parameters\n";      
-    				throw new RuntimeException(msg);
-    			}
-    			QueryParameter qp = (QueryParameter)param;
-    			if ("integer".equals(qp.getType()) ||
-    				"number".equals(qp.getType()) ||
-    				"string".equals(qp.getType()) ||
-    				"boolean".equals(qp.getType()))
-    			return true;
-    			String msg = "x-name-pattern only allowed for parameters of type integer, number, string, boolean\n";      
-				throw new RuntimeException(msg);
-    		}
+    			return Kind.PATTERN;
+    		else
+    			return Kind.HARDCODED;
     	}
-    	return false;    	
+    	return Kind.NORMAL;
+    }
+
+    public void fromHardcodedParameter(Parameter param, Set<String> imports, CodegenParameter codegenParam)
+    {
+    	SerializableParameter qp = (SerializableParameter) param;
+    	
+    	codegenParam.defaultValue = (String)codegenParam.vendorExtensions.get("x-binding-value");
+    	
+    	String type = qp.getType();
+    	Map<PropertyId, Object> args = new HashMap<PropertyId, Object>();
+        String format = qp.getFormat();
+        args.put(PropertyId.ENUM, qp.getEnum());
+        Property inner = PropertyBuilder.build(type, format, args);        	           
+        Property property = new MapProperty(inner);
+        
+        CodegenProperty pr = fromProperty("inner", inner);
+        codegenParam.baseType = pr.datatype;
+        codegenParam.isContainer = true;
+        imports.add(pr.baseType);
+        property.setRequired(param.getRequired());
+        CodegenProperty model = fromProperty(qp.getName(), property);
+        codegenParam.dataType = model.datatype;
+        codegenParam.isEnum = model.isEnum;
+        codegenParam._enum = model._enum;
+        codegenParam.allowableValues = model.allowableValues;
+        codegenParam.paramName = toParamName(getParameterName(param));
+
+        if (model.complexType != null) {
+            imports.add(model.complexType);
+        }        
+    }
+    
+    public void fromPatternParameter(Parameter param, Set<String> imports, CodegenParameter codegenParam)
+    {
+    	SerializableParameter qp = (SerializableParameter) param;
+    	
+    	codegenParam.pattern = (String)codegenParam.vendorExtensions.get("x-name-pattern");
+    	
+    	String type = qp.getType();
+    	Map<PropertyId, Object> args = new HashMap<PropertyId, Object>();
+        String format = qp.getFormat();
+        args.put(PropertyId.ENUM, qp.getEnum());
+        Property inner = PropertyBuilder.build(type, format, args);        	           
+        Property property = new MapProperty(inner);
+        
+        CodegenProperty pr = fromProperty("inner", inner);
+        codegenParam.baseType = pr.datatype;
+        codegenParam.isContainer = true;
+        imports.add(pr.baseType);
+        property.setRequired(param.getRequired());
+        CodegenProperty model = fromProperty(qp.getName(), property);
+        codegenParam.dataType = model.datatype;
+        codegenParam.isEnum = model.isEnum;
+        codegenParam._enum = model._enum;
+        codegenParam.allowableValues = model.allowableValues;
+        codegenParam.paramName = toParamName(getParameterName(param));
+
+        if (model.complexType != null) {
+            imports.add(model.complexType);
+        }        
+    }
+    
+    public void fromNormalParameter(Parameter param, Set<String> imports, CodegenParameter codegenParam)
+    {
+    	if (param instanceof SerializableParameter) {
+    		SerializableParameter qp = (SerializableParameter) param;
+    		Property property = null;
+    		String collectionFormat = null;
+    		String type = qp.getType();
+    		if (null == type) {
+    			LOGGER.warn("Type is NULL for Serializable Parameter: " + param);
+    		}
+    		if ("array".equals(type)) {
+    			Property inner = qp.getItems();
+    			if (inner == null) {
+    				LOGGER.warn("warning!  No inner type supplied for array parameter \"" + qp.getName() + "\", using String");
+    				inner = new StringProperty().description("//TODO automatically added by swagger-codegen");
+    			}
+    			property = new ArrayProperty(inner);
+    			collectionFormat = qp.getCollectionFormat();
+    			CodegenProperty pr = fromProperty("inner", inner);
+    			codegenParam.baseType = pr.datatype;
+    			codegenParam.isContainer = true;
+    			imports.add(pr.baseType);
+    		} else if ("object".equals(type)) {
+    			Property inner = qp.getItems();
+    			if (inner == null) {
+    				LOGGER.warn("warning!  No inner type supplied for map parameter \"" + qp.getName() + "\", using String");
+    				inner = new StringProperty().description("//TODO automatically added by swagger-codegen");
+    			}
+    			property = new MapProperty(inner);
+    			collectionFormat = qp.getCollectionFormat();
+    			CodegenProperty pr = fromProperty("inner", inner);
+    			codegenParam.baseType = pr.datatype;
+    			imports.add(pr.baseType);
+    		} else {
+    			Map<PropertyId, Object> args = new HashMap<PropertyId, Object>();
+    			String format = qp.getFormat();
+    			args.put(PropertyId.ENUM, qp.getEnum());
+    			property = PropertyBuilder.build(type, format, args);
+    		}
+    		if (property == null) {
+    			LOGGER.warn("warning!  Property type \"" + type + "\" not found for parameter \"" + param.getName() + "\", using String");
+    			property = new StringProperty().description("//TODO automatically added by swagger-codegen.  Type was " + type + " but not supported");
+    		}
+    		property.setRequired(param.getRequired());
+    		CodegenProperty model = fromProperty(qp.getName(), property);
+    		codegenParam.dataType = model.datatype;
+    		codegenParam.isEnum = model.isEnum;
+    		codegenParam._enum = model._enum;
+    		codegenParam.allowableValues = model.allowableValues;
+    		codegenParam.collectionFormat = collectionFormat;
+    		codegenParam.paramName = toParamName(getParameterName(param));
+
+    		if (model.complexType != null) {
+    			imports.add(model.complexType);
+    		}
+    	} else {
+    		if (!(param instanceof BodyParameter)) {
+    			LOGGER.error("Cannot use Parameter " + param + " as Body Parameter");
+    		}
+
+    		BodyParameter bp = (BodyParameter) param;
+    		Model model = bp.getSchema();
+
+    		if (model instanceof ModelImpl) {
+    			ModelImpl impl = (ModelImpl) model;
+    			CodegenModel cm = fromModel(bp.getName(), impl);
+    			if (cm.emptyVars != null && cm.emptyVars == false) {
+    				codegenParam.dataType = getTypeDeclaration(cm.classname);
+    				imports.add(codegenParam.dataType);
+    			} else {
+    				Property prop = PropertyBuilder.build(impl.getType(), impl.getFormat(), null);
+    				prop.setRequired(bp.getRequired());
+    				CodegenProperty cp = fromProperty("property", prop);
+    				if (cp != null) {
+    					codegenParam.dataType = cp.datatype;
+    					if (codegenParam.dataType.equals("byte[]")) {
+    						codegenParam.isBinary = true;
+    					}
+    					else {
+    						codegenParam.isBinary = false;
+    					}
+    				}
+    			}
+    		} else if (model instanceof ArrayModel) {
+    			// to use the built-in model parsing, we unwrap the ArrayModel
+    			// and get a single property from it
+    			ArrayModel impl = (ArrayModel) model;
+    			CodegenModel cm = fromModel(bp.getName(), impl);
+    			// get the single property
+    			ArrayProperty ap = new ArrayProperty().items(impl.getItems());
+    			ap.setRequired(param.getRequired());
+    			CodegenProperty cp = fromProperty("inner", ap);
+    			if (cp.complexType != null) {
+    				imports.add(cp.complexType);
+    			}
+    			imports.add(cp.baseType);
+    			codegenParam.dataType = cp.datatype;
+    			codegenParam.isContainer = true;
+    		} else {
+    			Model sub = bp.getSchema();
+    			if (sub instanceof RefModel) {
+    				String name = ((RefModel) sub).getSimpleRef();
+    				if (typeMapping.containsKey(name)) {
+    					name = typeMapping.get(name);
+    				} else {
+    					name = toModelName(name);
+    					if (defaultIncludes.contains(name)) {
+    						imports.add(name);
+    					}
+    					imports.add(name);
+    					name = getTypeDeclaration(name);
+    				}
+    				codegenParam.dataType = name;
+    			}
+    		}
+    		codegenParam.paramName = toParamName(getParameterName(param));
+    	}    	
     }
     
     public CodegenParameter fromParameter(Parameter param, Set<String> imports) 
@@ -1257,162 +1450,29 @@ public class DefaultCodegen {
         } else if (param instanceof FormParameter) {
             p.defaultValue = ((FormParameter) param).getDefaultValue();
         }
-
-        p.vendorExtensions = param.getVendorExtensions();
         
-        if (hasParameterNamePattern(param))
+        if (p.defaultValue == null)
+          p.defaultValue = "null";
+        /*
+         * Todo: quote string default parameters
+         */
+        
+        p.vendorExtensions = param.getVendorExtensions();
+        p.parameterKind = computeParameterKind(param);
+        
+        switch (p.parameterKind)
         {
-        	SerializableParameter qp = (SerializableParameter) param;
-        	
-        	//TODO: Do better
-        	p.pattern = (String)p.vendorExtensions.get("x-name-pattern");
-        	
-        	String type = qp.getType();
-        	Map<PropertyId, Object> args = new HashMap<PropertyId, Object>();
-            String format = qp.getFormat();
-            args.put(PropertyId.ENUM, qp.getEnum());
-            Property inner = PropertyBuilder.build(type, format, args);        	           
-            Property property = new MapProperty(inner);
-            
-            //collectionFormat = qp.getCollectionFormat();
-            CodegenProperty pr = fromProperty("inner", inner);
-            p.baseType = pr.datatype;
-            p.isContainer = true;
-            imports.add(pr.baseType);
-            property.setRequired(param.getRequired());
-            CodegenProperty model = fromProperty(qp.getName(), property);
-            p.dataType = model.datatype;
-            p.isEnum = model.isEnum;
-            p._enum = model._enum;
-            p.allowableValues = model.allowableValues;
-            //p.collectionFormat = collectionFormat;
-            p.paramName = toParamName(getParameterName(param));
-
-            if (model.complexType != null) {
-                imports.add(model.complexType);
-            }
-            return p;
+        case NORMAL:
+        	fromNormalParameter(param, imports, p);
+        	break;
+        case PATTERN:
+        	fromPatternParameter(param, imports, p);
+        	break;
+        case HARDCODED:
+        	fromHardcodedParameter(param, imports, p);
+        	break;
         }
-        else
-        {
-
-        if (param instanceof SerializableParameter) {
-            SerializableParameter qp = (SerializableParameter) param;
-            Property property = null;
-            String collectionFormat = null;
-            String type = qp.getType();
-            if (null == type) {
-                LOGGER.warn("Type is NULL for Serializable Parameter: " + param);
-            }
-            if ("array".equals(type)) {
-                Property inner = qp.getItems();
-                if (inner == null) {
-                    LOGGER.warn("warning!  No inner type supplied for array parameter \"" + qp.getName() + "\", using String");
-                    inner = new StringProperty().description("//TODO automatically added by swagger-codegen");
-                }
-                property = new ArrayProperty(inner);
-                collectionFormat = qp.getCollectionFormat();
-                CodegenProperty pr = fromProperty("inner", inner);
-                p.baseType = pr.datatype;
-                p.isContainer = true;
-                imports.add(pr.baseType);
-            } else if ("object".equals(type)) {
-                Property inner = qp.getItems();
-                if (inner == null) {
-                    LOGGER.warn("warning!  No inner type supplied for map parameter \"" + qp.getName() + "\", using String");
-                    inner = new StringProperty().description("//TODO automatically added by swagger-codegen");
-                }
-                property = new MapProperty(inner);
-                collectionFormat = qp.getCollectionFormat();
-                CodegenProperty pr = fromProperty("inner", inner);
-                p.baseType = pr.datatype;
-                imports.add(pr.baseType);
-            } else {
-                Map<PropertyId, Object> args = new HashMap<PropertyId, Object>();
-                String format = qp.getFormat();
-                args.put(PropertyId.ENUM, qp.getEnum());
-                property = PropertyBuilder.build(type, format, args);
-            }
-            if (property == null) {
-                LOGGER.warn("warning!  Property type \"" + type + "\" not found for parameter \"" + param.getName() + "\", using String");
-                property = new StringProperty().description("//TODO automatically added by swagger-codegen.  Type was " + type + " but not supported");
-            }
-            property.setRequired(param.getRequired());
-            CodegenProperty model = fromProperty(qp.getName(), property);
-            p.dataType = model.datatype;
-            p.isEnum = model.isEnum;
-            p._enum = model._enum;
-            p.allowableValues = model.allowableValues;
-            p.collectionFormat = collectionFormat;
-            p.paramName = toParamName(getParameterName(param));
-
-            if (model.complexType != null) {
-                imports.add(model.complexType);
-            }
-        } else {
-            if (!(param instanceof BodyParameter)) {
-                LOGGER.error("Cannot use Parameter " + param + " as Body Parameter");
-            }
-
-            BodyParameter bp = (BodyParameter) param;
-            Model model = bp.getSchema();
-
-            if (model instanceof ModelImpl) {
-                ModelImpl impl = (ModelImpl) model;
-                CodegenModel cm = fromModel(bp.getName(), impl);
-                if (cm.emptyVars != null && cm.emptyVars == false) {
-                    p.dataType = getTypeDeclaration(cm.classname);
-                    imports.add(p.dataType);
-                } else {
-                    Property prop = PropertyBuilder.build(impl.getType(), impl.getFormat(), null);
-                    prop.setRequired(bp.getRequired());
-                    CodegenProperty cp = fromProperty("property", prop);
-                    if (cp != null) {
-                        p.dataType = cp.datatype;
-                        if (p.dataType.equals("byte[]")) {
-                            p.isBinary = true;
-                        }
-                        else {
-                            p.isBinary = false;
-                        }
-                    }
-                }
-            } else if (model instanceof ArrayModel) {
-                // to use the built-in model parsing, we unwrap the ArrayModel
-                // and get a single property from it
-                ArrayModel impl = (ArrayModel) model;
-                CodegenModel cm = fromModel(bp.getName(), impl);
-                // get the single property
-                ArrayProperty ap = new ArrayProperty().items(impl.getItems());
-                ap.setRequired(param.getRequired());
-                CodegenProperty cp = fromProperty("inner", ap);
-                if (cp.complexType != null) {
-                    imports.add(cp.complexType);
-                }
-                imports.add(cp.baseType);
-                p.dataType = cp.datatype;
-                p.isContainer = true;
-            } else {
-                Model sub = bp.getSchema();
-                if (sub instanceof RefModel) {
-                    String name = ((RefModel) sub).getSimpleRef();
-                    if (typeMapping.containsKey(name)) {
-                        name = typeMapping.get(name);
-                    } else {
-                        name = toModelName(name);
-                        if (defaultIncludes.contains(name)) {
-                            imports.add(name);
-                        }
-                        imports.add(name);
-                        name = getTypeDeclaration(name);
-                    }
-                    p.dataType = name;
-                }
-            }
-            p.paramName = toParamName(getParameterName(param));
-        }
-        return p;
-        }
+        return p;        
     }
 
     public List<CodegenSecurity> fromSecurity(Map<String, SecuritySchemeDefinition> schemes) {
