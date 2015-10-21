@@ -23,7 +23,7 @@ namespace {{packageName}}.Api
         /// </remarks>
         {{#allParams}}/// <param name="{{paramName}}">{{description}}</param>
         {{/allParams}}/// <returns>{{#returnType}}{{^returnContainer}}{{{returnType}}}{{/returnContainer}}{{/returnType}}</returns>
-        {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}} {{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}} {{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}} = {{defaultValue}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
   
         /// <summary>
         /// {{summary}}
@@ -33,7 +33,7 @@ namespace {{packageName}}.Api
         /// </remarks>
         {{#allParams}}/// <param name="{{paramName}}">{{description}}</param>
         {{/allParams}}/// <returns>{{#returnType}}{{^returnContainer}}{{{returnType}}}{{/returnContainer}}{{/returnType}}</returns>
-        {{#returnType}}System.Threading.Tasks.Task<{{{returnType}}}>{{/returnType}}{{^returnType}}System.Threading.Tasks.Task{{/returnType}} {{nickname}}Async ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        {{#returnType}}System.Threading.Tasks.Task<{{{returnType}}}>{{/returnType}}{{^returnType}}System.Threading.Tasks.Task{{/returnType}} {{nickname}}Async ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}} = {{defaultValue}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
         {{/operation}}
     }
   
