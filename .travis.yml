@@ -3,3 +3,11 @@ language: java
 script: mvn verify -Psamples
 jdk:
   - oraclejdk7
+deploy:
+  provider: releases
+  api_key: "e6f3eb1c0a621668030d7047e1c9b96f95aebaba"
+  file: "modules/swagger-codegen-cli/target/swagger-codegen-cli.jar"
+  skip_cleanup: true
+  on:
+    repo: 28msec/swagger-codegen
+    branch: master
