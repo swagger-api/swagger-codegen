@@ -2,12 +2,15 @@ sudo: false
 language: java
 script: mvn verify -Psamples
 jdk:
-  - oraclejdk7
+- oraclejdk7
 deploy:
   provider: releases
-  api_key: "e6f3eb1c0a621668030d7047e1c9b96f95aebaba"
-  file: "modules/swagger-codegen-cli/target/swagger-codegen-cli.jar"
+  api_key: "$GITHUB_TOKEN"
+  file: modules/swagger-codegen-cli/target/swagger-codegen-cli.jar
   skip_cleanup: true
   on:
     repo: 28msec/swagger-codegen
     branch: master
+env:
+  global:
+    secure: BEeDjKwcdoNvF4YhQb0LyZ46W+B25R2qb1/04QY0l1S2Z4LPSgzQofIjZPU6M7sK6vMMF8uiTFehdAGr4pNxAnqdGYqXSV++C1XheDCOE3h8jcG6PAFOHNh4wntR5MR+SRHYts6TFaWzqclxSbzp5ia3BPqbZmh2gYK5JN1VVfBaVW/R1tVlyOK4DS6SvMejY3K5JnF4gvaJmlp33IIbpKx1QvvdbwR5PO5q0YMo/6cZB82dBv6mWOC/LaW0pD3d/J8Yrpfw7wZ3xFz8Bc7Lt7QVRS2YEYnkp1mRLYeqGnnyb2QSCP2USO6/pvJ5zOIxrKlClphn4ymdD7MAfmYh6mHWsmlVbAJpVDiUQTBFP1VbbJ09XVGjUqQqEThGKPzuG6q0YucBQiS07GagLmZOdu3c58n20fS25f4Cv2EuRICkvZddI25hdr3K2DiQ1SIQiac9LdXhqyluEGTr01sKz6SQMXASo1zbCJze1cSXiUem4ENTTfCGflEVCS/NGr9RWH+fYMZD0lGOPVqMHq4imW4Dlx8RRdh05pf4ozsfLGadZk1ACIFKB4Kt0CvB7wxTz0xyiJx9uzdqBXBLuVR4Os3Y+wmzlaa1k8+D26lA8BaQC+BoLbbH/xfBqjm6HuwjNeE/8gK1zUuwCKsaIkQpjGvG8yeTxc+w5+wkzwTiqdc=
