@@ -3,12 +3,3 @@ language: java
 script: mvn package
 jdk:
 - oraclejdk7
-before_deploy: "git fetch --tags"
-deploy:
-  provider: releases
-  api_key:
-    secure: blENlSVGYTjpmXWZgOsOJ0WTsSRUCw0XoDCmwjrg32UIP0dZsbIBcfkS/7VRfJeq7LTDpsrPes8wKNQ+n0KnBDETtvEtmbLxfKht1ZZWICQ5rDvGSepexXr3FcmeG7UG7HTrCuf3iHX2Eg0CLjpvZQlZeWPD6PzDa17ve6gqPe4ZqVIKjElKpENF3IxEFoePpVoq4olOL6HBwR/ClG55uU80iUDM/yY1qMmQMTy+m9Z3qpsG347JjDpgzK156NcTSi++XNw8VCwzeyU4DysxFK6uE3xIjiqIoi2vD8rkuR+nXe/Waozf9cCswtmaZQ8+IkiNXddmA9XaHZYEwcxrWHdis1dzkUtbkwTHKU2NypIM6oGR552gI9j3iaC6/ZBCgo9c/m1UuSpFaDwMAmo8EWh9wODV2cDRBR/zFdnGSchEN/8BAJTwBFCHIxabN9M4XPR6x0hkPsMedWFa5EgG9mt/jpaw3nvrgBMtFsc5zwnt/M8HxQNSacuq8WWMWuHIB6VQ/hpsz767tvo6mhUvddMrlp+6wpqNsEb8TyuBgQrha/MQ+CLDRNdaDnD9qJu7mj6rio4iDvPbGP7TBCvpXjBD4T1g5xgRiFjcYppC+nT5kgHdGvzWuFmC0N6AMC/6rdx5L/f0F67g5Hi1A89+AhS1Pwg2X5B+v3Mm1Ca/dRY=
-  file: modules/swagger-codegen-cli/target/swagger-codegen-cli.jar
-  on:
-    repo: 28msec/swagger-codegen
-    branch: master
