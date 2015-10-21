@@ -1,6 +1,6 @@
 # Swagger Code Generator
 
-[![Build Status](https://travis-ci.org/swagger-api/swagger-codegen.png)](https://travis-ci.org/swagger-api/swagger-codegen)
+[![Build Status](https://travis-ci.org/28msec/swagger-codegen.png)](https://travis-ci.org/28msec/swagger-codegen)
 
 ## Overview
 This is the swagger codegen project, which allows generation of client libraries automatically from a Swagger-compliant server.  
