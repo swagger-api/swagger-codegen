@@ -2,4 +2,12 @@ sudo: false
 language: java
 script: mvn verify -Psamples
 jdk:
-  - oraclejdk7
+- oraclejdk7
+deploy:
+  provider: releases
+  api_key:
+    secure: nl1TUKIMxLqgQhof1wJj9rcGTysXnmzqV0qAdsUAlXOJPFXkscWF/XnCnhorF8/Qx4gxNbh7WPu19UrI7zmqO+OKYkpq54qgRRtaWYyrZCa2m2aFNirW1i+DtZKs0p0g9JZMEptGuyu9eJjN/TJHJOB95o0t70stEbjopr3eOFcavfKDh1UK425tLsIePWYKh2dW6ad+KBegdKGJjJfTVv4dsqLwXZhMW3pyUPZ6bTr5SU07qqppE6uOdNMtlOghf2KIy6J+qIc9C912vpGW0JGSDi94mf1jeMyrXXut2B4pXHqqzJblJbEh/FVrUu+SP4/P7TarG+56ANAhsfjhVz86sjJIJVXsKalkidFYVkdcSL2niR1MlpCnGTK3S7+ViIyhoEsmsKjT8Y0Rn3HxoeCjSlQmNQ3Gy0aQ/VGl3A27G6NvdWZJF+0o+nhUsBTWy+ffNZOZ0G/ktC30e0n1yHBIXADkXGKUMozYWHRFiEjCFi2ssIn0T6Dp57cskkJ7Moy4EueZjQl5GpBLfi8qK0KC/m7bB4zRNnuVb7UANJq9KQrxM4RMcn/IeiGZJI5XWfC3wFbkXcu+kHI9TaBKo/Bl7VH/ZRczz4LKzckq1tAQP3njrcMx7JM0hKGRS4mD31oQLF5O5uEB3I89qzOEIocrsTbnGP7h/Yw3+g8uZBE=
+  file: modules/swagger-codegen-cli/target/swagger-codegen-cli.jar
+  on:
+    repo: 28msec/swagger-codegen
+    branch: master
