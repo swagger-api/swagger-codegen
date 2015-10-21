@@ -220,9 +220,9 @@ namespace {{packageName}}.Client
         /// <returns>Object representation of the JSON string.</returns>
         public object Deserialize(string content, Type type, IList<Parameter> headers=null)
         {
-            if (type == typeof(Object)) // return an object
+            if (type == typeof(Object)) // return a JSON object
             {
-                return content;
+                return JsonConvert.DeserializeObject(content);
             }
 
             if (type == typeof(Stream))
@@ -364,6 +364,12 @@ namespace {{packageName}}.Client
             return Convert.ChangeType(source, dest);
         }
         
+        /// <summary>
+        /// Adds pattern-based parameters (after name validation) to a dictionary query parameters.
+        /// </summary>
+        /// <param name="parameters">Pattern parameters</param>
+        /// <param name="pattern">Pattern</param>
+        /// <param name="queryParams">Query parameters</param>        
         public void AddPatternQueryParameters<T>(Dictionary<String, T> parameters, string pattern, Dictionary<String, String> queryParams)
         {
             Regex regex = new Regex(pattern);
