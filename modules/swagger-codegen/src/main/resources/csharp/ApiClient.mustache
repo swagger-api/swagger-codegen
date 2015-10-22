@@ -207,6 +207,10 @@ namespace {{packageName}}.Client
                 }
                 return flattenString.Remove(flattenString.Length - 1);;
             }
+            else if (obj is bool)
+                return ((bool)obj) ? "true" : "false";
+            else if (obj is Boolean)
+                return ((Boolean)obj) ? "true" : "false";
             else
                 return Convert.ToString (obj);
         }
@@ -375,7 +379,7 @@ namespace {{packageName}}.Client
             Regex regex = new Regex(pattern);
             foreach (KeyValuePair<String, T> entry in parameters)
             {
-                if (!regex.IsMatch(entry.Key))
+                if (regex.IsMatch(entry.Key))
                 {
                     queryParams.Add(entry.Key, ParameterToString(entry.Value));
                 }

@@ -7,7 +7,7 @@
 - [Json.NET] (https://www.nuget.org/packages/Newtonsoft.Json/)
 
 
-NOTE: The DLLs included in the package may not be the latest version. We recommned using [NuGet] (https://docs.nuget.org/consume/installing-nuget) to obtain the latest version of the packages:
+NOTE: The DLLs included in the package may not be the latest version. We recommend using [NuGet] (https://docs.nuget.org/consume/installing-nuget) to obtain the latest version of the packages:
 ```
 Install-Package RestSharp
 Install-Package Newtonsoft.Json
