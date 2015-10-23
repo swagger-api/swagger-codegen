@@ -1,4 +1,4 @@
-require "uri"
+require 'uri'
 
 module {{moduleName}}
 {{#operations}}
@@ -22,7 +22,12 @@ module {{moduleName}}
       {{/required}}{{/allParams}}
 
       # resource path
-      path = "{{path}}".sub('{format}','json'){{#pathParams}}.sub('{' + '{{baseName}}' + '}', {{paramName}}.to_s){{/pathParams}}
+      path = "{{path}}".sub('{format}','json')
+
+      {{#pathParams}}
+      # check if id parameter is resource URI, otherwise substitute for ID
+      path = {{paramName}} =~ URI::regexp ? path.sub('{' + '{{baseName}}' + '}', {{paramName}}.split('/')[-1].to_s) : path.sub('{' + '{{baseName}}' + '}', {{paramName}}.to_s)
+      {{/pathParams}}
 
       # query parameters
       query_params = {}{{#queryParams}}{{#required}}
@@ -54,8 +59,7 @@ module {{moduleName}}
 
       {{#returnType}}response = Swagger::Request.new(:{{httpMethod}}, path, {:params => query_params, :headers => header_params, :form_params => form_params, :body => post_body, :auth_names => @auth_names}).make
 
-      response.code == 201 ? obj = response.headers['Location'] : ({{#returnContainer}}response.map {|response| {{/returnContainer}}obj = {{returnBaseType}}.new() and obj.build_from_hash(response.body){{#returnContainer}} }{{/returnContainer}}{{/returnType}}{{^returnType}}Swagger::Request.new(:{{httpMethod}}, path, {:params => query_params,:headers => header_params, :form_params => form_params, :body => post_body, :auth_names => @auth_names}).make)
-      nil{{/returnType}}
+      response.code == 201 ? obj = response.headers['Location'] : ({{#returnContainer}}response.map {|response| {{/returnContainer}}obj = {{returnBaseType}}.new() and obj.build_from_hash(response.body){{#returnContainer}}{{/returnContainer}}){{/returnType}}{{^returnType}}nil{{/returnType}}
 
     end
 {{/operation}}
