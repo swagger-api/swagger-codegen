@@ -24,9 +24,12 @@ from six import iteritems
 try:
   # for python3
   from urllib.parse import quote
+  import urllib.parse as urlparse
 except ImportError:
   # for python2
   from urllib import quote
+  import urlparse
+
 
 from . import configuration
 
@@ -74,6 +77,9 @@ class ApiClient(object):
     if path_params:
       path_params = self.sanitize_for_serialization(path_params)
       for k, v in iteritems(path_params):
+        urlize = urlparse.urlparse(v)
+        if 'http' in urlize.scheme:
+          v = v.split('/')[-1]
         replacement = quote(str(self.to_path_value(v)))
         resource_path = resource_path.replace('{' + k + '}', replacement)
 
