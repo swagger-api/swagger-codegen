@@ -128,7 +128,7 @@ class RESTClientObject(object):
         if r.status not in range(200, 206):
             raise ApiException(r)
 
-        return r.getheader('Location') if method == 'POST' else self.process_response(r)
+        return r.getheader('Location') if r.status == 201 else self.process_response(r)
 
     def process_response(self, response):
         # In the python 3, the response.data is bytes.

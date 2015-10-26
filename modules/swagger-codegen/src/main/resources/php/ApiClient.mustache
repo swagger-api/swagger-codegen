@@ -298,7 +298,7 @@ class ApiClient {
       throw new ApiException("API call to $url timed out: ".serialize($response_info), 0, null, null);
     } else if ($response_info['http_code'] >= 200 && $response_info['http_code'] <= 299 ) {
       $data = json_decode($http_body);
-      if ($method == self::$POST) {
+      if ($response_info['http_code'] == 201) {
         $data = self::http_parse_headers($http_header)["Location"];
       }
       else if (json_last_error() > 0) { // if response is a string
@@ -308,7 +308,7 @@ class ApiClient {
       throw new ApiException("[".$response_info['http_code']."] Error connecting to the API ($url)",
         $response_info['http_code'], $http_header, $http_body);
     }
-    return $data;
+    return [$response_info['http_code'], $data];
   }
 
   /**
