@@ -45,23 +45,14 @@ namespace {{packageName}}.Api
         /// <summary>
         /// Initializes a new instance of the <see cref="{{classname}}"/> class.
         /// </summary>
-        /// <param name="apiClient"> an instance of ApiClient (optional)</param>
+        /// <param name="apiClient"> an instance of ApiClient</param>
         /// <returns></returns>
-        public {{classname}}(ApiClient apiClient = null)
+        public {{classname}}(ApiClient apiClient)
         {
             if (apiClient == null) // use the default one in Configuration
                 this.ApiClient = Configuration.DefaultApiClient; 
             else
                 this.ApiClient = apiClient;
-        }
-    
-        /// <summary>
-        /// Initializes a new instance of the <see cref="{{classname}}"/> class.
-        /// </summary>
-        /// <returns></returns>
-        public {{classname}}(String basePath)
-        {
-            this.ApiClient = new ApiClient(basePath);
         }
     
         /// <summary>
