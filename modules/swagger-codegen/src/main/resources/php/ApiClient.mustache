@@ -308,7 +308,7 @@ class ApiClient {
       throw new ApiException("[".$response_info['http_code']."] Error connecting to the API ($url)",
         $response_info['http_code'], $http_header, $http_body);
     }
-    return $data;
+    return [$response_info['http_code'], $data];
   }
 
   /**

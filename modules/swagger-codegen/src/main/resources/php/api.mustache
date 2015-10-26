@@ -96,7 +96,13 @@ class {{classname}} {
       if(${{paramName}} !== null) {
         $headerParams['{{baseName}}'] = $this->apiClient->toHeaderValue(${{paramName}});
       }{{/headerParams}}
-      {{#pathParams}}// path params
+      {{#pathParams}}
+      // Entire URL for ID
+      if (filter_var(${{paramName}}, FILTER_VALIDATE_URL)) {
+        $split = explode('/', ${{paramName}});
+        ${{paramName}} = end($split);
+      }
+      // path params
       if(${{paramName}} !== null) {
         $resourcePath = str_replace("{" . "{{baseName}}" . "}",
                                     $this->apiClient->toPathValue(${{paramName}}), $resourcePath);
@@ -124,11 +130,11 @@ class {{classname}} {
                                             $queryParams, $httpBody,
                                             $headerParams, $this->authSettings);
 
-      {{#returnType}}if(! $response) {
+      {{#returnType}}if(!$response[1]) {
         return null;
       }
 
-      return ($method == "POST") ? $response : $this->apiClient->deserialize($response,'{{returnType}}');{{/returnType}}
+      return $response[0] == 201 ? $response[1] : $this->apiClient->deserialize($response[1],'{{returnType}}');{{/returnType}}
   }
   {{/operation}}
 {{newline}}
