@@ -1062,12 +1062,9 @@ public class DefaultCodegen {
 
         String operationId = operation.getOperationId();
         if (operationId == null) {
-            String tmpPath = path;
-            tmpPath = tmpPath.replaceAll("\\{", "");
-            tmpPath = tmpPath.replaceAll("\\}", "");
-            String[] parts = (tmpPath + "/" + httpMethod).split("/");
+            String[] parts = (path + "/" + httpMethod).split("/");
             StringBuilder builder = new StringBuilder();
-            if ("/".equals(tmpPath)) {
+            if ("/".equals(path)) {
                 // must be root tmpPath
                 builder.append("root");
             }
