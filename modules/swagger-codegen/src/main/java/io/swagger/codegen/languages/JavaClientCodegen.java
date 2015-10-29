@@ -435,7 +435,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
     public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
         CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
 
-        if (allDefinitions != null && codegenModel != null && codegenModel.parent != null && codegenModel.hasEnums) {
+        if (allDefinitions != null && codegenModel != null && codegenModel.parent != null && codegenModel.hasEnums != null && codegenModel.hasEnums) {
             final Model parentModel = allDefinitions.get(toModelName(codegenModel.parent));
             final CodegenModel parentCodegenModel = super.fromModel(codegenModel.parent, parentModel);
             codegenModel = this.reconcileInlineEnums(codegenModel, parentCodegenModel);
@@ -556,7 +556,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         // Because the child models extend the parents, the enums will be available via the parent.
 
         // Only bother with reconciliation if the parent model has enums.
-        if (parentCodegenModel.hasEnums) {
+        if (codegenModel.hasEnums != null && parentCodegenModel.hasEnums) {
 
             // Get the properties for the parent and child models
             final List<CodegenProperty> parentModelCodegenProperties = parentCodegenModel.vars;
