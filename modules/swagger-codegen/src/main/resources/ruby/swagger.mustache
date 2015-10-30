@@ -41,11 +41,11 @@ module {{moduleName}}
       end
 
       def authenticated?
-        Swagger.configuration.auth_token.present?
+        Swagger.configuration.access_token.present?
       end
 
       def de_authenticate
-        Swagger.configuration.auth_token = nil
+        Swagger.configuration.access_token = nil
       end
 
       def authenticate
@@ -65,7 +65,7 @@ module {{moduleName}}
         )
 
         response_body = request.response.body
-        Swagger.configuration.auth_token = response_body['token']
+        Swagger.configuration.access_token = response_body['token']
       end
     end
   end

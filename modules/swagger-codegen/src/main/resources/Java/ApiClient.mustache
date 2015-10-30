@@ -150,10 +150,10 @@ public class ApiClient {
   /**
    * Helper method to set OAuth authorization token
    */
-  public void setAuthToken(String token) {
+  public void setAccessToken(String token) {
     for (Authentication auth : authentications.values()) {
       if (auth instanceof OAuth) {
-        ((OAuth) auth).setAuthToken(token);
+        ((OAuth) auth).setAccessToken(token);
         return;
       }
     }

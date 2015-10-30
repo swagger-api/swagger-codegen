@@ -41,7 +41,7 @@ module {{moduleName}}
             @params['{{keyParamName}}'] = get_api_key_with_prefix('{{keyParamName}}'){{/isKeyInQuery}}{{/isApiKey}}{{#isBasic}}@headers ||= {}
             http_auth_header = 'Basic ' + ["#{Swagger.configuration.username}:#{Swagger.configuration.password}"].pack('m').delete("\r\n")
             @headers['Authorization'] = http_auth_header{{/isBasic}}
-            {{#isOAuth}}@headers.merge!({:Authorization => "Bearer #{Swagger.configuration.auth_token}"}){{/isOAuth}}
+            {{#isOAuth}}@headers.merge!({:Authorization => "Bearer #{Swagger.configuration.access_token}"}){{/isOAuth}}
           {{/authMethods}}
           end
         end

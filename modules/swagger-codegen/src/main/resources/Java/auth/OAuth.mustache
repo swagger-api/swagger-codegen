@@ -4,18 +4,18 @@ import java.util.Map;
 
 public class OAuth implements Authentication {
 
-    private String authToken;
+    private String accessToken;
 
-    public void setAuthToken(String token) {
-        this.authToken = token;
+    public void setAccessToken(String token) {
+        this.accessToken = token;
     }
 
-    public String getAuthToken() {
-        return authToken;
+    public String getAccessToken() {
+        return accessToken;
     }
 
     @Override
     public void applyToParams(Map<String, String> queryParams, Map<String, String> headerParams) {
-        headerParams.put("Authorization", "Bearer " + this.authToken);
+        headerParams.put("Authorization", "Bearer " + this.accessToken);
     }
 }
