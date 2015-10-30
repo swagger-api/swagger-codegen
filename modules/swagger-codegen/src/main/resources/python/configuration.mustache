@@ -17,7 +17,7 @@ password = ''
 
 {{#authMethods}}
 {{#isOAuth}}
-auth_token = ''
+access_token = ''
 {{/isOAuth}}
 {{/authMethods}}
 
@@ -56,7 +56,7 @@ def auth_settings():
                     'type': 'oauth2',
                     'in': 'header',
                     'key': 'Authorization',
-                    'value': 'Bearer ' + auth_token
+                    'value': 'Bearer ' + access_token
                 },
              {{/isOAuth}}{{/authMethods}}
            }

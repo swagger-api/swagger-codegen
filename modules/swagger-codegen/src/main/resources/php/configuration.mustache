@@ -32,7 +32,7 @@ class Configuration {
   /**
    * Authorization token for OAuth 2
    */
-  public static $auth_token = '';
+  public static $access_token = '';
 
   /**
    * Username for HTTP basic authentication

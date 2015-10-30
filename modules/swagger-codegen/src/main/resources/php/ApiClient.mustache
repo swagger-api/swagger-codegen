@@ -192,7 +192,7 @@ class ApiClient {
         {{#authMethods}}
         case '{{name}}':
           {{#isApiKey}}{{#isKeyInHeader}}$headerParams['{{keyParamName}}'] = $this->getApiKeyWithPrefix('{{keyParamName}}');{{/isKeyInHeader}}{{#isKeyInQuery}}$queryParams['{{keyParamName}}'] = $this->getApiKeyWithPrefix('{{keyParamName}}');{{/isKeyInQuery}}{{/isApiKey}}{{#isBasic}}$headerParams['Authorization'] = 'Basic '.base64_encode(Configuration::$username.":".Configuration::$password);{{/isBasic}}
-          {{#isOAuth}}$headerParams['Authorization'] = 'Bearer ' . Configuration::$auth_token; {{/isOAuth}}
+          {{#isOAuth}}$headerParams['Authorization'] = 'Bearer ' . Configuration::$access_token; {{/isOAuth}}
           break;
         {{/authMethods}}
         default:
