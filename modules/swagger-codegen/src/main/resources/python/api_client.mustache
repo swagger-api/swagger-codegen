@@ -1,7 +1,7 @@
 # coding: utf-8
 
 from __future__ import absolute_import
-from .rest import RESTClientObject
+from .rest import RESTClient
 from .rest import ApiException
 
 import os
@@ -51,7 +51,7 @@ class ApiClient(object):
         """
         Constructor of the class.
         """
-        self.rest_client = RESTClientObject()
+        self.rest_client = RESTClient()
         self.default_headers = {}
         if header_name is not None:
             self.default_headers[header_name] = header_value
@@ -305,55 +305,23 @@ class ApiClient(object):
                                             post_params, files,
                                             response_type, auth_settings,
                                             callback))
-        thread.start()
-        return thread
+            thread.start()
+            return thread
 
     def request(self, method, url, query_params=None, headers=None,
                 post_params=None, body=None):
         """
         Makes the HTTP request using RESTClient.
         """
-        if method == "GET":
-            return self.rest_client.GET(url,
-                                        query_params=query_params,
-                                        headers=headers)
-        elif method == "HEAD":
-            return self.rest_client.HEAD(url,
-                                         query_params=query_params,
-                                         headers=headers)
-        elif method == "OPTIONS":
-            return self.rest_client.OPTIONS(url,
-                                            query_params=query_params,
-                                            headers=headers,
-                                            post_params=post_params,
-                                            body=body)
-        elif method == "POST":
-            return self.rest_client.POST(url,
-                                         query_params=query_params,
-                                         headers=headers,
-                                         post_params=post_params,
-                                         body=body)
-        elif method == "PUT":
-            return self.rest_client.PUT(url,
-                                        query_params=query_params,
-                                        headers=headers,
-                                        post_params=post_params,
-                                        body=body)
-        elif method == "PATCH":
-            return self.rest_client.PATCH(url,
-                                          query_params=query_params,
-                                          headers=headers,
-                                          post_params=post_params,
-                                          body=body)
-        elif method == "DELETE":
-            return self.rest_client.DELETE(url,
-                                           query_params=query_params,
-                                           headers=headers)
-        else:
-            raise ValueError(
-                "http method must be `GET`, `HEAD`,"
-                " `POST`, `PATCH`, `PUT` or `DELETE`."
-            )
+        methods = {'GET', 'HEAD', 'POST', 'PATCH', 'PUT', 'DELETE'}
+        if method not in methods:
+            raise ValueError("http method must be one of %s" % ', '.join(methods))
+        params = dict(
+            query_params=query_params,
+            headers=headers,
+            post_params=post_params,
+            body=body)
+        return getattr(self.rest_client, method)(url, {k: v for k, v in params.items() if v is not None})
 
     def prepare_post_parameters(self, post_params=None, files=None):
         """

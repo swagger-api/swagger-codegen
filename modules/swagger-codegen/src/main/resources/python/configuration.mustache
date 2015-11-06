@@ -46,6 +46,7 @@ class Configuration(object):
 {{#authMethods}}{{#isOAuth}}
         # access token for OAuth
         self.access_token = ""
+        self.oauth_url = "{{authorizationUrl}}"
 {{/isOAuth}}{{/authMethods}}
 
         # Logging Settings
