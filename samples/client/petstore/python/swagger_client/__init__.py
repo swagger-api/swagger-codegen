@@ -15,6 +15,4 @@ from .apis.pet_api import PetApi
 # import ApiClient
 from .api_client import ApiClient
 
-from .configuration import Configuration
-
-configuration = Configuration()
+from .configuration import Configuration, configuration

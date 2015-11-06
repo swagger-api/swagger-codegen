@@ -1,35 +1,14 @@
 # coding: utf-8
 
-"""
-Copyright 2015 SmartBear Software
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-
-   ref: https://github.com/swagger-api/swagger-codegen
-"""
-
 from __future__ import absolute_import
-from . import models
 from .rest import RESTClientObject
 from .rest import ApiException
 
 import os
 import re
 import sys
-import urllib
 import json
 import mimetypes
-import random
 import tempfile
 import threading
 
@@ -46,7 +25,7 @@ except ImportError:
     # for python2
     from urllib import quote
 
-from .configuration import Configuration
+from .configuration import configuration
 
 
 class ApiClient(object):
@@ -66,7 +45,7 @@ class ApiClient(object):
     :param header_name: a header to pass when making calls to the API.
     :param header_value: a header value to pass when making calls to the API.
     """
-    def __init__(self, host=Configuration().host,
+    def __init__(self, host=None,
                  header_name=None, header_value=None, cookie=None):
 
         """
@@ -76,7 +55,7 @@ class ApiClient(object):
         self.default_headers = {}
         if header_name is not None:
             self.default_headers[header_name] = header_value
-        self.host = host
+        self.host = host or configuration.host
         self.cookie = cookie
         # Set default User-Agent.
         self.user_agent = 'Python-Swagger/1.0.0'
@@ -445,7 +424,7 @@ class ApiClient(object):
         :param querys: Query parameters dict to be updated.
         :param auth_settings: Authentication setting identifiers list.
         """
-        config = Configuration()
+        config = configuration
 
         if not auth_settings:
             return
@@ -470,7 +449,7 @@ class ApiClient(object):
         :param response:  RESTResponse.
         :return: file path.
         """
-        config = Configuration()
+        config = configuration
 
         fd, path = tempfile.mkstemp(dir=config.temp_folder_path)
         os.close(fd)

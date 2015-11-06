@@ -8,7 +8,7 @@ import os
 # python 2 and python 3 compatibility library
 from six import iteritems
 
-from ..configuration import Configuration
+from ..configuration import configuration
 from ..api_client import ApiClient
 
 
@@ -20,7 +20,7 @@ class StoreApi(object):
     """
 
     def __init__(self, api_client=None):
-        config = Configuration()
+        config = configuration
         if api_client:
             self.api_client = api_client
         else:
