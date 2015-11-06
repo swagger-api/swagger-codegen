@@ -1,22 +1,5 @@
 # coding: utf-8
 
-"""
-UserApi.py
-Copyright 2015 SmartBear Software
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-"""
-
 from __future__ import absolute_import
 
 import sys
@@ -78,6 +61,7 @@ class UserApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
 
         resource_path = '/user'.replace('{format}', 'json')
         method = 'POST'
@@ -154,6 +138,7 @@ class UserApi(object):
             params[key] = val
         del params['kwargs']
 
+
         resource_path = '/user/createWithArray'.replace('{format}', 'json')
         method = 'POST'
 
@@ -228,6 +213,7 @@ class UserApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
 
         resource_path = '/user/createWithList'.replace('{format}', 'json')
         method = 'POST'
@@ -305,6 +291,7 @@ class UserApi(object):
             params[key] = val
         del params['kwargs']
 
+
         resource_path = '/user/login'.replace('{format}', 'json')
         method = 'GET'
 
@@ -381,6 +368,7 @@ class UserApi(object):
             params[key] = val
         del params['kwargs']
 
+
         resource_path = '/user/logout'.replace('{format}', 'json')
         method = 'GET'
 
@@ -440,9 +428,6 @@ class UserApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'username' is set
-        if username is None:
-            raise ValueError("Missing the required parameter `username` when calling `get_user_by_name`")
 
         all_params = ['username']
         all_params.append('callback')
@@ -456,6 +441,10 @@ class UserApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'username' is set
+        if ('username' not in params) or (params['username'] is None):
+            raise ValueError("Missing the required parameter `username` when calling `get_user_by_name`")
 
         resource_path = '/user/{username}'.replace('{format}', 'json')
         method = 'GET'
@@ -519,9 +508,6 @@ class UserApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'username' is set
-        if username is None:
-            raise ValueError("Missing the required parameter `username` when calling `update_user`")
 
         all_params = ['username', 'body']
         all_params.append('callback')
@@ -535,6 +521,10 @@ class UserApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'username' is set
+        if ('username' not in params) or (params['username'] is None):
+            raise ValueError("Missing the required parameter `username` when calling `update_user`")
 
         resource_path = '/user/{username}'.replace('{format}', 'json')
         method = 'PUT'
@@ -599,9 +589,6 @@ class UserApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'username' is set
-        if username is None:
-            raise ValueError("Missing the required parameter `username` when calling `delete_user`")
 
         all_params = ['username']
         all_params.append('callback')
@@ -615,6 +602,10 @@ class UserApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'username' is set
+        if ('username' not in params) or (params['username'] is None):
+            raise ValueError("Missing the required parameter `username` when calling `delete_user`")
 
         resource_path = '/user/{username}'.replace('{format}', 'json')
         method = 'DELETE'
