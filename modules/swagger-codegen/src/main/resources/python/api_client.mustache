@@ -317,7 +317,7 @@ class ApiClient(object):
             headers=headers,
             post_params=post_params,
             body=body)
-        return getattr(self.rest_client, method)(url, {k: v for k, v in params.items() if v is not None})
+        return self.rest_client.request(method, url, {k: v for k, v in params.items() if v is not None})
 
     def prepare_post_parameters(self, post_params=None, files=None):
         """
