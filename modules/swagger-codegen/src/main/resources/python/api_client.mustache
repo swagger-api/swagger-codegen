@@ -276,21 +276,17 @@ class ApiClient(object):
         :param header_params: Header parameters to be
             placed in the request header.
         :param body: Request body.
-        :param post_params dict: Request post form parameters,
-            for `application/x-www-form-urlencoded`, `multipart/form-data`.
-        :param auth_settings list: Auth Settings names for the request.
-        :param response: Response data type.
-        :param files dict: key -> filename, value -> filepath,
-            for `multipart/form-data`.
-        :param callback function: Callback function for asynchronous request.
-            If provide this parameter,
-            the request will be called asynchronously.
+        :param post_params: Request post form parameters, for `application/x-www-form-urlencoded`, `multipart/form-data`.
+        :type post_params: dict
+        :param auth_settings: Auth Settings names for the request.
+        :type auth_settings: list
+        :param files: key -> filename, value -> filepath, for `multipart/form-data`.
+        :type files: dict
+        :param callback: Callback function for asynchronous request.
+            If this parameter is provided the request will be called asynchronously.
         :return:
-            If provide parameter callback,
-            the request will be called asynchronously.
-            The method will return the request thread.
-            If parameter callback is None,
-            then the method will return the response directly.
+            If the parameter callback is provided, the request will be called asynchronously and the method will return the request thread. 
+            If parameter callback is None, then the method will return the response directly.
         """
         if callback is None:
             return self.__call_api(resource_path, method,
