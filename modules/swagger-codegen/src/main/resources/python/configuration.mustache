@@ -182,6 +182,14 @@ class Configuration(object):
         """
         return urllib3.util.make_headers(basic_auth=self.username + ':' + self.password)\
                            .get('authorization')
+                           
+    def get_access_value(self, type, param_name):
+        if type == 'api_key':
+            return self.get_api_key_with_prefix(param_name)
+        elif type == 'basic':
+            return self.get_basic_auth_token()
+        elif type == 'oauth2':
+            return 'Bearer ' + self.access_token
 
     def auth_settings(self):
         """
@@ -191,32 +199,13 @@ class Configuration(object):
         """
         return {
 {{#authMethods}}
-{{#isApiKey}}
-            '{{name}}':
-                {
-                    'type': 'api_key',
-                    'in': {{#isKeyInHeader}}'header'{{/isKeyInHeader}}{{#isKeyInQuery}}'query'{{/isKeyInQuery}},
-                    'key': '{{keyParamName}}',
-                    'value': self.get_api_key_with_prefix('{{keyParamName}}')
-                },
-{{/isApiKey}}
-{{#isBasic}}
-            '{{name}}':
-                {
-                    'type': 'basic',
-                    'in': 'header',
-                    'key': 'Authorization',
-                    'value': self.get_basic_auth_token()
-                },
-{{/isBasic}}{{#isOauth}}
-            '{{name}}': 
-                {
-                    'type': 'oauth2',
-                    'in': 'header',
-                    'key': 'Authorization',
-                    'value': 'Bearer ' + self.access_token
-                },
-{{/isOauth}}{{/authMethods}}
+            '{{name}}': {
+                'type': '{{type}}',
+                'in': '{{#isKeyInQuery}}query{{/isKeyInQuery}}' or 'header',
+                'key': '{{keyParamName}}',
+                'value': self.get_access_value('{{type}}', '{{keyParamName}}')
+            },
+{{/authMethods}}
         }
 
     def to_debug_report(self):
