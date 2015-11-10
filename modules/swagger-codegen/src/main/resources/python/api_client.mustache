@@ -3,6 +3,7 @@
 from __future__ import absolute_import
 from .rest import RESTClient
 from .rest import ApiException
+# noinspection PyUnresolvedReferences
 from .models import *
 
 import os
@@ -205,10 +206,6 @@ class ApiClient(object):
         """
         Deserializes response into an object.
 
-        :param response: RESTResponse object to be deserialized.
-        :param response_type: class literal for
-            deserialzied object, or string of class name.
-
         :return: deserialized object.
         """
         # handle file downloading
@@ -314,8 +311,9 @@ class ApiClient(object):
             query_params=query_params,
             headers=headers,
             post_params=post_params,
-            body=body)
-        return self.rest_client.request(method, url, {k: v for k, v in params.items() if v is not None}, auth_settings=auth_settings)
+            body=body,
+            auth_settings=auth_settings)
+        return self.rest_client.request(method, url, **{k: v for k, v in params.items() if v is not None})
 
     def prepare_post_parameters(self, post_params=None, files=None):
         """

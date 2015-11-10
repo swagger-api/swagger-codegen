@@ -80,7 +80,11 @@ class {{classname}}(object):
             {{#notFile}}form_params['{{baseName}}'] = params['{{paramName}}']{{/notFile}}{{#isFile}}files['{{baseName}}'] = params['{{paramName}}']{{/isFile}}
 {{/formParams}}
 
-        body_params = None{{#bodyParam}} or {{paramName}}{{/bodyParam}}
+        body_params = {
+{{#bodyParams}}
+            '{{baseName}}': {{paramName}},
+{{/bodyParams}}
+        }
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
