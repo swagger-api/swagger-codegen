@@ -9,6 +9,7 @@ import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
 
 import java.io.File;
+import java.lang.Override;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -196,6 +197,14 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         // should be the same as the model name
         return toModelName(name);
+    }
+
+    /*
+        Fix illegal function names
+     */
+    @Override
+    public String toOperationId(String operationId) {
+        return reservedWords.contains(operationId) ? escapeReservedWord(operationId) : operationId;
     }
 
 }
