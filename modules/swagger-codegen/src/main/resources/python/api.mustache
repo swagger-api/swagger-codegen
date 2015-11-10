@@ -2,9 +2,6 @@
 
 from __future__ import absolute_import
 
-# python 2 and python 3 compatibility library
-from six import iteritems
-
 from ..configuration import configuration
 from ..api_client import ApiClient
 
@@ -27,7 +24,7 @@ class {{classname}}(object):
             self.api_client = config.api_client
 {{#operation}}
 
-    def {{nickname}}(self, {{#sortParamsByRequiredFlag}}{{#allParams}}{{#required}}{{paramName}}, {{/required}}{{/allParams}}{{/sortParamsByRequiredFlag}}**kwargs):
+    def {{nickname}}(self{{#sortParamsByRequiredFlag}}{{#allParams}}, {{paramName}}{{#required}}{{/required}}{{^required}}=None{{/required}}{{/allParams}}{{/sortParamsByRequiredFlag}}, callback=None):
         """
         {{{summary}}}
         {{{notes}}}
@@ -55,44 +52,26 @@ class {{classname}}(object):
                  returns the request thread.
         """
 
-        all_params = [{{#allParams}}'{{paramName}}'{{#hasMore}}, {{/hasMore}}{{/allParams}}]
-
-        for key, val in iteritems(kwargs):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method {{nickname}}" % key
-                )
-            params[key] = val
-
-{{#allParams}}
-{{#required}}
-        # verify the required parameter '{{paramName}}' is set
-        if ('{{paramName}}' not in params) or (params['{{paramName}}'] is None):
-            raise ValueError("Missing the required parameter `{{paramName}}` when calling `{{nickname}}`")
-{{/required}}
-{{/allParams}}
-
         resource_path = '{{path}}'.replace('{format}', 'json')
         method = '{{httpMethod}}'
 
-        path_params = {}
+        path_params = {
 {{#pathParams}}
-        if '{{paramName}}' in params:
-            path_params['{{baseName}}'] = params['{{paramName}}']
+            '{{baseName}}': {{paramName}},
 {{/pathParams}}
+        }
 
-        query_params = {}
+        query_params = {
 {{#queryParams}}
-        if '{{paramName}}' in params:
-            query_params['{{baseName}}'] = params['{{paramName}}']
+            '{{baseName}}': {{paramName}},
 {{/queryParams}}
+        }
 
-        header_params = {}
+        header_params = {
 {{#headerParams}}
-        if '{{paramName}}' in params:
-            header_params['{{baseName}}'] = params['{{paramName}}']
+            '{{baseName}}': {{paramName}},
 {{/headerParams}}
+        }
 
         form_params = {}
         files = {}
@@ -101,11 +80,7 @@ class {{classname}}(object):
             {{#notFile}}form_params['{{baseName}}'] = params['{{paramName}}']{{/notFile}}{{#isFile}}files['{{baseName}}'] = params['{{paramName}}']{{/isFile}}
 {{/formParams}}
 
-        body_params = None
-{{#bodyParam}}
-        if '{{paramName}}' in params:
-            body_params = params['{{paramName}}']
-{{/bodyParam}}
+        body_params = None{{#bodyParam}} or {{paramName}}{{/bodyParam}}
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
@@ -129,7 +104,7 @@ class {{classname}}(object):
                                             files=files,
                                             response_type={{#returnType}}'{{returnType}}'{{/returnType}}{{^returnType}}None{{/returnType}},
                                             auth_settings=auth_settings,
-                                            callback=kwargs.get('callback'))
+                                            callback=callback)
         return response
 {{/operation}}
 {{/operations}}
