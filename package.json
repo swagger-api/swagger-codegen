@@ -1,0 +1,21 @@
+{
+  "name": "swagger-codegen",
+  "version": "2.1.6",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "https://github.com/28msec/swagger-codegen",
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/28msec/swagger-codegen/issues"
+  },
+  "homepage": "https://github.com/28msec/swagger-codegen#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-github-release": "^1.0.3",
+    "gulp-load-plugins": "^1.1.0"
+  }
+}
