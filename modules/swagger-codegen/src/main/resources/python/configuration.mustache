@@ -47,6 +47,9 @@ class Configuration(object):
         # access token for OAuth
         self.access_token = ""
         self.oauth_url = "{{authorizationUrl}}"
+        self.client_id = 'swagger_generated'
+        self.client_secret = None
+        self.scope = None
 {{/isOAuth}}{{/authMethods}}
 
         # Logging Settings

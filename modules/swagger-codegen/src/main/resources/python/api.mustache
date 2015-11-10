@@ -56,7 +56,6 @@ class {{classname}}(object):
         """
 
         all_params = [{{#allParams}}'{{paramName}}'{{#hasMore}}, {{/hasMore}}{{/allParams}}]
-        all_params.append('callback')
 
         for key, val in iteritems(kwargs):
             if key not in all_params:
