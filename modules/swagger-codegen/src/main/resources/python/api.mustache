@@ -2,9 +2,6 @@
 
 from __future__ import absolute_import
 
-import sys
-import os
-
 # python 2 and python 3 compatibility library
 from six import iteritems
 
@@ -61,15 +58,13 @@ class {{classname}}(object):
         all_params = [{{#allParams}}'{{paramName}}'{{#hasMore}}, {{/hasMore}}{{/allParams}}]
         all_params.append('callback')
 
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
+        for key, val in iteritems(kwargs):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method {{nickname}}" % key
                 )
             params[key] = val
-        del params['kwargs']
 
 {{#allParams}}
 {{#required}}
@@ -135,7 +130,7 @@ class {{classname}}(object):
                                             files=files,
                                             response_type={{#returnType}}'{{returnType}}'{{/returnType}}{{^returnType}}None{{/returnType}},
                                             auth_settings=auth_settings,
-                                            callback=params.get('callback'))
+                                            callback=kwargs.get('callback'))
         return response
 {{/operation}}
 {{/operations}}
