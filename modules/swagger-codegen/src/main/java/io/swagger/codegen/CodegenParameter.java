@@ -8,7 +8,7 @@ import java.util.List;
 public class CodegenParameter {
     public Boolean isFormParam, isQueryParam, isPathParam, isHeaderParam,
             isCookieParam, isBodyParam, isFile, notFile, hasMore, isContainer, secondaryParam, isBinary;
-    public String baseName, paramName, dataType, collectionFormat, description, baseType, defaultValue, pattern;
+    public String baseName, paramName, dataType, collectionFormat, description, baseType, defaultValue;
     public String jsonSchema;
     public boolean isEnum;
     public List<String> _enum;
@@ -22,17 +22,12 @@ public class CodegenParameter {
      */
     public Boolean required;
     
-    public Kind parameterKind;
-    
-    public enum Kind 
-    {
-    	NORMAL,
-    	PATTERN,
-    	HARDCODED
-    }    
-
     public CodegenParameter copy() {
         CodegenParameter output = new CodegenParameter();
+        return copy(output);
+    }
+ 
+    public CodegenParameter copy(CodegenParameter output) {
         output.isFile = this.isFile;
         output.notFile = this.notFile;
         output.hasMore = this.hasMore;
@@ -53,7 +48,6 @@ public class CodegenParameter {
         output.required = this.required;
         output.jsonSchema = this.jsonSchema;
         output.defaultValue = this.defaultValue;
-        output.pattern = this.pattern;
         output.isEnum = this.isEnum;
         if (this._enum != null) {
             output._enum = new ArrayList<String>(this._enum);
@@ -62,7 +56,6 @@ public class CodegenParameter {
             output.allowableValues = new HashMap<String, Object>(this.allowableValues);
         }
         output.vendorExtensions = this.vendorExtensions;
-        output.parameterKind = this.parameterKind;
 
         return output;
     }

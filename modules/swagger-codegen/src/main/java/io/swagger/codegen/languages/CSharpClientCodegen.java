@@ -1,8 +1,8 @@
 package io.swagger.codegen.languages;
 
+import io.cellstore.codegen.CellStoreCodegen;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.DefaultCodegen;
 import io.swagger.codegen.SupportingFile;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
@@ -16,7 +16,7 @@ import java.util.HashSet;
 
 import org.apache.commons.lang.StringUtils;
 
-public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig {
+public class CSharpClientCodegen extends CellStoreCodegen implements CodegenConfig {
     protected String packageName = "IO.Swagger";
     protected String packageVersion = "1.0.0";
     protected String clientPackage = "IO.Swagger.Client";

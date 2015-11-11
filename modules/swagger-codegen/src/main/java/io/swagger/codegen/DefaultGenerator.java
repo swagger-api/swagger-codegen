@@ -433,43 +433,13 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
         return map.get(name);
     }
-
-    public boolean includeOperation(Operation operation)
-    {
-    	Map<String, Object> extensions = operation.getVendorExtensions();
-    	if (extensions.size() > 0)
-    	{
-    		Object excludeFromBindings = extensions.get("x-exclude-from-bindings");
-    		if (excludeFromBindings != null)
-    		{
-    			if (excludeFromBindings instanceof Boolean)
-    			{
-    				if (((Boolean)excludeFromBindings).booleanValue())
-    					return false;
-    			}
-    			else
-    			{
-    				String msg = "Invalid value for x-exclude-from-bindings, only booleans are allowed\n";      
-    				throw new RuntimeException(msg);
-    			}
-    		}
-    	}
-    	return true;
-    }
     
     public void processOperation(String resourcePath, String httpMethod, Operation operation, Map<String, List<CodegenOperation>> operations, Path path) {
         if (operation != null) {
             if (System.getProperty("debugOperations") != null) {
                 LOGGER.debug("processOperation: resourcePath= " + resourcePath + "\t;" + httpMethod + " " + operation + "\n");
             }
-            
-            if (!includeOperation(operation))
-            {
-            	System.out.println("Excluding " + httpMethod.toUpperCase() + " " + resourcePath + " from bindings");
-            	return;
-            }
-            System.out.println("Processing " + httpMethod.toUpperCase() + " " + resourcePath);
-            
+                   
             List<String> tags = operation.getTags();
             if (tags == null) {
                 tags = new ArrayList<String>();
