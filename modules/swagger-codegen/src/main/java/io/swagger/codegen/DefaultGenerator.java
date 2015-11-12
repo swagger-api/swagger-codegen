@@ -54,6 +54,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         Boolean generateApis = null;
         Boolean generateModels = null;
         Boolean generateSupportingFiles = null;
+        Boolean generateInlineModels = null;
 
         Set<String> modelsToGenerate = null;
         Set<String> apisToGenerate = null;
@@ -80,8 +81,10 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             if(!supportingFiles.isEmpty()) {
                 supportingFilesToGenerate = new HashSet<String>(Arrays.asList(supportingFiles.split(",")));
             }
-        }
-
+        }        
+        
+        generateInlineModels = System.getProperty("noInlineModels") == null;
+        
         if(generateApis == null && generateModels == null && generateSupportingFiles == null) {
             // no specifics are set, generate everything
             generateApis = true; generateModels = true; generateSupportingFiles = true;
@@ -166,8 +169,11 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
 
         // resolve inline models
-        InlineModelResolver inlineModelResolver = new InlineModelResolver();
-        inlineModelResolver.flatten(swagger);
+        if (generateInlineModels)
+        {
+          InlineModelResolver inlineModelResolver = new InlineModelResolver();
+          inlineModelResolver.flatten(swagger);
+        }
 
         List<Object> allOperations = new ArrayList<Object>();
         List<Object> allModels = new ArrayList<Object>();
