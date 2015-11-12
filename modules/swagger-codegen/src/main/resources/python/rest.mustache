@@ -31,7 +31,7 @@ class RESTClient(object):
         if auth_settings is None:
             auth_settings = [None]
         assert len(auth_settings) == 1
-        auth_type = configuration.auth_settings()[auth_settings[0]]['type']
+        auth_type = configuration.auth_settings().get(auth_settings[0], {'type': auth_settings[0]})['type']
         if auth_type in self.sessions:
             return self.sessions[auth_type]
         if auth_type == 'oauth2':
@@ -47,10 +47,12 @@ class RESTClient(object):
                 'password': configuration.password, 
                 'grant_type': 'password', 
                 'scope': configuration.scope})
+        else:
+            self.sessions[auth_type] = requests.Session()
         return self.sessions[auth_type]
 
     def request(self, method, url, query_params=None, headers=None,
-                body=None, post_params=None, auth_settings=None):
+                body=None, post_params=None, auth_settings=None, files=None):
         """
         :param method: http request method
         :param url: http request url
@@ -99,6 +101,7 @@ class RESTClient(object):
                 data=data,
                 headers=headers,
                 cert=cert,
+                files=files,
                 verify=verify)
         except requests.exceptions.SSLError as e:
             msg = "{0}\n{1}".format(type(e).__name__, str(e))

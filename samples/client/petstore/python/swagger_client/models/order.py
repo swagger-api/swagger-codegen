@@ -5,7 +5,6 @@ Do not edit manually.
 """
 
 from pprint import pformat
-from six import iteritems
 
 
 class Order(object):
@@ -32,6 +31,16 @@ class Order(object):
             'ship_date': 'datetime',
             'status': 'str',
             'complete': 'bool',
+            
+        }
+        
+        self.external_name_by_attribute_name = {
+            'id': 'id',
+            'pet_id': 'petId',
+            'quantity': 'quantity',
+            'ship_date': 'shipDate',
+            'status': 'status',
+            'complete': 'complete',
             
         }
 

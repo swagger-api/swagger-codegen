@@ -1,8 +1,10 @@
 # coding: utf-8
 
 from __future__ import absolute_import
-from .rest import RESTClientObject
+from .rest import RESTClient
 from .rest import ApiException
+# noinspection PyUnresolvedReferences
+from .models import *
 
 import os
 import re
@@ -51,7 +53,7 @@ class ApiClient(object):
         """
         Constructor of the class.
         """
-        self.rest_client = RESTClientObject()
+        self.rest_client = RESTClient()
         self.default_headers = {}
         if header_name is not None:
             self.default_headers[header_name] = header_value
@@ -81,7 +83,7 @@ class ApiClient(object):
                    path_params=None, query_params=None, header_params=None,
                    body=None, post_params=None, files=None,
                    response_type=None, auth_settings=None, callback=None):
-
+                   
         # headers parameters
         header_params = header_params or {}
         header_params.update(self.default_headers)
@@ -105,9 +107,9 @@ class ApiClient(object):
                             for k, v in iteritems(query_params)}
 
         # post parameters
-        if post_params or files:
-            post_params = self.prepare_post_parameters(post_params, files)
-            post_params = self.sanitize_for_serialization(post_params)
+        post_params = post_params or {}
+        if files:
+            files = self.prepare_files(files)
 
         # auth setting
         self.update_params_for_auth(header_params, query_params, auth_settings)
@@ -120,11 +122,17 @@ class ApiClient(object):
         url = self.host + resource_path
 
         # perform request and return response
-        response_data = self.request(method, url,
-                                     query_params=query_params,
-                                     headers=header_params,
-                                     post_params=post_params, body=body)
+        response = self.request(
+            method, 
+            url,
+            query_params=query_params,
+            headers=header_params,
+            post_params=post_params, 
+            body=body,
+            files=files,
+            auth_settings=auth_settings)
 
+        response_data = response.content
         self.last_response = response_data
 
         # deserialize response data
@@ -188,34 +196,29 @@ class ApiClient(object):
                 # and attributes which value is not None.
                 # Convert attribute name to json key in
                 # model definition for request.
-                obj_dict = {attr: getattr(obj, attr)
+                obj_dict = {obj.external_name_by_attribute_name[attr]: getattr(obj, attr)
                             for attr, _ in iteritems(obj.swagger_type_by_variable_name)
                             if getattr(obj, attr) is not None}
 
             return {key: self.sanitize_for_serialization(val)
                     for key, val in iteritems(obj_dict)}
 
-    def deserialize(self, response, response_type):
+    def deserialize(self, response_data, response_type):
         """
         Deserializes response into an object.
-
-        :param response: RESTResponse object to be deserialized.
-        :param response_type: class literal for
-            deserialzied object, or string of class name.
 
         :return: deserialized object.
         """
         # handle file downloading
         # save response body into a tmp file and return the instance
         if "file" == response_type:
-            return self.__deserialize_file(response)
+            return self.__deserialize_file(response_data)
 
         # fetch data from response object
         try:
-            data = json.loads(response.data)
+            data = json.loads(response_data)
         except ValueError:
-            data = response.data
-
+            data = response_data
         return self.__deserialize(data, response_type)
 
     def __deserialize(self, data, klass):
@@ -241,14 +244,7 @@ class ApiClient(object):
                 return {k: self.__deserialize(v, sub_kls)
                         for k, v in iteritems(data)}
 
-            # convert str to class
-            # for native types
-            if klass in ['int', 'float', 'str', 'bool',
-                         "date", 'datetime', "object"]:
-                klass = eval(klass)
-            # for model types
-            else:
-                klass = eval('models.' + klass)
+            klass = eval(klass)
 
         if klass in [int, float, str, bool]:
             return self.__deserialize_primitive(data, klass)
@@ -276,21 +272,17 @@ class ApiClient(object):
         :param header_params: Header parameters to be
             placed in the request header.
         :param body: Request body.
-        :param post_params dict: Request post form parameters,
-            for `application/x-www-form-urlencoded`, `multipart/form-data`.
-        :param auth_settings list: Auth Settings names for the request.
-        :param response: Response data type.
-        :param files dict: key -> filename, value -> filepath,
-            for `multipart/form-data`.
-        :param callback function: Callback function for asynchronous request.
-            If provide this parameter,
-            the request will be called asynchronously.
+        :param post_params: Request post form parameters, for `application/x-www-form-urlencoded`, `multipart/form-data`.
+        :type post_params: dict
+        :param auth_settings: Auth Settings names for the request.
+        :type auth_settings: list
+        :param files: key -> filename, value -> filepath, for `multipart/form-data`.
+        :type files: dict
+        :param callback: Callback function for asynchronous request.
+            If this parameter is provided the request will be called asynchronously.
         :return:
-            If provide parameter callback,
-            the request will be called asynchronously.
-            The method will return the request thread.
-            If parameter callback is None,
-            then the method will return the response directly.
+            If the parameter callback is provided, the request will be called asynchronously and the method will return the request thread. 
+            If parameter callback is None, then the method will return the response directly.
         """
         if callback is None:
             return self.__call_api(resource_path, method,
@@ -305,69 +297,28 @@ class ApiClient(object):
                                             post_params, files,
                                             response_type, auth_settings,
                                             callback))
-        thread.start()
-        return thread
+            thread.start()
+            return thread
 
     def request(self, method, url, query_params=None, headers=None,
-                post_params=None, body=None):
+                post_params=None, body=None, auth_settings=None, files=None):
         """
         Makes the HTTP request using RESTClient.
         """
-        if method == "GET":
-            return self.rest_client.GET(url,
-                                        query_params=query_params,
-                                        headers=headers)
-        elif method == "HEAD":
-            return self.rest_client.HEAD(url,
-                                         query_params=query_params,
-                                         headers=headers)
-        elif method == "OPTIONS":
-            return self.rest_client.OPTIONS(url,
-                                            query_params=query_params,
-                                            headers=headers,
-                                            post_params=post_params,
-                                            body=body)
-        elif method == "POST":
-            return self.rest_client.POST(url,
-                                         query_params=query_params,
-                                         headers=headers,
-                                         post_params=post_params,
-                                         body=body)
-        elif method == "PUT":
-            return self.rest_client.PUT(url,
-                                        query_params=query_params,
-                                        headers=headers,
-                                        post_params=post_params,
-                                        body=body)
-        elif method == "PATCH":
-            return self.rest_client.PATCH(url,
-                                          query_params=query_params,
-                                          headers=headers,
-                                          post_params=post_params,
-                                          body=body)
-        elif method == "DELETE":
-            return self.rest_client.DELETE(url,
-                                           query_params=query_params,
-                                           headers=headers)
-        else:
-            raise ValueError(
-                "http method must be `GET`, `HEAD`,"
-                " `POST`, `PATCH`, `PUT` or `DELETE`."
-            )
-
-    def prepare_post_parameters(self, post_params=None, files=None):
-        """
-        Builds form parameters.
-
-        :param post_params: Normal form parameters.
-        :param files: File parameters.
-        :return: Form parameters with files.
-        """
-        params = {}
-
-        if post_params:
-            params.update(post_params)
-
+        methods = {'GET', 'HEAD', 'POST', 'PATCH', 'PUT', 'DELETE'}
+        if method not in methods:
+            raise ValueError("http method must be one of %s" % ', '.join(methods))
+        params = dict(
+            query_params=query_params,
+            headers=headers,
+            post_params=post_params,
+            files=files,
+            body=body,
+            auth_settings=auth_settings)
+        return self.rest_client.request(method, url, **{k: v for k, v in params.items() if v is not None})
+        
+    def prepare_files(self, files):
+        result = []
         if files:
             for k, v in iteritems(files):
                 if not v:
@@ -376,11 +327,9 @@ class ApiClient(object):
                 with open(v, 'rb') as f:
                     filename = os.path.basename(f.name)
                     filedata = f.read()
-                    mimetype = mimetypes.\
-                        guess_type(filename)[0] or 'application/octet-stream'
-                    params[k] = tuple([filename, filedata, mimetype])
-
-        return params
+                    mimetype = mimetypes.guess_type(filename)[0] or 'application/octet-stream'
+                    result.append((k, (filename, filedata, mimetype)))
+        return result
 
     def select_header_accept(self, accepts):
         """

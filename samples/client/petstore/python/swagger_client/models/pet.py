@@ -5,7 +5,6 @@ Do not edit manually.
 """
 
 from pprint import pformat
-from six import iteritems
 
 
 class Pet(object):
@@ -32,6 +31,16 @@ class Pet(object):
             'photo_urls': 'list[str]',
             'tags': 'list[Tag]',
             'status': 'str',
+            
+        }
+        
+        self.external_name_by_attribute_name = {
+            'id': 'id',
+            'category': 'category',
+            'name': 'name',
+            'photo_urls': 'photoUrls',
+            'tags': 'tags',
+            'status': 'status',
             
         }
 

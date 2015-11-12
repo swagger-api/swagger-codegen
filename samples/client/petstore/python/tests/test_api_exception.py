@@ -7,7 +7,6 @@ $ cd swagger_client-python
 $ nosetests -v
 """
 
-import os
 import time
 import unittest
 
@@ -18,6 +17,13 @@ from swagger_client.rest import ApiException
 class ApiExceptionTests(unittest.TestCase):
 
     def setUp(self):
+        swagger_client.configuration.reset()
+
+        swagger_client.configuration.api_key['api_key'] = '123456'
+        swagger_client.configuration.api_key_prefix['api_key'] = 'PREFIX'
+        swagger_client.configuration.username = 'test_username'
+        swagger_client.configuration.password = 'test_password'
+
         self.api_client = swagger_client.ApiClient()
         self.pet_api = swagger_client.PetApi(self.api_client)
         self.setUpModels()

@@ -20,6 +20,13 @@ HOST = 'http://petstore.swagger.io/v2'
 class PetApiTests(unittest.TestCase):
 
     def setUp(self):
+        swagger_client.configuration.reset()
+
+        swagger_client.configuration.api_key['api_key'] = '123456'
+        swagger_client.configuration.api_key_prefix['api_key'] = 'PREFIX'
+        swagger_client.configuration.username = 'test_username'
+        swagger_client.configuration.password = 'test_password'
+
         self.api_client = swagger_client.ApiClient(HOST)
         self.pet_api = swagger_client.PetApi(self.api_client)
         self.setUpModels()
@@ -138,15 +145,12 @@ class PetApiTests(unittest.TestCase):
 
     def test_upload_file(self):
         # upload file with form parameter
-        try:
-            additional_metadata = "special"
-            self.pet_api.upload_file(
-                pet_id=self.pet.id,
-                additional_metadata=additional_metadata,
-                file=self.foo
-            )
-        except ApiException as e:
-            self.fail("upload_file() raised {0} unexpectedly".format(type(e)))
+        additional_metadata = "special"
+        self.pet_api.upload_file(
+            pet_id=self.pet.id,
+            additional_metadata=additional_metadata,
+            file=self.foo
+        )
 
         # upload only file
         try:

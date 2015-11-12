@@ -27,6 +27,9 @@ class Configuration(object):
         """
         assert getattr(Configuration, '_singleton', None) is None
         Configuration._singleton = self
+        self.reset()
+        
+    def reset(self):
         # Default Base url
         self.host = "http://petstore.swagger.io/v2"
         # Default api client
@@ -47,6 +50,9 @@ class Configuration(object):
         # access token for OAuth
         self.access_token = ""
         self.oauth_url = "http://petstore.swagger.io/api/oauth/dialog"
+        self.client_id = 'swagger_generated'
+        self.client_secret = None
+        self.scope = None
 
 
         # Logging Settings
@@ -171,8 +177,7 @@ class Configuration(object):
         """
         if self.api_key.get(identifier) and self.api_key_prefix.get(identifier):
             return self.api_key_prefix[identifier] + ' ' + self.api_key[identifier]
-        elif self.api_key.get(identifier):
-            return self.api_key[identifier]
+        return self.api_key.get(identifier)
 
     def get_basic_auth_token(self):
         """
@@ -182,6 +187,16 @@ class Configuration(object):
         """
         return urllib3.util.make_headers(basic_auth=self.username + ':' + self.password)\
                            .get('authorization')
+                           
+    def get_access_value(self, type, param_name):
+        if type == 'apiKey':
+            return self.get_api_key_with_prefix(param_name)
+        elif type == 'basic':
+            return self.get_basic_auth_token()
+        elif type == 'oauth2':
+            return 'Bearer ' + self.access_token
+        else:
+            assert False, 'unsupported access type %s' % type
 
     def auth_settings(self):
         """
@@ -190,14 +205,18 @@ class Configuration(object):
         :return: The Auth Settings information dict.
         """
         return {
-            'api_key':
-                {
-                    'type': 'api_key',
-                    'in': 'header',
-                    'key': 'api_key',
-                    'value': self.get_api_key_with_prefix('api_key')
-                },
-
+            # 'petstore_auth': {
+            #     'type': 'oauth2',
+            #     'in': 'header',
+            #     'key': '',
+            #     'value': self.get_access_value('oauth2', '')
+            # },
+            'api_key': {
+                'type': 'apiKey',
+                'in': 'header',
+                'key': 'api_key',
+                'value': self.get_access_value('apiKey', 'api_key')
+            },
         }
 
     def to_debug_report(self):

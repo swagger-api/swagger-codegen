@@ -20,6 +20,11 @@ class {{classname}}(object):
             {{#vars}}'{{name}}': '{{{datatype}}}',
             {{/vars}}
         }
+        
+        self.external_name_by_attribute_name = {
+            {{#vars}}'{{name}}': '{{baseName}}',
+            {{/vars}}
+        }
 
 {{#vars}}
         self.{{#isEnum}}_{{/isEnum}}{{name}} = {{name}}

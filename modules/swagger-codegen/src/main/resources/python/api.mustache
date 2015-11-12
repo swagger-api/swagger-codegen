@@ -73,12 +73,21 @@ class {{classname}}(object):
 {{/headerParams}}
         }
 
-        form_params = {}
-        files = {}
+        form_params = {
 {{#formParams}}
-        if '{{paramName}}' in params:
-            {{#notFile}}form_params['{{baseName}}'] = params['{{paramName}}']{{/notFile}}{{#isFile}}files['{{baseName}}'] = params['{{paramName}}']{{/isFile}}
+{{#notFile}}
+            '{{baseName}}': {{paramName}},
+{{/notFile}}
 {{/formParams}}
+        }
+
+        files = {
+{{#formParams}}
+{{#isFile}}
+            '{{baseName}}': {{paramName}},
+{{/isFile}}
+{{/formParams}}
+        }
 
         body_params = {
 {{#bodyParams}}

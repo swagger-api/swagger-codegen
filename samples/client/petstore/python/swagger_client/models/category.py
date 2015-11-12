@@ -5,7 +5,6 @@ Do not edit manually.
 """
 
 from pprint import pformat
-from six import iteritems
 
 
 class Category(object):
@@ -20,6 +19,12 @@ class Category(object):
         self.swagger_type_by_variable_name = {
             'id': 'int',
             'name': 'str',
+            
+        }
+        
+        self.external_name_by_attribute_name = {
+            'id': 'id',
+            'name': 'name',
             
         }
 

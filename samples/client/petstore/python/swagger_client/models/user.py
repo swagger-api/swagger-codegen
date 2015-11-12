@@ -5,7 +5,6 @@ Do not edit manually.
 """
 
 from pprint import pformat
-from six import iteritems
 
 
 class User(object):
@@ -38,6 +37,18 @@ class User(object):
             'password': 'str',
             'phone': 'str',
             'user_status': 'int',
+            
+        }
+        
+        self.external_name_by_attribute_name = {
+            'id': 'id',
+            'username': 'username',
+            'first_name': 'firstName',
+            'last_name': 'lastName',
+            'email': 'email',
+            'password': 'password',
+            'phone': 'phone',
+            'user_status': 'userStatus',
             
         }
 

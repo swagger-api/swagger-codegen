@@ -107,9 +107,9 @@ class ApiClient(object):
                             for k, v in iteritems(query_params)}
 
         # post parameters
-        if post_params or files:
-            post_params = self.prepare_post_parameters(post_params, files)
-            post_params = self.sanitize_for_serialization(post_params)
+        post_params = post_params or {}
+        if files:
+            files = self.prepare_files(files)
 
         # auth setting
         self.update_params_for_auth(header_params, query_params, auth_settings)
@@ -129,6 +129,7 @@ class ApiClient(object):
             headers=header_params,
             post_params=post_params, 
             body=body,
+            files=files,
             auth_settings=auth_settings)
 
         response_data = response.content
@@ -195,7 +196,7 @@ class ApiClient(object):
                 # and attributes which value is not None.
                 # Convert attribute name to json key in
                 # model definition for request.
-                obj_dict = {attr: getattr(obj, attr)
+                obj_dict = {obj.external_name_by_attribute_name[attr]: getattr(obj, attr)
                             for attr, _ in iteritems(obj.swagger_type_by_variable_name)
                             if getattr(obj, attr) is not None}
 
@@ -300,7 +301,7 @@ class ApiClient(object):
             return thread
 
     def request(self, method, url, query_params=None, headers=None,
-                post_params=None, body=None, auth_settings=None):
+                post_params=None, body=None, auth_settings=None, files=None):
         """
         Makes the HTTP request using RESTClient.
         """
@@ -311,23 +312,13 @@ class ApiClient(object):
             query_params=query_params,
             headers=headers,
             post_params=post_params,
+            files=files,
             body=body,
             auth_settings=auth_settings)
         return self.rest_client.request(method, url, **{k: v for k, v in params.items() if v is not None})
-
-    def prepare_post_parameters(self, post_params=None, files=None):
-        """
-        Builds form parameters.
-
-        :param post_params: Normal form parameters.
-        :param files: File parameters.
-        :return: Form parameters with files.
-        """
-        params = {}
-
-        if post_params:
-            params.update(post_params)
-
+        
+    def prepare_files(self, files):
+        result = []
         if files:
             for k, v in iteritems(files):
                 if not v:
@@ -336,11 +327,9 @@ class ApiClient(object):
                 with open(v, 'rb') as f:
                     filename = os.path.basename(f.name)
                     filedata = f.read()
-                    mimetype = mimetypes.\
-                        guess_type(filename)[0] or 'application/octet-stream'
-                    params[k] = tuple([filename, filedata, mimetype])
-
-        return params
+                    mimetype = mimetypes.guess_type(filename)[0] or 'application/octet-stream'
+                    result.append((filename, filedata, mimetype))
+        return result
 
     def select_header_accept(self, accepts):
         """

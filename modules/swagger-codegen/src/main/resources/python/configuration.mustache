@@ -27,6 +27,9 @@ class Configuration(object):
         """
         assert getattr(Configuration, '_singleton', None) is None
         Configuration._singleton = self
+        self.reset()
+        
+    def reset(self):
         # Default Base url
         self.host = "{{basePath}}"
         # Default api client
@@ -174,8 +177,7 @@ class Configuration(object):
         """
         if self.api_key.get(identifier) and self.api_key_prefix.get(identifier):
             return self.api_key_prefix[identifier] + ' ' + self.api_key[identifier]
-        elif self.api_key.get(identifier):
-            return self.api_key[identifier]
+        return self.api_key.get(identifier)
 
     def get_basic_auth_token(self):
         """
@@ -187,12 +189,14 @@ class Configuration(object):
                            .get('authorization')
                            
     def get_access_value(self, type, param_name):
-        if type == 'api_key':
+        if type == 'apiKey':
             return self.get_api_key_with_prefix(param_name)
         elif type == 'basic':
             return self.get_basic_auth_token()
         elif type == 'oauth2':
             return 'Bearer ' + self.access_token
+        else:
+            assert False, 'unsupported access type %s' % type
 
     def auth_settings(self):
         """
@@ -204,7 +208,7 @@ class Configuration(object):
 {{#authMethods}}
             '{{name}}': {
                 'type': '{{type}}',
-                'in': '{{#isKeyInQuery}}query{{/isKeyInQuery}}' or 'header',
+                'in': '{{#isKeyInQuery}}query{{/isKeyInQuery}}{{^isKeyInQuery}}header{{/isKeyInQuery}}',
                 'key': '{{keyParamName}}',
                 'value': self.get_access_value('{{type}}', '{{keyParamName}}')
             },

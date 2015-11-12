@@ -2,3 +2,5 @@ nose
 tox
 coverage
 randomize
+requests
+rauth

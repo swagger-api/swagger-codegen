@@ -2,12 +2,6 @@
 
 from __future__ import absolute_import
 
-import sys
-import os
-
-# python 2 and python 3 compatibility library
-from six import iteritems
-
 from ..configuration import configuration
 from ..api_client import ApiClient
 
@@ -28,7 +22,7 @@ class UserApi(object):
                 config.api_client = ApiClient()
             self.api_client = config.api_client
 
-    def create_user(self, **kwargs):
+    def create_user(self, body=None, callback=None):
         """
         Create user
         This can only be done by the logged in user.
@@ -49,35 +43,27 @@ class UserApi(object):
                  returns the request thread.
         """
 
-        all_params = ['body']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method create_user" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
-
         resource_path = '/user'.replace('{format}', 'json')
         method = 'POST'
 
-        path_params = {}
+        path_params = {
+        }
 
-        query_params = {}
+        query_params = {
+        }
 
-        header_params = {}
+        header_params = {
+        }
 
-        form_params = {}
-        files = {}
+        form_params = {
+        }
 
-        body_params = None
-        if 'body' in params:
-            body_params = params['body']
+        files = {
+        }
+
+        body_params = {
+            'body': body,
+        }
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
@@ -101,10 +87,10 @@ class UserApi(object):
                                             files=files,
                                             response_type=None,
                                             auth_settings=auth_settings,
-                                            callback=params.get('callback'))
+                                            callback=callback)
         return response
 
-    def create_users_with_array_input(self, **kwargs):
+    def create_users_with_array_input(self, body=None, callback=None):
         """
         Creates list of users with given input array
         
@@ -125,35 +111,27 @@ class UserApi(object):
                  returns the request thread.
         """
 
-        all_params = ['body']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method create_users_with_array_input" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
-
         resource_path = '/user/createWithArray'.replace('{format}', 'json')
         method = 'POST'
 
-        path_params = {}
+        path_params = {
+        }
 
-        query_params = {}
+        query_params = {
+        }
 
-        header_params = {}
+        header_params = {
+        }
 
-        form_params = {}
-        files = {}
+        form_params = {
+        }
 
-        body_params = None
-        if 'body' in params:
-            body_params = params['body']
+        files = {
+        }
+
+        body_params = {
+            'body': body,
+        }
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
@@ -177,10 +155,10 @@ class UserApi(object):
                                             files=files,
                                             response_type=None,
                                             auth_settings=auth_settings,
-                                            callback=params.get('callback'))
+                                            callback=callback)
         return response
 
-    def create_users_with_list_input(self, **kwargs):
+    def create_users_with_list_input(self, body=None, callback=None):
         """
         Creates list of users with given input array
         
@@ -201,35 +179,27 @@ class UserApi(object):
                  returns the request thread.
         """
 
-        all_params = ['body']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method create_users_with_list_input" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
-
         resource_path = '/user/createWithList'.replace('{format}', 'json')
         method = 'POST'
 
-        path_params = {}
+        path_params = {
+        }
 
-        query_params = {}
+        query_params = {
+        }
 
-        header_params = {}
+        header_params = {
+        }
 
-        form_params = {}
-        files = {}
+        form_params = {
+        }
 
-        body_params = None
-        if 'body' in params:
-            body_params = params['body']
+        files = {
+        }
+
+        body_params = {
+            'body': body,
+        }
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
@@ -253,10 +223,10 @@ class UserApi(object):
                                             files=files,
                                             response_type=None,
                                             auth_settings=auth_settings,
-                                            callback=params.get('callback'))
+                                            callback=callback)
         return response
 
-    def login_user(self, **kwargs):
+    def login_user(self, username=None, password=None, callback=None):
         """
         Logs user into the system
         
@@ -278,37 +248,28 @@ class UserApi(object):
                  returns the request thread.
         """
 
-        all_params = ['username', 'password']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method login_user" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
-
         resource_path = '/user/login'.replace('{format}', 'json')
         method = 'GET'
 
-        path_params = {}
+        path_params = {
+        }
 
-        query_params = {}
-        if 'username' in params:
-            query_params['username'] = params['username']
-        if 'password' in params:
-            query_params['password'] = params['password']
+        query_params = {
+            'username': username,
+            'password': password,
+        }
 
-        header_params = {}
+        header_params = {
+        }
 
-        form_params = {}
-        files = {}
+        form_params = {
+        }
 
-        body_params = None
+        files = {
+        }
+
+        body_params = {
+        }
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
@@ -332,10 +293,10 @@ class UserApi(object):
                                             files=files,
                                             response_type='str',
                                             auth_settings=auth_settings,
-                                            callback=params.get('callback'))
+                                            callback=callback)
         return response
 
-    def logout_user(self, **kwargs):
+    def logout_user(self, callback=None):
         """
         Logs out current logged in user session
         
@@ -355,33 +316,26 @@ class UserApi(object):
                  returns the request thread.
         """
 
-        all_params = []
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method logout_user" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
-
         resource_path = '/user/logout'.replace('{format}', 'json')
         method = 'GET'
 
-        path_params = {}
+        path_params = {
+        }
 
-        query_params = {}
+        query_params = {
+        }
 
-        header_params = {}
+        header_params = {
+        }
 
-        form_params = {}
-        files = {}
+        form_params = {
+        }
 
-        body_params = None
+        files = {
+        }
+
+        body_params = {
+        }
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
@@ -405,10 +359,10 @@ class UserApi(object):
                                             files=files,
                                             response_type=None,
                                             auth_settings=auth_settings,
-                                            callback=params.get('callback'))
+                                            callback=callback)
         return response
 
-    def get_user_by_name(self, username, **kwargs):
+    def get_user_by_name(self, username, callback=None):
         """
         Get user by user name
         
@@ -429,38 +383,27 @@ class UserApi(object):
                  returns the request thread.
         """
 
-        all_params = ['username']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_user_by_name" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
-        # verify the required parameter 'username' is set
-        if ('username' not in params) or (params['username'] is None):
-            raise ValueError("Missing the required parameter `username` when calling `get_user_by_name`")
-
         resource_path = '/user/{username}'.replace('{format}', 'json')
         method = 'GET'
 
-        path_params = {}
-        if 'username' in params:
-            path_params['username'] = params['username']
+        path_params = {
+            'username': username,
+        }
 
-        query_params = {}
+        query_params = {
+        }
 
-        header_params = {}
+        header_params = {
+        }
 
-        form_params = {}
-        files = {}
+        form_params = {
+        }
 
-        body_params = None
+        files = {
+        }
+
+        body_params = {
+        }
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
@@ -484,10 +427,10 @@ class UserApi(object):
                                             files=files,
                                             response_type='User',
                                             auth_settings=auth_settings,
-                                            callback=params.get('callback'))
+                                            callback=callback)
         return response
 
-    def update_user(self, username, **kwargs):
+    def update_user(self, username, body=None, callback=None):
         """
         Updated user
         This can only be done by the logged in user.
@@ -509,40 +452,28 @@ class UserApi(object):
                  returns the request thread.
         """
 
-        all_params = ['username', 'body']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method update_user" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
-        # verify the required parameter 'username' is set
-        if ('username' not in params) or (params['username'] is None):
-            raise ValueError("Missing the required parameter `username` when calling `update_user`")
-
         resource_path = '/user/{username}'.replace('{format}', 'json')
         method = 'PUT'
 
-        path_params = {}
-        if 'username' in params:
-            path_params['username'] = params['username']
+        path_params = {
+            'username': username,
+        }
 
-        query_params = {}
+        query_params = {
+        }
 
-        header_params = {}
+        header_params = {
+        }
 
-        form_params = {}
-        files = {}
+        form_params = {
+        }
 
-        body_params = None
-        if 'body' in params:
-            body_params = params['body']
+        files = {
+        }
+
+        body_params = {
+            'body': body,
+        }
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
@@ -566,10 +497,10 @@ class UserApi(object):
                                             files=files,
                                             response_type=None,
                                             auth_settings=auth_settings,
-                                            callback=params.get('callback'))
+                                            callback=callback)
         return response
 
-    def delete_user(self, username, **kwargs):
+    def delete_user(self, username, callback=None):
         """
         Delete user
         This can only be done by the logged in user.
@@ -590,38 +521,27 @@ class UserApi(object):
                  returns the request thread.
         """
 
-        all_params = ['username']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method delete_user" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
-        # verify the required parameter 'username' is set
-        if ('username' not in params) or (params['username'] is None):
-            raise ValueError("Missing the required parameter `username` when calling `delete_user`")
-
         resource_path = '/user/{username}'.replace('{format}', 'json')
         method = 'DELETE'
 
-        path_params = {}
-        if 'username' in params:
-            path_params['username'] = params['username']
+        path_params = {
+            'username': username,
+        }
 
-        query_params = {}
+        query_params = {
+        }
 
-        header_params = {}
+        header_params = {
+        }
 
-        form_params = {}
-        files = {}
+        form_params = {
+        }
 
-        body_params = None
+        files = {
+        }
+
+        body_params = {
+        }
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
@@ -645,5 +565,5 @@ class UserApi(object):
                                             files=files,
                                             response_type=None,
                                             auth_settings=auth_settings,
-                                            callback=params.get('callback'))
+                                            callback=callback)
         return response

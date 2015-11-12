@@ -2,12 +2,6 @@
 
 from __future__ import absolute_import
 
-import sys
-import os
-
-# python 2 and python 3 compatibility library
-from six import iteritems
-
 from ..configuration import configuration
 from ..api_client import ApiClient
 
@@ -28,7 +22,7 @@ class PetApi(object):
                 config.api_client = ApiClient()
             self.api_client = config.api_client
 
-    def update_pet(self, **kwargs):
+    def update_pet(self, body=None, callback=None):
         """
         Update an existing pet
         
@@ -49,35 +43,27 @@ class PetApi(object):
                  returns the request thread.
         """
 
-        all_params = ['body']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method update_pet" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
-
         resource_path = '/pet'.replace('{format}', 'json')
         method = 'PUT'
 
-        path_params = {}
+        path_params = {
+        }
 
-        query_params = {}
+        query_params = {
+        }
 
-        header_params = {}
+        header_params = {
+        }
 
-        form_params = {}
-        files = {}
+        form_params = {
+        }
 
-        body_params = None
-        if 'body' in params:
-            body_params = params['body']
+        files = {
+        }
+
+        body_params = {
+            'body': body,
+        }
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
@@ -101,10 +87,10 @@ class PetApi(object):
                                             files=files,
                                             response_type=None,
                                             auth_settings=auth_settings,
-                                            callback=params.get('callback'))
+                                            callback=callback)
         return response
 
-    def add_pet(self, **kwargs):
+    def add_pet(self, body=None, callback=None):
         """
         Add a new pet to the store
         
@@ -125,35 +111,27 @@ class PetApi(object):
                  returns the request thread.
         """
 
-        all_params = ['body']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method add_pet" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
-
         resource_path = '/pet'.replace('{format}', 'json')
         method = 'POST'
 
-        path_params = {}
+        path_params = {
+        }
 
-        query_params = {}
+        query_params = {
+        }
 
-        header_params = {}
+        header_params = {
+        }
 
-        form_params = {}
-        files = {}
+        form_params = {
+        }
 
-        body_params = None
-        if 'body' in params:
-            body_params = params['body']
+        files = {
+        }
+
+        body_params = {
+            'body': body,
+        }
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
@@ -177,10 +155,10 @@ class PetApi(object):
                                             files=files,
                                             response_type=None,
                                             auth_settings=auth_settings,
-                                            callback=params.get('callback'))
+                                            callback=callback)
         return response
 
-    def find_pets_by_status(self, **kwargs):
+    def find_pets_by_status(self, status=None, callback=None):
         """
         Finds Pets by status
         Multiple status values can be provided with comma seperated strings
@@ -201,35 +179,27 @@ class PetApi(object):
                  returns the request thread.
         """
 
-        all_params = ['status']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method find_pets_by_status" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
-
         resource_path = '/pet/findByStatus'.replace('{format}', 'json')
         method = 'GET'
 
-        path_params = {}
+        path_params = {
+        }
 
-        query_params = {}
-        if 'status' in params:
-            query_params['status'] = params['status']
+        query_params = {
+            'status': status,
+        }
 
-        header_params = {}
+        header_params = {
+        }
 
-        form_params = {}
-        files = {}
+        form_params = {
+        }
 
-        body_params = None
+        files = {
+        }
+
+        body_params = {
+        }
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
@@ -253,10 +223,10 @@ class PetApi(object):
                                             files=files,
                                             response_type='list[Pet]',
                                             auth_settings=auth_settings,
-                                            callback=params.get('callback'))
+                                            callback=callback)
         return response
 
-    def find_pets_by_tags(self, **kwargs):
+    def find_pets_by_tags(self, tags=None, callback=None):
         """
         Finds Pets by tags
         Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
@@ -277,35 +247,27 @@ class PetApi(object):
                  returns the request thread.
         """
 
-        all_params = ['tags']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method find_pets_by_tags" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
-
         resource_path = '/pet/findByTags'.replace('{format}', 'json')
         method = 'GET'
 
-        path_params = {}
+        path_params = {
+        }
 
-        query_params = {}
-        if 'tags' in params:
-            query_params['tags'] = params['tags']
+        query_params = {
+            'tags': tags,
+        }
 
-        header_params = {}
+        header_params = {
+        }
 
-        form_params = {}
-        files = {}
+        form_params = {
+        }
 
-        body_params = None
+        files = {
+        }
+
+        body_params = {
+        }
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
@@ -329,10 +291,10 @@ class PetApi(object):
                                             files=files,
                                             response_type='list[Pet]',
                                             auth_settings=auth_settings,
-                                            callback=params.get('callback'))
+                                            callback=callback)
         return response
 
-    def get_pet_by_id(self, pet_id, **kwargs):
+    def get_pet_by_id(self, pet_id, callback=None):
         """
         Find pet by ID
         Returns a pet when ID < 10.  ID > 10 or nonintegers will simulate API error conditions
@@ -353,38 +315,27 @@ class PetApi(object):
                  returns the request thread.
         """
 
-        all_params = ['pet_id']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_pet_by_id" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
-        # verify the required parameter 'pet_id' is set
-        if ('pet_id' not in params) or (params['pet_id'] is None):
-            raise ValueError("Missing the required parameter `pet_id` when calling `get_pet_by_id`")
-
         resource_path = '/pet/{petId}'.replace('{format}', 'json')
         method = 'GET'
 
-        path_params = {}
-        if 'pet_id' in params:
-            path_params['petId'] = params['pet_id']
+        path_params = {
+            'petId': pet_id,
+        }
 
-        query_params = {}
+        query_params = {
+        }
 
-        header_params = {}
+        header_params = {
+        }
 
-        form_params = {}
-        files = {}
+        form_params = {
+        }
 
-        body_params = None
+        files = {
+        }
+
+        body_params = {
+        }
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
@@ -408,10 +359,10 @@ class PetApi(object):
                                             files=files,
                                             response_type='Pet',
                                             auth_settings=auth_settings,
-                                            callback=params.get('callback'))
+                                            callback=callback)
         return response
 
-    def update_pet_with_form(self, pet_id, **kwargs):
+    def update_pet_with_form(self, pet_id, name=None, status=None, callback=None):
         """
         Updates a pet in the store with form data
         
@@ -434,42 +385,29 @@ class PetApi(object):
                  returns the request thread.
         """
 
-        all_params = ['pet_id', 'name', 'status']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method update_pet_with_form" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
-        # verify the required parameter 'pet_id' is set
-        if ('pet_id' not in params) or (params['pet_id'] is None):
-            raise ValueError("Missing the required parameter `pet_id` when calling `update_pet_with_form`")
-
         resource_path = '/pet/{petId}'.replace('{format}', 'json')
         method = 'POST'
 
-        path_params = {}
-        if 'pet_id' in params:
-            path_params['petId'] = params['pet_id']
+        path_params = {
+            'petId': pet_id,
+        }
 
-        query_params = {}
+        query_params = {
+        }
 
-        header_params = {}
+        header_params = {
+        }
 
-        form_params = {}
-        files = {}
-        if 'name' in params:
-            form_params['name'] = params['name']
-        if 'status' in params:
-            form_params['status'] = params['status']
+        form_params = {
+            'name': name,
+            'status': status,
+        }
 
-        body_params = None
+        files = {
+        }
+
+        body_params = {
+        }
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
@@ -493,10 +431,10 @@ class PetApi(object):
                                             files=files,
                                             response_type=None,
                                             auth_settings=auth_settings,
-                                            callback=params.get('callback'))
+                                            callback=callback)
         return response
 
-    def delete_pet(self, pet_id, **kwargs):
+    def delete_pet(self, pet_id, api_key=None, callback=None):
         """
         Deletes a pet
         
@@ -518,40 +456,28 @@ class PetApi(object):
                  returns the request thread.
         """
 
-        all_params = ['pet_id', 'api_key']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method delete_pet" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
-        # verify the required parameter 'pet_id' is set
-        if ('pet_id' not in params) or (params['pet_id'] is None):
-            raise ValueError("Missing the required parameter `pet_id` when calling `delete_pet`")
-
         resource_path = '/pet/{petId}'.replace('{format}', 'json')
         method = 'DELETE'
 
-        path_params = {}
-        if 'pet_id' in params:
-            path_params['petId'] = params['pet_id']
+        path_params = {
+            'petId': pet_id,
+        }
 
-        query_params = {}
+        query_params = {
+        }
 
-        header_params = {}
-        if 'api_key' in params:
-            header_params['api_key'] = params['api_key']
+        header_params = {
+            'api_key': api_key,
+        }
 
-        form_params = {}
-        files = {}
+        form_params = {
+        }
 
-        body_params = None
+        files = {
+        }
+
+        body_params = {
+        }
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
@@ -575,10 +501,10 @@ class PetApi(object):
                                             files=files,
                                             response_type=None,
                                             auth_settings=auth_settings,
-                                            callback=params.get('callback'))
+                                            callback=callback)
         return response
 
-    def upload_file(self, pet_id, **kwargs):
+    def upload_file(self, pet_id, additional_metadata=None, file=None, callback=None):
         """
         uploads an image
         
@@ -601,42 +527,29 @@ class PetApi(object):
                  returns the request thread.
         """
 
-        all_params = ['pet_id', 'additional_metadata', 'file']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method upload_file" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
-        # verify the required parameter 'pet_id' is set
-        if ('pet_id' not in params) or (params['pet_id'] is None):
-            raise ValueError("Missing the required parameter `pet_id` when calling `upload_file`")
-
         resource_path = '/pet/{petId}/uploadImage'.replace('{format}', 'json')
         method = 'POST'
 
-        path_params = {}
-        if 'pet_id' in params:
-            path_params['petId'] = params['pet_id']
+        path_params = {
+            'petId': pet_id,
+        }
 
-        query_params = {}
+        query_params = {
+        }
 
-        header_params = {}
+        header_params = {
+        }
 
-        form_params = {}
-        files = {}
-        if 'additional_metadata' in params:
-            form_params['additionalMetadata'] = params['additional_metadata']
-        if 'file' in params:
-            files['file'] = params['file']
+        form_params = {
+            'additionalMetadata': additional_metadata,
+        }
 
-        body_params = None
+        files = {
+            'file': file,
+        }
+
+        body_params = {
+        }
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
@@ -660,5 +573,5 @@ class PetApi(object):
                                             files=files,
                                             response_type=None,
                                             auth_settings=auth_settings,
-                                            callback=params.get('callback'))
+                                            callback=callback)
         return response
