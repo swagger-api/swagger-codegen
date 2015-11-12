@@ -214,12 +214,14 @@ namespace IO.Swagger.Client
         /// <summary>
         /// Deserialize the JSON string into a proper object.
         /// </summary>
-        /// <param name="content">HTTP body (e.g. string, JSON).</param>
+        /// <param name="response">The HTTP response.</param>
         /// <param name="type">Object type.</param>
-        /// <param name="headers"></param>
         /// <returns>Object representation of the JSON string.</returns>
-        public object Deserialize(string content, Type type, IList<Parameter> headers=null)
+        public object Deserialize(IRestResponse response, Type type)
         {
+            byte[] data = response.RawBytes;
+            string content = response.Content;
+            IList<Parameter> headers = response.Headers;
             if (type == typeof(Object)) // return an object
             {
                 return content;
@@ -227,21 +229,22 @@ namespace IO.Swagger.Client
 
             if (type == typeof(Stream))
             {
-                var filePath = String.IsNullOrEmpty(Configuration.TempFolderPath)
-                    ? Path.GetTempPath()
-                    : Configuration.TempFolderPath;
-
-                var fileName = filePath + Guid.NewGuid();
                 if (headers != null)
                 {
+                    var filePath = String.IsNullOrEmpty(Configuration.TempFolderPath)
+                        ? Path.GetTempPath()
+                        : Configuration.TempFolderPath;
                     var regex = new Regex(@"Content-Disposition:.*filename=['""]?([^'""\s]+)['""]?$");
                     var match = regex.Match(headers.ToString());
                     if (match.Success)
-                        fileName = filePath + match.Value.Replace("\"", "").Replace("'", "");
+                    {
+                        string fileName = filePath + match.Value.Replace("\"", "").Replace("'", "");
+                        File.WriteAllBytes(fileName, data);
+                        return new FileStream(fileName, FileMode.Open);
+                    }
                 }
-                File.WriteAllText(fileName, content);
-                return new FileStream(fileName, FileMode.Open);
-
+                var stream = new MemoryStream(data);
+                return stream;
             }
 
             if (type.Name.StartsWith("System.Nullable`1[[System.DateTime")) // return a datetime object
@@ -317,12 +320,10 @@ namespace IO.Swagger.Client
                     
                     case "api_key":
                         headerParams["api_key"] = GetApiKeyWithPrefix("api_key");
-                        
                         break;
                     
                     case "petstore_auth":
-                        
-                        //TODO support oauth
+                        headerParams["Authorization"] = "Bearer " + Configuration.AccessToken;
                         break;
                     
                     default:

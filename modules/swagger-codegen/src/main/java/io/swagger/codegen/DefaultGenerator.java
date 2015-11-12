@@ -163,6 +163,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
         String contextPath = swagger.getBasePath() == null ? "" : swagger.getBasePath();
         String basePath = hostBuilder.toString();
+        String basePathWithoutHost = swagger.getBasePath();
 
 
         // resolve inline models
@@ -215,7 +216,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                                     .withLoader(new Mustache.TemplateLoader() {
                                         @Override
                                         public Reader getTemplate(String name) {
-                                            return getTemplateReader(config.templateDir() + File.separator + name + ".mustache");
+                                            return getTemplateReader(getFullTemplateFile(config, name + ".mustache"));
                                         }
                                     })
                                     .defaultValue("")
@@ -252,6 +253,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     Map<String, Object> operation = processOperations(config, tag, ops);
 
                     operation.put("basePath", basePath);
+                    operation.put("basePathWithoutHost", basePathWithoutHost);
                     operation.put("contextPath", contextPath);
                     operation.put("baseName", tag);
                     operation.put("modelPackage", config.modelPackage());
@@ -259,6 +261,13 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     operation.put("classname", config.toApiName(tag));
                     operation.put("classVarName", config.toApiVarName(tag));
                     operation.put("importPath", config.toApiImport(tag));
+
+                    // Pass sortParamsByRequiredFlag through to the Mustache template...
+                    boolean sortParamsByRequiredFlag = true;
+                    if (this.config.additionalProperties().containsKey(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG)) {
+                        sortParamsByRequiredFlag = Boolean.valueOf((String)this.config.additionalProperties().get(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG).toString());
+                    }
+                    operation.put("sortParamsByRequiredFlag", sortParamsByRequiredFlag);
 
                     processMimeTypes(swagger.getConsumes(), operation, "consumes");
                     processMimeTypes(swagger.getProduces(), operation, "produces");
@@ -283,7 +292,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                                 .withLoader(new Mustache.TemplateLoader() {
                                     @Override
                                     public Reader getTemplate(String name) {
-                                        return getTemplateReader(config.templateDir() + File.separator + name + ".mustache");
+                                        return getTemplateReader(getFullTemplateFile(config, name + ".mustache"));
                                     }
                                 })
                                 .defaultValue("")
@@ -374,7 +383,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                                     .withLoader(new Mustache.TemplateLoader() {
                                         @Override
                                         public Reader getTemplate(String name) {
-                                            return getTemplateReader(config.templateDir() + File.separator + name + ".mustache");
+                                            return getTemplateReader(getFullTemplateFile(config, name + ".mustache"));
                                         }
                                     })
                                     .defaultValue("")

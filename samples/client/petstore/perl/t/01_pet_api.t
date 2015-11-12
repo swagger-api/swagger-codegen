@@ -1,4 +1,4 @@
-use Test::More tests => 33;
+use Test::More tests => 37;
 use Test::Exception;
 
 use lib 'lib';
@@ -59,6 +59,9 @@ is $get_pet_hash->{category}->{id}, '22', 'get the proper category id from get_p
 is $get_pet_hash->{category}->{name}, 'perl', 'get the proper category from get_pet_by_id';
 is $get_pet_hash->{tags}[0]->{name}, 'just kidding', 'get the proper tag from get_pet_by_id';
 is $get_pet_hash->{tags}[0]->{id}, '11', 'get the proper tag id from get_pet_by_id';
+is $get_pet_hash->{photoUrls}->[0], '123', 'get the proper photoUrl from get_pet_by_id';
+is $get_pet_hash->{photoUrls}->[1], 'oop', 'get the proper photoUrl from get_pet_by_id';
+
 
 my $update_pet_with_form = $api->update_pet_with_form(pet_id => $pet_id, name => 'test_name', status => 'sold');
 is $update_pet_with_form, undef, 'get the null response from update_pet_wth_form';
@@ -73,4 +76,8 @@ my $delete_pet = $api->delete_pet(pet_id => $pet_id);
 is $delete_pet, undef, 'get the null response from delete_pet';
 throws_ok{$api->get_pet_by_id(pet_id => $pet_id)} qr/API Exception\(404\): Not Found/, "throw 404 error about pet not found after delete";
 #is $get_pet_after_delete->{status}, undef, 'get the updated status after update_pet_with_form';
+
+my $pets;
+lives_ok {$pets = $api->find_pets_by_status(status => [qw(sold available)])} 'array query param processed correctly';
+isa_ok($pets->[0], 'WWW::SwaggerClient::Object::Pet');
 
