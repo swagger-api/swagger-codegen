@@ -8,6 +8,7 @@ import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.DefaultCodegen;
 import io.swagger.models.Model;
 import io.swagger.models.Operation;
+import io.swagger.models.Swagger;
 import io.swagger.models.parameters.Parameter;
 import io.swagger.models.parameters.SerializableParameter;
 import io.swagger.models.properties.MapProperty;
@@ -33,11 +34,13 @@ public class CellStoreCodegen extends DefaultCodegen {
         CodegenModelFactory.setTypeMapping(CodegenModelType.PARAMETER, CellStoreCodegenParameter.class);
     };
     
+    @Override
     public CodegenOperation fromOperation(
         String path, 
         String httpMethod, 
         Operation operation, 
-        Map<String, Model> definitions) 
+        Map<String, Model> definitions,
+        Swagger swagger)
     {
         // remove excluded parameters
         List<Parameter> parameters = operation.getParameters();
@@ -55,7 +58,7 @@ public class CellStoreCodegen extends DefaultCodegen {
           operation.setParameters(parameters);
         }
         
-        CellStoreCodegenOperation op = (CellStoreCodegenOperation) super.fromOperation(path, httpMethod, operation, definitions);
+        CellStoreCodegenOperation op = (CellStoreCodegenOperation) super.fromOperation(path, httpMethod, operation, definitions, swagger);
         
         // find patterned and hardcoded Params
         List<CodegenParameter> patternQueryParams = new ArrayList<CodegenParameter>();

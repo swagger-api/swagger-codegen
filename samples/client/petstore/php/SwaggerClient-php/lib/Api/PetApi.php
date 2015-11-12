@@ -146,6 +146,7 @@ class PetApi
                 $queryParams, $httpBody,
                 $headerParams
             );
+            
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             }
@@ -210,6 +211,7 @@ class PetApi
                 $queryParams, $httpBody,
                 $headerParams
             );
+            
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             }
@@ -273,10 +275,17 @@ class PetApi
                 $queryParams, $httpBody,
                 $headerParams, '\Swagger\Client\Model\Pet[]'
             );
+            
+            if (!$response) {
+                return null;
+            }
+
+            return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Model\Pet[]', $httpHeader);
+            
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Model\Pet[]', $httpHeader);
+                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Model\Pet[]', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
@@ -284,11 +293,7 @@ class PetApi
             throw $e;
         }
         
-        if (!$response) {
-            return null;
-        }
-  
-        return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Model\Pet[]');
+        return null;
         
     }
     
@@ -346,10 +351,17 @@ class PetApi
                 $queryParams, $httpBody,
                 $headerParams, '\Swagger\Client\Model\Pet[]'
             );
+            
+            if (!$response) {
+                return null;
+            }
+
+            return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Model\Pet[]', $httpHeader);
+            
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Model\Pet[]', $httpHeader);
+                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Model\Pet[]', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
@@ -357,11 +369,7 @@ class PetApi
             throw $e;
         }
         
-        if (!$response) {
-            return null;
-        }
-  
-        return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Model\Pet[]');
+        return null;
         
     }
     
@@ -434,10 +442,17 @@ class PetApi
                 $queryParams, $httpBody,
                 $headerParams, '\Swagger\Client\Model\Pet'
             );
+            
+            if (!$response) {
+                return null;
+            }
+
+            return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Model\Pet', $httpHeader);
+            
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Model\Pet', $httpHeader);
+                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Model\Pet', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
@@ -445,11 +460,7 @@ class PetApi
             throw $e;
         }
         
-        if (!$response) {
-            return null;
-        }
-  
-        return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Model\Pet');
+        return null;
         
     }
     
@@ -523,6 +534,7 @@ class PetApi
                 $queryParams, $httpBody,
                 $headerParams
             );
+            
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             }
@@ -598,6 +610,7 @@ class PetApi
                 $queryParams, $httpBody,
                 $headerParams
             );
+            
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             }
@@ -677,6 +690,7 @@ class PetApi
                 $queryParams, $httpBody,
                 $headerParams
             );
+            
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             }
