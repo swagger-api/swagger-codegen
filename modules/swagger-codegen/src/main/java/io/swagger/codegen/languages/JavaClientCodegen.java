@@ -43,7 +43,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
     protected String groupId = "io.swagger";
     protected String artifactId = "swagger-java-client";
     protected String artifactVersion = "1.0.0";
-    protected String sourceFolder = "src/main/java";
+    protected String sourceFolder = "src" + File.separator + "main" + File.separator + "java";
     protected String localVariablePrefix = "";
     protected boolean fullJavaUtil = false;
     protected String javaUtilPrefix = "";
@@ -51,7 +51,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     public JavaClientCodegen() {
         super();
-        outputFolder = "generated-code/java";
+        outputFolder = "generated-code" + File.separator + "java";
         modelTemplateFiles.put("model.mustache", ".java");
         apiTemplateFiles.put("api.mustache", ".java");
         embeddedTemplateDir = templateDir = "Java";
@@ -203,7 +203,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         this.sanitizeConfig();
 
-        final String invokerFolder = (sourceFolder + '/' + invokerPackage).replace(".", "/");
+        final String invokerFolder = sourceFolder + File.separator + invokerPackage.replace(".", File.separator);
         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("build.gradle.mustache", "", "build.gradle"));
@@ -212,7 +212,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("ApiClient.mustache", invokerFolder, "ApiClient.java"));
         supportingFiles.add(new SupportingFile("StringUtil.mustache", invokerFolder, "StringUtil.java"));
 
-        final String authFolder = (sourceFolder + '/' + invokerPackage + ".auth").replace(".", "/");
+        final String authFolder = invokerFolder + File.separator + "auth";
         supportingFiles.add(new SupportingFile("auth/HttpBasicAuth.mustache", authFolder, "HttpBasicAuth.java"));
         supportingFiles.add(new SupportingFile("auth/ApiKeyAuth.mustache", authFolder, "ApiKeyAuth.java"));
         supportingFiles.add(new SupportingFile("auth/OAuth.mustache", authFolder, "OAuth.java"));
@@ -267,12 +267,12 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String apiFileFolder() {
-        return outputFolder + "/" + sourceFolder + "/" + apiPackage().replace('.', '/');
+        return outputFolder + File.separator + sourceFolder + File.separator + apiPackage().replace(".", File.separator);
     }
 
     @Override
     public String modelFileFolder() {
-        return outputFolder + "/" + sourceFolder + "/" + modelPackage().replace('.', '/');
+        return outputFolder + File.separator + sourceFolder + File.separator + modelPackage().replace(".", File.separator);
     }
 
     @Override
