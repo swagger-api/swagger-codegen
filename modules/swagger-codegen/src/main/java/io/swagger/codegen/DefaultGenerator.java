@@ -186,6 +186,11 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         	try {
                 List<CodegenOperation> ops = paths.get(tag);
                 Map<String, Object> operation = processOperations(config, tag, ops);
+                
+                Map<String, Object> operationObjs = (Map<String, Object>) operation.get("operations");
+                List<CodegenOperation> operationList = (List<CodegenOperation>) operationObjs.get("operation");
+                if (operationList.isEmpty())
+                  continue;
 
                 operation.put("basePath", basePath);
                 operation.put("contextPath", contextPath);

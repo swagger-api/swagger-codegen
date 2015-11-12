@@ -94,6 +94,8 @@ public class CellStoreCodegen extends DefaultCodegen {
           for (CodegenParameter p : removeAllParams) {
             op.allParams.remove(p);
           }
+          if (op.allParams.size() > 0)
+            op.allParams.get(op.allParams.size() -1 ).hasMore = false;
         }
         
         return op;
@@ -199,7 +201,7 @@ public class CellStoreCodegen extends DefaultCodegen {
         }
         for (CodegenOperation o : removeOps) {
           ops.remove(o);
-        }
+        }        
         return operations;
     }
     
