@@ -60,10 +60,10 @@ class ApiExceptionTests(unittest.TestCase):
             self.assertEqual(e.reason, "Not Found")
             self.assertRegexpMatches(e.body, "Pet not found")
 
-    def test_500_error(self):
+    def test_no_file_error(self):
         self.pet_api.add_pet(body=self.pet)
 
-        with self.assertRaisesRegexp(ApiException, "Internal Server Error"):
+        with self.assertRaisesRegexp(ApiException, "Unsupported Media Type"):
             self.pet_api.upload_file(
                 pet_id=self.pet.id,
                 additional_metadata="special",
@@ -77,6 +77,5 @@ class ApiExceptionTests(unittest.TestCase):
                 file=None
             )
         except ApiException as e:
-            self.assertEqual(e.status, 500)
-            self.assertEqual(e.reason, "Internal Server Error")
-            self.assertRegexpMatches(e.body, "Error 500 Internal Server Error")
+            self.assertEqual(e.status, 415)
+            self.assertEqual(e.reason, "Unsupported Media Type")

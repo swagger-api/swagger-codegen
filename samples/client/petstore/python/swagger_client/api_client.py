@@ -318,7 +318,7 @@ class ApiClient(object):
         return self.rest_client.request(method, url, **{k: v for k, v in params.items() if v is not None})
         
     def prepare_files(self, files):
-        result = []
+        result = {}
         if files:
             for k, v in iteritems(files):
                 if not v:
@@ -328,7 +328,7 @@ class ApiClient(object):
                     filename = os.path.basename(f.name)
                     filedata = f.read()
                     mimetype = mimetypes.guess_type(filename)[0] or 'application/octet-stream'
-                    result.append((k, (filename, filedata, mimetype)))
+                    result[k] = (filename, filedata, mimetype)
         return result
 
     def select_header_accept(self, accepts):

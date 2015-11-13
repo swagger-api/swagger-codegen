@@ -8,6 +8,7 @@ $ nosetests -v
 """
 
 import os
+from random import randint
 import time
 import unittest
 
@@ -42,7 +43,7 @@ class PetApiTests(unittest.TestCase):
         self.category.name = "dog"
         self.tag = swagger_client.Tag()
         self.tag.id = int(time.time())
-        self.tag.name = "swagger-codegen-python-pet-tag"
+        self.tag.name = "swagger-codegen-python-pet-tag-%s" % randint(0, 10000)  # randint to avoid others running the same test suite at the same time
         self.pet = swagger_client.Pet()
         self.pet.id = int(time.time())
         self.pet.name = "hello kity"
@@ -119,16 +120,16 @@ class PetApiTests(unittest.TestCase):
         self.pet_api.add_pet(body=self.pet)
 
         self.assertIn(
-            self.pet.id,
-            list(map(lambda x: getattr(x, 'id'), self.pet_api.find_pets_by_status(status=[self.pet.status])))
+            int(self.pet.id),
+            [getattr(x, 'id') for x in self.pet_api.find_pets_by_status(status=[self.pet.status])]
         )
 
     def test_find_pets_by_tags(self):
         self.pet_api.add_pet(body=self.pet)
 
         self.assertIn(
-            self.pet.id,
-            list(map(lambda x: getattr(x, 'id'), self.pet_api.find_pets_by_tags(tags=[self.tag.name])))
+            int(self.pet.id),
+            [getattr(x, 'id') for x in self.pet_api.find_pets_by_tags(tags=[self.tag.name])]
         )
 
     def test_update_pet_with_form(self):
