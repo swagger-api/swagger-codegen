@@ -61,6 +61,7 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
                         "DateTime",
                         "mixed",
                         "number",
+                        "null",
                         "void",
                         "byte")
         );
@@ -89,6 +90,7 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("array", "array");
         typeMapping.put("list", "array");
         typeMapping.put("object", "object");
+        typeMapping.put("null", "null");
         typeMapping.put("DateTime", "\\DateTime");
 
         cliOptions.add(new CliOption(CodegenConstants.MODEL_PACKAGE, CodegenConstants.MODEL_PACKAGE_DESC));
