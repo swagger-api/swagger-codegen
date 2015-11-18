@@ -20,6 +20,25 @@
         <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.9.1</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/gen/java</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
@@ -73,6 +92,43 @@
             </plugin>
         </plugins>
     </build>
+    <profiles>
+        <!-- generates pojos for a spec -->
+        <profile>
+            <id>pojos</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.swagger</groupId>
+                        <artifactId>swagger-codegen-maven-plugin</artifactId>
+                        <version>${codegen-version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                                <configuration>
+                                    <environmentVariables>
+                                        <!-- models to generate, empty means *all* -->
+                                        <models></models>
+                                        <!-- required by models as a helper -->
+                                        <supportingFiles>StringUtil.java</supportingFiles>
+                                    </environmentVariables>
+                                    <inputSpec>src/main/swagger/swagger.yaml</inputSpec>
+                                    <language>java</language>
+                                    <configOptions>
+                                        <sourceFolder>src/gen/java</sourceFolder>
+                                    </configOptions>
+                                    <output>.</output>
+                                    <modelPackage>{{modelPackage}}</modelPackage>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
     <dependencies>
         <!-- inflector client -->
         <dependency>
@@ -84,6 +140,7 @@
     <properties>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <swagger-core-version>1.5.4</swagger-core-version>
+        <codegen-version>2.1.4</codegen-version>
         <jetty-version>9.2.9.v20150224</jetty-version>
         <logback-version>1.0.1</logback-version>
         <junit-version>4.8.2</junit-version>
