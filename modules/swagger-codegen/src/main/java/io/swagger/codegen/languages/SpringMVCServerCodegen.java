@@ -2,17 +2,12 @@ package io.swagger.codegen.languages;
 
 import io.swagger.codegen.*;
 import io.swagger.models.Operation;
-import io.swagger.models.properties.ArrayProperty;
-import io.swagger.models.properties.MapProperty;
-import io.swagger.models.properties.Property;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Iterator;
 
 public class SpringMVCServerCodegen extends JavaClientCodegen implements CodegenConfig {
     public static final String CONFIG_PACKAGE = "configPackage";
@@ -38,17 +33,6 @@ public class SpringMVCServerCodegen extends JavaClientCodegen implements Codegen
         additionalProperties.put("title", title);
         additionalProperties.put(CodegenConstants.API_PACKAGE, apiPackage);
         additionalProperties.put(CONFIG_PACKAGE, configPackage);
-
-        languageSpecificPrimitives = new HashSet<String>(
-                Arrays.asList(
-                        "String",
-                        "boolean",
-                        "Boolean",
-                        "Double",
-                        "Integer",
-                        "Long",
-                        "Float")
-        );
 
         cliOptions.add(new CliOption(CONFIG_PACKAGE, "configuration package for generated code"));
     }
