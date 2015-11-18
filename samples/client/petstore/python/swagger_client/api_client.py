@@ -104,7 +104,8 @@ class ApiClient(object):
         if query_params:
             query_params = self.sanitize_for_serialization(query_params)
             query_params = {k: self.to_path_value(v)
-                            for k, v in iteritems(query_params)}
+                            for k, v in iteritems(query_params)
+                            if v is not None}
 
         # post parameters
         post_params = post_params or {}
