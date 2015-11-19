@@ -88,8 +88,13 @@ class RESTClient(object):
                     
             if headers['Content-Type'] == 'application/json':
                 assert not post_params
-                assert not body or body.keys() == ['body']
-                post_params = json.dumps(body['body']) if body else {}
+                if body:
+                    if body.keys() == ['body']:
+                        post_params = json.dumps(body['body'])
+                    else:
+                        post_params = json.dumps(body)
+                else:
+                    post_params = {}
                 if not post_params:
                     del headers['Content-Type']
             elif headers['Content-Type'] == 'multipart/form-data':
