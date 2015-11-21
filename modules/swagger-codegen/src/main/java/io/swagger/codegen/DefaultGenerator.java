@@ -85,8 +85,11 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             }
         }
 
-        if (swagger == null || config == null) {
-            throw new RuntimeException("missing swagger input or config!");
+        if (swagger == null) {
+            throw new RuntimeException("missing swagger input!");
+        } 
+        if (config == null) {
+            throw new RuntimeException("missing swagger config!");
         }
         if (System.getProperty("debugSwagger") != null) {
             Json.prettyPrint(swagger);

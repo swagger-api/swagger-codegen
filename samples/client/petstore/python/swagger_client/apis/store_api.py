@@ -1,31 +1,8 @@
 # coding: utf-8
 
-"""
-StoreApi.py
-Copyright 2015 SmartBear Software
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-"""
-
 from __future__ import absolute_import
 
-import sys
-import os
-
-# python 2 and python 3 compatibility library
-from six import iteritems
-
-from ..configuration import Configuration
+from ..configuration import configuration
 from ..api_client import ApiClient
 
 
@@ -37,7 +14,7 @@ class StoreApi(object):
     """
 
     def __init__(self, api_client=None):
-        config = Configuration()
+        config = configuration
         if api_client:
             self.api_client = api_client
         else:
@@ -45,7 +22,7 @@ class StoreApi(object):
                 config.api_client = ApiClient()
             self.api_client = config.api_client
 
-    def get_inventory(self, **kwargs):
+    def get_inventory(self, callback=None):
         """
         Returns pet inventories by status
         Returns a map of status codes to quantities
@@ -65,32 +42,26 @@ class StoreApi(object):
                  returns the request thread.
         """
 
-        all_params = []
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_inventory" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
         resource_path = '/store/inventory'.replace('{format}', 'json')
         method = 'GET'
 
-        path_params = {}
+        path_params = {
+        }
 
-        query_params = {}
+        query_params = {
+        }
 
-        header_params = {}
+        header_params = {
+        }
 
-        form_params = {}
-        files = {}
+        form_params = {
+        }
 
-        body_params = None
+        files = {
+        }
+
+        body_params = {
+        }
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
@@ -114,10 +85,10 @@ class StoreApi(object):
                                             files=files,
                                             response_type='dict(str, int)',
                                             auth_settings=auth_settings,
-                                            callback=params.get('callback'))
+                                            callback=callback)
         return response
 
-    def place_order(self, **kwargs):
+    def place_order(self, body=None, callback=None):
         """
         Place an order for a pet
         
@@ -138,34 +109,27 @@ class StoreApi(object):
                  returns the request thread.
         """
 
-        all_params = ['body']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method place_order" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
         resource_path = '/store/order'.replace('{format}', 'json')
         method = 'POST'
 
-        path_params = {}
+        path_params = {
+        }
 
-        query_params = {}
+        query_params = {
+        }
 
-        header_params = {}
+        header_params = {
+        }
 
-        form_params = {}
-        files = {}
+        form_params = {
+        }
 
-        body_params = None
-        if 'body' in params:
-            body_params = params['body']
+        files = {
+        }
+
+        body_params = {
+            'body': body,
+        }
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
@@ -189,10 +153,10 @@ class StoreApi(object):
                                             files=files,
                                             response_type='Order',
                                             auth_settings=auth_settings,
-                                            callback=params.get('callback'))
+                                            callback=callback)
         return response
 
-    def get_order_by_id(self, order_id, **kwargs):
+    def get_order_by_id(self, order_id, callback=None):
         """
         Find purchase order by ID
         For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions
@@ -212,38 +176,28 @@ class StoreApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'order_id' is set
-        if order_id is None:
-            raise ValueError("Missing the required parameter `order_id` when calling `get_order_by_id`")
-
-        all_params = ['order_id']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_order_by_id" % key
-                )
-            params[key] = val
-        del params['kwargs']
 
         resource_path = '/store/order/{orderId}'.replace('{format}', 'json')
         method = 'GET'
 
-        path_params = {}
-        if 'order_id' in params:
-            path_params['orderId'] = params['order_id']
+        path_params = {
+            'orderId': order_id,
+        }
 
-        query_params = {}
+        query_params = {
+        }
 
-        header_params = {}
+        header_params = {
+        }
 
-        form_params = {}
-        files = {}
+        form_params = {
+        }
 
-        body_params = None
+        files = {
+        }
+
+        body_params = {
+        }
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
@@ -267,10 +221,10 @@ class StoreApi(object):
                                             files=files,
                                             response_type='Order',
                                             auth_settings=auth_settings,
-                                            callback=params.get('callback'))
+                                            callback=callback)
         return response
 
-    def delete_order(self, order_id, **kwargs):
+    def delete_order(self, order_id, callback=None):
         """
         Delete purchase order by ID
         For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
@@ -290,38 +244,28 @@ class StoreApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'order_id' is set
-        if order_id is None:
-            raise ValueError("Missing the required parameter `order_id` when calling `delete_order`")
-
-        all_params = ['order_id']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method delete_order" % key
-                )
-            params[key] = val
-        del params['kwargs']
 
         resource_path = '/store/order/{orderId}'.replace('{format}', 'json')
         method = 'DELETE'
 
-        path_params = {}
-        if 'order_id' in params:
-            path_params['orderId'] = params['order_id']
+        path_params = {
+            'orderId': order_id,
+        }
 
-        query_params = {}
+        query_params = {
+        }
 
-        header_params = {}
+        header_params = {
+        }
 
-        form_params = {}
-        files = {}
+        form_params = {
+        }
 
-        body_params = None
+        files = {
+        }
+
+        body_params = {
+        }
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
@@ -345,5 +289,5 @@ class StoreApi(object):
                                             files=files,
                                             response_type=None,
                                             auth_settings=auth_settings,
-                                            callback=params.get('callback'))
+                                            callback=callback)
         return response

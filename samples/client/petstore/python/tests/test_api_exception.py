@@ -7,7 +7,6 @@ $ cd swagger_client-python
 $ nosetests -v
 """
 
-import os
 import time
 import unittest
 
@@ -18,6 +17,13 @@ from swagger_client.rest import ApiException
 class ApiExceptionTests(unittest.TestCase):
 
     def setUp(self):
+        swagger_client.configuration.reset()
+
+        swagger_client.configuration.api_key['api_key'] = '123456'
+        swagger_client.configuration.api_key_prefix['api_key'] = 'PREFIX'
+        swagger_client.configuration.username = 'test_username'
+        swagger_client.configuration.password = 'test_password'
+
         self.api_client = swagger_client.ApiClient()
         self.pet_api = swagger_client.PetApi(self.api_client)
         self.setUpModels()
@@ -54,10 +60,10 @@ class ApiExceptionTests(unittest.TestCase):
             self.assertEqual(e.reason, "Not Found")
             self.assertRegexpMatches(e.body, "Pet not found")
 
-    def test_500_error(self):
+    def test_no_file_error(self):
         self.pet_api.add_pet(body=self.pet)
 
-        with self.assertRaisesRegexp(ApiException, "Internal Server Error"):
+        with self.assertRaisesRegexp(ApiException, "Unsupported Media Type"):
             self.pet_api.upload_file(
                 pet_id=self.pet.id,
                 additional_metadata="special",
@@ -71,6 +77,5 @@ class ApiExceptionTests(unittest.TestCase):
                 file=None
             )
         except ApiException as e:
-            self.assertEqual(e.status, 500)
-            self.assertEqual(e.reason, "Internal Server Error")
-            self.assertRegexpMatches(e.body, "Error 500 Internal Server Error")
+            self.assertEqual(e.status, 415)
+            self.assertEqual(e.reason, "Unsupported Media Type")

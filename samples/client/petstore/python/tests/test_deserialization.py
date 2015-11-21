@@ -6,8 +6,6 @@ $ pip install nose (optional)
 $ cd SwaggerPetstore-python
 $ nosetests -v
 """
-import os
-import time
 import unittest
 import datetime
 
@@ -17,6 +15,7 @@ import swagger_client
 class DeserializationTests(unittest.TestCase):
 
     def setUp(self):
+        swagger_client.configuration.reset()
         self.api_client = swagger_client.ApiClient()
         self.deserialize = self.api_client._ApiClient__deserialize
 

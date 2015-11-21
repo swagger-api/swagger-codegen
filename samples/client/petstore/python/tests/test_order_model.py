@@ -7,8 +7,6 @@ $ cd swagger_client-python
 $ nosetests -v
 """
 
-import os
-import time
 import unittest
 
 import swagger_client

@@ -7,8 +7,6 @@ $ cd swagger_client-python
 $ nosetests -v
 """
 
-import os
-import time
 import unittest
 
 import swagger_client
@@ -30,11 +28,11 @@ class PetModelTests(unittest.TestCase):
         tag.id = 1
         self.pet.tags = [tag]
 
-    def test_to_str(self):
+    def test_repr(self):
         data = ("{'category': {'id': 1, 'name': 'dog'},\n"
                 " 'id': 1,\n"
                 " 'name': 'test name',\n"
                 " 'photo_urls': ['string'],\n"
                 " 'status': 'available',\n"
                 " 'tags': [{'id': 1, 'name': None}]}")
-        self.assertEqual(data, self.pet.to_str())
+        self.assertEqual(data, repr(self.pet))

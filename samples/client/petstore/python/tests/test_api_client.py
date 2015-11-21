@@ -7,8 +7,6 @@ $ cd SwaggerPetstore-python
 $ nosetests -v
 """
 
-import os
-import time
 import unittest
 from dateutil.parser import parse
 
@@ -21,9 +19,12 @@ HOST = 'http://petstore.swagger.io/v2'
 class ApiClientTests(unittest.TestCase):
 
     def setUp(self):
+        swagger_client.configuration.reset()
         self.api_client = swagger_client.ApiClient(HOST)
 
     def test_configuration(self):
+        swagger_client.configuration.reset()
+
         swagger_client.configuration.api_key['api_key'] = '123456'
         swagger_client.configuration.api_key_prefix['api_key'] = 'PREFIX'
         swagger_client.configuration.username = 'test_username'
