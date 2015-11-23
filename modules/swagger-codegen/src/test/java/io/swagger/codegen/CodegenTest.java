@@ -31,7 +31,7 @@ public class CodegenTest {
 
         final CodegenParameter file = op.formParams.get(1);
         Assert.assertTrue(file.isFormParam);
-        Assert.assertEquals(file.dataType, "file");
+        Assert.assertEquals(file.dataType, "java.io.File");
         Assert.assertNull(file.required);
         Assert.assertTrue(file.isFile);
         Assert.assertNull(file.hasMore);

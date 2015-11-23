@@ -8,7 +8,7 @@ import java.text.DateFormat;
 
 import java.io.IOException;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-07T15:05:10.376+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-23T18:55:22.333+08:00")
 public class JSON {
   private ObjectMapper mapper;
 
