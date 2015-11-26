@@ -7,7 +7,6 @@ import retrofit.http.*;
 import com.squareup.okhttp.RequestBody;
 
 import io.swagger.client.model.Pet;
-import java.io.File;
 
 import java.util.*;
 

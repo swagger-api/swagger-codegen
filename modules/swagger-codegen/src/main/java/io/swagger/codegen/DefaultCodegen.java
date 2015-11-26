@@ -420,7 +420,7 @@ public class DefaultCodegen {
         typeMapping.put("object", "Object");
         typeMapping.put("integer", "Integer");
         typeMapping.put("ByteArray", "byte[]");
-
+        typeMapping.put("file", "java.io.File");
 
         instantiationTypes = new HashMap<String, String>();
 
@@ -429,7 +429,8 @@ public class DefaultCodegen {
         importMapping = new HashMap<String, String>();
         importMapping.put("BigDecimal", "java.math.BigDecimal");
         importMapping.put("UUID", "java.util.UUID");
-        importMapping.put("File", "java.io.File");
+        // comment out below as a model can be named as "File"
+        // importMapping.put("File", "java.io.File");
         importMapping.put("Date", "java.util.Date");
         importMapping.put("Timestamp", "java.sql.Timestamp");
         importMapping.put("Map", "java.util.Map");
