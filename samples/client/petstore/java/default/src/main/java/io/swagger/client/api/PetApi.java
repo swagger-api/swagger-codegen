@@ -7,11 +7,10 @@ import io.swagger.client.Pair;
 import io.swagger.client.TypeRef;
 
 import io.swagger.client.model.Pet;
-import java.io.File;
 
 import java.util.*;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-04T19:58:40.953+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-26T10:45:35.489+08:00")
 public class PetApi {
   private ApiClient apiClient;
 
@@ -403,7 +402,7 @@ public class PetApi {
    * @param file file to upload
    * @return void
    */
-  public void uploadFile (Long petId, String additionalMetadata, File file) throws ApiException {
+  public void uploadFile (Long petId, String additionalMetadata, java.io.File file) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     

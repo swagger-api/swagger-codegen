@@ -17,7 +17,6 @@ import com.squareup.okhttp.Response;
 import java.io.IOException;
 
 import io.swagger.client.model.Pet;
-import java.io.File;
 
 import java.lang.reflect.Type;
 import java.util.*;
@@ -681,7 +680,7 @@ public class PetApi {
   }
   
   /* Build call for uploadFile */
-  private Call uploadFileCall(Long petId,String additionalMetadata,File file, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+  private Call uploadFileCall(Long petId,String additionalMetadata,java.io.File file, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object postBody = null;
     
     // verify the required parameter 'petId' is set
@@ -739,7 +738,7 @@ public class PetApi {
    * @param additionalMetadata Additional data to pass to server
    * @param file file to upload
    */
-  public void uploadFile(Long petId, String additionalMetadata, File file) throws ApiException {
+  public void uploadFile(Long petId, String additionalMetadata, java.io.File file) throws ApiException {
     Call call = uploadFileCall(petId,additionalMetadata,file, null, null);
     apiClient.execute(call);
   }
@@ -753,7 +752,7 @@ public class PetApi {
    * @param callback The callback to be executed when the API call finishes
    * @return The request call
    */
-  public Call uploadFileAsync(Long petId, String additionalMetadata, File file, final ApiCallback<Void> callback) throws ApiException {
+  public Call uploadFileAsync(Long petId, String additionalMetadata, java.io.File file, final ApiCallback<Void> callback) throws ApiException {
 
     ProgressResponseBody.ProgressListener progressListener = null;
     ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
