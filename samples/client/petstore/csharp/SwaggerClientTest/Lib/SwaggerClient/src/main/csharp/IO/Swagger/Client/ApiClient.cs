@@ -10,7 +10,6 @@ using System.Net;
 using System.Text;
 using Newtonsoft.Json;
 using RestSharp;
-using RestSharp.Extensions;
 
 namespace IO.Swagger.Client
 {
@@ -171,7 +170,7 @@ namespace IO.Swagger.Client
         /// <returns>Escaped string.</returns>
         public string EscapeString(string str)
         {
-            return RestSharp.Extensions.StringExtensions.UrlEncode(str);
+            return UrlEncode(str);
         }
     
         /// <summary>
@@ -183,9 +182,9 @@ namespace IO.Swagger.Client
         public FileParameter ParameterToFile(string name, Stream stream)
         {
             if (stream is FileStream)
-                return FileParameter.Create(name, stream.ReadAsBytes(), Path.GetFileName(((FileStream)stream).Name));
+                return FileParameter.Create(name, ReadAsBytes(stream), Path.GetFileName(((FileStream)stream).Name));
             else
-                return FileParameter.Create(name, stream.ReadAsBytes(), "no_file_name_provided");
+                return FileParameter.Create(name, ReadAsBytes(stream), "no_file_name_provided");
         }
     
         /// <summary>
@@ -199,10 +198,12 @@ namespace IO.Swagger.Client
         {
             if (obj is DateTime)
                 return ((DateTime)obj).ToString ("u");
-            else if (obj is IList) {
+            else if (obj is IList)
+            {
                 string flattenString = "";
                 string separator = ",";
-                foreach (var param in (IList)obj) {
+                foreach (var param in (IList)obj)
+                {
                     flattenString += param.ToString() + separator;
                 }
                 return flattenString.Remove(flattenString.Length - 1);;
@@ -319,15 +320,24 @@ namespace IO.Swagger.Client
                 {
                     
                     case "api_key":
-                        headerParams["api_key"] = GetApiKeyWithPrefix("api_key");
+                        
+                        var apiKeyValue = GetApiKeyWithPrefix("api_key");
+                        if (!String.IsNullOrEmpty(apiKeyValue))
+                        {
+                            headerParams["api_key"] = apiKeyValue;
+                        }
                         break;
                     
                     case "petstore_auth":
-                        headerParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+                        
+                        if (!String.IsNullOrEmpty(Configuration.AccessToken))
+                        {
+                            headerParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+                        }
                         break;
                     
                     default:
-                        //TODO show warning about security definition not found
+                        //show warning about security definition not found
                         break;
                 }
             }
@@ -340,11 +350,14 @@ namespace IO.Swagger.Client
         /// </summary>
         /// <param name="accepts">The accepts array to select from.</param>
         /// <returns>The Accept header to use.</returns>
-        public String SelectHeaderAccept(String[] accepts) {
+        public String SelectHeaderAccept(String[] accepts)
+        {
             if (accepts.Length == 0)
                 return null;
+
             if (accepts.Contains("application/json", StringComparer.OrdinalIgnoreCase))
                 return "application/json";
+
             return String.Join(",", accepts);
         }
  
@@ -355,8 +368,7 @@ namespace IO.Swagger.Client
         /// <returns>Encoded string.</returns>
         public static string Base64Encode(string text)
         {
-            var textByte = System.Text.Encoding.UTF8.GetBytes(text);
-            return System.Convert.ToBase64String(textByte);
+            return System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(text));
         }
     
         /// <summary>
@@ -366,9 +378,66 @@ namespace IO.Swagger.Client
         /// <param name="source">Object to be casted</param>
         /// <param name="dest">Target type</param>
         /// <returns>Casted object</returns>
-        public static dynamic ConvertType(dynamic source, Type dest) {
+        public static dynamic ConvertType(dynamic source, Type dest)
+        {
             return Convert.ChangeType(source, dest);
         }
+
+        /// <summary>
+        /// Convert stream to byte array
+        /// Credit/Ref: http://stackoverflow.com/a/221941/677735
+        /// </summary>
+        /// <param name="input">Input stream to be converted</param>
+        /// <returns>Byte array</returns>
+        public static byte[] ReadAsBytes(Stream input)
+        {
+            byte[] buffer = new byte[16*1024];
+            using (MemoryStream ms = new MemoryStream())
+            {
+                int read;
+                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    ms.Write(buffer, 0, read);
+                }
+                return ms.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// URL encode a string
+        /// Credit/Ref: https://github.com/restsharp/RestSharp/blob/master/RestSharp/Extensions/StringExtensions.cs#L50
+        /// </summary>
+        /// <param name="input">String to be URL encoded</param>
+        /// <returns>Byte array</returns>
+        public static string UrlEncode(string input)
+        {
+            const int maxLength = 32766;
+
+            if (input == null)
+            {
+                throw new ArgumentNullException("input");
+            }
+
+            if (input.Length <= maxLength)
+            {
+                return Uri.EscapeDataString(input);
+            }
+
+            StringBuilder sb = new StringBuilder(input.Length * 2);
+            int index = 0;
+
+            while (index < input.Length)
+            {
+                int length = Math.Min(input.Length - index, maxLength);
+                string subString = input.Substring(index, length);
+
+                sb.Append(Uri.EscapeDataString(subString));
+                index += subString.Length;
+            }
+
+            return sb.ToString();
+        }
+
   
     }
 }

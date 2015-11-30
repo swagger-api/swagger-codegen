@@ -5,6 +5,8 @@ import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
 import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.CodegenModel;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
@@ -14,10 +16,16 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CSharpClientCodegen.class);
+    protected boolean optionalMethodArgumentFlag = true;
     protected String packageName = "IO.Swagger";
     protected String packageVersion = "1.0.0";
     protected String clientPackage = "IO.Swagger.Client";
@@ -84,6 +92,7 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
                 .defaultValue("IO.Swagger"));
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_VERSION, "C# package version.").defaultValue("1.0.0"));
         cliOptions.add(new CliOption(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG, CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.OPTIONAL_METHOD_ARGUMENT, "C# Optional method argument, e.g. void square(int x=10) (.net 4.0+ only). Default: false").defaultValue("false"));
     }
 
     @Override
@@ -106,6 +115,12 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
         }
 
         additionalProperties.put("clientPackage", clientPackage);
+
+        if (additionalProperties.containsKey(CodegenConstants.OPTIONAL_METHOD_ARGUMENT)) {
+            setOptionalMethodArgumentFlag(Boolean.valueOf(additionalProperties
+                    .get(CodegenConstants.OPTIONAL_METHOD_ARGUMENT).toString()));
+        }
+        additionalProperties.put("optionalMethodArgument", optionalMethodArgumentFlag);
         
         supportingFiles.add(new SupportingFile("Configuration.mustache",
                 sourceFolder + File.separator + clientPackage.replace(".", java.io.File.separator), "Configuration.cs"));
@@ -254,11 +269,33 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
         return camelize(sanitizeName(operationId));
     }
 
+    public void setOptionalMethodArgumentFlag(boolean flag) {
+        this.optionalMethodArgumentFlag = flag;
+    }
+
     public void setPackageName(String packageName) {
         this.packageName = packageName;
     }
 
     public void setPackageVersion(String packageVersion) {
         this.packageVersion = packageVersion;
+    }
+
+    @Override
+    public Map<String, Object> postProcessModels(Map<String, Object> objs) {
+        List<Object> models = (List<Object>) objs.get("models");
+        for (Object _mo : models) {
+            Map<String, Object> mo = (Map<String, Object>) _mo;
+            CodegenModel cm = (CodegenModel) mo.get("model");
+            for (CodegenProperty var : cm.vars) {
+               // check to see if model name is same as the property name
+               // which will result in compilation error
+               // if found, prepend with _ to workaround the limitation
+               if (var.name.equals(cm.name)) {
+                   var.name = "_" + var.name; 
+               }
+            }
+        }
+        return objs;
     }
 }

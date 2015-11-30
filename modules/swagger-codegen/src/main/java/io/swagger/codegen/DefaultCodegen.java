@@ -1300,6 +1300,9 @@ public class DefaultCodegen {
                     p.isFormParam = new Boolean(true);
                     formParams.add(p.copy());
                 }
+                if (p.required == null || !p.required) {
+                    op.hasOptionalParams = true;
+                }
             }
         }
         for (String i : imports) {

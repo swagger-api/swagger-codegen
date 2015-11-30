@@ -36,6 +36,7 @@ Check out [Swagger-Spec](https://github.com/swagger-api/swagger-spec) for additi
     - [To build a server stub](#to-build-a-server-stub)
       - [Node.js](#nodejs)
       - [PHP Silex](#php-silex)
+      - [Python Flask (Connexion)](#python-flask-connexion)
       - [Ruby Sinatra](#ruby-sinatra)
       - [Scala Scalatra](#scala-scalatra)
       - [Java JAX-RS](#java-jax-rs)
@@ -268,9 +269,11 @@ AkkaScalaClientCodegen.java
 AndroidClientCodegen.java
 AsyncScalaClientCodegen.java
 CSharpClientCodegen.java
+ClojureClientCodegen.java
 CsharpDotNet2ClientCodegen.java
 DartClientCodegen.java
 FlashClientCodegen.java
+FlaskConnexionCodegen.java
 JavaClientCodegen.java
 JavaInflectorServerCodegen.java
 JaxRSServerCodegen.java
@@ -305,7 +308,8 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -o samples/client/petstore/java \
   -c path/to/config.json
 ```
-Supported config options can be different per language. Running `config-help -l {lang}` will show available options.
+Supported config options can be different per language. Running `config-help -l {lang}` will show available options.  **These options are applied 
+by passing them with `-D{optionName}={optionValue}**.
 
 ```
 java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar config-help -l java
@@ -438,6 +442,15 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -i http://petstore.swagger.io/v2/swagger.json \
   -l silex \
   -o samples/server/petstore/silex
+```
+
+### Python Flask (Connexion)
+
+```
+java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
+  -i http://petstore.swagger.io/v2/swagger.json \
+  -l flaskConnexion \
+  -o samples/server/petstore/flaskConnexion
 ```
 
 ### Ruby Sinatra
