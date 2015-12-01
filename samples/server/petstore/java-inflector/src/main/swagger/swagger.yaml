@@ -24,7 +24,7 @@ paths:
       - "pet"
       summary: "Add a new pet to the store"
       description: ""
-      operationId: "controllers.default_controller.add_pet"
+      operationId: "addPet"
       consumes:
       - "application/json"
       - "application/xml"
@@ -45,14 +45,12 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-tags:
-      - tag: "pet"
     put:
       tags:
       - "pet"
       summary: "Update an existing pet"
       description: ""
-      operationId: "controllers.default_controller.update_pet"
+      operationId: "updatePet"
       consumes:
       - "application/json"
       - "application/xml"
@@ -77,15 +75,13 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-tags:
-      - tag: "pet"
   /pet/findByStatus:
     get:
       tags:
       - "pet"
       summary: "Finds Pets by status"
       description: "Multiple status values can be provided with comma seperated strings"
-      operationId: "controllers.default_controller.find_pets_by_status"
+      operationId: "findPetsByStatus"
       produces:
       - "application/json"
       - "application/xml"
@@ -112,8 +108,6 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-tags:
-      - tag: "pet"
   /pet/findByTags:
     get:
       tags:
@@ -121,7 +115,7 @@ paths:
       summary: "Finds Pets by tags"
       description: "Muliple tags can be provided with comma seperated strings. Use\
         \ tag1, tag2, tag3 for testing."
-      operationId: "controllers.default_controller.find_pets_by_tags"
+      operationId: "findPetsByTags"
       produces:
       - "application/json"
       - "application/xml"
@@ -147,8 +141,6 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-tags:
-      - tag: "pet"
   /pet/{petId}:
     get:
       tags:
@@ -156,7 +148,7 @@ paths:
       summary: "Find pet by ID"
       description: "Returns a pet when ID < 10.  ID > 10 or nonintegers will simulate\
         \ API error conditions"
-      operationId: "controllers.default_controller.get_pet_by_id"
+      operationId: "getPetById"
       produces:
       - "application/json"
       - "application/xml"
@@ -181,14 +173,12 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-tags:
-      - tag: "pet"
     post:
       tags:
       - "pet"
       summary: "Updates a pet in the store with form data"
       description: ""
-      operationId: "controllers.default_controller.update_pet_with_form"
+      operationId: "updatePetWithForm"
       consumes:
       - "application/x-www-form-urlencoded"
       produces:
@@ -217,14 +207,12 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-tags:
-      - tag: "pet"
     delete:
       tags:
       - "pet"
       summary: "Deletes a pet"
       description: ""
-      operationId: "controllers.default_controller.delete_pet"
+      operationId: "deletePet"
       produces:
       - "application/json"
       - "application/xml"
@@ -247,15 +235,13 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-tags:
-      - tag: "pet"
   /pet/{petId}/uploadImage:
     post:
       tags:
       - "pet"
       summary: "uploads an image"
       description: ""
-      operationId: "controllers.default_controller.upload_file"
+      operationId: "uploadFile"
       consumes:
       - "multipart/form-data"
       produces:
@@ -285,15 +271,13 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-tags:
-      - tag: "pet"
   /store/inventory:
     get:
       tags:
       - "store"
       summary: "Returns pet inventories by status"
       description: "Returns a map of status codes to quantities"
-      operationId: "controllers.default_controller.get_inventory"
+      operationId: "getInventory"
       produces:
       - "application/json"
       - "application/xml"
@@ -308,15 +292,13 @@ paths:
               format: "int32"
       security:
       - api_key: []
-      x-tags:
-      - tag: "store"
   /store/order:
     post:
       tags:
       - "store"
       summary: "Place an order for a pet"
       description: ""
-      operationId: "controllers.default_controller.place_order"
+      operationId: "placeOrder"
       produces:
       - "application/json"
       - "application/xml"
@@ -334,8 +316,6 @@ paths:
             $ref: "#/definitions/Order"
         400:
           description: "Invalid Order"
-      x-tags:
-      - tag: "store"
   /store/order/{orderId}:
     get:
       tags:
@@ -343,7 +323,7 @@ paths:
       summary: "Find purchase order by ID"
       description: "For valid response try integer IDs with value <= 5 or > 10. Other\
         \ values will generated exceptions"
-      operationId: "controllers.default_controller.get_order_by_id"
+      operationId: "getOrderById"
       produces:
       - "application/json"
       - "application/xml"
@@ -362,15 +342,13 @@ paths:
           description: "Invalid ID supplied"
         404:
           description: "Order not found"
-      x-tags:
-      - tag: "store"
     delete:
       tags:
       - "store"
       summary: "Delete purchase order by ID"
       description: "For valid response try integer IDs with value < 1000. Anything\
         \ above 1000 or nonintegers will generate API errors"
-      operationId: "controllers.default_controller.delete_order"
+      operationId: "deleteOrder"
       produces:
       - "application/json"
       - "application/xml"
@@ -385,15 +363,13 @@ paths:
           description: "Invalid ID supplied"
         404:
           description: "Order not found"
-      x-tags:
-      - tag: "store"
   /user:
     post:
       tags:
       - "user"
       summary: "Create user"
       description: "This can only be done by the logged in user."
-      operationId: "controllers.default_controller.create_user"
+      operationId: "createUser"
       produces:
       - "application/json"
       - "application/xml"
@@ -407,15 +383,13 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-tags:
-      - tag: "user"
   /user/createWithArray:
     post:
       tags:
       - "user"
       summary: "Creates list of users with given input array"
       description: ""
-      operationId: "controllers.default_controller.create_users_with_array_input"
+      operationId: "createUsersWithArrayInput"
       produces:
       - "application/json"
       - "application/xml"
@@ -431,15 +405,13 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-tags:
-      - tag: "user"
   /user/createWithList:
     post:
       tags:
       - "user"
       summary: "Creates list of users with given input array"
       description: ""
-      operationId: "controllers.default_controller.create_users_with_list_input"
+      operationId: "createUsersWithListInput"
       produces:
       - "application/json"
       - "application/xml"
@@ -455,15 +427,13 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-tags:
-      - tag: "user"
   /user/login:
     get:
       tags:
       - "user"
       summary: "Logs user into the system"
       description: ""
-      operationId: "controllers.default_controller.login_user"
+      operationId: "loginUser"
       produces:
       - "application/json"
       - "application/xml"
@@ -485,15 +455,13 @@ paths:
             type: "string"
         400:
           description: "Invalid username/password supplied"
-      x-tags:
-      - tag: "user"
   /user/logout:
     get:
       tags:
       - "user"
       summary: "Logs out current logged in user session"
       description: ""
-      operationId: "controllers.default_controller.logout_user"
+      operationId: "logoutUser"
       produces:
       - "application/json"
       - "application/xml"
@@ -501,15 +469,13 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-tags:
-      - tag: "user"
   /user/{username}:
     get:
       tags:
       - "user"
       summary: "Get user by user name"
       description: ""
-      operationId: "controllers.default_controller.get_user_by_name"
+      operationId: "getUserByName"
       produces:
       - "application/json"
       - "application/xml"
@@ -538,14 +504,12 @@ paths:
           description: "Invalid username supplied"
         404:
           description: "User not found"
-      x-tags:
-      - tag: "user"
     put:
       tags:
       - "user"
       summary: "Updated user"
       description: "This can only be done by the logged in user."
-      operationId: "controllers.default_controller.update_user"
+      operationId: "updateUser"
       produces:
       - "application/json"
       - "application/xml"
@@ -566,14 +530,12 @@ paths:
           description: "Invalid user supplied"
         404:
           description: "User not found"
-      x-tags:
-      - tag: "user"
     delete:
       tags:
       - "user"
       summary: "Delete user"
       description: "This can only be done by the logged in user."
-      operationId: "controllers.default_controller.delete_user"
+      operationId: "deleteUser"
       produces:
       - "application/json"
       - "application/xml"
@@ -588,9 +550,11 @@ paths:
           description: "Invalid username supplied"
         404:
           description: "User not found"
-      x-tags:
-      - tag: "user"
 securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
   petstore_auth:
     type: "oauth2"
     authorizationUrl: "http://petstore.swagger.io/api/oauth/dialog"
@@ -598,10 +562,6 @@ securityDefinitions:
     scopes:
       write:pets: "modify pets in your account"
       read:pets: "read your pets"
-  api_key:
-    type: "apiKey"
-    name: "api_key"
-    in: "header"
 definitions:
   User:
     properties:
