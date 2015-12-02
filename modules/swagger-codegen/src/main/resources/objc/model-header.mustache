@@ -21,7 +21,7 @@
 {{#vars}}
 {{#description}}/* {{{description}}} {{^required}}[optional]{{/required}}
  */{{/description}}
-@property(nonatomic) {{{ datatype }}} {{name}};
+@property(nonatomic{{{otherSettings}}}) {{{ datatype }}} {{name}};
 {{/vars}}
 
 @end

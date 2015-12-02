@@ -27,6 +27,7 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
     public static final String GIT_REPO_URL = "gitRepoURL";
     public static final String LICENSE = "license";
     protected Set<String> foundationClasses = new HashSet<String>();
+    protected Set<String> forbiddenBeginnings;
     protected String podName = "SwaggerClient";
     protected String podVersion = "1.0.0";
     protected String classPrefix = "SWG";
@@ -100,11 +101,13 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
                         "default", "if", "id", "static", "while",
                         "do", "int", "struct", "_Packed",
                         "double", "protocol", "interface", "implementation",
-                        "NSObject", "NSInteger", "NSNumber", "CGFloat",
+                        "new", "NSObject", "NSInteger", "NSNumber", "CGFloat",
                         "property", "nonatomic", "retain", "strong",
                         "weak", "unsafe_unretained", "readwrite", "readonly",
                         "description"
                 ));
+
+        forbiddenBeginnings = new HashSet<String>(Arrays.asList("new"));
 
         importMapping = new HashMap<String, String>();
 
@@ -208,6 +211,17 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("Configuration-header.mustache", swaggerFolder, classPrefix + "Configuration.h"));
         supportingFiles.add(new SupportingFile("podspec.mustache", "", podName + ".podspec"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
+    }
+
+    @Override
+    public CodegenProperty fromProperty(String name, Property p) {
+        CodegenProperty codegenProperty = super.fromProperty(name, p);
+        for (String forbiddenBeginning : forbiddenBeginnings) {
+            if (name.startsWith(forbiddenBeginning)) {
+                codegenProperty.otherSettings = ", getter=get" + camelize(name);
+            }
+        }
+        return codegenProperty;
     }
 
     @Override
