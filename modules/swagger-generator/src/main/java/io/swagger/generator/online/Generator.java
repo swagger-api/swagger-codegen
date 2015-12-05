@@ -79,7 +79,7 @@ public class Generator {
         Swagger swagger;
         if (node == null) {
             if (opts.getSwaggerUrl() != null) {
-                swagger = new SwaggerParser().read(opts.getSwaggerUrl());
+                swagger = new SwaggerParser().read(opts.getSwaggerUrl(), opts.getSwaggerAuth(), true);
             } else {
                 throw new BadRequestException(400, "No swagger specification was supplied");
             }
