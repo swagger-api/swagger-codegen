@@ -95,6 +95,12 @@ public class CodeGenMojo extends AbstractMojo {
     private String language;
 
     /**
+     * Client language may has a library
+     */
+    @Parameter(name = "library", required = false)
+    private String library;
+
+    /**
      * Path to separate json configuration file.
      */
     @Parameter(name = "configurationFile", required = false)
@@ -151,6 +157,9 @@ public class CodeGenMojo extends AbstractMojo {
         }
         if (null != invokerPackage) {
             config.additionalProperties().put(INVOKER_PACKAGE_PARAM, invokerPackage);
+        }
+        if (null != library) {
+            config.setLibrary(library);
         }
 
         if (configOptions != null) {
