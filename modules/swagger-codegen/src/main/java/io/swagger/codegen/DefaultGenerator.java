@@ -1,8 +1,19 @@
 package io.swagger.codegen;
 
+import static org.apache.commons.lang3.StringUtils.capitalize;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
-import io.swagger.models.*;
+import io.swagger.models.ComposedModel;
+import io.swagger.models.Contact;
+import io.swagger.models.Info;
+import io.swagger.models.License;
+import io.swagger.models.Model;
+import io.swagger.models.Operation;
+import io.swagger.models.Path;
+import io.swagger.models.SecurityRequirement;
+import io.swagger.models.Swagger;
 import io.swagger.models.auth.OAuth2Definition;
 import io.swagger.models.auth.SecuritySchemeDefinition;
 import io.swagger.models.parameters.Parameter;
@@ -12,11 +23,24 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
-import java.util.*;
-
-import static org.apache.commons.lang3.StringUtils.capitalize;
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 public class DefaultGenerator extends AbstractGenerator implements Generator {
     Logger LOGGER = LoggerFactory.getLogger(DefaultGenerator.class);
@@ -193,7 +217,8 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
                         for (String templateName : config.modelTemplateFiles().keySet()) {
                             String suffix = config.modelTemplateFiles().get(templateName);
-                            String filename = config.modelFileFolder() + File.separator + config.toModelFilename(name) + suffix;
+                            String filename = config.modelFileFolder() + File.separator
+                                + config.toModelFilename(templateName, name) + suffix;
                             if (!config.shouldOverwrite(filename)) {
                                 continue;
                             }

@@ -97,6 +97,8 @@ public interface CodegenConfig {
 
     String toModelFilename(String name);
 
+    String toModelFilename(String templateFilename, String name);
+
     String toModelImport(String name);
 
     String toApiImport(String name);
