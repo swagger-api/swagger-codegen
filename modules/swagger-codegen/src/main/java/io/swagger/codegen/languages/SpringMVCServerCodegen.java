@@ -18,12 +18,13 @@ public class SpringMVCServerCodegen extends JavaClientCodegen implements Codegen
     public static final String CONFIG_PACKAGE = "configPackage";
     protected String title = "Petstore Server";
     protected String configPackage = "";
+    protected String templateFileName = "api.mustache";
 
     public SpringMVCServerCodegen() {
         super();
         outputFolder = "generated-code/javaSpringMVC";
         modelTemplateFiles.put("model.mustache", ".java");
-        apiTemplateFiles.put("api.mustache", ".java");
+        apiTemplateFiles.put(getTemplateFileName(), ".java");
         embeddedTemplateDir = templateDir = "JavaSpringMVC";
         apiPackage = "io.swagger.api";
         modelPackage = "io.swagger.model";
@@ -51,6 +52,10 @@ public class SpringMVCServerCodegen extends JavaClientCodegen implements Codegen
         );
 
         cliOptions.add(new CliOption(CONFIG_PACKAGE, "configuration package for generated code"));
+    }
+
+    protected String getTemplateFileName() {
+        return templateFileName;
     }
 
     public CodegenType getTag() {
