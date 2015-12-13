@@ -20,13 +20,13 @@
           <snapshots>
             <enabled>false</enabled>
           </snapshots>
-          <id>central</id>
+          <id>chop-release</id>
           <name>libs-release</name>
           <url>${env.ARTIFACTORY_RELEASE_REPO}</url>
         </repository>
         <repository>
           <snapshots />
-          <id>snapshots</id>
+          <id>chop-snapshots</id>
           <name>libs-snapshot</name>
           <url>${env.ARTIFACTORY_SNAPSHOTS_REPO}</url>
         </repository>
