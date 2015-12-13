@@ -31,6 +31,7 @@
           <url>${env.ARTIFACTORY_SNAPSHOTS_REPO}</url>
         </repository>
       </repositories>
+
       <id>artifactory</id>
     </profile>
   </profiles>
