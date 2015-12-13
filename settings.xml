@@ -3,12 +3,12 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <servers>
     <server>
-      <id>releases</id>
+      <id>chop-releases</id>
       <username>${env.ARTIFACTORY_USER}</username>
       <password>${env.ARTIFACTORY_PASSWORD}</password>
     </server>
     <server>
-      <id>snapshots</id>
+      <id>chop-snapshots</id>
       <username>${env.ARTIFACTORY_USER}</username>
       <password>${env.ARTIFACTORY_PASSWORD}</password>
     </server>
