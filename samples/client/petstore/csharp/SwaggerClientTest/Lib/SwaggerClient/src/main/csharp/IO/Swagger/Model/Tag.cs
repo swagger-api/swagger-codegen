@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
+
+
 namespace IO.Swagger.Model
 {
 
@@ -16,6 +18,14 @@ namespace IO.Swagger.Model
     [DataContract]
     public class Tag : IEquatable<Tag>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Tag" /> class.
+        /// </summary>
+        public Tag()
+        {
+            
+        }
+
         
         /// <summary>
         /// Gets or Sets Id
@@ -114,4 +124,6 @@ namespace IO.Swagger.Model
         }
 
     }
+
+
 }

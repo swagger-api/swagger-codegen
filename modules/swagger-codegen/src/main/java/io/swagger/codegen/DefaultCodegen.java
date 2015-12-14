@@ -2,6 +2,7 @@ package io.swagger.codegen;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+
 import io.swagger.codegen.examples.ExampleGenerator;
 import io.swagger.models.ArrayModel;
 import io.swagger.models.ComposedModel;
@@ -42,11 +43,13 @@ import io.swagger.models.properties.PropertyBuilder.PropertyId;
 import io.swagger.models.properties.RefProperty;
 import io.swagger.models.properties.StringProperty;
 import io.swagger.util.Json;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -446,7 +449,8 @@ public class DefaultCodegen {
 
         cliOptions.add(new CliOption(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG,
                 CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG_DESC).defaultValue("true"));
-        cliOptions.add(new CliOption(CodegenConstants.ENSURE_UNIQUE_PARAMS, CodegenConstants.ENSURE_UNIQUE_PARAMS_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.ENSURE_UNIQUE_PARAMS, CodegenConstants.ENSURE_UNIQUE_PARAMS_DESC)
+                .defaultValue("true"));
     }
 
     /**
@@ -573,6 +577,52 @@ public class DefaultCodegen {
             return "null";
         } else {
             return "null";
+        }
+    }
+    
+    /**
+     * Return the property initialized from a data object
+     * Useful for initialization with a plain object in Javascript
+     *
+     * @param name Name of the property object
+     * @param p Swagger property object
+     * @return string presentation of the default value of the property
+     */
+    public String toDefaultValueWithParam(String name, Property p) {
+        if (p instanceof StringProperty) {
+            return " = data." + name + ";";
+        } else if (p instanceof BooleanProperty) {
+            return " = data." + name + ";";
+        } else if (p instanceof DateProperty) {
+            return " = data." + name + ";";
+        } else if (p instanceof DateTimeProperty) {
+            return " = data." + name + ";";
+        } else if (p instanceof DoubleProperty) {
+            DoubleProperty dp = (DoubleProperty) p;
+            if (dp.getDefault() != null) {
+                return dp.getDefault().toString();
+            }
+            return " = data." + name + ";";
+        } else if (p instanceof FloatProperty) {
+            FloatProperty dp = (FloatProperty) p;
+            if (dp.getDefault() != null) {
+                return dp.getDefault().toString();
+            }
+            return " = data." + name + ";";
+        } else if (p instanceof IntegerProperty) {
+            IntegerProperty dp = (IntegerProperty) p;
+            if (dp.getDefault() != null) {
+                return dp.getDefault().toString();
+            }
+            return " = data." + name + ";";
+        } else if (p instanceof LongProperty) {
+            LongProperty dp = (LongProperty) p;
+            if (dp.getDefault() != null) {
+                return dp.getDefault().toString();
+            }
+            return " = data." + name + ";";
+        } else {
+            return " = data." + name + ";";
         }
     }
 
@@ -836,6 +886,8 @@ public class DefaultCodegen {
         property.setter = "set" + getterAndSetterCapitalize(name);
         property.example = p.getExample();
         property.defaultValue = toDefaultValue(p);
+        property.defaultValueWithParam = toDefaultValueWithParam(name, p);
+        
         property.jsonSchema = Json.pretty(p);
         property.isReadOnly = p.getReadOnly();
 
@@ -1831,6 +1883,9 @@ public class DefaultCodegen {
                     m.vars.add(cp);
                 }
             }
+            
+            m.mandatory = mandatory;
+            
         } else {
             m.emptyVars = true;
             m.hasVars = false;

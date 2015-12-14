@@ -13,10 +13,9 @@ import javax.ws.rs.core.Response.Status;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.filter.LoggingFilter;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
-import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.MultiPart;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
-import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -43,7 +42,7 @@ import io.swagger.client.auth.HttpBasicAuth;
 import io.swagger.client.auth.ApiKeyAuth;
 import io.swagger.client.auth.OAuth;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-29T00:18:01.946+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-09T16:27:55.818+08:00")
 public class ApiClient {
   private Client client;
   private Map<String, Client> hostMap = new HashMap<String, Client>();
@@ -76,8 +75,8 @@ public class ApiClient {
 
     // Setup authentications (key: authentication name, value: authentication).
     authentications = new HashMap<String, Authentication>();
-    authentications.put("api_key", new ApiKeyAuth("header", "api_key"));
     authentications.put("petstore_auth", new OAuth());
+    authentications.put("api_key", new ApiKeyAuth("header", "api_key"));
     // Prevent the authentications from being modified.
     authentications = Collections.unmodifiableMap(authentications);
   }
@@ -345,6 +344,17 @@ public class ApiClient {
   }
 
   /**
+   * Check if the given MIME is a JSON MIME.
+   * JSON MIME examples:
+   *   application/json
+   *   application/json; charset=UTF8
+   *   APPLICATION/JSON
+   */
+  public boolean isJsonMime(String mime) {
+    return mime != null && mime.matches("(?i)application\\/json(;.*)?");
+  }
+
+  /**
    * Select the Accept header's value from the given accepts array:
    *   if JSON exists in the given array, use it;
    *   otherwise use all of them (joining into a string)
@@ -354,8 +364,14 @@ public class ApiClient {
    *   null will be returned (not to set the Accept header explicitly).
    */
   public String selectHeaderAccept(String[] accepts) {
-    if (accepts.length == 0) return null;
-    if (StringUtil.containsIgnoreCase(accepts, "application/json")) return "application/json";
+    if (accepts.length == 0) {
+      return null;
+    }
+    for (String accept : accepts) {
+      if (isJsonMime(accept)) {
+        return accept;
+      }
+    }
     return StringUtil.join(accepts, ",");
   }
 
@@ -369,8 +385,14 @@ public class ApiClient {
    *   JSON will be used.
    */
   public String selectHeaderContentType(String[] contentTypes) {
-    if (contentTypes.length == 0) return "application/json";
-    if (StringUtil.containsIgnoreCase(contentTypes, "application/json")) return "application/json";
+    if (contentTypes.length == 0) {
+      return "application/json";
+    }
+    for (String contentType : contentTypes) {
+      if (isJsonMime(contentType)) {
+        return contentType;
+      }
+    }
     return contentTypes[0];
   }
 
@@ -390,7 +412,7 @@ public class ApiClient {
    * Content-Type (only JSON is supported for now).
    */
   public Entity<String> serialize(Object obj, String contentType) throws ApiException {
-    if (contentType.startsWith("application/json")) {
+    if (isJsonMime(contentType)) {
       return Entity.json(json.serialize(obj));
     } else {
       throw new ApiException(400, "can not serialize object into Content-Type: " + contentType);
@@ -414,7 +436,7 @@ public class ApiClient {
     else
       body = "";
 
-    if (contentType.startsWith("application/json")) {
+    if (isJsonMime(contentType)) {
       return json.deserialize(body, returnType);
     } else if (returnType.getType().equals(String.class)) {
       // Expecting string, return the raw response body.
@@ -477,23 +499,19 @@ public class ApiClient {
     Entity<?> formEntity = null;
 
     if (contentType.startsWith("multipart/form-data")) {
-      MultiPart multipart = new MultiPart();
+      MultiPart multiPart = new MultiPart();
       for (Entry<String, Object> param: formParams.entrySet()) {
         if (param.getValue() instanceof File) {
           File file = (File) param.getValue();
-
-          FormDataMultiPart mp = new FormDataMultiPart();
-          mp.bodyPart(new FormDataBodyPart(param.getKey(), file.getName()));
-          multipart.bodyPart(mp, MediaType.MULTIPART_FORM_DATA_TYPE);
-
-          multipart.bodyPart(new FileDataBodyPart(param.getKey(), file, MediaType.APPLICATION_OCTET_STREAM_TYPE));
+          FormDataContentDisposition contentDisp = FormDataContentDisposition.name(param.getKey())
+              .fileName(file.getName()).size(file.length()).build();
+          multiPart.bodyPart(new FormDataBodyPart(contentDisp, file, MediaType.APPLICATION_OCTET_STREAM_TYPE));
         } else {
-          FormDataMultiPart mp = new FormDataMultiPart();
-          mp.bodyPart(new FormDataBodyPart(param.getKey(), parameterToString(param.getValue())));
-          multipart.bodyPart(mp, MediaType.MULTIPART_FORM_DATA_TYPE);
+          FormDataContentDisposition contentDisp = FormDataContentDisposition.name(param.getKey()).build();
+          multiPart.bodyPart(new FormDataBodyPart(contentDisp, parameterToString(param.getValue())));
         }
       }
-      formEntity = Entity.entity(multipart, MediaType.MULTIPART_FORM_DATA_TYPE);
+      formEntity = Entity.entity(multiPart, MediaType.MULTIPART_FORM_DATA_TYPE);
     } else if (contentType.startsWith("application/x-www-form-urlencoded")) {
       Form form = new Form();
       for (Entry<String, Object> param: formParams.entrySet()) {

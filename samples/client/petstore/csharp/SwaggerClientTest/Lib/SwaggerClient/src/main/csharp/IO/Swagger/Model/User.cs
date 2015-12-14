@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
+
+
 namespace IO.Swagger.Model
 {
 
@@ -16,6 +18,14 @@ namespace IO.Swagger.Model
     [DataContract]
     public class User : IEquatable<User>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="User" /> class.
+        /// </summary>
+        public User()
+        {
+            
+        }
+
         
         /// <summary>
         /// Gets or Sets Id
@@ -211,4 +221,6 @@ namespace IO.Swagger.Model
         }
 
     }
+
+
 }
