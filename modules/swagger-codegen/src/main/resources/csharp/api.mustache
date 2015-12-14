@@ -64,21 +64,12 @@ namespace {{packageName}}.Api
     public class {{classname}} : I{{classname}}
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="{{classname}}"/> class.
-        /// </summary>
-        /// <returns></returns>
-        public {{classname}}(String basePath)
-        {
-            this.Configuration = new Configuration(new ApiClient(basePath));
-        }
-    
-        /// <summary>
         /// Initializes a new instance of the <see cref="{{classname}}"/> class
         /// using Configuration object
         /// </summary>
         /// <param name="configuration">An instance of Configuration</param>
         /// <returns></returns>
-        public {{classname}}(Configuration configuration = null)
+        public {{classname}}(Configuration configuration)
         {
             if (configuration == null) // use the default one in Configuration
                 this.Configuration = Configuration.Default; 

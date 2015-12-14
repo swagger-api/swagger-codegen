@@ -43,7 +43,7 @@ namespace {{packageName}}.Client
         public RestClient RestClient { get; set; }
     
         // Creates and sets up a RestRequest prior to a call.
-        private RestRequest PrepareRequest(
+        protected virtual RestRequest PrepareRequest(
             String path, RestSharp.Method method, Dictionary<String, String> queryParams, String postBody,
             Dictionary<String, String> headerParams, Dictionary<String, String> formParams,
             Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams)
@@ -163,13 +163,14 @@ namespace {{packageName}}.Client
                 return ((DateTime)obj).ToString (Configuration.DateTimeFormat);
             else if (obj is IList)
             {
-                string flattenString = "";
-                string separator = ",";
+                var flattenedString = new StringBuilder();
                 foreach (var param in (IList)obj)
                 {
-                    flattenString += param.ToString() + separator;
+                    if (flattenedString.Length > 0)
+                        flattenedString.Append(",");
+                    flattenedString.Append(param);
                 }
-                return flattenString.Remove(flattenString.Length - 1);;
+                return flattenedString.ToString();
             }
             else
                 return Convert.ToString (obj);
