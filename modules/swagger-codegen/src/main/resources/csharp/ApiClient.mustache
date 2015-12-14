@@ -43,7 +43,7 @@ namespace {{packageName}}.Client
         public RestClient RestClient { get; set; }
     
         // Creates and sets up a RestRequest prior to a call.
-        private RestRequest PrepareRequest(
+        protected virtual RestRequest PrepareRequest(
             String path, RestSharp.Method method, Dictionary<String, String> queryParams, String postBody,
             Dictionary<String, String> headerParams, Dictionary<String, String> formParams,
             Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams)
