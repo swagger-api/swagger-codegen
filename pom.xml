@@ -12,6 +12,20 @@
     <name>swagger-codegen-project</name>
     <version>2.1.5-SNAPSHOT</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
+
+      <distributionManagement>
+         <snapshotRepository>
+             <id>chop-snapshots</id>
+             <name>Chop Snapshots</name>
+             <url>${env.ARTIFACTORY_SNAPSHOTS_REPO}</url>
+         </snapshotRepository>
+         <repository>
+             <id>chop-release</id>
+             <name>Chop Release Repository</name>
+             <url>${env.ARTIFACTORY_RELEASE_REPO}</url>
+         </repository>
+      </distributionManagement>
+
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
         <developerConnection>scm:git:git@github.com:swagger-api/swagger-codegen.git</developerConnection>

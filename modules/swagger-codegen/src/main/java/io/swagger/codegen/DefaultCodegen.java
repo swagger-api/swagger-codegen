@@ -289,6 +289,18 @@ public class DefaultCodegen {
     }
 
     /**
+     * Return a template-file context specific version of the model filename
+     * for scenarios where multiple files are generated per model.
+     *
+     * @param templateFilename the name of the mustache file being processed
+     * @param name the model name
+     * @return the file name of the model
+     */
+    public String toModelFilename(String templateFilename, String name) {
+        return toModelFilename(name);
+    }
+
+    /**
      * Return the operation ID (method name)
      * 
      * @param operationId operation ID
@@ -774,6 +786,8 @@ public class DefaultCodegen {
         m.classVarName = toVarName(name);
         m.modelJson = Json.pretty(model);
         m.externalDocs = model.getExternalDocs();
+        m.vendorExtensions = model.getVendorExtensions();
+
         if (model instanceof ArrayModel) {
             ArrayModel am = (ArrayModel) model;
             ArrayProperty arrayProperty = new ArrayProperty(am.getItems());
@@ -895,6 +909,7 @@ public class DefaultCodegen {
         
         property.jsonSchema = Json.pretty(p);
         property.isReadOnly = p.getReadOnly();
+        property.vendorExtensions =p.getVendorExtensions();
 
         String type = getSwaggerType(p);
         if (p instanceof AbstractNumericProperty) {
