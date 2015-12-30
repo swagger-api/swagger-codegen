@@ -19,10 +19,14 @@ import io.swagger.models.properties.RefProperty;
 import io.swagger.models.properties.StringProperty;
 
 import com.google.common.collect.Sets;
+import io.swagger.util.Json;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class JavaModelTest {
 
@@ -38,48 +42,48 @@ public class JavaModelTest {
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
-        Assert.assertEquals(cm.name, "sample");
-        Assert.assertEquals(cm.classname, "Sample");
-        Assert.assertEquals(cm.description, "a sample model");
-        Assert.assertEquals(cm.vars.size(), 3);
+        assertEquals(cm.name, "sample");
+        assertEquals(cm.classname, "Sample");
+        assertEquals(cm.description, "a sample model");
+        assertEquals(cm.vars.size(), 3);
 
         final List<CodegenProperty> vars = cm.vars;
 
         final CodegenProperty property1 = vars.get(0);
-        Assert.assertEquals(property1.baseName, "id");
-        Assert.assertEquals(property1.getter, "getId");
-        Assert.assertEquals(property1.setter, "setId");
-        Assert.assertEquals(property1.datatype, "Long");
-        Assert.assertEquals(property1.name, "id");
-        Assert.assertEquals(property1.defaultValue, "null");
-        Assert.assertEquals(property1.baseType, "Long");
-        Assert.assertTrue(property1.hasMore);
-        Assert.assertTrue(property1.required);
-        Assert.assertTrue(property1.isNotContainer);
+        assertEquals(property1.baseName, "id");
+        assertEquals(property1.getter, "getId");
+        assertEquals(property1.setter, "setId");
+        assertEquals(property1.datatype, "Long");
+        assertEquals(property1.name, "id");
+        assertEquals(property1.defaultValue, "null");
+        assertEquals(property1.baseType, "Long");
+        assertTrue(property1.hasMore);
+        assertTrue(property1.required);
+        assertTrue(property1.isNotContainer);
 
         final CodegenProperty property2 = vars.get(1);
-        Assert.assertEquals(property2.baseName, "name");
-        Assert.assertEquals(property2.getter, "getName");
-        Assert.assertEquals(property2.setter, "setName");
-        Assert.assertEquals(property2.datatype, "String");
-        Assert.assertEquals(property2.name, "name");
-        Assert.assertEquals(property2.defaultValue, "null");
-        Assert.assertEquals(property2.baseType, "String");
-        Assert.assertTrue(property2.hasMore);
-        Assert.assertTrue(property2.required);
-        Assert.assertTrue(property2.isNotContainer);
+        assertEquals(property2.baseName, "name");
+        assertEquals(property2.getter, "getName");
+        assertEquals(property2.setter, "setName");
+        assertEquals(property2.datatype, "String");
+        assertEquals(property2.name, "name");
+        assertEquals(property2.defaultValue, "null");
+        assertEquals(property2.baseType, "String");
+        assertTrue(property2.hasMore);
+        assertTrue(property2.required);
+        assertTrue(property2.isNotContainer);
 
         final CodegenProperty property3 = vars.get(2);
-        Assert.assertEquals(property3.baseName, "createdAt");
-        Assert.assertEquals(property3.getter, "getCreatedAt");
-        Assert.assertEquals(property3.setter, "setCreatedAt");
-        Assert.assertEquals(property3.datatype, "Date");
-        Assert.assertEquals(property3.name, "createdAt");
-        Assert.assertEquals(property3.defaultValue, "null");
-        Assert.assertEquals(property3.baseType, "Date");
+        assertEquals(property3.baseName, "createdAt");
+        assertEquals(property3.getter, "getCreatedAt");
+        assertEquals(property3.setter, "setCreatedAt");
+        assertEquals(property3.datatype, "Date");
+        assertEquals(property3.name, "createdAt");
+        assertEquals(property3.defaultValue, "null");
+        assertEquals(property3.baseType, "Date");
         Assert.assertNull(property3.hasMore);
         Assert.assertNull(property3.required);
-        Assert.assertTrue(property3.isNotContainer);
+        assertTrue(property3.isNotContainer);
     }
 
     @Test(description = "convert a model with list property")
@@ -93,22 +97,22 @@ public class JavaModelTest {
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
-        Assert.assertEquals(cm.name, "sample");
-        Assert.assertEquals(cm.classname, "Sample");
-        Assert.assertEquals(cm.description, "a sample model");
-        Assert.assertEquals(cm.vars.size(), 2);
+        assertEquals(cm.name, "sample");
+        assertEquals(cm.classname, "Sample");
+        assertEquals(cm.description, "a sample model");
+        assertEquals(cm.vars.size(), 2);
 
         final CodegenProperty property = cm.vars.get(1);
-        Assert.assertEquals(property.baseName, "urls");
-        Assert.assertEquals(property.getter, "getUrls");
-        Assert.assertEquals(property.setter, "setUrls");
-        Assert.assertEquals(property.datatype, "List<String>");
-        Assert.assertEquals(property.name, "urls");
-        Assert.assertEquals(property.defaultValue, "new ArrayList<String>()");
-        Assert.assertEquals(property.baseType, "List");
-        Assert.assertEquals(property.containerType, "array");
+        assertEquals(property.baseName, "urls");
+        assertEquals(property.getter, "getUrls");
+        assertEquals(property.setter, "setUrls");
+        assertEquals(property.datatype, "List<String>");
+        assertEquals(property.name, "urls");
+        assertEquals(property.defaultValue, "new ArrayList<String>()");
+        assertEquals(property.baseType, "List");
+        assertEquals(property.containerType, "array");
         Assert.assertNull(property.required);
-        Assert.assertTrue(property.isContainer);
+        assertTrue(property.isContainer);
     }
 
     @Test(description = "convert a model with a map property")
@@ -121,22 +125,22 @@ public class JavaModelTest {
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
-        Assert.assertEquals(cm.name, "sample");
-        Assert.assertEquals(cm.classname, "Sample");
-        Assert.assertEquals(cm.description, "a sample model");
-        Assert.assertEquals(cm.vars.size(), 1);
+        assertEquals(cm.name, "sample");
+        assertEquals(cm.classname, "Sample");
+        assertEquals(cm.description, "a sample model");
+        assertEquals(cm.vars.size(), 1);
 
         final CodegenProperty property = cm.vars.get(0);
-        Assert.assertEquals(property.baseName, "translations");
-        Assert.assertEquals(property.getter, "getTranslations");
-        Assert.assertEquals(property.setter, "setTranslations");
-        Assert.assertEquals(property.datatype, "Map<String, String>");
-        Assert.assertEquals(property.name, "translations");
-        Assert.assertEquals(property.defaultValue, "new HashMap<String, String>()");
-        Assert.assertEquals(property.baseType, "Map");
-        Assert.assertEquals(property.containerType, "map");
+        assertEquals(property.baseName, "translations");
+        assertEquals(property.getter, "getTranslations");
+        assertEquals(property.setter, "setTranslations");
+        assertEquals(property.datatype, "Map<String, String>");
+        assertEquals(property.name, "translations");
+        assertEquals(property.defaultValue, "new HashMap<String, String>()");
+        assertEquals(property.baseType, "Map");
+        assertEquals(property.containerType, "map");
         Assert.assertNull(property.required);
-        Assert.assertTrue(property.isContainer);
+        assertTrue(property.isContainer);
     }
 
     @Test(description = "convert a model with a map with complex list property")
@@ -149,22 +153,22 @@ public class JavaModelTest {
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
-        Assert.assertEquals(cm.name, "sample");
-        Assert.assertEquals(cm.classname, "Sample");
-        Assert.assertEquals(cm.description, "a sample model");
-        Assert.assertEquals(cm.vars.size(), 1);
+        assertEquals(cm.name, "sample");
+        assertEquals(cm.classname, "Sample");
+        assertEquals(cm.description, "a sample model");
+        assertEquals(cm.vars.size(), 1);
 
         final CodegenProperty property = cm.vars.get(0);
-        Assert.assertEquals(property.baseName, "translations");
-        Assert.assertEquals(property.getter, "getTranslations");
-        Assert.assertEquals(property.setter, "setTranslations");
-        Assert.assertEquals(property.datatype, "Map<String, List<Pet>>");
-        Assert.assertEquals(property.name, "translations");
-        Assert.assertEquals(property.defaultValue, "new HashMap<String, List<Pet>>()");
-        Assert.assertEquals(property.baseType, "Map");
-        Assert.assertEquals(property.containerType, "map");
+        assertEquals(property.baseName, "translations");
+        assertEquals(property.getter, "getTranslations");
+        assertEquals(property.setter, "setTranslations");
+        assertEquals(property.datatype, "Map<String, List<Pet>>");
+        assertEquals(property.name, "translations");
+        assertEquals(property.defaultValue, "new HashMap<String, List<Pet>>()");
+        assertEquals(property.baseType, "Map");
+        assertEquals(property.containerType, "map");
         Assert.assertNull(property.required);
-        Assert.assertTrue(property.isContainer);
+        assertTrue(property.isContainer);
     }
 
     @Test(description = "convert a model with a 2D list property")
@@ -174,19 +178,19 @@ public class JavaModelTest {
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
-        Assert.assertEquals(cm.vars.size(), 1);
+        assertEquals(cm.vars.size(), 1);
 
         final CodegenProperty property = cm.vars.get(0);
-        Assert.assertEquals(property.baseName, "list2D");
-        Assert.assertEquals(property.getter, "getList2D");
-        Assert.assertEquals(property.setter, "setList2D");
-        Assert.assertEquals(property.datatype, "List<List<Pet>>");
-        Assert.assertEquals(property.name, "list2D");
-        Assert.assertEquals(property.defaultValue, "new ArrayList<List<Pet>>()");
-        Assert.assertEquals(property.baseType, "List");
-        Assert.assertEquals(property.containerType, "array");
+        assertEquals(property.baseName, "list2D");
+        assertEquals(property.getter, "getList2D");
+        assertEquals(property.setter, "setList2D");
+        assertEquals(property.datatype, "List<List<Pet>>");
+        assertEquals(property.name, "list2D");
+        assertEquals(property.defaultValue, "new ArrayList<List<Pet>>()");
+        assertEquals(property.baseType, "List");
+        assertEquals(property.containerType, "array");
         Assert.assertNull(property.required);
-        Assert.assertTrue(property.isContainer);
+        assertTrue(property.isContainer);
     }
 
     @Test(description = "convert a model with complex properties")
@@ -196,21 +200,21 @@ public class JavaModelTest {
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
-        Assert.assertEquals(cm.name, "sample");
-        Assert.assertEquals(cm.classname, "Sample");
-        Assert.assertEquals(cm.description, "a sample model");
-        Assert.assertEquals(cm.vars.size(), 1);
+        assertEquals(cm.name, "sample");
+        assertEquals(cm.classname, "Sample");
+        assertEquals(cm.description, "a sample model");
+        assertEquals(cm.vars.size(), 1);
 
         final CodegenProperty property = cm.vars.get(0);
-        Assert.assertEquals(property.baseName, "children");
-        Assert.assertEquals(property.getter, "getChildren");
-        Assert.assertEquals(property.setter, "setChildren");
-        Assert.assertEquals(property.datatype, "Children");
-        Assert.assertEquals(property.name, "children");
-        Assert.assertEquals(property.defaultValue, "null");
-        Assert.assertEquals(property.baseType, "Children");
+        assertEquals(property.baseName, "children");
+        assertEquals(property.getter, "getChildren");
+        assertEquals(property.setter, "setChildren");
+        assertEquals(property.datatype, "Children");
+        assertEquals(property.name, "children");
+        assertEquals(property.defaultValue, "null");
+        assertEquals(property.baseType, "Children");
         Assert.assertNull(property.required);
-        Assert.assertTrue(property.isNotContainer);
+        assertTrue(property.isNotContainer);
     }
 
     @Test(description = "convert a model with complex list property")
@@ -221,23 +225,23 @@ public class JavaModelTest {
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
-        Assert.assertEquals(cm.name, "sample");
-        Assert.assertEquals(cm.classname, "Sample");
-        Assert.assertEquals(cm.description, "a sample model");
-        Assert.assertEquals(cm.vars.size(), 1);
+        assertEquals(cm.name, "sample");
+        assertEquals(cm.classname, "Sample");
+        assertEquals(cm.description, "a sample model");
+        assertEquals(cm.vars.size(), 1);
 
         final CodegenProperty property = cm.vars.get(0);
-        Assert.assertEquals(property.baseName, "children");
-        Assert.assertEquals(property.complexType, "Children");
-        Assert.assertEquals(property.getter, "getChildren");
-        Assert.assertEquals(property.setter, "setChildren");
-        Assert.assertEquals(property.datatype, "List<Children>");
-        Assert.assertEquals(property.name, "children");
-        Assert.assertEquals(property.defaultValue, "new ArrayList<Children>()");
-        Assert.assertEquals(property.baseType, "List");
-        Assert.assertEquals(property.containerType, "array");
+        assertEquals(property.baseName, "children");
+        assertEquals(property.complexType, "Children");
+        assertEquals(property.getter, "getChildren");
+        assertEquals(property.setter, "setChildren");
+        assertEquals(property.datatype, "List<Children>");
+        assertEquals(property.name, "children");
+        assertEquals(property.defaultValue, "new ArrayList<Children>()");
+        assertEquals(property.baseType, "List");
+        assertEquals(property.containerType, "array");
         Assert.assertNull(property.required);
-        Assert.assertTrue(property.isContainer);
+        assertTrue(property.isContainer);
     }
 
     @Test(description = "convert a model with complex map property")
@@ -248,24 +252,24 @@ public class JavaModelTest {
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
-        Assert.assertEquals(cm.name, "sample");
-        Assert.assertEquals(cm.classname, "Sample");
-        Assert.assertEquals(cm.description, "a sample model");
-        Assert.assertEquals(cm.vars.size(), 1);
-        Assert.assertEquals(Sets.intersection(cm.imports, Sets.newHashSet("Map", "List", "Children")).size(), 3);
+        assertEquals(cm.name, "sample");
+        assertEquals(cm.classname, "Sample");
+        assertEquals(cm.description, "a sample model");
+        assertEquals(cm.vars.size(), 1);
+        assertEquals(Sets.intersection(cm.imports, Sets.newHashSet("Map", "List", "Children")).size(), 3);
 
         final CodegenProperty property = cm.vars.get(0);
-        Assert.assertEquals(property.baseName, "children");
-        Assert.assertEquals(property.complexType, "Children");
-        Assert.assertEquals(property.getter, "getChildren");
-        Assert.assertEquals(property.setter, "setChildren");
-        Assert.assertEquals(property.datatype, "Map<String, Children>");
-        Assert.assertEquals(property.name, "children");
-        Assert.assertEquals(property.defaultValue, "new HashMap<String, Children>()");
-        Assert.assertEquals(property.baseType, "Map");
-        Assert.assertEquals(property.containerType, "map");
+        assertEquals(property.baseName, "children");
+        assertEquals(property.complexType, "Children");
+        assertEquals(property.getter, "getChildren");
+        assertEquals(property.setter, "setChildren");
+        assertEquals(property.datatype, "Map<String, Children>");
+        assertEquals(property.name, "children");
+        assertEquals(property.defaultValue, "new HashMap<String, Children>()");
+        assertEquals(property.baseType, "Map");
+        assertEquals(property.containerType, "map");
         Assert.assertNull(property.required);
-        Assert.assertTrue(property.isContainer);
+        assertTrue(property.isContainer);
         Assert.assertNull(property.isNotContainer);
 
     }
@@ -278,13 +282,13 @@ public class JavaModelTest {
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
-        Assert.assertEquals(cm.name, "sample");
-        Assert.assertEquals(cm.classname, "Sample");
-        Assert.assertEquals(cm.description, "an array model");
-        Assert.assertEquals(cm.vars.size(), 0);
-        Assert.assertEquals(cm.parent, "ArrayList<Children>");
-        Assert.assertEquals(cm.imports.size(), 3);
-        Assert.assertEquals(Sets.intersection(cm.imports, Sets.newHashSet("List", "ArrayList", "Children")).size(), 3);
+        assertEquals(cm.name, "sample");
+        assertEquals(cm.classname, "Sample");
+        assertEquals(cm.description, "an array model");
+        assertEquals(cm.vars.size(), 0);
+        assertEquals(cm.parent, "ArrayList<Children>");
+        assertEquals(cm.imports.size(), 3);
+        assertEquals(Sets.intersection(cm.imports, Sets.newHashSet("List", "ArrayList", "Children")).size(), 3);
     }
 
     @Test(description = "convert an map model")
@@ -295,13 +299,13 @@ public class JavaModelTest {
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
-        Assert.assertEquals(cm.name, "sample");
-        Assert.assertEquals(cm.classname, "Sample");
-        Assert.assertEquals(cm.description, "an map model");
-        Assert.assertEquals(cm.vars.size(), 0);
-        Assert.assertEquals(cm.parent, "HashMap<String, Children>");
-        Assert.assertEquals(cm.imports.size(), 3);
-        Assert.assertEquals(Sets.intersection(cm.imports, Sets.newHashSet("Map", "HashMap", "Children")).size(), 3);
+        assertEquals(cm.name, "sample");
+        assertEquals(cm.classname, "Sample");
+        assertEquals(cm.description, "an map model");
+        assertEquals(cm.vars.size(), 0);
+        assertEquals(cm.parent, "HashMap<String, Children>");
+        assertEquals(cm.imports.size(), 3);
+        assertEquals(Sets.intersection(cm.imports, Sets.newHashSet("Map", "HashMap", "Children")).size(), 3);
     }
 
     @Test(description = "convert a model with upper-case property names")
@@ -313,21 +317,21 @@ public class JavaModelTest {
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
-        Assert.assertEquals(cm.name, "sample");
-        Assert.assertEquals(cm.classname, "Sample");
-        Assert.assertEquals(cm.vars.size(), 1);
+        assertEquals(cm.name, "sample");
+        assertEquals(cm.classname, "Sample");
+        assertEquals(cm.vars.size(), 1);
 
         final CodegenProperty property = cm.vars.get(0);
-        Assert.assertEquals(property.baseName, "NAME");
-        Assert.assertEquals(property.getter, "getNAME");
-        Assert.assertEquals(property.setter, "setNAME");
-        Assert.assertEquals(property.datatype, "String");
-        Assert.assertEquals(property.name, "NAME");
-        Assert.assertEquals(property.defaultValue, "null");
-        Assert.assertEquals(property.baseType, "String");
+        assertEquals(property.baseName, "NAME");
+        assertEquals(property.getter, "getNAME");
+        assertEquals(property.setter, "setNAME");
+        assertEquals(property.datatype, "String");
+        assertEquals(property.name, "NAME");
+        assertEquals(property.defaultValue, "null");
+        assertEquals(property.baseType, "String");
         Assert.assertNull(property.hasMore);
-        Assert.assertTrue(property.required);
-        Assert.assertTrue(property.isNotContainer);
+        assertTrue(property.required);
+        assertTrue(property.isNotContainer);
     }
 
     @Test(description = "convert a model with a 2nd char upper-case property names")
@@ -339,21 +343,21 @@ public class JavaModelTest {
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
-        Assert.assertEquals(cm.name, "sample");
-        Assert.assertEquals(cm.classname, "Sample");
-        Assert.assertEquals(cm.vars.size(), 1);
+        assertEquals(cm.name, "sample");
+        assertEquals(cm.classname, "Sample");
+        assertEquals(cm.vars.size(), 1);
 
         final CodegenProperty property = cm.vars.get(0);
-        Assert.assertEquals(property.baseName, "pId");
-        Assert.assertEquals(property.getter, "getPId");
-        Assert.assertEquals(property.setter, "setPId");
-        Assert.assertEquals(property.datatype, "String");
-        Assert.assertEquals(property.name, "pId");
-        Assert.assertEquals(property.defaultValue, "null");
-        Assert.assertEquals(property.baseType, "String");
+        assertEquals(property.baseName, "pId");
+        assertEquals(property.getter, "getPId");
+        assertEquals(property.setter, "setPId");
+        assertEquals(property.datatype, "String");
+        assertEquals(property.name, "pId");
+        assertEquals(property.defaultValue, "null");
+        assertEquals(property.baseType, "String");
         Assert.assertNull(property.hasMore);
-        Assert.assertTrue(property.required);
-        Assert.assertTrue(property.isNotContainer);
+        assertTrue(property.required);
+        assertTrue(property.isNotContainer);
     }
 
     @Test(description = "convert hyphens per issue 503")
@@ -365,10 +369,10 @@ public class JavaModelTest {
         final CodegenModel cm = codegen.fromModel("sample", model);
 
         final CodegenProperty property = cm.vars.get(0);
-        Assert.assertEquals(property.baseName, "created-at");
-        Assert.assertEquals(property.getter, "getCreatedAt");
-        Assert.assertEquals(property.setter, "setCreatedAt");
-        Assert.assertEquals(property.name, "createdAt");
+        assertEquals(property.baseName, "created-at");
+        assertEquals(property.getter, "getCreatedAt");
+        assertEquals(property.setter, "setCreatedAt");
+        assertEquals(property.name, "createdAt");
     }
 
     @Test(description = "convert query[password] to queryPassword")
@@ -380,10 +384,10 @@ public class JavaModelTest {
         final CodegenModel cm = codegen.fromModel("sample", model);
 
         final CodegenProperty property = cm.vars.get(0);
-        Assert.assertEquals(property.baseName, "query[password]");
-        Assert.assertEquals(property.getter, "getQueryPassword");
-        Assert.assertEquals(property.setter, "setQueryPassword");
-        Assert.assertEquals(property.name, "queryPassword");
+        assertEquals(property.baseName, "query[password]");
+        assertEquals(property.getter, "getQueryPassword");
+        assertEquals(property.setter, "setQueryPassword");
+        assertEquals(property.name, "queryPassword");
     }
 
     @Test(description = "properly escape names per 567")
@@ -394,7 +398,7 @@ public class JavaModelTest {
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("with.dots", model);
 
-        Assert.assertEquals(cm.classname, "WithDots");
+        assertEquals(cm.classname, "WithDots");
     }
 
     @Test(description = "convert a model with binary data")
@@ -406,16 +410,16 @@ public class JavaModelTest {
         final CodegenModel cm = codegen.fromModel("sample", model);
 
         final CodegenProperty property = cm.vars.get(0);
-        Assert.assertEquals(property.baseName, "inputBinaryData");
-        Assert.assertEquals(property.getter, "getInputBinaryData");
-        Assert.assertEquals(property.setter, "setInputBinaryData");
-        Assert.assertEquals(property.datatype, "byte[]");
-        Assert.assertEquals(property.name, "inputBinaryData");
-        Assert.assertEquals(property.defaultValue, "null");
-        Assert.assertEquals(property.baseType, "byte[]");
+        assertEquals(property.baseName, "inputBinaryData");
+        assertEquals(property.getter, "getInputBinaryData");
+        assertEquals(property.setter, "setInputBinaryData");
+        assertEquals(property.datatype, "byte[]");
+        assertEquals(property.name, "inputBinaryData");
+        assertEquals(property.defaultValue, "null");
+        assertEquals(property.baseType, "byte[]");
         Assert.assertNull(property.hasMore);
         Assert.assertNull(property.required);
-        Assert.assertTrue(property.isNotContainer);
+        assertTrue(property.isNotContainer);
     }
 
     @Test(description = "translate an invalid param name")
@@ -426,20 +430,20 @@ public class JavaModelTest {
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
-        Assert.assertEquals(cm.name, "sample");
-        Assert.assertEquals(cm.classname, "Sample");
-        Assert.assertEquals(cm.vars.size(), 1);
+        assertEquals(cm.name, "sample");
+        assertEquals(cm.classname, "Sample");
+        assertEquals(cm.vars.size(), 1);
 
         final CodegenProperty property = cm.vars.get(0);
-        Assert.assertEquals(property.baseName, "_");
-        Assert.assertEquals(property.getter, "getU");
-        Assert.assertEquals(property.setter, "setU");
-        Assert.assertEquals(property.datatype, "String");
-        Assert.assertEquals(property.name, "u");
-        Assert.assertEquals(property.defaultValue, "null");
-        Assert.assertEquals(property.baseType, "String");
+        assertEquals(property.baseName, "_");
+        assertEquals(property.getter, "getU");
+        assertEquals(property.setter, "setU");
+        assertEquals(property.datatype, "String");
+        assertEquals(property.name, "u");
+        assertEquals(property.defaultValue, "null");
+        assertEquals(property.baseType, "String");
         Assert.assertNull(property.hasMore);
-        Assert.assertTrue(property.isNotContainer);
+        assertTrue(property.isNotContainer);
     }
 
     @Test(description = "convert a parameter")
@@ -453,4 +457,20 @@ public class JavaModelTest {
 
         Assert.assertNull(cm.allowableValues);
     }
+
+    @Test(description = "convert a model with BigDecimal property as String")
+    public void bigDecimalPropertyTest() {
+        StringProperty bigDecimalProperty = new StringProperty();
+        bigDecimalProperty.setFormat("number");
+        final Model model = new ModelImpl()
+                .description("a sample model")
+                .property("bigDecimal", bigDecimalProperty);
+        final DefaultCodegen codegen = new JavaClientCodegen();
+        final CodegenModel cm = codegen.fromModel("sample", model);
+
+        String out = Json.pretty(cm);
+        assertTrue(cm.vars.size() == 1);
+        assertEquals("BigDecimal", cm.vars.get(0).datatype);
+    }
+
 }

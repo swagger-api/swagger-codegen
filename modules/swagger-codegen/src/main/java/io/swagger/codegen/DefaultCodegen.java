@@ -621,7 +621,12 @@ public class DefaultCodegen {
     public String getSwaggerType(Property p) {
         String datatype = null;
         if (p instanceof StringProperty) {
-            datatype = "string";
+            if("number".equals(p.getFormat())) {
+                datatype = "number";
+            }
+            else {
+                datatype = "string";
+            }
         } else if (p instanceof ByteArrayProperty) {
             datatype = "ByteArray";
         } else if (p instanceof BinaryProperty) {
