@@ -336,17 +336,21 @@ TypeScriptAngularClientCodegen.java
 TypeScriptNodeClientCodegen.java
 ```
 
-Each of these files creates reasonable defaults so you can get running quickly.  But if you want to configure package names, prefixes, model folders, etc. you can use a json config file to pass the values.
+Each language's code generator creates reasonable defaults for each configuration parameter, so you can get running quickly.  
+
+But if you want to configure package names, prefixes, model folders, etc. create a json config file to set the values, and use the *`-c`* option:
 
 ```
+cat >> path/to/config.json 
+{ "apiPackage" : "petstore" }
+^d
+
 java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -i http://petstore.swagger.io/v2/swagger.json \
   -l java \
   -o samples/client/petstore/java \
   -c path/to/config.json
 ```
-Supported config options can be different per language. Running `config-help -l {lang}` will show available options.  **These options are applied 
-by passing them with `-D{optionName}={optionValue}**.
 
 ```
 java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar config-help -l java
