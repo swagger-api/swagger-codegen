@@ -65,3 +65,6 @@ samples/client/petstore/python/.venv/
 *.pm~
 *.xml~
 *.t~
+
+#purecloud build paths
+dists/
