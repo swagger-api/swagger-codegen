@@ -90,6 +90,8 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
         typeMapping.put("map", "Dictionary");
         typeMapping.put("object", "Object");
 
+        importMapping.remove("LocalDateTime");
+
         cliOptions.clear();
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "C# package name (convention: Camel.Case).")
                 .defaultValue("IO.Swagger"));
