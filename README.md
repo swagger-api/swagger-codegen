@@ -25,6 +25,7 @@ Check out [Swagger-Spec](https://github.com/OAI/OpenAPI-Specification) for addit
       - [Build a Node.js server stub](#build-a-nodejs-server-stub)
     - [Homebrew](#homebrew)
   - Generators
+    - [PureCloud Libraries](#purecloud-libraries)
     - [To generate a sample client library](#to-generate-a-sample-client-library)
     - [Generating libraries from your server](#generating-libraries-from-your-server)
     - [Modifying the client library format](#modifying-the-client-library-format)
@@ -123,6 +124,24 @@ Here is an example usage:
 ```
 swagger-codegen generate -i http://petstore.swagger.io/v2/swagger.json -l ruby -o /tmp/test/
 ```
+
+### PureCloud Libraries
+
+For each language, a PureCloud-specific class extending ````DefaultCodegen```` will be created in ````modules\swagger-codegen\src\main\java\io\swagger\codegen\languages\```` named ````PureCloud*ClientCodegen.java```` as well as a shell script in ````bin\```` named ````purecloud-*.sh```` to generate a library for the language. This pattern should be followed for additional languages.
+
+After making any changes to the project's code, rebuild it from the root directory with ````mvn clean package````. The ````clean```` command is important because Maven doesn't seem to do a good job of rebuilding if you don't explicitly tell it to clean. After building, run one of the following generation scripts.
+
+#### C# (.NET DLL)
+
+##### Configuration
+* Update assembly info, including the DLL's version number, in ````modules\swagger-codegen\src\main\java\io\swagger\codegen\languages\PureCloudCSharpClientCodegen.java````
+* To change environments, change the URL used on line 29 in ````bin\purecloud-csharp.sh````
+* To fix any type mappings, add them to ````PureCloudCSharpClientCodegen.java```` in the constructor via ````typeMapping.put("swaggerType", "destinationType");````. If the change is a general concern for C#, not a PureCloud-specific override, add it to ````CSharpClientCodegen.java```` and submit it to the master repo as a PR.
+
+##### Generation
+1. Run the generator ````bin\purecloud-csharp.sh > dists\logs\csharp-buildlog.txt````
+2. CD to build directory ````cd dists\purecloud\csharp````
+3. Compile the DLL ````compile.bat > build.txt````
 
 
 ### To generate a sample client library
