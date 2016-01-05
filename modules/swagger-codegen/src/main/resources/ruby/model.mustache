@@ -24,6 +24,14 @@ module {{moduleName}}{{#models}}{{#model}}{{#description}}
       }
     end
 
+    # Attribute type mapping.
+    def self.get_enum_values
+    {
+        {{#vars}}{{^baseNameTypeArray}}:'{{{name}}}' => {{{moduleName}}}::{{{datatype}}}.send(:enum_value){{#hasMore}},{{/hasMore}}{{/baseNameTypeArray}}
+        {{/vars}}
+    }
+    end
+
     def initialize(attributes = {})
       return unless attributes.is_a?(Hash)
 
@@ -40,27 +48,14 @@ module {{moduleName}}{{#models}}{{#model}}{{#description}}
       end
       {{/vars}}
     end
+
 {{#vars}}{{#isEnum}}
     # Custom attribute writer method checking allowed values (enum).
-    def {{{name}}}=({{{name}}})
+    def self.enum_{{{name}}}
       allowed_values = [{{#allowableValues}}{{#values}}"{{{this}}}"{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}]
-      if {{{name}}} && !allowed_values.include?({{{name}}})
-        fail "invalid value for '{{{name}}}', must be one of #{allowed_values}"
-      end
-      @{{{name}}} = {{{name}}}
+      allowed_values
     end
 {{/isEnum}}{{/vars}}
-    # Check equality by comparing each attribute.
-    def ==(o)
-      return true if self.equal?(o)
-      self.class == o.class{{#vars}} &&
-          {{name}} == o.{{name}}{{/vars}}
-    end
-
-    # @see the `==` method
-    def eql?(o)
-      self == o
-    end
 
     # Calculate hash code according to all attributes.
     def hash

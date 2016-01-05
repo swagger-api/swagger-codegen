@@ -71,7 +71,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
         if(generateApis == null && generateModels == null && generateSupportingFiles == null) {
             // no specifics are set, generate everything
-            generateApis = true; generateModels = true; generateSupportingFiles = true;
+            generateApis = false; generateModels = true; generateSupportingFiles = true;
         }
         else {
             if(generateApis == null) {

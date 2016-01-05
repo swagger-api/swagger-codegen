@@ -34,6 +34,7 @@ public class CodegenProperty {
     public Boolean hasMore, required, secondaryParam;
     public Boolean isPrimitiveType, isContainer, isNotContainer;
     public boolean isEnum;
+    public Boolean baseNameTypeArray = Boolean.TRUE;
     public Boolean isReadOnly = false;
     public List<String> _enum;
     public Map<String, Object> allowableValues;

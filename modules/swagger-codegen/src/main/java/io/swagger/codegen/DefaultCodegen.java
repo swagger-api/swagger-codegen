@@ -904,6 +904,8 @@ public class DefaultCodegen {
         property.vendorExtensions = p.getVendorExtensions();
 
         String type = getSwaggerType(p);
+        property.baseNameTypeArray = p instanceof ArrayProperty;
+
         if (p instanceof AbstractNumericProperty) {
             AbstractNumericProperty np = (AbstractNumericProperty) p;
             property.minimum = np.getMinimum();
