@@ -1,18 +1,30 @@
 package io.swagger.codegen.languages;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
-import io.swagger.codegen.*;
+
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.SupportingFile;
 import io.swagger.models.HttpMethod;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
 import io.swagger.util.Yaml;
-
-import java.io.File;
-import java.util.*;
 
 public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConfig {
     public static final String CONTROLLER_PACKAGE = "controllerPackage";
@@ -249,7 +261,7 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
     }
 
     @SuppressWarnings("unchecked")
-    private List<Map<String, Object>> getOperations(Map<String, Object> objs) {
+    private static List<Map<String, Object>> getOperations(Map<String, Object> objs) {
         List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
         Map<String, Object> apiInfo = (Map<String, Object>) objs.get("apiInfo");
         List<Map<String, Object>> apis = (List<Map<String, Object>>) apiInfo.get("apis");
@@ -259,7 +271,7 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
         return result;
     }
 
-    private List<Map<String, Object>> sortOperationsByPath(List<CodegenOperation> ops) {
+    private static List<Map<String, Object>> sortOperationsByPath(List<CodegenOperation> ops) {
         Multimap<String, CodegenOperation> opsByPath = ArrayListMultimap.create();
 
         for (CodegenOperation op : ops) {

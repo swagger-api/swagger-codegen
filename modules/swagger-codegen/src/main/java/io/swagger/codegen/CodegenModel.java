@@ -1,8 +1,13 @@
 package io.swagger.codegen;
 
-import io.swagger.models.ExternalDocs;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
-import java.util.*;
+import io.swagger.models.ExternalDocs;
 
 public class CodegenModel {
     public String parent;

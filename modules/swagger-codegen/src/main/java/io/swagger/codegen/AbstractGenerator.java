@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 
 public abstract class AbstractGenerator {
 
-    public File writeToFile(String filename, String contents) throws IOException {
+	public static File writeToFile(String filename, String contents) throws IOException {
         System.out.println("writing file " + filename);
         File output = new File(filename);
 
@@ -49,9 +49,6 @@ public abstract class AbstractGenerator {
             InputStream is = this.getClass().getClassLoader().getResourceAsStream(getCPResourcePath(name));
             if (is == null) {
                 is = new FileInputStream(new File(name));
-            }
-            if (is == null) {
-                throw new RuntimeException("no file found");
             }
             return new InputStreamReader(is);
         } catch (Exception e) {
@@ -96,7 +93,7 @@ public abstract class AbstractGenerator {
         return this.getClass().getClassLoader().getResource(getCPResourcePath(name)) != null;
     }
 
-    public String getCPResourcePath(String name) {
+    public static String getCPResourcePath(String name) {
         if (!"/".equals(File.separator)) {
             return name.replaceAll(Pattern.quote(File.separator), "/");
         }

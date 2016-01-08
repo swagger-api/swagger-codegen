@@ -1,8 +1,8 @@
 package io.swagger.codegen;
 
-import java.util.ServiceLoader;
-
 import static java.util.ServiceLoader.load;
+
+import java.util.ServiceLoader;
 
 public class CodegenConfigLoader {
     /**

@@ -1,9 +1,9 @@
 package config;
 
-import com.google.common.collect.ImmutableMap;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import com.google.common.collect.ImmutableMap;
 
 public class Config {
     private Map<String, String> options;

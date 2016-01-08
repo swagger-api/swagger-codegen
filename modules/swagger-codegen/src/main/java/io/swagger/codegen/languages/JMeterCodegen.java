@@ -1,14 +1,18 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.*;
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashSet;
+
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.DefaultCodegen;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
-import io.swagger.models.properties.*;
-import org.apache.commons.lang.StringUtils;
-
-import java.util.*;
-import java.io.File;
+import io.swagger.models.properties.ArrayProperty;
+import io.swagger.models.properties.MapProperty;
+import io.swagger.models.properties.Property;
 
 public class JMeterCodegen extends DefaultCodegen implements CodegenConfig {
 

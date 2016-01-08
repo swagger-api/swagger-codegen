@@ -1,14 +1,14 @@
 package io.swagger.codegen;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import io.swagger.models.Model;
 import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
 import io.swagger.models.auth.SecuritySchemeDefinition;
 import io.swagger.models.properties.Property;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public interface CodegenConfig {
     CodegenType getTag();

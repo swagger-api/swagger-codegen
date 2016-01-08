@@ -1,14 +1,24 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenResponse;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.SupportingFile;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
 
-import java.io.File;
-import java.util.*;
-
-public class JaxRSServerCodegen extends JavaClientCodegen implements CodegenConfig {
+public class JaxRSServerCodegen extends JavaClientCodegen   {
     protected String dateLibrary = "default";
     protected String title = "Swagger Server";
     protected String implFolder = "src/main/java";
@@ -180,7 +190,7 @@ public class JaxRSServerCodegen extends JavaClientCodegen implements CodegenConf
             }
         }
         this.additionalProperties.put("serverPort", port);
-        if(swagger != null && swagger.getPaths() != null) {
+        if(swagger.getPaths() != null) {
             for(String pathname : swagger.getPaths().keySet()) {
                 Path path = swagger.getPath(pathname);
                 if(path.getOperations() != null) {

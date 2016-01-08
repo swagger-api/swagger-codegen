@@ -1,22 +1,49 @@
 package io.swagger.codegen;
 
-import com.samskivert.mustache.Mustache;
-import com.samskivert.mustache.Template;
-import io.swagger.models.*;
-import io.swagger.models.auth.OAuth2Definition;
-import io.swagger.models.auth.SecuritySchemeDefinition;
-import io.swagger.models.parameters.Parameter;
-import io.swagger.util.Json;
+import static org.apache.commons.lang3.StringUtils.capitalize;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
 import org.apache.commons.io.IOUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
-import java.util.*;
+import com.samskivert.mustache.Mustache;
+import com.samskivert.mustache.Template;
 
-import static org.apache.commons.lang3.StringUtils.capitalize;
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+import io.swagger.models.ComposedModel;
+import io.swagger.models.Contact;
+import io.swagger.models.Info;
+import io.swagger.models.License;
+import io.swagger.models.Model;
+import io.swagger.models.Operation;
+import io.swagger.models.Path;
+import io.swagger.models.SecurityRequirement;
+import io.swagger.models.Swagger;
+import io.swagger.models.auth.OAuth2Definition;
+import io.swagger.models.auth.SecuritySchemeDefinition;
+import io.swagger.models.parameters.Parameter;
+import io.swagger.util.Json;
 
 public class DefaultGenerator extends AbstractGenerator implements Generator {
     Logger LOGGER = LoggerFactory.getLogger(DefaultGenerator.class);
@@ -252,7 +279,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     // Pass sortParamsByRequiredFlag through to the Mustache template...
                     boolean sortParamsByRequiredFlag = true;
                     if (this.config.additionalProperties().containsKey(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG)) {
-                        sortParamsByRequiredFlag = Boolean.valueOf((String)this.config.additionalProperties().get(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG).toString());
+                        sortParamsByRequiredFlag = Boolean.valueOf(this.config.additionalProperties().get(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG).toString());
                     }
                     operation.put("sortParamsByRequiredFlag", sortParamsByRequiredFlag);
 
@@ -418,7 +445,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         return files;
     }
 
-    private void processMimeTypes(List<String> mimeTypeList, Map<String, Object> operation, String source) {
+    private static void processMimeTypes(List<String> mimeTypeList, Map<String, Object> operation, String source) {
         if (mimeTypeList != null && mimeTypeList.size() > 0) {
             List<Map<String, String>> c = new ArrayList<Map<String, String>>();
             int count = 0;
@@ -439,7 +466,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
     }
 
-    private List<String> sortModelsByInheritance(final Map<String, Model> definitions) {
+    private static List<String> sortModelsByInheritance(final Map<String, Model> definitions) {
     	List<String> sortedModelKeys = new ArrayList<String>(definitions.keySet());
     	Comparator<String> cmp = new Comparator<String>() {
 			@Override
@@ -609,11 +636,11 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
     }
 
-    private String generateParameterId(Parameter parameter) {
+    private static String generateParameterId(Parameter parameter) {
         return parameter.getName() + ":" + parameter.getIn();
     }
 
-    protected String sanitizeTag(String tag) {
+    protected  String sanitizeTag(String tag) {
         // remove spaces and make strong case
         String[] parts = tag.split(" ");
         StringBuilder buf = new StringBuilder();
@@ -625,7 +652,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         return buf.toString().replaceAll("[^a-zA-Z ]", "");
     }
 
-    public Map<String, Object> processOperations(CodegenConfig config, String tag, List<CodegenOperation> ops) {
+	public Map<String, Object> processOperations(CodegenConfig config, String tag, List<CodegenOperation> ops) {
         Map<String, Object> operations = new HashMap<String, Object>();
         Map<String, Object> objs = new HashMap<String, Object>();
         objs.put("classname", config.toApiName(tag));
@@ -704,7 +731,6 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
         Set<String> importSet = new TreeSet<String>();
         for (String nextImport : allImports) {
-            Map<String, String> im = new HashMap<String, String>();
             String mapping = config.importMapping().get(nextImport);
             if (mapping == null) {
                 mapping = config.toModelImport(nextImport);

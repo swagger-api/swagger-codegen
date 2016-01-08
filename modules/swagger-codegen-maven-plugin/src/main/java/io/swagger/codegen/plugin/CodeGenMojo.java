@@ -1,5 +1,24 @@
 package io.swagger.codegen.plugin;
 
+import static io.swagger.codegen.plugin.AdditionalParams.API_PACKAGE_PARAM;
+import static io.swagger.codegen.plugin.AdditionalParams.INVOKER_PACKAGE_PARAM;
+import static io.swagger.codegen.plugin.AdditionalParams.MODEL_PACKAGE_PARAM;
+import static io.swagger.codegen.plugin.AdditionalParams.TEMPLATE_DIR_PARAM;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.project.MavenProject;
+
+import config.Config;
+import config.ConfigParser;
+
 /*
  * Copyright 2001-2005 The Apache Software Foundation.
  *
@@ -24,26 +43,6 @@ import io.swagger.codegen.CodegenConfigLoader;
 import io.swagger.codegen.DefaultGenerator;
 import io.swagger.models.Swagger;
 import io.swagger.parser.SwaggerParser;
-
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.project.MavenProject;
-
-import config.Config;
-import config.ConfigParser;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ServiceLoader;
-
-import static io.swagger.codegen.plugin.AdditionalParams.API_PACKAGE_PARAM;
-import static io.swagger.codegen.plugin.AdditionalParams.INVOKER_PACKAGE_PARAM;
-import static io.swagger.codegen.plugin.AdditionalParams.MODEL_PACKAGE_PARAM;
-import static io.swagger.codegen.plugin.AdditionalParams.TEMPLATE_DIR_PARAM;
 
 /**
  * Goal which generates client/server code from a swagger json/yaml definition.
@@ -110,7 +109,7 @@ public class CodeGenMojo extends AbstractMojo {
      * A map of language-specific parameters as passed with the -c option to the command line
      */
     @Parameter(name = "configOptions")
-    private Map configOptions;
+    private Map<?, ?> configOptions;
 
     /**
      * Add the output directory to the project as a source root, so that the

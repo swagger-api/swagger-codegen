@@ -1,13 +1,5 @@
 package io.swagger.codegen;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import io.swagger.models.*;
-import io.swagger.models.parameters.BodyParameter;
-import io.swagger.models.parameters.Parameter;
-import io.swagger.models.parameters.RefParameter;
-import io.swagger.models.properties.*;
-import io.swagger.util.Json;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +7,24 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import io.swagger.models.ArrayModel;
+import io.swagger.models.Model;
+import io.swagger.models.ModelImpl;
+import io.swagger.models.Operation;
+import io.swagger.models.Path;
+import io.swagger.models.RefModel;
+import io.swagger.models.Response;
+import io.swagger.models.Swagger;
+import io.swagger.models.Xml;
+import io.swagger.models.parameters.BodyParameter;
+import io.swagger.models.parameters.Parameter;
+import io.swagger.models.properties.ArrayProperty;
+import io.swagger.models.properties.MapProperty;
+import io.swagger.models.properties.ObjectProperty;
+import io.swagger.models.properties.Property;
+import io.swagger.models.properties.RefProperty;
+import io.swagger.util.Json;
 
 public class InlineModelResolver {
     private Swagger swagger;
@@ -174,9 +184,7 @@ public class InlineModelResolver {
                             m.setItems(new RefProperty(existing));
                         }
                     }
-                } else if (model instanceof ComposedModel) {
-                    ComposedModel m = (ComposedModel) model;
-                }
+                } 
             }
         }
     }
@@ -296,14 +304,13 @@ public class InlineModelResolver {
     }
 
     public Model modelFromProperty(ArrayProperty object, String path) {
-        String access = object.getAccess();
         String description = object.getDescription();
         String example = object.getExample();
-        String name = object.getName();
-        Integer position = object.getPosition();
-        Boolean readOnly = object.getReadOnly();
-        Boolean required = object.getRequired();
-        String title = object.getTitle();
+     //   String name = object.getName();
+     //   Integer position = object.getPosition();
+     //   Boolean readOnly = object.getReadOnly();
+     //   Boolean required = object.getRequired();
+     //   String title = object.getTitle();
         Map<String, Object> extensions = object.getVendorExtensions();
         Xml xml = object.getXml();
 
@@ -331,15 +338,9 @@ public class InlineModelResolver {
     }
 
     public Model modelFromProperty(ObjectProperty object, String path) {
-        String access = object.getAccess();
         String description = object.getDescription();
         String example = object.getExample();
         String name = object.getName();
-        Integer position = object.getPosition();
-        Boolean readOnly = object.getReadOnly();
-        Boolean required = object.getRequired();
-        String title = object.getTitle();
-        Map<String, Object> extensions = object.getVendorExtensions();
         Xml xml = object.getXml();
 
         Map<String, Property> properties = object.getProperties();
@@ -359,17 +360,8 @@ public class InlineModelResolver {
     }
 
     public Model modelFromProperty(MapProperty object, String path) {
-        String access = object.getAccess();
         String description = object.getDescription();
         String example = object.getExample();
-        String name = object.getName();
-        Integer position = object.getPosition();
-        Boolean readOnly = object.getReadOnly();
-        Boolean required = object.getRequired();
-        String title = object.getTitle();
-        Map<String, Object> extensions = object.getVendorExtensions();
-        Xml xml = object.getXml();
-
         ArrayModel model = new ArrayModel();
         model.setDescription(description);
         model.setExample(example);
