@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 
 public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(CSharpClientCodegen.class);
+    protected boolean optionalAssemblyInfoFlag = true;
     protected boolean optionalMethodArgumentFlag = true;
 	protected boolean useDateTimeOffsetFlag = false;
     protected String packageTitle = "Swagger Library";
@@ -113,6 +114,8 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
                 CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG_DESC).defaultValue(Boolean.TRUE.toString()));
         cliOptions.add(CliOption.newBoolean(CodegenConstants.OPTIONAL_METHOD_ARGUMENT, "C# Optional method argument, " +
                 "e.g. void square(int x=10) (.net 4.0+ only)."));
+        cliOptions.add(CliOption.newBoolean(CodegenConstants.OPTIONAL_ASSEMBLY_INFO,
+                CodegenConstants.OPTIONAL_ASSEMBLY_INFO_DESC).defaultValue(Boolean.TRUE.toString()));
 		cliOptions.add(new CliOption(CodegenConstants.SOURCE_FOLDER, CodegenConstants.SOURCE_FOLDER_DESC).defaultValue(sourceFolder));
 		cliOptions.add(CliOption.newBoolean(CodegenConstants.USE_DATETIME_OFFSET, CodegenConstants.USE_DATETIME_OFFSET_DESC));
     }
@@ -166,6 +169,11 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
         }
         additionalProperties.put("optionalMethodArgument", optionalMethodArgumentFlag);
         
+        if (additionalProperties.containsKey(CodegenConstants.OPTIONAL_ASSEMBLY_INFO)) {
+            setOptionalAssemblyInfoFlag(Boolean.valueOf(additionalProperties
+                    .get(CodegenConstants.OPTIONAL_ASSEMBLY_INFO).toString()));
+        }
+
         supportingFiles.add(new SupportingFile("Configuration.mustache",
                 sourceFolder + File.separator + clientPackage.replace(".", java.io.File.separator), "Configuration.cs"));
         supportingFiles.add(new SupportingFile("ApiClient.mustache",
@@ -178,7 +186,10 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
         supportingFiles.add(new SupportingFile("RestSharp.dll", "bin", "RestSharp.dll"));
         supportingFiles.add(new SupportingFile("compile.mustache", "", "compile.bat"));
         supportingFiles.add(new SupportingFile("README.md", "", "README.md"));
-        supportingFiles.add(new SupportingFile("AssemblyInfo.mustache", "src" + File.separator + "Properties", "AssemblyInfo.cs"));
+
+        if (optionalAssemblyInfoFlag) {
+            supportingFiles.add(new SupportingFile("AssemblyInfo.mustache", "src" + File.separator + "Properties", "AssemblyInfo.cs"));
+        }
 
     }
 
@@ -318,6 +329,10 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
         }
 
         return camelize(sanitizeName(operationId));
+    }
+
+    public void setOptionalAssemblyInfoFlag(boolean flag) {
+        this.optionalAssemblyInfoFlag = flag;
     }
 
     public void setOptionalMethodArgumentFlag(boolean flag) {
