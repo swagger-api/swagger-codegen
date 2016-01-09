@@ -73,8 +73,8 @@ public class JavaModelEnumTest {
 
         final DefaultCodegen codegen = new JavaClientCodegen();
         final Map<String, Model> allModels = new HashMap<String, Model>();
-        allModels.put(codegen.toModelName(parentModel.getName()), parentModel);
-        allModels.put(codegen.toModelName(subModel.getName()), subModel);
+        allModels.put(parentModel.getName(), parentModel);
+        allModels.put(subModel.getName(), subModel);
 
         final CodegenModel cm = codegen.fromModel("sample", model, allModels);
 

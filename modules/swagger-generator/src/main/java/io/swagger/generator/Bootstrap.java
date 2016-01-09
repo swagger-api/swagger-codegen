@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 SmartBear Software
+ * Copyright 2016 SmartBear Software
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,17 +52,6 @@ public class Bootstrap extends HttpServlet {
             }
         }
 
-        String host = config.getInitParameter("generator.host");
-        if(host == null) {
-            host = "generator.swagger.io";
-        }
-        bc.setHost(host);
-
-        String scheme = config.getInitParameter("generator.protocol");
-        if(host == null) {
-            scheme = "https";
-        }
-        bc.setSchemes(new String[]{scheme});
         bc.setLicenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html");
         bc.setResourcePackage("io.swagger.generator.resource");
         bc.setScan(true);

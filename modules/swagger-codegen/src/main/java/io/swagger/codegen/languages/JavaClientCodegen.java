@@ -69,6 +69,11 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         reservedWords = new HashSet<String>(
                 Arrays.asList(
+                        // used as internal variables, can collide with parameter names
+                        "path", "queryParams", "headerParams", "formParams", "postBody", "accepts", "accept", "contentTypes",
+                        "contentType", "authNames",
+
+                        // language reserved words
                         "abstract", "continue", "for", "new", "switch", "assert",
                         "default", "if", "package", "synchronized", "boolean", "do", "goto", "private",
                         "this", "break", "double", "implements", "protected", "throw", "byte", "else",
@@ -480,8 +485,8 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
     public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
         CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
 
-        if (allDefinitions != null && codegenModel != null && codegenModel.parent != null && codegenModel.hasEnums) {
-            final Model parentModel = allDefinitions.get(toModelName(codegenModel.parent));
+        if (allDefinitions != null && codegenModel != null && codegenModel.parentSchema != null && codegenModel.hasEnums) {
+            final Model parentModel = allDefinitions.get(codegenModel.parentSchema);
             final CodegenModel parentCodegenModel = super.fromModel(codegenModel.parent, parentModel);
             codegenModel = JavaClientCodegen.reconcileInlineEnums(codegenModel, parentCodegenModel);
         }
@@ -501,11 +506,13 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
                 model.imports.add("JsonSerialize");
             }
         }
+
         if(model.isEnum == null || model.isEnum) {
             // needed by all pojos, but not enums
             model.imports.add("ApiModelProperty");
             model.imports.add("ApiModel");
-            model.imports.add("Objects");
+            // comment out below as it's in the model template 
+            //model.imports.add("Objects");
 
             final String lib = getLibrary();
             if(StringUtils.isEmpty(lib) || "feign".equals(lib) || "jersey2".equals(lib)) {

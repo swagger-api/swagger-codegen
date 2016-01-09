@@ -10,7 +10,7 @@ import java.util.TreeSet;
 import io.swagger.models.ExternalDocs;
 
 public class CodegenModel {
-    public String parent;
+    public String parent, parentSchema;
     public String name, classname, description, classVarName, modelJson, dataType;
     public String unescapedDescription;
     public String defaultValue;

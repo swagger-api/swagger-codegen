@@ -818,11 +818,12 @@ public class DefaultCodegen {
             // parent model
             final RefModel parent = (RefModel) composed.getParent();
             if (parent != null) {
-                final String parentRef = toModelName(parent.getSimpleRef());
-                m.parent = parentRef;
-                addImport(m, parentRef);
+                final String parentRef = parent.getSimpleRef();
+                m.parentSchema = parentRef;
+                m.parent = toModelName(parent.getSimpleRef());
+                addImport(m, m.parent);
                 if (!supportsInheritance && allDefinitions != null) {
-                    final Model parentModel = allDefinitions.get(parentRef);
+                    final Model parentModel = allDefinitions.get(m.parentSchema);
                     if (parentModel instanceof ModelImpl) {
                         final ModelImpl _parent = (ModelImpl) parentModel;
                         if (_parent.getProperties() != null) {
@@ -1821,6 +1822,20 @@ public class DefaultCodegen {
             opList = new ArrayList<CodegenOperation>();
             operations.put(tag, opList);
         }
+        // check for operationId uniqueness
+
+        String uniqueName = co.operationId;
+        int counter = 0;
+        for(CodegenOperation op : opList) {
+            if(uniqueName.equals(op.operationId)) {
+                uniqueName = co.operationId + "_" + counter;
+                counter ++;
+            }
+        }
+        if(!co.operationId.equals(uniqueName)) {
+            LOGGER.warn("generated unique operationId `" + uniqueName + "`");
+        }
+        co.operationId = uniqueName;
         opList.add(co);
         co.baseName = tag;
     }

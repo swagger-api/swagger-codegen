@@ -33,6 +33,7 @@ import io.swagger.models.properties.StringProperty;
 
 public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(CSharpClientCodegen.class);
+    protected boolean optionalAssemblyInfoFlag = true;
     protected boolean optionalMethodArgumentFlag = true;
     protected String packageTitle = "Swagger Library";
     protected String packageProductName = "SwaggerLibrary";
@@ -55,7 +56,20 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
 
         reservedWords = new HashSet<String>(
                 Arrays.asList(
-                        "abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char", "checked", "class", "const", "continue", "decimal", "default", "delegate", "do", "double", "else", "enum", "event", "explicit", "extern", "false", "finally", "fixed", "float", "for", "foreach", "goto", "if", "implicit", "in", "int", "interface", "internal", "is", "lock", "long", "namespace", "new", "null", "object", "operator", "out", "override", "params", "private", "protected", "public", "readonly", "ref", "return", "sbyte", "sealed", "short", "sizeof", "stackalloc", "static", "string", "struct", "switch", "this", "throw", "true", "try", "typeof", "uint", "ulong", "unchecked", "unsafe", "ushort", "using", "virtual", "void", "volatile", "while")
+                    // local variable names in API methods (endpoints)
+                    "path_", "pathParams", "queryParams", "headerParams", "formParams", "fileParams",
+                    "postBody", "http_header_accepts", "http_header_accept", "apiKeyValue", "response",
+                    "statusCode",
+                    // C# reserved words
+                    "abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char", "checked",
+                    "class", "const", "continue", "decimal", "default", "delegate", "do", "double", "else",
+                    "enum", "event", "explicit", "extern", "false", "finally", "fixed", "float", "for",
+                    "foreach", "goto", "if", "implicit", "in", "int", "interface", "internal", "is", "lock",
+                    "long", "namespace", "new", "null", "object", "operator", "out", "override", "params",
+                    "private", "protected", "public", "readonly", "ref", "return", "sbyte", "sealed",
+                    "short", "sizeof", "stackalloc", "static", "string", "struct", "switch", "this", "throw",
+                    "true", "try", "typeof", "uint", "ulong", "unchecked", "unsafe", "ushort", "using",
+                    "virtual", "void", "volatile", "while")
         );
 
 
@@ -108,6 +122,8 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
                 CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG_DESC).defaultValue(Boolean.TRUE.toString()));
         cliOptions.add(CliOption.newBoolean(CodegenConstants.OPTIONAL_METHOD_ARGUMENT, "C# Optional method argument, " +
                 "e.g. void square(int x=10) (.net 4.0+ only)."));
+        cliOptions.add(CliOption.newBoolean(CodegenConstants.OPTIONAL_ASSEMBLY_INFO,
+                CodegenConstants.OPTIONAL_ASSEMBLY_INFO_DESC).defaultValue(Boolean.TRUE.toString()));
     }
 
     @Override
@@ -144,6 +160,11 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
         }
         additionalProperties.put("optionalMethodArgument", optionalMethodArgumentFlag);
         
+        if (additionalProperties.containsKey(CodegenConstants.OPTIONAL_ASSEMBLY_INFO)) {
+            setOptionalAssemblyInfoFlag(Boolean.valueOf(additionalProperties
+                    .get(CodegenConstants.OPTIONAL_ASSEMBLY_INFO).toString()));
+        }
+
         supportingFiles.add(new SupportingFile("Configuration.mustache",
                 sourceFolder + File.separator + clientPackage.replace(".", java.io.File.separator), "Configuration.cs"));
         supportingFiles.add(new SupportingFile("ApiClient.mustache",
@@ -156,7 +177,10 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
         supportingFiles.add(new SupportingFile("RestSharp.dll", "bin", "RestSharp.dll"));
         supportingFiles.add(new SupportingFile("compile.mustache", "", "compile.bat"));
         supportingFiles.add(new SupportingFile("README.md", "", "README.md"));
-        supportingFiles.add(new SupportingFile("AssemblyInfo.mustache", "src" + File.separator + "Properties", "AssemblyInfo.cs"));
+
+        if (optionalAssemblyInfoFlag) {
+            supportingFiles.add(new SupportingFile("AssemblyInfo.mustache", "src" + File.separator + "Properties", "AssemblyInfo.cs"));
+        }
 
     }
 
@@ -296,6 +320,10 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
         }
 
         return camelize(sanitizeName(operationId));
+    }
+
+    public void setOptionalAssemblyInfoFlag(boolean flag) {
+        this.optionalAssemblyInfoFlag = flag;
     }
 
     public void setOptionalMethodArgumentFlag(boolean flag) {
