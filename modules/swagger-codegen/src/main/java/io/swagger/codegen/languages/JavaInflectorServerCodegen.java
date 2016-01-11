@@ -11,8 +11,14 @@ import io.swagger.util.Yaml;
 
 import java.util.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class JavaInflectorServerCodegen extends JavaClientCodegen implements CodegenConfig {
-    protected String title = "Swagger Inflector";
+
+	private static final Logger LOG = LoggerFactory.getLogger(JavaInflectorServerCodegen.class);
+    
+	protected String title = "Swagger Inflector";
 
     public JavaInflectorServerCodegen() {
         super();
@@ -163,7 +169,7 @@ public class JavaInflectorServerCodegen extends JavaClientCodegen implements Cod
             try {
                 objs.put("swagger-yaml", Yaml.mapper().writeValueAsString(swagger));
             } catch (JsonProcessingException e) {
-                e.printStackTrace();
+            	LOG.error(e.getMessage(), e);
             }
         }
         return super.postProcessSupportingFileData(objs);
