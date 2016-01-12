@@ -27,10 +27,10 @@ import java.util.Map;
 import java.util.Set;
 
 public class XmlExampleGenerator {
-    public static String NEWLINE = "\n";
-    public static String TAG_START = "<";
-    public static String CLOSE_TAG = ">";
-    public static String TAG_END = "</";
+    public static final String NEWLINE = "\n";
+    public static final String TAG_START = "<";
+    public static final String CLOSE_TAG = ">";
+    public static final String TAG_END = "</";
     private static String EMPTY = "";
     protected Map<String, Model> examples;
     protected SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
