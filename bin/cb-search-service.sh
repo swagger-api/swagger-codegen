@@ -1,0 +1,1 @@
+/crunchbase/search-service/bin/cb-search-service.sh

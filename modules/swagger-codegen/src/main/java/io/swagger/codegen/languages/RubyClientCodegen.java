@@ -177,16 +177,9 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         // use constant model/api package (folder path)
         setModelPackage("models");
-        setApiPackage("api");
-
-        supportingFiles.add(new SupportingFile("gemspec.mustache", "", gemName + ".gemspec"));
-        supportingFiles.add(new SupportingFile("gem.mustache", libFolder, gemName + ".rb"));
+        setApiPackage("");
         String gemFolder = libFolder + File.separator + gemName;
-        supportingFiles.add(new SupportingFile("api_client.mustache", gemFolder, "api_client.rb"));
-        supportingFiles.add(new SupportingFile("api_error.mustache", gemFolder, "api_error.rb"));
-        supportingFiles.add(new SupportingFile("configuration.mustache", gemFolder, "configuration.rb"));
-        supportingFiles.add(new SupportingFile("version.mustache", gemFolder, "version.rb"));
-        String modelFolder = gemFolder + File.separator + modelPackage.replace("/", File.separator);
+        String modelFolder = modelPackage.replace("/", File.separator);
     }
 
 
@@ -226,12 +219,12 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String apiFileFolder() {
-        return outputFolder + File.separator + libFolder + File.separator + gemName + File.separator + apiPackage.replace("/", File.separator);
+        return "";
     }
 
     @Override
     public String modelFileFolder() {
-        return outputFolder + File.separator + libFolder + File.separator + gemName + File.separator + modelPackage.replace("/", File.separator);
+        return outputFolder + File.separator + gemName;
     }
 
     @Override
@@ -392,7 +385,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String toModelImport(String name) {
-        return gemName + "/" + modelPackage() + "/" + toModelFilename(name);
+        return modelPackage() + "/" + toModelFilename(name);
     }
 
     @Override
