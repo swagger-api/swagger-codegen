@@ -218,7 +218,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             }
         }
         if (System.getProperty("debugModels") != null) {
-        	LOGGER.debug("############ Model info ############");
+            LOGGER.debug("############ Model info ############");
             Json.prettyPrint(allModels);
         }
 
@@ -294,7 +294,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             }
         }
         if (System.getProperty("debugOperations") != null) {
-        	LOGGER.debug("############ Operation info ############");
+            LOGGER.debug("############ Operation info ############");
             Json.prettyPrint(allOperations);
         }
 
@@ -333,7 +333,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         config.postProcessSupportingFileData(bundle);
 
         if (System.getProperty("debugSupportingFiles") != null) {
-        	LOGGER.debug("############ Supporting file info ############");
+            LOGGER.debug("############ Supporting file info ############");
             Json.prettyPrint(bundle);
         }
 
@@ -393,14 +393,14 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                             File outputFile = new File(outputFilename);
                             OutputStream out = new FileOutputStream(outputFile, false);
                             if (in != null && out != null) {
-                            	LOGGER.info("writing file " + outputFile);
+                                LOGGER.info("writing file " + outputFile);
                                 IOUtils.copy(in, out);
                             } else {
                                 if (in == null) {
-                                	LOGGER.error("can't open " + templateFile + " for input");
+                                    LOGGER.error("can't open " + templateFile + " for input");
                                 }
                                 if (out == null) {
-                                	LOGGER.error("can't open " + outputFile + " for output");
+                                    LOGGER.error("can't open " + outputFile + " for output");
                                 }
                             }
 
