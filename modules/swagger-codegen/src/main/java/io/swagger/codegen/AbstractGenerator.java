@@ -18,10 +18,10 @@ import org.slf4j.LoggerFactory;
 
 public abstract class AbstractGenerator {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AbstractGenerator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractGenerator.class);
 
     public File writeToFile(String filename, String contents) throws IOException {
-    	LOG.debug("writing file " + filename);
+        LOGGER.debug("writing file " + filename);
         File output = new File(filename);
 
         if (output.getParent() != null && !new File(output.getParent()).exists()) {
@@ -45,7 +45,7 @@ public abstract class AbstractGenerator {
             Scanner s = new Scanner(reader).useDelimiter("\\A");
             return s.hasNext() ? s.next() : "";
         } catch (Exception e) {
-            LOG.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
         throw new RuntimeException("can't load template " + name);
     }
@@ -61,7 +61,7 @@ public abstract class AbstractGenerator {
             }
             return new InputStreamReader(is);
         } catch (Exception e) {
-        	LOG.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
         throw new RuntimeException("can't load template " + name);
     }

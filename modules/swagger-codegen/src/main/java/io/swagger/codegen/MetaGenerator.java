@@ -29,7 +29,7 @@ import java.util.ServiceLoader;
 @Deprecated
 public class MetaGenerator extends AbstractGenerator {
 
-	private static final Logger LOG = LoggerFactory.getLogger(MetaGenerator.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(MetaGenerator.class);
 
     static Map<String, CodegenConfig> configs = new HashMap<String, CodegenConfig>();
     static String configString;
@@ -112,7 +112,7 @@ public class MetaGenerator extends AbstractGenerator {
             usage(options);
             return;
         }
-        LOG.info("writing to folder " + outputFolder);
+        LOGGER.info("writing to folder " + outputFolder);
         File outputFolderLocation = new File(outputFolder);
         if (!outputFolderLocation.exists()) {
             outputFolderLocation.mkdirs();
@@ -178,11 +178,11 @@ public class MetaGenerator extends AbstractGenerator {
                 } else {
                     String template = readTemplate(templateDir + File.separator + support.templateFile);
                     FileUtils.writeStringToFile(new File(outputFilename), template);
-                    LOG.info("copying file to " + outputFilename);
+                    LOGGER.info("copying file to " + outputFilename);
                     files.add(new File(outputFilename));
                 }
             } catch (IOException e) {
-            	LOG.error(e.getMessage(), e);
+                LOGGER.error(e.getMessage(), e);
             }
         }
     }
