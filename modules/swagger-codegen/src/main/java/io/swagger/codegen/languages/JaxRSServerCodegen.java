@@ -18,291 +18,296 @@ import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
 
-public class JaxRSServerCodegen extends JavaClientCodegen   {
-    protected String dateLibrary = "default";
-    protected String title = "Swagger Server";
-    protected String implFolder = "src/main/java";
+public class JaxRSServerCodegen extends JavaClientCodegen
+{
+	protected static final String JAXRS_TEMPLATE_DIRECTORY_NAME = "JavaJaxRS";
+	protected String dateLibrary = "default";
+	protected String title = "Swagger Server";
+	protected String implFolder = "src/main/java";
 
-    public static final String DATE_LIBRARY = "dateLibrary";
-    public JaxRSServerCodegen() {
-        super();
+	public static final String DATE_LIBRARY = "dateLibrary";
 
-        sourceFolder = "src/gen/java";
-        invokerPackage = "io.swagger.api";
-        artifactId = "swagger-jaxrs-server";
+	public JaxRSServerCodegen()
+	{
+		super();
 
-        outputFolder = "generated-code/javaJaxRS";
-        modelTemplateFiles.put("model.mustache", ".java");
-        apiTemplateFiles.put("api.mustache", ".java");
-        apiTemplateFiles.put("apiService.mustache", ".java");
-        apiTemplateFiles.put("apiServiceImpl.mustache", ".java");
-        apiTemplateFiles.put("apiServiceFactory.mustache", ".java");
-        apiPackage = "io.swagger.api";
-        modelPackage = "io.swagger.model";
+		sourceFolder = "src/gen/java";
+		invokerPackage = "io.swagger.api";
+		artifactId = "swagger-jaxrs-server";
 
-        additionalProperties.put("title", title);
-        
-        embeddedTemplateDir = templateDir = "JavaJaxRS" + File.separator + "jersey1_18";
+		outputFolder = "generated-code/javaJaxRS";
+		modelTemplateFiles.put("model.mustache", ".java");
+		apiTemplateFiles.put("api.mustache", ".java");
+		apiTemplateFiles.put("apiService.mustache", ".java");
+		apiTemplateFiles.put("apiServiceImpl.mustache", ".java");
+		apiTemplateFiles.put("apiServiceFactory.mustache", ".java");
+		apiPackage = "io.swagger.api";
+		modelPackage = "io.swagger.model";
 
-        for(int i = 0; i < cliOptions.size(); i++) {
-            if(CodegenConstants.LIBRARY.equals(cliOptions.get(i).getOpt())) {
-                cliOptions.remove(i);
-                break;
-            }
-        }
+		additionalProperties.put("title", title);
 
-        CliOption dateLibrary = new CliOption(DATE_LIBRARY, "Option. Date library to use");
-        Map<String, String> dateOptions = new HashMap<String, String>();
-        dateOptions.put("java8", "Java 8 native");
-        dateOptions.put("joda", "Joda");
-        dateLibrary.setEnum(dateOptions);
+		embeddedTemplateDir = templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME + File.separator + "jersey1_18";
 
-        cliOptions.add(dateLibrary);
+		for ( int i = 0; i < cliOptions.size(); i++ ) {
+			if ( CodegenConstants.LIBRARY.equals(cliOptions.get(i).getOpt()) ) {
+				cliOptions.remove(i);
+				break;
+			}
+		}
 
-        CliOption library = new CliOption(CodegenConstants.LIBRARY, "library template (sub-template) to use");
-        library.setDefault(DEFAULT_LIBRARY);
+		CliOption dateLibrary = new CliOption(DATE_LIBRARY, "Option. Date library to use");
+		Map<String, String> dateOptions = new HashMap<String, String>();
+		dateOptions.put("java8", "Java 8 native");
+		dateOptions.put("joda", "Joda");
+		dateLibrary.setEnum(dateOptions);
 
-        Map<String, String> supportedLibraries = new LinkedHashMap<String, String>();
+		cliOptions.add(dateLibrary);
 
-        supportedLibraries.put(DEFAULT_LIBRARY, "Jersey core 1.18.1");
-//        supportedLibraries.put("jersey2", "Jersey2 core library 2.x");
-        library.setEnum(supportedLibraries);
+		CliOption library = new CliOption(CodegenConstants.LIBRARY, "library template (sub-template) to use");
+		library.setDefault(DEFAULT_LIBRARY);
 
-        cliOptions.add(library);
-        cliOptions.add(new CliOption(CodegenConstants.IMPL_FOLDER, CodegenConstants.IMPL_FOLDER_DESC));
-    }
+		Map<String, String> supportedLibraries = new LinkedHashMap<String, String>();
 
-    @Override
-    public CodegenType getTag() {
-        return CodegenType.SERVER;
-    }
+		supportedLibraries.put(DEFAULT_LIBRARY, "Jersey core 1.18.1");
+		//        supportedLibraries.put("jersey2", "Jersey2 core library 2.x");
+		library.setEnum(supportedLibraries);
 
-    @Override
-    public String getName() {
-        return "jaxrs";
-    }
+		cliOptions.add(library);
+		cliOptions.add(new CliOption(CodegenConstants.IMPL_FOLDER, CodegenConstants.IMPL_FOLDER_DESC));
+	}
 
-    @Override
-    public String getHelp() {
-        return "Generates a Java JAXRS Server application.";
-    }
+	@Override
+	public CodegenType getTag()
+	{
+		return CodegenType.SERVER;
+	}
 
-    @Override
-    public void processOpts() {
-        super.processOpts();
-        
-        if(additionalProperties.containsKey(CodegenConstants.IMPL_FOLDER)) {
-        	implFolder = (String) additionalProperties.get(CodegenConstants.IMPL_FOLDER);
-        }
+	@Override
+	public String getName()
+	{
+		return "jaxrs";
+	}
 
-//        if("jersey2".equals(getLibrary())) {
-//            embeddedTemplateDir = templateDir = "JavaJaxRS" + File.separator + "jersey2";
-//        }
+	@Override
+	public String getHelp()
+	{
+		return "Generates a Java JAXRS Server application.";
+	}
 
-        supportingFiles.clear();
-        supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
-        supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
-        supportingFiles.add(new SupportingFile("ApiException.mustache",
-                (sourceFolder + '/' + apiPackage).replace(".", "/"), "ApiException.java"));
-        supportingFiles.add(new SupportingFile("ApiOriginFilter.mustache",
-                (sourceFolder + '/' + apiPackage).replace(".", "/"), "ApiOriginFilter.java"));
-        supportingFiles.add(new SupportingFile("ApiResponseMessage.mustache",
-                (sourceFolder + '/' + apiPackage).replace(".", "/"), "ApiResponseMessage.java"));
-        supportingFiles.add(new SupportingFile("NotFoundException.mustache",
-                (sourceFolder + '/' + apiPackage).replace(".", "/"), "NotFoundException.java"));
-        supportingFiles.add(new SupportingFile("web.mustache",
-                ("src/main/webapp/WEB-INF"), "web.xml"));
-        supportingFiles.add(new SupportingFile("StringUtil.mustache",
-                (sourceFolder + '/' + apiPackage).replace(".", "/"), "StringUtil.java"));
+	@Override
+	public void processOpts()
+	{
+		super.processOpts();
 
-        if (additionalProperties.containsKey("dateLibrary")) {
-            setDateLibrary(additionalProperties.get("dateLibrary").toString());
-            additionalProperties.put(dateLibrary, "true");
-        }
+		if ( additionalProperties.containsKey(CodegenConstants.IMPL_FOLDER) ) {
+			implFolder = (String) additionalProperties.get(CodegenConstants.IMPL_FOLDER);
+		}
 
-        if("joda".equals(dateLibrary)) {
-            typeMapping.put("date", "LocalDate");
-            typeMapping.put("DateTime", "DateTime");
+		//        if("jersey2".equals(getLibrary())) {
+		//            embeddedTemplateDir = templateDir = "JavaJaxRS" + File.separator + "jersey2";
+		//        }
 
-            importMapping.put("LocalDate", "org.joda.time.LocalDate");
-            importMapping.put("DateTime", "org.joda.time.DateTime");
+		supportingFiles.clear();
+		supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
+		supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
+		supportingFiles.add(new SupportingFile("ApiException.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "ApiException.java"));
+		supportingFiles.add(new SupportingFile("ApiOriginFilter.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "ApiOriginFilter.java"));
+		supportingFiles.add(new SupportingFile("ApiResponseMessage.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "ApiResponseMessage.java"));
+		supportingFiles.add(new SupportingFile("NotFoundException.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "NotFoundException.java"));
+		supportingFiles.add(new SupportingFile("web.mustache", ("src/main/webapp/WEB-INF"), "web.xml"));
+		supportingFiles.add(new SupportingFile("StringUtil.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "StringUtil.java"));
 
-            supportingFiles.add(new SupportingFile("JodaDateTimeProvider.mustache",
-                    (sourceFolder + '/' + apiPackage).replace(".", "/"), "JodaDateTimeProvider.java"));
-            supportingFiles.add(new SupportingFile("JodaLocalDateProvider.mustache",
-                    (sourceFolder + '/' + apiPackage).replace(".", "/"), "JodaLocalDateProvider.java"));
-        }
-        else if ("java8".equals(dateLibrary)) {
-            additionalProperties.put("java8", "true");
-            additionalProperties.put("javaVersion", "1.8");
-            typeMapping.put("date", "LocalDate");
-            typeMapping.put("DateTime", "LocalDateTime");
-            importMapping.put("LocalDate", "java.time.LocalDate");
-            importMapping.put("LocalDateTime", "java.time.LocalDateTime");
+		if ( additionalProperties.containsKey("dateLibrary") ) {
+			setDateLibrary(additionalProperties.get("dateLibrary").toString());
+			additionalProperties.put(dateLibrary, "true");
+		}
 
-            supportingFiles.add(new SupportingFile("LocalDateTimeProvider.mustache",
-                    (sourceFolder + '/' + apiPackage).replace(".", "/"), "LocalDateTimeProvider.java"));
-            supportingFiles.add(new SupportingFile("LocalDateProvider.mustache",
-                    (sourceFolder + '/' + apiPackage).replace(".", "/"), "LocalDateProvider.java"));
-        }
-    }
+		if ( "joda".equals(dateLibrary) ) {
+			typeMapping.put("date", "LocalDate");
+			typeMapping.put("DateTime", "DateTime");
 
-    @Override
-    public void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co, Map<String, List<CodegenOperation>> operations) {
-        String basePath = resourcePath;
-        if (basePath.startsWith("/")) {
-            basePath = basePath.substring(1);
-        }
-        int pos = basePath.indexOf("/");
-        if (pos > 0) {
-            basePath = basePath.substring(0, pos);
-        }
+			importMapping.put("LocalDate", "org.joda.time.LocalDate");
+			importMapping.put("DateTime", "org.joda.time.DateTime");
 
-        if (basePath == "") {
-            basePath = "default";
-        } else {
-            if (co.path.startsWith("/" + basePath)) {
-                co.path = co.path.substring(("/" + basePath).length());
-            }
-            co.subresourceOperation = !co.path.isEmpty();
-        }
-        List<CodegenOperation> opList = operations.get(basePath);
-        if (opList == null) {
-            opList = new ArrayList<CodegenOperation>();
-            operations.put(basePath, opList);
-        }
-        opList.add(co);
-        co.baseName = basePath;
-    }
+			supportingFiles.add(new SupportingFile("JodaDateTimeProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "JodaDateTimeProvider.java"));
+			supportingFiles.add(new SupportingFile("JodaLocalDateProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "JodaLocalDateProvider.java"));
+		} else if ( "java8".equals(dateLibrary) ) {
+			additionalProperties.put("java8", "true");
+			additionalProperties.put("javaVersion", "1.8");
+			typeMapping.put("date", "LocalDate");
+			typeMapping.put("DateTime", "LocalDateTime");
+			importMapping.put("LocalDate", "java.time.LocalDate");
+			importMapping.put("LocalDateTime", "java.time.LocalDateTime");
 
-    @Override
-    public void preprocessSwagger(Swagger swagger) {
-        if("/".equals(swagger.getBasePath())) {
-            swagger.setBasePath("");
-        }
+			supportingFiles.add(new SupportingFile("LocalDateTimeProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "LocalDateTimeProvider.java"));
+			supportingFiles.add(new SupportingFile("LocalDateProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "LocalDateProvider.java"));
+		}
+	}
 
-        String host = swagger.getHost();
-        String port = "8080";
-        if(host != null) {
-            String[] parts = host.split(":");
-            if(parts.length > 1) {
-                port = parts[1];
-            }
-        }
-        this.additionalProperties.put("serverPort", port);
-        if(swagger.getPaths() != null) {
-            for(String pathname : swagger.getPaths().keySet()) {
-                Path path = swagger.getPath(pathname);
-                if(path.getOperations() != null) {
-                    for(Operation operation : path.getOperations()) {
-                        if(operation.getTags() != null) {
-                            List<Map<String, String>> tags = new ArrayList<Map<String, String>>();
-                            for(String tag : operation.getTags()) {
-                                Map<String, String> value = new HashMap<String, String>();
-                                value.put("tag", tag);
-                                value.put("hasMore", "true");
-                                tags.add(value);
-                            }
-                            if(tags.size() > 0) {
-                                tags.get(tags.size() - 1).remove("hasMore");
-                            }
-                            if(operation.getTags().size() > 0) {
-                                String tag = operation.getTags().get(0);
-                                operation.setTags(Arrays.asList(tag));
-                            }
-                            operation.setVendorExtension("x-tags", tags);
-                        }
-                    }
-                }
-            }
-        }
-    }
+	@Override
+	public void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co, Map<String, List<CodegenOperation>> operations)
+	{
+		String basePath = resourcePath;
+		if ( basePath.startsWith("/") ) {
+			basePath = basePath.substring(1);
+		}
+		int pos = basePath.indexOf("/");
+		if ( pos > 0 ) {
+			basePath = basePath.substring(0, pos);
+		}
 
-    @Override
-    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
-        Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
-        if (operations != null) {
-            List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
-            for (CodegenOperation operation : ops) {
-                List<CodegenResponse> responses = operation.responses;
-                if (responses != null) {
-                    for (CodegenResponse resp : responses) {
-                        if ("0".equals(resp.code)) {
-                            resp.code = "200";
-                        }
-                    }
-                }
-                if (operation.returnType == null) {
-                    operation.returnType = "Void";
-                } else if (operation.returnType.startsWith("List")) {
-                    String rt = operation.returnType;
-                    int end = rt.lastIndexOf(">");
-                    if (end > 0) {
-                        operation.returnType = rt.substring("List<".length(), end).trim();
-                        operation.returnContainer = "List";
-                    }
-                } else if (operation.returnType.startsWith("Map")) {
-                    String rt = operation.returnType;
-                    int end = rt.lastIndexOf(">");
-                    if (end > 0) {
-                        operation.returnType = rt.substring("Map<".length(), end).split(",")[1].trim();
-                        operation.returnContainer = "Map";
-                    }
-                } else if (operation.returnType.startsWith("Set")) {
-                    String rt = operation.returnType;
-                    int end = rt.lastIndexOf(">");
-                    if (end > 0) {
-                        operation.returnType = rt.substring("Set<".length(), end).trim();
-                        operation.returnContainer = "Set";
-                    }
-                }
-            }
-        }
-        return objs;
-    }
+		if ( basePath == "" ) {
+			basePath = "default";
+		} else {
+			if ( co.path.startsWith("/" + basePath) ) {
+				co.path = co.path.substring(("/" + basePath).length());
+			}
+			co.subresourceOperation = !co.path.isEmpty();
+		}
+		List<CodegenOperation> opList = operations.get(basePath);
+		if ( opList == null ) {
+			opList = new ArrayList<CodegenOperation>();
+			operations.put(basePath, opList);
+		}
+		opList.add(co);
+		co.baseName = basePath;
+	}
 
-    @Override
-    public String toApiName(String name) {
-        if (name.length() == 0) {
-            return "DefaultApi";
-        }
-        name = sanitizeName(name);
-        return camelize(name) + "Api";
-    }
+	@Override
+	public void preprocessSwagger(Swagger swagger)
+	{
+		if ( "/".equals(swagger.getBasePath()) ) {
+			swagger.setBasePath("");
+		}
 
-    @Override
-    public String apiFilename(String templateName, String tag) {
+		String host = swagger.getHost();
+		String port = "8080";
+		if ( host != null ) {
+			String[] parts = host.split(":");
+			if ( parts.length > 1 ) {
+				port = parts[1];
+			}
+		}
+		this.additionalProperties.put("serverPort", port);
+		if ( swagger.getPaths() != null ) {
+			for ( String pathname : swagger.getPaths().keySet() ) {
+				Path path = swagger.getPath(pathname);
+				if ( path.getOperations() != null ) {
+					for ( Operation operation : path.getOperations() ) {
+						if ( operation.getTags() != null ) {
+							List<Map<String, String>> tags = new ArrayList<Map<String, String>>();
+							for ( String tag : operation.getTags() ) {
+								Map<String, String> value = new HashMap<String, String>();
+								value.put("tag", tag);
+								value.put("hasMore", "true");
+								tags.add(value);
+							}
+							if ( tags.size() > 0 ) {
+								tags.get(tags.size() - 1).remove("hasMore");
+							}
+							if ( operation.getTags().size() > 0 ) {
+								String tag = operation.getTags().get(0);
+								operation.setTags(Arrays.asList(tag));
+							}
+							operation.setVendorExtension("x-tags", tags);
+						}
+					}
+				}
+			}
+		}
+	}
 
-        String result = super.apiFilename(templateName, tag);
+	@Override
+	public Map<String, Object> postProcessOperations(Map<String, Object> objs)
+	{
+		Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
+		if ( operations != null ) {
+			List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
+			for ( CodegenOperation operation : ops ) {
+				List<CodegenResponse> responses = operation.responses;
+				if ( responses != null ) {
+					for ( CodegenResponse resp : responses ) {
+						if ( "0".equals(resp.code) ) {
+							resp.code = "200";
+						}
+					}
+				}
+				if ( operation.returnType == null ) {
+					operation.returnType = "Void";
+				} else if ( operation.returnType.startsWith("List") ) {
+					String rt = operation.returnType;
+					int end = rt.lastIndexOf(">");
+					if ( end > 0 ) {
+						operation.returnType = rt.substring("List<".length(), end).trim();
+						operation.returnContainer = "List";
+					}
+				} else if ( operation.returnType.startsWith("Map") ) {
+					String rt = operation.returnType;
+					int end = rt.lastIndexOf(">");
+					if ( end > 0 ) {
+						operation.returnType = rt.substring("Map<".length(), end).split(",")[1].trim();
+						operation.returnContainer = "Map";
+					}
+				} else if ( operation.returnType.startsWith("Set") ) {
+					String rt = operation.returnType;
+					int end = rt.lastIndexOf(">");
+					if ( end > 0 ) {
+						operation.returnType = rt.substring("Set<".length(), end).trim();
+						operation.returnContainer = "Set";
+					}
+				}
+			}
+		}
+		return objs;
+	}
 
-        if (templateName.endsWith("Impl.mustache")) {
-            int ix = result.lastIndexOf('/');
-            result = result.substring(0, ix) + "/impl" + result.substring(ix, result.length() - 5) + "ServiceImpl.java";
+	@Override
+	public String toApiName(String name)
+	{
+		if ( name.length() == 0 ) {
+			return "DefaultApi";
+		}
+		name = sanitizeName(name);
+		return camelize(name) + "Api";
+	}
 
-            result = result.replace(apiFileFolder(), implFileFolder(implFolder));
-        } else if (templateName.endsWith("Factory.mustache")) {
-            int ix = result.lastIndexOf('/');
-            result = result.substring(0, ix) + "/factories" + result.substring(ix, result.length() - 5) + "ServiceFactory.java";
+	@Override
+	public String apiFilename(String templateName, String tag)
+	{
 
-            result = result.replace(apiFileFolder(), implFileFolder(implFolder));
-        } else if (templateName.endsWith("Service.mustache")) {
-            int ix = result.lastIndexOf('.');
-            result = result.substring(0, ix) + "Service.java";
-        }
+		String result = super.apiFilename(templateName, tag);
 
-        return result;
-    }
+		if ( templateName.endsWith("Impl.mustache") ) {
+			int ix = result.lastIndexOf('/');
+			result = result.substring(0, ix) + "/impl" + result.substring(ix, result.length() - 5) + "ServiceImpl.java";
 
-    private String implFileFolder(String output) {
-        return outputFolder + "/" + output + "/" + apiPackage().replace('.', '/');
-    }
+			result = result.replace(apiFileFolder(), implFileFolder(implFolder));
+		} else if ( templateName.endsWith("Factory.mustache") ) {
+			int ix = result.lastIndexOf('/');
+			result = result.substring(0, ix) + "/factories" + result.substring(ix, result.length() - 5) + "ServiceFactory.java";
 
-    @Override
-    public boolean shouldOverwrite(String filename) {
-        return super.shouldOverwrite(filename) && !filename.endsWith("ServiceImpl.java") && !filename.endsWith("ServiceFactory.java");
-    }
+			result = result.replace(apiFileFolder(), implFileFolder(implFolder));
+		} else if ( templateName.endsWith("Service.mustache") ) {
+			int ix = result.lastIndexOf('.');
+			result = result.substring(0, ix) + "Service.java";
+		}
 
-    public void setDateLibrary(String library) {
-        this.dateLibrary = library;
-    }
+		return result;
+	}
+
+	private String implFileFolder(String output)
+	{
+		return outputFolder + "/" + output + "/" + apiPackage().replace('.', '/');
+	}
+
+	@Override
+	public boolean shouldOverwrite(String filename)
+	{
+		return super.shouldOverwrite(filename) && !filename.endsWith("ServiceImpl.java") && !filename.endsWith("ServiceFactory.java");
+	}
+
+	public void setDateLibrary(String library)
+	{
+		this.dateLibrary = library;
+	}
 }

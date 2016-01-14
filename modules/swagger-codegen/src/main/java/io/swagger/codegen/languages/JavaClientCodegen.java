@@ -201,8 +201,6 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
             javaUtilPrefix = "java.util.";
         }
         additionalProperties.put(FULL_JAVA_UTIL, fullJavaUtil);
-        additionalProperties.put("javaUtilPrefix", javaUtilPrefix);
-
         if (fullJavaUtil) {
             typeMapping.put("array", "java.util.List");
             typeMapping.put("map", "java.util.Map");
@@ -219,9 +217,8 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
             instantiationTypes.put("array", "java.util.ArrayList");
             instantiationTypes.put("map", "java.util.HashMap");
         }
-
+        
         this.sanitizeConfig();
-
 
         // optional jackson mappings for BigDecimal support
         importMapping.put("ToStringSerializer", "com.fasterxml.jackson.databind.ser.std.ToStringSerializer");
@@ -431,22 +428,22 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
             if (bp.getDefault() != null) {
                 return bp.getDefault().toString();
             }
-            return "null";
-        } else if (p instanceof StringProperty) {
-            StringProperty sp = (StringProperty) p;
-            if (sp.getDefault() != null) {
-                String _default = sp.getDefault();
-                if (sp.getEnum() == null) {
-                    return "\"" + escapeText(_default) + "\"";
-                } else {
-                    // convert to enum var name later in postProcessModels
-                    return _default;
-                }
-            }
-            return "null";
-        }
-        return super.toDefaultValue(p);
-    }
+			return "null";
+		}  else if ( p instanceof StringProperty ) {
+			StringProperty sp = (StringProperty) p;
+				if ( sp.getDefault() != null ) {
+					String _default = sp.getDefault();
+					if ( sp.getEnum() == null ) {
+						return "\"" + escapeText(_default) + "\"";
+					} else {
+						// convert to enum var name later in postProcessModels
+						return _default;
+					}
+				}
+				return "null";
+		}
+		return super.toDefaultValue(p);
+	}
 
     @Override
     public String getSwaggerType(Property p) {

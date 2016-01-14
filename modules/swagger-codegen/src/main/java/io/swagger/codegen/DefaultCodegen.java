@@ -65,8 +65,8 @@ import io.swagger.models.properties.PropertyBuilder;
 import io.swagger.models.properties.PropertyBuilder.PropertyId;
 import io.swagger.models.properties.RefProperty;
 import io.swagger.models.properties.StringProperty;
+import io.swagger.models.properties.UUIDProperty;
 import io.swagger.util.Json;
-
 
 public class DefaultCodegen {
     protected static final Logger LOGGER = LoggerFactory.getLogger(DefaultCodegen.class);
@@ -693,6 +693,8 @@ public class DefaultCodegen {
                 datatype = "Object";
                 e.printStackTrace();
             }
+        } else if (p instanceof UUIDProperty) {
+        	datatype = "UUID";
         } else {
             if (p != null) {
                 datatype = p.getType();
