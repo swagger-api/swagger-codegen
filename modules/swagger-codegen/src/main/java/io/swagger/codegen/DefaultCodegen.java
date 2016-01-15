@@ -790,17 +790,23 @@ public class DefaultCodegen {
             if (parent != null) {
                 final String parentRef = parent.getSimpleRef();
                 m.parentSchema = parentRef;
-                m.parent = toModelName(parent.getSimpleRef());
+                m.parent = toModelName(parentRef);
+                
                 addImport(m, m.parent);
-                if (!supportsInheritance && allDefinitions != null) {
+                if (allDefinitions != null) {
                     final Model parentModel = allDefinitions.get(m.parentSchema);
                     if (parentModel instanceof ModelImpl) {
                         final ModelImpl _parent = (ModelImpl) parentModel;
-                        if (_parent.getProperties() != null) {
-                            properties.putAll(_parent.getProperties());
+                        if (supportsInheritance) {
+                            m.parentModel = fromModel(parentRef, parentModel, allDefinitions);
                         }
-                        if (_parent.getRequired() != null) {
-                            required.addAll(_parent.getRequired());
+                        else {
+                            if (_parent.getProperties() != null) {
+                                properties.putAll(_parent.getProperties());
+                            }
+                            if (_parent.getRequired() != null) {
+                                required.addAll(_parent.getRequired());
+                            }
                         }
                     }
                 }
