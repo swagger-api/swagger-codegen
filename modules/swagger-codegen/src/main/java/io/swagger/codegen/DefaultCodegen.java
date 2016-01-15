@@ -65,15 +65,9 @@ import io.swagger.models.properties.PropertyBuilder;
 import io.swagger.models.properties.PropertyBuilder.PropertyId;
 import io.swagger.models.properties.RefProperty;
 import io.swagger.models.properties.StringProperty;
-<<<<<<< HEAD
 import io.swagger.models.properties.UUIDProperty;
 import io.swagger.util.Json;
 
-=======
-import io.swagger.util.Json;
-
-
->>>>>>> refs/heads/fix_java_warnings
 public class DefaultCodegen {
     protected static final Logger LOGGER = LoggerFactory.getLogger(DefaultCodegen.class);
 
