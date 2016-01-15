@@ -1,28 +1,26 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.DefaultCodegen;
-import io.swagger.codegen.SupportingFile;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CliOption;
-import io.swagger.models.properties.ArrayProperty;
-import io.swagger.models.properties.BooleanProperty;
-import io.swagger.models.properties.MapProperty;
-import io.swagger.models.properties.Property;
-
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.regex.Matcher;
 
 import org.apache.commons.lang.StringUtils;
+
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.SupportingFile;
+import io.swagger.models.properties.ArrayProperty;
+import io.swagger.models.properties.MapProperty;
+import io.swagger.models.properties.Property;
 
 public class PerlClientCodegen extends DefaultCodegen implements CodegenConfig {
     public static final String MODULE_NAME = "moduleName";
     public static final String MODULE_VERSION = "moduleVersion";
     protected String moduleName = "WWW::SwaggerClient";
-    protected String modulePathPart = moduleName.replaceAll("::", Matcher.quoteReplacement(File.separator));
+    protected String modulePathPart = moduleName.replaceAll("::",String.valueOf(File.separatorChar));
     protected String moduleVersion = "1.0.0";
 
     public PerlClientCodegen() {
@@ -96,7 +94,7 @@ public class PerlClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         if (additionalProperties.containsKey(MODULE_NAME)) {
             setModuleName((String) additionalProperties.get(MODULE_NAME));
-            setModulePathPart(moduleName.replaceAll("::", Matcher.quoteReplacement(File.separator)));
+            setModulePathPart(moduleName.replaceAll("::",String.valueOf(File.separatorChar)));
         } else {
             additionalProperties.put(MODULE_NAME, moduleName);
         }

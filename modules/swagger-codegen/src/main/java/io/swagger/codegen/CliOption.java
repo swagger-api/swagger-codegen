@@ -1,13 +1,13 @@
 package io.swagger.codegen;
 
-import io.swagger.annotations.ApiModelProperty;
-import io.swagger.models.properties.BooleanProperty;
-import io.swagger.models.properties.StringProperty;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.models.properties.BooleanProperty;
+import io.swagger.models.properties.StringProperty;
 
 public class CliOption {
     private final String opt;

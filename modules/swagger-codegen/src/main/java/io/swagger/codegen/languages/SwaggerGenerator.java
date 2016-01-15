@@ -1,14 +1,15 @@
 package io.swagger.codegen.languages;
 
+import java.io.File;
+
+import org.apache.commons.io.FileUtils;
+
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
 import io.swagger.codegen.SupportingFile;
 import io.swagger.models.Swagger;
 import io.swagger.util.Json;
-import org.apache.commons.io.FileUtils;
-
-import java.io.File;
 
 public class SwaggerGenerator extends DefaultCodegen implements CodegenConfig {
     public SwaggerGenerator() {

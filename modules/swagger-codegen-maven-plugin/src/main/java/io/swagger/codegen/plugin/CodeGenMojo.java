@@ -1,5 +1,21 @@
 package io.swagger.codegen.plugin;
 
+import static io.swagger.codegen.plugin.AdditionalParams.API_PACKAGE_PARAM;
+import static io.swagger.codegen.plugin.AdditionalParams.INVOKER_PACKAGE_PARAM;
+import static io.swagger.codegen.plugin.AdditionalParams.MODEL_PACKAGE_PARAM;
+import static io.swagger.codegen.plugin.AdditionalParams.TEMPLATE_DIR_PARAM;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.project.MavenProject;
+
 /*
  * Copyright 2001-2005 The Apache Software Foundation.
  *
@@ -18,186 +34,179 @@ package io.swagger.codegen.plugin;
 
 import config.Config;
 import config.ConfigParser;
-import io.swagger.codegen.*;
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.ClientOptInput;
+import io.swagger.codegen.ClientOpts;
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenConfigLoader;
+import io.swagger.codegen.DefaultGenerator;
 import io.swagger.models.Swagger;
 import io.swagger.parser.SwaggerParser;
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.project.MavenProject;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
-import static io.swagger.codegen.plugin.AdditionalParams.*;
 
 /**
  * Goal which generates client/server code from a swagger json/yaml definition.
  */
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
 public class CodeGenMojo extends AbstractMojo {
-    /**
-     * Location of the output directory.
-     */
-    @Parameter(name = "output",
-            property = "swagger.codegen.maven.plugin.output",
-            defaultValue = "${project.build.directory}/generated-sources/swagger")
-    private File output;
+	/**
+	 * Location of the output directory.
+	 */
+	@Parameter(name = "output",
+			property = "swagger.codegen.maven.plugin.output",
+			defaultValue = "${project.build.directory}/generated-sources/swagger")
+	private File output;
 
-    /**
-     * Location of the swagger spec, as URL or file.
-     */
-    @Parameter(name = "inputSpec", required = true)
-    private String inputSpec;
+	/**
+	 * Location of the swagger spec, as URL or file.
+	 */
+	@Parameter(name = "inputSpec", required = true)
+	private String inputSpec;
 
-    /**
-     * Folder containing the template files.
-     */
-    @Parameter(name = "templateDirectory")
-    private File templateDirectory;
+	/**
+	 * Folder containing the template files.
+	 */
+	@Parameter(name = "templateDirectory")
+	private File templateDirectory;
 
-    /**
-     * The package to use for generated model objects/classes
-     */
-    @Parameter(name = "modelPackage")
-    private String modelPackage;
+	/**
+	 * The package to use for generated model objects/classes
+	 */
+	@Parameter(name = "modelPackage")
+	private String modelPackage;
 
-    /**
-     * The package to use for generated api objects/classes
-     */
-    @Parameter(name = "apiPackage")
-    private String apiPackage;
+	/**
+	 * The package to use for generated api objects/classes
+	 */
+	@Parameter(name = "apiPackage")
+	private String apiPackage;
 
-    /**
-     * The package to use for the generated invoker objects
-     */
-    @Parameter(name = "invokerPackage")
-    private String invokerPackage;
+	/**
+	 * The package to use for the generated invoker objects
+	 */
+	@Parameter(name = "invokerPackage")
+	private String invokerPackage;
 
-    /**
-     * Client language to generate.
-     */
-    @Parameter(name = "language", required = true)
-    private String language;
+	/**
+	 * Client language to generate.
+	 */
+	@Parameter(name = "language", required = true)
+	private String language;
 
-    /**
-     * Path to separate json configuration file.
-     */
-    @Parameter(name = "configurationFile", required = false)
-    private String configurationFile;
+	/**
+	 * Path to separate json configuration file.
+	 */
+	@Parameter(name = "configurationFile", required = false)
+	private String configurationFile;
 
-    /**
-     * Sets the library
-     */
-    @Parameter(name = "library", required = false)
-    private String library;
+	/**
+	 * Sets the library
+	 */
+	@Parameter(name = "library", required = false)
+	private String library;
 
-    /**
-     * A map of language-specific parameters as passed with the -c option to the command line
-     */
-    @Parameter(name = "configOptions")
-    private Map configOptions;
+	/**
+	 * A map of language-specific parameters as passed with the -c option to the command line
+	 */
+	@Parameter(name = "configOptions")
+	private Map<?, ?> configOptions;
 
-    /**
-     * Add the output directory to the project as a source root, so that the
-     * generated java types are compiled and included in the project artifact.
-     */
-    @Parameter(defaultValue = "true")
-    private boolean addCompileSourceRoot = true;
+	/**
+	 * Add the output directory to the project as a source root, so that the
+	 * generated java types are compiled and included in the project artifact.
+	 */
+	@Parameter(defaultValue = "true")
+	private boolean addCompileSourceRoot = true;
 
-    @Parameter
-    protected Map<String, String> environmentVariables = new HashMap<String, String>();
+	@Parameter
+	protected Map<String, String> environmentVariables = new HashMap<String, String>();
 
-    @Parameter
-    private boolean configHelp = false;
+	@Parameter
+	private boolean configHelp = false;
 
-    /**
-     * The project being built.
-     */
-    @Parameter(readonly = true, required = true, defaultValue = "${project}")
-    private MavenProject project;
+	/**
+	 * The project being built.
+	 */
+	@Parameter(readonly = true, required = true, defaultValue = "${project}")
+	private MavenProject project;
 
-    @Override
-    public void execute() throws MojoExecutionException {
-        Swagger swagger = new SwaggerParser().read(inputSpec);
+	@Override
+	public void execute() throws MojoExecutionException {
+		Swagger swagger = new SwaggerParser().read(inputSpec);
 
-        CodegenConfig config = CodegenConfigLoader.forName(language);
-        config.setOutputDir(output.getAbsolutePath());
+		CodegenConfig config = CodegenConfigLoader.forName(language);
+		config.setOutputDir(output.getAbsolutePath());
 
-        if (environmentVariables != null) {
-            for(String key : environmentVariables.keySet()) {
-                String value = environmentVariables.get(key);
-                if(value == null) {
-                    // don't put null values
-                    value = "";
-                }
-                System.setProperty(key, value);
-            }
-        }
-        if (null != library) {
-            config.setLibrary(library);
-        }
-        if (null != templateDirectory) {
-            config.additionalProperties().put(TEMPLATE_DIR_PARAM, templateDirectory.getAbsolutePath());
-        }
-        if (null != modelPackage) {
-            config.additionalProperties().put(MODEL_PACKAGE_PARAM, modelPackage);
-        }
-        if (null != apiPackage) {
-            config.additionalProperties().put(API_PACKAGE_PARAM, apiPackage);
-        }
-        if (null != invokerPackage) {
-            config.additionalProperties().put(INVOKER_PACKAGE_PARAM, invokerPackage);
-        }
+		if (environmentVariables != null) {
+			for(String key : environmentVariables.keySet()) {
+				String value = environmentVariables.get(key);
+				if(value == null) {
+					// don't put null values
+					value = "";
+				}
+				System.setProperty(key, value);
+			}
+		}
+		if (null != library) {
+			config.setLibrary(library);
+		}
+		if (null != templateDirectory) {
+			config.additionalProperties().put(TEMPLATE_DIR_PARAM, templateDirectory.getAbsolutePath());
+		}
+		if (null != modelPackage) {
+			config.additionalProperties().put(MODEL_PACKAGE_PARAM, modelPackage);
+		}
+		if (null != apiPackage) {
+			config.additionalProperties().put(API_PACKAGE_PARAM, apiPackage);
+		}
+		if (null != invokerPackage) {
+			config.additionalProperties().put(INVOKER_PACKAGE_PARAM, invokerPackage);
+		}
 
-        if (configOptions != null) {
-            for (CliOption langCliOption : config.cliOptions()) {
-                if (configOptions.containsKey(langCliOption.getOpt())) {
-                    config.additionalProperties().put(langCliOption.getOpt(),
-                            configOptions.get(langCliOption.getOpt()));
-                }
-            }
-        }
+		if (configOptions != null) {
+			for (CliOption langCliOption : config.cliOptions()) {
+				if (configOptions.containsKey(langCliOption.getOpt())) {
+					config.additionalProperties().put(langCliOption.getOpt(),
+							configOptions.get(langCliOption.getOpt()));
+				}
+			}
+		}
 
-        if (null != configurationFile) {
-            Config genConfig = ConfigParser.read(configurationFile);
-            if (null != genConfig) {
-                for (CliOption langCliOption : config.cliOptions()) {
-                    if (genConfig.hasOption(langCliOption.getOpt())) {
-                        config.additionalProperties().put(langCliOption.getOpt(), genConfig.getOption(langCliOption.getOpt()));
-                    }
-                }
-            } else {
-            	throw new RuntimeException("Unable to read configuration file");
-            }
-        }
-        
-        ClientOptInput input = new ClientOptInput().opts(new ClientOpts()).swagger(swagger);
-        input.setConfig(config);
+		if (null != configurationFile) {
+			Config genConfig = ConfigParser.read(configurationFile);
+			if (null != genConfig) {
+				for (CliOption langCliOption : config.cliOptions()) {
+					if (genConfig.hasOption(langCliOption.getOpt())) {
+						config.additionalProperties().put(langCliOption.getOpt(), genConfig.getOption(langCliOption.getOpt()));
+					}
+				}
+			} else {
+				throw new RuntimeException("Unable to read configuration file");
+			}
+		}
 
-        if(configHelp) {
-            for (CliOption langCliOption : config.cliOptions()) {
-                System.out.println("\t" + langCliOption.getOpt());
-                System.out.println("\t    " + langCliOption.getOptionHelp().replaceAll("\n", "\n\t    "));
-                System.out.println();
-            }
-            return;
-        }
-        try {
-            new DefaultGenerator().opts(input).generate();
-        } catch (Exception e) {
-            // Maven logs exceptions thrown by plugins only if invoked with -e
-        	// I find it annoying to jump through hoops to get basic diagnostic information,
-        	// so let's log it in any case:
-            getLog().error(e); 
-            throw new MojoExecutionException("Code generation failed. See above for the full exception.");
-        }
+		ClientOptInput input = new ClientOptInput().opts(new ClientOpts()).swagger(swagger);
+		input.setConfig(config);
 
-        if (addCompileSourceRoot) {
-            project.addCompileSourceRoot(output.toString());
-        }
-    }
+		if(configHelp) {
+			for (CliOption langCliOption : config.cliOptions()) {
+				System.out.println("\t" + langCliOption.getOpt());
+				System.out.println("\t    " + langCliOption.getOptionHelp().replaceAll("\n", "\n\t    "));
+				System.out.println();
+			}
+			return;
+		}
+		try {
+			new DefaultGenerator().opts(input).generate();
+		} catch (Exception e) {
+			// Maven logs exceptions thrown by plugins only if invoked with -e
+			// I find it annoying to jump through hoops to get basic diagnostic information,
+			// so let's log it in any case:
+			getLog().error(e);
+			throw new MojoExecutionException("Code generation failed. See above for the full exception.");
+		}
+
+		if (addCompileSourceRoot) {
+			project.addCompileSourceRoot(output.toString());
+		}
+	}
 }

@@ -1,5 +1,12 @@
 package io.swagger.codegen.languages;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+
+import org.apache.commons.lang.StringUtils;
+
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
@@ -17,12 +24,6 @@ import io.swagger.models.properties.LongProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.StringProperty;
-import org.apache.commons.lang.StringUtils;
-
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 
 public class FlashClientCodegen extends DefaultCodegen implements CodegenConfig {
     protected String packageName = "io.swagger";
@@ -191,13 +192,8 @@ public class FlashClientCodegen extends DefaultCodegen implements CodegenConfig 
     @Override
     public String getTypeDeclaration(Property p) {
         if (p instanceof ArrayProperty) {
-            ArrayProperty ap = (ArrayProperty) p;
-            Property inner = ap.getItems();
             return getSwaggerType(p);
         } else if (p instanceof MapProperty) {
-            MapProperty mp = (MapProperty) p;
-            Property inner = mp.getAdditionalProperties();
-
             return getSwaggerType(p);
         }
         return super.getTypeDeclaration(p);
@@ -253,12 +249,8 @@ public class FlashClientCodegen extends DefaultCodegen implements CodegenConfig 
             }
             return "0";
         } else if (p instanceof MapProperty) {
-            MapProperty ap = (MapProperty) p;
-            String inner = getSwaggerType(ap.getAdditionalProperties());
             return "new Dictionary()";
         } else if (p instanceof ArrayProperty) {
-            ArrayProperty ap = (ArrayProperty) p;
-            String inner = getSwaggerType(ap.getItems());
             return "new Array()";
         } else {
             return "null";

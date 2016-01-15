@@ -1,23 +1,5 @@
 package io.swagger.codegen.languages;
 
-import com.google.common.base.Strings;
-
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenProperty;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.DefaultCodegen;
-import io.swagger.codegen.SupportingFile;
-import io.swagger.models.*;
-import io.swagger.models.properties.ArrayProperty;
-import io.swagger.models.properties.LongProperty;
-import io.swagger.models.properties.MapProperty;
-import io.swagger.models.properties.Property;
-import io.swagger.models.properties.RefProperty;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,6 +12,27 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Strings;
+
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.SupportingFile;
+import io.swagger.models.Info;
+import io.swagger.models.License;
+import io.swagger.models.Model;
+import io.swagger.models.Swagger;
+import io.swagger.models.properties.ArrayProperty;
+import io.swagger.models.properties.LongProperty;
+import io.swagger.models.properties.MapProperty;
+import io.swagger.models.properties.Property;
+import io.swagger.models.properties.RefProperty;
 
 public class JavascriptClientCodegen extends DefaultCodegen implements CodegenConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(JavascriptClientCodegen.class);
@@ -287,8 +290,8 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     @Override
     public String getTypeDeclaration(Property p) {
         if (p instanceof ArrayProperty) {
-            ArrayProperty ap = (ArrayProperty) p;
-            Property inner = ap.getItems();
+         //   ArrayProperty ap = (ArrayProperty) p;
+        //    Property inner = ap.getItems();
             return getSwaggerType(p); // TODO: + "/* <" + getTypeDeclaration(inner) + "> */";
         } else if (p instanceof MapProperty) {
             MapProperty mp = (MapProperty) p;
@@ -329,12 +332,9 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         } else if (p instanceof MapProperty) {
             return " = {}";
         } else if (p instanceof LongProperty) {
-            LongProperty dp = (LongProperty) p;
             return " = data." + name + ";";
-
            // added for Javascript
         } else if (p instanceof RefProperty) {
-            RefProperty rp = (RefProperty)p;
             return ".constructFromObject(data." + name + ");";
         }
 
@@ -465,14 +465,14 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
             && !languageSpecificPrimitives.contains(type);
     }
 
-    private String findCommonPrefixOfVars(List<String> vars) {
+    private static String findCommonPrefixOfVars(List<String> vars) {
         String prefix = StringUtils.getCommonPrefix(vars.toArray(new String[vars.size()]));
         // exclude trailing characters that should be part of a valid variable
         // e.g. ["status-on", "status-off"] => "status-" (not "status-o")
         return prefix.replaceAll("[a-zA-Z0-9]+\\z", "");
     }
 
-    private String toEnumVarName(String value) {
+    private static String toEnumVarName(String value) {
         String var = value.replaceAll("\\W+", "_").toUpperCase();
         if (var.matches("\\d.*")) {
             return "_" + var;
@@ -481,7 +481,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         }
     }
 
-    private CodegenModel reconcileInlineEnums(CodegenModel codegenModel, CodegenModel parentCodegenModel) {
+    private static CodegenModel reconcileInlineEnums(CodegenModel codegenModel, CodegenModel parentCodegenModel) {
         // This generator uses inline classes to define enums, which breaks when
         // dealing with models that have subTypes. To clean this up, we will analyze
         // the parent and child models, look for enums that match, and remove

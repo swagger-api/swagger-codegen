@@ -144,4 +144,10 @@ public class CodegenProperty {
         }
         return true;
     }
+
+	@Override
+	public int hashCode()
+	{
+		return super.hashCode();
+	}
 }

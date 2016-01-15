@@ -1,5 +1,27 @@
 package io.swagger.codegen;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
@@ -25,32 +47,26 @@ import io.swagger.models.parameters.Parameter;
 import io.swagger.models.parameters.PathParameter;
 import io.swagger.models.parameters.QueryParameter;
 import io.swagger.models.parameters.SerializableParameter;
-import io.swagger.models.properties.*;
+import io.swagger.models.properties.AbstractNumericProperty;
+import io.swagger.models.properties.ArrayProperty;
+import io.swagger.models.properties.BinaryProperty;
+import io.swagger.models.properties.BooleanProperty;
+import io.swagger.models.properties.ByteArrayProperty;
+import io.swagger.models.properties.DateProperty;
+import io.swagger.models.properties.DateTimeProperty;
+import io.swagger.models.properties.DecimalProperty;
+import io.swagger.models.properties.DoubleProperty;
+import io.swagger.models.properties.FloatProperty;
+import io.swagger.models.properties.IntegerProperty;
+import io.swagger.models.properties.LongProperty;
+import io.swagger.models.properties.MapProperty;
+import io.swagger.models.properties.Property;
+import io.swagger.models.properties.PropertyBuilder;
 import io.swagger.models.properties.PropertyBuilder.PropertyId;
+import io.swagger.models.properties.RefProperty;
+import io.swagger.models.properties.StringProperty;
+import io.swagger.models.properties.UUIDProperty;
 import io.swagger.util.Json;
-
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nullable;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 
 public class DefaultCodegen {
     protected static final Logger LOGGER = LoggerFactory.getLogger(DefaultCodegen.class);
@@ -106,36 +122,44 @@ public class DefaultCodegen {
     }
 
     // override with any special post-processing
-    public Map<String, Object> postProcessModels(Map<String, Object> objs) {
+	@SuppressWarnings("static-method")
+	public  Map<String, Object> postProcessModels(Map<String, Object> objs) {
         return objs;
     }
 
     // override with any special post-processing
-    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
+    @SuppressWarnings("static-method")
+	public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
         return objs;
     }
 
     // override with any special post-processing
-    public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
+    @SuppressWarnings("static-method")
+	public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
         return objs;
     }
 
     // override to post-process any model properties
-    public void postProcessModelProperty(CodegenModel model, CodegenProperty property){}
+    @SuppressWarnings("unused")
+	public void postProcessModelProperty(CodegenModel model, CodegenProperty property){}
 
     // override to post-process any parameters
-    public void postProcessParameter(CodegenParameter parameter){}
+    @SuppressWarnings("unused")
+	public void postProcessParameter(CodegenParameter parameter){}
 
     //override with any special handling of the entire swagger spec
-    public void preprocessSwagger(Swagger swagger) {
+    @SuppressWarnings("unused")
+	public void preprocessSwagger(Swagger swagger) {
     }
 
     // override with any special handling of the entire swagger spec
-    public void processSwagger(Swagger swagger) {
+    @SuppressWarnings("unused")
+	public void processSwagger(Swagger swagger) {
     }
 
     // override with any special text escaping logic
-    public String escapeText(String input) {
+    @SuppressWarnings("static-method")
+	public  String escapeText(String input) {
         if (input != null) {
             input = input.trim();
             String output = input.replaceAll("\n", "\\\\n");
@@ -286,7 +310,8 @@ public class DefaultCodegen {
      * @param operationId operation ID
      * @return the sanitized method name
      */
-    public String toOperationId(String operationId) {
+    @SuppressWarnings("static-method")
+	public String toOperationId(String operationId) {
         // throw exception if method name is empty
         if (StringUtils.isEmpty(operationId)) {
             throw new RuntimeException("Empty method name (operationId) not allowed");
@@ -331,7 +356,8 @@ public class DefaultCodegen {
      * @param property Codegen property object
      * @return the Enum name
      */
-    public String toEnumName(CodegenProperty property) {
+    @SuppressWarnings("static-method")
+	public String toEnumName(CodegenProperty property) {
         return StringUtils.capitalize(property.name) + "Enum";
     }
     
@@ -343,7 +369,8 @@ public class DefaultCodegen {
      *
      * throws Runtime exception as reserved word is not allowed (default behavior)
      */
-    public String escapeReservedWord(String name) {
+	@SuppressWarnings("static-method")
+	public  String escapeReservedWord(String name) {
         throw new RuntimeException("reserved word " + name + " not allowed");
     }
 
@@ -452,7 +479,8 @@ public class DefaultCodegen {
      * @param operation Swagger operation object
      * @return string presentation of the example path
      */
-    public String generateExamplePath(String path, Operation operation) {
+    @SuppressWarnings("static-method")
+	public String generateExamplePath(String path, Operation operation) {
         StringBuilder sb = new StringBuilder();
         sb.append(path);
 
@@ -534,7 +562,8 @@ public class DefaultCodegen {
      * @param p Swagger property object
      * @return string presentation of the default value of the property
      */
-    public String toDefaultValue(Property p) {
+    @SuppressWarnings("static-method")
+	public String toDefaultValue(Property p) {
         if (p instanceof StringProperty) {
             return "null";
         } else if (p instanceof BooleanProperty) {
@@ -580,7 +609,8 @@ public class DefaultCodegen {
      * @param p Swagger property object
      * @return string presentation of the default value of the property
      */
-    public String toDefaultValueWithParam(String name, Property p) {
+    @SuppressWarnings("static-method")
+	public String toDefaultValueWithParam(String name, Property p) {
         if (p instanceof StringProperty) {
             return " = data." + name + ";";
         } else if (p instanceof BooleanProperty) {
@@ -663,6 +693,8 @@ public class DefaultCodegen {
                 datatype = "Object";
                 e.printStackTrace();
             }
+        } else if (p instanceof UUIDProperty) {
+        	datatype = "UUID";
         } else {
             if (p != null) {
                 datatype = p.getType();
@@ -670,7 +702,7 @@ public class DefaultCodegen {
         }
         return datatype;
     }
-
+    
     /**
      * Return the snake-case of the string
      *

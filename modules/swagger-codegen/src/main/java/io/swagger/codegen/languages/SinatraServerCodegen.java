@@ -1,24 +1,21 @@
 package io.swagger.codegen.languages;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.DefaultCodegen;
-import io.swagger.codegen.SupportingFile;
-import io.swagger.models.properties.ArrayProperty;
-import io.swagger.models.properties.MapProperty;
-import io.swagger.models.properties.Property;
-import io.swagger.models.Swagger;
-import io.swagger.util.Yaml;
-
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.SupportingFile;
+import io.swagger.models.Swagger;
+import io.swagger.models.properties.ArrayProperty;
+import io.swagger.models.properties.MapProperty;
+import io.swagger.models.properties.Property;
+import io.swagger.util.Yaml;
 
 public class SinatraServerCodegen extends DefaultCodegen implements CodegenConfig {
     protected String gemName;

@@ -12,6 +12,7 @@
             <plugin>
                 <groupId>io.swagger</groupId>
                 <artifactId>swagger-codegen-maven-plugin</artifactId>
+                <!-- To use from the Maven Central Repository, please check the latest version on http://mvnrepository.com/artifact/io.swagger/swagger-codegen-maven-plugin/ and point to it. -->
                 <version>2.1.5-SNAPSHOT</version>
                 <executions>
                     <execution>

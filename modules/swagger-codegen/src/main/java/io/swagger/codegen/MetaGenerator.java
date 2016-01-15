@@ -1,15 +1,5 @@
 package io.swagger.codegen;
 
-import com.samskivert.mustache.Mustache;
-import com.samskivert.mustache.Template;
-import io.swagger.models.Swagger;
-import org.apache.commons.cli.BasicParser;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Options;
-import org.apache.commons.io.FileUtils;
-
 import java.io.File;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -18,6 +8,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
+
+import org.apache.commons.cli.BasicParser;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Options;
+import org.apache.commons.io.FileUtils;
+
+import com.samskivert.mustache.Mustache;
+import com.samskivert.mustache.Template;
 
 /**
  * @deprecated use instead {@link io.swagger.codegen.DefaultGenerator}
@@ -57,8 +57,6 @@ public class MetaGenerator extends AbstractGenerator {
     }
 
     protected void generate(String[] args) {
-        StringBuilder sb = new StringBuilder();
-        String targetLanguage = null;
         String outputFolder = null;
         String name = null;
         String targetPackage = "io.swagger.codegen";
@@ -71,8 +69,6 @@ public class MetaGenerator extends AbstractGenerator {
         options.addOption("n", "name", true, "the human-readable name of the generator");
         options.addOption("p", "package", true, "the package to put the main class into (defaults to io.swagger.codegen");
 
-        ClientOptInput clientOptInput = new ClientOptInput();
-        Swagger swagger = null;
         CommandLine cmd = null;
         try {
             CommandLineParser parser = new BasicParser();
@@ -88,9 +84,6 @@ public class MetaGenerator extends AbstractGenerator {
                 System.out.println("name is required");
                 usage(options);
                 return;
-            }
-            if (cmd.hasOption("l")) {
-                targetLanguage = cmd.getOptionValue("l");
             }
             if (cmd.hasOption("p")) {
                 targetPackage = cmd.getOptionValue("p");
@@ -161,8 +154,6 @@ public class MetaGenerator extends AbstractGenerator {
                                 public Reader getTemplate(String name) {
                                     return getTemplateReader(templateDir + File.separator + name + ".mustache");
                                 }
-
-                                ;
                             })
                             .defaultValue("")
                             .compile(template);
