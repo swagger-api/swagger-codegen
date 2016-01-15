@@ -1,12 +1,12 @@
 package io.swagger.codegen;
 
-import io.swagger.models.ExternalDocs;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import io.swagger.models.ExternalDocs;
 
 public class CodegenOperation {
     public final List<CodegenProperty> responseHeaders = new ArrayList<CodegenProperty>();
@@ -38,7 +38,7 @@ public class CodegenOperation {
      *
      * @return true if parameter exists, false otherwise
      */
-    private boolean nonempty(List<CodegenParameter> params) {
+    private static boolean nonEmpty(List<CodegenParameter> params) {
         return params != null && params.size() > 0;
     }
 
@@ -48,7 +48,7 @@ public class CodegenOperation {
      * @return true if body parameter exists, false otherwise
      */
     public boolean getHasBodyParam() {
-        return nonempty(bodyParams);
+        return nonEmpty(bodyParams);
     }
 
     /**
@@ -57,7 +57,7 @@ public class CodegenOperation {
      * @return true if query parameter exists, false otherwise
      */
     public boolean getHasQueryParams() {
-        return nonempty(queryParams);
+        return nonEmpty(queryParams);
     }
 
     /**
@@ -66,7 +66,7 @@ public class CodegenOperation {
      * @return true if header parameter exists, false otherwise
      */
     public boolean getHasHeaderParams() {
-        return nonempty(headerParams);
+        return nonEmpty(headerParams);
     }
 
     /**
@@ -75,7 +75,7 @@ public class CodegenOperation {
      * @return true if path parameter exists, false otherwise
      */
     public boolean getHasPathParams() {
-        return nonempty(pathParams);
+        return nonEmpty(pathParams);
     }
 
     /**
@@ -84,7 +84,7 @@ public class CodegenOperation {
      * @return true if any form parameter exists, false otherwise
      */
     public boolean getHasFormParams() {
-        return nonempty(formParams);
+        return nonEmpty(formParams);
     }
 
 }

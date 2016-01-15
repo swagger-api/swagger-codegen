@@ -1,22 +1,22 @@
 package io.swagger.codegen;
 
-import config.Config;
-import config.ConfigParser;
-import io.swagger.models.Swagger;
-import io.swagger.parser.SwaggerParser;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.ServiceLoader;
+
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.ServiceLoader;
+import config.Config;
+import config.ConfigParser;
+import io.swagger.models.Swagger;
+import io.swagger.parser.SwaggerParser;
 
 /**
  * @deprecated use instead {@link io.swagger.codegen.DefaultGenerator}
@@ -33,8 +33,6 @@ public class Codegen extends DefaultGenerator {
             "\n -DdebugSupportingFiles prints additional data passed to the template engine";
 
     public static void main(String[] args) {
-
-        StringBuilder sb = new StringBuilder();
 
         Options options = new Options();
         options.addOption("h", "help", false, "shows this message");
@@ -139,7 +137,7 @@ public class Codegen extends DefaultGenerator {
             // see if it's a class
             try {
                 System.out.println("loading class " + name);
-                Class customClass = Class.forName(name);
+                Class<?> customClass = Class.forName(name);
                 System.out.println("loaded");
                 return (CodegenConfig) customClass.newInstance();
             } catch (Exception e) {

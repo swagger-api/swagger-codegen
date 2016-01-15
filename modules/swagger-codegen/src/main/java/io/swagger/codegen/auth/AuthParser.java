@@ -1,13 +1,13 @@
 package io.swagger.codegen.auth;
 
-import io.swagger.models.auth.AuthorizationValue;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+import io.swagger.models.auth.AuthorizationValue;
 
 public class AuthParser {
 

@@ -1,7 +1,23 @@
 package io.swagger.codegen.config;
 
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.commons.lang3.Validate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.ClientOptInput;
 import io.swagger.codegen.ClientOpts;
@@ -13,20 +29,6 @@ import io.swagger.models.Swagger;
 import io.swagger.models.auth.AuthorizationValue;
 import io.swagger.parser.SwaggerParser;
 import io.swagger.util.Json;
-import org.apache.commons.lang3.Validate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 /**
  * A class that contains all codegen configuration properties a user would want to manipulate.

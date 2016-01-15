@@ -1,20 +1,45 @@
 package io.swagger.codegen.languages;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.base.Strings;
-import io.swagger.codegen.*;
+
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenParameter;
+import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.SupportingFile;
 import io.swagger.models.Model;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
 import io.swagger.models.parameters.FormParameter;
 import io.swagger.models.parameters.Parameter;
-import io.swagger.models.properties.*;
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.util.*;
+import io.swagger.models.properties.ArrayProperty;
+import io.swagger.models.properties.BooleanProperty;
+import io.swagger.models.properties.DoubleProperty;
+import io.swagger.models.properties.FloatProperty;
+import io.swagger.models.properties.IntegerProperty;
+import io.swagger.models.properties.LongProperty;
+import io.swagger.models.properties.MapProperty;
+import io.swagger.models.properties.Property;
+import io.swagger.models.properties.StringProperty;
 
 public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(JavaClientCodegen.class);
@@ -462,7 +487,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         if (allDefinitions != null && codegenModel != null && codegenModel.parentSchema != null && codegenModel.hasEnums) {
             final Model parentModel = allDefinitions.get(codegenModel.parentSchema);
             final CodegenModel parentCodegenModel = super.fromModel(codegenModel.parent, parentModel);
-            codegenModel = this.reconcileInlineEnums(codegenModel, parentCodegenModel);
+            codegenModel = JavaClientCodegen.reconcileInlineEnums(codegenModel, parentCodegenModel);
         }
 
         return codegenModel;
@@ -617,7 +642,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         }
     }
 
-    private String getAccept(Operation operation) {
+    private static String getAccept(Operation operation) {
         String accepts = null;
         String defaultContentType = "application/json";
         if (operation.getProduces() != null && !operation.getProduces().isEmpty()) {
@@ -648,14 +673,14 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         return super.needToImport(type) && type.indexOf(".") < 0;
     }
 
-    private String findCommonPrefixOfVars(List<String> vars) {
+    private static String findCommonPrefixOfVars(List<String> vars) {
         String prefix = StringUtils.getCommonPrefix(vars.toArray(new String[vars.size()]));
         // exclude trailing characters that should be part of a valid variable
         // e.g. ["status-on", "status-off"] => "status-" (not "status-o")
         return prefix.replaceAll("[a-zA-Z0-9]+\\z", "");
     }
 
-    private String toEnumVarName(String value) {
+    private static String toEnumVarName(String value) {
         String var = value.replaceAll("\\W+", "_").toUpperCase();
         if (var.matches("\\d.*")) {
             return "_" + var;
@@ -664,7 +689,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         }
     }
 
-    private CodegenModel reconcileInlineEnums(CodegenModel codegenModel, CodegenModel parentCodegenModel) {
+    private static CodegenModel reconcileInlineEnums(CodegenModel codegenModel, CodegenModel parentCodegenModel) {
         // This generator uses inline classes to define enums, which breaks when
         // dealing with models that have subTypes. To clean this up, we will analyze
         // the parent and child models, look for enums that match, and remove
@@ -748,7 +773,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         this.serializableModel = serializableModel;
     }
 
-    private String sanitizePackageName(String packageName) {
+    private static String sanitizePackageName(String packageName) {
         packageName = packageName.trim();
         packageName = packageName.replaceAll("[^a-zA-Z0-9_\\.]", "_");
         if(Strings.isNullOrEmpty(packageName)) {

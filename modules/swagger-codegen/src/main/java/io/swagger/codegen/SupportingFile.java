@@ -11,7 +11,8 @@ public class SupportingFile {
         this.destinationFilename = destinationFilename;
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("SupportingFile:").append("\n");
         builder.append("\ttemplateFile: ").append(templateFile).append("\n");

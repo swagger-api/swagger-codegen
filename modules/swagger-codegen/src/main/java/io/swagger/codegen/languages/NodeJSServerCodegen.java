@@ -1,5 +1,18 @@
 package io.swagger.codegen.languages;
 
+import java.io.File;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
@@ -9,16 +22,16 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 
-import io.swagger.codegen.*;
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenParameter;
+import io.swagger.codegen.CodegenResponse;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.SupportingFile;
 import io.swagger.models.Swagger;
 import io.swagger.models.Info;
 import io.swagger.util.Yaml;
-
-import java.io.File;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.*;
-import java.util.Map.Entry;
 
 public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig {
     protected String apiVersion = "1.0.0";
@@ -212,7 +225,7 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     @SuppressWarnings("unchecked")
-    private List<Map<String, Object>> getOperations(Map<String, Object> objs) {
+    private static List<Map<String, Object>> getOperations(Map<String, Object> objs) {
         List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
         Map<String, Object> apiInfo = (Map<String, Object>) objs.get("apiInfo");
         List<Map<String, Object>> apis = (List<Map<String, Object>>) apiInfo.get("apis");
@@ -222,7 +235,7 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
         return result;
     }
 
-    private List<Map<String, Object>> sortOperationsByPath(List<CodegenOperation> ops) {
+    private static List<Map<String, Object>> sortOperationsByPath(List<CodegenOperation> ops) {
         Multimap<String, CodegenOperation> opsByPath = ArrayListMultimap.create();
 
         for (CodegenOperation op : ops) {

@@ -1,12 +1,24 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.CodegenResponse;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.SupportingFile;
 import io.swagger.models.Operation;
 
-import java.io.File;
-import java.util.*;
-
-public class SpringMVCServerCodegen extends JavaClientCodegen implements CodegenConfig {
+public class SpringMVCServerCodegen extends JavaClientCodegen  {
     public static final String CONFIG_PACKAGE = "configPackage";
     protected String title = "Petstore Server";
     protected String configPackage = "";

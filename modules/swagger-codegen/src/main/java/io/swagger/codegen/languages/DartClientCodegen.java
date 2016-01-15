@@ -1,5 +1,10 @@
 package io.swagger.codegen.languages;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
@@ -9,11 +14,6 @@ import io.swagger.codegen.SupportingFile;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
-
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.HashMap;
 
 public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
     public static final String BROWSER_CLIENT = "browserClient";
@@ -218,12 +218,8 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public String toDefaultValue(Property p) {
         if (p instanceof MapProperty) {
-            MapProperty ap = (MapProperty) p;
-            String inner = getSwaggerType(ap.getAdditionalProperties());
             return "{}";
         } else if (p instanceof ArrayProperty) {
-            ArrayProperty ap = (ArrayProperty) p;
-            String inner = getSwaggerType(ap.getItems());
             return "[]";
         }
 

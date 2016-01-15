@@ -1,7 +1,17 @@
 package io.swagger.codegen.languages;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.swagger.codegen.*;
+
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.SupportingFile;
 import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
 import io.swagger.models.properties.ArrayProperty;
@@ -9,9 +19,7 @@ import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
 import io.swagger.util.Yaml;
 
-import java.util.*;
-
-public class JavaInflectorServerCodegen extends JavaClientCodegen implements CodegenConfig {
+public class JavaInflectorServerCodegen extends JavaClientCodegen {
     protected String title = "Swagger Inflector";
 
     public JavaInflectorServerCodegen() {

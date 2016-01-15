@@ -1,5 +1,11 @@
 package io.swagger.codegen.languages;
 
+import java.io.File;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
@@ -11,11 +17,6 @@ import io.swagger.models.Contact;
 import io.swagger.models.Info;
 import io.swagger.models.License;
 import io.swagger.models.Swagger;
-import org.apache.commons.lang.StringUtils;
-
-import java.io.File;
-import java.util.Map;
-import java.util.List;
 
 public class ClojureClientCodegen extends DefaultCodegen implements CodegenConfig {
     private static final String PROJECT_NAME = "projectName";

@@ -1,6 +1,18 @@
 package io.swagger.codegen.examples;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+
+import org.codehaus.plexus.util.StringUtils;
+
 import io.swagger.models.Model;
 import io.swagger.models.ModelImpl;
 import io.swagger.models.RefModel;
@@ -14,17 +26,6 @@ import io.swagger.models.properties.LongProperty;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.RefProperty;
 import io.swagger.models.properties.StringProperty;
-import org.codehaus.plexus.util.StringUtils;
-
-import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
 
 public class XmlExampleGenerator {
     public static String NEWLINE = "\n";
@@ -74,9 +75,6 @@ public class XmlExampleGenerator {
         Map<String, Property> elements = new LinkedHashMap<String, Property>();
 
         String name = modelName;
-        String namespace;
-        String prefix;
-        Boolean wrapped;
 
         Xml xml = model.getXml();
         if (xml != null) {
