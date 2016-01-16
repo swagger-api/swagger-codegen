@@ -160,8 +160,9 @@ extern NSString *const SWGResponseObjectErrorKey;
  *
  * @param data The data will be deserialized.
  * @param class The type of objective-c object.
+ * @param error The error
  */
-- (id) deserialize:(id) data class:(NSString *) class;
+- (id) deserialize:(id) data class:(NSString *) class error:(NSError**)error {
 
 /**
  * Logs request and response
