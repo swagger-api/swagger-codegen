@@ -279,13 +279,7 @@ static void (^reachabilityChangeBlock)(int);
 
 #pragma mark - Deserialize methods
 
-- (id) deserialize:(id) data class:(NSString *) class {
-    NSRegularExpression *regexp = nil;
-    NSTextCheckingResult *match = nil;
-    NSMutableArray *resultArray = nil;
-    NSMutableDictionary *resultDict = nil;
-    NSString *innerType = nil;
-
+- (id) deserialize:(id) data class:(NSString *) class error:(NSError **) error {
     // return nil if data is nil or class is nil
     if (!data || !class) {
         return nil;
@@ -300,6 +294,12 @@ static void (^reachabilityChangeBlock)(int);
     if ([class isEqualToString:@"NSObject"]) {
         return data;
     }
+
+    NSRegularExpression *regexp = nil;
+    NSTextCheckingResult *match = nil;
+    NSMutableArray *resultArray = nil;
+    NSMutableDictionary *resultDict = nil;
+    NSString *innerType = nil;
 
     // list of models
     NSString *arrayOfModelsPat = @"NSArray<(.+)>";
@@ -317,7 +317,7 @@ static void (^reachabilityChangeBlock)(int);
 
         resultArray = [NSMutableArray arrayWithCapacity:[dataArray count]];
         [data enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                [resultArray addObject:[self deserialize:obj class:innerType]];
+                [resultArray addObject:[self deserialize:obj class:innerType error:error]];
             }
         ];
 
@@ -339,7 +339,7 @@ static void (^reachabilityChangeBlock)(int);
 
         resultArray = [NSMutableArray arrayWithCapacity:[dataArray count]];
         [data enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            [resultArray addObject:[self deserialize:obj class:innerType]];
+            [resultArray addObject:[self deserialize:obj class:innerType error:error]];
         }];
 
         return resultArray;
@@ -360,7 +360,7 @@ static void (^reachabilityChangeBlock)(int);
 
         resultDict = [NSMutableDictionary dictionaryWithCapacity:[dataDict count]];
         [data enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-            [resultDict setValue:[self deserialize:obj class:valueType] forKey:key];
+            [resultDict setValue:[self deserialize:obj class:valueType error:error] forKey:key];
         }];
 
         return resultDict;
@@ -398,7 +398,7 @@ static void (^reachabilityChangeBlock)(int);
    // model
     Class ModelClass = NSClassFromString(class);
     if ([ModelClass instancesRespondToSelector:@selector(initWithDictionary:error:)]) {
-        return [[ModelClass alloc] initWithDictionary:data error:nil];
+        return [(JSONModel *) [ModelClass alloc] initWithDictionary:data error:error];
     }
 
     return nil;
@@ -626,7 +626,12 @@ static void (^reachabilityChangeBlock)(int);
     }
     else {
         [self operationWithCompletionBlock:request requestId:requestId completionBlock:^(id data, NSError *error) {
-            completionBlock([self deserialize:data class:responseType], error);
+            NSError * serializationError;
+            id response = [self deserialize:data class:responseType error:&serializationError];
+            if(!response && !error){
+                error = serializationError;
+            }
+            completionBlock(response, error);
         }];
     }
     return requestId;
