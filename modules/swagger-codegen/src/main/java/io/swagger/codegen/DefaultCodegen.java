@@ -1196,9 +1196,21 @@ public class DefaultCodegen {
                 // empty list, do nothing to override global setting
             }
         } else if (swagger != null && swagger.getConsumes() != null && swagger.getConsumes().size() > 0) {
-            // use consumes defined globally 
-            consumes = swagger.getConsumes();
-            LOGGER.debug("No consumes defined in operation. Using global consumes (" + swagger.getConsumes() + ") for " + op.operationId);
+            Boolean hasFormData = false;
+            for (Parameter param : operation.getParameters()) {
+                if (param.getIn().equals("formData")) {
+                    hasFormData = true;
+                }
+            }
+            if (hasFormData) {
+                consumes.add("multipart/form-data");
+                LOGGER.debug("No consumes defined, but formData exists. Using multipart/form-data for operation " + op.operationId);
+            }
+            else {
+                // use consumes defined globally
+                consumes = swagger.getConsumes();
+                LOGGER.debug("No consumes defined in operation. Using global consumes (" + swagger.getConsumes() + ") for " + op.operationId);
+            }
         }
         
         // if "consumes" is defined (per operation or using global definition)
