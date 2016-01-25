@@ -218,7 +218,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             }
         }
         if (System.getProperty("debugModels") != null) {
-            LOGGER.debug("############ Model info ############");
+            LOGGER.info("############ Model info ############");
             Json.prettyPrint(allModels);
         }
 
@@ -294,7 +294,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             }
         }
         if (System.getProperty("debugOperations") != null) {
-            LOGGER.debug("############ Operation info ############");
+            LOGGER.info("############ Operation info ############");
             Json.prettyPrint(allOperations);
         }
 
@@ -333,7 +333,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         config.postProcessSupportingFileData(bundle);
 
         if (System.getProperty("debugSupportingFiles") != null) {
-            LOGGER.debug("############ Supporting file info ############");
+            LOGGER.info("############ Supporting file info ############");
             Json.prettyPrint(bundle);
         }
 
@@ -512,7 +512,8 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     public void processOperation(String resourcePath, String httpMethod, Operation operation, Map<String, List<CodegenOperation>> operations, Path path) {
         if (operation != null) {
             if (System.getProperty("debugOperations") != null) {
-                LOGGER.debug("processOperation: resourcePath= " + resourcePath + "\t;" + httpMethod + " " + operation + "\n");
+                LOGGER.info("processOperation: resourcePath= " + resourcePath + "\t;" + httpMethod + " " + operation
+                        + "\n");
             }
             List<String> tags = operation.getTags();
             if (tags == null) {
