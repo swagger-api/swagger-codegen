@@ -11,7 +11,7 @@ import mockit.Tested;
 public class JaxRSServerOptionsTest extends JavaClientOptionsTest {
 
     @Tested
-    private JavaJerseyServerCodegen clientCodegen;
+    private JavaJerseyServerCodegen clientCodegen = new JavaJerseyServerCodegen();
 
     public JaxRSServerOptionsTest() {
         super(new JaxRSServerOptionsProvider());
