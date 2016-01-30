@@ -1,39 +1,42 @@
-/// <reference path="api.d.ts" />
+/// <reference path="../api.d.ts" />
 
-namespace {{package}} {
-    'use strict';
+//
+// DO NOT MODIFY - GENERATED FILE
+//
+
+/* tslint:disable:max-line-length */
 
 {{#models}}
 {{#model}}
 {{#description}}
-    /**
-     * {{{description}}}
-     */
+/**
+ * {{{description}}}
+ */
 {{/description}}
-    export interface {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
+interface {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
 {{#vars}}
 
 {{#description}}
-        /**
-         * {{{description}}}
-         */
+  /**
+   * {{{description}}}
+   */
 {{/description}}
-        {{name}}{{^required}}?{{/required}}: {{#isEnum}}{{classname}}.{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
+  {{name}}{{^required}}?{{/required}}: {{#isEnum}}{{classname}}.{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
 {{/vars}}
-    }
+}
 
 {{#hasEnums}}
-    export namespace {{classname}} {
+namespace {{classname}} {
 {{#vars}}
 {{#isEnum}}
 
-        export enum {{datatypeWithEnum}} { {{#allowableValues}}{{#values}}
-            {{.}} = <any> '{{.}}',{{/values}}{{/allowableValues}}
-        }
+  export enum {{datatypeWithEnum}} {
+{{#allowableValues}}{{#values}}     {{#fnEnumEntry}}{{.}}{{/fnEnumEntry}} = <any> '{{.}}',
+{{/values}}{{/allowableValues}}
+  }
 {{/isEnum}}
 {{/vars}}
-    }
+}
 {{/hasEnums}}
 {{/model}}
 {{/models}}
-}

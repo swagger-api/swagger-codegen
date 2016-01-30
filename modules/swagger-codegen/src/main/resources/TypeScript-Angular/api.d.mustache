@@ -1,13 +1,24 @@
+//
+// DO NOT MODIFY - GENERATED FILE
+//
+
+/*
+ * Models
+ */
 {{#models}}
 {{#model}}
-/// <reference path="{{{classname}}}.ts" />
+/// <reference path="models/{{{classFileName}}}.ts" />
 {{/model}}
 {{/models}}
 
+
+/*
+ * APIs
+ */
 {{#apiInfo}}
 {{#apis}}
 {{#operations}}
-/// <reference path="{{classname}}.ts" />
+/// <reference path="services/{{classVarName}}-api.ts" />
 {{/operations}}
 {{/apis}}
 {{/apiInfo}}

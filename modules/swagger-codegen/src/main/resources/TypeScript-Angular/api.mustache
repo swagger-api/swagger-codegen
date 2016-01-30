@@ -1,98 +1,125 @@
-/// <reference path="api.d.ts" />
+//
+// DO NOT MODIFY - GENERATED FILE
+//
 
-/* tslint:disable:no-unused-variable member-ordering */
+/// <reference path="../api.d.ts" />
+
+/* tslint:disable:no-unused-variable member-ordering max-line-length no-string-literal  */
 
 {{#operations}}
-namespace {{package}} {
-    'use strict';
-
 {{#description}}
-    /**
-    * {{&description}}
-    */
+/**
+* {{&description}}
+*/
 {{/description}}
-    export class {{classname}} {
-        protected basePath = '{{basePath}}';
-        public defaultHeaders : any = {};
+class {{classname}} {
+  public defaultHeaders: any = {};
 
-        static $inject: string[] = ['$http', '$httpParamSerializer'];
+  private logger: Logger;
 
-        constructor(protected $http: ng.IHttpService, protected $httpParamSerializer?: (d: any) => any, basePath?: string) {
-            if (basePath) {
-                this.basePath = basePath;
-            }
-        }
+  public static $inject: string[] = [
+    '$http',
+    '$httpParamSerializer',
+    'ApiConfigProvider',
+    'CacheService',
+    'LogService',
+    'ApiResultFactory'
+  ];
 
-        private extendObj<T1,T2>(objA: T1, objB: T2) {
-            for(let key in objB){
-                if(objB.hasOwnProperty(key)){
-                    objA[key] = objB[key];
-                }
-            }
-            return <T1&T2>objA;
-        }
+  constructor(
+      protected $http: ng.IHttpService,
+      protected $httpParamSerializer: (d: any) => any,
+      protected apiConfig: ApiConfig,
+      protected cacheService: CacheService,
+      logService: LogService,
+      protected apiResultFactory: ApiResultFactory) {
+     this.logger = logService.getLogger('{{classname}}');
+   }
+
+  private extendObj<T1, T2>(objA: T1, objB: T2) {
+    for (let key in objB) {
+      if (objB.hasOwnProperty(key)) {
+        objA[key] = objB[key];
+      }
+    }
+    return <any>objA;
+  }
+
+  private buildUrl(url: string, params: any) {
+    let serializedParams = this.$httpParamSerializer(params);
+    if (serializedParams.length > 0) {
+      url += ((url.indexOf('?') === -1) ? '?' : '&') + serializedParams;
+    }
+    return url;
+  }
 
 {{#operation}}
-        /**
-         * {{summary}}
-         * {{notes}}
-         {{#allParams}}* @param {{paramName}} {{description}}
-         {{/allParams}}*/
-        public {{nickname}} ({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}extraHttpRequestParams?: any ) : ng.IHttpPromise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}> {
-            const path = this.basePath + '{{path}}'{{#pathParams}}
-                .replace('{' + '{{baseName}}' + '}', String({{paramName}})){{/pathParams}};
+  /**
+   * {{summary}}
+   * {{notes}}
+   {{#allParams}}* @param {{paramName}} {{description}}
+   {{/allParams}}*/
+  public {{nickname}} ({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}cacheOptions?: CacheOptions): ng.IPromise<ApiResult<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}> | ApiError> {
+    const path = '{{basePathWithoutHost}}' + '{{path}}'{{#pathParams}}
+          .replace('{' + '{{baseName}}' + '}', {{paramName}} + ''){{/pathParams}};
+    const apiUrl = this.apiConfig.baseUrl + path;
 
-            let queryParameters: any = {};
-            let headerParams: any = this.extendObj({}, this.defaultHeaders);
+    let queryParameters: any = {};
+    let headerParams: any = this.extendObj({}, this.defaultHeaders);
 {{#hasFormParams}}
-            let formParams: any = {};
+    let formParams: any = {};
 
 {{/hasFormParams}}
 {{#allParams}}
 {{#required}}
-            // verify required parameter '{{paramName}}' is set
-            if (!{{paramName}}) {
-                throw new Error('Missing required parameter {{paramName}} when calling {{nickname}}');
-            }
+    // verify required parameter '{{paramName}}' is set
+    if (!{{paramName}}) {
+      throw new Error('Missing required parameter {{paramName}} when calling {{nickname}}');
+    }
 {{/required}}
 {{/allParams}}
 {{#queryParams}}
-            if ({{paramName}} !== undefined) {
-                queryParameters['{{baseName}}'] = {{paramName}};
-            }
+    if ({{paramName}} !== undefined) {
+      queryParameters['{{baseName}}'] = {{paramName}};
+    }
 
 {{/queryParams}}
 {{#headerParams}}
-            headerParams['{{baseName}}'] = {{paramName}};
+    headerParams['{{baseName}}'] = {{paramName}};
 
 {{/headerParams}}
 {{#hasFormParams}}
-            headerParams['Content-Type'] = 'application/x-www-form-urlencoded';
+    headerParams['Content-Type'] = 'application/x-www-form-urlencoded';
 
 {{/hasFormParams}}
 {{#formParams}}
-            formParams['{{baseName}}'] = {{paramName}};
+    formParams['{{baseName}}'] = {{paramName}};
 
 {{/formParams}}
-            let httpRequestParams: any = {
-                method: '{{httpMethod}}',
-                url: path,
-                json: {{#hasFormParams}}false{{/hasFormParams}}{{^hasFormParams}}true{{/hasFormParams}},
-                {{#bodyParam}}data: {{paramName}},
-                {{/bodyParam}}
-                {{#hasFormParams}}data: this.$httpParamSerializer(formParams),
-                {{/hasFormParams}}
-                params: queryParameters,
-                headers: headerParams
-            };
-
-            if (extraHttpRequestParams) {
-                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
-            }
-
-            return this.$http(httpRequestParams);
-        }
-{{/operation}}
+    let httpCache: Cache = this.cacheService.getCache(cacheOptions);
+    if (httpCache && cacheOptions.ignoreCache) {
+      httpCache.remove(this.buildUrl(apiUrl, queryParameters));
     }
+
+    let httpRequestParams: any = {
+      method: '{{httpMethod}}',
+      url: apiUrl,
+      json: {{#hasFormParams}}false{{/hasFormParams}}{{^hasFormParams}}true{{/hasFormParams}},
+{{#bodyParam}}        data: {{paramName}},{{/bodyParam}}
+{{#hasFormParams}}        data: this.$httpParamSerializer(formParams),{{/hasFormParams}}
+      params: queryParameters,
+      headers: headerParams,
+      cache: httpCache || false
+    };
+
+    this.logger.debug('Executing {{httpMethod}} request to ' + apiUrl);
+    return this.apiResultFactory.create(this.$http(httpRequestParams));
+  }
+
+{{/operation}}
 }
+
+angular
+  .module('cbApiClient')
+  .service('{{classname}}', {{classname}});
 {{/operations}}

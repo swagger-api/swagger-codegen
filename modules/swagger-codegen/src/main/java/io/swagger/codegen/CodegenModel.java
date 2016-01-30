@@ -7,6 +7,7 @@ import java.util.*;
 public class CodegenModel {
     public String parent, parentSchema;
     public String name, classname, description, classVarName, modelJson, dataType;
+    public String classFileName;
     public String unescapedDescription;
     public String defaultValue;
     public List<CodegenProperty> vars = new ArrayList<CodegenProperty>();
