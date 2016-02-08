@@ -1,18 +1,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define([undefined, '../ApiClient', './Category', './Tag'], factory);
+    define([undefined, '../ApiClient', '../ApiModel', './Category', './Tag'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(undefined, require('../ApiClient'), require('./Category'), require('./Tag'));
+    module.exports = factory(undefined, require('../ApiClient'), require('../ApiModel'), require('./Category'), require('./Tag'));
   } else {
     // Browser globals (root is window)
     if (!root.SwaggerPetstore) {
       root.SwaggerPetstore = {};
     }
-    factory(root.SwaggerPetstore, root.SwaggerPetstore.ApiClient, root.SwaggerPetstore.Category, root.SwaggerPetstore.Tag);
+    factory(root.SwaggerPetstore, root.SwaggerPetstore.ApiClient, root.SwaggerPetstore.ApiModel, root.SwaggerPetstore.Category, root.SwaggerPetstore.Tag);
   }
-}(this, function(module, ApiClient, Category, Tag) {
+}(this, function(module, ApiClient, ApiModel, Category, Tag) {
   'use strict';
 
   
@@ -52,34 +52,40 @@ var StatusEnum = function StatusEnum() {
     /**
      * datatype: Integer
      **/
+    ApiModel.call(this);
     this['id'] = null;
     
     /**
      * datatype: Category
      **/
+    ApiModel.call(this);
     this['category'] = new Category();
     
     /**
      * datatype: String
      * required
      **/
+    ApiModel.call(this);
     this['name'] = name;
     
     /**
      * datatype: [String]
      * required
      **/
+    ApiModel.call(this);
     this['photoUrls'] = photoUrls;
     
     /**
      * datatype: [Tag]
      **/
+    ApiModel.call(this);
     this['tags'] = [];
     
     /**
      * pet status in the store
      * datatype: StatusEnum
      **/
+    ApiModel.call(this);
     this['status'] = null;
     
   };
@@ -116,6 +122,7 @@ var StatusEnum = function StatusEnum() {
     return this;
   }
 
+  
   
   /**
    * @return {Integer}
@@ -203,10 +210,7 @@ var StatusEnum = function StatusEnum() {
     this['status'] = status;
   }
   
-
-  Pet.prototype.toJson = function() {
-    return JSON.stringify(this);
-  }
+  
 
   if (module) {
     module.Pet = Pet;

@@ -1,18 +1,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define([undefined, '../ApiClient'], factory);
+    define([undefined, '../ApiClient', '../ApiModel'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(undefined, require('../ApiClient'));
+    module.exports = factory(undefined, require('../ApiClient'), require('../ApiModel'));
   } else {
     // Browser globals (root is window)
     if (!root.SwaggerPetstore) {
       root.SwaggerPetstore = {};
     }
-    factory(root.SwaggerPetstore, root.SwaggerPetstore.ApiClient);
+    factory(root.SwaggerPetstore, root.SwaggerPetstore.ApiClient, root.SwaggerPetstore.ApiModel);
   }
-}(this, function(module, ApiClient) {
+}(this, function(module, ApiClient, ApiModel) {
   'use strict';
 
   
@@ -52,32 +52,38 @@ var StatusEnum = function StatusEnum() {
     /**
      * datatype: Integer
      **/
+    ApiModel.call(this);
     this['id'] = null;
     
     /**
      * datatype: Integer
      **/
+    ApiModel.call(this);
     this['petId'] = null;
     
     /**
      * datatype: Integer
      **/
+    ApiModel.call(this);
     this['quantity'] = null;
     
     /**
      * datatype: Date
      **/
+    ApiModel.call(this);
     this['shipDate'] = null;
     
     /**
      * Order Status
      * datatype: StatusEnum
      **/
+    ApiModel.call(this);
     this['status'] = null;
     
     /**
      * datatype: Boolean
      **/
+    ApiModel.call(this);
     this['complete'] = null;
     
   };
@@ -114,6 +120,7 @@ var StatusEnum = function StatusEnum() {
     return this;
   }
 
+  
   
   /**
    * @return {Integer}
@@ -201,10 +208,7 @@ var StatusEnum = function StatusEnum() {
     this['complete'] = complete;
   }
   
-
-  Order.prototype.toJson = function() {
-    return JSON.stringify(this);
-  }
+  
 
   if (module) {
     module.Order = Order;
