@@ -48,6 +48,14 @@ public class ApiInvoker {
   private RequestQueue mRequestQueue;
 
   private Map<String, Authentication> authentications;
+  String basePath = "{{basePath}}";
+  public void setBasePath(String basePath) {
+    this.basePath = basePath;
+  }
+
+  public String getBasePath() {
+    return basePath;
+  }
 
   private int connectionTimeout;
 
@@ -353,21 +361,21 @@ public class ApiInvoker {
     }
   }
 
-  public String invokeAPI(String host, String path, String method, List<Pair> queryParams, Object body, Map<String, String> headerParams, Map<String, String> formParams, String contentType, String[] authNames) throws ApiException, InterruptedException, ExecutionException, TimeoutException {
+  public String invokeAPI( String path, String method, List<Pair> queryParams, Object body, Map<String, String> headerParams, Map<String, String> formParams, String contentType, String[] authNames) throws ApiException, InterruptedException, ExecutionException, TimeoutException {
      RequestFuture<String> future = RequestFuture.newFuture();
-     Request request = createRequest(host, path, method, queryParams, body, headerParams, formParams, contentType, authNames, future, future);
+     Request request = createRequest( path, method, queryParams, body, headerParams, formParams, contentType, authNames, future, future);
      if(request != null) {
         mRequestQueue.add(request);
         return future.get(connectionTimeout, TimeUnit.SECONDS);
      } else return "no data";
   }
 
-  public void invokeAPI(String host, String path, String method, List<Pair> queryParams, Object body, Map<String, String> headerParams, Map<String, String> formParams, String contentType, String[] authNames, Response.Listener<String> stringRequest, Response.ErrorListener errorListener) throws ApiException {
-     Request request = createRequest(host, path, method, queryParams, body, headerParams, formParams, contentType, authNames, stringRequest, errorListener);
+  public void invokeAPI( String path, String method, List<Pair> queryParams, Object body, Map<String, String> headerParams, Map<String, String> formParams, String contentType, String[] authNames, Response.Listener<String> stringRequest, Response.ErrorListener errorListener) throws ApiException {
+     Request request = createRequest( path, method, queryParams, body, headerParams, formParams, contentType, authNames, stringRequest, errorListener);
      if (request != null) mRequestQueue.add(request);
   }
 
-  public Request<String> createRequest(String host, String path, String method, List<Pair> queryParams, Object body, Map<String, String> headerParams, Map<String, String> formParams, String contentType, String[] authNames, Response.Listener<String> stringRequest, Response.ErrorListener errorListener) throws ApiException {
+  public Request<String> createRequest( String path, String method, List<Pair> queryParams, Object body, Map<String, String> headerParams, Map<String, String> formParams, String contentType, String[] authNames, Response.Listener<String> stringRequest, Response.ErrorListener errorListener) throws ApiException {
     StringBuilder b = new StringBuilder();
     b.append("?");
 
@@ -385,7 +393,7 @@ public class ApiInvoker {
     }
 
     String querystring = b.substring(0, b.length() - 1);
-    String url = host + path + querystring;
+    String url = basePath + path + querystring;
 
     HashMap<String, String> headers = new HashMap<String, String>();
 
