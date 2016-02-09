@@ -373,5 +373,6 @@ extension PetstoreClientAPI {
 
             return requestBuilder.init(method: "POST", URLString: URLString, parameters: parameters, isBody: false)
         }
+    
     }
 }
