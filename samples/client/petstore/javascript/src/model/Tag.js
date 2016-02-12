@@ -20,17 +20,16 @@
 
   
   var Tag = function Tag() { 
+    ApiModel.call(this);
     
     /**
      * datatype: Integer
      **/
-    ApiModel.call(this);
     this['id'] = null;
     
     /**
      * datatype: String
      **/
-    ApiModel.call(this);
     this['name'] = null;
     
   };

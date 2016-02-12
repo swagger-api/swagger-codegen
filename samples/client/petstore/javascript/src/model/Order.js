@@ -48,42 +48,37 @@ var StatusEnum = function StatusEnum() {
 
   
   var Order = function Order() { 
+    ApiModel.call(this);
     
     /**
      * datatype: Integer
      **/
-    ApiModel.call(this);
     this['id'] = null;
     
     /**
      * datatype: Integer
      **/
-    ApiModel.call(this);
     this['petId'] = null;
     
     /**
      * datatype: Integer
      **/
-    ApiModel.call(this);
     this['quantity'] = null;
     
     /**
      * datatype: Date
      **/
-    ApiModel.call(this);
     this['shipDate'] = null;
     
     /**
      * Order Status
      * datatype: StatusEnum
      **/
-    ApiModel.call(this);
     this['status'] = null;
     
     /**
      * datatype: Boolean
      **/
-    ApiModel.call(this);
     this['complete'] = null;
     
   };

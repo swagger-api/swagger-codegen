@@ -20,54 +20,47 @@
 
   
   var User = function User() { 
+    ApiModel.call(this);
     
     /**
      * datatype: Integer
      **/
-    ApiModel.call(this);
     this['id'] = null;
     
     /**
      * datatype: String
      **/
-    ApiModel.call(this);
     this['username'] = null;
     
     /**
      * datatype: String
      **/
-    ApiModel.call(this);
     this['firstName'] = null;
     
     /**
      * datatype: String
      **/
-    ApiModel.call(this);
     this['lastName'] = null;
     
     /**
      * datatype: String
      **/
-    ApiModel.call(this);
     this['email'] = null;
     
     /**
      * datatype: String
      **/
-    ApiModel.call(this);
     this['password'] = null;
     
     /**
      * datatype: String
      **/
-    ApiModel.call(this);
     this['phone'] = null;
     
     /**
      * User Status
      * datatype: Integer
      **/
-    ApiModel.call(this);
     this['userStatus'] = null;
     
   };

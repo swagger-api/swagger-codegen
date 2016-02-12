@@ -23,6 +23,7 @@
    * {{description}}
    **/{{/description}}
   var {{classname}} = function {{classname}}({{#mandatory}}{{this}}{{^-last}}, {{/-last}}{{/mandatory}}) { {{#parent}}/* extends {{{parent}}}*/{{/parent}}
+    ApiModel.call(this);
     {{#vars}}
     /**{{#description}}
      * {{{description}}}{{/description}}
@@ -31,7 +32,6 @@
      * minimum: {{minimum}}{{/minimum}}{{#maximum}}
      * maximum: {{maximum}}{{/maximum}}
      **/
-    ApiModel.call(this);
     this['{{baseName}}'] = {{#required}}{{name}}{{/required}}{{^required}}{{{defaultValue}}}{{/required}};
     {{/vars}}
   };

@@ -48,44 +48,39 @@ var StatusEnum = function StatusEnum() {
 
   
   var Pet = function Pet(photoUrls, name) { 
+    ApiModel.call(this);
     
     /**
      * datatype: Integer
      **/
-    ApiModel.call(this);
     this['id'] = null;
     
     /**
      * datatype: Category
      **/
-    ApiModel.call(this);
     this['category'] = new Category();
     
     /**
      * datatype: String
      * required
      **/
-    ApiModel.call(this);
     this['name'] = name;
     
     /**
      * datatype: [String]
      * required
      **/
-    ApiModel.call(this);
     this['photoUrls'] = photoUrls;
     
     /**
      * datatype: [Tag]
      **/
-    ApiModel.call(this);
     this['tags'] = [];
     
     /**
      * pet status in the store
      * datatype: StatusEnum
      **/
-    ApiModel.call(this);
     this['status'] = null;
     
   };
