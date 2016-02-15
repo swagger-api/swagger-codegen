@@ -168,7 +168,7 @@ module {{moduleName}}
         end
       else
         # models, e.g. Pet
-        {{moduleName}}.const_get(return_type).new.tap do |model|
+        {{moduleName}}.const_get(return_type.split("_").map{|v| v[0].upcase + v[1..-1] }.join).new.tap do |model|
           model.build_from_hash data
         end
       end
