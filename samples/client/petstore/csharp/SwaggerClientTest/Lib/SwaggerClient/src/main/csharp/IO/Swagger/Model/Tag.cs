@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
@@ -14,7 +15,7 @@ namespace IO.Swagger.Model
     /// 
     /// </summary>
     [DataContract]
-    public class Tag : IEquatable<Tag>
+    public partial class Tag :  IEquatable<Tag>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Tag" /> class.
@@ -78,7 +79,7 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Returns true if Tag instances are equal
         /// </summary>
-        /// <param name="obj">Instance of Tag to be compared</param>
+        /// <param name="other">Instance of Tag to be compared</param>
         /// <returns>Boolean</returns>
         public bool Equals(Tag other)
         {
@@ -112,10 +113,10 @@ namespace IO.Swagger.Model
                 // Suitable nullity checks etc, of course :)
                 
                 if (this.Id != null)
-                    hash = hash * 57 + this.Id.GetHashCode();
+                    hash = hash * 59 + this.Id.GetHashCode();
                 
                 if (this.Name != null)
-                    hash = hash * 57 + this.Name.GetHashCode();
+                    hash = hash * 59 + this.Name.GetHashCode();
                 
                 return hash;
             }

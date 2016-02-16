@@ -3,6 +3,7 @@ package io.swagger.codegen.languages;
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
@@ -13,6 +14,8 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
@@ -84,24 +87,32 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("List", "NSArray");
         typeMapping.put("object", "NSObject");
         typeMapping.put("file", "NSURL");
+        //TODO binary should be mapped to byte array
+        // mapped to String as a workaround
+        typeMapping.put("binary", "NSString");
 
 
         // ref: http://www.tutorialspoint.com/objective_c/objective_c_basic_syntax.htm
         reservedWords = new HashSet<String>(
                 Arrays.asList(
-                        "auto", "else", "long", "switch",
-                        "break", "enum", "register", "typedef",
-                        "case", "extern", "return", "union",
-                        "char", "float", "short", "unsigned",
-                        "const", "for", "signed", "void",
-                        "continue", "goto", "sizeof", "volatile",
-                        "default", "if", "id", "static", "while",
-                        "do", "int", "struct", "_Packed",
-                        "double", "protocol", "interface", "implementation",
-                        "NSObject", "NSInteger", "NSNumber", "CGFloat",
-                        "property", "nonatomic", "retain", "strong",
-                        "weak", "unsafe_unretained", "readwrite", "readonly",
-                        "description"
+                    // local variable names in API methods (endpoints)
+                    "resourcePath", "pathParams", "queryParams", "headerParams",
+                    "responseContentType", "requestContentType", "authSettings",
+                    "formParams", "files", "bodyParam",
+                    // objc reserved words
+                    "auto", "else", "long", "switch",
+                    "break", "enum", "register", "typedef",
+                    "case", "extern", "return", "union",
+                    "char", "float", "short", "unsigned",
+                    "const", "for", "signed", "void",
+                    "continue", "goto", "sizeof", "volatile",
+                    "default", "if", "id", "static", "while",
+                    "do", "int", "struct", "_Packed",
+                    "double", "protocol", "interface", "implementation",
+                    "NSObject", "NSInteger", "NSNumber", "CGFloat",
+                    "property", "nonatomic", "retain", "strong",
+                    "weak", "unsafe_unretained", "readwrite", "readonly",
+                    "description"
                 ));
 
         importMapping = new HashMap<String, String>();
@@ -214,12 +225,8 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public String toInstantiationType(Property p) {
         if (p instanceof MapProperty) {
-            MapProperty ap = (MapProperty) p;
-            String inner = getSwaggerType(ap.getAdditionalProperties());
             return instantiationTypes.get("map");
         } else if (p instanceof ArrayProperty) {
-            ArrayProperty ap = (ArrayProperty) p;
-            String inner = getSwaggerType(ap.getItems());
             return instantiationTypes.get("array");
         } else {
             return null;
@@ -307,7 +314,7 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String toModelName(String type) {
-        type = type.replaceAll("[^0-9a-zA-Z_]", "_");
+        type = type.replaceAll("[^0-9a-zA-Z_]", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
 
         // language build-in classes
         if (typeMapping.keySet().contains(type) ||
@@ -367,7 +374,7 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public String toVarName(String name) {
         // sanitize name
-        name = sanitizeName(name);
+        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
 
         // if it's all upper case, do noting
         if (name.matches("^[A-Z_]$")) {
@@ -404,6 +411,7 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
         return "_" + name;
     }
 
+    @SuppressWarnings("static-method")
     public String escapeSpecialWord(String name) {
         return "var_" + name;
     }
@@ -449,6 +457,21 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
     
     public void setLicense(String license) {
         this.license = license;
+    }
+
+    @Override
+    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
+        Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
+        if (operations != null) {
+            List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
+            for (CodegenOperation operation : ops) {
+                if (!operation.allParams.isEmpty()) {
+                    String firstParamName = operation.allParams.get(0).paramName;
+                    operation.vendorExtensions.put("firstParamAltName", camelize(firstParamName));
+                }
+            }
+        }
+        return objs;
     }
 
     /**

@@ -22,7 +22,7 @@ export class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
     * {{{description}}}
     */
 {{/description}}
-    {{name}}: {{#isEnum}}{{classname}}.{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
+    "{{name}}": {{#isEnum}}{{classname}}.{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
 {{/vars}}
 }
 
@@ -31,7 +31,7 @@ export namespace {{classname}} {
 {{#vars}}
 {{#isEnum}}
     export enum {{datatypeWithEnum}} { {{#allowableValues}}{{#values}}
-        {{.}} = <any> '{{.}}',{{/values}}{{/allowableValues}}
+        {{.}} = <any> '{{.}}'{{^-last}},{{/-last}}{{/values}}{{/allowableValues}}
     }
 {{/isEnum}}
 {{/vars}}

@@ -81,6 +81,9 @@ public class SilexServerCodegen extends DefaultCodegen implements CodegenConfig 
         typeMapping.put("array", "array");
         typeMapping.put("list", "array");
         typeMapping.put("object", "object");
+        //TODO binary should be mapped to byte array
+        // mapped to String as a workaround
+        typeMapping.put("binary", "string");
 
         supportingFiles.add(new SupportingFile("README.mustache", packagePath.replace('/', File.separatorChar), "README.md"));
         supportingFiles.add(new SupportingFile("composer.json", packagePath.replace('/', File.separatorChar), "composer.json"));
@@ -162,7 +165,7 @@ public class SilexServerCodegen extends DefaultCodegen implements CodegenConfig 
     public String toVarName(String name) {
         // return the name in underscore style
         // PhoneNumber => phone_number
-        name = underscore(name);
+        name = underscore(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
 
         // parameter name starting with number won't compile
         // need to escape it by appending _ at the beginning

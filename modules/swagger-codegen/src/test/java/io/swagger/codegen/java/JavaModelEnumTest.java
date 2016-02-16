@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("static-method")
 public class JavaModelEnumTest {
 
     @Test(description = "convert a java model with an enum")
@@ -73,8 +74,8 @@ public class JavaModelEnumTest {
 
         final DefaultCodegen codegen = new JavaClientCodegen();
         final Map<String, Model> allModels = new HashMap<String, Model>();
-        allModels.put(codegen.toModelName(parentModel.getName()), parentModel);
-        allModels.put(codegen.toModelName(subModel.getName()), subModel);
+        allModels.put(parentModel.getName(), parentModel);
+        allModels.put(subModel.getName(), subModel);
 
         final CodegenModel cm = codegen.fromModel("sample", model, allModels);
 

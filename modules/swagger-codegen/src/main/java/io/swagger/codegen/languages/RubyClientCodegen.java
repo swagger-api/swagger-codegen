@@ -19,10 +19,25 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     public static final String GEM_NAME = "gemName";
     public static final String MODULE_NAME = "moduleName";
     public static final String GEM_VERSION = "gemVersion";
+    public static final String GEM_LICENSE = "gemLicense";
+    public static final String GEM_HOMEPAGE = "gemHomepage";
+    public static final String GEM_SUMMARY = "gemSummary";
+    public static final String GEM_DESCRIPTION = "gemDescription";
+    public static final String GEM_AUTHOR = "gemAuthor";
+    public static final String GEM_AUTHOR_EMAIL = "gemAuthorEmail";
+
     protected String gemName;
     protected String moduleName;
     protected String gemVersion = "1.0.0";
+    protected String specFolder = "spec";
     protected String libFolder = "lib";
+    protected String gemLicense = "Apache-2.0";
+    protected String gemHomepage = "http://swagger.io";
+    protected String gemSummary = "A ruby wrapper for the swagger APIs";
+    protected String gemDescription = "This gem maps to a swagger API";
+    protected String gemAuthor = "";
+    protected String gemAuthorEmail = "";
+
 
     public RubyClientCodegen() {
         super();
@@ -33,16 +48,23 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         apiTemplateFiles.put("api.mustache", ".rb");
         embeddedTemplateDir = templateDir = "ruby";
 
+        modelTestTemplateFiles.put("model_test.mustache", ".rb");
+        apiTestTemplateFiles.put("api_test.mustache", ".rb");
+
         typeMapping.clear();
         languageSpecificPrimitives.clear();
 
         reservedWords = new HashSet<String>(
                 Arrays.asList(
-                        "__FILE__", "and", "def", "end", "in", "or", "self", "unless", "__LINE__",
-                        "begin", "defined?", "ensure", "module", "redo", "super", "until", "BEGIN",
-                        "break", "do", "false", "next", "rescue", "then", "when", "END", "case",
-                        "else", "for", "nil", "retry", "true", "while", "alias", "class", "elsif",
-                        "if", "not", "return", "undef", "yield")
+                    // local variable names used in API methods (endpoints)
+                    "path", "query_params", "header_params", "_header_accept", "_header_accept_result",
+                    "_header_content_type", "form_params", "post_body", "auth_names",
+                    // ruby reserved keywords
+                    "__FILE__", "and", "def", "end", "in", "or", "self", "unless", "__LINE__",
+                    "begin", "defined?", "ensure", "module", "redo", "super", "until", "BEGIN",
+                    "break", "do", "false", "next", "rescue", "then", "when", "END", "case",
+                    "else", "for", "nil", "retry", "true", "while", "alias", "class", "elsif",
+                    "if", "not", "return", "undef", "yield")
         );
 
         languageSpecificPrimitives.add("int");
@@ -68,6 +90,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("map", "Hash");
         typeMapping.put("object", "Object");
         typeMapping.put("file", "File");
+        typeMapping.put("binary", "String");
 
         // remove modelPackage and apiPackage added by default
         Iterator<CliOption> itr = cliOptions.iterator();
@@ -83,6 +106,23 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         cliOptions.add(new CliOption(MODULE_NAME, "top module name (convention: CamelCase, usually corresponding" +
                 " to gem name).").defaultValue("SwaggerClient"));
         cliOptions.add(new CliOption(GEM_VERSION, "gem version.").defaultValue("1.0.0"));
+
+        cliOptions.add(new CliOption(GEM_LICENSE, "gem license. ").
+                defaultValue("Apache-2.0"));
+
+        cliOptions.add(new CliOption(GEM_HOMEPAGE, "gem homepage. ").
+                defaultValue("http://swagger.io"));
+
+        cliOptions.add(new CliOption(GEM_SUMMARY, "gem summary. ").
+                defaultValue("A ruby wrapper for the swagger APIs"));
+
+        cliOptions.add(new CliOption(GEM_DESCRIPTION, "gem description. ").
+                defaultValue("This gem maps to a swagger API"));
+
+        cliOptions.add(new CliOption(GEM_AUTHOR, "gem author (only one is supported)."));
+
+        cliOptions.add(new CliOption(GEM_AUTHOR_EMAIL, "gem author email (only one is supported)."));
+
     }
 
     @Override
@@ -110,10 +150,35 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         if (additionalProperties.containsKey(GEM_VERSION)) {
             setGemVersion((String) additionalProperties.get(GEM_VERSION));
-        } else {
+        }else {
             // not set, pass the default value to template
             additionalProperties.put(GEM_VERSION, gemVersion);
         }
+
+        if (additionalProperties.containsKey(GEM_LICENSE)) {
+            setGemLicense((String) additionalProperties.get(GEM_LICENSE));
+        }
+
+        if (additionalProperties.containsKey(GEM_HOMEPAGE)) {
+            setGemHomepage((String) additionalProperties.get(GEM_HOMEPAGE));
+        }
+
+        if (additionalProperties.containsKey(GEM_SUMMARY)) {
+            setGemSummary((String) additionalProperties.get(GEM_SUMMARY));
+        }
+
+        if (additionalProperties.containsKey(GEM_DESCRIPTION)) {
+            setGemDescription((String) additionalProperties.get(GEM_DESCRIPTION));
+        }
+
+        if (additionalProperties.containsKey(GEM_AUTHOR)) {
+            setGemAuthor((String) additionalProperties.get(GEM_AUTHOR));
+        }
+
+        if (additionalProperties.containsKey(GEM_AUTHOR_EMAIL)) {
+            setGemAuthorEmail((String) additionalProperties.get(GEM_AUTHOR_EMAIL));
+        }
+
 
         // use constant model/api package (folder path)
         setModelPackage("models");
@@ -126,8 +191,8 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("api_error.mustache", gemFolder, "api_error.rb"));
         supportingFiles.add(new SupportingFile("configuration.mustache", gemFolder, "configuration.rb"));
         supportingFiles.add(new SupportingFile("version.mustache", gemFolder, "version.rb"));
-        String modelFolder = gemFolder + File.separator + modelPackage.replace("/", File.separator);
     }
+
 
     @Override
     public CodegenType getTag() {
@@ -147,6 +212,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     /**
      * Generate Ruby module name from the gem name, e.g. use "SwaggerClient" for "swagger_client".
      */
+    @SuppressWarnings("static-method")
     public String generateModuleName(String gemName) {
         return camelize(gemName.replaceAll("[^\\w]+", "_"));
     }
@@ -154,6 +220,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     /**
      * Generate Ruby gem name from the module name, e.g. use "swagger_client" for "SwaggerClient".
      */
+    @SuppressWarnings("static-method")
     public String generateGemName(String moduleName) {
         return underscore(moduleName.replaceAll("[^\\w]+", ""));
     }
@@ -171,6 +238,16 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public String modelFileFolder() {
         return outputFolder + File.separator + libFolder + File.separator + gemName + File.separator + modelPackage.replace("/", File.separator);
+    }
+
+    @Override
+    public String apiTestFileFolder() {
+        return outputFolder + File.separator + specFolder + File.separator + apiPackage.replace("/", File.separator);
+    }
+
+    @Override
+    public String modelTestFileFolder() {
+        return outputFolder + File.separator + specFolder + File.separator + modelPackage.replace("/", File.separator);
     }
 
     @Override
@@ -245,7 +322,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public String toVarName(String name) {
         // sanitize name
-        name = sanitizeName(name);
+        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
 
         // if it's all uppper case, convert to lower case
         if (name.matches("^[A-Z_]*$")) {
@@ -272,7 +349,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String toModelName(String name) {
-        name = sanitizeName(name);
+        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
 
         // model name cannot use reserved keyword, e.g. return
         if (reservedWords.contains(name)) {
@@ -299,10 +376,20 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public String toApiFilename(String name) {
         // replace - with _ e.g. created-at => created_at
-        name = name.replaceAll("-", "_");
+        name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
 
         // e.g. PhoneNumberApi.rb => phone_number_api.rb
         return underscore(name) + "_api";
+    }
+
+    @Override
+    public String toApiTestFilename(String name) {
+        return toApiName(name) + "_spec";
+    }
+
+    @Override
+    public String toModelTestFilename(String name) {
+        return toModelName(name) + "_spec";
     }
 
     @Override
@@ -349,5 +436,29 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     public void setGemVersion(String gemVersion) {
         this.gemVersion = gemVersion;
+    }
+
+    public void setGemDescription(String gemDescription) {
+        this.gemDescription = gemDescription;
+    }
+
+    public void setGemSummary(String gemSummary) {
+        this.gemSummary = gemSummary;
+    }
+
+    public void setGemLicense(String gemLicense) {
+        this.gemLicense = gemLicense;
+    }
+
+    public void setGemHomepage(String gemHomepage) {
+        this.gemHomepage = gemHomepage;
+    }
+
+    public void setGemAuthor(String gemAuthor) {
+        this.gemAuthor = gemAuthor;
+    }
+
+    public void setGemAuthorEmail(String gemAuthorEmail) {
+        this.gemAuthorEmail = gemAuthorEmail;
     }
 }

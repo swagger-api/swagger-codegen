@@ -33,7 +33,11 @@ public class CsharpDotNet2ClientCodegen extends DefaultCodegen implements Codege
 
         reservedWords = new HashSet<String>(
                 Arrays.asList(
-                        "abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char", "checked", "class", "const", "continue", "decimal", "default", "delegate", "do", "double", "else", "enum", "event", "explicit", "extern", "false", "finally", "fixed", "float", "for", "foreach", "goto", "if", "implicit", "in", "int", "interface", "internal", "is", "lock", "long", "namespace", "new", "null", "object", "operator", "out", "override", "params", "private", "protected", "public", "readonly", "ref", "return", "sbyte", "sealed", "short", "sizeof", "stackalloc", "static", "string", "struct", "switch", "this", "throw", "true", "try", "typeof", "uint", "ulong", "unchecked", "unsafe", "ushort", "using", "virtual", "void", "volatile", "while")
+                    // local variable names in API methods (endpoints)
+                    "path", "queryParams", "headerParams", "formParams", "fileParams", "postBody",
+                    "authSettings", "response", "StatusCode",
+                    // C# reserved word 
+                    "abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char", "checked", "class", "const", "continue", "decimal", "default", "delegate", "do", "double", "else", "enum", "event", "explicit", "extern", "false", "finally", "fixed", "float", "for", "foreach", "goto", "if", "implicit", "in", "int", "interface", "internal", "is", "lock", "long", "namespace", "new", "null", "object", "operator", "out", "override", "params", "private", "protected", "public", "readonly", "ref", "return", "sbyte", "sealed", "short", "sizeof", "stackalloc", "static", "string", "struct", "switch", "this", "throw", "true", "try", "typeof", "uint", "ulong", "unchecked", "unsafe", "ushort", "using", "virtual", "void", "volatile", "while")
         );
 
 
@@ -168,7 +172,7 @@ public class CsharpDotNet2ClientCodegen extends DefaultCodegen implements Codege
     @Override
     public String toVarName(String name) {
         // replace - with _ e.g. created-at => created_at
-        name = name.replaceAll("-", "_");
+        name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
 
         // if it's all uppper case, do nothing
         if (name.matches("^[A-Z_]*$")) {
@@ -211,6 +215,8 @@ public class CsharpDotNet2ClientCodegen extends DefaultCodegen implements Codege
 
     @Override
     public String toModelName(String name) {
+        name = sanitizeName(name);
+
         // model name cannot use reserved keyword, e.g. return
         if (reservedWords.contains(name)) {
             throw new RuntimeException(name + " (reserved word) cannot be used as a model name");

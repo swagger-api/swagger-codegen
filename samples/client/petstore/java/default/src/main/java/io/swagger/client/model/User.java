@@ -1,17 +1,16 @@
 package io.swagger.client.model;
 
-import io.swagger.client.StringUtil;
-
-
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
-import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.*;
 
 
 
-@ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-29T11:32:50.163+08:00")
+
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-12T18:48:10.013-08:00")
 public class User   {
   
   private Long id = null;
@@ -26,7 +25,13 @@ public class User   {
   
   /**
    **/
-  @ApiModelProperty(value = "")
+  public User id(Long id) {
+    this.id = id;
+    return this;
+  }
+
+  
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("id")
   public Long getId() {
     return id;
@@ -38,7 +43,13 @@ public class User   {
   
   /**
    **/
-  @ApiModelProperty(value = "")
+  public User username(String username) {
+    this.username = username;
+    return this;
+  }
+
+  
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("username")
   public String getUsername() {
     return username;
@@ -50,7 +61,13 @@ public class User   {
   
   /**
    **/
-  @ApiModelProperty(value = "")
+  public User firstName(String firstName) {
+    this.firstName = firstName;
+    return this;
+  }
+
+  
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("firstName")
   public String getFirstName() {
     return firstName;
@@ -62,7 +79,13 @@ public class User   {
   
   /**
    **/
-  @ApiModelProperty(value = "")
+  public User lastName(String lastName) {
+    this.lastName = lastName;
+    return this;
+  }
+
+  
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("lastName")
   public String getLastName() {
     return lastName;
@@ -74,7 +97,13 @@ public class User   {
   
   /**
    **/
-  @ApiModelProperty(value = "")
+  public User email(String email) {
+    this.email = email;
+    return this;
+  }
+
+  
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("email")
   public String getEmail() {
     return email;
@@ -86,7 +115,13 @@ public class User   {
   
   /**
    **/
-  @ApiModelProperty(value = "")
+  public User password(String password) {
+    this.password = password;
+    return this;
+  }
+
+  
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("password")
   public String getPassword() {
     return password;
@@ -98,7 +133,13 @@ public class User   {
   
   /**
    **/
-  @ApiModelProperty(value = "")
+  public User phone(String phone) {
+    this.phone = phone;
+    return this;
+  }
+
+  
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("phone")
   public String getPhone() {
     return phone;
@@ -111,7 +152,13 @@ public class User   {
   /**
    * User Status
    **/
-  @ApiModelProperty(value = "User Status")
+  public User userStatus(Integer userStatus) {
+    this.userStatus = userStatus;
+    return this;
+  }
+
+  
+  @ApiModelProperty(example = "null", value = "User Status")
   @JsonProperty("userStatus")
   public Integer getUserStatus() {
     return userStatus;
@@ -123,7 +170,7 @@ public class User   {
   
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -131,14 +178,16 @@ public class User   {
       return false;
     }
     User user = (User) o;
-    return Objects.equals(id, user.id) &&
+
+    return true && Objects.equals(id, user.id) &&
         Objects.equals(username, user.username) &&
         Objects.equals(firstName, user.firstName) &&
         Objects.equals(lastName, user.lastName) &&
         Objects.equals(email, user.email) &&
         Objects.equals(password, user.password) &&
         Objects.equals(phone, user.phone) &&
-        Objects.equals(userStatus, user.userStatus);
+        Objects.equals(userStatus, user.userStatus)
+    ;
   }
 
   @Override
@@ -167,7 +216,7 @@ public class User   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

@@ -2,7 +2,7 @@
 
 """
 StoreApi.py
-Copyright 2015 SmartBear Software
+Copyright 2016 SmartBear Software
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -88,7 +88,7 @@ class StoreApi(object):
 
         header_params = {}
 
-        form_params = {}
+        form_params = []
         files = {}
 
         body_params = None
@@ -162,7 +162,7 @@ class StoreApi(object):
 
         header_params = {}
 
-        form_params = {}
+        form_params = []
         files = {}
 
         body_params = None
@@ -243,7 +243,7 @@ class StoreApi(object):
 
         header_params = {}
 
-        form_params = {}
+        form_params = []
         files = {}
 
         body_params = None
@@ -322,7 +322,7 @@ class StoreApi(object):
 
         header_params = {}
 
-        form_params = {}
+        form_params = []
         files = {}
 
         body_params = None

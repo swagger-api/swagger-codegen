@@ -39,7 +39,7 @@ public class XmlExampleGenerator {
     public XmlExampleGenerator(Map<String, Model> examples) {
         this.examples = examples;
         if (examples == null) {
-            examples = new HashMap<String, Model>();
+            this.examples = new HashMap<String, Model>(); 
         }
     }
 
@@ -74,10 +74,6 @@ public class XmlExampleGenerator {
         Map<String, Property> elements = new LinkedHashMap<String, Property>();
 
         String name = modelName;
-        String namespace;
-        String prefix;
-        Boolean wrapped;
-
         Xml xml = model.getXml();
         if (xml != null) {
             if (xml.getName() != null) {
@@ -117,6 +113,7 @@ public class XmlExampleGenerator {
         return sb.toString();
     }
 
+    @SuppressWarnings("static-method")
     protected String quote(String string) {
         return "\"" + string + "\"";
     }
@@ -173,37 +170,37 @@ public class XmlExampleGenerator {
     protected String getExample(Property property) {
         if (property instanceof DateTimeProperty) {
             if (property.getExample() != null) {
-                return property.getExample();
+                return property.getExample().toString();
             } else {
                 return dtFormat.format(new Date());
             }
         } else if (property instanceof StringProperty) {
             if (property.getExample() != null) {
-                return property.getExample();
+                return property.getExample().toString();
             } else {
                 return "string";
             }
         } else if (property instanceof DateProperty) {
             if (property.getExample() != null) {
-                return property.getExample();
+                return property.getExample().toString();
             } else {
                 return dateFormat.format(new Date());
             }
         } else if (property instanceof IntegerProperty) {
             if (property.getExample() != null) {
-                return property.getExample();
+                return property.getExample().toString();
             } else {
                 return "0";
             }
         } else if (property instanceof BooleanProperty) {
             if (property.getExample() != null) {
-                return property.getExample();
+                return property.getExample().toString();
             } else {
                 return "true";
             }
         } else if (property instanceof LongProperty) {
             if (property.getExample() != null) {
-                return property.getExample();
+                return property.getExample().toString();
             } else {
                 return "123456";
             }
@@ -211,14 +208,17 @@ public class XmlExampleGenerator {
         return "not implemented " + property;
     }
 
+    @SuppressWarnings("static-method")
     protected String openTag(String name) {
         return "<" + name + ">";
     }
 
+    @SuppressWarnings("static-method")
     protected String closeTag(String name) {
         return "</" + name + ">";
     }
 
+    @SuppressWarnings("static-method")
     protected String indent(int indent) {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < indent; i++) {

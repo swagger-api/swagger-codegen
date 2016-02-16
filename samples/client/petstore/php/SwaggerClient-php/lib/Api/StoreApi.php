@@ -10,7 +10,7 @@
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 /**
- *  Copyright 2015 SmartBear Software
+ *  Copyright 2016 SmartBear Software
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -120,8 +120,6 @@ class StoreApi
   
         // parse inputs
         $resourcePath = "/store/inventory";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "GET";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -135,6 +133,9 @@ class StoreApi
         
         
         
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
         
         
   
@@ -155,7 +156,7 @@ class StoreApi
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
+                $resourcePath, 'GET',
                 $queryParams, $httpBody,
                 $headerParams, 'map[string,int]'
             );
@@ -164,12 +165,12 @@ class StoreApi
                 return array(null, $statusCode, $httpHeader);
             }
 
-            return array($this->apiClient->getSerializer()->deserialize($response, 'map[string,int]', $httpHeader), $statusCode, $httpHeader);
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, 'map[string,int]', $httpHeader), $statusCode, $httpHeader);
             
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), 'map[string,int]', $e->getResponseHeaders());
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'map[string,int]', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
@@ -209,8 +210,6 @@ class StoreApi
   
         // parse inputs
         $resourcePath = "/store/order";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "POST";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -224,6 +223,9 @@ class StoreApi
         
         
         
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
         
         // body params
         $_tempBody = null;
@@ -241,7 +243,7 @@ class StoreApi
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
+                $resourcePath, 'POST',
                 $queryParams, $httpBody,
                 $headerParams, '\Swagger\Client\Model\Order'
             );
@@ -250,12 +252,12 @@ class StoreApi
                 return array(null, $statusCode, $httpHeader);
             }
 
-            return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Model\Order', $httpHeader), $statusCode, $httpHeader);
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, '\Swagger\Client\Model\Order', $httpHeader), $statusCode, $httpHeader);
             
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Model\Order', $e->getResponseHeaders());
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Order', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
@@ -299,8 +301,6 @@ class StoreApi
   
         // parse inputs
         $resourcePath = "/store/order/{orderId}";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "GET";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -314,6 +314,7 @@ class StoreApi
         
         
         // path params
+        
         if ($order_id !== null) {
             $resourcePath = str_replace(
                 "{" . "orderId" . "}",
@@ -321,6 +322,9 @@ class StoreApi
                 $resourcePath
             );
         }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
         
         
   
@@ -334,7 +338,7 @@ class StoreApi
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
+                $resourcePath, 'GET',
                 $queryParams, $httpBody,
                 $headerParams, '\Swagger\Client\Model\Order'
             );
@@ -343,12 +347,12 @@ class StoreApi
                 return array(null, $statusCode, $httpHeader);
             }
 
-            return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Model\Order', $httpHeader), $statusCode, $httpHeader);
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, '\Swagger\Client\Model\Order', $httpHeader), $statusCode, $httpHeader);
             
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Model\Order', $e->getResponseHeaders());
+                $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Order', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
@@ -392,8 +396,6 @@ class StoreApi
   
         // parse inputs
         $resourcePath = "/store/order/{orderId}";
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "DELETE";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -407,6 +409,7 @@ class StoreApi
         
         
         // path params
+        
         if ($order_id !== null) {
             $resourcePath = str_replace(
                 "{" . "orderId" . "}",
@@ -414,6 +417,9 @@ class StoreApi
                 $resourcePath
             );
         }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
         
         
   
@@ -427,7 +433,7 @@ class StoreApi
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath, $method,
+                $resourcePath, 'DELETE',
                 $queryParams, $httpBody,
                 $headerParams
             );

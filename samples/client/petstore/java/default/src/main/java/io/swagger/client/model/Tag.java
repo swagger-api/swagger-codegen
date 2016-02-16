@@ -1,17 +1,16 @@
 package io.swagger.client.model;
 
-import io.swagger.client.StringUtil;
-
-
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
-import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.*;
 
 
 
-@ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-29T11:32:50.163+08:00")
+
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-12T18:48:10.013-08:00")
 public class Tag   {
   
   private Long id = null;
@@ -20,7 +19,13 @@ public class Tag   {
   
   /**
    **/
-  @ApiModelProperty(value = "")
+  public Tag id(Long id) {
+    this.id = id;
+    return this;
+  }
+
+  
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("id")
   public Long getId() {
     return id;
@@ -32,7 +37,13 @@ public class Tag   {
   
   /**
    **/
-  @ApiModelProperty(value = "")
+  public Tag name(String name) {
+    this.name = name;
+    return this;
+  }
+
+  
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("name")
   public String getName() {
     return name;
@@ -44,7 +55,7 @@ public class Tag   {
   
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -52,8 +63,10 @@ public class Tag   {
       return false;
     }
     Tag tag = (Tag) o;
-    return Objects.equals(id, tag.id) &&
-        Objects.equals(name, tag.name);
+
+    return true && Objects.equals(id, tag.id) &&
+        Objects.equals(name, tag.name)
+    ;
   }
 
   @Override
@@ -76,7 +89,7 @@ public class Tag   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

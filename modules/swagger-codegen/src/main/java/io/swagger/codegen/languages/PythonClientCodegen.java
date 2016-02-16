@@ -51,22 +51,29 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         typeMapping.put("DateTime", "datetime");
         typeMapping.put("object", "object");
         typeMapping.put("file", "file");
+        //TODO binary should be mapped to byte array
+        // mapped to String as a workaround
+        typeMapping.put("binary", "str");
 
         // from https://docs.python.org/release/2.5.4/ref/keywords.html
         reservedWords = new HashSet<String>(
                 Arrays.asList(
-                        "and", "del", "from", "not", "while", "as", "elif", "global", "or", "with",
-                        "assert", "else", "if", "pass", "yield", "break", "except", "import",
-                        "print", "class", "exec", "in", "raise", "continue", "finally", "is",
-                        "return", "def", "for", "lambda", "try"));
+                    // local variable name used in API methods (endpoints)
+                    "all_params", "resource_path", "method", "path_params", "query_params",
+                    "header_params", "form_params", "files", "body_params",  "auth_settings",
+                    // python reserved words
+                    "and", "del", "from", "not", "while", "as", "elif", "global", "or", "with",
+                    "assert", "else", "if", "pass", "yield", "break", "except", "import",
+                    "print", "class", "exec", "in", "raise", "continue", "finally", "is",
+                    "return", "def", "for", "lambda", "try", "self"));
 
         cliOptions.clear();
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "python package name (convention: snake_case).")
                 .defaultValue("swagger_client"));
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_VERSION, "python package version.")
                 .defaultValue("1.0.0"));
-        cliOptions.add(new CliOption(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG,
-                CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG_DESC, BooleanProperty.TYPE));
+        cliOptions.add(CliOption.newBoolean(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG,
+                CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG_DESC).defaultValue(Boolean.TRUE.toString()));
     }
 
     @Override
@@ -172,7 +179,7 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
     @Override
     public String toVarName(String name) {
         // sanitize name
-        name = sanitizeName(name);
+        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
 
         // remove dollar sign
         name = name.replaceAll("$", "");
@@ -205,7 +212,7 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
 
     @Override
     public String toModelName(String name) {
-        name = sanitizeName(name);
+        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
 
         // remove dollar sign
         name = name.replaceAll("$", "");
@@ -287,6 +294,7 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
      * (PEP 0008) Python packages should also have short, all-lowercase names,
      * although the use of underscores is discouraged.
      */
+    @SuppressWarnings("static-method")
     public String generatePackageName(String packageName) {
         return underscore(packageName.replaceAll("[^\\w]+", ""));
     }

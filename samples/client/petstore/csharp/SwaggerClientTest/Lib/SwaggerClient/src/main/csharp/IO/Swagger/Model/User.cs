@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
@@ -14,7 +15,7 @@ namespace IO.Swagger.Model
     /// 
     /// </summary>
     [DataContract]
-    public class User : IEquatable<User>
+    public partial class User :  IEquatable<User>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="User" /> class.
@@ -127,7 +128,7 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Returns true if User instances are equal
         /// </summary>
-        /// <param name="obj">Instance of User to be compared</param>
+        /// <param name="other">Instance of User to be compared</param>
         /// <returns>Boolean</returns>
         public bool Equals(User other)
         {
@@ -191,28 +192,28 @@ namespace IO.Swagger.Model
                 // Suitable nullity checks etc, of course :)
                 
                 if (this.Id != null)
-                    hash = hash * 57 + this.Id.GetHashCode();
+                    hash = hash * 59 + this.Id.GetHashCode();
                 
                 if (this.Username != null)
-                    hash = hash * 57 + this.Username.GetHashCode();
+                    hash = hash * 59 + this.Username.GetHashCode();
                 
                 if (this.FirstName != null)
-                    hash = hash * 57 + this.FirstName.GetHashCode();
+                    hash = hash * 59 + this.FirstName.GetHashCode();
                 
                 if (this.LastName != null)
-                    hash = hash * 57 + this.LastName.GetHashCode();
+                    hash = hash * 59 + this.LastName.GetHashCode();
                 
                 if (this.Email != null)
-                    hash = hash * 57 + this.Email.GetHashCode();
+                    hash = hash * 59 + this.Email.GetHashCode();
                 
                 if (this.Password != null)
-                    hash = hash * 57 + this.Password.GetHashCode();
+                    hash = hash * 59 + this.Password.GetHashCode();
                 
                 if (this.Phone != null)
-                    hash = hash * 57 + this.Phone.GetHashCode();
+                    hash = hash * 59 + this.Phone.GetHashCode();
                 
                 if (this.UserStatus != null)
-                    hash = hash * 57 + this.UserStatus.GetHashCode();
+                    hash = hash * 59 + this.UserStatus.GetHashCode();
                 
                 return hash;
             }
