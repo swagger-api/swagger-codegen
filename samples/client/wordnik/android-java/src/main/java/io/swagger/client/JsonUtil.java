@@ -1,7 +1,7 @@
 package io.swagger.client;
 
 public class JsonUtil {
-    public static ObjectMapper mapper;
+    public static final ObjectMapper mapper;
 
     public static ObjectMapper getJsonMapper() {
         return mapper;
