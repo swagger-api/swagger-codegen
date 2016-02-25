@@ -3,6 +3,7 @@ package io.swagger.codegen.languages;
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
@@ -13,6 +14,8 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
@@ -84,6 +87,9 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("List", "NSArray");
         typeMapping.put("object", "NSObject");
         typeMapping.put("file", "NSURL");
+        //TODO binary should be mapped to byte array
+        // mapped to String as a workaround
+        typeMapping.put("binary", "NSString");
 
 
         // ref: http://www.tutorialspoint.com/objective_c/objective_c_basic_syntax.htm
@@ -243,12 +249,12 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
         if (typeMapping.containsKey(swaggerType)) {
             type = typeMapping.get(swaggerType);
             if (languageSpecificPrimitives.contains(type) && !foundationClasses.contains(type)) {
-                return toModelName(type);
+                return toModelNameWithoutReservedWordCheck(type);
             }
         } else {
             type = swaggerType;
         }
-        return toModelName(type);
+        return toModelNameWithoutReservedWordCheck(type);
     }
 
     @Override
@@ -308,6 +314,23 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String toModelName(String type) {
+        // model name cannot use reserved keyword
+        if (reservedWords.contains(type)) {
+            LOGGER.warn(type+ " (reserved word) cannot be used as model name. Renamed to " + ("object_" + type) + " before further processing");
+            type = "object_" + type; // e.g. return => ObjectReturn (after camelize)
+        }
+
+        return toModelNameWithoutReservedWordCheck(type);
+    }
+
+    /*
+     * Convert input to proper model name according to ObjC style guide
+     * without checking for reserved words
+     *
+     * @param type Model anme
+     * @return model Name in ObjC style guide
+     */
+    public String toModelNameWithoutReservedWordCheck(String type) {
         type = type.replaceAll("[^0-9a-zA-Z_]", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
 
         // language build-in classes
@@ -419,7 +442,8 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         // method name cannot use reserved keyword, e.g. return
         if (reservedWords.contains(operationId)) {
-            throw new RuntimeException(operationId + " (reserved word) cannot be used as method name");
+            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + camelize(sanitizeName("call_" + operationId), true));
+            operationId = "call_" + operationId;
         }
 
         return camelize(sanitizeName(operationId), true);
@@ -451,6 +475,21 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
     
     public void setLicense(String license) {
         this.license = license;
+    }
+
+    @Override
+    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
+        Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
+        if (operations != null) {
+            List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
+            for (CodegenOperation operation : ops) {
+                if (!operation.allParams.isEmpty()) {
+                    String firstParamName = operation.allParams.get(0).paramName;
+                    operation.vendorExtensions.put("firstParamAltName", camelize(firstParamName));
+                }
+            }
+        }
+        return objs;
     }
 
     /**

@@ -71,6 +71,7 @@ public class DefaultCodegen {
     protected String templateDir;
     protected String embeddedTemplateDir;
     protected Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    protected Map<String, Object> vendorExtensions = new HashMap<String, Object>();
     protected List<SupportingFile> supportingFiles = new ArrayList<SupportingFile>();
     protected List<CliOption> cliOptions = new ArrayList<CliOption>();
     protected boolean skipOverwrite;
@@ -108,12 +109,19 @@ public class DefaultCodegen {
         }
     }
 
+    // override with any special post-processing for all models
+    @SuppressWarnings("static-method")
+    public Map<String, Object> postProcessAllModels(Map<String, Object> objs) {
+        return objs;
+    }
+
     // override with any special post-processing
     @SuppressWarnings("static-method")
     public Map<String, Object> postProcessModels(Map<String, Object> objs) {
         return objs;
     }
 
+    
     // override with any special post-processing
     @SuppressWarnings("static-method")
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
@@ -247,6 +255,10 @@ public class DefaultCodegen {
         return additionalProperties;
     }
 
+    public Map<String, Object> vendorExtensions() {
+        return vendorExtensions;
+    }
+    
     public List<SupportingFile> supportingFiles() {
         return supportingFiles;
     }
@@ -593,6 +605,9 @@ public class DefaultCodegen {
      */
     @SuppressWarnings("static-method") 
     public String toExampleValue(Property p) {
+        if(p.getExample() != null) {
+            return p.getExample().toString();
+        }
         if (p instanceof StringProperty) {
             return "null";
         } else if (p instanceof BooleanProperty) {
@@ -1005,6 +1020,7 @@ public class DefaultCodegen {
             property.maxLength = sp.getMaxLength();
             property.minLength = sp.getMinLength();
             property.pattern = sp.getPattern();
+            property.isString = true;
             if (sp.getEnum() != null) {
                 List<String> _enum = sp.getEnum();
                 property._enum = _enum;
@@ -1019,6 +1035,7 @@ public class DefaultCodegen {
         
         if (p instanceof IntegerProperty) {
             IntegerProperty sp = (IntegerProperty) p;
+            property.isInteger = true;
             if (sp.getEnum() != null) {
                 List<Integer> _enum = sp.getEnum();
                 property._enum = new ArrayList<String>();
@@ -1036,6 +1053,7 @@ public class DefaultCodegen {
         
         if (p instanceof LongProperty) {
             LongProperty sp = (LongProperty) p;
+            property.isLong = true;
             if (sp.getEnum() != null) {
                 List<Long> _enum = sp.getEnum();
                 property._enum = new ArrayList<String>();
@@ -1051,8 +1069,21 @@ public class DefaultCodegen {
             }
         }
         
+        if (p instanceof BooleanProperty) {
+            property.isBoolean = true;
+        }
+
+        if (p instanceof BinaryProperty) {
+            property.isBinary = true;
+        }
+
+        if (p instanceof ByteArrayProperty) {
+            property.isByteArray = true;
+        }
+
         if (p instanceof DoubleProperty) {
             DoubleProperty sp = (DoubleProperty) p;
+            property.isDouble = true;
             if (sp.getEnum() != null) {
                 List<Double> _enum = sp.getEnum();
                 property._enum = new ArrayList<String>();
@@ -1070,6 +1101,7 @@ public class DefaultCodegen {
         
         if (p instanceof FloatProperty) {
             FloatProperty sp = (FloatProperty) p;
+            property.isFloat = true;
             if (sp.getEnum() != null) {
                 List<Float> _enum = sp.getEnum();
                 property._enum = new ArrayList<String>();
@@ -1087,6 +1119,7 @@ public class DefaultCodegen {
         
         if (p instanceof DateProperty) {
             DateProperty sp = (DateProperty) p;
+            property.isDate = true;
             if (sp.getEnum() != null) {
                 List<String> _enum = sp.getEnum();
                 property._enum = new ArrayList<String>();
@@ -1104,6 +1137,7 @@ public class DefaultCodegen {
         
         if (p instanceof DateTimeProperty) {
             DateTimeProperty sp = (DateTimeProperty) p;
+            property.isDateTime = true;
             if (sp.getEnum() != null) {
                 List<String> _enum = sp.getEnum();
                 property._enum = new ArrayList<String>();
@@ -1131,6 +1165,7 @@ public class DefaultCodegen {
 
       	if (p instanceof ArrayProperty) {
         		property.isContainer = true;
+        		property.isListContainer = true;
         		property.containerType = "array";
         		ArrayProperty ap = (ArrayProperty) p;
         		CodegenProperty cp = fromProperty(property.name, ap.getItems());
@@ -1153,6 +1188,7 @@ public class DefaultCodegen {
         		}
       	} else if (p instanceof MapProperty) {
             property.isContainer = true;
+            property.isMapContainer = true;
             property.containerType = "map";
             MapProperty ap = (MapProperty) p;
             CodegenProperty cp = fromProperty("inner", ap.getAdditionalProperties());
@@ -1560,7 +1596,7 @@ public class DefaultCodegen {
             if (null == type) {
                 LOGGER.warn("Type is NULL for Serializable Parameter: " + param);
             }
-            if ("array".equals(type)) {
+            if ("array".equals(type)) { // for array parameter
                 Property inner = qp.getItems();
                 if (inner == null) {
                     LOGGER.warn("warning!  No inner type supplied for array parameter \"" + qp.getName() + "\", using String");
@@ -1574,8 +1610,9 @@ public class DefaultCodegen {
                 CodegenProperty pr = fromProperty("inner", inner);
                 p.baseType = pr.datatype;
                 p.isContainer = true;
+                p.isListContainer = true;
                 imports.add(pr.baseType);
-            } else if ("object".equals(type)) {
+            } else if ("object".equals(type)) { // for map parameter
                 Property inner = qp.getItems();
                 if (inner == null) {
                     LOGGER.warn("warning!  No inner type supplied for map parameter \"" + qp.getName() + "\", using String");
@@ -1585,6 +1622,8 @@ public class DefaultCodegen {
                 collectionFormat = qp.getCollectionFormat();
                 CodegenProperty pr = fromProperty("inner", inner);
                 p.baseType = pr.datatype;
+                p.isContainer = true;
+                p.isMapContainer = true;
                 imports.add(pr.baseType);
             } else {
                 Map<PropertyId, Object> args = new HashMap<PropertyId, Object>();
@@ -1592,12 +1631,17 @@ public class DefaultCodegen {
                 args.put(PropertyId.ENUM, qp.getEnum());
                 property = PropertyBuilder.build(type, format, args);
             }
+
             if (property == null) {
                 LOGGER.warn("warning!  Property type \"" + type + "\" not found for parameter \"" + param.getName() + "\", using String");
                 property = new StringProperty().description("//TODO automatically added by swagger-codegen.  Type was " + type + " but not supported");
             }
             property.setRequired(param.getRequired());
             CodegenProperty model = fromProperty(qp.getName(), property);
+
+            // set boolean flag (e.g. isString)
+            setParameterBooleanFlagWithCodegenProperty(p, model);
+
             p.dataType = model.datatype;
             p.isEnum = model.isEnum;
             p._enum = model._enum;
@@ -1648,6 +1692,9 @@ public class DefaultCodegen {
                         p.dataType = cp.datatype;
                         p.isBinary = cp.datatype.toLowerCase().startsWith("byte");
                     }
+
+                    // set boolean flag (e.g. isString)
+                    setParameterBooleanFlagWithCodegenProperty(p, cp);
                 }
             } else if (model instanceof ArrayModel) {
                 // to use the built-in model parsing, we unwrap the ArrayModel
@@ -1663,6 +1710,10 @@ public class DefaultCodegen {
                 imports.add(cp.baseType);
                 p.dataType = cp.datatype;
                 p.isContainer = true;
+                p.isListContainer = true;
+
+                // set boolean flag (e.g. isString)
+                setParameterBooleanFlagWithCodegenProperty(p, cp);
             } else {
                 Model sub = bp.getSchema();
                 if (sub instanceof RefModel) {
@@ -1783,8 +1834,8 @@ public class DefaultCodegen {
                     builder.append(part);
                 }
             }
-            operationId = builder.toString();
-            LOGGER.info("generated operationId " + operationId + "\tfor Path: " + httpMethod + " " + path);
+            operationId = sanitizeName(builder.toString());
+            LOGGER.warn("Empty operationId found for path: " + httpMethod + " " + path + ". Renamed to auto-generated operationId: " + operationId);
         }
         return operationId;
     }
@@ -2080,14 +2131,6 @@ public class DefaultCodegen {
             word = m.replaceAll(rep);
         }
 
-        // Replace two underscores with $ to support inner classes.
-        p = Pattern.compile("(__)(.)");
-        m = p.matcher(word);
-        while (m.find()) {
-            word = m.replaceFirst("\\$" + m.group(2).toUpperCase());
-            m = p.matcher(word);
-        }
-
         // Remove all underscores
         p = Pattern.compile("(_)(.)");
         m = p.matcher(word);
@@ -2150,6 +2193,8 @@ public class DefaultCodegen {
 
     /**
      * Library template (sub-template).
+     *
+     * @return Library template
      */
     public String getLibrary() {
         return library;
@@ -2183,6 +2228,11 @@ public class DefaultCodegen {
     	    return "ERROR_UNKNOWN";
     	}
 
+        // if the name is just '$', map it to 'value' for the time being.
+        if ("$".equals(name)) {
+            return "value";
+        }
+
         // input[] => input
         name = name.replaceAll("\\[\\]", ""); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
 
@@ -2206,5 +2256,73 @@ public class DefaultCodegen {
         // remove everything else other than word, number and _
         // $php_variable => php_variable
         return name.replaceAll("[^a-zA-Z0-9_]", "");
+    }
+
+    /**
+     * Only write if the file doesn't exist
+     *
+     * @param outputFolder Output folder
+     * @param supportingFile Supporting file
+     */
+    public void writeOptional(String outputFolder, SupportingFile supportingFile) {
+        String folder = "";
+
+        if(outputFolder != null && !"".equals(outputFolder)) {
+            folder += outputFolder + File.separator;
+        }
+        folder += supportingFile.folder;
+        if(!"".equals(folder)) {
+            folder += File.separator + supportingFile.destinationFilename;
+        }
+        else {
+            folder = supportingFile.destinationFilename;
+        }
+        if(!new File(folder).exists()) {
+            supportingFiles.add(supportingFile);
+        } else {
+            LOGGER.info("Skipped overwriting " + supportingFile.destinationFilename + " as the file already exists in " + folder);
+        }
+    }
+
+    /**
+     * Set CodegenParameter boolean flag using CodegenProperty.
+     *
+     * @param parameter Codegen Parameter
+     * @param property  Codegen property
+     */
+    public void setParameterBooleanFlagWithCodegenProperty(CodegenParameter parameter, CodegenProperty property) {
+        if (parameter == null) {
+            LOGGER.error("Codegen Parameter cannnot be null.");
+            return;
+        }
+
+        if (property == null) {
+            LOGGER.error("Codegen Property cannot be null.");
+            return;
+        }
+
+        if (Boolean.TRUE.equals(property.isString)) {
+            parameter.isString = true;
+        } else if (Boolean.TRUE.equals(property.isBoolean)) {
+            parameter.isBoolean = true;
+        } else if (Boolean.TRUE.equals(property.isLong)) {
+            parameter.isLong = true;
+        } else if (Boolean.TRUE.equals(property.isInteger)) {
+            parameter.isInteger = true;
+        } else if (Boolean.TRUE.equals(property.isDouble)) {
+            parameter.isDouble = true;
+        } else if (Boolean.TRUE.equals(property.isFloat)) {
+            parameter.isFloat = true;
+        } else if (Boolean.TRUE.equals(property.isByteArray)) {
+            parameter.isByteArray = true;
+        } else if (Boolean.TRUE.equals(property.isBinary)) {
+            parameter.isByteArray = true;
+        } else if (Boolean.TRUE.equals(property.isDate)) {
+            parameter.isDate = true;
+        } else if (Boolean.TRUE.equals(property.isDateTime)) {
+            parameter.isDateTime = true;
+        } else {
+            LOGGER.debug("Property type is not primitive: " + property.datatype);
+        }
     }
 }

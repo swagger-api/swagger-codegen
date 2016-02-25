@@ -378,7 +378,7 @@ sub get_pet_by_id {
     
 
     # authentication setting, if any
-    my $auth_settings = [qw(api_key )];
+    my $auth_settings = [qw(api_key petstore_auth )];
 
     # make the API Call
     my $response = $self->{api_client}->call_api($_resource_path, $_method,
@@ -663,34 +663,34 @@ sub upload_file {
 }
 
 #
-# get_pet_by_id_with_byte_array
+# pet_pet_idtesting_byte_arraytrue_get
 #
 # Fake endpoint to test byte array return by 'Find pet by ID'
 # 
-# @param int $pet_id ID of pet that needs to be fetched (required)
+# @param int $package ID of pet that needs to be fetched (required)
 {
     my $params = {
-    'pet_id' => {
+    'package' => {
         data_type => 'int',
         description => 'ID of pet that needs to be fetched',
         required => '1',
     },
     };
-    __PACKAGE__->method_documentation->{ get_pet_by_id_with_byte_array } = { 
+    __PACKAGE__->method_documentation->{ pet_pet_idtesting_byte_arraytrue_get } = { 
     	summary => 'Fake endpoint to test byte array return by &#39;Find pet by ID&#39;',
         params => $params,
-        returns => 'binary',
+        returns => 'string',
         };
 }
-# @return binary
+# @return string
 #
-sub get_pet_by_id_with_byte_array {
+sub pet_pet_idtesting_byte_arraytrue_get {
     my ($self, %args) = @_;
 
     
-    # verify the required parameter 'pet_id' is set
-    unless (exists $args{'pet_id'}) {
-      croak("Missing the required parameter 'pet_id' when calling get_pet_by_id_with_byte_array");
+    # verify the required parameter 'package' is set
+    unless (exists $args{'package'}) {
+      croak("Missing the required parameter 'package' when calling pet_pet_idtesting_byte_arraytrue_get");
     }
     
 
@@ -713,9 +713,9 @@ sub get_pet_by_id_with_byte_array {
     
     
     # path params
-    if ( exists $args{'pet_id'}) {
-        my $_base_variable = "{" . "petId" . "}";
-        my $_base_value = $self->{api_client}->to_path_value($args{'pet_id'});
+    if ( exists $args{'package'}) {
+        my $_base_variable = "{" . "package" . "}";
+        my $_base_value = $self->{api_client}->to_path_value($args{'package'});
         $_resource_path =~ s/$_base_variable/$_base_value/g;
     }
     
@@ -723,7 +723,7 @@ sub get_pet_by_id_with_byte_array {
     
 
     # authentication setting, if any
-    my $auth_settings = [qw(api_key )];
+    my $auth_settings = [qw(api_key petstore_auth )];
 
     # make the API Call
     my $response = $self->{api_client}->call_api($_resource_path, $_method,
@@ -732,7 +732,7 @@ sub get_pet_by_id_with_byte_array {
     if (!$response) {
         return;
     }
-    my $_response_object = $self->{api_client}->deserialize('binary', $response);
+    my $_response_object = $self->{api_client}->deserialize('string', $response);
     return $_response_object;
     
 }
@@ -742,11 +742,11 @@ sub get_pet_by_id_with_byte_array {
 #
 # Fake endpoint to test byte array in body parameter for adding a new pet to the store
 # 
-# @param binary $body Pet object in the form of byte array (optional)
+# @param string $body Pet object in the form of byte array (optional)
 {
     my $params = {
     'body' => {
-        data_type => 'binary',
+        data_type => 'string',
         description => 'Pet object in the form of byte array',
         required => '0',
     },
