@@ -1,45 +1,22 @@
 package io.swagger.codegen.languages;
 
 import com.google.common.base.Strings;
-
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenParameter;
-import io.swagger.codegen.CodegenProperty;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.DefaultCodegen;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.*;
 import io.swagger.models.Model;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
 import io.swagger.models.parameters.FormParameter;
 import io.swagger.models.parameters.Parameter;
-import io.swagger.models.properties.ArrayProperty;
-import io.swagger.models.properties.BooleanProperty;
-import io.swagger.models.properties.DoubleProperty;
-import io.swagger.models.properties.FloatProperty;
-import io.swagger.models.properties.IntegerProperty;
-import io.swagger.models.properties.LongProperty;
-import io.swagger.models.properties.MapProperty;
-import io.swagger.models.properties.Property;
-import io.swagger.models.properties.StringProperty;
+import io.swagger.models.properties.*;
+import org.apache.commons.lang.BooleanUtils;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.util.*;
+import java.util.regex.Pattern;
 
 public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
     @SuppressWarnings("hiding")
@@ -75,20 +52,20 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         apiPackage = "io.swagger.client.api";
         modelPackage = "io.swagger.client.model";
 
-        reservedWords = new HashSet<String>(
-                Arrays.asList(
-                        // used as internal variables, can collide with parameter names
-                        "path", "queryParams", "headerParams", "formParams", "postBody", "accepts", "accept", "contentTypes",
-                        "contentType", "authNames",
+        setReservedWordsLowerCase(
+            Arrays.asList(
+                // used as internal variables, can collide with parameter names
+                "path", "queryParams", "headerParams", "formParams", "postBody", "accepts", "accept", "contentTypes",
+                "contentType", "authNames",
 
-                        // language reserved words
-                        "abstract", "continue", "for", "new", "switch", "assert",
-                        "default", "if", "package", "synchronized", "boolean", "do", "goto", "private",
-                        "this", "break", "double", "implements", "protected", "throw", "byte", "else",
-                        "import", "public", "throws", "case", "enum", "instanceof", "return", "transient",
-                        "catch", "extends", "int", "short", "try", "char", "final", "interface", "static",
-                        "void", "class", "finally", "long", "strictfp", "volatile", "const", "float",
-                        "native", "super", "while")
+                // language reserved words
+                "abstract", "continue", "for", "new", "switch", "assert",
+                "default", "if", "package", "synchronized", "boolean", "do", "goto", "private",
+                "this", "break", "double", "implements", "protected", "throw", "byte", "else",
+                "import", "public", "throws", "case", "enum", "instanceof", "return", "transient",
+                "catch", "extends", "int", "short", "try", "char", "final", "interface", "static",
+                "void", "class", "finally", "long", "strictfp", "volatile", "const", "float",
+                "native", "super", "while")
         );
 
         languageSpecificPrimitives = new HashSet<String>(
@@ -225,6 +202,8 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         additionalProperties.put(FULL_JAVA_UTIL, fullJavaUtil);
         additionalProperties.put("javaUtilPrefix", javaUtilPrefix);
 
+        importMapping.put("List", "java.util.List");
+
         if (fullJavaUtil) {
             typeMapping.put("array", "java.util.List");
             typeMapping.put("map", "java.util.Map");
@@ -258,13 +237,13 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         importMapping.put("StringUtil", invokerPackage + ".StringUtil");
 
         final String invokerFolder = (sourceFolder + '/' + invokerPackage).replace(".", "/");
-        supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
-        supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
-        supportingFiles.add(new SupportingFile("build.gradle.mustache", "", "build.gradle"));
-        supportingFiles.add(new SupportingFile("settings.gradle.mustache", "", "settings.gradle"));
-        supportingFiles.add(new SupportingFile("gradle.properties.mustache", "", "gradle.properties"));
-        supportingFiles.add(new SupportingFile("manifest.mustache", projectFolder, "AndroidManifest.xml"));
-        supportingFiles.add(new SupportingFile("ApiClient.mustache", invokerFolder, "ApiClient.java"));
+        writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
+        writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
+        writeOptional(outputFolder, new SupportingFile("build.gradle.mustache", "", "build.gradle"));
+        writeOptional(outputFolder, new SupportingFile("settings.gradle.mustache", "", "settings.gradle"));
+        writeOptional(outputFolder, new SupportingFile("gradle.properties.mustache", "", "gradle.properties"));
+        writeOptional(outputFolder, new SupportingFile("manifest.mustache", projectFolder, "AndroidManifest.xml"));
+        writeOptional(outputFolder, new SupportingFile("ApiClient.mustache", invokerFolder, "ApiClient.java"));
         supportingFiles.add(new SupportingFile("StringUtil.mustache", invokerFolder, "StringUtil.java"));
 
         final String authFolder = (sourceFolder + '/' + invokerPackage + ".auth").replace(".", "/");
@@ -383,7 +362,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         name = camelize(name, true);
 
         // for reserved word or word starting with number, append _
-        if (reservedWords.contains(name) || name.matches("^\\d.*")) {
+        if (isReservedWord(name) || name.matches("^\\d.*")) {
             name = escapeReservedWord(name);
         }
 
@@ -397,17 +376,21 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
-    public String toModelName(String name) {
-        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
-
-        // model name cannot use reserved keyword, e.g. return
-        if (reservedWords.contains(name)) {
-            throw new RuntimeException(name + " (reserved word) cannot be used as a model name");
-        }
+    public String toModelName(final String name) {
+        final String sanitizedName = sanitizeName(modelNamePrefix + name + modelNameSuffix);
 
         // camelize the model name
         // phone_number => PhoneNumber
-        return camelize(name);
+        final String camelizedName = camelize(sanitizedName);
+
+        // model name cannot use reserved keyword, e.g. return
+        if (isReservedWord(camelizedName)) {
+            final String modelName = "Object" + camelizedName;
+            LOGGER.warn(camelizedName + " (reserved word) cannot be used as model name. Renamed to " + modelName);
+            return modelName;
+        }
+
+        return camelizedName;
     }
 
     @Override
@@ -503,7 +486,8 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         String type = null;
         if (typeMapping.containsKey(swaggerType)) {
             type = typeMapping.get(swaggerType);
-            if (languageSpecificPrimitives.contains(type) || type.indexOf(".") >= 0) {
+            if (languageSpecificPrimitives.contains(type) || type.indexOf(".") >= 0 ||
+                type.equals("Map") || type.equals("List")) {
                 return type;
             }
         } else {
@@ -522,12 +506,16 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
             throw new RuntimeException("Empty method/operation name (operationId) not allowed");
         }
 
+        operationId = camelize(sanitizeName(operationId), true);
+
         // method name cannot use reserved keyword, e.g. return
-        if (reservedWords.contains(operationId)) {
-            throw new RuntimeException(operationId + " (reserved word) cannot be used as method name");
+        if (isReservedWord(operationId)) {
+            String newOperationId = camelize("call_" + operationId, true);
+            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + newOperationId);
+            return newOperationId;
         }
 
-        return camelize(sanitizeName(operationId), true);
+        return operationId;
     }
 
     @Override
@@ -556,18 +544,24 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
             }
         }
 
-        if(model.isEnum == null || model.isEnum) {
+        if ("array".equals(property.containerType)) {
+          model.imports.add("ArrayList");
+        } else if ("map".equals(property.containerType)) {
+          model.imports.add("HashMap");
+        }
+
+        if(!BooleanUtils.toBoolean(model.isEnum)) {
             // needed by all pojos, but not enums
             model.imports.add("ApiModelProperty");
             model.imports.add("ApiModel");
-            // comment out below as it's in the model template 
+            // comment out below as it's in the model template
             //model.imports.add("Objects");
 
             final String lib = getLibrary();
             if(StringUtils.isEmpty(lib) || "feign".equals(lib) || "jersey2".equals(lib)) {
                 model.imports.add("JsonProperty");
 
-                if(model.hasEnums != null || model.hasEnums == true) {
+                if(BooleanUtils.toBoolean(model.hasEnums)) {
                   model.imports.add("JsonValue");
                 }
             }
@@ -642,6 +636,17 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
+        // Remove imports of List, ArrayList, Map and HashMap as they are
+        // imported in the template already.
+        List<Map<String, String>> imports = (List<Map<String, String>>) objs.get("imports");
+        Pattern pattern = Pattern.compile("java\\.util\\.(List|ArrayList|Map|HashMap)");
+        for (Iterator<Map<String, String>> itr = imports.iterator(); itr.hasNext();) {
+            String _import = itr.next().get("import");
+            if (pattern.matcher(_import).matches()) {
+              itr.remove();
+            }
+        }
+
         if(usesAnyRetrofitLibrary()) {
             Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
             if (operations != null) {
@@ -772,7 +777,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
                     }
                 }
             }
-            
+
             if(removedChildEnum) {
                 // If we removed an entry from this model's vars, we need to ensure hasMore is updated
                 int count = 0, numVars = codegenProperties.size();

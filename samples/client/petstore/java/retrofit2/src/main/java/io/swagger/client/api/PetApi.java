@@ -11,7 +11,10 @@ import okhttp3.RequestBody;
 import io.swagger.client.model.Pet;
 import java.io.File;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public interface PetApi {
   
@@ -134,7 +137,7 @@ public interface PetApi {
    */
   
   @GET("pet/{petId}?testing_byte_array=true")
-  Call<byte[]> getPetByIdWithByteArray(
+  Call<byte[]> petPetIdtestingByteArraytrueGet(
     @Path("petId") Long petId
   );
 

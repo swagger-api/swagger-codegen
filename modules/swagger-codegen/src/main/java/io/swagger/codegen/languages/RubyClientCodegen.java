@@ -14,8 +14,11 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RubyClientCodegen.class);
     public static final String GEM_NAME = "gemName";
     public static final String MODULE_NAME = "moduleName";
     public static final String GEM_VERSION = "gemVersion";
@@ -38,6 +41,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     protected String gemAuthor = "";
     protected String gemAuthorEmail = "";
 
+    protected static int emptyMethodNameCounter = 0;
 
     public RubyClientCodegen() {
         super();
@@ -54,7 +58,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.clear();
         languageSpecificPrimitives.clear();
 
-        reservedWords = new HashSet<String>(
+        setReservedWordsLowerCase(
                 Arrays.asList(
                     // local variable names used in API methods (endpoints)
                     "path", "query_params", "header_params", "_header_accept", "_header_accept_result",
@@ -211,6 +215,9 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     /**
      * Generate Ruby module name from the gem name, e.g. use "SwaggerClient" for "swagger_client".
+     *
+     * @param gemName Ruby gem name
+     * @return Ruby module naame
      */
     @SuppressWarnings("static-method")
     public String generateModuleName(String gemName) {
@@ -219,6 +226,9 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     /**
      * Generate Ruby gem name from the module name, e.g. use "swagger_client" for "SwaggerClient".
+     *
+     * @param  moduleName Ruby module naame
+     * @return Ruby gem name
      */
     @SuppressWarnings("static-method")
     public String generateGemName(String moduleName) {
@@ -316,7 +326,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         if (type == null) {
             return null;
         }
-        return type;
+        return toModelName(type);
     }
 
     @Override
@@ -334,7 +344,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         name = underscore(name);
 
         // for reserved word or word starting with number, append _
-        if (reservedWords.contains(name) || name.matches("^\\d.*")) {
+        if (isReservedWord(name) || name.matches("^\\d.*")) {
             name = escapeReservedWord(name);
         }
 
@@ -352,8 +362,10 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
 
         // model name cannot use reserved keyword, e.g. return
-        if (reservedWords.contains(name)) {
-            throw new RuntimeException(name + " (reserved word) cannot be used as a model name");
+        if (isReservedWord(name)) {
+            String modelName = camelize("object_" + name);
+            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + modelName);
+            return modelName;
         }
 
         // camelize the model name
@@ -364,8 +376,10 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public String toModelFilename(String name) {
         // model name cannot use reserved keyword, e.g. return
-        if (reservedWords.contains(name)) {
-            throw new RuntimeException(name + " (reserved word) cannot be used as a model name");
+        if (isReservedWord(name)) {
+            String filename = underscore("object_" + name);
+            LOGGER.warn(name + " (reserved word) cannot be used as model filename. Renamed to " + filename);
+            return filename;
         }
 
         // underscore the model file name
@@ -403,14 +417,18 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String toOperationId(String operationId) {
-        // throw exception if method name is empty
+        // rename to empty_method_name_1 (e.g.) if method name is empty
         if (StringUtils.isEmpty(operationId)) {
-            throw new RuntimeException("Empty method name (operationId) not allowed");
+            operationId = underscore("empty_method_name_" + emptyMethodNameCounter++);
+            LOGGER.warn("Empty method name (operationId) found. Renamed to " + operationId);
+            return operationId;
         }
 
         // method name cannot use reserved keyword, e.g. return
-        if (reservedWords.contains(operationId)) {
-            throw new RuntimeException(operationId + " (reserved word) cannot be used as method name");
+        if (isReservedWord(operationId)) {
+            String newOperationId = underscore("call_" + operationId);
+            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + newOperationId);
+            return newOperationId;
         }
 
         return underscore(sanitizeName(operationId));

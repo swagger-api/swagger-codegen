@@ -18,10 +18,15 @@ namespace IO.Swagger.Model
     public partial class Category :  IEquatable<Category>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Category" /> class.
+        /// Initializes a new instance of the <see cref="Category" />class.
         /// </summary>
-        public Category()
+        /// <param name="Id">Id.</param>
+        /// <param name="Name">Name.</param>
+
+        public Category(long? Id = null, string Name = null)
         {
+            this.Id = Id;
+            this.Name = Name;
             
         }
 

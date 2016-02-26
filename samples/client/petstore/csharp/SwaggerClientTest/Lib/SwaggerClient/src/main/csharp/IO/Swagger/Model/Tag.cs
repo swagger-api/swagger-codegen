@@ -18,10 +18,15 @@ namespace IO.Swagger.Model
     public partial class Tag :  IEquatable<Tag>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Tag" /> class.
+        /// Initializes a new instance of the <see cref="Tag" />class.
         /// </summary>
-        public Tag()
+        /// <param name="Id">Id.</param>
+        /// <param name="Name">Name.</param>
+
+        public Tag(long? Id = null, string Name = null)
         {
+            this.Id = Id;
+            this.Name = Name;
             
         }
 

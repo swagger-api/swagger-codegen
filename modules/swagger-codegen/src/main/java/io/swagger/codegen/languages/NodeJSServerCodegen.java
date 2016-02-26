@@ -21,7 +21,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig {
-	
+
     private static final Logger LOGGER = LoggerFactory.getLogger(NodeJSServerCodegen.class);
 
     protected String apiVersion = "1.0.0";
@@ -60,7 +60,7 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
         /**
          * Reserved words.  Override this with reserved words specific to your language
          */
-        reservedWords = new HashSet<String>(
+        setReservedWordsLowerCase(
                 Arrays.asList(
                         "break", "case", "class", "catch", "const", "continue", "debugger",
                         "default", "delete", "do", "else", "export", "extends", "finally",
@@ -89,18 +89,9 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
                         "api",
                         "swagger.yaml")
         );
-        supportingFiles.add(new SupportingFile("index.mustache",
-                        "",
-                        "index.js")
-        );
-        supportingFiles.add(new SupportingFile("package.mustache",
-                        "",
-                        "package.json")
-        );
-        supportingFiles.add(new SupportingFile("README.mustache",
-                        "",
-                        "README.md")
-        );
+        writeOptional(outputFolder, new SupportingFile("index.mustache", "", "index.js"));
+        writeOptional(outputFolder, new SupportingFile("package.mustache", "", "package.json"));
+        writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
         if (System.getProperty("noservice") == null) {
             apiTemplateFiles.put(
                     "service.mustache",   // the template to use
@@ -260,7 +251,7 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
             }
         }
         this.additionalProperties.put("serverPort", port);
-        
+
         if (swagger.getInfo() != null) {
             Info info = swagger.getInfo();
             if (info.getTitle() != null) {
