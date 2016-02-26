@@ -548,6 +548,10 @@ public class ApiClient {
       builder = httpClient.resource(url).accept(accept);
     }
 
+    if ("GET".equals(method) && contentType != null && contentType.length() > 0) {
+      headerParams.put("Content-Type", contentType);
+    }
+
     for (String key : headerParams.keySet()) {
       builder = builder.header(key, headerParams.get(key));
     }
