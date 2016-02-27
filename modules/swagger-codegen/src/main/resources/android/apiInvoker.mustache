@@ -57,7 +57,7 @@ public class ApiInvoker {
   private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
 
   private HttpClient client = null;
-
+  private String host = "{{basePath}}";
   private boolean ignoreSSLCertificates = false;
 
   private ClientConnectionManager ignoreSSLConnectionManager;
@@ -241,7 +241,7 @@ public class ApiInvoker {
     }
   }
 
-  public String invokeAPI(String host, String path, String method, List<Pair> queryParams, Object body, Map<String, String> headerParams, Map<String, String> formParams, String contentType) throws ApiException {
+  public String invokeAPI( String path, String method, List<Pair> queryParams, Object body, Map<String, String> headerParams, Map<String, String> formParams, String contentType) throws ApiException {
     HttpClient client = getClient(host);
 
     StringBuilder b = new StringBuilder();
@@ -389,6 +389,12 @@ public class ApiInvoker {
     catch(IOException e) {
       throw new ApiException(500, e.getMessage());
     }
+  }
+  public void setHost (String host ) {
+	this.host = host;
+  }
+  public Sting getHost () {
+	return this.host;
   }
 
   private HttpClient getClient(String host) {
