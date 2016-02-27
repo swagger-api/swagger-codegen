@@ -28,7 +28,7 @@ public class JavaJerseyServerCodegen extends AbstractJavaJAXRSServerCodegen
 
         additionalProperties.put("title", title);
 
-        embeddedTemplateDir = templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME + File.separator + "jersey1_18";
+        embeddedTemplateDir = templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME;
 
         for ( int i = 0; i < cliOptions.size(); i++ ) {
             if ( CodegenConstants.LIBRARY.equals(cliOptions.get(i).getOpt()) ) {
@@ -43,6 +43,7 @@ public class JavaJerseyServerCodegen extends AbstractJavaJAXRSServerCodegen
         Map<String, String> supportedLibraries = new LinkedHashMap<String, String>();
 
         supportedLibraries.put(DEFAULT_LIBRARY, "Jersey core 1.18.1");
+        supportedLibraries.put("jersey2", "HTTP client: Jersey client 2.22");
         library.setEnum(supportedLibraries);
 
         cliOptions.add(library);
@@ -87,6 +88,11 @@ public class JavaJerseyServerCodegen extends AbstractJavaJAXRSServerCodegen
         supportingFiles.add(new SupportingFile("NotFoundException.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "NotFoundException.java"));
         writeOptional(outputFolder, new SupportingFile("web.mustache", ("src/main/webapp/WEB-INF"), "web.xml"));
         supportingFiles.add(new SupportingFile("StringUtil.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "StringUtil.java"));
+
+        // default: jersey 1.18
+        if (getLibrary() == null) {
+            setTemplateDir( JAXRS_TEMPLATE_DIRECTORY_NAME + File.separator + "jersey1_18" );
+        }
 
         if ( additionalProperties.containsKey("dateLibrary") ) {
             setDateLibrary(additionalProperties.get("dateLibrary").toString());
