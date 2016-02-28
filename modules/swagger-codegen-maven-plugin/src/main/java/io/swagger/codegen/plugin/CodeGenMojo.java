@@ -131,88 +131,104 @@ public class CodeGenMojo extends AbstractMojo {
 
         CodegenConfig config = CodegenConfigLoader.forName(language);
         config.setOutputDir(output.getAbsolutePath());
-
-        if (environmentVariables != null) {
-            for(String key : environmentVariables.keySet()) {
-                String value = environmentVariables.get(key);
-                if(value == null) {
-                    // don't put null values
-                    value = "";
-                }
-                System.setProperty(key, value);
-            }
-        }
-        if (null != library) {
-            config.setLibrary(library);
-        }
-        if (null != templateDirectory) {
-            config.additionalProperties().put(TEMPLATE_DIR_PARAM, templateDirectory.getAbsolutePath());
-        }
-        if (null != modelPackage) {
-            config.additionalProperties().put(MODEL_PACKAGE_PARAM, modelPackage);
-        }
-        if (null != apiPackage) {
-            config.additionalProperties().put(API_PACKAGE_PARAM, apiPackage);
-        }
-        if (null != invokerPackage) {
-            config.additionalProperties().put(INVOKER_PACKAGE_PARAM, invokerPackage);
-        }
         
-        Set<String> definedOptions = new HashSet<String>();
-        for (CliOption langCliOption : config.cliOptions()) {
-            definedOptions.add(langCliOption.getOpt());
-        }
+        Map<String,String> storedEnvironmentVariables = new HashMap<String,String>();
         
-        if (configOptions != null) {
-            if(configOptions.containsKey("import-mappings")) {
-                Map<String, String> mappings = createMapFromKeyValuePairs(configOptions.remove("import-mappings").toString());
-                config.importMapping().putAll(mappings);
-            }
-
-            if(configOptions.containsKey("type-mappings")) {
-                Map<String, String> mappings = createMapFromKeyValuePairs(configOptions.remove("type-mappings").toString());
-                config.typeMapping().putAll(mappings);
-            }
-
-            if(configOptions.containsKey("instantiation-types")) {
-                Map<String, String> mappings = createMapFromKeyValuePairs(configOptions.remove("instantiation-types").toString());
-                config.instantiationTypes().putAll(mappings);
-            }
-            addAdditionalProperties(config, definedOptions, configOptions);
-        }
-
-        if (null != configurationFile) {
-            Config genConfig = ConfigParser.read(configurationFile);
-            if (null != genConfig) {
-                addAdditionalProperties(config, definedOptions, genConfig.getOptions());
-            } else {
-                throw new RuntimeException("Unable to read configuration file");
-            }
-        }
-        
-        ClientOptInput input = new ClientOptInput().opts(new ClientOpts()).swagger(swagger);
-        input.setConfig(config);
-
-        if(configHelp) {
-            for (CliOption langCliOption : config.cliOptions()) {
-                System.out.println("\t" + langCliOption.getOpt());
-                System.out.println("\t    " + langCliOption.getOptionHelp().replaceAll("\n", "\n\t    "));
-                System.out.println();
-            }
-            return;
-        }
         try {
-            new DefaultGenerator().opts(input).generate();
-        } catch (Exception e) {
-            // Maven logs exceptions thrown by plugins only if invoked with -e
-            // I find it annoying to jump through hoops to get basic diagnostic information,
-            // so let's log it in any case:
-            getLog().error(e); 
-            throw new MojoExecutionException("Code generation failed. See above for the full exception.");
-        }
 
-        if (addCompileSourceRoot) {
-            project.addCompileSourceRoot(output.toString());
+            if (environmentVariables != null) {
+                for(String key : environmentVariables.keySet()) {
+                    storedEnvironmentVariables.put(key, System.getProperty(key));
+                    String value = environmentVariables.get(key);
+                    if(value == null) {
+                        // don't put null values
+                        value = "";
+                    }
+                    System.setProperty(key, value);
+                }
+            }
+            if (null != library) {
+                config.setLibrary(library);
+            }
+            if (null != templateDirectory) {
+                config.additionalProperties().put(TEMPLATE_DIR_PARAM, templateDirectory.getAbsolutePath());
+            }
+            if (null != modelPackage) {
+                config.additionalProperties().put(MODEL_PACKAGE_PARAM, modelPackage);
+            }
+            if (null != apiPackage) {
+                config.additionalProperties().put(API_PACKAGE_PARAM, apiPackage);
+            }
+            if (null != invokerPackage) {
+                config.additionalProperties().put(INVOKER_PACKAGE_PARAM, invokerPackage);
+            }
+            
+            Set<String> definedOptions = new HashSet<String>();
+            for (CliOption langCliOption : config.cliOptions()) {
+                definedOptions.add(langCliOption.getOpt());
+            }
+            
+            if (configOptions != null) {
+                if(configOptions.containsKey("import-mappings")) {
+                    Map<String, String> mappings = createMapFromKeyValuePairs(configOptions.remove("import-mappings").toString());
+                    config.importMapping().putAll(mappings);
+                }
+    
+                if(configOptions.containsKey("type-mappings")) {
+                    Map<String, String> mappings = createMapFromKeyValuePairs(configOptions.remove("type-mappings").toString());
+                    config.typeMapping().putAll(mappings);
+                }
+    
+                if(configOptions.containsKey("instantiation-types")) {
+                    Map<String, String> mappings = createMapFromKeyValuePairs(configOptions.remove("instantiation-types").toString());
+                    config.instantiationTypes().putAll(mappings);
+                }
+                addAdditionalProperties(config, definedOptions, configOptions);
+            }
+    
+            if (null != configurationFile) {
+                Config genConfig = ConfigParser.read(configurationFile);
+                if (null != genConfig) {
+                    addAdditionalProperties(config, definedOptions, genConfig.getOptions());
+                } else {
+                    throw new RuntimeException("Unable to read configuration file");
+                }
+            }
+            
+            ClientOptInput input = new ClientOptInput().opts(new ClientOpts()).swagger(swagger);
+            input.setConfig(config);
+    
+            if(configHelp) {
+                for (CliOption langCliOption : config.cliOptions()) {
+                    System.out.println("\t" + langCliOption.getOpt());
+                    System.out.println("\t    " + langCliOption.getOptionHelp().replaceAll("\n", "\n\t    "));
+                    System.out.println();
+                }
+                return;
+            }
+            try {
+                new DefaultGenerator().opts(input).generate();
+            } catch (Exception e) {
+                // Maven logs exceptions thrown by plugins only if invoked with -e
+                // I find it annoying to jump through hoops to get basic diagnostic information,
+                // so let's log it in any case:
+                getLog().error(e); 
+                throw new MojoExecutionException("Code generation failed. See above for the full exception.");
+            }
+    
+            if (addCompileSourceRoot) {
+                project.addCompileSourceRoot(output.toString());
+            }
+            
+        } finally {
+            for (String key : storedEnvironmentVariables.keySet()) {
+                String value = storedEnvironmentVariables.get(key);
+                if (value == null) {
+                    System.clearProperty(key);
+                } else {
+                    System.setProperty(key, value);
+                }
+            }
         }
     }
     
