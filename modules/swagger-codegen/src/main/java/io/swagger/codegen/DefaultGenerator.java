@@ -686,7 +686,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     @SuppressWarnings("static-method")
     protected String sanitizeTag(String tag) {
         // remove spaces and make strong case
-        String[] parts = tag.split(" ");
+        String[] parts = tag.split("[ -._]");
         StringBuilder buf = new StringBuilder();
         for (String part : parts) {
             if (isNotEmpty(part)) {
