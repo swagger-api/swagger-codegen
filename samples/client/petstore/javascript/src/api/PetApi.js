@@ -24,14 +24,14 @@
     /**
      * Update an existing pet
      * 
-     * @param {Pet}  body Pet object that needs to be added to the store
+     * @param {Pet} opts['body'] Pet object that needs to be added to the store
      * @param {function} callback the callback function, accepting three arguments: error, data, response
      */
-    self.updatePet = function(body, callback) {
-      var postBody = body;
+    self.updatePet = function(opts, callback) {
+      opts = opts || {};
+      var postBody = opts['body'];
       
 
-      
       var pathParams = {
       };
       var queryParams = {
@@ -41,35 +41,30 @@
       var formParams = {
       };
 
+      var authNames = ['petstore_auth'];
       var contentTypes = ['application/json', 'application/xml'];
       var accepts = ['application/json', 'application/xml'];
-
-      var handleResponse = null;
-      if (callback) {
-        handleResponse = function(error, data, response) {
-          callback(error, data, response);
-        };
-      }
+      var returnType = null;
 
       return this.apiClient.callApi(
         '/pet', 'PUT',
         pathParams, queryParams, headerParams, formParams, postBody,
-        contentTypes, accepts, handleResponse
+        authNames, contentTypes, accepts, returnType, callback
       );
-      
+
     }
     
     /**
      * Add a new pet to the store
      * 
-     * @param {Pet}  body Pet object that needs to be added to the store
+     * @param {Pet} opts['body'] Pet object that needs to be added to the store
      * @param {function} callback the callback function, accepting three arguments: error, data, response
      */
-    self.addPet = function(body, callback) {
-      var postBody = body;
+    self.addPet = function(opts, callback) {
+      opts = opts || {};
+      var postBody = opts['body'];
       
 
-      
       var pathParams = {
       };
       var queryParams = {
@@ -79,110 +74,93 @@
       var formParams = {
       };
 
+      var authNames = ['petstore_auth'];
       var contentTypes = ['application/json', 'application/xml'];
       var accepts = ['application/json', 'application/xml'];
-
-      var handleResponse = null;
-      if (callback) {
-        handleResponse = function(error, data, response) {
-          callback(error, data, response);
-        };
-      }
+      var returnType = null;
 
       return this.apiClient.callApi(
         '/pet', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
-        contentTypes, accepts, handleResponse
+        authNames, contentTypes, accepts, returnType, callback
       );
-      
+
     }
     
     /**
      * Finds Pets by status
-     * Multiple status values can be provided with comma seperated strings
-     * @param {Array}  status Status values that need to be considered for filter
+     * Multiple status values can be provided with comma separated strings
+     * @param {[String]} opts['status'] Status values that need to be considered for query
      * @param {function} callback the callback function, accepting three arguments: error, data, response
-     *   data is of type: Array
+     *   data is of type: [Pet]
      */
-    self.findPetsByStatus = function(status, callback) {
+    self.findPetsByStatus = function(opts, callback) {
+      opts = opts || {};
       var postBody = null;
       
 
-      
       var pathParams = {
       };
       var queryParams = {
-        'status': status
+        'status': this.apiClient.buildCollectionParam(opts['status'], 'multi')
       };
       var headerParams = {
       };
       var formParams = {
       };
 
+      var authNames = ['petstore_auth'];
       var contentTypes = [];
       var accepts = ['application/json', 'application/xml'];
-
-      var handleResponse = null;
-      if (callback) {
-        handleResponse = function(error, data, response) {
-          // TODO: support deserializing array of models
-          callback(error, data, response);
-        };
-      }
+      var returnType = [Pet];
 
       return this.apiClient.callApi(
         '/pet/findByStatus', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
-        contentTypes, accepts, handleResponse
+        authNames, contentTypes, accepts, returnType, callback
       );
-      
+
     }
     
     /**
      * Finds Pets by tags
      * Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
-     * @param {Array}  tags Tags to filter by
+     * @param {[String]} opts['tags'] Tags to filter by
      * @param {function} callback the callback function, accepting three arguments: error, data, response
-     *   data is of type: Array
+     *   data is of type: [Pet]
      */
-    self.findPetsByTags = function(tags, callback) {
+    self.findPetsByTags = function(opts, callback) {
+      opts = opts || {};
       var postBody = null;
       
 
-      
       var pathParams = {
       };
       var queryParams = {
-        'tags': tags
+        'tags': this.apiClient.buildCollectionParam(opts['tags'], 'multi')
       };
       var headerParams = {
       };
       var formParams = {
       };
 
+      var authNames = ['petstore_auth'];
       var contentTypes = [];
       var accepts = ['application/json', 'application/xml'];
-
-      var handleResponse = null;
-      if (callback) {
-        handleResponse = function(error, data, response) {
-          // TODO: support deserializing array of models
-          callback(error, data, response);
-        };
-      }
+      var returnType = [Pet];
 
       return this.apiClient.callApi(
         '/pet/findByTags', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
-        contentTypes, accepts, handleResponse
+        authNames, contentTypes, accepts, returnType, callback
       );
-      
+
     }
     
     /**
      * Find pet by ID
      * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
-     * @param {Integer}  petId ID of pet that needs to be fetched
+     * @param {Integer} petId ID of pet that needs to be fetched
      * @param {function} callback the callback function, accepting three arguments: error, data, response
      *   data is of type: Pet
      */
@@ -195,7 +173,6 @@
       }
       
 
-      
       var pathParams = {
         'petId': petId
       };
@@ -206,39 +183,29 @@
       var formParams = {
       };
 
+      var authNames = ['petstore_auth', 'api_key'];
       var contentTypes = [];
       var accepts = ['application/json', 'application/xml'];
-
-      var handleResponse = null;
-      if (callback) {
-        handleResponse = function(error, data, response) {
-          if (!error && data) {
-            var result = new Pet();
-            result.constructFromObject(data);
-            callback(error, result, response);
-          } else {
-            callback(error, data, response);
-          }
-        };
-      }
+      var returnType = Pet;
 
       return this.apiClient.callApi(
         '/pet/{petId}', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
-        contentTypes, accepts, handleResponse
+        authNames, contentTypes, accepts, returnType, callback
       );
-      
+
     }
     
     /**
      * Updates a pet in the store with form data
      * 
-     * @param {String}  petId ID of pet that needs to be updated
-     * @param {String}  name Updated name of the pet
-     * @param {String}  status Updated status of the pet
+     * @param {String} petId ID of pet that needs to be updated
+     * @param {String} opts['name'] Updated name of the pet
+     * @param {String} opts['status'] Updated status of the pet
      * @param {function} callback the callback function, accepting three arguments: error, data, response
      */
-    self.updatePetWithForm = function(petId, name, status, callback) {
+    self.updatePetWithForm = function(petId, opts, callback) {
+      opts = opts || {};
       var postBody = null;
       
       // verify the required parameter 'petId' is set
@@ -247,7 +214,6 @@
       }
       
 
-      
       var pathParams = {
         'petId': petId
       };
@@ -256,36 +222,32 @@
       var headerParams = {
       };
       var formParams = {
-        'name': name,
-        'status': status
+        'name': opts['name'],
+        'status': opts['status']
       };
 
+      var authNames = ['petstore_auth'];
       var contentTypes = ['application/x-www-form-urlencoded'];
       var accepts = ['application/json', 'application/xml'];
-
-      var handleResponse = null;
-      if (callback) {
-        handleResponse = function(error, data, response) {
-          callback(error, data, response);
-        };
-      }
+      var returnType = null;
 
       return this.apiClient.callApi(
         '/pet/{petId}', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
-        contentTypes, accepts, handleResponse
+        authNames, contentTypes, accepts, returnType, callback
       );
-      
+
     }
     
     /**
      * Deletes a pet
      * 
-     * @param {Integer}  petId Pet id to delete
-     * @param {String}  apiKey 
+     * @param {Integer} petId Pet id to delete
+     * @param {String} opts['apiKey'] 
      * @param {function} callback the callback function, accepting three arguments: error, data, response
      */
-    self.deletePet = function(petId, apiKey, callback) {
+    self.deletePet = function(petId, opts, callback) {
+      opts = opts || {};
       var postBody = null;
       
       // verify the required parameter 'petId' is set
@@ -294,45 +256,40 @@
       }
       
 
-      
       var pathParams = {
         'petId': petId
       };
       var queryParams = {
       };
       var headerParams = {
-        'api_key': apiKey
+        'api_key': opts['apiKey']
       };
       var formParams = {
       };
 
+      var authNames = ['petstore_auth'];
       var contentTypes = [];
       var accepts = ['application/json', 'application/xml'];
-
-      var handleResponse = null;
-      if (callback) {
-        handleResponse = function(error, data, response) {
-          callback(error, data, response);
-        };
-      }
+      var returnType = null;
 
       return this.apiClient.callApi(
         '/pet/{petId}', 'DELETE',
         pathParams, queryParams, headerParams, formParams, postBody,
-        contentTypes, accepts, handleResponse
+        authNames, contentTypes, accepts, returnType, callback
       );
-      
+
     }
     
     /**
      * uploads an image
      * 
-     * @param {Integer}  petId ID of pet to update
-     * @param {String}  additionalMetadata Additional data to pass to server
-     * @param {File}  file file to upload
+     * @param {Integer} petId ID of pet to update
+     * @param {String} opts['additionalMetadata'] Additional data to pass to server
+     * @param {File} opts['file'] file to upload
      * @param {function} callback the callback function, accepting three arguments: error, data, response
      */
-    self.uploadFile = function(petId, additionalMetadata, file, callback) {
+    self.uploadFile = function(petId, opts, callback) {
+      opts = opts || {};
       var postBody = null;
       
       // verify the required parameter 'petId' is set
@@ -341,7 +298,6 @@
       }
       
 
-      
       var pathParams = {
         'petId': petId
       };
@@ -350,45 +306,39 @@
       var headerParams = {
       };
       var formParams = {
-        'additionalMetadata': additionalMetadata,
-        'file': file
+        'additionalMetadata': opts['additionalMetadata'],
+        'file': opts['file']
       };
 
+      var authNames = ['petstore_auth'];
       var contentTypes = ['multipart/form-data'];
       var accepts = ['application/json', 'application/xml'];
-
-      var handleResponse = null;
-      if (callback) {
-        handleResponse = function(error, data, response) {
-          callback(error, data, response);
-        };
-      }
+      var returnType = null;
 
       return this.apiClient.callApi(
         '/pet/{petId}/uploadImage', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
-        contentTypes, accepts, handleResponse
+        authNames, contentTypes, accepts, returnType, callback
       );
-      
+
     }
     
     /**
      * Fake endpoint to test byte array return by &#39;Find pet by ID&#39;
      * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
-     * @param {Integer}  petId ID of pet that needs to be fetched
+     * @param {Integer} petId ID of pet that needs to be fetched
      * @param {function} callback the callback function, accepting three arguments: error, data, response
-     *   data is of type: String
+     *   data is of type: 'String'
      */
-    self.getPetByIdWithByteArray = function(petId, callback) {
+    self.petPetIdtestingByteArraytrueGet = function(petId, callback) {
       var postBody = null;
       
       // verify the required parameter 'petId' is set
       if (petId == null) {
-        throw "Missing the required parameter 'petId' when calling getPetByIdWithByteArray";
+        throw "Missing the required parameter 'petId' when calling petPetIdtestingByteArraytrueGet";
       }
       
 
-      
       var pathParams = {
         'petId': petId
       };
@@ -399,35 +349,30 @@
       var formParams = {
       };
 
+      var authNames = ['petstore_auth', 'api_key'];
       var contentTypes = [];
       var accepts = ['application/json', 'application/xml'];
-
-      var handleResponse = null;
-      if (callback) {
-        handleResponse = function(error, data, response) {
-          callback(error, data, response);
-        };
-      }
+      var returnType = 'String';
 
       return this.apiClient.callApi(
         '/pet/{petId}?testing_byte_array=true', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
-        contentTypes, accepts, handleResponse
+        authNames, contentTypes, accepts, returnType, callback
       );
-      
+
     }
     
     /**
      * Fake endpoint to test byte array in body parameter for adding a new pet to the store
      * 
-     * @param {String}  body Pet object in the form of byte array
+     * @param {String} opts['body'] Pet object in the form of byte array
      * @param {function} callback the callback function, accepting three arguments: error, data, response
      */
-    self.addPetUsingByteArray = function(body, callback) {
-      var postBody = body;
+    self.addPetUsingByteArray = function(opts, callback) {
+      opts = opts || {};
+      var postBody = opts['body'];
       
 
-      
       var pathParams = {
       };
       var queryParams = {
@@ -437,22 +382,17 @@
       var formParams = {
       };
 
+      var authNames = ['petstore_auth'];
       var contentTypes = ['application/json', 'application/xml'];
       var accepts = ['application/json', 'application/xml'];
-
-      var handleResponse = null;
-      if (callback) {
-        handleResponse = function(error, data, response) {
-          callback(error, data, response);
-        };
-      }
+      var returnType = null;
 
       return this.apiClient.callApi(
         '/pet?testing_byte_array=true', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
-        contentTypes, accepts, handleResponse
+        authNames, contentTypes, accepts, returnType, callback
       );
-      
+
     }
     
     

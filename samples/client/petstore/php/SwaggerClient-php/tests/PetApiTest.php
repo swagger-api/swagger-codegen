@@ -2,6 +2,10 @@
 
 require_once('autoload.php');
 
+// increase memory limit to avoid fatal error due to findPetByStatus
+// returning a lot of data
+ini_set('memory_limit', '256M');
+
 class PetApiTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -325,7 +329,7 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $pet_api = new Swagger\Client\Api\PetAPI($api_client);
         // test getPetByIdWithByteArray 
         $pet_id = 10005;
-        $bytes = $pet_api->getPetByIdWithByteArray($pet_id);
+        $bytes = $pet_api->petPetIdtestingByteArraytrueGet($pet_id);
         $json = json_decode(call_user_func_array('pack', array_merge(array('C*'), $bytes )), true);
 
         $this->assertInternalType("array", $bytes);

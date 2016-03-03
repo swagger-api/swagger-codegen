@@ -18,6 +18,8 @@ public interface CodegenConfig {
     String getHelp();
 
     Map<String, Object> additionalProperties();
+    
+    Map<String, Object> vendorExtensions();
 
     String testPackage();
 
@@ -103,6 +105,8 @@ public interface CodegenConfig {
 
     void processSwagger(Swagger swagger);
 
+    String sanitizeTag(String tag);
+
     String toApiFilename(String name);
 
     String toModelFilename(String name);
@@ -117,6 +121,8 @@ public interface CodegenConfig {
 
     void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co, Map<String, List<CodegenOperation>> operations);
 
+    Map<String, Object> postProcessAllModels(Map<String, Object> objs);
+    
     Map<String, Object> postProcessModels(Map<String, Object> objs);
 
     Map<String, Object> postProcessOperations(Map<String, Object> objs);
@@ -143,6 +149,8 @@ public interface CodegenConfig {
 
     /**
      * Library template (sub-template).
+     *
+     * @return libray template
      */
     String getLibrary();
 }

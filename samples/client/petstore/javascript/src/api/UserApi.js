@@ -24,14 +24,14 @@
     /**
      * Create user
      * This can only be done by the logged in user.
-     * @param {User}  body Created user object
+     * @param {User} opts['body'] Created user object
      * @param {function} callback the callback function, accepting three arguments: error, data, response
      */
-    self.createUser = function(body, callback) {
-      var postBody = body;
+    self.createUser = function(opts, callback) {
+      opts = opts || {};
+      var postBody = opts['body'];
       
 
-      
       var pathParams = {
       };
       var queryParams = {
@@ -41,35 +41,30 @@
       var formParams = {
       };
 
+      var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json', 'application/xml'];
-
-      var handleResponse = null;
-      if (callback) {
-        handleResponse = function(error, data, response) {
-          callback(error, data, response);
-        };
-      }
+      var returnType = null;
 
       return this.apiClient.callApi(
         '/user', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
-        contentTypes, accepts, handleResponse
+        authNames, contentTypes, accepts, returnType, callback
       );
-      
+
     }
     
     /**
      * Creates list of users with given input array
      * 
-     * @param {Array}  body List of user object
+     * @param {[User]} opts['body'] List of user object
      * @param {function} callback the callback function, accepting three arguments: error, data, response
      */
-    self.createUsersWithArrayInput = function(body, callback) {
-      var postBody = body;
+    self.createUsersWithArrayInput = function(opts, callback) {
+      opts = opts || {};
+      var postBody = opts['body'];
       
 
-      
       var pathParams = {
       };
       var queryParams = {
@@ -79,35 +74,30 @@
       var formParams = {
       };
 
+      var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json', 'application/xml'];
-
-      var handleResponse = null;
-      if (callback) {
-        handleResponse = function(error, data, response) {
-          callback(error, data, response);
-        };
-      }
+      var returnType = null;
 
       return this.apiClient.callApi(
         '/user/createWithArray', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
-        contentTypes, accepts, handleResponse
+        authNames, contentTypes, accepts, returnType, callback
       );
-      
+
     }
     
     /**
      * Creates list of users with given input array
      * 
-     * @param {Array}  body List of user object
+     * @param {[User]} opts['body'] List of user object
      * @param {function} callback the callback function, accepting three arguments: error, data, response
      */
-    self.createUsersWithListInput = function(body, callback) {
-      var postBody = body;
+    self.createUsersWithListInput = function(opts, callback) {
+      opts = opts || {};
+      var postBody = opts['body'];
       
 
-      
       var pathParams = {
       };
       var queryParams = {
@@ -117,64 +107,54 @@
       var formParams = {
       };
 
+      var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json', 'application/xml'];
-
-      var handleResponse = null;
-      if (callback) {
-        handleResponse = function(error, data, response) {
-          callback(error, data, response);
-        };
-      }
+      var returnType = null;
 
       return this.apiClient.callApi(
         '/user/createWithList', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
-        contentTypes, accepts, handleResponse
+        authNames, contentTypes, accepts, returnType, callback
       );
-      
+
     }
     
     /**
      * Logs user into the system
      * 
-     * @param {String}  username The user name for login
-     * @param {String}  password The password for login in clear text
+     * @param {String} opts['username'] The user name for login
+     * @param {String} opts['password'] The password for login in clear text
      * @param {function} callback the callback function, accepting three arguments: error, data, response
-     *   data is of type: String
+     *   data is of type: 'String'
      */
-    self.loginUser = function(username, password, callback) {
+    self.loginUser = function(opts, callback) {
+      opts = opts || {};
       var postBody = null;
       
 
-      
       var pathParams = {
       };
       var queryParams = {
-        'username': username,
-        'password': password
+        'username': opts['username'],
+        'password': opts['password']
       };
       var headerParams = {
       };
       var formParams = {
       };
 
+      var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json', 'application/xml'];
-
-      var handleResponse = null;
-      if (callback) {
-        handleResponse = function(error, data, response) {
-          callback(error, data, response);
-        };
-      }
+      var returnType = 'String';
 
       return this.apiClient.callApi(
         '/user/login', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
-        contentTypes, accepts, handleResponse
+        authNames, contentTypes, accepts, returnType, callback
       );
-      
+
     }
     
     /**
@@ -186,7 +166,6 @@
       var postBody = null;
       
 
-      
       var pathParams = {
       };
       var queryParams = {
@@ -196,28 +175,23 @@
       var formParams = {
       };
 
+      var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json', 'application/xml'];
-
-      var handleResponse = null;
-      if (callback) {
-        handleResponse = function(error, data, response) {
-          callback(error, data, response);
-        };
-      }
+      var returnType = null;
 
       return this.apiClient.callApi(
         '/user/logout', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
-        contentTypes, accepts, handleResponse
+        authNames, contentTypes, accepts, returnType, callback
       );
-      
+
     }
     
     /**
      * Get user by user name
      * 
-     * @param {String}  username The name that needs to be fetched. Use user1 for testing.
+     * @param {String} username The name that needs to be fetched. Use user1 for testing.
      * @param {function} callback the callback function, accepting three arguments: error, data, response
      *   data is of type: User
      */
@@ -230,7 +204,6 @@
       }
       
 
-      
       var pathParams = {
         'username': username
       };
@@ -241,39 +214,29 @@
       var formParams = {
       };
 
+      var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json', 'application/xml'];
-
-      var handleResponse = null;
-      if (callback) {
-        handleResponse = function(error, data, response) {
-          if (!error && data) {
-            var result = new User();
-            result.constructFromObject(data);
-            callback(error, result, response);
-          } else {
-            callback(error, data, response);
-          }
-        };
-      }
+      var returnType = User;
 
       return this.apiClient.callApi(
         '/user/{username}', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
-        contentTypes, accepts, handleResponse
+        authNames, contentTypes, accepts, returnType, callback
       );
-      
+
     }
     
     /**
      * Updated user
      * This can only be done by the logged in user.
-     * @param {String}  username name that need to be deleted
-     * @param {User}  body Updated user object
+     * @param {String} username name that need to be deleted
+     * @param {User} opts['body'] Updated user object
      * @param {function} callback the callback function, accepting three arguments: error, data, response
      */
-    self.updateUser = function(username, body, callback) {
-      var postBody = body;
+    self.updateUser = function(username, opts, callback) {
+      opts = opts || {};
+      var postBody = opts['body'];
       
       // verify the required parameter 'username' is set
       if (username == null) {
@@ -281,7 +244,6 @@
       }
       
 
-      
       var pathParams = {
         'username': username
       };
@@ -292,28 +254,23 @@
       var formParams = {
       };
 
+      var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json', 'application/xml'];
-
-      var handleResponse = null;
-      if (callback) {
-        handleResponse = function(error, data, response) {
-          callback(error, data, response);
-        };
-      }
+      var returnType = null;
 
       return this.apiClient.callApi(
         '/user/{username}', 'PUT',
         pathParams, queryParams, headerParams, formParams, postBody,
-        contentTypes, accepts, handleResponse
+        authNames, contentTypes, accepts, returnType, callback
       );
-      
+
     }
     
     /**
      * Delete user
      * This can only be done by the logged in user.
-     * @param {String}  username The name that needs to be deleted
+     * @param {String} username The name that needs to be deleted
      * @param {function} callback the callback function, accepting three arguments: error, data, response
      */
     self.deleteUser = function(username, callback) {
@@ -325,7 +282,6 @@
       }
       
 
-      
       var pathParams = {
         'username': username
       };
@@ -336,22 +292,17 @@
       var formParams = {
       };
 
+      var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json', 'application/xml'];
-
-      var handleResponse = null;
-      if (callback) {
-        handleResponse = function(error, data, response) {
-          callback(error, data, response);
-        };
-      }
+      var returnType = null;
 
       return this.apiClient.callApi(
         '/user/{username}', 'DELETE',
         pathParams, queryParams, headerParams, formParams, postBody,
-        contentTypes, accepts, handleResponse
+        authNames, contentTypes, accepts, returnType, callback
       );
-      
+
     }
     
     

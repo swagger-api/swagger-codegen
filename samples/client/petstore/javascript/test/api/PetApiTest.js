@@ -29,7 +29,7 @@ var createRandomPet = function() {
 describe('PetApi', function() {
   it('should create and get pet', function(done) {
     var pet = createRandomPet();
-    api.addPet(pet, function(error) {
+    api.addPet({body: pet}, function(error) {
       if (error) throw error;
 
       api.getPetById(pet.id, function(error, fetched, response) {
@@ -40,6 +40,7 @@ describe('PetApi', function() {
 
         expect(fetched).to.be.ok();
         expect(fetched.id).to.be(pet.id);
+        expect(fetched.getPhotoUrls()).to.eql(pet.getPhotoUrls());
         expect(fetched.getCategory()).to.be.ok();
         expect(fetched.getCategory().getName()).to.be(pet.getCategory().getName());
 
