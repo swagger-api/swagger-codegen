@@ -4,6 +4,7 @@ import io.swagger.codegen.*;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
+import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.File;
@@ -329,13 +330,24 @@ public class JavaResteasyServerCodegen extends JavaClientCodegen implements Code
             }
         }
 
-        if(model.isEnum == null || model.isEnum) {
+        if ("array".equals(property.containerType)) {
+            model.imports.add("ArrayList");
+        } else if ("map".equals(property.containerType)) {
+            model.imports.add("HashMap");
+        }
+
+        if(!BooleanUtils.toBoolean(model.isEnum)) {
+            // needed by all pojos, but not enums
+            model.imports.add("ApiModelProperty");
+            model.imports.add("ApiModel");
+            // comment out below as it's in the model template
+            //model.imports.add("Objects");
 
             final String lib = getLibrary();
-            if(StringUtils.isEmpty(lib)) {
+            if(StringUtils.isEmpty(lib) || "feign".equals(lib) || "jersey2".equals(lib)) {
                 model.imports.add("JsonProperty");
 
-                if(model.hasEnums != null || model.hasEnums == true) {
+                if(BooleanUtils.toBoolean(model.hasEnums)) {
                     model.imports.add("JsonValue");
                 }
             }
