@@ -7,40 +7,44 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace IO.Swagger.Model
 {
-
     /// <summary>
     /// 
     /// </summary>
     [DataContract]
     public partial class Tag :  IEquatable<Tag>
-    {
+    { 
+    
         /// <summary>
         /// Initializes a new instance of the <see cref="Tag" /> class.
+        /// Initializes a new instance of the <see cref="Tag" />class.
         /// </summary>
-        public Tag()
+        /// <param name="Id">Id.</param>
+        /// <param name="Name">Name.</param>
+
+        public Tag(long? Id = null, string Name = null)
         {
+            this.Id = Id;
+            this.Name = Name;
             
         }
-
         
+    
         /// <summary>
         /// Gets or Sets Id
         /// </summary>
         [DataMember(Name="id", EmitDefaultValue=false)]
         public long? Id { get; set; }
-  
-        
+    
         /// <summary>
         /// Gets or Sets Name
         /// </summary>
         [DataMember(Name="name", EmitDefaultValue=false)]
         public string Name { get; set; }
-  
-        
-  
+    
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>

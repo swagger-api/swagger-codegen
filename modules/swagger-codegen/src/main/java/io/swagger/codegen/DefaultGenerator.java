@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.util.*;
 
-import static org.apache.commons.lang3.StringUtils.capitalize;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+import org.apache.commons.lang3.ObjectUtils;
 
 public class DefaultGenerator extends AbstractGenerator implements Generator {
     protected Logger LOGGER = LoggerFactory.getLogger(DefaultGenerator.class);
@@ -168,22 +168,63 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         List<Object> allModels = new ArrayList<Object>();
 
         // models
-        Map<String, Model> definitions = swagger.getDefinitions();
+        final Map<String, Model> definitions = swagger.getDefinitions();
         if (definitions != null) {
-        	List<String> sortedModelKeys = sortModelsByInheritance(definitions);
+        	Set<String> modelKeys = definitions.keySet();
 
             if(generateModels) {
                 if(modelsToGenerate != null && modelsToGenerate.size() > 0) {
-                    List<String> updatedKeys = new ArrayList<String>();
-                    for(String m : sortedModelKeys) {
+                    Set<String> updatedKeys = new HashSet<String>();
+                    for(String m : modelKeys) {
                         if(modelsToGenerate.contains(m)) {
                             updatedKeys.add(m);
                         }
                     }
-                    sortedModelKeys = updatedKeys;
+                    modelKeys = updatedKeys;
                 }
 
-                for (String name : sortedModelKeys) {
+                // store all processed models
+                Map<String,Object> allProcessedModels = new TreeMap<String, Object>(new Comparator<String>() {
+                    @Override
+                    public int compare(String o1, String o2) {
+                        Model model1 = definitions.get(o1);
+                        Model model2 = definitions.get(o2);
+
+                        int model1InheritanceDepth = getInheritanceDepth(model1);
+                        int model2InheritanceDepth = getInheritanceDepth(model2);
+
+                        if (model1InheritanceDepth == model2InheritanceDepth) {
+                            return ObjectUtils.compare(config.toModelName(o1), config.toModelName(o2));
+                        } else if (model1InheritanceDepth > model2InheritanceDepth) {
+                            return 1;
+                        } else {
+                            return -1;
+                        }
+                    }
+
+                    private int getInheritanceDepth(Model model) {
+                        int inheritanceDepth = 0;
+                        Model parent = getParent(model);
+
+                        while (parent != null) {
+                            inheritanceDepth++;
+                            parent = getParent(parent);
+                        }
+
+                        return inheritanceDepth;
+                    }
+
+                    private Model getParent(Model model) {
+                        if (model instanceof ComposedModel) {
+                            return definitions.get(((ComposedModel) model).getParent().getReference());
+                        }
+
+                        return null;
+                    }
+                });
+
+                // process models only
+                for (String name : modelKeys) {
                     try {
                         //don't generate models that have an import mapping
                         if(config.importMapping().containsKey(name)) {
@@ -195,6 +236,26 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                         modelMap.put(name, model);
                         Map<String, Object> models = processModels(config, modelMap, definitions);
                         models.putAll(config.additionalProperties());
+                        
+                        allProcessedModels.put(name, models);
+
+                    } catch (Exception e) {
+                        throw new RuntimeException("Could not process model '" + name + "'", e);
+                    }
+                }
+                
+                // post process all processed models
+                allProcessedModels = config.postProcessAllModels(allProcessedModels);
+                
+                // generate files based on processed models
+                for (String name: allProcessedModels.keySet()) {
+                	Map<String, Object> models = (Map<String, Object>)allProcessedModels.get(name);
+                
+                	try {
+                        //don't generate models that have an import mapping
+                        if(config.importMapping().containsKey(name)) {
+                            continue;
+                        }
 
                         allModels.add(((List<Object>) models.get("models")).get(0));
 
@@ -240,6 +301,28 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                             writeToFile(filename, tmpl.execute(models));
                             files.add(new File(filename));
                         }
+
+                        // to generate model documentation files
+                        for (String templateName : config.modelDocTemplateFiles().keySet()) {
+                            String suffix = config.modelDocTemplateFiles().get(templateName);
+                            String filename = config.modelDocFileFolder() + File.separator + config.toModelDocFilename(name) + suffix;
+                            if (!config.shouldOverwrite(filename)) {
+                                continue;
+                            }
+                            String templateFile = getFullTemplateFile(config, templateName);
+                            String template = readTemplate(templateFile);
+                            Template tmpl = Mustache.compiler()
+                                    .withLoader(new Mustache.TemplateLoader() {
+                                        @Override
+                                        public Reader getTemplate(String name) {
+                                            return getTemplateReader(getFullTemplateFile(config, name + ".mustache"));
+                                        }
+                                    })
+                                    .defaultValue("")
+                                    .compile(template);
+                            writeToFile(filename, tmpl.execute(models));
+                            files.add(new File(filename));
+                        }
                     } catch (Exception e) {
                         throw new RuntimeException("Could not generate model '" + name + "'", e);
                     }
@@ -266,6 +349,12 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             for (String tag : paths.keySet()) {
                 try {
                     List<CodegenOperation> ops = paths.get(tag);
+                    Collections.sort(ops, new Comparator<CodegenOperation>() {
+                        @Override
+                        public int compare(CodegenOperation one, CodegenOperation another) {
+                            return ObjectUtils.compare(one.operationId, another.operationId);
+                        }
+                    });
                     Map<String, Object> operation = processOperations(config, tag, ops);
 
                     operation.put("basePath", basePath);
@@ -345,11 +434,35 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                         files.add(new File(filename));
                     }
 
+                    // to generate api documentation files
+                    for (String templateName : config.apiDocTemplateFiles().keySet()) {
+                        String filename = config.apiDocFilename(templateName, tag);
+                        if (!config.shouldOverwrite(filename) && new File(filename).exists()) {
+                            continue;
+                        }
+
+                        String templateFile = getFullTemplateFile(config, templateName);
+                        String template = readTemplate(templateFile);
+                        Template tmpl = Mustache.compiler()
+                                .withLoader(new Mustache.TemplateLoader() {
+                                    @Override
+                                    public Reader getTemplate(String name) {
+                                        return getTemplateReader(getFullTemplateFile(config, name + ".mustache"));
+                                    }
+                                })
+                                .defaultValue("")
+                                .compile(template);
+
+                        writeToFile(filename, tmpl.execute(operation));
+                        files.add(new File(filename));
+                    }
+
                 } catch (Exception e) {
                     throw new RuntimeException("Could not generate api file for '" + tag + "'", e);
                 }
             }
         }
+
         if (System.getProperty("debugOperations") != null) {
             LOGGER.info("############ Operation info ############");
             Json.prettyPrint(allOperations);
@@ -490,54 +603,8 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
     }
 
-    private static List<String> sortModelsByInheritance(final Map<String, Model> definitions) {
-    	List<String> sortedModelKeys = new ArrayList<String>(definitions.keySet());
-    	Comparator<String> cmp = new Comparator<String>() {
-			@Override
-			public int compare(String o1, String o2) {
-				Model model1 = definitions.get(o1);
-				Model model2 = definitions.get(o2);
-
-				int model1InheritanceDepth = getInheritanceDepth(model1);
-				int model2InheritanceDepth = getInheritanceDepth(model2);
-
-				if (model1InheritanceDepth == model2InheritanceDepth) {
-					return 0;
-				} else if (model1InheritanceDepth > model2InheritanceDepth) {
-					return 1;
-				} else {
-					return -1;
-				}
-			}
-
-			private int getInheritanceDepth(Model model) {
-				int inheritanceDepth = 0;
-				Model parent = getParent(model);
-
-				while (parent != null) {
-					inheritanceDepth++;
-					parent = getParent(parent);
-				}
-
-				return inheritanceDepth;
-			}
-
-			private Model getParent(Model model) {
-				if (model instanceof ComposedModel) {
-					return definitions.get(((ComposedModel) model).getParent().getReference());
-				}
-
-				return null;
-			}
-		};
-
-		Collections.sort(sortedModelKeys, cmp);
-
-		return sortedModelKeys;
-    }
-
     public Map<String, List<CodegenOperation>> processPaths(Map<String, Path> paths) {
-        Map<String, List<CodegenOperation>> ops = new HashMap<String, List<CodegenOperation>>();
+        Map<String, List<CodegenOperation>> ops = new TreeMap<String, List<CodegenOperation>>();
 
         for (String resourcePath : paths.keySet()) {
             Path path = paths.get(resourcePath);
@@ -599,8 +666,8 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 try {
                     co = config.fromOperation(resourcePath, httpMethod, operation, swagger.getDefinitions(), swagger);
                     co.tags = new ArrayList<String>();
-                    co.tags.add(sanitizeTag(tag));
-                    config.addOperationToGroup(sanitizeTag(tag), resourcePath, operation, co, operations);
+                    co.tags.add(config.sanitizeTag(tag));
+                    config.addOperationToGroup(config.sanitizeTag(tag), resourcePath, operation, co, operations);
 
                     List<Map<String, List<String>>> securities = operation.getSecurity();
                     if (securities == null && swagger.getSecurity() != null) {
@@ -657,19 +724,6 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
     private static String generateParameterId(Parameter parameter) {
         return parameter.getName() + ":" + parameter.getIn();
-    }
-
-    @SuppressWarnings("static-method")
-    protected String sanitizeTag(String tag) {
-        // remove spaces and make strong case
-        String[] parts = tag.split(" ");
-        StringBuilder buf = new StringBuilder();
-        for (String part : parts) {
-            if (isNotEmpty(part)) {
-                buf.append(capitalize(part));
-            }
-        }
-        return buf.toString().replaceAll("[^a-zA-Z ]", "");
     }
 
     @SuppressWarnings("static-method")
@@ -744,7 +798,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             CodegenModel cm = config.fromModel(key, mm, allDefinitions);
             Map<String, Object> mo = new HashMap<String, Object>();
             mo.put("model", cm);
-            mo.put("importPath", config.toModelImport(key));
+            mo.put("importPath", config.toModelImport(cm.classname));
             models.add(mo);
 
             allImports.addAll(cm.imports);

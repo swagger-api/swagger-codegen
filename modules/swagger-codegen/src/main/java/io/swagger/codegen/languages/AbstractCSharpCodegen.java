@@ -13,6 +13,7 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
     protected boolean optionalAssemblyInfoFlag = true;
     protected boolean optionalProjectFileFlag = false;
+    protected boolean optionalEmitDefaultValue = false;
     protected boolean optionalMethodArgumentFlag = true;
     protected boolean useDateTimeOffsetFlag = false;
     protected boolean useCollection = false;
@@ -44,12 +45,14 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
                 Arrays.asList("IDictionary")
         );
 
-        reservedWords = new HashSet<String>(
+        setReservedWordsLowerCase(
                 Arrays.asList(
                         // local variable names in API methods (endpoints)
-                        "path_", "pathParams", "queryParams", "headerParams", "formParams", "fileParams",
-                        "postBody", "http_header_accepts", "http_header_accept", "apiKeyValue", "response",
-                        "statusCode",
+                        "localVarPath", "localVarPathParams", "localVarQueryParams", "localVarHeaderParams", 
+                        "localVarFormParams", "localVarFileParams", "localVarStatusCode", "localVarResponse",
+                        "localVarPostBody", "localVarHttpHeaderAccepts", "localVarHttpHeaderAccept",
+                        "localVarHttpContentTypes", "localVarHttpContentType",
+                        "localVarStatusCode",
                         // C# reserved words
                         "abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char", "checked",
                         "class", "const", "continue", "decimal", "default", "delegate", "do", "double", "else",
@@ -116,6 +119,10 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
     public void setReturnICollection(boolean returnICollection) {
         this.returnICollection = returnICollection;
+    }
+
+    public void setOptionalEmitDefaultValue(boolean optionalEmitDefaultValue) {
+        this.optionalEmitDefaultValue = optionalEmitDefaultValue;
     }
 
     public void setUseCollection(boolean useCollection) {
@@ -189,6 +196,15 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         if (additionalProperties.containsKey(CodegenConstants.RETURN_ICOLLECTION)) {
             setReturnICollection(Boolean.valueOf(additionalProperties.get(CodegenConstants.RETURN_ICOLLECTION).toString()));
         }
+
+        if (additionalProperties.containsKey(CodegenConstants.OPTIONAL_EMIT_DEFAULT_VALUES)) {
+            setOptionalEmitDefaultValue(Boolean.valueOf(additionalProperties.get(CodegenConstants.OPTIONAL_EMIT_DEFAULT_VALUES).toString()));
+        }
+    }
+
+    @Override
+    public String toEnumName(CodegenProperty property) {
+        return StringUtils.capitalize(property.name) + "Enum?";
     }
 
     @Override
@@ -276,14 +292,15 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
     @Override
     public String toOperationId(String operationId) {
-        // throw exception if method name is empty
+        // throw exception if method name is empty (should not occur as an auto-generated method name will be used)
         if (StringUtils.isEmpty(operationId)) {
             throw new RuntimeException("Empty method name (operationId) not allowed");
         }
 
         // method name cannot use reserved keyword, e.g. return
-        if (reservedWords.contains(operationId)) {
-            throw new RuntimeException(operationId + " (reserved word) cannot be used as method name");
+        if (isReservedWord(operationId)) {
+            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + camelize(sanitizeName("call_" + operationId)));
+            operationId = "call_" + operationId;
         }
 
         return camelize(sanitizeName(operationId));
@@ -304,7 +321,7 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         name = camelize(name);
 
         // for reserved word or word starting with number, append _
-        if (reservedWords.contains(name) || name.matches("^\\d.*")) {
+        if (isReservedWord(name) || name.matches("^\\d.*")) {
             name = escapeReservedWord(name);
         }
 
@@ -329,7 +346,7 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         name = camelize(name, true);
 
         // for reserved word or word starting with number, append _
-        if (reservedWords.contains(name) || name.matches("^\\d.*")) {
+        if (isReservedWord(name) || name.matches("^\\d.*")) {
             name = escapeReservedWord(name);
         }
 
@@ -467,11 +484,20 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
     @Override
     public String toModelName(String name) {
+        if (!StringUtils.isEmpty(modelNamePrefix)) {
+            name = modelNamePrefix + "_" + name;
+        }
+
+        if (!StringUtils.isEmpty(modelNameSuffix)) {
+            name = name + "_" + modelNameSuffix;
+        }
+
         name = sanitizeName(name);
 
         // model name cannot use reserved keyword, e.g. return
-        if (reservedWords.contains(name)) {
-            throw new RuntimeException(name + " (reserved word) cannot be used as a model name");
+        if (isReservedWord(name)) {
+            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + camelize("model_" + name));
+            name = "model_" + name; // e.g. return => ModelReturn (after camelize)
         }
 
         // camelize the model name

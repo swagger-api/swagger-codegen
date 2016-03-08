@@ -18,16 +18,6 @@
   
   var Category = function Category() { 
     
-    /**
-     * datatype: Integer
-     **/
-    this['id'] = null;
-    
-    /**
-     * datatype: String
-     **/
-    this['name'] = null;
-    
   };
 
   Category.constructFromObject = function(data) {
@@ -78,10 +68,6 @@
   }
   
   
-
-  Category.prototype.toJson = function() {
-    return JSON.stringify(this);
-  }
 
   
 

@@ -1,21 +1,24 @@
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['./ApiClient', './model/User', './model/Category', './model/Pet', './model/Tag', './model/Order', './api/UserApi', './api/StoreApi', './api/PetApi'], factory);
+    define(['./ApiClient', './model/Order', './model/SpecialModelName', './model/User', './model/Category', './model/ObjectReturn', './model/InlineResponse200', './model/Tag', './model/Pet', './api/UserApi', './api/StoreApi', './api/PetApi'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('./ApiClient'), require('./model/User'), require('./model/Category'), require('./model/Pet'), require('./model/Tag'), require('./model/Order'), require('./api/UserApi'), require('./api/StoreApi'), require('./api/PetApi'));
+    module.exports = factory(require('./ApiClient'), require('./model/Order'), require('./model/SpecialModelName'), require('./model/User'), require('./model/Category'), require('./model/ObjectReturn'), require('./model/InlineResponse200'), require('./model/Tag'), require('./model/Pet'), require('./api/UserApi'), require('./api/StoreApi'), require('./api/PetApi'));
   }
-}(function(ApiClient, User, Category, Pet, Tag, Order, UserApi, StoreApi, PetApi) {
+}(function(ApiClient, Order, SpecialModelName, User, Category, ObjectReturn, InlineResponse200, Tag, Pet, UserApi, StoreApi, PetApi) {
   'use strict';
 
   return {
     ApiClient: ApiClient,
+    Order: Order,
+    SpecialModelName: SpecialModelName,
     User: User,
     Category: Category,
-    Pet: Pet,
+    ObjectReturn: ObjectReturn,
+    InlineResponse200: InlineResponse200,
     Tag: Tag,
-    Order: Order,
+    Pet: Pet,
     UserApi: UserApi,
     StoreApi: StoreApi,
     PetApi: PetApi

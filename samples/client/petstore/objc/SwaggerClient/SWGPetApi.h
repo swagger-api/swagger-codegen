@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "SWGPet.h"
+#import "SWGInlineResponse200.h"
 #import "SWGObject.h"
 #import "SWGApiClient.h"
 
@@ -48,9 +49,9 @@
 ///
 ///
 /// Finds Pets by status
-/// Multiple status values can be provided with comma seperated strings
+/// Multiple status values can be provided with comma separated strings
 ///
-/// @param status Status values that need to be considered for filter
+/// @param status Status values that need to be considered for query
 /// 
 ///
 /// @return NSArray<SWGPet>*
@@ -135,6 +136,19 @@
 
 ///
 ///
+/// Fake endpoint to test inline arbitrary object return by 'Find pet by ID'
+/// Returns a pet when ID < 10.  ID > 10 or nonintegers will simulate API error conditions
+///
+/// @param petId ID of pet that needs to be fetched
+/// 
+///
+/// @return SWGInlineResponse200*
+-(NSNumber*) getPetByIdInObjectWithPetId: (NSNumber*) petId
+    completionHandler: (void (^)(SWGInlineResponse200* output, NSError* error)) handler;
+
+
+///
+///
 /// Fake endpoint to test byte array return by 'Find pet by ID'
 /// Returns a pet when ID < 10.  ID > 10 or nonintegers will simulate API error conditions
 ///
@@ -142,7 +156,7 @@
 /// 
 ///
 /// @return NSString*
--(NSNumber*) getPetByIdWithByteArrayWithPetId: (NSNumber*) petId
+-(NSNumber*) petPetIdtestingByteArraytrueGetWithPetId: (NSNumber*) petId
     completionHandler: (void (^)(NSString* output, NSError* error)) handler;
 
 

@@ -16,41 +16,18 @@
   'use strict';
   
   
-  var Pet = function Pet(photoUrls, name) { 
-    
-    /**
-     * datatype: Integer
-     **/
-    this['id'] = null;
-    
-    /**
-     * datatype: Category
-     **/
-    this['category'] = new Category();
+  var Pet = function Pet(name, photoUrls) { 
     
     /**
      * datatype: String
-     * required
+     * required 
      **/
     this['name'] = name;
-    
     /**
      * datatype: [String]
-     * required
+     * required 
      **/
     this['photoUrls'] = photoUrls;
-    
-    /**
-     * datatype: [Tag]
-     **/
-    this['tags'] = [];
-    
-    /**
-     * pet status in the store
-     * datatype: StatusEnum
-     **/
-    this['status'] = null;
-    
   };
 
   Pet.constructFromObject = function(data) {
@@ -175,10 +152,6 @@
   }
   
   
-
-  Pet.prototype.toJson = function() {
-    return JSON.stringify(this);
-  }
 
   var StatusEnum = {
 

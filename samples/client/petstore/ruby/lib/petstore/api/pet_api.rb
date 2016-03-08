@@ -45,7 +45,7 @@ module Petstore
       end
       
       # resource path
-      path = "/pet".sub('{format}','json')
+      local_var_path = "/pet".sub('{format}','json')
 
       # query parameters
       query_params = {}
@@ -68,7 +68,7 @@ module Petstore
       post_body = @api_client.object_to_http_body(opts[:'body'])
       
       auth_names = ['petstore_auth']
-      data, status_code, headers = @api_client.call_api(:PUT, path,
+      data, status_code, headers = @api_client.call_api(:PUT, local_var_path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
@@ -101,7 +101,7 @@ module Petstore
       end
       
       # resource path
-      path = "/pet".sub('{format}','json')
+      local_var_path = "/pet".sub('{format}','json')
 
       # query parameters
       query_params = {}
@@ -124,7 +124,7 @@ module Petstore
       post_body = @api_client.object_to_http_body(opts[:'body'])
       
       auth_names = ['petstore_auth']
-      data, status_code, headers = @api_client.call_api(:POST, path,
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
@@ -137,9 +137,9 @@ module Petstore
     end
 
     # Finds Pets by status
-    # Multiple status values can be provided with comma seperated strings
+    # Multiple status values can be provided with comma separated strings
     # @param [Hash] opts the optional parameters
-    # @option opts [Array<String>] :status Status values that need to be considered for filter
+    # @option opts [Array<String>] :status Status values that need to be considered for query
     # @return [Array<Pet>]
     def find_pets_by_status(opts = {})
       data, status_code, headers = find_pets_by_status_with_http_info(opts)
@@ -147,9 +147,9 @@ module Petstore
     end
 
     # Finds Pets by status
-    # Multiple status values can be provided with comma seperated strings
+    # Multiple status values can be provided with comma separated strings
     # @param [Hash] opts the optional parameters
-    # @option opts [Array<String>] :status Status values that need to be considered for filter
+    # @option opts [Array<String>] :status Status values that need to be considered for query
     # @return [Array<(Array<Pet>, Fixnum, Hash)>] Array<Pet> data, response status code and response headers
     def find_pets_by_status_with_http_info(opts = {})
       if @api_client.config.debugging
@@ -157,7 +157,7 @@ module Petstore
       end
       
       # resource path
-      path = "/pet/findByStatus".sub('{format}','json')
+      local_var_path = "/pet/findByStatus".sub('{format}','json')
 
       # query parameters
       query_params = {}
@@ -181,7 +181,7 @@ module Petstore
       post_body = nil
       
       auth_names = ['petstore_auth']
-      data, status_code, headers = @api_client.call_api(:GET, path,
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
@@ -215,7 +215,7 @@ module Petstore
       end
       
       # resource path
-      path = "/pet/findByTags".sub('{format}','json')
+      local_var_path = "/pet/findByTags".sub('{format}','json')
 
       # query parameters
       query_params = {}
@@ -239,7 +239,7 @@ module Petstore
       post_body = nil
       
       auth_names = ['petstore_auth']
-      data, status_code, headers = @api_client.call_api(:GET, path,
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
@@ -276,7 +276,7 @@ module Petstore
       fail "Missing the required parameter 'pet_id' when calling get_pet_by_id" if pet_id.nil?
       
       # resource path
-      path = "/pet/{petId}".sub('{format}','json').sub('{' + 'petId' + '}', pet_id.to_s)
+      local_var_path = "/pet/{petId}".sub('{format}','json').sub('{' + 'petId' + '}', pet_id.to_s)
 
       # query parameters
       query_params = {}
@@ -298,8 +298,8 @@ module Petstore
       # http body (model)
       post_body = nil
       
-      auth_names = ['api_key']
-      data, status_code, headers = @api_client.call_api(:GET, path,
+      auth_names = ['petstore_auth', 'api_key']
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
@@ -340,7 +340,7 @@ module Petstore
       fail "Missing the required parameter 'pet_id' when calling update_pet_with_form" if pet_id.nil?
       
       # resource path
-      path = "/pet/{petId}".sub('{format}','json').sub('{' + 'petId' + '}', pet_id.to_s)
+      local_var_path = "/pet/{petId}".sub('{format}','json').sub('{' + 'petId' + '}', pet_id.to_s)
 
       # query parameters
       query_params = {}
@@ -365,7 +365,7 @@ module Petstore
       post_body = nil
       
       auth_names = ['petstore_auth']
-      data, status_code, headers = @api_client.call_api(:POST, path,
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
@@ -403,7 +403,7 @@ module Petstore
       fail "Missing the required parameter 'pet_id' when calling delete_pet" if pet_id.nil?
       
       # resource path
-      path = "/pet/{petId}".sub('{format}','json').sub('{' + 'petId' + '}', pet_id.to_s)
+      local_var_path = "/pet/{petId}".sub('{format}','json').sub('{' + 'petId' + '}', pet_id.to_s)
 
       # query parameters
       query_params = {}
@@ -427,7 +427,7 @@ module Petstore
       post_body = nil
       
       auth_names = ['petstore_auth']
-      data, status_code, headers = @api_client.call_api(:DELETE, path,
+      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
@@ -467,7 +467,7 @@ module Petstore
       fail "Missing the required parameter 'pet_id' when calling upload_file" if pet_id.nil?
       
       # resource path
-      path = "/pet/{petId}/uploadImage".sub('{format}','json').sub('{' + 'petId' + '}', pet_id.to_s)
+      local_var_path = "/pet/{petId}/uploadImage".sub('{format}','json').sub('{' + 'petId' + '}', pet_id.to_s)
 
       # query parameters
       query_params = {}
@@ -492,7 +492,7 @@ module Petstore
       post_body = nil
       
       auth_names = ['petstore_auth']
-      data, status_code, headers = @api_client.call_api(:POST, path,
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
@@ -504,31 +504,31 @@ module Petstore
       return data, status_code, headers
     end
 
-    # Fake endpoint to test byte array return by &#39;Find pet by ID&#39;
+    # Fake endpoint to test inline arbitrary object return by &#39;Find pet by ID&#39;
     # Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
     # @param pet_id ID of pet that needs to be fetched
     # @param [Hash] opts the optional parameters
-    # @return [String]
-    def get_pet_by_id_with_byte_array(pet_id, opts = {})
-      data, status_code, headers = get_pet_by_id_with_byte_array_with_http_info(pet_id, opts)
+    # @return [InlineResponse200]
+    def get_pet_by_id_in_object(pet_id, opts = {})
+      data, status_code, headers = get_pet_by_id_in_object_with_http_info(pet_id, opts)
       return data
     end
 
-    # Fake endpoint to test byte array return by &#39;Find pet by ID&#39;
+    # Fake endpoint to test inline arbitrary object return by &#39;Find pet by ID&#39;
     # Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
     # @param pet_id ID of pet that needs to be fetched
     # @param [Hash] opts the optional parameters
-    # @return [Array<(String, Fixnum, Hash)>] String data, response status code and response headers
-    def get_pet_by_id_with_byte_array_with_http_info(pet_id, opts = {})
+    # @return [Array<(InlineResponse200, Fixnum, Hash)>] InlineResponse200 data, response status code and response headers
+    def get_pet_by_id_in_object_with_http_info(pet_id, opts = {})
       if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: PetApi#get_pet_by_id_with_byte_array ..."
+        @api_client.config.logger.debug "Calling API: PetApi#get_pet_by_id_in_object ..."
       end
       
       # verify the required parameter 'pet_id' is set
-      fail "Missing the required parameter 'pet_id' when calling get_pet_by_id_with_byte_array" if pet_id.nil?
+      fail "Missing the required parameter 'pet_id' when calling get_pet_by_id_in_object" if pet_id.nil?
       
       # resource path
-      path = "/pet/{petId}?testing_byte_array=true".sub('{format}','json').sub('{' + 'petId' + '}', pet_id.to_s)
+      local_var_path = "/pet/{petId}?response=inline_arbitrary_object".sub('{format}','json').sub('{' + 'petId' + '}', pet_id.to_s)
 
       # query parameters
       query_params = {}
@@ -550,8 +550,68 @@ module Petstore
       # http body (model)
       post_body = nil
       
-      auth_names = ['api_key']
-      data, status_code, headers = @api_client.call_api(:GET, path,
+      auth_names = ['petstore_auth', 'api_key']
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path,
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => 'InlineResponse200')
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: PetApi#get_pet_by_id_in_object\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Fake endpoint to test byte array return by &#39;Find pet by ID&#39;
+    # Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
+    # @param pet_id ID of pet that needs to be fetched
+    # @param [Hash] opts the optional parameters
+    # @return [String]
+    def pet_pet_idtesting_byte_arraytrue_get(pet_id, opts = {})
+      data, status_code, headers = pet_pet_idtesting_byte_arraytrue_get_with_http_info(pet_id, opts)
+      return data
+    end
+
+    # Fake endpoint to test byte array return by &#39;Find pet by ID&#39;
+    # Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
+    # @param pet_id ID of pet that needs to be fetched
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(String, Fixnum, Hash)>] String data, response status code and response headers
+    def pet_pet_idtesting_byte_arraytrue_get_with_http_info(pet_id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "Calling API: PetApi#pet_pet_idtesting_byte_arraytrue_get ..."
+      end
+      
+      # verify the required parameter 'pet_id' is set
+      fail "Missing the required parameter 'pet_id' when calling pet_pet_idtesting_byte_arraytrue_get" if pet_id.nil?
+      
+      # resource path
+      local_var_path = "/pet/{petId}?testing_byte_array=true".sub('{format}','json').sub('{' + 'petId' + '}', pet_id.to_s)
+
+      # query parameters
+      query_params = {}
+
+      # header parameters
+      header_params = {}
+
+      # HTTP header 'Accept' (if needed)
+      _header_accept = ['application/json', 'application/xml']
+      _header_accept_result = @api_client.select_header_accept(_header_accept) and header_params['Accept'] = _header_accept_result
+
+      # HTTP header 'Content-Type'
+      _header_content_type = []
+      header_params['Content-Type'] = @api_client.select_header_content_type(_header_content_type)
+
+      # form parameters
+      form_params = {}
+
+      # http body (model)
+      post_body = nil
+      
+      auth_names = ['petstore_auth', 'api_key']
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
@@ -559,7 +619,7 @@ module Petstore
         :auth_names => auth_names,
         :return_type => 'String')
       if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: PetApi#get_pet_by_id_with_byte_array\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+        @api_client.config.logger.debug "API called: PetApi#pet_pet_idtesting_byte_arraytrue_get\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -585,7 +645,7 @@ module Petstore
       end
       
       # resource path
-      path = "/pet?testing_byte_array=true".sub('{format}','json')
+      local_var_path = "/pet?testing_byte_array=true".sub('{format}','json')
 
       # query parameters
       query_params = {}
@@ -608,7 +668,7 @@ module Petstore
       post_body = @api_client.object_to_http_body(opts[:'body'])
       
       auth_names = ['petstore_auth']
-      data, status_code, headers = @api_client.call_api(:POST, path,
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,

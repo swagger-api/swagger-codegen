@@ -22,6 +22,41 @@
     
     
     /**
+     * Finds orders by status
+     * A single status value can be provided as a string
+     * @param {String} opts['status'] Status value that needs to be considered for query
+     * @param {function} callback the callback function, accepting three arguments: error, data, response
+     *   data is of type: [Order]
+     */
+    self.findOrdersByStatus = function(opts, callback) {
+      opts = opts || {};
+      var postBody = null;
+      
+
+      var pathParams = {
+      };
+      var queryParams = {
+        'status': opts['status']
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['test_api_client_id', 'test_api_client_secret'];
+      var contentTypes = [];
+      var accepts = ['application/json', 'application/xml'];
+      var returnType = [Order];
+
+      return this.apiClient.callApi(
+        '/store/findByStatus', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+
+    }
+    
+    /**
      * Returns pet inventories by status
      * Returns a map of status codes to quantities
      * @param {function} callback the callback function, accepting three arguments: error, data, response
@@ -31,7 +66,6 @@
       var postBody = null;
       
 
-      
       var pathParams = {
       };
       var queryParams = {
@@ -51,21 +85,19 @@
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
-      
+
     }
     
     /**
-     * Place an order for a pet
-     * 
-     * @param {Order}  body order placed for purchasing the pet
+     * Fake endpoint to test arbitrary object return by &#39;Get inventory&#39;
+     * Returns an arbitrary object which is actually a map of status codes to quantities
      * @param {function} callback the callback function, accepting three arguments: error, data, response
-     *   data is of type: Order
+     *   data is of type: Object
      */
-    self.placeOrder = function(body, callback) {
-      var postBody = body;
+    self.getInventoryInObject = function(callback) {
+      var postBody = null;
       
 
-      
       var pathParams = {
       };
       var queryParams = {
@@ -75,7 +107,41 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['api_key'];
+      var contentTypes = [];
+      var accepts = ['application/json', 'application/xml'];
+      var returnType = Object;
+
+      return this.apiClient.callApi(
+        '/store/inventory?response=arbitrary_object', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+
+    }
+    
+    /**
+     * Place an order for a pet
+     * 
+     * @param {Order} opts['body'] order placed for purchasing the pet
+     * @param {function} callback the callback function, accepting three arguments: error, data, response
+     *   data is of type: Order
+     */
+    self.placeOrder = function(opts, callback) {
+      opts = opts || {};
+      var postBody = opts['body'];
+      
+
+      var pathParams = {
+      };
+      var queryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['test_api_client_id', 'test_api_client_secret'];
       var contentTypes = [];
       var accepts = ['application/json', 'application/xml'];
       var returnType = Order;
@@ -85,13 +151,13 @@
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
-      
+
     }
     
     /**
      * Find purchase order by ID
      * For valid response try integer IDs with value &lt;= 5 or &gt; 10. Other values will generated exceptions
-     * @param {String}  orderId ID of pet that needs to be fetched
+     * @param {String} orderId ID of pet that needs to be fetched
      * @param {function} callback the callback function, accepting three arguments: error, data, response
      *   data is of type: Order
      */
@@ -104,7 +170,6 @@
       }
       
 
-      
       var pathParams = {
         'orderId': orderId
       };
@@ -115,7 +180,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['test_api_key_query', 'test_api_key_header'];
       var contentTypes = [];
       var accepts = ['application/json', 'application/xml'];
       var returnType = Order;
@@ -125,13 +190,13 @@
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
-      
+
     }
     
     /**
      * Delete purchase order by ID
      * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
-     * @param {String}  orderId ID of the order that needs to be deleted
+     * @param {String} orderId ID of the order that needs to be deleted
      * @param {function} callback the callback function, accepting three arguments: error, data, response
      */
     self.deleteOrder = function(orderId, callback) {
@@ -143,7 +208,6 @@
       }
       
 
-      
       var pathParams = {
         'orderId': orderId
       };
@@ -164,7 +228,7 @@
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
-      
+
     }
     
     

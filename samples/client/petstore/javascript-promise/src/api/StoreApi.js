@@ -22,16 +22,48 @@
     
     
     /**
+     * Finds orders by status
+     * A single status value can be provided as a string
+     * @param {String} opts['status'] Status value that needs to be considered for query
+     *   data is of type: [Order]
+     */
+    self.findOrdersByStatus = function(opts) {
+      opts = opts || {};
+      var postBody = null;
+      
+
+      var pathParams = {
+      };
+      var queryParams = {
+        'status': opts['status']
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['test_api_client_id', 'test_api_client_secret'];
+      var contentTypes = [];
+      var accepts = ['application/json', 'application/xml'];
+      var returnType = [Order];
+
+      return this.apiClient.callApi(
+        '/store/findByStatus', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType
+      );
+
+    }
+    
+    /**
      * Returns pet inventories by status
      * Returns a map of status codes to quantities
-     
      *   data is of type: {'String': 'Integer'}
      */
     self.getInventory = function() {
       var postBody = null;
       
 
-      
       var pathParams = {
       };
       var queryParams = {
@@ -41,6 +73,7 @@
       var formParams = {
       };
 
+      var authNames = ['api_key'];
       var contentTypes = [];
       var accepts = ['application/json', 'application/xml'];
       var returnType = {'String': 'Integer'};
@@ -48,23 +81,22 @@
       return this.apiClient.callApi(
         '/store/inventory', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
-        contentTypes, accepts, returnType
+        authNames, contentTypes, accepts, returnType
       );
-      
+
     }
     
     /**
      * Place an order for a pet
      * 
-     * @param {Order}  body order placed for purchasing the pet
-     
+     * @param {Order} opts['body'] order placed for purchasing the pet
      *   data is of type: Order
      */
-    self.placeOrder = function(body) {
-      var postBody = body;
+    self.placeOrder = function(opts) {
+      opts = opts || {};
+      var postBody = opts['body'];
       
 
-      
       var pathParams = {
       };
       var queryParams = {
@@ -74,6 +106,7 @@
       var formParams = {
       };
 
+      var authNames = ['test_api_client_id', 'test_api_client_secret'];
       var contentTypes = [];
       var accepts = ['application/json', 'application/xml'];
       var returnType = Order;
@@ -81,16 +114,15 @@
       return this.apiClient.callApi(
         '/store/order', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
-        contentTypes, accepts, returnType
+        authNames, contentTypes, accepts, returnType
       );
-      
+
     }
     
     /**
      * Find purchase order by ID
      * For valid response try integer IDs with value &lt;= 5 or &gt; 10. Other values will generated exceptions
-     * @param {String}  orderId ID of pet that needs to be fetched
-     
+     * @param {String} orderId ID of pet that needs to be fetched
      *   data is of type: Order
      */
     self.getOrderById = function(orderId) {
@@ -102,7 +134,6 @@
       }
       
 
-      
       var pathParams = {
         'orderId': orderId
       };
@@ -113,6 +144,7 @@
       var formParams = {
       };
 
+      var authNames = ['test_api_key_query', 'test_api_key_header'];
       var contentTypes = [];
       var accepts = ['application/json', 'application/xml'];
       var returnType = Order;
@@ -120,16 +152,15 @@
       return this.apiClient.callApi(
         '/store/order/{orderId}', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
-        contentTypes, accepts, returnType
+        authNames, contentTypes, accepts, returnType
       );
-      
+
     }
     
     /**
      * Delete purchase order by ID
      * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
-     * @param {String}  orderId ID of the order that needs to be deleted
-     
+     * @param {String} orderId ID of the order that needs to be deleted
      */
     self.deleteOrder = function(orderId) {
       var postBody = null;
@@ -140,7 +171,6 @@
       }
       
 
-      
       var pathParams = {
         'orderId': orderId
       };
@@ -151,6 +181,7 @@
       var formParams = {
       };
 
+      var authNames = [];
       var contentTypes = [];
       var accepts = ['application/json', 'application/xml'];
       var returnType = null;
@@ -158,9 +189,9 @@
       return this.apiClient.callApi(
         '/store/order/{orderId}', 'DELETE',
         pathParams, queryParams, headerParams, formParams, postBody,
-        contentTypes, accepts, returnType
+        authNames, contentTypes, accepts, returnType
       );
-      
+
     }
     
     

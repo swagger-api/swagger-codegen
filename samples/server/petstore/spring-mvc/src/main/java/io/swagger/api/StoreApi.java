@@ -31,7 +31,7 @@ import static org.springframework.http.MediaType.*;
 @Controller
 @RequestMapping(value = "/store", produces = {APPLICATION_JSON_VALUE})
 @Api(value = "/store", description = "the store API")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringMVCServerCodegen", date = "2016-01-22T15:27:38.634-06:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringMVCServerCodegen", date = "2016-02-26T13:58:54.483Z")
 public class StoreApi {
   
 
@@ -41,7 +41,7 @@ public class StoreApi {
   @io.swagger.annotations.ApiResponses(value = { 
     @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation") })
   @RequestMapping(value = "/inventory", 
-    produces = { "application/json" }, 
+    produces = { "application/json", "application/xml" }, 
     
     method = RequestMethod.GET)
   public ResponseEntity<Map<String, Integer>> getInventory()
@@ -52,17 +52,20 @@ public class StoreApi {
 
   
 
-  @ApiOperation(value = "Place an order for a pet", notes = "", response = Order.class)
+  @ApiOperation(value = "Place an order for a pet", notes = "", response = Order.class, authorizations = {
+    @Authorization(value = "test_api_client_id"),
+    @Authorization(value = "test_api_client_secret")
+  })
   @io.swagger.annotations.ApiResponses(value = { 
     @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation"),
     @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid Order") })
   @RequestMapping(value = "/order", 
-    produces = { "application/xml", "application/json" }, 
+    produces = { "application/json", "application/xml" }, 
     
     method = RequestMethod.POST)
   public ResponseEntity<Order> placeOrder(
 
-@ApiParam(value = "order placed for purchasing the pet" ,required=true ) @RequestBody Order body
+@ApiParam(value = "order placed for purchasing the pet"  ) @RequestBody Order body
 )
       throws NotFoundException {
       // do some magic!
@@ -71,17 +74,20 @@ public class StoreApi {
 
   
 
-  @ApiOperation(value = "Find purchase order by ID", notes = "For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions", response = Order.class)
+  @ApiOperation(value = "Find purchase order by ID", notes = "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions", response = Order.class, authorizations = {
+    @Authorization(value = "test_api_key_query"),
+    @Authorization(value = "test_api_key_header")
+  })
   @io.swagger.annotations.ApiResponses(value = { 
     @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation"),
     @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid ID supplied"),
     @io.swagger.annotations.ApiResponse(code = 404, message = "Order not found") })
   @RequestMapping(value = "/order/{orderId}", 
-    produces = { "application/xml", "application/json" }, 
+    produces = { "application/json", "application/xml" }, 
     
     method = RequestMethod.GET)
   public ResponseEntity<Order> getOrderById(
-@ApiParam(value = "ID of pet that needs to be fetched",required=true ) @PathVariable("orderId") Long orderId
+@ApiParam(value = "ID of pet that needs to be fetched",required=true ) @PathVariable("orderId") String orderId
 
 )
       throws NotFoundException {
@@ -91,16 +97,16 @@ public class StoreApi {
 
   
 
-  @ApiOperation(value = "Delete purchase order by ID", notes = "For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors", response = Void.class)
+  @ApiOperation(value = "Delete purchase order by ID", notes = "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors", response = Void.class)
   @io.swagger.annotations.ApiResponses(value = { 
     @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid ID supplied"),
     @io.swagger.annotations.ApiResponse(code = 404, message = "Order not found") })
   @RequestMapping(value = "/order/{orderId}", 
-    produces = { "application/xml", "application/json" }, 
+    produces = { "application/json", "application/xml" }, 
     
     method = RequestMethod.DELETE)
   public ResponseEntity<Void> deleteOrder(
-@ApiParam(value = "ID of the order that needs to be deleted",required=true ) @PathVariable("orderId") Long orderId
+@ApiParam(value = "ID of the order that needs to be deleted",required=true ) @PathVariable("orderId") String orderId
 
 )
       throws NotFoundException {

@@ -38,13 +38,14 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         apiTemplateFiles.put("api.mustache", ".go");
         templateDir = "go";
 
-        reservedWords = new HashSet<String> (
+        setReservedWordsLowerCase(
             Arrays.asList(
                 "break", "default", "func", "interface", "select",
                 "case", "defer", "go", "map", "struct",
                 "chan", "else", "goto", "package", "switch",
                 "const", "fallthrough", "if", "range", "type",
-                "continue", "for", "import", "return", "var")
+                "continue", "for", "import", "return", "var", "error")
+                // Added "error" as it's used so frequently that it may as well be a keyword
         );
 
         defaultIncludes = new HashSet<String>(
@@ -100,7 +101,7 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
                 .defaultValue("swagger"));
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_VERSION, "Go package version.")
                 .defaultValue("1.0.0"));
-   
+
     }
 
     @Override
@@ -128,11 +129,25 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         apiPackage = packageName;
 
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
-    }    
+    }
 
     @Override
-    public String escapeReservedWord(String name) {
-        return "_" + name;
+    public String escapeReservedWord(String name)
+    {
+        // Can't start with an underscore, as our fields need to start with an
+        // UppercaseLetter so that Go treats them as public/visible.
+
+        // Options?
+        // - MyName
+        // - AName
+        // - TheName
+        // - XName
+        // - X_Name
+        // ... or maybe a suffix?
+        // - Name_ ... think this will work.
+
+        // FIXME: This should also really be a customizable option
+        return camelize(name) + '_';
     }
 
     @Override
@@ -158,7 +173,7 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         name = camelize(name);
 
         // for reserved word or word starting with number, append _
-        if(reservedWords.contains(name) || name.matches("^\\d.*"))
+        if(isReservedWord(name) || name.matches("^\\d.*"))
             name = escapeReservedWord(name);
 
         return name;
@@ -166,15 +181,32 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String toParamName(String name) {
-        // should be the same as variable name
-        return toVarName(name);
+        // params should be lowerCamelCase. E.g. "person Person", instead of
+        // "Person Person".
+        //
+        // REVISIT: Actually, for idiomatic go, the param name should
+        // really should just be a letter, e.g. "p Person"), but we'll get
+        // around to that some other time... Maybe.
+        return camelize(toVarName(name), true);
     }
 
     @Override
     public String toModelName(String name) {
+        if (!StringUtils.isEmpty(modelNamePrefix)) {
+            name = modelNamePrefix + "_" + name;
+        }
+
+        if (!StringUtils.isEmpty(modelNameSuffix)) {
+            name = name + "_" + modelNameSuffix;
+        }
+
+        name = sanitizeName(name);
+
         // model name cannot use reserved keyword, e.g. return
-        if(reservedWords.contains(name))
-            throw new RuntimeException(name + " (reserved word) cannot be used as a model name");
+        if (isReservedWord(name)) {
+            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + camelize("model_" + name));
+            name = "model_" + name; // e.g. return => ModelReturn (after camelize)
+        }
 
         // camelize the model name
         // phone_number => PhoneNumber
@@ -200,7 +232,24 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
 
             return getSwaggerType(p) + "[string]" + getTypeDeclaration(inner);
         }
-        return super.getTypeDeclaration(p);
+        //return super.getTypeDeclaration(p);
+
+        // Not using the supertype invocation, because we want to UpperCamelize
+        // the type.
+        String swaggerType = getSwaggerType(p);
+        if (typeMapping.containsKey(swaggerType)) {
+            return typeMapping.get(swaggerType);
+        }
+
+        if(typeMapping.containsValue(swaggerType)) {
+            return swaggerType;
+        }
+
+        if(languageSpecificPrimitives.contains(swaggerType)) {
+            return swaggerType;
+        }
+
+        return camelize(swaggerType, false);
     }
 
     @Override
@@ -220,8 +269,10 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public String toOperationId(String operationId) {
         // method name cannot use reserved keyword, e.g. return
-        if(reservedWords.contains(operationId))
-            throw new RuntimeException(operationId + " (reserved word) cannot be used as method name");
+        if (isReservedWord(operationId)) {
+            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + camelize(sanitizeName("call_" + operationId)));
+            operationId = "call_" + operationId;
+        }
 
         return camelize(operationId);
     }

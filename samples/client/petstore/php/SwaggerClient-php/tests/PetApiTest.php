@@ -2,6 +2,10 @@
 
 require_once('autoload.php');
 
+// increase memory limit to avoid fatal error due to findPetByStatus
+// returning a lot of data
+ini_set('memory_limit', '256M');
+
 class PetApiTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -106,8 +110,31 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($response->getTags()[0]->getId(), $pet_id);
         $this->assertSame($response->getTags()[0]->getName(), 'test php tag');
     }
-  
+
     // test getPetById with a Pet object (id 10005)
+    public function testGetPetByIdInObject()
+    {
+        // initialize the API client without host
+        $pet_id = 10005;  // ID of pet that needs to be fetched
+        $pet_api = new Swagger\Client\Api\PetAPI();
+        $pet_api->getApiClient()->getConfig()->setApiKey('api_key', '111222333444555');
+        // return Pet (inline model)
+        $response = $pet_api->getPetByIdInObject($pet_id);
+        $this->assertInstanceOf('Swagger\Client\Model\InlineResponse200', $response);
+        $this->assertSame($response->getId(), $pet_id);
+        $this->assertSame($response->getName(), 'PHP Unit Test');
+        $this->assertSame($response->getPhotoUrls()[0], 'http://test_php_unit_test.com');
+
+        // category is type "object"
+        $this->assertInternalType('array', $response->getCategory());
+        $this->assertSame($response->getCategory()['id'], $pet_id);
+        $this->assertSame($response->getCategory()['name'], 'test php category');
+
+        $this->assertSame($response->getTags()[0]->getId(), $pet_id);
+        $this->assertSame($response->getTags()[0]->getName(), 'test php tag');
+    }
+  
+    // test getPetByIdWithHttpInfo with a Pet object (id 10005)
     public function testGetPetByIdWithHttpInfo()
     {
         // initialize the API client without host
@@ -275,7 +302,7 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         // add a new pet (model)
         $object_serializer = new Swagger\Client\ObjectSerializer();
         $pet_json_string = json_encode($object_serializer->sanitizeForSerialization($new_pet));
-        $add_response = $pet_api->addPetUsingByteArray(unpack('C*', $pet_json_string));
+        $add_response = $pet_api->addPetUsingByteArray($pet_json_string);
         // return nothing (void)
         $this->assertSame($add_response, NULL);
         // verify added Pet
@@ -325,10 +352,10 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $pet_api = new Swagger\Client\Api\PetAPI($api_client);
         // test getPetByIdWithByteArray 
         $pet_id = 10005;
-        $bytes = $pet_api->getPetByIdWithByteArray($pet_id);
-        $json = json_decode(call_user_func_array('pack', array_merge(array('C*'), $bytes )), true);
+        $bytes = $pet_api->petPetIdtestingByteArraytrueGet($pet_id);
+        $json = json_decode($bytes, true);
 
-        $this->assertInternalType("array", $bytes);
+        $this->assertInternalType("string", $bytes);
 
         $this->assertSame($json['id'], $pet_id);
         // not testing name as it's tested by addPetUsingByteArray

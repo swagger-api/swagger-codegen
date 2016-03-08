@@ -80,6 +80,9 @@ samples/client/petstore/csharp/SwaggerClientTest/bin/Debug/
 samples/client/petstore/csharp/SwaggerClientTest/obj/Debug/
 **/.gradle/
 
+samples/client/petstore/python/dev-requirements.txt.log
+samples/client/petstore/python/swagger_client.egg-info/SOURCES.txt
+samples/client/petstore/python/.coverage
 
 #purecloud build paths
 dists/

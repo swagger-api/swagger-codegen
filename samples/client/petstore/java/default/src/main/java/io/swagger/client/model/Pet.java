@@ -7,13 +7,14 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.Category;
 import io.swagger.client.model.Tag;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-12T18:48:10.013-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-22T14:59:49.052+08:00")
 public class Pet   {
   
   private Long id = null;
@@ -50,7 +51,6 @@ public class Pet   {
     this.id = id;
     return this;
   }
-
   
   @ApiModelProperty(example = "null", value = "")
   @JsonProperty("id")
@@ -68,7 +68,6 @@ public class Pet   {
     this.category = category;
     return this;
   }
-
   
   @ApiModelProperty(example = "null", value = "")
   @JsonProperty("category")
@@ -86,7 +85,6 @@ public class Pet   {
     this.name = name;
     return this;
   }
-
   
   @ApiModelProperty(example = "doggie", required = true, value = "")
   @JsonProperty("name")
@@ -104,7 +102,6 @@ public class Pet   {
     this.photoUrls = photoUrls;
     return this;
   }
-
   
   @ApiModelProperty(example = "null", required = true, value = "")
   @JsonProperty("photoUrls")
@@ -122,7 +119,6 @@ public class Pet   {
     this.tags = tags;
     return this;
   }
-
   
   @ApiModelProperty(example = "null", value = "")
   @JsonProperty("tags")
@@ -141,7 +137,6 @@ public class Pet   {
     this.status = status;
     return this;
   }
-
   
   @ApiModelProperty(example = "null", value = "pet status in the store")
   @JsonProperty("status")
@@ -163,14 +158,12 @@ public class Pet   {
       return false;
     }
     Pet pet = (Pet) o;
-
-    return true && Objects.equals(id, pet.id) &&
-        Objects.equals(category, pet.category) &&
-        Objects.equals(name, pet.name) &&
-        Objects.equals(photoUrls, pet.photoUrls) &&
-        Objects.equals(tags, pet.tags) &&
-        Objects.equals(status, pet.status)
-    ;
+    return Objects.equals(this.id, pet.id) &&
+        Objects.equals(this.category, pet.category) &&
+        Objects.equals(this.name, pet.name) &&
+        Objects.equals(this.photoUrls, pet.photoUrls) &&
+        Objects.equals(this.tags, pet.tags) &&
+        Objects.equals(this.status, pet.status);
   }
 
   @Override

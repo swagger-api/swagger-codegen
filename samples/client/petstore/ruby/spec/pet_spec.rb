@@ -100,7 +100,7 @@ describe "Pet" do
       str = serialize_json(pet)
       @pet_api.add_pet_using_byte_array(body: str)
 
-      fetched_str = @pet_api.get_pet_by_id_with_byte_array(pet.id)
+      fetched_str = @pet_api.pet_pet_idtesting_byte_arraytrue_get(pet.id)
       fetched_str.should be_a(String)
       fetched = deserialize_json(fetched_str, 'Pet')
       fetched.should be_a(Petstore::Pet)
@@ -109,6 +109,16 @@ describe "Pet" do
       fetched.category.name.should == pet.category.name
 
       @pet_api.delete_pet(pet.id)
+    end
+
+    it "should get pet in bject" do
+      pet = @pet_api.get_pet_by_id_in_object(@pet_id)
+      pet.should be_a(Petstore::InlineResponse200)
+      pet.id.should == @pet_id
+      pet.name.should == "RUBY UNIT TESTING"
+      pet.category.should be_a(Hash)
+      pet.category[:id].should == 20002
+      pet.category[:name].should == 'category test'
     end
 
     it "should update a pet" do

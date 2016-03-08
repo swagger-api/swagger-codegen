@@ -31,6 +31,8 @@ public class CSharpClientOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.RETURN_ICOLLECTION, "false")
                 .put(CodegenConstants.OPTIONAL_PROJECT_FILE, "true")
                 .put(CodegenConstants.OPTIONAL_PROJECT_GUID, PACKAGE_GUID_VALUE)
+                .put(CodegenConstants.DOTNET_FRAMEWORK, "4.x")
+                .put(CodegenConstants.OPTIONAL_EMIT_DEFAULT_VALUES, "true")
                 .build();
     }
 

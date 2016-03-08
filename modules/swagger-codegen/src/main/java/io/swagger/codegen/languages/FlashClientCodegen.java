@@ -70,8 +70,8 @@ public class FlashClientCodegen extends DefaultCodegen implements CodegenConfig 
         importMapping = new HashMap<String, String>();
         importMapping.put("File", "flash.filesystem.File");
 
-        // from 
-        reservedWords = new HashSet<String>(Arrays.asList("add", "for", "lt", "tellTarget", "and",
+        // from
+        setReservedWordsLowerCase(Arrays.asList("add", "for", "lt", "tellTarget", "and",
                 "function", "ne", "this", "break", "ge", "new", "typeof", "continue", "gt", "not",
                 "var", "delete", "if", "on", "void", "do", "ifFrameLoaded", "onClipEvent", "while",
                 "else", "in", "or", "with", "eq", "le", "return"));
@@ -261,7 +261,7 @@ public class FlashClientCodegen extends DefaultCodegen implements CodegenConfig 
     public String toVarName(String name) {
         // replace - with _ e.g. created-at => created_at
         name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
- 
+
         // if it's all uppper case, convert to lower case
         if (name.matches("^[A-Z_]*$")) {
             name = name.toLowerCase();
@@ -272,7 +272,7 @@ public class FlashClientCodegen extends DefaultCodegen implements CodegenConfig 
         name = camelize(dropDots(name), true);
 
         // for reserved word or word starting with number, append _
-        if (reservedWords.contains(name) || name.matches("^\\d.*")) {
+        if (isReservedWord(name) || name.matches("^\\d.*")) {
             name = escapeReservedWord(name);
         }
 
@@ -287,9 +287,20 @@ public class FlashClientCodegen extends DefaultCodegen implements CodegenConfig 
 
     @Override
     public String toModelName(String name) {
+        if (!StringUtils.isEmpty(modelNamePrefix)) {
+            name = modelNamePrefix + "_" + name;
+        }
+
+        if (!StringUtils.isEmpty(modelNameSuffix)) {
+            name = name + "_" + modelNameSuffix;
+        }
+
+        name = sanitizeName(name);
+
         // model name cannot use reserved keyword, e.g. return
-        if (reservedWords.contains(name)) {
-            throw new RuntimeException(name + " (reserved word) cannot be used as a model name");
+        if (isReservedWord(name)) {
+            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + camelize("model_" + name));
+            name = "model_" + name; // e.g. return => ModelReturn (after camelize)
         }
 
         // camelize the model name
@@ -299,14 +310,8 @@ public class FlashClientCodegen extends DefaultCodegen implements CodegenConfig 
 
     @Override
     public String toModelFilename(String name) {
-        // model name cannot use reserved keyword, e.g. return
-        if (reservedWords.contains(name)) {
-            throw new RuntimeException(name + " (reserved word) cannot be used as a model name");
-        }
-
-        // underscore the model file name
-        // PhoneNumber => phone_number
-        return camelize(dropDots(name));
+        // leverage toModelName
+        return dropDots(toModelName(name));
     }
 
     @Override
@@ -343,8 +348,9 @@ public class FlashClientCodegen extends DefaultCodegen implements CodegenConfig 
         }
 
         // method name cannot use reserved keyword, e.g. return
-        if (reservedWords.contains(operationId)) {
-            throw new RuntimeException(operationId + " (reserved word) cannot be used as method name");
+        if (isReservedWord(operationId)) {
+            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + underscore(sanitizeName("call_" + operationId)));
+            operationId = "call_" + operationId;
         }
 
         return underscore(operationId);
