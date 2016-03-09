@@ -32,7 +32,6 @@ namespace {{packageName}}.Model
         public {{{datatypeWithEnum}}} {{name}} { get; set; }
     {{/isEnum}}{{/vars}}
         /// <summary>
-        /// Initializes a new instance of the <see cref="{{classname}}" /> class.
         /// Initializes a new instance of the <see cref="{{classname}}" />class.
         /// </summary>
 {{#vars}}{{^isReadOnly}}        /// <param name="{{name}}">{{#description}}{{description}}{{/description}}{{^description}}{{name}}{{/description}}{{#required}} (required){{/required}}{{#defaultValue}} (default to {{defaultValue}}){{/defaultValue}}.</param>
