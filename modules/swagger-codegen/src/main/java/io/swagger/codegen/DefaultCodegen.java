@@ -2186,6 +2186,27 @@ public class DefaultCodegen {
                 }
             }
 
+            boolean foundLastValidProperty = false;
+            for (int i = m.vars.size() -1; i >= 0; i--) {
+                CodegenProperty cp = m.vars.get(i);
+
+                // If we've found the last property already, set it and move on
+                if (foundLastValidProperty) {
+                    cp.hasMore = true;
+                    continue;
+                }
+
+                // If the property isn't readonly, we've found the last valid property
+                if (cp.isReadOnly == null || !cp.isReadOnly){
+                    foundLastValidProperty = true;
+                    cp.hasMore = null;
+                    continue;
+                }
+            }
+
+            // Make sure last property in list doesn't think there's more
+            m.vars.get(m.vars.size()-1).hasMore = null;
+
             m.mandatory = mandatory;
 
         } else {
