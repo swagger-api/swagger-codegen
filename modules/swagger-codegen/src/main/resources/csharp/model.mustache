@@ -113,17 +113,17 @@ namespace {{packageName}}.Model
             if (other == null)
                 return false;
 
-            return {{#vars}}{{#isNotContainer}}
+            return true{{#vars}}{{#isNotContainer}} &&
                 (
                     this.{{name}} == other.{{name}} ||
                     this.{{name}} != null &&
                     this.{{name}}.Equals(other.{{name}})
-                ){{#hasMore}} && {{/hasMore}}{{/isNotContainer}}{{^isNotContainer}}
+                ){{/isNotContainer}}{{^isNotContainer}} &&
                 (
                     this.{{name}} == other.{{name}} ||
                     this.{{name}} != null &&
                     this.{{name}}.SequenceEqual(other.{{name}})
-                ){{#hasMore}} && {{/hasMore}}{{/isNotContainer}}{{/vars}}{{^vars}}false{{/vars}};
+                ){{/isNotContainer}}{{/vars}}{{^vars}} && false{{/vars}};
         }
 
         /// <summary>
