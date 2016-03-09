@@ -293,9 +293,13 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
             Map<String, Object> mo = (Map<String, Object>) _mo;
             CodegenModel cm = (CodegenModel) mo.get("model");
             for (CodegenProperty var : cm.vars) {
-                Map<String, Object> allowableValues = var.allowableValues;
+                // Property names can't be the same as the class name
+                if (cm.classname.equalsIgnoreCase(var.name)) {
+                    var.name += "Property";
+                }
 
                 // handle ArrayProperty
+                Map<String, Object> allowableValues = var.allowableValues;
                 if (var.items != null) {
                     allowableValues = var.items.allowableValues;
                 }
