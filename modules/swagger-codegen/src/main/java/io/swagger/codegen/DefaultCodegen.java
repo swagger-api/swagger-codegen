@@ -1232,28 +1232,27 @@ public class DefaultCodegen {
         property.baseType = getSwaggerType(p);
 
       	if (p instanceof ArrayProperty) {
-        		property.isContainer = true;
-        		property.isListContainer = true;
-        		property.containerType = "array";
-        		ArrayProperty ap = (ArrayProperty) p;
-        		CodegenProperty cp = fromProperty(property.name, ap.getItems());
-        		if (cp == null) {
-        			LOGGER.warn("skipping invalid property " + Json.pretty(p));
-        		} else {
-          			property.baseType = getSwaggerType(p);
-          			if (!languageSpecificPrimitives.contains(cp.baseType)) {
-          				  property.complexType = cp.baseType;
-          			} else {
-          				  property.isPrimitiveType = true;
-          			}
-          			property.items = cp;
-          			if (property.items.isEnum) {
-          				  property.datatypeWithEnum = property.datatypeWithEnum.replace(property.items.baseType,
-          						property.items.datatypeWithEnum);
-                            if(property.defaultValue != null)
-          				        property.defaultValue = property.defaultValue.replace(property.items.baseType, property.items.datatypeWithEnum);
-          			}
-        		}
+            property.isContainer = true;
+            property.isListContainer = true;
+            property.containerType = "array";
+            ArrayProperty ap = (ArrayProperty) p;
+            CodegenProperty cp = fromProperty(property.name, ap.getItems());
+            if (cp == null) {
+                LOGGER.warn("skipping invalid property " + Json.pretty(p));
+            } else {
+                property.baseType = getSwaggerType(p);
+                if (!languageSpecificPrimitives.contains(cp.baseType)) {
+                    property.complexType = cp.baseType;
+                } else {
+                    property.isPrimitiveType = true;
+                }
+                property.items = cp;
+                if (property.items.isEnum) {
+                    property.datatypeWithEnum = property.datatypeWithEnum.replace(property.items.baseType, property.items.datatypeWithEnum);
+                    if(property.defaultValue != null)
+                        property.defaultValue = property.defaultValue.replace(property.items.baseType, property.items.datatypeWithEnum);
+                }
+            }
       	} else if (p instanceof MapProperty) {
             property.isContainer = true;
             property.isMapContainer = true;
@@ -2206,6 +2205,26 @@ public class DefaultCodegen {
 
             // Make sure last property in list doesn't think there's more
             m.vars.get(m.vars.size()-1).hasMore = null;
+
+            /*
+            // This code renames the enums as "ClassName+EnumName" to ensure they are globally unique. This breaks the
+            // override prevention feature (JavaModelEnumTest.java, overrideEnumTest).
+            // TODO: figure out a way to rename the enums without breaking this feature or find another way to solve this problem
+            LOGGER.info(">>>>> CLASS -> " + m.classname);
+            for (CodegenProperty cp : m.vars) {
+                LOGGER.info(">>> VAR -> " + cp.name);
+                if (cp.isEnum) {
+                    LOGGER.info(">>> [pre] datatypeWithEnum -> " + cp.datatypeWithEnum);
+                    cp.datatypeWithEnum = StringUtils.capitalize(m.classname) + cp.datatypeWithEnum;
+                    LOGGER.info(">>> [pst] datatypeWithEnum -> " + cp.datatypeWithEnum);
+                }
+                if (cp.items != null && cp.items.isEnum) {
+                    LOGGER.info(">>> [pre] datatypeWithEnum -> " + cp.items.datatypeWithEnum);
+                    cp.items.datatypeWithEnum = StringUtils.capitalize(m.classname) + cp.items.datatypeWithEnum;
+                    LOGGER.info(">>> [pst] datatypeWithEnum -> " + cp.items.datatypeWithEnum);
+                }
+            }
+            */
 
             m.mandatory = mandatory;
 

@@ -22,8 +22,10 @@ namespace {{packageName}}.Model
     
         [JsonConverter(typeof(StringEnumConverter))]
         {{>enumClass}}{{/isEnum}}{{#items.isEnum}}{{#items}}
-        {{>enumClass}}{{/items}}{{/items.isEnum}}{{/vars}}
-    {{#vars}}{{#isEnum}}
+        {{#allowableValues}}{{#enumVars}}
+        public static string {{baseName}}_{{name}} = "{{jsonname}}";{{/enumVars}}{{/allowableValues}}
+        {{/items}}{{/items.isEnum}}{{/vars}}
+        {{#vars}}{{#isEnum}}
         /// <summary>
         /// {{^description}}Gets or Sets {{{name}}}{{/description}}{{#description}}{{{description}}}{{/description}}
         /// </summary>{{#description}}

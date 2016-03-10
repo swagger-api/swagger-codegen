@@ -349,7 +349,13 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
 
                 // HACK: strip ? from enum
                 if (var.datatypeWithEnum != null) {
-                    var.vendorExtensions.put("plainDatatypeWithEnum", var.datatypeWithEnum.substring(0, var.datatypeWithEnum.length() - 1));
+                    var.vendorExtensions.put("plainDatatypeWithEnum", var.datatypeWithEnum.replaceAll("\\?",""));
+                }
+
+                // Use the basic type (i.e. List<string>) instead of the enum collection (i.e. List<MyEnum>)
+                if (var.items != null && var.items.datatypeWithEnum != null) {
+                    LOGGER.info("$$$$ Changing datatypeWithEnum '" + var.items.datatypeWithEnum + "' to '" + var.items.datatype + "'");
+                    var.items.datatypeWithEnum = var.items.datatype;
                 }
             }
         }
