@@ -146,12 +146,12 @@ class Decoders {
             Decoders.addDecoder(clazz: InlineResponse200.self) { (source: AnyObject) -> InlineResponse200 in
                 let sourceDictionary = source as! [NSObject:AnyObject]
                 let instance = InlineResponse200()
-                instance.tags = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["tags"])
+                instance.photoUrls = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["photoUrls"])
+                instance.name = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["name"])
                 instance.id = Decoders.decodeOptional(clazz: Int.self, source: sourceDictionary["id"])
                 instance.category = Decoders.decodeOptional(clazz: AnyObject.self, source: sourceDictionary["category"])
+                instance.tags = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["tags"])
                 instance.status = InlineResponse200.Status(rawValue: (sourceDictionary["status"] as? String) ?? "") 
-                instance.name = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["name"])
-                instance.photoUrls = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["photoUrls"])
                 return instance
             }
 			
@@ -227,6 +227,7 @@ class Decoders {
                 let sourceDictionary = source as! [NSObject:AnyObject]
                 let instance = SpecialModelName()
                 instance.specialPropertyName = Decoders.decodeOptional(clazz: Int.self, source: sourceDictionary["specialPropertyName"])
+                instance._type = SpecialModelName._type(rawValue: (sourceDictionary["_type"] as? String) ?? "") 
                 return instance
             }
 			
