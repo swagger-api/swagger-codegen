@@ -173,35 +173,5 @@
     completionHandler: (void (^)(NSError* error)) handler;
 
 
-///
-///
-/// Fake endpoint to test byte array return by 'Find pet by ID'
-/// Returns a pet when ID < 10.  ID > 10 or nonintegers will simulate API error conditions
-///
-/// @param petId ID of pet that needs to be fetched
-/// 
-///
-/// @return SWGBinary*
--(NSNumber*) getPetByIdWithByteArrayWithCompletionBlock :(NSNumber*) petId 
-    
-    completionHandler: (void (^)(SWGBinary* output, NSError* error))completionBlock;
-    
-
-
-///
-///
-/// Fake endpoint to test byte array in body parameter for adding a new pet to the store
-/// 
-///
-/// @param body Pet object in the form of byte array
-/// 
-///
-/// @return 
--(NSNumber*) addPetUsingByteArrayWithCompletionBlock :(SWGBinary*) body 
-    
-    
-    completionHandler: (void (^)(NSError* error))completionBlock;
-
-
 
 @end
