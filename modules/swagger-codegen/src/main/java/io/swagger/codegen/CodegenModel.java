@@ -11,6 +11,7 @@ public class CodegenModel {
     public String unescapedDescription;
     public String discriminator;
     public String defaultValue;
+    public CodegenModel parentModel;
     public List<CodegenProperty> vars = new ArrayList<CodegenProperty>();
     public List<String> allowableValues;
 
