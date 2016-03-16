@@ -1294,6 +1294,13 @@
         "$special[property.name]": {
           "type": "integer",
           "format": "int64"
+        },
+        "type": {
+          "type":"string",
+          "enum": [
+            "Type1",
+            "Type2"
+          ]
         }
       },
       "xml": {

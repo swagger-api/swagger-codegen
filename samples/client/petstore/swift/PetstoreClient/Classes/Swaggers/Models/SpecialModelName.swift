@@ -10,7 +10,13 @@ import Foundation
 
 public class SpecialModelName: JSONEncodable {
 
+    public enum _type: String { 
+        case Type1 = "Type1"
+        case Type2 = "Type2"
+    }
+    
     public var specialPropertyName: Int?
+    public var _type: _type?
     
 
     public init() {}
@@ -19,6 +25,7 @@ public class SpecialModelName: JSONEncodable {
     func encodeToJSON() -> AnyObject {
         var nillableDictionary = [String:AnyObject?]()
         nillableDictionary["specialPropertyName"] = self.specialPropertyName
+        nillableDictionary["_type"] = self._type?.rawValue
         let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
     }
