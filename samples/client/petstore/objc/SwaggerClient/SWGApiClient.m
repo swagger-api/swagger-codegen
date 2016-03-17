@@ -2,6 +2,10 @@
 
 NSString *const SWGResponseObjectErrorKey = @"SWGResponseObject";
 
+NSString *const SWGDeserializationErrorDomainKey = @"SWGDeserializationErrorDomainKey";
+
+NSInteger const SWGTypeMismatchErrorCode = 143553;
+
 static long requestId = 0;
 static bool offlineState = false;
 static NSMutableSet * queuedRequests = nil;
@@ -313,6 +317,13 @@ static void (^reachabilityChangeBlock)(int);
                                  range:NSMakeRange(0, [class length])];
 
     if (match) {
+        if(![data isKindOfClass: [NSArray class]]) {
+            if(error) {
+                NSDictionary * userInfo = @{NSLocalizedDescriptionKey : NSLocalizedString(@"Received response is not an array", nil)};
+                *error = [NSError errorWithDomain:SWGDeserializationErrorDomainKey code:SWGTypeMismatchErrorCode userInfo:userInfo];
+            }
+            return nil;
+        }
         NSArray *dataArray = data;
         innerType = [class substringWithRange:[match rangeAtIndex:1]];
 
