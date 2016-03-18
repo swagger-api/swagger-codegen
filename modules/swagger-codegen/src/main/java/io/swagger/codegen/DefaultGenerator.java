@@ -356,106 +356,11 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                             return ObjectUtils.compare(one.operationId, another.operationId);
                         }
                     });
-                    Map<String, Object> operation = processOperations(config, tag, ops);
+                    List<Map<String, Object>> operationGroups = processOperationsGroup(config, tag, ops);
 
-                    operation.put("basePath", basePath);
-                    operation.put("basePathWithoutHost", basePathWithoutHost);
-                    operation.put("contextPath", contextPath);
-                    operation.put("baseName", tag);
-                    operation.put("modelPackage", config.modelPackage());
-                    operation.putAll(config.additionalProperties());
-                    operation.put("classname", config.toApiName(tag));
-                    operation.put("classVarName", config.toApiVarName(tag));
-                    operation.put("importPath", config.toApiImport(tag));
-                    
-                    if(!config.vendorExtensions().isEmpty()) {
-                    	operation.put("vendorExtensions", config.vendorExtensions());
-                    }
+                    for (Map<String, Object> opGroup : operationGroups){
 
-                    // Pass sortParamsByRequiredFlag through to the Mustache template...
-                    boolean sortParamsByRequiredFlag = true;
-                    if (this.config.additionalProperties().containsKey(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG)) {
-                        sortParamsByRequiredFlag = Boolean.valueOf((String)this.config.additionalProperties().get(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG).toString());
-                    }
-                    operation.put("sortParamsByRequiredFlag", sortParamsByRequiredFlag);
-
-                    processMimeTypes(swagger.getConsumes(), operation, "consumes");
-                    processMimeTypes(swagger.getProduces(), operation, "produces");
-
-                    allOperations.add(new HashMap<String, Object>(operation));
-                    for (int i = 0; i < allOperations.size(); i++) {
-                        Map<String, Object> oo = (Map<String, Object>) allOperations.get(i);
-                        if (i < (allOperations.size() - 1)) {
-                            oo.put("hasMore", "true");
-                        }
-                    }
-
-                    for (String templateName : config.apiTemplateFiles().keySet()) {
-                        String filename = config.apiFilename(templateName, tag);
-                        if (!config.shouldOverwrite(filename) && new File(filename).exists()) {
-                            continue;
-                        }
-
-                        String templateFile = getFullTemplateFile(config, templateName);
-                        String template = readTemplate(templateFile);
-                        Template tmpl = Mustache.compiler()
-                                .withLoader(new Mustache.TemplateLoader() {
-                                    @Override
-                                    public Reader getTemplate(String name) {
-                                        return getTemplateReader(getFullTemplateFile(config, name + ".mustache"));
-                                    }
-                                })
-                                .defaultValue("")
-                                .compile(template);
-
-                        writeToFile(filename, tmpl.execute(operation));
-                        files.add(new File(filename));
-                    }
-
-                    // to generate api test files
-                    for (String templateName : config.apiTestTemplateFiles().keySet()) {
-                        String filename = config.apiTestFilename(templateName, tag);
-                        if (!config.shouldOverwrite(filename) && new File(filename).exists()) {
-                            continue;
-                        }
-
-                        String templateFile = getFullTemplateFile(config, templateName);
-                        String template = readTemplate(templateFile);
-                        Template tmpl = Mustache.compiler()
-                                .withLoader(new Mustache.TemplateLoader() {
-                                    @Override
-                                    public Reader getTemplate(String name) {
-                                        return getTemplateReader(getFullTemplateFile(config, name + ".mustache"));
-                                    }
-                                })
-                                .defaultValue("")
-                                .compile(template);
-
-                        writeToFile(filename, tmpl.execute(operation));
-                        files.add(new File(filename));
-                    }
-
-                    // to generate api documentation files
-                    for (String templateName : config.apiDocTemplateFiles().keySet()) {
-                        String filename = config.apiDocFilename(templateName, tag);
-                        if (!config.shouldOverwrite(filename) && new File(filename).exists()) {
-                            continue;
-                        }
-
-                        String templateFile = getFullTemplateFile(config, templateName);
-                        String template = readTemplate(templateFile);
-                        Template tmpl = Mustache.compiler()
-                                .withLoader(new Mustache.TemplateLoader() {
-                                    @Override
-                                    public Reader getTemplate(String name) {
-                                        return getTemplateReader(getFullTemplateFile(config, name + ".mustache"));
-                                    }
-                                })
-                                .defaultValue("")
-                                .compile(template);
-
-                        writeToFile(filename, tmpl.execute(operation));
-                        files.add(new File(filename));
+                        generateOperationGroup(files, contextPath, basePath, basePathWithoutHost, allOperations, tag, opGroup);
                     }
 
                 } catch (Exception e) {
@@ -581,6 +486,132 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
         config.processSwagger(swagger);
         return files;
+    }
+
+    private void generateOperationGroup(List<File> files, String contextPath, String basePath, String basePathWithoutHost, List<Object> allOperations, String tag, Map<String, Object> operationGroup) throws IOException {
+        operationGroup.put("basePath", basePath);
+        operationGroup.put("basePathWithoutHost", basePathWithoutHost);
+        operationGroup.put("contextPath", contextPath);
+        operationGroup.put("baseName", tag);
+        operationGroup.put("modelPackage", config.modelPackage());
+        operationGroup.putAll(config.additionalProperties());
+        operationGroup.put("classname", config.toApiName(tag));
+        operationGroup.put("classVarName", config.toApiVarName(tag));
+        operationGroup.put("importPath", config.toApiImport(tag));
+
+        if(!config.vendorExtensions().isEmpty()) {
+            operationGroup.put("vendorExtensions", config.vendorExtensions());
+        }
+
+        // Pass sortParamsByRequiredFlag through to the Mustache template...
+        boolean sortParamsByRequiredFlag = true;
+        if (this.config.additionalProperties().containsKey(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG)) {
+            sortParamsByRequiredFlag = Boolean.valueOf((String)this.config.additionalProperties().get(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG).toString());
+        }
+        operationGroup.put("sortParamsByRequiredFlag", sortParamsByRequiredFlag);
+
+        processMimeTypes(swagger.getConsumes(), operationGroup, "consumes");
+        processMimeTypes(swagger.getProduces(), operationGroup, "produces");
+
+        allOperations.add(new HashMap<String, Object>(operationGroup));
+        for (int i = 0; i < allOperations.size(); i++) {
+            Map<String, Object> oo = (Map<String, Object>) allOperations.get(i);
+            if (i < (allOperations.size() - 1)) {
+                oo.put("hasMore", "true");
+            }
+        }
+
+        for (String templateName : config.apiTemplateFiles().keySet()) {
+            String filename = null;
+            CodegenOperation operation = (CodegenOperation) operationGroup.get("singleOperation");
+            if (operation != null){
+                filename = config.apiFilenameSingleOperation(templateName, operation.operationId);
+            }else{
+                filename = config.apiFilename(templateName, tag);
+            }
+            if (!config.shouldOverwrite(filename) && new File(filename).exists()) {
+                continue;
+            }
+
+            String templateFile = getFullTemplateFile(config, templateName);
+            String template = readTemplate(templateFile);
+            Template tmpl = Mustache.compiler()
+                    .withLoader(new Mustache.TemplateLoader() {
+                        @Override
+                        public Reader getTemplate(String name) {
+                            return getTemplateReader(getFullTemplateFile(config, name + ".mustache"));
+                        }
+                    })
+                    .defaultValue("")
+                    .compile(template);
+
+            writeToFile(filename, tmpl.execute(operationGroup));
+            files.add(new File(filename));
+        }
+
+        // to generate api test files
+        for (String templateName : config.apiTestTemplateFiles().keySet()) {
+            String filename = null;
+
+            CodegenOperation operation = (CodegenOperation) operationGroup.get("singleOperation");
+
+            if (operation != null){
+                filename = config.apiTestFilenameSingleOperation(templateName, operation.operationId);
+            }else{
+                filename = config.apiTestFilename(templateName, tag);
+            }
+
+            if (!config.shouldOverwrite(filename) && new File(filename).exists()) {
+                continue;
+            }
+
+            String templateFile = getFullTemplateFile(config, templateName);
+            String template = readTemplate(templateFile);
+            Template tmpl = Mustache.compiler()
+                    .withLoader(new Mustache.TemplateLoader() {
+                        @Override
+                        public Reader getTemplate(String name) {
+                            return getTemplateReader(getFullTemplateFile(config, name + ".mustache"));
+                        }
+                    })
+                    .defaultValue("")
+                    .compile(template);
+
+            writeToFile(filename, tmpl.execute(operationGroup));
+            files.add(new File(filename));
+        }
+
+        // to generate api documentation files
+        for (String templateName : config.apiDocTemplateFiles().keySet()) {
+            String filename = null;
+
+            CodegenOperation operation = (CodegenOperation) operationGroup.get("singleOperation");
+
+            if (operation != null){
+                filename = config.apiDocFilenameSingleOperation(templateName, operation.operationId);
+            }else{
+                filename = config.apiDocFilename(templateName, tag);
+            }
+
+            if (!config.shouldOverwrite(filename) && new File(filename).exists()) {
+                continue;
+            }
+
+            String templateFile = getFullTemplateFile(config, templateName);
+            String template = readTemplate(templateFile);
+            Template tmpl = Mustache.compiler()
+                    .withLoader(new Mustache.TemplateLoader() {
+                        @Override
+                        public Reader getTemplate(String name) {
+                            return getTemplateReader(getFullTemplateFile(config, name + ".mustache"));
+                        }
+                    })
+                    .defaultValue("")
+                    .compile(template);
+
+            writeToFile(filename, tmpl.execute(operationGroup));
+            files.add(new File(filename));
+        }
     }
 
     private static void processMimeTypes(List<String> mimeTypeList, Map<String, Object> operation, String source) {
@@ -727,6 +758,24 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         return parameter.getName() + ":" + parameter.getIn();
     }
 
+    public List<Map<String, Object>> processOperationsGroup(CodegenConfig config, String tag, List<CodegenOperation> ops) {
+        List<Map<String, Object>> opList = new ArrayList<Map<String, Object>>();
+
+        if (config.isFilePerOperation()){
+            for (CodegenOperation op : ops){
+                List<CodegenOperation> opsToProcess = new ArrayList<CodegenOperation>();
+                opsToProcess.add(op);
+                Map<String, Object> opsProccessed = processOperations(config, tag, opsToProcess);
+                opsProccessed.put("singleOperation", op);
+                opList.add(opsProccessed);
+            }
+        }else{
+            opList.add(processOperations(config, tag, ops));
+        }
+
+        return opList;
+    }
+
     @SuppressWarnings("static-method")
     public Map<String, Object> processOperations(CodegenConfig config, String tag, List<CodegenOperation> ops) {
         Map<String, Object> operations = new HashMap<String, Object>();
@@ -785,6 +834,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 op.hasMore = null;
             }
         }
+        operations.put("tag", tag);
         return operations;
     }
 

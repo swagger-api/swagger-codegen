@@ -85,6 +85,7 @@ public class DefaultCodegen {
     protected Boolean ensureUniqueParams = true;
     protected String gitUserId, gitRepoId, releaseNote;
     protected String httpUserAgent;
+    private boolean isFilePerOperation = false;
 
     public List<CliOption> cliOptions() {
         return cliOptions;
@@ -2288,6 +2289,33 @@ public class DefaultCodegen {
         return word;
     }
 
+    public String apiFilenameSingleOperation(String templateName, String operationId){
+        String suffix = apiTemplateFiles().get(templateName);
+        return apiFileFolder() + '/' + operationIdToApiFileName(operationId) + suffix;
+    }
+
+    private String operationIdToApiFileName(String operationId) {
+        return operationId+"Api";
+    }
+
+    public String apiDocFilenameSingleOperation(String templateName, String operationId){
+        String suffix = apiDocTemplateFiles().get(templateName);
+        return apiFileFolder() + '/' + operationIdToApiDocFileName(operationId) + suffix;
+    }
+
+    public String apiTestFilenameSingleOperation(String templateName, String operationId){
+        String suffix = apiTestTemplateFiles().get(templateName);
+        return apiFileFolder() + '/' + operationIdToApiTestFileName(operationId) + suffix;
+    }
+
+    private String operationIdToApiTestFileName(String operationId) {
+        return operationId+"Test";
+    }
+
+    private String operationIdToApiDocFileName(String operationId) {
+        return operationId;
+    }
+
     public String apiFilename(String templateName, String tag) {
         String suffix = apiTemplateFiles().get(templateName);
         return apiFileFolder() + '/' + toApiFilename(tag) + suffix;
@@ -2580,4 +2608,13 @@ public class DefaultCodegen {
             LOGGER.debug("Property type is not primitive: " + property.datatype);
         }
     }
+
+    public boolean isFilePerOperation(){
+        return isFilePerOperation;
+    }
+
+    public void setFilePerOperation(boolean value){
+        isFilePerOperation = value;
+    }
+
 }
