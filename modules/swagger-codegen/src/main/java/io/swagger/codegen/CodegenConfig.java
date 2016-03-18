@@ -18,7 +18,7 @@ public interface CodegenConfig {
     String getHelp();
 
     Map<String, Object> additionalProperties();
-    
+
     Map<String, Object> vendorExtensions();
 
     String testPackage();
@@ -82,7 +82,7 @@ public interface CodegenConfig {
     CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions);
 
     CodegenOperation fromOperation(String resourcePath, String httpMethod, Operation operation, Map<String, Model> definitions, Swagger swagger);
-    
+
     CodegenOperation fromOperation(String resourcePath, String httpMethod, Operation operation, Map<String, Model> definitions);
 
     List<CodegenSecurity> fromSecurity(Map<String, SecuritySchemeDefinition> schemes);
@@ -122,11 +122,11 @@ public interface CodegenConfig {
     String toApiTestFilename(String name);
 
     String toModelTestFilename(String name);
-    
+
     String toApiDocFilename(String name);
 
     String toModelDocFilename(String name);
-    
+
     String toModelImport(String name);
 
     String toApiImport(String name);
@@ -134,7 +134,7 @@ public interface CodegenConfig {
     void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co, Map<String, List<CodegenOperation>> operations);
 
     Map<String, Object> postProcessAllModels(Map<String, Object> objs);
-    
+
     Map<String, Object> postProcessModels(Map<String, Object> objs);
 
     Map<String, Object> postProcessOperations(Map<String, Object> objs);
@@ -184,4 +184,13 @@ public interface CodegenConfig {
 
     String getHttpUserAgent();
 
+    boolean isFilePerOperation();
+
+    void setFilePerOperation(boolean value);
+
+    String apiFilenameSingleOperation(String templateName, String operationId);
+
+    String apiDocFilenameSingleOperation(String templateName, String operationId);
+
+    String apiTestFilenameSingleOperation(String templateName, String operationId);
 }

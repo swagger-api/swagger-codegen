@@ -3,7 +3,9 @@ package io.swagger.codegen;
 import io.swagger.codegen.languages.JavaClientCodegen;
 import io.swagger.models.Swagger;
 import io.swagger.parser.SwaggerParser;
+import junit.framework.Assert;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.junit.rules.TemporaryFolder;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -156,6 +158,49 @@ public class DefaultGeneratorTest {
         assertEquals(apiKey2.name, "api_key2");
         assertEquals(apiKey2.type, "apiKey");
     }
+
+    static class MyCodegen extends DefaultCodegen implements CodegenConfig{
+        public MyCodegen(){
+            setFilePerOperation(true);
+            templateDir = "single-file-per-op-html";
+            this.apiDocTemplateFiles.put("api-doc.mustache", ".html");
+        }
+
+        @Override
+        public CodegenType getTag() {
+            return CodegenType.DOCUMENTATION;
+        }
+
+        @Override
+        public String getName() {
+            return "mycodegen";
+        }
+
+        @Override
+        public String getHelp() {
+            return "nohelp";
+        }
+    }
+
+    @Test
+    public void testSingleFilePerOperation() throws Exception {
+        final File output = folder.getRoot();
+
+        final Swagger swagger = new SwaggerParser().read("src/test/resources/petstore.json");
+        CodegenConfig codegenConfig = new MyCodegen();
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        new DefaultGenerator().opts(clientOptInput).generate();
+
+        File deletePet = new File(output,"deletePet.html");
+        File getPet = new File(output,"getPetById.html");
+
+        Assert.assertTrue("The file deletePet.html does not exist.",deletePet.exists());
+        Assert.assertTrue("The file getPetById.html does not exist.",getPet.exists());
+    }
+
 
     @Test
     public void testSkipOverwrite() throws Exception {
