@@ -116,14 +116,6 @@ class PetApiTests(unittest.TestCase):
             list(map(lambda x: getattr(x, 'id'), self.pet_api.find_pets_by_status(status=[self.pet.status])))
         )
 
-    def test_find_pets_by_tags(self):
-        self.pet_api.add_pet(body=self.pet)
-
-        self.assertIn(
-            self.pet.id,
-            list(map(lambda x: getattr(x, 'id'), self.pet_api.find_pets_by_tags(tags=[self.tag.name])))
-        )
-
     def test_update_pet_with_form(self):
         self.pet_api.add_pet(body=self.pet)
 
