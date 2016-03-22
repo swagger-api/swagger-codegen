@@ -5,7 +5,7 @@ import io.swagger.codegen.CodegenModelType;
 import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenParameter;
 import io.swagger.codegen.CodegenProperty;
-import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.languages.AbstractCSharpCodegen;
 import io.swagger.models.Model;
 import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
@@ -26,7 +26,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class CellStoreCodegen extends DefaultCodegen {
+public abstract class CellStoreCodegen extends AbstractCSharpCodegen
+{
     protected static final Logger LOGGER = LoggerFactory.getLogger(CellStoreCodegen.class);
     
     public CellStoreCodegen(){
