@@ -1,6 +1,8 @@
 # Swagger Code Generator
+[![Circle CI](https://circleci.com/gh/28msec/swagger-codegen.svg?style=svg)](https://circleci.com/gh/28msec/swagger-codegen)
 
-[![Build Status](https://travis-ci.org/28msec/swagger-codegen.png)](https://travis-ci.org/28msec/swagger-codegen)
+## Creating new release
+Change version in package.json, merge to master.
 
 ## Overview
 This is the swagger codegen project, which allows generation of client libraries automatically from a Swagger-compliant server.  
