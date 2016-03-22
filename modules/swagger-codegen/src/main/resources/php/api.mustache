@@ -92,7 +92,7 @@ use \{{invokerPackage}}\ObjectSerializer;
   
     {{#operation}}
     /**
-     * {{{nickname}}}
+     * {{{operationId}}}
      *
      * {{{summary}}}
      *
@@ -100,12 +100,28 @@ use \{{invokerPackage}}\ObjectSerializer;
   {{/allParams}}   * @return {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}
      * @throws \{{invokerPackage}}\ApiException on non-2xx response
      */
-    public function {{nickname}}({{#allParams}}${{paramName}}{{^required}}=null{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+    public function {{operationId}}({{#allParams}}${{paramName}}{{^required}} = null{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+    {
+        list($response, $statusCode, $httpHeader) = $this->{{operationId}}WithHttpInfo ({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        return $response; 
+    }
+
+
+    /**
+     * {{{operationId}}}WithHttpInfo
+     *
+     * {{{summary}}}
+     *
+  {{#allParams}}   * @param {{dataType}} ${{paramName}} {{description}} {{#required}}(required){{/required}}{{^required}}(optional){{/required}}
+  {{/allParams}}   * @return Array of {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}null{{/returnType}}, HTTP status code, HTTP response headers (array of strings)
+     * @throws \{{invokerPackage}}\ApiException on non-2xx response
+     */
+    public function {{operationId}}WithHttpInfo({{#allParams}}${{paramName}}{{^required}} = null{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
     {
         {{#allParams}}{{#required}}
         // verify the required parameter '{{paramName}}' is set
         if (${{paramName}} === null) {
-            throw new \InvalidArgumentException('Missing the required parameter ${{paramName}} when calling {{nickname}}');
+            throw new \InvalidArgumentException('Missing the required parameter ${{paramName}} when calling {{operationId}}');
         }{{/required}}{{/allParams}}
   
         // parse inputs
@@ -123,14 +139,29 @@ use \{{invokerPackage}}\ObjectSerializer;
         $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array({{#consumes}}'{{mediaType}}'{{#hasMore}},{{/hasMore}}{{/consumes}}));
   
         {{#queryParams}}// query params
+        {{#collectionFormat}}
+        if (is_array(${{paramName}})) {
+            ${{paramName}} = $this->apiClient->getSerializer()->serializeCollection(${{paramName}}, '{{collectionFormat}}', true);
+        }
+        {{/collectionFormat}}
         if (${{paramName}} !== null) {
             $queryParams['{{baseName}}'] = $this->apiClient->getSerializer()->toQueryValue(${{paramName}});
         }{{/queryParams}}
         {{#headerParams}}// header params
+        {{#collectionFormat}}
+        if (is_array(${{paramName}})) {
+            ${{paramName}} = $this->apiClient->getSerializer()->serializeCollection(${{paramName}}, '{{collectionFormat}}');
+        }
+        {{/collectionFormat}}
         if (${{paramName}} !== null) {
             $headerParams['{{baseName}}'] = $this->apiClient->getSerializer()->toHeaderValue(${{paramName}});
         }{{/headerParams}}
         {{#pathParams}}// path params
+        {{#collectionFormat}}
+        if (is_array(${{paramName}})) {
+            ${{paramName}} = $this->apiClient->getSerializer()->serializeCollection(${{paramName}}, '{{collectionFormat}}');
+        }
+        {{/collectionFormat}}
         if (${{paramName}} !== null) {
             $resourcePath = str_replace(
                 "{" . "{{baseName}}" . "}",
@@ -140,7 +171,18 @@ use \{{invokerPackage}}\ObjectSerializer;
         }{{/pathParams}}
         {{#formParams}}// form params
         if (${{paramName}} !== null) {
-            $formParams['{{baseName}}'] = {{#isFile}}'@' . {{/isFile}}$this->apiClient->getSerializer()->toFormValue(${{paramName}});
+            {{#isFile}}
+            // PHP 5.5 introduced a CurlFile object that deprecates the old @filename syntax
+            // See: https://wiki.php.net/rfc/curl-file-upload
+            if (function_exists('curl_file_create')) {
+                $formParams['{{baseName}}'] = curl_file_create($this->apiClient->getSerializer()->toFormValue(${{paramName}}));
+            } else {
+               $formParams['{{baseName}}'] = '@' . $this->apiClient->getSerializer()->toFormValue(${{paramName}});
+            }
+            {{/isFile}}
+            {{^isFile}}
+            $formParams['{{baseName}}'] = $this->apiClient->getSerializer()->toFormValue(${{paramName}});
+            {{/isFile}}
         }{{/formParams}}
         {{#bodyParams}}// body params
         $_tempBody = null;
@@ -151,35 +193,42 @@ use \{{invokerPackage}}\ObjectSerializer;
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if (count($formParams) > 0) {
+        } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
         {{#authMethods}}{{#isApiKey}}
+        // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('{{keyParamName}}');
-        if (isset($apiKey)) {
+        if (strlen($apiKey) !== 0) {
             {{#isKeyInHeader}}$headerParams['{{keyParamName}}'] = $apiKey;{{/isKeyInHeader}}{{#isKeyInQuery}}$queryParams['{{keyParamName}}'] = $apiKey;{{/isKeyInQuery}}
         }{{/isApiKey}}
-        {{#isBasic}}$headerParams['Authorization'] = 'Basic '.base64_encode($this->apiClient->getConfig()->getUsername().":".$this->apiClient->getConfig()->getPassword());{{/isBasic}}
-        {{#isOAuth}}//TODO support oauth{{/isOAuth}}
+        {{#isBasic}}// this endpoint requires HTTP basic authentication
+        if (strlen($this->apiClient->getConfig()->getUsername()) !== 0 or strlen($this->apiClient->getConfig()->getPassword()) !== 0) {
+            $headerParams['Authorization'] = 'Basic ' . base64_encode($this->apiClient->getConfig()->getUsername() . ":" . $this->apiClient->getConfig()->getPassword());
+        }{{/isBasic}}{{#isOAuth}}// this endpoint requires OAuth (access token)
+        if (strlen($this->apiClient->getConfig()->getAccessToken()) !== 0) {
+            $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
+        }{{/isOAuth}}
         {{/authMethods}}
         // make the API Call
-        try
-        {
-            list($response, $httpHeader) = $this->apiClient->callApi(
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
                 $headerParams{{#returnType}}, '{{returnType}}'{{/returnType}}
             );
             {{#returnType}}
             if (!$response) {
-                return null;
+                return array(null, $statusCode, $httpHeader);
             }
 
-            return $this->apiClient->getSerializer()->deserialize($response, '{{returnType}}', $httpHeader);
+            return array($this->apiClient->getSerializer()->deserialize($response, '{{returnType}}', $httpHeader), $statusCode, $httpHeader);
+            {{/returnType}}{{^returnType}}
+            return array(null, $statusCode, $httpHeader);
             {{/returnType}}
         } catch (ApiException $e) {
             switch ($e->getCode()) { {{#responses}}{{#dataType}}
-            case {{code}}:
+            {{^isWildcard}}case {{code}}:{{/isWildcard}}{{#isWildcard}}default:{{/isWildcard}}
                 $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '{{dataType}}', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;{{/dataType}}{{/responses}}
@@ -187,9 +236,6 @@ use \{{invokerPackage}}\ObjectSerializer;
   
             throw $e;
         }
-        {{#returnType}}
-        return null;
-        {{/returnType}}
     }
     {{/operation}}
 }

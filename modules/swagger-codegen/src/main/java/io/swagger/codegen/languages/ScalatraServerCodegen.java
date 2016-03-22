@@ -1,5 +1,6 @@
 package io.swagger.codegen.languages;
 
+import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.CodegenOperation;
@@ -29,7 +30,7 @@ public class ScalatraServerCodegen extends DefaultCodegen implements CodegenConf
         outputFolder = "generated-code/scalatra";
         modelTemplateFiles.put("model.mustache", ".scala");
         apiTemplateFiles.put("api.mustache", ".scala");
-        templateDir = "scalatra";
+        embeddedTemplateDir = templateDir = "scalatra";
         apiPackage = "com.wordnik.client.api";
         modelPackage = "com.wordnik.client.model";
 
@@ -117,16 +118,22 @@ public class ScalatraServerCodegen extends DefaultCodegen implements CodegenConf
         importMapping.put("LocalDateTime", "org.joda.time.LocalDateTime");
         importMapping.put("LocalDate", "org.joda.time.LocalDate");
         importMapping.put("LocalTime", "org.joda.time.LocalTime");
+
+        cliOptions.add(new CliOption(CodegenConstants.MODEL_PACKAGE, CodegenConstants.MODEL_PACKAGE_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.API_PACKAGE, CodegenConstants.API_PACKAGE_DESC));
     }
 
+    @Override
     public CodegenType getTag() {
         return CodegenType.SERVER;
     }
 
+    @Override
     public String getName() {
         return "scalatra";
     }
 
+    @Override
     public String getHelp() {
         return "Generates a Scala server application with Scalatra.";
     }
@@ -141,6 +148,7 @@ public class ScalatraServerCodegen extends DefaultCodegen implements CodegenConf
         return outputFolder + "/" + sourceFolder + "/" + apiPackage().replace('.', File.separatorChar);
     }
 
+    @Override
     public String modelFileFolder() {
         return outputFolder + "/" + sourceFolder + "/" + modelPackage().replace('.', File.separatorChar);
     }

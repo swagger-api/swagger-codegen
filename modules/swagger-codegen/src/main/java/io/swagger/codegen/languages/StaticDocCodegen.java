@@ -20,7 +20,7 @@ public class StaticDocCodegen extends DefaultCodegen implements CodegenConfig {
         outputFolder = "docs";
         modelTemplateFiles.put("model.mustache", ".html");
         apiTemplateFiles.put("operation.mustache", ".html");
-        templateDir = "swagger-static";
+        embeddedTemplateDir = templateDir = "swagger-static";
 
         additionalProperties.put(CodegenConstants.INVOKER_PACKAGE, invokerPackage);
         additionalProperties.put(CodegenConstants.GROUP_ID, groupId);
@@ -50,14 +50,17 @@ public class StaticDocCodegen extends DefaultCodegen implements CodegenConfig {
         instantiationTypes.put("map", "HashMap");
     }
 
+    @Override
     public CodegenType getTag() {
         return CodegenType.DOCUMENTATION;
     }
 
+    @Override
     public String getName() {
         return "dynamic-html";
     }
 
+    @Override
     public String getHelp() {
         return "Generates a dynamic HTML site.";
     }
@@ -72,6 +75,7 @@ public class StaticDocCodegen extends DefaultCodegen implements CodegenConfig {
         return outputFolder + File.separator + sourceFolder + File.separator + "operations";
     }
 
+    @Override
     public String modelFileFolder() {
         return outputFolder + File.separator + sourceFolder + File.separator + "models";
     }

@@ -41,8 +41,8 @@ public class CodegenConfigurator {
     private String lang;
     private String inputSpec;
     private String outputDir;
-    private boolean verbose = false;
-    private boolean skipOverwrite = false;
+    private boolean verbose;
+    private boolean skipOverwrite;
     private String templateDir;
     private String auth;
     private String apiPackage;
@@ -339,6 +339,9 @@ public class CodegenConfigurator {
             if (dynamicProperties.containsKey(opt)) {
                 codegenConfig.additionalProperties().put(opt, dynamicProperties.get(opt));
             }
+            else if(systemProperties.containsKey(opt)) {
+                codegenConfig.additionalProperties().put(opt, systemProperties.get(opt).toString());
+            }
         }
     }
 
@@ -387,8 +390,7 @@ public class CodegenConfigurator {
 
         if (isNotEmpty(configFile)) {
             try {
-                CodegenConfigurator result = Json.mapper().readValue(new File(configFile), CodegenConfigurator.class);
-                return result;
+                return Json.mapper().readValue(new File(configFile), CodegenConfigurator.class);
             } catch (IOException e) {
                 LOG.error("Unable to deserialize config file: " + configFile, e);
             }

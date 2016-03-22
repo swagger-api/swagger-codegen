@@ -1,25 +1,15 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.SupportingFile;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import io.swagger.codegen.*;
 import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
-import io.swagger.util.Json;
+import io.swagger.util.Yaml;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class JavaInflectorServerCodegen extends JavaClientCodegen implements CodegenConfig {
     protected String title = "Swagger Inflector";
@@ -30,7 +20,7 @@ public class JavaInflectorServerCodegen extends JavaClientCodegen implements Cod
         sourceFolder = "src/main/java";
         modelTemplateFiles.put("model.mustache", ".java");
         apiTemplateFiles.put("api.mustache", ".java");
-        templateDir = "JavaInflector";
+        embeddedTemplateDir = templateDir = "JavaInflector";
         invokerPackage = "io.swagger.handler";
         artifactId = "swagger-inflector-server";
 
@@ -55,14 +45,17 @@ public class JavaInflectorServerCodegen extends JavaClientCodegen implements Cod
         );
     }
 
+    @Override
     public CodegenType getTag() {
         return CodegenType.SERVER;
     }
 
+    @Override
     public String getName() {
         return "inflector";
     }
 
+    @Override
     public String getHelp() {
         return "Generates a Java Inflector Server application.";
     }
@@ -76,6 +69,12 @@ public class JavaInflectorServerCodegen extends JavaClientCodegen implements Cod
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("web.mustache", "src/main/webapp/WEB-INF", "web.xml"));
         supportingFiles.add(new SupportingFile("inflector.mustache", "", "inflector.yaml"));
+        supportingFiles.add(new SupportingFile("swagger.mustache",
+                        "src/main/swagger",
+                        "swagger.yaml")
+        );
+        supportingFiles.add(new SupportingFile("StringUtil.mustache",
+                (sourceFolder + '/' + invokerPackage).replace(".", "/"), "StringUtil.java"));
     }
 
     @Override
@@ -121,6 +120,7 @@ public class JavaInflectorServerCodegen extends JavaClientCodegen implements Cod
         co.baseName = basePath;
     }
 
+    @Override
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
         Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
         if (operations != null) {
@@ -155,21 +155,18 @@ public class JavaInflectorServerCodegen extends JavaClientCodegen implements Cod
         return objs;
     }
 
+
     @Override
-    public void processSwagger(Swagger swagger) {
-        super.processSwagger(swagger);
-
-        try {
-            File file = new File( outputFolder + "/src/main/swagger/swagger.json" );
-            file.getParentFile().mkdirs();
-
-            FileWriter swaggerFile = new FileWriter(file);
-            swaggerFile.write( Json.pretty( swagger ));
-            swaggerFile.flush();
-            swaggerFile.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
+        Swagger swagger = (Swagger)objs.get("swagger");
+        if(swagger != null) {
+            try {
+                objs.put("swagger-yaml", Yaml.mapper().writeValueAsString(swagger));
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
         }
+        return super.postProcessSupportingFileData(objs);
     }
 
     @Override
@@ -181,6 +178,7 @@ public class JavaInflectorServerCodegen extends JavaClientCodegen implements Cod
         return camelize(name)+ "Controller";
     }
 
+    @Override
     public boolean shouldOverwrite(String filename) {
         return super.shouldOverwrite(filename);
     }

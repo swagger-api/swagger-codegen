@@ -1,5 +1,7 @@
 package io.swagger.codegen.languages;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenType;
@@ -8,16 +10,19 @@ import io.swagger.codegen.SupportingFile;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
+import io.swagger.models.Swagger;
+import io.swagger.util.Yaml;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
 public class SinatraServerCodegen extends DefaultCodegen implements CodegenConfig {
-    protected String gemName = null;
-    protected String moduleName = null;
+    protected String gemName;
+    protected String moduleName;
     protected String gemVersion = "1.0.0";
     protected String libFolder = "lib";
 
@@ -29,7 +34,7 @@ public class SinatraServerCodegen extends DefaultCodegen implements CodegenConfi
         // no model
         modelTemplateFiles.clear();
         apiTemplateFiles.put("api.mustache", ".rb");
-        templateDir = "sinatra";
+        embeddedTemplateDir = templateDir = "sinatra";
 
         typeMapping.clear();
         languageSpecificPrimitives.clear();
@@ -73,16 +78,20 @@ public class SinatraServerCodegen extends DefaultCodegen implements CodegenConfi
         supportingFiles.add(new SupportingFile("config.ru", "", "config.ru"));
         supportingFiles.add(new SupportingFile("Gemfile", "", "Gemfile"));
         supportingFiles.add(new SupportingFile("README.md", "", "README.md"));
+        supportingFiles.add(new SupportingFile("swagger.mustache","","swagger.yaml"));
     }
 
+    @Override
     public CodegenType getTag() {
         return CodegenType.SERVER;
     }
 
+    @Override
     public String getName() {
         return "sinatra";
     }
 
+    @Override
     public String getHelp() {
         return "Generates a Sinatra server library.";
     }
@@ -129,6 +138,7 @@ public class SinatraServerCodegen extends DefaultCodegen implements CodegenConfi
         return type;
     }
 
+    @Override
     public String toDefaultValue(Property p) {
         return "null";
     }
@@ -213,5 +223,17 @@ public class SinatraServerCodegen extends DefaultCodegen implements CodegenConfi
         return underscore(operationId);
     }
 
+    @Override
+    public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
+        Swagger swagger = (Swagger)objs.get("swagger");
+        if(swagger != null) {
+            try {
+                objs.put("swagger-yaml", Yaml.mapper().writeValueAsString(swagger));
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        }
+        return super.postProcessSupportingFileData(objs);
+    }
 
 }

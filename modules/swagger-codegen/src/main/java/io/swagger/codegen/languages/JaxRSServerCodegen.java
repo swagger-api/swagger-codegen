@@ -1,67 +1,78 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenResponse;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.*;
 import io.swagger.models.Operation;
+import io.swagger.models.Path;
+import io.swagger.models.Swagger;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class JaxRSServerCodegen extends JavaClientCodegen implements CodegenConfig {
+    protected String dateLibrary = "default";
     protected String title = "Swagger Server";
+    protected String implFolder = "src/main/java";
 
+    public static final String DATE_LIBRARY = "dateLibrary";
     public JaxRSServerCodegen() {
-        super.processOpts();
+        super();
 
         sourceFolder = "src/gen/java";
         invokerPackage = "io.swagger.api";
         artifactId = "swagger-jaxrs-server";
 
-        outputFolder = System.getProperty("swagger.codegen.jaxrs.genfolder", "generated-code/javaJaxRS");
+        outputFolder = "generated-code/javaJaxRS";
         modelTemplateFiles.put("model.mustache", ".java");
         apiTemplateFiles.put("api.mustache", ".java");
         apiTemplateFiles.put("apiService.mustache", ".java");
         apiTemplateFiles.put("apiServiceImpl.mustache", ".java");
         apiTemplateFiles.put("apiServiceFactory.mustache", ".java");
-        templateDir = "JavaJaxRS";
-        apiPackage = System.getProperty("swagger.codegen.jaxrs.apipackage", "io.swagger.api");
-        modelPackage = System.getProperty("swagger.codegen.jaxrs.modelpackage", "io.swagger.model");
+        apiPackage = "io.swagger.api";
+        modelPackage = "io.swagger.model";
 
-        additionalProperties.put(CodegenConstants.INVOKER_PACKAGE, invokerPackage);
-        additionalProperties.put(CodegenConstants.GROUP_ID, groupId);
-        additionalProperties.put(CodegenConstants.ARTIFACT_ID, artifactId);
-        additionalProperties.put(CodegenConstants.ARTIFACT_VERSION, artifactVersion);
         additionalProperties.put("title", title);
+        
+        embeddedTemplateDir = templateDir = "JavaJaxRS" + File.separator + "jersey1_18";
 
+        for(int i = 0; i < cliOptions.size(); i++) {
+            if(CodegenConstants.LIBRARY.equals(cliOptions.get(i).getOpt())) {
+                cliOptions.remove(i);
+                break;
+            }
+        }
 
-        languageSpecificPrimitives = new HashSet<String>(
-                Arrays.asList(
-                        "String",
-                        "boolean",
-                        "Boolean",
-                        "Double",
-                        "Integer",
-                        "Long",
-                        "Float")
-        );
+        CliOption dateLibrary = new CliOption(DATE_LIBRARY, "Option. Date library to use");
+        Map<String, String> dateOptions = new HashMap<String, String>();
+        dateOptions.put("java8", "Java 8 native");
+        dateOptions.put("joda", "Joda");
+        dateLibrary.setEnum(dateOptions);
+
+        cliOptions.add(dateLibrary);
+
+        CliOption library = new CliOption(CodegenConstants.LIBRARY, "library template (sub-template) to use");
+        library.setDefault(DEFAULT_LIBRARY);
+
+        Map<String, String> supportedLibraries = new LinkedHashMap<String, String>();
+
+        supportedLibraries.put(DEFAULT_LIBRARY, "Jersey core 1.18.1");
+//        supportedLibraries.put("jersey2", "Jersey2 core library 2.x");
+        library.setEnum(supportedLibraries);
+
+        cliOptions.add(library);
+        cliOptions.add(new CliOption(CodegenConstants.IMPL_FOLDER, CodegenConstants.IMPL_FOLDER_DESC));
     }
 
+    @Override
     public CodegenType getTag() {
         return CodegenType.SERVER;
     }
 
+    @Override
     public String getName() {
         return "jaxrs";
     }
 
+    @Override
     public String getHelp() {
         return "Generates a Java JAXRS Server application.";
     }
@@ -69,21 +80,61 @@ public class JaxRSServerCodegen extends JavaClientCodegen implements CodegenConf
     @Override
     public void processOpts() {
         super.processOpts();
+        
+        if(additionalProperties.containsKey(CodegenConstants.IMPL_FOLDER)) {
+        	implFolder = (String) additionalProperties.get(CodegenConstants.IMPL_FOLDER);
+        }
+
+//        if("jersey2".equals(getLibrary())) {
+//            embeddedTemplateDir = templateDir = "JavaJaxRS" + File.separator + "jersey2";
+//        }
 
         supportingFiles.clear();
         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("ApiException.mustache",
-                (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiException.java"));
+                (sourceFolder + '/' + apiPackage).replace(".", "/"), "ApiException.java"));
         supportingFiles.add(new SupportingFile("ApiOriginFilter.mustache",
-                (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiOriginFilter.java"));
+                (sourceFolder + '/' + apiPackage).replace(".", "/"), "ApiOriginFilter.java"));
         supportingFiles.add(new SupportingFile("ApiResponseMessage.mustache",
-                (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiResponseMessage.java"));
+                (sourceFolder + '/' + apiPackage).replace(".", "/"), "ApiResponseMessage.java"));
         supportingFiles.add(new SupportingFile("NotFoundException.mustache",
-                (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "NotFoundException.java"));
+                (sourceFolder + '/' + apiPackage).replace(".", "/"), "NotFoundException.java"));
         supportingFiles.add(new SupportingFile("web.mustache",
                 ("src/main/webapp/WEB-INF"), "web.xml"));
+        supportingFiles.add(new SupportingFile("StringUtil.mustache",
+                (sourceFolder + '/' + apiPackage).replace(".", "/"), "StringUtil.java"));
 
+        if (additionalProperties.containsKey("dateLibrary")) {
+            setDateLibrary(additionalProperties.get("dateLibrary").toString());
+            additionalProperties.put(dateLibrary, "true");
+        }
+
+        if("joda".equals(dateLibrary)) {
+            typeMapping.put("date", "LocalDate");
+            typeMapping.put("DateTime", "DateTime");
+
+            importMapping.put("LocalDate", "org.joda.time.LocalDate");
+            importMapping.put("DateTime", "org.joda.time.DateTime");
+
+            supportingFiles.add(new SupportingFile("JodaDateTimeProvider.mustache",
+                    (sourceFolder + '/' + apiPackage).replace(".", "/"), "JodaDateTimeProvider.java"));
+            supportingFiles.add(new SupportingFile("JodaLocalDateProvider.mustache",
+                    (sourceFolder + '/' + apiPackage).replace(".", "/"), "JodaLocalDateProvider.java"));
+        }
+        else if ("java8".equals(dateLibrary)) {
+            additionalProperties.put("java8", "true");
+            additionalProperties.put("javaVersion", "1.8");
+            typeMapping.put("date", "LocalDate");
+            typeMapping.put("DateTime", "LocalDateTime");
+            importMapping.put("LocalDate", "java.time.LocalDate");
+            importMapping.put("LocalDateTime", "java.time.LocalDateTime");
+
+            supportingFiles.add(new SupportingFile("LocalDateTimeProvider.mustache",
+                    (sourceFolder + '/' + apiPackage).replace(".", "/"), "LocalDateTimeProvider.java"));
+            supportingFiles.add(new SupportingFile("LocalDateProvider.mustache",
+                    (sourceFolder + '/' + apiPackage).replace(".", "/"), "LocalDateProvider.java"));
+        }
     }
 
     @Override
@@ -114,6 +165,50 @@ public class JaxRSServerCodegen extends JavaClientCodegen implements CodegenConf
         co.baseName = basePath;
     }
 
+    @Override
+    public void preprocessSwagger(Swagger swagger) {
+        if("/".equals(swagger.getBasePath())) {
+            swagger.setBasePath("");
+        }
+
+        String host = swagger.getHost();
+        String port = "8080";
+        if(host != null) {
+            String[] parts = host.split(":");
+            if(parts.length > 1) {
+                port = parts[1];
+            }
+        }
+        this.additionalProperties.put("serverPort", port);
+        if(swagger != null && swagger.getPaths() != null) {
+            for(String pathname : swagger.getPaths().keySet()) {
+                Path path = swagger.getPath(pathname);
+                if(path.getOperations() != null) {
+                    for(Operation operation : path.getOperations()) {
+                        if(operation.getTags() != null) {
+                            List<Map<String, String>> tags = new ArrayList<Map<String, String>>();
+                            for(String tag : operation.getTags()) {
+                                Map<String, String> value = new HashMap<String, String>();
+                                value.put("tag", tag);
+                                value.put("hasMore", "true");
+                                tags.add(value);
+                            }
+                            if(tags.size() > 0) {
+                                tags.get(tags.size() - 1).remove("hasMore");
+                            }
+                            if(operation.getTags().size() > 0) {
+                                String tag = operation.getTags().get(0);
+                                operation.setTags(Arrays.asList(tag));
+                            }
+                            operation.setVendorExtension("x-tags", tags);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
         Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
         if (operations != null) {
@@ -174,18 +269,12 @@ public class JaxRSServerCodegen extends JavaClientCodegen implements CodegenConf
             int ix = result.lastIndexOf('/');
             result = result.substring(0, ix) + "/impl" + result.substring(ix, result.length() - 5) + "ServiceImpl.java";
 
-            String output = System.getProperty("swagger.codegen.jaxrs.impl.source");
-            if (output != null) {
-                result = result.replace(apiFileFolder(), implFileFolder(output));
-            }
+            result = result.replace(apiFileFolder(), implFileFolder(implFolder));
         } else if (templateName.endsWith("Factory.mustache")) {
             int ix = result.lastIndexOf('/');
             result = result.substring(0, ix) + "/factories" + result.substring(ix, result.length() - 5) + "ServiceFactory.java";
 
-            String output = System.getProperty("swagger.codegen.jaxrs.impl.source");
-            if (output != null) {
-                result = result.replace(apiFileFolder(), implFileFolder(output));
-            }
+            result = result.replace(apiFileFolder(), implFileFolder(implFolder));
         } else if (templateName.endsWith("Service.mustache")) {
             int ix = result.lastIndexOf('.');
             result = result.substring(0, ix) + "Service.java";
@@ -195,10 +284,15 @@ public class JaxRSServerCodegen extends JavaClientCodegen implements CodegenConf
     }
 
     private String implFileFolder(String output) {
-        return outputFolder + "/" + output + "/" + apiPackage().replace('.', File.separatorChar);
+        return outputFolder + "/" + output + "/" + apiPackage().replace('.', '/');
     }
 
+    @Override
     public boolean shouldOverwrite(String filename) {
         return super.shouldOverwrite(filename) && !filename.endsWith("ServiceImpl.java") && !filename.endsWith("ServiceFactory.java");
+    }
+
+    public void setDateLibrary(String library) {
+        this.dateLibrary = library;
     }
 }

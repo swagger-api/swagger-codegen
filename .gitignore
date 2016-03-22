@@ -15,6 +15,7 @@ generated-sources/*
 generated-code/*
 *.swp
 *.swo
+*.csproj.user
 
 /target
 /generated-files
@@ -32,12 +33,15 @@ samples/client/petstore/qt5cpp/build-*
 samples/client/petstore/qt5cpp/PetStore/PetStore
 samples/client/petstore/qt5cpp/PetStore/Makefile
 samples/client/petstore/java/hello.txt
-samples/client/petstore/android-java/hello.txt
+samples/client/petstore/android/default/hello.txt
 samples/client/petstore/objc/SwaggerClientTests/Build
 samples/client/petstore/objc/SwaggerClientTests/Pods
 samples/client/petstore/objc/SwaggerClientTests/SwaggerClient.xcworkspace
 samples/client/petstore/objc/SwaggerClientTests/Podfile.lock
 samples/server/petstore/nodejs/node_modules
+samples/client/petstore/csharp/SwaggerClientTest/.vs
+samples/client/petstore/csharp/SwaggerClientTest/obj
+samples/client/petstore/csharp/SwaggerClientTest/bin
 target
 .idea
 .lib
@@ -58,3 +62,9 @@ samples/client/petstore/python/.venv/
 
 */.settings
 .settings
+
+*.mustache~
+*.java~
+*.pm~
+*.xml~
+*.t~

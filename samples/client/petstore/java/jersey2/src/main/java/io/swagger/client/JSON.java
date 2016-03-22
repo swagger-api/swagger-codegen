@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.datatype.joda.*;
 
-import java.io.IOException;
+import java.text.DateFormat;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-21T11:55:20.020+08:00")
-public class JSON {
+import javax.ws.rs.ext.ContextResolver;
+
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-05T14:39:17.660+08:00")
+public class JSON implements ContextResolver<ObjectMapper> {
   private ObjectMapper mapper;
 
   public JSON() {
@@ -21,35 +23,14 @@ public class JSON {
   }
 
   /**
-   * Serialize the given Java object into JSON string.
+   * Set the date format for JSON (de)serialization with Date properties.
    */
-  public String serialize(Object obj) throws ApiException {
-    try {
-      if (obj != null)
-        return mapper.writeValueAsString(obj);
-      else
-        return null;
-    } catch (Exception e) {
-      throw new ApiException(400, e.getMessage());
-    }
+  public void setDateFormat(DateFormat dateFormat) {
+    mapper.setDateFormat(dateFormat);
   }
 
-  /**
-   * Deserialize the given JSON string to Java object.
-   *
-   * @param body The JSON string
-   * @param returnType The type to deserialize inot
-   * @return The deserialized Java object
-   */
-  public <T> T deserialize(String body, TypeRef returnType) throws ApiException {
-    JavaType javaType = mapper.constructType(returnType.getType());
-    try {
-      return mapper.readValue(body, javaType);
-    } catch (IOException e) {
-      if (returnType.getType().equals(String.class))
-        return (T) body;
-      else
-        throw new ApiException(500, e.getMessage(), null, body);
-    }
+  @Override
+  public ObjectMapper getContext(Class<?> type) {
+    return mapper;
   }
 }

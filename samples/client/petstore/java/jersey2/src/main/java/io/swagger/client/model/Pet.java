@@ -1,18 +1,19 @@
 package io.swagger.client.model;
 
-import io.swagger.client.StringUtil;
+import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.Category;
 import io.swagger.client.model.Tag;
 import java.util.*;
 
 
 
-import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-@ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-20T11:29:47.599-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-05T14:39:17.660+08:00")
 public class Pet   {
   
   private Long id = null;
@@ -21,28 +22,31 @@ public class Pet   {
   private List<String> photoUrls = new ArrayList<String>();
   private List<Tag> tags = new ArrayList<Tag>();
 
-public enum StatusEnum {
-  AVAILABLE("available"),
-  PENDING("pending"),
-  SOLD("sold");
 
-  private String value;
+  public enum StatusEnum {
+    AVAILABLE("available"),
+    PENDING("pending"),
+    SOLD("sold");
 
-  StatusEnum(String value) {
-    this.value = value;
+    private String value;
+
+    StatusEnum(String value) {
+      this.value = value;
+    }
+
+    @Override
+    @JsonValue
+    public String toString() {
+      return value;
+    }
   }
-
-  @Override
-  public String toString() {
-    return value;
-  }
-}
 
   private StatusEnum status = null;
 
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("id")
   public Long getId() {
@@ -55,6 +59,7 @@ public enum StatusEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("category")
   public Category getCategory() {
@@ -67,6 +72,7 @@ public enum StatusEnum {
   
   /**
    **/
+  
   @ApiModelProperty(required = true, value = "")
   @JsonProperty("name")
   public String getName() {
@@ -79,6 +85,7 @@ public enum StatusEnum {
   
   /**
    **/
+  
   @ApiModelProperty(required = true, value = "")
   @JsonProperty("photoUrls")
   public List<String> getPhotoUrls() {
@@ -91,6 +98,7 @@ public enum StatusEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("tags")
   public List<Tag> getTags() {
@@ -104,6 +112,7 @@ public enum StatusEnum {
   /**
    * pet status in the store
    **/
+  
   @ApiModelProperty(value = "pet status in the store")
   @JsonProperty("status")
   public StatusEnum getStatus() {
@@ -116,17 +125,51 @@ public enum StatusEnum {
   
 
   @Override
-  public String toString()  {
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Pet pet = (Pet) o;
+    return Objects.equals(id, pet.id) &&
+        Objects.equals(category, pet.category) &&
+        Objects.equals(name, pet.name) &&
+        Objects.equals(photoUrls, pet.photoUrls) &&
+        Objects.equals(tags, pet.tags) &&
+        Objects.equals(status, pet.status);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, category, name, photoUrls, tags, status);
+  }
+
+  @Override
+  public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Pet {\n");
     
-    sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
-    sb.append("    category: ").append(StringUtil.toIndentedString(category)).append("\n");
-    sb.append("    name: ").append(StringUtil.toIndentedString(name)).append("\n");
-    sb.append("    photoUrls: ").append(StringUtil.toIndentedString(photoUrls)).append("\n");
-    sb.append("    tags: ").append(StringUtil.toIndentedString(tags)).append("\n");
-    sb.append("    status: ").append(StringUtil.toIndentedString(status)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    category: ").append(toIndentedString(category)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    photoUrls: ").append(toIndentedString(photoUrls)).append("\n");
+    sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
     return sb.toString();
   }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
 }
+

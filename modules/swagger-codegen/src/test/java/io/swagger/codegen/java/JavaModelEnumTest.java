@@ -10,13 +10,11 @@ import io.swagger.models.ModelImpl;
 import io.swagger.models.RefModel;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.StringProperty;
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,15 +73,15 @@ public class JavaModelEnumTest {
 
         final DefaultCodegen codegen = new JavaClientCodegen();
         final Map<String, Model> allModels = new HashMap<String, Model>();
-        allModels.put(codegen.toModelName(parentModel.getName()), parentModel);
-        allModels.put(codegen.toModelName(subModel.getName()), subModel);
+        allModels.put(parentModel.getName(), parentModel);
+        allModels.put(subModel.getName(), subModel);
 
         final CodegenModel cm = codegen.fromModel("sample", model, allModels);
 
         Assert.assertEquals(cm.name, "sample");
         Assert.assertEquals(cm.classname, "Sample");
         Assert.assertEquals(cm.parent, "ParentModel");
-        Assert.assertEquals(cm.imports, Collections.singletonList("ParentModel"));
+        Assert.assertTrue(cm.imports.contains("ParentModel"));
 
         // Assert that only the unshared/uninherited enum remains
         Assert.assertEquals(cm.vars.size(), 1);

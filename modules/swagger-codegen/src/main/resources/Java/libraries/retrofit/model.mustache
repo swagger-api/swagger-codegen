@@ -1,16 +1,12 @@
 package {{package}};
 
-import {{invokerPackage}}.StringUtil;
+import java.util.Objects;
 {{#imports}}import {{import}};
 {{/imports}}
 
 import com.google.gson.annotations.SerializedName;
 
-{{#serializableModel}}
-import java.io.Serializable;{{/serializableModel}}
-
-import io.swagger.annotations.*;
-
+{{#serializableModel}}import java.io.Serializable;{{/serializableModel}}
 {{#models}}
 
 {{#model}}{{#description}}
@@ -45,13 +41,43 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {{#seriali
   {{/vars}}
 
   @Override
-  public String toString()  {
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    {{classname}} {{classVarName}} = ({{classname}}) o;{{#hasVars}}
+    return {{#vars}}Objects.equals({{name}}, {{classVarName}}.{{name}}){{#hasMore}} &&
+        {{/hasMore}}{{^hasMore}};{{/hasMore}}{{/vars}}{{/hasVars}}{{^hasVars}}
+    return true;{{/hasVars}}
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash({{#vars}}{{name}}{{#hasMore}}, {{/hasMore}}{{/vars}});
+  }
+
+  @Override
+  public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class {{classname}} {\n");
-    {{#parent}}sb.append("    ").append(StringUtil.toIndentedString(super.toString())).append("\n");{{/parent}}
-    {{#vars}}sb.append("    {{name}}: ").append(StringUtil.toIndentedString({{name}})).append("\n");
+    {{#parent}}sb.append("    ").append(toIndentedString(super.toString())).append("\n");{{/parent}}
+    {{#vars}}sb.append("    {{name}}: ").append(toIndentedString({{name}})).append("\n");
     {{/vars}}sb.append("}");
     return sb.toString();
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
   }
 }
 {{/model}}
