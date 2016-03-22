@@ -2,13 +2,12 @@ package io.swagger.codegen.languages;
 
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
 import io.swagger.codegen.SupportingFile;
-import io.swagger.models.properties.ArrayProperty;
-import io.swagger.models.properties.MapProperty;
-import io.swagger.models.properties.Property;
+import io.swagger.models.properties.*;
 
 import java.io.File;
 import java.util.Arrays;
@@ -19,6 +18,12 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 
 public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
+    public static final String CLASS_PREFIX = "classPrefix";
+    public static final String POD_NAME = "podName";
+    public static final String AUTHOR_NAME = "authorName";
+    public static final String AUTHOR_EMAIL = "authorEmail";
+    public static final String GIT_REPO_URL = "gitRepoURL";
+    public static final String LICENSE = "license";
     protected Set<String> foundationClasses = new HashSet<String>();
     protected String podName = "SwaggerClient";
     protected String podVersion = "1.0.0";
@@ -27,6 +32,7 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
     protected String authorEmail = "apiteam@swagger.io";
     protected String license = "MIT";
     protected String gitRepoURL = "https://github.com/swagger-api/swagger-codegen";
+    protected String[] specialWords = {"new", "copy"};
 
     public ObjcClientCodegen() {
         super();
@@ -36,7 +42,7 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
         modelTemplateFiles.put("model-body.mustache", ".m");
         apiTemplateFiles.put("api-header.mustache", ".h");
         apiTemplateFiles.put("api-body.mustache", ".m");
-        templateDir = "objc";
+        embeddedTemplateDir = templateDir = "objc";
 
         defaultIncludes.clear();
         defaultIncludes.add("bool");
@@ -79,22 +85,28 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("object", "NSObject");
         typeMapping.put("file", "NSURL");
 
+
         // ref: http://www.tutorialspoint.com/objective_c/objective_c_basic_syntax.htm
         reservedWords = new HashSet<String>(
                 Arrays.asList(
-                        "auto", "else", "long", "switch",
-                        "break", "enum", "register", "typedef",
-                        "case", "extern", "return", "union",
-                        "char", "float", "short", "unsigned",
-                        "const", "for", "signed", "void",
-                        "continue", "goto", "sizeof", "volatile",
-                        "default", "if", "id", "static", "while",
-                        "do", "int", "struct", "_Packed",
-                        "double", "protocol", "interface", "implementation",
-                        "NSObject", "NSInteger", "NSNumber", "CGFloat",
-                        "property", "nonatomic", "retain", "strong",
-                        "weak", "unsafe_unretained", "readwrite", "readonly",
-                        "description"
+                    // local variable names in API methods (endpoints)
+                    "resourcePath", "pathParams", "queryParams", "headerParams",
+                    "responseContentType", "requestContentType", "authSettings",
+                    "formParams", "files", "bodyParam",
+                    // objc reserved words
+                    "auto", "else", "long", "switch",
+                    "break", "enum", "register", "typedef",
+                    "case", "extern", "return", "union",
+                    "char", "float", "short", "unsigned",
+                    "const", "for", "signed", "void",
+                    "continue", "goto", "sizeof", "volatile",
+                    "default", "if", "id", "static", "while",
+                    "do", "int", "struct", "_Packed",
+                    "double", "protocol", "interface", "implementation",
+                    "NSObject", "NSInteger", "NSNumber", "CGFloat",
+                    "property", "nonatomic", "retain", "strong",
+                    "weak", "unsafe_unretained", "readwrite", "readonly",
+                    "description"
                 ));
 
         importMapping = new HashMap<String, String>();
@@ -113,23 +125,30 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
         instantiationTypes.put("map", "NSMutableDictionary");
 
         cliOptions.clear();
-        cliOptions.add(new CliOption("classPrefix", "prefix for generated classes (convention: Abbreviation of pod name e.g. `HN` for `HackerNews`), default: `SWG`"));
-        cliOptions.add(new CliOption("podName", "cocoapods package name (convention: CameCase), default: `SwaggerClient`"));
-        cliOptions.add(new CliOption("podVersion", "cocoapods package version, default: `1.0.0`"));
-        cliOptions.add(new CliOption("authorName", "Name to use in the podspec file, default: `Swagger`"));
-        cliOptions.add(new CliOption("authorEmail", "Email to use in the podspec file, default: `apiteam@swagger.io`"));
-        cliOptions.add(new CliOption("gitRepoURL", "URL for the git repo where this podspec should point to, default: `https://github.com/swagger-api/swagger-codegen`"));
-        cliOptions.add(new CliOption("license", "License to use in the podspec file, default: `MIT`"));
+        cliOptions.add(new CliOption(CLASS_PREFIX, "prefix for generated classes (convention: Abbreviation of pod name e.g. `HN` for `HackerNews`).`")
+                .defaultValue("SWG"));
+        cliOptions.add(new CliOption(POD_NAME, "cocoapods package name (convention: CameCase).")
+                .defaultValue("SwaggerClient"));
+        cliOptions.add(new CliOption(CodegenConstants.POD_VERSION, "cocoapods package version.")
+                .defaultValue("1.0.0"));
+        cliOptions.add(new CliOption(AUTHOR_NAME, "Name to use in the podspec file.").defaultValue("Swagger"));
+        cliOptions.add(new CliOption(AUTHOR_EMAIL, "Email to use in the podspec file.").defaultValue("apiteam@swagger.io"));
+        cliOptions.add(new CliOption(GIT_REPO_URL, "URL for the git repo where this podspec should point to.")
+                .defaultValue("https://github.com/swagger-api/swagger-codegen"));
+        cliOptions.add(new CliOption(LICENSE, "License to use in the podspec file.").defaultValue("MIT"));
     }
 
+    @Override
     public CodegenType getTag() {
         return CodegenType.CLIENT;
     }
 
+    @Override
     public String getName() {
         return "objc";
     }
 
+    @Override
     public String getHelp() {
         return "Generates an Objective-C client library.";
     }
@@ -138,41 +157,41 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
     public void processOpts() {
         super.processOpts();
 
-        if (additionalProperties.containsKey("podName")) {
-            setPodName((String) additionalProperties.get("podName"));
+        if (additionalProperties.containsKey(POD_NAME)) {
+            setPodName((String) additionalProperties.get(POD_NAME));
         }
 
-        if (additionalProperties.containsKey("podVersion")) {
-            setPodVersion((String) additionalProperties.get("podVersion"));
+        if (additionalProperties.containsKey(CodegenConstants.POD_VERSION)) {
+            setPodVersion((String) additionalProperties.get(CodegenConstants.POD_VERSION));
         }
 
-        if (additionalProperties.containsKey("classPrefix")) {
-            setClassPrefix((String) additionalProperties.get("classPrefix"));
+        if (additionalProperties.containsKey(CLASS_PREFIX)) {
+            setClassPrefix((String) additionalProperties.get(CLASS_PREFIX));
         }
         
-        if (additionalProperties.containsKey("authorName")) {
-            setAuthorName((String) additionalProperties.get("authorName"));
+        if (additionalProperties.containsKey(AUTHOR_NAME)) {
+            setAuthorName((String) additionalProperties.get(AUTHOR_NAME));
         }
         
-        if (additionalProperties.containsKey("authorEmail")) {
-            setAuthorEmail((String) additionalProperties.get("authorEmail"));
+        if (additionalProperties.containsKey(AUTHOR_EMAIL)) {
+            setAuthorEmail((String) additionalProperties.get(AUTHOR_EMAIL));
         }
         
-        if (additionalProperties.containsKey("gitRepoURL")) {
-            setGitRepoURL((String) additionalProperties.get("gitRepoURL"));
+        if (additionalProperties.containsKey(GIT_REPO_URL)) {
+            setGitRepoURL((String) additionalProperties.get(GIT_REPO_URL));
         }
         
-        if (additionalProperties.containsKey("license")) {
-            setLicense((String) additionalProperties.get("license"));
+        if (additionalProperties.containsKey(LICENSE)) {
+            setLicense((String) additionalProperties.get(LICENSE));
         }
 
-        additionalProperties.put("podName", podName);
-        additionalProperties.put("podVersion", podVersion);
-        additionalProperties.put("classPrefix", classPrefix);
-        additionalProperties.put("authorName", authorName);
-        additionalProperties.put("authorEmail", authorEmail);
-        additionalProperties.put("gitRepoURL", gitRepoURL);
-        additionalProperties.put("license", license);
+        additionalProperties.put(POD_NAME, podName);
+        additionalProperties.put(CodegenConstants.POD_VERSION, podVersion);
+        additionalProperties.put(CLASS_PREFIX, classPrefix);
+        additionalProperties.put(AUTHOR_NAME, authorName);
+        additionalProperties.put(AUTHOR_EMAIL, authorEmail);
+        additionalProperties.put(GIT_REPO_URL, gitRepoURL);
+        additionalProperties.put(LICENSE, license);
 
         String swaggerFolder = podName;
 
@@ -331,11 +350,6 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
-    public String toDefaultValue(Property p) {
-        return null;
-    }
-
-    @Override
     public String apiFileFolder() {
         return outputFolder + File.separatorChar + apiPackage();
     }
@@ -350,6 +364,7 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
         return classPrefix + camelize(name) + "Api";
     }
 
+    @Override
     public String toApiFilename(String name) {
         return classPrefix + camelize(name) + "Api";
     }
@@ -364,6 +379,12 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
             return name;
         }
 
+        // if name starting with special word, escape with '_'
+        for(int i =0; i < specialWords.length; i++) {
+            if (name.matches("(?i:^" + specialWords[i] + ".*)"))
+                name = escapeSpecialWord(name);
+        }
+
         // camelize (lower first character) the variable name
         // e.g. `pet_id` to `petId`
         name = camelize(name, true);
@@ -372,6 +393,7 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
         if (reservedWords.contains(name) || name.matches("^\\d.*")) {
             name = escapeReservedWord(name);
         }
+
 
         return name;
     }
@@ -382,8 +404,13 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
         return toVarName(name);
     }
 
+    @Override
     public String escapeReservedWord(String name) {
         return "_" + name;
+    }
+
+    public String escapeSpecialWord(String name) {
+        return "var_" + name;
     }
 
     @Override
@@ -428,4 +455,55 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
     public void setLicense(String license) {
         this.license = license;
     }
+
+    /**
+     * Return the default value of the property
+     *
+     * @param p Swagger property object
+     * @return string presentation of the default value of the property
+     */
+    @Override
+    public String toDefaultValue(Property p) {
+        if (p instanceof StringProperty) {
+            StringProperty dp = (StringProperty) p;
+            if (dp.getDefault() != null) {
+                return "@\"" + dp.getDefault().toString() + "\"";
+            }
+        } else if (p instanceof BooleanProperty) {
+            BooleanProperty dp = (BooleanProperty) p;
+            if (dp.getDefault() != null) {
+                if (dp.getDefault().toString().equalsIgnoreCase("false"))
+                    return "@0";
+                else
+                    return "@1";
+            }
+        } else if (p instanceof DateProperty) {
+            // TODO
+        } else if (p instanceof DateTimeProperty) {
+            // TODO
+        } else if (p instanceof DoubleProperty) {
+            DoubleProperty dp = (DoubleProperty) p;
+            if (dp.getDefault() != null) {
+                return "@" + dp.getDefault().toString();
+            }
+        } else if (p instanceof FloatProperty) {
+            FloatProperty dp = (FloatProperty) p;
+            if (dp.getDefault() != null) {
+                return "@" + dp.getDefault().toString();
+            }
+        } else if (p instanceof IntegerProperty) {
+            IntegerProperty dp = (IntegerProperty) p;
+            if (dp.getDefault() != null) {
+                return "@" + dp.getDefault().toString();
+            }
+        } else if (p instanceof LongProperty) {
+            LongProperty dp = (LongProperty) p;
+            if (dp.getDefault() != null) {
+                return "@" + dp.getDefault().toString();
+            }
+        }
+
+        return null;
+    }
+
 }

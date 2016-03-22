@@ -5,7 +5,6 @@ require 'petstore/version'
 require 'petstore/configuration'
 
 # Models
-require 'petstore/models/base_object'
 require 'petstore/models/user'
 require 'petstore/models/category'
 require 'petstore/models/pet'
@@ -19,17 +18,17 @@ require 'petstore/api/store_api'
 
 module Petstore
   class << self
-    # Configure sdk using block.
-    # Petstore.configure do |config|
-    #   config.username = "xxx"
-    #   config.password = "xxx"
-    # end
-    # If no block given, return the configuration singleton instance.
+    # Customize default settings for the SDK using block.
+    #   Petstore.configure do |config|
+    #     config.username = "xxx"
+    #     config.password = "xxx"
+    #   end
+    # If no block given, return the default Configuration object.
     def configure
       if block_given?
-        yield Configuration.instance
+        yield(Configuration.default)
       else
-        Configuration.instance
+        Configuration.default
       end
     end
   end

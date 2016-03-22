@@ -1,19 +1,8 @@
 package io.swagger.codegen;
 
-import static org.apache.commons.lang3.StringUtils.capitalize;
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
-
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
-import io.swagger.models.ComposedModel;
-import io.swagger.models.Contact;
-import io.swagger.models.Info;
-import io.swagger.models.License;
-import io.swagger.models.Model;
-import io.swagger.models.Operation;
-import io.swagger.models.Path;
-import io.swagger.models.SecurityRequirement;
-import io.swagger.models.Swagger;
+import io.swagger.models.*;
 import io.swagger.models.auth.OAuth2Definition;
 import io.swagger.models.auth.SecuritySchemeDefinition;
 import io.swagger.models.parameters.Parameter;
@@ -23,20 +12,18 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Reader;
+import java.io.*;
 import java.util.*;
+
+import static org.apache.commons.lang3.StringUtils.capitalize;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 public class DefaultGenerator extends AbstractGenerator implements Generator {
     Logger LOGGER = LoggerFactory.getLogger(DefaultGenerator.class);
 
     protected CodegenConfig config;
-    protected ClientOptInput opts = null;
-    protected Swagger swagger = null;
+    protected ClientOptInput opts;
+    protected Swagger swagger;
 
     @Override
     public Generator opts(ClientOptInput opts) {
@@ -166,6 +153,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
         String contextPath = swagger.getBasePath() == null ? "" : swagger.getBasePath();
         String basePath = hostBuilder.toString();
+        String basePathWithoutHost = swagger.getBasePath();
 
 
         // resolve inline models
@@ -221,7 +209,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                                     .withLoader(new Mustache.TemplateLoader() {
                                         @Override
                                         public Reader getTemplate(String name) {
-                                            return getTemplateReader(config.templateDir() + File.separator + name + ".mustache");
+                                            return getTemplateReader(getFullTemplateFile(config, name + ".mustache"));
                                         }
                                     })
                                     .defaultValue("")
@@ -263,6 +251,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                         continue;
 
                     operation.put("basePath", basePath);
+                    operation.put("basePathWithoutHost", basePathWithoutHost);
                     operation.put("contextPath", contextPath);
                     operation.put("baseName", tag);
                     operation.put("modelPackage", config.modelPackage());
@@ -270,6 +259,13 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     operation.put("classname", config.toApiName(tag));
                     operation.put("classVarName", config.toApiVarName(tag));
                     operation.put("importPath", config.toApiImport(tag));
+
+                    // Pass sortParamsByRequiredFlag through to the Mustache template...
+                    boolean sortParamsByRequiredFlag = true;
+                    if (this.config.additionalProperties().containsKey(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG)) {
+                        sortParamsByRequiredFlag = Boolean.valueOf((String)this.config.additionalProperties().get(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG).toString());
+                    }
+                    operation.put("sortParamsByRequiredFlag", sortParamsByRequiredFlag);
 
                     processMimeTypes(swagger.getConsumes(), operation, "consumes");
                     processMimeTypes(swagger.getProduces(), operation, "produces");
@@ -294,7 +290,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                                 .withLoader(new Mustache.TemplateLoader() {
                                     @Override
                                     public Reader getTemplate(String name) {
-                                        return getTemplateReader(config.templateDir() + File.separator + name + ".mustache");
+                                        return getTemplateReader(getFullTemplateFile(config, name + ".mustache"));
                                     }
                                 })
                                 .defaultValue("")
@@ -323,6 +319,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         if (swagger.getHost() != null) {
             bundle.put("host", swagger.getHost());
         }
+        bundle.put("swagger", this.swagger);
         bundle.put("basePath", basePath);
         bundle.put("scheme", scheme);
         bundle.put("contextPath", contextPath);
@@ -385,7 +382,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                                     .withLoader(new Mustache.TemplateLoader() {
                                         @Override
                                         public Reader getTemplate(String name) {
-                                            return getTemplateReader(config.templateDir() + File.separator + name + ".mustache");
+                                            return getTemplateReader(getFullTemplateFile(config, name + ".mustache"));
                                         }
                                     })
                                     .defaultValue("")
@@ -578,7 +575,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     Map<String, SecuritySchemeDefinition> authMethods = new HashMap<String, SecuritySchemeDefinition>();
                     // NOTE: Use only the first security requirement for now.
                     // See the "security" field of "Swagger Object":
-                    //  https://github.com/swagger-api/swagger-spec/blob/master/versions/2.0.md#swagger-object
+                    //  https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#swagger-object
                     //  "there is a logical OR between the security requirements"
                     if (securities.size() > 1) {
                         LOGGER.warn("More than 1 security requirements are found, using only the first one");
@@ -712,27 +709,33 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             mo.put("model", cm);
             mo.put("importPath", config.toModelImport(key));
             models.add(mo);
+
             allImports.addAll(cm.imports);
         }
         objs.put("models", models);
 
-        List<Map<String, String>> imports = new ArrayList<Map<String, String>>();
+        Set<String> importSet = new TreeSet<String>();
         for (String nextImport : allImports) {
-            Map<String, String> im = new LinkedHashMap<String, String>();
+            Map<String, String> im = new HashMap<String, String>();
             String mapping = config.importMapping().get(nextImport);
             if (mapping == null) {
                 mapping = config.toModelImport(nextImport);
             }
             if (mapping != null && !config.defaultIncludes().contains(mapping)) {
-                im.put("import", mapping);
-                imports.add(im);
+                importSet.add(mapping);
             }
             // add instantiation types
             mapping = config.instantiationTypes().get(nextImport);
             if (mapping != null && !config.defaultIncludes().contains(mapping)) {
-                im.put("import", mapping);
-                imports.add(im);
+                importSet.add(mapping);
             }
+        }
+
+        List<Map<String, String>> imports = new ArrayList<Map<String, String>>();
+        for(String s: importSet) {
+            Map<String, String> item = new HashMap<String, String>();
+            item.put("import", s);
+            imports.add(item);
         }
 
         objs.put("imports", imports);

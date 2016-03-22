@@ -13,20 +13,23 @@ import java.io.File;
 public class SwaggerYamlGenerator extends DefaultCodegen implements CodegenConfig {
     public SwaggerYamlGenerator() {
         super();
-        templateDir = "swagger";
+        embeddedTemplateDir = templateDir = "swagger";
         outputFolder = "generated-code/swagger";
 
         supportingFiles.add(new SupportingFile("README.md", "", "README.md"));
     }
 
+    @Override
     public CodegenType getTag() {
         return CodegenType.DOCUMENTATION;
     }
 
+    @Override
     public String getName() {
         return "swagger-yaml";
     }
 
+    @Override
     public String getHelp() {
         return "Creates a static swagger.yaml file.";
     }

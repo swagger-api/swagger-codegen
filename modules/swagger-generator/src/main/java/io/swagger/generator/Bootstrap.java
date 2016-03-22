@@ -16,17 +16,19 @@
 
 package io.swagger.generator;
 
-import java.io.IOException;
-import java.io.InputStream;
+import org.apache.commons.io.IOUtils;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
-
-import org.apache.commons.io.IOUtils;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class Bootstrap extends HttpServlet {
+    private static final long serialVersionUID = 1400930071893332856L;
+
+    @Override
     public void init(ServletConfig config) throws ServletException {
         ServletContext context = config.getServletContext();
 
@@ -50,8 +52,6 @@ public class Bootstrap extends HttpServlet {
             }
         }
 
-        bc.setSchemes(new String[]{"https"});
-        bc.setHost("generator.swagger.io");
         bc.setLicenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html");
         bc.setResourcePackage("io.swagger.generator.resource");
         bc.setScan(true);

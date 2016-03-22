@@ -1,6 +1,7 @@
 package io.swagger.codegen.languages;
 
 import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
 import io.swagger.codegen.SupportingFile;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class CsharpDotNet2ClientCodegen extends DefaultCodegen implements CodegenConfig {
+    public static final String CLIENT_PACKAGE = "clientPackage";
     protected String packageName = "IO.Swagger";
     protected String packageVersion = "1.0.0";
     protected String clientPackage = "IO.Swagger.Client";
@@ -25,13 +27,17 @@ public class CsharpDotNet2ClientCodegen extends DefaultCodegen implements Codege
         outputFolder = "generated-code" + File.separator + "CsharpDotNet2";
         modelTemplateFiles.put("model.mustache", ".cs");
         apiTemplateFiles.put("api.mustache", ".cs");
-        templateDir = "CsharpDotNet2";
+        embeddedTemplateDir = templateDir = "CsharpDotNet2";
         apiPackage = "IO.Swagger.Api";
         modelPackage = "IO.Swagger.Model";
 
         reservedWords = new HashSet<String>(
                 Arrays.asList(
-                        "abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char", "checked", "class", "const", "continue", "decimal", "default", "delegate", "do", "double", "else", "enum", "event", "explicit", "extern", "false", "finally", "fixed", "float", "for", "foreach", "goto", "if", "implicit", "in", "int", "interface", "internal", "is", "lock", "long", "namespace", "new", "null", "object", "operator", "out", "override", "params", "private", "protected", "public", "readonly", "ref", "return", "sbyte", "sealed", "short", "sizeof", "stackalloc", "static", "string", "struct", "switch", "this", "throw", "true", "try", "typeof", "uint", "ulong", "unchecked", "unsafe", "ushort", "using", "virtual", "void", "volatile", "while")
+                    // local variable names in API methods (endpoints)
+                    "path", "queryParams", "headerParams", "formParams", "fileParams", "postBody",
+                    "authSettings", "response", "StatusCode",
+                    // C# reserved word 
+                    "abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char", "checked", "class", "const", "continue", "decimal", "default", "delegate", "do", "double", "else", "enum", "event", "explicit", "extern", "false", "finally", "fixed", "float", "for", "foreach", "goto", "if", "implicit", "in", "int", "interface", "internal", "is", "lock", "long", "namespace", "new", "null", "object", "operator", "out", "override", "params", "private", "protected", "public", "readonly", "ref", "return", "sbyte", "sealed", "short", "sizeof", "stackalloc", "static", "string", "struct", "switch", "this", "throw", "true", "try", "typeof", "uint", "ulong", "unchecked", "unsafe", "ushort", "using", "virtual", "void", "volatile", "while")
         );
 
 
@@ -77,34 +83,36 @@ public class CsharpDotNet2ClientCodegen extends DefaultCodegen implements Codege
         typeMapping.put("object", "Object");
 
         cliOptions.clear();
-        cliOptions.add(new CliOption("packageName", "C# package name (convention: Camel.Case), default: IO.Swagger"));
-        cliOptions.add(new CliOption("packageVersion", "C# package version, default: 1.0.0"));
-
+        cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "C# package name (convention: Camel.Case).")
+                .defaultValue("IO.Swagger"));
+        cliOptions.add(new CliOption(CodegenConstants.PACKAGE_VERSION, "C# package version.").defaultValue("1.0.0"));
+        cliOptions.add(new CliOption(CLIENT_PACKAGE, "C# client package name (convention: Camel.Case).")
+                .defaultValue("IO.Swagger.Client"));
     }
 
     @Override
     public void processOpts() {
         super.processOpts();
 
-        if (additionalProperties.containsKey("packageVersion")) {
-            packageVersion = (String) additionalProperties.get("packageVersion");
+        if (additionalProperties.containsKey(CodegenConstants.PACKAGE_VERSION)) {
+            setPackageVersion((String) additionalProperties.get(CodegenConstants.PACKAGE_VERSION));
         } else {
-            additionalProperties.put("packageVersion", packageVersion);
+            additionalProperties.put(CodegenConstants.PACKAGE_VERSION, packageVersion);
         }
 
-        if (additionalProperties.containsKey("packageName")) {
-            packageName = (String) additionalProperties.get("packageName");
+        if (additionalProperties.containsKey(CodegenConstants.PACKAGE_NAME)) {
+            setPackageName((String) additionalProperties.get(CodegenConstants.PACKAGE_NAME));
             apiPackage = packageName + ".Api";
             modelPackage = packageName + ".Model";
             clientPackage = packageName + ".Client";
         } else {
-            additionalProperties.put("packageName", packageName);
+            additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
         }
 
-        if (additionalProperties.containsKey("clientPackage")) {
-            this.setClientPackage((String) additionalProperties.get("clientPackage"));
+        if (additionalProperties.containsKey(CLIENT_PACKAGE)) {
+            this.setClientPackage((String) additionalProperties.get(CLIENT_PACKAGE));
         } else {
-            additionalProperties.put("clientPackage", clientPackage);
+            additionalProperties.put(CLIENT_PACKAGE, clientPackage);
         }
         
         supportingFiles.add(new SupportingFile("Configuration.mustache",
@@ -123,14 +131,25 @@ public class CsharpDotNet2ClientCodegen extends DefaultCodegen implements Codege
         this.clientPackage = clientPackage;
     }
 
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
+    }
+
+    public void setPackageVersion(String packageVersion) {
+        this.packageVersion = packageVersion;
+    }
+
+    @Override
     public CodegenType getTag() {
         return CodegenType.CLIENT;
     }
 
+    @Override
     public String getName() {
         return "CsharpDotNet2";
     }
 
+    @Override
     public String getHelp() {
         return "Generates a C# .Net 2.0 client library.";
     }
@@ -145,6 +164,7 @@ public class CsharpDotNet2ClientCodegen extends DefaultCodegen implements Codege
         return outputFolder + File.separator + sourceFolder + File.separator + apiPackage().replace('.', File.separatorChar);
     }
 
+    @Override
     public String modelFileFolder() {
         return outputFolder + File.separator + sourceFolder + File.separator + modelPackage().replace('.', File.separatorChar);
     }

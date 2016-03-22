@@ -1,5 +1,6 @@
 package io.swagger.codegen.languages;
 
+import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.CodegenType;
@@ -32,7 +33,7 @@ public class AsyncScalaClientCodegen extends DefaultCodegen implements CodegenCo
     protected String sourceFolder = "src/main/scala";
     protected String clientName = "SwaggerClient";
     protected String authScheme = "";
-    protected boolean authPreemptive = false;
+    protected boolean authPreemptive;
     protected boolean asyncHttpClient = !authScheme.isEmpty();
 
     public AsyncScalaClientCodegen() {
@@ -40,7 +41,7 @@ public class AsyncScalaClientCodegen extends DefaultCodegen implements CodegenCo
         outputFolder = "generated-code/async-scala";
         modelTemplateFiles.put("model.mustache", ".scala");
         apiTemplateFiles.put("api.mustache", ".scala");
-        templateDir = "asyncscala";
+        embeddedTemplateDir = templateDir = "asyncscala";
         apiPackage = "io.swagger.client.api";
         modelPackage = "io.swagger.client.model";
 
@@ -105,16 +106,22 @@ public class AsyncScalaClientCodegen extends DefaultCodegen implements CodegenCo
         );
         instantiationTypes.put("array", "ListBuffer");
         instantiationTypes.put("map", "HashMap");
+
+        cliOptions.add(new CliOption(CodegenConstants.MODEL_PACKAGE, CodegenConstants.MODEL_PACKAGE_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.API_PACKAGE, CodegenConstants.API_PACKAGE_DESC));
     }
 
+    @Override
     public CodegenType getTag() {
         return CodegenType.CLIENT;
     }
 
+    @Override
     public String getName() {
         return "async-scala";
     }
 
+    @Override
     public String getHelp() {
         return "Generates an Asynchronous Scala client library.";
     }
@@ -129,6 +136,7 @@ public class AsyncScalaClientCodegen extends DefaultCodegen implements CodegenCo
         return outputFolder + "/" + sourceFolder + "/" + apiPackage().replace('.', File.separatorChar);
     }
 
+    @Override
     public String modelFileFolder() {
         return outputFolder + "/" + sourceFolder + "/" + modelPackage().replace('.', File.separatorChar);
     }
@@ -178,6 +186,7 @@ public class AsyncScalaClientCodegen extends DefaultCodegen implements CodegenCo
         }
     }
 
+    @Override
     public String toDefaultValue(Property p) {
         if (p instanceof StringProperty) {
             return "null";

@@ -66,8 +66,7 @@ class ApiClient(object):
     :param header_name: a header to pass when making calls to the API.
     :param header_value: a header value to pass when making calls to the API.
     """
-    def __init__(self, host=Configuration().host,
-                 header_name=None, header_value=None, cookie=None):
+    def __init__(self, host=None, header_name=None, header_value=None, cookie=None):
 
         """
         Constructor of the class.
@@ -76,7 +75,10 @@ class ApiClient(object):
         self.default_headers = {}
         if header_name is not None:
             self.default_headers[header_name] = header_value
-        self.host = host
+        if host is None:
+            self.host = Configuration().host
+        else:
+            self.host = host
         self.cookie = cookie
         # Set default User-Agent.
         self.user_agent = 'Python-Swagger/1.0.0'
@@ -453,7 +455,9 @@ class ApiClient(object):
         for auth in auth_settings:
             auth_setting = config.auth_settings().get(auth)
             if auth_setting:
-                if auth_setting['in'] == 'header':
+                if not auth_setting['value']:
+                    continue
+                elif auth_setting['in'] == 'header':
                     headers[auth_setting['key']] = auth_setting['value']
                 elif auth_setting['in'] == 'query':
                     querys[auth_setting['key']] = auth_setting['value']

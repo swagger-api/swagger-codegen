@@ -17,20 +17,21 @@ import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JaxRSServerCodegen", date = "2015-10-20T10:58:35.558-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JaxRSServerCodegen", date = "2016-01-05T15:00:28.637+08:00")
 public abstract class StoreApiService {
   
-      public abstract Response getInventory()
+      public abstract Response getInventory(SecurityContext securityContext)
       throws NotFoundException;
   
-      public abstract Response placeOrder(Order body)
+      public abstract Response placeOrder(Order body,SecurityContext securityContext)
       throws NotFoundException;
   
-      public abstract Response getOrderById(String orderId)
+      public abstract Response getOrderById(String orderId,SecurityContext securityContext)
       throws NotFoundException;
   
-      public abstract Response deleteOrder(String orderId)
+      public abstract Response deleteOrder(String orderId,SecurityContext securityContext)
       throws NotFoundException;
   
 }

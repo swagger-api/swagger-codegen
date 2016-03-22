@@ -1,58 +1,54 @@
 package io.swagger.codegen.languages;
 
 import com.google.common.base.Strings;
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenProperty;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.DefaultCodegen;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.*;
 import io.swagger.models.Model;
-import io.swagger.models.properties.ArrayProperty;
-import io.swagger.models.properties.LongProperty;
-import io.swagger.models.properties.MapProperty;
-import io.swagger.models.properties.Property;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
+import io.swagger.models.Operation;
+import io.swagger.models.Path;
+import io.swagger.models.Swagger;
+import io.swagger.models.parameters.FormParameter;
+import io.swagger.models.parameters.Parameter;
+import io.swagger.models.properties.*;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.util.*;
+
 public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(JavaClientCodegen.class);
+    public static final String FULL_JAVA_UTIL = "fullJavaUtil";
+    public static final String DEFAULT_LIBRARY = "<default>";
 
     protected String invokerPackage = "io.swagger.client";
     protected String groupId = "io.swagger";
     protected String artifactId = "swagger-java-client";
     protected String artifactVersion = "1.0.0";
-    protected String sourceFolder = "src/main/java";
+    protected String projectFolder = "src" + File.separator + "main";
+    protected String sourceFolder = projectFolder + File.separator + "java";
     protected String localVariablePrefix = "";
-    protected boolean fullJavaUtil = false;
+    protected boolean fullJavaUtil;
     protected String javaUtilPrefix = "";
     protected Boolean serializableModel = false;
+    protected boolean serializeBigDecimalAsString = false;
 
     public JavaClientCodegen() {
         super();
-        outputFolder = "generated-code/java";
+        outputFolder = "generated-code" + File.separator + "java";
         modelTemplateFiles.put("model.mustache", ".java");
         apiTemplateFiles.put("api.mustache", ".java");
-        templateDir = "Java";
+        embeddedTemplateDir = templateDir = "Java";
         apiPackage = "io.swagger.client.api";
         modelPackage = "io.swagger.client.model";
 
         reservedWords = new HashSet<String>(
                 Arrays.asList(
+                        // used as internal variables, can collide with parameter names
+                        "path", "queryParams", "headerParams", "formParams", "postBody", "accepts", "accept", "contentTypes",
+                        "contentType", "authNames",
+
+                        // language reserved words
                         "abstract", "continue", "for", "new", "switch", "assert",
                         "default", "if", "package", "synchronized", "boolean", "do", "goto", "private",
                         "this", "break", "double", "implements", "protected", "throw", "byte", "else",
@@ -77,20 +73,30 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         instantiationTypes.put("array", "ArrayList");
         instantiationTypes.put("map", "HashMap");
 
+        cliOptions.add(new CliOption(CodegenConstants.MODEL_PACKAGE, CodegenConstants.MODEL_PACKAGE_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.API_PACKAGE, CodegenConstants.API_PACKAGE_DESC));
         cliOptions.add(new CliOption(CodegenConstants.INVOKER_PACKAGE, CodegenConstants.INVOKER_PACKAGE_DESC));
         cliOptions.add(new CliOption(CodegenConstants.GROUP_ID, CodegenConstants.GROUP_ID_DESC));
         cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_ID, CodegenConstants.ARTIFACT_ID_DESC));
         cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_VERSION, CodegenConstants.ARTIFACT_VERSION_DESC));
         cliOptions.add(new CliOption(CodegenConstants.SOURCE_FOLDER, CodegenConstants.SOURCE_FOLDER_DESC));
         cliOptions.add(new CliOption(CodegenConstants.LOCAL_VARIABLE_PREFIX, CodegenConstants.LOCAL_VARIABLE_PREFIX_DESC));
-        cliOptions.add(new CliOption(CodegenConstants.SERIALIZABLE_MODEL, CodegenConstants.SERIALIZABLE_MODEL_DESC));
-        cliOptions.add(new CliOption("fullJavaUtil", "whether to use fully qualified name for classes under java.util (default to false)"));
+        cliOptions.add(CliOption.newBoolean(CodegenConstants.SERIALIZABLE_MODEL, CodegenConstants.SERIALIZABLE_MODEL_DESC));
+        cliOptions.add(CliOption.newBoolean(CodegenConstants.SERIALIZE_BIG_DECIMAL_AS_STRING, CodegenConstants
+                .SERIALIZE_BIG_DECIMAL_AS_STRING_DESC));
+        cliOptions.add(CliOption.newBoolean(FULL_JAVA_UTIL, "whether to use fully qualified name for classes under java.util"));
 
-        supportedLibraries.put("<default>", "HTTP client: Jersey client 1.18. JSON processing: Jackson 2.4.2");
+        supportedLibraries.put(DEFAULT_LIBRARY, "HTTP client: Jersey client 1.18. JSON processing: Jackson 2.4.2");
+        supportedLibraries.put("feign", "HTTP client: Netflix Feign 8.1.1");
         supportedLibraries.put("jersey2", "HTTP client: Jersey client 2.6");
         supportedLibraries.put("okhttp-gson", "HTTP client: OkHttp 2.4.0. JSON processing: Gson 2.3.1");
         supportedLibraries.put("retrofit", "HTTP client: OkHttp 2.4.0. JSON processing: Gson 2.3.1 (Retrofit 1.9.0)");
-        cliOptions.add(buildLibraryCliOption(supportedLibraries));
+        supportedLibraries.put("retrofit2", "HTTP client: OkHttp 2.5.0. JSON processing: Gson 2.4 (Retrofit 2.0.0-beta2)");
+        CliOption library = new CliOption(CodegenConstants.LIBRARY, "library template (sub-template) to use");
+        library.setDefault(DEFAULT_LIBRARY);
+        library.setEnum(supportedLibraries);
+        library.setDefault(DEFAULT_LIBRARY);
+        cliOptions.add(library);
     }
 
     @Override
@@ -144,29 +150,32 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
             this.setSourceFolder((String) additionalProperties.get(CodegenConstants.SOURCE_FOLDER));
         }
 
-
         if (additionalProperties.containsKey(CodegenConstants.LOCAL_VARIABLE_PREFIX)) {
             this.setLocalVariablePrefix((String) additionalProperties.get(CodegenConstants.LOCAL_VARIABLE_PREFIX));
         }
 
         if (additionalProperties.containsKey(CodegenConstants.SERIALIZABLE_MODEL)) {
-            this.setSerializableModel(Boolean.valueOf((String)additionalProperties.get(CodegenConstants.SERIALIZABLE_MODEL).toString()));
+            this.setSerializableModel(Boolean.valueOf(additionalProperties.get(CodegenConstants.SERIALIZABLE_MODEL).toString()));
         }
 
         if (additionalProperties.containsKey(CodegenConstants.LIBRARY)) {
             this.setLibrary((String) additionalProperties.get(CodegenConstants.LIBRARY));
         }
 
+        if(additionalProperties.containsKey(CodegenConstants.SERIALIZE_BIG_DECIMAL_AS_STRING)) {
+            this.setSerializeBigDecimalAsString(Boolean.valueOf(additionalProperties.get(CodegenConstants.SERIALIZE_BIG_DECIMAL_AS_STRING).toString()));
+        }
+
         // need to put back serializableModel (boolean) into additionalProperties as value in additionalProperties is string
         additionalProperties.put(CodegenConstants.SERIALIZABLE_MODEL, serializableModel);
 
-        if (additionalProperties.containsKey("fullJavaUtil")) {
-            fullJavaUtil = Boolean.valueOf(additionalProperties.get("fullJavaUtil").toString());
+        if (additionalProperties.containsKey(FULL_JAVA_UTIL)) {
+            this.setFullJavaUtil(Boolean.valueOf(additionalProperties.get(FULL_JAVA_UTIL).toString()));
         }
         if (fullJavaUtil) {
             javaUtilPrefix = "java.util.";
         }
-        additionalProperties.put("fullJavaUtil", fullJavaUtil);
+        additionalProperties.put(FULL_JAVA_UTIL, fullJavaUtil);
         additionalProperties.put("javaUtilPrefix", javaUtilPrefix);
 
         if (fullJavaUtil) {
@@ -188,24 +197,42 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         this.sanitizeConfig();
 
-        final String invokerFolder = (sourceFolder + File.separator + invokerPackage).replace(".", File.separator);
+
+        // optional jackson mappings for BigDecimal support
+        importMapping.put("ToStringSerializer", "com.fasterxml.jackson.databind.ser.std.ToStringSerializer");
+        importMapping.put("JsonSerialize", "com.fasterxml.jackson.databind.annotation.JsonSerialize");
+
+        // imports for pojos
+        importMapping.put("ApiModelProperty", "io.swagger.annotations.ApiModelProperty");
+        importMapping.put("ApiModel", "io.swagger.annotations.ApiModel");
+        importMapping.put("JsonProperty", "com.fasterxml.jackson.annotation.JsonProperty");
+        importMapping.put("JsonValue", "com.fasterxml.jackson.annotation.JsonValue");
+        importMapping.put("Objects", "java.util.Objects");
+        importMapping.put("StringUtil", invokerPackage + ".StringUtil");
+
+        final String invokerFolder = (sourceFolder + '/' + invokerPackage).replace(".", "/");
         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
+        supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("build.gradle.mustache", "", "build.gradle"));
         supportingFiles.add(new SupportingFile("settings.gradle.mustache", "", "settings.gradle"));
         supportingFiles.add(new SupportingFile("gradle.properties.mustache", "", "gradle.properties"));
+        supportingFiles.add(new SupportingFile("manifest.mustache", projectFolder, "AndroidManifest.xml"));
         supportingFiles.add(new SupportingFile("ApiClient.mustache", invokerFolder, "ApiClient.java"));
         supportingFiles.add(new SupportingFile("StringUtil.mustache", invokerFolder, "StringUtil.java"));
 
-        final String authFolder = (sourceFolder + File.separator + invokerPackage + ".auth").replace(".", File.separator);
-        supportingFiles.add(new SupportingFile("auth/HttpBasicAuth.mustache", authFolder, "HttpBasicAuth.java"));
-        supportingFiles.add(new SupportingFile("auth/ApiKeyAuth.mustache", authFolder, "ApiKeyAuth.java"));
-        supportingFiles.add(new SupportingFile("auth/OAuth.mustache", authFolder, "OAuth.java"));
-        supportingFiles.add(new SupportingFile("auth/OAuthFlow.mustache", authFolder, "OAuthFlow.java"));
+        final String authFolder = (sourceFolder + '/' + invokerPackage + ".auth").replace(".", "/");
+        if ("feign".equals(getLibrary())) {
+            supportingFiles.add(new SupportingFile("FormAwareEncoder.mustache", invokerFolder, "FormAwareEncoder.java"));
+        } else {
+            supportingFiles.add(new SupportingFile("auth/HttpBasicAuth.mustache", authFolder, "HttpBasicAuth.java"));
+            supportingFiles.add(new SupportingFile("auth/ApiKeyAuth.mustache", authFolder, "ApiKeyAuth.java"));
+            supportingFiles.add(new SupportingFile("auth/OAuth.mustache", authFolder, "OAuth.java"));
+            supportingFiles.add(new SupportingFile("auth/OAuthFlow.mustache", authFolder, "OAuthFlow.java"));
+        }
 
-        if (!"retrofit".equals(getLibrary())) {
+        if (!("feign".equals(getLibrary()) || "retrofit".equals(getLibrary()) || "retrofit2".equals(getLibrary()))) {
             supportingFiles.add(new SupportingFile("apiException.mustache", invokerFolder, "ApiException.java"));
             supportingFiles.add(new SupportingFile("Configuration.mustache", invokerFolder, "Configuration.java"));
-            supportingFiles.add(new SupportingFile("JSON.mustache", invokerFolder, "JSON.java"));
             supportingFiles.add(new SupportingFile("Pair.mustache", invokerFolder, "Pair.java"));
             supportingFiles.add(new SupportingFile("auth/Authentication.mustache", authFolder, "Authentication.java"));
         }
@@ -214,13 +241,17 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         if ("okhttp-gson".equals(getLibrary())) {
             // the "okhttp-gson" library template requires "ApiCallback.mustache" for async call
             supportingFiles.add(new SupportingFile("ApiCallback.mustache", invokerFolder, "ApiCallback.java"));
+            supportingFiles.add(new SupportingFile("ApiResponse.mustache", invokerFolder, "ApiResponse.java"));
+            supportingFiles.add(new SupportingFile("JSON.mustache", invokerFolder, "JSON.java"));
+            supportingFiles.add(new SupportingFile("ProgressRequestBody.mustache", invokerFolder, "ProgressRequestBody.java"));
+            supportingFiles.add(new SupportingFile("ProgressResponseBody.mustache", invokerFolder, "ProgressResponseBody.java"));
             // "build.sbt" is for development with SBT
             supportingFiles.add(new SupportingFile("build.sbt.mustache", "", "build.sbt"));
-        } else if ("retrofit".equals(getLibrary())) {
+        } else if ("retrofit".equals(getLibrary()) || "retrofit2".equals(getLibrary())) {
             supportingFiles.add(new SupportingFile("auth/OAuthOkHttpClient.mustache", authFolder, "OAuthOkHttpClient.java"));
             supportingFiles.add(new SupportingFile("CollectionFormats.mustache", invokerFolder, "CollectionFormats.java"));
-        } else {
-            supportingFiles.add(new SupportingFile("TypeRef.mustache", invokerFolder, "TypeRef.java"));
+        } else if("jersey2".equals(getLibrary())) {
+            supportingFiles.add(new SupportingFile("JSON.mustache", invokerFolder, "JSON.java"));
         }
     }
 
@@ -251,12 +282,12 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String apiFileFolder() {
-        return outputFolder + "/" + sourceFolder + "/" + apiPackage().replace('.', File.separatorChar);
+        return outputFolder + "/" + sourceFolder + "/" + apiPackage().replace('.', '/');
     }
 
     @Override
     public String modelFileFolder() {
-        return outputFolder + "/" + sourceFolder + "/" + modelPackage().replace('.', File.separatorChar);
+        return outputFolder + "/" + sourceFolder + "/" + modelPackage().replace('.', '/');
     }
 
     @Override
@@ -346,12 +377,48 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
                 pattern = "new HashMap<String, %s>()";
             }
             return String.format(pattern, getTypeDeclaration(ap.getAdditionalProperties()));
+        } else if (p instanceof IntegerProperty) {
+            IntegerProperty dp = (IntegerProperty) p;
+            if (dp.getDefault() != null) {
+                return dp.getDefault().toString();
+            }
+            return "null";
         } else if (p instanceof LongProperty) {
             LongProperty dp = (LongProperty) p;
             if (dp.getDefault() != null) {
                 return dp.getDefault().toString()+"l";
             }
            return "null";
+        } else if (p instanceof DoubleProperty) {
+            DoubleProperty dp = (DoubleProperty) p;
+            if (dp.getDefault() != null) {
+                return dp.getDefault().toString() + "d";
+            }
+            return "null";
+        } else if (p instanceof FloatProperty) {
+            FloatProperty dp = (FloatProperty) p;
+            if (dp.getDefault() != null) {
+                return dp.getDefault().toString() + "f";
+            }
+            return "null";
+        } else if (p instanceof BooleanProperty) {
+            BooleanProperty bp = (BooleanProperty) p;
+            if (bp.getDefault() != null) {
+                return bp.getDefault().toString();
+            }
+            return "null";
+        } else if (p instanceof StringProperty) {
+            StringProperty sp = (StringProperty) p;
+            if (sp.getDefault() != null) {
+                String _default = sp.getDefault();
+                if (sp.getEnum() == null) {
+                    return "\"" + escapeText(_default) + "\"";
+                } else {
+                    // convert to enum var name later in postProcessModels
+                    return _default;
+                }
+            }
+            return "null";
         }
         return super.toDefaultValue(p);
     }
@@ -393,13 +460,50 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
     public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
         CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
 
-        if (allDefinitions != null && codegenModel != null && codegenModel.parent != null && codegenModel.hasEnums) {
-            final Model parentModel = allDefinitions.get(toModelName(codegenModel.parent));
+        if (allDefinitions != null && codegenModel != null && codegenModel.parentSchema != null && codegenModel.hasEnums) {
+            final Model parentModel = allDefinitions.get(codegenModel.parentSchema);
             final CodegenModel parentCodegenModel = super.fromModel(codegenModel.parent, parentModel);
             codegenModel = this.reconcileInlineEnums(codegenModel, parentCodegenModel);
         }
 
         return codegenModel;
+    }
+
+    @Override
+    public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
+        if(serializeBigDecimalAsString) {
+            if (property.baseType.equals("BigDecimal")) {
+                // we serialize BigDecimal as `string` to avoid precision loss
+                property.vendorExtensions.put("extraAnnotation", "@JsonSerialize(using = ToStringSerializer.class)");
+
+                // this requires some more imports to be added for this model...
+                model.imports.add("ToStringSerializer");
+                model.imports.add("JsonSerialize");
+            }
+        }
+
+        if(model.isEnum == null || model.isEnum) {
+            // needed by all pojos, but not enums
+            model.imports.add("ApiModelProperty");
+            model.imports.add("ApiModel");
+            // comment out below as it's in the model template 
+            //model.imports.add("Objects");
+
+            final String lib = getLibrary();
+            if(StringUtils.isEmpty(lib) || "feign".equals(lib) || "jersey2".equals(lib)) {
+                model.imports.add("JsonProperty");
+
+                if(model.hasEnums != null || model.hasEnums == true) {
+                  model.imports.add("JsonValue");
+                }
+            }
+        }
+        return;
+    }
+
+    @Override
+    public void postProcessParameter(CodegenParameter parameter) {
+        return;
     }
 
     @Override
@@ -444,13 +548,27 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
                     enumVars.add(enumVar);
                 }
                 allowableValues.put("enumVars", enumVars);
+                // handle default value for enum, e.g. available => StatusEnum.AVAILABLE
+                if (var.defaultValue != null) {
+                    String enumName = null;
+                    for (Map<String, String> enumVar : enumVars) {
+                        if (var.defaultValue.equals(enumVar.get("value"))) {
+                            enumName = enumVar.get("name");
+                            break;
+                        }
+                    }
+                    if (enumName != null) {
+                        var.defaultValue = var.datatypeWithEnum + "." + enumName;
+                    }
+                }
             }
         }
         return objs;
     }
 
+    @Override
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
-        if("retrofit".equals(getLibrary())) {
+        if("retrofit".equals(getLibrary()) || "retrofit2".equals(getLibrary())) {
             Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
             if (operations != null) {
                 List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
@@ -466,12 +584,67 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
                     if (operation.returnType == null) {
                         operation.returnType = "Void";
                     }
+                    if ("retrofit2".equals(getLibrary()) && StringUtils.isNotEmpty(operation.path) && operation.path.startsWith("/"))
+                    	operation.path = operation.path.substring(1);
                 }
             }
         }
         return objs;
     }
 
+    @Override
+    public void preprocessSwagger(Swagger swagger) {
+        if (swagger != null && swagger.getPaths() != null) {
+            for (String pathname : swagger.getPaths().keySet()) {
+                Path path = swagger.getPath(pathname);
+                if (path.getOperations() != null) {
+                    for (Operation operation : path.getOperations()) {
+                        boolean hasFormParameters = false;
+                        for (Parameter parameter : operation.getParameters()) {
+                            if (parameter instanceof FormParameter) {
+                                hasFormParameters = true;
+                            }
+                        }
+
+                        String defaultContentType = hasFormParameters ? "application/x-www-form-urlencoded" : "application/json";
+                        String contentType = operation.getConsumes() == null || operation.getConsumes().isEmpty()
+                                ? defaultContentType : operation.getConsumes().get(0);
+                        String accepts = getAccept(operation);
+                        operation.setVendorExtension("x-contentType", contentType);
+                        operation.setVendorExtension("x-accepts", accepts);
+                    }
+                }
+            }
+        }
+    }
+
+    private String getAccept(Operation operation) {
+        String accepts = null;
+        String defaultContentType = "application/json";
+        if (operation.getProduces() != null && !operation.getProduces().isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            for (String produces : operation.getProduces()) {
+                if (defaultContentType.equalsIgnoreCase(produces)) {
+                    accepts = defaultContentType;
+                    break;
+                } else {
+                    if (sb.length() > 0) {
+                        sb.append(",");
+                    }
+                    sb.append(produces);
+                }
+            }
+            if (accepts == null) {
+                accepts = sb.toString();
+            }
+        } else {
+            accepts = defaultContentType;
+        }
+
+        return accepts;
+    }
+
+    @Override
     protected boolean needToImport(String type) {
         return super.needToImport(type) && type.indexOf(".") < 0;
     }
@@ -564,6 +737,9 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         this.localVariablePrefix = localVariablePrefix;
     }
 
+    public void setSerializeBigDecimalAsString(boolean s) {
+        this.serializeBigDecimalAsString = s;
+    }
 
     public Boolean getSerializableModel() {
         return serializableModel;
@@ -582,4 +758,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         return packageName;
     }
 
+    public void setFullJavaUtil(boolean fullJavaUtil) {
+        this.fullJavaUtil = fullJavaUtil;
+    }
 }

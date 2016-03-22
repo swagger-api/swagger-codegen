@@ -16,15 +16,11 @@ package io.swagger.codegen.plugin;
  * limitations under the License.
  */
 
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.ClientOptInput;
-import io.swagger.codegen.ClientOpts;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenConfigLoader;
-import io.swagger.codegen.DefaultGenerator;
+import config.Config;
+import config.ConfigParser;
+import io.swagger.codegen.*;
 import io.swagger.models.Swagger;
 import io.swagger.parser.SwaggerParser;
-
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -32,18 +28,11 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
-import config.Config;
-import config.ConfigParser;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ServiceLoader;
 
-import static io.swagger.codegen.plugin.AdditionalParams.API_PACKAGE_PARAM;
-import static io.swagger.codegen.plugin.AdditionalParams.INVOKER_PACKAGE_PARAM;
-import static io.swagger.codegen.plugin.AdditionalParams.MODEL_PACKAGE_PARAM;
-import static io.swagger.codegen.plugin.AdditionalParams.TEMPLATE_DIR_PARAM;
+import static io.swagger.codegen.plugin.AdditionalParams.*;
 
 /**
  * Goal which generates client/server code from a swagger json/yaml definition.
@@ -101,6 +90,12 @@ public class CodeGenMojo extends AbstractMojo {
     private String configurationFile;
 
     /**
+     * Sets the library
+     */
+    @Parameter(name = "library", required = false)
+    private String library;
+
+    /**
      * A map of language-specific parameters as passed with the -c option to the command line
      */
     @Parameter(name = "configOptions")
@@ -115,6 +110,9 @@ public class CodeGenMojo extends AbstractMojo {
 
     @Parameter
     protected Map<String, String> environmentVariables = new HashMap<String, String>();
+
+    @Parameter
+    private boolean configHelp = false;
 
     /**
      * The project being built.
@@ -139,7 +137,9 @@ public class CodeGenMojo extends AbstractMojo {
                 System.setProperty(key, value);
             }
         }
-
+        if (null != library) {
+            config.setLibrary(library);
+        }
         if (null != templateDirectory) {
             config.additionalProperties().put(TEMPLATE_DIR_PARAM, templateDirectory.getAbsolutePath());
         }
@@ -177,7 +177,15 @@ public class CodeGenMojo extends AbstractMojo {
         
         ClientOptInput input = new ClientOptInput().opts(new ClientOpts()).swagger(swagger);
         input.setConfig(config);
-        
+
+        if(configHelp) {
+            for (CliOption langCliOption : config.cliOptions()) {
+                System.out.println("\t" + langCliOption.getOpt());
+                System.out.println("\t    " + langCliOption.getOptionHelp().replaceAll("\n", "\n\t    "));
+                System.out.println();
+            }
+            return;
+        }
         try {
             new DefaultGenerator().opts(input).generate();
         } catch (Exception e) {

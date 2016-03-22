@@ -219,9 +219,6 @@ extension PetstoreClientAPI {
          - API Key:
            - type: apiKey api_key 
            - name: api_key
-         - OAuth:
-           - type: oauth2
-           - name: petstore_auth
          - examples: [{example={
   "tags" : [ {
     "id" : 123456789,

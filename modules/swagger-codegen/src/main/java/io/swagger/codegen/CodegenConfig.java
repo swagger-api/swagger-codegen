@@ -29,6 +29,8 @@ public interface CodegenConfig {
 
     String templateDir();
 
+    String embeddedTemplateDir();
+
     String modelFileFolder();
 
     String modelPackage();
@@ -106,6 +108,10 @@ public interface CodegenConfig {
     Map<String, Object> postProcessOperations(Map<String, Object> objs);
 
     Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs);
+
+    void postProcessModelProperty(CodegenModel model, CodegenProperty property);
+
+    void postProcessParameter(CodegenParameter parameter);
 
     String apiFilename(String templateName, String tag);
 

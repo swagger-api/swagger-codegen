@@ -2,7 +2,10 @@ package io.swagger.client;
 
 import io.swagger.client.auth.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.TimeZone;
 
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -17,15 +20,86 @@ public class ApiClientTest {
     }
 
     @Test
+    public void testParseAndFormatDatetime() {
+        // default datetime format with UTC time zone
+        apiClient.getDatetimeFormat().setTimeZone(TimeZone.getTimeZone("UTC"));
+        String dateStr = "2015-11-07T03:49:09.356Z";
+        assertTrue(apiClient.isLenientDatetimeFormat());
+        assertEquals(dateStr, apiClient.formatDatetime(apiClient.parseDatetime("2015-11-07T03:49:09.356+00:00")));
+        assertEquals(dateStr, apiClient.formatDatetime(apiClient.parseDatetime("2015-11-07T05:49:09.356+02:00")));
+        assertEquals(dateStr, apiClient.formatDatetime(apiClient.parseDatetime("2015-11-07T02:49:09.356-01:00")));
+        // support various cases
+        assertEquals(dateStr, apiClient.formatDatetime(apiClient.parseDatetime("2015-11-07T03:49:09.356Z")));
+        assertEquals(dateStr, apiClient.formatDatetime(apiClient.parseDatetime("2015-11-07T03:49:09.356+00")));
+        assertEquals(dateStr, apiClient.formatDatetime(apiClient.parseDatetime("2015-11-07T02:49:09.356-0100")));
+        dateStr = "2015-11-07T03:49:09.000Z";
+        assertEquals(dateStr, apiClient.formatDatetime(apiClient.parseDatetime("2015-11-07T05:49:09+02")));
+
+        // custom datetime format: without milli-seconds, custom time zone
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
+        format.setTimeZone(TimeZone.getTimeZone("GMT+10"));
+        apiClient.setDatetimeFormat(format);
+        // disable support of various datetime format
+        apiClient.setLenientDatetimeFormat(false);
+        dateStr = "2015-11-07T13:49:09+10:00";
+        assertEquals(dateStr, apiClient.formatDatetime(apiClient.parseDatetime("2015-11-07T03:49:09+00:00")));
+        assertEquals(dateStr, apiClient.formatDatetime(apiClient.parseDatetime("2015-11-07T03:49:09Z")));
+        assertEquals(dateStr, apiClient.formatDatetime(apiClient.parseDatetime("2015-11-07T00:49:09-03:00")));
+
+        try {
+            // invalid time zone format
+            apiClient.parseDatetime("2015-11-07T03:49:09+00");
+            fail("parseDatetime should fail");
+        } catch (RuntimeException e) {
+            // OK
+        }
+        try {
+            // unexpected miliseconds
+            apiClient.parseDatetime("2015-11-07T03:49:09.000Z");
+            fail("parseDatetime should fail");
+        } catch (RuntimeException e) {
+            // OK
+        }
+    }
+
+    @Test
+    public void testParseAndFormatDate() {
+        // default date format
+        String dateStr = "2015-11-07";
+        assertEquals(dateStr, apiClient.formatDate(apiClient.parseDatetime("2015-11-07T03:49:09.356+00:00")));
+        assertEquals(dateStr, apiClient.formatDate(apiClient.parseDate("2015-11-07")));
+
+        // custom date format: without day
+        DateFormat format = new SimpleDateFormat("yyyy-MM");
+        apiClient.setDateFormat(format);
+        dateStr = "2015-11";
+        assertEquals(dateStr, apiClient.formatDate(apiClient.parseDatetime("2015-11-07T03:49:09Z")));
+        assertEquals(dateStr, apiClient.formatDate(apiClient.parseDate("2015-11")));
+    }
+
+    @Test
+    public void testIsJsonMime() {
+      assertFalse(apiClient.isJsonMime(null));
+      assertFalse(apiClient.isJsonMime(""));
+      assertFalse(apiClient.isJsonMime("text/plain"));
+      assertFalse(apiClient.isJsonMime("application/xml"));
+      assertFalse(apiClient.isJsonMime("application/jsonp"));
+
+      assertTrue(apiClient.isJsonMime("application/json"));
+      assertTrue(apiClient.isJsonMime("application/json; charset=UTF8"));
+      assertTrue(apiClient.isJsonMime("APPLICATION/JSON"));
+    }
+
+    @Test
     public void testSelectHeaderAccept() {
-        String[] accepts = {"APPLICATION/JSON", "APPLICATION/XML"};
+        String[] accepts = {"application/json", "application/xml"};
         assertEquals("application/json", apiClient.selectHeaderAccept(accepts));
 
-        accepts = new String[]{"application/json", "application/xml"};
-        assertEquals("application/json", apiClient.selectHeaderAccept(accepts));
+        accepts = new String[]{"APPLICATION/XML", "APPLICATION/JSON"};
+        assertEquals("APPLICATION/JSON", apiClient.selectHeaderAccept(accepts));
 
-        accepts = new String[]{"application/xml", "application/json"};
-        assertEquals("application/json", apiClient.selectHeaderAccept(accepts));
+        accepts = new String[]{"application/xml", "application/json; charset=UTF8"};
+        assertEquals("application/json; charset=UTF8", apiClient.selectHeaderAccept(accepts));
 
         accepts = new String[]{"text/plain", "application/xml"};
         assertEquals("text/plain,application/xml", apiClient.selectHeaderAccept(accepts));
@@ -36,14 +110,14 @@ public class ApiClientTest {
 
     @Test
     public void testSelectHeaderContentType() {
-        String[] contentTypes = {"APPLICATION/JSON", "APPLICATION/XML"};
+        String[] contentTypes = {"application/json", "application/xml"};
         assertEquals("application/json", apiClient.selectHeaderContentType(contentTypes));
 
-        contentTypes = new String[]{"application/json", "application/xml"};
-        assertEquals("application/json", apiClient.selectHeaderContentType(contentTypes));
+        contentTypes = new String[]{"APPLICATION/JSON", "APPLICATION/XML"};
+        assertEquals("APPLICATION/JSON", apiClient.selectHeaderContentType(contentTypes));
 
-        contentTypes = new String[]{"application/xml", "application/json"};
-        assertEquals("application/json", apiClient.selectHeaderContentType(contentTypes));
+        contentTypes = new String[]{"application/xml", "application/json; charset=UTF8"};
+        assertEquals("application/json; charset=UTF8", apiClient.selectHeaderContentType(contentTypes));
 
         contentTypes = new String[]{"text/plain", "application/xml"};
         assertEquals("text/plain", apiClient.selectHeaderContentType(contentTypes));
@@ -108,6 +182,18 @@ public class ApiClientTest {
         // reset values
         auth.setApiKey(null);
         auth.setApiKeyPrefix(null);
+    }
+
+    @Test
+    public void testGetAndSetConnectTimeout() {
+        assertEquals(0, apiClient.getConnectTimeout());
+        assertEquals(0, apiClient.getHttpClient().getConnectTimeout());
+
+        apiClient.setConnectTimeout(10000);
+        assertEquals(10000, apiClient.getConnectTimeout());
+        assertEquals(10000, apiClient.getHttpClient().getConnectTimeout());
+
+        apiClient.setConnectTimeout(0);
     }
 
     @Test
