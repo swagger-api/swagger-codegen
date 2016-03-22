@@ -253,8 +253,7 @@ namespace {{packageName}}.Client
             IList<Parameter> headers = response.Headers;
             if (type == typeof(byte[])) // return byte array
             {
-                return JsonConvert.DeserializeObject(response.RawBytes);
-                //return response.RawBytes;
+                return response.RawBytes;
             }
 
             if (type == typeof(Stream))
