@@ -180,7 +180,7 @@ namespace {{packageName}}.Api
             {{/pathParams}}
             {{#queryParams}}if ({{paramName}} != null) queryParams.Add("{{baseName}}", Configuration.ApiClient.ParameterToString({{paramName}})); // query parameter
             {{/queryParams}}
-            {{#patternQueryParams}}if ({{paramName}} != null) Configuration.AddPatternQueryParameters({{paramName}}, "{{pattern}}", queryParams); // pattern query parameter
+            {{#patternQueryParams}}if ({{paramName}} != null) Configuration.ApiClient.AddPatternQueryParameters({{paramName}}, "{{pattern}}", queryParams); // pattern query parameter
             {{/patternQueryParams}}
             {{#headerParams}}if ({{paramName}} != null) headerParams.Add("{{baseName}}", Configuration.ApiClient.ParameterToString({{paramName}})); // header parameter
             {{/headerParams}}
