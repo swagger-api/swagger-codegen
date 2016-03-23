@@ -204,9 +204,9 @@ namespace {{packageName}}.Client
         }
 
         /// <summary>
-        /// If parameter is DateTime, output in a formatted string (default ISO 8601), customizable with Configuration.DateTime.
-        /// If parameter is a list, join the list with ",".
-        /// Otherwise just return the string.
+        /// If parameter is DateTime or DateTimeOffset, output in a formatted string (default ISO 8601), customizable with Configuration.DateTime.
+        /// If parameter is a boolean, return "true" or "false"
+        /// Otherwise just return its string conversion.
         /// </summary>
         /// <param name="obj">The parameter (header, path, query, form).</param>
         /// <returns>Formatted string.</returns>
@@ -232,6 +232,14 @@ namespace {{packageName}}.Client
                 return Convert.ToString (obj);
         }
 
+        /// <summary>
+        /// If parameter is DateTime or DateTimeOffset, output in a formatted string (default ISO 8601), customizable with Configuration.DateTime.
+        /// If parameter is a boolean, return "true" or "false"
+        /// If the parameter is a single value just return its string conversion.
+        /// Otherwhise if the paramter is a list, the conversion above is applied to all its elements.
+        /// </summary>
+        /// <param name="obj">The parameter (header, path, query, form).</param>
+        /// <returns>List of formatted strings.</returns>
         public List<string> ParameterToString(object obj)
         {
             if (obj is IList)
