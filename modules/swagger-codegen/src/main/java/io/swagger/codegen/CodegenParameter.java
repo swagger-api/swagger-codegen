@@ -20,7 +20,7 @@ public class CodegenParameter {
     public Map<String, Object> allowableValues;
     public CodegenProperty items;
     public Map<String, Object> vendorExtensions;
-
+    
     /**
      * Determines whether this parameter is mandatory. If the parameter is in "path",
      * this property is required and its value MUST be true. Otherwise, the property
@@ -75,6 +75,10 @@ public class CodegenParameter {
     
     public CodegenParameter copy() {
         CodegenParameter output = new CodegenParameter();
+        return copy(output);
+    }
+ 
+    public CodegenParameter copy(CodegenParameter output) {
         output.isFile = this.isFile;
         output.notFile = this.notFile;
         output.hasMore = this.hasMore;

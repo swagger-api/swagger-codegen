@@ -1309,10 +1309,12 @@ public class DefaultCodegen {
           			}
           			property.items = cp;
           			if (property.items.isEnum) {
-          				  property.datatypeWithEnum = property.datatypeWithEnum.replace(property.items.baseType,
-          						property.items.datatypeWithEnum);
-                            if(property.defaultValue != null)
-          				        property.defaultValue = property.defaultValue.replace(property.items.baseType, property.items.datatypeWithEnum);
+          				  property.datatypeWithEnum = 
+          				      property.datatypeWithEnum.replace(property.items.baseType, property.items.datatypeWithEnum);
+                    if(property.defaultValue != null) {
+                        property.defaultValue = 
+                          property.defaultValue.replace(property.items.baseType, property.items.datatypeWithEnum);
+                    }
           			}
         		}
       	} else if (p instanceof MapProperty) {

@@ -41,6 +41,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         Boolean generateApis = null;
         Boolean generateModels = null;
         Boolean generateSupportingFiles = null;
+        Boolean generateInlineModels = null;
 
         Set<String> modelsToGenerate = null;
         Set<String> apisToGenerate = null;
@@ -67,8 +68,10 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             if(!supportingFiles.isEmpty()) {
                 supportingFilesToGenerate = new HashSet<String>(Arrays.asList(supportingFiles.split(",")));
             }
-        }
-
+        }        
+        
+        generateInlineModels = System.getProperty("noInlineModels") == null;
+        
         if(generateApis == null && generateModels == null && generateSupportingFiles == null) {
             // no specifics are set, generate everything
             generateApis = true; generateModels = true; generateSupportingFiles = true;
@@ -161,8 +164,11 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
 
         // resolve inline models
-        InlineModelResolver inlineModelResolver = new InlineModelResolver();
-        inlineModelResolver.flatten(swagger);
+        if (generateInlineModels)
+        {
+          InlineModelResolver inlineModelResolver = new InlineModelResolver();
+          inlineModelResolver.flatten(swagger);
+        }
 
         List<Object> allOperations = new ArrayList<Object>();
         List<Object> allModels = new ArrayList<Object>();
@@ -357,6 +363,11 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                         }
                     });
                     Map<String, Object> operation = processOperations(config, tag, ops);
+                    
+                    Map<String, Object> operationObjs = (Map<String, Object>) operation.get("operations");
+                    List<CodegenOperation> operationList = (List<CodegenOperation>) operationObjs.get("operation");
+                    if (operationList.isEmpty())
+                        continue;
 
                     operation.put("basePath", basePath);
                     operation.put("basePathWithoutHost", basePathWithoutHost);
@@ -627,13 +638,14 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
         return map.get(name);
     }
-
+    
     public void processOperation(String resourcePath, String httpMethod, Operation operation, Map<String, List<CodegenOperation>> operations, Path path) {
         if (operation != null) {
             if (System.getProperty("debugOperations") != null) {
                 LOGGER.info("processOperation: resourcePath= " + resourcePath + "\t;" + httpMethod + " " + operation
                         + "\n");
             }
+                   
             List<String> tags = operation.getTags();
             if (tags == null) {
                 tags = new ArrayList<String>();

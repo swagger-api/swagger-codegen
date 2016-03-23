@@ -78,7 +78,7 @@ namespace {{packageName}}.Client
     
         // Creates and sets up a RestRequest prior to a call.
         private RestRequest PrepareRequest(
-            String path, RestSharp.Method method, Dictionary<String, String> queryParams, Object postBody,
+            String path, RestSharp.Method method, Dictionary<String, List<String>> queryParams, Object postBody,
             Dictionary<String, String> headerParams, Dictionary<String, String> formParams,
             Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams,
             String contentType)
@@ -95,7 +95,8 @@ namespace {{packageName}}.Client
 
             // add query parameter, if any
             foreach(var param in queryParams)
-                request.AddQueryParameter(param.Key, param.Value);
+                foreach(var value in param.Value)
+                    request.AddQueryParameter(param.Key, value);
 
             // add form parameter, if any
             foreach(var param in formParams)
@@ -134,7 +135,7 @@ namespace {{packageName}}.Client
         /// <param name="contentType">Content Type of the request</param>
         /// <returns>Object</returns>
         public Object CallApi(
-            String path, RestSharp.Method method, Dictionary<String, String> queryParams, Object postBody,
+            String path, RestSharp.Method method, Dictionary<String, List<String>> queryParams, Object postBody,
             Dictionary<String, String> headerParams, Dictionary<String, String> formParams,
             Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams,
             String contentType)
@@ -166,7 +167,7 @@ namespace {{packageName}}.Client
         /// <param name="contentType">Content type.</param>
         /// <returns>The Task instance.</returns>
         public async System.Threading.Tasks.Task<Object> CallApiAsync(
-            String path, RestSharp.Method method, Dictionary<String, String> queryParams, Object postBody,
+            String path, RestSharp.Method method, Dictionary<String, List<String>> queryParams, Object postBody,
             Dictionary<String, String> headerParams, Dictionary<String, String> formParams,
             Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams,
             String contentType)
@@ -201,15 +202,15 @@ namespace {{packageName}}.Client
             else
                 return FileParameter.Create(name, ReadAsBytes(stream), "no_file_name_provided");
         }
-    
+
         /// <summary>
-        /// If parameter is DateTime, output in a formatted string (default ISO 8601), customizable with Configuration.DateTime.
-        /// If parameter is a list, join the list with ",".
-        /// Otherwise just return the string.
+        /// If parameter is DateTime or DateTimeOffset, output in a formatted string (default ISO 8601), customizable with Configuration.DateTime.
+        /// If parameter is a boolean, return "true" or "false"
+        /// Otherwise just return its string conversion.
         /// </summary>
         /// <param name="obj">The parameter (header, path, query, form).</param>
         /// <returns>Formatted string.</returns>
-        public string ParameterToString(object obj)
+        public string SingleParameterToString(object obj)
         {
             if (obj is DateTime)
                 // Return a formatted date string - Can be customized with Configuration.DateTimeFormat
@@ -222,20 +223,36 @@ namespace {{packageName}}.Client
                 // Defaults to an ISO 8601, using the known as a Round-trip date/time pattern ("o")
                 // https://msdn.microsoft.com/en-us/library/az4se3k1(v=vs.110).aspx#Anchor_8
                 // For example: 2009-06-15T13:45:30.0000000
-                return ((DateTimeOffset)obj).ToString (Configuration.DateTimeFormat);   
-            else if (obj is IList)
-            {
-                var flattenedString = new StringBuilder();
-                foreach (var param in (IList)obj)
-                {
-                    if (flattenedString.Length > 0)
-                        flattenedString.Append(",");
-                    flattenedString.Append(param);
-                }
-                return flattenedString.ToString();
-            }
+                return ((DateTimeOffset)obj).ToString (Configuration.DateTimeFormat);
+            else if (obj is bool)
+                return ((bool)obj) ? "true" : "false";
+            else if (obj is Boolean)
+                return ((Boolean)obj) ? "true" : "false";
             else
                 return Convert.ToString (obj);
+        }
+
+        /// <summary>
+        /// If parameter is DateTime or DateTimeOffset, output in a formatted string (default ISO 8601), customizable with Configuration.DateTime.
+        /// If parameter is a boolean, return "true" or "false"
+        /// If the parameter is a single value just return its string conversion.
+        /// Otherwhise if the paramter is a list, the conversion above is applied to all its elements.
+        /// </summary>
+        /// <param name="obj">The parameter (header, path, query, form).</param>
+        /// <returns>List of formatted strings.</returns>
+        public List<string> ParameterToString(object obj)
+        {
+            if (obj is IList)
+            {
+                List<string> ret = new List<string>();
+                foreach (var param in (IList)obj)
+                    ret.Add(SingleParameterToString(param));
+                return ret;
+            }
+            else
+            {
+                return new List<string> { SingleParameterToString(obj) };
+            }
         }
     
         /// <summary>
@@ -369,6 +386,29 @@ namespace {{packageName}}.Client
         {{#supportsAsync}}public static dynamic ConvertType(dynamic source, Type dest){{/supportsAsync}}{{^supportsAsync}}public static object ConvertType<T>(T source, Type dest) where T : class{{/supportsAsync}}
         {
             return Convert.ChangeType(source, dest);
+        }
+        
+        /// <summary>
+        /// Adds pattern-based parameters (after name validation) to a dictionary query parameters.
+        /// </summary>
+        /// <param name="parameters">Pattern parameters</param>
+        /// <param name="pattern">Pattern</param>
+        /// <param name="queryParams">Query parameters</param>        
+        public void AddPatternQueryParameters<T>(Dictionary<String, T> parameters, string pattern, Dictionary<String, List<String>> queryParams)
+        {
+            Regex regex = new Regex(pattern);
+            foreach (KeyValuePair<String, T> entry in parameters)
+            {
+                if (regex.IsMatch(entry.Key))
+                {
+                    if (queryParams.ContainsKey(entry.Key))
+                        queryParams[entry.Key].AddRange(ParameterToString(entry.Value));
+                    else
+                        queryParams.Add(entry.Key, ParameterToString(entry.Value));
+                }
+                else
+                    throw new ApiException((int)400, "Invalid parameter " + entry.Key + ", parameter name must match the regular expression \"" + pattern + "\"");
+            }
         }
 
         /// <summary>

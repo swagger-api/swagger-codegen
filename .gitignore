@@ -1,3 +1,5 @@
+node_modules
+
 *.iml
 out/
 *.ipr
@@ -96,3 +98,12 @@ samples/client/petstore/python/swagger_client.egg-info/SOURCES.txt
 samples/client/petstore/python/.coverage
 samples/client/petstore/python/.projectile
 samples/client/petstore/python/.venv/
+
+*/.settings
+.settings
+
+*.mustache~
+*.java~
+*.pm~
+*.xml~
+*.t~

@@ -187,7 +187,7 @@ namespace {{packageName}}.Api
             var localVarPath = "{{path}}";
     
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, List<String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -207,16 +207,17 @@ namespace {{packageName}}.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            // set "format" to json by default
-            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
-            localVarPathParams.Add("format", "json");
-            {{#pathParams}}if ({{paramName}} != null) localVarPathParams.Add("{{baseName}}", Configuration.ApiClient.ParameterToString({{paramName}})); // path parameter
+            {{#hardcodedQueryParams}}localVarQueryParams.Add("{{baseName}}", Configuration.ApiClient.ParameterToString("{{defaultValue}}")); // hardcoded query parameter
+            {{/hardcodedQueryParams}}
+            {{#pathParams}}if ({{paramName}} != null) localVarPathParams.Add("{{baseName}}", Configuration.ApiClient.SingleParameterToString({{paramName}})); // path parameter
             {{/pathParams}}
             {{#queryParams}}if ({{paramName}} != null) localVarQueryParams.Add("{{baseName}}", Configuration.ApiClient.ParameterToString({{paramName}})); // query parameter
             {{/queryParams}}
-            {{#headerParams}}if ({{paramName}} != null) localVarHeaderParams.Add("{{baseName}}", Configuration.ApiClient.ParameterToString({{paramName}})); // header parameter
+            {{#patternQueryParams}}if ({{paramName}} != null) Configuration.ApiClient.AddPatternQueryParameters({{paramName}}, "{{pattern}}", localVarQueryParams); // pattern query parameter
+            {{/patternQueryParams}}
+            {{#headerParams}}if ({{paramName}} != null) localVarHeaderParams.Add("{{baseName}}", Configuration.ApiClient.SingleParameterToString({{paramName}})); // header parameter
             {{/headerParams}}
-            {{#formParams}}if ({{paramName}} != null) {{#isFile}}localVarFileParams.Add("{{baseName}}", Configuration.ApiClient.ParameterToFile("{{baseName}}", {{paramName}}));{{/isFile}}{{^isFile}}localVarFormParams.Add("{{baseName}}", Configuration.ApiClient.ParameterToString({{paramName}})); // form parameter{{/isFile}}
+            {{#formParams}}if ({{paramName}} != null) {{#isFile}}localVarFileParams.Add("{{baseName}}", Configuration.ApiClient.ParameterToFile("{{baseName}}", {{paramName}}));{{/isFile}}{{^isFile}}localVarFormParams.Add("{{baseName}}", Configuration.ApiClient.SingleParameterToString({{paramName}})); // form parameter{{/isFile}}
             {{/formParams}}
             {{#bodyParam}}if ({{paramName}}.GetType() != typeof(byte[]))
             {
@@ -298,7 +299,7 @@ namespace {{packageName}}.Api
             var localVarPath = "{{path}}";
     
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, List<String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -318,16 +319,17 @@ namespace {{packageName}}.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            // set "format" to json by default
-            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
-            localVarPathParams.Add("format", "json");
-            {{#pathParams}}if ({{paramName}} != null) localVarPathParams.Add("{{baseName}}", Configuration.ApiClient.ParameterToString({{paramName}})); // path parameter
+            {{#hardcodedQueryParams}}localVarQueryParams.Add("{{baseName}}", Configuration.ApiClient.SingleParameterToString("{{defaultValue}}")); // hardcoded query parameter
+            {{/hardcodedQueryParams}}            
+            {{#pathParams}}if ({{paramName}} != null) localVarPathParams.Add("{{baseName}}", Configuration.ApiClient.SingleParameterToString({{paramName}})); // path parameter
             {{/pathParams}}
             {{#queryParams}}if ({{paramName}} != null) localVarQueryParams.Add("{{baseName}}", Configuration.ApiClient.ParameterToString({{paramName}})); // query parameter
             {{/queryParams}}
-            {{#headerParams}}if ({{paramName}} != null) localVarHeaderParams.Add("{{baseName}}", Configuration.ApiClient.ParameterToString({{paramName}})); // header parameter
+            {{#patternQueryParams}}if ({{paramName}} != null) Configuration.ApiClient.AddPatternQueryParameters({{paramName}}, "{{pattern}}", localVarQueryParams); // pattern query parameter
+            {{/patternQueryParams}}
+            {{#headerParams}}if ({{paramName}} != null) localVarHeaderParams.Add("{{baseName}}", Configuration.ApiClient.SingleParameterToString({{paramName}})); // header parameter
             {{/headerParams}}
-            {{#formParams}}if ({{paramName}} != null) {{#isFile}}localVarFileParams.Add("{{baseName}}", Configuration.ApiClient.ParameterToFile("{{baseName}}", {{paramName}}));{{/isFile}}{{^isFile}}localVarFormParams.Add("{{baseName}}", Configuration.ApiClient.ParameterToString({{paramName}})); // form parameter{{/isFile}}
+            {{#formParams}}if ({{paramName}} != null) {{#isFile}}localVarFileParams.Add("{{baseName}}", Configuration.ApiClient.ParameterToFile("{{baseName}}", {{paramName}}));{{/isFile}}{{^isFile}}localVarFormParams.Add("{{baseName}}", Configuration.ApiClient.SingleParameterToString({{paramName}})); // form parameter{{/isFile}}
             {{/formParams}}
             {{#bodyParam}}if ({{paramName}}.GetType() != typeof(byte[]))
             {

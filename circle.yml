@@ -1,0 +1,17 @@
+machine:
+  node:
+    version: 4.2.1
+dependencies:
+  override:
+    - npm install gulp -g
+    - npm install
+    - mvn --fail-never dependency:go-offline || true
+test:
+  override:
+    - mvn package
+deployment:
+  master:
+    branch: master
+    owner: 28msec
+    commands:
+      - gulp release

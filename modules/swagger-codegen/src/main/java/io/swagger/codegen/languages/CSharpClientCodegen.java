@@ -1,5 +1,6 @@
 package io.swagger.codegen.languages;
 
+import io.cellstore.codegen.CellStoreCodegen;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableMap;
 import io.swagger.codegen.CodegenConfig;
@@ -29,7 +30,7 @@ import org.apache.commons.lang.WordUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CSharpClientCodegen extends AbstractCSharpCodegen {
+public class CSharpClientCodegen extends CellStoreCodegen /*AbstractCSharpCodegen*/ {
     @SuppressWarnings({"unused", "hiding"})
     private static final Logger LOGGER = LoggerFactory.getLogger(CSharpClientCodegen.class);
     private static final String NET45 = "v4.5";
