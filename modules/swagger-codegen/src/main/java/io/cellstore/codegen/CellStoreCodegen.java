@@ -11,11 +11,13 @@ import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
 import io.swagger.models.parameters.Parameter;
 import io.swagger.models.parameters.SerializableParameter;
+import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.PropertyBuilder;
 import io.swagger.models.properties.PropertyBuilder.PropertyId;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -137,8 +139,13 @@ public abstract class CellStoreCodegen extends AbstractCSharpCodegen
           Map<PropertyId, Object> args = new HashMap<PropertyId, Object>();
           String format = qp.getFormat();
           args.put(PropertyId.ENUM, qp.getEnum());
-          
-          Property inner = PropertyBuilder.build(type, format, args);                     
+
+          Property inner = PropertyBuilder.build(type, format, args);
+          if (inner instanceof ArrayProperty)
+          {
+              ((ArrayProperty)inner).setItems(qp.getItems());
+          }
+
           CodegenProperty pr = fromProperty("inner", inner);
           p.baseType = pr.datatype;
           p.isContainer = true;

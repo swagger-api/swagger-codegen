@@ -402,7 +402,7 @@ namespace {{packageName}}.Client
                 if (regex.IsMatch(entry.Key))
                 {
                     if (queryParams.ContainsKey(entry.Key))
-                        queryParams[entry.Key].Add(SingleParameterToString(entry.Value));
+                        queryParams[entry.Key].AddRange(ParameterToString(entry.Value));
                     else
                         queryParams.Add(entry.Key, ParameterToString(entry.Value));
                 }
