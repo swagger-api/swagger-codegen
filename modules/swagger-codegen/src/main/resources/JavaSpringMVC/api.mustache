@@ -8,10 +8,12 @@ import {{modelPackage}}.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.Authorization;
 import io.swagger.annotations.AuthorizationScope;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -34,6 +36,14 @@ import static org.springframework.http.MediaType.*;
 {{>generatedAnnotation}}
 {{#operations}}
 public class {{classname}} {
+
+  private final Delegate delegate;
+  
+  @Autowired
+  public {{classname}}(Delegate {{classname}}Delegate) {
+    this.delegate = {{classname}}Delegate;
+  }
+
   {{#operation}}
 
   @ApiOperation(value = "{{{summary}}}", notes = "{{{notes}}}", response = {{{returnType}}}.class{{#returnContainer}}, responseContainer = "{{{returnContainer}}}"{{/returnContainer}}{{#hasAuthMethods}}, authorizations = {
@@ -43,19 +53,22 @@ public class {{classname}} {
       }{{/isOAuth}}){{#hasMore}},
     {{/hasMore}}{{/authMethods}}
   }{{/hasAuthMethods}})
-  @io.swagger.annotations.ApiResponses(value = { {{#responses}}
-    @io.swagger.annotations.ApiResponse(code = {{{code}}}, message = "{{{message}}}"){{#hasMore}},{{/hasMore}}{{/responses}} })
+  @ApiResponses(value = { {{#responses}} @ApiResponse(code = {{{code}}}, message = "{{{message}}}"){{#hasMore}},{{/hasMore}}{{/responses}} })
   @RequestMapping(value = "{{path}}", 
     {{#hasProduces}}produces = { {{#produces}}"{{mediaType}}"{{#hasMore}}, {{/hasMore}}{{/produces}} }, {{/hasProduces}}
     {{#hasConsumes}}consumes = { {{#consumes}}"{{mediaType}}"{{#hasMore}}, {{/hasMore}}{{/consumes}} },{{/hasConsumes}}
     method = RequestMethod.{{httpMethod}})
-  public ResponseEntity<{{>returnTypes}}> {{operationId}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},
-    {{/hasMore}}{{/allParams}})
-      throws NotFoundException {
-      // do some magic!
-      return new ResponseEntity<{{>returnTypes}}>(HttpStatus.OK);
+  public ResponseEntity<{{>returnTypes}}> {{operationId}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},{{/hasMore}}{{/allParams}}) throws NotFoundException {
+      return ResponseEntity.ok(delegate.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}},{{/hasMore}}{{/allParams}}));
   }
 
   {{/operation}}
+
+  public interface Delegate{
+  {{#operation}}
+    public {{>returnTypes}} {{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}},{{/hasMore}}{{/allParams}}) throws NotFoundException;
+
+  {{/operation}}
+  }
 }
 {{/operations}}
