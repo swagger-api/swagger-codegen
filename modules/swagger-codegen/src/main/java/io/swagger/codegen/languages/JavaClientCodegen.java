@@ -530,6 +530,10 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
             return newOperationId;
         }
 
+        if (operationId.matches("^\\d")) {
+            operationId = "_" + operationId;
+        }
+
         return operationId;
     }
 
@@ -597,6 +601,29 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         for (Object _mo : models) {
             Map<String, Object> mo = (Map<String, Object>) _mo;
             CodegenModel cm = (CodegenModel) mo.get("model");
+
+            if (Boolean.TRUE.equals(cm.isEnum) && cm.allowableValues != null) {
+                // set `x-codegen-enumVars` for the CodegenModel instance
+                List<Map<String, String>> enumVars = new ArrayList<Map<String, String>>();
+                String commonPrefix = findCommonPrefixOfVars(cm.allowableValues);
+                int truncateIdx = commonPrefix.length();
+                for (String value : cm.allowableValues) {
+                    Map<String, String> enumVar = new HashMap<String, String>();
+                    String enumName;
+                    if (truncateIdx == 0) {
+                        enumName = value;
+                    } else {
+                        enumName = value.substring(truncateIdx);
+                        if ("".equals(enumName)) {
+                            enumName = value;
+                        }
+                    }
+                    enumVar.put("name", toEnumVarName(enumName));
+                    enumVar.put("value", value);
+                    enumVars.add(enumVar);
+                }
+                cm.vendorExtensions.put("x-codegen-enumVars", enumVars);
+            }
 
             for (CodegenProperty var : cm.vars) {
                 Map<String, Object> allowableValues = var.allowableValues;

@@ -1,0 +1,17 @@
+public enum {{classname}} {
+    {{#vendorExtensions.x-codegen-enumVars}}@SerializedName("{{{value}}}")
+    {{{name}}}("{{{value}}}"){{^-last}},
+
+    {{/-last}}{{#-last}};{{/-last}}{{/vendorExtensions.x-codegen-enumVars}}
+
+    private String value;
+
+    {{classname}}(String value) {
+      this.value = value;
+    }
+
+    @Override
+    public String toString() {
+      return value;
+    }
+}

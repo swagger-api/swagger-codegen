@@ -10,35 +10,21 @@ import com.google.gson.annotations.SerializedName;
 
 
 
-public class Tag   {
+public class Animal   {
   
-  @SerializedName("id")
-  private Long id = null;
-  
-  @SerializedName("name")
-  private String name = null;
+  @SerializedName("className")
+  private String className = null;
   
 
   
   /**
    **/
-  @ApiModelProperty(value = "")
-  public Long getId() {
-    return id;
+  @ApiModelProperty(required = true, value = "")
+  public String getClassName() {
+    return className;
   }
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  public String getName() {
-    return name;
-  }
-  public void setName(String name) {
-    this.name = name;
+  public void setClassName(String className) {
+    this.className = className;
   }
 
   
@@ -51,23 +37,21 @@ public class Tag   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Tag tag = (Tag) o;
-    return Objects.equals(this.id, tag.id) &&
-        Objects.equals(this.name, tag.name);
+    Animal animal = (Animal) o;
+    return Objects.equals(this.className, animal.className);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(className);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Tag {\n");
+    sb.append("class Animal {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    className: ").append(toIndentedString(className)).append("\n");
     sb.append("}");
     return sb.toString();
   }
