@@ -47,6 +47,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     public JavaClientCodegen() {
         super();
+        supportsInheritance = true;
         outputFolder = "generated-code" + File.separator + "java";
         modelTemplateFiles.put("model.mustache", ".java");
         apiTemplateFiles.put("api.mustache", ".java");
@@ -238,6 +239,8 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         importMapping.put("ApiModelProperty", "io.swagger.annotations.ApiModelProperty");
         importMapping.put("ApiModel", "io.swagger.annotations.ApiModel");
         importMapping.put("JsonProperty", "com.fasterxml.jackson.annotation.JsonProperty");
+        importMapping.put("JsonSubTypes", "com.fasterxml.jackson.annotation.JsonSubTypes");
+        importMapping.put("JsonTypeInfo", "com.fasterxml.jackson.annotation.JsonTypeInfo");
         importMapping.put("JsonValue", "com.fasterxml.jackson.annotation.JsonValue");
         importMapping.put("Objects", "java.util.Objects");
         importMapping.put("StringUtil", invokerPackage + ".StringUtil");
@@ -541,6 +544,10 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
         if(codegenModel.description != null) {
             codegenModel.imports.add("ApiModel");
+        }
+        if (codegenModel.discriminator != null) {
+            codegenModel.imports.add("JsonSubTypes");
+            codegenModel.imports.add("JsonTypeInfo");
         }
         if (allDefinitions != null && codegenModel != null && codegenModel.parentSchema != null && codegenModel.hasEnums) {
             final Model parentModel = allDefinitions.get(codegenModel.parentSchema);
