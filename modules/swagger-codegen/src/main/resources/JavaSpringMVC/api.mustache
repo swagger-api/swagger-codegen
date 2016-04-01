@@ -31,8 +31,8 @@ import java.util.List;
 import static org.springframework.http.MediaType.*;
 
 @Controller
-@RequestMapping(value = "/{{baseName}}", produces = {APPLICATION_JSON_VALUE})
-@Api(value = "/{{baseName}}", description = "the {{baseName}} API")
+@RequestMapping(value = "{{contextPath}}", produces = {APPLICATION_JSON_VALUE})
+@Api(value = "{{contextPath}}", description = "the {{baseName}} API")
 {{>generatedAnnotation}}
 {{#operations}}
 public class {{classname}} {
@@ -54,19 +54,18 @@ public class {{classname}} {
     {{/hasMore}}{{/authMethods}}
   }{{/hasAuthMethods}})
   @ApiResponses(value = { {{#responses}} @ApiResponse(code = {{{code}}}, message = "{{{message}}}"){{#hasMore}},{{/hasMore}}{{/responses}} })
-  @RequestMapping(value = "{{path}}", 
+  @RequestMapping(value = "/{{baseName}}{{path}}",
     {{#hasProduces}}produces = { {{#produces}}"{{mediaType}}"{{#hasMore}}, {{/hasMore}}{{/produces}} }, {{/hasProduces}}
     {{#hasConsumes}}consumes = { {{#consumes}}"{{mediaType}}"{{#hasMore}}, {{/hasMore}}{{/consumes}} },{{/hasConsumes}}
     method = RequestMethod.{{httpMethod}})
   public ResponseEntity<{{>returnTypes}}> {{operationId}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},{{/hasMore}}{{/allParams}}) throws NotFoundException {
-      return ResponseEntity.ok(delegate.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}},{{/hasMore}}{{/allParams}}));
-  }
+      return delegate.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}},{{/hasMore}}{{/allParams}});  }
 
   {{/operation}}
 
   public interface Delegate{
   {{#operation}}
-    public {{>returnTypes}} {{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}},{{/hasMore}}{{/allParams}}) throws NotFoundException;
+    public ResponseEntity<{{>returnTypes}}> {{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}},{{/hasMore}}{{/allParams}}) throws NotFoundException;
 
   {{/operation}}
   }
