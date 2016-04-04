@@ -1,0 +1,11 @@
+{
+  "packageName": "PureCloudPlatformApiSdk",
+  "packageVersion": "0.10.0.345",
+  "packageTitle": "PureCloud Platform API SDK",
+  "packageDescription": "A python package to interface with the PureCloud Platform API",
+  "packageAuthor": "Interactive Intelligence, Inc.",
+  "packageAuthorEmail": "DeveloperEvangelists@inin.com",
+  "packageUrl": "https://developer.mypurecloud.com/api/rest/client-libraries/python/latest/",
+  "packageKeywords": "PureCloud Platform API ININ Interactive Intelligence",
+  "install_requires": ""
+}
