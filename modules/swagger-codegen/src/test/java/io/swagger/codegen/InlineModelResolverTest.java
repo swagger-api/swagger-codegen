@@ -12,6 +12,7 @@ import java.util.Map;
 
 import static org.testng.AssertJUnit.*;
 
+@SuppressWarnings("static-method")
 public class InlineModelResolverTest {
     @Test
     public void resolveInlineModelTest() throws Exception {
@@ -73,6 +74,7 @@ public class InlineModelResolverTest {
         ModelImpl model = (ModelImpl)swagger.getDefinitions().get("inline_response_200");
         assertTrue(model.getProperties().size() == 1);
         assertNotNull(model.getProperties().get("name"));
+        assertTrue(model.getProperties().get("name") instanceof StringProperty);
     }
 
     @Test
@@ -174,13 +176,30 @@ public class InlineModelResolverTest {
 
         ArrayModel am = (ArrayModel) schema;
         Property inner = am.getItems();
+        assertTrue(inner instanceof RefProperty);
 
-        ObjectProperty op = (ObjectProperty) inner;
-        Property name = op.getProperties().get("address");
-        assertTrue(name instanceof RefProperty);
+        RefProperty rp = (RefProperty) inner;
 
-        Model model = swagger.getDefinitions().get("hello_address");
-        assertNotNull(model);
+        assertEquals(rp.getType(), "ref");
+        assertEquals(rp.get$ref(), "#/definitions/body");
+        assertEquals(rp.getSimpleRef(), "body");
+
+        Model inline = swagger.getDefinitions().get("body");
+        assertNotNull(inline);
+        assertTrue(inline instanceof ModelImpl);
+        ModelImpl impl = (ModelImpl) inline;
+        RefProperty rpAddress = (RefProperty) impl.getProperties().get("address");
+        assertNotNull(rpAddress);
+        assertEquals(rpAddress.getType(), "ref");
+        assertEquals(rpAddress.get$ref(), "#/definitions/hello_address");
+        assertEquals(rpAddress.getSimpleRef(), "hello_address");
+
+        Model inlineProp = swagger.getDefinitions().get("hello_address");
+        assertNotNull(inlineProp);
+        assertTrue(inlineProp instanceof ModelImpl);
+        ModelImpl implProp = (ModelImpl) inlineProp;
+        assertNotNull(implProp.getProperties().get("street"));
+        assertTrue(implProp.getProperties().get("street") instanceof StringProperty);
     }
 
     @Test
@@ -213,9 +232,17 @@ public class InlineModelResolverTest {
 
         assertNotNull(p);
 
-        ObjectProperty innerModel = (ObjectProperty) p;
-        assertTrue(innerModel.getProperties().size() == 1);
-        assertNotNull(innerModel.getProperties().get("name"));
+        RefProperty rp = (RefProperty) p;
+        assertEquals(rp.getType(), "ref");
+        assertEquals(rp.get$ref(), "#/definitions/inline_response_200");
+        assertEquals(rp.getSimpleRef(), "inline_response_200");
+
+        Model inline = swagger.getDefinitions().get("inline_response_200");
+        assertNotNull(inline);
+        assertTrue(inline instanceof ModelImpl);
+        ModelImpl impl = (ModelImpl) inline;
+        assertNotNull(impl.getProperties().get("name"));
+        assertTrue(impl.getProperties().get("name") instanceof StringProperty);
     }
 
     @Test
@@ -258,20 +285,15 @@ public class InlineModelResolverTest {
         new InlineModelResolver().flatten(swagger);
 
         Response response = swagger.getPaths().get("/foo/baz").getGet().getResponses().get("200");
-
         Property property = response.getSchema();
-        assertTrue(property instanceof RefProperty);
+        assertTrue(property instanceof MapProperty);
+        assertTrue(swagger.getDefinitions().size() == 1);
 
         Model inline = swagger.getDefinitions().get("inline_response_200");
         assertTrue(inline instanceof ModelImpl);
         ModelImpl impl = (ModelImpl) inline;
-
-        Property innerProperty = impl.getAdditionalProperties();
-        assertTrue(innerProperty instanceof ObjectProperty);
-
-        ObjectProperty obj = (ObjectProperty) innerProperty;
-        Property name = obj.getProperties().get("name");
-        assertTrue(name instanceof StringProperty);
+        assertNotNull(impl.getProperties().get("name"));
+        assertTrue(impl.getProperties().get("name") instanceof StringProperty);
     }
 
     @Test
@@ -295,10 +317,17 @@ public class InlineModelResolverTest {
 
         ArrayProperty am = (ArrayProperty) response.getSchema();
         Property items = am.getItems();
-        assertTrue(items instanceof ObjectProperty);
-        ObjectProperty op = (ObjectProperty) items;
-        Property name = op.getProperties().get("name");
-        assertTrue(name instanceof StringProperty);
+        assertTrue(items instanceof RefProperty);
+        RefProperty rp = (RefProperty) items;
+        assertEquals(rp.getType(), "ref");
+        assertEquals(rp.get$ref(), "#/definitions/inline_response_200");
+        assertEquals(rp.getSimpleRef(), "inline_response_200");
+
+        Model inline = swagger.getDefinitions().get("inline_response_200");
+        assertTrue(inline instanceof ModelImpl);
+        ModelImpl impl = (ModelImpl) inline;
+        assertNotNull(impl.getProperties().get("name"));
+        assertTrue(impl.getProperties().get("name") instanceof StringProperty);
     }
 
     @Test
@@ -319,5 +348,288 @@ public class InlineModelResolverTest {
         new InlineModelResolver().flatten(swagger);
 
         Json.prettyPrint(swagger);
+    }
+
+    @Test
+    public void testArbitraryObjectBodyParam() {
+        Swagger swagger = new Swagger();
+
+        swagger.path("/hello", new Path()
+                .get(new Operation()
+                        .parameter(new BodyParameter()
+                                .name("body")
+                                .schema(new ModelImpl()))));
+
+        new InlineModelResolver().flatten(swagger);
+
+        Operation operation = swagger.getPaths().get("/hello").getGet();
+        BodyParameter bp = (BodyParameter)operation.getParameters().get(0);
+        assertTrue(bp.getSchema() instanceof ModelImpl);
+        ModelImpl m = (ModelImpl) bp.getSchema();
+        assertNull(m.getType());
+    }
+
+    @Test
+    public void testArbitraryObjectBodyParamInline() {
+        Swagger swagger = new Swagger();
+
+        swagger.path("/hello", new Path()
+                .get(new Operation()
+                        .parameter(new BodyParameter()
+                                .name("body")
+                                .schema(new ModelImpl()
+                                        .property("arbitrary", new ObjectProperty())))));
+
+        new InlineModelResolver().flatten(swagger);
+
+        Operation operation = swagger.getPaths().get("/hello").getGet();
+        BodyParameter bp = (BodyParameter)operation.getParameters().get(0);
+        assertTrue(bp.getSchema() instanceof RefModel);
+
+        Model body = swagger.getDefinitions().get("body");
+        assertTrue(body instanceof ModelImpl);
+
+        ModelImpl impl = (ModelImpl) body;
+        Property p = impl.getProperties().get("arbitrary");
+        assertNotNull(p);
+        assertTrue(p instanceof ObjectProperty);
+    }
+
+    @Test
+    public void testArbitraryObjectBodyParamWithArray() {
+        Swagger swagger = new Swagger();
+
+        swagger.path("/hello", new Path()
+                .get(new Operation()
+                        .parameter(new BodyParameter()
+                                .name("body")
+                                .schema(new ArrayModel()
+                                        .items(new ObjectProperty())))));
+
+        new InlineModelResolver().flatten(swagger);
+
+        Parameter param = swagger.getPaths().get("/hello").getGet().getParameters().get(0);
+        assertTrue(param instanceof BodyParameter);
+
+        BodyParameter bp = (BodyParameter) param;
+        Model schema = bp.getSchema();
+
+        assertTrue(schema instanceof ArrayModel);
+
+        ArrayModel am = (ArrayModel) schema;
+        Property inner = am.getItems();
+        assertTrue(inner instanceof ObjectProperty);
+
+        ObjectProperty op = (ObjectProperty) inner;
+        assertNotNull(op);
+        assertNull(op.getProperties());
+    }
+
+    @Test
+    public void testArbitraryObjectBodyParamArrayInline() {
+        Swagger swagger = new Swagger();
+
+        swagger.path("/hello", new Path()
+                .get(new Operation()
+                        .parameter(new BodyParameter()
+                                .name("body")
+                                .schema(new ArrayModel()
+                                        .items(new ObjectProperty()
+                                            .property("arbitrary", new ObjectProperty()))))));
+
+        new InlineModelResolver().flatten(swagger);
+
+        Parameter param = swagger.getPaths().get("/hello").getGet().getParameters().get(0);
+        assertTrue(param instanceof BodyParameter);
+
+        BodyParameter bp = (BodyParameter) param;
+        Model schema = bp.getSchema();
+
+        assertTrue(schema instanceof ArrayModel);
+
+        ArrayModel am = (ArrayModel) schema;
+        Property inner = am.getItems();
+        assertTrue(inner instanceof RefProperty);
+
+        RefProperty rp = (RefProperty) inner;
+
+        assertEquals(rp.getType(), "ref");
+        assertEquals(rp.get$ref(), "#/definitions/body");
+        assertEquals(rp.getSimpleRef(), "body");
+
+        Model inline = swagger.getDefinitions().get("body");
+        assertNotNull(inline);
+        assertTrue(inline instanceof ModelImpl);
+        ModelImpl impl = (ModelImpl) inline;
+        Property p = impl.getProperties().get("arbitrary");
+        assertNotNull(p);
+        assertTrue(p instanceof ObjectProperty);
+    }
+
+    @Test
+    public void testArbitraryObjectResponse() {
+        Swagger swagger = new Swagger();
+
+        swagger.path("/foo/bar", new Path()
+            .get(new Operation()
+                    .response(200, new Response()
+                            .description("it works!")
+                            .schema(new ObjectProperty()))));
+        new InlineModelResolver().flatten(swagger);
+
+        Map<String, Response> responses = swagger.getPaths().get("/foo/bar").getGet().getResponses();
+
+        Response response = responses.get("200");
+        assertNotNull(response);
+        assertTrue(response.getSchema() instanceof ObjectProperty);
+        ObjectProperty op = (ObjectProperty) response.getSchema();
+        assertNull(op.getProperties());
+    }
+
+    @Test
+    public void testArbitraryObjectResponseArray() {
+        Swagger swagger = new Swagger();
+
+        swagger.path("/foo/baz", new Path()
+                .get(new Operation()
+                        .response(200, new Response()
+                                .description("it works!")
+                                .schema(new ArrayProperty()
+                                        .items(new ObjectProperty())))));
+        new InlineModelResolver().flatten(swagger);
+
+        Response response = swagger.getPaths().get("/foo/baz").getGet().getResponses().get("200");
+        assertTrue(response.getSchema() instanceof ArrayProperty);
+
+        ArrayProperty am = (ArrayProperty) response.getSchema();
+        Property items = am.getItems();
+        assertTrue(items instanceof ObjectProperty);
+        ObjectProperty op = (ObjectProperty) items;
+        assertNull(op.getProperties());
+    }
+
+    @Test
+    public void testArbitraryObjectResponseArrayInline() {
+        Swagger swagger = new Swagger();
+
+        swagger.path("/foo/baz", new Path()
+                .get(new Operation()
+                        .response(200, new Response()
+                                .vendorExtension("x-foo", "bar")
+                                .description("it works!")
+                                .schema(new ArrayProperty()
+                                        .items(new ObjectProperty()
+                                            .property("arbitrary", new ObjectProperty()))))));
+
+        new InlineModelResolver().flatten(swagger);
+
+        Response response = swagger.getPaths().get("/foo/baz").getGet().getResponses().get("200");
+        assertNotNull(response);
+
+        assertNotNull(response.getSchema());
+        Property responseProperty = response.getSchema();
+        assertTrue(responseProperty instanceof ArrayProperty);
+
+        ArrayProperty ap = (ArrayProperty) responseProperty;
+        Property p = ap.getItems();
+        assertNotNull(p);
+
+        RefProperty rp = (RefProperty) p;
+        assertEquals(rp.getType(), "ref");
+        assertEquals(rp.get$ref(), "#/definitions/inline_response_200");
+        assertEquals(rp.getSimpleRef(), "inline_response_200");
+
+        Model inline = swagger.getDefinitions().get("inline_response_200");
+        assertNotNull(inline);
+        assertTrue(inline instanceof ModelImpl);
+        ModelImpl impl = (ModelImpl) inline;
+        Property inlineProp = impl.getProperties().get("arbitrary");
+        assertNotNull(inlineProp);
+        assertTrue(inlineProp instanceof ObjectProperty);
+        ObjectProperty op = (ObjectProperty) inlineProp;
+        assertNull(op.getProperties());
+    }
+
+    @Test
+    public void testArbitraryObjectResponseMapInline() {
+        Swagger swagger = new Swagger();
+
+        MapProperty schema = new MapProperty();
+        schema.setAdditionalProperties(new ObjectProperty());
+
+        swagger.path("/foo/baz", new Path()
+                .get(new Operation()
+                        .response(200, new Response()
+                                .description("it works!")
+                                .schema(schema))));
+        new InlineModelResolver().flatten(swagger);
+
+        Response response = swagger.getPaths().get("/foo/baz").getGet().getResponses().get("200");
+
+        Property property = response.getSchema();
+        assertTrue(property instanceof MapProperty);
+        assertTrue(swagger.getDefinitions().size() == 0);
+        Property inlineProp = ((MapProperty) property).getAdditionalProperties();
+        assertTrue(inlineProp instanceof ObjectProperty);
+        ObjectProperty op = (ObjectProperty) inlineProp;
+        assertNull(op.getProperties());
+    }
+
+    @Test
+    public void testArbitraryObjectModelInline() {
+        Swagger swagger = new Swagger();
+
+        swagger.addDefinition("User", new ModelImpl()
+                .name("user")
+                .description("a common user")
+                .property("name", new StringProperty())
+                .property("arbitrary", new ObjectProperty()
+                        .title("title")
+                        ._default("default")
+                        .access("access")
+                        .readOnly(false)
+                        .required(true)
+                        .description("description")
+                        .name("name")));
+
+        new InlineModelResolver().flatten(swagger);
+
+        ModelImpl user = (ModelImpl)swagger.getDefinitions().get("User");
+        assertNotNull(user);
+        Property inlineProp = user.getProperties().get("arbitrary");
+        assertTrue(inlineProp instanceof ObjectProperty);
+        ObjectProperty op = (ObjectProperty) inlineProp;
+        assertNull(op.getProperties());
+    }
+
+    @Test
+    public void testArbitraryObjectModelWithArrayInline() {
+        Swagger swagger = new Swagger();
+
+        swagger.addDefinition("User", new ArrayModel()
+                .items(new ObjectProperty()
+                        .title("title")
+                        ._default("default")
+                        .access("access")
+                        .readOnly(false)
+                        .required(true)
+                        .description("description")
+                        .name("name")
+                        .property("arbitrary", new ObjectProperty())));
+
+        new InlineModelResolver().flatten(swagger);
+
+        Model model = swagger.getDefinitions().get("User");
+        assertTrue(model instanceof ArrayModel);
+        ArrayModel am = (ArrayModel) model;
+        Property inner = am.getItems();
+        assertTrue(inner instanceof RefProperty);
+
+        ModelImpl userInner = (ModelImpl)swagger.getDefinitions().get("User_inner");
+        assertNotNull(userInner);
+        Property inlineProp = userInner.getProperties().get("arbitrary");
+        assertTrue(inlineProp instanceof ObjectProperty);
+        ObjectProperty op = (ObjectProperty) inlineProp;
+        assertNull(op.getProperties());
     }
 }
