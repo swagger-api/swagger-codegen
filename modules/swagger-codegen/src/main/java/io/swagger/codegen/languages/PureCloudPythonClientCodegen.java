@@ -16,6 +16,8 @@ public class PureCloudPythonClientCodegen extends PythonClientCodegen {
 
         // Use default templates
         embeddedTemplateDir = templateDir = "python";
+
+        reservedWords.add("property");
     }
 
 
@@ -27,6 +29,11 @@ public class PureCloudPythonClientCodegen extends PythonClientCodegen {
     @Override
     public void processOpts() {
         super.processOpts();
+    }
+
+    @Override
+    public String escapeReservedWord(String name) {
+        return "pc" + capitalizeFirstLetter(name);
     }
 
     @Override
@@ -45,5 +52,9 @@ public class PureCloudPythonClientCodegen extends PythonClientCodegen {
         }
 
         return super.getOrGenerateOperationId(operation, path, httpMethod);
+    }
+
+    private String capitalizeFirstLetter(String s) {
+        return s.substring(0, 1).toUpperCase() + s.substring(1);
     }
 }

@@ -2185,6 +2185,8 @@ public class DefaultCodegen {
                 }
             }
 
+            /*
+            //TODO: Enable this for C# only or find another way -- causes problems with other languages
             boolean foundLastValidProperty = false;
             for (int i = m.vars.size() -1; i >= 0; i--) {
                 CodegenProperty cp = m.vars.get(i);
@@ -2202,29 +2204,10 @@ public class DefaultCodegen {
                     continue;
                 }
             }
+            */
 
             // Make sure last property in list doesn't think there's more
             m.vars.get(m.vars.size()-1).hasMore = null;
-
-            /*
-            // This code renames the enums as "ClassName+EnumName" to ensure they are globally unique. This breaks the
-            // override prevention feature (JavaModelEnumTest.java, overrideEnumTest).
-            // TODO: figure out a way to rename the enums without breaking this feature or find another way to solve this problem
-            LOGGER.info(">>>>> CLASS -> " + m.classname);
-            for (CodegenProperty cp : m.vars) {
-                LOGGER.info(">>> VAR -> " + cp.name);
-                if (cp.isEnum) {
-                    LOGGER.info(">>> [pre] datatypeWithEnum -> " + cp.datatypeWithEnum);
-                    cp.datatypeWithEnum = StringUtils.capitalize(m.classname) + cp.datatypeWithEnum;
-                    LOGGER.info(">>> [pst] datatypeWithEnum -> " + cp.datatypeWithEnum);
-                }
-                if (cp.items != null && cp.items.isEnum) {
-                    LOGGER.info(">>> [pre] datatypeWithEnum -> " + cp.items.datatypeWithEnum);
-                    cp.items.datatypeWithEnum = StringUtils.capitalize(m.classname) + cp.items.datatypeWithEnum;
-                    LOGGER.info(">>> [pst] datatypeWithEnum -> " + cp.items.datatypeWithEnum);
-                }
-            }
-            */
 
             m.mandatory = mandatory;
 

@@ -1,6 +1,6 @@
 {
   "packageName": "PureCloudPlatformApiSdk",
-  "packageVersion": "0.10.0.345",
+  "packageVersion": "0.11.0.5",
   "packageTitle": "PureCloud Platform API SDK",
   "packageDescription": "A python package to interface with the PureCloud Platform API",
   "packageAuthor": "Interactive Intelligence, Inc.",
