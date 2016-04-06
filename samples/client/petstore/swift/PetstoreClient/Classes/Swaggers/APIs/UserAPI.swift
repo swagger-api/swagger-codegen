@@ -236,7 +236,7 @@ public class UserAPI: APIBase {
      
      Get user by user name
      
-     - parameter username: (path) The name that needs to be fetched. Use user1 for testing. 
+     - parameter username: (path) The name that needs to be fetched. Use user1 for testing.  
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func getUserByName(username username: String, completion: ((data: User?, error: ErrorType?) -> Void)) {
@@ -249,7 +249,7 @@ public class UserAPI: APIBase {
      
      Get user by user name
      
-     - parameter username: (path) The name that needs to be fetched. Use user1 for testing. 
+     - parameter username: (path) The name that needs to be fetched. Use user1 for testing.  
      - returns: Promise<User>
      */
     public class func getUserByName(username username: String) -> Promise<User> {
@@ -270,7 +270,7 @@ public class UserAPI: APIBase {
      
      - GET /user/{username}
      - 
-     - examples: [{example={
+     - examples: [{contentType=application/json, example={
   "id" : 1,
   "username" : "johnp",
   "firstName" : "John",
@@ -279,9 +279,9 @@ public class UserAPI: APIBase {
   "password" : "-secret-",
   "phone" : "0123456789",
   "userStatus" : 0
-}, contentType=application/json}]
+}}]
      
-     - parameter username: (path) The name that needs to be fetched. Use user1 for testing. 
+     - parameter username: (path) The name that needs to be fetched. Use user1 for testing.  
 
      - returns: RequestBuilder<User> 
      */
@@ -338,8 +338,8 @@ public class UserAPI: APIBase {
      
      - GET /user/login
      - 
-     - examples: [{example="aeiou", contentType=application/json}, {example=string, contentType=application/xml}]
-     - examples: [{example="aeiou", contentType=application/json}, {example=string, contentType=application/xml}]
+     - examples: [{contentType=application/json, example="aeiou"}, {contentType=application/xml, example=string}]
+     - examples: [{contentType=application/json, example="aeiou"}, {contentType=application/xml, example=string}]
      
      - parameter username: (query) The user name for login (optional)
      - parameter password: (query) The password for login in clear text (optional)
