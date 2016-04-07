@@ -212,7 +212,7 @@ public class PetApi {
   
   /**
    * Finds Pets by tags
-   * Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
+   * Muliple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
    * @param tags Tags to filter by (optional)
    * @return List<Pet>
    * @throws ApiException if fails to make API call

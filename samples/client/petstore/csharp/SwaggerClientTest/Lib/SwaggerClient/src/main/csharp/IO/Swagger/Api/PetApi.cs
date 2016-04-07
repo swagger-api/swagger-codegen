@@ -111,7 +111,7 @@ namespace IO.Swagger.Api
         /// Finds Pets by tags
         /// </summary>
         /// <remarks>
-        /// Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
+        /// Muliple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="tags">Tags to filter by (optional)</param>
@@ -122,7 +122,7 @@ namespace IO.Swagger.Api
         /// Finds Pets by tags
         /// </summary>
         /// <remarks>
-        /// Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
+        /// Muliple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="tags">Tags to filter by (optional)</param>
@@ -367,7 +367,7 @@ namespace IO.Swagger.Api
         /// Finds Pets by tags
         /// </summary>
         /// <remarks>
-        /// Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
+        /// Muliple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="tags">Tags to filter by (optional)</param>
@@ -378,7 +378,7 @@ namespace IO.Swagger.Api
         /// Finds Pets by tags
         /// </summary>
         /// <remarks>
-        /// Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
+        /// Muliple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="tags">Tags to filter by (optional)</param>
@@ -1316,7 +1316,7 @@ namespace IO.Swagger.Api
         }
         
         /// <summary>
-        /// Finds Pets by tags Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
+        /// Finds Pets by tags Muliple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="tags">Tags to filter by (optional)</param> 
@@ -1328,7 +1328,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Finds Pets by tags Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
+        /// Finds Pets by tags Muliple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="tags">Tags to filter by (optional)</param> 
@@ -1399,7 +1399,7 @@ namespace IO.Swagger.Api
 
         
         /// <summary>
-        /// Finds Pets by tags Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
+        /// Finds Pets by tags Muliple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="tags">Tags to filter by (optional)</param>
@@ -1412,7 +1412,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Finds Pets by tags Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
+        /// Finds Pets by tags Muliple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="tags">Tags to filter by (optional)</param>

@@ -107,7 +107,7 @@ class PetApi {
   
   /// Finds Pets by status
   ///
-  /// Multiple status values can be provided with comma seperated strings
+  /// Multiple status values can be provided with comma-separated strings
   Future<List<Pet>> findPetsByStatus(List<String> status) {
     Object postBody = null;
     
@@ -155,7 +155,7 @@ class PetApi {
   
   /// Finds Pets by tags
   ///
-  /// Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
+  /// Muliple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
   Future<List<Pet>> findPetsByTags(List<String> tags) {
     Object postBody = null;
     

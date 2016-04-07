@@ -68,7 +68,7 @@ MyApp.add_route('GET', '/v2/pets/findByStatus', {
   "nickname" => "find_pets_by_status", 
   "responseClass" => "array[Pet]", 
   "endpoint" => "/pets/findByStatus", 
-  "notes" => "Multiple status values can be provided with comma seperated strings",
+  "notes" => "Multiple status values can be provided with comma-separated strings",
   "parameters" => [
     
     {
@@ -98,7 +98,7 @@ MyApp.add_route('GET', '/v2/pets/findByTags', {
   "nickname" => "find_pets_by_tags", 
   "responseClass" => "array[Pet]", 
   "endpoint" => "/pets/findByTags", 
-  "notes" => "Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.",
+  "notes" => "Muliple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.",
   "parameters" => [
     
     {
