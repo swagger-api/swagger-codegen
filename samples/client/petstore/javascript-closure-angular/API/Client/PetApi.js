@@ -154,7 +154,7 @@ API.Client.PetApi.prototype.findPetsByStatus = function(opt_status, opt_extraHtt
 
 /**
  * Finds Pets by tags
- * Muliple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
+ * Multiple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
  * @param {!Array<!string>=} opt_tags Tags to filter by
  * @param {!angular.$http.Config=} opt_extraHttpRequestParams Extra HTTP parameters to send.
  * @return {!angular.$q.Promise<!Array<!API.Client.Pet>>}

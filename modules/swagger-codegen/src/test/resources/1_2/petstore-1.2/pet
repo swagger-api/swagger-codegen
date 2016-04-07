@@ -283,7 +283,7 @@
         {
           "method": "GET",
           "summary": "Finds Pets by tags",
-          "notes": "Muliple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.",
+          "notes": "Multiple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.",
           "type": "array",
           "items": {
             "$ref": "Pet"

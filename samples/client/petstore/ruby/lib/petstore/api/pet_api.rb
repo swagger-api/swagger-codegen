@@ -257,7 +257,7 @@ module Petstore
     end
 
     # Finds Pets by tags
-    # Muliple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
+    # Multiple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
     # @param [Hash] opts the optional parameters
     # @option opts [Array<String>] :tags Tags to filter by
     # @return [Array<Pet>]
@@ -267,7 +267,7 @@ module Petstore
     end
 
     # Finds Pets by tags
-    # Muliple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
+    # Multiple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
     # @param [Hash] opts the optional parameters
     # @option opts [Array<String>] :tags Tags to filter by
     # @return [Array<(Array<Pet>, Fixnum, Hash)>] Array<Pet> data, response status code and response headers

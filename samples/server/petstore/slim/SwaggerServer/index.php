@@ -190,7 +190,7 @@ $app->GET('/pet/findByStatus', function($request, $response, $args) {
 /**
  * GET findPetsByTags
  * Summary: Finds Pets by tags
- * Notes: Muliple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
+ * Notes: Multiple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
  * Output-Formats: [application/json, application/xml]
  */
 $app->GET('/pet/findByTags', function($request, $response, $args) {

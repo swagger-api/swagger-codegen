@@ -350,7 +350,7 @@ class PetApi(object):
     def find_pets_by_tags(self, **kwargs):
         """
         Finds Pets by tags
-        Muliple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
+        Multiple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please define a `callback` function
