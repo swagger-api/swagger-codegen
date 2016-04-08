@@ -87,7 +87,7 @@ public class PetApi  {
     @Path("/findByTags")
     
     @Produces({ "application/xml", "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "Finds Pets by tags", notes = "Muliple tags can be provided with comma separated strings. Use\ntag1, tag2, tag3 for testing.\n", response = Pet.class, responseContainer = "List", authorizations = {
+    @io.swagger.annotations.ApiOperation(value = "Finds Pets by tags", notes = "Multiple tags can be provided with comma separated strings. Use\ntag1, tag2, tag3 for testing.\n", response = Pet.class, responseContainer = "List", authorizations = {
         @io.swagger.annotations.Authorization(value = "petstore_auth", scopes = {
             @io.swagger.annotations.AuthorizationScope(scope = "write:pets", description = "modify pets in your account"),
             @io.swagger.annotations.AuthorizationScope(scope = "read:pets", description = "read your pets")

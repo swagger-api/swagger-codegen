@@ -116,7 +116,7 @@ API.Client.PetApi.prototype.addPet = function(opt_body, opt_extraHttpRequestPara
 
 /**
  * Finds Pets by status
- * Multiple status values can be provided with comma seperated strings
+ * Multiple status values can be provided with comma-separated strings
  * @param {!Array<!string>=} opt_status Status values that need to be considered for filter
  * @param {!angular.$http.Config=} opt_extraHttpRequestParams Extra HTTP parameters to send.
  * @return {!angular.$q.Promise<!Array<!API.Client.Pet>>}
@@ -154,7 +154,7 @@ API.Client.PetApi.prototype.findPetsByStatus = function(opt_status, opt_extraHtt
 
 /**
  * Finds Pets by tags
- * Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
+ * Multiple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
  * @param {!Array<!string>=} opt_tags Tags to filter by
  * @param {!angular.$http.Config=} opt_extraHttpRequestParams Extra HTTP parameters to send.
  * @return {!angular.$q.Promise<!Array<!API.Client.Pet>>}

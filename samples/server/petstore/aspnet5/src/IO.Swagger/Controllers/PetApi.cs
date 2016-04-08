@@ -54,7 +54,7 @@ namespace IO.Swagger.Controllers
         /// <summary>
         /// Finds Pets by status
         /// </summary>
-        /// <remarks>Multiple status values can be provided with comma seperated strings</remarks>
+        /// <remarks>Multiple status values can be provided with comma-separated strings</remarks>
         /// <param name="status">Status values that need to be considered for filter</param>
         /// <response code="200">successful operation</response>
         /// <response code="400">Invalid status value</response>
@@ -77,7 +77,7 @@ namespace IO.Swagger.Controllers
         /// <summary>
         /// Finds Pets by tags
         /// </summary>
-        /// <remarks>Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.</remarks>
+        /// <remarks>Multiple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.</remarks>
         /// <param name="tags">Tags to filter by</param>
         /// <response code="200">successful operation</response>
         /// <response code="400">Invalid tag value</response>

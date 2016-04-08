@@ -29,14 +29,14 @@ namespace IO.Swagger.Api
         void AddPet (Pet body);
         
         /// <summary>
-        /// Finds Pets by status Multiple status values can be provided with comma seperated strings
+        /// Finds Pets by status Multiple status values can be provided with comma-separated strings
         /// </summary>
         /// <param name="status">Status values that need to be considered for filter</param>
         /// <returns>List&lt;Pet&gt;</returns>
         List<Pet> FindPetsByStatus (List<string> status);
         
         /// <summary>
-        /// Finds Pets by tags Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
+        /// Finds Pets by tags Multiple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
         /// </summary>
         /// <param name="tags">Tags to filter by</param>
         /// <returns>List&lt;Pet&gt;</returns>
@@ -212,7 +212,7 @@ namespace IO.Swagger.Api
     
         
         /// <summary>
-        /// Finds Pets by status Multiple status values can be provided with comma seperated strings
+        /// Finds Pets by status Multiple status values can be provided with comma-separated strings
         /// </summary>
         /// <param name="status">Status values that need to be considered for filter</param> 
         /// <returns>List&lt;Pet&gt;</returns>            
@@ -252,7 +252,7 @@ namespace IO.Swagger.Api
     
         
         /// <summary>
-        /// Finds Pets by tags Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
+        /// Finds Pets by tags Multiple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
         /// </summary>
         /// <param name="tags">Tags to filter by</param> 
         /// <returns>List&lt;Pet&gt;</returns>            

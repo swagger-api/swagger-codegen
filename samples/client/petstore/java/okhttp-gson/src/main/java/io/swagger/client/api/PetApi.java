@@ -502,7 +502,7 @@ public class PetApi {
 
   /**
    * Finds Pets by tags
-   * Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
+   * Multiple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
    * @param tags Tags to filter by (optional)
    * @return List<Pet>
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -514,7 +514,7 @@ public class PetApi {
 
   /**
    * Finds Pets by tags
-   * Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
+   * Multiple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
    * @param tags Tags to filter by (optional)
    * @return ApiResponse<List<Pet>>
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -527,7 +527,7 @@ public class PetApi {
 
   /**
    * Finds Pets by tags (asynchronously)
-   * Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
+   * Multiple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.
    * @param tags Tags to filter by (optional)
    * @param callback The callback to be executed when the API call finishes
    * @return The request call

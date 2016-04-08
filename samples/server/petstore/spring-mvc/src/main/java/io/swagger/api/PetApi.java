@@ -83,7 +83,7 @@ public class PetApi {
 
   
 
-  @ApiOperation(value = "Finds Pets by status", notes = "Multiple status values can be provided with comma seperated strings", response = Pet.class, responseContainer = "List", authorizations = {
+  @ApiOperation(value = "Finds Pets by status", notes = "Multiple status values can be provided with comma-separated strings", response = Pet.class, responseContainer = "List", authorizations = {
     @Authorization(value = "petstore_auth", scopes = {
       @AuthorizationScope(scope = "write:pets", description = "modify pets in your account"),
       @AuthorizationScope(scope = "read:pets", description = "read your pets")
@@ -107,7 +107,7 @@ public class PetApi {
 
   
 
-  @ApiOperation(value = "Finds Pets by tags", notes = "Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.", response = Pet.class, responseContainer = "List", authorizations = {
+  @ApiOperation(value = "Finds Pets by tags", notes = "Multiple tags can be provided with comma-separated strings. Use tag1, tag2, tag3 for testing.", response = Pet.class, responseContainer = "List", authorizations = {
     @Authorization(value = "petstore_auth", scopes = {
       @AuthorizationScope(scope = "write:pets", description = "modify pets in your account"),
       @AuthorizationScope(scope = "read:pets", description = "read your pets")
