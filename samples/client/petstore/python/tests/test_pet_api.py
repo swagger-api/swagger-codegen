@@ -74,14 +74,14 @@ class PetApiTests(unittest.TestCase):
 
         def callback_function(data):
             self.assertIsNotNone(data)
-            self.assertEqual(data.id, self.pet.id)
-            self.assertEqual(data.name, self.pet.name)
-            self.assertIsNotNone(data.category)
-            self.assertEqual(data.category.id, self.pet.category.id)
-            self.assertEqual(data.category.name, self.pet.category.name)
-            self.assertTrue(isinstance(data.tags, list))
-            self.assertEqual(data.tags[0].id, self.pet.tags[0].id)
-            self.assertEqual(data.tags[0].name, self.pet.tags[0].name)
+            data_ = data[0]
+            self.assertEqual(data_.id, self.pet.id)
+            self.assertIsNotNone(data_.category)
+            self.assertEqual(data_.category.id, self.pet.category.id)
+            self.assertEqual(data_.category.name, self.pet.category.name)
+            self.assertTrue(isinstance(data_.tags, list))
+            self.assertEqual(data_.tags[0].id, self.pet.tags[0].id)
+            self.assertEqual(data_.tags[0].name, self.pet.tags[0].name)
 
         thread = self.pet_api.get_pet_by_id(pet_id=self.pet.id, callback=callback_function)
         thread.join(10)
