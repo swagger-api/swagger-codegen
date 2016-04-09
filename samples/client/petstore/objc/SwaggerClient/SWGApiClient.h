@@ -34,6 +34,16 @@
 extern NSString *const SWGResponseObjectErrorKey;
 
 /**
+ * A key for deserialization ErrorDomain
+ */
+extern NSString *const SWGDeserializationErrorDomainKey;
+
+/**
+ * Code for deserialization type mismatch error
+ */
+extern NSInteger const SWGTypeMismatchErrorCode;
+
+/**
  * Log debug message macro
  */
 #define SWGDebugLog(format, ...) [SWGApiClient debugLog:[NSString stringWithFormat:@"%s", __PRETTY_FUNCTION__] message: format, ##__VA_ARGS__];
@@ -179,8 +189,9 @@ extern NSString *const SWGResponseObjectErrorKey;
  *
  * @param data The data will be deserialized.
  * @param class The type of objective-c object.
+ * @param error The error
  */
-- (id) deserialize:(id) data class:(NSString *) class;
+- (id) deserialize:(id) data class:(NSString *) class error:(NSError**)error;
 
 /**
  * Logs request and response
