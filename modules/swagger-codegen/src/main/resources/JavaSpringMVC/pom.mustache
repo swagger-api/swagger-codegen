@@ -6,62 +6,33 @@
   <name>{{artifactId}}</name>
   <version>{{artifactVersion}}</version>
   <build>
-    <sourceDirectory>src/main/java</sourceDirectory>
+    <sourceDirectory>src/gen/java</sourceDirectory>
+	<defaultGoal>clean package install</defaultGoal>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>2.1.1</version>
-      </plugin>
-      <plugin>
-        <artifactId>maven-failsafe-plugin</artifactId>
-        <version>2.6</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>integration-test</goal>
-              <goal>verify</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-maven-plugin</artifactId>
-        <version>${jetty-version}</version>
-        <configuration>
-          <webAppConfig>
-            <contextPath>{{^contextPath}}/{{/contextPath}}{{#contextPath}}{{contextPath}}{{/contextPath}}</contextPath>
-          </webAppConfig>
-          <webAppSourceDirectory>target/${project.artifactId}-${project.version}</webAppSourceDirectory>
-          <stopPort>8079</stopPort>
-          <stopKey>stopit</stopKey>
-          <httpConnector>
-            <port>8002</port>
-            <idleTimeout>60000</idleTimeout>
-          </httpConnector>
-        </configuration>
-        <executions>
-          <execution>
-            <id>start-jetty</id>
-            <phase>pre-integration-test</phase>
-            <goals>
-              <goal>start</goal>
-            </goals>
-            <configuration>
-              <scanIntervalSeconds>0</scanIntervalSeconds>
-              <daemon>true</daemon>
-            </configuration>
-          </execution>
-          <execution>
-            <id>stop-jetty</id>
-            <phase>post-integration-test</phase>
-            <goals>
-              <goal>stop</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>3.5.1</version>
+			<configuration>
+				<verbose>true</verbose>
+				<fork>true</fork>
+				<source>1.8</source>
+				<target>1.8</target>
+			</configuration>
+		</plugin>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-source-plugin</artifactId>
+			<version>3.0.0</version>
+			<executions>
+				<execution>
+					<id>attach-sources</id>
+					<goals>
+						<goal>jar</goal>
+					</goals>
+				</execution>
+			</executions>
+		</plugin>
     </plugins>
   </build>
   <dependencies>
@@ -74,6 +45,31 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
       <version>${slf4j-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey-core</artifactId>
+      <version>${jersey-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey-json</artifactId>
+      <version>${jersey-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey-servlet</artifactId>
+      <version>${jersey-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.jersey.contribs</groupId>
+      <artifactId>jersey-multipart</artifactId>
+      <version>${jersey-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey-server</artifactId>
+      <version>${jersey-version}</version>
     </dependency>
 
     <!--Spring dependencies -->
@@ -117,14 +113,22 @@
       <version>${servlet-api-version}</version>
     </dependency>
   </dependencies>
+  <repositories>
+    <repository>
+      <id>jcenter-snapshots</id>
+      <name>jcenter</name>
+      <url>http://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
+    </repository>
+  </repositories>
   <properties>
-    <swagger-core-version>1.5.7</swagger-core-version>
+    <swagger-core-version>1.5.8</swagger-core-version>
     <jetty-version>9.2.9.v20150224</jetty-version>
-    <jersey-version>1.13</jersey-version>
-    <slf4j-version>1.6.3</slf4j-version>
-    <junit-version>4.8.1</junit-version>
+    <jersey-version>1.19.1</jersey-version>
+    <slf4j-version>1.7.18</slf4j-version>
+    <scala-test-version>1.6.1</scala-test-version>
+    <junit-version>4.12</junit-version>
     <servlet-api-version>2.5</servlet-api-version>
-    <springfox-version>2.3.1</springfox-version>
-    <spring-version>4.1.8.RELEASE</spring-version>
+    <springfox-version>2.4.0</springfox-version>
+    <spring-version>4.2.5.RELEASE</spring-version>
   </properties>
 </project>
