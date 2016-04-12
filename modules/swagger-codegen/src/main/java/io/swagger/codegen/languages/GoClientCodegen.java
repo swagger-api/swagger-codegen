@@ -1,6 +1,7 @@
 package io.swagger.codegen.languages;
 
 import io.swagger.codegen.*;
+import io.swagger.models.parameters.Parameter;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
@@ -33,6 +34,11 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     public GoClientCodegen() {
         super();
+
+        // We use GoCodegenParameter instead of CodegenParameter because we wish
+        // to add an extra field (exportParamName).
+        CodegenModelFactory.setTypeMapping(CodegenModelType.PARAMETER, GoCodegenParameter.class);
+
         outputFolder = "generated-code/go";
         modelTemplateFiles.put("model.mustache", ".go");
         apiTemplateFiles.put("api.mustache", ".go");
@@ -321,6 +327,38 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         return objs;
     }
 
+
+    /**
+     * Overrides fromParameter to provide an extra field, "exportParamName". This
+     * is useful when paramName starts with a lowercase letter, but we need that
+     * param to be exportable (starting with an uppercsae letter).
+     *
+     * @param param Swagger parameter object
+     * @param imports set of imports for library/package/module
+     * @return Instance of GoCodegenParameter.
+     */
+    @Override
+    public CodegenParameter fromParameter(Parameter param, Set<String> imports) {
+
+        CodegenParameter cp = super.fromParameter(param, imports);
+        GoCodegenParameter gcp = (GoCodegenParameter) cp;
+
+        char firstChar = gcp.paramName.charAt(0);
+
+        if (Character.isUpperCase(firstChar)) {
+            // First char is already uppercase, just use paramName.
+            gcp.exportParamName = gcp.paramName;
+            return gcp;
+        }
+
+        // It's a lowercase first char, let's convert it to uppercase
+        StringBuffer sb = new StringBuffer(gcp.paramName);
+        sb.setCharAt(0, Character.toUpperCase(firstChar));
+        gcp.exportParamName = sb.toString();
+
+        return gcp;
+    }
+
     @Override
     protected boolean needToImport(String type) {
         return !defaultIncludes.contains(type)
@@ -335,4 +373,86 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         this.packageVersion = packageVersion;
     }
 
+    /**
+     * GoCodegenParameter extends CodegenParameter to add a field {@link #exportParamName}
+     * which is guaranteed to be exported (that is to say, the first letter is upper-case).
+     */
+    public static class GoCodegenParameter extends CodegenParameter {
+
+        public String exportParamName;
+
+        public GoCodegenParameter() {
+
+        }
+
+        // REVISIT (neilotoole): do we need to provide equals() and hashCode()?
+        // The parent class (CodegenParameter) does not implement those methods.
+
+
+        @Override
+        public CodegenParameter copy() {
+            GoCodegenParameter output = new GoCodegenParameter();
+            output.exportParamName = this.exportParamName;
+
+            output.isFile = this.isFile;
+            output.notFile = this.notFile;
+            output.hasMore = this.hasMore;
+            output.isContainer = this.isContainer;
+            output.secondaryParam = this.secondaryParam;
+            output.baseName = this.baseName;
+            output.paramName = this.paramName;
+            output.dataType = this.dataType;
+            output.datatypeWithEnum = this.datatypeWithEnum;
+            output.collectionFormat = this.collectionFormat;
+            output.isCollectionFormatMulti = this.isCollectionFormatMulti;
+            output.description = this.description;
+            output.baseType = this.baseType;
+            output.isFormParam = this.isFormParam;
+            output.isQueryParam = this.isQueryParam;
+            output.isPathParam = this.isPathParam;
+            output.isHeaderParam = this.isHeaderParam;
+            output.isCookieParam = this.isCookieParam;
+            output.isBodyParam = this.isBodyParam;
+            output.required = this.required;
+            output.maximum = this.maximum;
+            output.exclusiveMaximum = this.exclusiveMaximum;
+            output.minimum = this.minimum;
+            output.exclusiveMinimum = this.exclusiveMinimum;
+            output.maxLength = this.maxLength;
+            output.minLength = this.minLength;
+            output.pattern = this.pattern;
+            output.maxItems = this.maxItems;
+            output.minItems = this.minItems;
+            output.uniqueItems = this.uniqueItems;
+            output.multipleOf = this.multipleOf;
+            output.jsonSchema = this.jsonSchema;
+            output.defaultValue = this.defaultValue;
+            output.example = this.example;
+            output.isEnum = this.isEnum;
+            if (this._enum != null) {
+                output._enum = new ArrayList<String>(this._enum);
+            }
+            if (this.allowableValues != null) {
+                output.allowableValues = new HashMap<String, Object>(this.allowableValues);
+            }
+            if (this.items != null) {
+                output.items = this.items;
+            }
+            output.vendorExtensions = this.vendorExtensions;
+            output.isBinary = this.isBinary;
+            output.isByteArray = this.isByteArray;
+            output.isString = this.isString;
+            output.isInteger = this.isInteger;
+            output.isLong = this.isLong;
+            output.isDouble = this.isDouble;
+            output.isFloat = this.isFloat;
+            output.isBoolean = this.isBoolean;
+            output.isDate = this.isDate;
+            output.isDateTime = this.isDateTime;
+            output.isListContainer = this.isListContainer;
+            output.isMapContainer = this.isMapContainer;
+
+            return output;
+        }
+    }
 }
