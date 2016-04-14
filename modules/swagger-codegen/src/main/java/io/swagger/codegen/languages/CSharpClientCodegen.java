@@ -34,6 +34,8 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
     private static final Logger LOGGER = LoggerFactory.getLogger(CSharpClientCodegen.class);
     private static final String NET45 = "v4.5";
     private static final String NET35 = "v3.5";
+    private static final String UWP = "uwp";
+    private static final String DATA_TYPE_WITH_ENUM_EXTENSION = "plainDatatypeWithEnum";
 
     protected String packageGuid = "{" + java.util.UUID.randomUUID().toString().toUpperCase() + "}";
     protected String packageTitle = "Swagger Library";
@@ -47,6 +49,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
     protected String targetFramework = NET45;
     protected String targetFrameworkNuget = "net45";
     protected boolean supportsAsync = Boolean.TRUE;
+    protected boolean supportsUWP = Boolean.FALSE;
 
 
     protected final Map<String, String> frameworks;
@@ -90,6 +93,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         frameworks = new ImmutableMap.Builder<String, String>()
                 .put(NET35, ".NET Framework 3.5 compatible")
                 .put(NET45, ".NET Framework 4.5+ compatible")
+                .put(UWP, "Universal Windows Platform - beta support")
                 .build();
         framework.defaultValue(this.targetFramework);
         framework.setEnum(frameworks);
@@ -157,6 +161,13 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
             if(additionalProperties.containsKey("supportsAsync")){
                 additionalProperties.remove("supportsAsync");
             }
+        } else if (UWP.equals(this.targetFramework)){
+            setTargetFrameworkNuget("uwp");
+            setSupportsAsync(Boolean.TRUE);
+            setSupportsUWP(Boolean.TRUE);
+            additionalProperties.put("supportsAsync", this.supportsUWP);
+            additionalProperties.put("supportsUWP", this.supportsAsync);
+
         } else {
             setTargetFrameworkNuget("net45");
             setSupportsAsync(Boolean.TRUE);
@@ -211,6 +222,9 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         supportingFiles.add(new SupportingFile("compile-mono.sh.mustache", "", "compile-mono.sh"));
         supportingFiles.add(new SupportingFile("packages.config.mustache", "vendor" + java.io.File.separator, "packages.config"));
         supportingFiles.add(new SupportingFile("README.md", "", "README.md"));
+        supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
+        supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
+
 
         if (optionalAssemblyInfoFlag) {
             supportingFiles.add(new SupportingFile("AssemblyInfo.mustache", packageFolder + File.separator + "Properties", "AssemblyInfo.cs"));
@@ -287,7 +301,9 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
     }
 
     @Override
-    public Map<String, Object> postProcessModels(Map<String, Object> objs) {
+    public Map<String, Object> postProcessModels(Map<String, Object> objMap) {
+    	Map<String, Object> objs = super.postProcessModels(objMap);
+
         List<Object> models = (List<Object>) objs.get("models");
         for (Object _mo : models) {
             Map<String, Object> mo = (Map<String, Object>) _mo;
@@ -334,16 +350,24 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
                 }
                 allowableValues.put("enumVars", enumVars);
                 // handle default value for enum, e.g. available => StatusEnum.AVAILABLE
+
+                // HACK: strip ? from enum
+                if (var.datatypeWithEnum != null) {
+                    var.vendorExtensions.put(DATA_TYPE_WITH_ENUM_EXTENSION, var.datatypeWithEnum.substring(0, var.datatypeWithEnum.length() - 1));
+                }
+
                 if (var.defaultValue != null) {
                     String enumName = null;
+
                     for (Map<String, String> enumVar : enumVars) {
-                        if (var.defaultValue.equals(enumVar.get("value"))) {
+
+                        if (var.defaultValue.replace("\"", "").equals(enumVar.get("value"))) {
                             enumName = enumVar.get("name");
                             break;
                         }
                     }
-                    if (enumName != null) {
-                        var.defaultValue = var.datatypeWithEnum + "." + enumName;
+                    if (enumName != null && var.vendorExtensions.containsKey(DATA_TYPE_WITH_ENUM_EXTENSION)) {
+                        var.defaultValue = var.vendorExtensions.get(DATA_TYPE_WITH_ENUM_EXTENSION) + "." + enumName;
                     }
                 }
 
@@ -404,7 +428,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
                     }
                 }
             }
-            
+
             if(removedChildEnum) {
                 // If we removed an entry from this model's vars, we need to ensure hasMore is updated
                 int count = 0, numVars = codegenProperties.size();
@@ -453,5 +477,9 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
 
     public void setSupportsAsync(Boolean supportsAsync){
         this.supportsAsync = supportsAsync;
+    }
+
+    public void setSupportsUWP(Boolean supportsUWP){
+        this.supportsUWP = supportsUWP;
     }
 }

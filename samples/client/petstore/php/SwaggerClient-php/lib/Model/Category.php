@@ -47,6 +47,12 @@ use \ArrayAccess;
 class Category implements ArrayAccess
 {
     /**
+      * The original name of the model.
+      * @var string
+      */
+    static $swaggerModelName = 'Category';
+
+    /**
       * Array of property to type mappings. Used for (de)serialization 
       * @var string[]
       */
@@ -55,6 +61,10 @@ class Category implements ArrayAccess
         'name' => 'string'
     );
   
+    static function swaggerTypes() {
+        return self::$swaggerTypes;
+    }
+
     /** 
       * Array of attributes where the key is the local name, and the value is the original name
       * @var string[] 
@@ -64,6 +74,10 @@ class Category implements ArrayAccess
         'name' => 'name'
     );
   
+    static function attributeMap() {
+        return self::$attributeMap;
+    }
+
     /**
       * Array of attributes to setter functions (for deserialization of responses)
       * @var string[]
@@ -73,6 +87,10 @@ class Category implements ArrayAccess
         'name' => 'setName'
     );
   
+    static function setters() {
+        return self::$setters;
+    }
+
     /**
       * Array of attributes to getter functions (for serialization of requests)
       * @var string[]
@@ -82,19 +100,20 @@ class Category implements ArrayAccess
         'name' => 'getName'
     );
   
-    
+    static function getters() {
+        return self::$getters;
+    }
+
     /**
       * $id 
       * @var int
       */
     protected $id;
-    
     /**
       * $name 
       * @var string
       */
     protected $name;
-    
 
     /**
      * Constructor
@@ -102,12 +121,13 @@ class Category implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
+        
+        
         if ($data != null) {
             $this->id = $data["id"];
             $this->name = $data["name"];
         }
     }
-    
     /**
      * Gets id
      * @return int
@@ -128,7 +148,6 @@ class Category implements ArrayAccess
         $this->id = $id;
         return $this;
     }
-    
     /**
      * Gets name
      * @return string
@@ -149,7 +168,6 @@ class Category implements ArrayAccess
         $this->name = $name;
         return $this;
     }
-    
     /**
      * Returns true if offset exists. False otherwise.
      * @param  integer $offset Offset 
@@ -197,10 +215,10 @@ class Category implements ArrayAccess
      */
     public function __toString()
     {
-        if (defined('JSON_PRETTY_PRINT')) {
+        if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
             return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
-        } else {
-            return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
         }
+
+        return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
     }
 }

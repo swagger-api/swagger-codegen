@@ -2,52 +2,22 @@ package io.swagger.codegen;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-
 import io.swagger.codegen.examples.ExampleGenerator;
-import io.swagger.models.ArrayModel;
-import io.swagger.models.ComposedModel;
-import io.swagger.models.Model;
-import io.swagger.models.ModelImpl;
-import io.swagger.models.Operation;
-import io.swagger.models.RefModel;
-import io.swagger.models.Response;
-import io.swagger.models.Swagger;
-import io.swagger.models.auth.ApiKeyAuthDefinition;
-import io.swagger.models.auth.BasicAuthDefinition;
-import io.swagger.models.auth.In;
-import io.swagger.models.auth.OAuth2Definition;
-import io.swagger.models.auth.SecuritySchemeDefinition;
-import io.swagger.models.parameters.BodyParameter;
-import io.swagger.models.parameters.CookieParameter;
-import io.swagger.models.parameters.FormParameter;
-import io.swagger.models.parameters.HeaderParameter;
-import io.swagger.models.parameters.Parameter;
-import io.swagger.models.parameters.PathParameter;
-import io.swagger.models.parameters.QueryParameter;
-import io.swagger.models.parameters.SerializableParameter;
+import io.swagger.models.*;
+import io.swagger.models.auth.*;
+import io.swagger.models.parameters.*;
 import io.swagger.models.properties.*;
 import io.swagger.models.properties.PropertyBuilder.PropertyId;
 import io.swagger.util.Json;
-
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
-
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -83,6 +53,8 @@ public class DefaultCodegen {
     protected String library;
     protected Boolean sortParamsByRequiredFlag = true;
     protected Boolean ensureUniqueParams = true;
+    protected String gitUserId, gitRepoId, releaseNote;
+    protected String httpUserAgent;
 
     public List<CliOption> cliOptions() {
         return cliOptions;
@@ -118,11 +90,40 @@ public class DefaultCodegen {
         if(additionalProperties.containsKey(CodegenConstants.MODEL_NAME_SUFFIX)){
             this.setModelNameSuffix((String) additionalProperties.get(CodegenConstants.MODEL_NAME_SUFFIX));
         }
+
     }
 
     // override with any special post-processing for all models
-    @SuppressWarnings("static-method")
+    @SuppressWarnings({ "static-method", "unchecked" })
     public Map<String, Object> postProcessAllModels(Map<String, Object> objs) {
+        if (supportsInheritance) {
+            // Index all CodegenModels by name.
+            Map<String, CodegenModel> allModels = new HashMap<String, CodegenModel>();
+            for (Entry<String, Object> entry : objs.entrySet()) {
+                String modelName = entry.getKey();
+                Map<String, Object> inner = (Map<String, Object>) entry.getValue();
+                List<Map<String, Object>> models = (List<Map<String, Object>>) inner.get("models");
+                for (Map<String, Object> mo : models) {
+                    CodegenModel cm = (CodegenModel) mo.get("model");
+                    allModels.put(modelName, cm);
+                }
+            }
+            // Fix up all parent and interface CodegenModel references.
+            for (CodegenModel cm : allModels.values()) {
+                if (cm.parent != null) {
+                    cm.parentModel = allModels.get(cm.parent);
+                }
+                if (cm.interfaces != null && !cm.interfaces.isEmpty()) {
+                    cm.interfaceModels = new ArrayList<CodegenModel>(cm.interfaces.size());
+                    for (String intf : cm.interfaces) {
+                        CodegenModel intfModel = allModels.get(intf);
+                        if (intfModel != null) {
+                            cm.interfaceModels.add(intfModel);
+                        }
+                    }
+                }
+            }
+        }
         return objs;
     }
 
@@ -169,11 +170,7 @@ public class DefaultCodegen {
     @SuppressWarnings("static-method")
     public String escapeText(String input) {
         if (input != null) {
-            input = input.trim(); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
-            String output = input.replaceAll("\n", "\\\\n");
-            output = output.replace("\r", "\\r");
-            output = output.replace("\"", "\\\"");
-            return output;
+            return StringEscapeUtils.escapeJava(input).replace("\\/", "/");
         }
         return input;
     }
@@ -341,8 +338,8 @@ public class DefaultCodegen {
     }
 
     /**
-     * Return the file name of the Api Documentation 
-     * 
+     * Return the file name of the Api Documentation
+     *
      * @param name the file name of the Api
      * @return the file name of the Api
      */
@@ -392,14 +389,14 @@ public class DefaultCodegen {
 
     /**
      * Return the capitalized file name of the model documentation
-     * 
+     *
      * @param name the model name
      * @return the file name of the model
      */
     public String toModelDocFilename(String name) {
         return initialCaps(name);
     }
-    
+
     /**
      * Return the operation ID (method name)
      *
@@ -653,7 +650,7 @@ public class DefaultCodegen {
     }
 
     /**
-     * Return the example value of the parameter. 
+     * Return the example value of the parameter.
      *
      * @param p Swagger property object
      */
@@ -942,8 +939,18 @@ public class DefaultCodegen {
             // TODO
         } else if (model instanceof ComposedModel) {
             final ComposedModel composed = (ComposedModel) model;
-            Map<String, Property> properties = new HashMap<String, Property>();
+            Map<String, Property> properties = new LinkedHashMap<String, Property>();
             List<String> required = new ArrayList<String>();
+            Map<String, Property> allProperties;
+            List<String> allRequired;
+            if (supportsInheritance) {
+                allProperties = new LinkedHashMap<String, Property>();
+                allRequired = new ArrayList<String>();
+                m.allVars = new ArrayList<CodegenProperty>();
+            } else {
+                allProperties = null;
+                allRequired = null;
+            }
             // parent model
             final RefModel parent = (RefModel) composed.getParent();
             if (parent != null) {
@@ -951,31 +958,29 @@ public class DefaultCodegen {
                 m.parentSchema = parentRef;
                 m.parent = toModelName(parent.getSimpleRef());
                 addImport(m, m.parent);
-                if (!supportsInheritance && allDefinitions != null) {
+                if (allDefinitions != null) {
                     final Model parentModel = allDefinitions.get(m.parentSchema);
-                    if (parentModel instanceof ModelImpl) {
-                        final ModelImpl _parent = (ModelImpl) parentModel;
-                        if (_parent.getProperties() != null) {
-                            properties.putAll(_parent.getProperties());
-                        }
-                        if (_parent.getRequired() != null) {
-                            required.addAll(_parent.getRequired());
-                        }
+                    if (supportsInheritance) {
+                        addProperties(allProperties, allRequired, parentModel, allDefinitions);
+                    } else {
+                        addProperties(properties, required, parentModel, allDefinitions);
                     }
                 }
             }
             // interfaces (intermediate models)
-            if (allDefinitions != null && composed.getInterfaces() != null) {
+            if (composed.getInterfaces() != null) {
+                if (m.interfaces == null)
+                    m.interfaces = new ArrayList<String>();
                 for (RefModel _interface : composed.getInterfaces()) {
                     final String interfaceRef = toModelName(_interface.getSimpleRef());
-                    final Model interfaceModel = allDefinitions.get(interfaceRef);
-                    if (interfaceModel instanceof ModelImpl) {
-                        final ModelImpl _interfaceModel = (ModelImpl) interfaceModel;
-                        if (_interfaceModel.getProperties() != null) {
-                            properties.putAll(_interfaceModel.getProperties());
-                        }
-                        if (_interfaceModel.getRequired() != null) {
-                            required.addAll(_interfaceModel.getRequired());
+                    m.interfaces.add(interfaceRef);
+                    addImport(m, interfaceRef);
+                    if (allDefinitions != null) {
+                        final Model interfaceModel = allDefinitions.get(interfaceRef);
+                        if (supportsInheritance) {
+                            addProperties(allProperties, allRequired, interfaceModel, allDefinitions);
+                        } else {
+                            addProperties(properties, required, interfaceModel, allDefinitions);
                         }
                     }
                 }
@@ -987,15 +992,12 @@ public class DefaultCodegen {
                 child = allDefinitions.get(childRef);
             }
             if (child != null && child instanceof ModelImpl) {
-                final ModelImpl _child = (ModelImpl) child;
-                if (_child.getProperties() != null) {
-                    properties.putAll(_child.getProperties());
-                }
-                if (_child.getRequired() != null) {
-                    required.addAll(_child.getRequired());
+                addProperties(properties, required, child, allDefinitions);
+                if (supportsInheritance) {
+                    addProperties(allProperties, allRequired, child, allDefinitions);
                 }
             }
-            addVars(m, properties, required);
+            addVars(m, properties, required, allProperties, allRequired);
         } else {
             ModelImpl impl = (ModelImpl) model;
             if(impl.getEnum() != null && impl.getEnum().size() > 0) {
@@ -1011,12 +1013,34 @@ public class DefaultCodegen {
             addVars(m, impl.getProperties(), impl.getRequired());
         }
 
-        if(m.vars != null) {
+        if (m.vars != null) {
             for(CodegenProperty prop : m.vars) {
                 postProcessModelProperty(m, prop);
             }
         }
         return m;
+    }
+
+    protected void addProperties(Map<String, Property> properties, List<String> required, Model model,
+            Map<String, Model> allDefinitions) {
+
+        if (model instanceof ModelImpl) {
+            ModelImpl mi = (ModelImpl) model;
+            if (mi.getProperties() != null) {
+                properties.putAll(mi.getProperties());
+            }
+            if (mi.getRequired() != null) {
+                required.addAll(mi.getRequired());
+            }
+        } else if (model instanceof RefModel) {
+            String interfaceRef = toModelName(((RefModel) model).getSimpleRef());
+            Model interfaceModel = allDefinitions.get(interfaceRef);
+            addProperties(properties, required, interfaceModel, allDefinitions);
+        } else if (model instanceof ComposedModel) {
+            for (Model component :((ComposedModel) model).getAllOf()) {
+                addProperties(properties, required, component, allDefinitions);
+            }
+        }
     }
 
     /**
@@ -1101,6 +1125,24 @@ public class DefaultCodegen {
             }
         }
 
+        if (p instanceof BaseIntegerProperty) {
+            BaseIntegerProperty sp = (BaseIntegerProperty) p;
+            property.isInteger = true;
+            /*if (sp.getEnum() != null) {
+                List<Integer> _enum = sp.getEnum();
+                property._enum = new ArrayList<String>();
+                for(Integer i : _enum) {
+                  property._enum.add(i.toString());
+                }
+                property.isEnum = true;
+
+                // legacy support
+                Map<String, Object> allowableValues = new HashMap<String, Object>();
+                allowableValues.put("values", _enum);
+                property.allowableValues = allowableValues;
+            }*/
+        }
+
         if (p instanceof IntegerProperty) {
             IntegerProperty sp = (IntegerProperty) p;
             property.isInteger = true;
@@ -1147,6 +1189,24 @@ public class DefaultCodegen {
 
         if (p instanceof ByteArrayProperty) {
             property.isByteArray = true;
+        }
+
+        if (p instanceof DecimalProperty) {
+            DecimalProperty sp = (DecimalProperty) p;
+            property.isFloat = true;
+            /*if (sp.getEnum() != null) {
+                List<Double> _enum = sp.getEnum();
+                property._enum = new ArrayList<String>();
+                for(Double i : _enum) {
+                  property._enum.add(i.toString());
+                }
+                property.isEnum = true;
+
+                // legacy support
+                Map<String, Object> allowableValues = new HashMap<String, Object>();
+                allowableValues.put("values", _enum);
+                property.allowableValues = allowableValues;
+            }*/
         }
 
         if (p instanceof DoubleProperty) {
@@ -1259,6 +1319,7 @@ public class DefaultCodegen {
             property.containerType = "map";
             MapProperty ap = (MapProperty) p;
             CodegenProperty cp = fromProperty("inner", ap.getAdditionalProperties());
+            property.items = cp;
 
             property.baseType = getSwaggerType(p);
             if (!languageSpecificPrimitives.contains(cp.baseType)) {
@@ -1447,6 +1508,16 @@ public class DefaultCodegen {
                     op.defaultResponse = toDefaultValue(responseProperty);
                     op.returnType = cm.datatype;
                     op.hasReference = definitions != null && definitions.containsKey(op.returnBaseType);
+
+                    // lookup discriminator
+                    if (definitions != null) {
+                        Model m = definitions.get(op.returnBaseType);
+                        if (m != null) {
+                            CodegenModel cmod = fromModel(op.returnBaseType, m, definitions);
+                            op.discriminator = cmod.discriminator;
+                        }
+                    }
+
                     if (cm.isContainer != null) {
                         op.returnContainer = cm.containerType;
                         if ("map".equals(cm.containerType)) {
@@ -1506,33 +1577,20 @@ public class DefaultCodegen {
 
 
                 allParams.add(p);
+                // Issue #2561 (neilotoole) : Moved setting of is<Type>Param flags
+                // from here to fromParameter().
                 if (param instanceof QueryParameter) {
-                    p.isQueryParam = new Boolean(true);
                     queryParams.add(p.copy());
                 } else if (param instanceof PathParameter) {
-                    p.required = true;
-                    p.isPathParam = new Boolean(true);
                     pathParams.add(p.copy());
                 } else if (param instanceof HeaderParameter) {
-                    p.isHeaderParam = new Boolean(true);
                     headerParams.add(p.copy());
                 } else if (param instanceof CookieParameter) {
-                    p.isCookieParam = new Boolean(true);
                     cookieParams.add(p.copy());
                 } else if (param instanceof BodyParameter) {
-                    p.isBodyParam = new Boolean(true);
-                    p.isBinary = p.dataType.toLowerCase().startsWith("byte");
                     bodyParam = p;
                     bodyParams.add(p.copy());
                 } else if (param instanceof FormParameter) {
-                    if ("file".equalsIgnoreCase(((FormParameter) param).getType())) {
-                        p.isFile = true;
-                    } else if("file".equals(p.baseType)){
-                    	p.isFile = true;
-                    } else {
-                        p.notFile = true;
-                    }
-                    p.isFormParam = new Boolean(true);
                     formParams.add(p.copy());
                 }
                 if (p.required == null || !p.required) {
@@ -1570,7 +1628,6 @@ public class DefaultCodegen {
         op.formParams = addHasMore(formParams);
         // legacy support
         op.nickname = op.operationId;
-
 
         if (op.allParams.size() > 0) {
             op.hasParams = true;
@@ -1861,6 +1918,33 @@ public class DefaultCodegen {
         // should be overridden by lang codegen
         setParameterExampleValue(p);
 
+        // Issue #2561 (neilotoole) : Set the is<TYPE>Param flags.
+        // This code has been moved to here from #fromOperation
+        // because these values should be set before calling #postProcessParameter.
+        // See: https://github.com/swagger-api/swagger-codegen/issues/2561
+        if (param instanceof QueryParameter) {
+            p.isQueryParam = true;
+        } else if (param instanceof PathParameter) {
+            p.required = true;
+            p.isPathParam = true;
+        } else if (param instanceof HeaderParameter) {
+            p.isHeaderParam = true;
+        } else if (param instanceof CookieParameter) {
+            p.isCookieParam = true;
+        } else if (param instanceof BodyParameter) {
+            p.isBodyParam = true;
+            p.isBinary = p.dataType.toLowerCase().startsWith("byte");
+        } else if (param instanceof FormParameter) {
+            if ("file".equalsIgnoreCase(((FormParameter) param).getType())) {
+                p.isFile = true;
+            } else if("file".equals(p.baseType)){
+                p.isFile = true;
+            } else {
+                p.notFile = true;
+            }
+            p.isFormParam = true;
+        }
+
         postProcessParameter(p);
         return p;
     }
@@ -2071,6 +2155,7 @@ public class DefaultCodegen {
             LOGGER.warn("generated unique operationId `" + uniqueName + "`");
         }
         co.operationId = uniqueName;
+        co.operationIdLowerCase = uniqueName.toLowerCase();
         opList.add(co);
         co.baseName = tag;
     }
@@ -2153,47 +2238,73 @@ public class DefaultCodegen {
         }
     }
 
-    private void addVars(CodegenModel m, Map<String, Property> properties, Collection<String> required) {
-        if (properties != null && properties.size() > 0) {
-            m.hasVars = true;
-            m.hasEnums = false;
-            final int totalCount = properties.size();
-            final Set<String> mandatory = required == null ? Collections.<String>emptySet() : new HashSet<String>(required);
-            int count = 0;
-            for (Map.Entry<String, Property> entry : properties.entrySet()) {
-                final String key = entry.getKey();
-                final Property prop = entry.getValue();
+    private void addVars(CodegenModel m, Map<String, Property> properties, List<String> required) {
+        addVars(m, properties, required, null, null);
+    }
 
-                if (prop == null) {
-                    LOGGER.warn("null property for " + key);
-                } else {
-                    final CodegenProperty cp = fromProperty(key, prop);
-                    cp.required = mandatory.contains(key) ? true : null;
-                    if (cp.isEnum) {
-                        m.hasEnums = true;
-                    }
-                    count += 1;
-                    if (count != totalCount) {
-                        cp.hasMore = true;
-                    }
-                    if (cp.isContainer != null) {
-                        addImport(m, typeMapping.get("array"));
-                    }
-                    addImport(m, cp.baseType);
-                    addImport(m, cp.complexType);
-                    m.vars.add(cp);
-                }
+    private void addVars(CodegenModel m, Map<String, Property> properties, List<String> required,
+            Map<String, Property> allProperties, List<String> allRequired) {
+
+            if (properties != null && !properties.isEmpty()) {
+                m.hasVars = true;
+                m.hasEnums = false;
+
+
+                Set<String> mandatory = required == null ? Collections.<String> emptySet()
+                        : new TreeSet<String>(required);
+                addVars(m, m.vars, properties, mandatory);
+                m.allMandatory = m.mandatory = mandatory;
+            } else {
+                m.emptyVars = true;
+                m.hasVars = false;
+                m.hasEnums = false;
             }
 
-            // Make sure last property in list doesn't think there's more
-            m.vars.get(m.vars.size()-1).hasMore = null;
+            if (allProperties != null) {
+                Set<String> allMandatory = allRequired == null ? Collections.<String> emptySet()
+                        : new TreeSet<String>(allRequired);
+                addVars(m, m.allVars, allProperties, allMandatory);
+                m.allMandatory = allMandatory;
+            }
+    }
 
-            m.mandatory = mandatory;
+    private void addVars(CodegenModel m, List<CodegenProperty> vars, Map<String, Property> properties, Set<String> mandatory) {
+        // convert set to list so that we can access the next entry in the loop
+        List<Map.Entry<String, Property>> propertyList = new ArrayList<Map.Entry<String, Property>>(properties.entrySet());
+        final int totalCount = propertyList.size();
+        for (int i = 0; i < totalCount; i++) {
+            Map.Entry<String, Property> entry = propertyList.get(i);
 
-        } else {
-            m.emptyVars = true;
-            m.hasVars = false;
-            m.hasEnums = false;
+            final String key = entry.getKey();
+            final Property prop = entry.getValue();
+
+            if (prop == null) {
+                LOGGER.warn("null property for " + key);
+            } else {
+                final CodegenProperty cp = fromProperty(key, prop);
+                cp.required = mandatory.contains(key) ? true : null;
+                if (cp.isEnum) {
+                    // FIXME: if supporting inheritance, when called a second time for allProperties it is possible for
+                    // m.hasEnums to be set incorrectly if allProperties has enumerations but properties does not.
+                    m.hasEnums = true;
+                }
+
+                if (i+1 != totalCount) {
+                    cp.hasMore = true;
+                    // check the next entry to see if it's read only
+                    if (!Boolean.TRUE.equals(propertyList.get(i+1).getValue().getReadOnly())) {
+                        cp.hasMoreNonReadOnly = true; // next entry is not ready only
+                    }
+                }
+
+                if (cp.isContainer != null) {
+                    addImport(m, typeMapping.get("array"));
+                }
+
+                addImport(m, cp.baseType);
+                addImport(m, cp.complexType);
+                vars.add(cp);
+            }
         }
     }
 
@@ -2339,6 +2450,11 @@ public class DefaultCodegen {
         return supportedLibraries;
     }
 
+    /**
+     * Set library template (sub-template).
+     *
+     * @param library Library template
+     */
     public void setLibrary(String library) {
         if (library != null && !supportedLibraries.containsKey(library))
             throw new RuntimeException("unknown library: " + library);
@@ -2352,6 +2468,78 @@ public class DefaultCodegen {
      */
     public String getLibrary() {
         return library;
+    }
+
+    /**
+     * Set Git user ID.
+     *
+     * @param gitUserId Git user ID
+     */
+    public void setGitUserId(String gitUserId) {
+        this.gitUserId = gitUserId;
+    }
+
+    /**
+     * Git user ID
+     *
+     * @return Git user ID
+     */
+    public String getGitUserId() {
+        return gitUserId;
+    }
+
+    /**
+     * Set Git repo ID.
+     *
+     * @param gitRepoId Git repo ID
+     */
+    public void setGitRepoId(String gitRepoId) {
+        this.gitRepoId = gitRepoId;
+    }
+
+    /**
+     * Git repo ID
+     *
+     * @return Git repo ID
+     */
+    public String getGitRepoId() {
+        return gitRepoId;
+    }
+
+    /**
+     * Set release note.
+     *
+     * @param releaseNote Release note
+     */
+    public void setReleaseNote(String releaseNote) {
+        this.releaseNote = releaseNote;
+    }
+
+    /**
+     * Release note
+     *
+     * @return Release note
+     */
+    public String getReleaseNote() {
+        return releaseNote;
+    }
+
+    /**
+     * Set HTTP user agent.
+     *
+     * @param httpUserAgent HTTP user agent
+     */
+    public void setHttpUserAgent(String httpUserAgent) {
+        this.httpUserAgent = httpUserAgent;
+    }
+
+    /**
+     * HTTP user agent
+     *
+     * @return HTTP user agent
+     */
+    public String getHttpUserAgent() {
+        return httpUserAgent;
     }
 
     @SuppressWarnings("static-method")

@@ -3,6 +3,7 @@ package io.swagger.codegen.languages;
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenParameter;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
 import io.swagger.codegen.SupportingFile;
@@ -17,6 +18,8 @@ import org.apache.commons.lang.StringUtils;
 public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig {
     protected String packageName;
     protected String packageVersion;
+    protected String apiDocPath = "docs/";
+    protected String modelDocPath = "docs/";
 
     public PythonClientCodegen() {
         super();
@@ -28,6 +31,9 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         apiTemplateFiles.put("api.mustache", ".py");
         embeddedTemplateDir = templateDir = "python";
 
+        modelDocTemplateFiles.put("model_doc.mustache", ".md");
+        apiDocTemplateFiles.put("api_doc.mustache", ".md");
+
         languageSpecificPrimitives.clear();
         languageSpecificPrimitives.add("int");
         languageSpecificPrimitives.add("float");
@@ -36,6 +42,7 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         languageSpecificPrimitives.add("str");
         languageSpecificPrimitives.add("datetime");
         languageSpecificPrimitives.add("date");
+        languageSpecificPrimitives.add("object");
 
         typeMapping.clear();
         typeMapping.put("integer", "int");
@@ -54,6 +61,7 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         //TODO binary should be mapped to byte array
         // mapped to String as a workaround
         typeMapping.put("binary", "str");
+        typeMapping.put("ByteArray", "str");
 
         // from https://docs.python.org/release/2.5.4/ref/keywords.html
         setReservedWordsLowerCase(
@@ -111,6 +119,10 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
         additionalProperties.put(CodegenConstants.PACKAGE_VERSION, packageVersion);
 
+        // make api and model doc path available in mustache template
+        additionalProperties.put("apiDocPath", apiDocPath);
+        additionalProperties.put("modelDocPath", modelDocPath);
+
         String swaggerFolder = packageName;
 
         modelPackage = swaggerFolder + File.separatorChar + "models";
@@ -124,6 +136,8 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         supportingFiles.add(new SupportingFile("__init__package.mustache", swaggerFolder, "__init__.py"));
         supportingFiles.add(new SupportingFile("__init__model.mustache", modelPackage, "__init__.py"));
         supportingFiles.add(new SupportingFile("__init__api.mustache", apiPackage, "__init__.py"));
+        supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
+        supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
     }
 
     private static String dropDots(String str) {
@@ -149,6 +163,27 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
     public String escapeReservedWord(String name) {
         return "_" + name;
     }
+
+    @Override
+    public String apiDocFileFolder() {
+        return (outputFolder + "/" + apiDocPath);
+    }
+
+    @Override
+    public String modelDocFileFolder() {
+        return (outputFolder + "/" + modelDocPath);
+    }
+
+    @Override
+    public String toModelDocFilename(String name) {
+        return toModelName(name);
+    }
+
+    @Override
+    public String toApiDocFilename(String name) {
+        return toApiName(name);
+    }
+ 
 
     @Override
     public String apiFileFolder() {
@@ -236,6 +271,12 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
             name = "model_" + name; // e.g. return => ModelReturn (after camelize)
         }
 
+        // model name starts with number
+        if (name.matches("^\\d.*")) {
+            LOGGER.warn(name + " (model name starts with number) cannot be used as model name. Renamed to " + camelize("model_" + name));
+            name = "model_" + name; // e.g. 200Response => Model200Response (after camelize)
+        }
+
         if (!StringUtils.isEmpty(modelNamePrefix)) {
             name = modelNamePrefix + "_" + name;
         }
@@ -259,6 +300,12 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         if (isReservedWord(name)) {
             LOGGER.warn(name + " (reserved word) cannot be used as model filename. Renamed to " + underscore(dropDots("model_" + name)));
             name = "model_" + name; // e.g. return => ModelReturn (after camelize)
+        }
+
+        // model name starts with number
+        if (name.matches("^\\d.*")) {
+            LOGGER.warn(name + " (model name starts with number) cannot be used as model name. Renamed to " + underscore("model_" + name));
+            name = "model_" + name; // e.g. 200Response => Model200Response (after camelize)
         }
 
         if (!StringUtils.isEmpty(modelNamePrefix)) {
@@ -387,5 +434,71 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
 
         return null;
     }
+
+    @Override
+    public void setParameterExampleValue(CodegenParameter p) {
+        String example;
+
+        if (p.defaultValue == null) {
+            example = p.example;
+        } else {
+            example = p.defaultValue;
+        }
+
+        String type = p.baseType;
+        if (type == null) {
+            type = p.dataType;
+        }
+
+        if ("String".equalsIgnoreCase(type) || "str".equalsIgnoreCase(type)) {
+            if (example == null) {
+                example = p.paramName + "_example";
+            }
+            example = "'" + escapeText(example) + "'";
+        } else if ("Integer".equals(type) || "int".equals(type)) {
+            if (example == null) {
+                example = "56";
+            }
+        } else if ("Float".equalsIgnoreCase(type) || "Double".equalsIgnoreCase(type)) {
+            if (example == null) {
+                example = "3.4";
+            }
+        } else if ("BOOLEAN".equalsIgnoreCase(type) || "bool".equalsIgnoreCase(type)) {
+            if (example == null) {
+                example = "True";
+            }
+        } else if ("file".equalsIgnoreCase(type)) {
+            if (example == null) {
+                example = "/path/to/file";
+            }
+            example = "'" + escapeText(example) + "'";
+        } else if ("Date".equalsIgnoreCase(type)) {
+            if (example == null) {
+                example = "2013-10-20";
+            }
+            example = "'" + escapeText(example) + "'";
+        } else if ("DateTime".equalsIgnoreCase(type)) {
+            if (example == null) {
+                example = "2013-10-20T19:20:30+01:00";
+            }
+            example = "'" + escapeText(example) + "'";
+        } else if (!languageSpecificPrimitives.contains(type)) {
+            // type is a model class, e.g. User
+            example = this.packageName + "." + type + "()";
+        } else {
+            LOGGER.warn("Type " + type + " not handled properly in setParameterExampleValue");
+        }
+
+        if (example == null) {
+            example = "NULL";
+        } else if (Boolean.TRUE.equals(p.isListContainer)) {
+            example = "[" + example + "]";
+        } else if (Boolean.TRUE.equals(p.isMapContainer)) {
+            example = "{'key': " + example + "}";
+        }
+
+        p.example = example;
+    }
+
 
 }
