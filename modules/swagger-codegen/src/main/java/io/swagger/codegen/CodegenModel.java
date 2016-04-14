@@ -15,8 +15,10 @@ public class CodegenModel {
     public String name, classname, description, classVarName, modelJson, dataType;
     public String classFilename; // store the class file name, mainly used for import
     public String unescapedDescription;
+    public String datatypeWithEnum;
     public String discriminator;
     public String defaultValue;
+    public List<Map<String, String>> enumVars = new ArrayList<Map<String, String>>();
     public List<CodegenProperty> vars = new ArrayList<CodegenProperty>();
     public List<CodegenProperty> allVars;
     public List<String> allowableValues;
