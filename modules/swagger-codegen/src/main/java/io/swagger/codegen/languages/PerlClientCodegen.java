@@ -95,6 +95,7 @@ public class PerlClientCodegen extends DefaultCodegen implements CodegenConfig {
         //TODO binary should be mapped to byte array
         // mapped to String as a workaround
         typeMapping.put("binary", "string");
+        typeMapping.put("ByteArray", "string");
 
         cliOptions.clear();
         cliOptions.add(new CliOption(MODULE_NAME, "Perl module name (convention: CamelCase or Long::Module).").defaultValue("SwaggerClient"));
@@ -135,6 +136,8 @@ public class PerlClientCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("AutoDoc.mustache", ("lib/" + modulePathPart + "/Role").replace('/', File.separatorChar), "AutoDoc.pm"));
         supportingFiles.add(new SupportingFile("autodoc.script.mustache", "bin", "autodoc"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
+        supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
+        supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
     }
 
     @Override
@@ -289,6 +292,12 @@ public class PerlClientCodegen extends DefaultCodegen implements CodegenConfig {
         if (isReservedWord(name)) {
             LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + camelize("model_" + name));
             name = "model_" + name;
+        }
+
+        // model name starts with number
+        if (name.matches("^\\d.*")) {
+            LOGGER.warn(name + " (model name starts with number) cannot be used as model name. Renamed to " + camelize("model_" + name));
+            name = "model_" + name; // e.g. 200Response => Model200Response (after camelize)
         }
 
         // add prefix/suffic to model name

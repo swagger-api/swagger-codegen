@@ -19,7 +19,11 @@ namespace {{packageName}}.Model
     [DataContract]
     public partial class {{classname}} : {{#parent}}{{{parent}}}, {{/parent}} IEquatable<{{classname}}>
     { {{#vars}}{{#isEnum}}
-    
+
+        /// <summary>
+        /// {{^description}}Gets or Sets {{{name}}}{{/description}}{{#description}}{{{description}}}{{/description}}
+        /// </summary>{{#description}}
+        /// <value>{{{description}}}</value>{{/description}}
         [JsonConverter(typeof(StringEnumConverter))]
         {{>enumClass}}{{/isEnum}}{{#items.isEnum}}{{#items}}
         {{#allowableValues}}{{#enumVars}}
@@ -61,12 +65,12 @@ namespace {{packageName}}.Model
             {{/defaultValue}}{{^defaultValue}}this.{{name}} = {{name}};
             {{/defaultValue}}{{/required}}{{/isReadOnly}}{{/vars}}
         }
-        
+
     {{#vars}}{{^isEnum}}
         /// <summary>
-        /// {{^description}}Gets or Sets {{{name}}}{{/description}}{{#description}}{{{description}}}{{/description}}
+        /// {{^description}}Gets or Sets {{{name}}}{{/description}}{{#description}}{{description}}{{/description}}
         /// </summary>{{#description}}
-        /// <value>{{{description}}}</value>{{/description}}
+        /// <value>{{description}}</value>{{/description}}
         [DataMember(Name="{{baseName}}", EmitDefaultValue={{emitDefaultValue}})]
         public {{{datatype}}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
     {{/isEnum}}{{/vars}}
@@ -78,12 +82,13 @@ namespace {{packageName}}.Model
         {
             var sb = new StringBuilder();
             sb.Append("class {{classname}} {\n");
-            {{#vars}}sb.Append("  {{name}}: ").Append({{name}}).Append("\n");
-            {{/vars}}
+{{#vars}}
+            sb.Append("  {{name}}: ").Append({{name}}).Append("\n");
+{{/vars}}
             sb.Append("}\n");
             return sb.ToString();
         }
-  
+
         /// <summary>
         /// Returns the JSON string presentation of the object
         /// </summary>

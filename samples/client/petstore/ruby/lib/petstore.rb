@@ -1,7 +1,7 @@
 =begin
 Swagger Petstore
 
-This is a sample server Petstore server.  You can find out more about Swagger at <a href=\"http://swagger.io\">http://swagger.io</a> or on irc.freenode.net, #swagger.  For this sample, you can use the api key \"special-key\" to test the authorization filters
+This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose.
 
 OpenAPI spec version: 1.0.0
 Contact: apiteam@swagger.io
@@ -21,19 +21,25 @@ require 'petstore/version'
 require 'petstore/configuration'
 
 # Models
-require 'petstore/models/order'
-require 'petstore/models/special_model_name'
-require 'petstore/models/user'
+require 'petstore/models/animal'
+require 'petstore/models/api_response'
+require 'petstore/models/cat'
 require 'petstore/models/category'
-require 'petstore/models/object_return'
-require 'petstore/models/inline_response_200'
-require 'petstore/models/tag'
+require 'petstore/models/dog'
+require 'petstore/models/format_test'
+require 'petstore/models/model_200_response'
+require 'petstore/models/model_return'
+require 'petstore/models/name'
+require 'petstore/models/order'
 require 'petstore/models/pet'
+require 'petstore/models/special_model_name'
+require 'petstore/models/tag'
+require 'petstore/models/user'
 
 # APIs
-require 'petstore/api/user_api'
-require 'petstore/api/store_api'
 require 'petstore/api/pet_api'
+require 'petstore/api/store_api'
+require 'petstore/api/user_api'
 
 module Petstore
   class << self

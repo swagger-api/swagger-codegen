@@ -24,7 +24,7 @@
 /// Create user
 /// This can only be done by the logged in user.
 ///
-/// @param body Created user object
+/// @param body Created user object (optional)
 /// 
 ///
 /// @return 
@@ -37,7 +37,7 @@
 /// Creates list of users with given input array
 /// 
 ///
-/// @param body List of user object
+/// @param body List of user object (optional)
 /// 
 ///
 /// @return 
@@ -50,7 +50,7 @@
 /// Creates list of users with given input array
 /// 
 ///
-/// @param body List of user object
+/// @param body List of user object (optional)
 /// 
 ///
 /// @return 
@@ -60,11 +60,37 @@
 
 ///
 ///
+/// Delete user
+/// This can only be done by the logged in user.
+///
+/// @param username The name that needs to be deleted
+/// 
+///
+/// @return 
+-(NSNumber*) deleteUserWithUsername: (NSString*) username
+    completionHandler: (void (^)(NSError* error)) handler;
+
+
+///
+///
+/// Get user by user name
+/// 
+///
+/// @param username The name that needs to be fetched. Use user1 for testing. 
+/// 
+///
+/// @return SWGUser*
+-(NSNumber*) getUserByNameWithUsername: (NSString*) username
+    completionHandler: (void (^)(SWGUser* output, NSError* error)) handler;
+
+
+///
+///
 /// Logs user into the system
 /// 
 ///
-/// @param username The user name for login
-/// @param password The password for login in clear text
+/// @param username The user name for login (optional)
+/// @param password The password for login in clear text (optional)
 /// 
 ///
 /// @return NSString*
@@ -87,42 +113,16 @@
 
 ///
 ///
-/// Get user by user name
-/// 
-///
-/// @param username The name that needs to be fetched. Use user1 for testing.
-/// 
-///
-/// @return SWGUser*
--(NSNumber*) getUserByNameWithUsername: (NSString*) username
-    completionHandler: (void (^)(SWGUser* output, NSError* error)) handler;
-
-
-///
-///
 /// Updated user
 /// This can only be done by the logged in user.
 ///
 /// @param username name that need to be deleted
-/// @param body Updated user object
+/// @param body Updated user object (optional)
 /// 
 ///
 /// @return 
 -(NSNumber*) updateUserWithUsername: (NSString*) username
     body: (SWGUser*) body
-    completionHandler: (void (^)(NSError* error)) handler;
-
-
-///
-///
-/// Delete user
-/// This can only be done by the logged in user.
-///
-/// @param username The name that needs to be deleted
-/// 
-///
-/// @return 
--(NSNumber*) deleteUserWithUsername: (NSString*) username
     completionHandler: (void (^)(NSError* error)) handler;
 
 
