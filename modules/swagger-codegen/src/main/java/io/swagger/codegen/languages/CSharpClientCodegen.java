@@ -81,6 +81,10 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
                 "Package's description",
                 null);
 
+        addOption(CodegenConstants.PACKAGE_CONFIGURATION,
+                "Package's configuration",
+                null);
+
         addOption(CodegenConstants.PACKAGE_COMPANY,
                 "Package's company",
                 null);

@@ -11,6 +11,7 @@ public class CSharpClientOptionsProvider implements OptionsProvider {
     public static final String PACKAGE_VERSION_VALUE = "1.0.0-SNAPSHOT";
     public static final String PACKAGE_TITLE_VALUE = "Swagger library";
     public static final String PACKAGE_DESCRIPTION_VALUE = "A library generated from a Swagger doc";
+    public static final String PACKAGE_CONFIGURATION_VALUE = "No Configuration";
     public static final String PACKAGE_COMPANY_VALUE = "Swagger";
     public static final String PACKAGE_PRODUCT_NAME_VALUE = "SwaggerLibrary";
     public static final String PACKAGE_COPYRIGHT_VALUE = "No Copyright";
@@ -31,6 +32,7 @@ public class CSharpClientOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.PACKAGE_VERSION, PACKAGE_VERSION_VALUE)
                 .put(CodegenConstants.PACKAGE_TITLE, PACKAGE_TITLE_VALUE)
                 .put(CodegenConstants.PACKAGE_DESCRIPTION, PACKAGE_DESCRIPTION_VALUE)
+                .put(CodegenConstants.PACKAGE_CONFIGURATION, PACKAGE_CONFIGURATION_VALUE)
                 .put(CodegenConstants.PACKAGE_COMPANY, PACKAGE_COMPANY_VALUE)
                 .put(CodegenConstants.PACKAGE_PRODUCT_NAME, PACKAGE_PRODUCT_NAME_VALUE)
                 .put(CodegenConstants.PACKAGE_COPYRIGHT, PACKAGE_COPYRIGHT_VALUE)
