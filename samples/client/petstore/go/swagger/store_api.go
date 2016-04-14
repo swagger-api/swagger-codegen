@@ -34,11 +34,11 @@ func NewStoreApiWithBasePath(basePath string) *StoreApi{
  * @param orderId ID of the order that needs to be deleted
  * @return void
  */
-//func (a StoreApi) DeleteOrder (orderId string) (error) {
 func (a StoreApi) DeleteOrder (orderId string) (error) {
 
     _sling := sling.New().Delete(a.Configuration.BasePath)
 
+    
     // create path and map variables
     path := "/v2/store/order/{orderId}"
     path = strings.Replace(path, "{" + "orderId" + "}", fmt.Sprintf("%v", orderId), -1)
@@ -97,10 +97,15 @@ func (a StoreApi) DeleteOrder (orderId string) (error) {
  * Returns a map of status codes to quantities
  * @return map[string]int32
  */
-//func (a StoreApi) GetInventory () (map[string]int32, error) {
 func (a StoreApi) GetInventory () (map[string]int32, error) {
 
     _sling := sling.New().Get(a.Configuration.BasePath)
+
+    // authentication (api_key) required
+    
+    // set key with prefix in header
+    _sling.Set("api_key", a.Configuration.GetApiKeyWithPrefix("api_key"))
+        
 
     // create path and map variables
     path := "/v2/store/inventory"
@@ -160,11 +165,11 @@ func (a StoreApi) GetInventory () (map[string]int32, error) {
  * @param orderId ID of pet that needs to be fetched
  * @return Order
  */
-//func (a StoreApi) GetOrderById (orderId int64) (Order, error) {
 func (a StoreApi) GetOrderById (orderId int64) (Order, error) {
 
     _sling := sling.New().Get(a.Configuration.BasePath)
 
+    
     // create path and map variables
     path := "/v2/store/order/{orderId}"
     path = strings.Replace(path, "{" + "orderId" + "}", fmt.Sprintf("%v", orderId), -1)
@@ -224,11 +229,11 @@ func (a StoreApi) GetOrderById (orderId int64) (Order, error) {
  * @param body order placed for purchasing the pet
  * @return Order
  */
-//func (a StoreApi) PlaceOrder (body Order) (Order, error) {
 func (a StoreApi) PlaceOrder (body Order) (Order, error) {
 
     _sling := sling.New().Post(a.Configuration.BasePath)
 
+    
     // create path and map variables
     path := "/v2/store/order"
 

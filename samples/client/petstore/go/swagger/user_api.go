@@ -34,11 +34,11 @@ func NewUserApiWithBasePath(basePath string) *UserApi{
  * @param body Created user object
  * @return void
  */
-//func (a UserApi) CreateUser (body User) (error) {
 func (a UserApi) CreateUser (body User) (error) {
 
     _sling := sling.New().Post(a.Configuration.BasePath)
 
+    
     // create path and map variables
     path := "/v2/user"
 
@@ -99,11 +99,11 @@ func (a UserApi) CreateUser (body User) (error) {
  * @param body List of user object
  * @return void
  */
-//func (a UserApi) CreateUsersWithArrayInput (body []User) (error) {
 func (a UserApi) CreateUsersWithArrayInput (body []User) (error) {
 
     _sling := sling.New().Post(a.Configuration.BasePath)
 
+    
     // create path and map variables
     path := "/v2/user/createWithArray"
 
@@ -164,11 +164,11 @@ func (a UserApi) CreateUsersWithArrayInput (body []User) (error) {
  * @param body List of user object
  * @return void
  */
-//func (a UserApi) CreateUsersWithListInput (body []User) (error) {
 func (a UserApi) CreateUsersWithListInput (body []User) (error) {
 
     _sling := sling.New().Post(a.Configuration.BasePath)
 
+    
     // create path and map variables
     path := "/v2/user/createWithList"
 
@@ -229,11 +229,11 @@ func (a UserApi) CreateUsersWithListInput (body []User) (error) {
  * @param username The name that needs to be deleted
  * @return void
  */
-//func (a UserApi) DeleteUser (username string) (error) {
 func (a UserApi) DeleteUser (username string) (error) {
 
     _sling := sling.New().Delete(a.Configuration.BasePath)
 
+    
     // create path and map variables
     path := "/v2/user/{username}"
     path = strings.Replace(path, "{" + "username" + "}", fmt.Sprintf("%v", username), -1)
@@ -293,11 +293,11 @@ func (a UserApi) DeleteUser (username string) (error) {
  * @param username The name that needs to be fetched. Use user1 for testing. 
  * @return User
  */
-//func (a UserApi) GetUserByName (username string) (User, error) {
 func (a UserApi) GetUserByName (username string) (User, error) {
 
     _sling := sling.New().Get(a.Configuration.BasePath)
 
+    
     // create path and map variables
     path := "/v2/user/{username}"
     path = strings.Replace(path, "{" + "username" + "}", fmt.Sprintf("%v", username), -1)
@@ -358,11 +358,11 @@ func (a UserApi) GetUserByName (username string) (User, error) {
  * @param password The password for login in clear text
  * @return string
  */
-//func (a UserApi) LoginUser (username string, password string) (string, error) {
 func (a UserApi) LoginUser (username string, password string) (string, error) {
 
     _sling := sling.New().Get(a.Configuration.BasePath)
 
+    
     // create path and map variables
     path := "/v2/user/login"
 
@@ -374,10 +374,10 @@ func (a UserApi) LoginUser (username string, password string) (string, error) {
     }
     
     type QueryParams struct {
-        username    string `url:"username,omitempty"`
-password    string `url:"password,omitempty"`
+        Username    string `url:"username,omitempty"`
+Password    string `url:"password,omitempty"`
 }
-    _sling = _sling.QueryStruct(&QueryParams{ username: username,password: password })
+    _sling = _sling.QueryStruct(&QueryParams{ Username: username,Password: password })
     // accept header
     accepts := []string { "application/xml", "application/json" }
     for key := range accepts {
@@ -425,11 +425,11 @@ password    string `url:"password,omitempty"`
  * 
  * @return void
  */
-//func (a UserApi) LogoutUser () (error) {
 func (a UserApi) LogoutUser () (error) {
 
     _sling := sling.New().Get(a.Configuration.BasePath)
 
+    
     // create path and map variables
     path := "/v2/user/logout"
 
@@ -489,11 +489,11 @@ func (a UserApi) LogoutUser () (error) {
  * @param body Updated user object
  * @return void
  */
-//func (a UserApi) UpdateUser (username string, body User) (error) {
 func (a UserApi) UpdateUser (username string, body User) (error) {
 
     _sling := sling.New().Put(a.Configuration.BasePath)
 
+    
     // create path and map variables
     path := "/v2/user/{username}"
     path = strings.Replace(path, "{" + "username" + "}", fmt.Sprintf("%v", username), -1)

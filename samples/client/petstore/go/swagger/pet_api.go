@@ -35,10 +35,16 @@ func NewPetApiWithBasePath(basePath string) *PetApi{
  * @param body Pet object that needs to be added to the store
  * @return void
  */
-//func (a PetApi) AddPet (body Pet) (error) {
 func (a PetApi) AddPet (body Pet) (error) {
 
     _sling := sling.New().Post(a.Configuration.BasePath)
+
+    // authentication (petstore_auth) required
+        
+    // oauth required
+    if a.Configuration.AccessToken != ""{
+        _sling.Set("Authorization", "Bearer " +  a.Configuration.AccessToken)
+    }
 
     // create path and map variables
     path := "/v2/pet"
@@ -101,10 +107,16 @@ func (a PetApi) AddPet (body Pet) (error) {
  * @param apiKey 
  * @return void
  */
-//func (a PetApi) DeletePet (petId int64, apiKey string) (error) {
 func (a PetApi) DeletePet (petId int64, apiKey string) (error) {
 
     _sling := sling.New().Delete(a.Configuration.BasePath)
+
+    // authentication (petstore_auth) required
+        
+    // oauth required
+    if a.Configuration.AccessToken != ""{
+        _sling.Set("Authorization", "Bearer " +  a.Configuration.AccessToken)
+    }
 
     // create path and map variables
     path := "/v2/pet/{petId}"
@@ -167,10 +179,16 @@ func (a PetApi) DeletePet (petId int64, apiKey string) (error) {
  * @param status Status values that need to be considered for filter
  * @return []Pet
  */
-//func (a PetApi) FindPetsByStatus (status []string) ([]Pet, error) {
 func (a PetApi) FindPetsByStatus (status []string) ([]Pet, error) {
 
     _sling := sling.New().Get(a.Configuration.BasePath)
+
+    // authentication (petstore_auth) required
+        
+    // oauth required
+    if a.Configuration.AccessToken != ""{
+        _sling.Set("Authorization", "Bearer " +  a.Configuration.AccessToken)
+    }
 
     // create path and map variables
     path := "/v2/pet/findByStatus"
@@ -183,9 +201,9 @@ func (a PetApi) FindPetsByStatus (status []string) ([]Pet, error) {
     }
     
     type QueryParams struct {
-        status    []string `url:"status,omitempty"`
+        Status    []string `url:"status,omitempty"`
 }
-    _sling = _sling.QueryStruct(&QueryParams{ status: status })
+    _sling = _sling.QueryStruct(&QueryParams{ Status: status })
     // accept header
     accepts := []string { "application/xml", "application/json" }
     for key := range accepts {
@@ -234,10 +252,16 @@ func (a PetApi) FindPetsByStatus (status []string) ([]Pet, error) {
  * @param tags Tags to filter by
  * @return []Pet
  */
-//func (a PetApi) FindPetsByTags (tags []string) ([]Pet, error) {
 func (a PetApi) FindPetsByTags (tags []string) ([]Pet, error) {
 
     _sling := sling.New().Get(a.Configuration.BasePath)
+
+    // authentication (petstore_auth) required
+        
+    // oauth required
+    if a.Configuration.AccessToken != ""{
+        _sling.Set("Authorization", "Bearer " +  a.Configuration.AccessToken)
+    }
 
     // create path and map variables
     path := "/v2/pet/findByTags"
@@ -250,9 +274,9 @@ func (a PetApi) FindPetsByTags (tags []string) ([]Pet, error) {
     }
     
     type QueryParams struct {
-        tags    []string `url:"tags,omitempty"`
+        Tags    []string `url:"tags,omitempty"`
 }
-    _sling = _sling.QueryStruct(&QueryParams{ tags: tags })
+    _sling = _sling.QueryStruct(&QueryParams{ Tags: tags })
     // accept header
     accepts := []string { "application/xml", "application/json" }
     for key := range accepts {
@@ -301,10 +325,15 @@ func (a PetApi) FindPetsByTags (tags []string) ([]Pet, error) {
  * @param petId ID of pet to return
  * @return Pet
  */
-//func (a PetApi) GetPetById (petId int64) (Pet, error) {
 func (a PetApi) GetPetById (petId int64) (Pet, error) {
 
     _sling := sling.New().Get(a.Configuration.BasePath)
+
+    // authentication (api_key) required
+    
+    // set key with prefix in header
+    _sling.Set("api_key", a.Configuration.GetApiKeyWithPrefix("api_key"))
+        
 
     // create path and map variables
     path := "/v2/pet/{petId}"
@@ -365,10 +394,16 @@ func (a PetApi) GetPetById (petId int64) (Pet, error) {
  * @param body Pet object that needs to be added to the store
  * @return void
  */
-//func (a PetApi) UpdatePet (body Pet) (error) {
 func (a PetApi) UpdatePet (body Pet) (error) {
 
     _sling := sling.New().Put(a.Configuration.BasePath)
+
+    // authentication (petstore_auth) required
+        
+    // oauth required
+    if a.Configuration.AccessToken != ""{
+        _sling.Set("Authorization", "Bearer " +  a.Configuration.AccessToken)
+    }
 
     // create path and map variables
     path := "/v2/pet"
@@ -432,10 +467,16 @@ func (a PetApi) UpdatePet (body Pet) (error) {
  * @param status Updated status of the pet
  * @return void
  */
-//func (a PetApi) UpdatePetWithForm (petId int64, name string, status string) (error) {
 func (a PetApi) UpdatePetWithForm (petId int64, name string, status string) (error) {
 
     _sling := sling.New().Post(a.Configuration.BasePath)
+
+    // authentication (petstore_auth) required
+        
+    // oauth required
+    if a.Configuration.AccessToken != ""{
+        _sling.Set("Authorization", "Bearer " +  a.Configuration.AccessToken)
+    }
 
     // create path and map variables
     path := "/v2/pet/{petId}"
@@ -456,10 +497,10 @@ func (a PetApi) UpdatePetWithForm (petId int64, name string, status string) (err
     }
 
     type FormParams struct {
-        name    string `url:"name,omitempty"`
-        status    string `url:"status,omitempty"`
+        Name    string `url:"name,omitempty"`
+        Status    string `url:"status,omitempty"`
     }
-    _sling = _sling.BodyForm(&FormParams{ name: name,status: status })
+    _sling = _sling.BodyForm(&FormParams{ Name: name,Status: status })
 
 
 
@@ -503,10 +544,16 @@ func (a PetApi) UpdatePetWithForm (petId int64, name string, status string) (err
  * @param file file to upload
  * @return ApiResponse
  */
-//func (a PetApi) UploadFile (petId int64, additionalMetadata string, file *os.File) (ApiResponse, error) {
 func (a PetApi) UploadFile (petId int64, additionalMetadata string, file *os.File) (ApiResponse, error) {
 
     _sling := sling.New().Post(a.Configuration.BasePath)
+
+    // authentication (petstore_auth) required
+        
+    // oauth required
+    if a.Configuration.AccessToken != ""{
+        _sling.Set("Authorization", "Bearer " +  a.Configuration.AccessToken)
+    }
 
     // create path and map variables
     path := "/v2/pet/{petId}/uploadImage"
@@ -527,10 +574,10 @@ func (a PetApi) UploadFile (petId int64, additionalMetadata string, file *os.Fil
     }
 
     type FormParams struct {
-        additionalMetadata    string `url:"additionalMetadata,omitempty"`
-        file    *os.File `url:"file,omitempty"`
+        AdditionalMetadata    string `url:"additionalMetadata,omitempty"`
+        File    *os.File `url:"file,omitempty"`
     }
-    _sling = _sling.BodyForm(&FormParams{ additionalMetadata: additionalMetadata,file: file })
+    _sling = _sling.BodyForm(&FormParams{ AdditionalMetadata: additionalMetadata,File: file })
 
   var successPayload = new(ApiResponse)
 
