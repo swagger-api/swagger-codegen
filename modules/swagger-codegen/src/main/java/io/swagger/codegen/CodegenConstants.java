@@ -61,6 +61,11 @@ public class CodegenConstants {
     public static final String PACKAGE_KEYWORDS = "packageKeywords";
     public static final String PACKAGE_INSTALL_REQUIRES = "install_requires";
     public static final String PACKAGE_DESCRIPTION = "packageDescription";
+    public static final String PACKAGE_COMPANY = "packageCompany";
+    public static final String PACKAGE_PRODUCT_NAME = "packageProductName";
+    public static final String PACKAGE_COPYRIGHT = "packageCopyright";
+    public static final String PACKAGE_TRADEMARK = "packageTrademark";
+    public static final String PACKAGE_CULTURE = "packageCulture";
     public static final String POD_VERSION = "podVersion";
 
     public static final String OPTIONAL_METHOD_ARGUMENT = "optionalMethodArgument";
