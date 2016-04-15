@@ -14,7 +14,7 @@ public class CodegenOperation {
             returnTypeIsPrimitive, returnSimpleType, subresourceOperation, isMapContainer,
             isListContainer, isMultipart, hasMore = Boolean.TRUE,
             isResponseBinary = Boolean.FALSE, hasReference = Boolean.FALSE;
-    public String path, operationId, returnType, httpMethod, returnBaseType,
+    public String path, operationId, returnType, returnContainerType, httpMethod, returnBaseType,
             returnContainer, summary, notes, baseName, defaultResponse, discriminator;
     public List<Map<String, String>> consumes, produces;
     public CodegenParameter bodyParam;

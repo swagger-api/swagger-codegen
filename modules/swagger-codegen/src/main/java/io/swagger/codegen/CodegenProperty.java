@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CodegenProperty {
-    public String baseName, complexType, getter, setter, description, datatype, datatypeWithEnum,
+    public String baseName, complexType, getter, setter, description, datatype, datatypeWithEnum, listDatatype,
             name, min, max, defaultValue, defaultValueWithParam, baseType, containerType;
 
     public String unescapedDescription;
@@ -97,6 +97,7 @@ public class CodegenProperty {
         result = prime * result + ((isDateTime == null) ? 0 : isDateTime.hashCode());
         result = prime * result + ((isMapContainer == null) ? 0 : isMapContainer.hashCode());
         result = prime * result + ((isListContainer == null) ? 0 : isListContainer.hashCode());
+        result = prime * result + ((listDatatype == null) ? 0 : listDatatype.hashCode());
         return result;
     }
 
