@@ -604,7 +604,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
             // DEG - Handle enumerations which don't have a codegen property
             // This is a hack which builds up the information necessary for the enumClass template
             List<CodegenProperty> vars = cm.vars;
-            if ((vars == null || vars.isEmpty()) && cm.isEnum && cm.allowableValues != null) {
+            if ((vars == null || vars.isEmpty()) && Boolean.TRUE.equals(cm.isEnum) && cm.allowableValues != null) {
             	final CodegenProperty newVar = new CodegenProperty();
             	final HashMap<String, Object> newAllowableValues = new HashMap<String, Object>();
             	newAllowableValues.put("values", new ArrayList<String>(cm.allowableValues));
@@ -793,8 +793,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
             return "_" + var;
         } else if (SPECIAL_CHARS_ENUM_MAPPER.containsKey(value)) {
         	return SPECIAL_CHARS_ENUM_MAPPER.get(value);
-        }
-        else {
+        } else {
             return var;
         }
     }
