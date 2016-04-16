@@ -288,25 +288,25 @@ static void (^reachabilityChangeBlock)(int);
 
 #pragma mark - Deserialize methods
 
-- (id) deserialize:(id) data class:(NSString *) class {
+- (id) deserialize:(id) data className:(NSString *) className {
     NSRegularExpression *regexp = nil;
     NSTextCheckingResult *match = nil;
     NSMutableArray *resultArray = nil;
     NSMutableDictionary *resultDict = nil;
     NSString *innerType = nil;
 
-    // return nil if data is nil or class is nil
-    if (!data || !class) {
+    // return nil if data is nil or className is nil
+    if (!data || !className) {
         return nil;
     }
 
-    // remove "*" from class, if ends with "*"
-    if ([class hasSuffix:@"*"]) {
-        class = [class substringToIndex:[class length] - 1];
+    // remove "*" from className, if ends with "*"
+    if ([className hasSuffix:@"*"]) {
+        className = [className substringToIndex:[className length] - 1];
     }
 
     // pure object
-    if ([class isEqualToString:@"NSObject"]) {
+    if ([className isEqualToString:@"NSObject"]) {
         return data;
     }
 
@@ -316,17 +316,17 @@ static void (^reachabilityChangeBlock)(int);
                                                       options:NSRegularExpressionCaseInsensitive
                                                         error:nil];
 
-    match = [regexp firstMatchInString:class
+    match = [regexp firstMatchInString:className
                                options:0
-                                 range:NSMakeRange(0, [class length])];
+                                 range:NSMakeRange(0, [className length])];
 
     if (match) {
         NSArray *dataArray = data;
-        innerType = [class substringWithRange:[match rangeAtIndex:1]];
+        innerType = [className substringWithRange:[match rangeAtIndex:1]];
 
         resultArray = [NSMutableArray arrayWithCapacity:[dataArray count]];
         [data enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                [resultArray addObject:[self deserialize:obj class:innerType]];
+                [resultArray addObject:[self deserialize:obj className:innerType]];
             }
         ];
 
@@ -338,17 +338,17 @@ static void (^reachabilityChangeBlock)(int);
     regexp = [NSRegularExpression regularExpressionWithPattern:arrayOfPrimitivesPat
                                                        options:NSRegularExpressionCaseInsensitive
                                                          error:nil];
-    match = [regexp firstMatchInString:class
+    match = [regexp firstMatchInString:className
                                options:0
-                                 range:NSMakeRange(0, [class length])];
+                                 range:NSMakeRange(0, [className length])];
 
     if (match) {
         NSArray *dataArray = data;
-        innerType = [class substringWithRange:[match rangeAtIndex:1]];
+        innerType = [className substringWithRange:[match rangeAtIndex:1]];
 
         resultArray = [NSMutableArray arrayWithCapacity:[dataArray count]];
         [data enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            [resultArray addObject:[self deserialize:obj class:innerType]];
+            [resultArray addObject:[self deserialize:obj className:innerType]];
         }];
 
         return resultArray;
@@ -359,17 +359,17 @@ static void (^reachabilityChangeBlock)(int);
     regexp = [NSRegularExpression regularExpressionWithPattern:dictPat
                                                        options:NSRegularExpressionCaseInsensitive
                                                          error:nil];
-    match = [regexp firstMatchInString:class
+    match = [regexp firstMatchInString:className
                                options:0
-                                 range:NSMakeRange(0, [class length])];
+                                 range:NSMakeRange(0, [className length])];
 
     if (match) {
         NSDictionary *dataDict = data;
-        NSString *valueType = [class substringWithRange:[match rangeAtIndex:2]];
+        NSString *valueType = [className substringWithRange:[match rangeAtIndex:2]];
 
         resultDict = [NSMutableDictionary dictionaryWithCapacity:[dataDict count]];
         [data enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-            [resultDict setValue:[self deserialize:obj class:valueType] forKey:key];
+            [resultDict setValue:[self deserialize:obj className:valueType] forKey:key];
         }];
 
         return resultDict;
@@ -378,14 +378,14 @@ static void (^reachabilityChangeBlock)(int);
     // primitives
     NSArray *primitiveTypes = @[@"NSString", @"NSDate", @"NSNumber"];
 
-    if ([primitiveTypes containsObject:class]) {
-        if ([class isEqualToString:@"NSString"]) {
+    if ([primitiveTypes containsObject:className]) {
+        if ([className isEqualToString:@"NSString"]) {
             return [NSString stringWithString:data];
         }
-        else if ([class isEqualToString:@"NSDate"]) {
+        else if ([className isEqualToString:@"NSDate"]) {
             return [NSDate dateWithISO8601String:data];
         }
-        else if ([class isEqualToString:@"NSNumber"]) {
+        else if ([className isEqualToString:@"NSNumber"]) {
             // NSNumber from NSNumber
             if ([data isKindOfClass:[NSNumber class]]) {
                 return data;
@@ -405,7 +405,7 @@ static void (^reachabilityChangeBlock)(int);
     }
 
    // model
-    Class ModelClass = NSClassFromString(class);
+    Class ModelClass = NSClassFromString(className);
     if ([ModelClass instancesRespondToSelector:@selector(initWithDictionary:error:)]) {
         return [[ModelClass alloc] initWithDictionary:data error:nil];
     }
@@ -635,7 +635,7 @@ static void (^reachabilityChangeBlock)(int);
     }
     else {
         [self operationWithCompletionBlock:request requestId:requestId completionBlock:^(id data, NSError *error) {
-            completionBlock([self deserialize:data class:responseType], error);
+            completionBlock([self deserialize:data className:responseType], error);
         }];
     }
     return requestId;
