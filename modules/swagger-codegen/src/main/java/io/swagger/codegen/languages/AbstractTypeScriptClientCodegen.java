@@ -1,6 +1,8 @@
 package io.swagger.codegen.languages;
 
 import io.swagger.codegen.*;
+import io.swagger.models.*;
+import io.swagger.models.parameters.*;
 import io.swagger.models.properties.*;
 
 import java.util.*;
@@ -82,17 +84,17 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
 
 	@Override
 	public String escapeReservedWord(String name) {
-		return "_" + name;
+        return "_" + name;
 	}
 
 	@Override
 	public String apiFileFolder() {
-		return outputFolder + "/" + apiPackage().replace('.', File.separatorChar);
+        return outputFolder + "/" + apiPackage().replace('.', File.separatorChar);
 	}
 
 	@Override
 	public String modelFileFolder() {
-		return outputFolder + "/" + modelPackage().replace('.', File.separatorChar);
+        return outputFolder + "/" + modelPackage().replace('.', File.separatorChar);
 	}
 
 	@Override
@@ -203,14 +205,45 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
         return camelize(sanitizeName(operationId), true);
     }
 
+    @Override
+    public CodegenProperty fromProperty(String name, Property p) {
+        CodegenProperty property = super.fromProperty(name, p);
+        if (p instanceof ArrayProperty) {
+            property.listDatatype = getListDatatype(p);
+        }
+        return property;
+    }
+
+    @Override
+    public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, Map<String, Model> definitions, Swagger swagger) {
+        CodegenOperation op = super.fromOperation(path, httpMethod, operation, definitions, swagger);
+        Response methodResponse = findMethodResponse(operation.getResponses());
+        if (methodResponse != null) {
+            if (methodResponse.getSchema() != null) {
+                CodegenProperty cm = fromProperty("response", methodResponse.getSchema());
+                op.returnContainerType = cm.baseType;
+            }
+        }
+        return op;
+    }
+
+    public String getListDatatype(Property p) {
+        if (p instanceof ArrayProperty) {
+            ArrayProperty ap = (ArrayProperty) p;
+            Property inner = ap.getItems();
+            return getTypeDeclaration(inner);
+        }
+        return "";
+    }
+
     public void setModelPropertyNaming(String naming) {
         if ("original".equals(naming) || "camelCase".equals(naming) ||
             "PascalCase".equals(naming) || "snake_case".equals(naming)) {
             this.modelPropertyNaming = naming;
         } else {
             throw new IllegalArgumentException("Invalid model property naming '" +
-              naming + "'. Must be 'original', 'camelCase', " +
-              "'PascalCase' or 'snake_case'");
+            naming + "'. Must be 'original', 'camelCase', " +
+            "'PascalCase' or 'snake_case'");
         }
     }
 
@@ -224,9 +257,9 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
             case camelCase:   return camelize(name, true);
             case PascalCase:  return camelize(name);
             case snake_case:  return underscore(name);
-            default:            throw new IllegalArgumentException("Invalid model property naming '" +
-                                    name + "'. Must be 'original', 'camelCase', " +
-                                    "'PascalCase' or 'snake_case'");
+            default:          throw new IllegalArgumentException("Invalid model property naming '" +
+                                name + "'. Must be 'original', 'camelCase', " +
+                                "'PascalCase' or 'snake_case'");
         }
 
     }
