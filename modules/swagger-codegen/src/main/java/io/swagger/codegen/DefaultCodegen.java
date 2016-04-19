@@ -1397,6 +1397,7 @@ public class DefaultCodegen {
         op.path = path;
         op.operationId = toOperationId(operationId);
         op.summary = escapeText(operation.getSummary());
+        op.unescapedNotes = operation.getDescription();
         op.notes = escapeText(operation.getDescription());
         op.tags = operation.getTags();
         op.hasConsumes = false;
@@ -1706,6 +1707,7 @@ public class DefaultCodegen {
         CodegenParameter p = CodegenModelFactory.newInstance(CodegenModelType.PARAMETER);
         p.baseName = param.getName();
         p.description = escapeText(param.getDescription());
+        p.unescapedDescription = param.getDescription();
         if (param.getRequired()) {
             p.required = param.getRequired();
         }
