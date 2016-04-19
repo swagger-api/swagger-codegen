@@ -601,6 +601,26 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
             Map<String, Object> mo = (Map<String, Object>) _mo;
             CodegenModel cm = (CodegenModel) mo.get("model");
 
+            // DEG - Handle enumerations which don't have a codegen property
+            // This is a hack which builds up the information necessary for the enumClass template
+            List<CodegenProperty> vars = cm.vars;
+            if ((vars == null || vars.isEmpty()) && Boolean.TRUE.equals(cm.isEnum) && cm.allowableValues != null) {
+            	final CodegenProperty newVar = new CodegenProperty();
+            	final HashMap<String, Object> newAllowableValues = new HashMap<String, Object>();
+            	newAllowableValues.put("values", new ArrayList<String>(cm.allowableValues));
+            	newVar._enum = new ArrayList<String>(cm.allowableValues);
+            	newVar.allowableValues = newAllowableValues;
+            	newVar.isEnum = true;
+            	newVar.datatypeWithEnum = cm.name;
+            	cm.vars.add(newVar);
+            	cm.hasEnums = true;
+            	cm.hasVars = true;
+            	cm.datatypeWithEnum = cm.classname;
+            	final Map<String, String> imports = new HashMap<String, String>();
+            	imports.put("import", "com.fasterxml.jackson.annotation.JsonValue");
+            	objs.put("imports", imports);
+            }
+            
             for (CodegenProperty var : cm.vars) {
                 Map<String, Object> allowableValues = var.allowableValues;
 
@@ -616,7 +636,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
                 if (values == null) {
                     continue;
                 }
-
+                
                 // put "enumVars" map into `allowableValues", including `name` and `value`
                 List<Map<String, String>> enumVars = new ArrayList<Map<String, String>>();
                 String commonPrefix = findCommonPrefixOfVars(values);
@@ -636,6 +656,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
                     enumVar.put("value", value);
                     enumVars.add(enumVar);
                 }
+                cm.enumVars = enumVars;
                 allowableValues.put("enumVars", enumVars);
                 // handle default value for enum, e.g. available => StatusEnum.AVAILABLE
                 if (var.defaultValue != null) {
@@ -756,10 +777,22 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         return prefix.replaceAll("[a-zA-Z0-9]+\\z", "");
     }
 
+    private static final Map<String, String> SPECIAL_CHARS_ENUM_MAPPER;
+    static
+    {
+    	SPECIAL_CHARS_ENUM_MAPPER = new HashMap<String, String>();
+    	SPECIAL_CHARS_ENUM_MAPPER.put("=", "EQUALS");
+    	SPECIAL_CHARS_ENUM_MAPPER.put("!=", "NOT_EQUALS");
+    	SPECIAL_CHARS_ENUM_MAPPER.put("&lt;=", "LESS_THAN_OR_EQUALS");
+    	SPECIAL_CHARS_ENUM_MAPPER.put("&lt;", "LESS_THAN");
+    }
+    
     private static String toEnumVarName(String value) {
         String var = value.replaceAll("\\W+", "_").toUpperCase();
         if (var.matches("\\d.*")) {
             return "_" + var;
+        } else if (SPECIAL_CHARS_ENUM_MAPPER.containsKey(value)) {
+        	return SPECIAL_CHARS_ENUM_MAPPER.get(value);
         } else {
             return var;
         }
