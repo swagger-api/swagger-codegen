@@ -4,7 +4,8 @@ import io.airlift.airline.Command;
 import io.airlift.airline.Option;
 import io.swagger.codegen.ClientOptInput;
 import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.DefaultGenerator;
+import io.swagger.codegen.Generator;
+import io.swagger.codegen.GeneratorLoader;
 import io.swagger.codegen.config.CodegenConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -220,6 +221,8 @@ public class Generate implements Runnable {
 
         final ClientOptInput clientOptInput = configurator.toClientOptInput();
 
-        new DefaultGenerator().opts(clientOptInput).generate();
+        for (Generator generator : GeneratorLoader.load()) {
+            generator.opts(clientOptInput).generate();
+        }
     }
 }
