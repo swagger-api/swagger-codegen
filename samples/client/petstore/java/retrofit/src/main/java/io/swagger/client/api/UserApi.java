@@ -18,7 +18,6 @@ import java.util.Map;
 
 
 public interface UserApi {
-  
   /**
    * Create user
    * Sync method
@@ -44,7 +43,6 @@ public interface UserApi {
   void createUser(
     @Body User body, Callback<Void> cb
   );
-  
   /**
    * Creates list of users with given input array
    * Sync method
@@ -70,7 +68,6 @@ public interface UserApi {
   void createUsersWithArrayInput(
     @Body List<User> body, Callback<Void> cb
   );
-  
   /**
    * Creates list of users with given input array
    * Sync method
@@ -96,7 +93,6 @@ public interface UserApi {
   void createUsersWithListInput(
     @Body List<User> body, Callback<Void> cb
   );
-  
   /**
    * Delete user
    * Sync method
@@ -122,7 +118,68 @@ public interface UserApi {
   void deleteUser(
     @Path("username") String username, Callback<Void> cb
   );
+  /**
+   * Get user by user name
+   * Sync method
+   * 
+   * @param username The name that needs to be fetched. Use user1 for testing.  (required)
+   * @return User
+   */
   
+  @GET("/user/{username}")
+  User getUserByName(
+    @Path("username") String username
+  );
+
+  /**
+   * Get user by user name
+   * Async method
+   * @param username The name that needs to be fetched. Use user1 for testing.  (required)
+   * @param cb callback method
+   * @return void
+   */
+  
+  @GET("/user/{username}")
+  void getUserByName(
+    @Path("username") String username, Callback<User> cb
+  );
+  /**
+   * Delete user
+   * Sync method
+<<<<<<< HEAD
+   * This can only be done by the logged in user.
+   * @param username The name that needs to be deleted (required)
+   * @return Void
+=======
+   * 
+   * @param username The user name for login (optional)
+   * @param password The password for login in clear text (optional)
+   * @return String
+>>>>>>> upstream/master
+   */
+  
+  @DELETE("/user/{username}")
+  Void deleteUser(
+    @Path("username") String username
+  );
+
+  /**
+   * Delete user
+   * Async method
+<<<<<<< HEAD
+   * @param username The name that needs to be deleted (required)
+=======
+   * @param username The user name for login (optional)
+   * @param password The password for login in clear text (optional)
+>>>>>>> upstream/master
+   * @param cb callback method
+   * @return void
+   */
+  
+  @DELETE("/user/{username}")
+  void deleteUser(
+    @Path("username") String username, Callback<Void> cb
+  );
   /**
    * Get user by user name
    * Sync method
@@ -148,6 +205,7 @@ public interface UserApi {
   void getUserByName(
     @Path("username") String username, Callback<User> cb
   );
+<<<<<<< HEAD
   
   /**
    * Logs user into the system
@@ -177,10 +235,18 @@ public interface UserApi {
     @Query("username") String username, @Query("password") String password, Callback<String> cb
   );
   
+=======
+>>>>>>> upstream/master
   /**
    * Logs out current logged in user session
    * Sync method
+<<<<<<< HEAD
    * 
+=======
+   * This can only be done by the logged in user.
+   * @param username name that need to be deleted (required)
+   * @param body Updated user object (optional)
+>>>>>>> upstream/master
    * @return Void
    */
   
@@ -191,6 +257,11 @@ public interface UserApi {
   /**
    * Logs out current logged in user session
    * Async method
+<<<<<<< HEAD
+=======
+   * @param username name that need to be deleted (required)
+   * @param body Updated user object (optional)
+>>>>>>> upstream/master
    * @param cb callback method
    * @return void
    */
@@ -199,6 +270,7 @@ public interface UserApi {
   void logoutUser(
     Callback<Void> cb
   );
+<<<<<<< HEAD
   
   /**
    * Updated user
@@ -228,5 +300,7 @@ public interface UserApi {
     @Path("username") String username, @Body User body, Callback<Void> cb
   );
   
+=======
+>>>>>>> upstream/master
 }
 

@@ -4,21 +4,31 @@ import java.util.Objects;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
 import com.google.gson.annotations.SerializedName;
 
 
 
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
 public class SpecialModelName   {
   
   @SerializedName("$special[property.name]")
   private Long specialPropertyName = null;
+<<<<<<< HEAD
   
 
   
+=======
+
+>>>>>>> upstream/master
   /**
    **/
   @ApiModelProperty(value = "")
@@ -29,7 +39,10 @@ public class SpecialModelName   {
     this.specialPropertyName = specialPropertyName;
   }
 
+<<<<<<< HEAD
   
+=======
+>>>>>>> upstream/master
 
   @Override
   public boolean equals(Object o) {
@@ -69,5 +82,8 @@ public class SpecialModelName   {
     return o.toString().replace("\n", "\n    ");
   }
 }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> upstream/master

@@ -13,6 +13,7 @@ import PromiseKit
 public class StoreAPI: APIBase {
     /**
      Delete purchase order by ID
+<<<<<<< HEAD
      
      - parameter orderId: (path) ID of the order that needs to be deleted 
      - parameter completion: completion handler to receive the data and the error objects
@@ -72,10 +73,20 @@ public class StoreAPI: APIBase {
     public class func findOrdersByStatus(status status: String? = nil, completion: ((data: [Order]?, error: ErrorType?) -> Void)) {
         findOrdersByStatusWithRequestBuilder(status: status).execute { (response, error) -> Void in
             completion(data: response?.body, error: error);
+=======
+     
+     - parameter orderId: (path) ID of the order that needs to be deleted 
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    public class func deleteOrder(orderId orderId: String, completion: ((error: ErrorType?) -> Void)) {
+        deleteOrderWithRequestBuilder(orderId: orderId).execute { (response, error) -> Void in
+            completion(error: error);
+>>>>>>> upstream/master
         }
     }
 
     /**
+<<<<<<< HEAD
      Finds orders by status
      
      - parameter status: (query) Status value that needs to be considered for query (optional, default to placed)
@@ -84,16 +95,27 @@ public class StoreAPI: APIBase {
     public class func findOrdersByStatus(status status: String? = nil) -> Promise<[Order]> {
         let deferred = Promise<[Order]>.pendingPromise()
         findOrdersByStatus(status: status) { data, error in
+=======
+     Delete purchase order by ID
+     
+     - parameter orderId: (path) ID of the order that needs to be deleted 
+     - returns: Promise<Void>
+     */
+    public class func deleteOrder(orderId orderId: String) -> Promise<Void> {
+        let deferred = Promise<Void>.pendingPromise()
+        deleteOrder(orderId: orderId) { error in
+>>>>>>> upstream/master
             if let error = error {
                 deferred.reject(error)
             } else {
-                deferred.fulfill(data!)
+                deferred.fulfill()
             }
         }
         return deferred.promise
     }
 
     /**
+<<<<<<< HEAD
      Finds orders by status
      - GET /store/findByStatus
      - A single status value can be provided as a string
@@ -135,9 +157,17 @@ public class StoreAPI: APIBase {
 </Order>}]
      
      - parameter status: (query) Status value that needs to be considered for query (optional, default to placed)
+=======
+     Delete purchase order by ID
+     - DELETE /store/order/{orderId}
+     - For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
+     
+     - parameter orderId: (path) ID of the order that needs to be deleted 
+>>>>>>> upstream/master
 
-     - returns: RequestBuilder<[Order]> 
+     - returns: RequestBuilder<Void> 
      */
+<<<<<<< HEAD
     public class func findOrdersByStatusWithRequestBuilder(status status: String? = nil) -> RequestBuilder<[Order]> {
         let path = "/store/findByStatus"
         let URLString = PetstoreClientAPI.basePath + path
@@ -145,11 +175,19 @@ public class StoreAPI: APIBase {
         let nillableParameters: [String:AnyObject?] = [
             "status": status
         ]
+=======
+    public class func deleteOrderWithRequestBuilder(orderId orderId: String) -> RequestBuilder<Void> {
+        var path = "/store/order/{orderId}"
+        path = path.stringByReplacingOccurrencesOfString("{orderId}", withString: "\(orderId)", options: .LiteralSearch, range: nil)
+        let URLString = PetstoreClientAPI.basePath + path
+
+        let nillableParameters: [String:AnyObject?] = [:]
+>>>>>>> upstream/master
         let parameters = APIHelper.rejectNil(nillableParameters)
 
-        let requestBuilder: RequestBuilder<[Order]>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "DELETE", URLString: URLString, parameters: parameters, isBody: true)
     }
 
     /**
@@ -199,6 +237,7 @@ public class StoreAPI: APIBase {
     public class func getInventoryWithRequestBuilder() -> RequestBuilder<[String:Int32]> {
         let path = "/store/inventory"
         let URLString = PetstoreClientAPI.basePath + path
+<<<<<<< HEAD
 
         let nillableParameters: [String:AnyObject?] = [:]
         let parameters = APIHelper.rejectNil(nillableParameters)
@@ -252,10 +291,13 @@ public class StoreAPI: APIBase {
         let path = "/store/inventory?response&#x3D;arbitrary_object"
         let URLString = PetstoreClientAPI.basePath + path
 
+=======
+
+>>>>>>> upstream/master
         let nillableParameters: [String:AnyObject?] = [:]
         let parameters = APIHelper.rejectNil(nillableParameters)
 
-        let requestBuilder: RequestBuilder<AnyObject>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<[String:Int32]>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: URLString, parameters: parameters, isBody: true)
     }
@@ -294,6 +336,7 @@ public class StoreAPI: APIBase {
      Find purchase order by ID
      - GET /store/order/{orderId}
      - For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions
+<<<<<<< HEAD
      - API Key:
        - type: apiKey test_api_key_query (QUERY)
        - name: test_api_key_query
@@ -301,6 +344,10 @@ public class StoreAPI: APIBase {
        - type: apiKey test_api_key_header 
        - name: test_api_key_header
      - examples: [{contentType=application/json, example={
+=======
+     - examples: [{example={
+  "id" : 123456789,
+>>>>>>> upstream/master
   "petId" : 123456789,
   "quantity" : 123,
   "id" : 123456789,
@@ -382,6 +429,7 @@ public class StoreAPI: APIBase {
      Place an order for a pet
      - POST /store/order
      - 
+<<<<<<< HEAD
      - API Key:
        - type: apiKey x-test_api_client_id 
        - name: test_api_client_id
@@ -389,6 +437,10 @@ public class StoreAPI: APIBase {
        - type: apiKey x-test_api_client_secret 
        - name: test_api_client_secret
      - examples: [{contentType=application/json, example={
+=======
+     - examples: [{example={
+  "id" : 123456789,
+>>>>>>> upstream/master
   "petId" : 123456789,
   "quantity" : 123,
   "id" : 123456789,

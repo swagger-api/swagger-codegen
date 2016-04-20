@@ -11,8 +11,11 @@ import okhttp3.RequestBody;
 import io.swagger.client.model.Pet;
 import io.swagger.client.model.InlineResponse200;
 import java.io.File;
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> upstream/master
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +25,6 @@ import java.util.Map;
 
 
 public interface PetApi {
-  
   /**
    * Add a new pet to the store
    * 
@@ -35,7 +37,6 @@ public interface PetApi {
     @Body Pet body
   );
 
-  
   /**
    * Fake endpoint to test byte array in body parameter for adding a new pet to the store
    * 
@@ -43,6 +44,7 @@ public interface PetApi {
    * @return Call<Void>
    */
   
+<<<<<<< HEAD
   @POST("pet?testing_byte_array=true")
   Observable<Void> addPetUsingByteArray(
     @Body byte[] body
@@ -60,9 +62,26 @@ public interface PetApi {
   @DELETE("pet/{petId}")
   Observable<Void> deletePet(
     @Path("petId") Long petId, @Header("api_key") String apiKey
+=======
+  @POST("pet?testing_byte_array&#x3D;true")
+  Observable<Void> addPetUsingByteArray(
+    @Body byte[] body
+>>>>>>> upstream/master
   );
 
+  /**
+   * Deletes a pet
+   * 
+   * @param petId Pet id to delete (required)
+   * @param apiKey  (optional)
+   * @return Call<Void>
+   */
   
+  @DELETE("pet/{petId}")
+  Observable<Void> deletePet(
+    @Path("petId") Long petId, @Header("api_key") String apiKey
+  );
+
   /**
    * Finds Pets by status
    * Multiple status values can be provided with comma separated strings
@@ -75,7 +94,6 @@ public interface PetApi {
     @Query("status") List<String> status
   );
 
-  
   /**
    * Finds Pets by tags
    * Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
@@ -88,7 +106,6 @@ public interface PetApi {
     @Query("tags") List<String> tags
   );
 
-  
   /**
    * Find pet by ID
    * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
@@ -101,7 +118,10 @@ public interface PetApi {
     @Path("petId") Long petId
   );
 
+<<<<<<< HEAD
   
+=======
+>>>>>>> upstream/master
   /**
    * Fake endpoint to test inline arbitrary object return by &#39;Find pet by ID&#39;
    * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
@@ -109,6 +129,7 @@ public interface PetApi {
    * @return Call<InlineResponse200>
    */
   
+<<<<<<< HEAD
   @GET("pet/{petId}?response=inline_arbitrary_object")
   Observable<InlineResponse200> getPetByIdInObject(
     @Path("petId") Long petId
@@ -138,10 +159,15 @@ public interface PetApi {
   @PUT("pet")
   Observable<Void> updatePet(
     @Body Pet body
+=======
+  @GET("pet/{petId}?response&#x3D;inline_arbitrary_object")
+  Observable<InlineResponse200> getPetByIdInObject(
+    @Path("petId") Long petId
+>>>>>>> upstream/master
   );
 
-  
   /**
+<<<<<<< HEAD
    * Updates a pet in the store with form data
    * 
    * @param petId ID of pet that needs to be updated (required)
@@ -154,9 +180,61 @@ public interface PetApi {
   @POST("pet/{petId}")
   Observable<Void> updatePetWithForm(
     @Path("petId") String petId, @Field("name") String name, @Field("status") String status
+=======
+   * Fake endpoint to test byte array return by &#39;Find pet by ID&#39;
+   * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
+   * @param petId ID of pet that needs to be fetched (required)
+   * @return Call<byte[]>
+   */
+  
+  @GET("pet/{petId}?testing_byte_array&#x3D;true")
+  Observable<byte[]> petPetIdtestingByteArraytrueGet(
+    @Path("petId") Long petId
+>>>>>>> upstream/master
   );
 
+  /**
+   * Update an existing pet
+   * 
+   * @param body Pet object that needs to be added to the store (optional)
+   * @return Call<Void>
+   */
   
+  @PUT("pet")
+  Observable<Void> updatePet(
+    @Body Pet body
+  );
+
+  /**
+<<<<<<< HEAD
+   * uploads an image
+   * 
+   * @param petId ID of pet to update (required)
+   * @param additionalMetadata Additional data to pass to server (optional)
+   * @param file file to upload (optional)
+   * @return Call<Void>
+   */
+  
+  @Multipart
+  @POST("pet/{petId}/uploadImage")
+  Observable<Void> uploadFile(
+    @Path("petId") Long petId, @Part("additionalMetadata") String additionalMetadata, @Part("file\"; filename=\"file\"") RequestBody file
+=======
+   * Updates a pet in the store with form data
+   * 
+   * @param petId ID of pet that needs to be updated (required)
+   * @param name Updated name of the pet (optional)
+   * @param status Updated status of the pet (optional)
+   * @return Call<Void>
+   */
+  
+  @FormUrlEncoded
+  @POST("pet/{petId}")
+  Observable<Void> updatePetWithForm(
+    @Path("petId") String petId, @Field("name") String name, @Field("status") String status
+>>>>>>> upstream/master
+  );
+
   /**
    * uploads an image
    * 
@@ -172,6 +250,5 @@ public interface PetApi {
     @Path("petId") Long petId, @Part("additionalMetadata") String additionalMetadata, @Part("file\"; filename=\"file\"") RequestBody file
   );
 
-  
 }
 

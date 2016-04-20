@@ -51,7 +51,11 @@ void (empty response body)
 
 No authorization required
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: Not defined
  - **Accept**: application/xml, application/json
@@ -95,7 +99,11 @@ void (empty response body)
 
 No authorization required
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: Not defined
  - **Accept**: application/xml, application/json
@@ -139,7 +147,11 @@ void (empty response body)
 
 No authorization required
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: Not defined
  - **Accept**: application/xml, application/json
@@ -183,7 +195,11 @@ void (empty response body)
 
 No authorization required
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: Not defined
  - **Accept**: application/xml, application/json
@@ -228,7 +244,11 @@ Name | Type | Description  | Notes
 
 No authorization required
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: Not defined
  - **Accept**: application/xml, application/json
@@ -275,7 +295,11 @@ Name | Type | Description  | Notes
 
 No authorization required
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: Not defined
  - **Accept**: application/xml, application/json
@@ -315,7 +339,11 @@ void (empty response body)
 
 No authorization required
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: Not defined
  - **Accept**: application/xml, application/json
@@ -361,7 +389,11 @@ void (empty response body)
 
 No authorization required
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: Not defined
  - **Accept**: application/xml, application/json

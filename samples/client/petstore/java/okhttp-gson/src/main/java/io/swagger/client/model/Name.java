@@ -9,17 +9,34 @@ import com.google.gson.annotations.SerializedName;
 
 
 
+<<<<<<< HEAD
 
+=======
+/**
+ * Model for testing model name same as property name
+ **/
+@ApiModel(description = "Model for testing model name same as property name")
+>>>>>>> upstream/master
 public class Name   {
   
   @SerializedName("name")
   private Integer name = null;
+<<<<<<< HEAD
   
 
   
   /**
    **/
   @ApiModelProperty(value = "")
+=======
+
+  @SerializedName("snake_case")
+  private Integer snakeCase = null;
+
+  /**
+   **/
+  @ApiModelProperty(required = true, value = "")
+>>>>>>> upstream/master
   public Integer getName() {
     return name;
   }
@@ -27,7 +44,17 @@ public class Name   {
     this.name = name;
   }
 
+<<<<<<< HEAD
   
+=======
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  public Integer getSnakeCase() {
+    return snakeCase;
+  }
+
+>>>>>>> upstream/master
 
   @Override
   public boolean equals(Object o) {
@@ -38,12 +65,21 @@ public class Name   {
       return false;
     }
     Name name = (Name) o;
+<<<<<<< HEAD
     return Objects.equals(this.name, name.name);
+=======
+    return Objects.equals(this.name, name.name) &&
+        Objects.equals(this.snakeCase, name.snakeCase);
+>>>>>>> upstream/master
   }
 
   @Override
   public int hashCode() {
+<<<<<<< HEAD
     return Objects.hash(name);
+=======
+    return Objects.hash(name, snakeCase);
+>>>>>>> upstream/master
   }
 
   @Override
@@ -52,6 +88,10 @@ public class Name   {
     sb.append("class Name {\n");
     
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+<<<<<<< HEAD
+=======
+    sb.append("    snakeCase: ").append(toIndentedString(snakeCase)).append("\n");
+>>>>>>> upstream/master
     sb.append("}");
     return sb.toString();
   }

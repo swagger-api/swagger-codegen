@@ -20,7 +20,6 @@ import java.util.Map;
 
 
 public interface UserApi {
-  
   /**
    * Create user
    * This can only be done by the logged in user.
@@ -33,7 +32,6 @@ public interface UserApi {
     @Body User body
   );
 
-  
   /**
    * Creates list of users with given input array
    * 
@@ -46,7 +44,6 @@ public interface UserApi {
     @Body List<User> body
   );
 
-  
   /**
    * Creates list of users with given input array
    * 
@@ -59,7 +56,30 @@ public interface UserApi {
     @Body List<User> body
   );
 
+  /**
+   * Delete user
+   * This can only be done by the logged in user.
+   * @param username The name that needs to be deleted (required)
+   * @return Call<Void>
+   */
   
+  @DELETE("user/{username}")
+  Call<Void> deleteUser(
+    @Path("username") String username
+  );
+
+  /**
+   * Get user by user name
+   * 
+   * @param username The name that needs to be fetched. Use user1 for testing.  (required)
+   * @return Call<User>
+   */
+  
+  @GET("user/{username}")
+  Call<User> getUserByName(
+    @Path("username") String username
+  );
+
   /**
    * Delete user
    * This can only be done by the logged in user.
@@ -99,7 +119,6 @@ public interface UserApi {
     @Query("username") String username, @Query("password") String password
   );
 
-  
   /**
    * Logs out current logged in user session
    * 
@@ -110,7 +129,10 @@ public interface UserApi {
   Call<Void> logoutUser();
     
 
+<<<<<<< HEAD
   
+=======
+>>>>>>> upstream/master
   /**
    * Updated user
    * This can only be done by the logged in user.
@@ -124,6 +146,9 @@ public interface UserApi {
     @Path("username") String username, @Body User body
   );
 
+<<<<<<< HEAD
   
+=======
+>>>>>>> upstream/master
 }
 

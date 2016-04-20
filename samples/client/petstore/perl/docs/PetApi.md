@@ -10,10 +10,19 @@ All URIs are relative to *http://petstore.swagger.io/v2*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**add_pet**](PetApi.md#add_pet) | **POST** /pet | Add a new pet to the store
+<<<<<<< HEAD
+=======
+[**add_pet_using_byte_array**](PetApi.md#add_pet_using_byte_array) | **POST** /pet?testing_byte_array&#x3D;true | Fake endpoint to test byte array in body parameter for adding a new pet to the store
+>>>>>>> upstream/master
 [**delete_pet**](PetApi.md#delete_pet) | **DELETE** /pet/{petId} | Deletes a pet
 [**find_pets_by_status**](PetApi.md#find_pets_by_status) | **GET** /pet/findByStatus | Finds Pets by status
 [**find_pets_by_tags**](PetApi.md#find_pets_by_tags) | **GET** /pet/findByTags | Finds Pets by tags
 [**get_pet_by_id**](PetApi.md#get_pet_by_id) | **GET** /pet/{petId} | Find pet by ID
+<<<<<<< HEAD
+=======
+[**get_pet_by_id_in_object**](PetApi.md#get_pet_by_id_in_object) | **GET** /pet/{petId}?response&#x3D;inline_arbitrary_object | Fake endpoint to test inline arbitrary object return by &#39;Find pet by ID&#39;
+[**pet_pet_idtesting_byte_arraytrue_get**](PetApi.md#pet_pet_idtesting_byte_arraytrue_get) | **GET** /pet/{petId}?testing_byte_array&#x3D;true | Fake endpoint to test byte array return by &#39;Find pet by ID&#39;
+>>>>>>> upstream/master
 [**update_pet**](PetApi.md#update_pet) | **PUT** /pet | Update an existing pet
 [**update_pet_with_form**](PetApi.md#update_pet_with_form) | **POST** /pet/{petId} | Updates a pet in the store with form data
 [**upload_file**](PetApi.md#upload_file) | **POST** /pet/{petId}/uploadImage | uploads an image
@@ -29,6 +38,8 @@ Add a new pet to the store
 ### Example 
 ```perl
 use Data::Dumper;
+<<<<<<< HEAD
+=======
 
 # Configure OAuth2 access token for authorization: petstore_auth
 $WWW::SwaggerClient::Configuration::access_token = 'YOUR_ACCESS_TOKEN';
@@ -48,6 +59,64 @@ if ($@) {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **body** | [**Pet**](Pet.md)| Pet object that needs to be added to the store | [optional] 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[petstore_auth](../README.md#petstore_auth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, application/xml
+ - **Accept**: application/json, application/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+>>>>>>> upstream/master
+
+# Configure OAuth2 access token for authorization: petstore_auth
+$WWW::SwaggerClient::Configuration::access_token = 'YOUR_ACCESS_TOKEN';
+
+<<<<<<< HEAD
+my $api_instance = WWW::SwaggerClient::PetApi->new();
+my $body = WWW::SwaggerClient::Object::Pet->new(); # Pet | Pet object that needs to be added to the store
+
+eval { 
+    $api_instance->add_pet(body => $body);
+};
+if ($@) {
+    warn "Exception when calling PetApi->add_pet: $@\n";
+=======
+Fake endpoint to test byte array in body parameter for adding a new pet to the store
+
+
+
+### Example 
+```perl
+use Data::Dumper;
+
+# Configure OAuth2 access token for authorization: petstore_auth
+$WWW::SwaggerClient::Configuration::access_token = 'YOUR_ACCESS_TOKEN';
+
+my $api_instance = WWW::SwaggerClient::PetApi->new();
+my $body = WWW::SwaggerClient::Object::string->new(); # string | Pet object in the form of byte array
+
+eval { 
+    $api_instance->add_pet_using_byte_array(body => $body);
+};
+if ($@) {
+    warn "Exception when calling PetApi->add_pet_using_byte_array: $@\n";
+>>>>>>> upstream/master
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
  **body** | [**Pet**](Pet.md)| Pet object that needs to be added to the store | 
 
 ### Return type
@@ -58,10 +127,14 @@ void (empty response body)
 
 [petstore_auth](../README.md#petstore_auth)
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: application/json, application/xml
+<<<<<<< HEAD
  - **Accept**: application/xml, application/json
+=======
+ - **Accept**: application/json, application/xml
+>>>>>>> upstream/master
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -106,10 +179,14 @@ void (empty response body)
 
 [petstore_auth](../README.md#petstore_auth)
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: Not defined
+<<<<<<< HEAD
  - **Accept**: application/xml, application/json
+=======
+ - **Accept**: application/json, application/xml
+>>>>>>> upstream/master
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -128,7 +205,11 @@ use Data::Dumper;
 $WWW::SwaggerClient::Configuration::access_token = 'YOUR_ACCESS_TOKEN';
 
 my $api_instance = WWW::SwaggerClient::PetApi->new();
+<<<<<<< HEAD
 my $status = (); # ARRAY[string] | Status values that need to be considered for filter
+=======
+my $status = (); # ARRAY[string] | Status values that need to be considered for query
+>>>>>>> upstream/master
 
 eval { 
     my $result = $api_instance->find_pets_by_status(status => $status);
@@ -153,10 +234,14 @@ Name | Type | Description  | Notes
 
 [petstore_auth](../README.md#petstore_auth)
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: Not defined
+<<<<<<< HEAD
  - **Accept**: application/xml, application/json
+=======
+ - **Accept**: application/json, application/xml
+>>>>>>> upstream/master
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -200,10 +285,14 @@ Name | Type | Description  | Notes
 
 [petstore_auth](../README.md#petstore_auth)
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: Not defined
+<<<<<<< HEAD
  - **Accept**: application/xml, application/json
+=======
+ - **Accept**: application/json, application/xml
+>>>>>>> upstream/master
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -212,11 +301,67 @@ Name | Type | Description  | Notes
 
 Find pet by ID
 
+<<<<<<< HEAD
 Returns a single pet
+=======
+Returns a pet when ID < 10.  ID > 10 or nonintegers will simulate API error conditions
 
 ### Example 
 ```perl
 use Data::Dumper;
+
+# Configure API key authorization: api_key
+$WWW::SwaggerClient::Configuration::api_key->{'api_key'} = 'YOUR_API_KEY';
+# uncomment below to setup prefix (e.g. BEARER) for API key, if needed
+#$WWW::SwaggerClient::Configuration::api_key_prefix->{'api_key'} = "BEARER";
+# Configure OAuth2 access token for authorization: petstore_auth
+$WWW::SwaggerClient::Configuration::access_token = 'YOUR_ACCESS_TOKEN';
+
+my $api_instance = WWW::SwaggerClient::PetApi->new();
+my $pet_id = 789; # int | ID of pet that needs to be fetched
+
+eval { 
+    my $result = $api_instance->get_pet_by_id(pet_id => $pet_id);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling PetApi->get_pet_by_id: $@\n";
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **pet_id** | **int**| ID of pet that needs to be fetched | 
+
+### Return type
+
+[**Pet**](Pet.md)
+
+### Authorization
+
+[api_key](../README.md#api_key), [petstore_auth](../README.md#petstore_auth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, application/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_pet_by_id_in_object**
+> InlineResponse200 get_pet_by_id_in_object(pet_id => $pet_id)
+
+Fake endpoint to test inline arbitrary object return by 'Find pet by ID'
+
+Returns a pet when ID < 10.  ID > 10 or nonintegers will simulate API error conditions
+>>>>>>> upstream/master
+
+### Example 
+```perl
+use Data::Dumper;
+<<<<<<< HEAD
 
 # Configure API key authorization: api_key
 $WWW::SwaggerClient::Configuration::api_key->{'api_key'} = 'YOUR_API_KEY';
@@ -232,6 +377,76 @@ eval {
 };
 if ($@) {
     warn "Exception when calling PetApi->get_pet_by_id: $@\n";
+=======
+
+# Configure API key authorization: api_key
+$WWW::SwaggerClient::Configuration::api_key->{'api_key'} = 'YOUR_API_KEY';
+# uncomment below to setup prefix (e.g. BEARER) for API key, if needed
+#$WWW::SwaggerClient::Configuration::api_key_prefix->{'api_key'} = "BEARER";
+# Configure OAuth2 access token for authorization: petstore_auth
+$WWW::SwaggerClient::Configuration::access_token = 'YOUR_ACCESS_TOKEN';
+
+my $api_instance = WWW::SwaggerClient::PetApi->new();
+my $pet_id = 789; # int | ID of pet that needs to be fetched
+
+eval { 
+    my $result = $api_instance->get_pet_by_id_in_object(pet_id => $pet_id);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling PetApi->get_pet_by_id_in_object: $@\n";
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **pet_id** | **int**| ID of pet that needs to be fetched | 
+
+### Return type
+
+[**InlineResponse200**](InlineResponse200.md)
+
+### Authorization
+
+[api_key](../README.md#api_key), [petstore_auth](../README.md#petstore_auth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, application/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **pet_pet_idtesting_byte_arraytrue_get**
+> string pet_pet_idtesting_byte_arraytrue_get(pet_id => $pet_id)
+
+Fake endpoint to test byte array return by 'Find pet by ID'
+
+Returns a pet when ID < 10.  ID > 10 or nonintegers will simulate API error conditions
+
+### Example 
+```perl
+use Data::Dumper;
+
+# Configure API key authorization: api_key
+$WWW::SwaggerClient::Configuration::api_key->{'api_key'} = 'YOUR_API_KEY';
+# uncomment below to setup prefix (e.g. BEARER) for API key, if needed
+#$WWW::SwaggerClient::Configuration::api_key_prefix->{'api_key'} = "BEARER";
+# Configure OAuth2 access token for authorization: petstore_auth
+$WWW::SwaggerClient::Configuration::access_token = 'YOUR_ACCESS_TOKEN';
+
+my $api_instance = WWW::SwaggerClient::PetApi->new();
+my $pet_id = 789; # int | ID of pet that needs to be fetched
+
+eval { 
+    my $result = $api_instance->pet_pet_idtesting_byte_arraytrue_get(pet_id => $pet_id);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling PetApi->pet_pet_idtesting_byte_arraytrue_get: $@\n";
+>>>>>>> upstream/master
 }
 ```
 
@@ -249,10 +464,14 @@ Name | Type | Description  | Notes
 
 [api_key](../README.md#api_key)
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: Not defined
+<<<<<<< HEAD
  - **Accept**: application/xml, application/json
+=======
+ - **Accept**: application/json, application/xml
+>>>>>>> upstream/master
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -295,10 +514,14 @@ void (empty response body)
 
 [petstore_auth](../README.md#petstore_auth)
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: application/json, application/xml
+<<<<<<< HEAD
  - **Accept**: application/xml, application/json
+=======
+ - **Accept**: application/json, application/xml
+>>>>>>> upstream/master
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -317,7 +540,11 @@ use Data::Dumper;
 $WWW::SwaggerClient::Configuration::access_token = 'YOUR_ACCESS_TOKEN';
 
 my $api_instance = WWW::SwaggerClient::PetApi->new();
+<<<<<<< HEAD
 my $pet_id = 789; # int | ID of pet that needs to be updated
+=======
+my $pet_id = 'pet_id_example'; # string | ID of pet that needs to be updated
+>>>>>>> upstream/master
 my $name = 'name_example'; # string | Updated name of the pet
 my $status = 'status_example'; # string | Updated status of the pet
 
@@ -345,10 +572,14 @@ void (empty response body)
 
 [petstore_auth](../README.md#petstore_auth)
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: application/x-www-form-urlencoded
+<<<<<<< HEAD
  - **Accept**: application/xml, application/json
+=======
+ - **Accept**: application/json, application/xml
+>>>>>>> upstream/master
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -372,8 +603,12 @@ my $additional_metadata = 'additional_metadata_example'; # string | Additional d
 my $file = '/path/to/file.txt'; # File | file to upload
 
 eval { 
+<<<<<<< HEAD
     my $result = $api_instance->upload_file(pet_id => $pet_id, additional_metadata => $additional_metadata, file => $file);
     print Dumper($result);
+=======
+    $api_instance->upload_file(pet_id => $pet_id, additional_metadata => $additional_metadata, file => $file);
+>>>>>>> upstream/master
 };
 if ($@) {
     warn "Exception when calling PetApi->upload_file: $@\n";
@@ -396,10 +631,14 @@ Name | Type | Description  | Notes
 
 [petstore_auth](../README.md#petstore_auth)
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: multipart/form-data
+<<<<<<< HEAD
  - **Accept**: application/json
+=======
+ - **Accept**: application/json, application/xml
+>>>>>>> upstream/master
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

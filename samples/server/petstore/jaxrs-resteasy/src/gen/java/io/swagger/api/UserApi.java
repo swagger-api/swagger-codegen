@@ -20,14 +20,18 @@ import javax.ws.rs.*;
 @Path("/user")
 
 
+<<<<<<< HEAD
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaResteasyServerCodegen", date = "2016-03-16T14:27:58.108+08:00")
+=======
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaResteasyServerCodegen", date = "2016-04-15T18:10:39.667+08:00")
+>>>>>>> upstream/master
 public class UserApi  {
    private final UserApiService delegate = UserApiServiceFactory.getUserApi();
 
     @POST
     
     
-    @Produces({ "application/json", "application/xml" })
+    @Produces({ "application/xml", "application/json" })
     public Response createUser( User body,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.createUser(body,securityContext);
@@ -35,7 +39,7 @@ public class UserApi  {
     @POST
     @Path("/createWithArray")
     
-    @Produces({ "application/json", "application/xml" })
+    @Produces({ "application/xml", "application/json" })
     public Response createUsersWithArrayInput( List<User> body,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.createUsersWithArrayInput(body,securityContext);
@@ -43,7 +47,7 @@ public class UserApi  {
     @POST
     @Path("/createWithList")
     
-    @Produces({ "application/json", "application/xml" })
+    @Produces({ "application/xml", "application/json" })
     public Response createUsersWithListInput( List<User> body,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.createUsersWithListInput(body,securityContext);
@@ -51,7 +55,11 @@ public class UserApi  {
     @DELETE
     @Path("/{username}")
     
+<<<<<<< HEAD
     @Produces({ "application/json", "application/xml" })
+=======
+    @Produces({ "application/xml", "application/json" })
+>>>>>>> upstream/master
     public Response deleteUser( @PathParam("username") String username,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.deleteUser(username,securityContext);
@@ -59,7 +67,11 @@ public class UserApi  {
     @GET
     @Path("/{username}")
     
+<<<<<<< HEAD
     @Produces({ "application/json", "application/xml" })
+=======
+    @Produces({ "application/xml", "application/json" })
+>>>>>>> upstream/master
     public Response getUserByName( @PathParam("username") String username,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.getUserByName(username,securityContext);
@@ -67,7 +79,7 @@ public class UserApi  {
     @GET
     @Path("/login")
     
-    @Produces({ "application/json", "application/xml" })
+    @Produces({ "application/xml", "application/json" })
     public Response loginUser( @QueryParam("username") String username, @QueryParam("password") String password,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.loginUser(username,password,securityContext);
@@ -75,7 +87,7 @@ public class UserApi  {
     @GET
     @Path("/logout")
     
-    @Produces({ "application/json", "application/xml" })
+    @Produces({ "application/xml", "application/json" })
     public Response logoutUser(@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.logoutUser(securityContext);
@@ -83,7 +95,7 @@ public class UserApi  {
     @PUT
     @Path("/{username}")
     
-    @Produces({ "application/json", "application/xml" })
+    @Produces({ "application/xml", "application/json" })
     public Response updateUser( @PathParam("username") String username, User body,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.updateUser(username,body,securityContext);

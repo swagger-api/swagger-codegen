@@ -44,7 +44,6 @@ public class UserApi {
     this.apiClient = apiClient;
   }
 
-  
   /* Build call for createUser */
   private Call createUserCall(User body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = body;
@@ -142,7 +141,6 @@ public class UserApi {
     apiClient.executeAsync(call, callback);
     return call;
   }
-  
   /* Build call for createUsersWithArrayInput */
   private Call createUsersWithArrayInputCall(List<User> body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = body;
@@ -240,7 +238,6 @@ public class UserApi {
     apiClient.executeAsync(call, callback);
     return call;
   }
-  
   /* Build call for createUsersWithListInput */
   private Call createUsersWithListInputCall(List<User> body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = body;
@@ -338,7 +335,10 @@ public class UserApi {
     apiClient.executeAsync(call, callback);
     return call;
   }
+<<<<<<< HEAD
   
+=======
+>>>>>>> upstream/master
   /* Build call for deleteUser */
   private Call deleteUserCall(String username, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = null;
@@ -442,7 +442,10 @@ public class UserApi {
     apiClient.executeAsync(call, callback);
     return call;
   }
+<<<<<<< HEAD
   
+=======
+>>>>>>> upstream/master
   /* Build call for getUserByName */
   private Call getUserByNameCall(String username, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = null;
@@ -494,7 +497,11 @@ public class UserApi {
   /**
    * Get user by user name
    * 
+<<<<<<< HEAD
    * @param username The name that needs to be fetched. Use user1 for testing. (required)
+=======
+   * @param username The name that needs to be fetched. Use user1 for testing.  (required)
+>>>>>>> upstream/master
    * @return User
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
    */
@@ -506,7 +513,11 @@ public class UserApi {
   /**
    * Get user by user name
    * 
+<<<<<<< HEAD
    * @param username The name that needs to be fetched. Use user1 for testing. (required)
+=======
+   * @param username The name that needs to be fetched. Use user1 for testing.  (required)
+>>>>>>> upstream/master
    * @return ApiResponse<User>
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
    */
@@ -519,7 +530,11 @@ public class UserApi {
   /**
    * Get user by user name (asynchronously)
    * 
+<<<<<<< HEAD
    * @param username The name that needs to be fetched. Use user1 for testing. (required)
+=======
+   * @param username The name that needs to be fetched. Use user1 for testing.  (required)
+>>>>>>> upstream/master
    * @param callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -550,7 +565,10 @@ public class UserApi {
     apiClient.executeAsync(call, localVarReturnType, callback);
     return call;
   }
+<<<<<<< HEAD
   
+=======
+>>>>>>> upstream/master
   /* Build call for loginUser */
   private Call loginUserCall(String username, String password, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = null;
@@ -659,7 +677,10 @@ public class UserApi {
     apiClient.executeAsync(call, localVarReturnType, callback);
     return call;
   }
+<<<<<<< HEAD
   
+=======
+>>>>>>> upstream/master
   /* Build call for logoutUser */
   private Call logoutUserCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = null;
@@ -754,7 +775,10 @@ public class UserApi {
     apiClient.executeAsync(call, callback);
     return call;
   }
+<<<<<<< HEAD
   
+=======
+>>>>>>> upstream/master
   /* Build call for updateUser */
   private Call updateUserCall(String username, User body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = body;
@@ -861,5 +885,4 @@ public class UserApi {
     apiClient.executeAsync(call, callback);
     return call;
   }
-  
 }

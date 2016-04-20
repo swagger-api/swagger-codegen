@@ -49,7 +49,11 @@ nil (empty response body)
 
 No authorization required
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: Not defined
  - **Accept**: application/xml, application/json
@@ -97,7 +101,11 @@ This endpoint does not need any parameter.
 
 [api_key](../README.md#api_key)
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
@@ -144,7 +152,11 @@ Name | Type | Description  | Notes
 
 No authorization required
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: Not defined
  - **Accept**: application/xml, application/json
@@ -191,7 +203,11 @@ Name | Type | Description  | Notes
 
 No authorization required
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: Not defined
  - **Accept**: application/xml, application/json

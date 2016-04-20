@@ -54,7 +54,11 @@ void (empty response body)
 
 [petstore_auth](../README.md#petstore_auth)
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: application/json, application/xml
  - **Accept**: application/xml, application/json
@@ -103,7 +107,11 @@ void (empty response body)
 
 [petstore_auth](../README.md#petstore_auth)
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: Not defined
  - **Accept**: application/xml, application/json
@@ -151,7 +159,11 @@ Name | Type | Description  | Notes
 
 [petstore_auth](../README.md#petstore_auth)
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: Not defined
  - **Accept**: application/xml, application/json
@@ -199,7 +211,11 @@ Name | Type | Description  | Notes
 
 [petstore_auth](../README.md#petstore_auth)
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: Not defined
  - **Accept**: application/xml, application/json
@@ -249,7 +265,11 @@ Name | Type | Description  | Notes
 
 [api_key](../README.md#api_key)
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: Not defined
  - **Accept**: application/xml, application/json
@@ -296,7 +316,11 @@ void (empty response body)
 
 [petstore_auth](../README.md#petstore_auth)
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: application/json, application/xml
  - **Accept**: application/xml, application/json
@@ -347,7 +371,11 @@ void (empty response body)
 
 [petstore_auth](../README.md#petstore_auth)
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/xml, application/json
@@ -399,7 +427,11 @@ Name | Type | Description  | Notes
 
 [petstore_auth](../README.md#petstore_auth)
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: multipart/form-data
  - **Accept**: application/json

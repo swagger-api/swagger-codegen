@@ -761,6 +761,10 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Acunetix](https://www.acunetix.com/)
 - [Atlassian](https://www.atlassian.com/)
 - [beemo](http://www.beemo.eu)
+<<<<<<< HEAD
+=======
+- [Cachet Financial](http://www.cachetfinancial.com/)
+>>>>>>> upstream/master
 - [CloudBoost](https://www.CloudBoost.io/)
 - [Cupix](http://www.cupix.com)
 - [DocuSign](https://www.docusign.com)
@@ -769,6 +773,10 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [everystory.us](http://everystory.us)
 - [Expected Behavior](http://www.expectedbehavior.com/)
 - [FH Münster - University of Applied Sciences](http://www.fh-muenster.de)
+<<<<<<< HEAD
+=======
+- [Interactive Intelligence](http://developer.mypurecloud.com/)
+>>>>>>> upstream/master
 - [LANDR Audio](https://www.landr.com/)
 - [LiveAgent](https://www.ladesk.com/)
 - [Kuary](https://kuary.com/)

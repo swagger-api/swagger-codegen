@@ -56,7 +56,11 @@ null (empty response body)
 
 No authorization required
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/xml
@@ -103,7 +107,11 @@ null (empty response body)
 
 No authorization required
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/xml
@@ -150,7 +158,11 @@ null (empty response body)
 
 No authorization required
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/xml
@@ -202,7 +214,11 @@ null (empty response body)
 
 [test_http_basic](../README.md#test_http_basic)
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/xml
@@ -248,7 +264,11 @@ Name | Type | Description  | Notes
 
 No authorization required
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/xml
@@ -297,7 +317,11 @@ Name | Type | Description  | Notes
 
 No authorization required
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/xml
@@ -337,7 +361,11 @@ null (empty response body)
 
 No authorization required
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/xml
@@ -387,7 +415,11 @@ null (empty response body)
 
 No authorization required
 
+<<<<<<< HEAD
 ### HTTP reuqest headers
+=======
+### HTTP request headers
+>>>>>>> upstream/master
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/xml

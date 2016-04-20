@@ -95,7 +95,11 @@ public class UserApi  {
         @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid username supplied", response = User.class),
         @io.swagger.annotations.ApiResponse(code = 404, message = "User not found", response = User.class) })
     public Response getUserByName(
+<<<<<<< HEAD
         @ApiParam(value = "The name that needs to be fetched. Use user1 for testing.",required=true) @PathParam("username") String username,
+=======
+        @ApiParam(value = "The name that needs to be fetched. Use user1 for testing. ",required=true) @PathParam("username") String username,
+>>>>>>> upstream/master
         @Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.getUserByName(username,securityContext);
@@ -119,7 +123,11 @@ public class UserApi  {
     @Path("/logout")
     
     @Produces({ "application/xml", "application/json" })
+<<<<<<< HEAD
     @io.swagger.annotations.ApiOperation(value = "Logs out current logged in user session", notes = "null", response = void.class, tags={ "user",  })
+=======
+    @io.swagger.annotations.ApiOperation(value = "Logs out current logged in user session", notes = "", response = void.class, tags={ "user",  })
+>>>>>>> upstream/master
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = void.class) })
     public Response logoutUser(
@@ -136,7 +144,11 @@ public class UserApi  {
         @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid user supplied", response = void.class),
         @io.swagger.annotations.ApiResponse(code = 404, message = "User not found", response = void.class) })
     public Response updateUser(
+<<<<<<< HEAD
         @ApiParam(value = "name that need to be updated",required=true) @PathParam("username") String username,
+=======
+        @ApiParam(value = "name that need to be deleted",required=true) @PathParam("username") String username,
+>>>>>>> upstream/master
         @ApiParam(value = "Updated user object" ,required=true) User body,
         @Context SecurityContext securityContext)
     throws NotFoundException {

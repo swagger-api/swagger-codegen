@@ -24,7 +24,11 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
   /**
    * Create user
    * This can only be done by the logged in user.
+<<<<<<< HEAD
    * @param body Created user object (optional)
+=======
+   * @param body Created user object 
+>>>>>>> upstream/master
    * @return void
    */
   def createUser (body: User)  = {
@@ -38,6 +42,10 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     val headerParams = new HashMap[String, String]
     val formParams = new HashMap[String, String]
 
+<<<<<<< HEAD
+=======
+    if (body == null) throw new Exception("Missing required parameter 'body' when calling UserApi->createUser")
+>>>>>>> upstream/master
 
         
     
@@ -49,7 +57,11 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       postBody = mp
     }
     else {
+<<<<<<< HEAD
           }
+=======
+    }
+>>>>>>> upstream/master
 
     try {
       apiInvoker.invokeApi(basePath, path, "POST", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
@@ -61,10 +73,18 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       case ex: ApiException => throw ex
     }
   }
+<<<<<<< HEAD
   /**
    * Creates list of users with given input array
    * 
    * @param body List of user object (optional)
+=======
+
+  /**
+   * Creates list of users with given input array
+   * 
+   * @param body List of user object 
+>>>>>>> upstream/master
    * @return void
    */
   def createUsersWithArrayInput (body: List[User])  = {
@@ -78,6 +98,10 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     val headerParams = new HashMap[String, String]
     val formParams = new HashMap[String, String]
 
+<<<<<<< HEAD
+=======
+    if (body == null) throw new Exception("Missing required parameter 'body' when calling UserApi->createUsersWithArrayInput")
+>>>>>>> upstream/master
 
         
     
@@ -89,7 +113,11 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       postBody = mp
     }
     else {
+<<<<<<< HEAD
           }
+=======
+    }
+>>>>>>> upstream/master
 
     try {
       apiInvoker.invokeApi(basePath, path, "POST", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
@@ -101,10 +129,18 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       case ex: ApiException => throw ex
     }
   }
+<<<<<<< HEAD
   /**
    * Creates list of users with given input array
    * 
    * @param body List of user object (optional)
+=======
+
+  /**
+   * Creates list of users with given input array
+   * 
+   * @param body List of user object 
+>>>>>>> upstream/master
    * @return void
    */
   def createUsersWithListInput (body: List[User])  = {
@@ -118,6 +154,10 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     val headerParams = new HashMap[String, String]
     val formParams = new HashMap[String, String]
 
+<<<<<<< HEAD
+=======
+    if (body == null) throw new Exception("Missing required parameter 'body' when calling UserApi->createUsersWithListInput")
+>>>>>>> upstream/master
 
         
     
@@ -129,7 +169,11 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       postBody = mp
     }
     else {
+<<<<<<< HEAD
           }
+=======
+    }
+>>>>>>> upstream/master
 
     try {
       apiInvoker.invokeApi(basePath, path, "POST", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
@@ -141,6 +185,10 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       case ex: ApiException => throw ex
     }
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
   /**
    * Delete user
    * This can only be done by the logged in user.
@@ -160,7 +208,10 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     val headerParams = new HashMap[String, String]
     val formParams = new HashMap[String, String]
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
         
     
     var postBody: AnyRef = null
@@ -171,7 +222,11 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       postBody = mp
     }
     else {
+<<<<<<< HEAD
           }
+=======
+    }
+>>>>>>> upstream/master
 
     try {
       apiInvoker.invokeApi(basePath, path, "DELETE", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
@@ -183,6 +238,10 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       case ex: ApiException => throw ex
     }
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
   /**
    * Get user by user name
    * 
@@ -202,7 +261,10 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     val headerParams = new HashMap[String, String]
     val formParams = new HashMap[String, String]
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
         
     
     var postBody: AnyRef = null
@@ -213,7 +275,11 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       postBody = mp
     }
     else {
+<<<<<<< HEAD
           }
+=======
+    }
+>>>>>>> upstream/master
 
     try {
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
@@ -226,11 +292,20 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       case ex: ApiException => throw ex
     }
   }
+<<<<<<< HEAD
   /**
    * Logs user into the system
    * 
    * @param username The user name for login (optional)
    * @param password The password for login in clear text (optional)
+=======
+
+  /**
+   * Logs user into the system
+   * 
+   * @param username The user name for login 
+   * @param password The password for login in clear text 
+>>>>>>> upstream/master
    * @return String
    */
   def loginUser (username: String, password: String) : Option[String] = {
@@ -244,11 +319,18 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     val headerParams = new HashMap[String, String]
     val formParams = new HashMap[String, String]
 
+<<<<<<< HEAD
 
     if(String.valueOf(username) != "null") queryParams += "username" -> username.toString
 if(String.valueOf(password) != "null") queryParams += "password" -> password.toString
     
     
+=======
+    if(String.valueOf(username) != "null") queryParams += "username" -> username.toString
+if(String.valueOf(password) != "null") queryParams += "password" -> password.toString
+    
+    
+>>>>>>> upstream/master
     var postBody: AnyRef = null
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -257,7 +339,11 @@ if(String.valueOf(password) != "null") queryParams += "password" -> password.toS
       postBody = mp
     }
     else {
+<<<<<<< HEAD
           }
+=======
+    }
+>>>>>>> upstream/master
 
     try {
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
@@ -270,6 +356,10 @@ if(String.valueOf(password) != "null") queryParams += "password" -> password.toS
       case ex: ApiException => throw ex
     }
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
   /**
    * Logs out current logged in user session
    * 
@@ -286,7 +376,10 @@ if(String.valueOf(password) != "null") queryParams += "password" -> password.toS
     val headerParams = new HashMap[String, String]
     val formParams = new HashMap[String, String]
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
         
     
     var postBody: AnyRef = null
@@ -297,7 +390,11 @@ if(String.valueOf(password) != "null") queryParams += "password" -> password.toS
       postBody = mp
     }
     else {
+<<<<<<< HEAD
           }
+=======
+    }
+>>>>>>> upstream/master
 
     try {
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
@@ -309,11 +406,19 @@ if(String.valueOf(password) != "null") queryParams += "password" -> password.toS
       case ex: ApiException => throw ex
     }
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
   /**
    * Updated user
    * This can only be done by the logged in user.
    * @param username name that need to be deleted 
+<<<<<<< HEAD
    * @param body Updated user object (optional)
+=======
+   * @param body Updated user object 
+>>>>>>> upstream/master
    * @return void
    */
   def updateUser (username: String, body: User)  = {
@@ -329,6 +434,10 @@ if(String.valueOf(password) != "null") queryParams += "password" -> password.toS
     val headerParams = new HashMap[String, String]
     val formParams = new HashMap[String, String]
 
+<<<<<<< HEAD
+=======
+    if (body == null) throw new Exception("Missing required parameter 'body' when calling UserApi->updateUser")
+>>>>>>> upstream/master
 
         
     
@@ -340,7 +449,11 @@ if(String.valueOf(password) != "null") queryParams += "password" -> password.toS
       postBody = mp
     }
     else {
+<<<<<<< HEAD
           }
+=======
+    }
+>>>>>>> upstream/master
 
     try {
       apiInvoker.invokeApi(basePath, path, "PUT", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
@@ -352,4 +465,8 @@ if(String.valueOf(password) != "null") queryParams += "password" -> password.toS
       case ex: ApiException => throw ex
     }
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
 }

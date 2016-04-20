@@ -15,17 +15,19 @@ import java.io.InputStream;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
+<<<<<<< HEAD
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaResteasyServerCodegen", date = "2016-03-16T14:27:58.108+08:00")
+=======
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaResteasyServerCodegen", date = "2016-04-15T18:10:39.667+08:00")
+>>>>>>> upstream/master
 public abstract class UserApiService {
-  
       public abstract Response createUser(User body,SecurityContext securityContext)
       throws NotFoundException;
-  
       public abstract Response createUsersWithArrayInput(List<User> body,SecurityContext securityContext)
       throws NotFoundException;
-  
       public abstract Response createUsersWithListInput(List<User> body,SecurityContext securityContext)
       throws NotFoundException;
+<<<<<<< HEAD
   
       public abstract Response deleteUser(String username,SecurityContext securityContext)
       throws NotFoundException;
@@ -42,4 +44,16 @@ public abstract class UserApiService {
       public abstract Response updateUser(String username,User body,SecurityContext securityContext)
       throws NotFoundException;
   
+=======
+      public abstract Response deleteUser(String username,SecurityContext securityContext)
+      throws NotFoundException;
+      public abstract Response getUserByName(String username,SecurityContext securityContext)
+      throws NotFoundException;
+      public abstract Response loginUser(String username,String password,SecurityContext securityContext)
+      throws NotFoundException;
+      public abstract Response logoutUser(SecurityContext securityContext)
+      throws NotFoundException;
+      public abstract Response updateUser(String username,User body,SecurityContext securityContext)
+      throws NotFoundException;
+>>>>>>> upstream/master
 }

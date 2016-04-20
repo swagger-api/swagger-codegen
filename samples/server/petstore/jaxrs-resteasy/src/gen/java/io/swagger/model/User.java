@@ -8,7 +8,11 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 
 
+<<<<<<< HEAD
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaResteasyServerCodegen", date = "2016-03-16T14:27:58.108+08:00")
+=======
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaResteasyServerCodegen", date = "2016-04-15T18:10:39.667+08:00")
+>>>>>>> upstream/master
 public class User   {
   
   private Long id = null;
@@ -20,7 +24,6 @@ public class User   {
   private String phone = null;
   private Integer userStatus = null;
 
-  
   /**
    **/
   
@@ -32,7 +35,6 @@ public class User   {
     this.id = id;
   }
 
-  
   /**
    **/
   
@@ -44,7 +46,6 @@ public class User   {
     this.username = username;
   }
 
-  
   /**
    **/
   
@@ -56,7 +57,6 @@ public class User   {
     this.firstName = firstName;
   }
 
-  
   /**
    **/
   
@@ -68,7 +68,6 @@ public class User   {
     this.lastName = lastName;
   }
 
-  
   /**
    **/
   
@@ -80,7 +79,6 @@ public class User   {
     this.email = email;
   }
 
-  
   /**
    **/
   
@@ -92,7 +90,6 @@ public class User   {
     this.password = password;
   }
 
-  
   /**
    **/
   
@@ -104,7 +101,6 @@ public class User   {
     this.phone = phone;
   }
 
-  
   /**
    * User Status
    **/
@@ -117,7 +113,6 @@ public class User   {
     this.userStatus = userStatus;
   }
 
-  
 
   @Override
   public boolean equals(Object o) {

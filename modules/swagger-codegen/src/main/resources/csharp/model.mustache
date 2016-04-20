@@ -25,11 +25,17 @@ namespace {{packageName}}.Model
         /// </summary>{{#description}}
         /// <value>{{{description}}}</value>{{/description}}
         [JsonConverter(typeof(StringEnumConverter))]
+<<<<<<< HEAD
         {{>enumClass}}{{/isEnum}}{{#items.isEnum}}{{#items}}
         {{#allowableValues}}{{#enumVars}}
         public static string {{baseName}}_{{name}} = "{{jsonname}}";{{/enumVars}}{{/allowableValues}}
         {{/items}}{{/items.isEnum}}{{/vars}}
         {{#vars}}{{#isEnum}}
+=======
+{{>enumClass}}{{/isEnum}}{{#items.isEnum}}{{#items}}
+{{>enumClass}}{{/items}}{{/items.isEnum}}{{/vars}}
+    {{#vars}}{{#isEnum}}
+>>>>>>> upstream/master
         /// <summary>
         /// {{^description}}Gets or Sets {{{name}}}{{/description}}{{#description}}{{{description}}}{{/description}}
         /// </summary>{{#description}}
@@ -42,7 +48,7 @@ namespace {{packageName}}.Model
         /// </summary>
 {{#vars}}{{^isReadOnly}}        /// <param name="{{name}}">{{#description}}{{description}}{{/description}}{{^description}}{{name}}{{/description}}{{#required}} (required){{/required}}{{#defaultValue}} (default to {{defaultValue}}){{/defaultValue}}.</param>
 {{/isReadOnly}}{{/vars}}
-        public {{classname}}({{#vars}}{{^isReadOnly}}{{{datatypeWithEnum}}} {{name}} = null{{#hasMore}}, {{/hasMore}}{{/isReadOnly}}{{/vars}})
+        public {{classname}}({{#vars}}{{^isReadOnly}}{{{datatypeWithEnum}}} {{name}} = null{{#hasMoreNonReadOnly}}, {{/hasMoreNonReadOnly}}{{/isReadOnly}}{{/vars}})
         {
             {{#vars}}{{^isReadOnly}}{{#required}}// to ensure "{{name}}" is required (not null)
             if ({{name}} == null)

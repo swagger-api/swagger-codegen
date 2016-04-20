@@ -40,6 +40,7 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     val headerParams = new HashMap[String, String]
     val formParams = new HashMap[String, String]
 
+<<<<<<< HEAD
 
         
     
@@ -84,6 +85,10 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     if(String.valueOf(status) != "null") queryParams += "status" -> status.toString
     
     
+=======
+        
+    
+>>>>>>> upstream/master
     var postBody: AnyRef = null
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -92,6 +97,7 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       postBody = mp
     }
     else {
+<<<<<<< HEAD
           }
 
     try {
@@ -130,21 +136,28 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       val mp = new FormDataMultiPart()
       
       postBody = mp
+=======
+>>>>>>> upstream/master
     }
     else {
           }
 
     try {
-      apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
+      apiInvoker.invokeApi(basePath, path, "DELETE", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
+<<<<<<< HEAD
            Some(ApiInvoker.deserialize(s, "map", classOf[Integer]).asInstanceOf[Map[String, Integer]])
         case _ => None
+=======
+                  case _ => None
+>>>>>>> upstream/master
       }
     } catch {
       case ex: ApiException if ex.code == 404 => None
       case ex: ApiException => throw ex
     }
   }
+<<<<<<< HEAD
   /**
    * Fake endpoint to test arbitrary object return by &#39;Get inventory&#39;
    * Returns an arbitrary object which is actually a map of status codes to quantities
@@ -153,6 +166,17 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
   def getInventoryInObject () : Option[Any] = {
     // create path and map variables
     val path = "/store/inventory?response&#x3D;arbitrary_object".replaceAll("\\{format\\}","json")
+=======
+
+  /**
+   * Returns pet inventories by status
+   * Returns a map of status codes to quantities
+   * @return Map[String, Integer]
+   */
+  def getInventory () : Option[Map[String, Integer]] = {
+    // create path and map variables
+    val path = "/store/inventory".replaceAll("\\{format\\}","json")
+>>>>>>> upstream/master
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
 
@@ -161,7 +185,10 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     val headerParams = new HashMap[String, String]
     val formParams = new HashMap[String, String]
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
         
     
     var postBody: AnyRef = null
@@ -172,12 +199,20 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       postBody = mp
     }
     else {
+<<<<<<< HEAD
           }
+=======
+    }
+>>>>>>> upstream/master
 
     try {
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
+<<<<<<< HEAD
            Some(ApiInvoker.deserialize(s, "", classOf[Any]).asInstanceOf[Any])
+=======
+           Some(ApiInvoker.deserialize(s, "map", classOf[Integer]).asInstanceOf[Map[String, Integer]])
+>>>>>>> upstream/master
         case _ => None
       }
     } catch {
@@ -185,13 +220,17 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       case ex: ApiException => throw ex
     }
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
   /**
    * Find purchase order by ID
    * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
    * @param orderId ID of pet that needs to be fetched 
    * @return Order
    */
-  def getOrderById (orderId: String) : Option[Order] = {
+  def getOrderById (orderId: Long) : Option[Order] = {
     // create path and map variables
     val path = "/store/order/{orderId}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "orderId" + "\\}",apiInvoker.escape(orderId))
 
@@ -204,7 +243,10 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     val headerParams = new HashMap[String, String]
     val formParams = new HashMap[String, String]
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
         
     
     var postBody: AnyRef = null
@@ -215,7 +257,11 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       postBody = mp
     }
     else {
+<<<<<<< HEAD
           }
+=======
+    }
+>>>>>>> upstream/master
 
     try {
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
@@ -228,10 +274,18 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       case ex: ApiException => throw ex
     }
   }
+<<<<<<< HEAD
   /**
    * Place an order for a pet
    * 
    * @param body order placed for purchasing the pet (optional)
+=======
+
+  /**
+   * Place an order for a pet
+   * 
+   * @param body order placed for purchasing the pet 
+>>>>>>> upstream/master
    * @return Order
    */
   def placeOrder (body: Order) : Option[Order] = {
@@ -245,6 +299,10 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     val headerParams = new HashMap[String, String]
     val formParams = new HashMap[String, String]
 
+<<<<<<< HEAD
+=======
+    if (body == null) throw new Exception("Missing required parameter 'body' when calling StoreApi->placeOrder")
+>>>>>>> upstream/master
 
         
     
@@ -256,7 +314,11 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       postBody = mp
     }
     else {
+<<<<<<< HEAD
           }
+=======
+    }
+>>>>>>> upstream/master
 
     try {
       apiInvoker.invokeApi(basePath, path, "POST", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
@@ -269,4 +331,8 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       case ex: ApiException => throw ex
     }
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
 }

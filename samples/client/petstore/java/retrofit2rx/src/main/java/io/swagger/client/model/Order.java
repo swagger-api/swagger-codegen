@@ -12,21 +12,24 @@ import com.google.gson.annotations.SerializedName;
 
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
 public class Order   {
   
   @SerializedName("id")
   private Long id = null;
-  
+
   @SerializedName("petId")
   private Long petId = null;
-  
+
   @SerializedName("quantity")
   private Integer quantity = null;
-  
+
   @SerializedName("shipDate")
   private Date shipDate = null;
-  
+
 
 public enum StatusEnum {
   @SerializedName("placed")
@@ -52,12 +55,10 @@ public enum StatusEnum {
 
   @SerializedName("status")
   private StatusEnum status = null;
-  
+
   @SerializedName("complete")
   private Boolean complete = null;
-  
 
-  
   /**
    **/
   @ApiModelProperty(value = "")
@@ -65,7 +66,6 @@ public enum StatusEnum {
     return id;
   }
 
-  
   /**
    **/
   @ApiModelProperty(value = "")
@@ -76,7 +76,6 @@ public enum StatusEnum {
     this.petId = petId;
   }
 
-  
   /**
    **/
   @ApiModelProperty(value = "")
@@ -87,7 +86,6 @@ public enum StatusEnum {
     this.quantity = quantity;
   }
 
-  
   /**
    **/
   @ApiModelProperty(value = "")
@@ -98,7 +96,6 @@ public enum StatusEnum {
     this.shipDate = shipDate;
   }
 
-  
   /**
    * Order Status
    **/
@@ -110,7 +107,6 @@ public enum StatusEnum {
     this.status = status;
   }
 
-  
   /**
    **/
   @ApiModelProperty(value = "")
@@ -121,7 +117,6 @@ public enum StatusEnum {
     this.complete = complete;
   }
 
-  
 
   @Override
   public boolean equals(Object o) {

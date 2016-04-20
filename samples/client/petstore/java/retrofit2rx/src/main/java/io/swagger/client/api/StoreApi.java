@@ -20,7 +20,18 @@ import java.util.Map;
 
 
 public interface StoreApi {
+  /**
+   * Delete purchase order by ID
+   * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
+   * @param orderId ID of the order that needs to be deleted (required)
+   * @return Call<Void>
+   */
   
+  @DELETE("store/order/{orderId}")
+  Observable<Void> deleteOrder(
+    @Path("orderId") String orderId
+  );
+
   /**
    * Delete purchase order by ID
    * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
@@ -46,7 +57,6 @@ public interface StoreApi {
     @Query("status") String status
   );
 
-  
   /**
    * Returns pet inventories by status
    * Returns a map of status codes to quantities
@@ -57,21 +67,26 @@ public interface StoreApi {
   Observable<Map<String, Integer>> getInventory();
     
 
-  
   /**
    * Fake endpoint to test arbitrary object return by &#39;Get inventory&#39;
    * Returns an arbitrary object which is actually a map of status codes to quantities
    * @return Call<Object>
    */
   
-  @GET("store/inventory?response=arbitrary_object")
+  @GET("store/inventory?response&#x3D;arbitrary_object")
   Observable<Object> getInventoryInObject();
     
 
+<<<<<<< HEAD
   
   /**
    * Find purchase order by ID
    * For valid response try integer IDs with value &lt;= 5 or &gt; 10. Other values will generated exceptions
+=======
+  /**
+   * Find purchase order by ID
+   * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+>>>>>>> upstream/master
    * @param orderId ID of pet that needs to be fetched (required)
    * @return Call<Order>
    */
@@ -81,7 +96,6 @@ public interface StoreApi {
     @Path("orderId") String orderId
   );
 
-  
   /**
    * Place an order for a pet
    * 
@@ -94,6 +108,5 @@ public interface StoreApi {
     @Body Order body
   );
 
-  
 }
 

@@ -11,17 +11,18 @@ import com.google.gson.annotations.SerializedName;
 
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
 public class Category   {
   
   @SerializedName("id")
   private Long id = null;
-  
+
   @SerializedName("name")
   private String name = null;
-  
 
-  
   /**
    **/
   @ApiModelProperty(value = "")
@@ -32,7 +33,6 @@ public class Category   {
     this.id = id;
   }
 
-  
   /**
    **/
   @ApiModelProperty(value = "")
@@ -43,7 +43,6 @@ public class Category   {
     this.name = name;
   }
 
-  
 
   @Override
   public boolean equals(Object o) {

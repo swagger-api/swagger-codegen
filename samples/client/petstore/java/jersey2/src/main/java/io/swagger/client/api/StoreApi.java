@@ -14,7 +14,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+<<<<<<< HEAD
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-03-17T16:00:50.657+08:00")
+=======
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-04-13T14:36:32.196+02:00")
+>>>>>>> upstream/master
 public class StoreApi {
   private ApiClient apiClient;
 
@@ -34,7 +38,6 @@ public class StoreApi {
     this.apiClient = apiClient;
   }
 
-  
   /**
    * Delete purchase order by ID
    * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
@@ -58,12 +61,13 @@ public class StoreApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> upstream/master
 
     
-
     
-
     final String[] localVarAccepts = {
       "application/json", "application/xml"
     };
@@ -76,11 +80,15 @@ public class StoreApi {
 
     String[] localVarAuthNames = new String[] {  };
 
+<<<<<<< HEAD
     
     apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
     
+=======
+
+    apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+>>>>>>> upstream/master
   }
-  
   /**
    * Finds orders by status
    * A single status value can be provided as a string
@@ -99,14 +107,16 @@ public class StoreApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+<<<<<<< HEAD
     
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "status", status));
     
+=======
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "status", status));
+>>>>>>> upstream/master
 
     
-
     
-
     final String[] localVarAccepts = {
       "application/json", "application/xml"
     };
@@ -119,12 +129,13 @@ public class StoreApi {
 
     String[] localVarAuthNames = new String[] { "test_api_client_id", "test_api_client_secret" };
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> upstream/master
     GenericType<List<Order>> localVarReturnType = new GenericType<List<Order>>() {};
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-    
-  }
-  
+      }
   /**
    * Returns pet inventories by status
    * Returns a map of status codes to quantities
@@ -142,12 +153,9 @@ public class StoreApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    
 
     
-
     
-
     final String[] localVarAccepts = {
       "application/json", "application/xml"
     };
@@ -160,12 +168,13 @@ public class StoreApi {
 
     String[] localVarAuthNames = new String[] { "api_key" };
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> upstream/master
     GenericType<Map<String, Integer>> localVarReturnType = new GenericType<Map<String, Integer>>() {};
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-    
-  }
-  
+      }
   /**
    * Fake endpoint to test arbitrary object return by &#39;Get inventory&#39;
    * Returns an arbitrary object which is actually a map of status codes to quantities
@@ -183,12 +192,9 @@ public class StoreApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    
 
     
-
     
-
     final String[] localVarAccepts = {
       "application/json", "application/xml"
     };
@@ -201,6 +207,7 @@ public class StoreApi {
 
     String[] localVarAuthNames = new String[] { "api_key" };
 
+<<<<<<< HEAD
     
     GenericType<Object> localVarReturnType = new GenericType<Object>() {};
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
@@ -210,6 +217,14 @@ public class StoreApi {
   /**
    * Find purchase order by ID
    * For valid response try integer IDs with value &lt;= 5 or &gt; 10. Other values will generated exceptions
+=======
+    GenericType<Object> localVarReturnType = new GenericType<Object>() {};
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * Find purchase order by ID
+   * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+>>>>>>> upstream/master
    * @param orderId ID of pet that needs to be fetched (required)
    * @return Order
    * @throws ApiException if fails to make API call
@@ -231,12 +246,9 @@ public class StoreApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    
 
     
-
     
-
     final String[] localVarAccepts = {
       "application/json", "application/xml"
     };
@@ -247,14 +259,11 @@ public class StoreApi {
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
-    String[] localVarAuthNames = new String[] { "test_api_key_query", "test_api_key_header" };
+    String[] localVarAuthNames = new String[] { "test_api_key_header", "test_api_key_query" };
 
-    
     GenericType<Order> localVarReturnType = new GenericType<Order>() {};
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-    
-  }
-  
+      }
   /**
    * Place an order for a pet
    * 
@@ -273,12 +282,9 @@ public class StoreApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    
 
     
-
     
-
     final String[] localVarAccepts = {
       "application/json", "application/xml"
     };
@@ -291,10 +297,16 @@ public class StoreApi {
 
     String[] localVarAuthNames = new String[] { "test_api_client_id", "test_api_client_secret" };
 
+<<<<<<< HEAD
     
     GenericType<Order> localVarReturnType = new GenericType<Order>() {};
     return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     
   }
   
+=======
+    GenericType<Order> localVarReturnType = new GenericType<Order>() {};
+    return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+>>>>>>> upstream/master
 }

@@ -9,14 +9,25 @@ import com.google.gson.annotations.SerializedName;
 
 
 
+<<<<<<< HEAD
 
+=======
+/**
+ * Model for testing reserved words
+ **/
+@ApiModel(description = "Model for testing reserved words")
+>>>>>>> upstream/master
 public class ModelReturn   {
   
   @SerializedName("return")
   private Integer _return = null;
+<<<<<<< HEAD
   
 
   
+=======
+
+>>>>>>> upstream/master
   /**
    **/
   @ApiModelProperty(value = "")
@@ -27,7 +38,10 @@ public class ModelReturn   {
     this._return = _return;
   }
 
+<<<<<<< HEAD
   
+=======
+>>>>>>> upstream/master
 
   @Override
   public boolean equals(Object o) {

@@ -9,17 +9,12 @@ MyApp.add_route('POST', '/v2/users', {
   "endpoint" => "/users", 
   "notes" => "This can only be done by the logged in user.",
   "parameters" => [
-    
-    
-    
-    
     {
       "name" => "body",
       "description" => "Created user object",
       "dataType" => "User",
       "paramType" => "body",
     }
-    
     ]}) do
   cross_origin
   # the guts live here
@@ -36,17 +31,12 @@ MyApp.add_route('POST', '/v2/users/createWithArray', {
   "endpoint" => "/users/createWithArray", 
   "notes" => "",
   "parameters" => [
-    
-    
-    
-    
     {
       "name" => "body",
       "description" => "List of user object",
       "dataType" => "array[User]",
       "paramType" => "body",
     }
-    
     ]}) do
   cross_origin
   # the guts live here
@@ -63,17 +53,56 @@ MyApp.add_route('POST', '/v2/users/createWithList', {
   "endpoint" => "/users/createWithList", 
   "notes" => "",
   "parameters" => [
-    
-    
-    
-    
     {
       "name" => "body",
       "description" => "List of user object",
       "dataType" => "array[User]",
       "paramType" => "body",
     }
-    
+    ]}) do
+  cross_origin
+  # the guts live here
+
+  {"message" => "yes, it worked"}.to_json
+end
+
+
+MyApp.add_route('DELETE', '/v2/user/{username}', {
+  "resourcePath" => "/User",
+  "summary" => "Delete user",
+  "nickname" => "delete_user", 
+  "responseClass" => "void", 
+  "endpoint" => "/user/{username}", 
+  "notes" => "This can only be done by the logged in user.",
+  "parameters" => [
+    {
+      "name" => "username",
+      "description" => "The name that needs to be deleted",
+      "dataType" => "string",
+      "paramType" => "path",
+    },
+    ]}) do
+  cross_origin
+  # the guts live here
+
+  {"message" => "yes, it worked"}.to_json
+end
+
+
+MyApp.add_route('GET', '/v2/user/{username}', {
+  "resourcePath" => "/User",
+  "summary" => "Get user by user name",
+  "nickname" => "get_user_by_name", 
+  "responseClass" => "User", 
+  "endpoint" => "/user/{username}", 
+  "notes" => "",
+  "parameters" => [
+    {
+      "name" => "username",
+      "description" => "The name that needs to be fetched. Use user1 for testing. ",
+      "dataType" => "string",
+      "paramType" => "path",
+    },
     ]}) do
   cross_origin
   # the guts live here
@@ -90,17 +119,32 @@ MyApp.add_route('DELETE', '/v2/users/{username}', {
   "endpoint" => "/users/{username}", 
   "notes" => "This can only be done by the logged in user.",
   "parameters" => [
+<<<<<<< HEAD
     
     
+=======
+    {
+      "name" => "username",
+      "description" => "The user name for login",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
+>>>>>>> upstream/master
     {
       "name" => "username",
       "description" => "The name that needs to be deleted",
       "dataType" => "string",
       "paramType" => "path",
     },
+<<<<<<< HEAD
     
     
     
+=======
+>>>>>>> upstream/master
     ]}) do
   cross_origin
   # the guts live here
@@ -117,6 +161,7 @@ MyApp.add_route('GET', '/v2/users/{username}', {
   "endpoint" => "/users/{username}", 
   "notes" => "",
   "parameters" => [
+<<<<<<< HEAD
     
     
     {
@@ -168,6 +213,8 @@ MyApp.add_route('GET', '/v2/users/login', {
     
     
     
+=======
+>>>>>>> upstream/master
     ]}) do
   cross_origin
   # the guts live here
@@ -184,6 +231,7 @@ MyApp.add_route('GET', '/v2/users/logout', {
   "endpoint" => "/users/logout", 
   "notes" => "",
   "parameters" => [
+<<<<<<< HEAD
     
     
     
@@ -206,22 +254,30 @@ MyApp.add_route('PUT', '/v2/users/{username}', {
   "parameters" => [
     
     
+=======
+>>>>>>> upstream/master
     {
       "name" => "username",
       "description" => "name that need to be deleted",
       "dataType" => "string",
       "paramType" => "path",
     },
+<<<<<<< HEAD
     
     
     
+=======
+>>>>>>> upstream/master
     {
       "name" => "body",
       "description" => "Updated user object",
       "dataType" => "User",
       "paramType" => "body",
     }
+<<<<<<< HEAD
     
+=======
+>>>>>>> upstream/master
     ]}) do
   cross_origin
   # the guts live here

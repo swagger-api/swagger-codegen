@@ -23,7 +23,11 @@ import javax.ws.rs.core.SecurityContext;
 public class StoreApiServiceImpl extends StoreApiService {
     
     @Override
+<<<<<<< HEAD
     public Response deleteOrder(Long orderId, SecurityContext securityContext)
+=======
+    public Response deleteOrder(String orderId, SecurityContext securityContext)
+>>>>>>> upstream/master
     throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();

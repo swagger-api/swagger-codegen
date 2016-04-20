@@ -24,7 +24,10 @@ public class ApiResponse  {
 
   private String message = null;
 
+<<<<<<< HEAD
   
+=======
+>>>>>>> upstream/master
   /**
    **/
   
@@ -34,7 +37,10 @@ public class ApiResponse  {
   public void setCode(Integer code) {
     this.code = code;
   }
+<<<<<<< HEAD
   
+=======
+>>>>>>> upstream/master
   /**
    **/
   
@@ -44,7 +50,10 @@ public class ApiResponse  {
   public void setType(String type) {
     this.type = type;
   }
+<<<<<<< HEAD
   
+=======
+>>>>>>> upstream/master
   /**
    **/
   
@@ -54,7 +63,10 @@ public class ApiResponse  {
   public void setMessage(String message) {
     this.message = message;
   }
+<<<<<<< HEAD
   
+=======
+>>>>>>> upstream/master
 
   @Override
   public String toString() {

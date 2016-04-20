@@ -7,12 +7,37 @@ exports.deleteOrder = function(args, res, next) {
   **/
   // no response value expected for this operation
   res.end();
+<<<<<<< HEAD
+=======
+}
+
+exports.getInventory = function(args, res, next) {
+  /**
+   * parameters expected in the args:
+  **/
+    var examples = {};
+  examples['application/json'] = {
+  "key" : 123
+};
+  if(Object.keys(examples).length > 0) {
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(examples[Object.keys(examples)[0]] || {}, null, 2));
+  }
+  else {
+    res.end();
+  }
+  
+>>>>>>> upstream/master
 }
 
 exports.getOrderById = function(args, res, next) {
   /**
    * parameters expected in the args:
+<<<<<<< HEAD
   * orderId (String)
+=======
+  * orderId (Long)
+>>>>>>> upstream/master
   **/
     var examples = {};
   examples['application/json'] = {

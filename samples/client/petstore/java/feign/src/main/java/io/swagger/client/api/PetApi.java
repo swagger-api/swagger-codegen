@@ -5,8 +5,11 @@ import io.swagger.client.ApiClient;
 import io.swagger.client.model.Pet;
 import io.swagger.client.model.InlineResponse200;
 import java.io.File;
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> upstream/master
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +18,11 @@ import java.util.Map;
 
 import feign.*;
 
+<<<<<<< HEAD
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-03-19T15:53:31.820+08:00")
+=======
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-04-13T14:36:33.302+02:00")
+>>>>>>> upstream/master
 public interface PetApi extends ApiClient.Api {
 
 
@@ -31,7 +38,11 @@ public interface PetApi extends ApiClient.Api {
     "Accepts: application/json",
   })
   void addPet(Pet body);
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> upstream/master
   /**
    * Fake endpoint to test byte array in body parameter for adding a new pet to the store
    * 
@@ -44,7 +55,11 @@ public interface PetApi extends ApiClient.Api {
     "Accepts: application/json",
   })
   void addPetUsingByteArray(byte[] body);
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> upstream/master
   /**
    * Deletes a pet
    * 
@@ -59,7 +74,11 @@ public interface PetApi extends ApiClient.Api {
     "apiKey: {apiKey}"
   })
   void deletePet(@Param("petId") Long petId, @Param("apiKey") String apiKey);
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> upstream/master
   /**
    * Finds Pets by status
    * Multiple status values can be provided with comma separated strings
@@ -72,7 +91,7 @@ public interface PetApi extends ApiClient.Api {
     "Accepts: application/json",
   })
   List<Pet> findPetsByStatus(@Param("status") List<String> status);
-  
+
   /**
    * Finds Pets by tags
    * Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
@@ -85,7 +104,7 @@ public interface PetApi extends ApiClient.Api {
     "Accepts: application/json",
   })
   List<Pet> findPetsByTags(@Param("tags") List<String> tags);
-  
+
   /**
    * Find pet by ID
    * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
@@ -98,7 +117,7 @@ public interface PetApi extends ApiClient.Api {
     "Accepts: application/json",
   })
   Pet getPetById(@Param("petId") Long petId);
-  
+
   /**
    * Fake endpoint to test inline arbitrary object return by &#39;Find pet by ID&#39;
    * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
@@ -111,7 +130,11 @@ public interface PetApi extends ApiClient.Api {
     "Accepts: application/json",
   })
   InlineResponse200 getPetByIdInObject(@Param("petId") Long petId);
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> upstream/master
   /**
    * Fake endpoint to test byte array return by &#39;Find pet by ID&#39;
    * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
@@ -124,7 +147,11 @@ public interface PetApi extends ApiClient.Api {
     "Accepts: application/json",
   })
   byte[] petPetIdtestingByteArraytrueGet(@Param("petId") Long petId);
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> upstream/master
   /**
    * Update an existing pet
    * 
@@ -137,7 +164,11 @@ public interface PetApi extends ApiClient.Api {
     "Accepts: application/json",
   })
   void updatePet(Pet body);
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> upstream/master
   /**
    * Updates a pet in the store with form data
    * 
@@ -152,7 +183,11 @@ public interface PetApi extends ApiClient.Api {
     "Accepts: application/json",
   })
   void updatePetWithForm(@Param("petId") String petId, @Param("name") String name, @Param("status") String status);
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> upstream/master
   /**
    * uploads an image
    * 
@@ -167,6 +202,9 @@ public interface PetApi extends ApiClient.Api {
     "Accepts: application/json",
   })
   void uploadFile(@Param("petId") Long petId, @Param("additionalMetadata") String additionalMetadata, @Param("file") File file);
+<<<<<<< HEAD
   
 
+=======
+>>>>>>> upstream/master
 }

@@ -15,17 +15,24 @@ import com.google.gson.annotations.SerializedName;
 
 public class InlineResponse200   {
   
+<<<<<<< HEAD
   @SerializedName("photoUrls")
   private List<String> photoUrls = new ArrayList<String>();
   
   @SerializedName("name")
   private String name = null;
   
+=======
+  @SerializedName("tags")
+  private List<Tag> tags = new ArrayList<Tag>();
+
+>>>>>>> upstream/master
   @SerializedName("id")
   private Long id = null;
-  
+
   @SerializedName("category")
   private Object category = null;
+<<<<<<< HEAD
   
   @SerializedName("tags")
   private List<Tag> tags = new ArrayList<Tag>();
@@ -67,19 +74,51 @@ public enum StatusEnum {
   public void setPhotoUrls(List<String> photoUrls) {
     this.photoUrls = photoUrls;
   }
+=======
+>>>>>>> upstream/master
 
-  
+
+public enum StatusEnum {
+  @SerializedName("available")
+  AVAILABLE("available"),
+
+  @SerializedName("pending")
+  PENDING("pending"),
+
+  @SerializedName("sold")
+  SOLD("sold");
+
+  private String value;
+
+  StatusEnum(String value) {
+    this.value = value;
+  }
+
+  @Override
+  public String toString() {
+    return value;
+  }
+}
+
+  @SerializedName("status")
+  private StatusEnum status = null;
+
+  @SerializedName("name")
+  private String name = null;
+
+  @SerializedName("photoUrls")
+  private List<String> photoUrls = new ArrayList<String>();
+
   /**
    **/
   @ApiModelProperty(value = "")
-  public String getName() {
-    return name;
+  public List<Tag> getTags() {
+    return tags;
   }
-  public void setName(String name) {
-    this.name = name;
+  public void setTags(List<Tag> tags) {
+    this.tags = tags;
   }
 
-  
   /**
    **/
   @ApiModelProperty(required = true, value = "")
@@ -90,7 +129,6 @@ public enum StatusEnum {
     this.id = id;
   }
 
-  
   /**
    **/
   @ApiModelProperty(value = "")
@@ -101,6 +139,7 @@ public enum StatusEnum {
     this.category = category;
   }
 
+<<<<<<< HEAD
   
   /**
    **/
@@ -113,6 +152,8 @@ public enum StatusEnum {
   }
 
   
+=======
+>>>>>>> upstream/master
   /**
    * pet status in the store
    **/
@@ -124,7 +165,30 @@ public enum StatusEnum {
     this.status = status;
   }
 
+<<<<<<< HEAD
   
+=======
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  public String getName() {
+    return name;
+  }
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  public List<String> getPhotoUrls() {
+    return photoUrls;
+  }
+  public void setPhotoUrls(List<String> photoUrls) {
+    this.photoUrls = photoUrls;
+  }
+
+>>>>>>> upstream/master
 
   @Override
   public boolean equals(Object o) {
@@ -135,17 +199,30 @@ public enum StatusEnum {
       return false;
     }
     InlineResponse200 inlineResponse200 = (InlineResponse200) o;
+<<<<<<< HEAD
     return Objects.equals(this.photoUrls, inlineResponse200.photoUrls) &&
         Objects.equals(this.name, inlineResponse200.name) &&
         Objects.equals(this.id, inlineResponse200.id) &&
         Objects.equals(this.category, inlineResponse200.category) &&
         Objects.equals(this.tags, inlineResponse200.tags) &&
         Objects.equals(this.status, inlineResponse200.status);
+=======
+    return Objects.equals(this.tags, inlineResponse200.tags) &&
+        Objects.equals(this.id, inlineResponse200.id) &&
+        Objects.equals(this.category, inlineResponse200.category) &&
+        Objects.equals(this.status, inlineResponse200.status) &&
+        Objects.equals(this.name, inlineResponse200.name) &&
+        Objects.equals(this.photoUrls, inlineResponse200.photoUrls);
+>>>>>>> upstream/master
   }
 
   @Override
   public int hashCode() {
+<<<<<<< HEAD
     return Objects.hash(photoUrls, name, id, category, tags, status);
+=======
+    return Objects.hash(tags, id, category, status, name, photoUrls);
+>>>>>>> upstream/master
   }
 
   @Override
@@ -153,12 +230,21 @@ public enum StatusEnum {
     StringBuilder sb = new StringBuilder();
     sb.append("class InlineResponse200 {\n");
     
+<<<<<<< HEAD
     sb.append("    photoUrls: ").append(toIndentedString(photoUrls)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    category: ").append(toIndentedString(category)).append("\n");
     sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
+=======
+    sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    category: ").append(toIndentedString(category)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    photoUrls: ").append(toIndentedString(photoUrls)).append("\n");
+>>>>>>> upstream/master
     sb.append("}");
     return sb.toString();
   }

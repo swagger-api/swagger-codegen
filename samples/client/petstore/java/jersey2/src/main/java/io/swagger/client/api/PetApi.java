@@ -16,7 +16,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+<<<<<<< HEAD
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-03-17T16:00:50.657+08:00")
+=======
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-04-13T14:36:32.196+02:00")
+>>>>>>> upstream/master
 public class PetApi {
   private ApiClient apiClient;
 
@@ -36,7 +40,6 @@ public class PetApi {
     this.apiClient = apiClient;
   }
 
-  
   /**
    * Add a new pet to the store
    * 
@@ -54,12 +57,9 @@ public class PetApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    
 
     
-
     
-
     final String[] localVarAccepts = {
       "application/json", "application/xml"
     };
@@ -72,11 +72,15 @@ public class PetApi {
 
     String[] localVarAuthNames = new String[] { "petstore_auth" };
 
+<<<<<<< HEAD
     
     apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
     
+=======
+
+    apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+>>>>>>> upstream/master
   }
-  
   /**
    * Fake endpoint to test byte array in body parameter for adding a new pet to the store
    * 
@@ -94,12 +98,9 @@ public class PetApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    
 
     
-
     
-
     final String[] localVarAccepts = {
       "application/json", "application/xml"
     };
@@ -112,11 +113,9 @@ public class PetApi {
 
     String[] localVarAuthNames = new String[] { "petstore_auth" };
 
-    
+
     apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
-    
   }
-  
   /**
    * Deletes a pet
    * 
@@ -141,14 +140,11 @@ public class PetApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    
 
     if (apiKey != null)
       localVarHeaderParams.put("api_key", apiClient.parameterToString(apiKey));
-    
 
     
-
     final String[] localVarAccepts = {
       "application/json", "application/xml"
     };
@@ -161,6 +157,63 @@ public class PetApi {
 
     String[] localVarAuthNames = new String[] { "petstore_auth" };
 
+
+    apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+  }
+  /**
+<<<<<<< HEAD
+   * Deletes a pet
+   * 
+   * @param petId Pet id to delete (required)
+   * @param apiKey  (optional)
+=======
+   * Finds Pets by status
+   * Multiple status values can be provided with comma separated strings
+   * @param status Status values that need to be considered for query (optional, default to available)
+   * @return List<Pet>
+>>>>>>> upstream/master
+   * @throws ApiException if fails to make API call
+   */
+  public void deletePet(Long petId, String apiKey) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'petId' is set
+    if (petId == null) {
+      throw new ApiException(400, "Missing the required parameter 'petId' when calling deletePet");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/pet/{petId}".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "petId" + "\\}", apiClient.escapeString(petId.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+<<<<<<< HEAD
+    
+=======
+    localVarQueryParams.addAll(apiClient.parameterToPairs("multi", "status", status));
+>>>>>>> upstream/master
+
+    if (apiKey != null)
+      localVarHeaderParams.put("api_key", apiClient.parameterToString(apiKey));
+    
+    
+    final String[] localVarAccepts = {
+      "application/json", "application/xml"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] { "petstore_auth" };
+
+<<<<<<< HEAD
     
     apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
     
@@ -170,6 +223,15 @@ public class PetApi {
    * Finds Pets by status
    * Multiple status values can be provided with comma separated strings
    * @param status Status values that need to be considered for query (optional, default to available)
+=======
+    GenericType<List<Pet>> localVarReturnType = new GenericType<List<Pet>>() {};
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * Finds Pets by tags
+   * Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
+   * @param tags Tags to filter by (optional)
+>>>>>>> upstream/master
    * @return List<Pet>
    * @throws ApiException if fails to make API call
    */
@@ -184,14 +246,16 @@ public class PetApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+<<<<<<< HEAD
     
     localVarQueryParams.addAll(apiClient.parameterToPairs("multi", "status", status));
     
+=======
+    localVarQueryParams.addAll(apiClient.parameterToPairs("multi", "tags", tags));
+>>>>>>> upstream/master
 
     
-
     
-
     final String[] localVarAccepts = {
       "application/json", "application/xml"
     };
@@ -204,17 +268,21 @@ public class PetApi {
 
     String[] localVarAuthNames = new String[] { "petstore_auth" };
 
-    
     GenericType<List<Pet>> localVarReturnType = new GenericType<List<Pet>>() {};
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-    
-  }
-  
+      }
   /**
+<<<<<<< HEAD
    * Finds Pets by tags
    * Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
    * @param tags Tags to filter by (optional)
    * @return List<Pet>
+=======
+   * Find pet by ID
+   * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
+   * @param petId ID of pet that needs to be fetched (required)
+   * @return Pet
+>>>>>>> upstream/master
    * @throws ApiException if fails to make API call
    */
   public List<Pet> findPetsByTags(List<String> tags) throws ApiException {
@@ -228,14 +296,15 @@ public class PetApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+<<<<<<< HEAD
     
     localVarQueryParams.addAll(apiClient.parameterToPairs("multi", "tags", tags));
     
+=======
+>>>>>>> upstream/master
 
     
-
     
-
     final String[] localVarAccepts = {
       "application/json", "application/xml"
     };
@@ -246,15 +315,20 @@ public class PetApi {
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
+<<<<<<< HEAD
     String[] localVarAuthNames = new String[] { "petstore_auth" };
 
     
     GenericType<List<Pet>> localVarReturnType = new GenericType<List<Pet>>() {};
+=======
+    String[] localVarAuthNames = new String[] { "api_key", "petstore_auth" };
+
+    GenericType<Pet> localVarReturnType = new GenericType<Pet>() {};
+>>>>>>> upstream/master
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-    
-  }
-  
+      }
   /**
+<<<<<<< HEAD
    * Find pet by ID
    * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
    * @param petId ID of pet that needs to be fetched (required)
@@ -262,15 +336,28 @@ public class PetApi {
    * @throws ApiException if fails to make API call
    */
   public Pet getPetById(Long petId) throws ApiException {
+=======
+   * Fake endpoint to test inline arbitrary object return by &#39;Find pet by ID&#39;
+   * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
+   * @param petId ID of pet that needs to be fetched (required)
+   * @return InlineResponse200
+   * @throws ApiException if fails to make API call
+   */
+  public InlineResponse200 getPetByIdInObject(Long petId) throws ApiException {
+>>>>>>> upstream/master
     Object localVarPostBody = null;
     
     // verify the required parameter 'petId' is set
     if (petId == null) {
+<<<<<<< HEAD
       throw new ApiException(400, "Missing the required parameter 'petId' when calling getPetById");
+=======
+      throw new ApiException(400, "Missing the required parameter 'petId' when calling getPetByIdInObject");
+>>>>>>> upstream/master
     }
     
     // create path and map variables
-    String localVarPath = "/pet/{petId}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/pet/{petId}?response=inline_arbitrary_object".replaceAll("\\{format\\}","json")
       .replaceAll("\\{" + "petId" + "\\}", apiClient.escapeString(petId.toString()));
 
     // query params
@@ -278,12 +365,13 @@ public class PetApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    
 
     
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
     
-
     final String[] localVarAccepts = {
       "application/json", "application/xml"
     };
@@ -294,6 +382,7 @@ public class PetApi {
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
+<<<<<<< HEAD
     String[] localVarAuthNames = new String[] { "petstore_auth", "api_key" };
 
     
@@ -310,15 +399,38 @@ public class PetApi {
    * @throws ApiException if fails to make API call
    */
   public InlineResponse200 getPetByIdInObject(Long petId) throws ApiException {
+=======
+    String[] localVarAuthNames = new String[] { "api_key", "petstore_auth" };
+
+    GenericType<InlineResponse200> localVarReturnType = new GenericType<InlineResponse200>() {};
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * Fake endpoint to test byte array return by &#39;Find pet by ID&#39;
+   * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
+   * @param petId ID of pet that needs to be fetched (required)
+   * @return byte[]
+   * @throws ApiException if fails to make API call
+   */
+  public byte[] petPetIdtestingByteArraytrueGet(Long petId) throws ApiException {
+>>>>>>> upstream/master
     Object localVarPostBody = null;
     
     // verify the required parameter 'petId' is set
     if (petId == null) {
+<<<<<<< HEAD
       throw new ApiException(400, "Missing the required parameter 'petId' when calling getPetByIdInObject");
     }
     
     // create path and map variables
     String localVarPath = "/pet/{petId}?response=inline_arbitrary_object".replaceAll("\\{format\\}","json")
+=======
+      throw new ApiException(400, "Missing the required parameter 'petId' when calling petPetIdtestingByteArraytrueGet");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/pet/{petId}?testing_byte_array=true".replaceAll("\\{format\\}","json")
+>>>>>>> upstream/master
       .replaceAll("\\{" + "petId" + "\\}", apiClient.escapeString(petId.toString()));
 
     // query params
@@ -326,12 +438,9 @@ public class PetApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    
 
     
-
     
-
     final String[] localVarAccepts = {
       "application/json", "application/xml"
     };
@@ -342,6 +451,7 @@ public class PetApi {
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
+<<<<<<< HEAD
     String[] localVarAuthNames = new String[] { "petstore_auth", "api_key" };
 
     
@@ -368,36 +478,12 @@ public class PetApi {
     // create path and map variables
     String localVarPath = "/pet/{petId}?testing_byte_array=true".replaceAll("\\{format\\}","json")
       .replaceAll("\\{" + "petId" + "\\}", apiClient.escapeString(petId.toString()));
+=======
+    String[] localVarAuthNames = new String[] { "api_key", "petstore_auth" };
 
-    // query params
-    List<Pair> localVarQueryParams = new ArrayList<Pair>();
-    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-    
-
-    
-
-    
-
-    final String[] localVarAccepts = {
-      "application/json", "application/xml"
-    };
-    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-
-    final String[] localVarContentTypes = {
-      
-    };
-    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-
-    String[] localVarAuthNames = new String[] { "petstore_auth", "api_key" };
-
-    
     GenericType<byte[]> localVarReturnType = new GenericType<byte[]>() {};
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-    
-  }
-  
+      }
   /**
    * Update an existing pet
    * 
@@ -409,36 +495,59 @@ public class PetApi {
     
     // create path and map variables
     String localVarPath = "/pet".replaceAll("\\{format\\}","json");
+>>>>>>> upstream/master
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    
 
     
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
     
-
     final String[] localVarAccepts = {
       "application/json", "application/xml"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
+<<<<<<< HEAD
+      
+=======
       "application/json", "application/xml"
+>>>>>>> upstream/master
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
-    String[] localVarAuthNames = new String[] { "petstore_auth" };
+    String[] localVarAuthNames = new String[] { "petstore_auth", "api_key" };
 
+<<<<<<< HEAD
     
+    GenericType<byte[]> localVarReturnType = new GenericType<byte[]>() {};
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+    
+=======
+
     apiClient.invokeAPI(localVarPath, "PUT", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
-    
+>>>>>>> upstream/master
   }
-  
   /**
+<<<<<<< HEAD
+   * Update an existing pet
+   * 
+   * @param body Pet object that needs to be added to the store (optional)
+   * @throws ApiException if fails to make API call
+   */
+  public void updatePet(Pet body) throws ApiException {
+    Object localVarPostBody = body;
+    
+    // create path and map variables
+    String localVarPath = "/pet".replaceAll("\\{format\\}","json");
+=======
    * Updates a pet in the store with form data
    * 
    * @param petId ID of pet that needs to be updated (required)
@@ -457,12 +566,90 @@ public class PetApi {
     // create path and map variables
     String localVarPath = "/pet/{petId}".replaceAll("\\{format\\}","json")
       .replaceAll("\\{" + "petId" + "\\}", apiClient.escapeString(petId.toString()));
+>>>>>>> upstream/master
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+
+    
+    if (name != null)
+      localVarFormParams.put("name", name);
+if (status != null)
+      localVarFormParams.put("status", status);
+
+    final String[] localVarAccepts = {
+      "application/json", "application/xml"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+<<<<<<< HEAD
+      "application/json", "application/xml"
+=======
+      "application/x-www-form-urlencoded"
+>>>>>>> upstream/master
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] { "petstore_auth" };
+
+<<<<<<< HEAD
+    
+    apiClient.invokeAPI(localVarPath, "PUT", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+    
+=======
+
+    apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+>>>>>>> upstream/master
+  }
+  /**
+<<<<<<< HEAD
+   * Updates a pet in the store with form data
+   * 
+   * @param petId ID of pet that needs to be updated (required)
+   * @param name Updated name of the pet (optional)
+   * @param status Updated status of the pet (optional)
+   * @throws ApiException if fails to make API call
+   */
+  public void updatePetWithForm(String petId, String name, String status) throws ApiException {
+=======
+   * uploads an image
+   * 
+   * @param petId ID of pet to update (required)
+   * @param additionalMetadata Additional data to pass to server (optional)
+   * @param file file to upload (optional)
+   * @throws ApiException if fails to make API call
+   */
+  public void uploadFile(Long petId, String additionalMetadata, File file) throws ApiException {
+>>>>>>> upstream/master
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'petId' is set
+    if (petId == null) {
+<<<<<<< HEAD
+      throw new ApiException(400, "Missing the required parameter 'petId' when calling updatePetWithForm");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/pet/{petId}".replaceAll("\\{format\\}","json")
+=======
+      throw new ApiException(400, "Missing the required parameter 'petId' when calling uploadFile");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/pet/{petId}/uploadImage".replaceAll("\\{format\\}","json")
+>>>>>>> upstream/master
+      .replaceAll("\\{" + "petId" + "\\}", apiClient.escapeString(petId.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+<<<<<<< HEAD
     
 
     
@@ -518,12 +705,18 @@ public class PetApi {
     
 
     
+=======
+>>>>>>> upstream/master
 
     if (additionalMetadata != null)
       localVarFormParams.put("additionalMetadata", additionalMetadata);
     if (file != null)
       localVarFormParams.put("file", file);
     
+    if (additionalMetadata != null)
+      localVarFormParams.put("additionalMetadata", additionalMetadata);
+if (file != null)
+      localVarFormParams.put("file", file);
 
     final String[] localVarAccepts = {
       "application/json", "application/xml"
@@ -537,9 +730,7 @@ public class PetApi {
 
     String[] localVarAuthNames = new String[] { "petstore_auth" };
 
-    
+
     apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
-    
   }
-  
 }

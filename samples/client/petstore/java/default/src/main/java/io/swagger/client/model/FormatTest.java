@@ -24,7 +24,12 @@ public class FormatTest   {
   private byte[] _byte = null;
   private byte[] binary = null;
   private Date date = null;
+<<<<<<< HEAD
   private String dateTime = null;
+=======
+  private Date dateTime = null;
+  private String password = null;
+>>>>>>> upstream/master
 
   
   /**
@@ -199,21 +204,52 @@ public class FormatTest   {
 
   /**
    **/
+<<<<<<< HEAD
   public FormatTest dateTime(String dateTime) {
+=======
+  public FormatTest dateTime(Date dateTime) {
+>>>>>>> upstream/master
     this.dateTime = dateTime;
     return this;
   }
   
   @ApiModelProperty(example = "null", value = "")
   @JsonProperty("dateTime")
+<<<<<<< HEAD
   public String getDateTime() {
     return dateTime;
   }
   public void setDateTime(String dateTime) {
+=======
+  public Date getDateTime() {
+    return dateTime;
+  }
+  public void setDateTime(Date dateTime) {
+>>>>>>> upstream/master
     this.dateTime = dateTime;
   }
 
 
+<<<<<<< HEAD
+=======
+  /**
+   **/
+  public FormatTest password(String password) {
+    this.password = password;
+    return this;
+  }
+  
+  @ApiModelProperty(example = "null", value = "")
+  @JsonProperty("password")
+  public String getPassword() {
+    return password;
+  }
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+
+>>>>>>> upstream/master
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -233,12 +269,21 @@ public class FormatTest   {
         Objects.equals(this._byte, formatTest._byte) &&
         Objects.equals(this.binary, formatTest.binary) &&
         Objects.equals(this.date, formatTest.date) &&
+<<<<<<< HEAD
         Objects.equals(this.dateTime, formatTest.dateTime);
+=======
+        Objects.equals(this.dateTime, formatTest.dateTime) &&
+        Objects.equals(this.password, formatTest.password);
+>>>>>>> upstream/master
   }
 
   @Override
   public int hashCode() {
+<<<<<<< HEAD
     return Objects.hash(integer, int32, int64, number, _float, _double, string, _byte, binary, date, dateTime);
+=======
+    return Objects.hash(integer, int32, int64, number, _float, _double, string, _byte, binary, date, dateTime, password);
+>>>>>>> upstream/master
   }
 
   @Override
@@ -257,6 +302,10 @@ public class FormatTest   {
     sb.append("    binary: ").append(toIndentedString(binary)).append("\n");
     sb.append("    date: ").append(toIndentedString(date)).append("\n");
     sb.append("    dateTime: ").append(toIndentedString(dateTime)).append("\n");
+<<<<<<< HEAD
+=======
+    sb.append("    password: ").append(toIndentedString(password)).append("\n");
+>>>>>>> upstream/master
     sb.append("}");
     return sb.toString();
   }

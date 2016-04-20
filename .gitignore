@@ -106,9 +106,14 @@ samples/client/petstore/python/dev-requirements.txt.log
 samples/client/petstore/python/swagger_client.egg-info/SOURCES.txt
 samples/client/petstore/python/.coverage
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 #purecloud build paths
 dists/
+=======
+samples/client/petstore/python/.projectile
+samples/client/petstore/python/.venv/
+>>>>>>> upstream/master
 =======
 samples/client/petstore/python/.projectile
 samples/client/petstore/python/.venv/

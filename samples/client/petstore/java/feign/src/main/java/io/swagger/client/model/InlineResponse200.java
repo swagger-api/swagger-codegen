@@ -13,6 +13,7 @@ import java.util.List;
 
 
 
+<<<<<<< HEAD
 
 
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-03-19T15:53:31.820+08:00")
@@ -20,6 +21,12 @@ public class InlineResponse200   {
   
   private List<String> photoUrls = new ArrayList<String>();
   private String name = null;
+=======
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-04-13T14:36:33.302+02:00")
+public class InlineResponse200   {
+  
+  private List<Tag> tags = new ArrayList<Tag>();
+>>>>>>> upstream/master
   private Long id = null;
   private Object category = null;
   private List<Tag> tags = new ArrayList<Tag>();
@@ -62,24 +69,47 @@ public class InlineResponse200   {
     this.photoUrls = photoUrls;
   }
 
+
+  public enum StatusEnum {
+    AVAILABLE("available"),
+    PENDING("pending"),
+    SOLD("sold");
+
+    private String value;
+
+    StatusEnum(String value) {
+      this.value = value;
+    }
+
+    @Override
+    @JsonValue
+    public String toString() {
+      return value;
+    }
+  }
+
+  private StatusEnum status = null;
+  private String name = null;
+  private List<String> photoUrls = new ArrayList<String>();
+
   
   /**
    **/
-  public InlineResponse200 name(String name) {
-    this.name = name;
+  public InlineResponse200 tags(List<Tag> tags) {
+    this.tags = tags;
     return this;
   }
   
-  @ApiModelProperty(example = "doggie", value = "")
-  @JsonProperty("name")
-  public String getName() {
-    return name;
+  @ApiModelProperty(example = "null", value = "")
+  @JsonProperty("tags")
+  public List<Tag> getTags() {
+    return tags;
   }
-  public void setName(String name) {
-    this.name = name;
+  public void setTags(List<Tag> tags) {
+    this.tags = tags;
   }
 
-  
+
   /**
    **/
   public InlineResponse200 id(Long id) {
@@ -96,7 +126,7 @@ public class InlineResponse200   {
     this.id = id;
   }
 
-  
+
   /**
    **/
   public InlineResponse200 category(Object category) {
@@ -113,7 +143,16 @@ public class InlineResponse200   {
     this.category = category;
   }
 
+
+  /**
+   * pet status in the store
+   **/
+  public InlineResponse200 status(StatusEnum status) {
+    this.status = status;
+    return this;
+  }
   
+<<<<<<< HEAD
   /**
    **/
   public InlineResponse200 tags(List<Tag> tags) {
@@ -149,6 +188,51 @@ public class InlineResponse200   {
   }
 
   
+=======
+  @ApiModelProperty(example = "null", value = "pet status in the store")
+  @JsonProperty("status")
+  public StatusEnum getStatus() {
+    return status;
+  }
+  public void setStatus(StatusEnum status) {
+    this.status = status;
+  }
+
+
+  /**
+   **/
+  public InlineResponse200 name(String name) {
+    this.name = name;
+    return this;
+  }
+  
+  @ApiModelProperty(example = "doggie", value = "")
+  @JsonProperty("name")
+  public String getName() {
+    return name;
+  }
+  public void setName(String name) {
+    this.name = name;
+  }
+
+
+  /**
+   **/
+  public InlineResponse200 photoUrls(List<String> photoUrls) {
+    this.photoUrls = photoUrls;
+    return this;
+  }
+  
+  @ApiModelProperty(example = "null", value = "")
+  @JsonProperty("photoUrls")
+  public List<String> getPhotoUrls() {
+    return photoUrls;
+  }
+  public void setPhotoUrls(List<String> photoUrls) {
+    this.photoUrls = photoUrls;
+  }
+
+>>>>>>> upstream/master
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -159,17 +243,30 @@ public class InlineResponse200   {
       return false;
     }
     InlineResponse200 inlineResponse200 = (InlineResponse200) o;
+<<<<<<< HEAD
     return Objects.equals(this.photoUrls, inlineResponse200.photoUrls) &&
         Objects.equals(this.name, inlineResponse200.name) &&
         Objects.equals(this.id, inlineResponse200.id) &&
         Objects.equals(this.category, inlineResponse200.category) &&
         Objects.equals(this.tags, inlineResponse200.tags) &&
         Objects.equals(this.status, inlineResponse200.status);
+=======
+    return Objects.equals(this.tags, inlineResponse200.tags) &&
+        Objects.equals(this.id, inlineResponse200.id) &&
+        Objects.equals(this.category, inlineResponse200.category) &&
+        Objects.equals(this.status, inlineResponse200.status) &&
+        Objects.equals(this.name, inlineResponse200.name) &&
+        Objects.equals(this.photoUrls, inlineResponse200.photoUrls);
+>>>>>>> upstream/master
   }
 
   @Override
   public int hashCode() {
+<<<<<<< HEAD
     return Objects.hash(photoUrls, name, id, category, tags, status);
+=======
+    return Objects.hash(tags, id, category, status, name, photoUrls);
+>>>>>>> upstream/master
   }
 
   @Override
@@ -177,12 +274,21 @@ public class InlineResponse200   {
     StringBuilder sb = new StringBuilder();
     sb.append("class InlineResponse200 {\n");
     
+<<<<<<< HEAD
     sb.append("    photoUrls: ").append(toIndentedString(photoUrls)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    category: ").append(toIndentedString(category)).append("\n");
     sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
+=======
+    sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    category: ").append(toIndentedString(category)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    photoUrls: ").append(toIndentedString(photoUrls)).append("\n");
+>>>>>>> upstream/master
     sb.append("}");
     return sb.toString();
   }

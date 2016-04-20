@@ -1396,6 +1396,7 @@ public class DefaultCodegen {
         op.path = path;
         op.operationId = toOperationId(operationId);
         op.summary = escapeText(operation.getSummary());
+        op.unescapedNotes = operation.getDescription();
         op.notes = escapeText(operation.getDescription());
         op.tags = operation.getTags();
         op.hasConsumes = false;
@@ -1705,6 +1706,7 @@ public class DefaultCodegen {
         CodegenParameter p = CodegenModelFactory.newInstance(CodegenModelType.PARAMETER);
         p.baseName = param.getName();
         p.description = escapeText(param.getDescription());
+        p.unescapedDescription = param.getDescription();
         if (param.getRequired()) {
             p.required = param.getRequired();
         }
@@ -2245,6 +2247,7 @@ public class DefaultCodegen {
     private void addVars(CodegenModel m, Map<String, Property> properties, List<String> required,
             Map<String, Property> allProperties, List<String> allRequired) {
 
+<<<<<<< HEAD
             if (properties != null && !properties.isEmpty()) {
                 m.hasVars = true;
                 m.hasEnums = false;
@@ -2275,6 +2278,68 @@ public class DefaultCodegen {
         for (int i = 0; i < totalCount; i++) {
             Map.Entry<String, Property> entry = propertyList.get(i);
 
+            final String key = entry.getKey();
+            final Property prop = entry.getValue();
+
+            if (prop == null) {
+                LOGGER.warn("null property for " + key);
+            } else {
+                final CodegenProperty cp = fromProperty(key, prop);
+                cp.required = mandatory.contains(key) ? true : null;
+                if (cp.isEnum) {
+                    // FIXME: if supporting inheritance, when called a second time for allProperties it is possible for
+                    // m.hasEnums to be set incorrectly if allProperties has enumerations but properties does not.
+                    m.hasEnums = true;
+                }
+
+                if (i+1 != totalCount) {
+                    cp.hasMore = true;
+                    // check the next entry to see if it's read only
+                    if (!Boolean.TRUE.equals(propertyList.get(i+1).getValue().getReadOnly())) {
+                        cp.hasMoreNonReadOnly = true; // next entry is not ready only
+                    }
+                }
+
+                if (cp.isContainer != null) {
+                    addImport(m, typeMapping.get("array"));
+                }
+
+                addImport(m, cp.baseType);
+                addImport(m, cp.complexType);
+                vars.add(cp);
+            }
+=======
+        if (properties != null && !properties.isEmpty()) {
+            m.hasVars = true;
+            m.hasEnums = false;
+
+
+            Set<String> mandatory = required == null ? Collections.<String> emptySet()
+                    : new TreeSet<String>(required);
+            addVars(m, m.vars, properties, mandatory);
+            m.allMandatory = m.mandatory = mandatory;
+        } else {
+            m.emptyVars = true;
+            m.hasVars = false;
+            m.hasEnums = false;
+>>>>>>> upstream/master
+        }
+
+        if (allProperties != null) {
+            Set<String> allMandatory = allRequired == null ? Collections.<String> emptySet()
+                    : new TreeSet<String>(allRequired);
+            addVars(m, m.allVars, allProperties, allMandatory);
+            m.allMandatory = allMandatory;
+        }
+    }
+
+    private void addVars(CodegenModel m, List<CodegenProperty> vars, Map<String, Property> properties, Set<String> mandatory) {
+        // convert set to list so that we can access the next entry in the loop
+        List<Map.Entry<String, Property>> propertyList = new ArrayList<Map.Entry<String, Property>>(properties.entrySet());
+        final int totalCount = propertyList.size();
+        for (int i = 0; i < totalCount; i++) {
+            Map.Entry<String, Property> entry = propertyList.get(i);
+            
             final String key = entry.getKey();
             final Property prop = entry.getValue();
 
@@ -2453,7 +2518,11 @@ public class DefaultCodegen {
     /**
      * Set library template (sub-template).
      *
+<<<<<<< HEAD
      * @param library Library template
+=======
+     * @param library Library template 
+>>>>>>> upstream/master
      */
     public void setLibrary(String library) {
         if (library != null && !supportedLibraries.containsKey(library))
@@ -2473,7 +2542,11 @@ public class DefaultCodegen {
     /**
      * Set Git user ID.
      *
+<<<<<<< HEAD
      * @param gitUserId Git user ID
+=======
+     * @param gitUserId Git user ID 
+>>>>>>> upstream/master
      */
     public void setGitUserId(String gitUserId) {
         this.gitUserId = gitUserId;
@@ -2491,7 +2564,11 @@ public class DefaultCodegen {
     /**
      * Set Git repo ID.
      *
+<<<<<<< HEAD
      * @param gitRepoId Git repo ID
+=======
+     * @param gitRepoId Git repo ID 
+>>>>>>> upstream/master
      */
     public void setGitRepoId(String gitRepoId) {
         this.gitRepoId = gitRepoId;
@@ -2534,7 +2611,11 @@ public class DefaultCodegen {
     }
 
     /**
+<<<<<<< HEAD
      * HTTP user agent
+=======
+     * HTTP user agent 
+>>>>>>> upstream/master
      *
      * @return HTTP user agent
      */

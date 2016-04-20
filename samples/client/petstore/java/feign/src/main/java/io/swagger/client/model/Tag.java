@@ -9,7 +9,11 @@ import io.swagger.annotations.ApiModelProperty;
 
 
 
+<<<<<<< HEAD
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-03-14T22:17:50.356+08:00")
+=======
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-04-13T14:36:33.302+02:00")
+>>>>>>> upstream/master
 public class Tag   {
   
   private Long id = null;
@@ -32,7 +36,7 @@ public class Tag   {
     this.id = id;
   }
 
-  
+
   /**
    **/
   public Tag name(String name) {
@@ -49,7 +53,6 @@ public class Tag   {
     this.name = name;
   }
 
-  
 
   @Override
   public boolean equals(java.lang.Object o) {

@@ -13,7 +13,11 @@ import java.util.Map;
 
 import feign.*;
 
+<<<<<<< HEAD
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-03-19T15:53:31.820+08:00")
+=======
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-04-13T14:36:33.302+02:00")
+>>>>>>> upstream/master
 public interface UserApi extends ApiClient.Api {
 
 
@@ -29,7 +33,7 @@ public interface UserApi extends ApiClient.Api {
     "Accepts: application/json",
   })
   void createUser(User body);
-  
+
   /**
    * Creates list of users with given input array
    * 
@@ -42,7 +46,7 @@ public interface UserApi extends ApiClient.Api {
     "Accepts: application/json",
   })
   void createUsersWithArrayInput(List<User> body);
-  
+
   /**
    * Creates list of users with given input array
    * 
@@ -55,7 +59,7 @@ public interface UserApi extends ApiClient.Api {
     "Accepts: application/json",
   })
   void createUsersWithListInput(List<User> body);
-  
+
   /**
    * Delete user
    * This can only be done by the logged in user.
@@ -68,11 +72,19 @@ public interface UserApi extends ApiClient.Api {
     "Accepts: application/json",
   })
   void deleteUser(@Param("username") String username);
+<<<<<<< HEAD
   
   /**
    * Get user by user name
    * 
    * @param username The name that needs to be fetched. Use user1 for testing. (required)
+=======
+
+  /**
+   * Get user by user name
+   * 
+   * @param username The name that needs to be fetched. Use user1 for testing.  (required)
+>>>>>>> upstream/master
    * @return User
    */
   @RequestLine("GET /user/{username}")
@@ -81,7 +93,11 @@ public interface UserApi extends ApiClient.Api {
     "Accepts: application/json",
   })
   User getUserByName(@Param("username") String username);
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> upstream/master
   /**
    * Logs user into the system
    * 
@@ -95,7 +111,11 @@ public interface UserApi extends ApiClient.Api {
     "Accepts: application/json",
   })
   String loginUser(@Param("username") String username, @Param("password") String password);
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> upstream/master
   /**
    * Logs out current logged in user session
    * 
@@ -107,7 +127,11 @@ public interface UserApi extends ApiClient.Api {
     "Accepts: application/json",
   })
   void logoutUser();
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> upstream/master
   /**
    * Updated user
    * This can only be done by the logged in user.
@@ -121,6 +145,9 @@ public interface UserApi extends ApiClient.Api {
     "Accepts: application/json",
   })
   void updateUser(@Param("username") String username, User body);
+<<<<<<< HEAD
   
 
+=======
+>>>>>>> upstream/master
 }
