@@ -1,9 +1,16 @@
 package main
 
 import (
+<<<<<<< HEAD
+	"testing"
+
+	sw "./swagger"
+	"github.com/stretchr/testify/assert"
+=======
 	sw "./go-petstore"
 	"github.com/stretchr/testify/assert"
 	"testing"
+>>>>>>> upstream/master
 )
 
 func TestAddPet(t *testing.T) {
@@ -28,11 +35,19 @@ func TestGetPetById(t *testing.T) {
 		t.Errorf("Error while getting pet by id")
 		t.Log(err)
 	} else {
+<<<<<<< HEAD
+		assert.Equal(resp.Id, "12830", "Pet id should be equal")
+		assert.Equal(resp.Name, "gopher", "Pet name should be gopher")
+		assert.Equal(resp.Status, "pending", "Pet status should be pending")
+
+		t.Log(resp)
+=======
 		assert.Equal(resp.Id, int64(12830), "Pet id should be equal")
 		assert.Equal(resp.Name, "gopher", "Pet name should be gopher")
 		assert.Equal(resp.Status, "pending", "Pet status should be pending")
 
 		//t.Log(resp)
+>>>>>>> upstream/master
 	}
 }
 

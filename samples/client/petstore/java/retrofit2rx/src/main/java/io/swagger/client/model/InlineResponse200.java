@@ -7,12 +7,17 @@ import io.swagger.client.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import com.google.gson.annotations.SerializedName;
 
 
 
 
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> upstream/master
 public class InlineResponse200   {
   
   @SerializedName("tags")
@@ -166,3 +171,5 @@ public enum StatusEnum {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+

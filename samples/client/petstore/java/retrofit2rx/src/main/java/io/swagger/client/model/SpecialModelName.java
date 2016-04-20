@@ -4,12 +4,17 @@ import java.util.Objects;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+
 import com.google.gson.annotations.SerializedName;
 
 
 
 
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> upstream/master
 public class SpecialModelName   {
   
   @SerializedName("$special[property.name]")
@@ -64,3 +69,5 @@ public class SpecialModelName   {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
+

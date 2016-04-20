@@ -4,20 +4,35 @@ import java.util.Objects;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> upstream/master
 import com.google.gson.annotations.SerializedName;
 
 
 
 
+<<<<<<< HEAD
+
+
+=======
 /**
  * Model for testing model name starting with number
  **/
 @ApiModel(description = "Model for testing model name starting with number")
+>>>>>>> upstream/master
 public class Model200Response   {
   
   @SerializedName("name")
   private Integer name = null;
+<<<<<<< HEAD
+  
 
+  
+=======
+
+>>>>>>> upstream/master
   /**
    **/
   @ApiModelProperty(value = "")
@@ -28,6 +43,10 @@ public class Model200Response   {
     this.name = name;
   }
 
+<<<<<<< HEAD
+  
+=======
+>>>>>>> upstream/master
 
   @Override
   public boolean equals(Object o) {
@@ -67,3 +86,8 @@ public class Model200Response   {
     return o.toString().replace("\n", "\n    ");
   }
 }
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> upstream/master

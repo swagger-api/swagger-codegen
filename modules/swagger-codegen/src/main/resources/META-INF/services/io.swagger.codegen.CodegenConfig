@@ -41,4 +41,9 @@ io.swagger.codegen.languages.AkkaScalaClientCodegen
 io.swagger.codegen.languages.CsharpDotNet2ClientCodegen
 io.swagger.codegen.languages.ClojureClientCodegen
 io.swagger.codegen.languages.HaskellServantCodegen
+<<<<<<< HEAD
+io.swagger.codegen.languages.PureCloudCSharpClientCodegen
+io.swagger.codegen.languages.PureCloudPythonClientCodegen
+=======
 io.swagger.codegen.languages.LumenServerCodegen
+>>>>>>> upstream/master

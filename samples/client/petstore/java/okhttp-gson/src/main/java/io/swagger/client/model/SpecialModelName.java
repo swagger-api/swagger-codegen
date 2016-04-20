@@ -14,7 +14,13 @@ public class SpecialModelName   {
   
   @SerializedName("$special[property.name]")
   private Long specialPropertyName = null;
+<<<<<<< HEAD
+  
 
+  
+=======
+
+>>>>>>> upstream/master
   /**
    **/
   @ApiModelProperty(value = "")
@@ -25,6 +31,10 @@ public class SpecialModelName   {
     this.specialPropertyName = specialPropertyName;
   }
 
+<<<<<<< HEAD
+  
+=======
+>>>>>>> upstream/master
 
   @Override
   public boolean equals(Object o) {

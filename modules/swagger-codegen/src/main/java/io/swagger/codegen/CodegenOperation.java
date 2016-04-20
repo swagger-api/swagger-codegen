@@ -15,7 +15,11 @@ public class CodegenOperation {
             isListContainer, isMultipart, hasMore = Boolean.TRUE,
             isResponseBinary = Boolean.FALSE, hasReference = Boolean.FALSE;
     public String path, operationId, returnType, httpMethod, returnBaseType,
+<<<<<<< HEAD
+            returnContainer, summary, notes, baseName, defaultResponse, discriminator;
+=======
             returnContainer, summary, unescapedNotes, notes, baseName, defaultResponse, discriminator;
+>>>>>>> upstream/master
     public List<Map<String, String>> consumes, produces;
     public CodegenParameter bodyParam;
     public List<CodegenParameter> allParams = new ArrayList<CodegenParameter>();

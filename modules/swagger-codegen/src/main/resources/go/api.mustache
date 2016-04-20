@@ -49,6 +49,11 @@ func (a {{classname}}) {{nickname}} ({{#allParams}}{{paramName}} {{{dataType}}}{
     {{/allParams}}
     _sling := sling.New().{{httpMethod}}(a.Configuration.BasePath)
 
+<<<<<<< HEAD
+    _sling := sling.New().{{httpMethod}}(a.Configuration.BasePath)
+
+=======
+>>>>>>> upstream/master
     {{#authMethods}}// authentication ({{name}}) required
     {{#isApiKey}}{{#isKeyInHeader}}
     // set key with prefix in header

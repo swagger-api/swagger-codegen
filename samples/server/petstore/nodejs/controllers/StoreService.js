@@ -7,6 +7,8 @@ exports.deleteOrder = function(args, res, next) {
   **/
   // no response value expected for this operation
   res.end();
+<<<<<<< HEAD
+=======
 }
 
 exports.getInventory = function(args, res, next) {
@@ -25,12 +27,17 @@ exports.getInventory = function(args, res, next) {
     res.end();
   }
   
+>>>>>>> upstream/master
 }
 
 exports.getOrderById = function(args, res, next) {
   /**
    * parameters expected in the args:
+<<<<<<< HEAD
+  * orderId (String)
+=======
   * orderId (Long)
+>>>>>>> upstream/master
   **/
     var examples = {};
   examples['application/json'] = {

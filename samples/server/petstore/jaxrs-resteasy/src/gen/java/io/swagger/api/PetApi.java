@@ -5,7 +5,11 @@ import io.swagger.api.PetApiService;
 import io.swagger.api.factories.PetApiServiceFactory;
 
 import io.swagger.model.Pet;
+<<<<<<< HEAD
+import io.swagger.model.InlineResponse200;
+=======
 import io.swagger.model.ApiResponse;
+>>>>>>> upstream/master
 import java.io.File;
 
 import java.util.List;
@@ -22,18 +26,39 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 @Path("/pet")
 
 
+<<<<<<< HEAD
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaResteasyServerCodegen", date = "2016-03-16T14:27:58.108+08:00")
+=======
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaResteasyServerCodegen", date = "2016-04-15T18:10:39.667+08:00")
+>>>>>>> upstream/master
 public class PetApi  {
    private final PetApiService delegate = PetApiServiceFactory.getPetApi();
 
     @POST
+<<<<<<< HEAD
     
     @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/xml", "application/json" })
+    @Produces({ "application/json", "application/xml" })
     public Response addPet( Pet body,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.addPet(body,securityContext);
     }
+    @DELETE
+    @Path("/{petId}")
+    
+    @Produces({ "application/json", "application/xml" })
+    public Response deletePet( @PathParam("petId") Long petId,@HeaderParam("api_key") String apiKey,@Context SecurityContext securityContext)
+=======
+    
+    @Consumes({ "application/json", "application/xml" })
+    @Produces({ "application/xml", "application/json" })
+    public Response addPet( Pet body,@Context SecurityContext securityContext)
+>>>>>>> upstream/master
+    throws NotFoundException {
+        return delegate.deletePet(petId,apiKey,securityContext);
+    }
+<<<<<<< HEAD
+=======
     @DELETE
     @Path("/{petId}")
     
@@ -42,6 +67,7 @@ public class PetApi  {
     throws NotFoundException {
         return delegate.deletePet(petId,apiKey,securityContext);
     }
+>>>>>>> upstream/master
     @GET
     @Path("/findByStatus")
     
@@ -66,10 +92,33 @@ public class PetApi  {
     throws NotFoundException {
         return delegate.getPetById(petId,securityContext);
     }
+<<<<<<< HEAD
+    @GET
+    @Path("/{petId}?response=inline_arbitrary_object")
+    
+    @Produces({ "application/json", "application/xml" })
+    public Response getPetByIdInObject( @PathParam("petId") Long petId,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.getPetByIdInObject(petId,securityContext);
+    }
+    @GET
+    @Path("/{petId}?testing_byte_array=true")
+    
+    @Produces({ "application/json", "application/xml" })
+    public Response petPetIdtestingByteArraytrueGet( @PathParam("petId") Long petId,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.petPetIdtestingByteArraytrueGet(petId,securityContext);
+    }
+    @PUT
+    
+    @Consumes({ "application/json", "application/xml" })
+    @Produces({ "application/json", "application/xml" })
+=======
     @PUT
     
     @Consumes({ "application/json", "application/xml" })
     @Produces({ "application/xml", "application/json" })
+>>>>>>> upstream/master
     public Response updatePet( Pet body,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.updatePet(body,securityContext);

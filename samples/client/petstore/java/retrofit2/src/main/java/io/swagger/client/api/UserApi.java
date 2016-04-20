@@ -10,10 +10,14 @@ import okhttp3.RequestBody;
 
 import io.swagger.client.model.User;
 
+
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+
 
 public interface UserApi {
   /**
@@ -77,6 +81,32 @@ public interface UserApi {
   );
 
   /**
+   * Delete user
+   * This can only be done by the logged in user.
+   * @param username The name that needs to be deleted (required)
+   * @return Call<Void>
+   */
+  
+  @DELETE("user/{username}")
+  Call<Void> deleteUser(
+    @Path("username") String username
+  );
+
+  
+  /**
+   * Get user by user name
+   * 
+   * @param username The name that needs to be fetched. Use user1 for testing. (required)
+   * @return Call<User>
+   */
+  
+  @GET("user/{username}")
+  Call<User> getUserByName(
+    @Path("username") String username
+  );
+
+  
+  /**
    * Logs user into the system
    * 
    * @param username The user name for login (optional)
@@ -99,6 +129,10 @@ public interface UserApi {
   Call<Void> logoutUser();
     
 
+<<<<<<< HEAD
+  
+=======
+>>>>>>> upstream/master
   /**
    * Updated user
    * This can only be done by the logged in user.
@@ -112,4 +146,9 @@ public interface UserApi {
     @Path("username") String username, @Body User body
   );
 
+<<<<<<< HEAD
+  
+=======
+>>>>>>> upstream/master
 }
+

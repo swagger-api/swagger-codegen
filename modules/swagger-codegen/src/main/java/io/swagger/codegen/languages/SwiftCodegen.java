@@ -98,7 +98,11 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
         reservedWords = new HashSet<String>(
                 Arrays.asList(
                     "Int", "Int32", "Int64", "Int64", "Float", "Double", "Bool", "Void", "String", "Character", "AnyObject",
+<<<<<<< HEAD
+                    "class", "break", "as", "associativity", "deinit", "case", "dynamicType", "convenience", "enum", "continue",
+=======
                     "class", "Class", "break", "as", "associativity", "deinit", "case", "dynamicType", "convenience", "enum", "continue",
+>>>>>>> upstream/master
                     "false", "dynamic", "extension", "default", "is", "didSet", "func", "do", "nil", "final", "import", "else",
                     "self", "get", "init", "fallthrough", "Self", "infix", "internal", "for", "super", "inout", "let", "if",
                     "true", "lazy", "operator", "in", "COLUMN", "left", "private", "return", "FILE", "mutating", "protocol",
@@ -202,11 +206,14 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
 
+<<<<<<< HEAD
+=======
     }
 
     @Override
     protected boolean isReservedWord(String word) {
         return word != null && reservedWords.contains(word); //don't lowercase as super does
+>>>>>>> upstream/master
     }
 
     @Override

@@ -4,19 +4,39 @@ import java.util.Objects;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> upstream/master
 import com.google.gson.annotations.SerializedName;
 
 
 
 
+<<<<<<< HEAD
+
+
+=======
 /**
  * Model for testing model name same as property name
  **/
 @ApiModel(description = "Model for testing model name same as property name")
+>>>>>>> upstream/master
 public class Name   {
   
   @SerializedName("name")
   private Integer name = null;
+<<<<<<< HEAD
+  
+  @SerializedName("snake_case")
+  private Integer snakeCase = null;
+  
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+=======
 
   @SerializedName("snake_case")
   private Integer snakeCase = null;
@@ -24,6 +44,7 @@ public class Name   {
   /**
    **/
   @ApiModelProperty(required = true, value = "")
+>>>>>>> upstream/master
   public Integer getName() {
     return name;
   }
@@ -31,13 +52,25 @@ public class Name   {
     this.name = name;
   }
 
+<<<<<<< HEAD
+  
+=======
+>>>>>>> upstream/master
   /**
    **/
   @ApiModelProperty(value = "")
   public Integer getSnakeCase() {
     return snakeCase;
   }
+<<<<<<< HEAD
+  public void setSnakeCase(Integer snakeCase) {
+    this.snakeCase = snakeCase;
+  }
 
+  
+=======
+
+>>>>>>> upstream/master
 
   @Override
   public boolean equals(Object o) {
@@ -79,3 +112,8 @@ public class Name   {
     return o.toString().replace("\n", "\n    ");
   }
 }
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> upstream/master

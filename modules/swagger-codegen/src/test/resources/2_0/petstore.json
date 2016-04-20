@@ -802,7 +802,12 @@
           "400": {
             "description": "Invalid username supplied"
           }
-        }
+        },
+        "security": [
+          {
+            "test_http_basic": []
+          }
+        ]
       }
     }
   },
@@ -820,6 +825,32 @@
         "write:pets": "modify pets in your account",
         "read:pets": "read your pets"
       }
+<<<<<<< HEAD
+    },
+    "test_api_client_id": {
+      "type": "apiKey",
+      "name": "x-test_api_client_id",
+      "in": "header"
+    },
+    "test_api_client_secret": {
+      "type": "apiKey",
+      "name": "x-test_api_client_secret",
+      "in": "header"
+    },
+    "test_api_key_header": {
+      "type": "apiKey",
+      "name": "test_api_key_header",
+      "in": "header"
+    },
+    "test_api_key_query": {
+      "type": "apiKey",
+      "name": "test_api_key_query",
+      "in": "query"
+    },
+    "test_http_basic": {
+      "type": "basic"
+=======
+>>>>>>> upstream/master
     }
   },
   "definitions": {
@@ -970,6 +1001,153 @@
       "xml": {
         "name": "Order"
       }
+<<<<<<< HEAD
+    },
+    "$special[model.name]": {
+      "properties": {
+        "$special[property.name]": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "xml": {
+        "name": "$special[model.name]"
+      }
+    },
+    "Return": {
+      "description": "Model for testing reserved words",
+      "properties": {
+        "return": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "xml": {
+        "name": "Return"
+      }
+    },
+    "Name": {
+      "description": "Model for testing model name same as property name",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "snake_case": {
+          "readOnly": true,
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "xml": {
+        "name": "Name"
+      }
+    },
+    "200_response": {
+      "description": "Model for testing model name starting with number",
+      "properties": {
+        "name": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "xml": {
+        "name": "Name"
+      }
+    },
+    "Dog" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/Animal"
+      }, {
+        "type" : "object",
+        "properties" : {
+          "breed" : {
+            "type" : "string"
+          }
+        }
+      } ]
+    },
+    "Cat" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/Animal"
+      }, {
+        "type" : "object",
+        "properties" : {
+          "declawed" : {
+            "type" : "boolean"
+          }
+        }
+      } ]
+    },
+    "Animal" : {
+      "type" : "object",
+      "discriminator": "className",
+      "required": [
+        "className"
+      ],
+      "properties" : {
+        "className" : {
+          "type" : "string"
+        }
+      }
+    },
+    "format_test" : {
+      "type" : "object",
+      "required": [
+        "number"
+      ],
+      "properties" : {
+        "integer" : {
+          "type": "integer"
+        },
+        "int32" : {
+          "type": "integer",
+          "format": "int32"
+        },
+        "int64" : {
+          "type": "integer",
+          "format": "int64"
+        },
+        "number" : {
+          "type": "number"
+        },
+        "float" : {
+          "type": "number",
+          "format": "float"
+        },
+        "double" : {
+          "type": "number",
+          "format": "double"
+        },
+        "string" : {
+          "type": "string"
+        },
+        "byte" : {
+          "type": "string",
+          "format": "byte"
+        },
+        "binary" : {
+          "type": "string",
+          "format": "binary"
+        },
+        "date" : {
+          "type": "string",
+          "format": "date"
+        },
+        "dateTime" : {
+          "type": "string",
+          "format": "date-time"
+        },
+        "password" : {
+          "type": "string",
+          "format": "password"
+        }
+      }
+=======
+>>>>>>> upstream/master
     }
   }
 }

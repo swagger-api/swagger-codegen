@@ -13,7 +13,11 @@ import java.util.List;
 
 
 
+<<<<<<< HEAD
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-03-14T22:17:48.808+08:00")
+=======
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-04-13T14:36:32.196+02:00")
+>>>>>>> upstream/master
 public class InlineResponse200   {
   
   private List<Tag> tags = new ArrayList<Tag>();
@@ -103,6 +107,17 @@ public class InlineResponse200   {
     return this;
   }
   
+<<<<<<< HEAD
+  /**
+   * pet status in the store
+   **/
+  public InlineResponse200 status(StatusEnum status) {
+    this.status = status;
+    return this;
+  }
+  
+=======
+>>>>>>> upstream/master
   @ApiModelProperty(example = "null", value = "pet status in the store")
   @JsonProperty("status")
   public StatusEnum getStatus() {
@@ -112,7 +127,11 @@ public class InlineResponse200   {
     this.status = status;
   }
 
+<<<<<<< HEAD
+  
+=======
 
+>>>>>>> upstream/master
   /**
    **/
   public InlineResponse200 name(String name) {
@@ -129,7 +148,11 @@ public class InlineResponse200   {
     this.name = name;
   }
 
+<<<<<<< HEAD
+  
+=======
 
+>>>>>>> upstream/master
   /**
    **/
   public InlineResponse200 photoUrls(List<String> photoUrls) {
@@ -146,6 +169,10 @@ public class InlineResponse200   {
     this.photoUrls = photoUrls;
   }
 
+<<<<<<< HEAD
+  
+=======
+>>>>>>> upstream/master
 
   @Override
   public boolean equals(java.lang.Object o) {

@@ -46,6 +46,10 @@ public class PetApi {
     this.apiClient = apiClient;
   }
 
+<<<<<<< HEAD
+  
+=======
+>>>>>>> upstream/master
   /* Build call for addPet */
   private Call addPetCall(Pet body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = body;
@@ -143,13 +147,21 @@ public class PetApi {
     apiClient.executeAsync(call, callback);
     return call;
   }
+<<<<<<< HEAD
+  
+=======
+>>>>>>> upstream/master
   /* Build call for addPetUsingByteArray */
   private Call addPetUsingByteArrayCall(byte[] body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = body;
     
 
     // create path and map variables
+<<<<<<< HEAD
+    String localVarPath = "/pet?testing_byte_array=true".replaceAll("\\{format\\}","json");
+=======
     String localVarPath = "/pet?testing_byte_array&#x3D;true".replaceAll("\\{format\\}","json");
+>>>>>>> upstream/master
 
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
 
@@ -240,6 +252,10 @@ public class PetApi {
     apiClient.executeAsync(call, callback);
     return call;
   }
+<<<<<<< HEAD
+  
+=======
+>>>>>>> upstream/master
   /* Build call for deletePet */
   private Call deletePetCall(Long petId, String apiKey, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = null;
@@ -661,6 +677,10 @@ public class PetApi {
     apiClient.executeAsync(call, localVarReturnType, callback);
     return call;
   }
+<<<<<<< HEAD
+  
+=======
+>>>>>>> upstream/master
   /* Build call for getPetByIdInObject */
   private Call getPetByIdInObjectCall(Long petId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = null;
@@ -672,7 +692,11 @@ public class PetApi {
     
 
     // create path and map variables
+<<<<<<< HEAD
+    String localVarPath = "/pet/{petId}?response=inline_arbitrary_object".replaceAll("\\{format\\}","json")
+=======
     String localVarPath = "/pet/{petId}?response&#x3D;inline_arbitrary_object".replaceAll("\\{format\\}","json")
+>>>>>>> upstream/master
       .replaceAll("\\{" + "petId" + "\\}", apiClient.escapeString(petId.toString()));
 
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -705,7 +729,11 @@ public class PetApi {
       });
     }
 
+<<<<<<< HEAD
+    String[] localVarAuthNames = new String[] { "petstore_auth", "api_key" };
+=======
     String[] localVarAuthNames = new String[] { "api_key", "petstore_auth" };
+>>>>>>> upstream/master
     return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
   }
 
@@ -768,6 +796,10 @@ public class PetApi {
     apiClient.executeAsync(call, localVarReturnType, callback);
     return call;
   }
+<<<<<<< HEAD
+  
+=======
+>>>>>>> upstream/master
   /* Build call for petPetIdtestingByteArraytrueGet */
   private Call petPetIdtestingByteArraytrueGetCall(Long petId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = null;
@@ -779,7 +811,11 @@ public class PetApi {
     
 
     // create path and map variables
+<<<<<<< HEAD
+    String localVarPath = "/pet/{petId}?testing_byte_array=true".replaceAll("\\{format\\}","json")
+=======
     String localVarPath = "/pet/{petId}?testing_byte_array&#x3D;true".replaceAll("\\{format\\}","json")
+>>>>>>> upstream/master
       .replaceAll("\\{" + "petId" + "\\}", apiClient.escapeString(petId.toString()));
 
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -812,7 +848,11 @@ public class PetApi {
       });
     }
 
+<<<<<<< HEAD
+    String[] localVarAuthNames = new String[] { "petstore_auth", "api_key" };
+=======
     String[] localVarAuthNames = new String[] { "api_key", "petstore_auth" };
+>>>>>>> upstream/master
     return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
   }
 
@@ -875,6 +915,10 @@ public class PetApi {
     apiClient.executeAsync(call, localVarReturnType, callback);
     return call;
   }
+<<<<<<< HEAD
+  
+=======
+>>>>>>> upstream/master
   /* Build call for updatePet */
   private Call updatePetCall(Pet body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = body;
@@ -972,6 +1016,10 @@ public class PetApi {
     apiClient.executeAsync(call, callback);
     return call;
   }
+<<<<<<< HEAD
+  
+=======
+>>>>>>> upstream/master
   /* Build call for updatePetWithForm */
   private Call updatePetWithFormCall(String petId, String name, String status, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = null;
@@ -1085,6 +1133,10 @@ public class PetApi {
     apiClient.executeAsync(call, callback);
     return call;
   }
+<<<<<<< HEAD
+  
+=======
+>>>>>>> upstream/master
   /* Build call for uploadFile */
   private Call uploadFileCall(Long petId, String additionalMetadata, File file, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = null;

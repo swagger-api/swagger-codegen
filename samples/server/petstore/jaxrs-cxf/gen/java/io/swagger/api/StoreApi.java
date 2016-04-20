@@ -14,7 +14,11 @@ public interface StoreApi  {
     @Path("/store/order/{orderId}")
     
     @Produces({ "application/xml", "application/json" })
+<<<<<<< HEAD
+    public Response deleteOrder(@PathParam("orderId") Long orderId);
+=======
     public Response deleteOrder(@PathParam("orderId") String orderId);
+>>>>>>> upstream/master
     @GET
     @Path("/store/inventory")
     

@@ -14,7 +14,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+<<<<<<< HEAD
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-03-17T16:00:50.657+08:00")
+=======
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-04-13T14:36:32.196+02:00")
+>>>>>>> upstream/master
 public class UserApi {
   private ApiClient apiClient;
 
@@ -162,6 +166,10 @@ public class UserApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+<<<<<<< HEAD
+    
+=======
+>>>>>>> upstream/master
 
     
     
@@ -177,13 +185,23 @@ public class UserApi {
 
     String[] localVarAuthNames = new String[] { "test_http_basic" };
 
+<<<<<<< HEAD
+    
+    apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+    
+=======
 
     apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+>>>>>>> upstream/master
   }
   /**
    * Get user by user name
    * 
+<<<<<<< HEAD
+   * @param username The name that needs to be fetched. Use user1 for testing. (required)
+=======
    * @param username The name that needs to be fetched. Use user1 for testing.  (required)
+>>>>>>> upstream/master
    * @return User
    * @throws ApiException if fails to make API call
    */
@@ -219,9 +237,18 @@ public class UserApi {
 
     String[] localVarAuthNames = new String[] {  };
 
+<<<<<<< HEAD
+    
+    GenericType<User> localVarReturnType = new GenericType<User>() {};
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+    
+  }
+  
+=======
     GenericType<User> localVarReturnType = new GenericType<User>() {};
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
+>>>>>>> upstream/master
   /**
    * Logs user into the system
    * 
@@ -241,8 +268,16 @@ public class UserApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+<<<<<<< HEAD
+    
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "username", username));
+    
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "password", password));
+    
+=======
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "username", username));
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "password", password));
+>>>>>>> upstream/master
 
     
     
@@ -258,6 +293,10 @@ public class UserApi {
 
     String[] localVarAuthNames = new String[] {  };
 
+<<<<<<< HEAD
+    
+=======
+>>>>>>> upstream/master
     GenericType<String> localVarReturnType = new GenericType<String>() {};
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
@@ -292,8 +331,14 @@ public class UserApi {
 
     String[] localVarAuthNames = new String[] {  };
 
+<<<<<<< HEAD
+    
+    apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+    
+=======
 
     apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+>>>>>>> upstream/master
   }
   /**
    * Updated user
@@ -334,7 +379,13 @@ public class UserApi {
 
     String[] localVarAuthNames = new String[] {  };
 
+<<<<<<< HEAD
+    
+    apiClient.invokeAPI(localVarPath, "PUT", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+    
+=======
 
     apiClient.invokeAPI(localVarPath, "PUT", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+>>>>>>> upstream/master
   }
 }

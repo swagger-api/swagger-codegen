@@ -256,7 +256,11 @@ class ObjectSerializer
             } else {
                 return null;
             }
+<<<<<<< HEAD
+        } elseif (in_array($class, array('integer', 'int', 'void', 'number', 'object', 'double', 'float', 'byte', 'DateTime', 'string', 'mixed', 'boolean', 'bool'))) {
+=======
         } elseif (in_array($class, array('void', 'bool', 'string', 'double', 'byte', 'mixed', 'integer', 'float', 'int', 'DateTime', 'number', 'boolean', 'object'))) {
+>>>>>>> upstream/master
             settype($data, $class);
             return $data;
         } elseif ($class === '\SplFileObject') {

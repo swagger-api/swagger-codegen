@@ -15,7 +15,11 @@ public class Bootstrap extends HttpServlet {
   public void init(ServletConfig config) throws ServletException {
     Info info = new Info()
       .title("Swagger Server")
+<<<<<<< HEAD
+      .description("This is a sample server Petstore server.  You can find out more about\nSwagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).\nFor this sample, you can use the api key `special-key` to test the authorization filters.\n")
+=======
       .description("This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.")
+>>>>>>> upstream/master
       .termsOfService("http://swagger.io/terms/")
       .contact(new Contact()
         .email("apiteam@swagger.io"))

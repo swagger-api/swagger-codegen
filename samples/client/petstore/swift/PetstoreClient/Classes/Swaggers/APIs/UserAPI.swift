@@ -162,6 +162,13 @@ public class UserAPI: APIBase {
      Delete user
      
      - parameter username: (path) The name that needs to be deleted 
+<<<<<<< HEAD
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    public class func deleteUser(username username: String, completion: ((error: ErrorType?) -> Void)) {
+        deleteUserWithRequestBuilder(username: username).execute { (response, error) -> Void in
+            completion(error: error);
+=======
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func deleteUser(username username: String, completion: ((error: ErrorType?) -> Void)) {
@@ -219,10 +226,21 @@ public class UserAPI: APIBase {
     public class func getUserByName(username username: String, completion: ((data: User?, error: ErrorType?) -> Void)) {
         getUserByNameWithRequestBuilder(username: username).execute { (response, error) -> Void in
             completion(data: response?.body, error: error);
+>>>>>>> upstream/master
         }
     }
 
     /**
+<<<<<<< HEAD
+     Delete user
+     
+     - parameter username: (path) The name that needs to be deleted 
+     - returns: Promise<Void>
+     */
+    public class func deleteUser(username username: String) -> Promise<Void> {
+        let deferred = Promise<Void>.pendingPromise()
+        deleteUser(username: username) { error in
+=======
      Get user by user name
      
      - parameter username: (path) The name that needs to be fetched. Use user1 for testing.  
@@ -231,6 +249,7 @@ public class UserAPI: APIBase {
     public class func getUserByName(username username: String) -> Promise<User> {
         let deferred = Promise<User>.pendingPromise()
         getUserByName(username: username) { data, error in
+>>>>>>> upstream/master
             if let error = error {
                 deferred.reject(error)
             } else {
@@ -241,6 +260,16 @@ public class UserAPI: APIBase {
     }
 
     /**
+<<<<<<< HEAD
+     Delete user
+     - DELETE /user/{username}
+     - This can only be done by the logged in user.
+     - BASIC:
+       - type: basic
+       - name: test_http_basic
+     
+     - parameter username: (path) The name that needs to be deleted 
+=======
      Get user by user name
      - GET /user/{username}
      - 
@@ -284,10 +313,15 @@ public class UserAPI: APIBase {
 </User>, contentType=application/xml}]
      
      - parameter username: (path) The name that needs to be fetched. Use user1 for testing.  
+>>>>>>> upstream/master
 
      - returns: RequestBuilder<User> 
      */
+<<<<<<< HEAD
+    public class func deleteUserWithRequestBuilder(username username: String) -> RequestBuilder<Void> {
+=======
     public class func getUserByNameWithRequestBuilder(username username: String) -> RequestBuilder<User> {
+>>>>>>> upstream/master
         var path = "/user/{username}"
         path = path.stringByReplacingOccurrencesOfString("{username}", withString: "\(username)", options: .LiteralSearch, range: nil)
         let URLString = PetstoreClientAPI.basePath + path
@@ -297,10 +331,105 @@ public class UserAPI: APIBase {
 
         let requestBuilder: RequestBuilder<User>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: parameters, isBody: true)
+        return requestBuilder.init(method: "DELETE", URLString: URLString, parameters: parameters, isBody: true)
     }
 
     /**
+<<<<<<< HEAD
+     Get user by user name
+     
+     - parameter username: (path) The name that needs to be fetched. Use user1 for testing.  
+=======
+     Logs user into the system
+     
+     - parameter username: (query) The user name for login (optional)
+     - parameter password: (query) The password for login in clear text (optional)
+>>>>>>> upstream/master
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    public class func loginUser(username username: String? = nil, password: String? = nil, completion: ((data: String?, error: ErrorType?) -> Void)) {
+        loginUserWithRequestBuilder(username: username, password: password).execute { (response, error) -> Void in
+            completion(data: response?.body, error: error);
+        }
+    }
+
+    /**
+<<<<<<< HEAD
+     Get user by user name
+     
+     - parameter username: (path) The name that needs to be fetched. Use user1 for testing.  
+     - returns: Promise<User>
+=======
+     Logs user into the system
+     
+     - parameter username: (query) The user name for login (optional)
+     - parameter password: (query) The password for login in clear text (optional)
+     - returns: Promise<String>
+>>>>>>> upstream/master
+     */
+    public class func loginUser(username username: String? = nil, password: String? = nil) -> Promise<String> {
+        let deferred = Promise<String>.pendingPromise()
+        loginUser(username: username, password: password) { data, error in
+            if let error = error {
+                deferred.reject(error)
+            } else {
+                deferred.fulfill(data!)
+            }
+        }
+        return deferred.promise
+    }
+
+    /**
+<<<<<<< HEAD
+     Get user by user name
+     - GET /user/{username}
+     - 
+     - examples: [{contentType=application/json, example={
+  "id" : 1,
+  "username" : "johnp",
+  "firstName" : "John",
+  "lastName" : "Public",
+  "email" : "johnp@swagger.io",
+  "password" : "-secret-",
+  "phone" : "0123456789",
+  "userStatus" : 0
+}}]
+     
+     - parameter username: (path) The name that needs to be fetched. Use user1 for testing.  
+=======
+     Logs user into the system
+     - GET /user/login
+     - 
+     - examples: [{example="aeiou", contentType=application/json}, {example=string, contentType=application/xml}]
+     - examples: [{example="aeiou", contentType=application/json}, {example=string, contentType=application/xml}]
+     
+     - parameter username: (query) The user name for login (optional)
+     - parameter password: (query) The password for login in clear text (optional)
+>>>>>>> upstream/master
+
+     - returns: RequestBuilder<String> 
+     */
+    public class func loginUserWithRequestBuilder(username username: String? = nil, password: String? = nil) -> RequestBuilder<String> {
+        let path = "/user/login"
+        let URLString = PetstoreClientAPI.basePath + path
+
+<<<<<<< HEAD
+        let nillableParameters: [String:AnyObject?] = [:]
+=======
+        let nillableParameters: [String:AnyObject?] = [
+            "username": username,
+            "password": password
+        ]
+>>>>>>> upstream/master
+        let parameters = APIHelper.rejectNil(nillableParameters)
+
+        let requestBuilder: RequestBuilder<String>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: URLString, parameters: parameters, isBody: false)
+    }
+
+    /**
+<<<<<<< HEAD
      Logs user into the system
      
      - parameter username: (query) The user name for login (optional)
@@ -336,8 +465,8 @@ public class UserAPI: APIBase {
      Logs user into the system
      - GET /user/login
      - 
-     - examples: [{example="aeiou", contentType=application/json}, {example=string, contentType=application/xml}]
-     - examples: [{example="aeiou", contentType=application/json}, {example=string, contentType=application/xml}]
+     - examples: [{contentType=application/json, example="aeiou"}, {contentType=application/xml, example=string}]
+     - examples: [{contentType=application/json, example="aeiou"}, {contentType=application/xml, example=string}]
      
      - parameter username: (query) The user name for login (optional)
      - parameter password: (query) The password for login in clear text (optional)
@@ -362,6 +491,10 @@ public class UserAPI: APIBase {
     /**
      Logs out current logged in user session
      
+=======
+     Logs out current logged in user session
+     
+>>>>>>> upstream/master
      - parameter completion: completion handler to receive the data and the error objects
      */
     public class func logoutUser(completion: ((error: ErrorType?) -> Void)) {

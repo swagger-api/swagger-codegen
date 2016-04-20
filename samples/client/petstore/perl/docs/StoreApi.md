@@ -10,9 +10,11 @@ All URIs are relative to *http://petstore.swagger.io/v2*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**delete_order**](StoreApi.md#delete_order) | **DELETE** /store/order/{orderId} | Delete purchase order by ID
-[**find_orders_by_status**](StoreApi.md#find_orders_by_status) | **GET** /store/findByStatus | Finds orders by status
 [**get_inventory**](StoreApi.md#get_inventory) | **GET** /store/inventory | Returns pet inventories by status
+<<<<<<< HEAD
+=======
 [**get_inventory_in_object**](StoreApi.md#get_inventory_in_object) | **GET** /store/inventory?response&#x3D;arbitrary_object | Fake endpoint to test arbitrary object return by &#39;Get inventory&#39;
+>>>>>>> upstream/master
 [**get_order_by_id**](StoreApi.md#get_order_by_id) | **GET** /store/order/{orderId} | Find purchase order by ID
 [**place_order**](StoreApi.md#place_order) | **POST** /store/order | Place an order for a pet
 
@@ -56,6 +58,9 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+<<<<<<< HEAD
+ - **Accept**: application/xml, application/json
+=======
  - **Accept**: application/json, application/xml
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -110,6 +115,7 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/xml
+>>>>>>> upstream/master
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -123,6 +129,22 @@ Returns a map of status codes to quantities
 ### Example 
 ```perl
 use Data::Dumper;
+<<<<<<< HEAD
+
+# Configure API key authorization: api_key
+$WWW::SwaggerClient::Configuration::api_key->{'api_key'} = 'YOUR_API_KEY';
+# uncomment below to setup prefix (e.g. BEARER) for API key, if needed
+#$WWW::SwaggerClient::Configuration::api_key_prefix->{'api_key'} = "BEARER";
+
+my $api_instance = WWW::SwaggerClient::StoreApi->new();
+
+eval { 
+    my $result = $api_instance->get_inventory();
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling StoreApi->get_inventory: $@\n";
+=======
 
 # Configure API key authorization: api_key
 $WWW::SwaggerClient::Configuration::api_key->{'api_key'} = 'YOUR_API_KEY';
@@ -182,6 +204,7 @@ eval {
 };
 if ($@) {
     warn "Exception when calling StoreApi->get_inventory_in_object: $@\n";
+>>>>>>> upstream/master
 }
 ```
 
@@ -190,7 +213,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**object**
+**HASH[string,int]**
 
 ### Authorization
 
@@ -199,7 +222,11 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+<<<<<<< HEAD
+ - **Accept**: application/json
+=======
  - **Accept**: application/json, application/xml
+>>>>>>> upstream/master
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -214,6 +241,10 @@ For valid response try integer IDs with value <= 5 or > 10. Other values will ge
 ```perl
 use Data::Dumper;
 
+<<<<<<< HEAD
+my $api_instance = WWW::SwaggerClient::StoreApi->new();
+my $order_id = 789; # int | ID of pet that needs to be fetched
+=======
 # Configure API key authorization: test_api_key_header
 $WWW::SwaggerClient::Configuration::api_key->{'test_api_key_header'} = 'YOUR_API_KEY';
 # uncomment below to setup prefix (e.g. BEARER) for API key, if needed
@@ -225,6 +256,7 @@ $WWW::SwaggerClient::Configuration::api_key->{'test_api_key_query'} = 'YOUR_API_
 
 my $api_instance = WWW::SwaggerClient::StoreApi->new();
 my $order_id = 'order_id_example'; # string | ID of pet that needs to be fetched
+>>>>>>> upstream/master
 
 eval { 
     my $result = $api_instance->get_order_by_id(order_id => $order_id);
@@ -239,7 +271,7 @@ if ($@) {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **order_id** | **string**| ID of pet that needs to be fetched | 
+ **order_id** | **int**| ID of pet that needs to be fetched | 
 
 ### Return type
 
@@ -247,12 +279,16 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[test_api_key_header](../README.md#test_api_key_header), [test_api_key_query](../README.md#test_api_key_query)
+No authorization required
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+<<<<<<< HEAD
+ - **Accept**: application/xml, application/json
+=======
  - **Accept**: application/json, application/xml
+>>>>>>> upstream/master
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -267,6 +303,8 @@ Place an order for a pet
 ```perl
 use Data::Dumper;
 
+<<<<<<< HEAD
+=======
 # Configure API key authorization: test_api_client_id
 $WWW::SwaggerClient::Configuration::api_key->{'x-test_api_client_id'} = 'YOUR_API_KEY';
 # uncomment below to setup prefix (e.g. BEARER) for API key, if needed
@@ -276,6 +314,7 @@ $WWW::SwaggerClient::Configuration::api_key->{'x-test_api_client_secret'} = 'YOU
 # uncomment below to setup prefix (e.g. BEARER) for API key, if needed
 #$WWW::SwaggerClient::Configuration::api_key_prefix->{'x-test_api_client_secret'} = "BEARER";
 
+>>>>>>> upstream/master
 my $api_instance = WWW::SwaggerClient::StoreApi->new();
 my $body = WWW::SwaggerClient::Object::Order->new(); # Order | order placed for purchasing the pet
 
@@ -292,7 +331,7 @@ if ($@) {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Order**](Order.md)| order placed for purchasing the pet | [optional] 
+ **body** | [**Order**](Order.md)| order placed for purchasing the pet | 
 
 ### Return type
 
@@ -300,12 +339,16 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[test_api_client_id](../README.md#test_api_client_id), [test_api_client_secret](../README.md#test_api_client_secret)
+No authorization required
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+<<<<<<< HEAD
+ - **Accept**: application/xml, application/json
+=======
  - **Accept**: application/json, application/xml
+>>>>>>> upstream/master
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

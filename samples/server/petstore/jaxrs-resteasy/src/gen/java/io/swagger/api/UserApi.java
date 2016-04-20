@@ -20,7 +20,11 @@ import javax.ws.rs.*;
 @Path("/user")
 
 
+<<<<<<< HEAD
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaResteasyServerCodegen", date = "2016-03-16T14:27:58.108+08:00")
+=======
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaResteasyServerCodegen", date = "2016-04-15T18:10:39.667+08:00")
+>>>>>>> upstream/master
 public class UserApi  {
    private final UserApiService delegate = UserApiServiceFactory.getUserApi();
 
@@ -51,7 +55,11 @@ public class UserApi  {
     @DELETE
     @Path("/{username}")
     
+<<<<<<< HEAD
+    @Produces({ "application/json", "application/xml" })
+=======
     @Produces({ "application/xml", "application/json" })
+>>>>>>> upstream/master
     public Response deleteUser( @PathParam("username") String username,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.deleteUser(username,securityContext);
@@ -59,7 +67,11 @@ public class UserApi  {
     @GET
     @Path("/{username}")
     
+<<<<<<< HEAD
+    @Produces({ "application/json", "application/xml" })
+=======
     @Produces({ "application/xml", "application/json" })
+>>>>>>> upstream/master
     public Response getUserByName( @PathParam("username") String username,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.getUserByName(username,securityContext);

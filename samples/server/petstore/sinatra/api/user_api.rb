@@ -1,12 +1,12 @@
 require 'json'
 
 
-MyApp.add_route('POST', '/v2/user', {
+MyApp.add_route('POST', '/v2/users', {
   "resourcePath" => "/User",
   "summary" => "Create user",
   "nickname" => "create_user", 
   "responseClass" => "void", 
-  "endpoint" => "/user", 
+  "endpoint" => "/users", 
   "notes" => "This can only be done by the logged in user.",
   "parameters" => [
     {
@@ -23,12 +23,12 @@ MyApp.add_route('POST', '/v2/user', {
 end
 
 
-MyApp.add_route('POST', '/v2/user/createWithArray', {
+MyApp.add_route('POST', '/v2/users/createWithArray', {
   "resourcePath" => "/User",
   "summary" => "Creates list of users with given input array",
   "nickname" => "create_users_with_array_input", 
   "responseClass" => "void", 
-  "endpoint" => "/user/createWithArray", 
+  "endpoint" => "/users/createWithArray", 
   "notes" => "",
   "parameters" => [
     {
@@ -45,12 +45,12 @@ MyApp.add_route('POST', '/v2/user/createWithArray', {
 end
 
 
-MyApp.add_route('POST', '/v2/user/createWithList', {
+MyApp.add_route('POST', '/v2/users/createWithList', {
   "resourcePath" => "/User",
   "summary" => "Creates list of users with given input array",
   "nickname" => "create_users_with_list_input", 
   "responseClass" => "void", 
-  "endpoint" => "/user/createWithList", 
+  "endpoint" => "/users/createWithList", 
   "notes" => "",
   "parameters" => [
     {
@@ -111,14 +111,18 @@ MyApp.add_route('GET', '/v2/user/{username}', {
 end
 
 
-MyApp.add_route('GET', '/v2/user/login', {
+MyApp.add_route('DELETE', '/v2/users/{username}', {
   "resourcePath" => "/User",
-  "summary" => "Logs user into the system",
-  "nickname" => "login_user", 
-  "responseClass" => "string", 
-  "endpoint" => "/user/login", 
-  "notes" => "",
+  "summary" => "Delete user",
+  "nickname" => "delete_user", 
+  "responseClass" => "void", 
+  "endpoint" => "/users/{username}", 
+  "notes" => "This can only be done by the logged in user.",
   "parameters" => [
+<<<<<<< HEAD
+    
+    
+=======
     {
       "name" => "username",
       "description" => "The user name for login",
@@ -128,6 +132,74 @@ MyApp.add_route('GET', '/v2/user/login', {
       "allowableValues" => "",
       
     },
+>>>>>>> upstream/master
+    {
+      "name" => "username",
+      "description" => "The name that needs to be deleted",
+      "dataType" => "string",
+      "paramType" => "path",
+    },
+<<<<<<< HEAD
+    
+    
+    
+=======
+>>>>>>> upstream/master
+    ]}) do
+  cross_origin
+  # the guts live here
+
+  {"message" => "yes, it worked"}.to_json
+end
+
+
+MyApp.add_route('GET', '/v2/users/{username}', {
+  "resourcePath" => "/User",
+  "summary" => "Get user by user name",
+  "nickname" => "get_user_by_name", 
+  "responseClass" => "User", 
+  "endpoint" => "/users/{username}", 
+  "notes" => "",
+  "parameters" => [
+<<<<<<< HEAD
+    
+    
+    {
+      "name" => "username",
+      "description" => "The name that needs to be fetched. Use user1 for testing.",
+      "dataType" => "string",
+      "paramType" => "path",
+    },
+    
+    
+    
+    ]}) do
+  cross_origin
+  # the guts live here
+
+  {"message" => "yes, it worked"}.to_json
+end
+
+
+MyApp.add_route('GET', '/v2/users/login', {
+  "resourcePath" => "/User",
+  "summary" => "Logs user into the system",
+  "nickname" => "login_user", 
+  "responseClass" => "string", 
+  "endpoint" => "/users/login", 
+  "notes" => "",
+  "parameters" => [
+    
+    {
+      "name" => "username",
+      "description" => "The user name for login",
+      "dataType" => "string",
+      "paramType" => "query",
+      
+      "allowableValues" => "",
+      
+    },
+    
     {
       "name" => "password",
       "description" => "The password for login in clear text",
@@ -137,6 +209,12 @@ MyApp.add_route('GET', '/v2/user/login', {
       "allowableValues" => "",
       
     },
+    
+    
+    
+    
+=======
+>>>>>>> upstream/master
     ]}) do
   cross_origin
   # the guts live here
@@ -145,14 +223,19 @@ MyApp.add_route('GET', '/v2/user/login', {
 end
 
 
-MyApp.add_route('GET', '/v2/user/logout', {
+MyApp.add_route('GET', '/v2/users/logout', {
   "resourcePath" => "/User",
   "summary" => "Logs out current logged in user session",
   "nickname" => "logout_user", 
   "responseClass" => "void", 
-  "endpoint" => "/user/logout", 
+  "endpoint" => "/users/logout", 
   "notes" => "",
   "parameters" => [
+<<<<<<< HEAD
+    
+    
+    
+    
     ]}) do
   cross_origin
   # the guts live here
@@ -161,26 +244,40 @@ MyApp.add_route('GET', '/v2/user/logout', {
 end
 
 
-MyApp.add_route('PUT', '/v2/user/{username}', {
+MyApp.add_route('PUT', '/v2/users/{username}', {
   "resourcePath" => "/User",
   "summary" => "Updated user",
   "nickname" => "update_user", 
   "responseClass" => "void", 
-  "endpoint" => "/user/{username}", 
+  "endpoint" => "/users/{username}", 
   "notes" => "This can only be done by the logged in user.",
   "parameters" => [
+    
+    
+=======
+>>>>>>> upstream/master
     {
       "name" => "username",
       "description" => "name that need to be deleted",
       "dataType" => "string",
       "paramType" => "path",
     },
+<<<<<<< HEAD
+    
+    
+    
+=======
+>>>>>>> upstream/master
     {
       "name" => "body",
       "description" => "Updated user object",
       "dataType" => "User",
       "paramType" => "body",
     }
+<<<<<<< HEAD
+    
+=======
+>>>>>>> upstream/master
     ]}) do
   cross_origin
   # the guts live here

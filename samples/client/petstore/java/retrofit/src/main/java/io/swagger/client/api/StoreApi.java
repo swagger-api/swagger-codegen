@@ -8,10 +8,14 @@ import retrofit.mime.*;
 
 import io.swagger.client.model.Order;
 
+
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+
 
 public interface StoreApi {
   /**
@@ -39,6 +43,32 @@ public interface StoreApi {
   void deleteOrder(
     @Path("orderId") String orderId, Callback<Void> cb
   );
+  /**
+   * Delete purchase order by ID
+   * Sync method
+   * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
+   * @param orderId ID of the order that needs to be deleted (required)
+   * @return Void
+   */
+  
+  @DELETE("/store/order/{orderId}")
+  Void deleteOrder(
+    @Path("orderId") String orderId
+  );
+
+  /**
+   * Delete purchase order by ID
+   * Async method
+   * @param orderId ID of the order that needs to be deleted (required)
+   * @param cb callback method
+   * @return void
+   */
+  
+  @DELETE("/store/order/{orderId}")
+  void deleteOrder(
+    @Path("orderId") String orderId, Callback<Void> cb
+  );
+  
   /**
    * Finds orders by status
    * Sync method
@@ -108,10 +138,18 @@ public interface StoreApi {
   void getInventoryInObject(
     Callback<Object> cb
   );
+<<<<<<< HEAD
+  
+  /**
+   * Find purchase order by ID
+   * Sync method
+   * For valid response try integer IDs with value &lt;= 5 or &gt; 10. Other values will generated exceptions
+=======
   /**
    * Find purchase order by ID
    * Sync method
    * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+>>>>>>> upstream/master
    * @param orderId ID of pet that needs to be fetched (required)
    * @return Order
    */
@@ -159,3 +197,4 @@ public interface StoreApi {
     @Body Order body, Callback<Order> cb
   );
 }
+

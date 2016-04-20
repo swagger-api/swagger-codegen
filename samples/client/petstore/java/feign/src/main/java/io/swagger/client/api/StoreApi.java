@@ -4,13 +4,20 @@ import io.swagger.client.ApiClient;
 
 import io.swagger.client.model.Order;
 
+
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import feign.*;
 
+<<<<<<< HEAD
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-03-19T15:53:31.820+08:00")
+=======
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-04-13T14:36:33.302+02:00")
+>>>>>>> upstream/master
 public interface StoreApi extends ApiClient.Api {
 
 
@@ -26,7 +33,11 @@ public interface StoreApi extends ApiClient.Api {
     "Accepts: application/json",
   })
   void deleteOrder(@Param("orderId") String orderId);
+<<<<<<< HEAD
+  
+=======
 
+>>>>>>> upstream/master
   /**
    * Finds orders by status
    * A single status value can be provided as a string
@@ -63,10 +74,17 @@ public interface StoreApi extends ApiClient.Api {
     "Accepts: application/json",
   })
   Object getInventoryInObject();
+<<<<<<< HEAD
+  
+  /**
+   * Find purchase order by ID
+   * For valid response try integer IDs with value &lt;= 5 or &gt; 10. Other values will generated exceptions
+=======
 
   /**
    * Find purchase order by ID
    * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+>>>>>>> upstream/master
    * @param orderId ID of pet that needs to be fetched (required)
    * @return Order
    */
@@ -89,4 +107,9 @@ public interface StoreApi extends ApiClient.Api {
     "Accepts: application/json",
   })
   Order placeOrder(Order body);
+<<<<<<< HEAD
+  
+
+=======
+>>>>>>> upstream/master
 }

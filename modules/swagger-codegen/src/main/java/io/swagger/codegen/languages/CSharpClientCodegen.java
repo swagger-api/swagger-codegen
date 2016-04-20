@@ -39,11 +39,6 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
     private static final String DATA_TYPE_WITH_ENUM_EXTENSION = "plainDatatypeWithEnum";
 
     protected String packageGuid = "{" + java.util.UUID.randomUUID().toString().toUpperCase() + "}";
-    protected String packageTitle = "Swagger Library";
-    protected String packageProductName = "SwaggerLibrary";
-    protected String packageDescription = "A library generated from a Swagger doc";
-    protected String packageCompany = "Swagger";
-    protected String packageCopyright = "No Copyright";
     protected String clientPackage = "IO.Swagger.Client";
     protected String localVariablePrefix = "";
     protected String apiDocPath = "docs/";
@@ -71,6 +66,8 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         // C# client default
         setSourceFolder("src" + File.separator + "main" + File.separator + "csharp");
 
+        importMapping.remove("LocalDateTime");
+
         cliOptions.clear();
 
         // CLI options
@@ -81,6 +78,38 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         addOption(CodegenConstants.PACKAGE_VERSION,
                 "C# package version.",
                 this.packageVersion);
+
+        addOption(CodegenConstants.PACKAGE_TITLE,
+                "Package's title",
+                null);
+
+        addOption(CodegenConstants.PACKAGE_DESCRIPTION,
+                "Package's description",
+                null);
+
+        addOption(CodegenConstants.PACKAGE_CONFIGURATION,
+                "Package's configuration",
+                null);
+
+        addOption(CodegenConstants.PACKAGE_COMPANY,
+                "Package's company",
+                null);
+
+        addOption(CodegenConstants.PACKAGE_PRODUCT_NAME,
+                "Package's product name",
+                null);
+
+        addOption(CodegenConstants.PACKAGE_COPYRIGHT,
+                "Package's copyright information",
+                null);
+
+        addOption(CodegenConstants.PACKAGE_TRADEMARK,
+                "Package's trademark information",
+                null);
+
+        addOption(CodegenConstants.PACKAGE_CULTURE,
+                "Package's culture string (e.g. en-us)",
+                null);
 
         addOption(CodegenConstants.SOURCE_FOLDER,
                 CodegenConstants.SOURCE_FOLDER_DESC,
@@ -146,13 +175,6 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         clientPackage = packageName + ".Client";
 
         additionalProperties.put("clientPackage", clientPackage);
-
-        // Add properties used by AssemblyInfo.mustache
-        additionalProperties.put("packageTitle", packageTitle);
-        additionalProperties.put("packageProductName", packageProductName);
-        additionalProperties.put("packageDescription", packageDescription);
-        additionalProperties.put("packageCompany", packageCompany);
-        additionalProperties.put("packageCopyright", packageCopyright);
         additionalProperties.put("emitDefaultValue", optionalEmitDefaultValue);
 
         if (additionalProperties.containsKey(CodegenConstants.DOTNET_FRAMEWORK)) {
@@ -225,9 +247,16 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         supportingFiles.add(new SupportingFile("compile.mustache", "", "compile.bat"));
         supportingFiles.add(new SupportingFile("compile-mono.sh.mustache", "", "compile-mono.sh"));
         supportingFiles.add(new SupportingFile("packages.config.mustache", "vendor" + java.io.File.separator, "packages.config"));
+<<<<<<< HEAD
+        supportingFiles.add(new SupportingFile("README.md", "", "README.md"));
+        supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
+        supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
+
+=======
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
+>>>>>>> upstream/master
 
         if (optionalAssemblyInfoFlag) {
             supportingFiles.add(new SupportingFile("AssemblyInfo.mustache", packageFolder + File.separator + "Properties", "AssemblyInfo.cs"));
@@ -308,16 +337,24 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
 
     @Override
     public Map<String, Object> postProcessModels(Map<String, Object> objMap) {
+<<<<<<< HEAD
+    	Map<String, Object> objs = super.postProcessModels(objMap);
+=======
         Map<String, Object> objs = super.postProcessModels(objMap);
+>>>>>>> upstream/master
 
         List<Object> models = (List<Object>) objs.get("models");
         for (Object _mo : models) {
             Map<String, Object> mo = (Map<String, Object>) _mo;
             CodegenModel cm = (CodegenModel) mo.get("model");
             for (CodegenProperty var : cm.vars) {
-                Map<String, Object> allowableValues = var.allowableValues;
+                // Property names can't be the same as the class name
+                if (cm.classname.equalsIgnoreCase(var.name)) {
+                    var.name += "Property";
+                }
 
                 // handle ArrayProperty
+                Map<String, Object> allowableValues = var.allowableValues;
                 if (var.items != null) {
                     allowableValues = var.items.allowableValues;
                 }
@@ -373,6 +410,18 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
                     }
                 }
 
+<<<<<<< HEAD
+                // HACK: strip ? from enum
+                if (var.datatypeWithEnum != null) {
+                    var.vendorExtensions.put("plainDatatypeWithEnum", var.datatypeWithEnum.replaceAll("\\?",""));
+                }
+
+                // Use the basic type (i.e. List<string>) instead of the enum collection (i.e. List<MyEnum>)
+                if (var.items != null && var.items.datatypeWithEnum != null) {
+                    var.datatypeWithEnum = var.datatype;
+                }
+=======
+>>>>>>> upstream/master
             }
         }
 
@@ -475,6 +524,8 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
     public void setSupportsUWP(Boolean supportsUWP){
         this.supportsUWP = supportsUWP;
     }
+<<<<<<< HEAD
+=======
 
     @Override
     public String toModelDocFilename(String name) {
@@ -491,4 +542,5 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         return (outputFolder + "/" + modelDocPath).replace('/', File.separatorChar);
     }
 
+>>>>>>> upstream/master
 }

@@ -22,7 +22,15 @@ import javax.ws.rs.core.SecurityContext;
 
 
 public abstract class PetApiService {
+<<<<<<< HEAD
+  
       public abstract Response addPet(Pet body,SecurityContext securityContext)
+      throws NotFoundException;
+  
+      public abstract Response deletePet(Long petId,String apiKey,SecurityContext securityContext)
+=======
+      public abstract Response addPet(Pet body,SecurityContext securityContext)
+>>>>>>> upstream/master
       throws NotFoundException;
       public abstract Response deletePet(Long petId,String apiKey,SecurityContext securityContext)
       throws NotFoundException;
@@ -32,10 +40,21 @@ public abstract class PetApiService {
       throws NotFoundException;
       public abstract Response getPetById(Long petId,SecurityContext securityContext)
       throws NotFoundException;
+<<<<<<< HEAD
+  
       public abstract Response updatePet(Pet body,SecurityContext securityContext)
       throws NotFoundException;
+  
+=======
+      public abstract Response updatePet(Pet body,SecurityContext securityContext)
+      throws NotFoundException;
+>>>>>>> upstream/master
       public abstract Response updatePetWithForm(Long petId,String name,String status,SecurityContext securityContext)
       throws NotFoundException;
       public abstract Response uploadFile(Long petId,String additionalMetadata,InputStream inputStream, FormDataContentDisposition fileDetail,SecurityContext securityContext)
       throws NotFoundException;
+<<<<<<< HEAD
+  
+=======
+>>>>>>> upstream/master
 }

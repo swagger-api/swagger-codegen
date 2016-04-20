@@ -44,6 +44,10 @@ public class StoreApi {
     this.apiClient = apiClient;
   }
 
+<<<<<<< HEAD
+  
+=======
+>>>>>>> upstream/master
   /* Build call for deleteOrder */
   private Call deleteOrderCall(String orderId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = null;
@@ -147,6 +151,10 @@ public class StoreApi {
     apiClient.executeAsync(call, callback);
     return call;
   }
+<<<<<<< HEAD
+  
+=======
+>>>>>>> upstream/master
   /* Build call for findOrdersByStatus */
   private Call findOrdersByStatusCall(String status, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = null;
@@ -250,6 +258,10 @@ public class StoreApi {
     apiClient.executeAsync(call, localVarReturnType, callback);
     return call;
   }
+<<<<<<< HEAD
+  
+=======
+>>>>>>> upstream/master
   /* Build call for getInventory */
   private Call getInventoryCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = null;
@@ -348,13 +360,21 @@ public class StoreApi {
     apiClient.executeAsync(call, localVarReturnType, callback);
     return call;
   }
+<<<<<<< HEAD
+  
+=======
+>>>>>>> upstream/master
   /* Build call for getInventoryInObject */
   private Call getInventoryInObjectCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = null;
     
 
     // create path and map variables
+<<<<<<< HEAD
+    String localVarPath = "/store/inventory?response=arbitrary_object".replaceAll("\\{format\\}","json");
+=======
     String localVarPath = "/store/inventory?response&#x3D;arbitrary_object".replaceAll("\\{format\\}","json");
+>>>>>>> upstream/master
 
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
 
@@ -496,7 +516,11 @@ public class StoreApi {
 
   /**
    * Find purchase order by ID
+<<<<<<< HEAD
+   * For valid response try integer IDs with value &lt;= 5 or &gt; 10. Other values will generated exceptions
+=======
    * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+>>>>>>> upstream/master
    * @param orderId ID of pet that needs to be fetched (required)
    * @return Order
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -508,7 +532,11 @@ public class StoreApi {
 
   /**
    * Find purchase order by ID
+<<<<<<< HEAD
+   * For valid response try integer IDs with value &lt;= 5 or &gt; 10. Other values will generated exceptions
+=======
    * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+>>>>>>> upstream/master
    * @param orderId ID of pet that needs to be fetched (required)
    * @return ApiResponse<Order>
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -521,7 +549,11 @@ public class StoreApi {
 
   /**
    * Find purchase order by ID (asynchronously)
+<<<<<<< HEAD
+   * For valid response try integer IDs with value &lt;= 5 or &gt; 10. Other values will generated exceptions
+=======
    * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+>>>>>>> upstream/master
    * @param orderId ID of pet that needs to be fetched (required)
    * @param callback The callback to be executed when the API call finishes
    * @return The request call
@@ -553,6 +585,10 @@ public class StoreApi {
     apiClient.executeAsync(call, localVarReturnType, callback);
     return call;
   }
+<<<<<<< HEAD
+  
+=======
+>>>>>>> upstream/master
   /* Build call for placeOrder */
   private Call placeOrderCall(Order body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = body;

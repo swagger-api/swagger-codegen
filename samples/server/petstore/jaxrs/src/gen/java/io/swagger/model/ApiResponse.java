@@ -16,6 +16,10 @@ public class ApiResponse   {
   private String type = null;
   private String message = null;
 
+<<<<<<< HEAD
+  
+=======
+>>>>>>> upstream/master
   /**
    **/
   public ApiResponse code(Integer code) {
@@ -33,6 +37,10 @@ public class ApiResponse   {
     this.code = code;
   }
 
+<<<<<<< HEAD
+  
+=======
+>>>>>>> upstream/master
   /**
    **/
   public ApiResponse type(String type) {
@@ -50,6 +58,10 @@ public class ApiResponse   {
     this.type = type;
   }
 
+<<<<<<< HEAD
+  
+=======
+>>>>>>> upstream/master
   /**
    **/
   public ApiResponse message(String message) {
@@ -67,6 +79,10 @@ public class ApiResponse   {
     this.message = message;
   }
 
+<<<<<<< HEAD
+  
+=======
+>>>>>>> upstream/master
 
   @Override
   public boolean equals(Object o) {
