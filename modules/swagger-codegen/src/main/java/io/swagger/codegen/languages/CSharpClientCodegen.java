@@ -39,11 +39,6 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
     private static final String DATA_TYPE_WITH_ENUM_EXTENSION = "plainDatatypeWithEnum";
 
     protected String packageGuid = "{" + java.util.UUID.randomUUID().toString().toUpperCase() + "}";
-    protected String packageTitle = "Swagger Library";
-    protected String packageProductName = "SwaggerLibrary";
-    protected String packageDescription = "A library generated from a Swagger doc";
-    protected String packageCompany = "Swagger";
-    protected String packageCopyright = "No Copyright";
     protected String clientPackage = "IO.Swagger.Client";
     protected String localVariablePrefix = "";
     protected String apiDocPath = "docs/";
@@ -83,6 +78,38 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         addOption(CodegenConstants.PACKAGE_VERSION,
                 "C# package version.",
                 this.packageVersion);
+
+        addOption(CodegenConstants.PACKAGE_TITLE,
+                 "Package's title",
+                 null);
+
+         addOption(CodegenConstants.PACKAGE_DESCRIPTION,
+                 "Package's description",
+                 null);
+
+         addOption(CodegenConstants.PACKAGE_CONFIGURATION,
+                "Package's configuration",
+                null);
+
+         addOption(CodegenConstants.PACKAGE_COMPANY,
+                 "Package's company",
+                 null);
+
+         addOption(CodegenConstants.PACKAGE_PRODUCT_NAME,
+                 "Package's product name",
+                 null);
+
+         addOption(CodegenConstants.PACKAGE_COPYRIGHT,
+                 "Package's copyright information",
+                 null);
+
+         addOption(CodegenConstants.PACKAGE_TRADEMARK,
+                 "Package's trademark information",
+                 null);
+
+         addOption(CodegenConstants.PACKAGE_CULTURE,
+                 "Package's culture string (e.g. en-us)",
+                 null);
 
         addOption(CodegenConstants.SOURCE_FOLDER,
                 CodegenConstants.SOURCE_FOLDER_DESC,
@@ -149,12 +176,6 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
 
         additionalProperties.put("clientPackage", clientPackage);
 
-        // Add properties used by AssemblyInfo.mustache
-        additionalProperties.put("packageTitle", packageTitle);
-        additionalProperties.put("packageProductName", packageProductName);
-        additionalProperties.put("packageDescription", packageDescription);
-        additionalProperties.put("packageCompany", packageCompany);
-        additionalProperties.put("packageCopyright", packageCopyright);
         additionalProperties.put("emitDefaultValue", optionalEmitDefaultValue);
 
         if (additionalProperties.containsKey(CodegenConstants.DOTNET_FRAMEWORK)) {
