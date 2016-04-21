@@ -45,81 +45,7 @@ class PetApi(object):
                 config.api_client = ApiClient()
             self.api_client = config.api_client
 
-    def update_pet(self, **kwargs):
-        """
-        Update an existing pet
-        
-
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.update_pet(callback=callback_function)
-
-        :param callback function: The callback function
-            for asynchronous request. (optional)
-        :param Pet body: Pet object that needs to be added to the store
-        :return: None
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        all_params = ['body']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method update_pet" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
-
-        resource_path = '/pet'.replace('{format}', 'json')
-        path_params = {}
-
-        query_params = {}
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        if 'body' in params:
-            body_params = params['body']
-
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.\
-            select_header_accept(['application/json', 'application/xml'])
-        if not header_params['Accept']:
-            del header_params['Accept']
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.\
-            select_header_content_type(['application/json', 'application/xml'])
-
-        # Authentication setting
-        auth_settings = ['petstore_auth']
-
-        response = self.api_client.call_api(resource_path, 'PUT',
-                                            path_params,
-                                            query_params,
-                                            header_params,
-                                            body=body_params,
-                                            post_params=form_params,
-                                            files=local_var_files,
-                                            response_type=None,
-                                            auth_settings=auth_settings,
-                                            callback=params.get('callback'))
-        return response
-
-    def add_pet(self, **kwargs):
+    def add_pet(self, body, **kwargs):
         """
         Add a new pet to the store
         
@@ -130,11 +56,11 @@ class PetApi(object):
         >>> def callback_function(response):
         >>>     pprint(response)
         >>>
-        >>> thread = api.add_pet(callback=callback_function)
+        >>> thread = api.add_pet(body, callback=callback_function)
 
         :param callback function: The callback function
             for asynchronous request. (optional)
-        :param Pet body: Pet object that needs to be added to the store
+        :param Pet body: Pet object that needs to be added to the store (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -153,6 +79,9 @@ class PetApi(object):
             params[key] = val
         del params['kwargs']
 
+        # verify the required parameter 'body' is set
+        if ('body' not in params) or (params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `add_pet`")
 
         resource_path = '/pet'.replace('{format}', 'json')
         path_params = {}
@@ -170,321 +99,13 @@ class PetApi(object):
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
-            select_header_accept(['application/json', 'application/xml'])
+            select_header_accept(['application/xml', 'application/json'])
         if not header_params['Accept']:
             del header_params['Accept']
 
         # HTTP header `Content-Type`
         header_params['Content-Type'] = self.api_client.\
             select_header_content_type(['application/json', 'application/xml'])
-
-        # Authentication setting
-        auth_settings = ['petstore_auth']
-
-        response = self.api_client.call_api(resource_path, 'POST',
-                                            path_params,
-                                            query_params,
-                                            header_params,
-                                            body=body_params,
-                                            post_params=form_params,
-                                            files=local_var_files,
-                                            response_type=None,
-                                            auth_settings=auth_settings,
-                                            callback=params.get('callback'))
-        return response
-
-    def find_pets_by_status(self, **kwargs):
-        """
-        Finds Pets by status
-        Multiple status values can be provided with comma separated strings
-
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.find_pets_by_status(callback=callback_function)
-
-        :param callback function: The callback function
-            for asynchronous request. (optional)
-        :param list[str] status: Status values that need to be considered for query
-        :return: list[Pet]
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        all_params = ['status']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method find_pets_by_status" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
-
-        resource_path = '/pet/findByStatus'.replace('{format}', 'json')
-        path_params = {}
-
-        query_params = {}
-        if 'status' in params:
-            query_params['status'] = params['status']
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.\
-            select_header_accept(['application/json', 'application/xml'])
-        if not header_params['Accept']:
-            del header_params['Accept']
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.\
-            select_header_content_type([])
-
-        # Authentication setting
-        auth_settings = ['petstore_auth']
-
-        response = self.api_client.call_api(resource_path, 'GET',
-                                            path_params,
-                                            query_params,
-                                            header_params,
-                                            body=body_params,
-                                            post_params=form_params,
-                                            files=local_var_files,
-                                            response_type='list[Pet]',
-                                            auth_settings=auth_settings,
-                                            callback=params.get('callback'))
-        return response
-
-    def find_pets_by_tags(self, **kwargs):
-        """
-        Finds Pets by tags
-        Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
-
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.find_pets_by_tags(callback=callback_function)
-
-        :param callback function: The callback function
-            for asynchronous request. (optional)
-        :param list[str] tags: Tags to filter by
-        :return: list[Pet]
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        all_params = ['tags']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method find_pets_by_tags" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
-
-        resource_path = '/pet/findByTags'.replace('{format}', 'json')
-        path_params = {}
-
-        query_params = {}
-        if 'tags' in params:
-            query_params['tags'] = params['tags']
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.\
-            select_header_accept(['application/json', 'application/xml'])
-        if not header_params['Accept']:
-            del header_params['Accept']
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.\
-            select_header_content_type([])
-
-        # Authentication setting
-        auth_settings = ['petstore_auth']
-
-        response = self.api_client.call_api(resource_path, 'GET',
-                                            path_params,
-                                            query_params,
-                                            header_params,
-                                            body=body_params,
-                                            post_params=form_params,
-                                            files=local_var_files,
-                                            response_type='list[Pet]',
-                                            auth_settings=auth_settings,
-                                            callback=params.get('callback'))
-        return response
-
-    def get_pet_by_id(self, pet_id, **kwargs):
-        """
-        Find pet by ID
-        Returns a pet when ID < 10.  ID > 10 or nonintegers will simulate API error conditions
-
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.get_pet_by_id(pet_id, callback=callback_function)
-
-        :param callback function: The callback function
-            for asynchronous request. (optional)
-        :param int pet_id: ID of pet that needs to be fetched (required)
-        :return: Pet
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        all_params = ['pet_id']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_pet_by_id" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
-        # verify the required parameter 'pet_id' is set
-        if ('pet_id' not in params) or (params['pet_id'] is None):
-            raise ValueError("Missing the required parameter `pet_id` when calling `get_pet_by_id`")
-
-        resource_path = '/pet/{petId}'.replace('{format}', 'json')
-        path_params = {}
-        if 'pet_id' in params:
-            path_params['petId'] = params['pet_id']
-
-        query_params = {}
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.\
-            select_header_accept(['application/json', 'application/xml'])
-        if not header_params['Accept']:
-            del header_params['Accept']
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.\
-            select_header_content_type([])
-
-        # Authentication setting
-        auth_settings = ['api_key', 'petstore_auth']
-
-        response = self.api_client.call_api(resource_path, 'GET',
-                                            path_params,
-                                            query_params,
-                                            header_params,
-                                            body=body_params,
-                                            post_params=form_params,
-                                            files=local_var_files,
-                                            response_type='Pet',
-                                            auth_settings=auth_settings,
-                                            callback=params.get('callback'))
-        return response
-
-    def update_pet_with_form(self, pet_id, **kwargs):
-        """
-        Updates a pet in the store with form data
-        
-
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.update_pet_with_form(pet_id, callback=callback_function)
-
-        :param callback function: The callback function
-            for asynchronous request. (optional)
-        :param str pet_id: ID of pet that needs to be updated (required)
-        :param str name: Updated name of the pet
-        :param str status: Updated status of the pet
-        :return: None
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        all_params = ['pet_id', 'name', 'status']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method update_pet_with_form" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
-        # verify the required parameter 'pet_id' is set
-        if ('pet_id' not in params) or (params['pet_id'] is None):
-            raise ValueError("Missing the required parameter `pet_id` when calling `update_pet_with_form`")
-
-        resource_path = '/pet/{petId}'.replace('{format}', 'json')
-        path_params = {}
-        if 'pet_id' in params:
-            path_params['petId'] = params['pet_id']
-
-        query_params = {}
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-        if 'name' in params:
-            form_params.append(('name', params['name']))
-        if 'status' in params:
-            form_params.append(('status', params['status']))
-
-        body_params = None
-
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.\
-            select_header_accept(['application/json', 'application/xml'])
-        if not header_params['Accept']:
-            del header_params['Accept']
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.\
-            select_header_content_type(['application/x-www-form-urlencoded'])
 
         # Authentication setting
         auth_settings = ['petstore_auth']
@@ -558,7 +179,7 @@ class PetApi(object):
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
-            select_header_accept(['application/json', 'application/xml'])
+            select_header_accept(['application/xml', 'application/json'])
         if not header_params['Accept']:
             del header_params['Accept']
 
@@ -570,6 +191,397 @@ class PetApi(object):
         auth_settings = ['petstore_auth']
 
         response = self.api_client.call_api(resource_path, 'DELETE',
+                                            path_params,
+                                            query_params,
+                                            header_params,
+                                            body=body_params,
+                                            post_params=form_params,
+                                            files=local_var_files,
+                                            response_type=None,
+                                            auth_settings=auth_settings,
+                                            callback=params.get('callback'))
+        return response
+
+    def find_pets_by_status(self, status, **kwargs):
+        """
+        Finds Pets by status
+        Multiple status values can be provided with comma separated strings
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please define a `callback` function
+        to be invoked when receiving the response.
+        >>> def callback_function(response):
+        >>>     pprint(response)
+        >>>
+        >>> thread = api.find_pets_by_status(status, callback=callback_function)
+
+        :param callback function: The callback function
+            for asynchronous request. (optional)
+        :param list[str] status: Status values that need to be considered for filter (required)
+        :return: list[Pet]
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        all_params = ['status']
+        all_params.append('callback')
+
+        params = locals()
+        for key, val in iteritems(params['kwargs']):
+            if key not in all_params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method find_pets_by_status" % key
+                )
+            params[key] = val
+        del params['kwargs']
+
+        # verify the required parameter 'status' is set
+        if ('status' not in params) or (params['status'] is None):
+            raise ValueError("Missing the required parameter `status` when calling `find_pets_by_status`")
+
+        resource_path = '/pet/findByStatus'.replace('{format}', 'json')
+        path_params = {}
+
+        query_params = {}
+        if 'status' in params:
+            query_params['status'] = params['status']
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.\
+            select_header_accept(['application/xml', 'application/json'])
+        if not header_params['Accept']:
+            del header_params['Accept']
+
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.\
+            select_header_content_type([])
+
+        # Authentication setting
+        auth_settings = ['petstore_auth']
+
+        response = self.api_client.call_api(resource_path, 'GET',
+                                            path_params,
+                                            query_params,
+                                            header_params,
+                                            body=body_params,
+                                            post_params=form_params,
+                                            files=local_var_files,
+                                            response_type='list[Pet]',
+                                            auth_settings=auth_settings,
+                                            callback=params.get('callback'))
+        return response
+
+    def find_pets_by_tags(self, tags, **kwargs):
+        """
+        Finds Pets by tags
+        Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please define a `callback` function
+        to be invoked when receiving the response.
+        >>> def callback_function(response):
+        >>>     pprint(response)
+        >>>
+        >>> thread = api.find_pets_by_tags(tags, callback=callback_function)
+
+        :param callback function: The callback function
+            for asynchronous request. (optional)
+        :param list[str] tags: Tags to filter by (required)
+        :return: list[Pet]
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        all_params = ['tags']
+        all_params.append('callback')
+
+        params = locals()
+        for key, val in iteritems(params['kwargs']):
+            if key not in all_params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method find_pets_by_tags" % key
+                )
+            params[key] = val
+        del params['kwargs']
+
+        # verify the required parameter 'tags' is set
+        if ('tags' not in params) or (params['tags'] is None):
+            raise ValueError("Missing the required parameter `tags` when calling `find_pets_by_tags`")
+
+        resource_path = '/pet/findByTags'.replace('{format}', 'json')
+        path_params = {}
+
+        query_params = {}
+        if 'tags' in params:
+            query_params['tags'] = params['tags']
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.\
+            select_header_accept(['application/xml', 'application/json'])
+        if not header_params['Accept']:
+            del header_params['Accept']
+
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.\
+            select_header_content_type([])
+
+        # Authentication setting
+        auth_settings = ['petstore_auth']
+
+        response = self.api_client.call_api(resource_path, 'GET',
+                                            path_params,
+                                            query_params,
+                                            header_params,
+                                            body=body_params,
+                                            post_params=form_params,
+                                            files=local_var_files,
+                                            response_type='list[Pet]',
+                                            auth_settings=auth_settings,
+                                            callback=params.get('callback'))
+        return response
+
+    def get_pet_by_id(self, pet_id, **kwargs):
+        """
+        Find pet by ID
+        Returns a single pet
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please define a `callback` function
+        to be invoked when receiving the response.
+        >>> def callback_function(response):
+        >>>     pprint(response)
+        >>>
+        >>> thread = api.get_pet_by_id(pet_id, callback=callback_function)
+
+        :param callback function: The callback function
+            for asynchronous request. (optional)
+        :param int pet_id: ID of pet to return (required)
+        :return: Pet
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        all_params = ['pet_id']
+        all_params.append('callback')
+
+        params = locals()
+        for key, val in iteritems(params['kwargs']):
+            if key not in all_params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method get_pet_by_id" % key
+                )
+            params[key] = val
+        del params['kwargs']
+
+        # verify the required parameter 'pet_id' is set
+        if ('pet_id' not in params) or (params['pet_id'] is None):
+            raise ValueError("Missing the required parameter `pet_id` when calling `get_pet_by_id`")
+
+        resource_path = '/pet/{petId}'.replace('{format}', 'json')
+        path_params = {}
+        if 'pet_id' in params:
+            path_params['petId'] = params['pet_id']
+
+        query_params = {}
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.\
+            select_header_accept(['application/xml', 'application/json'])
+        if not header_params['Accept']:
+            del header_params['Accept']
+
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.\
+            select_header_content_type([])
+
+        # Authentication setting
+        auth_settings = ['api_key']
+
+        response = self.api_client.call_api(resource_path, 'GET',
+                                            path_params,
+                                            query_params,
+                                            header_params,
+                                            body=body_params,
+                                            post_params=form_params,
+                                            files=local_var_files,
+                                            response_type='Pet',
+                                            auth_settings=auth_settings,
+                                            callback=params.get('callback'))
+        return response
+
+    def update_pet(self, body, **kwargs):
+        """
+        Update an existing pet
+        
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please define a `callback` function
+        to be invoked when receiving the response.
+        >>> def callback_function(response):
+        >>>     pprint(response)
+        >>>
+        >>> thread = api.update_pet(body, callback=callback_function)
+
+        :param callback function: The callback function
+            for asynchronous request. (optional)
+        :param Pet body: Pet object that needs to be added to the store (required)
+        :return: None
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        all_params = ['body']
+        all_params.append('callback')
+
+        params = locals()
+        for key, val in iteritems(params['kwargs']):
+            if key not in all_params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method update_pet" % key
+                )
+            params[key] = val
+        del params['kwargs']
+
+        # verify the required parameter 'body' is set
+        if ('body' not in params) or (params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `update_pet`")
+
+        resource_path = '/pet'.replace('{format}', 'json')
+        path_params = {}
+
+        query_params = {}
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        if 'body' in params:
+            body_params = params['body']
+
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.\
+            select_header_accept(['application/xml', 'application/json'])
+        if not header_params['Accept']:
+            del header_params['Accept']
+
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.\
+            select_header_content_type(['application/json', 'application/xml'])
+
+        # Authentication setting
+        auth_settings = ['petstore_auth']
+
+        response = self.api_client.call_api(resource_path, 'PUT',
+                                            path_params,
+                                            query_params,
+                                            header_params,
+                                            body=body_params,
+                                            post_params=form_params,
+                                            files=local_var_files,
+                                            response_type=None,
+                                            auth_settings=auth_settings,
+                                            callback=params.get('callback'))
+        return response
+
+    def update_pet_with_form(self, pet_id, **kwargs):
+        """
+        Updates a pet in the store with form data
+        
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please define a `callback` function
+        to be invoked when receiving the response.
+        >>> def callback_function(response):
+        >>>     pprint(response)
+        >>>
+        >>> thread = api.update_pet_with_form(pet_id, callback=callback_function)
+
+        :param callback function: The callback function
+            for asynchronous request. (optional)
+        :param int pet_id: ID of pet that needs to be updated (required)
+        :param str name: Updated name of the pet
+        :param str status: Updated status of the pet
+        :return: None
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        all_params = ['pet_id', 'name', 'status']
+        all_params.append('callback')
+
+        params = locals()
+        for key, val in iteritems(params['kwargs']):
+            if key not in all_params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method update_pet_with_form" % key
+                )
+            params[key] = val
+        del params['kwargs']
+
+        # verify the required parameter 'pet_id' is set
+        if ('pet_id' not in params) or (params['pet_id'] is None):
+            raise ValueError("Missing the required parameter `pet_id` when calling `update_pet_with_form`")
+
+        resource_path = '/pet/{petId}'.replace('{format}', 'json')
+        path_params = {}
+        if 'pet_id' in params:
+            path_params['petId'] = params['pet_id']
+
+        query_params = {}
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+        if 'name' in params:
+            form_params.append(('name', params['name']))
+        if 'status' in params:
+            form_params.append(('status', params['status']))
+
+        body_params = None
+
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.\
+            select_header_accept(['application/xml', 'application/json'])
+        if not header_params['Accept']:
+            del header_params['Accept']
+
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.\
+            select_header_content_type(['application/x-www-form-urlencoded'])
+
+        # Authentication setting
+        auth_settings = ['petstore_auth']
+
+        response = self.api_client.call_api(resource_path, 'POST',
                                             path_params,
                                             query_params,
                                             header_params,
@@ -599,7 +611,7 @@ class PetApi(object):
         :param int pet_id: ID of pet to update (required)
         :param str additional_metadata: Additional data to pass to server
         :param file file: file to upload
-        :return: None
+        :return: ApiResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -641,7 +653,7 @@ class PetApi(object):
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
-            select_header_accept(['application/json', 'application/xml'])
+            select_header_accept(['application/json'])
         if not header_params['Accept']:
             del header_params['Accept']
 
@@ -659,235 +671,7 @@ class PetApi(object):
                                             body=body_params,
                                             post_params=form_params,
                                             files=local_var_files,
-                                            response_type=None,
-                                            auth_settings=auth_settings,
-                                            callback=params.get('callback'))
-        return response
-
-    def get_pet_by_id_in_object(self, pet_id, **kwargs):
-        """
-        Fake endpoint to test inline arbitrary object return by 'Find pet by ID'
-        Returns a pet when ID < 10.  ID > 10 or nonintegers will simulate API error conditions
-
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.get_pet_by_id_in_object(pet_id, callback=callback_function)
-
-        :param callback function: The callback function
-            for asynchronous request. (optional)
-        :param int pet_id: ID of pet that needs to be fetched (required)
-        :return: InlineResponse200
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        all_params = ['pet_id']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_pet_by_id_in_object" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
-        # verify the required parameter 'pet_id' is set
-        if ('pet_id' not in params) or (params['pet_id'] is None):
-            raise ValueError("Missing the required parameter `pet_id` when calling `get_pet_by_id_in_object`")
-
-        resource_path = '/pet/{petId}?response=inline_arbitrary_object'.replace('{format}', 'json')
-        path_params = {}
-        if 'pet_id' in params:
-            path_params['petId'] = params['pet_id']
-
-        query_params = {}
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.\
-            select_header_accept(['application/json', 'application/xml'])
-        if not header_params['Accept']:
-            del header_params['Accept']
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.\
-            select_header_content_type([])
-
-        # Authentication setting
-        auth_settings = ['api_key', 'petstore_auth']
-
-        response = self.api_client.call_api(resource_path, 'GET',
-                                            path_params,
-                                            query_params,
-                                            header_params,
-                                            body=body_params,
-                                            post_params=form_params,
-                                            files=local_var_files,
-                                            response_type='InlineResponse200',
-                                            auth_settings=auth_settings,
-                                            callback=params.get('callback'))
-        return response
-
-    def pet_pet_idtesting_byte_arraytrue_get(self, pet_id, **kwargs):
-        """
-        Fake endpoint to test byte array return by 'Find pet by ID'
-        Returns a pet when ID < 10.  ID > 10 or nonintegers will simulate API error conditions
-
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.pet_pet_idtesting_byte_arraytrue_get(pet_id, callback=callback_function)
-
-        :param callback function: The callback function
-            for asynchronous request. (optional)
-        :param int pet_id: ID of pet that needs to be fetched (required)
-        :return: str
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        all_params = ['pet_id']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method pet_pet_idtesting_byte_arraytrue_get" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
-        # verify the required parameter 'pet_id' is set
-        if ('pet_id' not in params) or (params['pet_id'] is None):
-            raise ValueError("Missing the required parameter `pet_id` when calling `pet_pet_idtesting_byte_arraytrue_get`")
-
-        resource_path = '/pet/{petId}?testing_byte_array=true'.replace('{format}', 'json')
-        path_params = {}
-        if 'pet_id' in params:
-            path_params['petId'] = params['pet_id']
-
-        query_params = {}
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.\
-            select_header_accept(['application/json', 'application/xml'])
-        if not header_params['Accept']:
-            del header_params['Accept']
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.\
-            select_header_content_type([])
-
-        # Authentication setting
-        auth_settings = ['api_key', 'petstore_auth']
-
-        response = self.api_client.call_api(resource_path, 'GET',
-                                            path_params,
-                                            query_params,
-                                            header_params,
-                                            body=body_params,
-                                            post_params=form_params,
-                                            files=local_var_files,
-                                            response_type='str',
-                                            auth_settings=auth_settings,
-                                            callback=params.get('callback'))
-        return response
-
-    def add_pet_using_byte_array(self, **kwargs):
-        """
-        Fake endpoint to test byte array in body parameter for adding a new pet to the store
-        
-
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please define a `callback` function
-        to be invoked when receiving the response.
-        >>> def callback_function(response):
-        >>>     pprint(response)
-        >>>
-        >>> thread = api.add_pet_using_byte_array(callback=callback_function)
-
-        :param callback function: The callback function
-            for asynchronous request. (optional)
-        :param str body: Pet object in the form of byte array
-        :return: None
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        all_params = ['body']
-        all_params.append('callback')
-
-        params = locals()
-        for key, val in iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method add_pet_using_byte_array" % key
-                )
-            params[key] = val
-        del params['kwargs']
-
-
-        resource_path = '/pet?testing_byte_array=true'.replace('{format}', 'json')
-        path_params = {}
-
-        query_params = {}
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        if 'body' in params:
-            body_params = params['body']
-
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.\
-            select_header_accept(['application/json', 'application/xml'])
-        if not header_params['Accept']:
-            del header_params['Accept']
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.\
-            select_header_content_type(['application/json', 'application/xml'])
-
-        # Authentication setting
-        auth_settings = ['petstore_auth']
-
-        response = self.api_client.call_api(resource_path, 'POST',
-                                            path_params,
-                                            query_params,
-                                            header_params,
-                                            body=body_params,
-                                            post_params=form_params,
-                                            files=local_var_files,
-                                            response_type=None,
+                                            response_type='ApiResponse',
                                             auth_settings=auth_settings,
                                             callback=params.get('callback'))
         return response

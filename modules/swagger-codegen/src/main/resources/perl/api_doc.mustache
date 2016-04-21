@@ -1,6 +1,11 @@
 # {{moduleName}}::{{classname}}{{#description}}
 {{description}}{{/description}}
 
+## Load the API package
+```perl
+use {{moduleName}}::Object::{{classname}};
+```
+
 All URIs are relative to *{{basePath}}*
 
 Method | HTTP request | Description
@@ -19,15 +24,29 @@ Method | HTTP request | Description
 
 ### Example 
 ```perl
-my $api = {{moduleName}}::{{classname}}->new();
-{{#allParams}}my ${{paramName}} = {{#isListContainer}}({{/isListContainer}}{{#isBodyParam}}{{{moduleName}}}::Object::{{dataType}}->new(){{/isBodyParam}}{{^isBodyParam}}{{{example}}}{{/isBodyParam}}{{#isListContainer}}){{/isListContainer}}; # [{{{dataType}}}] {{description}}
+use Data::Dumper;
+{{#hasAuthMethods}}{{#authMethods}}{{#isBasic}}
+# Configure HTTP basic authorization: {{{name}}}
+${{{moduleName}}}::Configuration::username = 'YOUR_USERNAME';
+${{{moduleName}}}::Configuration::password = 'YOUR_PASSWORD';{{/isBasic}}{{#isApiKey}}
+# Configure API key authorization: {{{name}}}
+${{{moduleName}}}::Configuration::api_key->{'{{{keyParamName}}}'} = 'YOUR_API_KEY';
+# uncomment below to setup prefix (e.g. BEARER) for API key, if needed
+#${{{moduleName}}}::Configuration::api_key_prefix->{'{{{keyParamName}}}'} = "BEARER";{{/isApiKey}}{{#isOAuth}}
+# Configure OAuth2 access token for authorization: {{{name}}}
+${{{moduleName}}}::Configuration::access_token = 'YOUR_ACCESS_TOKEN';{{/isOAuth}}{{/authMethods}}
+{{/hasAuthMethods}}
+
+my $api_instance = {{moduleName}}::{{classname}}->new();
+{{#allParams}}my ${{paramName}} = {{#isListContainer}}({{/isListContainer}}{{#isBodyParam}}{{{moduleName}}}::Object::{{dataType}}->new(){{/isBodyParam}}{{^isBodyParam}}{{{example}}}{{/isBodyParam}}{{#isListContainer}}){{/isListContainer}}; # {{{dataType}}} | {{{description}}}
 {{/allParams}}
 
 eval { 
-    {{#returnType}}my $result = {{/returnType}}$api->{{{operationId}}}({{#allParams}}{{paramName}} => ${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+    {{#returnType}}my $result = {{/returnType}}$api_instance->{{{operationId}}}({{#allParams}}{{paramName}} => ${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});{{#returnType}}
+    print Dumper($result);{{/returnType}}
 };
 if ($@) {
-    warn "Exception when calling {{operationId}}: $@\n";
+    warn "Exception when calling {{classname}}->{{operationId}}: $@\n";
 }
 ```
 
@@ -35,7 +54,7 @@ if ($@) {
 {{^allParams}}This endpoint does not need any parameter.{{/allParams}}{{#allParams}}{{#-last}}
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------{{/-last}}{{/allParams}}
-{{#allParams}} **{{paramName}}** | {{#isPrimitiveType}}**{{dataType}}**{{/isPrimitiveType}}{{^isPrimitiveType}}[**{{dataType}}**]({{baseType}}.md){{/isPrimitiveType}}| {{description}} | {{^required}}[optional] {{/required}}{{#defaultValue}}[default to {{defaultValue}}]{{/defaultValue}}
+{{#allParams}} **{{paramName}}** | {{#isFile}}**{{dataType}}**{{/isFile}}{{#isPrimitiveType}}**{{dataType}}**{{/isPrimitiveType}}{{^isPrimitiveType}}{{^isFile}}[**{{dataType}}**]({{baseType}}.md){{/isFile}}{{/isPrimitiveType}}| {{description}} | {{^required}}[optional] {{/required}}{{#defaultValue}}[default to {{defaultValue}}]{{/defaultValue}}
 {{/allParams}}
 
 ### Return type
@@ -46,12 +65,12 @@ Name | Type | Description  | Notes
 
 {{^authMethods}}No authorization required{{/authMethods}}{{#authMethods}}[{{{name}}}](../README.md#{{{name}}}){{^-last}}, {{/-last}}{{/authMethods}}
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: {{#consumes}}{{mediaType}}{{#hasMore}}, {{/hasMore}}{{/consumes}}{{^consumes}}Not defined{{/consumes}}
  - **Accept**: {{#produces}}{{mediaType}}{{#hasMore}}, {{/hasMore}}{{/produces}}{{^produces}}Not defined{{/produces}}
 
-
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 {{/operation}}
 {{/operations}}

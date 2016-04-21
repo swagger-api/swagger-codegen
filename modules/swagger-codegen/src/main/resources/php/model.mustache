@@ -46,8 +46,14 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class {{classname}} implements ArrayAccess
+class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}implements ArrayAccess
 {
+    /**
+      * The original name of the model.
+      * @var string
+      */
+    static $swaggerModelName = '{{name}}';
+
     /**
       * Array of property to type mappings. Used for (de)serialization 
       * @var string[]
@@ -57,6 +63,10 @@ class {{classname}} implements ArrayAccess
         {{/hasMore}}{{/vars}}
     );
   
+    static function swaggerTypes() {
+        return self::$swaggerTypes{{#parent}} + parent::swaggerTypes(){{/parent}};
+    }
+
     /** 
       * Array of attributes where the key is the local name, and the value is the original name
       * @var string[] 
@@ -66,6 +76,10 @@ class {{classname}} implements ArrayAccess
         {{/hasMore}}{{/vars}}
     );
   
+    static function attributeMap() {
+        return {{#parent}}parent::attributeMap() + {{/parent}}self::$attributeMap;
+    }
+
     /**
       * Array of attributes to setter functions (for deserialization of responses)
       * @var string[]
@@ -75,6 +89,10 @@ class {{classname}} implements ArrayAccess
         {{/hasMore}}{{/vars}}
     );
   
+    static function setters() {
+        return {{#parent}}parent::setters() + {{/parent}}self::$setters;
+    }
+
     /**
       * Array of attributes to getter functions (for serialization of requests)
       * @var string[]
@@ -84,6 +102,10 @@ class {{classname}} implements ArrayAccess
         {{/hasMore}}{{/vars}}
     );
   
+    static function getters() {
+        return {{#parent}}parent::getters() + {{/parent}}self::$getters;
+    }
+
     {{#vars}}
     /**
       * ${{name}} {{#description}}{{{description}}}{{/description}}
@@ -98,6 +120,12 @@ class {{classname}} implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
+        {{#parent}}parent::__construct($data);{{/parent}}
+        {{#discriminator}}// Initialize discriminator property with the model name.
+        $discrimintor = array_search('{{discriminator}}', self::$attributeMap);
+        $this->{$discrimintor} = static::$swaggerModelName;
+        {{/discriminator}}
+
         if ($data != null) {
             {{#vars}}$this->{{name}} = $data["{{name}}"];{{#hasMore}}
             {{/hasMore}}{{/vars}}
@@ -175,11 +203,11 @@ class {{classname}} implements ArrayAccess
      */
     public function __toString()
     {
-        if (defined('JSON_PRETTY_PRINT')) {
+        if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
             return json_encode(\{{invokerPackage}}\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
-        } else {
-            return json_encode(\{{invokerPackage}}\ObjectSerializer::sanitizeForSerialization($this));
         }
+
+        return json_encode(\{{invokerPackage}}\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
 {{/model}}
