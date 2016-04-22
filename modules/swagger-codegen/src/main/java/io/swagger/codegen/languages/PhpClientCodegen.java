@@ -154,7 +154,9 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
                     // Trim prefix file separators from package path
                     .replaceAll(regFirstPathSeparator, ""))
                     // Trim trailing file separators from the overall path
-                    .replaceAll(regLastPathSeparator+ "$", "");
+                    .replaceAll(regLastPathSeparator+ "$", "")
+                    // replace backslash with system file separator
+                    .replace("\\", File.separator);
     }
 
     @Override
