@@ -90,8 +90,6 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
                 .defaultValue(""));
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_KEYWORDS, "python package keywords (convention: space separated words)")
                 .defaultValue(""));
-        cliOptions.add(new CliOption(CodegenConstants.PACKAGE_INSTALL_REQUIRES, "python package required packages.")
-                .defaultValue(""));
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_DESCRIPTION, "python package long description.")
                 .defaultValue("A Python Package Client"));
         cliOptions.add(CliOption.newBoolean(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG,

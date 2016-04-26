@@ -59,7 +59,6 @@ public class CodegenConstants {
     public static final String PACKAGE_AUTHOR_EMAIL = "packageAuthorEmail";
     public static final String PACKAGE_URL = "packageUrl";
     public static final String PACKAGE_KEYWORDS = "packageKeywords";
-    public static final String PACKAGE_INSTALL_REQUIRES = "install_requires";
     public static final String PACKAGE_DESCRIPTION = "packageDescription";
     public static final String PACKAGE_COMPANY = "packageCompany";
     public static final String PACKAGE_PRODUCT_NAME = "packageProductName";
