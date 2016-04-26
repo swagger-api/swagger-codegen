@@ -27,7 +27,7 @@ class APIHelper {
                 case let x where x === theTrue || x === theFalse:
                     destination[key] = "\(value as! Bool)"
                 default:
-                    destination[key] = "not a bool"
+                    destination[key] = value
             }
         }
 
