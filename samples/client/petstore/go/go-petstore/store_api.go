@@ -4,7 +4,6 @@ import (
     "strings"
     "fmt"
     "encoding/json"
-    "reflect"
 )
 
 type StoreApi struct {
@@ -228,9 +227,6 @@ func (a StoreApi) PlaceOrder (body Order) (Order, APIResponse, error) {
   path := a.Configuration.BasePath + "/store/order"
 
   // verify the required parameter 'body' is set
-  if reflect.DeepEqual((Order{}), body) {
-       return *new(Order), *NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter 'body' when calling StoreApi->PlaceOrder")
-  }
 
   headerParams := make(map[string]string)
   queryParams := make(map[string]string)

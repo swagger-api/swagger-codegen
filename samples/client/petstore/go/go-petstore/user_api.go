@@ -4,7 +4,6 @@ import (
     "strings"
     "fmt"
     "encoding/json"
-    "reflect"
 )
 
 type UserApi struct {
@@ -40,9 +39,6 @@ func (a UserApi) CreateUser (body User) (APIResponse, error) {
   path := a.Configuration.BasePath + "/user"
 
   // verify the required parameter 'body' is set
-  if reflect.DeepEqual((User{}), body) {
-       return *NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter 'body' when calling UserApi->CreateUser")
-  }
 
   headerParams := make(map[string]string)
   queryParams := make(map[string]string)
@@ -106,9 +102,6 @@ func (a UserApi) CreateUsersWithArrayInput (body []User) (APIResponse, error) {
   if len(body) == 0 {
        return *NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter 'body' when calling UserApi->CreateUsersWithArrayInput")
   }
-  if reflect.DeepEqual(([]User{}), body) {
-       return *NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter 'body' when calling UserApi->CreateUsersWithArrayInput")
-  }
 
   headerParams := make(map[string]string)
   queryParams := make(map[string]string)
@@ -170,9 +163,6 @@ func (a UserApi) CreateUsersWithListInput (body []User) (APIResponse, error) {
 
   // verify the required parameter 'body' is set
   if len(body) == 0 {
-       return *NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter 'body' when calling UserApi->CreateUsersWithListInput")
-  }
-  if reflect.DeepEqual(([]User{}), body) {
        return *NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter 'body' when calling UserApi->CreateUsersWithListInput")
   }
 
@@ -493,9 +483,6 @@ func (a UserApi) UpdateUser (username string, body User) (APIResponse, error) {
        return *NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter 'username' when calling UserApi->UpdateUser")
   }
   // verify the required parameter 'body' is set
-  if reflect.DeepEqual((User{}), body) {
-       return *NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter 'body' when calling UserApi->UpdateUser")
-  }
 
   headerParams := make(map[string]string)
   queryParams := make(map[string]string)

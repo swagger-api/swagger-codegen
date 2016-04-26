@@ -5,7 +5,6 @@ import (
     "strings"
     "fmt"
     "encoding/json"
-    "reflect"
 {{#imports}}    "{{import}}"
 {{/imports}}
 )
@@ -58,11 +57,6 @@ func (a {{classname}}) {{nickname}} ({{#allParams}}{{paramName}} {{{dataType}}}{
        return {{#returnType}}*new({{{returnType}}}), {{/returnType}}*NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}")
   }
   {{/isString}}
-  {{#isBodyParam}}
-  if reflect.DeepEqual(({{{dataType}}}{}), {{paramName}}) {
-       return {{#returnType}}*new({{{returnType}}}), {{/returnType}}*NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}")
-  }
-  {{/isBodyParam}}
   {{#isLong}}
   if {{paramName}} == 0 {
        return {{#returnType}}*new({{{returnType}}}), {{/returnType}}*NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}")

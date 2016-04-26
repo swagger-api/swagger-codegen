@@ -50,19 +50,6 @@ func TestDeleteUserWithMissingParam(t *testing.T) {
 	}	
 }
 
-func TestAddPetWithMissingParam(t *testing.T) {
-	assert := assert.New(t)
-	s := sw.NewPetApi()
-
-	apiResponse, err := s.AddPet(sw.Pet{})
-
-	assert.NotEqual(err, nil, "Error should not be nil")
-
-	if apiResponse.Response.StatusCode != 200 {
-		t.Log(apiResponse)
-	}	
-}
-
 func TestGetPetByIdMissingParam(t *testing.T) {
 	assert := assert.New(t)
 	s := sw.NewPetApi()
@@ -104,7 +91,7 @@ func TestGetPetByIdWithInvalidID(t *testing.T) {
 		t.Log(err)
 		t.Log(apiResponse)
 	} 
-	
+
 	if apiResponse.Response.StatusCode != 200 {
 		t.Log(apiResponse.Response)
 	}	

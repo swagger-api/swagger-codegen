@@ -4,7 +4,6 @@ import (
     "strings"
     "fmt"
     "encoding/json"
-    "reflect"
     "os"
     "io/ioutil"
 )
@@ -42,9 +41,6 @@ func (a PetApi) AddPet (body Pet) (APIResponse, error) {
   path := a.Configuration.BasePath + "/pet"
 
   // verify the required parameter 'body' is set
-  if reflect.DeepEqual((Pet{}), body) {
-       return *NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter 'body' when calling PetApi->AddPet")
-  }
 
   headerParams := make(map[string]string)
   queryParams := make(map[string]string)
@@ -393,9 +389,6 @@ func (a PetApi) UpdatePet (body Pet) (APIResponse, error) {
   path := a.Configuration.BasePath + "/pet"
 
   // verify the required parameter 'body' is set
-  if reflect.DeepEqual((Pet{}), body) {
-       return *NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter 'body' when calling PetApi->UpdatePet")
-  }
 
   headerParams := make(map[string]string)
   queryParams := make(map[string]string)
