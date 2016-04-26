@@ -18,7 +18,7 @@ class APIHelper {
         }
         return destination
     }
-    static func convertBoolToString(source: [String: AnyObject]) -> [String:AnyObject]? {
+    static func convertBoolToString(source: [String: AnyObject]) -> [String:AnyObject] {
         var destination = [String:AnyObject]()
         let theTrue = NSNumber(bool: true)
         let theFalse = NSNumber(bool: false)
@@ -29,10 +29,6 @@ class APIHelper {
                 default:
                     destination[key] = value
             }
-        }
-
-        if destination.isEmpty {
-            return nil
         }
         return destination
     }
