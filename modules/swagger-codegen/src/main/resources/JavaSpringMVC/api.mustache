@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Hashtable;
+
 
 import static org.springframework.http.MediaType.*;
 
@@ -38,7 +40,7 @@ import static org.springframework.http.MediaType.*;
 public class {{classname}} {
 
   private final Delegate delegate;
-  
+
   @Autowired
   public {{classname}}(Delegate {{classname}}Delegate) {
     this.delegate = {{classname}}Delegate;
@@ -58,14 +60,25 @@ public class {{classname}} {
     {{#hasProduces}}produces = { {{#produces}}"{{mediaType}}"{{#hasMore}}, {{/hasMore}}{{/produces}} }, {{/hasProduces}}
     {{#hasConsumes}}consumes = { {{#consumes}}"{{mediaType}}"{{#hasMore}}, {{/hasMore}}{{/consumes}} },{{/hasConsumes}}
     method = RequestMethod.{{httpMethod}})
-  public ResponseEntity<{{>returnTypes}}> {{operationId}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},{{/hasMore}}{{/allParams}}) throws NotFoundException {
-      return delegate.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}},{{/hasMore}}{{/allParams}});  }
-
+  public ResponseEntity {{operationId}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},{{/hasMore}}{{/allParams}})  {
+        try {
+           Object result = delegate.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}},{{/hasMore}}{{/allParams}});
+           if (result == null){
+                return ResponseEntity.status(HttpStatus.NO_CONTENT.value()).body("");
+           } else {
+                return ResponseEntity.status(HttpStatus.OK.value()).body(result);
+           }
+        } catch (ApiException ex){
+           Map errors = new HashMap();
+           errors.put("Error", ex.getResponseBody());
+           return ResponseEntity.status(ex.getHttpStatus().value()).body(errors);
+        }
+    }
   {{/operation}}
 
   public interface Delegate{
   {{#operation}}
-    public ResponseEntity<{{>returnTypes}}> {{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}},{{/hasMore}}{{/allParams}}) throws NotFoundException;
+    public {{>returnTypes}} {{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}},{{/hasMore}}{{/allParams}}) throws ApiException;
 
   {{/operation}}
   }

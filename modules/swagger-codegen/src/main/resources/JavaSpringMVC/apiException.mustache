@@ -1,10 +1,86 @@
 package {{apiPackage}};
 
+import java.util.Map;
+import java.util.List;
+import org.springframework.http.HttpStatus;
+
 {{>generatedAnnotation}}
-public class ApiException extends Exception{
-	private int code;
-	public ApiException (int code, String msg) {
-		super(msg);
-		this.code = code;
-	}
+public class ApiException extends Exception {
+  private int code = 0;
+  private HttpStatus httpStatus = null;
+  private Map<String, List<String>> responseHeaders = null;
+  private String responseBody = null;
+
+  public ApiException() {}
+
+  public ApiException(Throwable throwable) {
+    super(throwable);
+  }
+
+  public ApiException(String message) {
+    super(message);
+  }
+
+  public ApiException(String message, Throwable throwable, int code, Map<String, List<String>> responseHeaders, String responseBody) {
+    super(message, throwable);
+    this.code = code;
+    this.responseHeaders = responseHeaders;
+    this.responseBody = responseBody;
+  }
+
+  public ApiException(String message, int code, Map<String, List<String>> responseHeaders, String responseBody) {
+    this(message, (Throwable) null, code, responseHeaders, responseBody);
+  }
+
+  public ApiException(String message, Throwable throwable, int code, Map<String, List<String>> responseHeaders) {
+    this(message, throwable, code, responseHeaders, null);
+  }
+
+  public ApiException(int code, Map<String, List<String>> responseHeaders, String responseBody) {
+    this((String) null, (Throwable) null, code, responseHeaders, responseBody);
+  }
+
+  public ApiException(int code, String message) {
+    super(message);
+    this.code = code;
+  }
+
+  public ApiException(HttpStatus status,String responseBody) {
+    this.httpStatus = status;
+    this.responseBody = responseBody;
+  }
+
+
+  public ApiException(int code, String message, Map<String, List<String>> responseHeaders, String responseBody) {
+    this(code, message);
+    this.responseHeaders = responseHeaders;
+    this.responseBody = responseBody;
+  }
+
+  public int getCode() {
+    return code;
+  }
+
+  /**
+   * Get the HTTP response headers.
+   */
+  public Map<String, List<String>> getResponseHeaders() {
+    return responseHeaders;
+  }
+
+  /**
+   * Get the HTTP response body.
+   */
+  public String getResponseBody() {
+    return responseBody;
+  }
+
+ /**
+  * Get the HTTP response body.
+  */
+  public HttpStatus getHttpStatus() {
+    return httpStatus;
+  }
 }
+
+
