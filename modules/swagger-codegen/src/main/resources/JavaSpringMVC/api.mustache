@@ -40,7 +40,7 @@ import static org.springframework.http.MediaType.*;
 public class {{classname}} {
 
   private final Delegate delegate;
-  
+
   @Autowired
   public {{classname}}(Delegate {{classname}}Delegate) {
     this.delegate = {{classname}}Delegate;
@@ -69,9 +69,9 @@ public class {{classname}} {
                 return ResponseEntity.status(HttpStatus.OK.value()).body(result);
            }
         } catch (ApiException ex){
-           Hashtable error = new Hashtable();
-           error.put("Error", ex.getResponseBody());
-           return ResponseEntity.status(ex.getHttpStatus().value()).body(error);
+           Map errors = new HashMap();
+           errors.put("Error", ex.getResponseBody());
+           return ResponseEntity.status(ex.getHttpStatus().value()).body(errors);
         }
     }
   {{/operation}}
