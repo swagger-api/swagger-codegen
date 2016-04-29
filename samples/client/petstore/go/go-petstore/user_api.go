@@ -100,7 +100,7 @@ func (a UserApi) CreateUsersWithArrayInput (body []User) (APIResponse, error) {
 
   // verify the required parameter 'body' is set
   if len(body) == 0 {
-       return *NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter 'body' when calling UserApi->CreateUsersWithArrayInput")
+       return *new(APIResponse), fmt.Errorf("missing required parameter 'body' when calling UserApi->CreateUsersWithArrayInput")
   }
 
   headerParams := make(map[string]string)
@@ -163,7 +163,7 @@ func (a UserApi) CreateUsersWithListInput (body []User) (APIResponse, error) {
 
   // verify the required parameter 'body' is set
   if len(body) == 0 {
-       return *NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter 'body' when calling UserApi->CreateUsersWithListInput")
+       return *new(APIResponse), fmt.Errorf("missing required parameter 'body' when calling UserApi->CreateUsersWithListInput")
   }
 
   headerParams := make(map[string]string)
@@ -227,7 +227,7 @@ func (a UserApi) DeleteUser (username string) (APIResponse, error) {
 
   // verify the required parameter 'username' is set
   if username == "" {
-       return *NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter 'username' when calling UserApi->DeleteUser")
+       return *new(APIResponse), fmt.Errorf("missing required parameter 'username' when calling UserApi->DeleteUser")
   }
 
   headerParams := make(map[string]string)
@@ -289,7 +289,7 @@ func (a UserApi) GetUserByName (username string) (User, APIResponse, error) {
 
   // verify the required parameter 'username' is set
   if username == "" {
-       return *new(User), *NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter 'username' when calling UserApi->GetUserByName")
+       return *new(User), *new(APIResponse), fmt.Errorf("missing required parameter 'username' when calling UserApi->GetUserByName")
   }
 
   headerParams := make(map[string]string)
@@ -353,11 +353,11 @@ func (a UserApi) LoginUser (username string, password string) (string, APIRespon
 
   // verify the required parameter 'username' is set
   if username == "" {
-       return *new(string), *NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter 'username' when calling UserApi->LoginUser")
+       return *new(string), *new(APIResponse), fmt.Errorf("missing required parameter 'username' when calling UserApi->LoginUser")
   }
   // verify the required parameter 'password' is set
   if password == "" {
-       return *new(string), *NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter 'password' when calling UserApi->LoginUser")
+       return *new(string), *new(APIResponse), fmt.Errorf("missing required parameter 'password' when calling UserApi->LoginUser")
   }
 
   headerParams := make(map[string]string)
@@ -480,7 +480,7 @@ func (a UserApi) UpdateUser (username string, body User) (APIResponse, error) {
 
   // verify the required parameter 'username' is set
   if username == "" {
-       return *NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter 'username' when calling UserApi->UpdateUser")
+       return *new(APIResponse), fmt.Errorf("missing required parameter 'username' when calling UserApi->UpdateUser")
   }
   // verify the required parameter 'body' is set
 

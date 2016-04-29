@@ -112,7 +112,7 @@ func (a PetApi) DeletePet (petId int64, apiKey string) (APIResponse, error) {
 
   // verify the required parameter 'petId' is set
   if petId == 0 {
-       return *NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter 'petId' when calling PetApi->DeletePet")
+       return *new(APIResponse), fmt.Errorf("missing required parameter 'petId' when calling PetApi->DeletePet")
   }
 
   headerParams := make(map[string]string)
@@ -181,7 +181,7 @@ func (a PetApi) FindPetsByStatus (status []string) ([]Pet, APIResponse, error) {
 
   // verify the required parameter 'status' is set
   if len(status) == 0 {
-       return *new([]Pet), *NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter 'status' when calling PetApi->FindPetsByStatus")
+       return *new([]Pet), *new(APIResponse), fmt.Errorf("missing required parameter 'status' when calling PetApi->FindPetsByStatus")
   }
 
   headerParams := make(map[string]string)
@@ -251,7 +251,7 @@ func (a PetApi) FindPetsByTags (tags []string) ([]Pet, APIResponse, error) {
 
   // verify the required parameter 'tags' is set
   if len(tags) == 0 {
-       return *new([]Pet), *NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter 'tags' when calling PetApi->FindPetsByTags")
+       return *new([]Pet), *new(APIResponse), fmt.Errorf("missing required parameter 'tags' when calling PetApi->FindPetsByTags")
   }
 
   headerParams := make(map[string]string)
@@ -322,7 +322,7 @@ func (a PetApi) GetPetById (petId int64) (Pet, APIResponse, error) {
 
   // verify the required parameter 'petId' is set
   if petId == 0 {
-       return *new(Pet), *NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter 'petId' when calling PetApi->GetPetById")
+       return *new(Pet), *new(APIResponse), fmt.Errorf("missing required parameter 'petId' when calling PetApi->GetPetById")
   }
 
   headerParams := make(map[string]string)
@@ -461,7 +461,7 @@ func (a PetApi) UpdatePetWithForm (petId int64, name string, status string) (API
 
   // verify the required parameter 'petId' is set
   if petId == 0 {
-       return *NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter 'petId' when calling PetApi->UpdatePetWithForm")
+       return *new(APIResponse), fmt.Errorf("missing required parameter 'petId' when calling PetApi->UpdatePetWithForm")
   }
 
   headerParams := make(map[string]string)
@@ -534,7 +534,7 @@ func (a PetApi) UploadFile (petId int64, additionalMetadata string, file *os.Fil
 
   // verify the required parameter 'petId' is set
   if petId == 0 {
-       return *new(ModelApiResponse), *NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter 'petId' when calling PetApi->UploadFile")
+       return *new(ModelApiResponse), *new(APIResponse), fmt.Errorf("missing required parameter 'petId' when calling PetApi->UploadFile")
   }
 
   headerParams := make(map[string]string)

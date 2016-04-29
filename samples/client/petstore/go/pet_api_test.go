@@ -27,40 +27,28 @@ func TestFindPetsByStatusWithMissingParam(t *testing.T) {
 	assert := assert.New(t)
 	s := sw.NewPetApi()
 	status := []string {}
-	pets, apiResponse, err := s.FindPetsByStatus(status)
+	pets, _, err := s.FindPetsByStatus(status)
 
 	assert.Equal(len(pets), 0, "Should has no pet returned")
 	assert.NotEqual(err, nil, "Error should not be nil")
-
-	if apiResponse.Response.StatusCode != 200 {
-		t.Log(apiResponse)
-	}	
 }
 
 func TestDeleteUserWithMissingParam(t *testing.T) {
 	assert := assert.New(t)
 	s := sw.NewUserApi()
 
-	apiResponse, err := s.DeleteUser("")
+	_, err := s.DeleteUser("")
 
-	assert.NotEqual(err, nil, "Error should not be nil")
-
-	if apiResponse.Response.StatusCode != 200 {
-		t.Log(apiResponse)
-	}	
+	assert.NotEqual(err, nil, "Error should not be nil")	
 }
 
 func TestGetPetByIdMissingParam(t *testing.T) {
 	assert := assert.New(t)
 	s := sw.NewPetApi()
 
-	_, apiResponse, err := s.GetPetById(0)
+	_, _, err := s.GetPetById(0)
 
 	assert.NotEqual(err, nil, "Error should not be nil")
-
-	if apiResponse.Response.StatusCode != 200 {
-		t.Log(apiResponse)
-	}	
 }
 
 func TestGetPetById(t *testing.T) {

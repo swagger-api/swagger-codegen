@@ -41,7 +41,7 @@ func (a StoreApi) DeleteOrder (orderId string) (APIResponse, error) {
 
   // verify the required parameter 'orderId' is set
   if orderId == "" {
-       return *NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter 'orderId' when calling StoreApi->DeleteOrder")
+       return *new(APIResponse), fmt.Errorf("missing required parameter 'orderId' when calling StoreApi->DeleteOrder")
   }
 
   headerParams := make(map[string]string)
@@ -165,7 +165,7 @@ func (a StoreApi) GetOrderById (orderId int64) (Order, APIResponse, error) {
 
   // verify the required parameter 'orderId' is set
   if orderId == 0 {
-       return *new(Order), *NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter 'orderId' when calling StoreApi->GetOrderById")
+       return *new(Order), *new(APIResponse), fmt.Errorf("missing required parameter 'orderId' when calling StoreApi->GetOrderById")
   }
 
   headerParams := make(map[string]string)

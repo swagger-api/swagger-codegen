@@ -49,17 +49,17 @@ func (a {{classname}}) {{nickname}} ({{#allParams}}{{paramName}} {{{dataType}}}{
   // verify the required parameter '{{paramName}}' is set
   {{#isListContainer}}
   if len({{paramName}}) == 0 {
-       return {{#returnType}}*new({{{returnType}}}), {{/returnType}}*NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}")
+       return {{#returnType}}*new({{{returnType}}}), {{/returnType}}*new(APIResponse), fmt.Errorf("missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}")
   }
   {{/isListContainer}}
   {{#isString}}
   if {{paramName}} == "" {
-       return {{#returnType}}*new({{{returnType}}}), {{/returnType}}*NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}")
+       return {{#returnType}}*new({{{returnType}}}), {{/returnType}}*new(APIResponse), fmt.Errorf("missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}")
   }
   {{/isString}}
   {{#isLong}}
   if {{paramName}} == 0 {
-       return {{#returnType}}*new({{{returnType}}}), {{/returnType}}*NewAPIResponseWithError("400 - Bad Request"), fmt.Errorf("missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}")
+       return {{#returnType}}*new({{{returnType}}}), {{/returnType}}*new(APIResponse), fmt.Errorf("missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}")
   }
   {{/isLong}}  
   {{/required}}

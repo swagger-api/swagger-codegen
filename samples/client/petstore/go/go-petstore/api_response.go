@@ -20,9 +20,5 @@ func NewAPIResponse(r *http.Response) *APIResponse {
 func NewAPIResponseWithError(errorMessage string) *APIResponse {
   response := &APIResponse{Message: errorMessage}
 
-  httpResp := new(http.Response)
-  httpResp.StatusCode = 400
-  response.Response = httpResp
-
   return response
 }
