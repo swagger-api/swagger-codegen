@@ -4,7 +4,6 @@ import (
     "strings"
     "fmt"
     "encoding/json"
-    "errors"
 )
 
 type StoreApi struct {
@@ -38,11 +37,11 @@ func (a StoreApi) DeleteOrder (orderId string) (APIResponse, error) {
   var httpMethod = "Delete"
  // create path and map variables
   path := a.Configuration.BasePath + "/store/order/{orderId}"
- path = strings.Replace(path, "{" + "orderId" + "}", fmt.Sprintf("%v", orderId), -1)
+  path = strings.Replace(path, "{" + "orderId" + "}", fmt.Sprintf("%v", orderId), -1)
 
   // verify the required parameter 'orderId' is set
-  if &orderId == nil {
-      return *NewAPIResponseWithError("400 - Bad Request"), errors.New("Missing required parameter 'orderId' when calling StoreApi->DeleteOrder")
+  if orderId == "" {
+       return *new(APIResponse), fmt.Errorf("missing required parameter 'orderId' when calling StoreApi->DeleteOrder")
   }
 
   headerParams := make(map[string]string)
@@ -162,11 +161,11 @@ func (a StoreApi) GetOrderById (orderId int64) (Order, APIResponse, error) {
   var httpMethod = "Get"
  // create path and map variables
   path := a.Configuration.BasePath + "/store/order/{orderId}"
- path = strings.Replace(path, "{" + "orderId" + "}", fmt.Sprintf("%v", orderId), -1)
+  path = strings.Replace(path, "{" + "orderId" + "}", fmt.Sprintf("%v", orderId), -1)
 
   // verify the required parameter 'orderId' is set
-  if &orderId == nil {
-      return *new(Order), *NewAPIResponseWithError("400 - Bad Request"), errors.New("Missing required parameter 'orderId' when calling StoreApi->GetOrderById")
+  if orderId == 0 {
+       return *new(Order), *new(APIResponse), fmt.Errorf("missing required parameter 'orderId' when calling StoreApi->GetOrderById")
   }
 
   headerParams := make(map[string]string)
@@ -228,9 +227,6 @@ func (a StoreApi) PlaceOrder (body Order) (Order, APIResponse, error) {
   path := a.Configuration.BasePath + "/store/order"
 
   // verify the required parameter 'body' is set
-  if &body == nil {
-      return *new(Order), *NewAPIResponseWithError("400 - Bad Request"), errors.New("Missing required parameter 'body' when calling StoreApi->PlaceOrder")
-  }
 
   headerParams := make(map[string]string)
   queryParams := make(map[string]string)

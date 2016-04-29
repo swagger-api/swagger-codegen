@@ -24,17 +24,31 @@ func TestAddPet(t *testing.T) {
 }
 
 func TestFindPetsByStatusWithMissingParam(t *testing.T) {
+	assert := assert.New(t)
+	s := sw.NewPetApi()
+	status := []string {}
+	pets, _, err := s.FindPetsByStatus(status)
+
+	assert.Equal(len(pets), 0, "Should has no pet returned")
+	assert.NotEqual(err, nil, "Error should not be nil")
+}
+
+func TestDeleteUserWithMissingParam(t *testing.T) {
+	assert := assert.New(t)
+	s := sw.NewUserApi()
+
+	_, err := s.DeleteUser("")
+
+	assert.NotEqual(err, nil, "Error should not be nil")	
+}
+
+func TestGetPetByIdMissingParam(t *testing.T) {
+	assert := assert.New(t)
 	s := sw.NewPetApi()
 
-	_, apiResponse, err := s.FindPetsByStatus(nil)
+	_, _, err := s.GetPetById(0)
 
-	if err != nil {
-		t.Errorf("Error while testing TestFindPetsByStatusWithMissingParam")
-		t.Log(err)
-	}
-	if apiResponse.Response.StatusCode != 200 {
-		t.Log(apiResponse)
-	}	
+	assert.NotEqual(err, nil, "Error should not be nil")
 }
 
 func TestGetPetById(t *testing.T) {
@@ -59,14 +73,13 @@ func TestGetPetById(t *testing.T) {
 
 func TestGetPetByIdWithInvalidID(t *testing.T) {
 	s := sw.NewPetApi()
-	resp, apiResponse, err := s.GetPetById(999999999)
+	_, apiResponse, err := s.GetPetById(999999999)
 	if err != nil {
 		t.Errorf("Error while getting pet by invalid id")
 		t.Log(err)
 		t.Log(apiResponse)
-	} else {
-		t.Log(resp)
-	}
+	} 
+
 	if apiResponse.Response.StatusCode != 200 {
 		t.Log(apiResponse.Response)
 	}	
@@ -90,18 +103,17 @@ func TestFindPetsByStatus(t *testing.T) {
 	s := sw.NewPetApi()
 	resp, apiResponse, err := s.FindPetsByStatus([]string {"pending"})
 	if err != nil {
-		t.Errorf("Error while getting pet by id")
+		t.Errorf("Error while finding pet by status")
 		t.Log(err)
 		t.Log(apiResponse)
 	} else {
-		t.Log(apiResponse)
 		if len(resp) == 0 {
 			t.Errorf("Error no pets returned")
 		}
 
-	if apiResponse.Response.StatusCode != 200 {
-		t.Log(apiResponse.Response)
-	}
+		if apiResponse.Response.StatusCode != 200 {
+			t.Log(apiResponse.Response)
+		}
 	}
 }
 
