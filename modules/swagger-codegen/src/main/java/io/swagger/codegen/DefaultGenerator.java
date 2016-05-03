@@ -36,59 +36,41 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         return this;
     }
 
+    private Set<String> extractFromSystemProperty(String systemPropertyName) {
+        String modelNames = System.getProperty(systemPropertyName);
+        return modelNames.isEmpty() ? null : new HashSet<>(Arrays.asList(modelNames.split(",")));
+    }
+
     @Override
     public List<File> generate() {
-        Boolean generateApis = null;
-        Boolean generateModels = null;
-        Boolean generateSupportingFiles = null;
+        Boolean shouldGenerateApis;
+        Boolean shouldGenerateModels;
+        Boolean shouldGenerateSupportingFiles;
 
         Set<String> modelsToGenerate = null;
         Set<String> apisToGenerate = null;
         Set<String> supportingFilesToGenerate = null;
 
         // allows generating only models by specifying a CSV of models to generate, or empty for all
-        if(System.getProperty("models") != null) {
-            String modelNames = System.getProperty("models");
-            generateModels = true;
-            if(!modelNames.isEmpty()) {
-                modelsToGenerate = new HashSet<String>(Arrays.asList(modelNames.split(",")));
-            }
+        if (shouldGenerateModels = hasSystemProperty("models")) {
+            modelsToGenerate = extractFromSystemProperty("models");
         }
-        if(System.getProperty("apis") != null) {
-            String apiNames = System.getProperty("apis");
-            generateApis = true;
-            if(!apiNames.isEmpty()) {
-                apisToGenerate = new HashSet<String>(Arrays.asList(apiNames.split(",")));
-            }
+        if(shouldGenerateApis = hasSystemProperty("apis")) {
+            apisToGenerate = extractFromSystemProperty("apis");
         }
-        if(System.getProperty("supportingFiles") != null) {
-            String supportingFiles = System.getProperty("supportingFiles");
-            generateSupportingFiles = true;
-            if(!supportingFiles.isEmpty()) {
-                supportingFilesToGenerate = new HashSet<String>(Arrays.asList(supportingFiles.split(",")));
-            }
+        if(shouldGenerateSupportingFiles = hasSystemProperty("supportingFiles")) {
+            supportingFilesToGenerate = extractFromSystemProperty("supportingFiles");
         }
 
-        if(generateApis == null && generateModels == null && generateSupportingFiles == null) {
+        if(!shouldGenerateApis && !shouldGenerateModels && !shouldGenerateSupportingFiles) {
             // no specifics are set, generate everything
-            generateApis = true; generateModels = true; generateSupportingFiles = true;
-        }
-        else {
-            if(generateApis == null) {
-                generateApis = false;
-            }
-            if(generateModels == null) {
-                generateModels = false;
-            }
-            if(generateSupportingFiles == null) {
-                generateSupportingFiles = false;
-            }
+            shouldGenerateApis = true; shouldGenerateModels = true; shouldGenerateSupportingFiles = true;
         }
 
         if (swagger == null || config == null) {
             throw new RuntimeException("missing swagger input or config!");
         }
-        if (System.getProperty("debugSwagger") != null) {
+        if (hasSystemProperty("debugSwagger")) {
             Json.prettyPrint(swagger);
         }
         List<File> files = new ArrayList<File>();
@@ -138,25 +120,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         	config.vendorExtensions().putAll(swagger.getVendorExtensions());
         }
 
-        StringBuilder hostBuilder = new StringBuilder();
-        String scheme;
-        if (swagger.getSchemes() != null && swagger.getSchemes().size() > 0) {
-            scheme = swagger.getSchemes().get(0).toValue();
-        } else {
-            scheme = "https";
-        }
-        hostBuilder.append(scheme);
-        hostBuilder.append("://");
-        if (swagger.getHost() != null) {
-            hostBuilder.append(swagger.getHost());
-        } else {
-            hostBuilder.append("localhost");
-        }
-        if (swagger.getBasePath() != null) {
-            hostBuilder.append(swagger.getBasePath());
-        }
+        String scheme = extractScheme(swagger.getSchemes());
+        String basePath = composeBasePath(scheme);
         String contextPath = swagger.getBasePath() == null ? "" : swagger.getBasePath();
-        String basePath = hostBuilder.toString();
         String basePathWithoutHost = swagger.getBasePath();
 
 
@@ -172,7 +138,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         if (definitions != null) {
         	Set<String> modelKeys = definitions.keySet();
 
-            if(generateModels) {
+            if(shouldGenerateModels) {
                 if(modelsToGenerate != null && modelsToGenerate.size() > 0) {
                     Set<String> updatedKeys = new HashSet<String>();
                     for(String m : modelKeys) {
@@ -333,14 +299,14 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 }
             }
         }
-        if (System.getProperty("debugModels") != null) {
+        if (hasSystemProperty("debugModels")) {
             LOGGER.info("############ Model info ############");
             Json.prettyPrint(allModels);
         }
 
         // apis
         Map<String, List<CodegenOperation>> paths = processPaths(swagger.getPaths());
-        if(generateApis) {
+        if(shouldGenerateApis) {
             if(apisToGenerate != null && apisToGenerate.size() > 0) {
                 Map<String, List<CodegenOperation>> updatedPaths = new TreeMap<String, List<CodegenOperation>>();
                 for(String m : paths.keySet()) {
@@ -470,7 +436,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             }
         }
 
-        if (System.getProperty("debugOperations") != null) {
+        if (hasSystemProperty("debugOperations")) {
             LOGGER.info("############ Operation info ############");
             Json.prettyPrint(allOperations);
         }
@@ -509,12 +475,12 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
         config.postProcessSupportingFileData(bundle);
 
-        if (System.getProperty("debugSupportingFiles") != null) {
+        if (hasSystemProperty("debugSupportingFiles")) {
             LOGGER.info("############ Supporting file info ############");
             Json.prettyPrint(bundle);
         }
 
-        if(generateSupportingFiles) {
+        if(shouldGenerateSupportingFiles) {
             for (SupportingFile support : config.supportingFiles()) {
                 try {
                     String outputFolder = config.outputFolder();
@@ -590,6 +556,26 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         return files;
     }
 
+    private boolean hasSystemProperty(String systemPropertyName) {
+        return System.getProperty(systemPropertyName) != null;
+    }
+
+    private String composeBasePath(String scheme) {
+        StringBuilder hostBuilder = new StringBuilder();
+        hostBuilder.append(scheme);
+        hostBuilder.append("://");
+        String host = swagger.getHost() != null ? swagger.getHost() : "localhost";
+        hostBuilder.append(host);
+        if (swagger.getBasePath() != null) {
+            hostBuilder.append(swagger.getBasePath());
+        }
+        return hostBuilder.toString();
+    }
+
+    private String extractScheme(List<Scheme> schemes) {
+        return (schemes != null && schemes.size() > 0) ? schemes.get(0).toValue() : "https";
+    }
+
     private static void processMimeTypes(List<String> mimeTypeList, Map<String, Object> operation, String source) {
         if (mimeTypeList != null && mimeTypeList.size() > 0) {
             List<Map<String, String>> c = new ArrayList<Map<String, String>>();
@@ -637,7 +623,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
     public void processOperation(String resourcePath, String httpMethod, Operation operation, Map<String, List<CodegenOperation>> operations, Path path) {
         if (operation != null) {
-            if (System.getProperty("debugOperations") != null) {
+            if (hasSystemProperty("debugOperations")) {
                 LOGGER.info("processOperation: resourcePath= " + resourcePath + "\t;" + httpMethod + " " + operation
                         + "\n");
             }
