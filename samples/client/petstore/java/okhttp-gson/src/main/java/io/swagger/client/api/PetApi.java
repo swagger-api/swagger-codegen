@@ -18,8 +18,8 @@ import com.squareup.okhttp.Response;
 import java.io.IOException;
 
 import io.swagger.client.model.Pet;
-import java.io.File;
 import io.swagger.client.model.InlineResponse200;
+import java.io.File;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -46,105 +46,6 @@ public class PetApi {
     this.apiClient = apiClient;
   }
 
-  
-  /* Build call for updatePet */
-  private Call updatePetCall(Pet body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-    Object localVarPostBody = body;
-    
-
-    // create path and map variables
-    String localVarPath = "/pet".replaceAll("\\{format\\}","json");
-
-    List<Pair> localVarQueryParams = new ArrayList<Pair>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-    final String[] localVarAccepts = {
-      "application/json", "application/xml"
-    };
-    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-    if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-    final String[] localVarContentTypes = {
-      "application/json", "application/xml"
-    };
-    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-    localVarHeaderParams.put("Content-Type", localVarContentType);
-
-    if(progressListener != null) {
-      apiClient.getHttpClient().networkInterceptors().add(new Interceptor() {
-      @Override
-      public Response intercept(Interceptor.Chain chain) throws IOException {
-        Response originalResponse = chain.proceed(chain.request());
-        return originalResponse.newBuilder()
-                .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                .build();
-        }
-      });
-    }
-
-    String[] localVarAuthNames = new String[] { "petstore_auth" };
-    return apiClient.buildCall(localVarPath, "PUT", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-  }
-
-  /**
-   * Update an existing pet
-   * 
-   * @param body Pet object that needs to be added to the store
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-   */
-  public void updatePet(Pet body) throws ApiException {
-    updatePetWithHttpInfo(body);
-  }
-
-  /**
-   * Update an existing pet
-   * 
-   * @param body Pet object that needs to be added to the store
-   * @return ApiResponse<Void>
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-   */
-  public ApiResponse<Void> updatePetWithHttpInfo(Pet body) throws ApiException {
-    Call call = updatePetCall(body, null, null);
-    return apiClient.execute(call);
-  }
-
-  /**
-   * Update an existing pet (asynchronously)
-   * 
-   * @param body Pet object that needs to be added to the store
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-   */
-  public Call updatePetAsync(Pet body, final ApiCallback<Void> callback) throws ApiException {
-
-    ProgressResponseBody.ProgressListener progressListener = null;
-    ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-    if (callback != null) {
-      progressListener = new ProgressResponseBody.ProgressListener() {
-        @Override
-        public void update(long bytesRead, long contentLength, boolean done) {
-          callback.onDownloadProgress(bytesRead, contentLength, done);
-        }
-      };
-
-      progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-        @Override
-        public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-          callback.onUploadProgress(bytesWritten, contentLength, done);
-        }
-      };
-    }
-
-    Call call = updatePetCall(body, progressListener, progressRequestListener);
-    apiClient.executeAsync(call, callback);
-    return call;
-  }
-  
   /* Build call for addPet */
   private Call addPetCall(Pet body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = body;
@@ -190,7 +91,7 @@ public class PetApi {
   /**
    * Add a new pet to the store
    * 
-   * @param body Pet object that needs to be added to the store
+   * @param body Pet object that needs to be added to the store (optional)
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
    */
   public void addPet(Pet body) throws ApiException {
@@ -200,7 +101,7 @@ public class PetApi {
   /**
    * Add a new pet to the store
    * 
-   * @param body Pet object that needs to be added to the store
+   * @param body Pet object that needs to be added to the store (optional)
    * @return ApiResponse<Void>
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
    */
@@ -212,7 +113,7 @@ public class PetApi {
   /**
    * Add a new pet to the store (asynchronously)
    * 
-   * @param body Pet object that needs to be added to the store
+   * @param body Pet object that needs to be added to the store (optional)
    * @param callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -242,7 +143,211 @@ public class PetApi {
     apiClient.executeAsync(call, callback);
     return call;
   }
-  
+  /* Build call for addPetUsingByteArray */
+  private Call addPetUsingByteArrayCall(byte[] body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    Object localVarPostBody = body;
+    
+
+    // create path and map variables
+    String localVarPath = "/pet?testing_byte_array&#x3D;true".replaceAll("\\{format\\}","json");
+
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    final String[] localVarAccepts = {
+      "application/json", "application/xml"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+    if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+    final String[] localVarContentTypes = {
+      "application/json", "application/xml"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+    localVarHeaderParams.put("Content-Type", localVarContentType);
+
+    if(progressListener != null) {
+      apiClient.getHttpClient().networkInterceptors().add(new Interceptor() {
+      @Override
+      public Response intercept(Interceptor.Chain chain) throws IOException {
+        Response originalResponse = chain.proceed(chain.request());
+        return originalResponse.newBuilder()
+                .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                .build();
+        }
+      });
+    }
+
+    String[] localVarAuthNames = new String[] { "petstore_auth" };
+    return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+  }
+
+  /**
+   * Fake endpoint to test byte array in body parameter for adding a new pet to the store
+   * 
+   * @param body Pet object in the form of byte array (optional)
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+   */
+  public void addPetUsingByteArray(byte[] body) throws ApiException {
+    addPetUsingByteArrayWithHttpInfo(body);
+  }
+
+  /**
+   * Fake endpoint to test byte array in body parameter for adding a new pet to the store
+   * 
+   * @param body Pet object in the form of byte array (optional)
+   * @return ApiResponse<Void>
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+   */
+  public ApiResponse<Void> addPetUsingByteArrayWithHttpInfo(byte[] body) throws ApiException {
+    Call call = addPetUsingByteArrayCall(body, null, null);
+    return apiClient.execute(call);
+  }
+
+  /**
+   * Fake endpoint to test byte array in body parameter for adding a new pet to the store (asynchronously)
+   * 
+   * @param body Pet object in the form of byte array (optional)
+   * @param callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   */
+  public Call addPetUsingByteArrayAsync(byte[] body, final ApiCallback<Void> callback) throws ApiException {
+
+    ProgressResponseBody.ProgressListener progressListener = null;
+    ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+    if (callback != null) {
+      progressListener = new ProgressResponseBody.ProgressListener() {
+        @Override
+        public void update(long bytesRead, long contentLength, boolean done) {
+          callback.onDownloadProgress(bytesRead, contentLength, done);
+        }
+      };
+
+      progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+        @Override
+        public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+          callback.onUploadProgress(bytesWritten, contentLength, done);
+        }
+      };
+    }
+
+    Call call = addPetUsingByteArrayCall(body, progressListener, progressRequestListener);
+    apiClient.executeAsync(call, callback);
+    return call;
+  }
+  /* Build call for deletePet */
+  private Call deletePetCall(Long petId, String apiKey, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'petId' is set
+    if (petId == null) {
+       throw new ApiException("Missing the required parameter 'petId' when calling deletePet(Async)");
+    }
+    
+
+    // create path and map variables
+    String localVarPath = "/pet/{petId}".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "petId" + "\\}", apiClient.escapeString(petId.toString()));
+
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    if (apiKey != null)
+      localVarHeaderParams.put("api_key", apiClient.parameterToString(apiKey));
+
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    final String[] localVarAccepts = {
+      "application/json", "application/xml"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+    if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+    final String[] localVarContentTypes = {
+      
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+    localVarHeaderParams.put("Content-Type", localVarContentType);
+
+    if(progressListener != null) {
+      apiClient.getHttpClient().networkInterceptors().add(new Interceptor() {
+      @Override
+      public Response intercept(Interceptor.Chain chain) throws IOException {
+        Response originalResponse = chain.proceed(chain.request());
+        return originalResponse.newBuilder()
+                .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                .build();
+        }
+      });
+    }
+
+    String[] localVarAuthNames = new String[] { "petstore_auth" };
+    return apiClient.buildCall(localVarPath, "DELETE", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+  }
+
+  /**
+   * Deletes a pet
+   * 
+   * @param petId Pet id to delete (required)
+   * @param apiKey  (optional)
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+   */
+  public void deletePet(Long petId, String apiKey) throws ApiException {
+    deletePetWithHttpInfo(petId, apiKey);
+  }
+
+  /**
+   * Deletes a pet
+   * 
+   * @param petId Pet id to delete (required)
+   * @param apiKey  (optional)
+   * @return ApiResponse<Void>
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+   */
+  public ApiResponse<Void> deletePetWithHttpInfo(Long petId, String apiKey) throws ApiException {
+    Call call = deletePetCall(petId, apiKey, null, null);
+    return apiClient.execute(call);
+  }
+
+  /**
+   * Deletes a pet (asynchronously)
+   * 
+   * @param petId Pet id to delete (required)
+   * @param apiKey  (optional)
+   * @param callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   */
+  public Call deletePetAsync(Long petId, String apiKey, final ApiCallback<Void> callback) throws ApiException {
+
+    ProgressResponseBody.ProgressListener progressListener = null;
+    ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+    if (callback != null) {
+      progressListener = new ProgressResponseBody.ProgressListener() {
+        @Override
+        public void update(long bytesRead, long contentLength, boolean done) {
+          callback.onDownloadProgress(bytesRead, contentLength, done);
+        }
+      };
+
+      progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+        @Override
+        public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+          callback.onUploadProgress(bytesWritten, contentLength, done);
+        }
+      };
+    }
+
+    Call call = deletePetCall(petId, apiKey, progressListener, progressRequestListener);
+    apiClient.executeAsync(call, callback);
+    return call;
+  }
   /* Build call for findPetsByStatus */
   private Call findPetsByStatusCall(List<String> status, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = null;
@@ -290,7 +395,7 @@ public class PetApi {
   /**
    * Finds Pets by status
    * Multiple status values can be provided with comma separated strings
-   * @param status Status values that need to be considered for query
+   * @param status Status values that need to be considered for query (optional, default to available)
    * @return List<Pet>
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
    */
@@ -302,7 +407,7 @@ public class PetApi {
   /**
    * Finds Pets by status
    * Multiple status values can be provided with comma separated strings
-   * @param status Status values that need to be considered for query
+   * @param status Status values that need to be considered for query (optional, default to available)
    * @return ApiResponse<List<Pet>>
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
    */
@@ -315,7 +420,7 @@ public class PetApi {
   /**
    * Finds Pets by status (asynchronously)
    * Multiple status values can be provided with comma separated strings
-   * @param status Status values that need to be considered for query
+   * @param status Status values that need to be considered for query (optional, default to available)
    * @param callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -346,7 +451,6 @@ public class PetApi {
     apiClient.executeAsync(call, localVarReturnType, callback);
     return call;
   }
-  
   /* Build call for findPetsByTags */
   private Call findPetsByTagsCall(List<String> tags, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = null;
@@ -394,7 +498,7 @@ public class PetApi {
   /**
    * Finds Pets by tags
    * Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
-   * @param tags Tags to filter by
+   * @param tags Tags to filter by (optional)
    * @return List<Pet>
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
    */
@@ -406,7 +510,7 @@ public class PetApi {
   /**
    * Finds Pets by tags
    * Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
-   * @param tags Tags to filter by
+   * @param tags Tags to filter by (optional)
    * @return ApiResponse<List<Pet>>
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
    */
@@ -419,7 +523,7 @@ public class PetApi {
   /**
    * Finds Pets by tags (asynchronously)
    * Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
-   * @param tags Tags to filter by
+   * @param tags Tags to filter by (optional)
    * @param callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -450,7 +554,6 @@ public class PetApi {
     apiClient.executeAsync(call, localVarReturnType, callback);
     return call;
   }
-  
   /* Build call for getPetById */
   private Call getPetByIdCall(Long petId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = null;
@@ -495,14 +598,14 @@ public class PetApi {
       });
     }
 
-    String[] localVarAuthNames = new String[] { "petstore_auth", "api_key" };
+    String[] localVarAuthNames = new String[] { "api_key", "petstore_auth" };
     return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
   }
 
   /**
    * Find pet by ID
    * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
-   * @param petId ID of pet that needs to be fetched
+   * @param petId ID of pet that needs to be fetched (required)
    * @return Pet
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
    */
@@ -514,7 +617,7 @@ public class PetApi {
   /**
    * Find pet by ID
    * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
-   * @param petId ID of pet that needs to be fetched
+   * @param petId ID of pet that needs to be fetched (required)
    * @return ApiResponse<Pet>
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
    */
@@ -527,7 +630,7 @@ public class PetApi {
   /**
    * Find pet by ID (asynchronously)
    * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
-   * @param petId ID of pet that needs to be fetched
+   * @param petId ID of pet that needs to be fetched (required)
    * @param callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -558,7 +661,317 @@ public class PetApi {
     apiClient.executeAsync(call, localVarReturnType, callback);
     return call;
   }
-  
+  /* Build call for getPetByIdInObject */
+  private Call getPetByIdInObjectCall(Long petId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'petId' is set
+    if (petId == null) {
+       throw new ApiException("Missing the required parameter 'petId' when calling getPetByIdInObject(Async)");
+    }
+    
+
+    // create path and map variables
+    String localVarPath = "/pet/{petId}?response&#x3D;inline_arbitrary_object".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "petId" + "\\}", apiClient.escapeString(petId.toString()));
+
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    final String[] localVarAccepts = {
+      "application/json", "application/xml"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+    if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+    final String[] localVarContentTypes = {
+      
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+    localVarHeaderParams.put("Content-Type", localVarContentType);
+
+    if(progressListener != null) {
+      apiClient.getHttpClient().networkInterceptors().add(new Interceptor() {
+      @Override
+      public Response intercept(Interceptor.Chain chain) throws IOException {
+        Response originalResponse = chain.proceed(chain.request());
+        return originalResponse.newBuilder()
+                .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                .build();
+        }
+      });
+    }
+
+    String[] localVarAuthNames = new String[] { "api_key", "petstore_auth" };
+    return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+  }
+
+  /**
+   * Fake endpoint to test inline arbitrary object return by &#39;Find pet by ID&#39;
+   * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
+   * @param petId ID of pet that needs to be fetched (required)
+   * @return InlineResponse200
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+   */
+  public InlineResponse200 getPetByIdInObject(Long petId) throws ApiException {
+    ApiResponse<InlineResponse200> resp = getPetByIdInObjectWithHttpInfo(petId);
+    return resp.getData();
+  }
+
+  /**
+   * Fake endpoint to test inline arbitrary object return by &#39;Find pet by ID&#39;
+   * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
+   * @param petId ID of pet that needs to be fetched (required)
+   * @return ApiResponse<InlineResponse200>
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+   */
+  public ApiResponse<InlineResponse200> getPetByIdInObjectWithHttpInfo(Long petId) throws ApiException {
+    Call call = getPetByIdInObjectCall(petId, null, null);
+    Type localVarReturnType = new TypeToken<InlineResponse200>(){}.getType();
+    return apiClient.execute(call, localVarReturnType);
+  }
+
+  /**
+   * Fake endpoint to test inline arbitrary object return by &#39;Find pet by ID&#39; (asynchronously)
+   * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
+   * @param petId ID of pet that needs to be fetched (required)
+   * @param callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   */
+  public Call getPetByIdInObjectAsync(Long petId, final ApiCallback<InlineResponse200> callback) throws ApiException {
+
+    ProgressResponseBody.ProgressListener progressListener = null;
+    ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+    if (callback != null) {
+      progressListener = new ProgressResponseBody.ProgressListener() {
+        @Override
+        public void update(long bytesRead, long contentLength, boolean done) {
+          callback.onDownloadProgress(bytesRead, contentLength, done);
+        }
+      };
+
+      progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+        @Override
+        public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+          callback.onUploadProgress(bytesWritten, contentLength, done);
+        }
+      };
+    }
+
+    Call call = getPetByIdInObjectCall(petId, progressListener, progressRequestListener);
+    Type localVarReturnType = new TypeToken<InlineResponse200>(){}.getType();
+    apiClient.executeAsync(call, localVarReturnType, callback);
+    return call;
+  }
+  /* Build call for petPetIdtestingByteArraytrueGet */
+  private Call petPetIdtestingByteArraytrueGetCall(Long petId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'petId' is set
+    if (petId == null) {
+       throw new ApiException("Missing the required parameter 'petId' when calling petPetIdtestingByteArraytrueGet(Async)");
+    }
+    
+
+    // create path and map variables
+    String localVarPath = "/pet/{petId}?testing_byte_array&#x3D;true".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "petId" + "\\}", apiClient.escapeString(petId.toString()));
+
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    final String[] localVarAccepts = {
+      "application/json", "application/xml"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+    if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+    final String[] localVarContentTypes = {
+      
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+    localVarHeaderParams.put("Content-Type", localVarContentType);
+
+    if(progressListener != null) {
+      apiClient.getHttpClient().networkInterceptors().add(new Interceptor() {
+      @Override
+      public Response intercept(Interceptor.Chain chain) throws IOException {
+        Response originalResponse = chain.proceed(chain.request());
+        return originalResponse.newBuilder()
+                .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                .build();
+        }
+      });
+    }
+
+    String[] localVarAuthNames = new String[] { "api_key", "petstore_auth" };
+    return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+  }
+
+  /**
+   * Fake endpoint to test byte array return by &#39;Find pet by ID&#39;
+   * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
+   * @param petId ID of pet that needs to be fetched (required)
+   * @return byte[]
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+   */
+  public byte[] petPetIdtestingByteArraytrueGet(Long petId) throws ApiException {
+    ApiResponse<byte[]> resp = petPetIdtestingByteArraytrueGetWithHttpInfo(petId);
+    return resp.getData();
+  }
+
+  /**
+   * Fake endpoint to test byte array return by &#39;Find pet by ID&#39;
+   * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
+   * @param petId ID of pet that needs to be fetched (required)
+   * @return ApiResponse<byte[]>
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+   */
+  public ApiResponse<byte[]> petPetIdtestingByteArraytrueGetWithHttpInfo(Long petId) throws ApiException {
+    Call call = petPetIdtestingByteArraytrueGetCall(petId, null, null);
+    Type localVarReturnType = new TypeToken<byte[]>(){}.getType();
+    return apiClient.execute(call, localVarReturnType);
+  }
+
+  /**
+   * Fake endpoint to test byte array return by &#39;Find pet by ID&#39; (asynchronously)
+   * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
+   * @param petId ID of pet that needs to be fetched (required)
+   * @param callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   */
+  public Call petPetIdtestingByteArraytrueGetAsync(Long petId, final ApiCallback<byte[]> callback) throws ApiException {
+
+    ProgressResponseBody.ProgressListener progressListener = null;
+    ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+    if (callback != null) {
+      progressListener = new ProgressResponseBody.ProgressListener() {
+        @Override
+        public void update(long bytesRead, long contentLength, boolean done) {
+          callback.onDownloadProgress(bytesRead, contentLength, done);
+        }
+      };
+
+      progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+        @Override
+        public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+          callback.onUploadProgress(bytesWritten, contentLength, done);
+        }
+      };
+    }
+
+    Call call = petPetIdtestingByteArraytrueGetCall(petId, progressListener, progressRequestListener);
+    Type localVarReturnType = new TypeToken<byte[]>(){}.getType();
+    apiClient.executeAsync(call, localVarReturnType, callback);
+    return call;
+  }
+  /* Build call for updatePet */
+  private Call updatePetCall(Pet body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    Object localVarPostBody = body;
+    
+
+    // create path and map variables
+    String localVarPath = "/pet".replaceAll("\\{format\\}","json");
+
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    final String[] localVarAccepts = {
+      "application/json", "application/xml"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+    if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+    final String[] localVarContentTypes = {
+      "application/json", "application/xml"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+    localVarHeaderParams.put("Content-Type", localVarContentType);
+
+    if(progressListener != null) {
+      apiClient.getHttpClient().networkInterceptors().add(new Interceptor() {
+      @Override
+      public Response intercept(Interceptor.Chain chain) throws IOException {
+        Response originalResponse = chain.proceed(chain.request());
+        return originalResponse.newBuilder()
+                .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                .build();
+        }
+      });
+    }
+
+    String[] localVarAuthNames = new String[] { "petstore_auth" };
+    return apiClient.buildCall(localVarPath, "PUT", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+  }
+
+  /**
+   * Update an existing pet
+   * 
+   * @param body Pet object that needs to be added to the store (optional)
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+   */
+  public void updatePet(Pet body) throws ApiException {
+    updatePetWithHttpInfo(body);
+  }
+
+  /**
+   * Update an existing pet
+   * 
+   * @param body Pet object that needs to be added to the store (optional)
+   * @return ApiResponse<Void>
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+   */
+  public ApiResponse<Void> updatePetWithHttpInfo(Pet body) throws ApiException {
+    Call call = updatePetCall(body, null, null);
+    return apiClient.execute(call);
+  }
+
+  /**
+   * Update an existing pet (asynchronously)
+   * 
+   * @param body Pet object that needs to be added to the store (optional)
+   * @param callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   */
+  public Call updatePetAsync(Pet body, final ApiCallback<Void> callback) throws ApiException {
+
+    ProgressResponseBody.ProgressListener progressListener = null;
+    ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+    if (callback != null) {
+      progressListener = new ProgressResponseBody.ProgressListener() {
+        @Override
+        public void update(long bytesRead, long contentLength, boolean done) {
+          callback.onDownloadProgress(bytesRead, contentLength, done);
+        }
+      };
+
+      progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+        @Override
+        public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+          callback.onUploadProgress(bytesWritten, contentLength, done);
+        }
+      };
+    }
+
+    Call call = updatePetCall(body, progressListener, progressRequestListener);
+    apiClient.executeAsync(call, callback);
+    return call;
+  }
   /* Build call for updatePetWithForm */
   private Call updatePetWithFormCall(String petId, String name, String status, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = null;
@@ -614,9 +1027,9 @@ public class PetApi {
   /**
    * Updates a pet in the store with form data
    * 
-   * @param petId ID of pet that needs to be updated
-   * @param name Updated name of the pet
-   * @param status Updated status of the pet
+   * @param petId ID of pet that needs to be updated (required)
+   * @param name Updated name of the pet (optional)
+   * @param status Updated status of the pet (optional)
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
    */
   public void updatePetWithForm(String petId, String name, String status) throws ApiException {
@@ -626,9 +1039,9 @@ public class PetApi {
   /**
    * Updates a pet in the store with form data
    * 
-   * @param petId ID of pet that needs to be updated
-   * @param name Updated name of the pet
-   * @param status Updated status of the pet
+   * @param petId ID of pet that needs to be updated (required)
+   * @param name Updated name of the pet (optional)
+   * @param status Updated status of the pet (optional)
    * @return ApiResponse<Void>
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
    */
@@ -640,9 +1053,9 @@ public class PetApi {
   /**
    * Updates a pet in the store with form data (asynchronously)
    * 
-   * @param petId ID of pet that needs to be updated
-   * @param name Updated name of the pet
-   * @param status Updated status of the pet
+   * @param petId ID of pet that needs to be updated (required)
+   * @param name Updated name of the pet (optional)
+   * @param status Updated status of the pet (optional)
    * @param callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -672,116 +1085,6 @@ public class PetApi {
     apiClient.executeAsync(call, callback);
     return call;
   }
-  
-  /* Build call for deletePet */
-  private Call deletePetCall(Long petId, String apiKey, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-    Object localVarPostBody = null;
-    
-    // verify the required parameter 'petId' is set
-    if (petId == null) {
-       throw new ApiException("Missing the required parameter 'petId' when calling deletePet(Async)");
-    }
-    
-
-    // create path and map variables
-    String localVarPath = "/pet/{petId}".replaceAll("\\{format\\}","json")
-      .replaceAll("\\{" + "petId" + "\\}", apiClient.escapeString(petId.toString()));
-
-    List<Pair> localVarQueryParams = new ArrayList<Pair>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-    if (apiKey != null)
-      localVarHeaderParams.put("api_key", apiClient.parameterToString(apiKey));
-
-    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-    final String[] localVarAccepts = {
-      "application/json", "application/xml"
-    };
-    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-    if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-    final String[] localVarContentTypes = {
-      
-    };
-    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-    localVarHeaderParams.put("Content-Type", localVarContentType);
-
-    if(progressListener != null) {
-      apiClient.getHttpClient().networkInterceptors().add(new Interceptor() {
-      @Override
-      public Response intercept(Interceptor.Chain chain) throws IOException {
-        Response originalResponse = chain.proceed(chain.request());
-        return originalResponse.newBuilder()
-                .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                .build();
-        }
-      });
-    }
-
-    String[] localVarAuthNames = new String[] { "petstore_auth" };
-    return apiClient.buildCall(localVarPath, "DELETE", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-  }
-
-  /**
-   * Deletes a pet
-   * 
-   * @param petId Pet id to delete
-   * @param apiKey 
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-   */
-  public void deletePet(Long petId, String apiKey) throws ApiException {
-    deletePetWithHttpInfo(petId, apiKey);
-  }
-
-  /**
-   * Deletes a pet
-   * 
-   * @param petId Pet id to delete
-   * @param apiKey 
-   * @return ApiResponse<Void>
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-   */
-  public ApiResponse<Void> deletePetWithHttpInfo(Long petId, String apiKey) throws ApiException {
-    Call call = deletePetCall(petId, apiKey, null, null);
-    return apiClient.execute(call);
-  }
-
-  /**
-   * Deletes a pet (asynchronously)
-   * 
-   * @param petId Pet id to delete
-   * @param apiKey 
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-   */
-  public Call deletePetAsync(Long petId, String apiKey, final ApiCallback<Void> callback) throws ApiException {
-
-    ProgressResponseBody.ProgressListener progressListener = null;
-    ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-    if (callback != null) {
-      progressListener = new ProgressResponseBody.ProgressListener() {
-        @Override
-        public void update(long bytesRead, long contentLength, boolean done) {
-          callback.onDownloadProgress(bytesRead, contentLength, done);
-        }
-      };
-
-      progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-        @Override
-        public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-          callback.onUploadProgress(bytesWritten, contentLength, done);
-        }
-      };
-    }
-
-    Call call = deletePetCall(petId, apiKey, progressListener, progressRequestListener);
-    apiClient.executeAsync(call, callback);
-    return call;
-  }
-  
   /* Build call for uploadFile */
   private Call uploadFileCall(Long petId, String additionalMetadata, File file, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
     Object localVarPostBody = null;
@@ -837,9 +1140,9 @@ public class PetApi {
   /**
    * uploads an image
    * 
-   * @param petId ID of pet to update
-   * @param additionalMetadata Additional data to pass to server
-   * @param file file to upload
+   * @param petId ID of pet to update (required)
+   * @param additionalMetadata Additional data to pass to server (optional)
+   * @param file file to upload (optional)
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
    */
   public void uploadFile(Long petId, String additionalMetadata, File file) throws ApiException {
@@ -849,9 +1152,9 @@ public class PetApi {
   /**
    * uploads an image
    * 
-   * @param petId ID of pet to update
-   * @param additionalMetadata Additional data to pass to server
-   * @param file file to upload
+   * @param petId ID of pet to update (required)
+   * @param additionalMetadata Additional data to pass to server (optional)
+   * @param file file to upload (optional)
    * @return ApiResponse<Void>
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
    */
@@ -863,9 +1166,9 @@ public class PetApi {
   /**
    * uploads an image (asynchronously)
    * 
-   * @param petId ID of pet to update
-   * @param additionalMetadata Additional data to pass to server
-   * @param file file to upload
+   * @param petId ID of pet to update (required)
+   * @param additionalMetadata Additional data to pass to server (optional)
+   * @param file file to upload (optional)
    * @param callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -895,319 +1198,4 @@ public class PetApi {
     apiClient.executeAsync(call, callback);
     return call;
   }
-  
-  /* Build call for getPetByIdInObject */
-  private Call getPetByIdInObjectCall(Long petId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-    Object localVarPostBody = null;
-    
-    // verify the required parameter 'petId' is set
-    if (petId == null) {
-       throw new ApiException("Missing the required parameter 'petId' when calling getPetByIdInObject(Async)");
-    }
-    
-
-    // create path and map variables
-    String localVarPath = "/pet/{petId}?response=inline_arbitrary_object".replaceAll("\\{format\\}","json")
-      .replaceAll("\\{" + "petId" + "\\}", apiClient.escapeString(petId.toString()));
-
-    List<Pair> localVarQueryParams = new ArrayList<Pair>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-    final String[] localVarAccepts = {
-      "application/json", "application/xml"
-    };
-    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-    if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-    final String[] localVarContentTypes = {
-      
-    };
-    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-    localVarHeaderParams.put("Content-Type", localVarContentType);
-
-    if(progressListener != null) {
-      apiClient.getHttpClient().networkInterceptors().add(new Interceptor() {
-      @Override
-      public Response intercept(Interceptor.Chain chain) throws IOException {
-        Response originalResponse = chain.proceed(chain.request());
-        return originalResponse.newBuilder()
-                .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                .build();
-        }
-      });
-    }
-
-    String[] localVarAuthNames = new String[] { "petstore_auth", "api_key" };
-    return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-  }
-
-  /**
-   * Fake endpoint to test inline arbitrary object return by &#39;Find pet by ID&#39;
-   * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
-   * @param petId ID of pet that needs to be fetched
-   * @return InlineResponse200
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-   */
-  public InlineResponse200 getPetByIdInObject(Long petId) throws ApiException {
-    ApiResponse<InlineResponse200> resp = getPetByIdInObjectWithHttpInfo(petId);
-    return resp.getData();
-  }
-
-  /**
-   * Fake endpoint to test inline arbitrary object return by &#39;Find pet by ID&#39;
-   * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
-   * @param petId ID of pet that needs to be fetched
-   * @return ApiResponse<InlineResponse200>
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-   */
-  public ApiResponse<InlineResponse200> getPetByIdInObjectWithHttpInfo(Long petId) throws ApiException {
-    Call call = getPetByIdInObjectCall(petId, null, null);
-    Type localVarReturnType = new TypeToken<InlineResponse200>(){}.getType();
-    return apiClient.execute(call, localVarReturnType);
-  }
-
-  /**
-   * Fake endpoint to test inline arbitrary object return by &#39;Find pet by ID&#39; (asynchronously)
-   * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
-   * @param petId ID of pet that needs to be fetched
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-   */
-  public Call getPetByIdInObjectAsync(Long petId, final ApiCallback<InlineResponse200> callback) throws ApiException {
-
-    ProgressResponseBody.ProgressListener progressListener = null;
-    ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-    if (callback != null) {
-      progressListener = new ProgressResponseBody.ProgressListener() {
-        @Override
-        public void update(long bytesRead, long contentLength, boolean done) {
-          callback.onDownloadProgress(bytesRead, contentLength, done);
-        }
-      };
-
-      progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-        @Override
-        public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-          callback.onUploadProgress(bytesWritten, contentLength, done);
-        }
-      };
-    }
-
-    Call call = getPetByIdInObjectCall(petId, progressListener, progressRequestListener);
-    Type localVarReturnType = new TypeToken<InlineResponse200>(){}.getType();
-    apiClient.executeAsync(call, localVarReturnType, callback);
-    return call;
-  }
-  
-  /* Build call for petPetIdtestingByteArraytrueGet */
-  private Call petPetIdtestingByteArraytrueGetCall(Long petId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-    Object localVarPostBody = null;
-    
-    // verify the required parameter 'petId' is set
-    if (petId == null) {
-       throw new ApiException("Missing the required parameter 'petId' when calling petPetIdtestingByteArraytrueGet(Async)");
-    }
-    
-
-    // create path and map variables
-    String localVarPath = "/pet/{petId}?testing_byte_array=true".replaceAll("\\{format\\}","json")
-      .replaceAll("\\{" + "petId" + "\\}", apiClient.escapeString(petId.toString()));
-
-    List<Pair> localVarQueryParams = new ArrayList<Pair>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-    final String[] localVarAccepts = {
-      "application/json", "application/xml"
-    };
-    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-    if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-    final String[] localVarContentTypes = {
-      
-    };
-    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-    localVarHeaderParams.put("Content-Type", localVarContentType);
-
-    if(progressListener != null) {
-      apiClient.getHttpClient().networkInterceptors().add(new Interceptor() {
-      @Override
-      public Response intercept(Interceptor.Chain chain) throws IOException {
-        Response originalResponse = chain.proceed(chain.request());
-        return originalResponse.newBuilder()
-                .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                .build();
-        }
-      });
-    }
-
-    String[] localVarAuthNames = new String[] { "petstore_auth", "api_key" };
-    return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-  }
-
-  /**
-   * Fake endpoint to test byte array return by &#39;Find pet by ID&#39;
-   * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
-   * @param petId ID of pet that needs to be fetched
-   * @return byte[]
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-   */
-  public byte[] petPetIdtestingByteArraytrueGet(Long petId) throws ApiException {
-    ApiResponse<byte[]> resp = petPetIdtestingByteArraytrueGetWithHttpInfo(petId);
-    return resp.getData();
-  }
-
-  /**
-   * Fake endpoint to test byte array return by &#39;Find pet by ID&#39;
-   * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
-   * @param petId ID of pet that needs to be fetched
-   * @return ApiResponse<byte[]>
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-   */
-  public ApiResponse<byte[]> petPetIdtestingByteArraytrueGetWithHttpInfo(Long petId) throws ApiException {
-    Call call = petPetIdtestingByteArraytrueGetCall(petId, null, null);
-    Type localVarReturnType = new TypeToken<byte[]>(){}.getType();
-    return apiClient.execute(call, localVarReturnType);
-  }
-
-  /**
-   * Fake endpoint to test byte array return by &#39;Find pet by ID&#39; (asynchronously)
-   * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
-   * @param petId ID of pet that needs to be fetched
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-   */
-  public Call petPetIdtestingByteArraytrueGetAsync(Long petId, final ApiCallback<byte[]> callback) throws ApiException {
-
-    ProgressResponseBody.ProgressListener progressListener = null;
-    ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-    if (callback != null) {
-      progressListener = new ProgressResponseBody.ProgressListener() {
-        @Override
-        public void update(long bytesRead, long contentLength, boolean done) {
-          callback.onDownloadProgress(bytesRead, contentLength, done);
-        }
-      };
-
-      progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-        @Override
-        public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-          callback.onUploadProgress(bytesWritten, contentLength, done);
-        }
-      };
-    }
-
-    Call call = petPetIdtestingByteArraytrueGetCall(petId, progressListener, progressRequestListener);
-    Type localVarReturnType = new TypeToken<byte[]>(){}.getType();
-    apiClient.executeAsync(call, localVarReturnType, callback);
-    return call;
-  }
-  
-  /* Build call for addPetUsingByteArray */
-  private Call addPetUsingByteArrayCall(byte[] body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-    Object localVarPostBody = body;
-    
-
-    // create path and map variables
-    String localVarPath = "/pet?testing_byte_array=true".replaceAll("\\{format\\}","json");
-
-    List<Pair> localVarQueryParams = new ArrayList<Pair>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-    final String[] localVarAccepts = {
-      "application/json", "application/xml"
-    };
-    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-    if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-    final String[] localVarContentTypes = {
-      "application/json", "application/xml"
-    };
-    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-    localVarHeaderParams.put("Content-Type", localVarContentType);
-
-    if(progressListener != null) {
-      apiClient.getHttpClient().networkInterceptors().add(new Interceptor() {
-      @Override
-      public Response intercept(Interceptor.Chain chain) throws IOException {
-        Response originalResponse = chain.proceed(chain.request());
-        return originalResponse.newBuilder()
-                .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                .build();
-        }
-      });
-    }
-
-    String[] localVarAuthNames = new String[] { "petstore_auth" };
-    return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-  }
-
-  /**
-   * Fake endpoint to test byte array in body parameter for adding a new pet to the store
-   * 
-   * @param body Pet object in the form of byte array
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-   */
-  public void addPetUsingByteArray(byte[] body) throws ApiException {
-    addPetUsingByteArrayWithHttpInfo(body);
-  }
-
-  /**
-   * Fake endpoint to test byte array in body parameter for adding a new pet to the store
-   * 
-   * @param body Pet object in the form of byte array
-   * @return ApiResponse<Void>
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-   */
-  public ApiResponse<Void> addPetUsingByteArrayWithHttpInfo(byte[] body) throws ApiException {
-    Call call = addPetUsingByteArrayCall(body, null, null);
-    return apiClient.execute(call);
-  }
-
-  /**
-   * Fake endpoint to test byte array in body parameter for adding a new pet to the store (asynchronously)
-   * 
-   * @param body Pet object in the form of byte array
-   * @param callback The callback to be executed when the API call finishes
-   * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-   */
-  public Call addPetUsingByteArrayAsync(byte[] body, final ApiCallback<Void> callback) throws ApiException {
-
-    ProgressResponseBody.ProgressListener progressListener = null;
-    ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-    if (callback != null) {
-      progressListener = new ProgressResponseBody.ProgressListener() {
-        @Override
-        public void update(long bytesRead, long contentLength, boolean done) {
-          callback.onDownloadProgress(bytesRead, contentLength, done);
-        }
-      };
-
-      progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-        @Override
-        public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-          callback.onUploadProgress(bytesWritten, contentLength, done);
-        }
-      };
-    }
-
-    Call call = addPetUsingByteArrayCall(body, progressListener, progressRequestListener);
-    apiClient.executeAsync(call, callback);
-    return call;
-  }
-  
 }

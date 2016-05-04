@@ -30,7 +30,7 @@ public class CodegenConstants {
 
     public static final String IMPL_FOLDER = "implFolder";
     public static final String IMPL_FOLDER_DESC = "folder for generated implementation code";
-    
+
     public static final String LOCAL_VARIABLE_PREFIX = "localVariablePrefix";
     public static final String LOCAL_VARIABLE_PREFIX_DESC = "prefix for generated code members and local variables";
 
@@ -48,7 +48,7 @@ public class CodegenConstants {
 
     public static final String USE_DATETIME_OFFSET = "useDateTimeOffset";
     public static final String USE_DATETIME_OFFSET_DESC = "Use DateTimeOffset to model date-time properties";
-	
+
     public static final String ENSURE_UNIQUE_PARAMS = "ensureUniqueParams";
     public static final String ENSURE_UNIQUE_PARAMS_DESC = "Whether to ensure parameter names are unique in an operation (rename parameters that are not).";
 
@@ -59,8 +59,13 @@ public class CodegenConstants {
     public static final String PACKAGE_AUTHOR_EMAIL = "packageAuthorEmail";
     public static final String PACKAGE_URL = "packageUrl";
     public static final String PACKAGE_KEYWORDS = "packageKeywords";
-    public static final String PACKAGE_INSTALL_REQUIRES = "install_requires";
     public static final String PACKAGE_DESCRIPTION = "packageDescription";
+    public static final String PACKAGE_COMPANY = "packageCompany";
+    public static final String PACKAGE_PRODUCT_NAME = "packageProductName";
+    public static final String PACKAGE_COPYRIGHT = "packageCopyright";
+    public static final String PACKAGE_TRADEMARK = "packageTrademark";
+    public static final String PACKAGE_CULTURE = "packageCulture";
+    public static final String PACKAGE_CONFIGURATION = "packageConfiguration";
     public static final String POD_VERSION = "podVersion";
 
     public static final String OPTIONAL_METHOD_ARGUMENT = "optionalMethodArgument";
@@ -74,13 +79,13 @@ public class CodegenConstants {
 
     public static final String RETURN_ICOLLECTION = "returnICollection";
     public static final String RETURN_ICOLLECTION_DESC = "Return ICollection<T> instead of the concrete type.";
-    
+
     public static final String OPTIONAL_PROJECT_FILE = "optionalProjectFile";
     public static final String OPTIONAL_PROJECT_FILE_DESC = "Generate {PackageName}.csproj.";
-    
+
     public static final String OPTIONAL_PROJECT_GUID = "packageGuid";
     public static final String OPTIONAL_PROJECT_GUID_DESC = "The GUID that will be associated with the C# project";
-    
+
     public static final String MODEL_PROPERTY_NAMING = "modelPropertyNaming";
     public static final String MODEL_PROPERTY_NAMING_DESC = "Naming convention for the property: 'camelCase', 'PascalCase', 'snake_case' and 'original', which keeps the original name";
 
@@ -97,5 +102,17 @@ public class CodegenConstants {
 
     public static final String OPTIONAL_EMIT_DEFAULT_VALUES = "optionalEmitDefaultValues";
     public static final String OPTIONAL_EMIT_DEFAULT_VALUES_DESC = "Set DataMember's EmitDefaultValue, default false.";
+
+    public static final String GIT_USER_ID = "gitUserId";
+    public static final String GIT_USER_ID_DESC = "Git user ID, e.g. swagger-api.";
+
+    public static final String GIT_REPO_ID = "gitRepoId";
+    public static final String GIT_REPO_ID_DESC = "Git repo ID, e.g. swagger-codegen.";
+
+    public static final String RELEASE_NOTE = "releaseNote";
+    public static final String RELEASE_NOTE_DESC = "Release note, default to 'Minor update'.";
+
+    public static final String HTTP_USER_AGENT = "httpUserAgent";
+    public static final String HTTP_USER_AGENT_DESC = "HTTP user agent, e.g. codegen_csharp_api_client, default to 'Swagger-Codegen/{packageVersion}}/{language}'";
 
 }

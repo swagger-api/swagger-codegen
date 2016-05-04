@@ -15,7 +15,7 @@ VERSION = "{{packageVersion}}"
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 
-REQUIRES = ["urllib3 >= 1.10", "six >= 1.9", "certifi", "python-dateutil"]
+REQUIRES = ["urllib3 >= 1.15", "six >= 1.10", "certifi", "python-dateutil"]
 
 setup(
     name="{{packageName}}",
@@ -25,7 +25,7 @@ setup(
     author_email="{{packageAuthorEmail}}",
     url="{{packageUrl}}",
     keywords=["Swagger {{packageKeywords}}"],
-    install_requires="{{install_requires}}",
+    install_requires=REQUIRES,
     packages=find_packages(),
     include_package_data=True,
     long_description="{{packageDescription}}"

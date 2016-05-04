@@ -16,11 +16,10 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserApi {
-  
   /**
    * Create user
    * This can only be done by the logged in user.
-   * @param body Created user object
+   * @param body Created user object (optional)
    * @return Call<Void>
    */
   
@@ -29,11 +28,10 @@ public interface UserApi {
     @Body User body
   );
 
-  
   /**
    * Creates list of users with given input array
    * 
-   * @param body List of user object
+   * @param body List of user object (optional)
    * @return Call<Void>
    */
   
@@ -42,11 +40,10 @@ public interface UserApi {
     @Body List<User> body
   );
 
-  
   /**
    * Creates list of users with given input array
    * 
-   * @param body List of user object
+   * @param body List of user object (optional)
    * @return Call<Void>
    */
   
@@ -55,12 +52,35 @@ public interface UserApi {
     @Body List<User> body
   );
 
+  /**
+   * Delete user
+   * This can only be done by the logged in user.
+   * @param username The name that needs to be deleted (required)
+   * @return Call<Void>
+   */
   
+  @DELETE("user/{username}")
+  Observable<Void> deleteUser(
+    @Path("username") String username
+  );
+
+  /**
+   * Get user by user name
+   * 
+   * @param username The name that needs to be fetched. Use user1 for testing.  (required)
+   * @return Call<User>
+   */
+  
+  @GET("user/{username}")
+  Observable<User> getUserByName(
+    @Path("username") String username
+  );
+
   /**
    * Logs user into the system
    * 
-   * @param username The user name for login
-   * @param password The password for login in clear text
+   * @param username The user name for login (optional)
+   * @param password The password for login in clear text (optional)
    * @return Call<String>
    */
   
@@ -69,7 +89,6 @@ public interface UserApi {
     @Query("username") String username, @Query("password") String password
   );
 
-  
   /**
    * Logs out current logged in user session
    * 
@@ -80,25 +99,11 @@ public interface UserApi {
   Observable<Void> logoutUser();
     
 
-  
-  /**
-   * Get user by user name
-   * 
-   * @param username The name that needs to be fetched. Use user1 for testing.
-   * @return Call<User>
-   */
-  
-  @GET("user/{username}")
-  Observable<User> getUserByName(
-    @Path("username") String username
-  );
-
-  
   /**
    * Updated user
    * This can only be done by the logged in user.
-   * @param username name that need to be deleted
-   * @param body Updated user object
+   * @param username name that need to be deleted (required)
+   * @param body Updated user object (optional)
    * @return Call<Void>
    */
   
@@ -107,18 +112,4 @@ public interface UserApi {
     @Path("username") String username, @Body User body
   );
 
-  
-  /**
-   * Delete user
-   * This can only be done by the logged in user.
-   * @param username The name that needs to be deleted
-   * @return Call<Void>
-   */
-  
-  @DELETE("user/{username}")
-  Observable<Void> deleteUser(
-    @Path("username") String username
-  );
-
-  
 }

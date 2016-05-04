@@ -1,9 +1,15 @@
 package io.swagger.codegen.languages;
 
+import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.CodegenProperty;
+import io.swagger.models.Model;
 import io.swagger.models.Operation;
+import io.swagger.models.properties.Property;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.*;
 
 public class PureCloudCSharpClientCodegen extends CSharpClientCodegen {
 
@@ -40,5 +46,35 @@ public class PureCloudCSharpClientCodegen extends CSharpClientCodegen {
         }
 
         return super.getOrGenerateOperationId(operation, path, httpMethod);
+    }
+
+    @Override
+    public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
+        // Execute super method
+        CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
+
+        // Use our own values for hasMore
+        boolean foundLastValidProperty = false;
+        for (int i = codegenModel.vars.size() -1; i >= 0; i--) {
+            CodegenProperty cp = codegenModel.vars.get(i);
+
+            // If we've found the last property already, set it and move on
+            if (foundLastValidProperty) {
+                cp.hasMore = true;
+                continue;
+            }
+
+            // If the property isn't readonly, we've found the last valid property
+            if (cp.isReadOnly == null || !cp.isReadOnly){
+                foundLastValidProperty = true;
+                cp.hasMore = null;
+                continue;
+            }
+        }
+
+        // Make sure last property in list doesn't think there's more
+        codegenModel.vars.get(codegenModel.vars.size()-1).hasMore = null;
+
+        return codegenModel;
     }
 }
