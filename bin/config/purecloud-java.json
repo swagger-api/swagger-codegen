@@ -1,3 +1,11 @@
 {
-
+  "artifactId": "platform-client",
+  "artifactVersion": "0.1.0.0",
+  "apiPackage": "com.mypurecloud.sdk.api",
+  "modelPackage": "com.mypurecloud.sdk.model",
+  "invokerPackage": "com.mypurecloud.sdk",
+  "groupId": "com.mypurecloud",
+  "localVariablePrefix": "pc",
+  "serializableModel": "true",
+  "hideGenerationTimestamp": "false"
 }
