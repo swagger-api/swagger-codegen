@@ -45,23 +45,15 @@ import java.io.Writer;
  */
 public class EscapeTextUtils {
     /**
-     * <p>
      * <code>StringEscapeUtils</code> instances should NOT be constructed in
      * standard programming.
-     * </p>
      *
-     * <p>
      * Instead, the class should be used as:
      * 
-     * <pre>
      * StringEscapeUtils.escapeJava("foo");
-     * </pre>
-     * </p>
      *
-     * <p>
      * This constructor is public to permit tools that require a JavaBean
      * instance to operate.
-     * </p>
      */
     public EscapeTextUtils() {
         super();
@@ -70,32 +62,20 @@ public class EscapeTextUtils {
     // Java and JavaScript
     // --------------------------------------------------------------------------
     /**
-     * <p>
      * Escapes the characters in a <code>String</code> using Java String rules.
-     * </p>
      *
-     * <p>
      * Deals correctly with quotes and control-chars (tab, backslash, cr, ff,
      * etc.)
-     * </p>
      *
-     * <p>
      * So a tab becomes the characters <code>'\\'</code> and <code>'t'</code>.
-     * </p>
      *
-     * <p>
      * The only difference between Java strings and JavaScript strings is that
      * in JavaScript, a single quote must be escaped.
-     * </p>
      *
-     * <p>
      * Example:
      * 
-     * <pre>
      * input string: He didn't say, "Stop!"
      * output string: He didn't say, \"Stop!\"
-     * </pre>
-     * </p>
      *
      * @param str
      *            String to escape values in, may be null
@@ -107,10 +87,8 @@ public class EscapeTextUtils {
     }
 
     /**
-     * <p>
      * Worker method for the {@link #escapeJava(String)} method.
-     * </p>
-     * 
+     *
      * @param str
      *            String to escape values in, may be null
      * @param escapeSingleQuotes
@@ -133,10 +111,8 @@ public class EscapeTextUtils {
     }
 
     /**
-     * <p>
      * Worker method for the {@link #escapeJava(String)} method.
-     * </p>
-     * 
+     *
      * @param out
      *            write to receieve the escaped string
      * @param str
@@ -224,10 +200,8 @@ public class EscapeTextUtils {
     }
 
     /**
-     * <p>
      * Returns an upper case hexadecimal <code>String</code> for the given
      * character.
-     * </p>
      * 
      * @param ch
      *            The character to convert.
