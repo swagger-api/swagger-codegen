@@ -202,7 +202,7 @@ public class EscapeTextUtils {
     /**
      * Returns an upper case hexadecimal <code>String</code> for the given
      * character.
-     * 
+     *
      * @param ch
      *            The character to convert.
      * @return An upper case hexadecimal <code>String</code>
