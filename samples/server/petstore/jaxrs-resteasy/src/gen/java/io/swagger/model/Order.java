@@ -9,7 +9,7 @@ import java.util.Date;
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaResteasyServerCodegen", date = "2016-03-16T14:27:58.108+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaResteasyServerCodegen", date = "2016-04-29T00:20:47.240+08:00")
 public class Order   {
   
   private Long id = null;
@@ -17,12 +17,15 @@ public class Order   {
   private Integer quantity = null;
   private Date shipDate = null;
 
-
+  /**
+   * Order Status
+   */
   public enum StatusEnum {
     PLACED("placed"),
-    APPROVED("approved"),
-    DELIVERED("delivered");
 
+        APPROVED("approved"),
+
+        DELIVERED("delivered");
     private String value;
 
     StatusEnum(String value) {
@@ -32,14 +35,13 @@ public class Order   {
     @Override
     @JsonValue
     public String toString() {
-      return value;
+      return String.valueOf(value);
     }
   }
 
   private StatusEnum status = null;
-  private Boolean complete = null;
+  private Boolean complete = false;
 
-  
   /**
    **/
   
@@ -51,7 +53,6 @@ public class Order   {
     this.id = id;
   }
 
-  
   /**
    **/
   
@@ -63,7 +64,6 @@ public class Order   {
     this.petId = petId;
   }
 
-  
   /**
    **/
   
@@ -75,7 +75,6 @@ public class Order   {
     this.quantity = quantity;
   }
 
-  
   /**
    **/
   
@@ -87,7 +86,6 @@ public class Order   {
     this.shipDate = shipDate;
   }
 
-  
   /**
    * Order Status
    **/
@@ -100,7 +98,6 @@ public class Order   {
     this.status = status;
   }
 
-  
   /**
    **/
   
@@ -112,7 +109,6 @@ public class Order   {
     this.complete = complete;
   }
 
-  
 
   @Override
   public boolean equals(Object o) {

@@ -7,16 +7,14 @@ import io.swagger.annotations.ApiModelProperty;
 import com.google.gson.annotations.SerializedName;
 
 
-
-
-
+/**
+ * SpecialModelName
+ */
 public class SpecialModelName   {
   
   @SerializedName("$special[property.name]")
   private Long specialPropertyName = null;
-  
 
-  
   /**
    **/
   @ApiModelProperty(value = "")
@@ -27,7 +25,6 @@ public class SpecialModelName   {
     this.specialPropertyName = specialPropertyName;
   }
 
-  
 
   @Override
   public boolean equals(Object o) {
@@ -67,3 +64,4 @@ public class SpecialModelName   {
     return o.toString().replace("\n", "\n    ");
   }
 }
+

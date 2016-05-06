@@ -14,6 +14,7 @@
 
 {{#models}}{{#model}}#import "{{classname}}.h"
 {{/model}}{{/models}}
+{{^models}}#import "{{classPrefix}}Object.h"{{/models}}
 
 @class {{classPrefix}}Configuration;
 
@@ -23,6 +24,16 @@
  * The corresponding value is the parsed response body for an HTTP error.
  */
 extern NSString *const {{classPrefix}}ResponseObjectErrorKey;
+
+/**
+ * A key for deserialization ErrorDomain
+ */
+extern NSString *const {{classPrefix}}DeserializationErrorDomainKey;
+
+/**
+ * Code for deserialization type mismatch error
+ */
+extern NSInteger const {{classPrefix}}TypeMismatchErrorCode;
 
 /**
  * Log debug message macro
@@ -170,8 +181,9 @@ extern NSString *const {{classPrefix}}ResponseObjectErrorKey;
  *
  * @param data The data will be deserialized.
  * @param class The type of objective-c object.
+ * @param error The error
  */
-- (id) deserialize:(id) data class:(NSString *) class;
+- (id) deserialize:(id) data class:(NSString *) class error:(NSError**)error;
 
 /**
  * Logs request and response

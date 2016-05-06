@@ -8,13 +8,12 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaResteasyServerCodegen", date = "2016-03-16T14:27:58.108+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaResteasyServerCodegen", date = "2016-04-29T00:20:47.240+08:00")
 public class Tag   {
   
   private Long id = null;
   private String name = null;
 
-  
   /**
    **/
   
@@ -26,7 +25,6 @@ public class Tag   {
     this.id = id;
   }
 
-  
   /**
    **/
   
@@ -38,7 +36,6 @@ public class Tag   {
     this.name = name;
   }
 
-  
 
   @Override
   public boolean equals(Object o) {

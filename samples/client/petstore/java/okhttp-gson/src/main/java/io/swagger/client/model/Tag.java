@@ -7,19 +7,17 @@ import io.swagger.annotations.ApiModelProperty;
 import com.google.gson.annotations.SerializedName;
 
 
-
-
-
+/**
+ * Tag
+ */
 public class Tag   {
   
   @SerializedName("id")
   private Long id = null;
-  
+
   @SerializedName("name")
   private String name = null;
-  
 
-  
   /**
    **/
   @ApiModelProperty(value = "")
@@ -30,7 +28,6 @@ public class Tag   {
     this.id = id;
   }
 
-  
   /**
    **/
   @ApiModelProperty(value = "")
@@ -41,7 +38,6 @@ public class Tag   {
     this.name = name;
   }
 
-  
 
   @Override
   public boolean equals(Object o) {
@@ -83,3 +79,4 @@ public class Tag   {
     return o.toString().replace("\n", "\n    ");
   }
 }
+

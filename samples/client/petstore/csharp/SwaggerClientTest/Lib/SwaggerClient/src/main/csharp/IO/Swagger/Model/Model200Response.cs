@@ -12,31 +12,28 @@ using Newtonsoft.Json.Converters;
 namespace IO.Swagger.Model
 {
     /// <summary>
-    /// 
+    /// Model for testing model name starting with number
     /// </summary>
     [DataContract]
     public partial class Model200Response :  IEquatable<Model200Response>
-    { 
-    
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="Model200Response" /> class.
-        /// Initializes a new instance of the <see cref="Model200Response" />class.
         /// </summary>
         /// <param name="Name">Name.</param>
-
         public Model200Response(int? Name = null)
         {
-            this.Name = Name;
+            
+            
+                        this.Name = Name;
             
         }
         
-    
         /// <summary>
         /// Gets or Sets Name
         /// </summary>
         [DataMember(Name="name", EmitDefaultValue=false)]
         public int? Name { get; set; }
-    
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -46,7 +43,6 @@ namespace IO.Swagger.Model
             var sb = new StringBuilder();
             sb.Append("class Model200Response {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
-            
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -101,13 +97,11 @@ namespace IO.Swagger.Model
             {
                 int hash = 41;
                 // Suitable nullity checks etc, of course :)
-                
                 if (this.Name != null)
                     hash = hash * 59 + this.Name.GetHashCode();
-                
                 return hash;
             }
         }
-
     }
+
 }

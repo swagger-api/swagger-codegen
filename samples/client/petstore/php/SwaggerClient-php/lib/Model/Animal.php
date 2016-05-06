@@ -47,60 +47,74 @@ use \ArrayAccess;
 class Animal implements ArrayAccess
 {
     /**
+      * The original name of the model.
+      * @var string
+      */
+    static $swaggerModelName = 'Animal';
+
+    /**
       * Array of property to type mappings. Used for (de)serialization 
       * @var string[]
       */
     static $swaggerTypes = array(
         'class_name' => 'string'
     );
-  
+ 
     static function swaggerTypes() {
         return self::$swaggerTypes;
     }
 
     /** 
-      * Array of attributes where the key is the local name, and the value is the original name
-      * @var string[] 
-      */
+     * Array of attributes where the key is the local name, and the value is the original name
+     * @var string[]
+     */
     static $attributeMap = array(
         'class_name' => 'className'
     );
-  
+ 
     static function attributeMap() {
         return self::$attributeMap;
     }
 
     /**
-      * Array of attributes to setter functions (for deserialization of responses)
-      * @var string[]
-      */
+     * Array of attributes to setter functions (for deserialization of responses)
+     * @var string[]
+     */
     static $setters = array(
         'class_name' => 'setClassName'
     );
-  
+ 
     static function setters() {
         return self::$setters;
     }
 
     /**
-      * Array of attributes to getter functions (for serialization of requests)
-      * @var string[]
-      */
+     * Array of attributes to getter functions (for serialization of requests)
+     * @var string[]
+     */
     static $getters = array(
         'class_name' => 'getClassName'
     );
-  
+ 
     static function getters() {
         return self::$getters;
     }
 
     
-    /**
-      * $class_name 
-      * @var string
-      */
-    protected $class_name;
+
     
+
+    /**
+     * Associative array for storing property values
+     * @var mixed[]
+     */
+    protected $container = array(
+        /**
+         * $container['class_name']
+         * @var string
+         */
+        'class_name' => null,
+    );
 
     /**
      * Constructor
@@ -109,20 +123,23 @@ class Animal implements ArrayAccess
     public function __construct(array $data = null)
     {
         
+        // Initialize discriminator property with the model name.
+        $discrimintor = array_search('className', self::$attributeMap);
+        $this->container[$discrimintor] = static::$swaggerModelName;
+
         if ($data != null) {
-            $this->class_name = $data["class_name"];
+            $this->container['class_name'] = $data['class_name'];
         }
     }
-    
     /**
      * Gets class_name
      * @return string
      */
     public function getClassName()
     {
-        return $this->class_name;
+        return $this->container['class_name'];
     }
-  
+
     /**
      * Sets class_name
      * @param string $class_name 
@@ -131,10 +148,9 @@ class Animal implements ArrayAccess
     public function setClassName($class_name)
     {
         
-        $this->class_name = $class_name;
+        $this->container['class_name'] = $class_name;
         return $this;
     }
-    
     /**
      * Returns true if offset exists. False otherwise.
      * @param  integer $offset Offset 
@@ -142,9 +158,9 @@ class Animal implements ArrayAccess
      */
     public function offsetExists($offset)
     {
-        return isset($this->$offset);
+        return isset($this->container[$offset]);
     }
-  
+
     /**
      * Gets offset.
      * @param  integer $offset Offset 
@@ -152,9 +168,9 @@ class Animal implements ArrayAccess
      */
     public function offsetGet($offset)
     {
-        return $this->$offset;
+        return isset($this->container[$offset]) ? $this->container[$offset] : null;
     }
-  
+ 
     /**
      * Sets value based on offset.
      * @param  integer $offset Offset 
@@ -163,9 +179,13 @@ class Animal implements ArrayAccess
      */
     public function offsetSet($offset, $value)
     {
-        $this->$offset = $value;
+        if (is_null($offset)) {
+            $this->container[] = $value;
+        } else {
+            $this->container[$offset] = $value;
+        }
     }
-  
+ 
     /**
      * Unsets offset.
      * @param  integer $offset Offset 
@@ -173,19 +193,19 @@ class Animal implements ArrayAccess
      */
     public function offsetUnset($offset)
     {
-        unset($this->$offset);
+        unset($this->container[$offset]);
     }
-  
+ 
     /**
      * Gets the string presentation of the object
      * @return string
      */
     public function __toString()
     {
-        if (defined('JSON_PRETTY_PRINT')) {
+        if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
             return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
-        } else {
-            return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
         }
+
+        return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
     }
 }

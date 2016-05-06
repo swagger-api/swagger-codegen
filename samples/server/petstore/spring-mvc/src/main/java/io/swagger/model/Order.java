@@ -13,7 +13,7 @@ import java.util.Objects;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringMVCServerCodegen", date = "2016-02-26T13:58:54.483Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringMVCServerCodegen", date = "2016-05-03T13:43:02.966+02:00")
 public class Order  {
   
   private Long id = null;
@@ -27,7 +27,6 @@ public class Order  {
   private StatusEnum status = null;
   private Boolean complete = null;
 
-  
   /**
    **/
   @ApiModelProperty(value = "")
@@ -39,7 +38,6 @@ public class Order  {
     this.id = id;
   }
 
-  
   /**
    **/
   @ApiModelProperty(value = "")
@@ -51,7 +49,6 @@ public class Order  {
     this.petId = petId;
   }
 
-  
   /**
    **/
   @ApiModelProperty(value = "")
@@ -63,7 +60,6 @@ public class Order  {
     this.quantity = quantity;
   }
 
-  
   /**
    **/
   @ApiModelProperty(value = "")
@@ -75,7 +71,6 @@ public class Order  {
     this.shipDate = shipDate;
   }
 
-  
   /**
    * Order Status
    **/
@@ -88,7 +83,6 @@ public class Order  {
     this.status = status;
   }
 
-  
   /**
    **/
   @ApiModelProperty(value = "")
@@ -100,7 +94,6 @@ public class Order  {
     this.complete = complete;
   }
 
-  
 
   @Override
   public boolean equals(Object o) {

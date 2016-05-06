@@ -1,7 +1,7 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['../ApiClient'], factory);
+    define(['ApiClient'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
     module.exports = factory(require('../ApiClient'));
@@ -15,6 +15,9 @@
 }(this, function(ApiClient) {
   'use strict';
 
+
+
+
   /**
    * The ModelReturn model module.
    * @module model/ModelReturn
@@ -23,10 +26,12 @@
 
   /**
    * Constructs a new <code>ModelReturn</code>.
+   * Model for testing reserved words
    * @alias module:model/ModelReturn
    * @class
    */
   var exports = function() {
+    var _this = this;
 
 
   };
@@ -39,7 +44,7 @@
    * @return {module:model/ModelReturn} The populated <code>ModelReturn</code> instance.
    */
   exports.constructFromObject = function(data, obj) {
-    if (data) { 
+    if (data) {
       obj = obj || new exports();
 
       if (data.hasOwnProperty('return')) {
@@ -48,7 +53,6 @@
     }
     return obj;
   }
-
 
   /**
    * @member {Integer} return
@@ -60,3 +64,5 @@
 
   return exports;
 }));
+
+

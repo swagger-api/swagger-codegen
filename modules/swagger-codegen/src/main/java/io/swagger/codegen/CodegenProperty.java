@@ -32,6 +32,7 @@ public class CodegenProperty {
     public Boolean exclusiveMinimum;
     public Boolean exclusiveMaximum;
     public Boolean hasMore, required, secondaryParam;
+    public Boolean hasMoreNonReadOnly; // for model constructor, true if next properyt is not readonly
     public Boolean isPrimitiveType, isContainer, isNotContainer;
     public Boolean isString, isInteger, isLong, isFloat, isDouble, isByteArray, isBinary, isBoolean, isDate, isDateTime;
     public Boolean isListContainer, isMapContainer;
@@ -41,6 +42,13 @@ public class CodegenProperty {
     public Map<String, Object> allowableValues;
     public CodegenProperty items;
     public Map<String, Object> vendorExtensions;
+    public Boolean hasValidation; // true if pattern, maximum, etc are set (only used in the mustache template)
+
+    @Override
+    public String toString() {
+        return String.format("%s(%s)", baseName, datatype);
+    }
+
 
     @Override
     public int hashCode()
@@ -63,6 +71,7 @@ public class CodegenProperty {
         result = prime * result + ((exclusiveMinimum == null) ? 0 : exclusiveMinimum.hashCode());
         result = prime * result + ((getter == null) ? 0 : getter.hashCode());
         result = prime * result + ((hasMore == null) ? 0 : hasMore.hashCode());
+        result = prime * result + ((hasMoreNonReadOnly == null) ? 0 : hasMoreNonReadOnly.hashCode());
         result = prime * result + ((isContainer == null) ? 0 : isContainer.hashCode());
         result = prime * result + (isEnum ? 1231 : 1237);
         result = prime * result + ((isNotContainer == null) ? 0 : isNotContainer.hashCode());
@@ -83,6 +92,7 @@ public class CodegenProperty {
         result = prime * result + ((setter == null) ? 0 : setter.hashCode());
         result = prime * result + ((unescapedDescription == null) ? 0 : unescapedDescription.hashCode());
         result = prime * result + ((vendorExtensions == null) ? 0 : vendorExtensions.hashCode());
+        result = prime * result + ((hasValidation == null) ? 0 : hasValidation.hashCode());
         result = prime * result + ((isString == null) ? 0 : isString.hashCode());
         result = prime * result + ((isInteger == null) ? 0 : isInteger.hashCode());
         result = prime * result + ((isLong == null) ? 0 : isLong.hashCode());
@@ -200,12 +210,19 @@ public class CodegenProperty {
         if (this.allowableValues != other.allowableValues && (this.allowableValues == null || !this.allowableValues.equals(other.allowableValues))) {
             return false;
         }
+
         if (this.vendorExtensions != other.vendorExtensions && (this.vendorExtensions == null || !this.vendorExtensions.equals(other.vendorExtensions))) {
             return false;
         }
+
+        if (this.hasValidation != other.hasValidation && (this.hasValidation == null || !this.hasValidation.equals(other.hasValidation))) {
+            return false;
+        }
+
         if (this.isString != other.isString && (this.isString == null || !this.isString.equals(other.isString))) {
             return false;
         }
+
         if (this.isInteger != other.isInteger && (this.isInteger == null || !this.isInteger.equals(other.isInteger))) {
             return false;
         }

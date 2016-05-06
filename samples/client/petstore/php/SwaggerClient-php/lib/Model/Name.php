@@ -38,7 +38,7 @@ use \ArrayAccess;
  * Name Class Doc Comment
  *
  * @category    Class
- * @description 
+ * @description Model for testing model name same as property name
  * @package     Swagger\Client
  * @author      http://github.com/swagger-api/swagger-codegen
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
@@ -47,70 +47,94 @@ use \ArrayAccess;
 class Name implements ArrayAccess
 {
     /**
+      * The original name of the model.
+      * @var string
+      */
+    static $swaggerModelName = 'Name';
+
+    /**
       * Array of property to type mappings. Used for (de)serialization 
       * @var string[]
       */
     static $swaggerTypes = array(
         'name' => 'int',
-        'snake_case' => 'int'
+        'snake_case' => 'int',
+        'property' => 'string'
     );
-  
+ 
     static function swaggerTypes() {
         return self::$swaggerTypes;
     }
 
     /** 
-      * Array of attributes where the key is the local name, and the value is the original name
-      * @var string[] 
-      */
+     * Array of attributes where the key is the local name, and the value is the original name
+     * @var string[]
+     */
     static $attributeMap = array(
         'name' => 'name',
-        'snake_case' => 'snake_case'
+        'snake_case' => 'snake_case',
+        'property' => 'property'
     );
-  
+ 
     static function attributeMap() {
         return self::$attributeMap;
     }
 
     /**
-      * Array of attributes to setter functions (for deserialization of responses)
-      * @var string[]
-      */
+     * Array of attributes to setter functions (for deserialization of responses)
+     * @var string[]
+     */
     static $setters = array(
         'name' => 'setName',
-        'snake_case' => 'setSnakeCase'
+        'snake_case' => 'setSnakeCase',
+        'property' => 'setProperty'
     );
-  
+ 
     static function setters() {
         return self::$setters;
     }
 
     /**
-      * Array of attributes to getter functions (for serialization of requests)
-      * @var string[]
-      */
+     * Array of attributes to getter functions (for serialization of requests)
+     * @var string[]
+     */
     static $getters = array(
         'name' => 'getName',
-        'snake_case' => 'getSnakeCase'
+        'snake_case' => 'getSnakeCase',
+        'property' => 'getProperty'
     );
-  
+ 
     static function getters() {
         return self::$getters;
     }
 
     
-    /**
-      * $name 
-      * @var int
-      */
-    protected $name;
+
     
+
     /**
-      * $snake_case 
-      * @var int
-      */
-    protected $snake_case;
+     * Associative array for storing property values
+     * @var mixed[]
+     */
+    protected $container = array(
+        /**
+         * $container['name']
+         * @var int
+         */
+        'name' => null,
     
+        /**
+         * $container['snake_case']
+         * @var int
+         */
+        'snake_case' => null,
+    
+        /**
+         * $container['property']
+         * @var string
+         */
+        'property' => null,
+    );
 
     /**
      * Constructor
@@ -119,21 +143,22 @@ class Name implements ArrayAccess
     public function __construct(array $data = null)
     {
         
+        
         if ($data != null) {
-            $this->name = $data["name"];
-            $this->snake_case = $data["snake_case"];
+            $this->container['name'] = $data['name'];
+            $this->container['snake_case'] = $data['snake_case'];
+            $this->container['property'] = $data['property'];
         }
     }
-    
     /**
      * Gets name
      * @return int
      */
     public function getName()
     {
-        return $this->name;
+        return $this->container['name'];
     }
-  
+
     /**
      * Sets name
      * @param int $name 
@@ -142,19 +167,18 @@ class Name implements ArrayAccess
     public function setName($name)
     {
         
-        $this->name = $name;
+        $this->container['name'] = $name;
         return $this;
     }
-    
     /**
      * Gets snake_case
      * @return int
      */
     public function getSnakeCase()
     {
-        return $this->snake_case;
+        return $this->container['snake_case'];
     }
-  
+
     /**
      * Sets snake_case
      * @param int $snake_case 
@@ -163,10 +187,29 @@ class Name implements ArrayAccess
     public function setSnakeCase($snake_case)
     {
         
-        $this->snake_case = $snake_case;
+        $this->container['snake_case'] = $snake_case;
         return $this;
     }
-    
+    /**
+     * Gets property
+     * @return string
+     */
+    public function getProperty()
+    {
+        return $this->container['property'];
+    }
+
+    /**
+     * Sets property
+     * @param string $property 
+     * @return $this
+     */
+    public function setProperty($property)
+    {
+        
+        $this->container['property'] = $property;
+        return $this;
+    }
     /**
      * Returns true if offset exists. False otherwise.
      * @param  integer $offset Offset 
@@ -174,9 +217,9 @@ class Name implements ArrayAccess
      */
     public function offsetExists($offset)
     {
-        return isset($this->$offset);
+        return isset($this->container[$offset]);
     }
-  
+
     /**
      * Gets offset.
      * @param  integer $offset Offset 
@@ -184,9 +227,9 @@ class Name implements ArrayAccess
      */
     public function offsetGet($offset)
     {
-        return $this->$offset;
+        return isset($this->container[$offset]) ? $this->container[$offset] : null;
     }
-  
+ 
     /**
      * Sets value based on offset.
      * @param  integer $offset Offset 
@@ -195,9 +238,13 @@ class Name implements ArrayAccess
      */
     public function offsetSet($offset, $value)
     {
-        $this->$offset = $value;
+        if (is_null($offset)) {
+            $this->container[] = $value;
+        } else {
+            $this->container[$offset] = $value;
+        }
     }
-  
+ 
     /**
      * Unsets offset.
      * @param  integer $offset Offset 
@@ -205,19 +252,19 @@ class Name implements ArrayAccess
      */
     public function offsetUnset($offset)
     {
-        unset($this->$offset);
+        unset($this->container[$offset]);
     }
-  
+ 
     /**
      * Gets the string presentation of the object
      * @return string
      */
     public function __toString()
     {
-        if (defined('JSON_PRETTY_PRINT')) {
+        if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
             return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
-        } else {
-            return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
         }
+
+        return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
     }
 }

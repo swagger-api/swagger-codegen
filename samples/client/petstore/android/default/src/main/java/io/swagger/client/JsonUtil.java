@@ -39,32 +39,12 @@ public class JsonUtil {
       return new TypeToken<List<Category>>(){}.getType();
     }
     
-    if ("InlineResponse200".equalsIgnoreCase(className)) {
-      return new TypeToken<List<InlineResponse200>>(){}.getType();
-    }
-    
-    if ("Model200Response".equalsIgnoreCase(className)) {
-      return new TypeToken<List<Model200Response>>(){}.getType();
-    }
-    
-    if ("ModelReturn".equalsIgnoreCase(className)) {
-      return new TypeToken<List<ModelReturn>>(){}.getType();
-    }
-    
-    if ("Name".equalsIgnoreCase(className)) {
-      return new TypeToken<List<Name>>(){}.getType();
-    }
-    
     if ("Order".equalsIgnoreCase(className)) {
       return new TypeToken<List<Order>>(){}.getType();
     }
     
     if ("Pet".equalsIgnoreCase(className)) {
       return new TypeToken<List<Pet>>(){}.getType();
-    }
-    
-    if ("SpecialModelName".equalsIgnoreCase(className)) {
-      return new TypeToken<List<SpecialModelName>>(){}.getType();
     }
     
     if ("Tag".equalsIgnoreCase(className)) {
@@ -85,32 +65,12 @@ public class JsonUtil {
       return new TypeToken<Category>(){}.getType();
     }
     
-    if ("InlineResponse200".equalsIgnoreCase(className)) {
-      return new TypeToken<InlineResponse200>(){}.getType();
-    }
-    
-    if ("Model200Response".equalsIgnoreCase(className)) {
-      return new TypeToken<Model200Response>(){}.getType();
-    }
-    
-    if ("ModelReturn".equalsIgnoreCase(className)) {
-      return new TypeToken<ModelReturn>(){}.getType();
-    }
-    
-    if ("Name".equalsIgnoreCase(className)) {
-      return new TypeToken<Name>(){}.getType();
-    }
-    
     if ("Order".equalsIgnoreCase(className)) {
       return new TypeToken<Order>(){}.getType();
     }
     
     if ("Pet".equalsIgnoreCase(className)) {
       return new TypeToken<Pet>(){}.getType();
-    }
-    
-    if ("SpecialModelName".equalsIgnoreCase(className)) {
-      return new TypeToken<SpecialModelName>(){}.getType();
     }
     
     if ("Tag".equalsIgnoreCase(className)) {

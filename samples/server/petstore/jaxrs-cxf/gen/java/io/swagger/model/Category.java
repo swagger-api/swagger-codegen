@@ -8,9 +8,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlEnum;
 
 @XmlAccessorType(XmlAccessType.FIELD)
- @XmlType(name = "", propOrder =
+ @XmlType(name = "Category", propOrder =
 	{ "id", "name"
 })
 
@@ -22,7 +23,6 @@ public class Category  {
 
   private String name = null;
 
-  
   /**
    **/
   
@@ -32,7 +32,6 @@ public class Category  {
   public void setId(Long id) {
     this.id = id;
   }
-  
   /**
    **/
   
@@ -42,7 +41,6 @@ public class Category  {
   public void setName(String name) {
     this.name = name;
   }
-  
 
   @Override
   public String toString() {

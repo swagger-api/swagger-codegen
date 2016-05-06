@@ -8,12 +8,12 @@ git_repo_id=$2
 release_note=$3
 
 if [ "$git_user_id" = "" ]; then
-    git_user_id="YOUR_GIT_USR_ID"
+    git_user_id="GIT_USER_ID"
     echo "[INFO] No command line input provided. Set \$git_user_id to $git_user_id"
 fi
 
 if [ "$git_repo_id" = "" ]; then
-    git_repo_id="YOUR_GIT_REPO_ID"
+    git_repo_id="GIT_REPO_ID"
     echo "[INFO] No command line input provided. Set \$git_repo_id to $git_repo_id"
 fi
 
@@ -28,7 +28,7 @@ git init
 # Adds the files in the local repository and stages them for commit.
 git add .
 
-# Commits the tracked changes and prepares them to be pushed to a remote repository. 
+# Commits the tracked changes and prepares them to be pushed to a remote repository.
 git commit -m "$release_note"
 
 # Sets the new remote

@@ -3,7 +3,8 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | **Integer** |  | [optional] 
+**name** | **Integer** |  | 
 **snakeCase** | **Integer** |  | [optional] 
+**property** | **String** |  | [optional] 
 
 

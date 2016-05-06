@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**delete_order**](StoreApi.md#delete_order) | **DELETE** /store/order/{orderId} | Delete purchase order by ID
 [**find_orders_by_status**](StoreApi.md#find_orders_by_status) | **GET** /store/findByStatus | Finds orders by status
 [**get_inventory**](StoreApi.md#get_inventory) | **GET** /store/inventory | Returns pet inventories by status
-[**get_inventory_in_object**](StoreApi.md#get_inventory_in_object) | **GET** /store/inventory?response=arbitrary_object | Fake endpoint to test arbitrary object return by &#39;Get inventory&#39;
+[**get_inventory_in_object**](StoreApi.md#get_inventory_in_object) | **GET** /store/inventory?response&#x3D;arbitrary_object | Fake endpoint to test arbitrary object return by &#39;Get inventory&#39;
 [**get_order_by_id**](StoreApi.md#get_order_by_id) | **GET** /store/order/{orderId} | Find purchase order by ID
 [**place_order**](StoreApi.md#place_order) | **POST** /store/order | Place an order for a pet
 
@@ -53,7 +53,7 @@ void (empty response body)
 
 No authorization required
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/xml
@@ -73,12 +73,12 @@ use Data::Dumper;
 
 # Configure API key authorization: test_api_client_id
 $WWW::SwaggerClient::Configuration::api_key->{'x-test_api_client_id'} = 'YOUR_API_KEY';
-# uncomment below to setup prefix (e.g. BEARER) for API key, if needed
-#$WWW::SwaggerClient::Configuration::api_key_prefix->{'x-test_api_client_id'} = "BEARER";
+# uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+#$WWW::SwaggerClient::Configuration::api_key_prefix->{'x-test_api_client_id'} = "Bearer";
 # Configure API key authorization: test_api_client_secret
 $WWW::SwaggerClient::Configuration::api_key->{'x-test_api_client_secret'} = 'YOUR_API_KEY';
-# uncomment below to setup prefix (e.g. BEARER) for API key, if needed
-#$WWW::SwaggerClient::Configuration::api_key_prefix->{'x-test_api_client_secret'} = "BEARER";
+# uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+#$WWW::SwaggerClient::Configuration::api_key_prefix->{'x-test_api_client_secret'} = "Bearer";
 
 my $api_instance = WWW::SwaggerClient::StoreApi->new();
 my $status = 'status_example'; # string | Status value that needs to be considered for query
@@ -106,7 +106,7 @@ Name | Type | Description  | Notes
 
 [test_api_client_id](../README.md#test_api_client_id), [test_api_client_secret](../README.md#test_api_client_secret)
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/xml
@@ -126,8 +126,8 @@ use Data::Dumper;
 
 # Configure API key authorization: api_key
 $WWW::SwaggerClient::Configuration::api_key->{'api_key'} = 'YOUR_API_KEY';
-# uncomment below to setup prefix (e.g. BEARER) for API key, if needed
-#$WWW::SwaggerClient::Configuration::api_key_prefix->{'api_key'} = "BEARER";
+# uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+#$WWW::SwaggerClient::Configuration::api_key_prefix->{'api_key'} = "Bearer";
 
 my $api_instance = WWW::SwaggerClient::StoreApi->new();
 
@@ -151,7 +151,7 @@ This endpoint does not need any parameter.
 
 [api_key](../README.md#api_key)
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/xml
@@ -171,8 +171,8 @@ use Data::Dumper;
 
 # Configure API key authorization: api_key
 $WWW::SwaggerClient::Configuration::api_key->{'api_key'} = 'YOUR_API_KEY';
-# uncomment below to setup prefix (e.g. BEARER) for API key, if needed
-#$WWW::SwaggerClient::Configuration::api_key_prefix->{'api_key'} = "BEARER";
+# uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+#$WWW::SwaggerClient::Configuration::api_key_prefix->{'api_key'} = "Bearer";
 
 my $api_instance = WWW::SwaggerClient::StoreApi->new();
 
@@ -196,7 +196,7 @@ This endpoint does not need any parameter.
 
 [api_key](../README.md#api_key)
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/xml
@@ -216,12 +216,12 @@ use Data::Dumper;
 
 # Configure API key authorization: test_api_key_header
 $WWW::SwaggerClient::Configuration::api_key->{'test_api_key_header'} = 'YOUR_API_KEY';
-# uncomment below to setup prefix (e.g. BEARER) for API key, if needed
-#$WWW::SwaggerClient::Configuration::api_key_prefix->{'test_api_key_header'} = "BEARER";
+# uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+#$WWW::SwaggerClient::Configuration::api_key_prefix->{'test_api_key_header'} = "Bearer";
 # Configure API key authorization: test_api_key_query
 $WWW::SwaggerClient::Configuration::api_key->{'test_api_key_query'} = 'YOUR_API_KEY';
-# uncomment below to setup prefix (e.g. BEARER) for API key, if needed
-#$WWW::SwaggerClient::Configuration::api_key_prefix->{'test_api_key_query'} = "BEARER";
+# uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+#$WWW::SwaggerClient::Configuration::api_key_prefix->{'test_api_key_query'} = "Bearer";
 
 my $api_instance = WWW::SwaggerClient::StoreApi->new();
 my $order_id = 'order_id_example'; # string | ID of pet that needs to be fetched
@@ -249,7 +249,7 @@ Name | Type | Description  | Notes
 
 [test_api_key_header](../README.md#test_api_key_header), [test_api_key_query](../README.md#test_api_key_query)
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/xml
@@ -269,12 +269,12 @@ use Data::Dumper;
 
 # Configure API key authorization: test_api_client_id
 $WWW::SwaggerClient::Configuration::api_key->{'x-test_api_client_id'} = 'YOUR_API_KEY';
-# uncomment below to setup prefix (e.g. BEARER) for API key, if needed
-#$WWW::SwaggerClient::Configuration::api_key_prefix->{'x-test_api_client_id'} = "BEARER";
+# uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+#$WWW::SwaggerClient::Configuration::api_key_prefix->{'x-test_api_client_id'} = "Bearer";
 # Configure API key authorization: test_api_client_secret
 $WWW::SwaggerClient::Configuration::api_key->{'x-test_api_client_secret'} = 'YOUR_API_KEY';
-# uncomment below to setup prefix (e.g. BEARER) for API key, if needed
-#$WWW::SwaggerClient::Configuration::api_key_prefix->{'x-test_api_client_secret'} = "BEARER";
+# uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+#$WWW::SwaggerClient::Configuration::api_key_prefix->{'x-test_api_client_secret'} = "Bearer";
 
 my $api_instance = WWW::SwaggerClient::StoreApi->new();
 my $body = WWW::SwaggerClient::Object::Order->new(); # Order | order placed for purchasing the pet
@@ -302,7 +302,7 @@ Name | Type | Description  | Notes
 
 [test_api_client_id](../README.md#test_api_client_id), [test_api_client_secret](../README.md#test_api_client_secret)
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/xml

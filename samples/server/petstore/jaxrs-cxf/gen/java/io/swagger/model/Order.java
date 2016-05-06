@@ -8,9 +8,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlEnum;
 
 @XmlAccessorType(XmlAccessType.FIELD)
- @XmlType(name = "", propOrder =
+ @XmlType(name = "Order", propOrder =
 	{ "id", "petId", "quantity", "shipDate", "status", "complete"
 })
 
@@ -26,28 +27,32 @@ public class Order  {
 
   private javax.xml.datatype.XMLGregorianCalendar shipDate = null;
 
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlType;
-
-@XmlType(name="Order")
+@XmlType(name="StatusEnum")
 @XmlEnum
-public enum Order {
-    {values=[placed, approved, delivered], enumVars=[{name=PLACED, value=placed}, {name=APPROVED, value=approved}, {name=DELIVERED, value=delivered}]}, 
-    
-    public String value() {
-        return name();
+public enum StatusEnum {
+
+    PLACED(String.valueOf("placed")), APPROVED(String.valueOf("approved")), DELIVERED(String.valueOf("delivered"));
+
+
+    private String value;
+
+    StatusEnum (String v) {
+        value = v;
     }
 
-    public static Order fromValue(String v) {
+    public String value() {
+        return value;
+    }
+
+    public static StatusEnum fromValue(String v) {
         return valueOf(v);
     }
 }
 
   private StatusEnum status = null;
 
-  private Boolean complete = null;
+  private Boolean complete = false;
 
-  
   /**
    **/
   
@@ -57,7 +62,6 @@ public enum Order {
   public void setId(Long id) {
     this.id = id;
   }
-  
   /**
    **/
   
@@ -67,7 +71,6 @@ public enum Order {
   public void setPetId(Long petId) {
     this.petId = petId;
   }
-  
   /**
    **/
   
@@ -77,7 +80,6 @@ public enum Order {
   public void setQuantity(Integer quantity) {
     this.quantity = quantity;
   }
-  
   /**
    **/
   
@@ -87,7 +89,6 @@ public enum Order {
   public void setShipDate(javax.xml.datatype.XMLGregorianCalendar shipDate) {
     this.shipDate = shipDate;
   }
-  
   /**
    * Order Status
    **/
@@ -98,7 +99,6 @@ public enum Order {
   public void setStatus(StatusEnum status) {
     this.status = status;
   }
-  
   /**
    **/
   
@@ -108,7 +108,6 @@ public enum Order {
   public void setComplete(Boolean complete) {
     this.complete = complete;
   }
-  
 
   @Override
   public String toString() {

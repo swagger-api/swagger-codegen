@@ -49,20 +49,20 @@ def prepare_pet(pet_api)
   tag = Petstore::Tag.new('id' => 30002, 'name' => 'tag test')
   pet = Petstore::Pet.new('id' => pet_id, 'name' => "RUBY UNIT TESTING", 'photo_urls' => 'photo url',
                           'category' => category, 'tags' => [tag], 'status' => 'pending')
-  pet_api.add_pet(:'body'=> pet)
+  pet_api.add_pet(pet)
   return pet_id
 end
 
 # create a random order, return its id
 def prepare_store(store_api)
-  order_id = random_id
+  order_id = 5
   order = Petstore::Order.new("id" => order_id,
 		  "petId" => 123,
 		  "quantity" => 789,
 		  "shipDate" => "2015-04-06T23:42:01.678Z",
 		  "status" => "placed",
 		  "complete" => false)
-  store_api.place_order(:body => order)
+  store_api.place_order(order)
   return order_id
 end
 

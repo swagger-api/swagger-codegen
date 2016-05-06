@@ -111,6 +111,10 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($response->getTags()[0]->getName(), 'test php tag');
     }
 
+    /* 
+     * comment out as we've removed invalid endpoints from the spec, we'll introduce something
+     * similar in the future when we've time to update the petstore server
+     *
     // test getPetById with a Pet object (id 10005)
     public function testGetPetByIdInObject()
     {
@@ -133,6 +137,7 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($response->getTags()[0]->getId(), $pet_id);
         $this->assertSame($response->getTags()[0]->getName(), 'test php tag');
     }
+     */
   
     // test getPetByIdWithHttpInfo with a Pet object (id 10005)
     public function testGetPetByIdWithHttpInfo()
@@ -274,7 +279,11 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($response->getId(), $new_pet_id);
         $this->assertSame($response->getName(), 'PHP Unit Test 2');
     }
-  
+
+    /*
+     * comment out as we've removed invalid endpoints from the spec, we'll introduce something
+     * similar in the future when we've time to update the petstore server
+     *
     // test addPetUsingByteArray and verify by the "id" and "name" of the response
     public function testAddPetUsingByteArray()
     {
@@ -310,8 +319,7 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($response->getId(), $new_pet_id);
         $this->assertSame($response->getName(), 'PHP Unit Test 3');
     }
-
-
+     */
   
     // test upload file
     public function testUploadFile()
@@ -322,9 +330,10 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $pet_api = new Swagger\Client\Api\PetApi($api_client);
         // upload file
         $pet_id = 10001;
-        $add_response = $pet_api->uploadFile($pet_id, "test meta", "./composer.json");
-        // return nothing (void)
-        $this->assertSame($add_response, NULL);
+        $response = $pet_api->uploadFile($pet_id, "test meta", "./composer.json");
+        // return ApiResponse 
+        $this->assertInstanceOf('Swagger\Client\Model\ApiResponse', $response);
+
     }
   
     // test get inventory
@@ -334,14 +343,18 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $config = new Swagger\Client\Configuration();
         $config->setHost('http://petstore.swagger.io/v2');
         $api_client = new Swagger\Client\APIClient($config);
-        $store_api = new Swagger\Client\Api\StoreAPI($api_client);
+        $store_api = new Swagger\Client\Api\StoreApi($api_client);
         // get inventory
         $get_response = $store_api->getInventory();
   
         $this->assertInternalType("int", $get_response['sold']);
         $this->assertInternalType("int", $get_response['pending']);
     }
-  
+
+    /*
+     * comment out as we've removed invalid endpoints from the spec, we'll introduce something
+     * similar in the future when we've time to update the petstore server
+     *
     // test byte array response
     public function testGetPetByIdWithByteArray()
     {
@@ -365,6 +378,7 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($json['tags'][0]['id'], $pet_id);
         $this->assertSame($json['tags'][0]['name'], 'test php tag');
     }
+     */
 
     // test empty object serialization
     public function testEmptyPetSerialization()
@@ -400,6 +414,40 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('Great Dane', $new_dog->getBreed());
         // the property on the parent class should be set
         $this->assertSame('Dog', $new_dog->getClassName());
+    }
+
+    // test if discriminator is initialized automatically
+    public function testDiscriminatorInitialization()
+    {
+        $new_dog = new Swagger\Client\Model\Dog();
+        $this->assertSame('Dog', $new_dog->getClassName());
+    }
+
+    // test if ArrayAccess interface works
+    public function testArrayStuff()
+    {
+        // create an AnimalFarm which is an object implementing the
+        // ArrayAccess interface
+        $farm = new Swagger\Client\Model\AnimalFarm();
+
+        // add some animals to the farm to make sure the ArrayAccess
+        // interface works
+        $farm[] = new Swagger\Client\Model\Dog();
+        $farm[] = new Swagger\Client\Model\Cat();
+        $farm[] = new Swagger\Client\Model\Animal();
+
+        // assert we can look up the animals in the farm by array
+        // indices (let's try a random order)
+        $this->assertInstanceOf('Swagger\Client\Model\Cat', $farm[1]);
+        $this->assertInstanceOf('Swagger\Client\Model\Dog', $farm[0]);
+        $this->assertInstanceOf('Swagger\Client\Model\Animal', $farm[2]);
+
+        // let's try to `foreach` the animals in the farm and let's
+        // try to use the objects we loop through
+        foreach ($farm as $animal) {
+            $this->assertContains($animal->getClassName(), array('Dog', 'Cat', 'Animal'));
+            $this->assertInstanceOf('Swagger\Client\Model\Animal', $animal);
+        }
     }
 
 }

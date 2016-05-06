@@ -10,13 +10,13 @@ All URIs are relative to *http://petstore.swagger.io/v2*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**add_pet**](PetApi.md#add_pet) | **POST** /pet | Add a new pet to the store
-[**add_pet_using_byte_array**](PetApi.md#add_pet_using_byte_array) | **POST** /pet?testing_byte_array=true | Fake endpoint to test byte array in body parameter for adding a new pet to the store
+[**add_pet_using_byte_array**](PetApi.md#add_pet_using_byte_array) | **POST** /pet?testing_byte_array&#x3D;true | Fake endpoint to test byte array in body parameter for adding a new pet to the store
 [**delete_pet**](PetApi.md#delete_pet) | **DELETE** /pet/{petId} | Deletes a pet
 [**find_pets_by_status**](PetApi.md#find_pets_by_status) | **GET** /pet/findByStatus | Finds Pets by status
 [**find_pets_by_tags**](PetApi.md#find_pets_by_tags) | **GET** /pet/findByTags | Finds Pets by tags
 [**get_pet_by_id**](PetApi.md#get_pet_by_id) | **GET** /pet/{petId} | Find pet by ID
-[**get_pet_by_id_in_object**](PetApi.md#get_pet_by_id_in_object) | **GET** /pet/{petId}?response=inline_arbitrary_object | Fake endpoint to test inline arbitrary object return by &#39;Find pet by ID&#39;
-[**pet_pet_idtesting_byte_arraytrue_get**](PetApi.md#pet_pet_idtesting_byte_arraytrue_get) | **GET** /pet/{petId}?testing_byte_array=true | Fake endpoint to test byte array return by &#39;Find pet by ID&#39;
+[**get_pet_by_id_in_object**](PetApi.md#get_pet_by_id_in_object) | **GET** /pet/{petId}?response&#x3D;inline_arbitrary_object | Fake endpoint to test inline arbitrary object return by &#39;Find pet by ID&#39;
+[**pet_pet_idtesting_byte_arraytrue_get**](PetApi.md#pet_pet_idtesting_byte_arraytrue_get) | **GET** /pet/{petId}?testing_byte_array&#x3D;true | Fake endpoint to test byte array return by &#39;Find pet by ID&#39;
 [**update_pet**](PetApi.md#update_pet) | **PUT** /pet | Update an existing pet
 [**update_pet_with_form**](PetApi.md#update_pet_with_form) | **POST** /pet/{petId} | Updates a pet in the store with form data
 [**upload_file**](PetApi.md#upload_file) | **POST** /pet/{petId}/uploadImage | uploads an image
@@ -61,7 +61,7 @@ void (empty response body)
 
 [petstore_auth](../README.md#petstore_auth)
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: application/json, application/xml
  - **Accept**: application/json, application/xml
@@ -107,7 +107,7 @@ void (empty response body)
 
 [petstore_auth](../README.md#petstore_auth)
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: application/json, application/xml
  - **Accept**: application/json, application/xml
@@ -155,7 +155,7 @@ void (empty response body)
 
 [petstore_auth](../README.md#petstore_auth)
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/xml
@@ -202,7 +202,7 @@ Name | Type | Description  | Notes
 
 [petstore_auth](../README.md#petstore_auth)
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/xml
@@ -249,7 +249,7 @@ Name | Type | Description  | Notes
 
 [petstore_auth](../README.md#petstore_auth)
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/xml
@@ -269,8 +269,8 @@ use Data::Dumper;
 
 # Configure API key authorization: api_key
 $WWW::SwaggerClient::Configuration::api_key->{'api_key'} = 'YOUR_API_KEY';
-# uncomment below to setup prefix (e.g. BEARER) for API key, if needed
-#$WWW::SwaggerClient::Configuration::api_key_prefix->{'api_key'} = "BEARER";
+# uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+#$WWW::SwaggerClient::Configuration::api_key_prefix->{'api_key'} = "Bearer";
 # Configure OAuth2 access token for authorization: petstore_auth
 $WWW::SwaggerClient::Configuration::access_token = 'YOUR_ACCESS_TOKEN';
 
@@ -300,7 +300,7 @@ Name | Type | Description  | Notes
 
 [api_key](../README.md#api_key), [petstore_auth](../README.md#petstore_auth)
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/xml
@@ -320,8 +320,8 @@ use Data::Dumper;
 
 # Configure API key authorization: api_key
 $WWW::SwaggerClient::Configuration::api_key->{'api_key'} = 'YOUR_API_KEY';
-# uncomment below to setup prefix (e.g. BEARER) for API key, if needed
-#$WWW::SwaggerClient::Configuration::api_key_prefix->{'api_key'} = "BEARER";
+# uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+#$WWW::SwaggerClient::Configuration::api_key_prefix->{'api_key'} = "Bearer";
 # Configure OAuth2 access token for authorization: petstore_auth
 $WWW::SwaggerClient::Configuration::access_token = 'YOUR_ACCESS_TOKEN';
 
@@ -351,7 +351,7 @@ Name | Type | Description  | Notes
 
 [api_key](../README.md#api_key), [petstore_auth](../README.md#petstore_auth)
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/xml
@@ -371,8 +371,8 @@ use Data::Dumper;
 
 # Configure API key authorization: api_key
 $WWW::SwaggerClient::Configuration::api_key->{'api_key'} = 'YOUR_API_KEY';
-# uncomment below to setup prefix (e.g. BEARER) for API key, if needed
-#$WWW::SwaggerClient::Configuration::api_key_prefix->{'api_key'} = "BEARER";
+# uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+#$WWW::SwaggerClient::Configuration::api_key_prefix->{'api_key'} = "Bearer";
 # Configure OAuth2 access token for authorization: petstore_auth
 $WWW::SwaggerClient::Configuration::access_token = 'YOUR_ACCESS_TOKEN';
 
@@ -402,7 +402,7 @@ Name | Type | Description  | Notes
 
 [api_key](../README.md#api_key), [petstore_auth](../README.md#petstore_auth)
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/xml
@@ -448,7 +448,7 @@ void (empty response body)
 
 [petstore_auth](../README.md#petstore_auth)
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: application/json, application/xml
  - **Accept**: application/json, application/xml
@@ -498,7 +498,7 @@ void (empty response body)
 
 [petstore_auth](../README.md#petstore_auth)
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: application/json, application/xml
@@ -548,7 +548,7 @@ void (empty response body)
 
 [petstore_auth](../README.md#petstore_auth)
 
-### HTTP reuqest headers
+### HTTP request headers
 
  - **Content-Type**: multipart/form-data
  - **Accept**: application/json, application/xml

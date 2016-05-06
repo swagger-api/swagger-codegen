@@ -34,19 +34,6 @@
 
 ///
 ///
-/// Finds orders by status
-/// A single status value can be provided as a string
-///
-/// @param status Status value that needs to be considered for query
-/// 
-///
-/// @return NSArray<SWGOrder>*
--(NSNumber*) findOrdersByStatusWithStatus: (NSString*) status
-    completionHandler: (void (^)(NSArray<SWGOrder>* output, NSError* error)) handler;
-
-
-///
-///
 /// Returns pet inventories by status
 /// Returns a map of status codes to quantities
 ///
@@ -55,18 +42,6 @@
 /// @return NSDictionary* /* NSString, NSNumber */
 -(NSNumber*) getInventoryWithCompletionHandler: 
     (void (^)(NSDictionary* /* NSString, NSNumber */ output, NSError* error)) handler;
-
-
-///
-///
-/// Fake endpoint to test arbitrary object return by 'Get inventory'
-/// Returns an arbitrary object which is actually a map of status codes to quantities
-///
-/// 
-///
-/// @return NSObject*
--(NSNumber*) getInventoryInObjectWithCompletionHandler: 
-    (void (^)(NSObject* output, NSError* error)) handler;
 
 
 ///
@@ -87,7 +62,7 @@
 /// Place an order for a pet
 /// 
 ///
-/// @param body order placed for purchasing the pet
+/// @param body order placed for purchasing the pet (optional)
 /// 
 ///
 /// @return SWGOrder*

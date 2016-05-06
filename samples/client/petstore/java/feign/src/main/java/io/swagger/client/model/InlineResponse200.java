@@ -10,12 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
-
-
-
-
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-03-19T15:53:31.820+08:00")
+/**
+ * InlineResponse200
+ */
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-04-12T23:06:03.099+08:00")
 public class InlineResponse200   {
   
   private List<String> photoUrls = new ArrayList<String>();
@@ -24,7 +22,9 @@ public class InlineResponse200   {
   private Object category = null;
   private List<Tag> tags = new ArrayList<Tag>();
 
-
+  /**
+   * pet status in the store
+   */
   public enum StatusEnum {
     AVAILABLE("available"),
     PENDING("pending"),
@@ -39,7 +39,7 @@ public class InlineResponse200   {
     @Override
     @JsonValue
     public String toString() {
-      return value;
+      return String.valueOf(value);
     }
   }
 
@@ -198,6 +198,4 @@ public class InlineResponse200   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
 

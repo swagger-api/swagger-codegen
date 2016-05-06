@@ -7,16 +7,15 @@ import io.swagger.annotations.ApiModelProperty;
 import com.google.gson.annotations.SerializedName;
 
 
-
-
-
+/**
+ * Model for testing model name starting with number
+ */
+@ApiModel(description = "Model for testing model name starting with number")
 public class Model200Response   {
   
   @SerializedName("name")
   private Integer name = null;
-  
 
-  
   /**
    **/
   @ApiModelProperty(value = "")
@@ -27,7 +26,6 @@ public class Model200Response   {
     this.name = name;
   }
 
-  
 
   @Override
   public boolean equals(Object o) {
@@ -67,3 +65,4 @@ public class Model200Response   {
     return o.toString().replace("\n", "\n    ");
   }
 }
+

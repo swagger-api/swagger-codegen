@@ -88,8 +88,8 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
                         "Int32",
                         "Int64",
                         "Float",
-                        "Guid",
-                        "Stream", // not really a primitive, we include it to avoid model import
+                        "Guid?",
+                        "System.IO.Stream", // not really a primitive, we include it to avoid model import
                         "Object")
         );
 
@@ -101,6 +101,7 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         typeMapping = new HashMap<String, String>();
         typeMapping.put("string", "string");
         typeMapping.put("binary", "byte[]");
+        typeMapping.put("bytearray", "byte[]");
         typeMapping.put("boolean", "bool?");
         typeMapping.put("integer", "int?");
         typeMapping.put("float", "float?");
@@ -109,12 +110,12 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         typeMapping.put("number", "double?");
         typeMapping.put("datetime", "DateTime?");
         typeMapping.put("date", "DateTime?");
-        typeMapping.put("file", "Stream");
+        typeMapping.put("file", "System.IO.Stream");
         typeMapping.put("array", "List");
         typeMapping.put("list", "List");
         typeMapping.put("map", "Dictionary");
         typeMapping.put("object", "Object");
-        typeMapping.put("uuid", "Guid");
+        typeMapping.put("uuid", "Guid?");
     }
 
     public void setReturnICollection(boolean returnICollection) {
@@ -203,11 +204,6 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     }
 
     @Override
-    public String toEnumName(CodegenProperty property) {
-        return StringUtils.capitalize(property.name) + "Enum?";
-    }
-
-    @Override
     public Map<String, Object> postProcessModels(Map<String, Object> objs) {
         List<Object> models = (List<Object>) objs.get("models");
         for (Object _mo : models) {
@@ -222,7 +218,8 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
                 }
             }
         }
-        return objs;
+        // process enum in models
+        return postProcessModelsEnum(objs);
     }
 
     @Override
@@ -543,4 +540,54 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     public void setSourceFolder(String sourceFolder) {
         this.sourceFolder = sourceFolder;
     }
+
+    
+    @Override
+    public String toEnumVarName(String name, String datatype) {
+        String enumName = sanitizeName(name);
+
+        enumName = enumName.replaceFirst("^_", "");
+        enumName = enumName.replaceFirst("_$", "");
+
+        enumName = camelize(enumName) + "Enum";
+
+        LOGGER.info("toEnumVarName = " + enumName);
+
+        if (enumName.matches("\\d.*")) { // starts with number
+            return "_" + enumName;
+        } else {
+            return enumName;
+        }
+    }
+
+    @Override
+    public String toEnumName(CodegenProperty property) {
+        return sanitizeName(camelize(property.name)) + "Enum";
+    }
+
+    /*
+    @Override
+    public String toEnumName(CodegenProperty property) {
+        String enumName = sanitizeName(property.name);
+        if (!StringUtils.isEmpty(modelNamePrefix)) {
+            enumName = modelNamePrefix + "_" + enumName;
+        }
+
+        if (!StringUtils.isEmpty(modelNameSuffix)) {
+            enumName = enumName + "_" + modelNameSuffix;
+        }
+
+        // model name cannot use reserved keyword, e.g. return
+        if (isReservedWord(enumName)) {
+            LOGGER.warn(enumName + " (reserved word) cannot be used as model name. Renamed to " + camelize("model_" + enumName));
+            enumName = "model_" + enumName; // e.g. return => ModelReturn (after camelize)
+        }
+
+        if (enumName.matches("\\d.*")) { // starts with number
+            return "_" + enumName;
+        } else {
+            return enumName;
+        }
+    }
+    */
 }

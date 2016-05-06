@@ -6,12 +6,10 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 
-
-
-
-
-
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-03-19T15:53:31.820+08:00")
+/**
+ * SpecialModelName
+ */
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-04-27T23:17:22.230+08:00")
 public class SpecialModelName   {
   
   private Long specialPropertyName = null;
@@ -33,7 +31,6 @@ public class SpecialModelName   {
     this.specialPropertyName = specialPropertyName;
   }
 
-  
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -73,6 +70,4 @@ public class SpecialModelName   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
 
