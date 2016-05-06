@@ -3,8 +3,8 @@ package main
 import (
 	sw "./go-petstore"
 	"github.com/stretchr/testify/assert"
-	"testing"
 	"os"
+	"testing"
 )
 
 func TestAddPet(t *testing.T) {
@@ -18,9 +18,9 @@ func TestAddPet(t *testing.T) {
 		t.Errorf("Error while adding pet")
 		t.Log(err)
 	}
-	if apiResponse.Response.StatusCode != 200 {
-		t.Log(apiResponse.Response)
-	}	
+	if *apiResponse.Response.StatusCode != 200 {
+		t.Log(*apiResponse.Response)
+	}
 }
 
 func TestFindPetsByStatusWithMissingParam(t *testing.T) {
@@ -32,9 +32,9 @@ func TestFindPetsByStatusWithMissingParam(t *testing.T) {
 		t.Errorf("Error while testing TestFindPetsByStatusWithMissingParam")
 		t.Log(err)
 	}
-	if apiResponse.Response.StatusCode != 200 {
-		t.Log(apiResponse)
-	}	
+	if *apiResponse.Response.StatusCode != 200 {
+		t.Log(*apiResponse)
+	}
 }
 
 func TestGetPetById(t *testing.T) {
@@ -52,9 +52,9 @@ func TestGetPetById(t *testing.T) {
 
 		//t.Log(resp)
 	}
-	if apiResponse.Response.StatusCode != 200 {
-		t.Log(apiResponse.Response)
-	}	
+	if *apiResponse.Response.StatusCode != 200 {
+		t.Log(*apiResponse.Response)
+	}
 }
 
 func TestGetPetByIdWithInvalidID(t *testing.T) {
@@ -67,9 +67,9 @@ func TestGetPetByIdWithInvalidID(t *testing.T) {
 	} else {
 		t.Log(resp)
 	}
-	if apiResponse.Response.StatusCode != 200 {
-		t.Log(apiResponse.Response)
-	}	
+	if *apiResponse.Response.StatusCode != 200 {
+		t.Log(*apiResponse.Response)
+	}
 }
 
 func TestUpdatePetWithForm(t *testing.T) {
@@ -79,35 +79,40 @@ func TestUpdatePetWithForm(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error while updating pet by id")
 		t.Log(err)
-		t.Log(apiResponse)
+		t.Log(*apiResponse)
 	}
-	if apiResponse.Response.StatusCode != 200 {
-		t.Log(apiResponse.Response)
+	if *apiResponse.Response.StatusCode != 200 {
+		t.Log(*apiResponse.Response)
 	}
 }
 
 func TestFindPetsByStatus(t *testing.T) {
 	s := sw.NewPetApi()
-	resp, apiResponse, err := s.FindPetsByStatus([]string {"pending"})
+	resp, apiResponse, err := s.FindPetsByStatus([]string{"available"})
 	if err != nil {
 		t.Errorf("Error while getting pet by id")
 		t.Log(err)
-		t.Log(apiResponse)
+		t.Log(*apiResponse)
 	} else {
-		t.Log(apiResponse)
-		if len(resp) == 0 {
+		t.Log(*apiResponse)
+		if len(*resp) == 0 {
 			t.Errorf("Error no pets returned")
+		} else {
+			assert := assert.New(t)
+			for i := 0; i < len(resp); i++ {
+				assert.Equal(resp[i].Status, "available", "Pet status should be `available`")
+			}
 		}
 
-	if apiResponse.Response.StatusCode != 200 {
-		t.Log(apiResponse.Response)
-	}
+		if *apiResponse.Response.StatusCode != 200 {
+			t.Log(*apiResponse.Response)
+		}
 	}
 }
 
 func TestUploadFile(t *testing.T) {
 	s := sw.NewPetApi()
-	file, _ := os.Open("../python/testfiles/foo.png") 
+	file, _ := os.Open("../python/testfiles/foo.png")
 
 	_, apiResponse, err := s.UploadFile(12830, "golang", file)
 
@@ -115,7 +120,8 @@ func TestUploadFile(t *testing.T) {
 		t.Errorf("Error while uploading file")
 		t.Log(err)
 	}
-	if apiResponse.Response.StatusCode != 200 {
+
+	if *apiResponse.Response.StatusCode != 200 {
 		t.Log(apiResponse.Response)
 	}
 }
@@ -128,7 +134,7 @@ func TestDeletePet(t *testing.T) {
 		t.Errorf("Error while deleting pet by id")
 		t.Log(err)
 	}
-	if apiResponse.Response.StatusCode != 200 {
+	if *apiResponse.Response.StatusCode != 200 {
 		t.Log(apiResponse.Response)
 	}
 }
