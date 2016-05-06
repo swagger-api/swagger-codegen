@@ -170,7 +170,7 @@ public class DefaultCodegen {
     @SuppressWarnings("static-method")
     public String escapeText(String input) {
         if (input != null) {
-        	return EscapeTextUtils.escapeJava(input).replace("\\/", "/");
+            return EscapeTextUtils.escapeJava(input).replace("\\/", "/");
         }
         return input;
     }

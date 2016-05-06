@@ -38,58 +38,83 @@ import java.io.Writer;
  * @version $Id: StringEscapeUtils.java 612880 2008-01-17 17:34:43Z ggregory $
  */
 /**
- * Make a little mod to show double byte characters properly.
- * 2016-05-05 22:38
+ * Make a little mod to show double byte characters properly. 2016-05-05 22:38
+ * 
  * @author Ming Jou
  *
  */
 public class EscapeTextUtils {
     /**
-     * <p><code>StringEscapeUtils</code> instances should NOT be constructed in
-     * standard programming.</p>
+     * <p>
+     * <code>StringEscapeUtils</code> instances should NOT be constructed in
+     * standard programming.
+     * </p>
      *
-     * <p>Instead, the class should be used as:
-     * <pre>StringEscapeUtils.escapeJava("foo");</pre></p>
+     * <p>
+     * Instead, the class should be used as:
+     * 
+     * <pre>
+     * StringEscapeUtils.escapeJava("foo");
+     * </pre>
+     * </p>
      *
-     * <p>This constructor is public to permit tools that require a JavaBean
-     * instance to operate.</p>
+     * <p>
+     * This constructor is public to permit tools that require a JavaBean
+     * instance to operate.
+     * </p>
      */
     public EscapeTextUtils() {
-      super();
+        super();
     }
 
     // Java and JavaScript
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     /**
-     * <p>Escapes the characters in a <code>String</code> using Java String rules.</p>
+     * <p>
+     * Escapes the characters in a <code>String</code> using Java String rules.
+     * </p>
      *
-     * <p>Deals correctly with quotes and control-chars (tab, backslash, cr, ff, etc.) </p>
+     * <p>
+     * Deals correctly with quotes and control-chars (tab, backslash, cr, ff,
+     * etc.)
+     * </p>
      *
-     * <p>So a tab becomes the characters <code>'\\'</code> and
-     * <code>'t'</code>.</p>
+     * <p>
+     * So a tab becomes the characters <code>'\\'</code> and <code>'t'</code>.
+     * </p>
      *
-     * <p>The only difference between Java strings and JavaScript strings
-     * is that in JavaScript, a single quote must be escaped.</p>
+     * <p>
+     * The only difference between Java strings and JavaScript strings is that
+     * in JavaScript, a single quote must be escaped.
+     * </p>
      *
-     * <p>Example:
+     * <p>
+     * Example:
+     * 
      * <pre>
      * input string: He didn't say, "Stop!"
      * output string: He didn't say, \"Stop!\"
      * </pre>
      * </p>
      *
-     * @param str  String to escape values in, may be null
-     * @return String with escaped values, <code>null</code> if null string input
+     * @param str
+     *            String to escape values in, may be null
+     * @return String with escaped values, <code>null</code> if null string
+     *         input
      */
     public static String escapeJava(String str) {
         return escapeJavaStyleString(str, false);
     }
 
     /**
-     * <p>Worker method for the {@link #escapeJava(String)} method.</p>
+     * <p>
+     * Worker method for the {@link #escapeJava(String)} method.
+     * </p>
      * 
-     * @param str String to escape values in, may be null
-     * @param escapeSingleQuotes escapes single quotes if <code>true</code>
+     * @param str
+     *            String to escape values in, may be null
+     * @param escapeSingleQuotes
+     *            escapes single quotes if <code>true</code>
      * @return the escaped string
      */
     private static String escapeJavaStyleString(String str, boolean escapeSingleQuotes) {
@@ -108,12 +133,18 @@ public class EscapeTextUtils {
     }
 
     /**
-     * <p>Worker method for the {@link #escapeJava(String)} method.</p>
+     * <p>
+     * Worker method for the {@link #escapeJava(String)} method.
+     * </p>
      * 
-     * @param out write to receieve the escaped string
-     * @param str String to escape values in, may be null
-     * @param escapeSingleQuote escapes single quotes if <code>true</code>
-     * @throws IOException if an IOException occurs
+     * @param out
+     *            write to receieve the escaped string
+     * @param str
+     *            String to escape values in, may be null
+     * @param escapeSingleQuote
+     *            escapes single quotes if <code>true</code>
+     * @throws IOException
+     *             if an IOException occurs
      */
     private static void escapeJavaStyleString(Writer out, String str, boolean escapeSingleQuote) throws IOException {
         if (out == null) {
@@ -136,72 +167,74 @@ public class EscapeTextUtils {
                 out.write(ch);
             } else if (ch < 32) {
                 switch (ch) {
-                    case '\b':
-                        out.write('\\');
-                        out.write('b');
-                        break;
-                    case '\n':
-                        out.write('\\');
-                        out.write('n');
-                        break;
-                    case '\t':
-                        out.write('\\');
-                        out.write('t');
-                        break;
-                    case '\f':
-                        out.write('\\');
-                        out.write('f');
-                        break;
-                    case '\r':
-                        out.write('\\');
-                        out.write('r');
-                        break;
-                    default :
-                        if (ch > 0xf) {
-                            out.write("\\u00" + hex(ch));
-                        } else {
-                            out.write("\\u000" + hex(ch));
-                        }
-                        break;
+                case '\b':
+                    out.write('\\');
+                    out.write('b');
+                    break;
+                case '\n':
+                    out.write('\\');
+                    out.write('n');
+                    break;
+                case '\t':
+                    out.write('\\');
+                    out.write('t');
+                    break;
+                case '\f':
+                    out.write('\\');
+                    out.write('f');
+                    break;
+                case '\r':
+                    out.write('\\');
+                    out.write('r');
+                    break;
+                default:
+                    if (ch > 0xf) {
+                        out.write("\\u00" + hex(ch));
+                    } else {
+                        out.write("\\u000" + hex(ch));
+                    }
+                    break;
                 }
             } else {
                 switch (ch) {
-                    case '\'':
-                        if (escapeSingleQuote) {
-                          out.write('\\');
-                        }
-                        out.write('\'');
-                        break;
-                    case '"':
+                case '\'':
+                    if (escapeSingleQuote) {
                         out.write('\\');
-                        out.write('"');
-                        break;
-                    case '\\':
-                        out.write('\\');
-                        out.write('\\');
-                        break;
-                    case '/':
-                        out.write('\\');
-                        out.write('/');
-                        break;
-                    default :
-                        out.write(ch);
-                        break;
+                    }
+                    out.write('\'');
+                    break;
+                case '"':
+                    out.write('\\');
+                    out.write('"');
+                    break;
+                case '\\':
+                    out.write('\\');
+                    out.write('\\');
+                    break;
+                case '/':
+                    out.write('\\');
+                    out.write('/');
+                    break;
+                default:
+                    out.write(ch);
+                    break;
                 }
             }
         }
     }
 
     /**
-     * <p>Returns an upper case hexadecimal <code>String</code> for the given
-     * character.</p>
+     * <p>
+     * Returns an upper case hexadecimal <code>String</code> for the given
+     * character.
+     * </p>
      * 
-     * @param ch The character to convert.
+     * @param ch
+     *            The character to convert.
      * @return An upper case hexadecimal <code>String</code>
      */
     private static String hex(char ch) {
         return Integer.toHexString(ch).toUpperCase();
     }
-
 
 }
