@@ -3,13 +3,13 @@ package io.swagger.codegen;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import io.swagger.codegen.examples.ExampleGenerator;
+import io.swagger.codegen.utils.EscapeTextUtils;
 import io.swagger.models.*;
 import io.swagger.models.auth.*;
 import io.swagger.models.parameters.*;
 import io.swagger.models.properties.*;
 import io.swagger.models.properties.PropertyBuilder.PropertyId;
 import io.swagger.util.Json;
-import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -325,7 +325,7 @@ public class DefaultCodegen {
     @SuppressWarnings("static-method")
     public String escapeText(String input) {
         if (input != null) {
-            return StringEscapeUtils.escapeJava(input).replace("\\/", "/");
+            return EscapeTextUtils.escapeJava(input).replace("\\/", "/");
         }
         return input;
     }
