@@ -10,6 +10,7 @@ public class CodegenModel {
     // References to parent and interface CodegenModels. Only set when code generator supports inheritance.
     public CodegenModel parentModel;
     public List<CodegenModel> interfaceModels;
+    public List<CodegenModel> children;
 
     public String name, classname, description, classVarName, modelJson, dataType;
     public String classFilename; // store the class file name, mainly used for import
@@ -27,7 +28,7 @@ public class CodegenModel {
     public Set<String> allMandatory;
 
     public Set<String> imports = new TreeSet<String>();
-    public Boolean hasVars, emptyVars, hasMoreModels, hasEnums, isEnum;
+    public Boolean hasVars, emptyVars, hasMoreModels, hasEnums, isEnum, hasChildren, hasMoreChildren;
     public ExternalDocs externalDocs;
 
     public Map<String, Object> vendorExtensions;
