@@ -197,6 +197,14 @@ class ApiClient
         }
         curl_setopt($curl, CURLOPT_URL, $url);
 
+        // HTTP basic authentication
+        if ($this->config->getUsername() and $this->config->getPassword()) {
+            curl_setopt(
+                $curl, CURLOPT_USERPWD,
+                $this->config->getUsername().':'.$this->config->getPassword()
+            );
+        }
+
         // Set user agent
         curl_setopt($curl, CURLOPT_USERAGENT, $this->config->getUserAgent());
 
