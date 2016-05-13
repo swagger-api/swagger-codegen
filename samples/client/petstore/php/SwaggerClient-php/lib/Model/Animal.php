@@ -134,7 +134,7 @@ class Animal implements ArrayAccess
         $invalid_properties = array();
         
         if ($this->class_name === null) {
-            $invalid_properties[] = "'$class_name' can't be null";
+            $invalid_properties[] = '"class_name" can't be null';
         }
         
 

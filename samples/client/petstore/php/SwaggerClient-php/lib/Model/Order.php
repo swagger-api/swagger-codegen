@@ -200,7 +200,7 @@ class Order implements ArrayAccess
 
         $allowed_values = array("placed", "approved", "delivered");
         if (!in_array($this->status, $allowed_values))) {
-            $invalid_properties[] = "invalid value for '$status', must be one of #{allowed_values}.";
+            $invalid_properties[] = 'invalid value for "status", must be one of #{allowed_values}.';
         }
 
         

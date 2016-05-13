@@ -264,77 +264,77 @@ class FormatTest implements ArrayAccess
         
         
         if ($this->integer > 100.0) {
-            $invalid_properties[] = "invalid value for '$integer', must be smaller than or equal to 100.0.";
+            $invalid_properties[] = 'invalid value for "integer", must be smaller than or equal to 100.0.';
         }
         if ($this->integer < 10.0) {
-            $invalid_properties[] = "invalid value for '$integer', must be bigger than or equal to 10.0.";
+            $invalid_properties[] = 'invalid value for "integer", must be bigger than or equal to 10.0.';
         }
 
         
         if ($this->int32 > 200.0) {
-            $invalid_properties[] = "invalid value for '$int32', must be smaller than or equal to 200.0.";
+            $invalid_properties[] = 'invalid value for "int32", must be smaller than or equal to 200.0.';
         }
         if ($this->int32 < 20.0) {
-            $invalid_properties[] = "invalid value for '$int32', must be bigger than or equal to 20.0.";
+            $invalid_properties[] = 'invalid value for "int32", must be bigger than or equal to 20.0.';
         }
 
         
 
         if ($this->number === null) {
-            $invalid_properties[] = "'$number' can't be null";
+            $invalid_properties[] = '"number" can't be null';
         }
         
         if ($this->number > 543.2) {
-            $invalid_properties[] = "invalid value for '$number', must be smaller than or equal to 543.2.";
+            $invalid_properties[] = 'invalid value for "number", must be smaller than or equal to 543.2.';
         }
         if ($this->number < 32.1) {
-            $invalid_properties[] = "invalid value for '$number', must be bigger than or equal to 32.1.";
+            $invalid_properties[] = 'invalid value for "number", must be bigger than or equal to 32.1.';
         }
 
         
         if ($this->float > 987.6) {
-            $invalid_properties[] = "invalid value for '$float', must be smaller than or equal to 987.6.";
+            $invalid_properties[] = 'invalid value for "float", must be smaller than or equal to 987.6.';
         }
         if ($this->float < 54.3) {
-            $invalid_properties[] = "invalid value for '$float', must be bigger than or equal to 54.3.";
+            $invalid_properties[] = 'invalid value for "float", must be bigger than or equal to 54.3.';
         }
 
         
         if ($this->double > 123.4) {
-            $invalid_properties[] = "invalid value for '$double', must be smaller than or equal to 123.4.";
+            $invalid_properties[] = 'invalid value for "double", must be smaller than or equal to 123.4.';
         }
         if ($this->double < 67.8) {
-            $invalid_properties[] = "invalid value for '$double', must be bigger than or equal to 67.8.";
+            $invalid_properties[] = 'invalid value for "double", must be bigger than or equal to 67.8.';
         }
 
         
         if (!preg_match("/[a-z]/i", $this->string)) {
-            $invalid_properties[] = "invalid value for '$string', must be conform to the pattern /[a-z]/i.";
+            $invalid_properties[] = 'invalid value for "string", must be conform to the pattern /[a-z]/i.';
         }
         
         if ($this->byte === null) {
-            $invalid_properties[] = "'$byte' can't be null";
+            $invalid_properties[] = '"byte" can't be null';
         }
         
 
         
 
         if ($this->date === null) {
-            $invalid_properties[] = "'$date' can't be null";
+            $invalid_properties[] = '"date" can't be null';
         }
         
 
         
 
         if ($this->password === null) {
-            $invalid_properties[] = "'$password' can't be null";
+            $invalid_properties[] = '"password" can't be null';
         }
         
         if (strlen($this->password) > 64) {
-            $invalid_properties[] = "invalid value for '$password', the character length must be smaller than or equal to 64.";
+            $invalid_properties[] = 'invalid value for "password", the character length must be smaller than or equal to 64.';
         }
         if (strlen($this->password) < 10) {
-            $invalid_properties[] = "invalid value for '$password', the character length must be bigger than or equal to 10.";
+            $invalid_properties[] = 'invalid value for "password", the character length must be bigger than or equal to 10.';
         }
 
         return $invalid_properties;
