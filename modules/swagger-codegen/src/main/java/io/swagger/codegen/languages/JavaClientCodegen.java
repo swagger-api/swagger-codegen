@@ -607,7 +607,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
             type = typeMapping.get(swaggerType);
             if (languageSpecificPrimitives.contains(type) || type.indexOf(".") >= 0 ||
                 type.equals("Map") || type.equals("List") ||
-                type.equals("File") || type.equals("Date") || type.equals("LocalDate")) {
+                type.equals("File") || type.equals("Date") || type.equals("LocalDate") || type.equals("DateTime")) {
                 return type;
             }
         } else {
