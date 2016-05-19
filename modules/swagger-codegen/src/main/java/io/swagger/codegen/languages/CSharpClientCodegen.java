@@ -79,6 +79,38 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
                 "C# package version.",
                 this.packageVersion);
 
+        addOption(CodegenConstants.PACKAGE_TITLE,
+                "Package's title",
+                null);
+
+        addOption(CodegenConstants.PACKAGE_DESCRIPTION,
+                "Package's description",
+                null);
+
+        addOption(CodegenConstants.PACKAGE_CONFIGURATION,
+                "Package's configuration",
+                null);
+
+        addOption(CodegenConstants.PACKAGE_COMPANY,
+                "Package's company",
+                null);
+
+        addOption(CodegenConstants.PACKAGE_PRODUCT_NAME,
+                "Package's product name",
+                null);
+
+        addOption(CodegenConstants.PACKAGE_COPYRIGHT,
+                "Package's copyright information",
+                null);
+
+        addOption(CodegenConstants.PACKAGE_TRADEMARK,
+                "Package's trademark information",
+                null);
+
+        addOption(CodegenConstants.PACKAGE_CULTURE,
+                "Package's culture string (e.g. en-us)",
+                null);
+
         addOption(CodegenConstants.SOURCE_FOLDER,
                 CodegenConstants.SOURCE_FOLDER_DESC,
                 sourceFolder);
