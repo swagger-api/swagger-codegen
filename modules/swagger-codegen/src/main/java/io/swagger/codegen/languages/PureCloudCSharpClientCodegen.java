@@ -4,11 +4,11 @@ import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.models.Model;
 import io.swagger.models.Operation;
-import io.swagger.models.properties.Property;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.util.*;
 
 public class PureCloudCSharpClientCodegen extends CSharpClientCodegen {
@@ -23,6 +23,12 @@ public class PureCloudCSharpClientCodegen extends CSharpClientCodegen {
 
         // Prevents collision between System.Attribute and ININ.PureCloudApi.Model.Attribute
         typeMapping.put("Attribute", "ININ.PureCloudApi.Model.Attribute");
+
+        // C# client default
+        setSourceFolder("src" + File.separator + "main" + File.separator + "csharp");
+
+        importMapping.remove("LocalDateTime");
+
     }
 
     @Override
