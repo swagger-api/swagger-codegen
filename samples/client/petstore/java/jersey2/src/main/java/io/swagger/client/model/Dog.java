@@ -7,10 +7,10 @@ import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.Animal;
 
 
-
-
-
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-04-13T14:36:32.196+02:00")
+/**
+ * Dog
+ */
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-05-06T18:35:03.551+08:00")
 public class Dog extends Animal  {
   
   private String className = null;

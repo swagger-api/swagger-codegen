@@ -1,22 +1,22 @@
 package io.swagger.client.model;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 
-
 /**
  * Model for testing model name same as property name
- **/
-
+ */
 @ApiModel(description = "Model for testing model name same as property name")
 
 public class Name   {
   
   private Integer name = null;
   private Integer snakeCase = null;
+  private String property = null;
 
   
   /**
@@ -43,6 +43,23 @@ public class Name   {
   }
 
 
+  /**
+   **/
+  public Name property(String property) {
+    this.property = property;
+    return this;
+  }
+  
+  @ApiModelProperty(example = "null", value = "")
+  @JsonProperty("property")
+  public String getProperty() {
+    return property;
+  }
+  public void setProperty(String property) {
+    this.property = property;
+  }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -53,12 +70,13 @@ public class Name   {
     }
     Name name = (Name) o;
     return Objects.equals(this.name, name.name) &&
-        Objects.equals(this.snakeCase, name.snakeCase);
+        Objects.equals(this.snakeCase, name.snakeCase) &&
+        Objects.equals(this.property, name.property);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, snakeCase);
+    return Objects.hash(name, snakeCase, property);
   }
 
   @Override
@@ -68,6 +86,7 @@ public class Name   {
     
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    snakeCase: ").append(toIndentedString(snakeCase)).append("\n");
+    sb.append("    property: ").append(toIndentedString(property)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -67,12 +67,12 @@ Returns a map of status codes to quantities
 ```ruby
 # load the gem
 require 'petstore'
-# setup authorization 
+# setup authorization
 Petstore.configure do |config|
   # Configure API key authorization: api_key
   config.api_key['api_key'] = 'YOUR API KEY'
-  # Uncomment the following line to set a prefix for the API key, e.g. 'BEARER' (defaults to nil)
-  #config.api_key_prefix['api_key'] = 'BEARER'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  #config.api_key_prefix['api_key'] = 'Bearer'
 end
 
 api_instance = Petstore::StoreApi.new

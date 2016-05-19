@@ -2,11 +2,12 @@ package io.swagger.codegen.languages;
 
 import io.swagger.codegen.*;
 import io.swagger.models.Operation;
-
+import io.swagger.models.Path;
+import io.swagger.models.Swagger;
 import java.io.File;
 import java.util.*;
 
-public class SpringMVCServerCodegen extends JavaClientCodegen {
+public class SpringMVCServerCodegen extends JavaClientCodegen implements CodegenConfig{
     public static final String CONFIG_PACKAGE = "configPackage";
     protected String title = "Petstore Server";
     protected String configPackage = "";
@@ -17,6 +18,7 @@ public class SpringMVCServerCodegen extends JavaClientCodegen {
         outputFolder = "generated-code/javaSpringMVC";
         modelTemplateFiles.put("model.mustache", ".java");
         apiTemplateFiles.put(templateFileName, ".java");
+        apiTestTemplateFiles.clear(); // TODO: add test template
         embeddedTemplateDir = templateDir = "JavaSpringMVC";
         apiPackage = "io.swagger.api";
         modelPackage = "io.swagger.model";
@@ -58,6 +60,11 @@ public class SpringMVCServerCodegen extends JavaClientCodegen {
     @Override
     public void processOpts() {
         super.processOpts();
+
+        // clear model and api doc template as this codegen
+        // does not support auto-generated markdown doc at the moment
+        modelDocTemplateFiles.remove("model_doc.mustache");
+        apiDocTemplateFiles.remove("api_doc.mustache");
 
         if (additionalProperties.containsKey(CONFIG_PACKAGE)) {
             this.setConfigPackage((String) additionalProperties.get(CONFIG_PACKAGE));
@@ -114,6 +121,51 @@ public class SpringMVCServerCodegen extends JavaClientCodegen {
         }
         opList.add(co);
         co.baseName = basePath;
+    }
+    
+    @Override
+    public void preprocessSwagger(Swagger swagger) {
+    	System.out.println("preprocessSwagger");
+        if ("/".equals(swagger.getBasePath())) {
+            swagger.setBasePath("");
+        }
+
+        String host = swagger.getHost();
+        String port = "8080";
+        if (host != null) {
+            String[] parts = host.split(":");
+            if (parts.length > 1) {
+                port = parts[1];
+            }
+        }
+        
+        this.additionalProperties.put("serverPort", port);
+        if (swagger != null && swagger.getPaths() != null) {
+            for (String pathname : swagger.getPaths().keySet()) {
+                Path path = swagger.getPath(pathname);
+                if (path.getOperations() != null) {
+                    for (Operation operation : path.getOperations()) {
+                        if (operation.getTags() != null) {
+                            List<Map<String, String>> tags = new ArrayList<Map<String, String>>();
+                            for (String tag : operation.getTags()) {
+                                Map<String, String> value = new HashMap<String, String>();
+                                value.put("tag", tag);
+                                value.put("hasMore", "true");
+                                tags.add(value);
+                            }
+                            if (tags.size() > 0) {
+                                tags.get(tags.size() - 1).remove("hasMore");
+                            }
+                            if (operation.getTags().size() > 0) {
+                                String tag = operation.getTags().get(0);
+                                operation.setTags(Arrays.asList(tag));
+                            }
+                            operation.setVendorExtension("x-tags", tags);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override

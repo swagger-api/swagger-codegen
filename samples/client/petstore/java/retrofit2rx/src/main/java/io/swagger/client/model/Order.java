@@ -26,39 +26,45 @@ public class Order   {
   private Date shipDate = null;
 
 
-public enum StatusEnum {
-  @SerializedName("placed")
-  PLACED("placed"),
+  /**
+   * Order Status
+   */
+  public enum StatusEnum {
+    @SerializedName("placed")
+    PLACED("placed"),
 
-  @SerializedName("approved")
-  APPROVED("approved"),
+    @SerializedName("approved")
+    APPROVED("approved"),
 
-  @SerializedName("delivered")
-  DELIVERED("delivered");
+    @SerializedName("delivered")
+    DELIVERED("delivered");
 
-  private String value;
+    private String value;
 
-  StatusEnum(String value) {
-    this.value = value;
+    StatusEnum(String value) {
+      this.value = value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
   }
-
-  @Override
-  public String toString() {
-    return value;
-  }
-}
 
   @SerializedName("status")
   private StatusEnum status = null;
 
   @SerializedName("complete")
-  private Boolean complete = null;
+  private Boolean complete = false;
 
   /**
    **/
   @ApiModelProperty(value = "")
   public Long getId() {
     return id;
+  }
+  public void setId(Long id) {
+    this.id = id;
   }
 
   /**

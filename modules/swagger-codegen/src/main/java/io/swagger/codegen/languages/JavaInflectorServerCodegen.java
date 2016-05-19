@@ -25,6 +25,7 @@ public class JavaInflectorServerCodegen extends JavaClientCodegen {
         sourceFolder = "src/gen/java";
         modelTemplateFiles.put("model.mustache", ".java");
         apiTemplateFiles.put("api.mustache", ".java");
+        apiTestTemplateFiles.clear(); // TODO: add test template
         embeddedTemplateDir = templateDir = "JavaInflector";
         invokerPackage = "io.swagger.handler";
         artifactId = "swagger-inflector-server";
@@ -69,6 +70,11 @@ public class JavaInflectorServerCodegen extends JavaClientCodegen {
     @Override
     public void processOpts() {
         super.processOpts();
+
+        // clear model and api doc template as this codegen
+        // does not support auto-generated markdown doc at the moment
+        modelDocTemplateFiles.remove("model_doc.mustache");
+        apiDocTemplateFiles.remove("api_doc.mustache");
 
         supportingFiles.clear();
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));

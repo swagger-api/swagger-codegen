@@ -1,14 +1,22 @@
-package swagger
+package petstore
 
 import (
+	"net/http"
 )
 
+type APIResponse struct {
+	*http.Response
+	Message string `json:"message,omitempty"`
+}
 
-type ApiResponse struct {
-    
-    Code  int32  `json:"code,omitempty"`
-    
-    Type_  string  `json:"type,omitempty"`
-    
-    Message  string  `json:"message,omitempty"`
+func NewAPIResponse(r *http.Response) *APIResponse {
+
+	response := &APIResponse{Response: r}
+	return response
+}
+
+func NewAPIResponseWithError(errorMessage string) *APIResponse {
+
+	response := &APIResponse{Message: errorMessage}
+	return response
 }

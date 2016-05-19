@@ -6,6 +6,7 @@ io.swagger.codegen.languages.DartClientCodegen
 io.swagger.codegen.languages.FlashClientCodegen
 io.swagger.codegen.languages.FlaskConnexionCodegen
 io.swagger.codegen.languages.GoClientCodegen
+io.swagger.codegen.languages.GroovyClientCodegen
 io.swagger.codegen.languages.JavaClientCodegen
 io.swagger.codegen.languages.JavaJerseyServerCodegen
 io.swagger.codegen.languages.JavaCXFServerCodegen
@@ -26,7 +27,9 @@ io.swagger.codegen.languages.ScalaClientCodegen
 io.swagger.codegen.languages.ScalatraServerCodegen
 io.swagger.codegen.languages.SilexServerCodegen
 io.swagger.codegen.languages.SinatraServerCodegen
+io.swagger.codegen.languages.Rails5ServerCodegen
 io.swagger.codegen.languages.SlimFrameworkServerCodegen
+io.swagger.codegen.languages.SpringBootServerCodegen
 io.swagger.codegen.languages.SpringMVCServerCodegen
 io.swagger.codegen.languages.StaticDocCodegen
 io.swagger.codegen.languages.StaticHtmlGenerator
@@ -37,6 +40,7 @@ io.swagger.codegen.languages.TizenClientCodegen
 io.swagger.codegen.languages.TypeScriptAngular2ClientCodegen
 io.swagger.codegen.languages.TypeScriptAngularClientCodegen
 io.swagger.codegen.languages.TypeScriptNodeClientCodegen
+io.swagger.codegen.languages.TypeScriptFetchClientCodegen
 io.swagger.codegen.languages.AkkaScalaClientCodegen
 io.swagger.codegen.languages.CsharpDotNet2ClientCodegen
 io.swagger.codegen.languages.ClojureClientCodegen

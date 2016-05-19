@@ -199,6 +199,9 @@
             </plugin>
         </plugins>
     </reporting>
+    <properties>
+        <diffutils-version>1.2.1</diffutils-version>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>io.swagger</groupId>
@@ -252,8 +255,8 @@
             <version>${slf4j-version}</version>
         </dependency>
         <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
             <version>${commons-lang-version}</version>
         </dependency>
         <dependency>
@@ -279,6 +282,13 @@
 <!--             <version>${jmockit-version}</version> -->
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.googlecode.java-diff-utils</groupId>
+            <artifactId>diffutils</artifactId>
+            <version>${diffutils-version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
     <repositories>
         <repository>

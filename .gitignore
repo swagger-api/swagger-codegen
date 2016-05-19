@@ -41,6 +41,7 @@ samples/server-generator/scalatra/target
 samples/server-generator/scalatra/output/.history
 
 # nodejs
+**/node_modules/
 samples/server-generator/node/output/node_modules
 samples/server/petstore/nodejs/node_modules
 samples/server/petstore/nodejs-server/node_modules
@@ -91,13 +92,19 @@ samples/client/petstore/swift/SwaggerClientTests/Pods/Pods.xcodeproj/xcshareddat
 samples/client/petstore/csharp/SwaggerClientTest/.vs
 samples/client/petstore/csharp/SwaggerClientTest/obj
 samples/client/petstore/csharp/SwaggerClientTest/bin
-samples/client/petstore/csharp/SwaggerClientTest/Lib/SwaggerClient/vendor/
+samples/client/petstore/csharp/SwaggerClientTest/packages
 samples/client/petstore/csharp/SwaggerClientTest/bin/Debug/
 samples/client/petstore/csharp/SwaggerClientTest/obj/Debug/
-samples/client/petstore/csharp/SwaggerClientTest/Lib/SwaggerClient/nuget.exe
 samples/client/petstore/csharp/SwaggerClientTest/TestResult.xml
 samples/client/petstore/csharp/SwaggerClientTest/nuget.exe
 samples/client/petstore/csharp/SwaggerClientTest/testrunner/
+samples/client/petstore/csharp/SwaggerClient/.vs
+samples/client/petstore/csharp/SwaggerClient/nuget.exe
+samples/client/petstore/csharp/SwaggerClient/obj
+samples/client/petstore/csharp/SwaggerClient/bin
+samples/client/petstore/csharp/SwaggerClient/obj/Debug/
+samples/client/petstore/csharp/SwaggerClient/bin/Debug/
+samples/client/petstore/csharp/SwaggerClient/packages
 
 # Python
 *.pyc
@@ -111,3 +118,9 @@ dists/
 
 samples/client/petstore/python/.projectile
 samples/client/petstore/python/.venv/
+
+# ts
+samples/client/petstore/typescript-node/npm/node_modules
+samples/client/petstore/typescript-fetch/**/dist/
+samples/client/petstore/typescript-fetch/**/typings
+

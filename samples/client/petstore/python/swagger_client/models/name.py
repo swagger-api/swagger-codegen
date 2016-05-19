@@ -20,6 +20,7 @@ Copyright 2016 SmartBear Software
 
 from pprint import pformat
 from six import iteritems
+import re
 
 
 class Name(object):
@@ -38,16 +39,22 @@ class Name(object):
         """
         self.swagger_types = {
             'name': 'int',
-            'snake_case': 'int'
+            'snake_case': 'int',
+            '_property': 'str',
+            '_123_number': 'int'
         }
 
         self.attribute_map = {
             'name': 'name',
-            'snake_case': 'snake_case'
+            'snake_case': 'snake_case',
+            '_property': 'property',
+            '_123_number': '123Number'
         }
 
         self._name = None
         self._snake_case = None
+        self.__property = None
+        self.__123_number = None
 
     @property
     def name(self):
@@ -69,6 +76,7 @@ class Name(object):
         :param name: The name of this Name.
         :type: int
         """
+        
         self._name = name
 
     @property
@@ -91,7 +99,54 @@ class Name(object):
         :param snake_case: The snake_case of this Name.
         :type: int
         """
+        
         self._snake_case = snake_case
+
+    @property
+    def _property(self):
+        """
+        Gets the _property of this Name.
+
+
+        :return: The _property of this Name.
+        :rtype: str
+        """
+        return self.__property
+
+    @_property.setter
+    def _property(self, _property):
+        """
+        Sets the _property of this Name.
+
+
+        :param _property: The _property of this Name.
+        :type: str
+        """
+        
+        self.__property = _property
+
+    @property
+    def _123_number(self):
+        """
+        Gets the _123_number of this Name.
+
+
+        :return: The _123_number of this Name.
+        :rtype: int
+        """
+        return self.__123_number
+
+    @_123_number.setter
+    def _123_number(self, _123_number):
+        """
+        Sets the _123_number of this Name.
+
+
+        :param _123_number: The _123_number of this Name.
+        :type: int
+        """
+        
+        self.__123_number = _123_number
 
     def to_dict(self):
         """

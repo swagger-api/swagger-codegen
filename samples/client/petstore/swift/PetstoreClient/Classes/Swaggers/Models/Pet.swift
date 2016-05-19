@@ -28,7 +28,6 @@ public class Pet: JSONEncodable {
     func encodeToJSON() -> AnyObject {
         var nillableDictionary = [String:AnyObject?]()
         nillableDictionary["id"] = self.id?.encodeToJSON()
-        nillableDictionary["id"] = self.id?.encodeToJSON()
         nillableDictionary["category"] = self.category?.encodeToJSON()
         nillableDictionary["name"] = self.name
         nillableDictionary["photoUrls"] = self.photoUrls?.encodeToJSON()

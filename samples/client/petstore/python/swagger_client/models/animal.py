@@ -20,6 +20,7 @@ Copyright 2016 SmartBear Software
 
 from pprint import pformat
 from six import iteritems
+import re
 
 
 class Animal(object):
@@ -37,14 +38,17 @@ class Animal(object):
                                   and the value is json key in definition.
         """
         self.swagger_types = {
-            'class_name': 'str'
+            'class_name': 'str',
+            'color': 'str'
         }
 
         self.attribute_map = {
-            'class_name': 'className'
+            'class_name': 'className',
+            'color': 'color'
         }
 
         self._class_name = None
+        self._color = 'red'
 
     @property
     def class_name(self):
@@ -66,7 +70,31 @@ class Animal(object):
         :param class_name: The class_name of this Animal.
         :type: str
         """
+        
         self._class_name = class_name
+
+    @property
+    def color(self):
+        """
+        Gets the color of this Animal.
+
+
+        :return: The color of this Animal.
+        :rtype: str
+        """
+        return self._color
+
+    @color.setter
+    def color(self, color):
+        """
+        Sets the color of this Animal.
+
+
+        :param color: The color of this Animal.
+        :type: str
+        """
+        
+        self._color = color
 
     def to_dict(self):
         """

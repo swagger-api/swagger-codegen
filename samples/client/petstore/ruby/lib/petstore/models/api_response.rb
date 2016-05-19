@@ -1,7 +1,7 @@
 =begin
 Swagger Petstore
 
-This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose.
+This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\ 
 
 OpenAPI spec version: 1.0.0
 Contact: apiteam@swagger.io
@@ -50,19 +50,34 @@ module Petstore
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}){|(k,v), h| h[k.to_sym] = v}
 
-      if attributes[:'code']
+      if attributes.has_key?(:'code')
         self.code = attributes[:'code']
       end
-      if attributes[:'type']
+
+      if attributes.has_key?(:'type')
         self.type = attributes[:'type']
       end
-      if attributes[:'message']
+
+      if attributes.has_key?(:'message')
         self.message = attributes[:'message']
       end
+
+    end
+
+    # Show invalid properties with the reasons. Usually used together with valid?
+    # @return Array for valid properies with the reasons
+    def list_invalid_properties
+      invalid_properties = Array.new
+      return invalid_properties
+    end
+
+    # Check to see if the all the properties in the model are valid
+    # @return true if the model is valid
+    def valid?
     end
 
     # Checks equality by comparing each attribute.
-    # @param [Object] Object to be compared 
+    # @param [Object] Object to be compared
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
@@ -72,7 +87,7 @@ module Petstore
     end
 
     # @see the `==` method
-    # @param [Object] Object to be compared 
+    # @param [Object] Object to be compared
     def eql?(o)
       self == o
     end
@@ -171,7 +186,7 @@ module Petstore
 
     # Outputs non-array value in the form of hash
     # For object, use to_hash. Otherwise, just return the value
-    # @param [Object] value Any valid value 
+    # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
     def _to_hash(value)
       if value.is_a?(Array)

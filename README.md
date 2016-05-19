@@ -28,8 +28,8 @@ Check out [Swagger-Spec](https://github.com/OAI/OpenAPI-Specification) for addit
       - [Run docker in Vagrant](#run-docker-in-vagrant)
       - [Public Docker image](#public-docker-image)
     - [Homebrew](#homebrew)
+  - [Getting Started](#getting-started)
   - Generators
-    - [PureCloud Libraries](#purecloud-libraries)
     - [To generate a sample client library](#to-generate-a-sample-client-library)
     - [Generating libraries from your server](#generating-libraries-from-your-server)
     - [Modifying the client library format](#modifying-the-client-library-format)
@@ -51,6 +51,7 @@ Check out [Swagger-Spec](https://github.com/OAI/OpenAPI-Specification) for addit
       - [Java JAX-RS (Apache CXF 2 / 3)](#java-jax-rs-apache-cxf-2--3)
       - [Java JAX-RS (Resteasy)](#java-jax-rs-resteasy)      
       - [Java Spring MVC](#java-spring-mvc)
+      - [Java SpringBoot](#java-springboot)
       - [Haskell Servant](#haskell-servant)
       - [ASP.NET 5 Web API](#aspnet-5-web-api)
     - [To build the codegen library](#to-build-the-codegen-library)
@@ -59,6 +60,7 @@ Check out [Swagger-Spec](https://github.com/OAI/OpenAPI-Specification) for addit
   - [Online Generators](#online-generators)
   - [Guidelines for Contribution](https://github.com/swagger-api/swagger-codegen/wiki/Guidelines-for-Contribution)
   - [Companies/Projects using Swagger Codegen](#companiesprojects-using-swagger-codegen)
+  - [Swagger Codegen Core Team](#swagger-codegen-core-team)
   - [License](#license)
 
 
@@ -142,25 +144,27 @@ Here is an example usage:
 ```
 swagger-codegen generate -i http://petstore.swagger.io/v2/swagger.json -l ruby -o /tmp/test/
 ```
+## Getting Started
 
-### PureCloud Libraries
+To generate a PHP client for http://petstore.swagger.io/v2/swagger.json, please run the following
+```sh
+git clone https://github.com/swagger-api/swagger-codegen
+cd swagger-codegen
+mvn clean package
+java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
+   -i http://petstore.swagger.io/v2/swagger.json \
+   -l php \
+   -o /var/tmp/php_api_client
+```
+(if you're on Windows, replace the last command with `java -jar modules\swagger-codegen-cli\target\swagger-codegen-cli.jar generate -i http://petstore.swagger.io/v2/swagger.json -l php -o c:\temp\php_api_client`)
 
-For each language, a PureCloud-specific class extending ````DefaultCodegen```` will be created in ````modules\swagger-codegen\src\main\java\io\swagger\codegen\languages\```` named ````PureCloud*ClientCodegen.java```` as well as a shell script in ````bin\```` named ````purecloud-*.sh```` to generate a library for the language. This pattern should be followed for additional languages.
+You can also download the JAR (latest relesae) directly from [maven.org]( http://central.maven.org/maven2/io/swagger/swagger-codegen/2.1.6/swagger-codegen-2.1.6.jar)
 
-After making any changes to the project's code, rebuild it from the root directory with ````mvn clean package````. The ````clean```` command is important because Maven doesn't seem to do a good job of rebuilding if you don't explicitly tell it to clean. After building, run one of the following generation scripts.
+To get a list of **general** options available, please run `java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar help generate`
 
-#### C# (.NET DLL)
+To get a list of PHP specified options (which can be passed to the generator with a config file via the `-c` option), please run `java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar config-help -l php`
 
-##### Configuration
-* Update assembly info, including the DLL's version number, in ````modules\swagger-codegen\src\main\java\io\swagger\codegen\languages\PureCloudCSharpClientCodegen.java````
-* To change environments, change the URL used on line 29 in ````bin\purecloud-csharp.sh````
-* To fix any type mappings, add them to ````PureCloudCSharpClientCodegen.java```` in the constructor via ````typeMapping.put("swaggerType", "destinationType");````. If the change is a general concern for C#, not a PureCloud-specific override, add it to ````CSharpClientCodegen.java```` and submit it to the master repo as a PR.
-
-##### Generation
-1. Run the generator ````bin\purecloud-csharp.sh > dists\logs\csharp-buildlog.txt````
-2. CD to build directory ````cd dists\purecloud\csharp````
-3. Compile the DLL ````compile.bat > build.txt````
-
+## Generators
 
 ### To generate a sample client library
 You can build a client against the swagger sample [petstore](http://petstore.swagger.io) API as follows:
@@ -169,7 +173,7 @@ You can build a client against the swagger sample [petstore](http://petstore.swa
 ./bin/java-petstore.sh
 ```
 
-(On Windows, run `./bin/windows/java-petstore.bat` instead)
+(On Windows, run `.\bin\windows\java-petstore.bat` instead)
 
 This will run the generator with this command:
 
@@ -380,6 +384,26 @@ To control the specific files being generated, you can pass a CSV list of what y
 
 # generate the User model and the supportingFile `StringUtil.java`:
 -Dmodels=User -DsupportingFiles=StringUtil.java
+```
+
+To control generation of docs and tests for api and models, pass false to the option. For api, these options are  `-DapiTest=false` and `-DapiDocs=false`. For models, `-DmodelTest=false` and `-DmodelDocs=false`.
+These options default to true and don't limit the generation of the feature options listed above (like `-Dapi`):
+
+```
+# generate only models (with tests and documentation)
+java -Dmodels {opts}
+
+# generate only models (with tests but no documentation)
+java -Dmodels -DmodelDocs=false {opts}
+
+# generate only User and Pet models (no tests and no documentation)
+java -Dmodels=User,Pet -DmodelTests=false {opts}
+
+# generate only apis (without tests)
+java -Dapis -DapiTests=false {opts}
+
+# generate only apis (modelTests option is ignored)
+java -Dapis -DmodelTests=false {opts}
 ```
 
 When using selective generation, _only_ the templates needed for the specific generation will be used.
@@ -604,7 +628,7 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
 ```
 java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -i http://petstore.swagger.io/v2/swagger.json \
-  -l silex \
+  -l silex-PHP \
   -o samples/server/petstore/silex
 ```
 
@@ -686,6 +710,31 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -o samples/server/petstore/spring-mvc
 ```
 
+### Java SpringBoot
+
+```
+java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
+  -i http://petstore.swagger.io/v2/swagger.json \
+  -l springboot \
+  -o samples/server/petstore/springboot
+```
+
+You can also set a Json file with basePackage & configPackage properties :  
+Example : 
+```
+{
+"basePackage":"io.swagger",
+"configPackage":"io.swagger.config"
+}
+```
+For use it  add option ```-c myOptions.json```  to the generation command    
+
+To Use-it :
+in the generated folder try ``` mvn package ``` for build jar.  
+Start your server  ``` java -jar target/swagger-springboot-server-1.0.0.jar ```  
+SpringBoot listening on default port 8080
+
+
 ### Haskell Servant
 
 ```
@@ -761,6 +810,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Acunetix](https://www.acunetix.com/)
 - [Atlassian](https://www.atlassian.com/)
 - [beemo](http://www.beemo.eu)
+- [bitly](https://bitly.com)
 - [Cachet Financial](http://www.cachetfinancial.com/)
 - [CloudBoost](https://www.CloudBoost.io/)
 - [Cupix](http://www.cupix.com)
@@ -770,6 +820,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [everystory.us](http://everystory.us)
 - [Expected Behavior](http://www.expectedbehavior.com/)
 - [FH Münster - University of Applied Sciences](http://www.fh-muenster.de)
+- [IMS Health](http://www.imshealth.com/en/solution-areas/technology-and-applications)
 - [Interactive Intelligence](http://developer.mypurecloud.com/)
 - [LANDR Audio](https://www.landr.com/)
 - [LiveAgent](https://www.ladesk.com/)
@@ -777,17 +828,108 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [nViso](http://www.nviso.ch/)
 - [Okiok](https://www.okiok.com)
 - [OSDN](https://osdn.jp)
+- [PagerDuty](https://www.pagerduty.com)
+- [Pepipost](https://www.pepipost.com)
 - [Pixoneye](http://www.pixoneye.com/)
 - [PostAffiliatePro](https://www.postaffiliatepro.com/)
 - [Reload! A/S](https://reload.dk/) 
+- [REstore](https://www.restore.eu)
 - [Royal Bank of Canada (RBC)](http://www.rbc.com/canada.html)
 - [SmartRecruiters](https://www.smartrecruiters.com/)
 - [StyleRecipe](http://stylerecipe.co.jp)
 - [Svenska Spel AB](https://www.svenskaspel.se/)
 - [ThoughtWorks](https://www.thoughtworks.com)
 - [uShip](https://www.uship.com/)
+- [WEXO A/S](https://www.wexo.dk/)
 - [Zalando](https://tech.zalando.com)
 - [ZEEF.com](https://zeef.com/)
+
+# Swagger Codegen Core Team
+
+Swaagger Codegen core team members are contributors who have been making signficiant contributions (review issues, fix bugs, make enhancements, etc) to the project on a regular basis.
+
+## API Clients
+| Langauges     | Core Team (join date) | 
+|:-------------|:-------------| 
+| ActionScript | |
+| C++      |  |  
+| C#      | @jimschubert (2016/05/01) |  |
+| Clojure | @xhh (2016/05/01) |
+| Dart      |  |  
+| Groovy     |  |  
+| Go     |  @guohuang (2016/05/01) @neilotoole (2016/05/01) |  
+| Java      | @cbornet (2016/05/01) @xhh (2016/05/01) |
+| NodeJS/Javascript | @xhh (2016/05/01) | 
+| ObjC      | @mateuszmackowiak (2016/05/09) |
+| Perl      | @wing328 (2016/05/01) |
+| PHP      | @arnested (2016/05/01) |
+| Python   | @scottrw93 (2016/05/01) |
+| Ruby      | @wing328 (2016/05/01) |
+| Scala     |  |
+| Swift     | @jaz-ah (2016/05/01)  @Edubits (2016/05/01) |
+| TypeScript (Node) | @Vrolijkx (2016/05/01) | 
+| TypeScript (Angular1) | @Vrolijkx (2016/05/01) | 
+| TypeScript (Angular2) | @Vrolijkx (2016/05/01) |
+| TypeScript (Fetch) |  |
+## Server Stubs
+| Langauges     | Core Team (date joined) | 
+|:------------- |:-------------| 
+| C# ASP.NET5 |  @jimschubert (2016/05/01) |
+| Haskell Servant |  |
+| Java Spring Boot |  |
+| Java SpringMVC | @kolyjjj (2016/05/01) |
+| Java JAX-RS |  |
+| NodeJS | @kolyjjj (2016/05/01) |  
+| PHP Lumen | @abcsum (2016/05/01) |
+| PHP Silex |  |
+| PHP Slim  |  |
+| Python Flask  |  |
+| Ruby Sinatra     | @wing328 (2016/05/01) |  |
+| Scala Scalatra |  |  |
+
+## Template Creator
+Here is a list of template creators:
+ * API Clients:
+   * Akka-Scala: @cchafer 
+   * C# (.NET 2.0): @who
+   * Clojure: @xhh
+   * Dart: @yissachar  
+   * Groovy: @victorgit  
+   * Go: @wing328  
+   * Java (Retrofit): @0legg
+   * Java (Retrofi2): @emilianobonassi
+   * Java (Jersey2): @xhh 
+   * Java (okhttp-gson): @xhh
+   * Javascript/NodeJS: @jfiala  
+   * Javascript (Closure-annotated Angular) @achew22
+   * Perl: @wing328
+   * Swift: @tkqubo
+   * TypeScript (Node):  @mhardorf 
+   * TypeScript (Angular1):  @mhardorf 
+   * TypeScript (Fetch): @leonyu
+   * TypeScript (Angular2): @roni-frantchi
+ * Server Stubs
+   * C# ASP.NET5: @jimschubert
+   * Haskell Servant: @algas
+   * Java Spring Boot: @diyfr
+   * JAX-RS RestEasy: @chameleon82
+   * JAX-RS CXF: @hiveship 
+   * PHP Lumen: @abcsum
+   * PHP Slim: @jfastnacht
+   * Ruby on Rails 5: @zlx 
+
+## How to join the core team
+
+Here are the requirements to become a core team member:
+- rank within top 50 in https://github.com/swagger-api/swagger-codegen/graphs/contributors
+  - to contribute, here are some good [starting points](https://github.com/swagger-api/swagger-codegen/issues?q=is%3Aopen+is%3Aissue+label%3A%22Need+community+contribution%22) 
+- regular contributions to the project
+  - about 3 hours per week
+  - for contribution, it can be addressing issues, reviewing PRs submitted by others, submitting PR to fix bugs or make enhancements, etc
+
+ To join the core team, please reach out to wing328hk@gmail.com (@wing328) for more information.
+ 
+ To become a Template Creator, simply submit a PR for new API client (e.g. Rust, Elixir) or server stub (e.g. Ruby Grape) generator.
 
 License
 -------

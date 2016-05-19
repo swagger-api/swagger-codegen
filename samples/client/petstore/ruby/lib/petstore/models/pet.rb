@@ -1,7 +1,7 @@
 =begin
 Swagger Petstore
 
-This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose.
+This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\ 
 
 OpenAPI spec version: 1.0.0
 Contact: apiteam@swagger.io
@@ -63,27 +63,57 @@ module Petstore
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}){|(k,v), h| h[k.to_sym] = v}
 
-      if attributes[:'id']
+      if attributes.has_key?(:'id')
         self.id = attributes[:'id']
       end
-      if attributes[:'category']
+
+      if attributes.has_key?(:'category')
         self.category = attributes[:'category']
       end
-      if attributes[:'name']
+
+      if attributes.has_key?(:'name')
         self.name = attributes[:'name']
       end
-      if attributes[:'photoUrls']
+
+      if attributes.has_key?(:'photoUrls')
         if (value = attributes[:'photoUrls']).is_a?(Array)
           self.photo_urls = value
         end
       end
-      if attributes[:'tags']
+
+      if attributes.has_key?(:'tags')
         if (value = attributes[:'tags']).is_a?(Array)
           self.tags = value
         end
       end
-      if attributes[:'status']
+
+      if attributes.has_key?(:'status')
         self.status = attributes[:'status']
+      end
+
+    end
+
+    # Show invalid properties with the reasons. Usually used together with valid?
+    # @return Array for valid properies with the reasons
+    def list_invalid_properties
+      invalid_properties = Array.new
+      return invalid_properties
+    end
+
+    # Check to see if the all the properties in the model are valid
+    # @return true if the model is valid
+    def valid?
+      if @name.nil?
+        return false
+      end
+
+      if @photo_urls.nil?
+        return false
+      end
+
+      allowed_values = ["available", "pending", "sold"]
+      if @status && !allowed_values.include?(@status)
+        return false
       end
     end
 
@@ -92,13 +122,13 @@ module Petstore
     def status=(status)
       allowed_values = ["available", "pending", "sold"]
       if status && !allowed_values.include?(status)
-        fail "invalid value for 'status', must be one of #{allowed_values}"
+        fail ArgumentError, "invalid value for 'status', must be one of #{allowed_values}."
       end
       @status = status
     end
 
     # Checks equality by comparing each attribute.
-    # @param [Object] Object to be compared 
+    # @param [Object] Object to be compared
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
@@ -111,7 +141,7 @@ module Petstore
     end
 
     # @see the `==` method
-    # @param [Object] Object to be compared 
+    # @param [Object] Object to be compared
     def eql?(o)
       self == o
     end
@@ -210,7 +240,7 @@ module Petstore
 
     # Outputs non-array value in the form of hash
     # For object, use to_hash. Otherwise, just return the value
-    # @param [Object] value Any valid value 
+    # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
     def _to_hash(value)
       if value.is_a?(Array)

@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
     public static final String CLASS_PREFIX = "classPrefix";
@@ -28,6 +28,9 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
     public static final String AUTHOR_EMAIL = "authorEmail";
     public static final String GIT_REPO_URL = "gitRepoURL";
     public static final String LICENSE = "license";
+    
+    public static final String BinaryDataType = "ObjcClientCodegenBinaryData";
+    
     protected Set<String> foundationClasses = new HashSet<String>();
     protected String podName = "SwaggerClient";
     protected String podVersion = "1.0.0";
@@ -39,6 +42,11 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
     protected String[] specialWords = {"new", "copy"};
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
+    protected String modelFilesPath = "Model/";
+    protected String coreFilesPath = "Core/";
+    protected String apiFilesPath = "Api/";
+    
+    protected Set<String> advancedMapingTypes = new HashSet<String>();
 
     public ObjcClientCodegen() {
         super();
@@ -66,6 +74,18 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
         defaultIncludes.add("NSMutableArray");
         defaultIncludes.add("NSMutableDictionary");
 
+        defaultIncludes.add(BinaryDataType);
+
+        advancedMapingTypes.add("NSDictionary");
+        advancedMapingTypes.add("NSArray");
+        advancedMapingTypes.add("NSMutableArray");
+        advancedMapingTypes.add("NSMutableDictionary");
+        advancedMapingTypes.add("NSObject");
+        advancedMapingTypes.add("NSNumber");
+        advancedMapingTypes.add("NSURL");
+        advancedMapingTypes.add("NSString");
+        advancedMapingTypes.add("NSDate");
+
         languageSpecificPrimitives.clear();
         languageSpecificPrimitives.add("NSNumber");
         languageSpecificPrimitives.add("NSString");
@@ -92,10 +112,8 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("List", "NSArray");
         typeMapping.put("object", "NSObject");
         typeMapping.put("file", "NSURL");
-        //TODO binary should be mapped to byte array
-        // mapped to String as a workaround
-        typeMapping.put("binary", "NSString");
-        typeMapping.put("ByteArray", "NSString");
+        typeMapping.put("binary", BinaryDataType);
+        typeMapping.put("ByteArray", BinaryDataType);
 
         // ref: http://www.tutorialspoint.com/objective_c/objective_c_basic_syntax.htm
         setReservedWordsLowerCase(
@@ -208,30 +226,34 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
         additionalProperties.put("apiDocPath", apiDocPath);
         additionalProperties.put("modelDocPath", modelDocPath);
 
-        String swaggerFolder = podName;
+        modelPackage = podName;
+        apiPackage = podName;
 
-        modelPackage = swaggerFolder;
-        apiPackage = swaggerFolder;
-
-        supportingFiles.add(new SupportingFile("Object-header.mustache", swaggerFolder, classPrefix + "Object.h"));
-        supportingFiles.add(new SupportingFile("Object-body.mustache", swaggerFolder, classPrefix + "Object.m"));
-        supportingFiles.add(new SupportingFile("QueryParamCollection-header.mustache", swaggerFolder, classPrefix + "QueryParamCollection.h"));
-        supportingFiles.add(new SupportingFile("QueryParamCollection-body.mustache", swaggerFolder, classPrefix + "QueryParamCollection.m"));
-        supportingFiles.add(new SupportingFile("ApiClient-header.mustache", swaggerFolder, classPrefix + "ApiClient.h"));
-        supportingFiles.add(new SupportingFile("ApiClient-body.mustache", swaggerFolder, classPrefix + "ApiClient.m"));
-        supportingFiles.add(new SupportingFile("JSONResponseSerializer-header.mustache", swaggerFolder, classPrefix + "JSONResponseSerializer.h"));
-        supportingFiles.add(new SupportingFile("JSONResponseSerializer-body.mustache", swaggerFolder, classPrefix + "JSONResponseSerializer.m"));
-        supportingFiles.add(new SupportingFile("JSONRequestSerializer-body.mustache", swaggerFolder, classPrefix + "JSONRequestSerializer.m"));
-        supportingFiles.add(new SupportingFile("JSONRequestSerializer-header.mustache", swaggerFolder, classPrefix + "JSONRequestSerializer.h"));
-        supportingFiles.add(new SupportingFile("JSONValueTransformer+ISO8601.m", swaggerFolder, "JSONValueTransformer+ISO8601.m"));
-        supportingFiles.add(new SupportingFile("JSONValueTransformer+ISO8601.h", swaggerFolder, "JSONValueTransformer+ISO8601.h"));
-        supportingFiles.add(new SupportingFile("Configuration-body.mustache", swaggerFolder, classPrefix + "Configuration.m"));
-        supportingFiles.add(new SupportingFile("Configuration-header.mustache", swaggerFolder, classPrefix + "Configuration.h"));
+        supportingFiles.add(new SupportingFile("Object-header.mustache", coreFileFolder(), classPrefix + "Object.h"));
+        supportingFiles.add(new SupportingFile("Object-body.mustache",  coreFileFolder(), classPrefix + "Object.m"));
+        supportingFiles.add(new SupportingFile("QueryParamCollection-header.mustache",  coreFileFolder(), classPrefix + "QueryParamCollection.h"));
+        supportingFiles.add(new SupportingFile("QueryParamCollection-body.mustache",  coreFileFolder(), classPrefix + "QueryParamCollection.m"));
+        supportingFiles.add(new SupportingFile("ApiClient-header.mustache",  coreFileFolder(), classPrefix + "ApiClient.h"));
+        supportingFiles.add(new SupportingFile("ApiClient-body.mustache",  coreFileFolder(), classPrefix + "ApiClient.m"));
+        supportingFiles.add(new SupportingFile("JSONResponseSerializer-header.mustache",  coreFileFolder(), classPrefix + "JSONResponseSerializer.h"));
+        supportingFiles.add(new SupportingFile("JSONResponseSerializer-body.mustache",  coreFileFolder(), classPrefix + "JSONResponseSerializer.m"));
+        supportingFiles.add(new SupportingFile("JSONRequestSerializer-body.mustache",  coreFileFolder(), classPrefix + "JSONRequestSerializer.m"));
+        supportingFiles.add(new SupportingFile("JSONRequestSerializer-header.mustache",  coreFileFolder(), classPrefix + "JSONRequestSerializer.h"));
+        supportingFiles.add(new SupportingFile("ResponseDeserializer-body.mustache",  coreFileFolder(), classPrefix + "ResponseDeserializer.m"));
+        supportingFiles.add(new SupportingFile("ResponseDeserializer-header.mustache",  coreFileFolder(), classPrefix + "ResponseDeserializer.h"));
+        supportingFiles.add(new SupportingFile("Sanitizer-body.mustache",  coreFileFolder(), classPrefix + "Sanitizer.m"));
+        supportingFiles.add(new SupportingFile("Sanitizer-header.mustache",  coreFileFolder(), classPrefix + "Sanitizer.h"));
+        supportingFiles.add(new SupportingFile("Logger-body.mustache",  coreFileFolder(), classPrefix + "Logger.m"));
+        supportingFiles.add(new SupportingFile("Logger-header.mustache",  coreFileFolder(), classPrefix + "Logger.h"));
+        supportingFiles.add(new SupportingFile("JSONValueTransformer+ISO8601.m",  coreFileFolder(), "JSONValueTransformer+ISO8601.m"));
+        supportingFiles.add(new SupportingFile("JSONValueTransformer+ISO8601.h",  coreFileFolder(), "JSONValueTransformer+ISO8601.h"));
+        supportingFiles.add(new SupportingFile("Configuration-body.mustache",  coreFileFolder(), classPrefix + "Configuration.m"));
+        supportingFiles.add(new SupportingFile("Configuration-header.mustache",  coreFileFolder(), classPrefix + "Configuration.h"));
+        supportingFiles.add(new SupportingFile("api-protocol.mustache", coreFileFolder(), classPrefix + "Api.h"));
         supportingFiles.add(new SupportingFile("podspec.mustache", "", podName + ".podspec"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
-
 
     }
 
@@ -278,19 +300,26 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
             String innerType = getSwaggerType(inner);
 
             String innerTypeDeclaration = getTypeDeclaration(inner);
-
             if (innerTypeDeclaration.endsWith("*")) {
                 innerTypeDeclaration = innerTypeDeclaration.substring(0, innerTypeDeclaration.length() - 1);
             }
-
+            
+            if(innerTypeDeclaration.equalsIgnoreCase(BinaryDataType)) {
+                return "NSData*";
+            }
             // In this codition, type of property p is array of primitive,
-            // return container type with pointer, e.g. `NSArray* /* NSString */'
-            if (languageSpecificPrimitives.contains(innerType)) {
-                return getSwaggerType(p) + "*" + " /* " + innerTypeDeclaration + " */";
+            // return container type with pointer, e.g. `NSArray*<NSString*>*'
+            if (languageSpecificPrimitives.contains(innerTypeDeclaration)) {
+                return getSwaggerType(p) +  "<" + innerTypeDeclaration + "*>*";
             }
             // In this codition, type of property p is array of model,
             // return container type combine inner type with pointer, e.g. `NSArray<SWGTag>*'
             else {
+                for (String sd : advancedMapingTypes) {
+                    if(innerTypeDeclaration.startsWith(sd)) {
+                        return getSwaggerType(p) + "<" + innerTypeDeclaration + "*>*";
+                    }
+                }
                 return getSwaggerType(p) + "<" + innerTypeDeclaration + ">*";
             }
         } else if (p instanceof MapProperty) {
@@ -298,11 +327,20 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
             Property inner = mp.getAdditionalProperties();
 
             String innerTypeDeclaration = getTypeDeclaration(inner);
-
+            
             if (innerTypeDeclaration.endsWith("*")) {
                 innerTypeDeclaration = innerTypeDeclaration.substring(0, innerTypeDeclaration.length() - 1);
             }
-            return getSwaggerType(p) + "* /* NSString, " + innerTypeDeclaration + " */";
+            if (languageSpecificPrimitives.contains(innerTypeDeclaration)) {
+                return getSwaggerType(p) +  "<NSString*, " + innerTypeDeclaration + "*>*";
+            } else {
+                for (String s : advancedMapingTypes) {
+                    if(innerTypeDeclaration.startsWith(s)) {
+                        return getSwaggerType(p) + "<NSString*, " + innerTypeDeclaration + "*>*";
+                    }
+                }
+                return getSwaggerType(p) + "<NSString*, " + innerTypeDeclaration + ">*";
+            }
         } else {
             String swaggerType = getSwaggerType(p);
 
@@ -419,12 +457,16 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String apiFileFolder() {
-        return outputFolder + File.separatorChar + apiPackage();
+        return (outputFolder + "/"+ apiPackage() + "/" + apiFilesPath).replace("/", File.separator);
     }
 
     @Override
     public String modelFileFolder() {
-        return outputFolder + File.separatorChar + modelPackage();
+        return (outputFolder + "/"+ modelPackage() + "/" + modelFilesPath).replace("/", File.separator);
+    }
+
+    public String coreFileFolder() {
+        return (apiPackage() + "/" + coreFilesPath).replace("/", File.separator);
     }
 
     @Override

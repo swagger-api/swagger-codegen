@@ -23,6 +23,16 @@ public abstract class AbstractJavaJAXRSServerCodegen extends JavaClientCodegen
     public AbstractJavaJAXRSServerCodegen()
     {
         super();
+        apiTestTemplateFiles.clear(); // TODO: add test template
+    }
+
+    @Override
+    public void processOpts() {
+        super.processOpts();
+        // clear model and api doc template as AbstractJavaJAXRSServerCodegen
+        // does not support auto-generated markdown doc at the moment
+        modelDocTemplateFiles.remove("model_doc.mustache");
+        apiDocTemplateFiles.remove("api_doc.mustache");
     }
 
     // ================

@@ -1,5 +1,6 @@
 package io.swagger.client.model;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -8,10 +9,10 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 
 
-
-
-
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-04-13T14:36:33.302+02:00")
+/**
+ * Order
+ */
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-05-13T16:29:08.210Z")
 public class Order   {
   
   private Long id = null;
@@ -19,7 +20,9 @@ public class Order   {
   private Integer quantity = null;
   private Date shipDate = null;
 
-
+  /**
+   * Order Status
+   */
   public enum StatusEnum {
     PLACED("placed"),
     APPROVED("approved"),
@@ -34,18 +37,28 @@ public class Order   {
     @Override
     @JsonValue
     public String toString() {
-      return value;
+      return String.valueOf(value);
     }
   }
 
   private StatusEnum status = null;
-  private Boolean complete = null;
+  private Boolean complete = false;
 
+  
+  /**
+   **/
+  public Order id(Long id) {
+    this.id = id;
+    return this;
+  }
   
   @ApiModelProperty(example = "null", value = "")
   @JsonProperty("id")
   public Long getId() {
     return id;
+  }
+  public void setId(Long id) {
+    this.id = id;
   }
 
 

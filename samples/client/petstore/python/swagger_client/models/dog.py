@@ -20,6 +20,7 @@ Copyright 2016 SmartBear Software
 
 from pprint import pformat
 from six import iteritems
+import re
 
 
 class Dog(object):
@@ -38,15 +39,18 @@ class Dog(object):
         """
         self.swagger_types = {
             'class_name': 'str',
+            'color': 'str',
             'breed': 'str'
         }
 
         self.attribute_map = {
             'class_name': 'className',
+            'color': 'color',
             'breed': 'breed'
         }
 
         self._class_name = None
+        self._color = 'red'
         self._breed = None
 
     @property
@@ -69,7 +73,31 @@ class Dog(object):
         :param class_name: The class_name of this Dog.
         :type: str
         """
+        
         self._class_name = class_name
+
+    @property
+    def color(self):
+        """
+        Gets the color of this Dog.
+
+
+        :return: The color of this Dog.
+        :rtype: str
+        """
+        return self._color
+
+    @color.setter
+    def color(self, color):
+        """
+        Sets the color of this Dog.
+
+
+        :param color: The color of this Dog.
+        :type: str
+        """
+        
+        self._color = color
 
     @property
     def breed(self):
@@ -91,6 +119,7 @@ class Dog(object):
         :param breed: The breed of this Dog.
         :type: str
         """
+        
         self._breed = breed
 
     def to_dict(self):

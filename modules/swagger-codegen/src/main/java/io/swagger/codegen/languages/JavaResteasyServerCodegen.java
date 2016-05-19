@@ -4,7 +4,7 @@ import io.swagger.codegen.*;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.util.*;
@@ -31,6 +31,7 @@ public class JavaResteasyServerCodegen extends JavaClientCodegen implements Code
         apiTemplateFiles.put("apiService.mustache", ".java");
         apiTemplateFiles.put("apiServiceImpl.mustache", ".java");
         apiTemplateFiles.put("apiServiceFactory.mustache", ".java");
+        apiTestTemplateFiles.clear(); // TODO: add test template
         apiPackage = "io.swagger.api";
         modelPackage = "io.swagger.model";
 
@@ -83,6 +84,11 @@ public class JavaResteasyServerCodegen extends JavaClientCodegen implements Code
     @Override
     public void processOpts() {
         super.processOpts();
+
+        // clear model and api doc template as AbstractJavaJAXRSServerCodegen
+        // does not support auto-generated markdown doc at the moment
+        modelDocTemplateFiles.remove("model_doc.mustache");
+        apiDocTemplateFiles.remove("api_doc.mustache");
 
         if (additionalProperties.containsKey(CodegenConstants.IMPL_FOLDER)) {
             implFolder = (String) additionalProperties.get(CodegenConstants.IMPL_FOLDER);

@@ -1,7 +1,7 @@
 =begin
 Swagger Petstore
 
-This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose.
+This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\ 
 
 OpenAPI spec version: 1.0.0
 Contact: apiteam@swagger.io
@@ -23,11 +23,17 @@ module Petstore
 
     attr_accessor :snake_case
 
+    attr_accessor :property
+
+    attr_accessor :_123_number
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'name' => :'name',
-        :'snake_case' => :'snake_case'
+        :'snake_case' => :'snake_case',
+        :'property' => :'property',
+        :'_123_number' => :'123Number'
       }
     end
 
@@ -35,7 +41,9 @@ module Petstore
     def self.swagger_types
       {
         :'name' => :'Integer',
-        :'snake_case' => :'Integer'
+        :'snake_case' => :'Integer',
+        :'property' => :'String',
+        :'_123_number' => :'Integer'
       }
     end
 
@@ -47,25 +55,53 @@ module Petstore
       # convert string to symbol for hash key
       attributes = attributes.each_with_object({}){|(k,v), h| h[k.to_sym] = v}
 
-      if attributes[:'name']
+      if attributes.has_key?(:'name')
         self.name = attributes[:'name']
       end
-      if attributes[:'snake_case']
+
+      if attributes.has_key?(:'snake_case')
         self.snake_case = attributes[:'snake_case']
       end
+
+      if attributes.has_key?(:'property')
+        self.property = attributes[:'property']
+      end
+
+      if attributes.has_key?(:'123Number')
+        self._123_number = attributes[:'123Number']
+      end
+
+    end
+
+    # Show invalid properties with the reasons. Usually used together with valid?
+    # @return Array for valid properies with the reasons
+    def list_invalid_properties
+      invalid_properties = Array.new
+      return invalid_properties
+    end
+
+    # Check to see if the all the properties in the model are valid
+    # @return true if the model is valid
+    def valid?
+      if @name.nil?
+        return false
+      end
+
     end
 
     # Checks equality by comparing each attribute.
-    # @param [Object] Object to be compared 
+    # @param [Object] Object to be compared
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
           name == o.name &&
-          snake_case == o.snake_case
+          snake_case == o.snake_case &&
+          property == o.property &&
+          _123_number == o._123_number
     end
 
     # @see the `==` method
-    # @param [Object] Object to be compared 
+    # @param [Object] Object to be compared
     def eql?(o)
       self == o
     end
@@ -73,7 +109,7 @@ module Petstore
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [name, snake_case].hash
+      [name, snake_case, property, _123_number].hash
     end
 
     # Builds the object from hash
@@ -164,7 +200,7 @@ module Petstore
 
     # Outputs non-array value in the form of hash
     # For object, use to_hash. Otherwise, just return the value
-    # @param [Object] value Any valid value 
+    # @param [Object] value Any valid value
     # @return [Hash] Returns the value in the form of hash
     def _to_hash(value)
       if value.is_a?(Array)

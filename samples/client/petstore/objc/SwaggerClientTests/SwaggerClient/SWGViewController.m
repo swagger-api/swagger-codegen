@@ -27,19 +27,14 @@
     
     SWGPetApi *api = [[SWGPetApi alloc] init];
     NSURL *file = [NSURL fileURLWithPath:@"/Users/geekerzp/tmp/test.jpg"];
-    [api uploadFileWithPetId:@2 additionalMetadata:@2 file:file completionHandler:^(NSError *error) {
+    [api uploadFileWithPetId:@2 additionalMetadata:@"2" file:file completionHandler:^(NSError *error) {
         NSLog(@"*** error: %@", error);
     }];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
 - (SWGPet*) createPet {
     SWGPet * pet = [[SWGPet alloc] init];
-    pet._id = [[NSNumber alloc] initWithLong:[[NSDate date] timeIntervalSince1970]];
+    pet._id = @((long) [[NSDate date] timeIntervalSince1970]);
     pet.name = @"monkey";
     
     SWGCategory * category = [[SWGCategory alloc] init];
@@ -53,11 +48,11 @@
     SWGTag *tag2 = [[SWGTag alloc] init];
     tag2._id = [[NSNumber alloc] initWithInteger:arc4random_uniform(100000)];
     tag2.name = @"test tag 2";
-    pet.tags = (NSArray<SWGTag> *)[[NSArray alloc] initWithObjects:tag1, tag2, nil];
+    pet.tags = (NSArray<SWGTag> *) @[tag1, tag2];
 
     pet.status = @"available";
 
-    NSArray * photos = [[NSArray alloc] initWithObjects:@"http://foo.bar.com/3", @"http://foo.bar.com/4", nil];
+    NSArray * photos = @[@"http://foo.bar.com/3", @"http://foo.bar.com/4"];
     pet.photoUrls = photos;
     return pet;
 }
