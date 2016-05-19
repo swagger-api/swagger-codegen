@@ -5,7 +5,7 @@ import io.swagger.codegen.CodegenProperty;
 import io.swagger.models.Model;
 import io.swagger.models.Operation;
 import io.swagger.models.properties.Property;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
