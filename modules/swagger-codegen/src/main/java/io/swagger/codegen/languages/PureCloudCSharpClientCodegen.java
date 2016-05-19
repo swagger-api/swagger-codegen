@@ -24,11 +24,7 @@ public class PureCloudCSharpClientCodegen extends CSharpClientCodegen {
         // Prevents collision between System.Attribute and ININ.PureCloudApi.Model.Attribute
         typeMapping.put("Attribute", "ININ.PureCloudApi.Model.Attribute");
 
-        // C# client default
-        setSourceFolder("src" + File.separator + "main" + File.separator + "csharp");
-
         importMapping.remove("LocalDateTime");
-
     }
 
     @Override
