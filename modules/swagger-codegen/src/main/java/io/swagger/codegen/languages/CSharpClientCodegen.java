@@ -182,11 +182,37 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         additionalProperties.put("clientPackage", clientPackage);
 
         // Add properties used by AssemblyInfo.mustache
-        additionalProperties.put("packageTitle", packageTitle);
-        additionalProperties.put("packageProductName", packageProductName);
-        additionalProperties.put("packageDescription", packageDescription);
-        additionalProperties.put("packageCompany", packageCompany);
-        additionalProperties.put("packageCopyright", packageCopyright);
+        // {{packageTitle}}
+        if (additionalProperties.containsKey(CodegenConstants.PACKAGE_TITLE)) {
+            packageTitle = (String) additionalProperties.get(CodegenConstants.PACKAGE_TITLE);
+        } else {
+            additionalProperties.put(CodegenConstants.PACKAGE_TITLE, packageTitle);
+        }
+        // {{packageProductName}}
+        if (additionalProperties.containsKey(CodegenConstants.PACKAGE_PRODUCT_NAME)) {
+            packageProductName = (String) additionalProperties.get(CodegenConstants.PACKAGE_PRODUCT_NAME);
+        } else {
+            additionalProperties.put(CodegenConstants.PACKAGE_PRODUCT_NAME, packageProductName);
+        }
+        // {{packageDescription}}
+        if (additionalProperties.containsKey(CodegenConstants.PACKAGE_DESCRIPTION)) {
+            packageDescription = (String) additionalProperties.get(CodegenConstants.PACKAGE_DESCRIPTION);
+        } else {
+            additionalProperties.put(CodegenConstants.PACKAGE_DESCRIPTION, packageDescription);
+        }
+        // {{packageCompany}}
+        if (additionalProperties.containsKey(CodegenConstants.PACKAGE_COMPANY)) {
+            packageCompany = (String) additionalProperties.get(CodegenConstants.PACKAGE_COMPANY);
+        } else {
+            additionalProperties.put(CodegenConstants.PACKAGE_COMPANY, packageCompany);
+        }
+        // {{packageCopyright}}
+        if (additionalProperties.containsKey(CodegenConstants.PACKAGE_COPYRIGHT)) {
+            packageCopyright = (String) additionalProperties.get(CodegenConstants.PACKAGE_COPYRIGHT);
+        } else {
+            additionalProperties.put(CodegenConstants.PACKAGE_COPYRIGHT, packageCopyright);
+        }
+
         additionalProperties.put("emitDefaultValue", optionalEmitDefaultValue);
 
         if (additionalProperties.containsKey(CodegenConstants.DOTNET_FRAMEWORK)) {
