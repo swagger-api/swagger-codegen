@@ -67,7 +67,7 @@ public class {{classname}} {
                 return ResponseEntity.status(HttpStatus.OK.value()).body(result);
            }
         } catch (ApiException ex){
-           Map errors = new HashMap();
+           Map<String,String> errors = new HashMap<String,String>();
            errors.put("Error", ex.getResponseBody());
            return ResponseEntity.status(ex.getHttpStatus().value()).body(errors);
         }
