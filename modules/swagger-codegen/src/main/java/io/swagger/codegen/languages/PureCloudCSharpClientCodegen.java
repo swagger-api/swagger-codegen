@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.util.*;
 
 public class PureCloudCSharpClientCodegen extends CSharpClientCodegen {
@@ -19,7 +20,7 @@ public class PureCloudCSharpClientCodegen extends CSharpClientCodegen {
         super();
 
         // Use C# templates
-        embeddedTemplateDir = templateDir = "csharp";
+        embeddedTemplateDir = templateDir = "purecloud" + File.separator + "csharp";
 
         // Prevents collision between System.Attribute and ININ.PureCloudApi.Model.Attribute
         typeMapping.put("Attribute", "ININ.PureCloudApi.Model.Attribute");
@@ -63,6 +64,14 @@ public class PureCloudCSharpClientCodegen extends CSharpClientCodegen {
             // If we've found the last property already, set it and move on
             if (foundLastValidProperty) {
                 cp.hasMore = true;
+
+                // Prevent trailing commas from readonly props
+                if (cp.isReadOnly != null && cp.isReadOnly) {
+                    cp.hasMoreNonReadOnly = null;
+                } else {
+                    cp.hasMoreNonReadOnly = true;
+                }
+
                 continue;
             }
 
@@ -70,12 +79,22 @@ public class PureCloudCSharpClientCodegen extends CSharpClientCodegen {
             if (cp.isReadOnly == null || !cp.isReadOnly){
                 foundLastValidProperty = true;
                 cp.hasMore = null;
+                cp.hasMoreNonReadOnly = null;
                 continue;
             }
         }
 
         // Make sure last property in list doesn't think there's more
         codegenModel.vars.get(codegenModel.vars.size()-1).hasMore = null;
+
+        // Set hasRequired only if non-readonly properties are required
+        codegenModel.hasRequired = null;
+        for (CodegenProperty cp : codegenModel.vars) {
+            if (cp.isReadOnly == null && cp.required != null && cp.required) {
+                codegenModel.hasRequired = true;
+                break;
+            }
+        }
 
         return codegenModel;
     }
