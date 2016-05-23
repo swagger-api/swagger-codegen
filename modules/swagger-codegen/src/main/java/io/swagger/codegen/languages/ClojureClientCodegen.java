@@ -1,5 +1,11 @@
 package io.swagger.codegen.languages;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.File;
+import java.util.List;
+import java.util.Map;
+
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
@@ -11,11 +17,6 @@ import io.swagger.models.Contact;
 import io.swagger.models.Info;
 import io.swagger.models.License;
 import io.swagger.models.Swagger;
-import org.apache.commons.lang3.StringUtils;
-
-import java.io.File;
-import java.util.Map;
-import java.util.List;
 
 public class ClojureClientCodegen extends DefaultCodegen implements CodegenConfig {
     private static final String PROJECT_NAME = "projectName";
@@ -89,7 +90,7 @@ public class ClojureClientCodegen extends DefaultCodegen implements CodegenConfi
 
         if (swagger.getInfo() != null) {
             Info info = swagger.getInfo();
-            if (projectName == null &&  info.getTitle() != null) {
+            if (projectName == null && info.getTitle() != null) {
                 // when projectName is not specified, generate it from info.title
                 projectName = dashize(info.getTitle());
             }

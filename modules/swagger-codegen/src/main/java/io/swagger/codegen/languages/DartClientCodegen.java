@@ -1,5 +1,10 @@
 package io.swagger.codegen.languages;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
@@ -9,11 +14,6 @@ import io.swagger.codegen.SupportingFile;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
-
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.HashMap;
 
 public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
     public static final String BROWSER_CLIENT = "browserClient";
@@ -45,7 +45,7 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
                         "is", "library", "new", "null", "operator", "part", "rethrow",
                         "return", "set", "static", "super", "switch", "sync*", "this",
                         "throw", "true", "try", "typedef", "var", "void", "while",
-                        "with", "yield", "yield*" )
+                        "with", "yield", "yield*")
         );
 
         languageSpecificPrimitives = new HashSet<String>(

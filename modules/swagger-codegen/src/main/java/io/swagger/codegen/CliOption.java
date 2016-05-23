@@ -1,13 +1,13 @@
 package io.swagger.codegen;
 
-import io.swagger.annotations.ApiModelProperty;
-import io.swagger.models.properties.BooleanProperty;
-import io.swagger.models.properties.StringProperty;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.models.properties.BooleanProperty;
+import io.swagger.models.properties.StringProperty;
 
 public class CliOption {
     private final String opt;
@@ -24,6 +24,14 @@ public class CliOption {
         this.opt = opt;
         this.description = description;
         this.type = type;
+    }
+
+    public static CliOption newBoolean(String opt, String description) {
+        return new CliOption(opt, description, BooleanProperty.TYPE).defaultValue(Boolean.FALSE.toString());
+    }
+
+    public static CliOption newString(String opt, String description) {
+        return new CliOption(opt, description, StringProperty.TYPE);
     }
 
     @ApiModelProperty(name = "optionName")
@@ -79,18 +87,10 @@ public class CliOption {
         this.enumValues = enumValues;
     }
 
-    public static CliOption newBoolean(String opt, String description) {
-        return new CliOption(opt, description, BooleanProperty.TYPE).defaultValue(Boolean.FALSE.toString());
-    }
-
-    public static CliOption newString(String opt, String description) {
-        return new CliOption(opt, description, StringProperty.TYPE);
-    }
-
     @JsonIgnore
     public String getOptionHelp() {
         StringBuilder sb = new StringBuilder(description);
-        if(defaultValue != null) {
+        if (defaultValue != null) {
             sb.append(" (Default: ").append(defaultValue).append(")");
         }
         if (enumValues != null) {

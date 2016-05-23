@@ -1,24 +1,33 @@
 package io.swagger.codegen;
 
-import io.swagger.codegen.languages.JavaClientCodegen;
-import io.swagger.models.Swagger;
-import io.swagger.parser.SwaggerParser;
 import org.apache.commons.io.FileUtils;
 import org.junit.rules.TemporaryFolder;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import io.swagger.codegen.languages.JavaClientCodegen;
+import io.swagger.models.Swagger;
+import io.swagger.parser.SwaggerParser;
+
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.Assert.fail;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.assertTrue;
 
 /**
  * Tests for DefaultGenerator logic
@@ -30,6 +39,23 @@ public class DefaultGeneratorTest {
     private static final String MODEL_ORDER_FILE = "/src/main/java/io/swagger/client/model/Order.java";
 
     public TemporaryFolder folder = new TemporaryFolder();
+
+    private static void changeContent(File file) throws IOException {
+        Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), UTF_8));
+        out.write(TEST_SKIP_OVERWRITE);
+        out.close();
+    }
+
+    private static CodegenOperation findCodegenOperationByOperationId(Map<String, List<CodegenOperation>> paths, String operationId) {
+        for (List<CodegenOperation> ops : paths.values()) {
+            for (CodegenOperation co : ops) {
+                if (operationId.equals(co.operationId)) {
+                    return co;
+                }
+            }
+        }
+        return null;
+    }
 
     @BeforeMethod
     public void setUp() throws Exception {
@@ -212,29 +238,12 @@ public class DefaultGeneratorTest {
 
         Map<String, List<CodegenOperation>> paths = generator.processPaths(swagger.getPaths());
         Set<String> opIds = new HashSet<String>();
-        for(String path : paths.keySet()) {
+        for (String path : paths.keySet()) {
             List<CodegenOperation> ops = paths.get(path);
-            for(CodegenOperation op : ops) {
+            for (CodegenOperation op : ops) {
                 assertFalse(opIds.contains(op.operationId));
                 opIds.add(op.operationId);
             }
         }
-    }
-
-    private static void changeContent(File file) throws IOException {
-        Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), UTF_8));
-        out.write(TEST_SKIP_OVERWRITE);
-        out.close();
-    }
-
-    private static CodegenOperation findCodegenOperationByOperationId(Map<String, List<CodegenOperation>> paths, String operationId) {
-        for (List<CodegenOperation> ops : paths.values()) {
-            for (CodegenOperation co : ops) {
-                if (operationId.equals(co.operationId)) {
-                    return co;
-                }
-            }
-        }
-        return null;
     }
 }

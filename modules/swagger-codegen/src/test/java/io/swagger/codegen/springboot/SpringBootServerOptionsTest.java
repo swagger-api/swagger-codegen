@@ -4,7 +4,6 @@ import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.java.JavaClientOptionsTest;
 import io.swagger.codegen.languages.SpringBootServerCodegen;
 import io.swagger.codegen.options.SpringBootServerOptionsProvider;
-
 import mockit.Expectations;
 import mockit.Tested;
 
@@ -54,7 +53,7 @@ public class SpringBootServerOptionsTest extends JavaClientOptionsTest {
             times = 1;
             clientCodegen.setBasePackage(SpringBootServerOptionsProvider.BASE_PACKAGE_VALUE);
             times = 1;
- 
+
         }};
     }
 }

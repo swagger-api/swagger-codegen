@@ -1,16 +1,28 @@
 package io.swagger;
 
-import java.io.*;
-import java.util.*;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import io.swagger.client.*;
-import io.swagger.client.api.*;
-import io.swagger.client.model.*;
+import io.swagger.client.ApiException;
+import io.swagger.client.api.PetApi;
+import io.swagger.client.model.Category;
+import io.swagger.client.model.Pet;
+import io.swagger.client.model.Tag;
 
 public class PetstoreProfiling {
     public int total = 5;
     public Long newPetId = 50003L;
     public String outputFile = "./petstore_profiling.output";
+
+    public static void main(String[] args) {
+        final PetstoreProfiling profiling = new PetstoreProfiling();
+        profiling.run();
+    }
 
     public void callApis(int index, List<Map<String, String>> results) {
         long start;
@@ -97,10 +109,5 @@ public class PetstoreProfiling {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static void main(String[] args) {
-        final PetstoreProfiling profiling = new PetstoreProfiling();
-        profiling.run();
     }
 }

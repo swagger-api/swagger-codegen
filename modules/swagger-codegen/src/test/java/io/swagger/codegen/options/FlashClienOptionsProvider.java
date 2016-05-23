@@ -1,10 +1,10 @@
 package io.swagger.codegen.options;
 
-import io.swagger.codegen.CodegenConstants;
-
 import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
+
+import io.swagger.codegen.CodegenConstants;
 
 public class FlashClienOptionsProvider implements OptionsProvider {
     public static final String PACKAGE_NAME_VALUE = "io.swagger.flash";

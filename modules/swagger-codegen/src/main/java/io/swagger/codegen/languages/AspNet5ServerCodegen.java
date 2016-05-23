@@ -1,13 +1,15 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.*;
-import io.swagger.models.properties.*;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.*;
+import java.util.Arrays;
+
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.SupportingFile;
 
 public class AspNet5ServerCodegen extends AbstractCSharpCodegen {
 
@@ -26,7 +28,7 @@ public class AspNet5ServerCodegen extends AbstractCSharpCodegen {
 
         // contextually reserved words
         setReservedWordsLowerCase(
-            Arrays.asList("var", "async", "await", "dynamic", "yield")
+                Arrays.asList("var", "async", "await", "dynamic", "yield")
         );
 
         cliOptions.clear();

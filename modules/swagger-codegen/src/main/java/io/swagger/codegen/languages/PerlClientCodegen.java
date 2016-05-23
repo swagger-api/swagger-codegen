@@ -1,44 +1,39 @@
 package io.swagger.codegen.languages;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.regex.Matcher;
+
+import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.CodegenParameter;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
 import io.swagger.codegen.SupportingFile;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CliOption;
 import io.swagger.models.properties.ArrayProperty;
+import io.swagger.models.properties.BooleanProperty;
+import io.swagger.models.properties.DateProperty;
+import io.swagger.models.properties.DateTimeProperty;
+import io.swagger.models.properties.DoubleProperty;
+import io.swagger.models.properties.FloatProperty;
+import io.swagger.models.properties.IntegerProperty;
+import io.swagger.models.properties.LongProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.StringProperty;
-import io.swagger.models.properties.LongProperty;
-import io.swagger.models.properties.IntegerProperty;
-import io.swagger.models.properties.FloatProperty;
-import io.swagger.models.properties.DoubleProperty;
-import io.swagger.models.properties.BooleanProperty;
-import io.swagger.models.properties.BinaryProperty;
-import io.swagger.models.properties.ByteArrayProperty;
-import io.swagger.models.properties.DateTimeProperty;
-import io.swagger.models.properties.DateProperty;
-
-
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.regex.Matcher;
-
-import org.apache.commons.lang3.StringUtils;
 
 public class PerlClientCodegen extends DefaultCodegen implements CodegenConfig {
     public static final String MODULE_NAME = "moduleName";
     public static final String MODULE_VERSION = "moduleVersion";
+    protected static int emptyFunctionNameCounter = 0;
     protected String moduleName = "WWW::SwaggerClient";
     protected String modulePathPart = moduleName.replaceAll("::", Matcher.quoteReplacement(File.separator));
     protected String moduleVersion = "1.0.0";
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
-
-    protected static int emptyFunctionNameCounter = 0;
 
     public PerlClientCodegen() {
         super();
@@ -390,7 +385,7 @@ public class PerlClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public void setParameterExampleValue(CodegenParameter p) {
-        if (Boolean.TRUE.equals(p.isString) || Boolean.TRUE.equals(p.isBinary) || 
+        if (Boolean.TRUE.equals(p.isString) || Boolean.TRUE.equals(p.isBinary) ||
                 Boolean.TRUE.equals(p.isByteArray) || Boolean.TRUE.equals(p.isFile)) {
             p.example = "'" + p.example + "'";
         } else if (Boolean.TRUE.equals(p.isBoolean)) {

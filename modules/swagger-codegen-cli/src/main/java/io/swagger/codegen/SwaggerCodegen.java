@@ -8,12 +8,8 @@ import io.swagger.codegen.cmd.Langs;
 import io.swagger.codegen.cmd.Meta;
 
 /**
- * User: lanwen
- * Date: 24.03.15
- * Time: 17:56
- * <p>
- * Command line interface for swagger codegen
- * use `swagger-codegen-cli.jar help` for more info
+ * User: lanwen Date: 24.03.15 Time: 17:56 <p> Command line interface for swagger codegen use
+ * `swagger-codegen-cli.jar help` for more info
  *
  * @since 2.1.3-M1
  */

@@ -30,10 +30,10 @@ public class OptionUtils {
 
         List<String> results = new ArrayList<String>();
 
-        if(input != null && !input.isEmpty()) {
+        if (input != null && !input.isEmpty()) {
             for (String value : input.split(",")) {
-                if(isNotEmpty(value))
-                results.add(value);
+                if (isNotEmpty(value))
+                    results.add(value);
             }
         }
 

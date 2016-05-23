@@ -9,9 +9,7 @@ import static ch.lambdaj.collection.LambdaCollections.with;
 import static java.util.ServiceLoader.load;
 
 /**
- * User: lanwen
- * Date: 24.03.15
- * Time: 20:25
+ * User: lanwen Date: 24.03.15 Time: 20:25
  */
 @Command(name = "langs", description = "Shows available langs")
 public class Langs implements Runnable {

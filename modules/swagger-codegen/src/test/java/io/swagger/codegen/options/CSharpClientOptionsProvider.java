@@ -1,17 +1,17 @@
 package io.swagger.codegen.options;
 
-import io.swagger.codegen.CodegenConstants;
-
 import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
+
+import io.swagger.codegen.CodegenConstants;
 
 public class CSharpClientOptionsProvider implements OptionsProvider {
     public static final String PACKAGE_NAME_VALUE = "swagger_client_csharp";
     public static final String PACKAGE_VERSION_VALUE = "1.0.0-SNAPSHOT";
     public static final String SOURCE_FOLDER_VALUE = "src_csharp";
     public static final String PACKAGE_GUID_VALUE = "{894EAEBB-649A-498C-A735-10D0BD7B73E0}";
-	
+
     @Override
     public String getLanguage() {
         return "csharp";

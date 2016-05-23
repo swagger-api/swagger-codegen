@@ -2,6 +2,7 @@ package io.swagger.codegen;
 
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
+
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -22,8 +23,8 @@ import java.util.Map;
 import java.util.ServiceLoader;
 
 /**
- * @deprecated use instead {@link io.swagger.codegen.DefaultGenerator}
- * or cli interface from https://github.com/swagger-api/swagger-codegen/pull/547
+ * @deprecated use instead {@link io.swagger.codegen.DefaultGenerator} or cli interface from
+ * https://github.com/swagger-api/swagger-codegen/pull/547
  */
 @Deprecated
 public class MetaGenerator extends AbstractGenerator {
@@ -32,6 +33,20 @@ public class MetaGenerator extends AbstractGenerator {
 
     static Map<String, CodegenConfig> configs = new HashMap<String, CodegenConfig>();
     static String configString;
+
+    static {
+        List<CodegenConfig> extensions = getExtensions();
+        StringBuilder sb = new StringBuilder();
+
+        for (CodegenConfig config : extensions) {
+            if (sb.toString().length() != 0) {
+                sb.append(", ");
+            }
+            sb.append(config.getName());
+            configs.put(config.getName(), config);
+            configString = sb.toString();
+        }
+    }
 
     public static void main(String[] args) {
         new MetaGenerator().generate(args);
@@ -175,20 +190,6 @@ public class MetaGenerator extends AbstractGenerator {
             } catch (IOException e) {
                 LOGGER.error(e.getMessage(), e);
             }
-        }
-    }
-
-    static {
-        List<CodegenConfig> extensions = getExtensions();
-        StringBuilder sb = new StringBuilder();
-
-        for (CodegenConfig config : extensions) {
-            if (sb.toString().length() != 0) {
-                sb.append(", ");
-            }
-            sb.append(config.getName());
-            configs.put(config.getName(), config);
-            configString = sb.toString();
         }
     }
 }

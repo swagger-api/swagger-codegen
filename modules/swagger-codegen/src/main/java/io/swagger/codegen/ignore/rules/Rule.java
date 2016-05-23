@@ -4,72 +4,14 @@ import java.util.List;
 
 public abstract class Rule {
 
-    public enum Operation {EXCLUDE, INCLUDE, NOOP, EXCLUDE_AND_TERMINATE}
-
     // The original rule
     private final String definition;
-
     private final List<Part> syntax;
 
     Rule(List<Part> syntax, String definition) {
         this.syntax = syntax;
         this.definition = definition;
     }
-
-    public abstract Boolean matches(String relativePath);
-
-    public String getDefinition() {
-        return this.definition;
-    }
-
-    protected String getPattern() {
-        if(syntax == null) return this.definition;
-
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < syntax.size(); i++) {
-            Part current = syntax.get(i);
-
-            switch(current.getToken()){
-                case MATCH_ALL:
-                case MATCH_ANY:
-                case ESCAPED_EXCLAMATION:
-                case ESCAPED_SPACE:
-                case PATH_DELIM:
-                case TEXT:
-                case DIRECTORY_MARKER:
-                    sb.append(current.getValue());
-                    break;
-                case NEGATE:
-                case ROOTED_MARKER:
-                case COMMENT:
-                    break;
-            }
-        }
-        return sb.toString();
-    }
-
-    /**
-     * Whether or not the rule should be negated. !foo means foo should be removed from previous matches.
-     * Example: **\/*.bak excludes all backup. Adding !/test.bak will include test.bak in the project root.
-     * <p>
-     * NOTE: It is not possible to re-include a file if a parent directory of that file is excluded.
-     */
-    public Boolean getNegated() {
-        return this.syntax != null && this.syntax.size() > 0 && this.syntax.get(0).getToken() == IgnoreLineParser.Token.NEGATE;
-    }
-
-    public Operation evaluate(String relativePath) {
-        if (Boolean.TRUE.equals(matches(relativePath))) {
-            if(Boolean.TRUE.equals(this.getNegated())) {
-                return this.getIncludeOperation();
-            }
-            return this.getExcludeOperation();
-        }
-        return Operation.NOOP;
-    }
-
-    protected Operation getIncludeOperation(){ return Operation.INCLUDE; }
-    protected Operation getExcludeOperation(){ return Operation.EXCLUDE; }
 
     public static Rule create(String definition) {
         // NOTE: Comments that start with a : (e.g. //:) are pulled from git documentation for .gitignore
@@ -172,4 +114,66 @@ public abstract class Rule {
 
         return rule;
     }
+
+    public abstract Boolean matches(String relativePath);
+
+    public String getDefinition() {
+        return this.definition;
+    }
+
+    protected String getPattern() {
+        if (syntax == null) return this.definition;
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < syntax.size(); i++) {
+            Part current = syntax.get(i);
+
+            switch (current.getToken()) {
+                case MATCH_ALL:
+                case MATCH_ANY:
+                case ESCAPED_EXCLAMATION:
+                case ESCAPED_SPACE:
+                case PATH_DELIM:
+                case TEXT:
+                case DIRECTORY_MARKER:
+                    sb.append(current.getValue());
+                    break;
+                case NEGATE:
+                case ROOTED_MARKER:
+                case COMMENT:
+                    break;
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Whether or not the rule should be negated. !foo means foo should be removed from previous
+     * matches. Example: **\/*.bak excludes all backup. Adding !/test.bak will include test.bak in
+     * the project root. <p> NOTE: It is not possible to re-include a file if a parent directory of
+     * that file is excluded.
+     */
+    public Boolean getNegated() {
+        return this.syntax != null && this.syntax.size() > 0 && this.syntax.get(0).getToken() == IgnoreLineParser.Token.NEGATE;
+    }
+
+    public Operation evaluate(String relativePath) {
+        if (Boolean.TRUE.equals(matches(relativePath))) {
+            if (Boolean.TRUE.equals(this.getNegated())) {
+                return this.getIncludeOperation();
+            }
+            return this.getExcludeOperation();
+        }
+        return Operation.NOOP;
+    }
+
+    protected Operation getIncludeOperation() {
+        return Operation.INCLUDE;
+    }
+
+    protected Operation getExcludeOperation() {
+        return Operation.EXCLUDE;
+    }
+
+    public enum Operation {EXCLUDE, INCLUDE, NOOP, EXCLUDE_AND_TERMINATE}
 }

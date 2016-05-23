@@ -1,10 +1,11 @@
 package io.swagger.codegen.options;
 
 import com.google.common.collect.ImmutableMap;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.languages.TypeScriptFetchClientCodegen;
 
 import java.util.Map;
+
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.languages.TypeScriptFetchClientCodegen;
 
 public class TypeScriptFetchClientOptionsProvider implements OptionsProvider {
     public static final String SORT_PARAMS_VALUE = "false";

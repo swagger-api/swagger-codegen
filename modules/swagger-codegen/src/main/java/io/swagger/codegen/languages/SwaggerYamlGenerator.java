@@ -1,10 +1,10 @@
 package io.swagger.codegen.languages;
 
-import java.io.File;
-
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
 
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenType;
@@ -14,7 +14,7 @@ import io.swagger.models.Swagger;
 import io.swagger.util.Yaml;
 
 public class SwaggerYamlGenerator extends DefaultCodegen implements CodegenConfig {
-	
+
     private static final Logger LOGGER = LoggerFactory.getLogger(SwaggerYamlGenerator.class);
 
     public SwaggerYamlGenerator() {

@@ -1,5 +1,10 @@
 package io.swagger.codegen.csharp;
 
+import com.google.common.collect.Sets;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.DefaultCodegen;
@@ -7,21 +12,12 @@ import io.swagger.codegen.languages.CSharpClientCodegen;
 import io.swagger.models.ArrayModel;
 import io.swagger.models.Model;
 import io.swagger.models.ModelImpl;
-import io.swagger.models.Path;
-import io.swagger.models.Swagger;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.DateTimeProperty;
 import io.swagger.models.properties.LongProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.RefProperty;
 import io.swagger.models.properties.StringProperty;
-import io.swagger.parser.SwaggerParser;
-
-import com.google.common.collect.Sets;
-import org.testng.Assert;
-import org.testng.annotations.Test;
-
-import java.util.Map;
 
 @SuppressWarnings("static-method")
 public class CSharpModelTest {

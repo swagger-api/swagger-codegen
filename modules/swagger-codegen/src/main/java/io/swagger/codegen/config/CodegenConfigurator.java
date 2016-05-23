@@ -2,17 +2,7 @@ package io.swagger.codegen.config;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.ClientOptInput;
-import io.swagger.codegen.ClientOpts;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenConfigLoader;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.auth.AuthParser;
-import io.swagger.models.Swagger;
-import io.swagger.models.auth.AuthorizationValue;
-import io.swagger.parser.SwaggerParser;
-import io.swagger.util.Json;
+
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,18 +16,30 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.ClientOptInput;
+import io.swagger.codegen.ClientOpts;
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenConfigLoader;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.auth.AuthParser;
+import io.swagger.models.Swagger;
+import io.swagger.models.auth.AuthorizationValue;
+import io.swagger.parser.SwaggerParser;
+import io.swagger.util.Json;
+
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 /**
- * A class that contains all codegen configuration properties a user would want to manipulate.
- * An instance could be created by deserializing a JSON file or being populated from CLI or Maven plugin parameters.
- * It also has a convenience method for creating a ClientOptInput class which is THE object DefaultGenerator.java needs
- * to generate code.
+ * A class that contains all codegen configuration properties a user would want to manipulate. An
+ * instance could be created by deserializing a JSON file or being populated from CLI or Maven
+ * plugin parameters. It also has a convenience method for creating a ClientOptInput class which is
+ * THE object DefaultGenerator.java needs to generate code.
  */
 public class CodegenConfigurator {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(CodegenConfigurator.class);
-
+    private final Map<String, String> dynamicProperties = new HashMap<String, String>(); //the map that holds the JsonAnySetter/JsonAnyGetter values
     private String lang;
     private String inputSpec;
     private String outputDir;
@@ -60,29 +62,43 @@ public class CodegenConfigurator {
     private Map<String, String> additionalProperties = new HashMap<String, String>();
     private Map<String, String> importMappings = new HashMap<String, String>();
     private Set<String> languageSpecificPrimitives = new HashSet<String>();
-    private String gitUserId="GIT_USER_ID";
-    private String gitRepoId="GIT_REPO_ID";
-    private String releaseNote="Minor update";
+    private String gitUserId = "GIT_USER_ID";
+    private String gitRepoId = "GIT_REPO_ID";
+    private String releaseNote = "Minor update";
     private String httpUserAgent;
-
-    private final Map<String, String> dynamicProperties = new HashMap<String, String>(); //the map that holds the JsonAnySetter/JsonAnyGetter values
 
     public CodegenConfigurator() {
         this.setOutputDir(".");
     }
 
-    public CodegenConfigurator setLang(String lang) {
-        this.lang = lang;
-        return this;
+    private static String toAbsolutePathStr(String path) {
+        if (isNotEmpty(path)) {
+            return Paths.get(path).toAbsolutePath().toString();
+        }
+
+        return path;
+
+    }
+
+    public static CodegenConfigurator fromFile(String configFile) {
+
+        if (isNotEmpty(configFile)) {
+            try {
+                return Json.mapper().readValue(new File(configFile), CodegenConfigurator.class);
+            } catch (IOException e) {
+                LOGGER.error("Unable to deserialize config file: " + configFile, e);
+            }
+        }
+        return null;
+    }
+
+    public String getInputSpec() {
+        return inputSpec;
     }
 
     public CodegenConfigurator setInputSpec(String inputSpec) {
         this.inputSpec = inputSpec;
         return this;
-    }
-
-    public String getInputSpec() {
-        return inputSpec;
     }
 
     public String getOutputDir() {
@@ -143,6 +159,11 @@ public class CodegenConfigurator {
         return lang;
     }
 
+    public CodegenConfigurator setLang(String lang) {
+        this.lang = lang;
+        return this;
+    }
+
     public String getTemplateDir() {
         return templateDir;
     }
@@ -152,7 +173,7 @@ public class CodegenConfigurator {
 
         // check to see if the folder exists
         if (!(f != null && f.exists() && f.isDirectory())) {
-            throw new IllegalArgumentException("Template directory " + templateDir + " does not exist."); 
+            throw new IllegalArgumentException("Template directory " + templateDir + " does not exist.");
         }
 
         this.templateDir = f.getAbsolutePath();
@@ -338,7 +359,7 @@ public class CodegenConfigurator {
     }
 
     public CodegenConfigurator setHttpUserAgent(String httpUserAgent) {
-        this.httpUserAgent= httpUserAgent;
+        this.httpUserAgent = httpUserAgent;
         return this;
     }
 
@@ -411,8 +432,7 @@ public class CodegenConfigurator {
             String opt = langCliOption.getOpt();
             if (dynamicProperties.containsKey(opt)) {
                 codegenConfig.additionalProperties().put(opt, dynamicProperties.get(opt));
-            }
-            else if(systemProperties.containsKey(opt)) {
+            } else if (systemProperties.containsKey(opt)) {
                 codegenConfig.additionalProperties().put(opt, systemProperties.get(opt).toString());
             }
         }
@@ -440,15 +460,6 @@ public class CodegenConfigurator {
         }
     }
 
-    private static String toAbsolutePathStr(String path) {
-        if (isNotEmpty(path)) {
-            return Paths.get(path).toAbsolutePath().toString();
-        }
-
-        return path;
-
-    }
-
     private void checkAndSetAdditionalProperty(String property, String propertyKey) {
         checkAndSetAdditionalProperty(property, property, propertyKey);
     }
@@ -457,18 +468,6 @@ public class CodegenConfigurator {
         if (isNotEmpty(property)) {
             additionalProperties.put(propertyKey, valueToSet);
         }
-    }
-
-    public static CodegenConfigurator fromFile(String configFile) {
-
-        if (isNotEmpty(configFile)) {
-            try {
-                return Json.mapper().readValue(new File(configFile), CodegenConfigurator.class);
-            } catch (IOException e) {
-                LOGGER.error("Unable to deserialize config file: " + configFile, e);
-            }
-        }
-        return null;
     }
 
 }

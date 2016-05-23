@@ -1,5 +1,8 @@
 package io.swagger.codegen.cmd;
 
+import org.apache.commons.lang3.ArrayUtils;
+import org.testng.annotations.Test;
+
 import io.swagger.codegen.ClientOptInput;
 import io.swagger.codegen.DefaultGenerator;
 import io.swagger.codegen.SwaggerCodegen;
@@ -9,8 +12,6 @@ import mockit.FullVerifications;
 import mockit.Injectable;
 import mockit.Mocked;
 import mockit.Verifications;
-import org.apache.commons.lang3.ArrayUtils;
-import org.testng.annotations.Test;
 
 @SuppressWarnings("unused")
 public class GenerateTest {
@@ -132,24 +133,28 @@ public class GenerateTest {
 
         setupAndRunTest("-i", "swagger.yaml", "-l", "java", "-o", "src/main/java", true, "config.json", "-c", "config.json");
 
-        new FullVerifications(){{}};
+        new FullVerifications() {{
+        }};
 
         setupAndRunTest("-i", "swagger.yaml", "-l", "java", "-o", "src/main/java", true, "config.json", "--config", "config.json");
 
-        new FullVerifications(){{}};
+        new FullVerifications() {{
+        }};
     }
 
     @Test
     public void testSkipOverwrite() throws Exception {
 
         setupAndRunGenericTest("-s");
-        new FullVerifications(){{
-            configurator.setSkipOverwrite(true); times=1;
+        new FullVerifications() {{
+            configurator.setSkipOverwrite(true);
+            times = 1;
         }};
 
         setupAndRunGenericTest("--skip-overwrite");
-        new FullVerifications(){{
-            configurator.setSkipOverwrite(true); times=1;
+        new FullVerifications() {{
+            configurator.setSkipOverwrite(true);
+            times = 1;
         }};
     }
 
@@ -158,8 +163,9 @@ public class GenerateTest {
         final String value = "io.foo.bar.api";
         setupAndRunGenericTest("--api-package", value);
 
-        new FullVerifications(){{
-           configurator.setApiPackage(value); times=1;
+        new FullVerifications() {{
+            configurator.setApiPackage(value);
+            times = 1;
         }};
     }
 
@@ -168,8 +174,9 @@ public class GenerateTest {
         final String value = "io.foo.bar.api";
         setupAndRunGenericTest("--model-package", value);
 
-        new FullVerifications(){{
-            configurator.setModelPackage(value); times=1;
+        new FullVerifications() {{
+            configurator.setModelPackage(value);
+            times = 1;
         }};
     }
 
@@ -251,8 +258,9 @@ public class GenerateTest {
         final String value = "io.foo.bar.api";
         setupAndRunGenericTest("--invoker-package", value);
 
-        new FullVerifications(){{
-            configurator.setInvokerPackage(value); times=1;
+        new FullVerifications() {{
+            configurator.setInvokerPackage(value);
+            times = 1;
         }};
     }
 
@@ -261,8 +269,9 @@ public class GenerateTest {
         final String value = "io.foo.bar.api";
         setupAndRunGenericTest("--group-id", value);
 
-        new FullVerifications(){{
-            configurator.setGroupId(value); times=1;
+        new FullVerifications() {{
+            configurator.setGroupId(value);
+            times = 1;
         }};
     }
 
@@ -271,8 +280,9 @@ public class GenerateTest {
         final String value = "awesome-api";
         setupAndRunGenericTest("--artifact-id", value);
 
-        new FullVerifications(){{
-            configurator.setArtifactId(value); times=1;
+        new FullVerifications() {{
+            configurator.setArtifactId(value);
+            times = 1;
         }};
     }
 
@@ -281,8 +291,9 @@ public class GenerateTest {
         final String value = "1.2.3";
         setupAndRunGenericTest("--artifact-version", value);
 
-        new FullVerifications(){{
-            configurator.setArtifactVersion(value); times=1;
+        new FullVerifications() {{
+            configurator.setArtifactVersion(value);
+            times = 1;
         }};
     }
 
@@ -291,8 +302,9 @@ public class GenerateTest {
         final String value = "library1";
         setupAndRunGenericTest("--library", value);
 
-        new FullVerifications(){{
-            configurator.setLibrary(value); times=1;
+        new FullVerifications() {{
+            configurator.setLibrary(value);
+            times = 1;
         }};
     }
 
@@ -305,7 +317,7 @@ public class GenerateTest {
 
         if (configuratorFromFile) {
 
-            new Expectations(){{
+            new Expectations() {{
                 CodegenConfigurator.fromFile(configFile);
                 times = 1;
                 result = configurator;

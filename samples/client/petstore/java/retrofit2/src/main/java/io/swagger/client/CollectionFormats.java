@@ -69,7 +69,7 @@ public class CollectionFormats {
 
         @Override
         public String toString() {
-            return StringUtil.join( params.toArray(new String[0]), "\t");
+            return StringUtil.join(params.toArray(new String[0]), "\t");
         }
     }
 

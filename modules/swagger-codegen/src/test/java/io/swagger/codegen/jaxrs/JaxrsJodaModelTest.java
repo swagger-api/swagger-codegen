@@ -1,5 +1,7 @@
 package io.swagger.codegen.jaxrs;
 
+import org.testng.annotations.Test;
+
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.languages.JavaJerseyServerCodegen;
 import io.swagger.models.Model;
@@ -8,13 +10,12 @@ import io.swagger.models.properties.DateProperty;
 import io.swagger.models.properties.DateTimeProperty;
 import io.swagger.models.properties.LongProperty;
 import io.swagger.util.Json;
-import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 
 @SuppressWarnings("static-method")
 public class JaxrsJodaModelTest {
-    
+
     @Test(description = "convert a simple java model with Joda types")
     public void simpleModelTest() {
         final Model model = new ModelImpl()

@@ -1,10 +1,5 @@
 package io.swagger.client.auth;
 
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import org.apache.oltu.oauth2.client.HttpClient;
 import org.apache.oltu.oauth2.client.OAuthClient;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
@@ -17,6 +12,11 @@ import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
 import org.apache.oltu.oauth2.common.token.BasicOAuthToken;
+
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import feign.Client;
 import feign.Request.Options;
@@ -31,18 +31,12 @@ import io.swagger.client.StringUtil;
 public class OAuth implements RequestInterceptor {
 
     static final int MILLIS_PER_SECOND = 1000;
-
-    public interface AccessTokenListener {
-        void notify(BasicOAuthToken token);
-    }
-
     private volatile String accessToken;
     private Long expirationTimeMillis;
     private OAuthClient oauthClient;
     private TokenRequestBuilder tokenRequestBuilder;
     private AuthenticationRequestBuilder authenticationRequestBuilder;
     private AccessTokenListener accessTokenListener;
-
     public OAuth(Client client, TokenRequestBuilder requestBuilder) {
         this.oauthClient = new OAuthClient(new OAuthFeignClient(client));
         this.tokenRequestBuilder = requestBuilder;
@@ -51,19 +45,19 @@ public class OAuth implements RequestInterceptor {
     public OAuth(Client client, OAuthFlow flow, String authorizationUrl, String tokenUrl, String scopes) {
         this(client, OAuthClientRequest.tokenLocation(tokenUrl).setScope(scopes));
 
-        switch(flow) {
-        case accessCode:
-        case implicit:
-            tokenRequestBuilder.setGrantType(GrantType.AUTHORIZATION_CODE);
-            break;
-        case password:
-            tokenRequestBuilder.setGrantType(GrantType.PASSWORD);
-            break;
-        case application:
-            tokenRequestBuilder.setGrantType(GrantType.CLIENT_CREDENTIALS);
-            break;
-        default:
-            break;
+        switch (flow) {
+            case accessCode:
+            case implicit:
+                tokenRequestBuilder.setGrantType(GrantType.AUTHORIZATION_CODE);
+                break;
+            case password:
+                tokenRequestBuilder.setGrantType(GrantType.PASSWORD);
+                break;
+            case application:
+                tokenRequestBuilder.setGrantType(GrantType.CLIENT_CREDENTIALS);
+                break;
+            default:
+                break;
         }
         authenticationRequestBuilder = OAuthClientRequest.authorizationLocation(authorizationUrl);
     }
@@ -92,7 +86,7 @@ public class OAuth implements RequestInterceptor {
         try {
             accessTokenResponse = oauthClient.accessToken(tokenRequestBuilder.buildBodyMessage());
         } catch (Exception e) {
-            throw new RetryableException(e.getMessage(), e,null);
+            throw new RetryableException(e.getMessage(), e, null);
         }
         if (accessTokenResponse != null && accessTokenResponse.getAccessToken() != null) {
             setAccessToken(accessTokenResponse.getAccessToken(), accessTokenResponse.getExpiresIn());
@@ -135,12 +129,16 @@ public class OAuth implements RequestInterceptor {
         return oauthClient;
     }
 
+    public void setOauthClient(Client client) {
+        this.oauthClient = new OAuthClient(new OAuthFeignClient(client));
+    }
+
     public void setOauthClient(OAuthClient oauthClient) {
         this.oauthClient = oauthClient;
     }
 
-    public void setOauthClient(Client client) {
-        this.oauthClient = new OAuthClient( new OAuthFeignClient(client));
+    public interface AccessTokenListener {
+        void notify(BasicOAuthToken token);
     }
 
     public static class OAuthFeignClient implements HttpClient {
@@ -156,8 +154,8 @@ public class OAuth implements RequestInterceptor {
         }
 
         public <T extends OAuthClientResponse> T execute(OAuthClientRequest request, Map<String, String> headers,
-                String requestMethod, Class<T> responseClass)
-                        throws OAuthSystemException, OAuthProblemException {
+                                                         String requestMethod, Class<T> responseClass)
+                throws OAuthSystemException, OAuthProblemException {
 
             RequestTemplate req = new RequestTemplate()
                     .append(request.getLocationUri())
@@ -177,8 +175,8 @@ public class OAuth implements RequestInterceptor {
             }
 
             String contentType = null;
-            Collection<String> contentTypeHeader =  feignResponse.headers().get("Content-Type");
-            if(contentTypeHeader != null) {
+            Collection<String> contentTypeHeader = feignResponse.headers().get("Content-Type");
+            if (contentTypeHeader != null) {
                 contentType = StringUtil.join(contentTypeHeader.toArray(new String[0]), ";");
             }
 

@@ -2,16 +2,17 @@ package io.swagger.client;
 
 import com.google.gson.reflect.TypeToken;
 
-import io.swagger.client.model.Order;
+import org.junit.Before;
+import org.junit.Test;
 
-import java.lang.Exception;
 import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.TimeZone;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import io.swagger.client.model.Order;
+
+import static org.junit.Assert.assertEquals;
 
 public class JSONTest {
     ApiClient apiClient = null;
@@ -33,7 +34,8 @@ public class JSONTest {
         order.setShipDate(datetimeFormat.parse(dateStr));
 
         String str = json.serialize(order);
-        Type type = new TypeToken<Order>() { }.getType();
+        Type type = new TypeToken<Order>() {
+        }.getType();
         Order o = json.deserialize(str, type);
         assertEquals(dateStr, datetimeFormat.format(o.getShipDate()));
     }
@@ -48,7 +50,8 @@ public class JSONTest {
         apiClient.setDatetimeFormat(datetimeFormat);
         apiClient.setLenientDatetimeFormat(false);
         String str = json.serialize(order);
-        Type type = new TypeToken<Order>() { }.getType();
+        Type type = new TypeToken<Order>() {
+        }.getType();
         Order o = json.deserialize(str, type);
         assertEquals(dateStr, datetimeFormat.format(o.getShipDate()));
     }

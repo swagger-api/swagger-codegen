@@ -1,46 +1,22 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.*;
-import io.swagger.models.properties.*;
-
-import java.util.*;
 import java.io.File;
+import java.util.Arrays;
+import java.util.HashSet;
+
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.SupportingFile;
+import io.swagger.models.properties.ArrayProperty;
+import io.swagger.models.properties.MapProperty;
+import io.swagger.models.properties.Property;
 
 public class LumenServerCodegen extends DefaultCodegen implements CodegenConfig {
 
     // source folder where to write the files
     protected String sourceFolder = "src";
     protected String apiVersion = "1.0.0";
-
-    /**
-     * Configures the type of generator.
-     * 
-     * @return  the CodegenType for this generator
-     * @see     io.swagger.codegen.CodegenType
-     */
-    public CodegenType getTag() {
-        return CodegenType.CLIENT;
-    }
-
-    /**
-     * Configures a friendly name for the generator.  This will be used by the generator
-     * to select the library with the -l flag.
-     * 
-     * @return the friendly name for the generator
-     */
-    public String getName() {
-        return "lumen";
-    }
-
-    /**
-     * Returns human-friendly help for the generator.  Provide the consumer with help
-     * tips, parameters here
-     * 
-     * @return A string value for the help message
-     */
-    public String getHelp() {
-        return "Generates a LumenServerCodegen client library.";
-    }
 
     public LumenServerCodegen() {
         super();
@@ -72,7 +48,7 @@ public class LumenServerCodegen extends DefaultCodegen implements CodegenConfig 
         // apiTemplateFiles.put(
         //     "api.mustache",   // the template to use
         //     ".sample");       // the extension for each file to write
-        
+
 
         // no api files
         apiTemplateFiles.clear();
@@ -98,10 +74,10 @@ public class LumenServerCodegen extends DefaultCodegen implements CodegenConfig 
         /**
          * Reserved words.  Override this with reserved words specific to your language
          */
-        reservedWords = new HashSet<String> (
-            Arrays.asList(
-                "sample1",  // replace with static values
-                "sample2")
+        reservedWords = new HashSet<String>(
+                Arrays.asList(
+                        "sample1",  // replace with static values
+                        "sample2")
         );
 
         /**
@@ -128,26 +104,26 @@ public class LumenServerCodegen extends DefaultCodegen implements CodegenConfig 
         supportingFiles.add(new SupportingFile("public" + File.separator + "index.php", packagePath + File.separator + "public", "index.php"));
 
         supportingFiles.add(new SupportingFile("app" + File.separator + "User.php", packagePath + File.separator + "app", "User.php"));
-        supportingFiles.add(new SupportingFile("app" + File.separator + "Console" + File.separator + "Kernel.php", packagePath + File.separator + "app"  + File.separator + "Console", "Kernel.php"));
-        supportingFiles.add(new SupportingFile("app" + File.separator + "Exceptions" + File.separator + "Handler.php", packagePath + File.separator + "app"  + File.separator + "Exceptions", "Handler.php"));
+        supportingFiles.add(new SupportingFile("app" + File.separator + "Console" + File.separator + "Kernel.php", packagePath + File.separator + "app" + File.separator + "Console", "Kernel.php"));
+        supportingFiles.add(new SupportingFile("app" + File.separator + "Exceptions" + File.separator + "Handler.php", packagePath + File.separator + "app" + File.separator + "Exceptions", "Handler.php"));
         // supportingFiles.add(new SupportingFile("app" + File.separator + "Http" + File.separator + "Kernel.php", packagePath + File.separator + "app"  + File.separator + "Http", "Kernel.php"));
-        supportingFiles.add(new SupportingFile("app" + File.separator + "Http" + File.separator + "routes.mustache", packagePath + File.separator + "app"  + File.separator + "Http", "routes.php"));
-        
-        supportingFiles.add(new SupportingFile("app" + File.separator + "Http" + File.separator + "Controllers" + File.separator + "Controller.php", packagePath + File.separator + "app"  + File.separator + "Http" + File.separator + "Controllers" + File.separator, "Controller.php"));
-        supportingFiles.add(new SupportingFile("app" + File.separator + "Http" + File.separator + "Controllers" + File.separator + "ExampleController.php", packagePath + File.separator + "app"  + File.separator + "Http" + File.separator + "Controllers" + File.separator, "ExampleController.php"));
+        supportingFiles.add(new SupportingFile("app" + File.separator + "Http" + File.separator + "routes.mustache", packagePath + File.separator + "app" + File.separator + "Http", "routes.php"));
+
+        supportingFiles.add(new SupportingFile("app" + File.separator + "Http" + File.separator + "Controllers" + File.separator + "Controller.php", packagePath + File.separator + "app" + File.separator + "Http" + File.separator + "Controllers" + File.separator, "Controller.php"));
+        supportingFiles.add(new SupportingFile("app" + File.separator + "Http" + File.separator + "Controllers" + File.separator + "ExampleController.php", packagePath + File.separator + "app" + File.separator + "Http" + File.separator + "Controllers" + File.separator, "ExampleController.php"));
         // supportingFiles.add(new SupportingFile("app" + File.separator + "Http" + File.separator + "Controllers" + File.separator + "Auth" + File.separator + "AuthController.php", packagePath + File.separator + "app"  + File.separator + "Http" + File.separator + "Controllers" + File.separator + "Auth" + File.separator, "AuthController.php"));
         // supportingFiles.add(new SupportingFile("app" + File.separator + "Http" + File.separator + "Controllers" + File.separator + "Auth" + File.separator + "PasswordController.php", packagePath + File.separator + "app"  + File.separator + "Http" + File.separator + "Controllers" + File.separator + "Auth" + File.separator, "PasswordController.php"));
-        
-        supportingFiles.add(new SupportingFile("app" + File.separator + "Http" + File.separator + "Middleware" + File.separator + "Authenticate.php", packagePath + File.separator + "app"  + File.separator + "Http" + File.separator + "Middleware" + File.separator, "Authenticate.php"));
-        supportingFiles.add(new SupportingFile("app" + File.separator + "Http" + File.separator + "Middleware" + File.separator + "ExampleMiddleware.php", packagePath + File.separator + "app"  + File.separator + "Http" + File.separator + "Middleware" + File.separator, "ExampleMiddleware.php"));
+
+        supportingFiles.add(new SupportingFile("app" + File.separator + "Http" + File.separator + "Middleware" + File.separator + "Authenticate.php", packagePath + File.separator + "app" + File.separator + "Http" + File.separator + "Middleware" + File.separator, "Authenticate.php"));
+        supportingFiles.add(new SupportingFile("app" + File.separator + "Http" + File.separator + "Middleware" + File.separator + "ExampleMiddleware.php", packagePath + File.separator + "app" + File.separator + "Http" + File.separator + "Middleware" + File.separator, "ExampleMiddleware.php"));
         // supportingFiles.add(new SupportingFile("app" + File.separator + "Http" + File.separator + "Middleware" + File.separator + "RedirectIfAuthenticated.php", packagePath + File.separator + "app"  + File.separator + "Http" + File.separator + "Middleware" + File.separator, "RedirectIfAuthenticated.php"));
         // supportingFiles.add(new SupportingFile("app" + File.separator + "Http" + File.separator + "Middleware" + File.separator + "VerifyCsrfToken.php", packagePath + File.separator + "app"  + File.separator + "Http" + File.separator + "Middleware" + File.separator, "VerifyCsrfToken.php"));
-        
+
         // supportingFiles.add(new SupportingFile("app" + File.separator + "Http" + File.separator + "Requests" + File.separator + "Request.php", packagePath + File.separator + "app"  + File.separator + "Http" + File.separator + "Requests" + File.separator, "Request.php"));
-                
-        supportingFiles.add(new SupportingFile("app" + File.separator + "Providers" + File.separator + "AppServiceProvider.php", packagePath + File.separator + "app"  + File.separator + "Providers", "AppServiceProvider.php"));
-        supportingFiles.add(new SupportingFile("app" + File.separator + "Providers" + File.separator + "AuthServiceProvider.php", packagePath + File.separator + "app"  + File.separator + "Providers", "AuthServiceProvider.php"));
-        supportingFiles.add(new SupportingFile("app" + File.separator + "Providers" + File.separator + "EventServiceProvider.php", packagePath + File.separator + "app"  + File.separator + "Providers", "EventServiceProvider.php"));
+
+        supportingFiles.add(new SupportingFile("app" + File.separator + "Providers" + File.separator + "AppServiceProvider.php", packagePath + File.separator + "app" + File.separator + "Providers", "AppServiceProvider.php"));
+        supportingFiles.add(new SupportingFile("app" + File.separator + "Providers" + File.separator + "AuthServiceProvider.php", packagePath + File.separator + "app" + File.separator + "Providers", "AuthServiceProvider.php"));
+        supportingFiles.add(new SupportingFile("app" + File.separator + "Providers" + File.separator + "EventServiceProvider.php", packagePath + File.separator + "app" + File.separator + "Providers", "EventServiceProvider.php"));
         // supportingFiles.add(new SupportingFile("app" + File.separator + "Providers" + File.separator + "RouteServiceProvider.php", packagePath + File.separator + "app"  + File.separator + "Providers", "RouteServiceProvider.php"));
 
         // supportingFiles.add(new SupportingFile("config" + File.separator + "app.php", packagePath + File.separator + "config"  + File.separator, "app.php"));
@@ -157,16 +133,46 @@ public class LumenServerCodegen extends DefaultCodegen implements CodegenConfig 
          * the client generator
          */
         languageSpecificPrimitives = new HashSet<String>(
-            Arrays.asList(
-                "Type1",      // replace these with your types
-                "Type2")
+                Arrays.asList(
+                        "Type1",      // replace these with your types
+                        "Type2")
         );
     }
 
     /**
-     * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping
-     * those terms here.  This logic is only called if a variable matches the reseved words
-     * 
+     * Configures the type of generator.
+     *
+     * @return the CodegenType for this generator
+     * @see io.swagger.codegen.CodegenType
+     */
+    public CodegenType getTag() {
+        return CodegenType.CLIENT;
+    }
+
+    /**
+     * Configures a friendly name for the generator.  This will be used by the generator to select
+     * the library with the -l flag.
+     *
+     * @return the friendly name for the generator
+     */
+    public String getName() {
+        return "lumen";
+    }
+
+    /**
+     * Returns human-friendly help for the generator.  Provide the consumer with help tips,
+     * parameters here
+     *
+     * @return A string value for the help message
+     */
+    public String getHelp() {
+        return "Generates a LumenServerCodegen client library.";
+    }
+
+    /**
+     * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping those terms
+     * here.  This logic is only called if a variable matches the reseved words
+     *
      * @return the escaped term
      */
     @Override
@@ -192,19 +198,19 @@ public class LumenServerCodegen extends DefaultCodegen implements CodegenConfig 
     }
 
     /**
-     * Optional - type declaration.  This is a String which is used by the templates to instantiate your
-     * types.  There is typically special handling for different property types
+     * Optional - type declaration.  This is a String which is used by the templates to instantiate
+     * your types.  There is typically special handling for different property types
      *
-     * @return a string value used as the `dataType` field for model templates, `returnType` for api templates
+     * @return a string value used as the `dataType` field for model templates, `returnType` for api
+     * templates
      */
     @Override
     public String getTypeDeclaration(Property p) {
-        if(p instanceof ArrayProperty) {
+        if (p instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) p;
             Property inner = ap.getItems();
             return getSwaggerType(p) + "[" + getTypeDeclaration(inner) + "]";
-        }
-        else if (p instanceof MapProperty) {
+        } else if (p instanceof MapProperty) {
             MapProperty mp = (MapProperty) p;
             Property inner = mp.getAdditionalProperties();
             return getSwaggerType(p) + "[String, " + getTypeDeclaration(inner) + "]";
@@ -213,8 +219,9 @@ public class LumenServerCodegen extends DefaultCodegen implements CodegenConfig 
     }
 
     /**
-     * Optional - swagger type conversion.  This is used to map swagger types in a `Property` into 
-     * either language specific types via `typeMapping` or into complex models if there is not a mapping.
+     * Optional - swagger type conversion.  This is used to map swagger types in a `Property` into
+     * either language specific types via `typeMapping` or into complex models if there is not a
+     * mapping.
      *
      * @return a string value of the type or complex model for this property
      * @see io.swagger.models.properties.Property
@@ -223,12 +230,11 @@ public class LumenServerCodegen extends DefaultCodegen implements CodegenConfig 
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
         String type = null;
-        if(typeMapping.containsKey(swaggerType)) {
+        if (typeMapping.containsKey(swaggerType)) {
             type = typeMapping.get(swaggerType);
-            if(languageSpecificPrimitives.contains(type))
+            if (languageSpecificPrimitives.contains(type))
                 return toModelName(type);
-        }
-        else
+        } else
             type = swaggerType;
         return toModelName(type);
     }

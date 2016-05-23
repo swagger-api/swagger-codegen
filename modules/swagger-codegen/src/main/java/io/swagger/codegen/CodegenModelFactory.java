@@ -11,7 +11,8 @@ public final class CodegenModelFactory {
      * Configure a different implementation class.
      *
      * @param type           the type that shall be replaced
-     * @param implementation the implementation class must extend the default class and must provide a public no-arg constructor
+     * @param implementation the implementation class must extend the default class and must provide
+     *                       a public no-arg constructor
      */
     public static void setTypeMapping(CodegenModelType type, Class<?> implementation) {
         if (!type.getDefaultImplementation().isAssignableFrom(implementation)) {

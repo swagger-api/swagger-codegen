@@ -1,5 +1,11 @@
 package io.swagger.codegen.languages;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashMap;
+
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
@@ -17,12 +23,6 @@ import io.swagger.models.properties.LongProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.StringProperty;
-import org.apache.commons.lang3.StringUtils;
-
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 
 public class FlashClientCodegen extends DefaultCodegen implements CodegenConfig {
     protected String packageName = "io.swagger";
@@ -87,6 +87,10 @@ public class FlashClientCodegen extends DefaultCodegen implements CodegenConfig 
 
     }
 
+    private static String dropDots(String str) {
+        return str.replaceAll("\\.", "_");
+    }
+
     @Override
     public void processOpts() {
         super.processOpts();
@@ -106,15 +110,13 @@ public class FlashClientCodegen extends DefaultCodegen implements CodegenConfig 
             setPackageName((String) additionalProperties.get(CodegenConstants.PACKAGE_NAME));
             apiPackage = packageName + ".client.api";
             modelPackage = packageName + ".client.model";
-        }
-        else {
+        } else {
             setPackageName("io.swagger");
         }
 
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_VERSION)) {
             setPackageVersion((String) additionalProperties.get(CodegenConstants.PACKAGE_VERSION));
-        }
-        else {
+        } else {
             setPackageVersion("1.0.0");
         }
 
@@ -155,10 +157,6 @@ public class FlashClientCodegen extends DefaultCodegen implements CodegenConfig 
                 + File.separator + "lib" + File.separator + "ext", "flexunit-core-flex-4.0.0.2-sdk3.5.0.12683.swc"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
-    }
-
-    private static String dropDots(String str) {
-        return str.replaceAll("\\.", "_");
     }
 
     @Override

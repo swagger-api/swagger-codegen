@@ -4,7 +4,6 @@ import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.java.JavaClientOptionsTest;
 import io.swagger.codegen.languages.SpringMVCServerCodegen;
 import io.swagger.codegen.options.SpringMVCServerOptionsProvider;
-
 import mockit.Expectations;
 import mockit.Tested;
 

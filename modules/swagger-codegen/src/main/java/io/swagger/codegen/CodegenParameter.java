@@ -2,8 +2,8 @@ package io.swagger.codegen;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 public class CodegenParameter {
     public Boolean isFormParam, isQueryParam, isPathParam, isHeaderParam,
@@ -23,57 +23,57 @@ public class CodegenParameter {
     public Boolean hasValidation;
 
     /**
-     * Determines whether this parameter is mandatory. If the parameter is in "path",
-     * this property is required and its value MUST be true. Otherwise, the property
-     * MAY be included and its default value is false.
+     * Determines whether this parameter is mandatory. If the parameter is in "path", this property
+     * is required and its value MUST be true. Otherwise, the property MAY be included and its
+     * default value is false.
      */
     public Boolean required;
 
-	/**
-	 * See http://json-schema.org/latest/json-schema-validation.html#anchor17.
-	 */
+    /**
+     * See http://json-schema.org/latest/json-schema-validation.html#anchor17.
+     */
     public Number maximum;
-	/**
-	 * See http://json-schema.org/latest/json-schema-validation.html#anchor17
-	 */
+    /**
+     * See http://json-schema.org/latest/json-schema-validation.html#anchor17
+     */
     public Boolean exclusiveMaximum;
-	/**
-	 * See http://json-schema.org/latest/json-schema-validation.html#anchor21
-	 */
+    /**
+     * See http://json-schema.org/latest/json-schema-validation.html#anchor21
+     */
     public Number minimum;
-	/**
-	 * See http://json-schema.org/latest/json-schema-validation.html#anchor21
-	 */
+    /**
+     * See http://json-schema.org/latest/json-schema-validation.html#anchor21
+     */
     public Boolean exclusiveMinimum;
-	/**
-	 * See http://json-schema.org/latest/json-schema-validation.html#anchor26
-	 */
+    /**
+     * See http://json-schema.org/latest/json-schema-validation.html#anchor26
+     */
     public Integer maxLength;
-	/**
-	 * See http://json-schema.org/latest/json-schema-validation.html#anchor29
-	 */
+    /**
+     * See http://json-schema.org/latest/json-schema-validation.html#anchor29
+     */
     public Integer minLength;
-	/**
-	 * See http://json-schema.org/latest/json-schema-validation.html#anchor33
-	 */
+    /**
+     * See http://json-schema.org/latest/json-schema-validation.html#anchor33
+     */
     public String pattern;
-	/**
-	 * See http://json-schema.org/latest/json-schema-validation.html#anchor42
-	 */
+    /**
+     * See http://json-schema.org/latest/json-schema-validation.html#anchor42
+     */
     public Integer maxItems;
-	/**
-	 * See http://json-schema.org/latest/json-schema-validation.html#anchor45
-	 */
+    /**
+     * See http://json-schema.org/latest/json-schema-validation.html#anchor45
+     */
     public Integer minItems;
-	/**
-	 * See http://json-schema.org/latest/json-schema-validation.html#anchor49
-	 */
+    /**
+     * See http://json-schema.org/latest/json-schema-validation.html#anchor49
+     */
     public Boolean uniqueItems;
-	/**
-	 * See http://json-schema.org/latest/json-schema-validation.html#anchor14
-	 */
+    /**
+     * See http://json-schema.org/latest/json-schema-validation.html#anchor14
+     */
     public Number multipleOf;
-    
+
     public CodegenParameter copy() {
         CodegenParameter output = new CodegenParameter();
         output.isFile = this.isFile;

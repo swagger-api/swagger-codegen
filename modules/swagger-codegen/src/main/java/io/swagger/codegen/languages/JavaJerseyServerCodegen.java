@@ -1,10 +1,18 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.*;
-import io.swagger.models.Operation;
-
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.SupportingFile;
+import io.swagger.models.Operation;
 
 public class JavaJerseyServerCodegen extends AbstractJavaJAXRSServerCodegen {
     public JavaJerseyServerCodegen() {
@@ -28,8 +36,8 @@ public class JavaJerseyServerCodegen extends AbstractJavaJAXRSServerCodegen {
 
         embeddedTemplateDir = templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME + File.separator + "jersey1_18";
 
-        for ( int i = 0; i < cliOptions.size(); i++ ) {
-            if ( CodegenConstants.LIBRARY.equals(cliOptions.get(i).getOpt()) ) {
+        for (int i = 0; i < cliOptions.size(); i++) {
+            if (CodegenConstants.LIBRARY.equals(cliOptions.get(i).getOpt())) {
                 cliOptions.remove(i);
                 break;
             }
@@ -50,21 +58,19 @@ public class JavaJerseyServerCodegen extends AbstractJavaJAXRSServerCodegen {
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return "jaxrs"; // TODO should be renamed as "jaxrs-jersey"
     }
 
     @Override
-    public String getHelp()
-    {
+    public String getHelp() {
         return "Generates a Java JAXRS Server application based on Jersey framework.";
     }
 
     @Override
     public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
         super.postProcessModelProperty(model, property);
-        if("null".equals(property.example)) {
+        if ("null".equals(property.example)) {
             property.example = null;
         }
     }
@@ -78,7 +84,7 @@ public class JavaJerseyServerCodegen extends AbstractJavaJAXRSServerCodegen {
         modelDocTemplateFiles.remove("model_doc.mustache");
         apiDocTemplateFiles.remove("api_doc.mustache");
 
-        if ( additionalProperties.containsKey(CodegenConstants.IMPL_FOLDER) ) {
+        if (additionalProperties.containsKey(CodegenConstants.IMPL_FOLDER)) {
             implFolder = (String) additionalProperties.get(CodegenConstants.IMPL_FOLDER);
         }
 
@@ -95,33 +101,31 @@ public class JavaJerseyServerCodegen extends AbstractJavaJAXRSServerCodegen {
         writeOptional(outputFolder, new SupportingFile("web.mustache", ("src/main/webapp/WEB-INF"), "web.xml"));
         supportingFiles.add(new SupportingFile("StringUtil.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "StringUtil.java"));
 
-        if ( additionalProperties.containsKey("dateLibrary") ) {
+        if (additionalProperties.containsKey("dateLibrary")) {
             setDateLibrary(additionalProperties.get("dateLibrary").toString());
             additionalProperties.put(dateLibrary, "true");
         }
-        if(DEFAULT_LIBRARY.equals(library) || library == null) {
-            if(templateDir.startsWith(JAXRS_TEMPLATE_DIRECTORY_NAME)) {
+        if (DEFAULT_LIBRARY.equals(library) || library == null) {
+            if (templateDir.startsWith(JAXRS_TEMPLATE_DIRECTORY_NAME)) {
                 // set to the default location
                 templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME + File.separator + "jersey1_18";
-            }
-            else {
+            } else {
                 templateDir += File.separator + "jersey1_18";
             }
         }
-        if("jersey2".equals(library)) {
-            if(templateDir.startsWith(JAXRS_TEMPLATE_DIRECTORY_NAME)) {
+        if ("jersey2".equals(library)) {
+            if (templateDir.startsWith(JAXRS_TEMPLATE_DIRECTORY_NAME)) {
                 // set to the default location
                 templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME + File.separator + "jersey2";
-            }
-            else {
+            } else {
                 templateDir += File.separator + "jersey2";
             }
         }
 
-        if ( "joda".equals(dateLibrary) ) {
+        if ("joda".equals(dateLibrary)) {
             supportingFiles.add(new SupportingFile("JodaDateTimeProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "JodaDateTimeProvider.java"));
             supportingFiles.add(new SupportingFile("JodaLocalDateProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "JodaLocalDateProvider.java"));
-        } else if ( "java8".equals(dateLibrary) ) {
+        } else if ("java8".equals(dateLibrary)) {
             supportingFiles.add(new SupportingFile("LocalDateTimeProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "LocalDateTimeProvider.java"));
             supportingFiles.add(new SupportingFile("LocalDateProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "LocalDateProvider.java"));
         }

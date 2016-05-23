@@ -1,11 +1,5 @@
 package io.swagger.client.auth;
 
-import static java.net.HttpURLConnection.HTTP_UNAUTHORIZED;
-import static java.net.HttpURLConnection.HTTP_FORBIDDEN;
-
-import java.io.IOException;
-import java.util.Map;
-
 import org.apache.oltu.oauth2.client.OAuthClient;
 import org.apache.oltu.oauth2.client.request.OAuthBearerClientRequest;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
@@ -17,32 +11,32 @@ import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
 import org.apache.oltu.oauth2.common.token.BasicOAuthToken;
 
+import java.io.IOException;
+import java.util.Map;
+
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Request.Builder;
 import okhttp3.Response;
 
-public class OAuth implements Interceptor {
+import static java.net.HttpURLConnection.HTTP_FORBIDDEN;
+import static java.net.HttpURLConnection.HTTP_UNAUTHORIZED;
 
-    public interface AccessTokenListener {
-        public void notify(BasicOAuthToken token);
-    }
+public class OAuth implements Interceptor {
 
     private volatile String accessToken;
     private OAuthClient oauthClient;
-
     private TokenRequestBuilder tokenRequestBuilder;
     private AuthenticationRequestBuilder authenticationRequestBuilder;
-
     private AccessTokenListener accessTokenListener;
 
-    public OAuth( OkHttpClient client, TokenRequestBuilder requestBuilder ) {
+    public OAuth(OkHttpClient client, TokenRequestBuilder requestBuilder) {
         this.oauthClient = new OAuthClient(new OAuthOkHttpClient(client));
         this.tokenRequestBuilder = requestBuilder;
     }
 
-    public OAuth(TokenRequestBuilder requestBuilder ) {
+    public OAuth(TokenRequestBuilder requestBuilder) {
         this(new OkHttpClient(), requestBuilder);
     }
 
@@ -53,20 +47,20 @@ public class OAuth implements Interceptor {
     }
 
     public void setFlow(OAuthFlow flow) {
-        switch(flow) {
-        case accessCode:
-        case implicit:
-            tokenRequestBuilder.setGrantType(GrantType.AUTHORIZATION_CODE);
-            break;
-        case password:
-            tokenRequestBuilder.setGrantType(GrantType.PASSWORD);
-            break;
-        case application:
-            tokenRequestBuilder.setGrantType(GrantType.CLIENT_CREDENTIALS);
-            break;
-        default:
-            break;
-        }            
+        switch (flow) {
+            case accessCode:
+            case implicit:
+                tokenRequestBuilder.setGrantType(GrantType.AUTHORIZATION_CODE);
+                break;
+            case password:
+                tokenRequestBuilder.setGrantType(GrantType.PASSWORD);
+                break;
+            case application:
+                tokenRequestBuilder.setGrantType(GrantType.CLIENT_CREDENTIALS);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -99,19 +93,19 @@ public class OAuth implements Interceptor {
                 throw new IOException(e);
             }
 
-            for ( Map.Entry<String, String> header : oAuthRequest.getHeaders().entrySet() ) {
+            for (Map.Entry<String, String> header : oAuthRequest.getHeaders().entrySet()) {
                 rb.addHeader(header.getKey(), header.getValue());
             }
-            rb.url( oAuthRequest.getLocationUri());
+            rb.url(oAuthRequest.getLocationUri());
 
             //Execute the request
             Response response = chain.proceed(rb.build());
 
             // 401 most likely indicates that access token has expired.
             // Time to refresh and resend the request
-            if ( response != null && (response.code() == HTTP_UNAUTHORIZED | response.code() == HTTP_FORBIDDEN) ) {
+            if (response != null && (response.code() == HTTP_UNAUTHORIZED | response.code() == HTTP_FORBIDDEN)) {
                 if (updateAccessToken(requestAccessToken)) {
-                    return intercept( chain );
+                    return intercept(chain);
                 }
             }
             return response;
@@ -124,7 +118,7 @@ public class OAuth implements Interceptor {
      * Returns true if the access token has been updated
      */
     public synchronized boolean updateAccessToken(String requestAccessToken) throws IOException {
-        if (getAccessToken() == null || getAccessToken().equals(requestAccessToken)) {    
+        if (getAccessToken() == null || getAccessToken().equals(requestAccessToken)) {
             try {
                 OAuthJSONAccessTokenResponse accessTokenResponse = oauthClient.accessToken(this.tokenRequestBuilder.buildBodyMessage());
                 if (accessTokenResponse != null && accessTokenResponse.getAccessToken() != null) {
@@ -171,6 +165,10 @@ public class OAuth implements Interceptor {
 
     public void setAuthenticationRequestBuilder(AuthenticationRequestBuilder authenticationRequestBuilder) {
         this.authenticationRequestBuilder = authenticationRequestBuilder;
+    }
+
+    public interface AccessTokenListener {
+        public void notify(BasicOAuthToken token);
     }
 
 }

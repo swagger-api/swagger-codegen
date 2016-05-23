@@ -1,12 +1,12 @@
 package io.swagger.codegen.javascript;
 
-import java.util.List;
+import com.google.common.collect.Sets;
 
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import com.google.common.collect.Sets;
+import java.util.List;
 
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenParameter;
@@ -28,6 +28,20 @@ import io.swagger.models.properties.StringProperty;
 
 @SuppressWarnings("static-method")
 public class JavaScriptModelTest {
+    @DataProvider(name = "modelNames")
+    public static Object[][] primeNumbers() {
+        return new Object[][]{
+                {"sample", "Sample"},
+                {"sample_name", "SampleName"},
+                {"sample__name", "SampleName"},
+                {"/sample", "Sample"},
+                {"\\sample", "Sample"},
+                {"sample.name", "SampleName"},
+                {"_sample", "Sample"},
+                {"Sample", "Sample"},
+        };
+    }
+
     @Test(description = "convert a simple java model")
     public void simpleModelTest() {
         final Model model = new ModelImpl()
@@ -239,7 +253,7 @@ public class JavaScriptModelTest {
         Assert.assertEquals(property.complexType, "Children");
         Assert.assertEquals(property.getter, "getChildren");
         Assert.assertEquals(property.setter, "setChildren");
-        // FIXME: what should datatype be for a JavaScript array? 
+        // FIXME: what should datatype be for a JavaScript array?
 //        Assert.assertEquals(property.datatype, "Array<Children>");
         Assert.assertEquals(property.name, "children");
         // FIXME: should an array property have an empty array as its default value? What if the property is required?
@@ -463,20 +477,6 @@ public class JavaScriptModelTest {
         final CodegenParameter cm = codegen.fromParameter(parameter, null);
 
         Assert.assertNull(cm.allowableValues);
-    }
-
-    @DataProvider(name = "modelNames")
-    public static Object[][] primeNumbers() {
-        return new Object[][] {
-                {"sample", "Sample"},
-                {"sample_name", "SampleName"},
-                {"sample__name", "SampleName"},
-                {"/sample", "Sample"},
-                {"\\sample", "Sample"},
-                {"sample.name", "SampleName"},
-                {"_sample", "Sample"},
-                {"Sample", "Sample"},
-        };
     }
 
     @Test(dataProvider = "modelNames", description = "avoid inner class")

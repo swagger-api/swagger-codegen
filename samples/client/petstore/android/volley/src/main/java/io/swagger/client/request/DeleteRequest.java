@@ -18,12 +18,11 @@ import java.util.Map;
 
 public class DeleteRequest extends Request<String> {
 
-    HttpEntity entity;
-
     private final Response.Listener<String> mListener;
-
+    HttpEntity entity;
     String contentType;
     Map<String, String> apiHeaders;
+
     public DeleteRequest(String url, Map<String, String> apiHeaders, String contentType, HttpEntity entity, Response.Listener<String> listener, Response.ErrorListener errorListener) {
         super(Method.DELETE, url, errorListener);
         mListener = listener;
@@ -42,8 +41,7 @@ public class DeleteRequest extends Request<String> {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         try {
             entity.writeTo(bos);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             VolleyLog.e("IOException writing to ByteArrayOutputStream");
         }
         return bos.toByteArray();
@@ -51,13 +49,13 @@ public class DeleteRequest extends Request<String> {
 
     @Override
     protected Response<String> parseNetworkResponse(NetworkResponse response) {
-      String parsed;
+        String parsed;
         try {
-          parsed = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+            parsed = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
         } catch (UnsupportedEncodingException e) {
-          parsed = new String(response.data);
+            parsed = new String(response.data);
         }
-      return Response.success(parsed, HttpHeaderParser.parseCacheHeaders(response));
+        return Response.success(parsed, HttpHeaderParser.parseCacheHeaders(response));
     }
 
     @Override
@@ -77,7 +75,7 @@ public class DeleteRequest extends Request<String> {
         if (apiHeaders != null && !apiHeaders.equals(Collections.emptyMap())) {
             headers.putAll(apiHeaders);
         }
-        if(contentType != null) {
+        if (contentType != null) {
             headers.put("Content-Type", contentType);
         }
 

@@ -1,11 +1,12 @@
 package io.swagger.generator.model;
 
 import com.fasterxml.jackson.databind.JsonNode;
+
+import java.util.Map;
+
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.models.auth.AuthorizationValue;
 import io.swagger.models.auth.SecuritySchemeDefinition;
-
-import java.util.Map;
 
 public class GeneratorInput {
     private JsonNode spec;

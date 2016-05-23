@@ -1,34 +1,24 @@
 package io.swagger.codegen.languages;
 
-import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableMap;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.DefaultCodegen;
-import io.swagger.codegen.SupportingFile;
-import io.swagger.codegen.CodegenProperty;
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenParameter;
-import io.swagger.models.properties.*;
-import io.swagger.codegen.CliOption;
-import io.swagger.models.Model;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.Iterator;
-
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.SupportingFile;
+import io.swagger.models.Model;
 
 public class CSharpClientCodegen extends AbstractCSharpCodegen {
     @SuppressWarnings({"unused", "hiding"})
@@ -37,7 +27,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
     private static final String NET35 = "v3.5";
     private static final String UWP = "uwp";
     private static final String DATA_TYPE_WITH_ENUM_EXTENSION = "plainDatatypeWithEnum";
-
+    protected final Map<String, String> frameworks;
     protected String packageGuid = "{" + java.util.UUID.randomUUID().toString().toUpperCase() + "}";
     protected String packageTitle = "Swagger Library";
     protected String packageProductName = "SwaggerLibrary";
@@ -48,14 +38,10 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
     protected String localVariablePrefix = "";
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
-
     protected String targetFramework = NET45;
     protected String targetFrameworkNuget = "net45";
     protected boolean supportsAsync = Boolean.TRUE;
     protected boolean supportsUWP = Boolean.FALSE;
-
-
-    protected final Map<String, String> frameworks;
 
     public CSharpClientCodegen() {
         super();
@@ -139,7 +125,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         super.processOpts();
         Boolean excludeTests = false;
 
-        if(additionalProperties.containsKey(CodegenConstants.EXCLUDE_TESTS)) {
+        if (additionalProperties.containsKey(CodegenConstants.EXCLUDE_TESTS)) {
             excludeTests = Boolean.valueOf(additionalProperties.get(CodegenConstants.EXCLUDE_TESTS).toString());
         }
 
@@ -168,10 +154,10 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         if (NET35.equals(this.targetFramework)) {
             setTargetFrameworkNuget("net35");
             setSupportsAsync(Boolean.FALSE);
-            if(additionalProperties.containsKey("supportsAsync")){
+            if (additionalProperties.containsKey("supportsAsync")) {
                 additionalProperties.remove("supportsAsync");
             }
-        } else if (UWP.equals(this.targetFramework)){
+        } else if (UWP.equals(this.targetFramework)) {
             setTargetFrameworkNuget("uwp");
             setSupportsAsync(Boolean.TRUE);
             setSupportsUWP(Boolean.TRUE);
@@ -240,7 +226,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         // copy package.config to nuget's standard location for project-level installs
         supportingFiles.add(new SupportingFile("packages.config.mustache", packageFolder + File.separator, "packages.config"));
 
-        if(Boolean.FALSE.equals(excludeTests)) {
+        if (Boolean.FALSE.equals(excludeTests)) {
             supportingFiles.add(new SupportingFile("packages_test.config.mustache", testPackageFolder + File.separator, "packages.config"));
         }
 
@@ -255,7 +241,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
             supportingFiles.add(new SupportingFile("Solution.mustache", "", packageName + ".sln"));
             supportingFiles.add(new SupportingFile("Project.mustache", packageFolder, packageName + ".csproj"));
 
-            if(Boolean.FALSE.equals(excludeTests)) {
+            if (Boolean.FALSE.equals(excludeTests)) {
                 supportingFiles.add(new SupportingFile("TestProject.mustache", testPackageFolder, testPackageName + ".csproj"));
             }
         }
@@ -332,11 +318,11 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
 
     @Override
     public Map<String, Object> postProcessModels(Map<String, Object> objMap) {
-    	return super.postProcessModels(objMap);
+        return super.postProcessModels(objMap);
     }
 
     public void setTargetFramework(String dotnetFramework) {
-        if(!frameworks.containsKey(dotnetFramework)){
+        if (!frameworks.containsKey(dotnetFramework)) {
             LOGGER.warn("Invalid .NET framework version, defaulting to " + this.targetFramework);
         } else {
             this.targetFramework = dotnetFramework;
@@ -378,10 +364,10 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
                 }
             }
 
-            if(removedChildEnum) {
+            if (removedChildEnum) {
                 // If we removed an entry from this model's vars, we need to ensure hasMore is updated
                 int count = 0, numVars = codegenProperties.size();
-                for(CodegenProperty codegenProperty : codegenProperties) {
+                for (CodegenProperty codegenProperty : codegenProperties) {
                     count += 1;
                     codegenProperty.hasMore = (count < numVars) ? true : null;
                 }
@@ -395,7 +381,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
     @Override
     public String toEnumValue(String value, String datatype) {
         if ("int?".equalsIgnoreCase(datatype) || "long?".equalsIgnoreCase(datatype) ||
-            "double?".equalsIgnoreCase(datatype) || "float?".equalsIgnoreCase(datatype)) {
+                "double?".equalsIgnoreCase(datatype) || "float?".equalsIgnoreCase(datatype)) {
             return value;
         } else {
             return "\"" + escapeText(value) + "\"";
@@ -405,8 +391,8 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
     @Override
     public String toEnumVarName(String value, String datatype) {
         // number
-        if ("int?".equals(datatype) || "long?".equals(datatype) || 
-            "double?".equals(datatype) || "float?".equals(datatype)) {
+        if ("int?".equals(datatype) || "long?".equals(datatype) ||
+                "double?".equals(datatype) || "float?".equals(datatype)) {
             String varName = "NUMBER_" + value;
             varName = varName.replaceAll("-", "MINUS_");
             varName = varName.replaceAll("\\+", "PLUS_");
@@ -440,11 +426,11 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         this.targetFrameworkNuget = targetFrameworkNuget;
     }
 
-    public void setSupportsAsync(Boolean supportsAsync){
+    public void setSupportsAsync(Boolean supportsAsync) {
         this.supportsAsync = supportsAsync;
     }
 
-    public void setSupportsUWP(Boolean supportsUWP){
+    public void setSupportsUWP(Boolean supportsUWP) {
         this.supportsUWP = supportsUWP;
     }
 

@@ -1,21 +1,34 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.*;
-import io.swagger.models.Operation;
-import io.swagger.models.Path;
-import io.swagger.models.Swagger;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.CodegenResponse;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.SupportingFile;
+import io.swagger.models.Operation;
+import io.swagger.models.Path;
+import io.swagger.models.Swagger;
 
 public class JavaResteasyServerCodegen extends JavaClientCodegen implements CodegenConfig {
 
+    public static final String DATE_LIBRARY = "dateLibrary";
     protected String dateLibrary = "default";
     protected String title = "Swagger Server";
     protected String implFolder = "src/main/java";
-
-    public static final String DATE_LIBRARY = "dateLibrary";
 
     public JavaResteasyServerCodegen() {
 
@@ -324,7 +337,7 @@ public class JavaResteasyServerCodegen extends JavaClientCodegen implements Code
 
     @Override
     public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
-        if(serializeBigDecimalAsString) {
+        if (serializeBigDecimalAsString) {
             if (property.baseType.equals("BigDecimal")) {
                 // we serialize BigDecimal as `string` to avoid precision loss
                 property.vendorExtensions.put("extraAnnotation", "@JsonSerialize(using = ToStringSerializer.class)");
@@ -335,13 +348,13 @@ public class JavaResteasyServerCodegen extends JavaClientCodegen implements Code
             }
         }
 
-        if(model.isEnum == null || model.isEnum) {
+        if (model.isEnum == null || model.isEnum) {
 
             final String lib = getLibrary();
-            if(StringUtils.isEmpty(lib)) {
+            if (StringUtils.isEmpty(lib)) {
                 model.imports.add("JsonProperty");
 
-                if(model.hasEnums != null || model.hasEnums == true) {
+                if (model.hasEnums != null || model.hasEnums == true) {
                     model.imports.add("JsonValue");
                 }
             }

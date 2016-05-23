@@ -1,27 +1,41 @@
 package io.swagger.codegen.languages;
 
 import com.google.common.base.Predicate;
-
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
-import io.swagger.codegen.*;
-import io.swagger.models.Swagger;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.text.WordUtils;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.annotation.Nullable;
+
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.SupportingFile;
 import io.swagger.models.Model;
 import io.swagger.models.Operation;
+import io.swagger.models.Swagger;
 import io.swagger.models.parameters.HeaderParameter;
 import io.swagger.models.parameters.Parameter;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.text.WordUtils;
-
-import javax.annotation.Nullable;
-import java.util.*;
-import java.io.File;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
     public static final String PROJECT_NAME = "projectName";
@@ -39,28 +53,13 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
     public static final String POD_DOCUMENTATION_URL = "podDocumentationURL";
     public static final String SWIFT_USE_API_NAMESPACE = "swiftUseApiNamespace";
     protected static final String LIBRARY_PROMISE_KIT = "PromiseKit";
-    protected static final String[] RESPONSE_LIBRARIES = { LIBRARY_PROMISE_KIT };
+    protected static final String[] RESPONSE_LIBRARIES = {LIBRARY_PROMISE_KIT};
+    private static final Pattern PATH_PARAM_PATTERN = Pattern.compile("\\{[a-zA-Z_]+\\}");
     protected String projectName = "SwaggerClient";
     protected boolean unwrapRequired;
     protected boolean swiftUseApiNamespace;
     protected String[] responseAs = new String[0];
     protected String sourceFolder = "Classes" + File.separator + "Swaggers";
-    private static final Pattern PATH_PARAM_PATTERN = Pattern.compile("\\{[a-zA-Z_]+\\}");
-
-    @Override
-    public CodegenType getTag() {
-        return CodegenType.CLIENT;
-    }
-
-    @Override
-    public String getName() {
-        return "swift";
-    }
-
-    @Override
-    public String getHelp() {
-        return "Generates a swift client library.";
-    }
 
     public SwiftCodegen() {
         super();
@@ -73,39 +72,39 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
 
         languageSpecificPrimitives = new HashSet<String>(
                 Arrays.asList(
-                    "Int",
-                    "Int32",
-                    "Int64",
-                    "Float",
-                    "Double",
-                    "Bool",
-                    "Void",
-                    "String",
-                    "Character",
-                    "AnyObject")
-                );
+                        "Int",
+                        "Int32",
+                        "Int64",
+                        "Float",
+                        "Double",
+                        "Bool",
+                        "Void",
+                        "String",
+                        "Character",
+                        "AnyObject")
+        );
         defaultIncludes = new HashSet<String>(
                 Arrays.asList(
-                    "NSDate",
-                    "NSURL", // for file
-                    "Array",
-                    "Dictionary",
-                    "Set",
-                    "Any",
-                    "Empty",
-                    "AnyObject")
-                );
+                        "NSDate",
+                        "NSURL", // for file
+                        "Array",
+                        "Dictionary",
+                        "Set",
+                        "Any",
+                        "Empty",
+                        "AnyObject")
+        );
         reservedWords = new HashSet<String>(
                 Arrays.asList(
-                    "Int", "Int32", "Int64", "Int64", "Float", "Double", "Bool", "Void", "String", "Character", "AnyObject",
-                    "class", "Class", "break", "as", "associativity", "deinit", "case", "dynamicType", "convenience", "enum", "continue",
-                    "false", "dynamic", "extension", "default", "is", "didSet", "func", "do", "nil", "final", "import", "else",
-                    "self", "get", "init", "fallthrough", "Self", "infix", "internal", "for", "super", "inout", "let", "if",
-                    "true", "lazy", "operator", "in", "COLUMN", "left", "private", "return", "FILE", "mutating", "protocol",
-                    "switch", "FUNCTION", "none", "public", "where", "LINE", "nonmutating", "static", "while", "optional",
-                    "struct", "override", "subscript", "postfix", "typealias", "precedence", "var", "prefix", "Protocol",
-                    "required", "right", "set", "Type", "unowned", "weak")
-                );
+                        "Int", "Int32", "Int64", "Int64", "Float", "Double", "Bool", "Void", "String", "Character", "AnyObject",
+                        "class", "Class", "break", "as", "associativity", "deinit", "case", "dynamicType", "convenience", "enum", "continue",
+                        "false", "dynamic", "extension", "default", "is", "didSet", "func", "do", "nil", "final", "import", "else",
+                        "self", "get", "init", "fallthrough", "Self", "infix", "internal", "for", "super", "inout", "let", "if",
+                        "true", "lazy", "operator", "in", "COLUMN", "left", "private", "return", "FILE", "mutating", "protocol",
+                        "switch", "FUNCTION", "none", "public", "where", "LINE", "nonmutating", "static", "while", "optional",
+                        "struct", "override", "subscript", "postfix", "typealias", "precedence", "var", "prefix", "Protocol",
+                        "required", "right", "set", "Type", "unowned", "weak")
+        );
 
         typeMapping = new HashMap<String, String>();
         typeMapping.put("array", "Array");
@@ -136,9 +135,9 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
 
         cliOptions.add(new CliOption(PROJECT_NAME, "Project name in Xcode"));
         cliOptions.add(new CliOption(RESPONSE_AS, "Optionally use libraries to manage response.  Currently " +
-                    StringUtils.join(RESPONSE_LIBRARIES, ", ") + " are available."));
+                StringUtils.join(RESPONSE_LIBRARIES, ", ") + " are available."));
         cliOptions.add(new CliOption(UNWRAP_REQUIRED, "Treat 'required' properties in response as non-optional " +
-                    "(which would crash the app if api returns null as opposed to required option specified in json schema"));
+                "(which would crash the app if api returns null as opposed to required option specified in json schema"));
         cliOptions.add(new CliOption(POD_SOURCE, "Source information used for Podspec"));
         cliOptions.add(new CliOption(CodegenConstants.POD_VERSION, "Version used for Podspec"));
         cliOptions.add(new CliOption(POD_AUTHORS, "Authors used for Podspec"));
@@ -151,6 +150,48 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
         cliOptions.add(new CliOption(POD_SCREENSHOTS, "Screenshots used for Podspec"));
         cliOptions.add(new CliOption(POD_DOCUMENTATION_URL, "Documentation URL used for Podspec"));
         cliOptions.add(new CliOption(SWIFT_USE_API_NAMESPACE, "Flag to make all the API classes inner-class of {{projectName}}API"));
+    }
+
+    private static String normalizePath(String path) {
+        StringBuilder builder = new StringBuilder();
+
+        int cursor = 0;
+        Matcher matcher = PATH_PARAM_PATTERN.matcher(path);
+        boolean found = matcher.find();
+        while (found) {
+            String stringBeforeMatch = path.substring(cursor, matcher.start());
+            builder.append(stringBeforeMatch);
+
+            String group = matcher.group().substring(1, matcher.group().length() - 1);
+            group = camelize(group, true);
+            builder
+                    .append("{")
+                    .append(group)
+                    .append("}");
+
+            cursor = matcher.end();
+            found = matcher.find();
+        }
+
+        String stringAfterMatch = path.substring(cursor);
+        builder.append(stringAfterMatch);
+
+        return builder.toString();
+    }
+
+    @Override
+    public CodegenType getTag() {
+        return CodegenType.CLIENT;
+    }
+
+    @Override
+    public String getName() {
+        return "swift";
+    }
+
+    @Override
+    public String getHelp() {
+        return "Generates a swift client library.";
     }
 
     @Override
@@ -175,7 +216,7 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
         if (additionalProperties.containsKey(RESPONSE_AS)) {
             Object responseAsObject = additionalProperties.get(RESPONSE_AS);
             if (responseAsObject instanceof String) {
-                setResponseAs(((String)responseAsObject).split(","));
+                setResponseAs(((String) responseAsObject).split(","));
             } else {
                 setResponseAs((String[]) responseAsObject);
             }
@@ -195,7 +236,7 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("Cartfile.mustache", "", "Cartfile"));
         supportingFiles.add(new SupportingFile("APIHelper.mustache", sourceFolder, "APIHelper.swift"));
         supportingFiles.add(new SupportingFile("AlamofireImplementations.mustache", sourceFolder,
-                    "AlamofireImplementations.swift"));
+                "AlamofireImplementations.swift"));
         supportingFiles.add(new SupportingFile("Extensions.mustache", sourceFolder, "Extensions.swift"));
         supportingFiles.add(new SupportingFile("Models.mustache", sourceFolder, "Models.swift"));
         supportingFiles.add(new SupportingFile("APIs.mustache", sourceFolder, "APIs.swift"));
@@ -338,7 +379,7 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
             codegenProperty.datatypeWithEnum = toEnumName(codegenProperty);
             //codegenProperty.datatypeWithEnum =
             //    StringUtils.left(codegenProperty.datatypeWithEnum, codegenProperty.datatypeWithEnum.length() - "Enum".length());
- 
+
             // Ensure that the enum type doesn't match a reserved word or
             // the variable name doesn't match the generated enum type or the
             // Swift compiler will generate an error
@@ -359,17 +400,16 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
         return WordUtils.capitalizeFully(StringUtils.lowerCase(value), separators).replaceAll("[-_  :]", "");
     }
 
-
     @Override
     public String toApiName(String name) {
-        if(name.length() == 0)
+        if (name.length() == 0)
             return "DefaultAPI";
         return initialCaps(name) + "API";
     }
 
     @Override
     public String toOperationId(String operationId) {
-        operationId = camelize(sanitizeName(operationId), true); 
+        operationId = camelize(sanitizeName(operationId), true);
 
         // throw exception if method name is empty. This should not happen but keep the check just in case
         if (StringUtils.isEmpty(operationId)) {
@@ -445,33 +485,6 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
         }));
         operation.setParameters(parameters);
         return super.fromOperation(path, httpMethod, operation, definitions, swagger);
-    }
-
-    private static String normalizePath(String path) {
-        StringBuilder builder = new StringBuilder();
-
-        int cursor = 0;
-        Matcher matcher = PATH_PARAM_PATTERN.matcher(path);
-        boolean found = matcher.find();
-        while (found) {
-            String stringBeforeMatch = path.substring(cursor, matcher.start());
-            builder.append(stringBeforeMatch);
-
-            String group = matcher.group().substring(1, matcher.group().length() - 1);
-            group = camelize(group, true);
-            builder
-                .append("{")
-                .append(group)
-                .append("}");
-
-            cursor = matcher.end();
-            found = matcher.find();
-        }
-
-        String stringAfterMatch = path.substring(cursor);
-        builder.append(stringAfterMatch);
-
-        return builder.toString();
     }
 
     public void setProjectName(String projectName) {

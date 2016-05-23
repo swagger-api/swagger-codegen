@@ -1,24 +1,43 @@
 package io.swagger.codegen.languages;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
+
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
-import io.swagger.codegen.*;
-import io.swagger.models.*;
-import io.swagger.util.Yaml;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenParameter;
+import io.swagger.codegen.CodegenResponse;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.SupportingFile;
+import io.swagger.models.HttpMethod;
+import io.swagger.models.Info;
+import io.swagger.models.Operation;
+import io.swagger.models.Path;
+import io.swagger.models.Swagger;
+import io.swagger.util.Yaml;
 
 public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig {
 
@@ -86,8 +105,8 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
         //   "controller.js")
         // );
         supportingFiles.add(new SupportingFile("swagger.mustache",
-                        "api",
-                        "swagger.yaml")
+                "api",
+                "swagger.yaml")
         );
         writeOptional(outputFolder, new SupportingFile("index.mustache", "", "index.js"));
         writeOptional(outputFolder, new SupportingFile("package.mustache", "", "package.json"));
@@ -97,6 +116,40 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
                     "service.mustache",   // the template to use
                     "Service.js");       // the extension for each file to write
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static List<Map<String, Object>> getOperations(Map<String, Object> objs) {
+        List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+        Map<String, Object> apiInfo = (Map<String, Object>) objs.get("apiInfo");
+        List<Map<String, Object>> apis = (List<Map<String, Object>>) apiInfo.get("apis");
+        for (Map<String, Object> api : apis) {
+            result.add((Map<String, Object>) api.get("operations"));
+        }
+        return result;
+    }
+
+    private static List<Map<String, Object>> sortOperationsByPath(List<CodegenOperation> ops) {
+        Multimap<String, CodegenOperation> opsByPath = ArrayListMultimap.create();
+
+        for (CodegenOperation op : ops) {
+            opsByPath.put(op.path, op);
+        }
+
+        List<Map<String, Object>> opsByPathList = new ArrayList<Map<String, Object>>();
+        for (Entry<String, Collection<CodegenOperation>> entry : opsByPath.asMap().entrySet()) {
+            Map<String, Object> opsByPathEntry = new HashMap<String, Object>();
+            opsByPathList.add(opsByPathEntry);
+            opsByPathEntry.put("path", entry.getKey());
+            opsByPathEntry.put("operation", entry.getValue());
+            List<CodegenOperation> operationsForThisPath = Lists.newArrayList(entry.getValue());
+            operationsForThisPath.get(operationsForThisPath.size() - 1).hasMore = null;
+            if (opsByPathList.size() < opsByPath.asMap().size()) {
+                opsByPathEntry.put("hasMore", "true");
+            }
+        }
+
+        return opsByPathList;
     }
 
     @Override
@@ -116,8 +169,8 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     /**
-     * Configures a friendly name for the generator.  This will be used by the generator
-     * to select the library with the -l flag.
+     * Configures a friendly name for the generator.  This will be used by the generator to select
+     * the library with the -l flag.
      *
      * @return the friendly name for the generator
      */
@@ -127,8 +180,8 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     /**
-     * Returns human-friendly help for the generator.  Provide the consumer with help
-     * tips, parameters here
+     * Returns human-friendly help for the generator.  Provide the consumer with help tips,
+     * parameters here
      *
      * @return A string value for the help message
      */
@@ -152,8 +205,8 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     /**
-     * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping
-     * those terms here.  This logic is only called if a variable matches the reseved words
+     * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping those terms
+     * here.  This logic is only called if a variable matches the reseved words
      *
      * @return the escaped term
      */
@@ -206,40 +259,6 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
         return objs;
     }
 
-    @SuppressWarnings("unchecked")
-    private static List<Map<String, Object>> getOperations(Map<String, Object> objs) {
-        List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
-        Map<String, Object> apiInfo = (Map<String, Object>) objs.get("apiInfo");
-        List<Map<String, Object>> apis = (List<Map<String, Object>>) apiInfo.get("apis");
-        for (Map<String, Object> api : apis) {
-            result.add((Map<String, Object>) api.get("operations"));
-        }
-        return result;
-    }
-
-    private static List<Map<String, Object>> sortOperationsByPath(List<CodegenOperation> ops) {
-        Multimap<String, CodegenOperation> opsByPath = ArrayListMultimap.create();
-
-        for (CodegenOperation op : ops) {
-            opsByPath.put(op.path, op);
-        }
-
-        List<Map<String, Object>> opsByPathList = new ArrayList<Map<String, Object>>();
-        for (Entry<String, Collection<CodegenOperation>> entry : opsByPath.asMap().entrySet()) {
-            Map<String, Object> opsByPathEntry = new HashMap<String, Object>();
-            opsByPathList.add(opsByPathEntry);
-            opsByPathEntry.put("path", entry.getKey());
-            opsByPathEntry.put("operation", entry.getValue());
-            List<CodegenOperation> operationsForThisPath = Lists.newArrayList(entry.getValue());
-            operationsForThisPath.get(operationsForThisPath.size() - 1).hasMore = null;
-            if (opsByPathList.size() < opsByPath.asMap().size()) {
-                opsByPathEntry.put("hasMore", "true");
-            }
-        }
-
-        return opsByPathList;
-    }
-
     @Override
     public void preprocessSwagger(Swagger swagger) {
         String host = swagger.getHost();
@@ -264,21 +283,21 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
 
         // need vendor extensions for x-swagger-router-controller
         Map<String, Path> paths = swagger.getPaths();
-        if(paths != null) {
-            for(String pathname : paths.keySet()) {
+        if (paths != null) {
+            for (String pathname : paths.keySet()) {
                 Path path = paths.get(pathname);
                 Map<HttpMethod, Operation> operationMap = path.getOperationMap();
-                if(operationMap != null) {
-                    for(HttpMethod method : operationMap.keySet()) {
+                if (operationMap != null) {
+                    for (HttpMethod method : operationMap.keySet()) {
                         Operation operation = operationMap.get(method);
                         String tag = "default";
-                        if(operation.getTags() != null && operation.getTags().size() > 0) {
+                        if (operation.getTags() != null && operation.getTags().size() > 0) {
                             tag = toApiName(operation.getTags().get(0));
                         }
-                        if(operation.getOperationId() == null) {
+                        if (operation.getOperationId() == null) {
                             operation.setOperationId(getOrGenerateOperationId(operation, pathname, method.toString()));
                         }
-                        if(operation.getVendorExtensions().get("x-swagger-router-controller") == null) {
+                        if (operation.getVendorExtensions().get("x-swagger-router-controller") == null) {
                             operation.getVendorExtensions().put("x-swagger-router-controller", sanitizeTag(tag));
                         }
                     }
@@ -287,16 +306,16 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
         }
     }
 
-        @Override
+    @Override
     public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
-        Swagger swagger = (Swagger)objs.get("swagger");
-        if(swagger != null) {
+        Swagger swagger = (Swagger) objs.get("swagger");
+        if (swagger != null) {
             try {
                 SimpleModule module = new SimpleModule();
                 module.addSerializer(Double.class, new JsonSerializer<Double>() {
                     @Override
                     public void serialize(Double val, JsonGenerator jgen,
-                                   SerializerProvider provider) throws IOException, JsonProcessingException {
+                                          SerializerProvider provider) throws IOException, JsonProcessingException {
                         jgen.writeNumber(new BigDecimal(val));
                     }
                 });

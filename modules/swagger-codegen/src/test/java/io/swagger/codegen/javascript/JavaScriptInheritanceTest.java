@@ -1,13 +1,13 @@
 package io.swagger.codegen.javascript;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import com.google.common.collect.Sets;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.google.common.collect.Sets;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.languages.JavascriptClientCodegen;

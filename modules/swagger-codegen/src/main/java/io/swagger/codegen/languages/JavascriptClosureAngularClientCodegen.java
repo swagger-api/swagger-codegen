@@ -1,14 +1,27 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.*;
-import io.swagger.models.properties.*;
-
-import java.util.TreeSet;
-import java.util.*;
-import java.io.File;
-
 import org.apache.commons.lang3.StringUtils;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
+
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.DefaultCodegen;
+import io.swagger.models.properties.ArrayProperty;
+import io.swagger.models.properties.FileProperty;
+import io.swagger.models.properties.MapProperty;
+import io.swagger.models.properties.Property;
 
 public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implements CodegenConfig {
     public JavascriptClosureAngularClientCodegen() {
@@ -16,21 +29,21 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
 
         supportsInheritance = false;
         setReservedWordsLowerCase(Arrays.asList("abstract",
-            "continue", "for", "new", "switch", "assert", "default", "if",
-            "package", "synchronized", "do", "goto", "private",
-            "this", "break", "double", "implements", "protected", "throw",
-            "byte", "else", "import", "public", "throws", "case", "enum",
-            "instanceof", "return", "transient", "catch", "extends", "int",
-            "short", "try", "char", "final", "interface", "static", "void",
-            "class", "finally", "const", "super", "while"));
+                "continue", "for", "new", "switch", "assert", "default", "if",
+                "package", "synchronized", "do", "goto", "private",
+                "this", "break", "double", "implements", "protected", "throw",
+                "byte", "else", "import", "public", "throws", "case", "enum",
+                "instanceof", "return", "transient", "catch", "extends", "int",
+                "short", "try", "char", "final", "interface", "static", "void",
+                "class", "finally", "const", "super", "while"));
 
         languageSpecificPrimitives = new HashSet<String>(Arrays.asList(
-            "string",
-            "boolean",
-            "number",
-            "Object",
-            "Blob",
-            "Date"));
+                "string",
+                "boolean",
+                "number",
+                "Object",
+                "Blob",
+                "Date"));
         instantiationTypes.put("array", "Array");
 
         typeMapping = new HashMap<String, String>();
@@ -57,9 +70,9 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
 
         importMapping = new HashMap<String, String>();
         defaultIncludes = new HashSet<String>(Arrays.asList(
-            "Object",
-            "Array",
-            "Blob"
+                "Object",
+                "Array",
+                "Blob"
         ));
 
         typeMapping.put("binary", "string");
@@ -80,7 +93,7 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
     @Override
     public String getHelp() {
         return "Generates a Javascript AngularJS client library (beta) annotated with Google Closure Compiler annotations" +
-            "(https://developers.google.com/closure/compiler/docs/js-for-compiler?hl=en)";
+                "(https://developers.google.com/closure/compiler/docs/js-for-compiler?hl=en)";
     }
 
     @Override
@@ -164,7 +177,7 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
         } else if (p instanceof MapProperty) {
             MapProperty mp = (MapProperty) p;
             Property inner = mp.getAdditionalProperties();
-            return "Object<!string, "+ getTypeDeclaration(inner) + ">";
+            return "Object<!string, " + getTypeDeclaration(inner) + ">";
         } else if (p instanceof FileProperty) {
             return "Object";
         }
@@ -174,7 +187,7 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
                 type.equals("number") ||
                 type.equals("string")) {
             return type;
-                }
+        }
         return apiPackage + "." + type;
     }
 
@@ -213,7 +226,7 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
     @Override
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
         if (objs.get("imports") instanceof List) {
-            List<Map<String, String>> imports = (ArrayList<Map<String, String>>)objs.get("imports");
+            List<Map<String, String>> imports = (ArrayList<Map<String, String>>) objs.get("imports");
             Collections.sort(imports, new Comparator<Map<String, String>>() {
                 public int compare(Map<String, String> o1, Map<String, String> o2) {
                     return o1.get("import").compareTo(o2.get("import"));

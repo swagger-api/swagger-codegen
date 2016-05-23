@@ -17,13 +17,11 @@ import io.swagger.models.properties.ObjectProperty;
 import io.swagger.models.properties.Property;
 
 public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCodegen {
-    private static final SimpleDateFormat SNAPSHOT_SUFFIX_FORMAT = new SimpleDateFormat("yyyyMMddHHmm");
-
     public static final String NPM_NAME = "npmName";
     public static final String NPM_VERSION = "npmVersion";
     public static final String NPM_REPOSITORY = "npmRepository";
     public static final String SNAPSHOT = "snapshot";
-
+    private static final SimpleDateFormat SNAPSHOT_SUFFIX_FORMAT = new SimpleDateFormat("yyyyMMddHHmm");
     protected String npmName = null;
     protected String npmVersion = "1.0.0";
     protected String npmRepository = null;
@@ -35,7 +33,7 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
         embeddedTemplateDir = templateDir = "typescript-angular2";
         modelTemplateFiles.put("model.mustache", ".ts");
         apiTemplateFiles.put("api.mustache", ".ts");
-        typeMapping.put("Date","Date");
+        typeMapping.put("Date", "Date");
         apiPackage = "api";
         modelPackage = "model";
 
@@ -69,13 +67,13 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
         supportingFiles.add(new SupportingFile("apis.mustache", apiPackage().replace('.', File.separatorChar), "api.ts"));
         supportingFiles.add(new SupportingFile("index.mustache", getIndexDirectory(), "index.ts"));
 
-        if(additionalProperties.containsKey(NPM_NAME)) {
+        if (additionalProperties.containsKey(NPM_NAME)) {
             addNpmPackageGeneration();
         }
     }
 
     private void addNpmPackageGeneration() {
-        if(additionalProperties.containsKey(NPM_NAME)) {
+        if (additionalProperties.containsKey(NPM_NAME)) {
             this.setNpmName(additionalProperties.get(NPM_NAME).toString());
         }
 
@@ -107,15 +105,15 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
     @Override
     public String getTypeDeclaration(Property p) {
         Property inner;
-        if(p instanceof ArrayProperty) {
-            ArrayProperty mp1 = (ArrayProperty)p;
+        if (p instanceof ArrayProperty) {
+            ArrayProperty mp1 = (ArrayProperty) p;
             inner = mp1.getItems();
             return this.getSwaggerType(p) + "<" + this.getTypeDeclaration(inner) + ">";
-        } else if(p instanceof MapProperty) {
-            MapProperty mp = (MapProperty)p;
+        } else if (p instanceof MapProperty) {
+            MapProperty mp = (MapProperty) p;
             inner = mp.getAdditionalProperties();
             return "{ [key: string]: " + this.getTypeDeclaration(inner) + "; }";
-        } else if(p instanceof FileProperty || p instanceof ObjectProperty) {
+        } else if (p instanceof FileProperty || p instanceof ObjectProperty) {
             return "any";
         } else {
             return super.getTypeDeclaration(p);
@@ -125,7 +123,7 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
     @Override
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
-        if(languageSpecificPrimitives.contains(swaggerType)) {
+        if (languageSpecificPrimitives.contains(swaggerType)) {
             return swaggerType;
         }
         return addModelPrefix(swaggerType);
@@ -146,8 +144,8 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
     }
 
     private boolean startsWithLanguageSpecificPrimitiv(String type) {
-        for (String langPrimitive:languageSpecificPrimitives) {
-            if (type.startsWith(langPrimitive))  {
+        for (String langPrimitive : languageSpecificPrimitives) {
+            if (type.startsWith(langPrimitive)) {
                 return true;
             }
         }

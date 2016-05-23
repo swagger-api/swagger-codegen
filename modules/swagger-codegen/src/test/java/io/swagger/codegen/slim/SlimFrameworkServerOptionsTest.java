@@ -4,7 +4,6 @@ import io.swagger.codegen.AbstractOptionsTest;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.languages.SlimFrameworkServerCodegen;
 import io.swagger.codegen.options.SlimFrameworkServerOptionsProvider;
-
 import mockit.Expectations;
 import mockit.Tested;
 

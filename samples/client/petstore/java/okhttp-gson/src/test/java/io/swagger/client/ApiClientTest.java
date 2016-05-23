@@ -1,14 +1,29 @@
 package io.swagger.client;
 
-import io.swagger.client.auth.*;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import io.swagger.client.auth.ApiKeyAuth;
+import io.swagger.client.auth.Authentication;
+import io.swagger.client.auth.HttpBasicAuth;
+import io.swagger.client.auth.OAuth;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 
 public class ApiClientTest {
@@ -79,15 +94,15 @@ public class ApiClientTest {
 
     @Test
     public void testIsJsonMime() {
-      assertFalse(apiClient.isJsonMime(null));
-      assertFalse(apiClient.isJsonMime(""));
-      assertFalse(apiClient.isJsonMime("text/plain"));
-      assertFalse(apiClient.isJsonMime("application/xml"));
-      assertFalse(apiClient.isJsonMime("application/jsonp"));
+        assertFalse(apiClient.isJsonMime(null));
+        assertFalse(apiClient.isJsonMime(""));
+        assertFalse(apiClient.isJsonMime("text/plain"));
+        assertFalse(apiClient.isJsonMime("application/xml"));
+        assertFalse(apiClient.isJsonMime("application/jsonp"));
 
-      assertTrue(apiClient.isJsonMime("application/json"));
-      assertTrue(apiClient.isJsonMime("application/json; charset=UTF8"));
-      assertTrue(apiClient.isJsonMime("APPLICATION/JSON"));
+        assertTrue(apiClient.isJsonMime("application/json"));
+        assertTrue(apiClient.isJsonMime("application/json; charset=UTF8"));
+        assertTrue(apiClient.isJsonMime("APPLICATION/JSON"));
     }
 
     @Test

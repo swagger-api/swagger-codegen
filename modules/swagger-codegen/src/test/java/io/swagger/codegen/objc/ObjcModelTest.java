@@ -1,5 +1,12 @@
 package io.swagger.codegen.objc;
 
+import com.google.common.collect.Sets;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import java.util.Map;
+
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenProperty;
@@ -18,30 +25,24 @@ import io.swagger.models.properties.RefProperty;
 import io.swagger.models.properties.StringProperty;
 import io.swagger.parser.SwaggerParser;
 
-import com.google.common.collect.Sets;
-import org.testng.Assert;
-import org.testng.annotations.Test;
-
-import java.util.Map;
-
 @SuppressWarnings("static-method")
 public class ObjcModelTest {
 
     @Test(description = "convert a model with a advanced map property")
     public void advancedMapPropertyTest() {
         final Model model = new ModelImpl()
-        .description("a sample model")
-        .property("translations", new MapProperty()
-                  .additionalProperties(new MapProperty().additionalProperties(new StringProperty())))
-        .required("id");
+                .description("a sample model")
+                .property("translations", new MapProperty()
+                        .additionalProperties(new MapProperty().additionalProperties(new StringProperty())))
+                .required("id");
         final DefaultCodegen codegen = new ObjcClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
-        
+
         Assert.assertEquals(cm.name, "sample");
         Assert.assertEquals(cm.classname, "SWGSample");
         Assert.assertEquals(cm.description, "a sample model");
         Assert.assertEquals(cm.vars.size(), 1);
-        
+
         final CodegenProperty property1 = cm.vars.get(0);
         Assert.assertEquals(property1.baseName, "translations");
         Assert.assertEquals(property1.datatype, "NSDictionary<NSString*, NSDictionary<NSString*, NSString*>*>*");
@@ -51,7 +52,7 @@ public class ObjcModelTest {
         Assert.assertNull(property1.required);
         Assert.assertTrue(property1.isContainer);
     }
-    
+
     @Test(description = "convert a simple java model")
     public void simpleModelTest() {
         final Model model = new ModelImpl()
@@ -69,7 +70,7 @@ public class ObjcModelTest {
         Assert.assertEquals(cm.classname, "SWGSample");
         Assert.assertEquals(cm.description, "a sample model");
         Assert.assertEquals(cm.vars.size(), 3);
-        Assert.assertEquals(cm.discriminator,"test");
+        Assert.assertEquals(cm.discriminator, "test");
 
         final CodegenProperty property1 = cm.vars.get(0);
         Assert.assertEquals(property1.baseName, "id");
@@ -170,7 +171,7 @@ public class ObjcModelTest {
         Assert.assertTrue(property1.isPrimitiveType);
     }
 
-    
+
     @Test(description = "convert a model with complex property")
     public void complexPropertyTest() {
         final Model model = new ModelImpl()

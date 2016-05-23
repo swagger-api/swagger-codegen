@@ -21,7 +21,7 @@ import io.swagger.models.properties.Property;
 
 public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen implements CodegenConfig {
 
-    protected String modelPropertyNaming= "camelCase";
+    protected String modelPropertyNaming = "camelCase";
     protected Boolean supportsES6 = true;
 
     public AbstractTypeScriptClientCodegen() {
@@ -88,88 +88,88 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
         }
 
         if (additionalProperties.containsKey(CodegenConstants.SUPPORTS_ES6)) {
-            setSupportsES6(Boolean.valueOf((String)additionalProperties.get(CodegenConstants.SUPPORTS_ES6)));
+            setSupportsES6(Boolean.valueOf((String) additionalProperties.get(CodegenConstants.SUPPORTS_ES6)));
             additionalProperties.put("supportsES6", getSupportsES6());
         }
     }
 
 
-	@Override
-	public CodegenType getTag() {
-	    return CodegenType.CLIENT;
-	}
+    @Override
+    public CodegenType getTag() {
+        return CodegenType.CLIENT;
+    }
 
-	@Override
-	public String escapeReservedWord(String name) {
-		return "_" + name;
-	}
+    @Override
+    public String escapeReservedWord(String name) {
+        return "_" + name;
+    }
 
-	@Override
-	public String apiFileFolder() {
-		return outputFolder + "/" + apiPackage().replace('.', File.separatorChar);
-	}
+    @Override
+    public String apiFileFolder() {
+        return outputFolder + "/" + apiPackage().replace('.', File.separatorChar);
+    }
 
-	@Override
-	public String modelFileFolder() {
-		return outputFolder + "/" + modelPackage().replace('.', File.separatorChar);
-	}
+    @Override
+    public String modelFileFolder() {
+        return outputFolder + "/" + modelPackage().replace('.', File.separatorChar);
+    }
 
-	@Override
-        public String toParamName(String name) {
-            // replace - with _ e.g. created-at => created_at
-            name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+    @Override
+    public String toParamName(String name) {
+        // replace - with _ e.g. created-at => created_at
+        name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
 
-            // if it's all uppper case, do nothing
-            if (name.matches("^[A-Z_]*$"))
-                return name;
-
-            // camelize the variable name
-            // pet_id => petId
-            name = camelize(name, true);
-
-            // for reserved word or word starting with number, append _
-            if (isReservedWord(name) || name.matches("^\\d.*"))
-                name = escapeReservedWord(name);
-
+        // if it's all uppper case, do nothing
+        if (name.matches("^[A-Z_]*$"))
             return name;
+
+        // camelize the variable name
+        // pet_id => petId
+        name = camelize(name, true);
+
+        // for reserved word or word starting with number, append _
+        if (isReservedWord(name) || name.matches("^\\d.*"))
+            name = escapeReservedWord(name);
+
+        return name;
+    }
+
+    @Override
+    public String toVarName(String name) {
+        // should be the same as variable name
+        return getNameUsingModelPropertyNaming(name);
+    }
+
+    @Override
+    public String toModelName(String name) {
+        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+
+        if (!StringUtils.isEmpty(modelNamePrefix)) {
+            name = modelNamePrefix + "_" + name;
         }
 
-	@Override
-	public String toVarName(String name) {
-		// should be the same as variable name
-		return getNameUsingModelPropertyNaming(name);
-	}
-
-	@Override
-        public String toModelName(String name) {
-            name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
-
-            if (!StringUtils.isEmpty(modelNamePrefix)) {
-                name = modelNamePrefix + "_" + name;
-            }
-
-            if (!StringUtils.isEmpty(modelNameSuffix)) {
-                name = name + "_" + modelNameSuffix;
-            }
-
-            // model name cannot use reserved keyword, e.g. return
-            if (isReservedWord(name)) {
-                String modelName = camelize("model_" + name);
-                LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + modelName);
-                return modelName;
-            }
-
-            // model name starts with number
-            if (name.matches("^\\d.*")) {
-                String modelName = camelize("model_" + name); // e.g. 200Response => Model200Response (after camelize)
-                LOGGER.warn(name + " (model name starts with number) cannot be used as model name. Renamed to " + modelName);
-                return modelName;
-            }
-
-            // camelize the model name
-            // phone_number => PhoneNumber
-            return camelize(name);
+        if (!StringUtils.isEmpty(modelNameSuffix)) {
+            name = name + "_" + modelNameSuffix;
         }
+
+        // model name cannot use reserved keyword, e.g. return
+        if (isReservedWord(name)) {
+            String modelName = camelize("model_" + name);
+            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + modelName);
+            return modelName;
+        }
+
+        // model name starts with number
+        if (name.matches("^\\d.*")) {
+            String modelName = camelize("model_" + name); // e.g. 200Response => Model200Response (after camelize)
+            LOGGER.warn(name + " (model name starts with number) cannot be used as model name. Renamed to " + modelName);
+            return modelName;
+        }
+
+        // camelize the model name
+        // phone_number => PhoneNumber
+        return camelize(name);
+    }
 
     @Override
     public String toModelFilename(String name) {
@@ -186,7 +186,7 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
         } else if (p instanceof MapProperty) {
             MapProperty mp = (MapProperty) p;
             Property inner = mp.getAdditionalProperties();
-            return "{ [key: string]: "+ getTypeDeclaration(inner) + "; }";
+            return "{ [key: string]: " + getTypeDeclaration(inner) + "; }";
         } else if (p instanceof FileProperty) {
             return "any";
         }
@@ -222,30 +222,35 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
         return camelize(sanitizeName(operationId), true);
     }
 
-    public void setModelPropertyNaming(String naming) {
-        if ("original".equals(naming) || "camelCase".equals(naming) ||
-            "PascalCase".equals(naming) || "snake_case".equals(naming)) {
-            this.modelPropertyNaming = naming;
-        } else {
-            throw new IllegalArgumentException("Invalid model property naming '" +
-                                               naming + "'. Must be 'original', 'camelCase', " +
-                                               "'PascalCase' or 'snake_case'");
-        }
-    }
-
     public String getModelPropertyNaming() {
         return this.modelPropertyNaming;
     }
 
+    public void setModelPropertyNaming(String naming) {
+        if ("original".equals(naming) || "camelCase".equals(naming) ||
+                "PascalCase".equals(naming) || "snake_case".equals(naming)) {
+            this.modelPropertyNaming = naming;
+        } else {
+            throw new IllegalArgumentException("Invalid model property naming '" +
+                    naming + "'. Must be 'original', 'camelCase', " +
+                    "'PascalCase' or 'snake_case'");
+        }
+    }
+
     public String getNameUsingModelPropertyNaming(String name) {
         switch (CodegenConstants.MODEL_PROPERTY_NAMING_TYPE.valueOf(getModelPropertyNaming())) {
-            case original:    return name;
-            case camelCase:   return camelize(name, true);
-            case PascalCase:  return camelize(name);
-            case snake_case:  return underscore(name);
-            default:          throw new IllegalArgumentException("Invalid model property naming '" +
-                                                                 name + "'. Must be 'original', 'camelCase', " +
-                                                                 "'PascalCase' or 'snake_case'");
+            case original:
+                return name;
+            case camelCase:
+                return camelize(name, true);
+            case PascalCase:
+                return camelize(name);
+            case snake_case:
+                return underscore(name);
+            default:
+                throw new IllegalArgumentException("Invalid model property naming '" +
+                        name + "'. Must be 'original', 'camelCase', " +
+                        "'PascalCase' or 'snake_case'");
         }
 
     }
@@ -304,11 +309,11 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
         return postProcessModelsEnum(objs);
     }
 
-    public void setSupportsES6(Boolean value) {
-        supportsES6 = value;
-    }
-
     public Boolean getSupportsES6() {
         return supportsES6;
+    }
+
+    public void setSupportsES6(Boolean value) {
+        supportsES6 = value;
     }
 }

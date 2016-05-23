@@ -1,10 +1,10 @@
 package io.swagger.codegen.options;
 
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.languages.SpringBootServerCodegen;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.languages.SpringBootServerCodegen;
 
 public class SpringBootServerOptionsProvider extends JavaOptionsProvider {
     public static final String CONFIG_PACKAGE_VALUE = "configPackage";

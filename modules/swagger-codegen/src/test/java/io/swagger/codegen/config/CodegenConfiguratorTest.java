@@ -1,5 +1,11 @@
 package io.swagger.codegen.config;
 
+import org.testng.annotations.Test;
+
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.Map;
+
 import io.swagger.codegen.ClientOptInput;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConfigLoader;
@@ -15,11 +21,6 @@ import mockit.Injectable;
 import mockit.Mocked;
 import mockit.StrictExpectations;
 import mockit.Tested;
-import org.testng.annotations.Test;
-
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.Map;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -45,6 +46,15 @@ public class CodegenConfiguratorTest {
 
     @Tested
     CodegenConfigurator configurator;
+
+    private static String toAbsolutePathDir(String outputDir) {
+        return Paths.get(outputDir).toAbsolutePath().toAbsolutePath().toString();
+    }
+
+    private static void assertValueInMap(Map<?, ?> map, String propertyKey, String expectedPropertyValue) {
+        assertTrue(map.containsKey(propertyKey));
+        assertEquals(map.get(propertyKey), expectedPropertyValue);
+    }
 
     @SuppressWarnings("unused")
     @Test
@@ -117,7 +127,6 @@ public class CodegenConfiguratorTest {
         final ClientOptInput clientOptInput = setupAndRunGenericTest(configurator);
         assertValueInMap(clientOptInput.getConfig().additionalProperties(), CodegenConstants.API_PACKAGE, apiPackage);
     }
-
 
     @Test
     public void testModelPackage() throws Exception {
@@ -319,10 +328,6 @@ public class CodegenConfiguratorTest {
         return result;
     }
 
-    private static String toAbsolutePathDir(String outputDir) {
-        return Paths.get(outputDir).toAbsolutePath().toAbsolutePath().toString();
-    }
-
     @SuppressWarnings("unused")
     private void setupStandardExpectations(final String spec, final String languageName, final String auth, final CodegenConfig config) {
 
@@ -331,7 +336,9 @@ public class CodegenConfiguratorTest {
             times = 1;
             result = config;
 
-            AuthParser.parse(auth); times=1; result = authorizationValues;
+            AuthParser.parse(auth);
+            times = 1;
+            result = authorizationValues;
 
             new SwaggerParser();
             times = 1;
@@ -342,11 +349,6 @@ public class CodegenConfiguratorTest {
             result = swagger;
 
         }};
-    }
-
-    private static void assertValueInMap(Map<?, ?> map, String propertyKey, String expectedPropertyValue) {
-        assertTrue(map.containsKey(propertyKey));
-        assertEquals(map.get(propertyKey), expectedPropertyValue);
     }
 
 }

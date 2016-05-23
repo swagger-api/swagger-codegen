@@ -7,7 +7,7 @@ public class TestUtils {
     private static final AtomicLong atomicId = createAtomicId();
 
     public static long nextId() {
-      return atomicId.getAndIncrement();
+        return atomicId.getAndIncrement();
     }
 
     private static AtomicLong createAtomicId() {

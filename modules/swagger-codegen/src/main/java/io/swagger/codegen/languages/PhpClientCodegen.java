@@ -1,5 +1,17 @@
 package io.swagger.codegen.languages;
 
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
@@ -9,30 +21,27 @@ import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
 import io.swagger.codegen.SupportingFile;
-import io.swagger.models.properties.*;
-
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.HashSet;
-import java.util.regex.Matcher;
-
-import org.apache.commons.lang3.StringUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.swagger.models.properties.ArrayProperty;
+import io.swagger.models.properties.BooleanProperty;
+import io.swagger.models.properties.DateProperty;
+import io.swagger.models.properties.DateTimeProperty;
+import io.swagger.models.properties.DoubleProperty;
+import io.swagger.models.properties.FloatProperty;
+import io.swagger.models.properties.IntegerProperty;
+import io.swagger.models.properties.LongProperty;
+import io.swagger.models.properties.MapProperty;
+import io.swagger.models.properties.Property;
+import io.swagger.models.properties.RefProperty;
+import io.swagger.models.properties.StringProperty;
 
 public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
-    @SuppressWarnings("hiding")
-    static Logger LOGGER = LoggerFactory.getLogger(PhpClientCodegen.class);
-
     public static final String VARIABLE_NAMING_CONVENTION = "variableNamingConvention";
     public static final String PACKAGE_PATH = "packagePath";
     public static final String SRC_BASE_PATH = "srcBasePath";
     public static final String COMPOSER_VENDOR_NAME = "composerVendorName";
     public static final String COMPOSER_PROJECT_NAME = "composerProjectName";
+    @SuppressWarnings("hiding")
+    static Logger LOGGER = LoggerFactory.getLogger(PhpClientCodegen.class);
     protected String invokerPackage = "Swagger\\Client";
     protected String composerVendorName = null;
     protected String composerProjectName = null;
@@ -43,7 +52,7 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
     protected String docsBasePath = "docs";
     protected String apiDirName = "Api";
     protected String modelDirName = "Model";
-    protected String variableNamingConvention= "snake_case";
+    protected String variableNamingConvention = "snake_case";
     protected String apiDocPath = docsBasePath + "/" + apiDirName;
     protected String modelDocPath = docsBasePath + "/" + modelDirName;
 
@@ -65,12 +74,12 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         setReservedWordsLowerCase(
                 Arrays.asList(
-                    // local variables used in api methods (endpoints)
-                    "resourcePath", "httpBody", "queryParams", "headerParams",
-                    "formParams", "_header_accept", "_tempBody",
+                        // local variables used in api methods (endpoints)
+                        "resourcePath", "httpBody", "queryParams", "headerParams",
+                        "formParams", "_header_accept", "_tempBody",
 
-                    // PHP reserved words
-                    "__halt_compiler", "abstract", "and", "array", "as", "break", "callable", "case", "catch", "class", "clone", "const", "continue", "declare", "default", "die", "do", "echo", "else", "elseif", "empty", "enddeclare", "endfor", "endforeach", "endif", "endswitch", "endwhile", "eval", "exit", "extends", "final", "for", "foreach", "function", "global", "goto", "if", "implements", "include", "include_once", "instanceof", "insteadof", "interface", "isset", "list", "namespace", "new", "or", "print", "private", "protected", "public", "require", "require_once", "return", "static", "switch", "throw", "trait", "try", "unset", "use", "var", "while", "xor")
+                        // PHP reserved words
+                        "__halt_compiler", "abstract", "and", "array", "as", "break", "callable", "case", "catch", "class", "clone", "const", "continue", "declare", "default", "die", "do", "echo", "else", "elseif", "empty", "enddeclare", "endfor", "endforeach", "endif", "endswitch", "endwhile", "eval", "exit", "extends", "final", "for", "foreach", "function", "global", "goto", "if", "implements", "include", "include_once", "instanceof", "insteadof", "interface", "isset", "list", "namespace", "new", "or", "print", "private", "protected", "public", "require", "require_once", "return", "static", "switch", "throw", "trait", "try", "unset", "use", "var", "while", "xor")
         );
 
         // ref: http://php.net/manual/en/language.types.intro.php
@@ -138,6 +147,10 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
         return packagePath;
     }
 
+    public void setPackagePath(String packagePath) {
+        this.packagePath = packagePath;
+    }
+
     public String toPackagePath(String packageName, String basePath) {
         packageName = packageName.replace(invokerPackage, ""); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
         if (basePath != null && basePath.length() > 0) {
@@ -159,12 +172,12 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
         }
 
         return (getPackagePath() + File.separatorChar + basePath
-                    // Replace period, backslash, forward slash with file separator in package name
-                    + packageName.replaceAll("[\\.\\\\/]", Matcher.quoteReplacement(File.separator))
-                    // Trim prefix file separators from package path
-                    .replaceAll(regFirstPathSeparator, ""))
-                    // Trim trailing file separators from the overall path
-                    .replaceAll(regLastPathSeparator+ "$", "");
+                // Replace period, backslash, forward slash with file separator in package name
+                + packageName.replaceAll("[\\.\\\\/]", Matcher.quoteReplacement(File.separator))
+                // Trim prefix file separators from package path
+                .replaceAll(regFirstPathSeparator, ""))
+                // Trim trailing file separators from the overall path
+                .replaceAll(regLastPathSeparator + "$", "");
     }
 
     @Override
@@ -366,10 +379,6 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
         this.artifactVersion = artifactVersion;
     }
 
-    public void setPackagePath(String packagePath) {
-        this.packagePath = packagePath;
-    }
-
     public void setSrcBasePath(String srcBasePath) {
         this.srcBasePath = srcBasePath;
     }
@@ -392,13 +401,13 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
         name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
 
         if ("camelCase".equals(variableNamingConvention)) {
-          // return the name in camelCase style
-          // phone_number => phoneNumber
-          name =  camelize(name, true);
+            // return the name in camelCase style
+            // phone_number => phoneNumber
+            name = camelize(name, true);
         } else { // default to snake case
-          // return the name in underscore style
-          // PhoneNumber => phone_number
-          name =  underscore(name);
+            // return the name in underscore style
+            // PhoneNumber => phone_number
+            name = underscore(name);
         }
 
         // parameter name starting with number won't compile
@@ -443,7 +452,7 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
         if (!name.matches("^\\\\.*")) {
             name = modelNamePrefix + name + modelNameSuffix;
         }
-        
+
         // camelize the model name
         // phone_number => PhoneNumber
         return camelize(name);

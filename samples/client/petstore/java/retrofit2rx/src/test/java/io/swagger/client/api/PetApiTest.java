@@ -1,16 +1,13 @@
 package io.swagger.client.api;
 
-import io.swagger.client.ApiClient;
-import io.swagger.client.model.Pet;
-import io.swagger.client.model.ModelApiResponse;
-import java.io.File;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.File;
 import java.util.List;
-import java.util.Map;
+
+import io.swagger.client.ApiClient;
+import io.swagger.client.model.Pet;
 
 /**
  * API tests for PetApi
@@ -24,11 +21,9 @@ public class PetApiTest {
         api = new ApiClient().createService(PetApi.class);
     }
 
-    
+
     /**
      * Add a new pet to the store
-     *
-     * 
      */
     @Test
     public void addPetTest() {
@@ -37,11 +32,9 @@ public class PetApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Deletes a pet
-     *
-     * 
      */
     @Test
     public void deletePetTest() {
@@ -51,7 +44,7 @@ public class PetApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Finds Pets by status
      *
@@ -64,11 +57,12 @@ public class PetApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Finds Pets by tags
      *
-     * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+     * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for
+     * testing.
      */
     @Test
     public void findPetsByTagsTest() {
@@ -77,7 +71,7 @@ public class PetApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Find pet by ID
      *
@@ -90,11 +84,9 @@ public class PetApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Update an existing pet
-     *
-     * 
      */
     @Test
     public void updatePetTest() {
@@ -103,11 +95,9 @@ public class PetApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Updates a pet in the store with form data
-     *
-     * 
      */
     @Test
     public void updatePetWithFormTest() {
@@ -118,11 +108,9 @@ public class PetApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * uploads an image
-     *
-     * 
      */
     @Test
     public void uploadFileTest() {
@@ -133,5 +121,5 @@ public class PetApiTest {
 
         // TODO: test validations
     }
-    
+
 }

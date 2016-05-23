@@ -4,7 +4,6 @@ import io.swagger.codegen.AbstractOptionsTest;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.languages.GoClientCodegen;
 import io.swagger.codegen.options.GoClientOptionsProvider;
-
 import mockit.Expectations;
 import mockit.Tested;
 
@@ -29,7 +28,7 @@ public class GoClientOptionsTest extends AbstractOptionsTest {
             clientCodegen.setPackageVersion(GoClientOptionsProvider.PACKAGE_VERSION_VALUE);
             times = 1;
             clientCodegen.setPackageName(GoClientOptionsProvider.PACKAGE_NAME_VALUE);
-            times = 1;                        
+            times = 1;
         }};
     }
 }

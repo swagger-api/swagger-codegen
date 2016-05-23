@@ -1,17 +1,17 @@
 package io.swagger.client.auth;
 
-import java.io.IOException;
-
 import com.squareup.okhttp.Credentials;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
+import java.io.IOException;
+
 public class HttpBasicAuth implements Interceptor {
 
     private String username;
     private String password;
-    
+
     public String getUsername() {
         return username;
     }

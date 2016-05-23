@@ -1,18 +1,29 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.*;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenParameter;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.SupportingFile;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
-import io.swagger.models.parameters.Parameter;
-
-import java.io.File;
-import java.util.*;
-
-import org.apache.commons.lang3.StringUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
     static Logger LOGGER = LoggerFactory.getLogger(GoClientCodegen.class);
@@ -21,18 +32,6 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
     protected String packageVersion = "1.0.0";
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
-
-    public CodegenType getTag() {
-        return CodegenType.CLIENT;
-    }
-
-    public String getName() {
-        return "go";
-    }
-
-    public String getHelp() {
-        return "Generates a Go client library (beta).";
-    }
 
     public GoClientCodegen() {
         super();
@@ -46,38 +45,38 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         templateDir = "go";
 
         setReservedWordsLowerCase(
-            Arrays.asList(
-                "break", "default", "func", "interface", "select",
-                "case", "defer", "go", "map", "struct",
-                "chan", "else", "goto", "package", "switch",
-                "const", "fallthrough", "if", "range", "type",
-                "continue", "for", "import", "return", "var", "error", "ApiResponse")
+                Arrays.asList(
+                        "break", "default", "func", "interface", "select",
+                        "case", "defer", "go", "map", "struct",
+                        "chan", "else", "goto", "package", "switch",
+                        "const", "fallthrough", "if", "range", "type",
+                        "continue", "for", "import", "return", "var", "error", "ApiResponse")
                 // Added "error" as it's used so frequently that it may as well be a keyword
         );
 
         defaultIncludes = new HashSet<String>(
                 Arrays.asList(
-                    "map",
-                    "array")
-                );
+                        "map",
+                        "array")
+        );
 
         languageSpecificPrimitives = new HashSet<String>(
-            Arrays.asList(
-                "string",
-                "bool",
-                "uint",
-                "uint32",
-                "uint64",
-                "int",
-                "int32",
-                "int64",
-                "float32",
-                "float64",
-                "complex64",
-                "complex128",
-                "rune",
-                "byte")
-            );
+                Arrays.asList(
+                        "string",
+                        "bool",
+                        "uint",
+                        "uint32",
+                        "uint64",
+                        "int",
+                        "int32",
+                        "int64",
+                        "float32",
+                        "float64",
+                        "complex64",
+                        "complex128",
+                        "rune",
+                        "byte")
+        );
 
         instantiationTypes.clear();
         /*instantiationTypes.put("array", "GoArray");
@@ -113,27 +112,37 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
                 .defaultValue("1.0.0"));
     }
 
+    public CodegenType getTag() {
+        return CodegenType.CLIENT;
+    }
+
+    public String getName() {
+        return "go";
+    }
+
+    public String getHelp() {
+        return "Generates a Go client library (beta).";
+    }
+
     @Override
     public void processOpts() {
         //super.processOpts();
 
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_NAME)) {
             setPackageName((String) additionalProperties.get(CodegenConstants.PACKAGE_NAME));
-        }
-        else {
+        } else {
             setPackageName("swagger");
         }
 
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_VERSION)) {
             setPackageVersion((String) additionalProperties.get(CodegenConstants.PACKAGE_VERSION));
-        }
-        else {
+        } else {
             setPackageVersion("1.0.0");
         }
 
         additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
         additionalProperties.put(CodegenConstants.PACKAGE_VERSION, packageVersion);
-        
+
         additionalProperties.put("apiDocPath", apiDocPath);
         additionalProperties.put("modelDocPath", modelDocPath);
 
@@ -151,8 +160,7 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
-    public String escapeReservedWord(String name)
-    {
+    public String escapeReservedWord(String name) {
         // Can't start with an underscore, as our fields need to start with an
         // UppercaseLetter so that Go treats them as public/visible.
 
@@ -192,7 +200,7 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         name = camelize(name);
 
         // for reserved word or word starting with number, append _
-        if(isReservedWord(name) || name.matches("^\\d.*"))
+        if (isReservedWord(name) || name.matches("^\\d.*"))
             name = escapeReservedWord(name);
 
         return name;
@@ -247,16 +255,15 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
     }
 
 
-
     /**
-     * Overrides postProcessParameter to add a vendor extension "x-exportParamName".
-     * This is useful when paramName starts with a lowercase letter, but we need that
-     * param to be exportable (starts with an Uppercase letter).
+     * Overrides postProcessParameter to add a vendor extension "x-exportParamName". This is useful
+     * when paramName starts with a lowercase letter, but we need that param to be exportable
+     * (starts with an Uppercase letter).
      *
      * @param parameter CodegenParameter object to be processed.
      */
     @Override
-    public void postProcessParameter(CodegenParameter parameter){
+    public void postProcessParameter(CodegenParameter parameter) {
 
         // Give the base class a chance to process
         super.postProcessParameter(parameter);
@@ -298,12 +305,11 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String getTypeDeclaration(Property p) {
-        if(p instanceof ArrayProperty) {
+        if (p instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) p;
             Property inner = ap.getItems();
             return "[]" + getTypeDeclaration(inner);
-        }
-        else if (p instanceof MapProperty) {
+        } else if (p instanceof MapProperty) {
             MapProperty mp = (MapProperty) p;
             Property inner = mp.getAdditionalProperties();
 
@@ -318,11 +324,11 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
             return typeMapping.get(swaggerType);
         }
 
-        if(typeMapping.containsValue(swaggerType)) {
+        if (typeMapping.containsValue(swaggerType)) {
             return swaggerType;
         }
 
-        if(languageSpecificPrimitives.contains(swaggerType)) {
+        if (languageSpecificPrimitives.contains(swaggerType)) {
             return swaggerType;
         }
 
@@ -333,12 +339,11 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
         String type = null;
-        if(typeMapping.containsKey(swaggerType)) {
+        if (typeMapping.containsKey(swaggerType)) {
             type = typeMapping.get(swaggerType);
-            if(languageSpecificPrimitives.contains(type))
+            if (languageSpecificPrimitives.contains(type))
                 return (type);
-        }
-        else
+        } else
             type = swaggerType;
         return type;
     }
@@ -378,7 +383,7 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         }
         // if the return type is not primitive, import encoding/json
         for (CodegenOperation operation : operations) {
-            if(operation.returnBaseType != null && needToImport(operation.returnBaseType)) {
+            if (operation.returnBaseType != null && needToImport(operation.returnBaseType)) {
                 Map<String, String> customImport = new HashMap<String, String>();
                 customImport.put("import", "encoding/json");
                 imports.add(customImport);
@@ -397,7 +402,7 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
             // if the import package happens to be found in the importMapping (key)
             // add the corresponding import package to the list
             if (importMapping.containsKey(_import)) {
-                Map<String, String> newImportMap= new HashMap<String, String>();
+                Map<String, String> newImportMap = new HashMap<String, String>();
                 newImportMap.put("import", importMapping.get(_import));
                 listIterator.add(newImportMap);
             }
@@ -429,7 +434,7 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
             // if the import package happens to be found in the importMapping (key)
             // add the corresponding import package to the list
             if (importMapping.containsKey(_import)) {
-                Map<String, String> newImportMap= new HashMap<String, String>();
+                Map<String, String> newImportMap = new HashMap<String, String>();
                 newImportMap.put("import", importMapping.get(_import));
                 listIterator.add(newImportMap);
             }
@@ -441,7 +446,7 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     protected boolean needToImport(String type) {
         return !defaultIncludes.contains(type)
-            && !languageSpecificPrimitives.contains(type);
+                && !languageSpecificPrimitives.contains(type);
     }
 
     public void setPackageName(String packageName) {

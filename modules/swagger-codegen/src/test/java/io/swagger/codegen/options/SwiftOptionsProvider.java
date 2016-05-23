@@ -1,11 +1,11 @@
 package io.swagger.codegen.options;
 
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.languages.SwiftCodegen;
-
 import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
+
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.languages.SwiftCodegen;
 
 public class SwiftOptionsProvider implements OptionsProvider {
     public static final String SORT_PARAMS_VALUE = "false";

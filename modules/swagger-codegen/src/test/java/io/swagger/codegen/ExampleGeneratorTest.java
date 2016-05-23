@@ -1,15 +1,8 @@
 package io.swagger.codegen;
 
-import io.swagger.codegen.examples.ExampleGenerator;
-import io.swagger.models.Model;
-import io.swagger.models.ModelImpl;
-import io.swagger.models.Xml;
-import io.swagger.models.properties.ArrayProperty;
-import io.swagger.models.properties.RefProperty;
-import io.swagger.models.properties.StringProperty;
-
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -17,6 +10,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import io.swagger.codegen.examples.ExampleGenerator;
+import io.swagger.models.Model;
+import io.swagger.models.ModelImpl;
+import io.swagger.models.Xml;
+import io.swagger.models.properties.ArrayProperty;
+import io.swagger.models.properties.RefProperty;
+import io.swagger.models.properties.StringProperty;
 
 @SuppressWarnings("static-method")
 public class ExampleGeneratorTest {

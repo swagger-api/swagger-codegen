@@ -1,15 +1,16 @@
 package io.swagger.codegen.options;
 
 import com.google.common.collect.ImmutableMap;
-import io.swagger.codegen.CodegenConstants;
 
 import java.util.Map;
+
+import io.swagger.codegen.CodegenConstants;
 
 public class AspNet5ServerOptionsProvider implements OptionsProvider {
     public static final String PACKAGE_NAME_VALUE = "swagger_server_aspnet5";
     public static final String PACKAGE_VERSION_VALUE = "1.0.0-SNAPSHOT";
     public static final String SOURCE_FOLDER_VALUE = "src_aspnet5";
-	
+
     @Override
     public String getLanguage() {
         return "aspnet5";
