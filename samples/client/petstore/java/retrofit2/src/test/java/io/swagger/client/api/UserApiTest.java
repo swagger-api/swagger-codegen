@@ -1,14 +1,12 @@
 package io.swagger.client.api;
 
-import io.swagger.client.ApiClient;
-import io.swagger.client.model.User;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import io.swagger.client.ApiClient;
+import io.swagger.client.model.User;
 
 /**
  * API tests for UserApi
@@ -22,7 +20,7 @@ public class UserApiTest {
         api = new ApiClient().createService(UserApi.class);
     }
 
-    
+
     /**
      * Create user
      *
@@ -35,11 +33,9 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Creates list of users with given input array
-     *
-     * 
      */
     @Test
     public void createUsersWithArrayInputTest() {
@@ -48,11 +44,9 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Creates list of users with given input array
-     *
-     * 
      */
     @Test
     public void createUsersWithListInputTest() {
@@ -61,7 +55,7 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Delete user
      *
@@ -74,11 +68,9 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Get user by user name
-     *
-     * 
      */
     @Test
     public void getUserByNameTest() {
@@ -87,11 +79,9 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Logs user into the system
-     *
-     * 
      */
     @Test
     public void loginUserTest() {
@@ -101,11 +91,9 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Logs out current logged in user session
-     *
-     * 
      */
     @Test
     public void logoutUserTest() {
@@ -113,7 +101,7 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Updated user
      *
@@ -127,5 +115,5 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
+
 }

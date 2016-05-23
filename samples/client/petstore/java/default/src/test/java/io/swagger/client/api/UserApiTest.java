@@ -1,13 +1,11 @@
 package io.swagger.client.api;
 
-import io.swagger.client.ApiException;
-import io.swagger.client.model.User;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import io.swagger.client.ApiException;
+import io.swagger.client.model.User;
 
 /**
  * API tests for UserApi
@@ -16,14 +14,13 @@ public class UserApiTest {
 
     private final UserApi api = new UserApi();
 
-    
+
     /**
      * Create user
      *
      * This can only be done by the logged in user.
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @throws ApiException if the Api call fails
      */
     @Test
     public void createUserTest() throws ApiException {
@@ -32,14 +29,11 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Creates list of users with given input array
      *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
+     * @throws ApiException if the Api call fails
      */
     @Test
     public void createUsersWithArrayInputTest() throws ApiException {
@@ -48,14 +42,11 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Creates list of users with given input array
      *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
+     * @throws ApiException if the Api call fails
      */
     @Test
     public void createUsersWithListInputTest() throws ApiException {
@@ -64,14 +55,13 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Delete user
      *
      * This can only be done by the logged in user.
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @throws ApiException if the Api call fails
      */
     @Test
     public void deleteUserTest() throws ApiException {
@@ -80,14 +70,11 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Get user by user name
      *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
+     * @throws ApiException if the Api call fails
      */
     @Test
     public void getUserByNameTest() throws ApiException {
@@ -96,14 +83,11 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Logs user into the system
      *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
+     * @throws ApiException if the Api call fails
      */
     @Test
     public void loginUserTest() throws ApiException {
@@ -113,14 +97,11 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Logs out current logged in user session
      *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
+     * @throws ApiException if the Api call fails
      */
     @Test
     public void logoutUserTest() throws ApiException {
@@ -128,14 +109,13 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Updated user
      *
      * This can only be done by the logged in user.
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @throws ApiException if the Api call fails
      */
     @Test
     public void updateUserTest() throws ApiException {
@@ -145,5 +125,5 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
+
 }

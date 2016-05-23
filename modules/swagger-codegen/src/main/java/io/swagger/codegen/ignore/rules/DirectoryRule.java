@@ -10,7 +10,7 @@ public class DirectoryRule extends FileRule {
 
     DirectoryRule(List<Part> syntax, String definition) {
         super(syntax, definition);
-        matcher = FileSystems.getDefault().getPathMatcher("glob:**/"+this.getPattern());
+        matcher = FileSystems.getDefault().getPathMatcher("glob:**/" + this.getPattern());
     }
 
     @Override

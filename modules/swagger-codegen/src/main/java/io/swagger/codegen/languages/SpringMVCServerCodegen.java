@@ -1,13 +1,27 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.CodegenResponse;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.SupportingFile;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
-import java.io.File;
-import java.util.*;
 
-public class SpringMVCServerCodegen extends JavaClientCodegen implements CodegenConfig{
+public class SpringMVCServerCodegen extends JavaClientCodegen implements CodegenConfig {
     public static final String CONFIG_PACKAGE = "configPackage";
     protected String title = "Petstore Server";
     protected String configPackage = "";
@@ -122,10 +136,10 @@ public class SpringMVCServerCodegen extends JavaClientCodegen implements Codegen
         opList.add(co);
         co.baseName = basePath;
     }
-    
+
     @Override
     public void preprocessSwagger(Swagger swagger) {
-    	System.out.println("preprocessSwagger");
+        System.out.println("preprocessSwagger");
         if ("/".equals(swagger.getBasePath())) {
             swagger.setBasePath("");
         }
@@ -138,7 +152,7 @@ public class SpringMVCServerCodegen extends JavaClientCodegen implements Codegen
                 port = parts[1];
             }
         }
-        
+
         this.additionalProperties.put("serverPort", port);
         if (swagger != null && swagger.getPaths() != null) {
             for (String pathname : swagger.getPaths().keySet()) {
@@ -209,7 +223,7 @@ public class SpringMVCServerCodegen extends JavaClientCodegen implements Codegen
                 }
             }
         }
-        if("j8-async".equals(getLibrary())) {
+        if ("j8-async".equals(getLibrary())) {
             apiTemplateFiles.remove(this.templateFileName);
             this.templateFileName = "api-j8-async.mustache";
             apiTemplateFiles.put(this.templateFileName, ".java");

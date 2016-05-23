@@ -1,5 +1,10 @@
 package io.swagger.codegen.languages;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
@@ -17,11 +22,6 @@ import io.swagger.models.properties.LongProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.StringProperty;
-
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 
 public class AsyncScalaClientCodegen extends DefaultCodegen implements CodegenConfig {
     protected String invokerPackage = "io.swagger.client";
@@ -45,16 +45,16 @@ public class AsyncScalaClientCodegen extends DefaultCodegen implements CodegenCo
 
         setReservedWordsLowerCase(
                 Arrays.asList(
-                    // local variable names used in API methods (endpoints)
-                    "config", "path", "contentTypes", "contentType", "queryParams", "headerParams",
-                    "formParams", "postBody", "resFuture", "client", "reader",
+                        // local variable names used in API methods (endpoints)
+                        "config", "path", "contentTypes", "contentType", "queryParams", "headerParams",
+                        "formParams", "postBody", "resFuture", "client", "reader",
 
-                    // scala reserved words
-                    "abstract", "case", "catch", "class", "def", "do", "else", "extends",
-                    "false", "final", "finally", "for", "forSome", "if", "implicit",
-                    "import", "lazy", "match", "new", "null", "object", "override", "package",
-                    "private", "protected", "return", "sealed", "super", "this", "throw",
-                    "trait", "try", "true", "type", "val", "var", "while", "with", "yield")
+                        // scala reserved words
+                        "abstract", "case", "catch", "class", "def", "do", "else", "extends",
+                        "false", "final", "finally", "for", "forSome", "if", "implicit",
+                        "import", "lazy", "match", "new", "null", "object", "override", "package",
+                        "private", "protected", "return", "sealed", "super", "this", "throw",
+                        "trait", "try", "true", "type", "val", "var", "while", "with", "yield")
         );
 
         additionalProperties.put(CodegenConstants.INVOKER_PACKAGE, invokerPackage);

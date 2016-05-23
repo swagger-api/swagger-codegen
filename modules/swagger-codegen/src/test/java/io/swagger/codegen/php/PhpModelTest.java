@@ -1,5 +1,9 @@
 package io.swagger.codegen.php;
 
+import org.testng.Assert;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.DefaultCodegen;
@@ -14,13 +18,21 @@ import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.RefProperty;
 import io.swagger.models.properties.StringProperty;
 
-import com.google.common.collect.Sets;
-import org.testng.Assert;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
-
 @SuppressWarnings("static-method")
 public class PhpModelTest {
+
+    @DataProvider(name = "modelNames")
+    public static Object[][] primeNumbers() {
+        return new Object[][]{
+                {"sample", "Sample"},
+                {"sample_name", "SampleName"},
+                {"sample__name", "SampleName"},
+                {"/sample", "Sample"},
+                {"\\sample", "\\Sample"},
+                {"sample.name", "SampleName"},
+                {"_sample", "Sample"},
+        };
+    }
 
     @Test(description = "convert a simple php model")
     public void simpleModelTest() {
@@ -244,19 +256,6 @@ public class PhpModelTest {
         // {{imports}} is not used in template
         //Assert.assertEquals(cm.imports.size(), 2);
         //Assert.assertEquals(Sets.intersection(cm.imports, Sets.newHashSet("Children")).size(), 1);
-    }
-
-    @DataProvider(name = "modelNames")
-    public static Object[][] primeNumbers() {
-        return new Object[][] {
-            {"sample", "Sample"},
-            {"sample_name", "SampleName"},
-            {"sample__name", "SampleName"},
-            {"/sample", "Sample"},
-            {"\\sample", "\\Sample"},
-            {"sample.name", "SampleName"},
-            {"_sample", "Sample"},
-        };
     }
 
     @Test(dataProvider = "modelNames", description = "avoid inner class")

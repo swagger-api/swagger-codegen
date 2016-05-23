@@ -1,16 +1,23 @@
 package io.swagger.codegen;
 
-import io.swagger.models.Operation;
-import io.swagger.models.Swagger;
-import io.swagger.models.properties.Property;
-import io.swagger.parser.SwaggerParser;
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
+import io.swagger.models.Operation;
+import io.swagger.models.Swagger;
+import io.swagger.models.properties.Property;
+import io.swagger.parser.SwaggerParser;
+
 public class CodegenTest {
+
+    private static Swagger parseAndPrepareSwagger(String path) {
+        Swagger swagger = new SwaggerParser().read(path);
+        // resolve inline models
+        new InlineModelResolver().flatten(swagger);
+        return swagger;
+    }
 
     @Test(description = "read a file upload param from a 2.0 spec")
     public void fileUploadParamTest() {
@@ -116,7 +123,6 @@ public class CodegenTest {
         //Assert.assertEquals(statusParam._enum.size(), 3);
     }
 
-
     @Test(description = "handle required parameters from a 2.0 spec as required when figuring out Swagger types")
     public void requiredParametersTest() {
         final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/requiredTest.json");
@@ -176,7 +182,7 @@ public class CodegenTest {
         Assert.assertTrue(op.bodyParam.isBinary);
         Assert.assertTrue(op.responses.get(0).isBinary);
     }
-    
+
     @Test(description = "discriminator is present")
     public void discriminatorTest() {
         final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/discriminatorTest.json");
@@ -195,7 +201,7 @@ public class CodegenTest {
         final String path = "/tests/localConsumesAndProduces";
         final Operation p = model.getPaths().get(path).getGet();
         CodegenOperation op = codegen.fromOperation(path, "get", p, model.getDefinitions(), model);
-        
+
         Assert.assertTrue(op.hasConsumes);
         Assert.assertEquals(op.consumes.size(), 1);
         Assert.assertEquals(op.consumes.get(0).get("mediaType"), "application/json");
@@ -203,7 +209,7 @@ public class CodegenTest {
         Assert.assertEquals(op.produces.size(), 1);
         Assert.assertEquals(op.produces.get(0).get("mediaType"), "application/json");
     }
-    
+
     @Test(description = "use spec consumes and produces")
     public void globalConsumesAndProducesTest() {
         final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/globalConsumesAndProduces.json");
@@ -211,7 +217,7 @@ public class CodegenTest {
         final String path = "/tests/globalConsumesAndProduces";
         final Operation p = model.getPaths().get(path).getGet();
         CodegenOperation op = codegen.fromOperation(path, "get", p, model.getDefinitions(), model);
-        
+
         Assert.assertTrue(op.hasConsumes);
         Assert.assertEquals(op.consumes.size(), 1);
         Assert.assertEquals(op.consumes.get(0).get("mediaType"), "application/global_consumes");
@@ -219,7 +225,7 @@ public class CodegenTest {
         Assert.assertEquals(op.produces.size(), 1);
         Assert.assertEquals(op.produces.get(0).get("mediaType"), "application/global_produces");
     }
- 
+
     @Test(description = "use operation consumes and produces (reset in operation with empty array)")
     public void localResetConsumesAndProducesTest() {
         final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/globalConsumesAndProduces.json");
@@ -227,19 +233,12 @@ public class CodegenTest {
         final String path = "/tests/localResetConsumesAndProduces";
         final Operation p = model.getPaths().get(path).getGet();
         CodegenOperation op = codegen.fromOperation(path, "get", p, model.getDefinitions(), model);
-        
+
         Assert.assertNotNull(op);
         Assert.assertFalse(op.hasConsumes);
         Assert.assertNull(op.consumes);
         Assert.assertFalse(op.hasProduces);
         Assert.assertNull(op.produces);
 
-    }
-
-    private static Swagger parseAndPrepareSwagger(String path) {
-        Swagger swagger = new SwaggerParser().read(path);
-        // resolve inline models
-        new InlineModelResolver().flatten(swagger);
-        return swagger;
     }
 }

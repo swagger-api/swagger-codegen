@@ -1,12 +1,5 @@
 package io.swagger.codegen;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.ServiceLoader;
-
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -15,20 +8,27 @@ import org.apache.commons.cli.Options;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.ServiceLoader;
+
 import config.Config;
 import config.ConfigParser;
 import io.swagger.models.Swagger;
 import io.swagger.parser.SwaggerParser;
 
 /**
- * @deprecated use instead {@link io.swagger.codegen.DefaultGenerator}
- * or cli interface from https://github.com/swagger-api/swagger-codegen/pull/547
+ * @deprecated use instead {@link io.swagger.codegen.DefaultGenerator} or cli interface from
+ * https://github.com/swagger-api/swagger-codegen/pull/547
  */
 @Deprecated
 public class Codegen extends DefaultGenerator {
-	
+
     private static final Logger LOGGER = LoggerFactory.getLogger(Codegen.class);
-	
+
     static Map<String, CodegenConfig> configs = new HashMap<String, CodegenConfig>();
     static String configString;
     static String debugInfoOptions = "\nThe following additional debug options are available for all codegen targets:" +
@@ -36,6 +36,20 @@ public class Codegen extends DefaultGenerator {
             "\n -DdebugModels prints models passed to the template engine" +
             "\n -DdebugOperations prints operations passed to the template engine" +
             "\n -DdebugSupportingFiles prints additional data passed to the template engine";
+
+    static {
+        List<CodegenConfig> extensions = getExtensions();
+        StringBuilder sb = new StringBuilder();
+
+        for (CodegenConfig config : extensions) {
+            if (sb.toString().length() != 0) {
+                sb.append(", ");
+            }
+            sb.append(config.getName());
+            configs.put(config.getName(), config);
+            configString = sb.toString();
+        }
+    }
 
     @SuppressWarnings("deprecation")
     public static void main(String[] args) {
@@ -149,20 +163,6 @@ public class Codegen extends DefaultGenerator {
             } catch (Exception e) {
                 throw new RuntimeException("can't load class " + name);
             }
-        }
-    }
-
-    static {
-        List<CodegenConfig> extensions = getExtensions();
-        StringBuilder sb = new StringBuilder();
-
-        for (CodegenConfig config : extensions) {
-            if (sb.toString().length() != 0) {
-                sb.append(", ");
-            }
-            sb.append(config.getName());
-            configs.put(config.getName(), config);
-            configString = sb.toString();
         }
     }
 }

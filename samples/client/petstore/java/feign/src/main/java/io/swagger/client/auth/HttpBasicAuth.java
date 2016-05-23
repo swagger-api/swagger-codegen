@@ -11,7 +11,7 @@ public class HttpBasicAuth implements RequestInterceptor {
 
     private String username;
     private String password;
-    
+
     public String getUsername() {
         return username;
     }
@@ -33,9 +33,9 @@ public class HttpBasicAuth implements RequestInterceptor {
         this.password = password;
     }
 
-  @Override
-  public void apply(RequestTemplate template) {
-      RequestInterceptor requestInterceptor = new BasicAuthRequestInterceptor(username, password);
-      requestInterceptor.apply(template);
-  }
+    @Override
+    public void apply(RequestTemplate template) {
+        RequestInterceptor requestInterceptor = new BasicAuthRequestInterceptor(username, password);
+        requestInterceptor.apply(template);
+    }
 }

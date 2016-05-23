@@ -1,5 +1,14 @@
 package io.swagger.codegen.languages;
 
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Map;
+
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
@@ -12,20 +21,17 @@ import io.swagger.codegen.SupportingFile;
 import io.swagger.models.Model;
 import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
-import io.swagger.models.properties.*;
-
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.swagger.models.properties.ArrayProperty;
+import io.swagger.models.properties.BooleanProperty;
+import io.swagger.models.properties.DoubleProperty;
+import io.swagger.models.properties.FloatProperty;
+import io.swagger.models.properties.IntegerProperty;
+import io.swagger.models.properties.LongProperty;
+import io.swagger.models.properties.MapProperty;
+import io.swagger.models.properties.Property;
+import io.swagger.models.properties.StringProperty;
 
 public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RubyClientCodegen.class);
     public static final String GEM_NAME = "gemName";
     public static final String MODULE_NAME = "moduleName";
     public static final String GEM_VERSION = "gemVersion";
@@ -35,7 +41,8 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     public static final String GEM_DESCRIPTION = "gemDescription";
     public static final String GEM_AUTHOR = "gemAuthor";
     public static final String GEM_AUTHOR_EMAIL = "gemAuthorEmail";
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(RubyClientCodegen.class);
+    protected static int emptyMethodNameCounter = 0;
     protected String gemName;
     protected String moduleName;
     protected String gemVersion = "1.0.0";
@@ -49,8 +56,6 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     protected String gemAuthorEmail = "";
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
-
-    protected static int emptyMethodNameCounter = 0;
 
     public RubyClientCodegen() {
         super();
@@ -68,15 +73,15 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         setReservedWordsLowerCase(
                 Arrays.asList(
-                    // local variable names used in API methods (endpoints)
-                    "local_var_path", "query_params", "header_params", "_header_accept", "_header_accept_result",
-                    "_header_content_type", "form_params", "post_body", "auth_names",
-                    // ruby reserved keywords
-                    "__FILE__", "and", "def", "end", "in", "or", "self", "unless", "__LINE__",
-                    "begin", "defined?", "ensure", "module", "redo", "super", "until", "BEGIN",
-                    "break", "do", "false", "next", "rescue", "then", "when", "END", "case",
-                    "else", "for", "nil", "retry", "true", "while", "alias", "class", "elsif",
-                    "if", "not", "return", "undef", "yield")
+                        // local variable names used in API methods (endpoints)
+                        "local_var_path", "query_params", "header_params", "_header_accept", "_header_accept_result",
+                        "_header_content_type", "form_params", "post_body", "auth_names",
+                        // ruby reserved keywords
+                        "__FILE__", "and", "def", "end", "in", "or", "self", "unless", "__LINE__",
+                        "begin", "defined?", "ensure", "module", "redo", "super", "until", "BEGIN",
+                        "break", "do", "false", "next", "rescue", "then", "when", "END", "case",
+                        "else", "for", "nil", "retry", "true", "while", "alias", "class", "elsif",
+                        "if", "not", "return", "undef", "yield")
         );
 
         typeMapping.clear();
@@ -178,7 +183,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         if (additionalProperties.containsKey(GEM_VERSION)) {
             setGemVersion((String) additionalProperties.get(GEM_VERSION));
-        }else {
+        } else {
             // not set, pass the default value to template
             additionalProperties.put(GEM_VERSION, gemVersion);
         }
@@ -292,7 +297,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     /**
      * Generate Ruby gem name from the module name, e.g. use "swagger_client" for "SwaggerClient".
      *
-     * @param  moduleName Ruby module naame
+     * @param moduleName Ruby module naame
      * @return Ruby gem name
      */
     @SuppressWarnings("static-method")

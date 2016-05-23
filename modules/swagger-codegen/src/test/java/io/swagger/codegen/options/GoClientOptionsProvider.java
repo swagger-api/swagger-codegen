@@ -1,11 +1,10 @@
 package io.swagger.codegen.options;
 
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.languages.GoClientCodegen;
-
 import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
+
+import io.swagger.codegen.CodegenConstants;
 
 public class GoClientOptionsProvider implements OptionsProvider {
 

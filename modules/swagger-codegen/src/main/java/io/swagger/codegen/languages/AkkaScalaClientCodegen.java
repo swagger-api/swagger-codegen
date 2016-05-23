@@ -1,8 +1,25 @@
 package io.swagger.codegen.languages;
 
 import com.google.common.base.CaseFormat;
+
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
@@ -26,21 +43,6 @@ import io.swagger.models.properties.LongProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.StringProperty;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 public class AkkaScalaClientCodegen extends DefaultCodegen implements CodegenConfig {
     protected String mainPackage = "io.swagger.client";
@@ -57,10 +59,10 @@ public class AkkaScalaClientCodegen extends DefaultCodegen implements CodegenCon
     protected boolean renderJavadoc = true;
     protected boolean removeOAuthSecurities = true;
     /**
-     * If set to true, only the default response (the one with le lowest 2XX code) will be considered as a success, and all
-     * others as ApiErrors.
-     * If set to false, all responses defined in the model will be considered as a success upon reception. Only http errors,
-     * unmarshalling problems and any other RuntimeException will be considered as ApiErrors.
+     * If set to true, only the default response (the one with le lowest 2XX code) will be
+     * considered as a success, and all others as ApiErrors. If set to false, all responses defined
+     * in the model will be considered as a success upon reception. Only http errors, unmarshalling
+     * problems and any other RuntimeException will be considered as ApiErrors.
      */
     protected boolean onlyOneSuccess = true;
 

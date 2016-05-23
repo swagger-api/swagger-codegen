@@ -1,5 +1,10 @@
 package io.swagger.codegen.python;
 
+import com.google.common.collect.Sets;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenProperty;
@@ -17,13 +22,6 @@ import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.RefProperty;
 import io.swagger.models.properties.StringProperty;
 import io.swagger.parser.SwaggerParser;
-
-import org.testng.Assert;
-import org.testng.annotations.Test;
-import org.testng.annotations.ITestAnnotation;
-
-import com.google.common.collect.Sets;
-import java.util.Map;
 
 @SuppressWarnings("static-method")
 public class PythonTest {

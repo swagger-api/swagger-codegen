@@ -2,24 +2,22 @@ package io.swagger.codegen.languages;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.Map;
+
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
 import io.swagger.codegen.SupportingFile;
+import io.swagger.models.Swagger;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
-import io.swagger.models.Swagger;
 import io.swagger.util.Yaml;
-
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class SinatraServerCodegen extends DefaultCodegen implements CodegenConfig {
 
@@ -85,7 +83,7 @@ public class SinatraServerCodegen extends DefaultCodegen implements CodegenConfi
         supportingFiles.add(new SupportingFile("config.ru", "", "config.ru"));
         supportingFiles.add(new SupportingFile("Gemfile", "", "Gemfile"));
         supportingFiles.add(new SupportingFile("README.md", "", "README.md"));
-        supportingFiles.add(new SupportingFile("swagger.mustache","","swagger.yaml"));
+        supportingFiles.add(new SupportingFile("swagger.mustache", "", "swagger.yaml"));
     }
 
     @Override
@@ -232,8 +230,8 @@ public class SinatraServerCodegen extends DefaultCodegen implements CodegenConfi
 
     @Override
     public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
-        Swagger swagger = (Swagger)objs.get("swagger");
-        if(swagger != null) {
+        Swagger swagger = (Swagger) objs.get("swagger");
+        if (swagger != null) {
             try {
                 objs.put("swagger-yaml", Yaml.mapper().writeValueAsString(swagger));
             } catch (JsonProcessingException e) {

@@ -1,10 +1,10 @@
 package io.swagger.codegen.options;
 
-import io.swagger.codegen.CodegenConstants;
-
 import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
+
+import io.swagger.codegen.CodegenConstants;
 
 public class StaticHtmlOptionsProvider implements OptionsProvider {
     public static final String SORT_PARAMS_VALUE = "false";

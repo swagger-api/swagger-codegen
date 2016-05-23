@@ -1,11 +1,11 @@
 package io.swagger.codegen;
 
-import io.swagger.models.auth.AuthorizationValue;
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
+
+import io.swagger.models.auth.AuthorizationValue;
 
 @SuppressWarnings("static-method")
 public class ClientAuthInputTest {

@@ -1,15 +1,18 @@
 package io.swagger.petstore.test;
 
-import io.swagger.TestUtils;
-
-import io.swagger.client.ApiClient;
-import io.swagger.client.api.*;
-import io.swagger.client.model.*;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import java.util.Arrays;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import io.swagger.TestUtils;
+import io.swagger.client.ApiClient;
+import io.swagger.client.api.UserApi;
+import io.swagger.client.model.User;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class UserApiTest {
     ApiClient apiClient;
@@ -59,7 +62,8 @@ public class UserApiTest {
 
     // ignore for the time being, please refer to the following for more info:
     // https://github.com/swagger-api/swagger-codegen/issues/1660
-    @Ignore @Test
+    @Ignore
+    @Test
     public void testLoginUser() throws Exception {
         User user = createUser();
         api.createUser(user);

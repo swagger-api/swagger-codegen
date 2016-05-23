@@ -1,14 +1,14 @@
 package io.swagger.codegen;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import io.swagger.models.Model;
 import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
 import io.swagger.models.auth.SecuritySchemeDefinition;
 import io.swagger.models.properties.Property;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public interface CodegenConfig {
     CodegenType getTag();
@@ -18,7 +18,7 @@ public interface CodegenConfig {
     String getHelp();
 
     Map<String, Object> additionalProperties();
-    
+
     Map<String, Object> vendorExtensions();
 
     String testPackage();
@@ -82,7 +82,7 @@ public interface CodegenConfig {
     CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions);
 
     CodegenOperation fromOperation(String resourcePath, String httpMethod, Operation operation, Map<String, Model> definitions, Swagger swagger);
-    
+
     CodegenOperation fromOperation(String resourcePath, String httpMethod, Operation operation, Map<String, Model> definitions);
 
     List<CodegenSecurity> fromSecurity(Map<String, SecuritySchemeDefinition> schemes);
@@ -122,11 +122,11 @@ public interface CodegenConfig {
     String toApiTestFilename(String name);
 
     String toModelTestFilename(String name);
-    
+
     String toApiDocFilename(String name);
 
     String toModelDocFilename(String name);
-    
+
     String toModelImport(String name);
 
     String toApiImport(String name);
@@ -134,7 +134,7 @@ public interface CodegenConfig {
     void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co, Map<String, List<CodegenOperation>> operations);
 
     Map<String, Object> postProcessAllModels(Map<String, Object> objs);
-    
+
     Map<String, Object> postProcessModels(Map<String, Object> objs);
 
     Map<String, Object> postProcessOperations(Map<String, Object> objs);
@@ -159,8 +159,6 @@ public interface CodegenConfig {
 
     Map<String, String> supportedLibraries();
 
-    void setLibrary(String library);
-
     /**
      * Library template (sub-template).
      *
@@ -168,21 +166,23 @@ public interface CodegenConfig {
      */
     String getLibrary();
 
-    void setGitUserId(String gitUserId);
+    void setLibrary(String library);
 
     String getGitUserId();
 
-    void setGitRepoId(String gitRepoId);
+    void setGitUserId(String gitUserId);
 
     String getGitRepoId();
 
-    void setReleaseNote(String releaseNote);
+    void setGitRepoId(String gitRepoId);
 
     String getReleaseNote();
 
-    void setHttpUserAgent(String httpUserAgent);
+    void setReleaseNote(String releaseNote);
 
     String getHttpUserAgent();
+
+    void setHttpUserAgent(String httpUserAgent);
 
     String getCommonTemplateDir();
 }

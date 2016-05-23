@@ -1,11 +1,11 @@
 package io.swagger.client.auth;
 
-import io.swagger.client.Pair;
-
 import android.util.Base64;
 
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
+
+import io.swagger.client.Pair;
 
 public class HttpBasicAuth implements Authentication {
     private String username;
@@ -29,7 +29,7 @@ public class HttpBasicAuth implements Authentication {
 
     @Override
     public void applyToParams(List<Pair> queryParams, Map<String, String> headerParams) {
-       String str = (username == null ? "" : username) + ":" + (password == null ? "" : password);
-       headerParams.put("Authorization", "Basic " + Base64.encodeToString(str.getBytes(), Base64.DEFAULT));
+        String str = (username == null ? "" : username) + ":" + (password == null ? "" : password);
+        headerParams.put("Authorization", "Basic " + Base64.encodeToString(str.getBytes(), Base64.DEFAULT));
     }
 }

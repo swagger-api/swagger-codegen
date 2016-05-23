@@ -1,15 +1,12 @@
 package io.swagger.client.api;
 
-import io.swagger.client.ApiException;
-import io.swagger.client.model.Pet;
-import io.swagger.client.model.ModelApiResponse;
-import java.io.File;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.File;
 import java.util.List;
-import java.util.Map;
+
+import io.swagger.client.ApiException;
+import io.swagger.client.model.Pet;
 
 /**
  * API tests for PetApi
@@ -18,14 +15,11 @@ public class PetApiTest {
 
     private final PetApi api = new PetApi();
 
-    
+
     /**
      * Add a new pet to the store
      *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
+     * @throws ApiException if the Api call fails
      */
     @Test
     public void addPetTest() throws ApiException {
@@ -34,14 +28,11 @@ public class PetApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Deletes a pet
      *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
+     * @throws ApiException if the Api call fails
      */
     @Test
     public void deletePetTest() throws ApiException {
@@ -51,14 +42,13 @@ public class PetApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Finds Pets by status
      *
      * Multiple status values can be provided with comma separated strings
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @throws ApiException if the Api call fails
      */
     @Test
     public void findPetsByStatusTest() throws ApiException {
@@ -67,14 +57,14 @@ public class PetApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Finds Pets by tags
      *
-     * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+     * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for
+     * testing.
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @throws ApiException if the Api call fails
      */
     @Test
     public void findPetsByTagsTest() throws ApiException {
@@ -83,14 +73,13 @@ public class PetApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Find pet by ID
      *
      * Returns a single pet
      *
-     * @throws ApiException
-     *          if the Api call fails
+     * @throws ApiException if the Api call fails
      */
     @Test
     public void getPetByIdTest() throws ApiException {
@@ -99,14 +88,11 @@ public class PetApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Update an existing pet
      *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
+     * @throws ApiException if the Api call fails
      */
     @Test
     public void updatePetTest() throws ApiException {
@@ -115,14 +101,11 @@ public class PetApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Updates a pet in the store with form data
      *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
+     * @throws ApiException if the Api call fails
      */
     @Test
     public void updatePetWithFormTest() throws ApiException {
@@ -133,14 +116,11 @@ public class PetApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * uploads an image
      *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
+     * @throws ApiException if the Api call fails
      */
     @Test
     public void uploadFileTest() throws ApiException {
@@ -151,5 +131,5 @@ public class PetApiTest {
 
         // TODO: test validations
     }
-    
+
 }

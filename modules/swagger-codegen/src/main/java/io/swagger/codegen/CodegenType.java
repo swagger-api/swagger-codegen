@@ -11,6 +11,13 @@ public enum CodegenType {
 
     private static Map<String, CodegenType> names = new HashMap<String, CodegenType>();
 
+    static {
+        names.put("client", CLIENT);
+        names.put("server", SERVER);
+        names.put("documentation", DOCUMENTATION);
+        names.put("other", OTHER);
+    }
+
     @JsonCreator
     public static CodegenType forValue(String value) {
         return names.get(value.toLowerCase());
@@ -25,12 +32,5 @@ public enum CodegenType {
         }
 
         return null; // or fail
-    }
-
-    static {
-        names.put("client", CLIENT);
-        names.put("server", SERVER);
-        names.put("documentation", DOCUMENTATION);
-        names.put("other", OTHER);
     }
 }

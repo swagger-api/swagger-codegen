@@ -1,21 +1,19 @@
 package io.swagger.codegen.auth;
 
-import io.swagger.models.auth.AuthorizationValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import config.ConfigParser;
+import io.swagger.models.auth.AuthorizationValue;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 public class AuthParser {
-	
+
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthParser.class);
 
     public static List<AuthorizationValue> parse(String urlEncodedAuthStr) {

@@ -1,12 +1,12 @@
 package io.swagger.client.auth;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class ApiKeyAuth implements Interceptor {
     private final String location;
@@ -46,7 +46,7 @@ public class ApiKeyAuth implements Interceptor {
             if (newQuery == null) {
                 newQuery = paramValue;
             } else {
-                newQuery += "&" + paramValue;  
+                newQuery += "&" + paramValue;
             }
 
             URI newUri;

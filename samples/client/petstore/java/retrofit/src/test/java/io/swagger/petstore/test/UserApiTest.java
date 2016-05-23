@@ -1,16 +1,17 @@
 package io.swagger.petstore.test;
 
-import io.swagger.TestUtils;
-
-import io.swagger.client.ApiClient;
-import io.swagger.client.api.*;
-import io.swagger.client.model.*;
-
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.Arrays;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import io.swagger.TestUtils;
+import io.swagger.client.ApiClient;
+import io.swagger.client.api.UserApi;
+import io.swagger.client.model.User;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class UserApiTest {
     UserApi api = null;

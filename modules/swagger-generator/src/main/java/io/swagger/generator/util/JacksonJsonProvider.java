@@ -3,11 +3,12 @@ package io.swagger.generator.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
-import io.swagger.util.Json;
 
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.ext.Provider;
+
+import io.swagger.util.Json;
 
 @Provider
 @Produces({MediaType.APPLICATION_JSON})

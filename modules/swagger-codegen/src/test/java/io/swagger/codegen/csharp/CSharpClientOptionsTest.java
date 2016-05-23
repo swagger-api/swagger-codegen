@@ -4,7 +4,6 @@ import io.swagger.codegen.AbstractOptionsTest;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.languages.CSharpClientCodegen;
 import io.swagger.codegen.options.CSharpClientOptionsProvider;
-
 import mockit.Expectations;
 import mockit.Tested;
 

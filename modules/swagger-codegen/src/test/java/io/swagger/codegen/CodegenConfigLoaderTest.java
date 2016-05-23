@@ -32,7 +32,7 @@ public class CodegenConfigLoaderTest {
         Object[][] result = new Object[codegenConfigList.size()][1];
 
         for (int i = 0; i < codegenConfigList.size(); i++) {
-            result[i]= new Object[]{codegenConfigList.get(i)};
+            result[i] = new Object[]{codegenConfigList.get(i)};
         }
 
         return result;

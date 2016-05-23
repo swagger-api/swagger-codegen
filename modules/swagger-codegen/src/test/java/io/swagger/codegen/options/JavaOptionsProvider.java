@@ -1,10 +1,11 @@
 package io.swagger.codegen.options;
 
 import com.google.common.collect.ImmutableMap;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.languages.JavaClientCodegen;
 
 import java.util.Map;
+
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.languages.JavaClientCodegen;
 
 public class JavaOptionsProvider implements OptionsProvider {
     public static final String ARTIFACT_ID_VALUE = "swagger-java-client-test";

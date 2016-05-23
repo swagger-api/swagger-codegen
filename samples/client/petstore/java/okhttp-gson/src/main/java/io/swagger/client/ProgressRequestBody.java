@@ -13,14 +13,8 @@ import okio.Sink;
 
 public class ProgressRequestBody extends RequestBody {
 
-    public interface ProgressRequestListener {
-        void onRequestProgress(long bytesWritten, long contentLength, boolean done);
-    }
-
     private final RequestBody requestBody;
- 
     private final ProgressRequestListener progressListener;
-  
     private BufferedSink bufferedSink;
 
     public ProgressRequestBody(RequestBody requestBody, ProgressRequestListener progressListener) {
@@ -43,7 +37,7 @@ public class ProgressRequestBody extends RequestBody {
         if (bufferedSink == null) {
             bufferedSink = Okio.buffer(sink(sink));
         }
-  
+
         requestBody.writeTo(bufferedSink);
         bufferedSink.flush();
 
@@ -51,7 +45,7 @@ public class ProgressRequestBody extends RequestBody {
 
     private Sink sink(Sink sink) {
         return new ForwardingSink(sink) {
-       
+
             long bytesWritten = 0L;
             long contentLength = 0L;
 
@@ -66,5 +60,9 @@ public class ProgressRequestBody extends RequestBody {
                 progressListener.onRequestProgress(bytesWritten, contentLength, bytesWritten == contentLength);
             }
         };
+    }
+
+    public interface ProgressRequestListener {
+        void onRequestProgress(long bytesWritten, long contentLength, boolean done);
     }
 }

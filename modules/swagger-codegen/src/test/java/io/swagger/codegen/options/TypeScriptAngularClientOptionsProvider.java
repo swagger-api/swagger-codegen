@@ -1,10 +1,10 @@
 package io.swagger.codegen.options;
 
-import io.swagger.codegen.CodegenConstants;
-
 import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
+
+import io.swagger.codegen.CodegenConstants;
 
 public class TypeScriptAngularClientOptionsProvider implements OptionsProvider {
     public static final String SUPPORTS_ES6_VALUE = "false";

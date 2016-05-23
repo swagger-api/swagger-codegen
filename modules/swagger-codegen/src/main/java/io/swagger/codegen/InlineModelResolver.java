@@ -1,10 +1,5 @@
 package io.swagger.codegen;
 
-import io.swagger.models.*;
-import io.swagger.models.parameters.BodyParameter;
-import io.swagger.models.parameters.Parameter;
-import io.swagger.models.properties.*;
-import io.swagger.util.Json;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,13 +8,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class InlineModelResolver {
-    private Swagger swagger;
-    private boolean skipMatches;
-    static Logger LOGGER = LoggerFactory.getLogger(InlineModelResolver.class);
+import io.swagger.models.ArrayModel;
+import io.swagger.models.Model;
+import io.swagger.models.ModelImpl;
+import io.swagger.models.Operation;
+import io.swagger.models.Path;
+import io.swagger.models.RefModel;
+import io.swagger.models.Response;
+import io.swagger.models.Swagger;
+import io.swagger.models.Xml;
+import io.swagger.models.parameters.BodyParameter;
+import io.swagger.models.parameters.Parameter;
+import io.swagger.models.properties.ArrayProperty;
+import io.swagger.models.properties.MapProperty;
+import io.swagger.models.properties.ObjectProperty;
+import io.swagger.models.properties.Property;
+import io.swagger.models.properties.RefProperty;
+import io.swagger.util.Json;
 
+public class InlineModelResolver {
+    static Logger LOGGER = LoggerFactory.getLogger(InlineModelResolver.class);
     Map<String, Model> addedModels = new HashMap<String, Model>();
     Map<String, String> generatedSignature = new HashMap<String, String>();
+    private Swagger swagger;
+    private boolean skipMatches;
 
     public void flatten(Swagger swagger) {
         this.swagger = swagger;
@@ -45,7 +57,7 @@ public class InlineModelResolver {
                                 BodyParameter bp = (BodyParameter) parameter;
                                 if (bp.getSchema() != null) {
                                     Model model = bp.getSchema();
-                                    if(model instanceof ModelImpl) {
+                                    if (model instanceof ModelImpl) {
                                         ModelImpl obj = (ModelImpl) model;
                                         if (obj.getType() == null || "object".equals(obj.getType())) {
                                             if (obj.getProperties() != null && obj.getProperties().size() > 0) {
@@ -56,12 +68,11 @@ public class InlineModelResolver {
                                                 swagger.addDefinition(modelName, model);
                                             }
                                         }
-                                    }
-                                    else if (model instanceof ArrayModel) {
+                                    } else if (model instanceof ArrayModel) {
                                         ArrayModel am = (ArrayModel) model;
                                         Property inner = am.getItems();
 
-                                        if(inner instanceof ObjectProperty) {
+                                        if (inner instanceof ObjectProperty) {
                                             ObjectProperty op = (ObjectProperty) inner;
                                             if (op.getProperties() != null && op.getProperties().size() > 0) {
                                                 flattenProperties(op.getProperties(), pathname);
@@ -106,7 +117,7 @@ public class InlineModelResolver {
                                     ArrayProperty ap = (ArrayProperty) property;
                                     Property inner = ap.getItems();
 
-                                    if(inner instanceof ObjectProperty) {
+                                    if (inner instanceof ObjectProperty) {
                                         ObjectProperty op = (ObjectProperty) inner;
                                         if (op.getProperties() != null && op.getProperties().size() > 0) {
                                             flattenProperties(op.getProperties(), pathname);
@@ -126,7 +137,7 @@ public class InlineModelResolver {
                                     MapProperty mp = (MapProperty) property;
 
                                     Property innerProperty = mp.getAdditionalProperties();
-                                    if(innerProperty instanceof ObjectProperty) {
+                                    if (innerProperty instanceof ObjectProperty) {
                                         ObjectProperty op = (ObjectProperty) innerProperty;
                                         if (op.getProperties() != null && op.getProperties().size() > 0) {
                                             flattenProperties(op.getProperties(), pathname);
@@ -227,8 +238,8 @@ public class InlineModelResolver {
         for (String key : properties.keySet()) {
             Property property = properties.get(key);
             if (property instanceof ObjectProperty &&
-                    ((ObjectProperty)property).getProperties() != null &&
-                    ((ObjectProperty)property).getProperties().size() > 0) {
+                    ((ObjectProperty) property).getProperties() != null &&
+                    ((ObjectProperty) property).getProperties().size() > 0) {
                 String modelName = uniqueName(path + "_" + key);
 
                 ObjectProperty op = (ObjectProperty) property;
@@ -303,7 +314,7 @@ public class InlineModelResolver {
         String example = null;
 
         Object obj = object.getExample();
-        if(obj != null) {
+        if (obj != null) {
             example = obj.toString();
         }
         Property inner = object.getItems();
@@ -322,7 +333,7 @@ public class InlineModelResolver {
         String example = null;
 
         Object obj = object.getExample();
-        if(obj != null) {
+        if (obj != null) {
             example = obj.toString();
         }
         String name = object.getName();
@@ -349,7 +360,7 @@ public class InlineModelResolver {
         String example = null;
 
         Object obj = object.getExample();
-        if(obj != null) {
+        if (obj != null) {
             example = obj.toString();
         }
 

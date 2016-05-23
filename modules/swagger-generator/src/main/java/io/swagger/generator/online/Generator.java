@@ -1,7 +1,22 @@
 package io.swagger.generator.online;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import io.swagger.codegen.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.ClientOptInput;
+import io.swagger.codegen.ClientOpts;
+import io.swagger.codegen.Codegen;
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenConfigLoader;
 import io.swagger.generator.exception.ApiException;
 import io.swagger.generator.exception.BadRequestException;
 import io.swagger.generator.model.GeneratorInput;
@@ -11,14 +26,6 @@ import io.swagger.models.Swagger;
 import io.swagger.models.auth.AuthorizationValue;
 import io.swagger.parser.SwaggerParser;
 import io.swagger.util.Json;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 public class Generator {
     static Logger LOGGER = LoggerFactory.getLogger(Generator.class);
@@ -37,21 +44,6 @@ public class Generator {
         return map;
     }
 
-    public enum Type {
-        CLIENT("client"),
-        SERVER("server");
-
-        private String name;
-
-        Type(String name) {
-            this.name = name;
-        }
-
-        String getTypeName() {
-            return name;
-        }
-    }
-
     public static String generateClient(String language, GeneratorInput opts) throws ApiException {
         return generate(language, opts, Type.CLIENT);
     }
@@ -66,31 +58,29 @@ public class Generator {
             throw new BadRequestException("No options were supplied");
         }
         JsonNode node = opts.getSpec();
-        if(node != null && "{}".equals(node.toString())) {
+        if (node != null && "{}".equals(node.toString())) {
             LOGGER.debug("ignoring empty spec");
             node = null;
         }
         Swagger swagger;
         if (node == null) {
             if (opts.getSwaggerUrl() != null) {
-                if(opts.getAuthorizationValue() != null) {
+                if (opts.getAuthorizationValue() != null) {
                     List<AuthorizationValue> authorizationValues = new ArrayList<AuthorizationValue>();
                     authorizationValues.add(opts.getAuthorizationValue());
 
                     swagger = new SwaggerParser().read(opts.getSwaggerUrl(), authorizationValues, true);
-                }
-                else {
+                } else {
                     swagger = new SwaggerParser().read(opts.getSwaggerUrl());
                 }
             } else {
                 throw new BadRequestException("No swagger specification was supplied");
             }
-        } else if(opts.getAuthorizationValue() != null) {
+        } else if (opts.getAuthorizationValue() != null) {
             List<AuthorizationValue> authorizationValues = new ArrayList<AuthorizationValue>();
             authorizationValues.add(opts.getAuthorizationValue());
             swagger = new SwaggerParser().read(node, authorizationValues, true);
-        }
-        else {
+        } else {
             swagger = new SwaggerParser().read(node, true);
         }
         if (swagger == null) {
@@ -99,10 +89,10 @@ public class Generator {
 
         String destPath = null;
 
-        if(opts != null && opts.getOptions() != null) {
+        if (opts != null && opts.getOptions() != null) {
             destPath = opts.getOptions().get("outputFolder");
         }
-        if(destPath == null) {
+        if (destPath == null) {
             destPath = language + "-"
                     + type.getTypeName();
         }
@@ -116,10 +106,10 @@ public class Generator {
                 .opts(clientOpts)
                 .swagger(swagger);
 
-        CodegenConfig codegenConfig=null;
+        CodegenConfig codegenConfig = null;
         try {
             codegenConfig = CodegenConfigLoader.forName(language);
-        } catch(RuntimeException e) {
+        } catch (RuntimeException e) {
             throw new BadRequestException("Unsupported target " + language + " supplied");
         }
 
@@ -145,18 +135,16 @@ public class Generator {
             } else {
                 throw new BadRequestException("A target generation was attempted, but no files were created!");
             }
-            for(File file: files) {
+            for (File file : files) {
                 try {
                     file.delete();
-                }
-                catch(Exception e) {
+                } catch (Exception e) {
                     LOGGER.error("unable to delete file " + file.getAbsolutePath());
                 }
             }
             try {
                 new File(outputFolder).delete();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 LOGGER.error("unable to delete output folder " + outputFolder);
             }
         } catch (Exception e) {
@@ -183,6 +171,21 @@ public class Generator {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public enum Type {
+        CLIENT("client"),
+        SERVER("server");
+
+        private String name;
+
+        Type(String name) {
+            this.name = name;
+        }
+
+        String getTypeName() {
+            return name;
         }
     }
 }

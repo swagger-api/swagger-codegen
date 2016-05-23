@@ -1,15 +1,15 @@
 package io.swagger.generator.resource;
 
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
+
 import io.swagger.generator.exception.ApiException;
 import io.swagger.generator.exception.BadRequestException;
 import io.swagger.generator.exception.NotFoundException;
 import io.swagger.generator.model.ApiResponse;
 import io.swagger.generator.util.ValidationException;
-
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.Provider;
 
 @Provider
 public class ExceptionWriter implements ExceptionMapper<Exception> {

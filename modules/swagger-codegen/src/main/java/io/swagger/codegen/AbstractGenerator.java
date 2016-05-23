@@ -1,5 +1,8 @@
 package io.swagger.codegen;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,9 +15,6 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.Scanner;
 import java.util.regex.Pattern;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public abstract class AbstractGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractGenerator.class);
@@ -64,10 +64,10 @@ public abstract class AbstractGenerator {
     }
 
     /**
-     * Get the template file path with template dir prepended, and use the
-     * library template if exists.
+     * Get the template file path with template dir prepended, and use the library template if
+     * exists.
      *
-     * @param config Codegen config
+     * @param config       Codegen config
      * @param templateFile Template file
      * @return String Full template file path
      */
@@ -75,16 +75,16 @@ public abstract class AbstractGenerator {
         String library = config.getLibrary();
         if (library != null && !"".equals(library)) {
             String libTemplateFile = config.templateDir() + File.separator +
-                "libraries" + File.separator + library + File.separator +
-                templateFile;
+                    "libraries" + File.separator + library + File.separator +
+                    templateFile;
 
             if (new File(libTemplateFile).exists()) {
                 return libTemplateFile;
             }
 
             libTemplateFile = config.embeddedTemplateDir() + File.separator +
-                "libraries" + File.separator + library + File.separator +
-                templateFile;
+                    "libraries" + File.separator + library + File.separator +
+                    templateFile;
             if (embeddedTemplateExists(libTemplateFile)) {
                 // Fall back to the template file embedded/packaged in the JAR file...
                 return libTemplateFile;

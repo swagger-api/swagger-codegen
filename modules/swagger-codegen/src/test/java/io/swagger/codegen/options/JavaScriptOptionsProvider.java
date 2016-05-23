@@ -1,12 +1,11 @@
 package io.swagger.codegen.options;
 
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.options.OptionsProvider;
-import io.swagger.codegen.languages.JavascriptClientCodegen;
-
 import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
+
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.languages.JavascriptClientCodegen;
 
 public class JavaScriptOptionsProvider implements OptionsProvider {
     public static final String ARTIFACT_ID_VALUE = "swagger-javascript-client-test";
@@ -18,7 +17,7 @@ public class JavaScriptOptionsProvider implements OptionsProvider {
     public static final String ARTIFACT_VERSION_VALUE = "1.0.0-SNAPSHOT";
     public static final String SOURCE_FOLDER_VALUE = "src/main/javascript";
     public static final String LOCAL_PREFIX_VALUE = "_";
-//    public static final String SERIALIZABLE_MODEL_VALUE = "false";
+    //    public static final String SERIALIZABLE_MODEL_VALUE = "false";
     public static final String ENSURE_UNIQUE_PARAMS_VALUE = "true";
     public static final String PROJECT_NAME_VALUE = "JavaScript Client Test";
     public static final String MODULE_NAME_VALUE = "JavaScriptClient";

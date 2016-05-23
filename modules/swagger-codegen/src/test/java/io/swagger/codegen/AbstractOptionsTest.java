@@ -1,11 +1,7 @@
 package io.swagger.codegen;
 
-import io.swagger.codegen.options.OptionsProvider;
-
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-
-import mockit.FullVerifications;
 
 import org.apache.commons.lang3.StringUtils;
 import org.testng.Assert;
@@ -15,11 +11,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import io.swagger.codegen.options.OptionsProvider;
+import mockit.FullVerifications;
+
 public abstract class AbstractOptionsTest {
     private final OptionsProvider optionsProvider;
 
     protected AbstractOptionsTest(OptionsProvider optionsProvider) {
         this.optionsProvider = optionsProvider;
+    }
+
+    private static Function<CliOption, String> getCliOptionTransformer() {
+        return new Function<CliOption, String>() {
+            @Override
+            public String apply(CliOption option) {
+                return option.getOpt();
+            }
+        };
     }
 
     @SuppressWarnings("unused")
@@ -48,15 +56,6 @@ public abstract class AbstractOptionsTest {
         if (!undocumented.isEmpty()) {
             Assert.fail(String.format("These options weren't documented: %s.", StringUtils.join(undocumented, ", ")));
         }
-    }
-
-    private static Function<CliOption, String> getCliOptionTransformer() {
-        return new Function<CliOption, String>() {
-            @Override
-            public String apply(CliOption option) {
-                return option.getOpt();
-            }
-        };
     }
 
     protected abstract CodegenConfig getCodegenConfig();

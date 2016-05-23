@@ -1,5 +1,13 @@
 package io.swagger.codegen.languages;
 
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashSet;
+
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
@@ -11,17 +19,9 @@ import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashSet;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class AndroidClientCodegen extends DefaultCodegen implements CodegenConfig {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AndroidClientCodegen.class);
     public static final String USE_ANDROID_MAVEN_GRADLE_PLUGIN = "useAndroidMavenGradlePlugin";
+    private static final Logger LOGGER = LoggerFactory.getLogger(AndroidClientCodegen.class);
     protected String invokerPackage = "io.swagger.client";
     protected String groupId = "io.swagger";
     protected String artifactId = "swagger-android-client";
@@ -48,19 +48,19 @@ public class AndroidClientCodegen extends DefaultCodegen implements CodegenConfi
 
         setReservedWordsLowerCase(
                 Arrays.asList(
-                    // local variable names used in API methods (endpoints)
-                    "localVarPostBody", "localVarPath", "localVarQueryParams", "localVarHeaderParams",
-                    "localVarFormParams", "localVarContentTypes", "localVarContentType",
-                    "localVarResponse", "localVarBuilder", "authNames", "basePath", "apiInvoker",
+                        // local variable names used in API methods (endpoints)
+                        "localVarPostBody", "localVarPath", "localVarQueryParams", "localVarHeaderParams",
+                        "localVarFormParams", "localVarContentTypes", "localVarContentType",
+                        "localVarResponse", "localVarBuilder", "authNames", "basePath", "apiInvoker",
 
-                    // android reserved words
-                    "abstract", "continue", "for", "new", "switch", "assert",
-                    "default", "if", "package", "synchronized", "boolean", "do", "goto", "private",
-                    "this", "break", "double", "implements", "protected", "throw", "byte", "else",
-                    "import", "public", "throws", "case", "enum", "instanceof", "return", "transient",
-                    "catch", "extends", "int", "short", "try", "char", "final", "interface", "static",
-                    "void", "class", "finally", "long", "strictfp", "volatile", "const", "float",
-                    "native", "super", "while")
+                        // android reserved words
+                        "abstract", "continue", "for", "new", "switch", "assert",
+                        "default", "if", "package", "synchronized", "boolean", "do", "goto", "private",
+                        "this", "break", "double", "implements", "protected", "throw", "byte", "else",
+                        "import", "public", "throws", "case", "enum", "instanceof", "return", "transient",
+                        "catch", "extends", "int", "short", "try", "char", "final", "interface", "static",
+                        "void", "class", "finally", "long", "strictfp", "volatile", "const", "float",
+                        "native", "super", "while")
         );
 
         languageSpecificPrimitives = new HashSet<String>(
@@ -129,22 +129,22 @@ public class AndroidClientCodegen extends DefaultCodegen implements CodegenConfi
 
     @Override
     public String apiDocFileFolder() {
-        return (outputFolder + "/" + apiDocPath).replace( '/', File.separatorChar );
+        return (outputFolder + "/" + apiDocPath).replace('/', File.separatorChar);
     }
 
     @Override
     public String modelDocFileFolder() {
-        return ( outputFolder + "/" + modelDocPath ).replace( '/', File.separatorChar );
+        return (outputFolder + "/" + modelDocPath).replace('/', File.separatorChar);
     }
 
     @Override
-    public String toApiDocFilename( String name ) {
-        return toApiName( name );
+    public String toApiDocFilename(String name) {
+        return toApiName(name);
     }
 
     @Override
-    public String toModelDocFilename( String name ) {
-        return toModelName( name );
+    public String toModelDocFilename(String name) {
+        return toModelName(name);
     }
 
     @Override
@@ -169,8 +169,8 @@ public class AndroidClientCodegen extends DefaultCodegen implements CodegenConfi
         if (typeMapping.containsKey(swaggerType)) {
             type = typeMapping.get(swaggerType);
             if (languageSpecificPrimitives.contains(type) || type.indexOf(".") >= 0 ||
-                type.equals("Map") || type.equals("List") ||
-                type.equals("File") || type.equals("Date")) {
+                    type.equals("Map") || type.equals("List") ||
+                    type.equals("File") || type.equals("Date")) {
                 return type;
             }
         } else {
@@ -379,8 +379,8 @@ public class AndroidClientCodegen extends DefaultCodegen implements CodegenConfi
         }
 
         //make api and model doc path available in mustache template
-        additionalProperties.put( "apiDocPath", apiDocPath );
-        additionalProperties.put( "modelDocPath", modelDocPath );
+        additionalProperties.put("apiDocPath", apiDocPath);
+        additionalProperties.put("modelDocPath", modelDocPath);
 
         if (StringUtils.isEmpty(getLibrary())) {
             setLibrary("volley"); // set volley as the default library
@@ -392,15 +392,15 @@ public class AndroidClientCodegen extends DefaultCodegen implements CodegenConfi
         } else if ("httpclient".equals(getLibrary())) {
             addSupportingFilesForHttpClient();
         } else {
-            throw new IllegalArgumentException("Invalid 'library' option specified: '" + getLibrary() + "'. Must be 'httpclient' or 'volley' (default)"); 
+            throw new IllegalArgumentException("Invalid 'library' option specified: '" + getLibrary() + "'. Must be 'httpclient' or 'volley' (default)");
         }
 
     }
 
     private void addSupportingFilesForHttpClient() {
         // documentation files
-        modelDocTemplateFiles.put( "model_doc.mustache", ".md" );
-        apiDocTemplateFiles.put( "api_doc.mustache", ".md" );
+        modelDocTemplateFiles.put("model_doc.mustache", ".md");
+        apiDocTemplateFiles.put("api_doc.mustache", ".md");
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
 
         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
@@ -421,19 +421,19 @@ public class AndroidClientCodegen extends DefaultCodegen implements CodegenConfi
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
 
         // gradle wrapper files
-        supportingFiles.add(new SupportingFile( "gradlew.mustache", "", "gradlew" ));
-        supportingFiles.add(new SupportingFile( "gradlew.bat.mustache", "", "gradlew.bat" ));
-        supportingFiles.add(new SupportingFile( "gradle-wrapper.properties.mustache", 
-                gradleWrapperPackage.replace(".", File.separator), "gradle-wrapper.properties" ));
-        supportingFiles.add(new SupportingFile( "gradle-wrapper.jar", 
-                gradleWrapperPackage.replace(".", File.separator), "gradle-wrapper.jar" ));
+        supportingFiles.add(new SupportingFile("gradlew.mustache", "", "gradlew"));
+        supportingFiles.add(new SupportingFile("gradlew.bat.mustache", "", "gradlew.bat"));
+        supportingFiles.add(new SupportingFile("gradle-wrapper.properties.mustache",
+                gradleWrapperPackage.replace(".", File.separator), "gradle-wrapper.properties"));
+        supportingFiles.add(new SupportingFile("gradle-wrapper.jar",
+                gradleWrapperPackage.replace(".", File.separator), "gradle-wrapper.jar"));
 
     }
 
     private void addSupportingFilesForVolley() {
         // documentation files
-        modelDocTemplateFiles.put( "model_doc.mustache", ".md" );
-        apiDocTemplateFiles.put( "api_doc.mustache", ".md" );
+        modelDocTemplateFiles.put("model_doc.mustache", ".md");
+        apiDocTemplateFiles.put("api_doc.mustache", ".md");
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
 
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
@@ -468,12 +468,12 @@ public class AndroidClientCodegen extends DefaultCodegen implements CodegenConfi
                 (sourceFolder + File.separator + authPackage).replace(".", File.separator), "Authentication.java"));
 
         // gradle wrapper files
-        supportingFiles.add(new SupportingFile( "gradlew.mustache", "", "gradlew" ));
-        supportingFiles.add(new SupportingFile( "gradlew.bat.mustache", "", "gradlew.bat" ));
-        supportingFiles.add(new SupportingFile( "gradle-wrapper.properties.mustache", 
-                gradleWrapperPackage.replace(".", File.separator), "gradle-wrapper.properties" ));
-        supportingFiles.add(new SupportingFile( "gradle-wrapper.jar", 
-                gradleWrapperPackage.replace(".", File.separator), "gradle-wrapper.jar" ));
+        supportingFiles.add(new SupportingFile("gradlew.mustache", "", "gradlew"));
+        supportingFiles.add(new SupportingFile("gradlew.bat.mustache", "", "gradlew.bat"));
+        supportingFiles.add(new SupportingFile("gradle-wrapper.properties.mustache",
+                gradleWrapperPackage.replace(".", File.separator), "gradle-wrapper.properties"));
+        supportingFiles.add(new SupportingFile("gradle-wrapper.jar",
+                gradleWrapperPackage.replace(".", File.separator), "gradle-wrapper.jar"));
     }
 
     public Boolean getUseAndroidMavenGradlePlugin() {

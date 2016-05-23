@@ -1,5 +1,9 @@
 package io.swagger.generator;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import io.swagger.codegen.Codegen;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenType;
@@ -9,10 +13,6 @@ import io.swagger.models.Path;
 import io.swagger.models.Swagger;
 import io.swagger.models.parameters.Parameter;
 import io.swagger.models.parameters.PathParameter;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class DynamicSwaggerConfig extends BeanConfig {
     static List<String> clients = new ArrayList<String>();
@@ -44,7 +44,7 @@ public class DynamicSwaggerConfig extends BeanConfig {
             }
 
             Operation get = clientPath.getGet();
-            if(get != null) {
+            if (get != null) {
                 framework = get.getParameters().get(0);
                 if (framework instanceof PathParameter) {
                     PathParameter param = (PathParameter) framework;
@@ -63,7 +63,7 @@ public class DynamicSwaggerConfig extends BeanConfig {
             }
 
             Operation get = serverPath.getGet();
-            if(get != null) {
+            if (get != null) {
                 framework = get.getParameters().get(0);
                 if (framework instanceof PathParameter) {
                     PathParameter param = (PathParameter) framework;

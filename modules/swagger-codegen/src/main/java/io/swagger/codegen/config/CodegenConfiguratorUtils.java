@@ -1,18 +1,21 @@
 package io.swagger.codegen.config;
 
-import io.swagger.codegen.utils.OptionUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import io.swagger.codegen.utils.OptionUtils;
 
 /**
- * Contains shared logic for applying key-value pairs and CSV strings
- * to specific settings in CodegenConfigurator.
+ * Contains shared logic for applying key-value pairs and CSV strings to specific settings in
+ * CodegenConfigurator.
  *
- * <p>
- *     This class exists to facilitate testing. These methods could be applied
- *     to CodegenConfigurator, but this complicates things when mocking CodegenConfigurator.
- * </p>
+ * <p> This class exists to facilitate testing. These methods could be applied to
+ * CodegenConfigurator, but this complicates things when mocking CodegenConfigurator. </p>
  */
 public final class CodegenConfiguratorUtils {
 

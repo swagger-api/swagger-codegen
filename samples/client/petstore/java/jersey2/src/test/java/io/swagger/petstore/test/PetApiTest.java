@@ -2,12 +2,8 @@ package io.swagger.petstore.test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import io.swagger.TestUtils;
-
-import io.swagger.client.*;
-import io.swagger.client.api.*;
-import io.swagger.client.auth.*;
-import io.swagger.client.model.*;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -15,10 +11,22 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import io.swagger.TestUtils;
+import io.swagger.client.ApiClient;
+import io.swagger.client.ApiException;
+import io.swagger.client.Configuration;
+import io.swagger.client.api.PetApi;
+import io.swagger.client.auth.ApiKeyAuth;
+import io.swagger.client.model.Category;
+import io.swagger.client.model.Pet;
+import io.swagger.client.model.Tag;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class PetApiTest {
     PetApi api = null;
@@ -282,7 +290,7 @@ public class PetApiTest {
         try {
             return mapper.readValue(json, klass);
         } catch (Exception e) {
-          throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
     }
 }

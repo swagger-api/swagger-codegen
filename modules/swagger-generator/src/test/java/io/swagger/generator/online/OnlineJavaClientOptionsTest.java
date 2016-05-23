@@ -1,7 +1,8 @@
 package io.swagger.generator.online;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
+import org.testng.annotations.Test;
+
+import java.util.Map;
 
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConstants;
@@ -9,9 +10,8 @@ import io.swagger.codegen.languages.JavaClientCodegen;
 import io.swagger.codegen.options.JavaOptionsProvider;
 import io.swagger.generator.exception.ApiException;
 
-import org.testng.annotations.Test;
-
-import java.util.Map;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 
 @SuppressWarnings("static-method")
 public class OnlineJavaClientOptionsTest {

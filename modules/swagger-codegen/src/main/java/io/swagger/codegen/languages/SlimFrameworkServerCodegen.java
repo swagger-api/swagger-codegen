@@ -1,5 +1,10 @@
 package io.swagger.codegen.languages;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.CodegenType;
@@ -9,11 +14,6 @@ import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.RefProperty;
-
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 
 public class SlimFrameworkServerCodegen extends DefaultCodegen implements CodegenConfig {
     protected String invokerPackage;
@@ -185,11 +185,11 @@ public class SlimFrameworkServerCodegen extends DefaultCodegen implements Codege
         if ("camelCase".equals(variableNamingConvention)) {
             // return the name in camelCase style
             // phone_number => phoneNumber
-            name =  camelize(name, true);
+            name = camelize(name, true);
         } else { // default to snake case
             // return the name in underscore style
             // PhoneNumber => phone_number
-            name =  underscore(name);
+            name = underscore(name);
         }
 
         // parameter name starting with number won't compile

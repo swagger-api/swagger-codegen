@@ -1,21 +1,25 @@
 package io.swagger.codegen.cmd;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.airlift.airline.Command;
 import io.airlift.airline.Option;
 import io.swagger.codegen.ClientOptInput;
 import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.DefaultGenerator;
 import io.swagger.codegen.config.CodegenConfigurator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.*;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyAdditionalPropertiesKvp;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyImportMappingsKvp;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyInstantiationTypesKvp;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyLanguageSpecificPrimitivesCsv;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applySystemPropertiesKvp;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyTypeMappingsKvp;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 /**
- * User: lanwen
- * Date: 24.03.15
- * Time: 20:22
+ * User: lanwen Date: 24.03.15 Time: 20:22
  */
 
 @Command(name = "generate", description = "Generate code with chosen lang")
@@ -105,7 +109,7 @@ public class Generate implements Runnable {
 
     @Option(name = {"--library"}, title = "library", description = CodegenConstants.LIBRARY_DESC)
     private String library;
-    
+
     @Option(name = {"--git-user-id"}, title = "git user id", description = CodegenConstants.GIT_USER_ID_DESC)
     private String gitUserId;
 
@@ -125,7 +129,7 @@ public class Generate implements Runnable {
         CodegenConfigurator configurator = CodegenConfigurator.fromFile(configFile);
 
         //if a config file wasn't specified or we were unable to read it
-        if(configurator == null) {
+        if (configurator == null) {
             //createa a fresh configurator
             configurator = new CodegenConfigurator();
         }
@@ -135,63 +139,63 @@ public class Generate implements Runnable {
             configurator.setVerbose(verbose);
         }
 
-        if(skipOverwrite != null) {
+        if (skipOverwrite != null) {
             configurator.setSkipOverwrite(skipOverwrite);
         }
 
-        if(isNotEmpty(spec)) {
+        if (isNotEmpty(spec)) {
             configurator.setInputSpec(spec);
         }
 
-        if(isNotEmpty(lang)) {
+        if (isNotEmpty(lang)) {
             configurator.setLang(lang);
         }
 
-        if(isNotEmpty(output)) {
+        if (isNotEmpty(output)) {
             configurator.setOutputDir(output);
         }
 
-        if(isNotEmpty(auth)) {
+        if (isNotEmpty(auth)) {
             configurator.setAuth(auth);
         }
 
-        if(isNotEmpty(templateDir)) {
+        if (isNotEmpty(templateDir)) {
             configurator.setTemplateDir(templateDir);
         }
 
-        if(isNotEmpty(apiPackage)) {
+        if (isNotEmpty(apiPackage)) {
             configurator.setApiPackage(apiPackage);
         }
 
-        if(isNotEmpty(modelPackage)) {
+        if (isNotEmpty(modelPackage)) {
             configurator.setModelPackage(modelPackage);
         }
 
-        if(isNotEmpty(modelNamePrefix)){
+        if (isNotEmpty(modelNamePrefix)) {
             configurator.setModelNamePrefix(modelNamePrefix);
         }
 
-        if(isNotEmpty(modelNameSuffix)){
+        if (isNotEmpty(modelNameSuffix)) {
             configurator.setModelNameSuffix(modelNameSuffix);
         }
 
-        if(isNotEmpty(invokerPackage)) {
+        if (isNotEmpty(invokerPackage)) {
             configurator.setInvokerPackage(invokerPackage);
         }
 
-        if(isNotEmpty(groupId)) {
+        if (isNotEmpty(groupId)) {
             configurator.setGroupId(groupId);
         }
 
-        if(isNotEmpty(artifactId)) {
+        if (isNotEmpty(artifactId)) {
             configurator.setArtifactId(artifactId);
         }
 
-        if(isNotEmpty(artifactVersion)) {
+        if (isNotEmpty(artifactVersion)) {
             configurator.setArtifactVersion(artifactVersion);
         }
 
-        if(isNotEmpty(library)) {
+        if (isNotEmpty(library)) {
             configurator.setLibrary(library);
         }
 

@@ -1,5 +1,12 @@
 package io.swagger.codegen.languages;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
@@ -17,13 +24,6 @@ import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.RefProperty;
 import io.swagger.models.properties.StringProperty;
-
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 public class Qt5CPPGenerator extends DefaultCodegen implements CodegenConfig {
     protected final String PREFIX = "SWG";
@@ -149,8 +149,8 @@ public class Qt5CPPGenerator extends DefaultCodegen implements CodegenConfig {
     }
 
     /**
-     * Configures a friendly name for the generator.  This will be used by the generator
-     * to select the library with the -l flag.
+     * Configures a friendly name for the generator.  This will be used by the generator to select
+     * the library with the -l flag.
      *
      * @return the friendly name for the generator
      */
@@ -160,8 +160,8 @@ public class Qt5CPPGenerator extends DefaultCodegen implements CodegenConfig {
     }
 
     /**
-     * Returns human-friendly help for the generator.  Provide the consumer with help
-     * tips, parameters here
+     * Returns human-friendly help for the generator.  Provide the consumer with help tips,
+     * parameters here
      *
      * @return A string value for the help message
      */
@@ -181,8 +181,8 @@ public class Qt5CPPGenerator extends DefaultCodegen implements CodegenConfig {
     }
 
     /**
-     * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping
-     * those terms here.  This logic is only called if a variable matches the reseved words
+     * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping those terms
+     * here.  This logic is only called if a variable matches the reseved words
      *
      * @return the escaped term
      */
@@ -220,10 +220,11 @@ public class Qt5CPPGenerator extends DefaultCodegen implements CodegenConfig {
     }
 
     /**
-     * Optional - type declaration.  This is a String which is used by the templates to instantiate your
-     * types.  There is typically special handling for different property types
+     * Optional - type declaration.  This is a String which is used by the templates to instantiate
+     * your types.  There is typically special handling for different property types
      *
-     * @return a string value used as the `dataType` field for model templates, `returnType` for api templates
+     * @return a string value used as the `dataType` field for model templates, `returnType` for api
+     * templates
      */
     @Override
     public String getTypeDeclaration(Property p) {
@@ -290,7 +291,8 @@ public class Qt5CPPGenerator extends DefaultCodegen implements CodegenConfig {
 
     /**
      * Optional - swagger type conversion.  This is used to map swagger types in a `Property` into
-     * either language specific types via `typeMapping` or into complex models if there is not a mapping.
+     * either language specific types via `typeMapping` or into complex models if there is not a
+     * mapping.
      *
      * @return a string value of the type or complex model for this property
      * @see io.swagger.models.properties.Property

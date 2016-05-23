@@ -1,11 +1,11 @@
 package io.swagger.codegen.options;
 
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.languages.RubyClientCodegen;
-
 import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
+
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.languages.RubyClientCodegen;
 
 public class RubyClientOptionsProvider implements OptionsProvider {
     public static final String GEM_NAME_VALUE = "swagger_client_ruby";
@@ -17,7 +17,7 @@ public class RubyClientOptionsProvider implements OptionsProvider {
     public static final String GEM_HOMEPAGE_VALUE = "homepage";
     public static final String GEM_SUMMARY_VALUE = "summary";
     public static final String GEM_DESCRIPTION_VALUE = "description";
-    public static final String GEM_AUTHOR_VALUE =  "foo";
+    public static final String GEM_AUTHOR_VALUE = "foo";
     public static final String GEM_AUTHOR_EMAIL_VALUE = "foo";
 
     @Override

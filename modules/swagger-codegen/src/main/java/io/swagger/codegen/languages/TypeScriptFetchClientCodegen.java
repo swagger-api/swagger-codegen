@@ -3,8 +3,6 @@ package io.swagger.codegen.languages;
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.SupportingFile;
 
-import java.io.File;
-
 public class TypeScriptFetchClientCodegen extends AbstractTypeScriptClientCodegen {
 
     public static final String NPM_NAME = "npmName";
@@ -31,7 +29,7 @@ public class TypeScriptFetchClientCodegen extends AbstractTypeScriptClientCodege
         supportingFiles.add(new SupportingFile("typings.json.mustache", "", "typings.json"));
         supportingFiles.add(new SupportingFile("tsconfig.json.mustache", "", "tsconfig.json"));
 
-        if(additionalProperties.containsKey(NPM_NAME)) {
+        if (additionalProperties.containsKey(NPM_NAME)) {
             this.setNpmName(additionalProperties.get(NPM_NAME).toString());
         }
 

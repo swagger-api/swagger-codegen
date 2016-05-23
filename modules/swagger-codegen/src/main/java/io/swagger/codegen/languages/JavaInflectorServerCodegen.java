@@ -1,17 +1,23 @@
 package io.swagger.codegen.languages;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.swagger.codegen.*;
-import io.swagger.models.Operation;
-import io.swagger.models.Swagger;
-import io.swagger.models.properties.ArrayProperty;
-import io.swagger.models.properties.MapProperty;
-import io.swagger.models.properties.Property;
-import io.swagger.util.Yaml;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.SupportingFile;
+import io.swagger.models.Operation;
+import io.swagger.models.Swagger;
+import io.swagger.util.Yaml;
 
 public class JavaInflectorServerCodegen extends JavaClientCodegen {
 
@@ -19,6 +25,7 @@ public class JavaInflectorServerCodegen extends JavaClientCodegen {
 
     protected String title = "Swagger Inflector";
     protected String implFolder = "src/main/java";
+
     public JavaInflectorServerCodegen() {
         super();
 
@@ -82,8 +89,8 @@ public class JavaInflectorServerCodegen extends JavaClientCodegen {
         writeOptional(outputFolder, new SupportingFile("web.mustache", "src/main/webapp/WEB-INF", "web.xml"));
         writeOptional(outputFolder, new SupportingFile("inflector.mustache", "", "inflector.yaml"));
         supportingFiles.add(new SupportingFile("swagger.mustache",
-                        "src/main/swagger",
-                        "swagger.yaml")
+                "src/main/swagger",
+                "swagger.yaml")
         );
         supportingFiles.add(new SupportingFile("StringUtil.mustache",
                 (sourceFolder + '/' + invokerPackage).replace(".", "/"), "StringUtil.java"));
@@ -155,7 +162,7 @@ public class JavaInflectorServerCodegen extends JavaClientCodegen {
     public String apiFilename(String templateName, String tag) {
         String result = super.apiFilename(templateName, tag);
 
-        if ( templateName.endsWith("api.mustache") ) {
+        if (templateName.endsWith("api.mustache")) {
             int ix = result.indexOf(sourceFolder);
             String beg = result.substring(0, ix);
             String end = result.substring(ix + sourceFolder.length());
@@ -167,8 +174,8 @@ public class JavaInflectorServerCodegen extends JavaClientCodegen {
 
     @Override
     public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
-        Swagger swagger = (Swagger)objs.get("swagger");
-        if(swagger != null) {
+        Swagger swagger = (Swagger) objs.get("swagger");
+        if (swagger != null) {
             try {
                 objs.put("swagger-yaml", Yaml.mapper().writeValueAsString(swagger));
             } catch (JsonProcessingException e) {
@@ -184,6 +191,6 @@ public class JavaInflectorServerCodegen extends JavaClientCodegen {
             return "DefaultController";
         }
         name = name.replaceAll("[^a-zA-Z0-9]+", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
-        return camelize(name)+ "Controller";
+        return camelize(name) + "Controller";
     }
 }

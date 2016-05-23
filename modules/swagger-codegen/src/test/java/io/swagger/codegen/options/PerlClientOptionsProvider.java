@@ -1,12 +1,11 @@
 package io.swagger.codegen.options;
 
-import io.swagger.codegen.CodegenConstants;
-
-import io.swagger.codegen.languages.PerlClientCodegen;
-
 import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
+
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.languages.PerlClientCodegen;
 
 public class PerlClientOptionsProvider implements OptionsProvider {
     public static final String MODULE_NAME_VALUE = "";

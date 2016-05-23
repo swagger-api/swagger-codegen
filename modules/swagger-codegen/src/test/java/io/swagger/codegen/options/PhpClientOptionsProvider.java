@@ -1,11 +1,11 @@
 package io.swagger.codegen.options;
 
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.languages.PhpClientCodegen;
-
 import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
+
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.languages.PhpClientCodegen;
 
 public class PhpClientOptionsProvider implements OptionsProvider {
     public static final String MODEL_PACKAGE_VALUE = "package";

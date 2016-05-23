@@ -4,29 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IgnoreLineParser {
-    enum Token {
-        MATCH_ALL("**"),
-        MATCH_ANY("*"),
-        ESCAPED_EXCLAMATION("\\!"),
-        ESCAPED_SPACE("\\ "),
-        PATH_DELIM("/"),
-        NEGATE("!"),
-        TEXT(null),
-        DIRECTORY_MARKER("/"),
-        ROOTED_MARKER("/"),
-        COMMENT(null);
-
-        private String pattern;
-
-        Token(String pattern) {
-            this.pattern = pattern;
-        }
-
-        public String getPattern() {
-            return pattern;
-        }
-    }
-
     // NOTE: Comments that start with a : (e.g. //:) are pulled from git documentation for .gitignore
     // see: https://github.com/git/git/blob/90f7b16b3adc78d4bbabbd426fb69aa78c714f71/Documentation/gitignore.txt
     static List<Part> parse(String text) throws ParserException {
@@ -68,8 +45,8 @@ public class IgnoreLineParser {
 
                 if (Token.MATCH_ANY.pattern.equals(next)) {
                     // peek ahead for invalid pattern. Slightly inefficient, but acceptable.
-                    if ((i+2 < totalLength - 1) &&
-                            String.valueOf(characters[i+2]).equals(Token.MATCH_ANY.pattern)) {
+                    if ((i + 2 < totalLength - 1) &&
+                            String.valueOf(characters[i + 2]).equals(Token.MATCH_ANY.pattern)) {
                         // It doesn't matter where we are in the pattern, *** is invalid.
                         throw new ParserException("The pattern *** is invalid.");
                     }
@@ -106,7 +83,7 @@ public class IgnoreLineParser {
                     }
 
                     parts.add(new Part(Token.PATH_DELIM));
-                    if(Token.PATH_DELIM.pattern.equals(next)) {
+                    if (Token.PATH_DELIM.pattern.equals(next)) {
                         // ignore doubled path delims. NOTE: doesn't do full lookahead, so /// will result in //
                         i++;
                     }
@@ -130,5 +107,28 @@ public class IgnoreLineParser {
         }
 
         return parts;
+    }
+
+    enum Token {
+        MATCH_ALL("**"),
+        MATCH_ANY("*"),
+        ESCAPED_EXCLAMATION("\\!"),
+        ESCAPED_SPACE("\\ "),
+        PATH_DELIM("/"),
+        NEGATE("!"),
+        TEXT(null),
+        DIRECTORY_MARKER("/"),
+        ROOTED_MARKER("/"),
+        COMMENT(null);
+
+        private String pattern;
+
+        Token(String pattern) {
+            this.pattern = pattern;
+        }
+
+        public String getPattern() {
+            return pattern;
+        }
     }
 }

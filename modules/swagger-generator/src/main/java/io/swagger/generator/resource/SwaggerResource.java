@@ -1,5 +1,25 @@
 package io.swagger.generator.resource;
 
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -12,15 +32,6 @@ import io.swagger.generator.model.Generated;
 import io.swagger.generator.model.GeneratorInput;
 import io.swagger.generator.model.ResponseCode;
 import io.swagger.generator.online.Generator;
-import org.apache.commons.io.FileUtils;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.io.File;
-import java.util.*;
 
 @Path("/gen")
 @Api(value = "/gen", description = "Resource for generating swagger components")
@@ -63,8 +74,7 @@ public class SwaggerResource {
 
             try {
                 FileUtils.deleteDirectory(file.getParentFile());
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 System.out.println("failed to delete file " + file.getAbsolutePath());
             }
 
@@ -93,10 +103,9 @@ public class SwaggerResource {
         String filename = Generator.generateClient(language, opts);
         String scheme = request.getHeader("X-SSL");
         String port = "";
-        if("1".equals(scheme)) {
+        if ("1".equals(scheme)) {
             scheme = "https";
-        }
-        else {
+        } else {
             scheme = request.getScheme();
             port = ":" + request.getServerPort();
         }

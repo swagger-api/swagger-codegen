@@ -1,14 +1,14 @@
 package io.swagger.codegen.staticDocs;
 
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.DefaultCodegen;
 import io.swagger.codegen.languages.StaticDocCodegen;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.RefProperty;
 import io.swagger.models.properties.StringProperty;
-
-import org.testng.Assert;
-import org.testng.annotations.Test;
 
 @SuppressWarnings("static-method")
 public class StaticOperationTest {

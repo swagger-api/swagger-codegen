@@ -1,8 +1,8 @@
 package io.swagger.generator;
 
-import io.swagger.generator.model.GeneratorInput;
-
 import org.testng.annotations.Test;
+
+import io.swagger.generator.model.GeneratorInput;
 
 @SuppressWarnings("static-method")
 public class GeneratorInputTest {

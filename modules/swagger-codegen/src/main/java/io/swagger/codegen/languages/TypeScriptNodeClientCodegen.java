@@ -12,14 +12,12 @@ import io.swagger.codegen.SupportingFile;
 import io.swagger.models.properties.BooleanProperty;
 
 public class TypeScriptNodeClientCodegen extends AbstractTypeScriptClientCodegen {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TypeScriptNodeClientCodegen.class);
-    private static final SimpleDateFormat SNAPSHOT_SUFFIX_FORMAT = new SimpleDateFormat("yyyyMMddHHmm");
-
     public static final String NPM_NAME = "npmName";
     public static final String NPM_VERSION = "npmVersion";
     public static final String NPM_REPOSITORY = "npmRepository";
     public static final String SNAPSHOT = "snapshot";
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(TypeScriptNodeClientCodegen.class);
+    private static final SimpleDateFormat SNAPSHOT_SUFFIX_FORMAT = new SimpleDateFormat("yyyyMMddHHmm");
     protected String npmName = null;
     protected String npmVersion = "1.0.0";
     protected String npmRepository = null;
@@ -43,13 +41,13 @@ public class TypeScriptNodeClientCodegen extends AbstractTypeScriptClientCodegen
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
 
         LOGGER.warn("check additionals: " + additionalProperties.get(NPM_NAME));
-        if(additionalProperties.containsKey(NPM_NAME)) {
+        if (additionalProperties.containsKey(NPM_NAME)) {
             addNpmPackageGeneration();
         }
     }
 
     private void addNpmPackageGeneration() {
-        if(additionalProperties.containsKey(NPM_NAME)) {
+        if (additionalProperties.containsKey(NPM_NAME)) {
             this.setNpmName(additionalProperties.get(NPM_NAME).toString());
         }
 
@@ -92,12 +90,12 @@ public class TypeScriptNodeClientCodegen extends AbstractTypeScriptClientCodegen
         this.npmName = npmName;
     }
 
-    public void setNpmVersion(String npmVersion) {
-        this.npmVersion = npmVersion;
-    }
-
     public String getNpmVersion() {
         return npmVersion;
+    }
+
+    public void setNpmVersion(String npmVersion) {
+        this.npmVersion = npmVersion;
     }
 
     public String getNpmRepository() {

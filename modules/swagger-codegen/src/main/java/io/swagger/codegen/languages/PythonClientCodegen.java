@@ -1,5 +1,14 @@
 package io.swagger.codegen.languages;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
@@ -9,27 +18,27 @@ import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
 import io.swagger.codegen.SupportingFile;
-import io.swagger.models.properties.*;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
+import io.swagger.models.properties.ArrayProperty;
+import io.swagger.models.properties.BooleanProperty;
+import io.swagger.models.properties.DateProperty;
+import io.swagger.models.properties.DateTimeProperty;
+import io.swagger.models.properties.DoubleProperty;
+import io.swagger.models.properties.FloatProperty;
+import io.swagger.models.properties.IntegerProperty;
+import io.swagger.models.properties.LongProperty;
+import io.swagger.models.properties.MapProperty;
+import io.swagger.models.properties.Property;
+import io.swagger.models.properties.StringProperty;
 
 public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig {
     protected String packageName;
     protected String packageVersion;
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
-    
+
     protected Map<Character, String> regexModifiers;
-    
-	private String testFolder;
+
+    private String testFolder;
 
     public PythonClientCodegen() {
         super();
@@ -37,18 +46,18 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         modelPackage = "models";
         apiPackage = "api";
         outputFolder = "generated-code" + File.separatorChar + "python";
-        
+
         modelTemplateFiles.put("model.mustache", ".py");
         apiTemplateFiles.put("api.mustache", ".py");
-        
+
         modelTestTemplateFiles.put("model_test.mustache", ".py");
         apiTestTemplateFiles.put("api_test.mustache", ".py");
-        
+
         embeddedTemplateDir = templateDir = "python";
 
         modelDocTemplateFiles.put("model_doc.mustache", ".md");
         apiDocTemplateFiles.put("api_doc.mustache", ".md");
-        
+
         testFolder = "test";
 
         languageSpecificPrimitives.clear();
@@ -85,17 +94,17 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         // from https://docs.python.org/release/2.5.4/ref/keywords.html
         setReservedWordsLowerCase(
                 Arrays.asList(
-                    // local variable name used in API methods (endpoints)
-                    "all_params", "resource_path", "path_params", "query_params",
-                    "header_params", "form_params", "local_var_files", "body_params",  "auth_settings",
-                    // @property
-                    "property",
-                    // python reserved words
-                    "and", "del", "from", "not", "while", "as", "elif", "global", "or", "with",
-                    "assert", "else", "if", "pass", "yield", "break", "except", "import",
-                    "print", "class", "exec", "in", "raise", "continue", "finally", "is",
-                    "return", "def", "for", "lambda", "try", "self"));
-        
+                        // local variable name used in API methods (endpoints)
+                        "all_params", "resource_path", "path_params", "query_params",
+                        "header_params", "form_params", "local_var_files", "body_params", "auth_settings",
+                        // @property
+                        "property",
+                        // python reserved words
+                        "and", "del", "from", "not", "while", "as", "elif", "global", "or", "with",
+                        "assert", "else", "if", "pass", "yield", "break", "except", "import",
+                        "print", "class", "exec", "in", "raise", "continue", "finally", "is",
+                        "return", "def", "for", "lambda", "try", "self"));
+
         regexModifiers = new HashMap<Character, String>();
         regexModifiers.put('i', "IGNORECASE");
         regexModifiers.put('l', "LOCALE");
@@ -113,26 +122,28 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
                 CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG_DESC).defaultValue(Boolean.TRUE.toString()));
     }
 
+    private static String dropDots(String str) {
+        return str.replaceAll("\\.", "_");
+    }
+
     @Override
     public void processOpts() {
         super.processOpts();
         Boolean excludeTests = false;
 
-        if(additionalProperties.containsKey(CodegenConstants.EXCLUDE_TESTS)) {
+        if (additionalProperties.containsKey(CodegenConstants.EXCLUDE_TESTS)) {
             excludeTests = Boolean.valueOf(additionalProperties.get(CodegenConstants.EXCLUDE_TESTS).toString());
         }
 
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_NAME)) {
             setPackageName((String) additionalProperties.get(CodegenConstants.PACKAGE_NAME));
-        }
-        else {
+        } else {
             setPackageName("swagger_client");
         }
 
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_VERSION)) {
             setPackageVersion((String) additionalProperties.get(CodegenConstants.PACKAGE_VERSION));
-        }
-        else {
+        } else {
             setPackageVersion("1.0.0");
         }
 
@@ -153,7 +164,7 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         supportingFiles.add(new SupportingFile("tox.mustache", "", "tox.ini"));
         supportingFiles.add(new SupportingFile("test-requirements.mustache", "", "test-requirements.txt"));
         supportingFiles.add(new SupportingFile("requirements.mustache", "", "requirements.txt"));
-        
+
         supportingFiles.add(new SupportingFile("api_client.mustache", swaggerFolder, "api_client.py"));
         supportingFiles.add(new SupportingFile("rest.mustache", swaggerFolder, "rest.py"));
         supportingFiles.add(new SupportingFile("configuration.mustache", swaggerFolder, "configuration.py"));
@@ -161,19 +172,15 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         supportingFiles.add(new SupportingFile("__init__model.mustache", modelPackage, "__init__.py"));
         supportingFiles.add(new SupportingFile("__init__api.mustache", apiPackage, "__init__.py"));
 
-        if(Boolean.FALSE.equals(excludeTests)) {
+        if (Boolean.FALSE.equals(excludeTests)) {
             supportingFiles.add(new SupportingFile("__init__test.mustache", testFolder, "__init__.py"));
         }
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
     }
 
-    private static String dropDots(String str) {
-        return str.replaceAll("\\.", "_");
-    }
-    
     @Override
-    public void postProcessParameter(CodegenParameter parameter){
+    public void postProcessParameter(CodegenParameter parameter) {
         postProcessPattern(parameter.pattern, parameter.vendorExtensions);
     }
 
@@ -187,21 +194,21 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
      * does not support this in as natural a way so it needs to convert it. See
      * https://docs.python.org/2/howto/regex.html#compilation-flags for details.
      */
-    public void postProcessPattern(String pattern, Map<String, Object> vendorExtensions){
-        if(pattern != null) {
+    public void postProcessPattern(String pattern, Map<String, Object> vendorExtensions) {
+        if (pattern != null) {
             int i = pattern.lastIndexOf('/');
 
             //Must follow Perl /pattern/modifiers convention
-            if(pattern.charAt(0) != '/' || i < 2) {
+            if (pattern.charAt(0) != '/' || i < 2) {
                 throw new IllegalArgumentException("Pattern must follow the Perl "
-                        + "/pattern/modifiers convention. "+pattern+" is not valid.");
+                        + "/pattern/modifiers convention. " + pattern + " is not valid.");
             }
 
             String regex = pattern.substring(1, i).replace("'", "\'");
             List<String> modifiers = new ArrayList<String>();
 
-            for(char c : pattern.substring(i).toCharArray()) {
-                if(regexModifiers.containsKey(c)) {
+            for (char c : pattern.substring(i).toCharArray()) {
+                if (regexModifiers.containsKey(c)) {
                     String modifier = regexModifiers.get(c);
                     modifiers.add(modifier);
                 }
@@ -251,7 +258,7 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
     public String toApiDocFilename(String name) {
         return toApiName(name);
     }
- 
+
 
     @Override
     public String apiFileFolder() {
@@ -262,15 +269,15 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
     public String modelFileFolder() {
         return outputFolder + File.separatorChar + modelPackage().replace('.', File.separatorChar);
     }
-    
+
     @Override
     public String apiTestFileFolder() {
-    	return outputFolder + File.separatorChar + testFolder;
+        return outputFolder + File.separatorChar + testFolder;
     }
 
     @Override
     public String modelTestFileFolder() {
-    	return outputFolder + File.separatorChar + testFolder;
+        return outputFolder + File.separatorChar + testFolder;
     }
 
     @Override
@@ -398,11 +405,13 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         // PhoneNumber => phone_number
         return underscore(dropDots(name));
     }
-    
+
     @Override
     public String toModelTestFilename(String name) {
-    	return "test_" + toModelFilename(name);
-    };
+        return "test_" + toModelFilename(name);
+    }
+
+    ;
 
     @Override
     public String toApiFilename(String name) {
@@ -412,10 +421,10 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         // e.g. PhoneNumberApi.rb => phone_number_api.rb
         return underscore(name) + "_api";
     }
-    
+
     @Override
     public String toApiTestFilename(String name) {
-    	return "test_" + toApiFilename(name);
+        return "test_" + toApiFilename(name);
     }
 
     @Override
@@ -462,8 +471,8 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
     /**
      * Generate Python package name from String `packageName`
      *
-     * (PEP 0008) Python packages should also have short, all-lowercase names,
-     * although the use of underscores is discouraged.
+     * (PEP 0008) Python packages should also have short, all-lowercase names, although the use of
+     * underscores is discouraged.
      *
      * @param packageName Package name
      * @return Python package name that conforms to PEP 0008

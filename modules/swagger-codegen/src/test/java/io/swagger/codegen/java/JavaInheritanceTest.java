@@ -1,5 +1,10 @@
 package io.swagger.codegen.java;
 
+import com.google.common.collect.Sets;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.DefaultCodegen;
 import io.swagger.codegen.languages.JavaClientCodegen;
@@ -8,10 +13,6 @@ import io.swagger.models.Model;
 import io.swagger.models.ModelImpl;
 import io.swagger.models.RefModel;
 import io.swagger.models.properties.StringProperty;
-
-import com.google.common.collect.Sets;
-import org.testng.Assert;
-import org.testng.annotations.Test;
 
 public class JavaInheritanceTest {
 

@@ -1,10 +1,11 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.*;
-import io.swagger.models.Operation;
-
 import java.io.File;
-import java.util.*;
+
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.SupportingFile;
 
 public class GroovyClientCodegen extends JavaClientCodegen {
     public static final String CONFIG_PACKAGE = "configPackage";
@@ -21,7 +22,7 @@ public class GroovyClientCodegen extends JavaClientCodegen {
         apiTemplateFiles.put(templateFileName, ".groovy");
         apiTestTemplateFiles.clear(); // TODO: add test template
         embeddedTemplateDir = templateDir = "Groovy";
-        
+
         apiPackage = "io.swagger.api";
         modelPackage = "io.swagger.model";
         configPackage = "io.swagger.configuration";

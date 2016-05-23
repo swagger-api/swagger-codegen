@@ -1,6 +1,16 @@
 package io.swagger.codegen.examples;
 
 
+import org.codehaus.plexus.util.StringUtils;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+
 import io.swagger.models.Model;
 import io.swagger.models.ModelImpl;
 import io.swagger.models.RefModel;
@@ -14,15 +24,6 @@ import io.swagger.models.properties.LongProperty;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.RefProperty;
 import io.swagger.models.properties.StringProperty;
-import org.codehaus.plexus.util.StringUtils;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
 
 public class XmlExampleGenerator {
     public static String NEWLINE = "\n";
@@ -35,7 +36,7 @@ public class XmlExampleGenerator {
     public XmlExampleGenerator(Map<String, Model> examples) {
         this.examples = examples;
         if (examples == null) {
-            this.examples = new HashMap<String, Model>(); 
+            this.examples = new HashMap<String, Model>();
         }
     }
 
@@ -77,7 +78,7 @@ public class XmlExampleGenerator {
             }
         }
         // TODO: map objects will not enter this block
-        if(model.getProperties() != null) {
+        if (model.getProperties() != null) {
             for (String pName : model.getProperties().keySet()) {
                 Property p = model.getProperties().get(pName);
                 if (p != null && p.getXml() != null && p.getXml().getAttribute() != null && p.getXml().getAttribute()) {

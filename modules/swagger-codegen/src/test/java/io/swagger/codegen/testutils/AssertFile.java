@@ -30,11 +30,10 @@ public class AssertFile {
     }
 
     /**
-     * Asserts that two directories are recursively equal. If they are not, an {@link AssertionError} is thrown with the
-     * given message.<br/>
-     * There will be a textual comparison of all files under expected with all files under actual. File attributes will
-     * not be considered.<br/>
-     * Missing or additional files are considered an error.<br/>
+     * Asserts that two directories are recursively equal. If they are not, an {@link
+     * AssertionError} is thrown with the given message.<br/> There will be a textual comparison of
+     * all files under expected with all files under actual. File attributes will not be
+     * considered.<br/> Missing or additional files are considered an error.<br/>
      *
      * @param expected Path expected directory
      * @param actual   Path actual directory
@@ -57,8 +56,8 @@ public class AssertFile {
                     }
 
                     assertEquals(expectedDir.toFile().list(),
-                                 actualDir.toFile().list(),
-                                 String.format("Directory content of '%s' and '%s' differ.", expectedDir, actualDir));
+                            actualDir.toFile().list(),
+                            String.format("Directory content of '%s' and '%s' differ.", expectedDir, actualDir));
 
                     return FileVisitResult.CONTINUE;
                 }
@@ -97,11 +96,11 @@ public class AssertFile {
 
     public static void assertFilesAreEqual(final Path expected, final Path actual) {
 
-        if(!Files.isRegularFile(expected)) {
+        if (!Files.isRegularFile(expected)) {
             fail("expected: '%s' is not a readable file");
         }
 
-        if(!Files.isRegularFile(actual)) {
+        if (!Files.isRegularFile(actual)) {
             fail("actual: '%s' is not a readable file");
         }
 
@@ -110,14 +109,14 @@ public class AssertFile {
             List<String> actualLines = Files.readAllLines(actual, Charset.defaultCharset());
             Patch diff = DiffUtils.diff(expectedLines, actualLines);
             List<Delta> deltas = diff.getDeltas();
-            if(!deltas.isEmpty()) {
+            if (!deltas.isEmpty()) {
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.append("files diff:\n");
                 stringBuilder.append("\tfile: '" + expected.toAbsolutePath().toString() + "' \n");
                 stringBuilder.append("\tfile: '" + actual.toAbsolutePath().toString() + "' \n");
                 stringBuilder.append("\tdiffs:\n");
 
-                for (Delta delta: deltas) {
+                for (Delta delta : deltas) {
                     stringBuilder.append(delta.toString() + "\n");
                 }
 

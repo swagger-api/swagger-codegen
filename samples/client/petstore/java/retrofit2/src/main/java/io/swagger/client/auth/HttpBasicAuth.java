@@ -2,17 +2,16 @@ package io.swagger.client.auth;
 
 import java.io.IOException;
 
+import okhttp3.Credentials;
 import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.Credentials;
 
 public class HttpBasicAuth implements Interceptor {
 
     private String username;
     private String password;
-    
+
     public String getUsername() {
         return username;
     }

@@ -1,5 +1,13 @@
 package io.swagger.codegen.java;
 
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.DefaultCodegen;
@@ -10,13 +18,6 @@ import io.swagger.models.ModelImpl;
 import io.swagger.models.RefModel;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.StringProperty;
-import org.testng.Assert;
-import org.testng.annotations.Test;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 @SuppressWarnings("static-method")
 public class JavaModelEnumTest {

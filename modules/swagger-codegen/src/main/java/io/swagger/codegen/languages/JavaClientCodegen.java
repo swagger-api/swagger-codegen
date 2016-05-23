@@ -1,35 +1,58 @@
 package io.swagger.codegen.languages;
 
 import com.google.common.base.Strings;
-import io.swagger.codegen.*;
+
+import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
+
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenParameter;
+import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.SupportingFile;
 import io.swagger.models.Model;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
 import io.swagger.models.parameters.FormParameter;
 import io.swagger.models.parameters.Parameter;
-import io.swagger.models.properties.*;
-import org.apache.commons.lang3.BooleanUtils;
-import org.apache.commons.lang3.StringUtils;
-//import org.apache.commons.lang3.WordUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.swagger.models.properties.ArrayProperty;
+import io.swagger.models.properties.BooleanProperty;
+import io.swagger.models.properties.DoubleProperty;
+import io.swagger.models.properties.FloatProperty;
+import io.swagger.models.properties.IntegerProperty;
+import io.swagger.models.properties.LongProperty;
+import io.swagger.models.properties.MapProperty;
+import io.swagger.models.properties.Property;
+import io.swagger.models.properties.StringProperty;
 
-import java.io.File;
-import java.util.*;
-import java.util.regex.Pattern;
+//import org.apache.commons.lang3.WordUtils;
 
 public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
-    @SuppressWarnings("hiding")
-    private static final Logger LOGGER = LoggerFactory.getLogger(JavaClientCodegen.class);
     public static final String FULL_JAVA_UTIL = "fullJavaUtil";
     public static final String DEFAULT_LIBRARY = "<default>";
     public static final String DATE_LIBRARY = "dateLibrary";
     public static final String USE_RX_JAVA = "useRxJava";
-
     public static final String RETROFIT_1 = "retrofit";
     public static final String RETROFIT_2 = "retrofit2";
-
+    @SuppressWarnings("hiding")
+    private static final Logger LOGGER = LoggerFactory.getLogger(JavaClientCodegen.class);
     protected String dateLibrary = "default";
     protected String invokerPackage = "io.swagger.client";
     protected String groupId = "io.swagger";
@@ -60,21 +83,21 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         modelPackage = "io.swagger.client.model";
 
         setReservedWordsLowerCase(
-            Arrays.asList(
-                // used as internal variables, can collide with parameter names
-                "localVarPath", "localVarQueryParams", "localVarHeaderParams", "localVarFormParams",
-                "localVarPostBody", "localVarAccepts", "localVarAccept", "localVarContentTypes",
-                "localVarContentType", "localVarAuthNames", "localReturnType",
-                "ApiClient", "ApiException", "ApiResponse", "Configuration", "StringUtil",
+                Arrays.asList(
+                        // used as internal variables, can collide with parameter names
+                        "localVarPath", "localVarQueryParams", "localVarHeaderParams", "localVarFormParams",
+                        "localVarPostBody", "localVarAccepts", "localVarAccept", "localVarContentTypes",
+                        "localVarContentType", "localVarAuthNames", "localReturnType",
+                        "ApiClient", "ApiException", "ApiResponse", "Configuration", "StringUtil",
 
-                // language reserved words
-                "abstract", "continue", "for", "new", "switch", "assert",
-                "default", "if", "package", "synchronized", "boolean", "do", "goto", "private",
-                "this", "break", "double", "implements", "protected", "throw", "byte", "else",
-                "import", "public", "throws", "case", "enum", "instanceof", "return", "transient",
-                "catch", "extends", "int", "short", "try", "char", "final", "interface", "static",
-                "void", "class", "finally", "long", "strictfp", "volatile", "const", "float",
-                "native", "super", "while")
+                        // language reserved words
+                        "abstract", "continue", "for", "new", "switch", "assert",
+                        "default", "if", "package", "synchronized", "boolean", "do", "goto", "private",
+                        "this", "break", "double", "implements", "protected", "throw", "byte", "else",
+                        "import", "public", "throws", "case", "enum", "instanceof", "return", "transient",
+                        "catch", "extends", "int", "short", "try", "char", "final", "interface", "static",
+                        "void", "class", "finally", "long", "strictfp", "volatile", "const", "float",
+                        "native", "super", "while")
         );
 
         languageSpecificPrimitives = new HashSet<String>(
@@ -130,6 +153,89 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         dateLibrary.setEnum(dateOptions);
 
         cliOptions.add(dateLibrary);
+    }
+
+    private static String getAccept(Operation operation) {
+        String accepts = null;
+        String defaultContentType = "application/json";
+        if (operation.getProduces() != null && !operation.getProduces().isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            for (String produces : operation.getProduces()) {
+                if (defaultContentType.equalsIgnoreCase(produces)) {
+                    accepts = defaultContentType;
+                    break;
+                } else {
+                    if (sb.length() > 0) {
+                        sb.append(",");
+                    }
+                    sb.append(produces);
+                }
+            }
+            if (accepts == null) {
+                accepts = sb.toString();
+            }
+        } else {
+            accepts = defaultContentType;
+        }
+
+        return accepts;
+    }
+
+    private static CodegenModel reconcileInlineEnums(CodegenModel codegenModel, CodegenModel parentCodegenModel) {
+        // This generator uses inline classes to define enums, which breaks when
+        // dealing with models that have subTypes. To clean this up, we will analyze
+        // the parent and child models, look for enums that match, and remove
+        // them from the child models and leave them in the parent.
+        // Because the child models extend the parents, the enums will be available via the parent.
+
+        // Only bother with reconciliation if the parent model has enums.
+        if (parentCodegenModel.hasEnums) {
+
+            // Get the properties for the parent and child models
+            final List<CodegenProperty> parentModelCodegenProperties = parentCodegenModel.vars;
+            List<CodegenProperty> codegenProperties = codegenModel.vars;
+
+            // Iterate over all of the parent model properties
+            boolean removedChildEnum = false;
+            for (CodegenProperty parentModelCodegenPropery : parentModelCodegenProperties) {
+                // Look for enums
+                if (parentModelCodegenPropery.isEnum) {
+                    // Now that we have found an enum in the parent class,
+                    // and search the child class for the same enum.
+                    Iterator<CodegenProperty> iterator = codegenProperties.iterator();
+                    while (iterator.hasNext()) {
+                        CodegenProperty codegenProperty = iterator.next();
+                        if (codegenProperty.isEnum && codegenProperty.equals(parentModelCodegenPropery)) {
+                            // We found an enum in the child class that is
+                            // a duplicate of the one in the parent, so remove it.
+                            iterator.remove();
+                            removedChildEnum = true;
+                        }
+                    }
+                }
+            }
+
+            if (removedChildEnum) {
+                // If we removed an entry from this model's vars, we need to ensure hasMore is updated
+                int count = 0, numVars = codegenProperties.size();
+                for (CodegenProperty codegenProperty : codegenProperties) {
+                    count += 1;
+                    codegenProperty.hasMore = (count < numVars) ? true : null;
+                }
+                codegenModel.vars = codegenProperties;
+            }
+        }
+
+        return codegenModel;
+    }
+
+    private static String sanitizePackageName(String packageName) {
+        packageName = packageName.trim(); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        packageName = packageName.replaceAll("[^a-zA-Z0-9_\\.]", "_");
+        if (Strings.isNullOrEmpty(packageName)) {
+            return "invalidPackageName";
+        }
+        return packageName;
     }
 
     @Override
@@ -195,7 +301,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
             this.setLibrary((String) additionalProperties.get(CodegenConstants.LIBRARY));
         }
 
-        if(additionalProperties.containsKey(CodegenConstants.SERIALIZE_BIG_DECIMAL_AS_STRING)) {
+        if (additionalProperties.containsKey(CodegenConstants.SERIALIZE_BIG_DECIMAL_AS_STRING)) {
             this.setSerializeBigDecimalAsString(Boolean.valueOf(additionalProperties.get(CodegenConstants.SERIALIZE_BIG_DECIMAL_AS_STRING).toString()));
         }
 
@@ -299,25 +405,24 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         } else if (usesAnyRetrofitLibrary()) {
             supportingFiles.add(new SupportingFile("auth/OAuthOkHttpClient.mustache", authFolder, "OAuthOkHttpClient.java"));
             supportingFiles.add(new SupportingFile("CollectionFormats.mustache", invokerFolder, "CollectionFormats.java"));
-        } else if("jersey2".equals(getLibrary())) {
+        } else if ("jersey2".equals(getLibrary())) {
             // generate markdown docs
             modelDocTemplateFiles.put("model_doc.mustache", ".md");
             apiDocTemplateFiles.put("api_doc.mustache", ".md");
             supportingFiles.add(new SupportingFile("JSON.mustache", invokerFolder, "JSON.java"));
         }
 
-        if(additionalProperties.containsKey(DATE_LIBRARY)) {
+        if (additionalProperties.containsKey(DATE_LIBRARY)) {
             this.dateLibrary = additionalProperties.get(DATE_LIBRARY).toString();
         }
 
-        if("joda".equals(dateLibrary)) {
+        if ("joda".equals(dateLibrary)) {
             typeMapping.put("date", "LocalDate");
             typeMapping.put("DateTime", "DateTime");
 
             importMapping.put("LocalDate", "org.joda.time.LocalDate");
             importMapping.put("DateTime", "org.joda.time.DateTime");
-        }
-        else if ("java8".equals(dateLibrary)) {
+        } else if ("java8".equals(dateLibrary)) {
             additionalProperties.put("java8", "true");
             additionalProperties.put("javaVersion", "1.8");
             typeMapping.put("date", "LocalDate");
@@ -409,8 +514,8 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         // sanitize name
         name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
 
-        if("_".equals(name)) {
-          name = "_u";
+        if ("_".equals(name)) {
+            name = "_u";
         }
 
         // if it's all uppper case, do nothing
@@ -511,9 +616,9 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         } else if (p instanceof LongProperty) {
             LongProperty dp = (LongProperty) p;
             if (dp.getDefault() != null) {
-                return dp.getDefault().toString()+"l";
+                return dp.getDefault().toString() + "l";
             }
-           return "null";
+            return "null";
         } else if (p instanceof DoubleProperty) {
             DoubleProperty dp = (DoubleProperty) p;
             if (dp.getDefault() != null) {
@@ -619,8 +724,8 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         if (typeMapping.containsKey(swaggerType)) {
             type = typeMapping.get(swaggerType);
             if (languageSpecificPrimitives.contains(type) || type.indexOf(".") >= 0 ||
-                type.equals("Map") || type.equals("List") ||
-                type.equals("File") || type.equals("Date")) {
+                    type.equals("Map") || type.equals("List") ||
+                    type.equals("File") || type.equals("Date")) {
                 return type;
             }
         } else {
@@ -654,7 +759,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
         CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
-        if(codegenModel.description != null) {
+        if (codegenModel.description != null) {
             codegenModel.imports.add("ApiModel");
         }
         if (allDefinitions != null && codegenModel != null && codegenModel.parentSchema != null && codegenModel.hasEnums) {
@@ -671,7 +776,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         objs = super.postProcessModelsEnum(objs);
         String lib = getLibrary();
         if (StringUtils.isEmpty(lib) || "feign".equals(lib) || "jersey2".equals(lib)) {
-            List<Map<String, String>> imports = (List<Map<String, String>>)objs.get("imports");
+            List<Map<String, String>> imports = (List<Map<String, String>>) objs.get("imports");
             List<Object> models = (List<Object>) objs.get("models");
             for (Object _mo : models) {
                 Map<String, Object> mo = (Map<String, Object>) _mo;
@@ -690,7 +795,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
-        if(serializeBigDecimalAsString) {
+        if (serializeBigDecimalAsString) {
             if (property.baseType.equals("BigDecimal")) {
                 // we serialize BigDecimal as `string` to avoid precision loss
                 property.vendorExtensions.put("extraAnnotation", "@JsonSerialize(using = ToStringSerializer.class)");
@@ -702,12 +807,12 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         }
 
         if ("array".equals(property.containerType)) {
-          model.imports.add("ArrayList");
+            model.imports.add("ArrayList");
         } else if ("map".equals(property.containerType)) {
-          model.imports.add("HashMap");
+            model.imports.add("HashMap");
         }
 
-        if(!BooleanUtils.toBoolean(model.isEnum)) {
+        if (!BooleanUtils.toBoolean(model.isEnum)) {
             // needed by all pojos, but not enums
             model.imports.add("ApiModelProperty");
             model.imports.add("ApiModel");
@@ -715,11 +820,11 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
             //model.imports.add("Objects");
 
             final String lib = getLibrary();
-            if(StringUtils.isEmpty(lib) || "feign".equals(lib) || "jersey2".equals(lib)) {
+            if (StringUtils.isEmpty(lib) || "feign".equals(lib) || "jersey2".equals(lib)) {
                 model.imports.add("JsonProperty");
 
-                if(BooleanUtils.toBoolean(model.hasEnums)) {
-                  model.imports.add("JsonValue");
+                if (BooleanUtils.toBoolean(model.hasEnums)) {
+                    model.imports.add("JsonValue");
                 }
             }
         }
@@ -742,14 +847,14 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         // imported in the template already.
         List<Map<String, String>> imports = (List<Map<String, String>>) objs.get("imports");
         Pattern pattern = Pattern.compile("java\\.util\\.(List|ArrayList|Map|HashMap)");
-        for (Iterator<Map<String, String>> itr = imports.iterator(); itr.hasNext();) {
+        for (Iterator<Map<String, String>> itr = imports.iterator(); itr.hasNext(); ) {
             String _import = itr.next().get("import");
             if (pattern.matcher(_import).matches()) {
-              itr.remove();
+                itr.remove();
             }
         }
 
-        if(usesAnyRetrofitLibrary()) {
+        if (usesAnyRetrofitLibrary()) {
             Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
             if (operations != null) {
                 List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
@@ -766,12 +871,21 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
                         operation.returnType = "Void";
                     }
                     if (usesRetrofit2Library() && StringUtils.isNotEmpty(operation.path) && operation.path.startsWith("/"))
-                    	operation.path = operation.path.substring(1);
+                        operation.path = operation.path.substring(1);
                 }
             }
         }
         return objs;
     }
+/*
+    @Override
+    public String findCommonPrefixOfVars(List<String> vars) {
+        String prefix = StringUtils.getCommonPrefix(vars.toArray(new String[vars.size()]));
+        // exclude trailing characters that should be part of a valid variable
+        // e.g. ["status-on", "status-off"] => "status-" (not "status-o")
+        return prefix.replaceAll("[a-zA-Z0-9]+\\z", "");
+    }
+*/
 
     @Override
     public void preprocessSwagger(Swagger swagger) {
@@ -799,45 +913,10 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         }
     }
 
-    private static String getAccept(Operation operation) {
-        String accepts = null;
-        String defaultContentType = "application/json";
-        if (operation.getProduces() != null && !operation.getProduces().isEmpty()) {
-            StringBuilder sb = new StringBuilder();
-            for (String produces : operation.getProduces()) {
-                if (defaultContentType.equalsIgnoreCase(produces)) {
-                    accepts = defaultContentType;
-                    break;
-                } else {
-                    if (sb.length() > 0) {
-                        sb.append(",");
-                    }
-                    sb.append(produces);
-                }
-            }
-            if (accepts == null) {
-                accepts = sb.toString();
-            }
-        } else {
-            accepts = defaultContentType;
-        }
-
-        return accepts;
-    }
-
     @Override
     protected boolean needToImport(String type) {
         return super.needToImport(type) && type.indexOf(".") < 0;
     }
-/*
-    @Override
-    public String findCommonPrefixOfVars(List<String> vars) {
-        String prefix = StringUtils.getCommonPrefix(vars.toArray(new String[vars.size()]));
-        // exclude trailing characters that should be part of a valid variable
-        // e.g. ["status-on", "status-off"] => "status-" (not "status-o")
-        return prefix.replaceAll("[a-zA-Z0-9]+\\z", "");
-    }
-*/
 
     @Override
     public String toEnumName(CodegenProperty property) {
@@ -848,7 +927,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
     public String toEnumVarName(String value, String datatype) {
         // number
         if ("Integer".equals(datatype) || "Long".equals(datatype) ||
-            "Float".equals(datatype) || "Double".equals(datatype)) {
+                "Float".equals(datatype) || "Double".equals(datatype)) {
             String varName = "NUMBER_" + value;
             varName = varName.replaceAll("-", "MINUS_");
             varName = varName.replaceAll("\\+", "PLUS_");
@@ -868,59 +947,11 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public String toEnumValue(String value, String datatype) {
         if ("Integer".equals(datatype) || "Long".equals(datatype) ||
-            "Float".equals(datatype) || "Double".equals(datatype)) {
+                "Float".equals(datatype) || "Double".equals(datatype)) {
             return value;
         } else {
             return "\"" + escapeText(value) + "\"";
         }
-    }
-
-    private static CodegenModel reconcileInlineEnums(CodegenModel codegenModel, CodegenModel parentCodegenModel) {
-        // This generator uses inline classes to define enums, which breaks when
-        // dealing with models that have subTypes. To clean this up, we will analyze
-        // the parent and child models, look for enums that match, and remove
-        // them from the child models and leave them in the parent.
-        // Because the child models extend the parents, the enums will be available via the parent.
-
-        // Only bother with reconciliation if the parent model has enums.
-        if (parentCodegenModel.hasEnums) {
-
-            // Get the properties for the parent and child models
-            final List<CodegenProperty> parentModelCodegenProperties = parentCodegenModel.vars;
-            List<CodegenProperty> codegenProperties = codegenModel.vars;
-
-            // Iterate over all of the parent model properties
-            boolean removedChildEnum = false;
-            for (CodegenProperty parentModelCodegenPropery : parentModelCodegenProperties) {
-                // Look for enums
-                if (parentModelCodegenPropery.isEnum) {
-                    // Now that we have found an enum in the parent class,
-                    // and search the child class for the same enum.
-                    Iterator<CodegenProperty> iterator = codegenProperties.iterator();
-                    while (iterator.hasNext()) {
-                        CodegenProperty codegenProperty = iterator.next();
-                        if (codegenProperty.isEnum && codegenProperty.equals(parentModelCodegenPropery)) {
-                            // We found an enum in the child class that is
-                            // a duplicate of the one in the parent, so remove it.
-                            iterator.remove();
-                            removedChildEnum = true;
-                        }
-                    }
-                }
-            }
-
-            if(removedChildEnum) {
-                // If we removed an entry from this model's vars, we need to ensure hasMore is updated
-                int count = 0, numVars = codegenProperties.size();
-                for(CodegenProperty codegenProperty : codegenProperties) {
-                    count += 1;
-                    codegenProperty.hasMore = (count < numVars) ? true : null;
-                }
-                codegenModel.vars = codegenProperties;
-            }
-        }
-
-        return codegenModel;
     }
 
     public void setInvokerPackage(String invokerPackage) {
@@ -957,15 +988,6 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     public void setSerializableModel(Boolean serializableModel) {
         this.serializableModel = serializableModel;
-    }
-
-    private static String sanitizePackageName(String packageName) {
-        packageName = packageName.trim(); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
-        packageName = packageName.replaceAll("[^a-zA-Z0-9_\\.]", "_");
-        if(Strings.isNullOrEmpty(packageName)) {
-            return "invalidPackageName";
-        }
-        return packageName;
     }
 
     public void setFullJavaUtil(boolean fullJavaUtil) {

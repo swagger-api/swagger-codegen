@@ -1,15 +1,12 @@
 package io.swagger.client.api;
 
-import io.swagger.client.ApiClient;
-import java.math.BigDecimal;
-import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.util.Date;
+
+import io.swagger.client.ApiClient;
 
 /**
  * API tests for FakeApi
@@ -23,11 +20,11 @@ public class FakeApiTest {
         api = new ApiClient().buildClient(FakeApi.class);
     }
 
-    
+
     /**
-     * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
+     * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트
      *
-     * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
+     * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트
      */
     @Test
     public void testEndpointParametersTest() {
@@ -47,5 +44,5 @@ public class FakeApiTest {
 
         // TODO: test validations
     }
-    
+
 }

@@ -1,9 +1,9 @@
 package io.swagger.codegen;
 
+import org.testng.annotations.Test;
+
 import io.swagger.models.Swagger;
 import io.swagger.parser.SwaggerParser;
-
-import org.testng.annotations.Test;
 
 @SuppressWarnings("static-method")
 public class SwaggerMigratorTest {

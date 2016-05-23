@@ -1,5 +1,14 @@
 package io.swagger.codegen.examples;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import io.swagger.models.Model;
 import io.swagger.models.ModelImpl;
 import io.swagger.models.properties.ArrayProperty;
@@ -19,15 +28,6 @@ import io.swagger.models.properties.RefProperty;
 import io.swagger.models.properties.StringProperty;
 import io.swagger.models.properties.UUIDProperty;
 import io.swagger.util.Json;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class ExampleGenerator {
     protected Map<String, Model> examples;
@@ -127,7 +127,7 @@ public class ExampleGenerator {
                 return resolveModelToExample(simpleName, mediaType, model, processedModels);
             }
         } else if (property instanceof UUIDProperty) {
-            return "046b6c7f-0b8a-43b9-b35d-6489e6daee91"; 
+            return "046b6c7f-0b8a-43b9-b35d-6489e6daee91";
         }
 
         return "";

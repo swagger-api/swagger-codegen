@@ -1,8 +1,5 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.DefaultCodegen;
-import io.swagger.models.properties.BooleanProperty;
 import org.reflections.Reflections;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -12,6 +9,10 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.DefaultCodegen;
+import io.swagger.models.properties.BooleanProperty;
 
 @SuppressWarnings("static-method")
 public class BooleanOptionsTest {
@@ -25,7 +26,7 @@ public class BooleanOptionsTest {
 
         for (Class<? extends DefaultCodegen> codegen : reflections.getSubTypesOf(DefaultCodegen.class)) {
             if (!Modifier.isAbstract(codegen.getModifiers())) {
-                codegenList.add((new Object[] {codegen.newInstance()}));
+                codegenList.add((new Object[]{codegen.newInstance()}));
             }
         }
         if (codegenList.size() == 0) {

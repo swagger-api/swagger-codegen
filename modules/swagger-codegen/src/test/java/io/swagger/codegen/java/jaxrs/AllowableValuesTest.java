@@ -1,11 +1,11 @@
 package io.swagger.codegen.java.jaxrs;
 
-import io.swagger.codegen.CodegenParameter;
-
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
+
 import org.apache.commons.io.IOUtils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -14,6 +14,8 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+
+import io.swagger.codegen.CodegenParameter;
 
 public class AllowableValuesTest {
 

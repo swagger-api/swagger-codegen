@@ -1,18 +1,20 @@
 package io.swagger.petstore.test;
 
-import feign.FeignException;
-
-import io.swagger.TestUtils;
-
-import io.swagger.client.*;
-import io.swagger.client.api.*;
-import io.swagger.client.model.*;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.lang.reflect.Field;
 import java.util.Map;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import feign.FeignException;
+import io.swagger.TestUtils;
+import io.swagger.client.ApiClient;
+import io.swagger.client.api.StoreApi;
+import io.swagger.client.model.Order;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class StoreApiTest {
     ApiClient apiClient;
@@ -68,11 +70,11 @@ public class StoreApiTest {
         order.setComplete(true);
 
         try {
-          Field idField = Order.class.getDeclaredField("id");
-          idField.setAccessible(true);
-          idField.set(order, TestUtils.nextId());
+            Field idField = Order.class.getDeclaredField("id");
+            idField.setAccessible(true);
+            idField.set(order, TestUtils.nextId());
         } catch (Exception e) {
-          throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
 
         return order;

@@ -1,13 +1,27 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.CodegenResponse;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.SupportingFile;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
-import java.io.File;
-import java.util.*;
 
-public class SpringBootServerCodegen extends JavaClientCodegen implements CodegenConfig{
+public class SpringBootServerCodegen extends JavaClientCodegen implements CodegenConfig {
     public static final String CONFIG_PACKAGE = "configPackage";
     public static final String BASE_PACKAGE = "basePackage";
     protected String title = "Petstore Server";
@@ -40,7 +54,7 @@ public class SpringBootServerCodegen extends JavaClientCodegen implements Codege
 
         cliOptions.add(new CliOption(CONFIG_PACKAGE, "configuration package for generated code"));
         cliOptions.add(new CliOption(BASE_PACKAGE, "base package for generated code"));
-        
+
         supportedLibraries.clear();
         supportedLibraries.put(DEFAULT_LIBRARY, "Default Spring Boot server stub.");
         supportedLibraries.put("j8-async", "Use async servlet feature and Java 8's default interface. Generating interface with service " +
@@ -98,8 +112,8 @@ public class SpringBootServerCodegen extends JavaClientCodegen implements Codege
 
         supportingFiles.add(new SupportingFile("swagger2SpringBoot.mustache",
                 (sourceFolder + File.separator + basePackage).replace(".", java.io.File.separator), "Swagger2SpringBoot.java"));
-        
-        
+
+
         supportingFiles.add(new SupportingFile("application.properties",
                 ("src.main.resources").replace(".", java.io.File.separator), "application.properties"));
 
@@ -132,10 +146,10 @@ public class SpringBootServerCodegen extends JavaClientCodegen implements Codege
         opList.add(co);
         co.baseName = basePath;
     }
-    
+
     @Override
     public void preprocessSwagger(Swagger swagger) {
-    	System.out.println("preprocessSwagger");
+        System.out.println("preprocessSwagger");
         if ("/".equals(swagger.getBasePath())) {
             swagger.setBasePath("");
         }
@@ -148,7 +162,7 @@ public class SpringBootServerCodegen extends JavaClientCodegen implements Codege
                 port = parts[1];
             }
         }
-        
+
         this.additionalProperties.put("serverPort", port);
         if (swagger != null && swagger.getPaths() != null) {
             for (String pathname : swagger.getPaths().keySet()) {
@@ -219,7 +233,7 @@ public class SpringBootServerCodegen extends JavaClientCodegen implements Codege
                 }
             }
         }
-        if("j8-async".equals(getLibrary())) {
+        if ("j8-async".equals(getLibrary())) {
             apiTemplateFiles.remove(this.templateFileName);
             this.templateFileName = "api-j8-async.mustache";
             apiTemplateFiles.put(this.templateFileName, ".java");
@@ -256,7 +270,7 @@ public class SpringBootServerCodegen extends JavaClientCodegen implements Codege
     public void setBasePackage(String configPackage) {
         this.basePackage = configPackage;
     }
-    
+
     @Override
     public Map<String, Object> postProcessModels(Map<String, Object> objs) {
         // remove the import of "Object" to avoid compilation error

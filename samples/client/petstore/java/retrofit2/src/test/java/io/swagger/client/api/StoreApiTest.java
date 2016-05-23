@@ -1,14 +1,10 @@
 package io.swagger.client.api;
 
-import io.swagger.client.ApiClient;
-import io.swagger.client.model.Order;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import io.swagger.client.ApiClient;
+import io.swagger.client.model.Order;
 
 /**
  * API tests for StoreApi
@@ -22,11 +18,12 @@ public class StoreApiTest {
         api = new ApiClient().createService(StoreApi.class);
     }
 
-    
+
     /**
      * Delete purchase order by ID
      *
-     * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
+     * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers
+     * will generate API errors
      */
     @Test
     public void deleteOrderTest() {
@@ -35,7 +32,7 @@ public class StoreApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Returns pet inventories by status
      *
@@ -47,11 +44,12 @@ public class StoreApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Find purchase order by ID
      *
-     * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+     * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will
+     * generated exceptions
      */
     @Test
     public void getOrderByIdTest() {
@@ -60,11 +58,9 @@ public class StoreApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
      * Place an order for a pet
-     *
-     * 
      */
     @Test
     public void placeOrderTest() {
@@ -73,5 +69,5 @@ public class StoreApiTest {
 
         // TODO: test validations
     }
-    
+
 }

@@ -1,17 +1,10 @@
 /**
- * Copyright 2016 SmartBear Software
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Copyright 2016 SmartBear Software <p> Licensed under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance with the License. You may obtain a
+ * copy of the License at <p> http://www.apache.org/licenses/LICENSE-2.0 <p> Unless required by
+ * applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ * the License for the specific language governing permissions and limitations under the License.
  */
 
 package io.swagger.generator.util;
@@ -37,6 +30,30 @@ public class ZipUtil {
      * A constants for buffer size used to read/write data
      */
     private static final int BUFFER_SIZE = 4096;
+
+    /**
+     * Adds a file to the current zip output stream
+     * @param file the file to be added
+     * @param zos the current zip output stream
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    private static void addFileToZip(File file, ZipOutputStream zos)
+            throws FileNotFoundException, IOException {
+        zos.putNextEntry(new ZipEntry(file.getName()));
+
+        BufferedInputStream bis = new BufferedInputStream(new FileInputStream(
+                file));
+
+        byte[] bytesIn = new byte[BUFFER_SIZE];
+        int read = 0;
+
+        while ((read = bis.read(bytesIn)) != -1) {
+            zos.write(bytesIn, 0, read);
+        }
+
+        zos.closeEntry();
+    }
 
     /**
      * Compresses a collection of files to a destination zip file
@@ -94,29 +111,5 @@ public class ZipUtil {
             zos.closeEntry();
 
         }
-    }
-
-    /**
-     * Adds a file to the current zip output stream
-     * @param file the file to be added
-     * @param zos the current zip output stream
-     * @throws FileNotFoundException
-     * @throws IOException
-     */
-    private static void addFileToZip(File file, ZipOutputStream zos)
-            throws FileNotFoundException, IOException {
-        zos.putNextEntry(new ZipEntry(file.getName()));
-
-        BufferedInputStream bis = new BufferedInputStream(new FileInputStream(
-                file));
-
-        byte[] bytesIn = new byte[BUFFER_SIZE];
-        int read = 0;
-
-        while ((read = bis.read(bytesIn)) != -1) {
-            zos.write(bytesIn, 0, read);
-        }
-
-        zos.closeEntry();
     }
 }
