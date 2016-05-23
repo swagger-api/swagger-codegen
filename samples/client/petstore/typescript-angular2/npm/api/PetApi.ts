@@ -73,7 +73,7 @@ export class PetApi {
      * Multiple status values can be provided with comma seperated strings
      * @param status Status values that need to be considered for filter
      */
-    public findPetsByStatus (status?: models.Array<string>, extraHttpRequestParams?: any ) : Observable<Array<models.Pet>> {
+    public findPetsByStatus (status?: Array<string>, extraHttpRequestParams?: any ) : Observable<Array<models.Pet>> {
         const path = this.basePath + '/pet/findByStatus';
 
         let queryParameters: any = ""; // This should probably be an object in the future
@@ -97,7 +97,7 @@ export class PetApi {
      * Muliple tags can be provided with comma seperated strings. Use tag1, tag2, tag3 for testing.
      * @param tags Tags to filter by
      */
-    public findPetsByTags (tags?: models.Array<string>, extraHttpRequestParams?: any ) : Observable<Array<models.Pet>> {
+    public findPetsByTags (tags?: Array<string>, extraHttpRequestParams?: any ) : Observable<Array<models.Pet>> {
         const path = this.basePath + '/pet/findByTags';
 
         let queryParameters: any = ""; // This should probably be an object in the future
@@ -205,7 +205,7 @@ export class PetApi {
      * @param additionalMetadata Additional data to pass to server
      * @param file file to upload
      */
-    public uploadFile (petId: number, additionalMetadata?: string, file?: models.any, extraHttpRequestParams?: any ) : Observable<{}> {
+    public uploadFile (petId: number, additionalMetadata?: string, file?: any, extraHttpRequestParams?: any ) : Observable<{}> {
         const path = this.basePath + '/pet/{petId}/uploadImage'
             .replace('{' + 'petId' + '}', String(petId));
 

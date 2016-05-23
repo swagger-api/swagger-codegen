@@ -121,4 +121,8 @@ samples/client/petstore/typescript-node/**/typings
 samples/client/petstore/typescript-angular/**/typings
 samples/client/petstore/typescript-fetch/**/dist/
 samples/client/petstore/typescript-fetch/**/typings
+samples/client/petstore/typescript-angular2/*/lib/
+samples/client/petstore/typescript-angular2/*/node_modules/
+samples/client/petstore/typescript-angular2/*/typings/
+
 

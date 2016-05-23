@@ -45,7 +45,7 @@ export class UserApi {
      * 
      * @param body List of user object
      */
-    public createUsersWithArrayInput (body?: models.Array<models.User>, extraHttpRequestParams?: any ) : Observable<{}> {
+    public createUsersWithArrayInput (body?: Array<models.User>, extraHttpRequestParams?: any ) : Observable<{}> {
         const path = this.basePath + '/user/createWithArray';
 
         let queryParameters: any = ""; // This should probably be an object in the future
@@ -66,7 +66,7 @@ export class UserApi {
      * 
      * @param body List of user object
      */
-    public createUsersWithListInput (body?: models.Array<models.User>, extraHttpRequestParams?: any ) : Observable<{}> {
+    public createUsersWithListInput (body?: Array<models.User>, extraHttpRequestParams?: any ) : Observable<{}> {
         const path = this.basePath + '/user/createWithList';
 
         let queryParameters: any = ""; // This should probably be an object in the future

@@ -511,6 +511,18 @@
             </modules>
         </profile>
         <profile>
+            <id>typescript-angular2-npm-client</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/typescript-angular2/npm</module>
+            </modules>
+        </profile>
+        <profile>
             <id>ruby-client</id>
             <activation>
                 <property>
@@ -550,6 +562,7 @@
                 <!-- run ruby test first which has a random delay script to
                      avoid issues with running 2 CI jobs in parallel.       -->
                 <module>samples/client/petstore/ruby</module>
+                <module>samples/client/petstore/typescript-angular2/npm</module>
                 <module>samples/client/petstore/typescript-angular</module>
                 <module>samples/client/petstore/typescript-node/npm</module>
                 <module>samples/client/petstore/android/volley</module>
