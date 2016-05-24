@@ -1,0 +1,233 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[most]{tcolorbox}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{float}
+\usepackage{listings}
+
+\colorlet{punct}{red!60!black}
+\definecolor{background}{HTML}{EEEEEE}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+
+\lstdefinelanguage{json}{
+    basicstyle=\normalfont\ttfamily,
+    literate=
+     *{0}{{{\color{numb}0}}}{1}
+      {1}{{{\color{numb}1}}}{1}
+      {2}{{{\color{numb}2}}}{1}
+      {3}{{{\color{numb}3}}}{1}
+      {4}{{{\color{numb}4}}}{1}
+      {5}{{{\color{numb}5}}}{1}
+      {6}{{{\color{numb}6}}}{1}
+      {7}{{{\color{numb}7}}}{1}
+      {8}{{{\color{numb}8}}}{1}
+      {9}{{{\color{numb}9}}}{1}
+      {:}{{{\color{punct}{:}}}}{1}
+      {,}{{{\color{punct}{,}}}}{1}
+      {\{}{{{\color{delim}{\{}}}}{1}
+      {\}}{{{\color{delim}{\}}}}}{1}
+      {[}{{{\color{delim}{[}}}}{1}
+      {]}{{{\color{delim}{]}}}}{1},
+}
+
+\tcbset{
+frame code={}
+center title,
+left=0pt,
+right=0pt,
+top=0pt,
+bottom=0pt,
+colback=gray!70,
+colframe=white,
+width=\dimexpr\textwidth\relax,
+enlarge left by=0mm,
+boxsep=5pt,
+arc=0pt,outer arc=0pt,
+}
+
+\begin{document}
+\section{ {{{appName}}} }
+{{{appDescription}}}
+\begin{itemize}
+\item {\textbf{Versión: } {{{version}}} }
+\item {\textbf{Base Path: } {{{basePath}}} }
+\end {itemize}
+
+\subsection{Table of Contents}
+
+\begin{itemize}
+{{#apiInfo}}
+        {{#apis}}
+            {{#operations}}
+                {{#operation}}
+                   \item{ \textbf{ {{httpMethod}} } {{path}} }
+                {{/operation}}
+            {{/operations}}
+        {{/apis}}
+{{/apiInfo}}
+\end {itemize}
+\newpage
+
+  \section{ Methods }
+  {{#apiInfo}}
+  {{#apis}}
+  {{#operations}}
+  {{#operation}}
+      \begin{tcolorbox}
+      \textsc{ {{httpMethod}} {{path}} }
+      \end{tcolorbox}
+   {{{notes}}}
+
+   {{#hasPathParams}}
+       \subsection{Path parameters}
+    	\begin{table}[H]
+    		\centering
+ 		\begin{tabular}{|l|l|l|l|}
+     		\hline
+     		\rowcolor[gray]{0.5} 
+     		\multirow{1}{*}{\color{white}Parameter} & \color{white}Description & \color{white}Default Value & \color{white}Data type \\ \hline
+     		{{#pathParams}}	
+     			\multirow{1}{*}{ {{paramName}} } & {{description}} & {{#defaultValue}}{{{defaultValue}}}{{/defaultValue}} & {{dataType}} \\ \hline
+ 			{{/pathParams}}
+ 		\end{tabular}
+		\end{table}	
+   {{/hasPathParams}}
+
+
+
+    {{#hasConsumes}}
+        \subsection{Consumes}
+    This API call consumes the following media types via the Content-Type request header:
+    {{#consumes}}
+      {{mediaType}}
+    {{/consumes}}
+    {{/hasConsumes}}
+
+    {{#hasBodyParam}}
+        \subsection{Request body}
+      	\begin{table}[H]
+    		\centering
+ 		\begin{tabular}{|l|l|l|l|}
+     		\hline
+     		\rowcolor[gray]{0.5} 
+     		\multirow{1}{*}{\color{white}Parameter} & \color{white}Description & \color{white}Default Value & \color{white}Data type \\ \hline
+     		{{#bodyParams}}	
+     			\multirow{1}{*}{ {{paramName}} } & {{description}} & {{#defaultValue}}{{{defaultValue}}}{{/defaultValue}} & {{dataType}} \\ \hline
+ 			{{/bodyParams}}
+ 		\end{tabular}
+		\end{table}
+    {{/hasBodyParam}}
+
+    {{#hasHeaderParam}}
+        \subsection{Request headers}
+    	\begin{itemize}
+ 			{{#headerParam}}
+ 				\item { {{paramName}} - {{description}} - {{#defaultValue}}default: {{{defaultValue}}}{{/defaultValue}} - {{dataType}} }
+      		{{/headerParam}}
+      	\end{itemize}
+    {{/hasHeaderParam}}
+
+    {{#hasQueryParams}}
+        \subsection{Query parameters}
+        \begin{table}[H]
+    		\centering
+ 		\begin{tabular}{|l|l|l|l|}
+     		\hline
+     		\rowcolor[gray]{0.5} 
+     		\multirow{1}{*}{\color{white}Parameter} & \color{white}Description & \color{white}Default Value & \color{white}Data type \\ \hline
+     		{{#queryParams}}	
+     			\multirow{1}{*}{ {{paramName}} } & {{description}} & {{#defaultValue}}{{{defaultValue}}}{{/defaultValue}} & {{dataType}} \\ \hline
+ 			{{/queryParams}}
+ 		\end{tabular}
+		\end{table}
+    {{/hasQueryParams}}
+
+    {{#hasFormParams}}
+        \subsection{Form parameters}
+      	\begin{table}[H]
+    		\centering
+ 		\begin{tabular}{|l|l|l|l|}
+     		\hline
+     		\rowcolor[gray]{0.5} 
+     		\multirow{1}{*}{\color{white}Parameter} & \color{white}Description & \color{white}Default Value & \color{white}Data type \\ \hline
+     		{{#formParams}}	
+     			\multirow{1}{*}{ {{paramName}} } & {{description}} & {{#defaultValue}}{{{defaultValue}}}{{/defaultValue}} & {{dataType}} \\ \hline
+ 			{{/formParams}}
+ 		\end{tabular}
+		\end{table}
+    {{/hasFormParams}}
+
+    {{#hasExamples}}
+    {{#examples}}
+        \subsection{Example data}
+    Content-Type: {{{contentType}}}
+    {{{example}}}
+    {{/examples}}
+    {{/hasExamples}}
+
+    {{#hasProduces}}
+        \subsection{Produces}
+    This API call produces the following media types according to the Accept request header;
+    the media type will be conveyed by the Content-Type response header.
+
+    {{#produces}}
+      {{mediaType}}
+    {{/produces}}
+    {{/hasProduces}}
+
+   \subsection{Responses}
+    \begin{table}[H]
+    	\centering
+ 	\begin{tabular}{|l|l|}
+     	\hline
+     	\rowcolor[gray]{0.5} 
+     	\multirow{1}{*}{\color{white}HTTP Status Code} & \color{white}Reason \\ \hline
+     	{{#responses}}
+     		\multirow{1}{*}{ {{code}} } & {{message}} \\ \hline
+ 		{{#examples}}
+            \subsection{Example data}
+        Content-Type: {{{contentType}}}
+        {{example}}
+        {{/examples}}
+        {{/responses}}
+ 	\end{tabular}
+	\end{table}
+
+  {{/operation}}
+  {{/operations}}
+  {{/apis}}
+  {{/apiInfo}}
+
+\newpage
+  \section{ Models }
+  \subsection{Table of Contents}
+
+  {{#models}}
+  {{#model}}
+      \begin{itemize}
+        \item{ \textbf{ {{classname}} } }
+      \end{itemize}
+  {{/model}}
+  {{/models}}
+
+  {{#models}}
+  {{#model}}
+      \begin{tcolorbox}
+      \textsc{ {{classname}} }
+      \end{tcolorbox}
+      \begin{lstlisting}[language=json,firstnumber=1]    
+{{classname}} {
+          {{#vars}}
+  {{name}} ({{datatype}}, {{^required}}optional{{/required}}){{#isEnum}}
+    =[{{#_enum}}'{{this}}',{{/_enum}}]{{/isEnum}},
+          {{/vars}}
+} 
+      \end{lstlisting}    
+  {{/model}}
+  {{/models}}
+
+\end{document}

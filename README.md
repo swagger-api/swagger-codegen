@@ -450,6 +450,7 @@ SlimFrameworkServerCodegen.java
 SpringMVCServerCodegen.java
 StaticDocCodegen.java
 StaticHtmlGenerator.java
+LatexGenerator.java
 SwaggerGenerator.java
 SwaggerYamlGenerator.java
 SwiftCodegen.java
