@@ -17,7 +17,7 @@ namespace IO.Swagger.Test
 		public void TearDown()
 		{
 			// Reset to default, just in case
-			Configuration.Default.DateTimeFormat = "o";
+			IO.Swagger.Client.Configuration.Default.DateTimeFormat = "o";
 		}
 
 		/// <summary>
@@ -82,7 +82,7 @@ namespace IO.Swagger.Test
 		public void TestParameterToStringForDateTimeWithUFormat ()
 		{
 			// Setup the DateTimeFormat across all of the calls
-			Configuration.Default.DateTimeFormat = "u";
+			IO.Swagger.Client.Configuration.Default.DateTimeFormat = "u";
 			ApiClient api = new ApiClient();
 
 			// test datetime
@@ -94,7 +94,7 @@ namespace IO.Swagger.Test
 		public void TestParameterToStringForDateTimeWithCustomFormat ()
 		{
 			// Setup the DateTimeFormat across all of the calls
-			Configuration.Default.DateTimeFormat = "dd/MM/yy HH:mm:ss";
+			IO.Swagger.Client.Configuration.Default.DateTimeFormat = "dd/MM/yy HH:mm:ss";
 			ApiClient api = new ApiClient();
 
 			// test datetime
@@ -124,25 +124,25 @@ namespace IO.Swagger.Test
 			PetApi p1 = new PetApi ();
 			PetApi p2 = new PetApi ();
 
-			Configuration c1 = new Configuration (); // using default ApiClient
+			IO.Swagger.Client.Configuration c1 = new IO.Swagger.Client.Configuration (); // using default ApiClient
 			PetApi p3 = new PetApi (c1);
 
 			ApiClient a1 = new ApiClient();
-			Configuration c2 = new Configuration (a1); // using "a1" as the ApiClient
+			IO.Swagger.Client.Configuration c2 = new IO.Swagger.Client.Configuration (a1); // using "a1" as the ApiClient
 			PetApi p4 = new PetApi (c2);
 
 
 			// ensure both using the same default ApiClient
 			Assert.AreSame(p1.Configuration.ApiClient, p2.Configuration.ApiClient);
-			Assert.AreSame(p1.Configuration.ApiClient, Configuration.Default.ApiClient);
+			Assert.AreSame(p1.Configuration.ApiClient, IO.Swagger.Client.Configuration.Default.ApiClient);
 
 			// ensure both using the same default ApiClient
 			Assert.AreSame(p3.Configuration.ApiClient, c1.ApiClient);
-			Assert.AreSame(p3.Configuration.ApiClient, Configuration.Default.ApiClient);
+			Assert.AreSame(p3.Configuration.ApiClient, IO.Swagger.Client.Configuration.Default.ApiClient);
 
 			// ensure it's not using the default ApiClient
 			Assert.AreSame(p4.Configuration.ApiClient, c2.ApiClient);
-			Assert.AreNotSame(p4.Configuration.ApiClient, Configuration.Default.ApiClient);
+			Assert.AreNotSame(p4.Configuration.ApiClient, IO.Swagger.Client.Configuration.Default.ApiClient);
 
 		}
 	}
