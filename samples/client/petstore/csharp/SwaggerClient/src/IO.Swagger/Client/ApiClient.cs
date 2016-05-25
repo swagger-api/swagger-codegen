@@ -320,7 +320,7 @@ namespace IO.Swagger.Client
             }
             catch (Exception e)
             {
-                throw new ApiException(500, e.Message);
+                throw new IO.Swagger.Client.ApiException(500, e.Message);
             }
         }
 
@@ -337,7 +337,7 @@ namespace IO.Swagger.Client
             }
             catch (Exception e)
             {
-                throw new ApiException(500, e.Message);
+                throw new IO.Swagger.Client.ApiException(500, e.Message);
             }
         }
 

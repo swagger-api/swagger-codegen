@@ -25,7 +25,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using RestSharp;
-using IO.Swagger.Client;
 using IO.Swagger.Model;
 
 namespace IO.Swagger.Api
@@ -33,7 +32,7 @@ namespace IO.Swagger.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public interface IPetApi : IApiAccessor
+    public interface IPetApi : IO.Swagger.Client.IApiAccessor
     {
         #region Synchronous Operations
         /// <summary>
@@ -56,7 +55,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AddPetWithHttpInfo (Pet body);
+        IO.Swagger.Client.ApiResponse<Object> AddPetWithHttpInfo (Pet body);
         /// <summary>
         /// Deletes a pet
         /// </summary>
@@ -79,7 +78,7 @@ namespace IO.Swagger.Api
         /// <param name="petId">Pet id to delete</param>
         /// <param name="apiKey"> (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> DeletePetWithHttpInfo (long? petId, string apiKey = null);
+        IO.Swagger.Client.ApiResponse<Object> DeletePetWithHttpInfo (long? petId, string apiKey = null);
         /// <summary>
         /// Finds Pets by status
         /// </summary>
@@ -100,7 +99,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="status">Status values that need to be considered for filter</param>
         /// <returns>ApiResponse of List&lt;Pet&gt;</returns>
-        ApiResponse<List<Pet>> FindPetsByStatusWithHttpInfo (List<string> status);
+        IO.Swagger.Client.ApiResponse<List<Pet>> FindPetsByStatusWithHttpInfo (List<string> status);
         /// <summary>
         /// Finds Pets by tags
         /// </summary>
@@ -121,7 +120,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="tags">Tags to filter by</param>
         /// <returns>ApiResponse of List&lt;Pet&gt;</returns>
-        ApiResponse<List<Pet>> FindPetsByTagsWithHttpInfo (List<string> tags);
+        IO.Swagger.Client.ApiResponse<List<Pet>> FindPetsByTagsWithHttpInfo (List<string> tags);
         /// <summary>
         /// Find pet by ID
         /// </summary>
@@ -142,7 +141,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to return</param>
         /// <returns>ApiResponse of Pet</returns>
-        ApiResponse<Pet> GetPetByIdWithHttpInfo (long? petId);
+        IO.Swagger.Client.ApiResponse<Pet> GetPetByIdWithHttpInfo (long? petId);
         /// <summary>
         /// Update an existing pet
         /// </summary>
@@ -163,7 +162,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> UpdatePetWithHttpInfo (Pet body);
+        IO.Swagger.Client.ApiResponse<Object> UpdatePetWithHttpInfo (Pet body);
         /// <summary>
         /// Updates a pet in the store with form data
         /// </summary>
@@ -188,7 +187,7 @@ namespace IO.Swagger.Api
         /// <param name="name">Updated name of the pet (optional)</param>
         /// <param name="status">Updated status of the pet (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> UpdatePetWithFormWithHttpInfo (long? petId, string name = null, string status = null);
+        IO.Swagger.Client.ApiResponse<Object> UpdatePetWithFormWithHttpInfo (long? petId, string name = null, string status = null);
         /// <summary>
         /// uploads an image
         /// </summary>
@@ -213,7 +212,7 @@ namespace IO.Swagger.Api
         /// <param name="additionalMetadata">Additional data to pass to server (optional)</param>
         /// <param name="file">file to upload (optional)</param>
         /// <returns>ApiResponse of ApiResponse</returns>
-        ApiResponse<ApiResponse> UploadFileWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream file = null);
+        IO.Swagger.Client.ApiResponse<ApiResponse> UploadFileWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream file = null);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -236,7 +235,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AddPetAsyncWithHttpInfo (Pet body);
+        System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<Object>> AddPetAsyncWithHttpInfo (Pet body);
         /// <summary>
         /// Deletes a pet
         /// </summary>
@@ -259,7 +258,7 @@ namespace IO.Swagger.Api
         /// <param name="petId">Pet id to delete</param>
         /// <param name="apiKey"> (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> DeletePetAsyncWithHttpInfo (long? petId, string apiKey = null);
+        System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<Object>> DeletePetAsyncWithHttpInfo (long? petId, string apiKey = null);
         /// <summary>
         /// Finds Pets by status
         /// </summary>
@@ -280,7 +279,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="status">Status values that need to be considered for filter</param>
         /// <returns>Task of ApiResponse (List&lt;Pet&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<Pet>>> FindPetsByStatusAsyncWithHttpInfo (List<string> status);
+        System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<List<Pet>>> FindPetsByStatusAsyncWithHttpInfo (List<string> status);
         /// <summary>
         /// Finds Pets by tags
         /// </summary>
@@ -301,7 +300,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="tags">Tags to filter by</param>
         /// <returns>Task of ApiResponse (List&lt;Pet&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<Pet>>> FindPetsByTagsAsyncWithHttpInfo (List<string> tags);
+        System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<List<Pet>>> FindPetsByTagsAsyncWithHttpInfo (List<string> tags);
         /// <summary>
         /// Find pet by ID
         /// </summary>
@@ -322,7 +321,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to return</param>
         /// <returns>Task of ApiResponse (Pet)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Pet>> GetPetByIdAsyncWithHttpInfo (long? petId);
+        System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<Pet>> GetPetByIdAsyncWithHttpInfo (long? petId);
         /// <summary>
         /// Update an existing pet
         /// </summary>
@@ -343,7 +342,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> UpdatePetAsyncWithHttpInfo (Pet body);
+        System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<Object>> UpdatePetAsyncWithHttpInfo (Pet body);
         /// <summary>
         /// Updates a pet in the store with form data
         /// </summary>
@@ -368,7 +367,7 @@ namespace IO.Swagger.Api
         /// <param name="name">Updated name of the pet (optional)</param>
         /// <param name="status">Updated status of the pet (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> UpdatePetWithFormAsyncWithHttpInfo (long? petId, string name = null, string status = null);
+        System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<Object>> UpdatePetWithFormAsyncWithHttpInfo (long? petId, string name = null, string status = null);
         /// <summary>
         /// uploads an image
         /// </summary>
@@ -393,7 +392,7 @@ namespace IO.Swagger.Api
         /// <param name="additionalMetadata">Additional data to pass to server (optional)</param>
         /// <param name="file">file to upload (optional)</param>
         /// <returns>Task of ApiResponse (ApiResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ApiResponse>> UploadFileAsyncWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream file = null);
+        System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<ApiResponse>> UploadFileAsyncWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream file = null);
         #endregion Asynchronous Operations
     }
 
@@ -408,7 +407,7 @@ namespace IO.Swagger.Api
         /// <returns></returns>
         public PetApi(String basePath)
         {
-            this.Configuration = new IO.Swagger.Client.Configuration(new ApiClient(basePath));
+            this.Configuration = new IO.Swagger.Client.Configuration(new IO.Swagger.Client.ApiClient(basePath));
 
             // ensure API client has configuration ready
             if (this.Configuration.ApiClient.Configuration == null)
@@ -426,7 +425,7 @@ namespace IO.Swagger.Api
         public PetApi(IO.Swagger.Client.Configuration configuration = null)
         {
             if (configuration == null) // use the default one in Configuration
-                this.Configuration = Configuration.Default;
+                this.Configuration = IO.Swagger.Client.Configuration.Default;
             else
                 this.Configuration = configuration;
 
@@ -501,11 +500,11 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> AddPetWithHttpInfo (Pet body)
+        public IO.Swagger.Client.ApiResponse<Object> AddPetWithHttpInfo (Pet body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
-                throw new ApiException(400, "Missing required parameter 'body' when calling PetApi->AddPet");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'body' when calling PetApi->AddPet");
 
             var localVarPath = "/pet";
             var localVarPathParams = new Dictionary<String, String>();
@@ -558,12 +557,12 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling AddPet: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling AddPet: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling AddPet: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling AddPet: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
             
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
@@ -586,11 +585,11 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> AddPetAsyncWithHttpInfo (Pet body)
+        public async System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<Object>> AddPetAsyncWithHttpInfo (Pet body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
-                throw new ApiException(400, "Missing required parameter 'body' when calling PetApi->AddPet");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'body' when calling PetApi->AddPet");
 
             var localVarPath = "/pet";
             var localVarPathParams = new Dictionary<String, String>();
@@ -643,12 +642,12 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling AddPet: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling AddPet: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling AddPet: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling AddPet: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
             
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
@@ -672,11 +671,11 @@ namespace IO.Swagger.Api
         /// <param name="petId">Pet id to delete</param>
         /// <param name="apiKey"> (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> DeletePetWithHttpInfo (long? petId, string apiKey = null)
+        public IO.Swagger.Client.ApiResponse<Object> DeletePetWithHttpInfo (long? petId, string apiKey = null)
         {
             // verify the required parameter 'petId' is set
             if (petId == null)
-                throw new ApiException(400, "Missing required parameter 'petId' when calling PetApi->DeletePet");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'petId' when calling PetApi->DeletePet");
 
             var localVarPath = "/pet/{petId}";
             var localVarPathParams = new Dictionary<String, String>();
@@ -721,12 +720,12 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling DeletePet: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling DeletePet: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling DeletePet: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling DeletePet: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
             
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
@@ -751,11 +750,11 @@ namespace IO.Swagger.Api
         /// <param name="petId">Pet id to delete</param>
         /// <param name="apiKey"> (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> DeletePetAsyncWithHttpInfo (long? petId, string apiKey = null)
+        public async System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<Object>> DeletePetAsyncWithHttpInfo (long? petId, string apiKey = null)
         {
             // verify the required parameter 'petId' is set
             if (petId == null)
-                throw new ApiException(400, "Missing required parameter 'petId' when calling PetApi->DeletePet");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'petId' when calling PetApi->DeletePet");
 
             var localVarPath = "/pet/{petId}";
             var localVarPathParams = new Dictionary<String, String>();
@@ -800,12 +799,12 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling DeletePet: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling DeletePet: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling DeletePet: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling DeletePet: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
             
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
@@ -818,7 +817,7 @@ namespace IO.Swagger.Api
         /// <returns>List&lt;Pet&gt;</returns>
         public List<Pet> FindPetsByStatus (List<string> status)
         {
-             ApiResponse<List<Pet>> localVarResponse = FindPetsByStatusWithHttpInfo(status);
+             IO.Swagger.Client.ApiResponse<List<Pet>> localVarResponse = FindPetsByStatusWithHttpInfo(status);
              return localVarResponse.Data;
         }
 
@@ -828,11 +827,11 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="status">Status values that need to be considered for filter</param>
         /// <returns>ApiResponse of List&lt;Pet&gt;</returns>
-        public ApiResponse< List<Pet> > FindPetsByStatusWithHttpInfo (List<string> status)
+        public IO.Swagger.Client.ApiResponse< List<Pet> > FindPetsByStatusWithHttpInfo (List<string> status)
         {
             // verify the required parameter 'status' is set
             if (status == null)
-                throw new ApiException(400, "Missing required parameter 'status' when calling PetApi->FindPetsByStatus");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'status' when calling PetApi->FindPetsByStatus");
 
             var localVarPath = "/pet/findByStatus";
             var localVarPathParams = new Dictionary<String, String>();
@@ -876,11 +875,11 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling FindPetsByStatus: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling FindPetsByStatus: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling FindPetsByStatus: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling FindPetsByStatus: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
-            return new ApiResponse<List<Pet>>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<List<Pet>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Pet>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Pet>)));
             
@@ -894,7 +893,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of List&lt;Pet&gt;</returns>
         public async System.Threading.Tasks.Task<List<Pet>> FindPetsByStatusAsync (List<string> status)
         {
-             ApiResponse<List<Pet>> localVarResponse = await FindPetsByStatusAsyncWithHttpInfo(status);
+             IO.Swagger.Client.ApiResponse<List<Pet>> localVarResponse = await FindPetsByStatusAsyncWithHttpInfo(status);
              return localVarResponse.Data;
 
         }
@@ -905,11 +904,11 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="status">Status values that need to be considered for filter</param>
         /// <returns>Task of ApiResponse (List&lt;Pet&gt;)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<List<Pet>>> FindPetsByStatusAsyncWithHttpInfo (List<string> status)
+        public async System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<List<Pet>>> FindPetsByStatusAsyncWithHttpInfo (List<string> status)
         {
             // verify the required parameter 'status' is set
             if (status == null)
-                throw new ApiException(400, "Missing required parameter 'status' when calling PetApi->FindPetsByStatus");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'status' when calling PetApi->FindPetsByStatus");
 
             var localVarPath = "/pet/findByStatus";
             var localVarPathParams = new Dictionary<String, String>();
@@ -953,11 +952,11 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling FindPetsByStatus: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling FindPetsByStatus: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling FindPetsByStatus: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling FindPetsByStatus: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
-            return new ApiResponse<List<Pet>>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<List<Pet>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Pet>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Pet>)));
             
@@ -971,7 +970,7 @@ namespace IO.Swagger.Api
         /// <returns>List&lt;Pet&gt;</returns>
         public List<Pet> FindPetsByTags (List<string> tags)
         {
-             ApiResponse<List<Pet>> localVarResponse = FindPetsByTagsWithHttpInfo(tags);
+             IO.Swagger.Client.ApiResponse<List<Pet>> localVarResponse = FindPetsByTagsWithHttpInfo(tags);
              return localVarResponse.Data;
         }
 
@@ -981,11 +980,11 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="tags">Tags to filter by</param>
         /// <returns>ApiResponse of List&lt;Pet&gt;</returns>
-        public ApiResponse< List<Pet> > FindPetsByTagsWithHttpInfo (List<string> tags)
+        public IO.Swagger.Client.ApiResponse< List<Pet> > FindPetsByTagsWithHttpInfo (List<string> tags)
         {
             // verify the required parameter 'tags' is set
             if (tags == null)
-                throw new ApiException(400, "Missing required parameter 'tags' when calling PetApi->FindPetsByTags");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'tags' when calling PetApi->FindPetsByTags");
 
             var localVarPath = "/pet/findByTags";
             var localVarPathParams = new Dictionary<String, String>();
@@ -1029,11 +1028,11 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling FindPetsByTags: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling FindPetsByTags: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling FindPetsByTags: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling FindPetsByTags: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
-            return new ApiResponse<List<Pet>>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<List<Pet>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Pet>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Pet>)));
             
@@ -1047,7 +1046,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of List&lt;Pet&gt;</returns>
         public async System.Threading.Tasks.Task<List<Pet>> FindPetsByTagsAsync (List<string> tags)
         {
-             ApiResponse<List<Pet>> localVarResponse = await FindPetsByTagsAsyncWithHttpInfo(tags);
+             IO.Swagger.Client.ApiResponse<List<Pet>> localVarResponse = await FindPetsByTagsAsyncWithHttpInfo(tags);
              return localVarResponse.Data;
 
         }
@@ -1058,11 +1057,11 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="tags">Tags to filter by</param>
         /// <returns>Task of ApiResponse (List&lt;Pet&gt;)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<List<Pet>>> FindPetsByTagsAsyncWithHttpInfo (List<string> tags)
+        public async System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<List<Pet>>> FindPetsByTagsAsyncWithHttpInfo (List<string> tags)
         {
             // verify the required parameter 'tags' is set
             if (tags == null)
-                throw new ApiException(400, "Missing required parameter 'tags' when calling PetApi->FindPetsByTags");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'tags' when calling PetApi->FindPetsByTags");
 
             var localVarPath = "/pet/findByTags";
             var localVarPathParams = new Dictionary<String, String>();
@@ -1106,11 +1105,11 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling FindPetsByTags: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling FindPetsByTags: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling FindPetsByTags: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling FindPetsByTags: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
-            return new ApiResponse<List<Pet>>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<List<Pet>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Pet>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Pet>)));
             
@@ -1124,7 +1123,7 @@ namespace IO.Swagger.Api
         /// <returns>Pet</returns>
         public Pet GetPetById (long? petId)
         {
-             ApiResponse<Pet> localVarResponse = GetPetByIdWithHttpInfo(petId);
+             IO.Swagger.Client.ApiResponse<Pet> localVarResponse = GetPetByIdWithHttpInfo(petId);
              return localVarResponse.Data;
         }
 
@@ -1134,11 +1133,11 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to return</param>
         /// <returns>ApiResponse of Pet</returns>
-        public ApiResponse< Pet > GetPetByIdWithHttpInfo (long? petId)
+        public IO.Swagger.Client.ApiResponse< Pet > GetPetByIdWithHttpInfo (long? petId)
         {
             // verify the required parameter 'petId' is set
             if (petId == null)
-                throw new ApiException(400, "Missing required parameter 'petId' when calling PetApi->GetPetById");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'petId' when calling PetApi->GetPetById");
 
             var localVarPath = "/pet/{petId}";
             var localVarPathParams = new Dictionary<String, String>();
@@ -1182,11 +1181,11 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling GetPetById: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling GetPetById: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling GetPetById: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling GetPetById: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
-            return new ApiResponse<Pet>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<Pet>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Pet) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Pet)));
             
@@ -1200,7 +1199,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of Pet</returns>
         public async System.Threading.Tasks.Task<Pet> GetPetByIdAsync (long? petId)
         {
-             ApiResponse<Pet> localVarResponse = await GetPetByIdAsyncWithHttpInfo(petId);
+             IO.Swagger.Client.ApiResponse<Pet> localVarResponse = await GetPetByIdAsyncWithHttpInfo(petId);
              return localVarResponse.Data;
 
         }
@@ -1211,11 +1210,11 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to return</param>
         /// <returns>Task of ApiResponse (Pet)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Pet>> GetPetByIdAsyncWithHttpInfo (long? petId)
+        public async System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<Pet>> GetPetByIdAsyncWithHttpInfo (long? petId)
         {
             // verify the required parameter 'petId' is set
             if (petId == null)
-                throw new ApiException(400, "Missing required parameter 'petId' when calling PetApi->GetPetById");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'petId' when calling PetApi->GetPetById");
 
             var localVarPath = "/pet/{petId}";
             var localVarPathParams = new Dictionary<String, String>();
@@ -1258,11 +1257,11 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling GetPetById: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling GetPetById: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling GetPetById: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling GetPetById: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
-            return new ApiResponse<Pet>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<Pet>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Pet) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Pet)));
             
@@ -1285,11 +1284,11 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> UpdatePetWithHttpInfo (Pet body)
+        public IO.Swagger.Client.ApiResponse<Object> UpdatePetWithHttpInfo (Pet body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
-                throw new ApiException(400, "Missing required parameter 'body' when calling PetApi->UpdatePet");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'body' when calling PetApi->UpdatePet");
 
             var localVarPath = "/pet";
             var localVarPathParams = new Dictionary<String, String>();
@@ -1342,12 +1341,12 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling UpdatePet: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling UpdatePet: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling UpdatePet: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling UpdatePet: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
             
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
@@ -1370,11 +1369,11 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> UpdatePetAsyncWithHttpInfo (Pet body)
+        public async System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<Object>> UpdatePetAsyncWithHttpInfo (Pet body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
-                throw new ApiException(400, "Missing required parameter 'body' when calling PetApi->UpdatePet");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'body' when calling PetApi->UpdatePet");
 
             var localVarPath = "/pet";
             var localVarPathParams = new Dictionary<String, String>();
@@ -1427,12 +1426,12 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling UpdatePet: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling UpdatePet: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling UpdatePet: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling UpdatePet: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
             
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
@@ -1458,11 +1457,11 @@ namespace IO.Swagger.Api
         /// <param name="name">Updated name of the pet (optional)</param>
         /// <param name="status">Updated status of the pet (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> UpdatePetWithFormWithHttpInfo (long? petId, string name = null, string status = null)
+        public IO.Swagger.Client.ApiResponse<Object> UpdatePetWithFormWithHttpInfo (long? petId, string name = null, string status = null)
         {
             // verify the required parameter 'petId' is set
             if (petId == null)
-                throw new ApiException(400, "Missing required parameter 'petId' when calling PetApi->UpdatePetWithForm");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'petId' when calling PetApi->UpdatePetWithForm");
 
             var localVarPath = "/pet/{petId}";
             var localVarPathParams = new Dictionary<String, String>();
@@ -1509,12 +1508,12 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling UpdatePetWithForm: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling UpdatePetWithForm: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling UpdatePetWithForm: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling UpdatePetWithForm: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
             
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
@@ -1541,11 +1540,11 @@ namespace IO.Swagger.Api
         /// <param name="name">Updated name of the pet (optional)</param>
         /// <param name="status">Updated status of the pet (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> UpdatePetWithFormAsyncWithHttpInfo (long? petId, string name = null, string status = null)
+        public async System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<Object>> UpdatePetWithFormAsyncWithHttpInfo (long? petId, string name = null, string status = null)
         {
             // verify the required parameter 'petId' is set
             if (petId == null)
-                throw new ApiException(400, "Missing required parameter 'petId' when calling PetApi->UpdatePetWithForm");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'petId' when calling PetApi->UpdatePetWithForm");
 
             var localVarPath = "/pet/{petId}";
             var localVarPathParams = new Dictionary<String, String>();
@@ -1592,12 +1591,12 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling UpdatePetWithForm: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling UpdatePetWithForm: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling UpdatePetWithForm: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling UpdatePetWithForm: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
             
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
@@ -1612,7 +1611,7 @@ namespace IO.Swagger.Api
         /// <returns>ApiResponse</returns>
         public ApiResponse UploadFile (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
         {
-             ApiResponse<ApiResponse> localVarResponse = UploadFileWithHttpInfo(petId, additionalMetadata, file);
+             IO.Swagger.Client.ApiResponse<ApiResponse> localVarResponse = UploadFileWithHttpInfo(petId, additionalMetadata, file);
              return localVarResponse.Data;
         }
 
@@ -1624,11 +1623,11 @@ namespace IO.Swagger.Api
         /// <param name="additionalMetadata">Additional data to pass to server (optional)</param>
         /// <param name="file">file to upload (optional)</param>
         /// <returns>ApiResponse of ApiResponse</returns>
-        public ApiResponse< ApiResponse > UploadFileWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
+        public IO.Swagger.Client.ApiResponse< ApiResponse > UploadFileWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
         {
             // verify the required parameter 'petId' is set
             if (petId == null)
-                throw new ApiException(400, "Missing required parameter 'petId' when calling PetApi->UploadFile");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'petId' when calling PetApi->UploadFile");
 
             var localVarPath = "/pet/{petId}/uploadImage";
             var localVarPathParams = new Dictionary<String, String>();
@@ -1674,11 +1673,11 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling UploadFile: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling UploadFile: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling UploadFile: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling UploadFile: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
-            return new ApiResponse<ApiResponse>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<ApiResponse>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (ApiResponse) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ApiResponse)));
             
@@ -1694,7 +1693,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse</returns>
         public async System.Threading.Tasks.Task<ApiResponse> UploadFileAsync (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
         {
-             ApiResponse<ApiResponse> localVarResponse = await UploadFileAsyncWithHttpInfo(petId, additionalMetadata, file);
+             IO.Swagger.Client.ApiResponse<ApiResponse> localVarResponse = await UploadFileAsyncWithHttpInfo(petId, additionalMetadata, file);
              return localVarResponse.Data;
 
         }
@@ -1707,11 +1706,11 @@ namespace IO.Swagger.Api
         /// <param name="additionalMetadata">Additional data to pass to server (optional)</param>
         /// <param name="file">file to upload (optional)</param>
         /// <returns>Task of ApiResponse (ApiResponse)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<ApiResponse>> UploadFileAsyncWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
+        public async System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<ApiResponse>> UploadFileAsyncWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
         {
             // verify the required parameter 'petId' is set
             if (petId == null)
-                throw new ApiException(400, "Missing required parameter 'petId' when calling PetApi->UploadFile");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'petId' when calling PetApi->UploadFile");
 
             var localVarPath = "/pet/{petId}/uploadImage";
             var localVarPathParams = new Dictionary<String, String>();
@@ -1757,11 +1756,11 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling UploadFile: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling UploadFile: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling UploadFile: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling UploadFile: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
-            return new ApiResponse<ApiResponse>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<ApiResponse>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (ApiResponse) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ApiResponse)));
             
