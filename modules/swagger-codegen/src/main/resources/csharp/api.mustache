@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using RestSharp;
-using {{packageName}}.Client;
 {{#hasImport}}using {{packageName}}.Model;
 {{/hasImport}}
 
@@ -14,7 +13,7 @@ namespace {{packageName}}.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public interface I{{classname}} : IApiAccessor
+    public interface I{{classname}} : {{packageName}}.Client.IApiAccessor
     {
         #region Synchronous Operations
         {{#operation}}
@@ -38,7 +37,7 @@ namespace {{packageName}}.Api
         /// <exception cref="{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
         {{#allParams}}/// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}</param>
         {{/allParams}}/// <returns>ApiResponse of {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}Object(void){{/returnType}}</returns>
-        ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}> {{operationId}}WithHttpInfo ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = null{{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        {{packageName}}.Client.ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}> {{operationId}}WithHttpInfo ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = null{{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
         {{/operation}}
         #endregion Synchronous Operations
         {{#supportsAsync}}
@@ -64,7 +63,7 @@ namespace {{packageName}}.Api
         /// <exception cref="{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
         {{#allParams}}/// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}</param>
         {{/allParams}}/// <returns>Task of ApiResponse{{#returnType}} ({{returnType}}){{/returnType}}</returns>
-        System.Threading.Tasks.Task<ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}>> {{operationId}}AsyncWithHttpInfo ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = null{{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        System.Threading.Tasks.Task<{{packageName}}.Client.ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}>> {{operationId}}AsyncWithHttpInfo ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = null{{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
         {{/operation}}
         #endregion Asynchronous Operations
         {{/supportsAsync}}
@@ -81,7 +80,7 @@ namespace {{packageName}}.Api
         /// <returns></returns>
         public {{classname}}(String basePath)
         {
-            this.Configuration = new {{packageName}}.Client.Configuration(new ApiClient(basePath));
+            this.Configuration = new {{packageName}}.Client.Configuration(new {{packageName}}.Client.ApiClient(basePath));
 
             // ensure API client has configuration ready
             if (this.Configuration.ApiClient.Configuration == null)
@@ -99,7 +98,7 @@ namespace {{packageName}}.Api
         public {{classname}}({{packageName}}.Client.Configuration configuration = null)
         {
             if (configuration == null) // use the default one in Configuration
-                this.Configuration = Configuration.Default;
+                this.Configuration = {{packageName}}.Client.Configuration.Default;
             else
                 this.Configuration = configuration;
 
@@ -166,7 +165,7 @@ namespace {{packageName}}.Api
         {{/allParams}}/// <returns>{{#returnType}}{{returnType}}{{/returnType}}</returns>
         public {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}} {{operationId}} ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = null{{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
         {
-             {{#returnType}}ApiResponse<{{{returnType}}}> localVarResponse = {{operationId}}WithHttpInfo({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+             {{#returnType}}{{packageName}}.Client.ApiResponse<{{{returnType}}}> localVarResponse = {{operationId}}WithHttpInfo({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
              return localVarResponse.Data;{{/returnType}}{{^returnType}}{{operationId}}WithHttpInfo({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});{{/returnType}}
         }
 
@@ -176,13 +175,13 @@ namespace {{packageName}}.Api
         /// <exception cref="{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
         {{#allParams}}/// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}</param>
         {{/allParams}}/// <returns>ApiResponse of {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}Object(void){{/returnType}}</returns>
-        public ApiResponse<{{#returnType}} {{{returnType}}} {{/returnType}}{{^returnType}}Object{{/returnType}}> {{operationId}}WithHttpInfo ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = null{{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+        public {{packageName}}.Client.ApiResponse<{{#returnType}} {{{returnType}}} {{/returnType}}{{^returnType}}Object{{/returnType}}> {{operationId}}WithHttpInfo ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = null{{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
         {
             {{#allParams}}
             {{#required}}
             // verify the required parameter '{{paramName}}' is set
             if ({{paramName}} == null)
-                throw new ApiException(400, "Missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}");
+                throw new {{packageName}}.Client.ApiException(400, "Missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}");
             {{/required}}
             {{/allParams}}
 
@@ -258,7 +257,7 @@ namespace {{packageName}}.Api
             // http basic authentication required
             if (!String.IsNullOrEmpty(Configuration.Username) || !String.IsNullOrEmpty(Configuration.Password))
             {
-                localVarHeaderParams["Authorization"] = "Basic " + ApiClient.Base64Encode(Configuration.Username + ":" + Configuration.Password);
+                localVarHeaderParams["Authorization"] = "Basic " + {{packageName}}.Client.ApiClient.Base64Encode(Configuration.Username + ":" + Configuration.Password);
             }
             {{/isBasic}}
             {{#isOAuth}}
@@ -277,14 +276,14 @@ namespace {{packageName}}.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling {{operationId}}: " + localVarResponse.Content, localVarResponse.Content);
+                throw new {{packageName}}.Client.ApiException (localVarStatusCode, "Error calling {{operationId}}: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling {{operationId}}: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new {{packageName}}.Client.ApiException (localVarStatusCode, "Error calling {{operationId}}: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
-            {{#returnType}}return new ApiResponse<{{{returnType}}}>(localVarStatusCode,
+            {{#returnType}}return new {{packageName}}.Client.ApiResponse<{{{returnType}}}>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 ({{{returnType}}}) Configuration.ApiClient.Deserialize(localVarResponse, typeof({{#returnContainer}}{{{returnContainer}}}{{/returnContainer}}{{^returnContainer}}{{{returnType}}}{{/returnContainer}})));{{/returnType}}
-            {{^returnType}}return new ApiResponse<Object>(localVarStatusCode,
+            {{^returnType}}return new {{packageName}}.Client.ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);{{/returnType}}
         }
@@ -298,7 +297,7 @@ namespace {{packageName}}.Api
         {{/allParams}}/// <returns>Task of {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}void{{/returnType}}</returns>
         {{#returnType}}public async System.Threading.Tasks.Task<{{{returnType}}}>{{/returnType}}{{^returnType}}public async System.Threading.Tasks.Task{{/returnType}} {{operationId}}Async ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = null{{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
         {
-             {{#returnType}}ApiResponse<{{{returnType}}}> localVarResponse = await {{operationId}}AsyncWithHttpInfo({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+             {{#returnType}}{{packageName}}.Client.ApiResponse<{{{returnType}}}> localVarResponse = await {{operationId}}AsyncWithHttpInfo({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
              return localVarResponse.Data;{{/returnType}}{{^returnType}}await {{operationId}}AsyncWithHttpInfo({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});{{/returnType}}
 
         }
@@ -309,13 +308,13 @@ namespace {{packageName}}.Api
         /// <exception cref="{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
         {{#allParams}}/// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}</param>
         {{/allParams}}/// <returns>Task of ApiResponse{{#returnType}} ({{returnType}}){{/returnType}}</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}>> {{operationId}}AsyncWithHttpInfo ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = null{{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+        public async System.Threading.Tasks.Task<{{packageName}}.Client.ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}>> {{operationId}}AsyncWithHttpInfo ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = null{{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
         {
             {{#allParams}}
             {{#required}}
             // verify the required parameter '{{paramName}}' is set
             if ({{paramName}} == null)
-                throw new ApiException(400, "Missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}");
+                throw new {{packageName}}.Client.ApiException(400, "Missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}");
             {{/required}}
             {{/allParams}}
 
@@ -391,7 +390,7 @@ namespace {{packageName}}.Api
             // http basic authentication required
             if (!String.IsNullOrEmpty(Configuration.Username) || !String.IsNullOrEmpty(Configuration.Password))
             {
-                localVarHeaderParams["Authorization"] = "Basic " + ApiClient.Base64Encode(Configuration.Username + ":" + Configuration.Password);
+                localVarHeaderParams["Authorization"] = "Basic " + {{packageName}}.Client.ApiClient.Base64Encode(Configuration.Username + ":" + Configuration.Password);
             }
             {{/isBasic}}
             {{#isOAuth}}
@@ -411,14 +410,14 @@ namespace {{packageName}}.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling {{operationId}}: " + localVarResponse.Content, localVarResponse.Content);
+                throw new {{packageName}}.Client.ApiException (localVarStatusCode, "Error calling {{operationId}}: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling {{operationId}}: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new {{packageName}}.Client.ApiException (localVarStatusCode, "Error calling {{operationId}}: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
-            {{#returnType}}return new ApiResponse<{{{returnType}}}>(localVarStatusCode,
+            {{#returnType}}return new {{packageName}}.Client.ApiResponse<{{{returnType}}}>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 ({{{returnType}}}) Configuration.ApiClient.Deserialize(localVarResponse, typeof({{#returnContainer}}{{{returnContainer}}}{{/returnContainer}}{{^returnContainer}}{{{returnType}}}{{/returnContainer}})));{{/returnType}}
-            {{^returnType}}return new ApiResponse<Object>(localVarStatusCode,
+            {{^returnType}}return new {{packageName}}.Client.ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);{{/returnType}}
         }
