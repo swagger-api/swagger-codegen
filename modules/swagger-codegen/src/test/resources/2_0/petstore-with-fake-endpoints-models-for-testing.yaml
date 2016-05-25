@@ -990,6 +990,16 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/ReadOnlyFirst'
+  Configuration:
+    type: object
+    properties:
+      configuration:
+        type: string
+  Client:
+    type: object
+    properties:
+      client:
+        type: string
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'

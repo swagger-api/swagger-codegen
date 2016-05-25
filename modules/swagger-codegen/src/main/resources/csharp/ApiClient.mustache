@@ -315,7 +315,7 @@ namespace {{packageName}}.Client
             }
             catch (Exception e)
             {
-                throw new ApiException(500, e.Message);
+                throw new {{packageName}}.Client.ApiException(500, e.Message);
             }
         }
 
@@ -332,7 +332,7 @@ namespace {{packageName}}.Client
             }
             catch (Exception e)
             {
-                throw new ApiException(500, e.Message);
+                throw new {{packageName}}.Client.ApiException(500, e.Message);
             }
         }
 

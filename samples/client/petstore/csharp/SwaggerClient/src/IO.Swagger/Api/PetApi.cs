@@ -408,10 +408,10 @@ namespace IO.Swagger.Api
         /// <returns></returns>
         public PetApi(String basePath)
         {
-            this.Configuration = new Configuration(new ApiClient(basePath));
+            this.Configuration = new IO.Swagger.Client.Configuration(new ApiClient(basePath));
 
             // ensure API client has configuration ready
-            if (Configuration.ApiClient.Configuration == null)
+            if (this.Configuration.ApiClient.Configuration == null)
             {
                 this.Configuration.ApiClient.Configuration = this.Configuration;
             }
@@ -423,7 +423,7 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <param name="configuration">An instance of Configuration</param>
         /// <returns></returns>
-        public PetApi(Configuration configuration = null)
+        public PetApi(IO.Swagger.Client.Configuration configuration = null)
         {
             if (configuration == null) // use the default one in Configuration
                 this.Configuration = Configuration.Default;
@@ -431,7 +431,7 @@ namespace IO.Swagger.Api
                 this.Configuration = configuration;
 
             // ensure API client has configuration ready
-            if (Configuration.ApiClient.Configuration == null)
+            if (this.Configuration.ApiClient.Configuration == null)
             {
                 this.Configuration.ApiClient.Configuration = this.Configuration;
             }
@@ -460,7 +460,7 @@ namespace IO.Swagger.Api
         /// Gets or sets the configuration object
         /// </summary>
         /// <value>An instance of the Configuration</value>
-        public Configuration Configuration {get; set;}
+        public IO.Swagger.Client.Configuration Configuration {get; set;}
 
         /// <summary>
         /// Gets the default header.

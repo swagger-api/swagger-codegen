@@ -7,9 +7,9 @@ using IO.Swagger.Model;
 
 namespace IO.Swagger.Test
 {
-	public class ConfigurationTests
+	public class ApiClientConfigurationTests
 	{
-		public ConfigurationTests ()
+		public ApiClientConfigurationTests ()
 		{
 		}
 
