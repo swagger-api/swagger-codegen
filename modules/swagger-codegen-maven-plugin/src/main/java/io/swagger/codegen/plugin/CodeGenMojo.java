@@ -163,8 +163,6 @@ public class CodeGenMojo extends AbstractMojo {
     @Override
     public void execute() throws MojoExecutionException {
 
-        Swagger swagger = new SwaggerParser().read(inputSpec);
-
         //attempt to read from config file
         CodegenConfigurator configurator = CodegenConfigurator.fromFile(configurationFile);
 
@@ -258,7 +256,7 @@ public class CodeGenMojo extends AbstractMojo {
                 configurator.addSystemProperty(key, value);
             }
         }
-        
+
         final ClientOptInput input = configurator.toClientOptInput();
         final CodegenConfig config = input.getConfig();
 
@@ -285,7 +283,7 @@ public class CodeGenMojo extends AbstractMojo {
             // Maven logs exceptions thrown by plugins only if invoked with -e
             // I find it annoying to jump through hoops to get basic diagnostic information,
             // so let's log it in any case:
-            getLog().error(e); 
+            getLog().error(e);
             throw new MojoExecutionException("Code generation failed. See above for the full exception.");
         }
 
