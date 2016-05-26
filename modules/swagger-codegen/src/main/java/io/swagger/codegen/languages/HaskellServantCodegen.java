@@ -7,7 +7,6 @@ import io.swagger.models.properties.*;
 import io.swagger.models.Model;
 import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.*;
 import java.io.File;
@@ -154,12 +153,12 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
      * @return the escaped term
      */
     @Override
-    public String escapeReservedWord(String name) {
+    public String escapeReservedWord(final String name) {
         return name + "_";
     }
 
     @Override
-    public void preprocessSwagger(Swagger swagger) {
+    public void preprocessSwagger(final Swagger swagger) {
         // From the title, compute a reasonable name for the package and the API
         String title = swagger.getInfo().getTitle();
 
@@ -225,7 +224,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
      * @return a string value used as the `dataType` field for model templates, `returnType` for api templates
      */
     @Override
-    public String getTypeDeclaration(Property p) {
+    public String getTypeDeclaration(final Property p) {
         if (p instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) p;
             Property inner = ap.getItems();
@@ -246,7 +245,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
      * @see io.swagger.models.properties.Property
      */
     @Override
-    public String getSwaggerType(Property p) {
+    public String getSwaggerType(final Property p) {
         String swaggerType = super.getSwaggerType(p);
         String type = null;
         if (typeMapping.containsKey(swaggerType)) {
@@ -264,7 +263,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
     }
 
     @Override
-    public String toInstantiationType(Property p) {
+    public String toInstantiationType(final Property p) {
         if (p instanceof MapProperty) {
             MapProperty ap = (MapProperty) p;
             Property additionalProperties2 = ap.getAdditionalProperties();
@@ -288,7 +287,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
 
 
     // Intersperse a separator string between a list of strings, like String.join.
-    private String joinStrings(String sep, List<String> ss) {
+    private String joinStrings(final String sep, final List<String> ss) {
         StringBuilder sb = new StringBuilder();
         for (String s : ss) {
             if (sb.length() > 0) {
@@ -303,7 +302,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
     // For example, the path /api/jobs/info/{id}/last would become:
     //      "api" :> "jobs" :> "info" :> Capture "id" IdType :> "last"
     // IdType is provided by the capture params.
-    private List<String> pathToServantRoute(String path, List<CodegenParameter> pathParams) {
+    private List<String> pathToServantRoute(String path, final List<CodegenParameter> pathParams) {
         // Map the capture params by their names.
         HashMap<String, String> captureTypes = new HashMap<String, String>();
         for (CodegenParameter param : pathParams) {
@@ -331,7 +330,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
     }
 
     // Extract the arguments that are passed in the route path parameters
-    private List<String> pathToClientType(String path, List<CodegenParameter> pathParams) {
+    private List<String> pathToClientType(String path, final List<CodegenParameter> pathParams) {
         // Map the capture params by their names.
         HashMap<String, String> captureTypes = new HashMap<String, String>();
         for (CodegenParameter param : pathParams) {
@@ -357,7 +356,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
 
 
     @Override
-    public CodegenOperation fromOperation(String resourcePath, String httpMethod, Operation operation, Map<String, Model> definitions, Swagger swagger) {
+    public CodegenOperation fromOperation(final String resourcePath, final String httpMethod, final Operation operation, final Map<String, Model> definitions, final Swagger swagger) {
         CodegenOperation op = super.fromOperation(resourcePath, httpMethod, operation, definitions, swagger);
 
         List<String> path = pathToServantRoute(op.path, op.pathParams);
@@ -423,7 +422,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
         return op;
     }
 
-    private String makeQueryListType(String type, String collectionFormat) {
+    private String makeQueryListType(String type, final String collectionFormat) {
         type = type.substring(1, type.length() - 1);
         switch(collectionFormat) {
             case "csv": return "(QueryList 'CommaSeparated (" + type + "))";
@@ -432,11 +431,11 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
             case "pipes": return "(QueryList 'PipeSeparated (" + type + "))";
             case "multi": return "(QueryList 'MultiParamArray (" + type + "))";
             default:
-                throw new NotImplementedException();
+                throw new UnsupportedOperationException();
         }
     }
 
-    private String fixOperatorChars(String string) {
+    private String fixOperatorChars(final String string) {
         StringBuilder sb = new StringBuilder();
         for (char c : string.toCharArray()) {
             if (specialCharReplacements.containsKey(c)) {
@@ -450,13 +449,13 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
     }
 
     // Remove characters from a string that do not belong in a model classname
-    private String fixModelChars(String string) {
+    private String fixModelChars(final String string) {
         return string.replace(".", "").replace("-", "");
     }
 
     // Override fromModel to create the appropriate model namings
     @Override
-    public CodegenModel fromModel(String name, Model mod, Map<String, Model> allDefinitions) {
+    public CodegenModel fromModel(final String name, final Model mod, final Map<String, Model> allDefinitions) {
         CodegenModel model = super.fromModel(name, mod, allDefinitions);
 
         // Clean up the class name to remove invalid characters
@@ -487,7 +486,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
     }
 
     @Override
-    public CodegenParameter fromParameter(Parameter param, Set<String> imports) {
+    public CodegenParameter fromParameter(final Parameter param, final Set<String> imports) {
         CodegenParameter p = super.fromParameter(param, imports);
         p.vendorExtensions.put("x-formParamName", camelize(p.baseName));
         p.dataType = fixModelChars(p.dataType);
