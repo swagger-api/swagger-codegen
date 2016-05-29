@@ -7,7 +7,6 @@ using System.Linq;
 using System.IO;
 using System.Collections.Generic;
 using {{packageName}}.Api;
-using {{packageName}}.Model;
 using {{packageName}}.Client;
 using System.Reflection;
 
@@ -25,7 +24,7 @@ namespace {{packageName}}.Test
     [TestFixture]
     public class {{classname}}Tests
     {
-        private {{classname}} instance;
+        private {{packageName}}.Model.{{classname}} instance;
 
         /// <summary>
         /// Setup before each test
@@ -33,7 +32,7 @@ namespace {{packageName}}.Test
         [SetUp]
         public void Init()
         {
-            instance = new {{classname}}();
+            instance = new {{packageName}}.Model.{{classname}}();
         }
 
         /// <summary>
@@ -51,7 +50,7 @@ namespace {{packageName}}.Test
         [Test]
         public void {{classname}}InstanceTest()
         {
-            Assert.IsInstanceOf<{{classname}}> (instance, "instance is a {{classname}}");
+            Assert.IsInstanceOf<{{packageName}}.Model.{{classname}}> (instance, "instance is a {{packageName}}.Model.{{classname}}");
         }
 
         {{#vars}}

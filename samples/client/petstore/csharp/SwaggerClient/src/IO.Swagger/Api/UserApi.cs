@@ -25,7 +25,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using RestSharp;
-using IO.Swagger.Client;
 using IO.Swagger.Model;
 
 namespace IO.Swagger.Api
@@ -33,7 +32,7 @@ namespace IO.Swagger.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public interface IUserApi : IApiAccessor
+    public interface IUserApi : IO.Swagger.Client.IApiAccessor
     {
         #region Synchronous Operations
         /// <summary>
@@ -56,7 +55,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Created user object</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> CreateUserWithHttpInfo (User body);
+        IO.Swagger.Client.ApiResponse<Object> CreateUserWithHttpInfo (User body);
         /// <summary>
         /// Creates list of users with given input array
         /// </summary>
@@ -77,7 +76,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">List of user object</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> CreateUsersWithArrayInputWithHttpInfo (List<User> body);
+        IO.Swagger.Client.ApiResponse<Object> CreateUsersWithArrayInputWithHttpInfo (List<User> body);
         /// <summary>
         /// Creates list of users with given input array
         /// </summary>
@@ -98,7 +97,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">List of user object</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> CreateUsersWithListInputWithHttpInfo (List<User> body);
+        IO.Swagger.Client.ApiResponse<Object> CreateUsersWithListInputWithHttpInfo (List<User> body);
         /// <summary>
         /// Delete user
         /// </summary>
@@ -119,7 +118,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="username">The name that needs to be deleted</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> DeleteUserWithHttpInfo (string username);
+        IO.Swagger.Client.ApiResponse<Object> DeleteUserWithHttpInfo (string username);
         /// <summary>
         /// Get user by user name
         /// </summary>
@@ -140,7 +139,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="username">The name that needs to be fetched. Use user1 for testing. </param>
         /// <returns>ApiResponse of User</returns>
-        ApiResponse<User> GetUserByNameWithHttpInfo (string username);
+        IO.Swagger.Client.ApiResponse<User> GetUserByNameWithHttpInfo (string username);
         /// <summary>
         /// Logs user into the system
         /// </summary>
@@ -163,7 +162,7 @@ namespace IO.Swagger.Api
         /// <param name="username">The user name for login</param>
         /// <param name="password">The password for login in clear text</param>
         /// <returns>ApiResponse of string</returns>
-        ApiResponse<string> LoginUserWithHttpInfo (string username, string password);
+        IO.Swagger.Client.ApiResponse<string> LoginUserWithHttpInfo (string username, string password);
         /// <summary>
         /// Logs out current logged in user session
         /// </summary>
@@ -182,7 +181,7 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> LogoutUserWithHttpInfo ();
+        IO.Swagger.Client.ApiResponse<Object> LogoutUserWithHttpInfo ();
         /// <summary>
         /// Updated user
         /// </summary>
@@ -205,7 +204,7 @@ namespace IO.Swagger.Api
         /// <param name="username">name that need to be deleted</param>
         /// <param name="body">Updated user object</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> UpdateUserWithHttpInfo (string username, User body);
+        IO.Swagger.Client.ApiResponse<Object> UpdateUserWithHttpInfo (string username, User body);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -228,7 +227,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Created user object</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> CreateUserAsyncWithHttpInfo (User body);
+        System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<Object>> CreateUserAsyncWithHttpInfo (User body);
         /// <summary>
         /// Creates list of users with given input array
         /// </summary>
@@ -249,7 +248,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">List of user object</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> CreateUsersWithArrayInputAsyncWithHttpInfo (List<User> body);
+        System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<Object>> CreateUsersWithArrayInputAsyncWithHttpInfo (List<User> body);
         /// <summary>
         /// Creates list of users with given input array
         /// </summary>
@@ -270,7 +269,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">List of user object</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> CreateUsersWithListInputAsyncWithHttpInfo (List<User> body);
+        System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<Object>> CreateUsersWithListInputAsyncWithHttpInfo (List<User> body);
         /// <summary>
         /// Delete user
         /// </summary>
@@ -291,7 +290,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="username">The name that needs to be deleted</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> DeleteUserAsyncWithHttpInfo (string username);
+        System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<Object>> DeleteUserAsyncWithHttpInfo (string username);
         /// <summary>
         /// Get user by user name
         /// </summary>
@@ -312,7 +311,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="username">The name that needs to be fetched. Use user1 for testing. </param>
         /// <returns>Task of ApiResponse (User)</returns>
-        System.Threading.Tasks.Task<ApiResponse<User>> GetUserByNameAsyncWithHttpInfo (string username);
+        System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<User>> GetUserByNameAsyncWithHttpInfo (string username);
         /// <summary>
         /// Logs user into the system
         /// </summary>
@@ -335,7 +334,7 @@ namespace IO.Swagger.Api
         /// <param name="username">The user name for login</param>
         /// <param name="password">The password for login in clear text</param>
         /// <returns>Task of ApiResponse (string)</returns>
-        System.Threading.Tasks.Task<ApiResponse<string>> LoginUserAsyncWithHttpInfo (string username, string password);
+        System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<string>> LoginUserAsyncWithHttpInfo (string username, string password);
         /// <summary>
         /// Logs out current logged in user session
         /// </summary>
@@ -354,7 +353,7 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> LogoutUserAsyncWithHttpInfo ();
+        System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<Object>> LogoutUserAsyncWithHttpInfo ();
         /// <summary>
         /// Updated user
         /// </summary>
@@ -377,7 +376,7 @@ namespace IO.Swagger.Api
         /// <param name="username">name that need to be deleted</param>
         /// <param name="body">Updated user object</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> UpdateUserAsyncWithHttpInfo (string username, User body);
+        System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<Object>> UpdateUserAsyncWithHttpInfo (string username, User body);
         #endregion Asynchronous Operations
     }
 
@@ -392,10 +391,10 @@ namespace IO.Swagger.Api
         /// <returns></returns>
         public UserApi(String basePath)
         {
-            this.Configuration = new Configuration(new ApiClient(basePath));
+            this.Configuration = new IO.Swagger.Client.Configuration(new IO.Swagger.Client.ApiClient(basePath));
 
             // ensure API client has configuration ready
-            if (Configuration.ApiClient.Configuration == null)
+            if (this.Configuration.ApiClient.Configuration == null)
             {
                 this.Configuration.ApiClient.Configuration = this.Configuration;
             }
@@ -407,15 +406,15 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <param name="configuration">An instance of Configuration</param>
         /// <returns></returns>
-        public UserApi(Configuration configuration = null)
+        public UserApi(IO.Swagger.Client.Configuration configuration = null)
         {
             if (configuration == null) // use the default one in Configuration
-                this.Configuration = Configuration.Default;
+                this.Configuration = IO.Swagger.Client.Configuration.Default;
             else
                 this.Configuration = configuration;
 
             // ensure API client has configuration ready
-            if (Configuration.ApiClient.Configuration == null)
+            if (this.Configuration.ApiClient.Configuration == null)
             {
                 this.Configuration.ApiClient.Configuration = this.Configuration;
             }
@@ -444,7 +443,7 @@ namespace IO.Swagger.Api
         /// Gets or sets the configuration object
         /// </summary>
         /// <value>An instance of the Configuration</value>
-        public Configuration Configuration {get; set;}
+        public IO.Swagger.Client.Configuration Configuration {get; set;}
 
         /// <summary>
         /// Gets the default header.
@@ -485,11 +484,11 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Created user object</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> CreateUserWithHttpInfo (User body)
+        public IO.Swagger.Client.ApiResponse<Object> CreateUserWithHttpInfo (User body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
-                throw new ApiException(400, "Missing required parameter 'body' when calling UserApi->CreateUser");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'body' when calling UserApi->CreateUser");
 
             var localVarPath = "/user";
             var localVarPathParams = new Dictionary<String, String>();
@@ -534,12 +533,12 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling CreateUser: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling CreateUser: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling CreateUser: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling CreateUser: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
             
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
@@ -562,11 +561,11 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Created user object</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> CreateUserAsyncWithHttpInfo (User body)
+        public async System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<Object>> CreateUserAsyncWithHttpInfo (User body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
-                throw new ApiException(400, "Missing required parameter 'body' when calling UserApi->CreateUser");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'body' when calling UserApi->CreateUser");
 
             var localVarPath = "/user";
             var localVarPathParams = new Dictionary<String, String>();
@@ -611,12 +610,12 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling CreateUser: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling CreateUser: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling CreateUser: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling CreateUser: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
             
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
@@ -638,11 +637,11 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">List of user object</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> CreateUsersWithArrayInputWithHttpInfo (List<User> body)
+        public IO.Swagger.Client.ApiResponse<Object> CreateUsersWithArrayInputWithHttpInfo (List<User> body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
-                throw new ApiException(400, "Missing required parameter 'body' when calling UserApi->CreateUsersWithArrayInput");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'body' when calling UserApi->CreateUsersWithArrayInput");
 
             var localVarPath = "/user/createWithArray";
             var localVarPathParams = new Dictionary<String, String>();
@@ -687,12 +686,12 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling CreateUsersWithArrayInput: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling CreateUsersWithArrayInput: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling CreateUsersWithArrayInput: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling CreateUsersWithArrayInput: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
             
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
@@ -715,11 +714,11 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">List of user object</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> CreateUsersWithArrayInputAsyncWithHttpInfo (List<User> body)
+        public async System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<Object>> CreateUsersWithArrayInputAsyncWithHttpInfo (List<User> body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
-                throw new ApiException(400, "Missing required parameter 'body' when calling UserApi->CreateUsersWithArrayInput");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'body' when calling UserApi->CreateUsersWithArrayInput");
 
             var localVarPath = "/user/createWithArray";
             var localVarPathParams = new Dictionary<String, String>();
@@ -764,12 +763,12 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling CreateUsersWithArrayInput: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling CreateUsersWithArrayInput: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling CreateUsersWithArrayInput: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling CreateUsersWithArrayInput: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
             
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
@@ -791,11 +790,11 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">List of user object</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> CreateUsersWithListInputWithHttpInfo (List<User> body)
+        public IO.Swagger.Client.ApiResponse<Object> CreateUsersWithListInputWithHttpInfo (List<User> body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
-                throw new ApiException(400, "Missing required parameter 'body' when calling UserApi->CreateUsersWithListInput");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'body' when calling UserApi->CreateUsersWithListInput");
 
             var localVarPath = "/user/createWithList";
             var localVarPathParams = new Dictionary<String, String>();
@@ -840,12 +839,12 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling CreateUsersWithListInput: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling CreateUsersWithListInput: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling CreateUsersWithListInput: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling CreateUsersWithListInput: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
             
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
@@ -868,11 +867,11 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">List of user object</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> CreateUsersWithListInputAsyncWithHttpInfo (List<User> body)
+        public async System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<Object>> CreateUsersWithListInputAsyncWithHttpInfo (List<User> body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
-                throw new ApiException(400, "Missing required parameter 'body' when calling UserApi->CreateUsersWithListInput");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'body' when calling UserApi->CreateUsersWithListInput");
 
             var localVarPath = "/user/createWithList";
             var localVarPathParams = new Dictionary<String, String>();
@@ -917,12 +916,12 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling CreateUsersWithListInput: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling CreateUsersWithListInput: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling CreateUsersWithListInput: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling CreateUsersWithListInput: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
             
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
@@ -944,11 +943,11 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="username">The name that needs to be deleted</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> DeleteUserWithHttpInfo (string username)
+        public IO.Swagger.Client.ApiResponse<Object> DeleteUserWithHttpInfo (string username)
         {
             // verify the required parameter 'username' is set
             if (username == null)
-                throw new ApiException(400, "Missing required parameter 'username' when calling UserApi->DeleteUser");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'username' when calling UserApi->DeleteUser");
 
             var localVarPath = "/user/{username}";
             var localVarPathParams = new Dictionary<String, String>();
@@ -986,12 +985,12 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling DeleteUser: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling DeleteUser: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling DeleteUser: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling DeleteUser: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
             
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
@@ -1014,11 +1013,11 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="username">The name that needs to be deleted</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> DeleteUserAsyncWithHttpInfo (string username)
+        public async System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<Object>> DeleteUserAsyncWithHttpInfo (string username)
         {
             // verify the required parameter 'username' is set
             if (username == null)
-                throw new ApiException(400, "Missing required parameter 'username' when calling UserApi->DeleteUser");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'username' when calling UserApi->DeleteUser");
 
             var localVarPath = "/user/{username}";
             var localVarPathParams = new Dictionary<String, String>();
@@ -1056,12 +1055,12 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling DeleteUser: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling DeleteUser: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling DeleteUser: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling DeleteUser: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
             
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
@@ -1074,7 +1073,7 @@ namespace IO.Swagger.Api
         /// <returns>User</returns>
         public User GetUserByName (string username)
         {
-             ApiResponse<User> localVarResponse = GetUserByNameWithHttpInfo(username);
+             IO.Swagger.Client.ApiResponse<User> localVarResponse = GetUserByNameWithHttpInfo(username);
              return localVarResponse.Data;
         }
 
@@ -1084,11 +1083,11 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="username">The name that needs to be fetched. Use user1 for testing. </param>
         /// <returns>ApiResponse of User</returns>
-        public ApiResponse< User > GetUserByNameWithHttpInfo (string username)
+        public IO.Swagger.Client.ApiResponse< User > GetUserByNameWithHttpInfo (string username)
         {
             // verify the required parameter 'username' is set
             if (username == null)
-                throw new ApiException(400, "Missing required parameter 'username' when calling UserApi->GetUserByName");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'username' when calling UserApi->GetUserByName");
 
             var localVarPath = "/user/{username}";
             var localVarPathParams = new Dictionary<String, String>();
@@ -1126,11 +1125,11 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling GetUserByName: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling GetUserByName: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling GetUserByName: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling GetUserByName: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
-            return new ApiResponse<User>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<User>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (User) Configuration.ApiClient.Deserialize(localVarResponse, typeof(User)));
             
@@ -1144,7 +1143,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of User</returns>
         public async System.Threading.Tasks.Task<User> GetUserByNameAsync (string username)
         {
-             ApiResponse<User> localVarResponse = await GetUserByNameAsyncWithHttpInfo(username);
+             IO.Swagger.Client.ApiResponse<User> localVarResponse = await GetUserByNameAsyncWithHttpInfo(username);
              return localVarResponse.Data;
 
         }
@@ -1155,11 +1154,11 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="username">The name that needs to be fetched. Use user1 for testing. </param>
         /// <returns>Task of ApiResponse (User)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<User>> GetUserByNameAsyncWithHttpInfo (string username)
+        public async System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<User>> GetUserByNameAsyncWithHttpInfo (string username)
         {
             // verify the required parameter 'username' is set
             if (username == null)
-                throw new ApiException(400, "Missing required parameter 'username' when calling UserApi->GetUserByName");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'username' when calling UserApi->GetUserByName");
 
             var localVarPath = "/user/{username}";
             var localVarPathParams = new Dictionary<String, String>();
@@ -1197,11 +1196,11 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling GetUserByName: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling GetUserByName: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling GetUserByName: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling GetUserByName: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
-            return new ApiResponse<User>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<User>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (User) Configuration.ApiClient.Deserialize(localVarResponse, typeof(User)));
             
@@ -1216,7 +1215,7 @@ namespace IO.Swagger.Api
         /// <returns>string</returns>
         public string LoginUser (string username, string password)
         {
-             ApiResponse<string> localVarResponse = LoginUserWithHttpInfo(username, password);
+             IO.Swagger.Client.ApiResponse<string> localVarResponse = LoginUserWithHttpInfo(username, password);
              return localVarResponse.Data;
         }
 
@@ -1227,14 +1226,14 @@ namespace IO.Swagger.Api
         /// <param name="username">The user name for login</param>
         /// <param name="password">The password for login in clear text</param>
         /// <returns>ApiResponse of string</returns>
-        public ApiResponse< string > LoginUserWithHttpInfo (string username, string password)
+        public IO.Swagger.Client.ApiResponse< string > LoginUserWithHttpInfo (string username, string password)
         {
             // verify the required parameter 'username' is set
             if (username == null)
-                throw new ApiException(400, "Missing required parameter 'username' when calling UserApi->LoginUser");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'username' when calling UserApi->LoginUser");
             // verify the required parameter 'password' is set
             if (password == null)
-                throw new ApiException(400, "Missing required parameter 'password' when calling UserApi->LoginUser");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'password' when calling UserApi->LoginUser");
 
             var localVarPath = "/user/login";
             var localVarPathParams = new Dictionary<String, String>();
@@ -1273,11 +1272,11 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling LoginUser: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling LoginUser: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling LoginUser: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling LoginUser: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
-            return new ApiResponse<string>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<string>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (string) Configuration.ApiClient.Deserialize(localVarResponse, typeof(string)));
             
@@ -1292,7 +1291,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of string</returns>
         public async System.Threading.Tasks.Task<string> LoginUserAsync (string username, string password)
         {
-             ApiResponse<string> localVarResponse = await LoginUserAsyncWithHttpInfo(username, password);
+             IO.Swagger.Client.ApiResponse<string> localVarResponse = await LoginUserAsyncWithHttpInfo(username, password);
              return localVarResponse.Data;
 
         }
@@ -1304,14 +1303,14 @@ namespace IO.Swagger.Api
         /// <param name="username">The user name for login</param>
         /// <param name="password">The password for login in clear text</param>
         /// <returns>Task of ApiResponse (string)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<string>> LoginUserAsyncWithHttpInfo (string username, string password)
+        public async System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<string>> LoginUserAsyncWithHttpInfo (string username, string password)
         {
             // verify the required parameter 'username' is set
             if (username == null)
-                throw new ApiException(400, "Missing required parameter 'username' when calling UserApi->LoginUser");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'username' when calling UserApi->LoginUser");
             // verify the required parameter 'password' is set
             if (password == null)
-                throw new ApiException(400, "Missing required parameter 'password' when calling UserApi->LoginUser");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'password' when calling UserApi->LoginUser");
 
             var localVarPath = "/user/login";
             var localVarPathParams = new Dictionary<String, String>();
@@ -1350,11 +1349,11 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling LoginUser: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling LoginUser: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling LoginUser: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling LoginUser: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
-            return new ApiResponse<string>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<string>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (string) Configuration.ApiClient.Deserialize(localVarResponse, typeof(string)));
             
@@ -1375,7 +1374,7 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> LogoutUserWithHttpInfo ()
+        public IO.Swagger.Client.ApiResponse<Object> LogoutUserWithHttpInfo ()
         {
 
             var localVarPath = "/user/logout";
@@ -1413,12 +1412,12 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling LogoutUser: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling LogoutUser: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling LogoutUser: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling LogoutUser: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
             
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
@@ -1439,7 +1438,7 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> LogoutUserAsyncWithHttpInfo ()
+        public async System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<Object>> LogoutUserAsyncWithHttpInfo ()
         {
 
             var localVarPath = "/user/logout";
@@ -1477,12 +1476,12 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling LogoutUser: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling LogoutUser: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling LogoutUser: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling LogoutUser: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
             
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
@@ -1506,14 +1505,14 @@ namespace IO.Swagger.Api
         /// <param name="username">name that need to be deleted</param>
         /// <param name="body">Updated user object</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> UpdateUserWithHttpInfo (string username, User body)
+        public IO.Swagger.Client.ApiResponse<Object> UpdateUserWithHttpInfo (string username, User body)
         {
             // verify the required parameter 'username' is set
             if (username == null)
-                throw new ApiException(400, "Missing required parameter 'username' when calling UserApi->UpdateUser");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'username' when calling UserApi->UpdateUser");
             // verify the required parameter 'body' is set
             if (body == null)
-                throw new ApiException(400, "Missing required parameter 'body' when calling UserApi->UpdateUser");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'body' when calling UserApi->UpdateUser");
 
             var localVarPath = "/user/{username}";
             var localVarPathParams = new Dictionary<String, String>();
@@ -1559,12 +1558,12 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling UpdateUser: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling UpdateUser: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling UpdateUser: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling UpdateUser: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
             
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
@@ -1589,14 +1588,14 @@ namespace IO.Swagger.Api
         /// <param name="username">name that need to be deleted</param>
         /// <param name="body">Updated user object</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> UpdateUserAsyncWithHttpInfo (string username, User body)
+        public async System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<Object>> UpdateUserAsyncWithHttpInfo (string username, User body)
         {
             // verify the required parameter 'username' is set
             if (username == null)
-                throw new ApiException(400, "Missing required parameter 'username' when calling UserApi->UpdateUser");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'username' when calling UserApi->UpdateUser");
             // verify the required parameter 'body' is set
             if (body == null)
-                throw new ApiException(400, "Missing required parameter 'body' when calling UserApi->UpdateUser");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'body' when calling UserApi->UpdateUser");
 
             var localVarPath = "/user/{username}";
             var localVarPathParams = new Dictionary<String, String>();
@@ -1642,12 +1641,12 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling UpdateUser: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling UpdateUser: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling UpdateUser: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling UpdateUser: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
             
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }

@@ -25,14 +25,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using RestSharp;
-using IO.Swagger.Client;
 
 namespace IO.Swagger.Api
 {
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public interface IFakeApi : IApiAccessor
+    public interface IFakeApi : IO.Swagger.Client.IApiAccessor
     {
         #region Synchronous Operations
         /// <summary>
@@ -77,7 +76,7 @@ namespace IO.Swagger.Api
         /// <param name="dateTime">None (optional)</param>
         /// <param name="password">None (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> TestEndpointParametersWithHttpInfo (double? number, double? _double, string _string, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null);
+        IO.Swagger.Client.ApiResponse<Object> TestEndpointParametersWithHttpInfo (double? number, double? _double, string _string, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -122,7 +121,7 @@ namespace IO.Swagger.Api
         /// <param name="dateTime">None (optional)</param>
         /// <param name="password">None (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> TestEndpointParametersAsyncWithHttpInfo (double? number, double? _double, string _string, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null);
+        System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<Object>> TestEndpointParametersAsyncWithHttpInfo (double? number, double? _double, string _string, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null);
         #endregion Asynchronous Operations
     }
 
@@ -137,10 +136,10 @@ namespace IO.Swagger.Api
         /// <returns></returns>
         public FakeApi(String basePath)
         {
-            this.Configuration = new Configuration(new ApiClient(basePath));
+            this.Configuration = new IO.Swagger.Client.Configuration(new IO.Swagger.Client.ApiClient(basePath));
 
             // ensure API client has configuration ready
-            if (Configuration.ApiClient.Configuration == null)
+            if (this.Configuration.ApiClient.Configuration == null)
             {
                 this.Configuration.ApiClient.Configuration = this.Configuration;
             }
@@ -152,15 +151,15 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <param name="configuration">An instance of Configuration</param>
         /// <returns></returns>
-        public FakeApi(Configuration configuration = null)
+        public FakeApi(IO.Swagger.Client.Configuration configuration = null)
         {
             if (configuration == null) // use the default one in Configuration
-                this.Configuration = Configuration.Default;
+                this.Configuration = IO.Swagger.Client.Configuration.Default;
             else
                 this.Configuration = configuration;
 
             // ensure API client has configuration ready
-            if (Configuration.ApiClient.Configuration == null)
+            if (this.Configuration.ApiClient.Configuration == null)
             {
                 this.Configuration.ApiClient.Configuration = this.Configuration;
             }
@@ -189,7 +188,7 @@ namespace IO.Swagger.Api
         /// Gets or sets the configuration object
         /// </summary>
         /// <value>An instance of the Configuration</value>
-        public Configuration Configuration {get; set;}
+        public IO.Swagger.Client.Configuration Configuration {get; set;}
 
         /// <summary>
         /// Gets the default header.
@@ -252,20 +251,20 @@ namespace IO.Swagger.Api
         /// <param name="dateTime">None (optional)</param>
         /// <param name="password">None (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> TestEndpointParametersWithHttpInfo (double? number, double? _double, string _string, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null)
+        public IO.Swagger.Client.ApiResponse<Object> TestEndpointParametersWithHttpInfo (double? number, double? _double, string _string, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null)
         {
             // verify the required parameter 'number' is set
             if (number == null)
-                throw new ApiException(400, "Missing required parameter 'number' when calling FakeApi->TestEndpointParameters");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'number' when calling FakeApi->TestEndpointParameters");
             // verify the required parameter '_double' is set
             if (_double == null)
-                throw new ApiException(400, "Missing required parameter '_double' when calling FakeApi->TestEndpointParameters");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter '_double' when calling FakeApi->TestEndpointParameters");
             // verify the required parameter '_string' is set
             if (_string == null)
-                throw new ApiException(400, "Missing required parameter '_string' when calling FakeApi->TestEndpointParameters");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter '_string' when calling FakeApi->TestEndpointParameters");
             // verify the required parameter '_byte' is set
             if (_byte == null)
-                throw new ApiException(400, "Missing required parameter '_byte' when calling FakeApi->TestEndpointParameters");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter '_byte' when calling FakeApi->TestEndpointParameters");
 
             var localVarPath = "/fake";
             var localVarPathParams = new Dictionary<String, String>();
@@ -316,12 +315,12 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling TestEndpointParameters: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling TestEndpointParameters: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling TestEndpointParameters: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling TestEndpointParameters: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
             
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
@@ -366,20 +365,20 @@ namespace IO.Swagger.Api
         /// <param name="dateTime">None (optional)</param>
         /// <param name="password">None (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> TestEndpointParametersAsyncWithHttpInfo (double? number, double? _double, string _string, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null)
+        public async System.Threading.Tasks.Task<IO.Swagger.Client.ApiResponse<Object>> TestEndpointParametersAsyncWithHttpInfo (double? number, double? _double, string _string, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null)
         {
             // verify the required parameter 'number' is set
             if (number == null)
-                throw new ApiException(400, "Missing required parameter 'number' when calling FakeApi->TestEndpointParameters");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter 'number' when calling FakeApi->TestEndpointParameters");
             // verify the required parameter '_double' is set
             if (_double == null)
-                throw new ApiException(400, "Missing required parameter '_double' when calling FakeApi->TestEndpointParameters");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter '_double' when calling FakeApi->TestEndpointParameters");
             // verify the required parameter '_string' is set
             if (_string == null)
-                throw new ApiException(400, "Missing required parameter '_string' when calling FakeApi->TestEndpointParameters");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter '_string' when calling FakeApi->TestEndpointParameters");
             // verify the required parameter '_byte' is set
             if (_byte == null)
-                throw new ApiException(400, "Missing required parameter '_byte' when calling FakeApi->TestEndpointParameters");
+                throw new IO.Swagger.Client.ApiException(400, "Missing required parameter '_byte' when calling FakeApi->TestEndpointParameters");
 
             var localVarPath = "/fake";
             var localVarPathParams = new Dictionary<String, String>();
@@ -430,12 +429,12 @@ namespace IO.Swagger.Api
             int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (localVarStatusCode >= 400)
-                throw new ApiException (localVarStatusCode, "Error calling TestEndpointParameters: " + localVarResponse.Content, localVarResponse.Content);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling TestEndpointParameters: " + localVarResponse.Content, localVarResponse.Content);
             else if (localVarStatusCode == 0)
-                throw new ApiException (localVarStatusCode, "Error calling TestEndpointParameters: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
+                throw new IO.Swagger.Client.ApiException (localVarStatusCode, "Error calling TestEndpointParameters: " + localVarResponse.ErrorMessage, localVarResponse.ErrorMessage);
 
             
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new IO.Swagger.Client.ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }

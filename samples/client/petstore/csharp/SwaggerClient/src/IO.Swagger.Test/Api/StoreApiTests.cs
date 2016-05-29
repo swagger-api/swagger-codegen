@@ -77,7 +77,7 @@ namespace IO.Swagger.Test
             //Assert.IsInstanceOf<Dictionary<string, int?>> (response, "response is Dictionary<string, int?>");
 
 			// set timeout to 10 seconds
-			Configuration c1 = new Configuration (timeout: 10000);
+			IO.Swagger.Client.Configuration c1 = new IO.Swagger.Client.Configuration (timeout: 10000);
 
 			StoreApi storeApi = new StoreApi (c1);
 			Dictionary<String, int?> response = storeApi.GetInventory ();
