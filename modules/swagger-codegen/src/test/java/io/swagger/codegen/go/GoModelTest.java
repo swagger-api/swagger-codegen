@@ -1,4 +1,4 @@
-package io.swagger.codegen.Go;
+package io.swagger.codegen.go;
 
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenProperty;
@@ -257,7 +257,7 @@ public class GoModelTest {
     }
 
     @Test(dataProvider = "modelNames", description = "avoid inner class")
-    public void modelNameTest(String name, String expectedName) {
+    public void modelNameTest(final String name, final String expectedName) {
         final Model model = new ModelImpl();
         final DefaultCodegen codegen = new GoClientCodegen();
         final CodegenModel cm = codegen.fromModel(name, model);
