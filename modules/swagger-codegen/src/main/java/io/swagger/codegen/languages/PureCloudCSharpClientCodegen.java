@@ -85,7 +85,8 @@ public class PureCloudCSharpClientCodegen extends CSharpClientCodegen {
         }
 
         // Make sure last property in list doesn't think there's more
-        codegenModel.vars.get(codegenModel.vars.size()-1).hasMore = null;
+        if (codegenModel.vars.size() > 0)
+            codegenModel.vars.get(codegenModel.vars.size()-1).hasMore = null;
 
         // Set hasRequired only if non-readonly properties are required
         codegenModel.hasRequired = null;
