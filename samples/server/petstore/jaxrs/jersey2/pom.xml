@@ -135,7 +135,7 @@
   </repositories>
   <properties>
     <swagger-core-version>1.5.9</swagger-core-version>
-    <jetty-version>9.3.10M0</jetty-version>
+    <jetty-version>9.3.10.M0</jetty-version>
     <jersey2-version>2.22.2</jersey2-version>
     <slf4j-version>1.7.21</slf4j-version>
     <junit-version>4.12</junit-version>
