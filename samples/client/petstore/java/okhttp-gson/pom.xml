@@ -105,7 +105,7 @@
           <target>1.7</target>
         </configuration>
       </plugin>
-      <!-- For testing build.gradle -->
+      <!-- For testing build.gradle, build.sbt -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
@@ -124,14 +124,6 @@
               </arguments>
             </configuration>
           </execution>
-        </executions>
-      </plugin>
-      <!-- For testing build.sbt -->
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin-sbt</artifactId>
-        <version>1.2.1</version>
-        <executions>
           <execution>
             <id>sbt-test</id>
             <phase>integration-test</phase>
