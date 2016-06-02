@@ -557,6 +557,7 @@
             <modules>
                 <!-- run ruby test first which has a random delay script to
                      avoid issues with running 2 CI jobs in parallel.       -->
+                <module>samples/server/petstore/jaxrs/jersey1</module>
                 <module>samples/client/petstore/ruby</module>
                 <module>samples/client/petstore/typescript-fetch/tests/default</module>
                 <module>samples/client/petstore/typescript-fetch/builds/default</module>
@@ -576,7 +577,6 @@
                 <module>samples/client/petstore/javascript</module>
                 <module>samples/client/petstore/scala</module>
                 <module>samples/server/petstore/spring-mvc</module>
-                <module>samples/server/petstore/jaxrs/jersey1</module>
                 <module>samples/server/petstore/jaxrs/jersey2</module>
                 <module>samples/server/petstore/jaxrs-resteasy</module>
                 <!--module>samples/client/petstore/objc/SwaggerClientTests</module-->
