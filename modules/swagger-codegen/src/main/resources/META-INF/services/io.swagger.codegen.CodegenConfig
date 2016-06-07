@@ -36,6 +36,7 @@ io.swagger.codegen.languages.StaticHtmlGenerator
 io.swagger.codegen.languages.SwaggerGenerator
 io.swagger.codegen.languages.SwaggerYamlGenerator
 io.swagger.codegen.languages.SwiftCodegen
+io.swagger.codegen.languages.Swift2Codegen
 io.swagger.codegen.languages.TizenClientCodegen
 io.swagger.codegen.languages.TypeScriptAngular2ClientCodegen
 io.swagger.codegen.languages.TypeScriptAngularClientCodegen
