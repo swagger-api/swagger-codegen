@@ -167,7 +167,7 @@ public class FakeApi {
      * @param date None (optional)
      * @param dateTime None (optional)
      * @param password None (optional)
-     * @return ApiResponse<Void>
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<Void> testEndpointParametersWithHttpInfo(BigDecimal number, Double _double, String string, byte[] _byte, Integer integer, Integer int32, Long int64, Float _float, byte[] binary, Date date, Date dateTime, String password) throws ApiException {

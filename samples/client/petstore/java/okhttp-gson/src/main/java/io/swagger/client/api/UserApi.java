@@ -105,7 +105,7 @@ public class UserApi {
      * Create user
      * This can only be done by the logged in user.
      * @param body Created user object (required)
-     * @return ApiResponse<Void>
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<Void> createUserWithHttpInfo(User body) throws ApiException {
@@ -207,7 +207,7 @@ public class UserApi {
      * Creates list of users with given input array
      * 
      * @param body List of user object (required)
-     * @return ApiResponse<Void>
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<Void> createUsersWithArrayInputWithHttpInfo(List<User> body) throws ApiException {
@@ -309,7 +309,7 @@ public class UserApi {
      * Creates list of users with given input array
      * 
      * @param body List of user object (required)
-     * @return ApiResponse<Void>
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<Void> createUsersWithListInputWithHttpInfo(List<User> body) throws ApiException {
@@ -412,7 +412,7 @@ public class UserApi {
      * Delete user
      * This can only be done by the logged in user.
      * @param username The name that needs to be deleted (required)
-     * @return ApiResponse<Void>
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<Void> deleteUserWithHttpInfo(String username) throws ApiException {
@@ -517,7 +517,7 @@ public class UserApi {
      * Get user by user name
      * 
      * @param username The name that needs to be fetched. Use user1 for testing.  (required)
-     * @return ApiResponse<User>
+     * @return ApiResponse&lt;User&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<User> getUserByNameWithHttpInfo(String username) throws ApiException {
@@ -634,7 +634,7 @@ public class UserApi {
      * 
      * @param username The user name for login (required)
      * @param password The password for login in clear text (required)
-     * @return ApiResponse<String>
+     * @return ApiResponse&lt;String&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<String> loginUserWithHttpInfo(String username, String password) throws ApiException {
@@ -732,7 +732,7 @@ public class UserApi {
     /**
      * Logs out current logged in user session
      * 
-     * @return ApiResponse<Void>
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<Void> logoutUserWithHttpInfo() throws ApiException {
@@ -841,7 +841,7 @@ public class UserApi {
      * This can only be done by the logged in user.
      * @param username name that need to be deleted (required)
      * @param body Updated user object (required)
-     * @return ApiResponse<Void>
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<Void> updateUserWithHttpInfo(String username, User body) throws ApiException {

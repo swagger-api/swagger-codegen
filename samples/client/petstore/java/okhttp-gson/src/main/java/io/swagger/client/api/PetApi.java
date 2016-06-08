@@ -107,7 +107,7 @@ public class PetApi {
      * Add a new pet to the store
      * 
      * @param body Pet object that needs to be added to the store (required)
-     * @return ApiResponse<Void>
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<Void> addPetWithHttpInfo(Pet body) throws ApiException {
@@ -214,7 +214,7 @@ public class PetApi {
      * 
      * @param petId Pet id to delete (required)
      * @param apiKey  (optional)
-     * @return ApiResponse<Void>
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<Void> deletePetWithHttpInfo(Long petId, String apiKey) throws ApiException {
@@ -309,7 +309,7 @@ public class PetApi {
      * Finds Pets by status
      * Multiple status values can be provided with comma separated strings
      * @param status Status values that need to be considered for filter (required)
-     * @return List<Pet>
+     * @return List&lt;Pet&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public List<Pet> findPetsByStatus(List<String> status) throws ApiException {
@@ -321,7 +321,7 @@ public class PetApi {
      * Finds Pets by status
      * Multiple status values can be provided with comma separated strings
      * @param status Status values that need to be considered for filter (required)
-     * @return ApiResponse<List<Pet>>
+     * @return ApiResponse&lt;List&lt;Pet&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<List<Pet>> findPetsByStatusWithHttpInfo(List<String> status) throws ApiException {
@@ -417,7 +417,7 @@ public class PetApi {
      * Finds Pets by tags
      * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
      * @param tags Tags to filter by (required)
-     * @return List<Pet>
+     * @return List&lt;Pet&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public List<Pet> findPetsByTags(List<String> tags) throws ApiException {
@@ -429,7 +429,7 @@ public class PetApi {
      * Finds Pets by tags
      * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
      * @param tags Tags to filter by (required)
-     * @return ApiResponse<List<Pet>>
+     * @return ApiResponse&lt;List&lt;Pet&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<List<Pet>> findPetsByTagsWithHttpInfo(List<String> tags) throws ApiException {
@@ -536,7 +536,7 @@ public class PetApi {
      * Find pet by ID
      * Returns a single pet
      * @param petId ID of pet to return (required)
-     * @return ApiResponse<Pet>
+     * @return ApiResponse&lt;Pet&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<Pet> getPetByIdWithHttpInfo(Long petId) throws ApiException {
@@ -640,7 +640,7 @@ public class PetApi {
      * Update an existing pet
      * 
      * @param body Pet object that needs to be added to the store (required)
-     * @return ApiResponse<Void>
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<Void> updatePetWithHttpInfo(Pet body) throws ApiException {
@@ -751,7 +751,7 @@ public class PetApi {
      * @param petId ID of pet that needs to be updated (required)
      * @param name Updated name of the pet (optional)
      * @param status Updated status of the pet (optional)
-     * @return ApiResponse<Void>
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<Void> updatePetWithFormWithHttpInfo(Long petId, String name, String status) throws ApiException {
@@ -866,7 +866,7 @@ public class PetApi {
      * @param petId ID of pet to update (required)
      * @param additionalMetadata Additional data to pass to server (optional)
      * @param file file to upload (optional)
-     * @return ApiResponse<ModelApiResponse>
+     * @return ApiResponse&lt;ModelApiResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<ModelApiResponse> uploadFileWithHttpInfo(Long petId, String additionalMetadata, File file) throws ApiException {
