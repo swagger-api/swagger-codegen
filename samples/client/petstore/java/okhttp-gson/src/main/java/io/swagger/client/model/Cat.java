@@ -31,7 +31,7 @@ public class Cat extends Animal  {
     /**
      * Set className
      *
-     * @param className
+     * @param className className
      */
     public void setClassName(String className) {
         this.className = className;
@@ -49,7 +49,7 @@ public class Cat extends Animal  {
     /**
      * Set color
      *
-     * @param color
+     * @param color color
      */
     public void setColor(String color) {
         this.color = color;
@@ -67,7 +67,7 @@ public class Cat extends Animal  {
     /**
      * Set declawed
      *
-     * @param declawed
+     * @param declawed declawed
      */
     public void setDeclawed(Boolean declawed) {
         this.declawed = declawed;

@@ -27,7 +27,7 @@ public class ModelReturn   {
     /**
      * Set _return
      *
-     * @param _return
+     * @param _return _return
      */
     public void setReturn(Integer _return) {
         this._return = _return;

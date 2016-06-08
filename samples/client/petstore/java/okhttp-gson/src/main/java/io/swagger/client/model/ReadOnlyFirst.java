@@ -37,7 +37,7 @@ public class ReadOnlyFirst   {
     /**
      * Set baz
      *
-     * @param baz
+     * @param baz baz
      */
     public void setBaz(String baz) {
         this.baz = baz;

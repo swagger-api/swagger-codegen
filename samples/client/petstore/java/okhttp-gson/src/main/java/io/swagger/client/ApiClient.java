@@ -197,7 +197,6 @@ public class ApiClient {
     /**
      * Get JSON
      *
-     * @param json JSON object
      * @return JSON object
      */
     public JSON getJSON() {
@@ -282,6 +281,7 @@ public class ApiClient {
     /**
      * Whether to allow various ISO 8601 datetime formats when parsing a datetime string.
      * @see #parseDatetime(String)
+     * @return True if lenientDatetimeFormat flag is set to true
      */
     public boolean isLenientDatetimeFormat() {
         return lenientDatetimeFormat;
@@ -600,7 +600,9 @@ public class ApiClient {
     /**
      * Sets the connect timeout (in milliseconds).
      * A value of 0 means no timeout, otherwise values must be between 1 and
+     *
      * {@link Integer#MAX_VALUE}.
+     * @return Api client
      */
     public ApiClient setConnectTimeout(int connectionTimeout) {
         httpClient.setConnectTimeout(connectionTimeout, TimeUnit.MILLISECONDS);
@@ -636,8 +638,8 @@ public class ApiClient {
      * Format to {@code Pair} objects.
      *
      * @param collectionFormat collection format (e.g. csv, tsv)
-     * @param name
-     * @param value 
+     * @param name Name
+     * @param value Value
      * @return A list of Pair objects
      */
     public List<Pair> parameterToPairs(String collectionFormat, String name, Object value){
@@ -1008,6 +1010,7 @@ public class ApiClient {
      * @param returnType Return type
      * @throws ApiException If the response has a unsuccessful status code or
      *   fail to deserialize the response body
+     * @return Type
      */
     public <T> T handleResponse(Response response, Type returnType) throws ApiException {
         if (response.isSuccessful()) {
@@ -1041,6 +1044,7 @@ public class ApiClient {
      * @param headerParams The header parameters
      * @param formParams The form parameters
      * @param authNames The authentications to apply
+     * @param progressRequestListener Progress request listener
      * @return The HTTP call
      * @throws ApiException If fail to serialize the request body object
      */

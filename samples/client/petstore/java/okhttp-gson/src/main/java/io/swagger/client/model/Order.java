@@ -62,7 +62,7 @@ public class Order   {
     /**
      * Set id
      *
-     * @param id
+     * @param id id
      */
     public void setId(Long id) {
         this.id = id;
@@ -80,7 +80,7 @@ public class Order   {
     /**
      * Set petId
      *
-     * @param petId
+     * @param petId petId
      */
     public void setPetId(Long petId) {
         this.petId = petId;
@@ -98,7 +98,7 @@ public class Order   {
     /**
      * Set quantity
      *
-     * @param quantity
+     * @param quantity quantity
      */
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
@@ -116,7 +116,7 @@ public class Order   {
     /**
      * Set shipDate
      *
-     * @param shipDate
+     * @param shipDate shipDate
      */
     public void setShipDate(Date shipDate) {
         this.shipDate = shipDate;
@@ -134,7 +134,7 @@ public class Order   {
     /**
      * Set status
      *
-     * @param status
+     * @param status status
      */
     public void setStatus(StatusEnum status) {
         this.status = status;
@@ -152,7 +152,7 @@ public class Order   {
     /**
      * Set complete
      *
-     * @param complete
+     * @param complete complete
      */
     public void setComplete(Boolean complete) {
         this.complete = complete;

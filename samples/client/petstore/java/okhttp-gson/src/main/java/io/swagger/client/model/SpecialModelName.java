@@ -26,7 +26,7 @@ public class SpecialModelName   {
     /**
      * Set specialPropertyName
      *
-     * @param specialPropertyName
+     * @param specialPropertyName specialPropertyName
      */
     public void setSpecialPropertyName(Long specialPropertyName) {
         this.specialPropertyName = specialPropertyName;

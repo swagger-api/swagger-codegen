@@ -31,7 +31,7 @@ public class AdditionalPropertiesClass   {
     /**
      * Set mapProperty
      *
-     * @param mapProperty
+     * @param mapProperty mapProperty
      */
     public void setMapProperty(Map<String, String> mapProperty) {
         this.mapProperty = mapProperty;
@@ -49,7 +49,7 @@ public class AdditionalPropertiesClass   {
     /**
      * Set mapOfMapProperty
      *
-     * @param mapOfMapProperty
+     * @param mapOfMapProperty mapOfMapProperty
      */
     public void setMapOfMapProperty(Map<String, Map<String, String>> mapOfMapProperty) {
         this.mapOfMapProperty = mapOfMapProperty;

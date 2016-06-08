@@ -30,7 +30,7 @@ public class ModelApiResponse   {
     /**
      * Set code
      *
-     * @param code
+     * @param code code
      */
     public void setCode(Integer code) {
         this.code = code;
@@ -48,7 +48,7 @@ public class ModelApiResponse   {
     /**
      * Set type
      *
-     * @param type
+     * @param type type
      */
     public void setType(String type) {
         this.type = type;
@@ -66,7 +66,7 @@ public class ModelApiResponse   {
     /**
      * Set message
      *
-     * @param message
+     * @param message message
      */
     public void setMessage(String message) {
         this.message = message;

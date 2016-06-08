@@ -28,7 +28,7 @@ public class Animal   {
     /**
      * Set className
      *
-     * @param className
+     * @param className className
      */
     public void setClassName(String className) {
         this.className = className;
@@ -46,7 +46,7 @@ public class Animal   {
     /**
      * Set color
      *
-     * @param color
+     * @param color color
      */
     public void setColor(String color) {
         this.color = color;

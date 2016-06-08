@@ -54,7 +54,7 @@ public class FormatTest   {
     /**
      * Set integer
      *
-     * @param integer
+     * @param integer integer
      */
     public void setInteger(Integer integer) {
         this.integer = integer;
@@ -74,7 +74,7 @@ public class FormatTest   {
     /**
      * Set int32
      *
-     * @param int32
+     * @param int32 int32
      */
     public void setInt32(Integer int32) {
         this.int32 = int32;
@@ -92,7 +92,7 @@ public class FormatTest   {
     /**
      * Set int64
      *
-     * @param int64
+     * @param int64 int64
      */
     public void setInt64(Long int64) {
         this.int64 = int64;
@@ -112,7 +112,7 @@ public class FormatTest   {
     /**
      * Set number
      *
-     * @param number
+     * @param number number
      */
     public void setNumber(BigDecimal number) {
         this.number = number;
@@ -132,7 +132,7 @@ public class FormatTest   {
     /**
      * Set _float
      *
-     * @param _float
+     * @param _float _float
      */
     public void setFloat(Float _float) {
         this._float = _float;
@@ -152,7 +152,7 @@ public class FormatTest   {
     /**
      * Set _double
      *
-     * @param _double
+     * @param _double _double
      */
     public void setDouble(Double _double) {
         this._double = _double;
@@ -170,7 +170,7 @@ public class FormatTest   {
     /**
      * Set string
      *
-     * @param string
+     * @param string string
      */
     public void setString(String string) {
         this.string = string;
@@ -188,7 +188,7 @@ public class FormatTest   {
     /**
      * Set _byte
      *
-     * @param _byte
+     * @param _byte _byte
      */
     public void setByte(byte[] _byte) {
         this._byte = _byte;
@@ -206,7 +206,7 @@ public class FormatTest   {
     /**
      * Set binary
      *
-     * @param binary
+     * @param binary binary
      */
     public void setBinary(byte[] binary) {
         this.binary = binary;
@@ -224,7 +224,7 @@ public class FormatTest   {
     /**
      * Set date
      *
-     * @param date
+     * @param date date
      */
     public void setDate(Date date) {
         this.date = date;
@@ -242,7 +242,7 @@ public class FormatTest   {
     /**
      * Set dateTime
      *
-     * @param dateTime
+     * @param dateTime dateTime
      */
     public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
@@ -260,7 +260,7 @@ public class FormatTest   {
     /**
      * Set uuid
      *
-     * @param uuid
+     * @param uuid uuid
      */
     public void setUuid(String uuid) {
         this.uuid = uuid;
@@ -278,7 +278,7 @@ public class FormatTest   {
     /**
      * Set password
      *
-     * @param password
+     * @param password password
      */
     public void setPassword(String password) {
         this.password = password;

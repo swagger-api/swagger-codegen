@@ -40,7 +40,7 @@ public class User   {
     /**
      * Set id
      *
-     * @param id
+     * @param id id
      */
     public void setId(Long id) {
         this.id = id;
@@ -58,7 +58,7 @@ public class User   {
     /**
      * Set username
      *
-     * @param username
+     * @param username username
      */
     public void setUsername(String username) {
         this.username = username;
@@ -76,7 +76,7 @@ public class User   {
     /**
      * Set firstName
      *
-     * @param firstName
+     * @param firstName firstName
      */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -94,7 +94,7 @@ public class User   {
     /**
      * Set lastName
      *
-     * @param lastName
+     * @param lastName lastName
      */
     public void setLastName(String lastName) {
         this.lastName = lastName;
@@ -112,7 +112,7 @@ public class User   {
     /**
      * Set email
      *
-     * @param email
+     * @param email email
      */
     public void setEmail(String email) {
         this.email = email;
@@ -130,7 +130,7 @@ public class User   {
     /**
      * Set password
      *
-     * @param password
+     * @param password password
      */
     public void setPassword(String password) {
         this.password = password;
@@ -148,7 +148,7 @@ public class User   {
     /**
      * Set phone
      *
-     * @param phone
+     * @param phone phone
      */
     public void setPhone(String phone) {
         this.phone = phone;
@@ -166,7 +166,7 @@ public class User   {
     /**
      * Set userStatus
      *
-     * @param userStatus
+     * @param userStatus userStatus
      */
     public void setUserStatus(Integer userStatus) {
         this.userStatus = userStatus;

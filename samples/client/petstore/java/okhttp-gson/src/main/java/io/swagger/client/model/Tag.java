@@ -28,7 +28,7 @@ public class Tag   {
     /**
      * Set id
      *
-     * @param id
+     * @param id id
      */
     public void setId(Long id) {
         this.id = id;
@@ -46,7 +46,7 @@ public class Tag   {
     /**
      * Set name
      *
-     * @param name
+     * @param name name
      */
     public void setName(String name) {
         this.name = name;

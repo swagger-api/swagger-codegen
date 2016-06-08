@@ -27,7 +27,7 @@ public class Model200Response   {
     /**
      * Set name
      *
-     * @param name
+     * @param name name
      */
     public void setName(Integer name) {
         this.name = name;

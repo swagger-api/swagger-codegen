@@ -33,7 +33,7 @@ public class Name   {
     /**
      * Set name
      *
-     * @param name
+     * @param name name
      */
     public void setName(Integer name) {
         this.name = name;
@@ -60,7 +60,7 @@ public class Name   {
     /**
      * Set property
      *
-     * @param property
+     * @param property property
      */
     public void setProperty(String property) {
         this.property = property;

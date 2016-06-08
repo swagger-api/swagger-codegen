@@ -96,7 +96,7 @@ public class EnumTest   {
     /**
      * Set enumString
      *
-     * @param enumString
+     * @param enumString enumString
      */
     public void setEnumString(EnumStringEnum enumString) {
         this.enumString = enumString;
@@ -114,7 +114,7 @@ public class EnumTest   {
     /**
      * Set enumInteger
      *
-     * @param enumInteger
+     * @param enumInteger enumInteger
      */
     public void setEnumInteger(EnumIntegerEnum enumInteger) {
         this.enumInteger = enumInteger;
@@ -132,7 +132,7 @@ public class EnumTest   {
     /**
      * Set enumNumber
      *
-     * @param enumNumber
+     * @param enumNumber enumNumber
      */
     public void setEnumNumber(EnumNumberEnum enumNumber) {
         this.enumNumber = enumNumber;

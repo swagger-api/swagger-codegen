@@ -65,7 +65,7 @@ public class Pet   {
     /**
      * Set id
      *
-     * @param id
+     * @param id id
      */
     public void setId(Long id) {
         this.id = id;
@@ -83,7 +83,7 @@ public class Pet   {
     /**
      * Set category
      *
-     * @param category
+     * @param category category
      */
     public void setCategory(Category category) {
         this.category = category;
@@ -101,7 +101,7 @@ public class Pet   {
     /**
      * Set name
      *
-     * @param name
+     * @param name name
      */
     public void setName(String name) {
         this.name = name;
@@ -119,7 +119,7 @@ public class Pet   {
     /**
      * Set photoUrls
      *
-     * @param photoUrls
+     * @param photoUrls photoUrls
      */
     public void setPhotoUrls(List<String> photoUrls) {
         this.photoUrls = photoUrls;
@@ -137,7 +137,7 @@ public class Pet   {
     /**
      * Set tags
      *
-     * @param tags
+     * @param tags tags
      */
     public void setTags(List<Tag> tags) {
         this.tags = tags;
@@ -155,7 +155,7 @@ public class Pet   {
     /**
      * Set status
      *
-     * @param status
+     * @param status status
      */
     public void setStatus(StatusEnum status) {
         this.status = status;
