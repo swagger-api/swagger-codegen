@@ -6,6 +6,7 @@
 //
 
 import Alamofire
+import ObjectMapper
 import AlamofireObjectMapper
 
 {{#description}}
@@ -14,24 +15,8 @@ class {{classname}} {
 {{#operation}}
 
     enum {{operationId}}Response {
-        {{#responses}}case Res{{code}}({{#dataType}}{{.}}, {{/dataType}}NSData){{#isDefault}}//default{{/isDefault}}
-        {{/responses}}case Failure(Int?, NSData?)
-        var data:NSData? {
-            switch self {
-            {{#responses}}case Res{{code}}({{#dataType}}_, {{/dataType}}let nsdata):
-                return nsdata
-            {{/responses}}case Failure(_, let nsdata):
-                return nsdata
-            }
-        }
-        var statusCode:Int? {
-            switch self {
-            {{#responses}}case Res{{code}}:
-                return {{code}}
-            {{/responses}}case Failure(let code, _):
-                return code
-            }
-        }
+        {{#responses}}case Res{{code}}{{#dataType}}({{.}}){{/dataType}}{{#isDefault}}//default{{/isDefault}}
+        {{/responses}}case Failure(NSError?)
     }
 
     /**
@@ -41,7 +26,7 @@ class {{classname}} {
      - {{httpMethod}} {{path}}{{#notes}}
      - {{{notes}}}{{/notes}}
      */
-    class func request{{operationId}}({{#allParams}}{{paramName}}: {{#isListContainer}}[{{/isListContainer}}{{{dataType}}}{{#isListContainer}}]{{/isListContainer}}{{^required}}?{{/required}}, {{/allParams}}callback:(({{operationId}}Response) -> Void)?=nil) {
+    class func request{{operationId}}({{#allParams}}{{paramName}}: {{#isListContainer}}[{{/isListContainer}}{{{dataType}}}{{#isListContainer}}]{{/isListContainer}}{{^required}}?{{/required}}, {{/allParams}}callback:(({{operationId}}Response, NSURLRequest?, NSHTTPURLResponse?, NSData?) -> Void)?=nil) {
         {{^pathParams}}let{{/pathParams}}{{#pathParams}}{{^secondaryParam}}var{{/secondaryParam}}{{/pathParams}} path = "{{path}}"{{#pathParams}}
         path = path.stringByReplacingOccurrencesOfString("{{=<% %>=}}{<%paramName%>}<%={{ }}=%>", withString: "\({{paramName}})", options: .LiteralSearch, range: nil){{/pathParams}}
         let URLString = "{{basePath}}" + path
@@ -67,8 +52,12 @@ class {{classname}} {
             guard let callback = callback else {
                 return
             }
-            guard let nshttpUrlResponse = nshttpUrlResponse, data = data else {
-                callback(.Failure(nil, nil))
+            if let err = err {
+                callback(.Failure(err), urlRequest, nshttpUrlResponse, data)
+                return
+            }
+            guard let nshttpUrlResponse = nshttpUrlResponse else {
+                callback(.Failure(nil), urlRequest, nil, data)
                 return
             }
             switch nshttpUrlResponse.statusCode {
@@ -82,15 +71,17 @@ class {{classname}} {
                 {{/containerType}}{{/primitiveType}}
                 let result = responseSerializer.serializeResponse(urlRequest, nshttpUrlResponse, data, err)
                 if let value = result.value {
-                    callback(.Res{{code}}(value, data))
+                    callback(.Res{{code}}(value), urlRequest, nshttpUrlResponse, data)
                 } else {
-                    callback(.Failure({{code}}, data))
+                    callback(.Failure(result.error), urlRequest, nshttpUrlResponse, data)
                 }
-                {{/dataType}}{{^dataType}}callback(.Res{{code}}(data)){{/dataType}}
+                {{/dataType}}{{^dataType}}
+                callback(.Res{{code}}, urlRequest, nshttpUrlResponse, data){{/dataType}}
                 break
             {{/responses}}
             default:
-                callback(.Failure(nshttpUrlResponse.statusCode, data))
+                let failureReason = "The status code \(nshttpUrlResponse.statusCode) is undefined in the swagger spec."
+                callback(.Failure(Error.errorWithCode(.StatusCodeValidationFailed, failureReason: failureReason)), urlRequest, nshttpUrlResponse, data)
                 break
             }
         }
