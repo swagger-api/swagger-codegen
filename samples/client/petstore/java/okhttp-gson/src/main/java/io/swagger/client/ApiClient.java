@@ -943,10 +943,9 @@ public class ApiClient {
     /**
      * Execute HTTP call and deserialize the HTTP response body into the given return type.
      *
-     * @param <T> Type
      * @param returnType The return type used to deserialize HTTP response body
      * @param <T> The return type corresponding to (same with) returnType
-     * @return <code>ApiResponse</code> object containing response status, headers and
+     * @return ApiResponse object containing response status, headers and
      *   data, which is a Java object deserialized from response body and would be null
      *   when returnType is null.
      * @throws ApiException If fail to execute the call
