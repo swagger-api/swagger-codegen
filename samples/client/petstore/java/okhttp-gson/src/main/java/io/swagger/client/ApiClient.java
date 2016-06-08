@@ -227,7 +227,7 @@ public class ApiClient {
      * Configure whether to verify certificate and hostname when making https requests.
      * Default to true.
      * NOTE: Do NOT set to false in production code, otherwise you would face multiple types of cryptographic attacks.
-     * 
+     *
      * @param verifyingSsl True to verify TLS/SSL connection
      * @return ApiClient
      */
@@ -434,7 +434,7 @@ public class ApiClient {
 
     /**
      * Helper method to set password for the first HTTP basic authentication.
-     * 
+     *
      * @param password Password
      */
     public void setPassword(String password) {
@@ -601,7 +601,7 @@ public class ApiClient {
      * Sets the connect timeout (in milliseconds).
      * A value of 0 means no timeout, otherwise values must be between 1 and
      *
-     * {@link Integer#MAX_VALUE}.
+     * @param connectionTimeout connection timeout in milliseconds
      * @return Api client
      */
     public ApiClient setConnectTimeout(int connectionTimeout) {
@@ -945,6 +945,7 @@ public class ApiClient {
      *
      * @param returnType The return type used to deserialize HTTP response body
      * @param <T> The return type corresponding to (same with) returnType
+     * @param call Call
      * @return ApiResponse object containing response status, headers and
      *   data, which is a Java object deserialized from response body and would be null
      *   when returnType is null.
@@ -965,7 +966,7 @@ public class ApiClient {
      *
      * @param <T> Type
      * @param call An instance of the Call object
-     * @param callback ApiCallback<T>
+     * @param callback ApiCallback&lt;T&gt;
      */
     public <T> void executeAsync(Call call, ApiCallback<T> callback) {
         executeAsync(call, null, callback);
