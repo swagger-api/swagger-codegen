@@ -63,6 +63,7 @@ public class JSON {
     /**
      * Deserialize the given JSON string to Java object.
      *
+     * @param <T> Type
      * @param body The JSON string
      * @param returnType The type to deserialize inot
      * @return The deserialized Java object

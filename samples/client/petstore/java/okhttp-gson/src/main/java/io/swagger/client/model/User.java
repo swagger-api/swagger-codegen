@@ -11,108 +11,163 @@ import com.google.gson.annotations.SerializedName;
  * User
  */
 public class User   {
-    
     @SerializedName("id")
     private Long id = null;
-
     @SerializedName("username")
     private String username = null;
-
     @SerializedName("firstName")
     private String firstName = null;
-
     @SerializedName("lastName")
     private String lastName = null;
-
     @SerializedName("email")
     private String email = null;
-
     @SerializedName("password")
     private String password = null;
-
     @SerializedName("phone")
     private String phone = null;
-
     @SerializedName("userStatus")
     private Integer userStatus = null;
 
     /**
+     * Get id
+     * @return id
      **/
     @ApiModelProperty(value = "")
     public Long getId() {
         return id;
     }
+
+    /**
+     * Set id
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
     /**
+     * Get username
+     * @return username
      **/
     @ApiModelProperty(value = "")
     public String getUsername() {
         return username;
     }
+
+    /**
+     * Set username
+     *
+     * @param username
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
     /**
+     * Get firstName
+     * @return firstName
      **/
     @ApiModelProperty(value = "")
     public String getFirstName() {
         return firstName;
     }
+
+    /**
+     * Set firstName
+     *
+     * @param firstName
+     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
     /**
+     * Get lastName
+     * @return lastName
      **/
     @ApiModelProperty(value = "")
     public String getLastName() {
         return lastName;
     }
+
+    /**
+     * Set lastName
+     *
+     * @param lastName
+     */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
     /**
+     * Get email
+     * @return email
      **/
     @ApiModelProperty(value = "")
     public String getEmail() {
         return email;
     }
+
+    /**
+     * Set email
+     *
+     * @param email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
     /**
+     * Get password
+     * @return password
      **/
     @ApiModelProperty(value = "")
     public String getPassword() {
         return password;
     }
+
+    /**
+     * Set password
+     *
+     * @param password
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
     /**
+     * Get phone
+     * @return phone
      **/
     @ApiModelProperty(value = "")
     public String getPhone() {
         return phone;
     }
+
+    /**
+     * Set phone
+     *
+     * @param phone
+     */
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
     /**
      * User Status
+     * @return userStatus
      **/
     @ApiModelProperty(value = "User Status")
     public Integer getUserStatus() {
         return userStatus;
     }
+
+    /**
+     * Set userStatus
+     *
+     * @param userStatus
+     */
     public void setUserStatus(Integer userStatus) {
         this.userStatus = userStatus;
     }
@@ -162,6 +217,8 @@ public class User   {
     /**
      * Convert the given object to string with each line indented by 4 spaces
      * (except the first line).
+     *
+     * @param o Object to be converted to indented string
      */
     private String toIndentedString(Object o) {
         if (o == null) {

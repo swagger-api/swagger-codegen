@@ -11,14 +11,14 @@ import com.google.gson.annotations.SerializedName;
  * ReadOnlyFirst
  */
 public class ReadOnlyFirst   {
-    
     @SerializedName("bar")
     private String bar = null;
-
     @SerializedName("baz")
     private String baz = null;
 
     /**
+     * Get bar
+     * @return bar
      **/
     @ApiModelProperty(value = "")
     public String getBar() {
@@ -26,11 +26,19 @@ public class ReadOnlyFirst   {
     }
 
     /**
+     * Get baz
+     * @return baz
      **/
     @ApiModelProperty(value = "")
     public String getBaz() {
         return baz;
     }
+
+    /**
+     * Set baz
+     *
+     * @param baz
+     */
     public void setBaz(String baz) {
         this.baz = baz;
     }
@@ -68,6 +76,8 @@ public class ReadOnlyFirst   {
     /**
      * Convert the given object to string with each line indented by 4 spaces
      * (except the first line).
+     *
+     * @param o Object to be converted to indented string
      */
     private String toIndentedString(Object o) {
         if (o == null) {

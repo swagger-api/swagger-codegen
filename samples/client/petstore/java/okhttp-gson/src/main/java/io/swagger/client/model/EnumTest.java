@@ -11,9 +11,7 @@ import com.google.gson.annotations.SerializedName;
  * EnumTest
  */
 public class EnumTest   {
-    
-
-      /**
+  /**
    * Gets or Sets enumString
    */
   public enum EnumStringEnum {
@@ -37,9 +35,7 @@ public class EnumTest   {
 
     @SerializedName("enum_string")
     private EnumStringEnum enumString = null;
-
-
-      /**
+  /**
    * Gets or Sets enumInteger
    */
   public enum EnumIntegerEnum {
@@ -63,9 +59,7 @@ public class EnumTest   {
 
     @SerializedName("enum_integer")
     private EnumIntegerEnum enumInteger = null;
-
-
-      /**
+  /**
    * Gets or Sets enumNumber
    */
   public enum EnumNumberEnum {
@@ -91,31 +85,55 @@ public class EnumTest   {
     private EnumNumberEnum enumNumber = null;
 
     /**
+     * Get enumString
+     * @return enumString
      **/
     @ApiModelProperty(value = "")
     public EnumStringEnum getEnumString() {
         return enumString;
     }
+
+    /**
+     * Set enumString
+     *
+     * @param enumString
+     */
     public void setEnumString(EnumStringEnum enumString) {
         this.enumString = enumString;
     }
 
     /**
+     * Get enumInteger
+     * @return enumInteger
      **/
     @ApiModelProperty(value = "")
     public EnumIntegerEnum getEnumInteger() {
         return enumInteger;
     }
+
+    /**
+     * Set enumInteger
+     *
+     * @param enumInteger
+     */
     public void setEnumInteger(EnumIntegerEnum enumInteger) {
         this.enumInteger = enumInteger;
     }
 
     /**
+     * Get enumNumber
+     * @return enumNumber
      **/
     @ApiModelProperty(value = "")
     public EnumNumberEnum getEnumNumber() {
         return enumNumber;
     }
+
+    /**
+     * Set enumNumber
+     *
+     * @param enumNumber
+     */
     public void setEnumNumber(EnumNumberEnum enumNumber) {
         this.enumNumber = enumNumber;
     }
@@ -155,6 +173,8 @@ public class EnumTest   {
     /**
      * Convert the given object to string with each line indented by 4 spaces
      * (except the first line).
+     *
+     * @param o Object to be converted to indented string
      */
     private String toIndentedString(Object o) {
         if (o == null) {

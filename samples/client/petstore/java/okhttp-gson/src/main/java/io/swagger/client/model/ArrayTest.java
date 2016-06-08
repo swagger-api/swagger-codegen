@@ -13,42 +13,63 @@ import com.google.gson.annotations.SerializedName;
  * ArrayTest
  */
 public class ArrayTest   {
-    
     @SerializedName("array_of_string")
     private List<String> arrayOfString = new ArrayList<String>();
-
     @SerializedName("array_array_of_integer")
     private List<List<Long>> arrayArrayOfInteger = new ArrayList<List<Long>>();
-
     @SerializedName("array_array_of_model")
     private List<List<ReadOnlyFirst>> arrayArrayOfModel = new ArrayList<List<ReadOnlyFirst>>();
 
     /**
+     * Get arrayOfString
+     * @return arrayOfString
      **/
     @ApiModelProperty(value = "")
     public List<String> getArrayOfString() {
         return arrayOfString;
     }
+
+    /**
+     * Set arrayOfString
+     *
+     * @param arrayOfString
+     */
     public void setArrayOfString(List<String> arrayOfString) {
         this.arrayOfString = arrayOfString;
     }
 
     /**
+     * Get arrayArrayOfInteger
+     * @return arrayArrayOfInteger
      **/
     @ApiModelProperty(value = "")
     public List<List<Long>> getArrayArrayOfInteger() {
         return arrayArrayOfInteger;
     }
+
+    /**
+     * Set arrayArrayOfInteger
+     *
+     * @param arrayArrayOfInteger
+     */
     public void setArrayArrayOfInteger(List<List<Long>> arrayArrayOfInteger) {
         this.arrayArrayOfInteger = arrayArrayOfInteger;
     }
 
     /**
+     * Get arrayArrayOfModel
+     * @return arrayArrayOfModel
      **/
     @ApiModelProperty(value = "")
     public List<List<ReadOnlyFirst>> getArrayArrayOfModel() {
         return arrayArrayOfModel;
     }
+
+    /**
+     * Set arrayArrayOfModel
+     *
+     * @param arrayArrayOfModel
+     */
     public void setArrayArrayOfModel(List<List<ReadOnlyFirst>> arrayArrayOfModel) {
         this.arrayArrayOfModel = arrayArrayOfModel;
     }
@@ -88,6 +109,8 @@ public class ArrayTest   {
     /**
      * Convert the given object to string with each line indented by 4 spaces
      * (except the first line).
+     *
+     * @param o Object to be converted to indented string
      */
     private String toIndentedString(Object o) {
         if (o == null) {

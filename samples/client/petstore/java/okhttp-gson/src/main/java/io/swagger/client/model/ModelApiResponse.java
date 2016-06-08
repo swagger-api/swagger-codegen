@@ -11,42 +11,63 @@ import com.google.gson.annotations.SerializedName;
  * ModelApiResponse
  */
 public class ModelApiResponse   {
-    
     @SerializedName("code")
     private Integer code = null;
-
     @SerializedName("type")
     private String type = null;
-
     @SerializedName("message")
     private String message = null;
 
     /**
+     * Get code
+     * @return code
      **/
     @ApiModelProperty(value = "")
     public Integer getCode() {
         return code;
     }
+
+    /**
+     * Set code
+     *
+     * @param code
+     */
     public void setCode(Integer code) {
         this.code = code;
     }
 
     /**
+     * Get type
+     * @return type
      **/
     @ApiModelProperty(value = "")
     public String getType() {
         return type;
     }
+
+    /**
+     * Set type
+     *
+     * @param type
+     */
     public void setType(String type) {
         this.type = type;
     }
 
     /**
+     * Get message
+     * @return message
      **/
     @ApiModelProperty(value = "")
     public String getMessage() {
         return message;
     }
+
+    /**
+     * Set message
+     *
+     * @param message
+     */
     public void setMessage(String message) {
         this.message = message;
     }
@@ -86,6 +107,8 @@ public class ModelApiResponse   {
     /**
      * Convert the given object to string with each line indented by 4 spaces
      * (except the first line).
+     *
+     * @param o Object to be converted to indented string
      */
     private String toIndentedString(Object o) {
         if (o == null) {

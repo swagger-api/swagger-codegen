@@ -11,16 +11,23 @@ import com.google.gson.annotations.SerializedName;
  * SpecialModelName
  */
 public class SpecialModelName   {
-    
     @SerializedName("$special[property.name]")
     private Long specialPropertyName = null;
 
     /**
+     * Get specialPropertyName
+     * @return specialPropertyName
      **/
     @ApiModelProperty(value = "")
     public Long getSpecialPropertyName() {
         return specialPropertyName;
     }
+
+    /**
+     * Set specialPropertyName
+     *
+     * @param specialPropertyName
+     */
     public void setSpecialPropertyName(Long specialPropertyName) {
         this.specialPropertyName = specialPropertyName;
     }
@@ -56,6 +63,8 @@ public class SpecialModelName   {
     /**
      * Convert the given object to string with each line indented by 4 spaces
      * (except the first line).
+     *
+     * @param o Object to be converted to indented string
      */
     private String toIndentedString(Object o) {
         if (o == null) {

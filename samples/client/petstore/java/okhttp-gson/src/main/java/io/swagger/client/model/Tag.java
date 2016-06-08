@@ -11,29 +11,43 @@ import com.google.gson.annotations.SerializedName;
  * Tag
  */
 public class Tag   {
-    
     @SerializedName("id")
     private Long id = null;
-
     @SerializedName("name")
     private String name = null;
 
     /**
+     * Get id
+     * @return id
      **/
     @ApiModelProperty(value = "")
     public Long getId() {
         return id;
     }
+
+    /**
+     * Set id
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
     /**
+     * Get name
+     * @return name
      **/
     @ApiModelProperty(value = "")
     public String getName() {
         return name;
     }
+
+    /**
+     * Set name
+     *
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
@@ -71,6 +85,8 @@ public class Tag   {
     /**
      * Convert the given object to string with each line indented by 4 spaces
      * (except the first line).
+     *
+     * @param o Object to be converted to indented string
      */
     private String toIndentedString(Object o) {
         if (o == null) {

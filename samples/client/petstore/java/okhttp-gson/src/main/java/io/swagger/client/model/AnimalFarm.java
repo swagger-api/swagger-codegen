@@ -12,7 +12,7 @@ import com.google.gson.annotations.SerializedName;
  * AnimalFarm
  */
 public class AnimalFarm extends ArrayList<Animal>  {
-    
+
 
     @Override
     public boolean equals(Object o) {
@@ -42,6 +42,8 @@ public class AnimalFarm extends ArrayList<Animal>  {
     /**
      * Convert the given object to string with each line indented by 4 spaces
      * (except the first line).
+     *
+     * @param o Object to be converted to indented string
      */
     private String toIndentedString(Object o) {
         if (o == null) {

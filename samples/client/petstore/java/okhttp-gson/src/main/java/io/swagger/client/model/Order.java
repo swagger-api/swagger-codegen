@@ -12,21 +12,15 @@ import com.google.gson.annotations.SerializedName;
  * Order
  */
 public class Order   {
-    
     @SerializedName("id")
     private Long id = null;
-
     @SerializedName("petId")
     private Long petId = null;
-
     @SerializedName("quantity")
     private Integer quantity = null;
-
     @SerializedName("shipDate")
     private Date shipDate = null;
-
-
-      /**
+  /**
    * Order Status
    */
   public enum StatusEnum {
@@ -53,67 +47,113 @@ public class Order   {
 
     @SerializedName("status")
     private StatusEnum status = null;
-
     @SerializedName("complete")
     private Boolean complete = false;
 
     /**
+     * Get id
+     * @return id
      **/
     @ApiModelProperty(value = "")
     public Long getId() {
         return id;
     }
+
+    /**
+     * Set id
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
     /**
+     * Get petId
+     * @return petId
      **/
     @ApiModelProperty(value = "")
     public Long getPetId() {
         return petId;
     }
+
+    /**
+     * Set petId
+     *
+     * @param petId
+     */
     public void setPetId(Long petId) {
         this.petId = petId;
     }
 
     /**
+     * Get quantity
+     * @return quantity
      **/
     @ApiModelProperty(value = "")
     public Integer getQuantity() {
         return quantity;
     }
+
+    /**
+     * Set quantity
+     *
+     * @param quantity
+     */
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
     /**
+     * Get shipDate
+     * @return shipDate
      **/
     @ApiModelProperty(value = "")
     public Date getShipDate() {
         return shipDate;
     }
+
+    /**
+     * Set shipDate
+     *
+     * @param shipDate
+     */
     public void setShipDate(Date shipDate) {
         this.shipDate = shipDate;
     }
 
     /**
      * Order Status
+     * @return status
      **/
     @ApiModelProperty(value = "Order Status")
     public StatusEnum getStatus() {
         return status;
     }
+
+    /**
+     * Set status
+     *
+     * @param status
+     */
     public void setStatus(StatusEnum status) {
         this.status = status;
     }
 
     /**
+     * Get complete
+     * @return complete
      **/
     @ApiModelProperty(value = "")
     public Boolean getComplete() {
         return complete;
     }
+
+    /**
+     * Set complete
+     *
+     * @param complete
+     */
     public void setComplete(Boolean complete) {
         this.complete = complete;
     }
@@ -159,6 +199,8 @@ public class Order   {
     /**
      * Convert the given object to string with each line indented by 4 spaces
      * (except the first line).
+     *
+     * @param o Object to be converted to indented string
      */
     private String toIndentedString(Object o) {
         if (o == null) {

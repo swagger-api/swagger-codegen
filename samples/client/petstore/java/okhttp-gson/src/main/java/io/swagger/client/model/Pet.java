@@ -15,24 +15,17 @@ import com.google.gson.annotations.SerializedName;
  * Pet
  */
 public class Pet   {
-    
     @SerializedName("id")
     private Long id = null;
-
     @SerializedName("category")
     private Category category = null;
-
     @SerializedName("name")
     private String name = null;
-
     @SerializedName("photoUrls")
     private List<String> photoUrls = new ArrayList<String>();
-
     @SerializedName("tags")
     private List<Tag> tags = new ArrayList<Tag>();
-
-
-      /**
+  /**
    * pet status in the store
    */
   public enum StatusEnum {
@@ -61,62 +54,109 @@ public class Pet   {
     private StatusEnum status = null;
 
     /**
+     * Get id
+     * @return id
      **/
     @ApiModelProperty(value = "")
     public Long getId() {
         return id;
     }
+
+    /**
+     * Set id
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
     /**
+     * Get category
+     * @return category
      **/
     @ApiModelProperty(value = "")
     public Category getCategory() {
         return category;
     }
+
+    /**
+     * Set category
+     *
+     * @param category
+     */
     public void setCategory(Category category) {
         this.category = category;
     }
 
     /**
+     * Get name
+     * @return name
      **/
     @ApiModelProperty(required = true, value = "")
     public String getName() {
         return name;
     }
+
+    /**
+     * Set name
+     *
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
+     * Get photoUrls
+     * @return photoUrls
      **/
     @ApiModelProperty(required = true, value = "")
     public List<String> getPhotoUrls() {
         return photoUrls;
     }
+
+    /**
+     * Set photoUrls
+     *
+     * @param photoUrls
+     */
     public void setPhotoUrls(List<String> photoUrls) {
         this.photoUrls = photoUrls;
     }
 
     /**
+     * Get tags
+     * @return tags
      **/
     @ApiModelProperty(value = "")
     public List<Tag> getTags() {
         return tags;
     }
+
+    /**
+     * Set tags
+     *
+     * @param tags
+     */
     public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
 
     /**
      * pet status in the store
+     * @return status
      **/
     @ApiModelProperty(value = "pet status in the store")
     public StatusEnum getStatus() {
         return status;
     }
+
+    /**
+     * Set status
+     *
+     * @param status
+     */
     public void setStatus(StatusEnum status) {
         this.status = status;
     }
@@ -162,6 +202,8 @@ public class Pet   {
     /**
      * Convert the given object to string with each line indented by 4 spaces
      * (except the first line).
+     *
+     * @param o Object to be converted to indented string
      */
     private String toIndentedString(Object o) {
         if (o == null) {

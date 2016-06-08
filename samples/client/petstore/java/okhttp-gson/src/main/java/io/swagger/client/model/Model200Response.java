@@ -12,16 +12,23 @@ import com.google.gson.annotations.SerializedName;
  */
 @ApiModel(description = "Model for testing model name starting with number")
 public class Model200Response   {
-    
     @SerializedName("name")
     private Integer name = null;
 
     /**
+     * Get name
+     * @return name
      **/
     @ApiModelProperty(value = "")
     public Integer getName() {
         return name;
     }
+
+    /**
+     * Set name
+     *
+     * @param name
+     */
     public void setName(Integer name) {
         this.name = name;
     }
@@ -57,6 +64,8 @@ public class Model200Response   {
     /**
      * Convert the given object to string with each line indented by 4 spaces
      * (except the first line).
+     *
+     * @param o Object to be converted to indented string
      */
     private String toIndentedString(Object o) {
         if (o == null) {

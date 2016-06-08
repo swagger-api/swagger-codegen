@@ -12,42 +12,63 @@ import com.google.gson.annotations.SerializedName;
  * Cat
  */
 public class Cat extends Animal  {
-    
     @SerializedName("className")
     private String className = null;
-
     @SerializedName("color")
     private String color = "red";
-
     @SerializedName("declawed")
     private Boolean declawed = null;
 
     /**
+     * Get className
+     * @return className
      **/
     @ApiModelProperty(required = true, value = "")
     public String getClassName() {
         return className;
     }
+
+    /**
+     * Set className
+     *
+     * @param className
+     */
     public void setClassName(String className) {
         this.className = className;
     }
 
     /**
+     * Get color
+     * @return color
      **/
     @ApiModelProperty(value = "")
     public String getColor() {
         return color;
     }
+
+    /**
+     * Set color
+     *
+     * @param color
+     */
     public void setColor(String color) {
         this.color = color;
     }
 
     /**
+     * Get declawed
+     * @return declawed
      **/
     @ApiModelProperty(value = "")
     public Boolean getDeclawed() {
         return declawed;
     }
+
+    /**
+     * Set declawed
+     *
+     * @param declawed
+     */
     public void setDeclawed(Boolean declawed) {
         this.declawed = declawed;
     }
@@ -88,6 +109,8 @@ public class Cat extends Animal  {
     /**
      * Convert the given object to string with each line indented by 4 spaces
      * (except the first line).
+     *
+     * @param o Object to be converted to indented string
      */
     private String toIndentedString(Object o) {
         if (o == null) {

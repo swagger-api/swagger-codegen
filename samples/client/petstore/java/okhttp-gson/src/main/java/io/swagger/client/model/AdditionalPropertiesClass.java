@@ -14,29 +14,43 @@ import com.google.gson.annotations.SerializedName;
  * AdditionalPropertiesClass
  */
 public class AdditionalPropertiesClass   {
-    
     @SerializedName("map_property")
     private Map<String, String> mapProperty = new HashMap<String, String>();
-
     @SerializedName("map_of_map_property")
     private Map<String, Map<String, String>> mapOfMapProperty = new HashMap<String, Map<String, String>>();
 
     /**
+     * Get mapProperty
+     * @return mapProperty
      **/
     @ApiModelProperty(value = "")
     public Map<String, String> getMapProperty() {
         return mapProperty;
     }
+
+    /**
+     * Set mapProperty
+     *
+     * @param mapProperty
+     */
     public void setMapProperty(Map<String, String> mapProperty) {
         this.mapProperty = mapProperty;
     }
 
     /**
+     * Get mapOfMapProperty
+     * @return mapOfMapProperty
      **/
     @ApiModelProperty(value = "")
     public Map<String, Map<String, String>> getMapOfMapProperty() {
         return mapOfMapProperty;
     }
+
+    /**
+     * Set mapOfMapProperty
+     *
+     * @param mapOfMapProperty
+     */
     public void setMapOfMapProperty(Map<String, Map<String, String>> mapOfMapProperty) {
         this.mapOfMapProperty = mapOfMapProperty;
     }
@@ -74,6 +88,8 @@ public class AdditionalPropertiesClass   {
     /**
      * Convert the given object to string with each line indented by 4 spaces
      * (except the first line).
+     *
+     * @param o Object to be converted to indented string
      */
     private String toIndentedString(Object o) {
         if (o == null) {

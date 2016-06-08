@@ -120,6 +120,9 @@ public class ApiClient {
 
     private HttpLoggingInterceptor loggingInterceptor;
 
+    /*
+     * Constructor for ApiClient
+     */
     public ApiClient() {
         httpClient = new OkHttpClient();
 
@@ -152,33 +155,72 @@ public class ApiClient {
         authentications = Collections.unmodifiableMap(authentications);
     }
 
+    /**
+     * Get base path
+     *
+     * @return Baes path
+     */
     public String getBasePath() {
         return basePath;
     }
 
+    /**
+     * Set base path
+     *
+     * @param basePath Base path of the URL (e.g {{basePath}})
+     * @return An instance of OkHttpClient
+     */
     public ApiClient setBasePath(String basePath) {
         this.basePath = basePath;
         return this;
     }
 
+    /**
+     * Get HTTP client
+     *
+     * @return An instance of OkHttpClient
+     */
     public OkHttpClient getHttpClient() {
         return httpClient;
     }
 
+    /**
+     * Set HTTP client
+     *
+     * @param httpClient An instance of OkHttpClient
+     * @return Api Client
+     */
     public ApiClient setHttpClient(OkHttpClient httpClient) {
         this.httpClient = httpClient;
         return this;
     }
 
+    /**
+     * Get JSON
+     *
+     * @param json JSON object
+     * @return JSON object
+     */
     public JSON getJSON() {
         return json;
     }
 
+    /**
+     * Set JSON
+     *
+     * @param json JSON object
+     * @return Api client
+     */
     public ApiClient setJSON(JSON json) {
         this.json = json;
         return this;
     }
 
+    /**
+     * True if isVerifyingSsl flag is on
+     *
+     * @return True if isVerifySsl flag is on
+     */
     public boolean isVerifyingSsl() {
         return verifyingSsl;
     }
@@ -187,6 +229,9 @@ public class ApiClient {
      * Configure whether to verify certificate and hostname when making https requests.
      * Default to true.
      * NOTE: Do NOT set to false in production code, otherwise you would face multiple types of cryptographic attacks.
+     * 
+     * @param verifyingSsl True to verify TLS/SSL connection
+     * @return ApiClient
      */
     public ApiClient setVerifyingSsl(boolean verifyingSsl) {
         this.verifyingSsl = verifyingSsl;
@@ -194,6 +239,11 @@ public class ApiClient {
         return this;
     }
 
+    /**
+     * Get SSL CA cert.
+     *
+     * @return Input stream to the SSL CA cert
+     */
     public InputStream getSslCaCert() {
         return sslCaCert;
     }
@@ -201,6 +251,9 @@ public class ApiClient {
     /**
      * Configure the CA certificate to be trusted when making https requests.
      * Use null to reset to default.
+     *
+     * @param sslCaCert input stream for SSL CA cert
+     * @return ApiClient
      */
     public ApiClient setSslCaCert(InputStream sslCaCert) {
         this.sslCaCert = sslCaCert;
@@ -245,6 +298,8 @@ public class ApiClient {
      * The default <code>dateFormat</code> supports these ISO 8601 date formats:
      *   2015-08-16
      *   2015-8-16
+     * @param str String to be parsed
+     * @return Date
      */
     public Date parseDate(String str) {
         if (str == null)
@@ -724,6 +779,7 @@ public class ApiClient {
      * Deserialize response body to Java object, according to the return type and
      * the Content-Type response header.
      *
+     * @param <T> Type
      * @param response HTTP response
      * @param returnType The type of the Java object
      * @return The deserialized Java object
@@ -874,9 +930,10 @@ public class ApiClient {
     /**
      * {@link #execute(Call, Type)}
      *
+     * @param <T> Type
      * @param call An instance of the Call object
      * @throws ApiException If fail to execute the call
-     * @return ApiResponse<T>
+     * @return ApiResponse&lt;T&gt;
      */
     public <T> ApiResponse<T> execute(Call call) throws ApiException {
         return execute(call, null);
@@ -885,6 +942,7 @@ public class ApiClient {
     /**
      * Execute HTTP call and deserialize the HTTP response body into the given return type.
      *
+     * @param <T> Type
      * @param returnType The return type used to deserialize HTTP response body
      * @param <T> The return type corresponding to (same with) returnType
      * @return <code>ApiResponse</code> object containing response status, headers and
@@ -903,8 +961,9 @@ public class ApiClient {
     }
 
     /**
-     * @link #executeAsync(Call, Type, ApiCallback)
+     * {@link #executeAsync(Call, Type, ApiCallback)}
      *
+     * @param <T> Type
      * @param call An instance of the Call object
      * @param callback ApiCallback<T>
      */
@@ -916,6 +975,7 @@ public class ApiClient {
      * Execute HTTP call asynchronously.
      *
      * @see #execute(Call, Type)
+     * @param <T> Type
      * @param call The callback to be executed when the API call finishes
      * @param returnType Return type
      * @param callback ApiCallback
@@ -944,6 +1004,9 @@ public class ApiClient {
     /**
      * Handle the given response, return the deserialized object when the response is successful.
      *
+     * @param <T> Type
+     * @param response Response
+     * @param returnType Return type
      * @throws ApiException If the response has a unsuccessful status code or
      *   fail to deserialize the response body
      */
@@ -1078,6 +1141,8 @@ public class ApiClient {
      * Update query and header parameters based on authentication settings.
      *
      * @param authNames The authentications to apply
+     * @param queryParams  List of query parameters
+     * @param headerParams  Map of header parameters
      */
     public void updateParamsForAuth(String[] authNames, List<Pair> queryParams, Map<String, String> headerParams) {
         for (String authName : authNames) {
@@ -1128,7 +1193,7 @@ public class ApiClient {
      * Guess Content-Type header from the given file (defaults to "application/octet-stream").
      *
      * @param file The given file
-     * @return The Content-Type guessed
+     * @return The guessed Content-Type
      */
     public String guessContentTypeFromFile(File file) {
         String contentType = URLConnection.guessContentTypeFromName(file.getName());
