@@ -12,7 +12,7 @@ import ObjectMapper
 
 /** {{description}} */{{/description}}
 
-class {{classname}}: Mappable {
+{{#swiftUseApiNamespace}}extension {{projectNamespace}} { {{/swiftUseApiNamespace}}class {{classname}}: Mappable {
 {{#vars}}{{#isEnum}}
     enum {{datatypeWithEnum}}: String { {{#allowableValues}}{{#values}}
         case {{enum}} = "{{raw}}"{{/values}}{{/allowableValues}}
@@ -29,5 +29,5 @@ class {{classname}}: Mappable {
     func mapping(map: Map) { {{#vars}}
         {{name}} <- {{#isDate}}(map["{{baseName}}"], APIHelper.dateFormatterTransform){{/isDate}}{{#isDateTime}}(map["{{baseName}}"], APIHelper.dateTimeFormatterTransform){{/isDateTime}}{{^isDate}}{{^isDateTime}}map["{{baseName}}"]{{/isDateTime}}{{/isDate}}{{/vars}}
     }
-}{{/model}}
+}{{#swiftUseApiNamespace}} } {{/swiftUseApiNamespace}}{{/model}}
 {{/models}}

@@ -24,28 +24,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Swift2Codegen extends DefaultCodegen implements CodegenConfig {
-    public static final String ENDPOINT_NAME = "endpointName";
     public static final String PROJECT_NAME = "projectName";
-    public static final String RESPONSE_AS = "responseAs";
-    public static final String UNWRAP_REQUIRED = "unwrapRequired";
-    public static final String POD_SOURCE = "podSource";
-    public static final String POD_AUTHORS = "podAuthors";
-    public static final String POD_SOCIAL_MEDIA_URL = "podSocialMediaURL";
-    public static final String POD_DOCSET_URL = "podDocsetURL";
-    public static final String POD_LICENSE = "podLicense";
-    public static final String POD_HOMEPAGE = "podHomepage";
-    public static final String POD_SUMMARY = "podSummary";
-    public static final String POD_DESCRIPTION = "podDescription";
-    public static final String POD_SCREENSHOTS = "podScreenshots";
-    public static final String POD_DOCUMENTATION_URL = "podDocumentationURL";
+    public static final String PROJECT_NAMESPACE = "projectNamespace";
     public static final String SWIFT_USE_API_NAMESPACE = "swiftUseApiNamespace";
-    protected static final String LIBRARY_PROMISE_KIT = "PromiseKit";
-    protected static final String[] RESPONSE_LIBRARIES = { LIBRARY_PROMISE_KIT };
     protected String projectName = "SwaggerClient";
     protected boolean unwrapRequired;
     protected boolean swiftUseApiNamespace;
     protected String[] responseAs = new String[0];
-    protected String sourceFolder = "Classes" + File.separator + "Swaggers";
+    protected String sourceFolder = "src";
     private static final Pattern PATH_PARAM_PATTERN = Pattern.compile("\\{[a-zA-Z_]+\\}");
 
     @Override
@@ -132,66 +118,31 @@ public class Swift2Codegen extends DefaultCodegen implements CodegenConfig {
 
         importMapping = new HashMap<String, String>();
 
-        cliOptions.add(new CliOption("endpointName", "endpointName name"));
-        cliOptions.add(new CliOption(PROJECT_NAME, "Project name in Xcode"));
-        cliOptions.add(new CliOption(RESPONSE_AS, "Optionally use libraries to manage response.  Currently " +
-                    StringUtils.join(RESPONSE_LIBRARIES, ", ") + " are available."));
-        cliOptions.add(new CliOption(UNWRAP_REQUIRED, "Treat 'required' properties in response as non-optional " +
-                    "(which would crash the app if api returns null as opposed to required option specified in json schema"));
-        cliOptions.add(new CliOption(POD_SOURCE, "Source information used for Podspec"));
-        cliOptions.add(new CliOption(CodegenConstants.POD_VERSION, "Version used for Podspec"));
-        cliOptions.add(new CliOption(POD_AUTHORS, "Authors used for Podspec"));
-        cliOptions.add(new CliOption(POD_SOCIAL_MEDIA_URL, "Social Media URL used for Podspec"));
-        cliOptions.add(new CliOption(POD_DOCSET_URL, "Docset URL used for Podspec"));
-        cliOptions.add(new CliOption(POD_LICENSE, "License used for Podspec"));
-        cliOptions.add(new CliOption(POD_HOMEPAGE, "Homepage used for Podspec"));
-        cliOptions.add(new CliOption(POD_SUMMARY, "Summary used for Podspec"));
-        cliOptions.add(new CliOption(POD_DESCRIPTION, "Description used for Podspec"));
-        cliOptions.add(new CliOption(POD_SCREENSHOTS, "Screenshots used for Podspec"));
-        cliOptions.add(new CliOption(POD_DOCUMENTATION_URL, "Documentation URL used for Podspec"));
-        cliOptions.add(new CliOption(SWIFT_USE_API_NAMESPACE, "Flag to make all the API classes inner-class of {{projectName}}API"));
+        cliOptions.add(new CliOption(PROJECT_NAME, "Project name"));
+        cliOptions.add(new CliOption(SWIFT_USE_API_NAMESPACE, "Flag to make all the Model classes inner-class of the api main class"));
     }
 
     @Override
     public void processOpts() {
         super.processOpts();
-
-        additionalProperties.put(ENDPOINT_NAME, initialCaps(camelize(sanitizeName((String) additionalProperties.get(ENDPOINT_NAME)), true)));
-
         // Setup project name
         if (additionalProperties.containsKey(PROJECT_NAME)) {
             setProjectName((String) additionalProperties.get(PROJECT_NAME));
         } else {
             additionalProperties.put(PROJECT_NAME, projectName);
         }
-        sourceFolder = projectName + File.separator + sourceFolder;
+        String originalSourceFolder = new String(sourceFolder);
+        sourceFolder = sourceFolder + File.separator + projectName;
 
-        // Setup unwrapRequired option, which makes all the properties with "required" non-optional
-        if (additionalProperties.containsKey(UNWRAP_REQUIRED)) {
-            setUnwrapRequired(Boolean.parseBoolean(String.valueOf(additionalProperties.get(UNWRAP_REQUIRED))));
-        }
-        additionalProperties.put(UNWRAP_REQUIRED, unwrapRequired);
-
-        // Setup unwrapRequired option, which makes all the properties with "required" non-optional
-        if (additionalProperties.containsKey(RESPONSE_AS)) {
-            Object responseAsObject = additionalProperties.get(RESPONSE_AS);
-            if (responseAsObject instanceof String) {
-                setResponseAs(((String)responseAsObject).split(","));
-            } else {
-                setResponseAs((String[]) responseAsObject);
-            }
-        }
-        additionalProperties.put(RESPONSE_AS, responseAs);
-        if (ArrayUtils.contains(responseAs, LIBRARY_PROMISE_KIT)) {
-            additionalProperties.put("usePromiseKit", true);
-        }
-
-        // Setup swiftUseApiNamespace option, which makes all the API classes inner-class of {{projectName}}API
         if (additionalProperties.containsKey(SWIFT_USE_API_NAMESPACE)) {
             swiftUseApiNamespace = Boolean.parseBoolean(String.valueOf(additionalProperties.get(SWIFT_USE_API_NAMESPACE)));
         }
+
         additionalProperties.put(SWIFT_USE_API_NAMESPACE, swiftUseApiNamespace);
-        supportingFiles.add(new SupportingFile("APIHelper.mustache", sourceFolder, "APIHelper.swift"));
+        if (swiftUseApiNamespace) {
+            additionalProperties.put(PROJECT_NAMESPACE, toApiName(projectName));
+        }
+        supportingFiles.add(new SupportingFile("APIHelper.mustache", originalSourceFolder + File.separator + "common", "APIHelper.swift"));
     }
 
     @Override
@@ -283,8 +234,11 @@ public class Swift2Codegen extends DefaultCodegen implements CodegenConfig {
      */
     @Override
     public String toModelFilename(String name) {
-        // should be the same as the model name
-        return toModelName(name);
+        String modelName = toModelName(name);
+        if (swiftUseApiNamespace) {
+            modelName = String.valueOf(additionalProperties.get(PROJECT_NAMESPACE)) + modelName;
+        }
+        return modelName;
     }
 
     @Override
@@ -351,7 +305,7 @@ public class Swift2Codegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public String toApiName(String name) {
         if(name.length() == 0 || name.equals("Default"))
-            return (String) additionalProperties.get(ENDPOINT_NAME) + "API";
+            return (String) additionalProperties.get(PROJECT_NAME) + "API";
         return initialCaps(name) + "API";
     }
 
