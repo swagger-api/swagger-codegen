@@ -15,7 +15,8 @@ class {{classname}} {
 {{#operation}}
 
     enum {{operationId}}Response {
-        {{#responses}}case Res{{code}}{{#dataType}}({{.}}){{/dataType}}{{#isDefault}}//default{{/isDefault}}
+        {{#responses}}{{#description}}/** {{description}} */
+        {{/description}}case Res{{code}}{{#dataType}}({{.}}){{/dataType}}{{#isDefault}}//default{{/isDefault}}
         {{/responses}}case Failure(NSError?)
     }
 
