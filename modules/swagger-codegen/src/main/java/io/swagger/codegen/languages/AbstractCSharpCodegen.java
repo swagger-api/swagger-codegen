@@ -75,25 +75,41 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
                 Arrays.asList(
                         "String",
                         "string",
+                        "bool",
                         "bool?",
+                        "double",
                         "double?",
+                        "decimal",
                         "decimal?",
+                        "short",
+                        "short?",
+                        "ushort",
+                        "ushort?",
+                        "int",
                         "int?",
+                        "uint",
+                        "uint?",
+                        "long",
                         "long?",
+                        "ulong",
+                        "ulong?",
+                        "float",
                         "float?",
                         "byte[]",
                         "ICollection",
                         "Collection",
                         "List",
                         "Dictionary",
+                        "DateTime",
                         "DateTime?",
+                        "DateTimeOffset",
                         "DateTimeOffset?",
                         "String",
                         "Boolean",
                         "Double",
                         "Int32",
                         "Int64",
-                        "Float",
+                        "Guid",
                         "Guid?",
                         "System.IO.Stream", // not really a primitive, we include it to avoid model import
                         "Object")
@@ -122,6 +138,8 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         typeMapping.put("map", "Dictionary");
         typeMapping.put("object", "Object");
         typeMapping.put("uuid", "Guid?");
+        typeMapping.put("Int", "int?");
+        typeMapping.put("Float", "float?");
     }
 
     public void setReturnICollection(boolean returnICollection) {
