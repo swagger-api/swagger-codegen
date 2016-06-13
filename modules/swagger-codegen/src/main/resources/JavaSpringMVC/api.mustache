@@ -67,8 +67,13 @@ public class {{classname}} {
                 return ResponseEntity.status(HttpStatus.OK.value()).body(result);
            }
         } catch (ApiException ex){
-           Map<String,String> errors = new HashMap<String,String>();
-           errors.put("Error", ex.getResponseBody());
+           Map<String,Object> errors = new HashMap<String,Object>();
+           if (ex.getResponseBody() != null){
+             errors.put("error", ex.getResponseBody());
+           }
+           if (ex.getErrorSpec() != null){
+             errors.put("error", ex.getErrorSpec());
+           }
            return ResponseEntity.status(ex.getHttpStatus().value()).body(errors);
         }
     }

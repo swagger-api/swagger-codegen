@@ -1,0 +1,42 @@
+package {{apiPackage}};
+
+import java.util.Map;
+
+{{>generatedAnnotation}}
+public class ErrorSpec {
+
+    private Integer code;
+    private String fields;
+    private String message;
+
+    public ErrorSpec(Integer code, String message, String fields){
+        this.code = code;
+        this.message = message;
+        this.fields = fields;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getFields() {
+        return fields;
+    }
+
+    public void setFields(String fields) {
+        this.fields = fields;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+}
+
