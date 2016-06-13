@@ -86,6 +86,8 @@ public class SpringMVCServerCodegen extends JavaClientCodegen {
                 (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiResponseMessage.java"));
         supportingFiles.add(new SupportingFile("notFoundException.mustache",
                 (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "NotFoundException.java"));
+        supportingFiles.add(new SupportingFile("errorSpec.mustache",
+                (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ErrorSpec.java"));
 
         supportingFiles.add(new SupportingFile("swaggerConfig.mustache",
                 (sourceFolder + File.separator + configPackage).replace(".", java.io.File.separator), "SwaggerConfig.java"));
