@@ -33,6 +33,7 @@ io.swagger.codegen.languages.SpringBootServerCodegen
 io.swagger.codegen.languages.SpringMVCServerCodegen
 io.swagger.codegen.languages.StaticDocCodegen
 io.swagger.codegen.languages.StaticHtmlGenerator
+io.swagger.codegen.languages.LatexGenerator
 io.swagger.codegen.languages.SwaggerGenerator
 io.swagger.codegen.languages.SwaggerYamlGenerator
 io.swagger.codegen.languages.SwiftCodegen

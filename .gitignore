@@ -30,6 +30,7 @@ packages/
 *.pm~
 *.xml~
 *.t~
+*.*~
 
 /target
 /generated-files
