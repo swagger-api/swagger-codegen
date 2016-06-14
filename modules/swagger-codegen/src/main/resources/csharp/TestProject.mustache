@@ -61,6 +61,12 @@ limitations under the License.
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <NugetPackagesPath Condition="Exists('$(SolutionDir)\packages')">$(SolutionDir)\packages</NugetPackagesPath>
+    <NugetPackagesPath Condition="Exists('..\packages')">..\packages</NugetPackagesPath>
+    <NugetPackagesPath Condition="Exists('..\..\packages')">..\..\packages</NugetPackagesPath>
+    <NugetPackagesPath Condition="Exists('..\..\vendor')">..\..\vendor</NugetPackagesPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -71,22 +77,29 @@ limitations under the License.
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
     <Reference Include="Newtonsoft.Json">
-        <HintPath Condition="Exists('$(SolutionDir)\packages')">$(SolutionDir)\packages\Newtonsoft.Json.8.0.3\lib\{{targetFrameworkNuget}}\Newtonsoft.Json.dll</HintPath>
-        <HintPath Condition="Exists('..\packages')">..\packages\Newtonsoft.Json.8.0.3\lib\{{targetFrameworkNuget}}\Newtonsoft.Json.dll</HintPath>
-        <HintPath Condition="Exists('..\..\packages')">..\..\packages\Newtonsoft.Json.8.0.3\lib\{{targetFrameworkNuget}}\Newtonsoft.Json.dll</HintPath>
-        <HintPath Condition="Exists('{{binRelativePath}}')">{{binRelativePath}}\Newtonsoft.Json.8.0.3\lib\{{targetFrameworkNuget}}\Newtonsoft.Json.dll</HintPath>
+      <HintPath>$(NugetPackagesPath)\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp">
-        <HintPath Condition="Exists('$(SolutionDir)\packages')">$(SolutionDir)\packages\RestSharp.105.1.0\lib\{{targetFrameworkNuget}}\RestSharp.dll</HintPath>
-        <HintPath Condition="Exists('..\packages')">..\packages\RestSharp.105.1.0\lib\{{targetFrameworkNuget}}\RestSharp.dll</HintPath>
-        <HintPath Condition="Exists('..\..\packages')">..\..\packages\RestSharp.105.1.0\lib\{{targetFrameworkNuget}}\RestSharp.dll</HintPath>
-        <HintPath Condition="Exists('{{binRelativePath}}')">{{binRelativePath}}\RestSharp.105.1.0\lib\{{targetFrameworkNuget}}\RestSharp.dll</HintPath>
+      <HintPath>$(NugetPackagesPath)\RestSharp.105.1.0\lib\net45\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-        <HintPath Condition="Exists('$(SolutionDir)\packages')">$(SolutionDir)\packages\NUnit.3.2.1\lib\nunit.framework.dll</HintPath>
-        <HintPath Condition="Exists('..\packages')">..\packages\NUnit.3.2.1\lib\nunit.framework.dll</HintPath>
-        <HintPath Condition="Exists('..\..\packages')">..\..\packages\NUnit.3.2.1\lib\nunit.framework.dll</HintPath>
-        <HintPath Condition="Exists('{{binRelativePath}}')">{{binRelativePath}}\NUnit.3.2.1\lib\nunit.framework.dll</HintPath>
+      <HintPath>$(NugetPackagesPath)\NUnit.3.2.1\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>$(NugetPackagesPath)\NUnit3TestAdapter.3.2.0\lib\Mono.Cecil.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="nunit.engine, Version=3.2.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>$(NugetPackagesPath)\NUnit3TestAdapter.3.2.0\lib\nunit.engine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="nunit.engine.api, Version=3.0.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>$(NugetPackagesPath)\NUnit3TestAdapter.3.2.0\lib\nunit.engine.api.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NUnit3.TestAdapter, Version=3.2.0.0, Culture=neutral, PublicKeyToken=4cb40d35494691ac, processorArchitecture=MSIL">
+      <HintPath>$(NugetPackagesPath)\NUnit3TestAdapter.3.2.0\lib\NUnit3.TestAdapter.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
