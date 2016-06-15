@@ -8,11 +8,20 @@
     <url>http://maven.apache.org</url>
     <build>
         <plugins>
+        	<plugin>
+        	    <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
             <!-- activate the plugin -->
             <plugin>
                 <groupId>io.swagger</groupId>
                 <artifactId>swagger-codegen-maven-plugin</artifactId>
-                <version>2.1.5-SNAPSHOT</version>
+                <version>2.2.0-SNAPSHOT</version>
                 <executions>
                     <execution>
                         <goals>
@@ -81,13 +90,8 @@
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-joda</artifactId>
-            <version>2.1.5</version>
-        </dependency>
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>${jodatime-version}</version>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson-version}</version>
         </dependency>
 
         <!-- Base64 encoding that works in both JVM and Android -->
@@ -108,7 +112,6 @@
         <swagger-annotations-version>1.5.0</swagger-annotations-version>
         <jersey-version>2.12</jersey-version>
         <jackson-version>2.4.2</jackson-version>
-        <jodatime-version>2.3</jodatime-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <junit-version>4.8.1</junit-version>
     </properties>

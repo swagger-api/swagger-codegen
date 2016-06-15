@@ -21,8 +21,6 @@ import io.swagger.codegen.ClientOptInput;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.DefaultGenerator;
 import io.swagger.codegen.config.CodegenConfigurator;
-import io.swagger.models.Swagger;
-import io.swagger.parser.SwaggerParser;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -32,9 +30,7 @@ import org.apache.maven.project.MavenProject;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import static io.swagger.codegen.config.CodegenConfiguratorUtils.*;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
@@ -288,7 +284,12 @@ public class CodeGenMojo extends AbstractMojo {
         }
 
         if (addCompileSourceRoot) {
-            project.addCompileSourceRoot(output.toString());
+            // The actual directories we want don't have a nice variable,
+            // but they are normally the directory above the package structure (so we chop that bit off).
+            project.addCompileSourceRoot(config.apiFileFolder()
+                    .substring(0, config.apiFileFolder().length() - config.apiPackage().length()));
+            project.addTestCompileSourceRoot(config.apiTestFileFolder()
+                    .substring(0, config.apiTestFileFolder().length() - config.testPackage().length()));
         }
     }
 }
