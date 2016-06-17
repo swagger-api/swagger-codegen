@@ -11,13 +11,14 @@ import java.util.*;
 
 public class AspNet5ServerCodegen extends AbstractCSharpCodegen {
 
-    protected String sourceFolder = "src" + File.separator + packageName;
 
     @SuppressWarnings("hiding")
     protected Logger LOGGER = LoggerFactory.getLogger(AspNet5ServerCodegen.class);
 
     public AspNet5ServerCodegen() {
         super();
+
+        this.sourceFolder = "src" + File.separator + packageName;
 
         outputFolder = "generated-code" + File.separator + this.getName();
 
