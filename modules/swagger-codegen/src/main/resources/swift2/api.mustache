@@ -32,16 +32,16 @@ class {{classname}} {
         path = path.stringByReplacingOccurrencesOfString("{{=<% %>=}}{<%paramName%>}<%={{ }}=%>", withString: "\({{paramName}})", options: .LiteralSearch, range: nil){{/pathParams}}
         let URLString = "{{basePath}}" + path
         
-        let headerParams:[String:String]? = {{^headerParams}}nil{{/headerParams}}{{#headerParams}}{{^secondaryParam}}[{{/secondaryParam}}
-            "{{baseName}}": {{#required}}"\({{paramName}})"{{/required}}{{^required}}{{paramName}} == nil ? "" : "\({{paramName}})"!{{/required}}{{#hasMore}},{{/hasMore}}{{^hasMore}}
-        ]{{/hasMore}}{{/headerParams}}
+        var headerFields:[String:String] = [:]
+        {{#consumes}}headerFields["Content-Type"] = "{{mediaType}}"{{/consumes}}{{#headerParams}}
+        headerFields["{{baseName}}"] = {{#required}}"\({{paramName}})"{{/required}}{{^required}}{{paramName}} == nil ? "" : "\({{paramName}})"!{{/required}}{{/headerParams}}
 
         {{#bodyParam}}
-        let data:NSData
+        let sentData:NSData
         if let {{^required}}{{paramName}} = {{paramName}}, {{/required}}dataString = Mapper().toJSONString({{paramName}}), encodedData = dataString.dataUsingEncoding(NSUTF8StringEncoding) {
-            data = encodedData
+            sentData = encodedData
         } else {
-            data = NSData()
+            sentData = NSData()
         }
         {{/bodyParam}}
         {{^bodyParam}}
@@ -49,7 +49,7 @@ class {{classname}} {
             "{{baseName}}": {{paramName}}{{#hasMore}},{{/hasMore}}{{^hasMore}}
         ]{{/hasMore}}{{/queryParams}})
         
-        Alamofire.request(Method.{{httpMethod}}, URLString, parameters: queryParams, encoding: .URL, headers: headerParams){{/bodyParam}}{{#bodyParam}}        Alamofire.upload(Method.{{httpMethod}}, URLString, headers: headerParams, data: data){{/bodyParam}}.response { (urlRequest, nshttpUrlResponse, data, err) in
+        Alamofire.request(Method.{{httpMethod}}, URLString, parameters: queryParams, encoding: .URL, headers: headerFields){{/bodyParam}}{{#bodyParam}}        Alamofire.upload(Method.{{httpMethod}}, URLString, headers: headerFields, data: sentData){{/bodyParam}}.response { (urlRequest, nshttpUrlResponse, data, err) in
             guard let callback = callback else {
                 return
             }
