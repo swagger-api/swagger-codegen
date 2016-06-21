@@ -59,3 +59,29 @@ class APIHelper {
         return destination
     }
 }
+
+protocol SwaggerRequiredFieldValidating {
+    func hasAllRequiredFields() -> Bool
+}
+
+extension Array:SwaggerRequiredFieldValidating {
+    func hasAllRequiredFields() -> Bool {
+        for item in self {
+            if let validatingItem = item as? SwaggerRequiredFieldValidating where !validatingItem.hasAllRequiredFields() {
+                return false
+            }
+        }
+        return true
+    }
+}
+
+extension Dictionary:SwaggerRequiredFieldValidating {
+    func hasAllRequiredFields() -> Bool {
+        for (key, item) in self {
+            if let validatingItem = item as? SwaggerRequiredFieldValidating where !validatingItem.hasAllRequiredFields() {
+                return false
+            }
+        }
+        return true
+    }
+}

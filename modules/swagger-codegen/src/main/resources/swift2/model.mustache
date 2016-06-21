@@ -12,14 +12,15 @@ import ObjectMapper
 
 /** {{description}} */{{/description}}
 
-{{#swiftUseApiNamespace}}extension {{projectNamespace}} { {{/swiftUseApiNamespace}}class {{classname}}: Mappable {
+{{#swiftUseApiNamespace}}extension {{projectNamespace}} { {{/swiftUseApiNamespace}}class {{classname}}: Mappable, SwaggerRequiredFieldValidating {
 {{#vars}}{{#isEnum}}
     enum {{datatypeWithEnum}}: String { {{#allowableValues}}{{#values}}
         case {{enum}} = "{{raw}}"{{/values}}{{/allowableValues}}
     }
     {{/isEnum}}{{/vars}}{{#vars}}
     {{#isEnum}}{{#description}}/** {{description}} */
-    {{/description}}var {{name}}: {{{datatypeWithEnum}}}{{^unwrapRequired}}?{{/unwrapRequired}}{{#unwrapRequired}}{{^required}}?{{/required}}{{#required}}!{{/required}}{{/unwrapRequired}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}}{{/isEnum}}{{^isEnum}}{{#description}}/** {{description}} */
+    {{/description}}{{#required}}/** required */
+    {{/required}}var {{name}}: {{{datatypeWithEnum}}}{{^unwrapRequired}}?{{/unwrapRequired}}{{#unwrapRequired}}{{^required}}?{{/required}}{{#required}}!{{/required}}{{/unwrapRequired}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}}{{/isEnum}}{{^isEnum}}{{#description}}/** {{description}} */
     {{/description}}var {{name}}: {{{datatype}}}{{^unwrapRequired}}?{{/unwrapRequired}}{{#unwrapRequired}}{{^required}}?{{/required}}{{#required}}!{{/required}}{{/unwrapRequired}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}}{{/isEnum}}{{/vars}}
 
     required init?(_ map: Map){}
@@ -28,6 +29,15 @@ import ObjectMapper
 
     func mapping(map: Map) { {{#vars}}
         {{name}} <- {{#isDate}}(map["{{baseName}}"], APIHelper.dateFormatterTransform){{/isDate}}{{#isDateTime}}(map["{{baseName}}"], APIHelper.dateTimeFormatterTransform){{/isDateTime}}{{^isDate}}{{^isDateTime}}map["{{baseName}}"]{{/isDateTime}}{{/isDate}}{{/vars}}
+    }
+
+    func hasAllRequiredFields() -> Bool {
+        {{#vars}}{{#required}}if {{name}} == nil {
+            return false
+        } else if let validatingObject = {{name}} as? SwaggerRequiredFieldValidating where !validatingObject.hasAllRequiredFields() {
+            return false
+        }
+        {{/required}}{{/vars}}return true
     }
 }{{#swiftUseApiNamespace}} } {{/swiftUseApiNamespace}}{{/model}}
 {{/models}}
