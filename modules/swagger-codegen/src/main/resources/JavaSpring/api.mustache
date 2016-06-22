@@ -48,7 +48,7 @@ public interface {{classname}} {
         // do some magic!
         return {{#async}}() -> {{/async}}new ResponseEntity<{{>returnTypes}}>(HttpStatus.OK);
     }{{/java8}}
-
+{{#headerParams}}{{#isEnum}}{{>enumInnerClass}}{{/isEnum}}{{/headerParams}}{{#queryParams}}{{#isEnum}}{{>enumInnerClass}}{{/isEnum}}{{/queryParams}}{{#pathParams}}{{#isEnum}}{{>enumInnerClass}}{{/isEnum}}{{/pathParams}}
 {{/operation}}
 }
 {{/operations}}
