@@ -1501,30 +1501,38 @@ public class DefaultCodegen {
         }
 
         property.baseType = getSwaggerType(p);
-
+        // A quick fix to support 1 sub array like [[Object]]
       	if (p instanceof ArrayProperty) {
-        		property.isContainer = true;
-        		property.isListContainer = true;
-        		property.containerType = "array";
-        		ArrayProperty ap = (ArrayProperty) p;
-        		CodegenProperty cp = fromProperty(property.name, ap.getItems());
-        		if (cp == null) {
-        			LOGGER.warn("skipping invalid property " + Json.pretty(p));
-        		} else {
-          			property.baseType = getSwaggerType(p);
-          			if (!languageSpecificPrimitives.contains(cp.baseType)) {
-          				  property.complexType = cp.baseType;
-          			} else {
-          				  property.isPrimitiveType = true;
-          			}
-          			property.items = cp;
-          			if (property.items.isEnum) {
-          				  property.datatypeWithEnum = property.datatypeWithEnum.replace(property.items.baseType,
-          						property.items.datatypeWithEnum);
-                            if(property.defaultValue != null)
-          				        property.defaultValue = property.defaultValue.replace(property.items.baseType, property.items.datatypeWithEnum);
-          			}
-        		}
+            if ("array".equals(((ArrayProperty) p).getItems().getType())) {
+                Property subArray = ((ArrayProperty)((ArrayProperty) p).getItems()).getItems();
+                if(subArray instanceof RefProperty) {
+                    RefProperty refProp = (RefProperty) subArray;
+                    property.complexType = refProp.getSimpleRef();
+                }
+            }
+            property.isContainer = true;
+            property.isListContainer = true;
+            property.containerType = "array";
+            ArrayProperty ap = (ArrayProperty) p;
+            CodegenProperty cp = fromProperty(property.name, ap.getItems());
+            if (cp == null) {
+                LOGGER.warn("skipping invalid property " + Json.pretty(p));
+            } else {
+                property.baseType = getSwaggerType(p);
+                if (!languageSpecificPrimitives.contains(cp.baseType)) {
+                      property.complexType = cp.baseType;
+                } else {
+                      property.isPrimitiveType = true;
+                }
+                property.items = cp;
+                if (property.items.isEnum) {
+                      property.datatypeWithEnum = property.datatypeWithEnum.replace(property.items.baseType,
+                            property.items.datatypeWithEnum);
+                        if(property.defaultValue != null)
+                            property.defaultValue = property.defaultValue.replace(property.items.baseType, property.items.datatypeWithEnum);
+                }
+            }
+
       	} else if (p instanceof MapProperty) {
             property.isContainer = true;
             property.isMapContainer = true;
