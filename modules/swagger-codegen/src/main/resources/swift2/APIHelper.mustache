@@ -77,7 +77,7 @@ extension Array:SwaggerRequiredFieldValidating {
 
 extension Dictionary:SwaggerRequiredFieldValidating {
     func hasAllRequiredFields() -> Bool {
-        for (key, item) in self {
+        for (_, item) in self {
             if let validatingItem = item as? SwaggerRequiredFieldValidating where !validatingItem.hasAllRequiredFields() {
                 return false
             }
