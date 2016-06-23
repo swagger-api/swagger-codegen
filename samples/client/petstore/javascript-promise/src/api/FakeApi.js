@@ -131,6 +131,43 @@
         authNames, contentTypes, accepts, returnType
       );
     }
+
+
+    /**
+     * To test enum query parameters
+     * @param {Object} opts Optional parameters
+     * @param {module:model/String} opts.enumQueryString Query parameter enum test (string) (default to -efg)
+     * @param {Number} opts.enumQueryInteger Query parameter enum test (double)
+     * @param {Number} opts.enumQueryDouble Query parameter enum test (double)
+     */
+    this.testEnumQueryParameters = function(opts) {
+      opts = opts || {};
+      var postBody = null;
+
+
+      var pathParams = {
+      };
+      var queryParams = {
+        'enum_query_integer': opts['enumQueryInteger']
+      };
+      var headerParams = {
+      };
+      var formParams = {
+        'enum_query_string': opts['enumQueryString'],
+        'enum_query_double': opts['enumQueryDouble']
+      };
+
+      var authNames = [];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = null;
+
+      return this.apiClient.callApi(
+        '/fake', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType
+      );
+    }
   };
 
   return exports;

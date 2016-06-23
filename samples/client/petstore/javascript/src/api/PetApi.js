@@ -160,7 +160,7 @@
     /**
      * Finds Pets by status
      * Multiple status values can be provided with comma separated strings
-     * @param {Array.<String>} status Status values that need to be considered for filter
+     * @param {Array.<module:model/String>} status Status values that need to be considered for filter
      * @param {module:api/PetApi~findPetsByStatusCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {Array.<module:model/Pet>}
      */

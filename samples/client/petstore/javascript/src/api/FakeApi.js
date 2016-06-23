@@ -139,6 +139,51 @@
         authNames, contentTypes, accepts, returnType, callback
       );
     }
+
+    /**
+     * Callback function to receive the result of the testEnumQueryParameters operation.
+     * @callback module:api/FakeApi~testEnumQueryParametersCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * To test enum query parameters
+     * @param {Object} opts Optional parameters
+     * @param {module:model/String} opts.enumQueryString Query parameter enum test (string) (default to -efg)
+     * @param {Number} opts.enumQueryInteger Query parameter enum test (double)
+     * @param {Number} opts.enumQueryDouble Query parameter enum test (double)
+     * @param {module:api/FakeApi~testEnumQueryParametersCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    this.testEnumQueryParameters = function(opts, callback) {
+      opts = opts || {};
+      var postBody = null;
+
+
+      var pathParams = {
+      };
+      var queryParams = {
+        'enum_query_integer': opts['enumQueryInteger']
+      };
+      var headerParams = {
+      };
+      var formParams = {
+        'enum_query_string': opts['enumQueryString'],
+        'enum_query_double': opts['enumQueryDouble']
+      };
+
+      var authNames = [];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = null;
+
+      return this.apiClient.callApi(
+        '/fake', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
   };
 
   return exports;
