@@ -7,7 +7,7 @@
   <version>{{artifactVersion}}</version>
   <build>
     <sourceDirectory>src/gen/java</sourceDirectory>
-	<defaultGoal>clean package install</defaultGoal>
+	<defaultGoal>clean package install deploy</defaultGoal>
     <plugins>
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
@@ -113,13 +113,40 @@
       <version>${servlet-api-version}</version>
     </dependency>
   </dependencies>
-  <repositories>
-    <repository>
-      <id>jcenter-snapshots</id>
-      <name>jcenter</name>
-      <url>http://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
-    </repository>
-  </repositories>
+	<repositories>
+		<repository>
+			<id>deploymentRelease</id>
+			<url>http://maven.vcdev.lan/nexus/content/repositories/releases</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>deploymentSnapshot</id>
+			<name>Internal Releases</name>
+			<url>http://maven.vcdev.lan/nexus/content/repositories/snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<distributionManagement>
+		<repository>
+			<id>deployment</id>
+			<url>http://maven.vcdev.lan/nexus/content/repositories/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>deployment</id>
+			<name>Internal Releases</name>
+			<url>http://maven.vcdev.lan/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
   <properties>
     <swagger-core-version>1.5.8</swagger-core-version>
     <jetty-version>9.2.9.v20150224</jetty-version>
