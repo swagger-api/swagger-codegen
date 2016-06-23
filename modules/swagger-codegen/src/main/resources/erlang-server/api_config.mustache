@@ -1,0 +1,29 @@
+-module({{packageName}}_api_config).
+
+-include_lib("{{packageName}}_router.hrl").
+
+-export([get_handler/1]).
+-export([handle/0]).
+
+get_handler(OperationID) ->
+    case maps:find(OperationID, handlers()) of
+        {ok, Handler} ->
+            Handler;
+        error ->
+            error({unknown_operation, OperationID})
+    end.
+
+handlers() ->
+    #{
+    {{#apiInfo}}{{#apis}}
+        {{#operations}}{{#operation}}
+                "{{operationId}}" => default_handler(){{#hasMore}},{{/hasMore}}
+        {{/operation}}{{#hasMore}},{{/hasMore}}{{/operations}}
+    {{/apis}}{{/apiInfo}}
+    }.
+
+default_handler() ->
+    ?MODULE.
+
+handle() ->
+    {error, {501, [], <<"Deafault swagger response">>}}.

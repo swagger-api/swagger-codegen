@@ -1,0 +1,11 @@
+-ifndef(__{{packageName}}_router__).
+-define(__{{packageName}}_router__, 42).
+
+-record(operation, {
+    path = "",
+    id = "",
+    httpMethod = "",
+    baseName = ""
+}).
+
+-endif.

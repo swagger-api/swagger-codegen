@@ -1,0 +1,29 @@
+-module({{packageName}}_router).
+
+-include_lib("{{packageName}}_router.hrl").
+
+-export([get_paths/0]).
+-export([get_operations/0]).
+
+get_paths() ->
+    [
+        {'_', [{Op#operation.path, handler(), [Op#operation.id]} || Op <- get_operations()] }
+    ].
+
+get_operations() ->
+    [
+    {{#apiInfo}}{{#apis}}
+        {{#operations}}{{#operation}}
+            #operation{
+                path = "{{path}}",
+                id = "{{operationId}}",
+                httpMethod = "{{httpMethod}}",
+                baseName = "{{baseName}}"
+            }{{#hasMore}},{{/hasMore}}
+        {{/operation}}{{#hasMore}},{{/hasMore}}{{/operations}}
+    {{/apis}}{{/apiInfo}}
+    ].
+
+handler() ->
+    list_to_atom("{{packageName}}" ++ "_handler").
+
