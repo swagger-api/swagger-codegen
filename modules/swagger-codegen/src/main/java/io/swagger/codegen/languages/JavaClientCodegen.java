@@ -207,4 +207,15 @@ public class JavaClientCodegen extends AbstractJavaCodegen {
     public void setUseRxJava(boolean useRxJava) {
         this.useRxJava = useRxJava;
     }
+
+    @Override
+    public String escapeQuotationMark(String input) {
+        // remove " to avoid code injection
+        return input.replace("\"", "");
+    }
+
+    @Override
+    public String escapeUnsafeCharacters(String input) {
+        return input.replace("*/", "");
+    }
 }
