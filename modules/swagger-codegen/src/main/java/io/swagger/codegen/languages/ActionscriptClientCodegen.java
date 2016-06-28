@@ -22,7 +22,6 @@ public class ActionscriptClientCodegen extends DefaultCodegen implements Codegen
         apiPackage = "io.swagger.client.api";
         outputFolder = "generated-code" + File.separatorChar + "flash";
         modelTemplateFiles.put("model.mustache", ".as");
-        // modelTemplateFiles.put("modelList.mustache", "List.as");
         apiTemplateFiles.put("api.mustache", ".as");
         embeddedTemplateDir = templateDir = "actionscript";
 
@@ -104,38 +103,11 @@ public class ActionscriptClientCodegen extends DefaultCodegen implements Codegen
         additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
         additionalProperties.put(CodegenConstants.PACKAGE_VERSION, packageVersion);
 
-        //modelPackage = invokerPackage + File.separatorChar + "client" + File.separatorChar + "model";
-        //apiPackage = invokerPackage + File.separatorChar + "client" + File.separatorChar + "api";
-
         final String invokerFolder = (sourceFolder + File.separator + "src/" + invokerPackage + File.separator).replace(".", File.separator).replace('.', File.separatorChar);
 
-        supportingFiles.add(new SupportingFile("ApiInvoker.as", invokerFolder + "common", "ApiInvoker.as"));
-        supportingFiles.add(new SupportingFile("ApiUrlHelper.as", invokerFolder + "common", "ApiUrlHelper.as"));
-        supportingFiles.add(new SupportingFile("ApiUserCredentials.as", invokerFolder + "common", "ApiUserCredentials.as"));
-        //supportingFiles.add(new SupportingFile("ListWrapper.as", invokerFolder + "common", "ListWrapper.as"));
-        supportingFiles.add(new SupportingFile("SwaggerApi.as", invokerFolder + "common", "SwaggerApi.as"));
-        supportingFiles.add(new SupportingFile("XMLWriter.as", invokerFolder + "common", "XMLWriter.as"));
-        supportingFiles.add(new SupportingFile("ApiError.as", invokerFolder + "exception", "ApiError.as"));
-        supportingFiles.add(new SupportingFile("ApiErrorCodes.as", invokerFolder + "exception", "ApiErrorCodes.as"));
+        supportingFiles.add(new SupportingFile("HttpClient.as", invokerFolder, "HttpClient.as"));
         supportingFiles.add(new SupportingFile("ApiClientEvent.as", invokerFolder + "event", "ApiClientEvent.as"));
         supportingFiles.add(new SupportingFile("Response.as", invokerFolder + "event", "Response.as"));
-        //supportingFiles.add(new SupportingFile("build.properties", sourceFolder, "build.properties"));
-        //supportingFiles.add(new SupportingFile("build.xml", sourceFolder, "build.xml"));
-        //supportingFiles.add(new SupportingFile("README.txt", sourceFolder, "README.txt"));
-        //supportingFiles.add(new SupportingFile("AirExecutorApp-app.xml", sourceFolder + File.separatorChar
-        //        + "bin", "AirExecutorApp-app.xml"));
-        //supportingFiles.add(new SupportingFile("ASAXB-0.1.1.swc", sourceFolder + File.separatorChar
-        //        + "lib", "ASAXB-0.1.1.swc"));
-        supportingFiles.add(new SupportingFile("as3corelib.swc", sourceFolder + File.separatorChar
-                + "lib", "as3corelib.swc"));
-        //supportingFiles.add(new SupportingFile("flexunit-4.1.0_RC2-28-flex_3.5.0.12683.swc", sourceFolder
-        //        + File.separator + "lib" + File.separator + "ext", "flexunit-4.1.0_RC2-28-flex_3.5.0.12683.swc"));
-        //supportingFiles.add(new SupportingFile("flexunit-aircilistener-4.1.0_RC2-28-3.5.0.12683.swc", sourceFolder
-        //       + File.separator + "lib" + File.separator + "ext", "flexunit-aircilistener-4.1.0_RC2-28-3.5.0.12683.swc"));
-        //supportingFiles.add(new SupportingFile("flexunit-cilistener-4.1.0_RC2-28-3.5.0.12683.swc", sourceFolder
-        //        + File.separator + "lib" + File.separator + "ext", "flexunit-cilistener-4.1.0_RC2-28-3.5.0.12683.swc"));
-        //supportingFiles.add(new SupportingFile("flexunit-core-flex-4.0.0.2-sdk3.5.0.12683.swc", sourceFolder
-        //        + File.separator + "lib" + File.separator + "ext", "flexunit-core-flex-4.0.0.2-sdk3.5.0.12683.swc"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
     }
