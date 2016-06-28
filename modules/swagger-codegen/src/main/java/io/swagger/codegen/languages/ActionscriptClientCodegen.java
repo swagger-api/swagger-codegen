@@ -103,13 +103,11 @@ public class ActionscriptClientCodegen extends DefaultCodegen implements Codegen
         additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
         additionalProperties.put(CodegenConstants.PACKAGE_VERSION, packageVersion);
 
-        final String invokerFolder = (sourceFolder + File.separator + "src/" + invokerPackage + File.separator).replace(".", File.separator).replace('.', File.separatorChar);
+        final String invokerFolder = (sourceFolder + File.separator + "src/main/flash/" + invokerPackage + File.separator).replace(".", File.separator).replace('.', File.separatorChar);
 
         supportingFiles.add(new SupportingFile("HttpClient.as", invokerFolder, "HttpClient.as"));
         supportingFiles.add(new SupportingFile("ApiClientEvent.as", invokerFolder + "event", "ApiClientEvent.as"));
         supportingFiles.add(new SupportingFile("Response.as", invokerFolder + "event", "Response.as"));
-        supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
-        supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
     }
 
     private static String dropDots(String str) {
@@ -138,13 +136,13 @@ public class ActionscriptClientCodegen extends DefaultCodegen implements Codegen
 
     @Override
     public String apiFileFolder() {
-        return (outputFolder + File.separatorChar + sourceFolder + File.separatorChar + "src/"
+        return (outputFolder + File.separatorChar + sourceFolder + File.separatorChar + "src/main/flash/"
                 + apiPackage().replace('.', File.separatorChar)).replace('/', File.separatorChar);
     }
 
     @Override
     public String modelFileFolder() {
-        return (outputFolder + File.separatorChar + sourceFolder + File.separatorChar + "src/"
+        return (outputFolder + File.separatorChar + sourceFolder + File.separatorChar + "src/main/flash/"
                 + modelPackage().replace('.', File.separatorChar)).replace('/', File.separatorChar);
     }
 
