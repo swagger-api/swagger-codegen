@@ -1,9 +1,9 @@
 %% basic handler
 -module({{packageName}}_handler).
 
--include_lib("{{packageName}}_router.hrl").
+-include("{{packageName}}_request.hrl").
 
-
+%% Cowboy REST callbacks
 -export([allowed_methods/2]).
 -export([init/3]).
 -export([rest_init/2]).
@@ -16,39 +16,72 @@
 -export([malformed_request/2]).
 -export([valid_content_headers/2]).
 -export([valid_entity_length/2]).
--export([handle/2]).
+
+%% Handlers
+-export([handle_request_json/2]).
 
 -record(state, {
-    method,
-    operationID
+    operation_id,
+    logic_handler,
+    validator_state,
+    parsed_request,
+    context=#{}
 }).
 
-init(_Transport, Req, [OperationID]) ->
-    {upgrade, protocol, cowboy_rest, Req, [OperationID]}.
+init(_Transport, Req, Opts) ->
+    {upgrade, protocol, cowboy_rest, Req, Opts}.
 
-rest_init(Req0, [OperationID]) ->
-    {Method, Req} = cowboy_req:method(Req0),
-    {ok, Req, #state{method = Method, operationID = OperationID}}.
+rest_init(Req0, [OperationID, LogicHandler, ValidatorState]) ->
+    ParsingParams = [method, bindings, qs_vals, headers],
+    {PR, Req} = {{packageName}}_utils:parse_request(ParsingParams, Req0),
+    State = #state{
+      operation_id = OperationID,
+      logic_handler = LogicHandler,
+      validator_state = ValidatorState,
+      parsed_request = PR
+    },
+    {ok, Req, State}.
 
-allowed_methods(Req, State = #state{operationID = ID}) ->
-    Op = get_operation_by_id(ID),
-    {[list_to_binary(Op#operation.httpMethod)], Req, State}.
+{{#apiInfo}}{{#apis}}
+    {{#operations}}{{#operation}}
+    allowed_methods(Req, State = #state{operation_id = "{{operationId}}"}) ->
+        {[<<"{{httpMethod}}">>], Req, State}{{#hasMore}};{{/hasMore}}
+    {{/operation}}{{#hasMore}};{{/hasMore}}{{^hasMore}}.{{/hasMore}}{{/operations}}
+{{/apis}}{{/apiInfo}}
 
-is_authorized(Req, State) ->
-    {true, Req, State}.
+{{#apiInfo}}{{#apis}}
+    {{#operations}}{{#operation}}
+    is_authorized(Req, State = #state{operation_id = "{{operationId}}" = OperationID, logic_handler = LogicHandler, parsed_request = PR}) ->
+    {{#authMethods}}
+        {{#isApiKey}}
+          From = {{#isKeyInQuery}}qs_val{{/isKeyInQuery}}{{#isKeyInHeader}}header{{/isKeyInHeader}},
+          case {{packageName}}_auth:authorize_api_key(From, "{{keyParamName}}", OperationID, PR, LogicHandler) of
+            {true, Context} ->  {true, Req, State#state{context = Context}};
+            {false, AuthHeader} ->  {{false, AuthHeader}, Req, State}
+          end
+        {{/isApiKey}}
+    {{/authMethods}}{{#hasMore}};{{/hasMore}}
+    {{/operation}}{{#hasMore}};{{/hasMore}}{{^hasMore}}.{{/hasMore}}{{/operations}}
+{{/apis}}{{/apiInfo}}
 
 content_types_accepted(Req, State) ->
     {[
-        {<<"application/json">>, handle}
+        {<<"application/json">>, handle_request_json}
     ], Req, State}.
 %%get head
 
-valid_content_headers(Req, State) ->
-    {true, Req, State}.
+{{#apiInfo}}{{#apis}}
+    {{#operations}}{{#operation}}
+    valid_content_headers(Req0, State = #state{operation_id = "{{operationId}}"}) ->
+        Headers = [{{#headerParams}}"{{baseName}}"{{#hasMore}},{{/hasMore}}{{/headerParams}}],
+        {Result, Req} = validate_headers(Headers, Req0),
+        {Result, Req, State}{{#hasMore}};{{/hasMore}}
+    {{/operation}}{{#hasMore}};{{/hasMore}}{{^hasMore}}.{{/hasMore}}{{/operations}}
+{{/apis}}{{/apiInfo}}
 
 content_types_provided(Req, State) ->
     {[
-        {<<"application/json">>, handle}
+        {<<"application/json">>, handle_request_json}
     ], Req, State}.
 
 malformed_request(Req, State) ->
@@ -63,21 +96,25 @@ delete_resource(Req, State) ->
 known_content_type(Req, State) ->
     {true, Req, State}.
 
-valid_entity_length(Req, State) ->
-    {true, Req, State}.
+valid_entity_length(Req0, State = #state{parsed_request = PR0}) ->
+    %% @TODO check the length
+    {PR, Req} = {{packageName}}_utils:parse_request(body, PR0, Req0),
+    {true, Req, State#state{parsed_request = PR}}.
 
 %%%%
-handle(Req0, State = #state{operationID = ID}) ->
-    Handler = {{packageName}}_api_config:get_handler(ID),
-    case Handler:handle() of
+handle_request_json(
+  Req0,
+  State = #state{
+    operation_id = OperationID,
+    logic_handler = LogicHandler,
+    validator_state = ValidatorState,
+    parsed_request = PR
+  }
+) ->
+    Populated = populate_model(OperationID, PR, ValidatorState),
+    case LogicHandler:handle_request(OperationID, Populated) of
         {ok, {Headers, Body}} ->
-            Req1 = lists:foldl(
-                fun({K, V}, Req) ->
-                    cowboy_req:set_resp_header(K, V, Req)
-                end,
-                Req0,
-                Headers
-            ),
+            Req1 = swagger_utils:set_resp_headers(Headers, Req0),
             Req = cowboy_req:set_resp_body(Body, Req1),
             {true, Req, State};
         {error, {Status, Headers, Reason}} ->
@@ -85,13 +122,76 @@ handle(Req0, State = #state{operationID = ID}) ->
             {halt, Req, State}
     end.
 
-get_operation_by_id(OperationID) ->
-    get_operation_by_id(OperationID, {{packageName}}_router:get_operations()).
 
-get_operation_by_id(OperationID, []) ->
-    error({unknown_operation, OperationID});
-get_operation_by_id(OperationID, [R = #operation{id = OperationID}| _]) ->
-    R;
-get_operation_by_id(OperationID, [_| T]) ->
-    get_operation_by_id(OperationID, T).
+{{#apiInfo}}{{#apis}}
+    {{#operations}}{{#operation}}
+populate_model("{{operationId}}", PR, ValidatorState) ->
+  Params = [
+  {{#allParams}}
+    {{#isFormParam}}
+        { {{dataType}}, form, "{{baseName}}"}
+    {{/isFormParam}}
+    {{#isQueryParam}}
+        { {{dataType}}, qs_val, '{{baseName}}'}
+    {{/isQueryParam}}
+    {{#isPathParam}}
+        { {{dataType}}, path, '{{baseName}}'}
+    {{/isPathParam}}
+    {{#isHeaderParam}}
+        { {{dataType}}, header, "{{baseName}}"}
+    {{/isHeaderParam}}
+    {{#isBodyParam}}
+      {{#baseType}}
+        { model, body, "{{dataType}}"}
+      {{/baseType}}
+    {{/isBodyParam}}{{#hasMore}},{{/hasMore}}
+  {{/allParams}}
+  ],
+  populate_model_fields(Params, PR, ValidatorState)
+  {{#hasMore}};{{/hasMore}}
+    {{/operation}}{{#hasMore}};{{/hasMore}}{{^hasMore}}.{{/hasMore}}{{/operations}}
+{{/apis}}{{/apiInfo}}
+
+
+populate_model_fields(Params, PR, ValidatorState) ->
+  populate_model_fields(Params, PR, ValidatorState, #{}).
+
+populate_model_fields([], _, _, Model) ->
+  Model;
+
+populate_model_fields([FieldParams | T], PR, ValidatorState, Model) ->
+  {ok, K, V} =  populate_model_field(FieldParams, PR, ValidatorState),
+  populate_model_fields(T, PR, ValidatorState, maps:put(K, V, Model)).
+
+populate_model_field({model, body, Name}, #parsed_request{body = Body}, ValidatorState) ->
+  PreparedBody = case Body of
+    <<"">> -> #{};
+    _ -> jsx:decode(Body, [return_maps])
+  end,
+  Definition =  list_to_binary("#/definitions/" ++ Name),
+  try
+    jesse_schema_validator:validate_with_state(
+      [{<<"$ref">>, Definition}],
+      PreparedBody,
+      ValidatorState
+    ),
+    {ok, Name, PreparedBody}
+  catch
+      _:E ->
+        throw({invalid_body, E})
+  end;
+
+populate_model_field({_DataType, qs_val, Name}, #parsed_request{qs_vals = QS}, _) ->
+  Value = {{packageName}}_utils:get_opt(Name, QS),
+  {ok, Name, Value};
+
+populate_model_field({_DataType, header, Name}, #parsed_request{headers = Headers}, _) ->
+  Value = {{packageName}}_utils:get_opt(Name, Headers),
+  {ok, Name, Value};
+
+populate_model_field({_DataType, path, Name}, #parsed_request{bindings = Bindings}, _) ->
+  Value = {{packageName}}_utils:get_opt(Name, Bindings),
+  {ok, Name, Value}.
+
+validate_headers(_, Req) -> {true, Req}.
 

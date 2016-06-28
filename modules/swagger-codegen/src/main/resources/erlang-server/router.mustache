@@ -1,29 +1,22 @@
 -module({{packageName}}_router).
 
--include_lib("{{packageName}}_router.hrl").
+-export([get_paths/2]).
 
--export([get_paths/0]).
--export([get_operations/0]).
-
-get_paths() ->
+get_paths(LogicHandler, SwaggerPath) ->
+    ValidatorState = prepare_validator(SwaggerPath),
     [
-        {'_', [{Op#operation.path, handler(), [Op#operation.id]} || Op <- get_operations()] }
-    ].
-
-get_operations() ->
-    [
-    {{#apiInfo}}{{#apis}}
+        {'_',
+          [
+      {{#apiInfo}}{{#apis}}
         {{#operations}}{{#operation}}
-            #operation{
-                path = "{{path}}",
-                id = "{{operationId}}",
-                httpMethod = "{{httpMethod}}",
-                baseName = "{{baseName}}"
-            }{{#hasMore}},{{/hasMore}}
+            {"{{path}}", '{{packageName}}_handler', ["{{operationId}}", LogicHandler, ValidatorState]}
+        {{#hasMore}},{{/hasMore}}
         {{/operation}}{{#hasMore}},{{/hasMore}}{{/operations}}
     {{/apis}}{{/apiInfo}}
+            ]
+          }
     ].
 
-handler() ->
-    list_to_atom("{{packageName}}" ++ "_handler").
-
+prepare_validator(SwaggerPath) ->
+    R = jsx:decode(element(2, file:read_file(SwaggerPath))),
+    jesse_state:new(R, [{default_schema_ver, <<"http://json-schema.org/draft-04/schema#">>}]).

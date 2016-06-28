@@ -92,19 +92,16 @@ public class ErlangServerCodegen extends DefaultCodegen implements CodegenConfig
          * entire object tree available.  If the input file has a suffix of `.mustache
          * it will be processed by the template engine.  Otherwise, it will be copied
          */
-        supportingFiles.add(new SupportingFile("swagger.mustache","", "swagger.yaml"));
+        supportingFiles.add(new SupportingFile("rebar.config.mustache","", "rebar.config"));
         supportingFiles.add(new SupportingFile("app.src.mustache", "", "src" + File.separator + this.packageName + ".app.src"));
-        supportingFiles.add(new SupportingFile("include/router_hrl.mustache", "", toIncludeFilePath("router", "hrl")));
+        supportingFiles.add(new SupportingFile("request.hrl.mustache", "",  toSourceFilePath("request", "hrl")));
         supportingFiles.add(new SupportingFile("router.mustache", "",  toSourceFilePath("router", "erl")));
         supportingFiles.add(new SupportingFile("server.mustache", "",  toSourceFilePath("server", "erl")));
+        supportingFiles.add(new SupportingFile("utils.mustache", "",  toSourceFilePath("utils", "erl")));
+        supportingFiles.add(new SupportingFile("auth.mustache", "",  toSourceFilePath("auth", "erl")));
         supportingFiles.add(new SupportingFile("handler.mustache", "",  toSourceFilePath("handler", "erl")));
-
-        /**
-         * Do not reload your main customizing file
-        */
-        if(!new java.io.File(toSourceFilePath("api_config", "erl")).exists()){
-            supportingFiles.add(new SupportingFile("api_config.mustache", "",  toSourceFilePath("api_config", "erl")));
-        }
+        supportingFiles.add(new SupportingFile("default_logic_handler.mustache", "",  toSourceFilePath("default_logic_handler", "erl")));
+        supportingFiles.add(new SupportingFile("logic_handler.mustache", "",  toSourceFilePath("logic_handler", "erl")));
         writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
     }
 
@@ -163,7 +160,7 @@ public class ErlangServerCodegen extends DefaultCodegen implements CodegenConfig
      */
     @Override
     public String escapeReservedWord(String name) {
-        return "_" + name;  // add an underscore to the name
+        return name + "_";  // add an underscore to the name
     }
 
     /**
@@ -194,45 +191,11 @@ public class ErlangServerCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     @Override
-    public String toModelFilename(String name) {
-        if (!StringUtils.isEmpty(modelNamePrefix)) {
-            name = modelNamePrefix + "_" + name;
-        }
-
-        if (!StringUtils.isEmpty(modelNameSuffix)) {
-            name = name + "_" + modelNameSuffix;
-        }
-
-        name = sanitizeName(name);
-
-        // model name cannot use reserved keyword, e.g. return
-        if (isReservedWord(name)) {
-            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + camelize("model_" + name));
-            name = "model_" + name; // e.g. return => ModelReturn (after camelize)
-        }
-
-        return underscore(name);
-    }
-
-    @Override
     public String toApiFilename(String name) {
         // replace - with _ e.g. created-at => created_at
         name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
 
         return this.packageName + "_" + name + "_handler";
-    }
-
-    @Override
-    public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
-        Swagger swagger = (Swagger)objs.get("swagger");
-        if(swagger != null) {
-            try {
-                objs.put("swagger-yaml", Yaml.mapper().writeValueAsString(swagger));
-            } catch (JsonProcessingException e) {
-                LOGGER.error(e.getMessage(), e);
-            }
-        }
-        return super.postProcessSupportingFileData(objs);
     }
 
     protected String toSourceFilePath(String name, String extension) {

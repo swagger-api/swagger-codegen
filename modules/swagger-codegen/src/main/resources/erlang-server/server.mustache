@@ -2,17 +2,23 @@
 
 
 -define(DEFAULT_ACCEPTORS_POOLSIZE, 100).
+-define(DEFAULT_LOGIC_HANDLER, {{packageName}}_default_logic_handler).
 
 -export([child_spec/2]).
 
 child_spec(Id, #{
     ip            := Ip,
     port          := Port,
+    swagger_path  := SwaggerPath,
     net_opts      := NetOpts
-}) ->
+} = Params) ->
     AcceptorsPool = ?DEFAULT_ACCEPTORS_POOLSIZE,
     {Transport, TransportOpts} = get_socket_transport(Ip, Port, NetOpts),
-    CowboyOpts = get_cowboy_config(),
+    LogicHandler = case maps:find(logic_handler, Params) of
+        {ok, L} -> L;
+        error -> ?DEFAULT_LOGIC_HANDLER
+    end,
+    CowboyOpts = get_cowboy_config(LogicHandler, SwaggerPath),
     ranch:child_spec({?MODULE, Id}, AcceptorsPool,
         Transport, TransportOpts, cowboy_protocol, CowboyOpts).
 
@@ -21,25 +27,13 @@ get_socket_transport(Ip, Port, Options) ->
         {ip,   Ip},
         {port, Port}
     ],
-    case get_opt(ssl, Options) of
+    case {{packageName}}_utils:get_opt(ssl, Options) of
         SslOpts = [_|_] ->
             {ranch_ssl, Opts ++ SslOpts};
         undefined ->
             {ranch_tcp, Opts}
     end.
 
-%%Deal with set handlers
-get_cowboy_config() ->
-    Paths = {{packageName}}_router:get_paths(),
+get_cowboy_config(LogicHandler, SwaggerPath) ->
+    Paths = swagger_router:get_paths(LogicHandler, SwaggerPath),
     [{env, [{dispatch, cowboy_router:compile(Paths)}]}].
-
-
-%% Movie it to the utils
-get_opt(Key, Opts) ->
-    get_opt(Key, Opts, undefined).
-
-get_opt(Key, Opts, Default) when is_atom(Key) ->
-    case lists:keyfind(Key, 1, Opts) of
-        {_, Value} -> Value;
-        false -> Default
-    end.

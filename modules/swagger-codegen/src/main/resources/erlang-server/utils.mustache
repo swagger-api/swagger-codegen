@@ -1,0 +1,61 @@
+-module({{packageName}}_utils).
+
+-include("{{packageName}}_request.hrl").
+
+-export([set_resp_headers/2]).
+-export([string_to_header/1]).
+-export([parse_request/2]).
+-export([parse_request/3]).
+-export([get_opt/2]).
+-export([get_opt/3]).
+
+set_resp_headers([], Req) ->
+    Req;
+set_resp_headers([{K, V} | T], Req0) ->
+    Req = cowboy_req:set_resp_header(K, V, Req0),
+    set_resp_headers(T, Req).
+
+string_to_header(Name) ->
+  list_to_binary(string:to_lower(Name)).
+
+parse_request(Field, Req) when is_atom(Field) ->
+    parse_request([Field], Req);
+
+parse_request(Fields, Req) ->
+    parse_request(Fields, #parsed_request{}, Req).
+
+
+parse_request([], Parsed, Req) ->
+    {Parsed, Req};
+
+parse_request(Field, Parsed, Req) when is_atom(Field) ->
+    parse_request([Field], Parsed, Req);
+
+parse_request([method | T], Parsed, Req0) ->
+    {V, Req} = cowboy_req:method(Req0),
+    parse_request(T, Parsed#parsed_request{method = V}, Req);
+
+parse_request([bindings | T], Parsed, Req0) ->
+    {V, Req} = cowboy_req:bindings(Req0),
+    parse_request(T, Parsed#parsed_request{bindings = V}, Req);
+
+parse_request([qs_vals | T], Parsed, Req0) ->
+    {V, Req} = cowboy_req:qs_vals(Req0),
+    parse_request(T, Parsed#parsed_request{qs_vals = V}, Req);
+
+parse_request([body | T], Parsed, Req0) ->
+    {ok, Body, Req} = cowboy_req:body(Req0),
+    parse_request(T, Parsed#parsed_request{body = Body}, Req);
+
+parse_request([headers | T], Parsed, Req0) ->
+    {V, Req} = cowboy_req:headers(Req0),
+    parse_request(T, Parsed#parsed_request{headers = V}, Req).
+
+get_opt(Key, Opts) ->
+    get_opt(Key, Opts, undefined).
+
+get_opt(Key, Opts, Default) ->
+    case lists:keyfind(Key, 1, Opts) of
+        {_, Value} -> Value;
+        false -> Default
+    end.

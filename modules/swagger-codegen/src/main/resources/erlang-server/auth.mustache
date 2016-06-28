@@ -1,0 +1,30 @@
+-module({{packageName}}_auth).
+
+-include("{{packageName}}_request.hrl").
+
+-export([authorize_api_key/5]).
+
+authorize_api_key(From, KeyParam, OperationID, PR, LogicHandler) ->
+  ApiKey = get_api_key(From, KeyParam, PR),
+  case ApiKey of
+    undefined ->
+        AuthHeader = <<"">>,
+        {false, AuthHeader};
+    _ ->
+      case LogicHandler:authorize_api_key(ApiKey, OperationID) of
+        {true, Context}  ->
+          {true, Context};
+        false ->
+          AuthHeader = <<"">>,
+          {false, AuthHeader}
+      end
+  end.
+
+get_api_key(header, KeyParam, #parsed_request{headers = Headers}) ->
+    swagger_utils:get_opt({{packageName}}_utils:string_to_header(KeyParam), Headers);
+
+get_api_key(qs_val, KeyParam, #parsed_request{qs_vals = QS}) ->
+    swagger_utils:get_opt(KeyParam, QS).
+
+
+

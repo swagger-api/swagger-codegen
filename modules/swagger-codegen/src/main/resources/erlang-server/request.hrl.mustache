@@ -1,0 +1,12 @@
+-ifndef({{packageName}}_request_included__).
+-define({{packageName}}_request_included__, yeah).
+
+-record(parsed_request, {
+    method,
+    headers=[],
+    qs_vals=[],
+    body,
+    bindings=[]
+}).
+
+-endif.
