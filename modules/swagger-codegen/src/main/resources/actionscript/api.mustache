@@ -1,28 +1,29 @@
 package {{package}} {
 
-import io.swagger.common.ApiInvoker;
-import io.swagger.exception.ApiErrorCodes;
-import io.swagger.exception.ApiError;
-import io.swagger.common.ApiUserCredentials;
+
+import flash.events.EventDispatcher;
+import flash.utils.Dictionary;
+
+import io.swagger.event.ApiClientEvent;
 import io.swagger.event.Response;
-import io.swagger.common.SwaggerApi;
+import io.swagger.HttpClient;
+
+import org.osflash.vanilla.extract;
+
 {{#imports}}import {{import}};
 {{/imports}}
 
-import mx.rpc.AsyncToken;
-import mx.utils.UIDUtil;
-import flash.utils.Dictionary;
-import flash.events.EventDispatcher;
-
 {{#operations}}
-public class {{classname}} extends SwaggerApi {
+public class {{classname}} extends EventDispatcher {
+
+    public var client:HttpClient;
+
     /**
     * Constructor for the {{classname}} api client
-    * @param apiCredentials Wrapper object for tokens and hostName required towards authentication
-    * @param eventDispatcher Optional event dispatcher that when provided is used by the SDK to dispatch any Response
     */
-    public function {{classname}}(apiCredentials: ApiUserCredentials, eventDispatcher: EventDispatcher = null) {
-        super(apiCredentials, eventDispatcher);
+    public function {{classname}}( url:String )
+    {
+        client = new HttpClient( url, this );
     }
 
 {{#operation}}
@@ -34,41 +35,62 @@ public class {{classname}} extends SwaggerApi {
     /*
      * Returns {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}
      */
-    public function {{nickname}} ({{#allParams}}{{paramName}}: {{{dataType}}}{{#hasMore}}, {{/hasMore}}{{/allParams}}): String {
+    public function {{nickname}} ({{#allParams}}{{paramName}}:{{{dataType}}}{{#hasMore}}, {{/hasMore}}{{/allParams}}):void
+    {
         // create path and map variables
-        var path: String = "{{path}}".replace(/{format}/g,"xml"){{#pathParams}}.replace("{" + "{{paramName}}" + "}", getApiInvoker().escapeString({{{paramName}}})){{/pathParams}};
+       var path: String = "{{path}}"{{#pathParams}}.replace("{" + "{{paramName}}" + "}", {{{paramName}}}){{/pathParams}};
 
-        // query params
         var queryParams: Dictionary = new Dictionary();
-        var headerParams: Dictionary = new Dictionary();
-
+		var headerParams: Dictionary = new Dictionary();
 
          {{#allParams}}{{#required}}
             // verify the required parameter '{{paramName}}' is set
             if ({{paramName}} == null) {
-              throw new ApiError(400, "missing required params");
+              throw new Error( "missing required params " + {{paramName}} );
             }
             {{/required}}{{/allParams}}
 
-        {{#queryParams}}if("null" != String({{paramName}}))
-            queryParams["{{paramName}}"] = toPathValue({{paramName}});
-        {{/queryParams}}
+         {{#queryParams}}if("null" != String({{paramName}}))
+                     queryParams["{{paramName}}"] = toPathValue({{paramName}});
+                 {{/queryParams}}
 
-        {{#headerParams}}headerParams["{{paramName}}"] = toPathValue({{paramName}});
-        {{/headerParams}}
+                 {{#headerParams}}headerParams["{{paramName}}"] = toPathValue({{paramName}});
+                 {{/headerParams}}
+        headerParams["X-UA-VERSION"] = "{{packageVersion}}";
+        headerParams["User-Agent"] = "Doorman-Client-Flash";
 
-        var token:AsyncToken = getApiInvoker().invokeAPI(path, "{{httpMethod}}", queryParams, {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}}, headerParams);
-
-        var requestId: String = getUniqueId();
-
-        token.requestId = requestId;
-        token.completionEventType = "{{nickname}}";
-
-        token.returnType = {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}null {{/returnType}};
-        return requestId;
+         client.call( path, on_{{nickname}}_response, queryParams, headerParams);
 
     }
+
+    private function on_{{nickname}}_response( resp:Response ):void
+    {
+        if (resp.isSuccess)
+        {
+            // Convert the response into an object
+            var response:{{{returnType}}} = extract( JSON.parse( resp.payload + "" ), {{{returnType}}} );
+            resp.payload = response;
+        }
+
+        var event:ApiClientEvent = new ApiClientEvent( {{classname}}.event_{{nickname}} );
+        event.response = resp;
+        dispatchEvent( event );
+    }
+
     {{/operation}}
+
+    private function toPathValue(value: Object): String
+    {
+        if(value is Array){
+            return (value as Array).join(",");
+        }
+        return  value == null ? "" : value.toString();
+    }
 }
+
+
+
         {{/operations}}
+
+
 }
