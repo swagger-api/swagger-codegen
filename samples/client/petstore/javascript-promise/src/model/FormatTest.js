@@ -52,12 +52,12 @@
    * Constructs a new <code>FormatTest</code>.
    * @alias module:model/FormatTest
    * @class
-   * @param _number
-   * @param _byte
-   * @param _date
-   * @param password
+   * @param number {Number} 
+   * @param byte {String} 
+   * @param date {Date} 
+   * @param password {String} 
    */
-  var exports = function(_number, _byte, _date, password) {
+  var exports = function(number, byte, date, password) {
     var _this = this;
 
 

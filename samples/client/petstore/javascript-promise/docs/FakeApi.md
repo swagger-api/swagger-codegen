@@ -5,6 +5,7 @@ All URIs are relative to *http://petstore.swagger.io/v2*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**testEndpointParameters**](FakeApi.md#testEndpointParameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
+[**testEnumQueryParameters**](FakeApi.md#testEnumQueryParameters) | **GET** /fake | To test enum query parameters
 
 
 <a name="testEndpointParameters"></a>
@@ -76,4 +77,50 @@ No authorization required
 
  - **Content-Type**: application/xml; charset=utf-8, application/json; charset=utf-8
  - **Accept**: application/xml; charset=utf-8, application/json; charset=utf-8
+
+<a name="testEnumQueryParameters"></a>
+# **testEnumQueryParameters**
+> testEnumQueryParameters(opts)
+
+To test enum query parameters
+
+### Example
+```javascript
+var SwaggerPetstore = require('swagger-petstore');
+
+var apiInstance = new SwaggerPetstore.FakeApi();
+
+var opts = { 
+  'enumQueryString': "-efg", // String | Query parameter enum test (string)
+  'enumQueryInteger': 3.4, // Number | Query parameter enum test (double)
+  'enumQueryDouble': 1.2 // Number | Query parameter enum test (double)
+};
+apiInstance.testEnumQueryParameters(opts).then(function() {
+  console.log('API called successfully.');
+}, function(error) {
+  console.error(error);
+});
+
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **enumQueryString** | **String**| Query parameter enum test (string) | [optional] [default to -efg]
+ **enumQueryInteger** | **Number**| Query parameter enum test (double) | [optional] 
+ **enumQueryDouble** | **Number**| Query parameter enum test (double) | [optional] 
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 

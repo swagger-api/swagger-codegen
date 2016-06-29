@@ -58,6 +58,7 @@
     var _this = this;
 
 
+
   };
 
   /**
@@ -74,6 +75,9 @@
       if (data.hasOwnProperty('name')) {
         obj['name'] = ApiClient.convertToType(data['name'], 'Integer');
       }
+      if (data.hasOwnProperty('class')) {
+        obj['class'] = ApiClient.convertToType(data['class'], 'String');
+      }
     }
     return obj;
   }
@@ -82,6 +86,10 @@
    * @member {Integer} name
    */
   exports.prototype['name'] = undefined;
+  /**
+   * @member {String} class
+   */
+  exports.prototype['class'] = undefined;
 
 
 

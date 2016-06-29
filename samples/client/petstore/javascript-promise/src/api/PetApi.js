@@ -137,7 +137,7 @@
     /**
      * Finds Pets by status
      * Multiple status values can be provided with comma separated strings
-     * @param {Array.<String>} status Status values that need to be considered for filter
+     * @param {Array.<module:model/String>} status Status values that need to be considered for filter
      * data is of type: {Array.<module:model/Pet>}
      */
     this.findPetsByStatus = function(status) {
