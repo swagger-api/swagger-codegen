@@ -51,6 +51,7 @@ namespace {{packageName}}.Models
         /// {{^description}}Gets or Sets {{{name}}}{{/description}}{{#description}}{{{description}}}{{/description}}
         /// </summary>{{#description}}
         /// <value>{{{description}}}</value>{{/description}}
+		[JsonProperty(PropertyName = "{{baseName}}")]
         public {{{datatype}}} {{name}} { get; set; }
 
         {{/vars}}
@@ -64,7 +65,7 @@ namespace {{packageName}}.Models
             var sb = new StringBuilder();
             sb.Append("class {{classname}} {\n");
             {{#vars}}sb.Append("  {{name}}: ").Append({{name}}).Append("\n");
-            {{/vars}}
+			{{/vars}}
             sb.Append("}\n");
             return sb.ToString();
         }
