@@ -1,6 +1,6 @@
 /**
  * Swagger Petstore
- * This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\ 
+ * This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
  *
  * OpenAPI spec version: 1.0.0
  * Contact: apiteam@swagger.io
@@ -59,10 +59,30 @@
   }
 
   describe('FakeApi', function() {
+    describe('testCodeInjectEnd', function() {
+      it('should call testCodeInjectEnd successfully', function(done) {
+        //uncomment below and update the code to test testCodeInjectEnd
+        //instance.testCodeInjectEnd(pet, function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
     describe('testEndpointParameters', function() {
       it('should call testEndpointParameters successfully', function(done) {
         //uncomment below and update the code to test testEndpointParameters
         //instance.testEndpointParameters(pet, function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
+    describe('testEnumQueryParameters', function() {
+      it('should call testEnumQueryParameters successfully', function(done) {
+        //uncomment below and update the code to test testEnumQueryParameters
+        //instance.testEnumQueryParameters(pet, function(error) {
         //  if (error) throw error;
         //expect().to.be();
         //});

@@ -1,6 +1,6 @@
 /**
  * Swagger Petstore
- * This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\ 
+ * This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
  *
  * OpenAPI spec version: 1.0.0
  * Contact: apiteam@swagger.io
@@ -67,6 +67,12 @@
 
     it('should have the property name (base name: "name")', function() {
       // uncomment below and update the code to test the property name
+      //var instane = new SwaggerPetstore.Model200Response();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property _class (base name: "class")', function() {
+      // uncomment below and update the code to test the property _class
       //var instane = new SwaggerPetstore.Model200Response();
       //expect(instance).to.be();
     });

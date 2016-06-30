@@ -71,12 +71,6 @@
       //expect(instance).to.be();
     });
 
-    it('should have the property mapMapOfEnum (base name: "map_map_of_enum")', function() {
-      // uncomment below and update the code to test the property mapMapOfEnum
-      //var instane = new SwaggerPetstore.MapTest();
-      //expect(instance).to.be();
-    });
-
     it('should have the property mapOfEnumString (base name: "map_of_enum_string")', function() {
       // uncomment below and update the code to test the property mapOfEnumString
       //var instane = new SwaggerPetstore.MapTest();
