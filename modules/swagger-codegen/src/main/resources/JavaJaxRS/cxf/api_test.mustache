@@ -1,0 +1,59 @@
+{{>licenseInfo}}
+
+package {{package}};
+
+{{#imports}}import {{import}};
+{{/imports}}
+import org.junit.Test;
+import org.junit.Before;
+
+import javax.ws.rs.core.Response;
+import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+
+
+{{^fullJavaUtil}}
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+{{/fullJavaUtil}}
+
+/**
+ * API tests for {{classname}}
+ */
+public class {{classname}}Test {
+
+    private {{classname}} api;
+    
+    @Before
+    public void setup() {
+    	JacksonJsonProvider provider = new JacksonJsonProvider();
+    	List providers = new ArrayList();
+		providers.add(provider);
+		
+		api = JAXRSClientFactory.create("{{basePath}}", {{classname}}.class, providers);
+    }
+
+    {{#operations}}{{#operation}}
+    /**
+     * {{summary}}
+     *
+     * {{notes}}
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void {{operationId}}Test() {
+        {{#allParams}}
+        {{{dataType}}} {{paramName}} = new {{{dataType}}}();
+        {{/allParams}}
+        Response response = api.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+
+		{{#returnType}}{{{returnType}}} responseModel = response.readEntity({{{returnType}}}.class);{{/returnType}}
+
+        // TODO: test validations
+    }
+    {{/operation}}{{/operations}}
+}

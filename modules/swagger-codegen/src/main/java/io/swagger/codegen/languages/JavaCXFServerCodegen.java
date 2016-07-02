@@ -19,8 +19,7 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
         supportsInheritance = true;
         sourceFolder = "gen" + File.separator + "java";
         outputFolder = "generated-code/JavaJaxRS-CXF";
-        apiTestTemplateFiles.clear(); // TODO: add test template
-
+        
         // clear model and api doc template as this codegen
         // does not support auto-generated markdown doc at the moment
         //TODO: add doc templates
@@ -42,10 +41,9 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
 	public void processOpts()
 	{
 		super.processOpts();
-
+		
 		supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
-        
         
 	} 
 	
