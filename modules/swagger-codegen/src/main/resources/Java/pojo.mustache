@@ -52,6 +52,15 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {{#seriali
  {{#vendorExtensions.extraAnnotation}}
   {{vendorExtensions.extraAnnotation}}
   {{/vendorExtensions.extraAnnotation}}
+  {{#required}}
+  @NotNull{{/required}}{{! 
+}}{{#pattern}}
+  @Pattern(regexp="{{pattern}}"){{/pattern}}{{#minLength}}{{#maxLength}}
+  @Size(min={{minLength}},max={{maxLength}}){{/maxLength}}{{/minLength}}{{#minLength}}{{^maxLength}}
+  @Size(min={{minLength}}){{/maxLength}}{{/minLength}}{{^minLength}}{{#maxLength}}
+  @Size(max={{maxLength}}){{/maxLength}}{{/minLength}}{{#minimum}}
+  //@Min({{minimum}}){{/minimum}}{{#maximum}}
+  //@Max({{maximum}}){{/maximum}}
   @ApiModelProperty({{#example}}example = "{{example}}", {{/example}}{{#required}}required = {{required}}, {{/required}}value = "{{{description}}}")
   public {{{datatypeWithEnum}}} {{getter}}() {
     return {{name}};
