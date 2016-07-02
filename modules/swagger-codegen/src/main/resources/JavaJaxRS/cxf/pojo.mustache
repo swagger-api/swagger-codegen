@@ -1,3 +1,4 @@
+import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -11,6 +12,9 @@ import javax.xml.bind.annotation.XmlEnum;
 }){{/hasVars}}
 {{^hasVars}}@XmlType(name = "{{classname}}"){{/hasVars}}
 {{^parent}}@XmlRootElement(name="{{classname}}"){{/parent}}
+{{#description}}
+@ApiModel(description="{{{description}}}")
+{{/description}}
 public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {
   {{#vars}}{{#isEnum}}
 
@@ -22,27 +26,52 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {
   private {{{datatypeWithEnum}}} {{name}} = {{{defaultValue}}};{{/vars}}
 
   {{#vars}}
-  /**{{#description}}
-   * {{{description}}}{{/description}}{{#minimum}}
-   * minimum: {{minimum}}{{/minimum}}{{#maximum}}
-   * maximum: {{maximum}}{{/maximum}}
-   **/
+ /**
+  {{#description}}
+   * {{{description}}}
+  {{/description}}
+  {{^description}}
+   * Get {{name}}
+  {{/description}}
+  {{#minimum}}
+   * minimum: {{minimum}}
+  {{/minimum}}
+  {{#maximum}}
+   * maximum: {{maximum}}
+  {{/maximum}}
+   * @return {{name}}
+  **/
 {{#required}}
-  @NotNull{{/required}}{{! 
-}}
+  @NotNull
+{{/required}}
 {{#pattern}}
   @Pattern(regexp="{{pattern}}")
 {{/pattern}}
-{{#minLength}}{{#maxLength}}  @Size(min={{minLength}},max={{maxLength}}){{/maxLength}}{{/minLength}}{{#minLength}}{{^maxLength}}
-  @Size(min={{minLength}}){{/maxLength}}{{/minLength}}{{^minLength}}{{#maxLength}}
-  @Size(max={{maxLength}}){{/maxLength}}{{/minLength}}
+{{#minLength}}
+{{#maxLength}}
+  @Size(min={{minLength}},max={{maxLength}})
+{{/maxLength}}
+{{/minLength}}
+{{#minLength}}
+{{^maxLength}}
+  @Size(min={{minLength}})
+{{/maxLength}}
+{{/minLength}}
+{{^minLength}}
+{{#maxLength}}
+  @Size(max={{maxLength}})
+  {{/maxLength}}
+  {{/minLength}}
 {{#minimum}}
   //@Min({{minimum}})
 {{/minimum}}
 {{#maximum}}
   //@Max({{maximum}})
 {{/maximum}}
-  {{#vendorExtensions.extraAnnotation}}{{vendorExtensions.extraAnnotation}}{{/vendorExtensions.extraAnnotation}}
+  @ApiModelProperty({{#example}}example = "{{example}}", {{/example}}{{#required}}required = {{required}}, {{/required}}value = "{{{description}}}")
+{{#vendorExtensions.extraAnnotation}}
+  {{vendorExtensions.extraAnnotation}}
+{{/vendorExtensions.extraAnnotation}}
   public {{{datatypeWithEnum}}} {{getter}}() {
     return {{name}};
   }
