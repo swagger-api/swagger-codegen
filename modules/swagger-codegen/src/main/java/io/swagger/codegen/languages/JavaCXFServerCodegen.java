@@ -8,6 +8,7 @@ import java.util.Map;
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.SupportingFile;
 import io.swagger.models.Operation;
 
 public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
@@ -37,6 +38,17 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
 	}
 
 
+	@Override
+	public void processOpts()
+	{
+		super.processOpts();
+
+		supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
+        writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
+        
+        
+	} 
+	
 	@Override
 	public String getName()
 	{
