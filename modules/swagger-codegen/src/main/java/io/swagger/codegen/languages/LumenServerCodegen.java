@@ -10,7 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class LumenServerCodegen extends DefaultCodegen implements CodegenConfig {
+public class LumenServerCodegen extends AbstractPhpCodegen//DefaultCodegen implements CodegenConfig 
+{
 
     // source folder where to write the files
     protected String sourceFolder = "";
