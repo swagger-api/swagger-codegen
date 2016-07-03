@@ -58,7 +58,10 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
         super.processOpts();
         
         supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
+        
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
+        
+        writeOptional(outputFolder, new SupportingFile("readme.md", "", "readme.md"));
         
         writeOptional(outputFolder, new SupportingFile("web.mustache",
                 ("src/main/webapp/WEB-INF"), "web.xml"));
