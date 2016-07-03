@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlEnum;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 {{#hasVars}} @XmlType(name = "{{classname}}", propOrder =
-	{ {{#vars}}"{{name}}"{{^-last}}, {{/-last}}{{/vars}}
+    { {{#vars}}"{{name}}"{{^-last}}, {{/-last}}{{/vars}}
 }){{/hasVars}}
 {{^hasVars}}@XmlType(name = "{{classname}}"){{/hasVars}}
 {{^parent}}@XmlRootElement(name="{{classname}}"){{/parent}}
@@ -23,24 +23,6 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {
 {{>enumClass}}{{/items}}{{/items.isEnum}}
 
   @XmlElement(name="{{baseName}}")
-  private {{{datatypeWithEnum}}} {{name}} = {{{defaultValue}}};{{/vars}}
-
-  {{#vars}}
- /**
-  {{#description}}
-   * {{{description}}}
-  {{/description}}
-  {{^description}}
-   * Get {{name}}
-  {{/description}}
-  {{#minimum}}
-   * minimum: {{minimum}}
-  {{/minimum}}
-  {{#maximum}}
-   * maximum: {{maximum}}
-  {{/maximum}}
-   * @return {{name}}
-  **/
 {{#required}}
   @NotNull
 {{/required}}
@@ -67,8 +49,26 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {
 {{/minimum}}
 {{#maximum}}
   //@Max({{maximum}})
-{{/maximum}}
+{{/maximum}}  
   @ApiModelProperty({{#example}}example = "{{example}}", {{/example}}{{#required}}required = {{required}}, {{/required}}value = "{{{description}}}")
+  private {{{datatypeWithEnum}}} {{name}} = {{{defaultValue}}};{{/vars}}
+
+  {{#vars}}
+ /**
+  {{#description}}
+   * {{{description}}}
+  {{/description}}
+  {{^description}}
+   * Get {{name}}
+  {{/description}}
+  {{#minimum}}
+   * minimum: {{minimum}}
+  {{/minimum}}
+  {{#maximum}}
+   * maximum: {{maximum}}
+  {{/maximum}}
+   * @return {{name}}
+  **/
 {{#vendorExtensions.extraAnnotation}}
   {{vendorExtensions.extraAnnotation}}
 {{/vendorExtensions.extraAnnotation}}
