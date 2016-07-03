@@ -12,9 +12,9 @@ import io.swagger.codegen.SupportingFile;
 import io.swagger.models.Operation;
 
 public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
-{	
-	public JavaCXFServerCodegen()
-	{
+{    
+    public JavaCXFServerCodegen()
+    {
         super();
         supportsInheritance = true;
         sourceFolder = "gen" + File.separator + "java";
@@ -34,24 +34,24 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
 
         embeddedTemplateDir = templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME + File.separator + "cxf";
 
-	}
+    }
 
 
-	@Override
-	public void processOpts()
-	{
-		super.processOpts();
-		
-		supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
+    @Override
+    public void processOpts()
+    {
+        super.processOpts();
+        
+        supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
         
-	} 
-	
-	@Override
-	public String getName()
-	{
-		return "jaxrs-cxf";
-	}
+    } 
+    
+    @Override
+    public String getName()
+    {
+        return "jaxrs-cxf";
+    }
 
     @Override
     public void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co, Map<String, List<CodegenOperation>> operations) {
