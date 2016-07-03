@@ -9,8 +9,11 @@ import org.junit.Before;
 
 import javax.ws.rs.core.Response;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
+import org.apache.cxf.jaxrs.client.ClientConfiguration;
+import org.apache.cxf.jaxrs.client.WebClient;
+import org.apache.cxf.transport.common.gzip.GZIPInInterceptor;
+import org.apache.cxf.transport.common.gzip.GZIPOutInterceptor;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-
 
 {{^fullJavaUtil}}
 import java.util.ArrayList;
@@ -28,11 +31,24 @@ public class {{classname}}Test {
     
     @Before
     public void setup() {
-    	JacksonJsonProvider provider = new JacksonJsonProvider();
-    	List providers = new ArrayList();
-		providers.add(provider);
-		
-		api = JAXRSClientFactory.create("{{basePath}}", {{classname}}.class, providers);
+        JacksonJsonProvider provider = new JacksonJsonProvider();
+        List providers = new ArrayList();
+        providers.add(provider);
+        
+        api = JAXRSClientFactory.create("{{basePath}}", {{classname}}.class, providers);
+        
+        org.apache.cxf.jaxrs.client.Client client = WebClient.client(api);
+        
+        ClientConfiguration config = WebClient.getConfig(client); 
+        
+        // Example for using Gzipping
+        GZIPOutInterceptor gzipOutInterceptor = new GZIPOutInterceptor();
+        // use Gzipping for first request sent to server
+        //gzipOutInterceptor.setForce(true);
+        config.getOutInterceptors().add(gzipOutInterceptor);
+        
+        config.getInInterceptors().add(new GZIPInInterceptor()); 
+        
     }
 
     {{#operations}}{{#operation}}
@@ -51,7 +67,7 @@ public class {{classname}}Test {
         {{/allParams}}
         Response response = api.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
 
-		{{#returnType}}{{{returnType}}} responseModel = response.readEntity({{{returnType}}}.class);{{/returnType}}
+        {{#returnType}}{{{returnType}}} responseModel = response.readEntity({{{returnType}}}.class);{{/returnType}}
 
         // TODO: test validations
     }
