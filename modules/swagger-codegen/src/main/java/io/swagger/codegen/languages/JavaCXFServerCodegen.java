@@ -11,18 +11,31 @@ import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.SupportingFile;
 import io.swagger.models.Operation;
 
+/**
+ * TODO #2017:
+ * - reuse bean-validation-annotations in Java?
+ * - pom.xml: maybe add cxf-version property
+ * - api_test.mustache: add switch for using gzip in test cases?
+ * 
+ * 
+ *
+ */
 public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
 {    
     public JavaCXFServerCodegen()
     {
         super();
-        sourceFolder = "gen" + File.separator + "java";
-        outputFolder = "generated-code/JavaJaxRS-CXF";
         apiTestTemplateFiles.clear(); // TODO: add test template
 
-        //TODO add auto-generated pom.xml for maven
-        //apiTemplateFiles.put("pom.mustache", "pom.xml");
-
+        supportsInheritance = true;
+        
+        artifactId = "swagger-cxf-server";
+        
+        sourceFolder = "gen" + File.separator + "java";
+        outputFolder = "generated-code/JavaJaxRS-CXF";
+        
+        apiTemplateFiles.put("apiServiceImpl.mustache", ".java");
+        
         // clear model and api doc template as this codegen
         // does not support auto-generated markdown doc at the moment
         //TODO: add doc templates
@@ -47,6 +60,13 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
         
         supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
+        
+        writeOptional(outputFolder, new SupportingFile("web.mustache",
+                ("src/main/webapp/WEB-INF"), "web.xml"));
+        writeOptional(outputFolder, new SupportingFile("context.xml.mustache",
+                ("src/main/webapp/WEB-INF"), "context.xml"));
+        writeOptional(outputFolder, new SupportingFile("jboss-web.xml.mustache",
+                ("src/main/webapp/WEB-INF"), "jboss-web.xml"));
         
     } 
     

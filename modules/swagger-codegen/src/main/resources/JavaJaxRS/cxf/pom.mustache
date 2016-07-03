@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>{{groupId}}</groupId>
   <artifactId>{{artifactId}}</artifactId>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
   <name>{{artifactId}}</name>
   <version>{{artifactVersion}}</version>
   <build>
@@ -25,7 +25,7 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
+      <!--plugin>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
         <version>${jetty-version}</version>
@@ -61,7 +61,7 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
+      </plugin-->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
@@ -81,6 +81,14 @@
           </execution>
         </executions>
       </plugin>
+      
+      <!-- build WAR file -->
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+           <failOnMissingWebXml>true</failOnMissingWebXml>
+        </configuration>
+    </plugin>
     </plugins>
   </build>
   <dependencies>
@@ -108,13 +116,6 @@
       <version>${junit-version}</version>
       <scope>test</scope>
     </dependency>
-    <!-- CXF Client -->
-    <dependency>
-        <groupId>org.apache.cxf</groupId>
-        <artifactId>cxf-rt-rs-client</artifactId>
-        <version>3.1.6</version>
-        <scope>test</scope>
-    </dependency>
     <!-- Bean Validation API support -->
     <dependency>
         <groupId>javax.validation</groupId>
@@ -122,6 +123,50 @@
         <version>1.1.0.Final</version>
         <scope>provided</scope>
     </dependency>
+    <!-- CXF Client -->
+    <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-rs-client</artifactId>
+        <version>3.1.6</version>
+        <scope>test</scope>
+    </dependency>
+    
+     <!-- CXF server -->
+    <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+        <version>3.1.6</version>
+        <scope>compile</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-rs-service-description</artifactId>
+        <version>3.1.6</version>
+        <scope>compile</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-ws-policy</artifactId>
+        <version>3.1.6</version>
+        <scope>compile</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-wsdl</artifactId>
+        <version>3.1.6</version>
+        <scope>compile</scope>
+    </dependency>
+    <!-- spring -->
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>4.2.5.RELEASE</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-web</artifactId>
+        <version>4.2.5.RELEASE</version>
+    </dependency>    
   </dependencies>
   <repositories>
     <repository>

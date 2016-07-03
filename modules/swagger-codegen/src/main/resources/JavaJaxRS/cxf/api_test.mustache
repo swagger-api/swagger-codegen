@@ -65,9 +65,7 @@ public class {{classname}}Test {
         {{#allParams}}
         {{{dataType}}} {{paramName}} = new {{{dataType}}}();
         {{/allParams}}
-        Response response = api.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
-
-        {{#returnType}}{{{returnType}}} responseModel = response.readEntity({{{returnType}}}.class);{{/returnType}}
+        {{#returnType}}{{{returnType}}} response = {{/returnType}}api.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
 
         // TODO: test validations
     }
