@@ -587,6 +587,7 @@ Your subclass will now be loaded and overrides the `PREFIX` value in the supercl
 Java Bean Validation annotations are supported:
 
 Annotation | Swagger-API | Description
+---------- | ----------- | -----------
 @DecimalMax (max for BigDecimal) | maxLength | not yet supported, see #2549
 @DecimalMin (min for BigDecimal) | minLength | not yet supported, see #2549
 @Max | maximum | The value of the field or property must be an integer value lower than or equal to the number in the value element.
