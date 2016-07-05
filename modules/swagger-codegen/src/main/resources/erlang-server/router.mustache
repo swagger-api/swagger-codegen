@@ -9,7 +9,7 @@ get_paths(LogicHandler, SwaggerPath) ->
           [
       {{#apiInfo}}{{#apis}}
         {{#operations}}{{#operation}}
-            {"{{path}}", '{{packageName}}_handler', ["{{operationId}}", LogicHandler, ValidatorState]}
+            {"{{path}}", '{{packageName}}_handler', ['{{operationId}}', LogicHandler, ValidatorState]}
         {{#hasMore}},{{/hasMore}}
         {{/operation}}{{#hasMore}},{{/hasMore}}{{/operations}}
     {{/apis}}{{/apiInfo}}

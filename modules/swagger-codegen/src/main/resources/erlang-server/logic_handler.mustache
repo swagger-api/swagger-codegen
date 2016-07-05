@@ -5,9 +5,9 @@
 {{/hasAuthMethods}}
 {{#authMethods}}
     {{#isApiKey}}
--callback authorize_api_key(ApiKey :: binary(), OperationID :: binary()) -> Result :: boolean() | {boolean(), context()}.
+-callback authorize_api_key(ApiKey :: binary(), OperationID :: atom()) -> Result :: boolean() | {boolean(), context()}.
     {{/isApiKey}}
 {{/authMethods}}
 
 
--callback handle_request(OperationID :: string(), Request :: any()) -> {ok, {[Header :: binary()], Result :: any()}} | {error, {Status :: integer(), [Header :: binary()], any()}}.
+-callback handle_request(OperationID :: atom(), Request :: any()) -> {ok, {[Header :: binary()], Result :: any()}} | {error, {Status :: integer(), [Header :: binary()], any()}}.

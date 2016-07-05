@@ -1,5 +1,5 @@
 %% basic handler
--module({{packageName}}_handler).
+-module({{classname}}).
 
 -include("{{packageName}}_request.hrl").
 
@@ -42,27 +42,27 @@ rest_init(Req0, [OperationID, LogicHandler, ValidatorState]) ->
     },
     {ok, Req, State}.
 
-{{#apiInfo}}{{#apis}}
     {{#operations}}{{#operation}}
-    allowed_methods(Req, State = #state{operation_id = "{{operationId}}"}) ->
-        {[<<"{{httpMethod}}">>], Req, State}{{#hasMore}};{{/hasMore}}
-    {{/operation}}{{#hasMore}};{{/hasMore}}{{^hasMore}}.{{/hasMore}}{{/operations}}
-{{/apis}}{{/apiInfo}}
+    allowed_methods(Req, State = #state{operation_id = '{{operationId}}'}) ->
+        {[<<"{{httpMethod}}">>], Req, State};
+    {{/operation}}{{/operations}}
+    allowed_methods(Req, State) ->
+        {[], Req, State}.
 
-{{#apiInfo}}{{#apis}}
     {{#operations}}{{#operation}}
-    is_authorized(Req, State = #state{operation_id = "{{operationId}}" = OperationID, logic_handler = LogicHandler, parsed_request = PR}) ->
+    is_authorized(Req, State = #state{operation_id = '{{operationId}}' = OperationID, logic_handler = LogicHandler, parsed_request = PR}) ->
     {{#authMethods}}
         {{#isApiKey}}
           From = {{#isKeyInQuery}}qs_val{{/isKeyInQuery}}{{#isKeyInHeader}}header{{/isKeyInHeader}},
           case {{packageName}}_auth:authorize_api_key(From, "{{keyParamName}}", OperationID, PR, LogicHandler) of
             {true, Context} ->  {true, Req, State#state{context = Context}};
             {false, AuthHeader} ->  {{false, AuthHeader}, Req, State}
-          end
+          end;
         {{/isApiKey}}
-    {{/authMethods}}{{#hasMore}};{{/hasMore}}
-    {{/operation}}{{#hasMore}};{{/hasMore}}{{^hasMore}}.{{/hasMore}}{{/operations}}
-{{/apis}}{{/apiInfo}}
+    {{/authMethods}}
+    {{/operation}}{{/operations}}
+    is_authorized(Req, State) ->
+        {{false, <<"">>}, Req, State}.
 
 content_types_accepted(Req, State) ->
     {[
@@ -70,14 +70,14 @@ content_types_accepted(Req, State) ->
     ], Req, State}.
 %%get head
 
-{{#apiInfo}}{{#apis}}
     {{#operations}}{{#operation}}
-    valid_content_headers(Req0, State = #state{operation_id = "{{operationId}}"}) ->
+    valid_content_headers(Req0, State = #state{operation_id = '{{operationId}}'}) ->
         Headers = [{{#headerParams}}"{{baseName}}"{{#hasMore}},{{/hasMore}}{{/headerParams}}],
         {Result, Req} = validate_headers(Headers, Req0),
-        {Result, Req, State}{{#hasMore}};{{/hasMore}}
-    {{/operation}}{{#hasMore}};{{/hasMore}}{{^hasMore}}.{{/hasMore}}{{/operations}}
-{{/apis}}{{/apiInfo}}
+        {Result, Req, State};
+    {{/operation}}{{/operations}}
+    valid_content_headers(Req, State) ->
+        {false, Req, State}.
 
 content_types_provided(Req, State) ->
     {[
@@ -91,7 +91,7 @@ allow_missing_post(Req, State) ->
     {false, Req, State}.
 
 delete_resource(Req, State) ->
-    {true, Req, State}.
+    handle_request_json(Req, State).
 
 known_content_type(Req, State) ->
     {true, Req, State}.
@@ -123,9 +123,8 @@ handle_request_json(
     end.
 
 
-{{#apiInfo}}{{#apis}}
     {{#operations}}{{#operation}}
-populate_model("{{operationId}}", PR, ValidatorState) ->
+populate_model('{{operationId}}', PR, ValidatorState) ->
   Params = [
   {{#allParams}}
     {{#isFormParam}}
@@ -150,7 +149,6 @@ populate_model("{{operationId}}", PR, ValidatorState) ->
   populate_model_fields(Params, PR, ValidatorState)
   {{#hasMore}};{{/hasMore}}
     {{/operation}}{{#hasMore}};{{/hasMore}}{{^hasMore}}.{{/hasMore}}{{/operations}}
-{{/apis}}{{/apiInfo}}
 
 
 populate_model_fields(Params, PR, ValidatorState) ->
@@ -165,7 +163,7 @@ populate_model_fields([FieldParams | T], PR, ValidatorState, Model) ->
 
 populate_model_field({model, body, Name}, #parsed_request{body = Body}, ValidatorState) ->
   PreparedBody = case Body of
-    <<"">> -> #{};
+    <<"">> -> <<"">>;
     _ -> jsx:decode(Body, [return_maps])
   end,
   Definition =  list_to_binary("#/definitions/" ++ Name),
@@ -178,7 +176,7 @@ populate_model_field({model, body, Name}, #parsed_request{body = Body}, Validato
     {ok, Name, PreparedBody}
   catch
       _:E ->
-        throw({invalid_body, E})
+        throw({bad_request, E})
   end;
 
 populate_model_field({_DataType, qs_val, Name}, #parsed_request{qs_vals = QS}, _) ->

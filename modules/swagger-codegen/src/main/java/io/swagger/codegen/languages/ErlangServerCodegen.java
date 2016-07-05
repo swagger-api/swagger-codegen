@@ -26,7 +26,7 @@ public class ErlangServerCodegen extends DefaultCodegen implements CodegenConfig
     private static final Logger LOGGER = LoggerFactory.getLogger(ErlangServerCodegen.class);
 
     protected String apiVersion = "1.0.0";
-    protected String apiPath = "";
+    protected String apiPath = "src";
     protected String packageName = "swagger";
 
     public ErlangServerCodegen() {
@@ -54,9 +54,9 @@ public class ErlangServerCodegen extends DefaultCodegen implements CodegenConfig
          * as with models, add multiple entries with different extensions for multiple files per
          * class
          */
-        // apiTemplateFiles.put(
-        //         "handler.mustache",   // the template to use
-        //         ".erl");       // the extension for each file to write
+        apiTemplateFiles.put(
+            "handler.mustache",   // the template to use
+            ".erl");       // the extension for each file to write
 
         /**
          * Template Location.  This is the location which templates will be read from.  The generator
@@ -76,7 +76,30 @@ public class ErlangServerCodegen extends DefaultCodegen implements CodegenConfig
        );
 
         instantiationTypes.clear();
+
         typeMapping.clear();
+        typeMapping.put("enum", "binary");
+        typeMapping.put("date", "date");
+        typeMapping.put("datetime", "datetime");
+        typeMapping.put("boolean", "boolean");
+        typeMapping.put("string", "binary");
+        typeMapping.put("integer", "integer");
+        typeMapping.put("int", "integer");
+        typeMapping.put("float", "integer");
+        typeMapping.put("long", "integer");
+        typeMapping.put("double", "float");
+        typeMapping.put("array", "list");
+        typeMapping.put("map", "map");
+        typeMapping.put("number", "integer");
+        typeMapping.put("bigdecimal", "float");
+        typeMapping.put("List", "list");
+        typeMapping.put("object", "object");
+        typeMapping.put("file", "file");
+        typeMapping.put("binary", "binary");
+        typeMapping.put("bytearray", "binary");
+        typeMapping.put("byte", "binary");
+        typeMapping.put("uuid", "binary");
+        typeMapping.put("password", "binary");
 
         cliOptions.clear();
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "Erlang package name (convention: lowercase).")
@@ -99,7 +122,7 @@ public class ErlangServerCodegen extends DefaultCodegen implements CodegenConfig
         supportingFiles.add(new SupportingFile("server.mustache", "",  toSourceFilePath("server", "erl")));
         supportingFiles.add(new SupportingFile("utils.mustache", "",  toSourceFilePath("utils", "erl")));
         supportingFiles.add(new SupportingFile("auth.mustache", "",  toSourceFilePath("auth", "erl")));
-        supportingFiles.add(new SupportingFile("handler.mustache", "",  toSourceFilePath("handler", "erl")));
+    //    supportingFiles.add(new SupportingFile("handler.mustache", "",  toSourceFilePath("handler", "erl")));
         supportingFiles.add(new SupportingFile("default_logic_handler.mustache", "",  toSourceFilePath("default_logic_handler", "erl")));
         supportingFiles.add(new SupportingFile("logic_handler.mustache", "",  toSourceFilePath("logic_handler", "erl")));
         writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
@@ -147,9 +170,9 @@ public class ErlangServerCodegen extends DefaultCodegen implements CodegenConfig
     @Override
     public String toApiName(String name) {
         if (name.length() == 0) {
-            return "DefaultController";
+            return this.packageName + "_default_handler";
         }
-        return initialCaps(name);
+        return this.packageName + "_" + underscore(name) + "_handler";
     }
 
     /**
@@ -174,8 +197,6 @@ public class ErlangServerCodegen extends DefaultCodegen implements CodegenConfig
 
     @Override
     public String toModelName(String name) {
-        // camelize the model name
-        // phone_number => PhoneNumber
         return camelize(toModelFilename(name));
     }
 
@@ -192,18 +213,7 @@ public class ErlangServerCodegen extends DefaultCodegen implements CodegenConfig
 
     @Override
     public String toApiFilename(String name) {
-        // replace - with _ e.g. created-at => created_at
-        name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
-
-        return this.packageName + "_" + name + "_handler";
-    }
-
-    protected String toSourceFilePath(String name, String extension) {
-        return "src" + File.separator +  this.packageName + "_" + name + "." + extension;
-    }
-
-    protected String toIncludeFilePath(String name, String extension) {
-        return "include" + File.separator + this.packageName + "_" + name + "." + extension;
+        return toHandlerName(name);
     }
 
     @Override
@@ -222,4 +232,19 @@ public class ErlangServerCodegen extends DefaultCodegen implements CodegenConfig
         this.packageName = packageName;
     }
 
+    protected String toHandlerName(String name) {
+        return toModuleName(name) + "_handler";
+    }
+
+    protected String toModuleName(String name) {
+        return this.packageName + "_" + underscore(name.replaceAll("-", "_"));
+    }
+
+    protected String toSourceFilePath(String name, String extension) {
+        return "src" + File.separator +  toModuleName(name) + "." + extension;
+    }
+
+    protected String toIncludeFilePath(String name, String extension) {
+        return "include" + File.separator + toModuleName(name) + "." + extension;
+    }
 }
