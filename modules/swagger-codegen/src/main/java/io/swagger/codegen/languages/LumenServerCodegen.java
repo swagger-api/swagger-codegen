@@ -12,6 +12,7 @@ import java.util.TreeMap;
 
 public class LumenServerCodegen extends AbstractPhpCodegen 
 {
+     @SuppressWarnings("hiding")
     protected String apiVersion = "1.0.0";
         
     /**
