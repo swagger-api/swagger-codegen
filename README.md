@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/swagger-api/swagger-codegen.svg)](https://travis-ci.org/swagger-api/swagger-codegen)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.swagger/swagger-codegen-project/badge.svg?style=plastic)](https://maven-badges.herokuapp.com/maven-central/io.swagger/swagger-codegen-project)
 [![PR Stats](http://issuestats.com/github/swagger-api/swagger-codegen/badge/pr)](http://issuestats.com/github/swagger-api/swagger-codegen) [![Issue Stats](http://issuestats.com/github/swagger-api/swagger-codegen/badge/issue)](http://issuestats.com/github/swagger-api/swagger-codegen)
+[![Windows Test](https://ci.appveyor.com/api/projects/status/github/swagger-api/swagger-codegen?branch=master&svg=true&passingText=Windows%20Test%20-%20OK&failingText=Windows%20Test%20-%20Fails)](#)
 
 :star::star::star: If you would like to contribute, please refer to [guidelines](https://github.com/swagger-api/swagger-codegen/blob/master/CONTRIBUTING.md) and a list of [open tasks](https://github.com/swagger-api/swagger-codegen/issues?q=is%3Aopen+is%3Aissue+label%3A%22Need+community+contribution%22).:star::star::star:
 
@@ -11,7 +12,7 @@
 :warning: If the OpenAPI/Swagger spec is obtained from an untrusted source, please make sure you've reviewed the spec before using Swagger Codegen to generate the API client, server stub or documentation as [code injection](https://en.wikipedia.org/wiki/Code_injection) may occur :warning:
 
 ## Overview
-This is the swagger codegen project, which allows generation of client libraries automatically from a Swagger-compliant server.
+This is the swagger codegen project, which allows generation of API client libraries, server stubs and documentation automatically given an [OpenAPI Spec]((https://github.com/OAI/OpenAPI-Specification).
 
 Check out [Swagger-Spec](https://github.com/OAI/OpenAPI-Specification) for additional information about the Swagger project, including additional libraries with support for other languages and more.
 
@@ -375,7 +376,7 @@ To control the specific files being generated, you can pass a CSV list of what y
 -Dmodels=User -DsupportingFiles=StringUtil.java
 ```
 
-To control generation of docs and tests for api and models, pass false to the option. For api, these options are  `-DapiTest=false` and `-DapiDocs=false`. For models, `-DmodelTest=false` and `-DmodelDocs=false`.
+To control generation of docs and tests for api and models, pass false to the option. For api, these options are  `-DapiTests=false` and `-DapiDocs=false`. For models, `-DmodelTests=false` and `-DmodelDocs=false`.
 These options default to true and don't limit the generation of the feature options listed above (like `-Dapi`):
 
 ```

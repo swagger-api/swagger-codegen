@@ -114,5 +114,4 @@ public class LumenServerCodegen extends AbstractPhpCodegen
 
         return objs;
     }
-    
 }
