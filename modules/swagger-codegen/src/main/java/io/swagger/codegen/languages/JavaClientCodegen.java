@@ -9,6 +9,13 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.*;
 
+/**
+ * TODO #2549:
+ * - add switch for bean-validation-annotations?
+ * 
+ * 
+ *
+ */
 public class JavaClientCodegen extends AbstractJavaCodegen {
     @SuppressWarnings("hiding")
     private static final Logger LOGGER = LoggerFactory.getLogger(JavaClientCodegen.class);
@@ -164,7 +171,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen {
                         operation.returnType = "Void";
                     }
                     if (usesRetrofit2Library() && StringUtils.isNotEmpty(operation.path) && operation.path.startsWith("/"))
-                    	operation.path = operation.path.substring(1);
+                        operation.path = operation.path.substring(1);
                 }
             }
         }

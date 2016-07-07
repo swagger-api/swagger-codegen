@@ -8,18 +8,33 @@ import java.util.Map;
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.SupportingFile;
 import io.swagger.models.Operation;
 
+/**
+ * TODO #2017:
+ * - reuse bean-validation-annotations in Java?
+ * - pom.xml: maybe add cxf-version property
+ * - api_test.mustache: add switch for using gzip in test cases?
+ * 
+ * 
+ *
+ */
 public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
-{	
-	public JavaCXFServerCodegen()
-	{
+{    
+    public JavaCXFServerCodegen()
+    {
         super();
+        
         supportsInheritance = true;
+        
+        artifactId = "swagger-cxf-server";
+        
         sourceFolder = "gen" + File.separator + "java";
         outputFolder = "generated-code/JavaJaxRS-CXF";
-        apiTestTemplateFiles.clear(); // TODO: add test template
-
+        
+        apiTemplateFiles.put("apiServiceImpl.mustache", ".java");
+        
         // clear model and api doc template as this codegen
         // does not support auto-generated markdown doc at the moment
         //TODO: add doc templates
@@ -34,14 +49,34 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
 
         embeddedTemplateDir = templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME + File.separator + "cxf";
 
-	}
+    }
 
 
-	@Override
-	public String getName()
-	{
-		return "jaxrs-cxf";
-	}
+    @Override
+    public void processOpts()
+    {
+        super.processOpts();
+        
+        supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
+        
+        writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
+        
+        writeOptional(outputFolder, new SupportingFile("readme.md", "", "readme.md"));
+        
+        writeOptional(outputFolder, new SupportingFile("web.mustache",
+                ("src/main/webapp/WEB-INF"), "web.xml"));
+        writeOptional(outputFolder, new SupportingFile("context.xml.mustache",
+                ("src/main/webapp/WEB-INF"), "context.xml"));
+        writeOptional(outputFolder, new SupportingFile("jboss-web.xml.mustache",
+                ("src/main/webapp/WEB-INF"), "jboss-web.xml"));
+        
+    } 
+    
+    @Override
+    public String getName()
+    {
+        return "jaxrs-cxf";
+    }
 
     @Override
     public void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co, Map<String, List<CodegenOperation>> operations) {

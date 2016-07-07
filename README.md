@@ -590,6 +590,33 @@ and specify the `classname` when running the generator:
 
 Your subclass will now be loaded and overrides the `PREFIX` value in the superclass.
 
+### Java Bean Validation support
+
+Java Bean Validation annotations are supported:
+
+Annotation | Swagger-API | Description
+---------- | ----------- | -----------
+@DecimalMax (max for BigDecimal) | maxLength | not yet supported, see #2549
+@DecimalMin (min for BigDecimal) | minLength | not yet supported, see #2549
+@Max | maximum | The value of the field or property must be an integer value lower than or equal to the number in the value element.
+@Min | minimum | The value of the field or property must be an integer value greater than or equal to the number in the value element.
+@NotNull | required=true | The value of the field or property must not be null.
+@Pattern | pattern | The value of the field or property must match the regular expression defined in the regexp element.
+@Size | minLength/maxLength | The size of the field or property is evaluated and must match the specified boundaries.
+
+See http://docs.oracle.com/javaee/6/tutorial/doc/gircz.html for the full list of annotations.
+
+The following annotations currently don't have an equivalent in the Swagger-API spec:
+* @AssertFalse
+* @AssertTrue
+* @Digits
+* @Future
+* @Null
+* @Past
+
+Languages with Bean Validation support: Java, JAX-RS CXF
+
+
 ### Bringing your own models
 
 Sometimes you don't want a model generated.  In this case, you can simply specify an import mapping to tell

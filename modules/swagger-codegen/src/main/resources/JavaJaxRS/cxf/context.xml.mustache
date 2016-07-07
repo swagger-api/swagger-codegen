@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:cxf="http://cxf.apache.org/core"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+                           http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+                           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
+
+    
+    
+    <import resource="classpath:META-INF/cxf/cxf.xml" />
+
+    <!-- JAXRS providers -->
+    <bean id="jsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider" />
+    <bean id="multipartProvider" class="org.apache.cxf.jaxrs.provider.MultipartProvider" />
+    
+    <!-- Controller -->
+{{#apiInfo}}
+{{#apis}}
+    <bean id="{{classname}}" class="{{package}}.impl.{{classname}}ServiceImpl" />
+{{/apis}}
+{{/apiInfo}}
+    
+    <!-- CXF Swagger2Feature -->  
+    <bean id="swagger2Feature" class="org.apache.cxf.jaxrs.swagger.Swagger2Feature">
+        <!--property name="basePath" value="/"/>
+        <property name="contact" value="${swagger.contact}" />
+        <property name="title" value="${swagger.title}" />
+        <property name="version" value="${swagger.version}" />
+        <property name="description" value="${swagger.description}" />
+        <property name="license" value="${swagger.license}" />
+        <property name="licenseUrl" value="${swagger.licenseUrl}" /-->
+    </bean>       
+
+    <cxf:bus>
+        <cxf:features>
+            <cxf:logging />
+        </cxf:features>
+    </cxf:bus>
+    
+    
+    <bean id="wadlGenerator"
+          class="org.apache.cxf.jaxrs.model.wadl.WadlGenerator">
+        <property name="linkJsonToXmlSchema" value="true" />
+    </bean>
+    
+    <!-- REST server -->
+    <jaxrs:server id="restServer" address="/services">
+        <jaxrs:serviceBeans>
+{{#apiInfo}}
+{{#apis}}
+                <ref bean="{{classname}}" />
+{{/apis}}
+{{/apiInfo}}
+        </jaxrs:serviceBeans>
+        <jaxrs:providers>
+            <ref bean="jsonProvider" />
+            <ref bean="multipartProvider" />
+            <ref bean="wadlGenerator" />
+        </jaxrs:providers>
+        <jaxrs:features>
+            <ref bean="swagger2Feature" />
+        </jaxrs:features>
+    </jaxrs:server>
+     
+</beans>
