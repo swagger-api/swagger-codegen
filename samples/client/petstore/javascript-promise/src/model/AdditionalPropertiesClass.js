@@ -82,11 +82,11 @@
   }
 
   /**
-   * @member {Object.<String, String>} map_property
+   * @member {{{{vendorExtensions.x-jsdoc-type}}}} map_property
    */
   exports.prototype['map_property'] = undefined;
   /**
-   * @member {Object.<String, Object.<String, String>>} map_of_map_property
+   * @member {{{{vendorExtensions.x-jsdoc-type}}}} map_of_map_property
    */
   exports.prototype['map_of_map_property'] = undefined;
 

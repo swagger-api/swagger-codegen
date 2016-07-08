@@ -52,8 +52,8 @@
    * Constructs a new <code>Pet</code>.
    * @alias module:model/Pet
    * @class
-   * @param name {String} 
-   * @param photoUrls {Array.<String>} 
+   * @param name {{{{vendorExtensions.x-jsdoc-type}}}} 
+   * @param photoUrls {{{{vendorExtensions.x-jsdoc-type}}}} 
    */
   var exports = function(name, photoUrls) {
     var _this = this;
@@ -100,28 +100,28 @@
   }
 
   /**
-   * @member {Integer} id
+   * @member {{{{vendorExtensions.x-jsdoc-type}}}} id
    */
   exports.prototype['id'] = undefined;
   /**
-   * @member {module:model/Category} category
+   * @member {{{{vendorExtensions.x-jsdoc-type}}}} category
    */
   exports.prototype['category'] = undefined;
   /**
-   * @member {String} name
+   * @member {{{{vendorExtensions.x-jsdoc-type}}}} name
    */
   exports.prototype['name'] = undefined;
   /**
-   * @member {Array.<String>} photoUrls
+   * @member {{{{vendorExtensions.x-jsdoc-type}}}} photoUrls
    */
   exports.prototype['photoUrls'] = undefined;
   /**
-   * @member {Array.<module:model/Tag>} tags
+   * @member {{{{vendorExtensions.x-jsdoc-type}}}} tags
    */
   exports.prototype['tags'] = undefined;
   /**
    * pet status in the store
-   * @member {module:model/Pet.StatusEnum} status
+   * @member {{{{vendorExtensions.x-jsdoc-type}}}} status
    */
   exports.prototype['status'] = undefined;
 

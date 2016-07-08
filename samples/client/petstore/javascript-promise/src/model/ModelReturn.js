@@ -79,7 +79,7 @@
   }
 
   /**
-   * @member {Integer} return
+   * @member {{{{vendorExtensions.x-jsdoc-type}}}} return
    */
   exports.prototype['return'] = undefined;
 

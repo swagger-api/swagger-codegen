@@ -52,7 +52,7 @@
    * Constructs a new <code>Animal</code>.
    * @alias module:model/Animal
    * @class
-   * @param className {String} 
+   * @param className {{{{vendorExtensions.x-jsdoc-type}}}} 
    */
   var exports = function(className) {
     var _this = this;
@@ -83,11 +83,11 @@
   }
 
   /**
-   * @member {String} className
+   * @member {{{{vendorExtensions.x-jsdoc-type}}}} className
    */
   exports.prototype['className'] = undefined;
   /**
-   * @member {String} color
+   * @member {{{{vendorExtensions.x-jsdoc-type}}}} color
    * @default 'red'
    */
   exports.prototype['color'] = 'red';

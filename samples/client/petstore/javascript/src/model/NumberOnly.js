@@ -78,7 +78,7 @@
   }
 
   /**
-   * @member {Number} JustNumber
+   * @member {{{{vendorExtensions.x-jsdoc-type}}}} JustNumber
    */
   exports.prototype['JustNumber'] = undefined;
 

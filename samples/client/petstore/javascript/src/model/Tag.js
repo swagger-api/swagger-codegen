@@ -82,11 +82,11 @@
   }
 
   /**
-   * @member {Integer} id
+   * @member {{{{vendorExtensions.x-jsdoc-type}}}} id
    */
   exports.prototype['id'] = undefined;
   /**
-   * @member {String} name
+   * @member {{{{vendorExtensions.x-jsdoc-type}}}} name
    */
   exports.prototype['name'] = undefined;
 

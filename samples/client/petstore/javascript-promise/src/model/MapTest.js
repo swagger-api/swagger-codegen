@@ -82,11 +82,11 @@
   }
 
   /**
-   * @member {Object.<String, Object.<String, String>>} map_map_of_string
+   * @member {{{{vendorExtensions.x-jsdoc-type}}}} map_map_of_string
    */
   exports.prototype['map_map_of_string'] = undefined;
   /**
-   * @member {Object.<String, module:model/MapTest.InnerEnum>} map_of_enum_string
+   * @member {{{{vendorExtensions.x-jsdoc-type}}}} map_of_enum_string
    */
   exports.prototype['map_of_enum_string'] = undefined;
 

@@ -106,36 +106,36 @@
   }
 
   /**
-   * @member {Integer} id
+   * @member {{{{vendorExtensions.x-jsdoc-type}}}} id
    */
   exports.prototype['id'] = undefined;
   /**
-   * @member {String} username
+   * @member {{{{vendorExtensions.x-jsdoc-type}}}} username
    */
   exports.prototype['username'] = undefined;
   /**
-   * @member {String} firstName
+   * @member {{{{vendorExtensions.x-jsdoc-type}}}} firstName
    */
   exports.prototype['firstName'] = undefined;
   /**
-   * @member {String} lastName
+   * @member {{{{vendorExtensions.x-jsdoc-type}}}} lastName
    */
   exports.prototype['lastName'] = undefined;
   /**
-   * @member {String} email
+   * @member {{{{vendorExtensions.x-jsdoc-type}}}} email
    */
   exports.prototype['email'] = undefined;
   /**
-   * @member {String} password
+   * @member {{{{vendorExtensions.x-jsdoc-type}}}} password
    */
   exports.prototype['password'] = undefined;
   /**
-   * @member {String} phone
+   * @member {{{{vendorExtensions.x-jsdoc-type}}}} phone
    */
   exports.prototype['phone'] = undefined;
   /**
    * User Status
-   * @member {Integer} userStatus
+   * @member {{{{vendorExtensions.x-jsdoc-type}}}} userStatus
    */
   exports.prototype['userStatus'] = undefined;
 
