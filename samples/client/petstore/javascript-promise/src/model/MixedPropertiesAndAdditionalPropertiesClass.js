@@ -86,15 +86,15 @@
   }
 
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} uuid
+   * @member {String} uuid
    */
   exports.prototype['uuid'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} dateTime
+   * @member {Date} dateTime
    */
   exports.prototype['dateTime'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} map
+   * @member {Object.<String, module:model/Animal>} map
    */
   exports.prototype['map'] = undefined;
 

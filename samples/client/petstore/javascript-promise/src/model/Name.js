@@ -53,7 +53,7 @@
    * Model for testing model name same as property name
    * @alias module:model/Name
    * @class
-   * @param name {{{{vendorExtensions.x-jsdoc-type}}}} 
+   * @param name {Integer} 
    */
   var exports = function(name) {
     var _this = this;
@@ -92,19 +92,19 @@
   }
 
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} name
+   * @member {Integer} name
    */
   exports.prototype['name'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} snake_case
+   * @member {Integer} snake_case
    */
   exports.prototype['snake_case'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} property
+   * @member {String} property
    */
   exports.prototype['property'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} 123Number
+   * @member {Integer} 123Number
    */
   exports.prototype['123Number'] = undefined;
 

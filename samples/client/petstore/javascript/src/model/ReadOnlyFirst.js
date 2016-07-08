@@ -82,11 +82,11 @@
   }
 
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} bar
+   * @member {String} bar
    */
   exports.prototype['bar'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} baz
+   * @member {String} baz
    */
   exports.prototype['baz'] = undefined;
 

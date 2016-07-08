@@ -53,7 +53,7 @@
    * @alias module:model/Cat
    * @class
    * @extends module:model/Animal
-   * @param className {{{{vendorExtensions.x-jsdoc-type}}}} 
+   * @param className {String} 
    */
   var exports = function(className) {
     var _this = this;
@@ -83,7 +83,7 @@
   exports.prototype.constructor = exports;
 
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} declawed
+   * @member {Boolean} declawed
    */
   exports.prototype['declawed'] = undefined;
 

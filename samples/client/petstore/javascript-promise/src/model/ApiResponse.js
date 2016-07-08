@@ -86,15 +86,15 @@
   }
 
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} code
+   * @member {Integer} code
    */
   exports.prototype['code'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} type
+   * @member {String} type
    */
   exports.prototype['type'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} message
+   * @member {String} message
    */
   exports.prototype['message'] = undefined;
 

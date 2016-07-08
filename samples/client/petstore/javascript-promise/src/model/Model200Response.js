@@ -83,11 +83,11 @@
   }
 
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} name
+   * @member {Integer} name
    */
   exports.prototype['name'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} class
+   * @member {String} class
    */
   exports.prototype['class'] = undefined;
 

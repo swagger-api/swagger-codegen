@@ -52,10 +52,10 @@
    * Constructs a new <code>FormatTest</code>.
    * @alias module:model/FormatTest
    * @class
-   * @param _number {{{{vendorExtensions.x-jsdoc-type}}}} 
-   * @param _byte {{{{vendorExtensions.x-jsdoc-type}}}} 
-   * @param _date {{{{vendorExtensions.x-jsdoc-type}}}} 
-   * @param password {{{{vendorExtensions.x-jsdoc-type}}}} 
+   * @param _number {Number} 
+   * @param _byte {String} 
+   * @param _date {Date} 
+   * @param password {String} 
    */
   var exports = function(_number, _byte, _date, password) {
     var _this = this;
@@ -130,55 +130,55 @@
   }
 
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} integer
+   * @member {Integer} integer
    */
   exports.prototype['integer'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} int32
+   * @member {Integer} int32
    */
   exports.prototype['int32'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} int64
+   * @member {Integer} int64
    */
   exports.prototype['int64'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} number
+   * @member {Number} number
    */
   exports.prototype['number'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} float
+   * @member {Number} float
    */
   exports.prototype['float'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} double
+   * @member {Number} double
    */
   exports.prototype['double'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} string
+   * @member {String} string
    */
   exports.prototype['string'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} byte
+   * @member {String} byte
    */
   exports.prototype['byte'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} binary
+   * @member {String} binary
    */
   exports.prototype['binary'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} date
+   * @member {Date} date
    */
   exports.prototype['date'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} dateTime
+   * @member {Date} dateTime
    */
   exports.prototype['dateTime'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} uuid
+   * @member {String} uuid
    */
   exports.prototype['uuid'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} password
+   * @member {String} password
    */
   exports.prototype['password'] = undefined;
 

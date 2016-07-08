@@ -86,15 +86,15 @@
   }
 
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} enum_string
+   * @member {module:model/EnumTest.EnumStringEnum} enum_string
    */
   exports.prototype['enum_string'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} enum_integer
+   * @member {module:model/EnumTest.EnumIntegerEnum} enum_integer
    */
   exports.prototype['enum_integer'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} enum_number
+   * @member {module:model/EnumTest.EnumNumberEnum} enum_number
    */
   exports.prototype['enum_number'] = undefined;
 

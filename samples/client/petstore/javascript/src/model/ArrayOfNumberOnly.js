@@ -78,7 +78,7 @@
   }
 
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} ArrayNumber
+   * @member {Array.<Number>} ArrayNumber
    */
   exports.prototype['ArrayNumber'] = undefined;
 

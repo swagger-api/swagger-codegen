@@ -98,28 +98,28 @@
   }
 
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} id
+   * @member {Integer} id
    */
   exports.prototype['id'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} petId
+   * @member {Integer} petId
    */
   exports.prototype['petId'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} quantity
+   * @member {Integer} quantity
    */
   exports.prototype['quantity'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} shipDate
+   * @member {Date} shipDate
    */
   exports.prototype['shipDate'] = undefined;
   /**
    * Order Status
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} status
+   * @member {module:model/Order.StatusEnum} status
    */
   exports.prototype['status'] = undefined;
   /**
-   * @member {{{{vendorExtensions.x-jsdoc-type}}}} complete
+   * @member {Boolean} complete
    * @default false
    */
   exports.prototype['complete'] = false;
