@@ -61,7 +61,7 @@
      * Delete purchase order by ID
      * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
      * @param {String} orderId ID of the order that needs to be deleted
-     * @return {Promise} a Promise, with data of type {@link }
+     * @return {Promise} a Promise
      */
     this.deleteOrder = function(orderId) {
       var postBody = null;

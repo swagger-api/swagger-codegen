@@ -73,7 +73,7 @@
      * @param {Date} opts._date None
      * @param {Date} opts.dateTime None
      * @param {String} opts.password None
-     * @return {Promise} a Promise, with data of type {@link }
+     * @return {Promise} a Promise
      */
     this.testEndpointParameters = function(_number, _double, _string, _byte, opts) {
       opts = opts || {};
@@ -140,7 +140,7 @@
      * @param {module:model/String} opts.enumQueryString Query parameter enum test (string) (default to -efg)
      * @param {Number} opts.enumQueryInteger Query parameter enum test (double)
      * @param {Number} opts.enumQueryDouble Query parameter enum test (double)
-     * @return {Promise} a Promise, with data of type {@link }
+     * @return {Promise} a Promise
      */
     this.testEnumQueryParameters = function(opts) {
       opts = opts || {};

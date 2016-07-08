@@ -61,7 +61,7 @@
      * Create user
      * This can only be done by the logged in user.
      * @param {module:model/User} body Created user object
-     * @return {Promise} a Promise, with data of type {@link }
+     * @return {Promise} a Promise
      */
     this.createUser = function(body) {
       var postBody = body;
@@ -98,7 +98,7 @@
      * Creates list of users with given input array
      * 
      * @param {Array.<module:model/User>} body List of user object
-     * @return {Promise} a Promise, with data of type {@link }
+     * @return {Promise} a Promise
      */
     this.createUsersWithArrayInput = function(body) {
       var postBody = body;
@@ -135,7 +135,7 @@
      * Creates list of users with given input array
      * 
      * @param {Array.<module:model/User>} body List of user object
-     * @return {Promise} a Promise, with data of type {@link }
+     * @return {Promise} a Promise
      */
     this.createUsersWithListInput = function(body) {
       var postBody = body;
@@ -172,7 +172,7 @@
      * Delete user
      * This can only be done by the logged in user.
      * @param {String} username The name that needs to be deleted
-     * @return {Promise} a Promise, with data of type {@link }
+     * @return {Promise} a Promise
      */
     this.deleteUser = function(username) {
       var postBody = null;
@@ -292,7 +292,7 @@
     /**
      * Logs out current logged in user session
      * 
-     * @return {Promise} a Promise, with data of type {@link }
+     * @return {Promise} a Promise
      */
     this.logoutUser = function() {
       var postBody = null;
@@ -325,7 +325,7 @@
      * This can only be done by the logged in user.
      * @param {String} username name that need to be deleted
      * @param {module:model/User} body Updated user object
-     * @return {Promise} a Promise, with data of type {@link }
+     * @return {Promise} a Promise
      */
     this.updateUser = function(username, body) {
       var postBody = body;

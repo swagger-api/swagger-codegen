@@ -61,7 +61,7 @@
      * Add a new pet to the store
      * 
      * @param {module:model/Pet} body Pet object that needs to be added to the store
-     * @return {Promise} a Promise, with data of type {@link }
+     * @return {Promise} a Promise
      */
     this.addPet = function(body) {
       var postBody = body;
@@ -100,7 +100,7 @@
      * @param {Integer} petId Pet id to delete
      * @param {Object} opts Optional parameters
      * @param {String} opts.apiKey 
-     * @return {Promise} a Promise, with data of type {@link }
+     * @return {Promise} a Promise
      */
     this.deletePet = function(petId, opts) {
       opts = opts || {};
@@ -254,7 +254,7 @@
      * Update an existing pet
      * 
      * @param {module:model/Pet} body Pet object that needs to be added to the store
-     * @return {Promise} a Promise, with data of type {@link }
+     * @return {Promise} a Promise
      */
     this.updatePet = function(body) {
       var postBody = body;
@@ -294,7 +294,7 @@
      * @param {Object} opts Optional parameters
      * @param {String} opts.name Updated name of the pet
      * @param {String} opts.status Updated status of the pet
-     * @return {Promise} a Promise, with data of type {@link }
+     * @return {Promise} a Promise
      */
     this.updatePetWithForm = function(petId, opts) {
       opts = opts || {};
