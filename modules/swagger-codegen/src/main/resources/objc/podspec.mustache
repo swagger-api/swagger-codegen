@@ -12,10 +12,7 @@ Pod::Spec.new do |s|
     s.version          = "{{podVersion}}"
 {{#apiInfo}}{{#apis}}{{^hasMore}}
     s.summary          = "{{appName}}"
-    s.description      = <<-DESC
-                         {{{appDescription}}}
-                         DESC
-{{/hasMore}}{{/apis}}{{/apiInfo}}
+    s.description      = "{{appDescription}}{{/hasMore}}{{/apis}}{{/apiInfo}}"
     s.platform     = :ios, '7.0'
     s.requires_arc = true
 
