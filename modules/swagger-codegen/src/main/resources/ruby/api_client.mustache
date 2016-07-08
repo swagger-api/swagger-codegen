@@ -23,7 +23,7 @@ module {{moduleName}}
     # @option config [Configuration] Configuraiton for initializing the object, default to Configuration.default
     def initialize(config = Configuration.default)
       @config = config
-      @user_agent = "{{#httpUserAgent}}{{{.}}}{{/httpUserAgent}}{{^httpUserAgent}}Swagger-Codegen/#{VERSION}/ruby{{/httpUserAgent}}"
+      @user_agent = "{{#httpUserAgent}}{{{.}}}{{/httpUserAgent}}{{^httpUserAgent}}{{#gemName}}{{.}}{{/gemName}}/#{VERSION} ruby/#{RUBY_VERSION}{{/httpUserAgent}}"
       @default_headers = {
         'Content-Type' => "application/json",
         'User-Agent' => @user_agent
@@ -115,12 +115,13 @@ module {{moduleName}}
     # Check if the given MIME is a JSON MIME.
     # JSON MIME examples:
     #   application/json
+    #   application/vnd.api+json
     #   application/json; charset=UTF8
     #   APPLICATION/JSON
     # @param [String] mime MIME
     # @return [Boolean] True if the MIME is applicaton/json
     def json_mime?(mime)
-       !(mime =~ /\Aapplication\/json(;.*)?\z/i).nil?
+    !(mime =~ /\Aapplication\/(vnd\.api\+)?json(;.*)?\z/i).nil?
     end
 
     # Deserialize the response to the given return type.
