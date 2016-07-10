@@ -6,5 +6,8 @@ jdk:
 - oraclejdk7
 - oraclejdk8
 
-after_success:
-- ./bin/run-all-petstore.sh
+ci:
+- ./bin/run-all-petstore.sh 2>&1 > run-all-petstore.log
+
+post_ci:
+- tail run-all-petstore.log

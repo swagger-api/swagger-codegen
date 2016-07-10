@@ -20,6 +20,7 @@ build_script:
 test_script:
   - mvn clean install --batch-mode
   - .\bin\windows\run-all-petstore.bat 2>&1 > run-all-petstore.log
+after_test:
   - tail .\run-all-petstore.log
 cache:
   - C:\maven\
