@@ -8,6 +8,6 @@ jdk:
 
 build:
   ci:
-    - ./bin/run-all-petstore 2>&1 > run-all-petstore.log
+    - ./bin/run-all-petstore > run-all-petstore.log 2>&1
   post_ci:
     - tail run-all-petstore.log
