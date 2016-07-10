@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash -e
 
 for SCRIPT in ./bin/*.sh
 do
