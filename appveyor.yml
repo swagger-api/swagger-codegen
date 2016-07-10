@@ -19,7 +19,8 @@ build_script:
   - mvn clean package --batch-mode -DskipTest
 test_script:
   - mvn clean install --batch-mode
-  - .\bin\windows\run-all-petstore.bat
+  - .\bin\windows\run-all-petstore.bat 2>&1 > run-all-petstore.log
+  - tail .\run-all-petstore.log
 cache:
   - C:\maven\
   - C:\Users\appveyor\.m2
