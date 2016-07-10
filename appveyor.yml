@@ -15,11 +15,9 @@ install:
   - cmd: SET PATH=C:\maven\apache-maven-3.2.5\bin;%JAVA_HOME%\bin;%PATH%
   - cmd: SET MAVEN_OPTS=-XX:MaxPermSize=2g -Xmx4g
   - cmd: SET JAVA_OPTS=-XX:MaxPermSize=2g -Xmx4g
-build_script:
-  - mvn clean package --batch-mode -DskipTest
 test_script:
   - mvn clean install --batch-mode
-  - .\bin\windows\run-all-petstore.bat 2>&1 > run-all-petstore.log
+  - .\bin\windows\run-all-petstore.bat > run-all-petstore.log 2>&1
 after_test:
   - tail .\run-all-petstore.log
 cache:
