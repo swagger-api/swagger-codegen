@@ -1,0 +1,10 @@
+language: java
+
+jdk:
+- openjdk7
+- openjdk8
+- oraclejdk7
+- oraclejdk8
+
+after_success:
+- ./bin/run-all-petstore.sh
