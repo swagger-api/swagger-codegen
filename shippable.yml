@@ -7,7 +7,7 @@ jdk:
 - oraclejdk8
 
 ci:
-- ./bin/run-all-petstore.sh 2>&1 > run-all-petstore.log
+- ./bin/run-all-petstore 2>&1 > run-all-petstore.log
 
 post_ci:
 - tail run-all-petstore.log
