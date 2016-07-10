@@ -36,6 +36,9 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
         apiPackage = "io.swagger.api";
         modelPackage = "io.swagger.model";
 
+        apiTestTemplateFiles.clear(); // TODO: add api test template
+        modelTestTemplateFiles.clear(); // TODO: add model test template
+
         // clear model and api doc template as this codegen
         // does not support auto-generated markdown doc at the moment
         //TODO: add doc templates
