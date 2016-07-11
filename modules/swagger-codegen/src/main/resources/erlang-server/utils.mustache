@@ -4,6 +4,9 @@
 -export([string_to_header/1]).
 -export([get_opt/2]).
 -export([get_opt/3]).
+-export([priv_dir/0]).
+-export([priv_dir/1]).
+-export([priv_path/1]).
 
 set_resp_headers([], Req) ->
     Req;
@@ -21,4 +24,41 @@ get_opt(Key, Opts, Default) ->
     case lists:keyfind(Key, 1, Opts) of
         {_, Value} -> Value;
         false -> Default
+    end.
+
+-spec priv_dir() -> file:filename().
+
+priv_dir() ->
+    {ok, AppName} = application:get_application(),
+    priv_dir(AppName).
+
+-spec priv_dir(Application :: atom()) -> file:filename().
+
+priv_dir(AppName) ->
+    case code:priv_dir(AppName) of
+        Value when is_list(Value) ->
+            Value ++ "/";
+        _Error ->
+            select_priv_dir([filename:join(["apps", atom_to_list(AppName), "priv"]), "priv"])
+     end.
+
+-spec priv_path(Relative :: file:filename()) -> file:filename().
+
+priv_path(Relative) ->
+    filename:join(priv_dir(), Relative).
+
+-include_lib("kernel/include/file.hrl").
+
+select_priv_dir(Paths) ->
+    case lists:dropwhile(fun test_priv_dir/1, Paths) of
+        [Path | _] -> Path;
+        _          -> exit(no_priv_dir)
+    end.
+
+test_priv_dir(Path) ->
+    case file:read_file_info(Path) of
+        {ok, #file_info{type = directory}} ->
+            false;
+        _ ->
+            true
     end.

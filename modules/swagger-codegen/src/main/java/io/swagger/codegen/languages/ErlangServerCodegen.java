@@ -10,7 +10,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import io.swagger.codegen.*;
 import io.swagger.models.*;
-import io.swagger.util.Yaml;
+import io.swagger.util.Json;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -121,7 +121,7 @@ public class ErlangServerCodegen extends DefaultCodegen implements CodegenConfig
         supportingFiles.add(new SupportingFile("server.mustache", "",  toSourceFilePath("server", "erl")));
         supportingFiles.add(new SupportingFile("utils.mustache", "",  toSourceFilePath("utils", "erl")));
         supportingFiles.add(new SupportingFile("auth.mustache", "",  toSourceFilePath("auth", "erl")));
-    //    supportingFiles.add(new SupportingFile("handler.mustache", "",  toSourceFilePath("handler", "erl")));
+        supportingFiles.add(new SupportingFile("swagger.mustache", "", toPrivFilePath("swagger", "json")));
         supportingFiles.add(new SupportingFile("default_logic_handler.mustache", "",  toSourceFilePath("default_logic_handler", "erl")));
         supportingFiles.add(new SupportingFile("logic_handler.mustache", "",  toSourceFilePath("logic_handler", "erl")));
         writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
@@ -227,6 +227,19 @@ public class ErlangServerCodegen extends DefaultCodegen implements CodegenConfig
         return objs;
     }
 
+    @Override
+    public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
+        Swagger swagger = (Swagger)objs.get("swagger");
+        if(swagger != null) {
+            try {
+                objs.put("swagger-json", Json.mapper().writeValueAsString(swagger));
+            } catch (JsonProcessingException e) {
+                LOGGER.error(e.getMessage(), e);
+            }
+        }
+        return super.postProcessSupportingFileData(objs);
+    }
+
     public void setPackageName(String packageName) {
         this.packageName = packageName;
     }
@@ -245,5 +258,9 @@ public class ErlangServerCodegen extends DefaultCodegen implements CodegenConfig
 
     protected String toIncludeFilePath(String name, String extension) {
         return "include" + File.separator + toModuleName(name) + "." + extension;
+    }
+
+    protected String toPrivFilePath(String name, String extension) {
+        return "priv" + File.separator + name + "." + extension;
     }
 }
