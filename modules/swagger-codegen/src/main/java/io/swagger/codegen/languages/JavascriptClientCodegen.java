@@ -58,6 +58,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     public static final String USE_PROMISES = "usePromises";
     public static final String USE_INHERITANCE = "useInheritance";
     public static final String EMIT_MODEL_METHODS = "emitModelMethods";
+    public static final String WITH_CREDENTIALS = "withCredentials";
     public static final String EMIT_JS_DOC = "emitJSDoc";
 
     protected String projectName;
@@ -71,6 +72,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     protected String localVariablePrefix = "";
     protected boolean usePromises;
     protected boolean emitModelMethods;
+    protected boolean withCredentials;
     protected boolean emitJSDoc = true;
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
@@ -171,6 +173,9 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         cliOptions.add(new CliOption(USE_INHERITANCE,
                 "use JavaScript prototype chains & delegation for inheritance")
                 .defaultValue(Boolean.TRUE.toString()));
+        cliOptions.add(new CliOption(WITH_CREDENTIALS,
+                "add withCredentials() to client, to allow sending cookies to server")
+                .defaultValue(Boolean.FALSE.toString()));
     }
 
     @Override
@@ -226,6 +231,9 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         }
         if (additionalProperties.containsKey(EMIT_MODEL_METHODS)) {
             setEmitModelMethods(Boolean.parseBoolean((String)additionalProperties.get(EMIT_MODEL_METHODS)));
+        }
+        if (additionalProperties.containsKey(WITH_CREDENTIALS)) {
+            setWithCredentials(Boolean.parseBoolean((String)additionalProperties.get(WITH_CREDENTIALS)));
         }
         if (additionalProperties.containsKey(EMIT_JS_DOC)) {
             setEmitJSDoc(Boolean.parseBoolean((String)additionalProperties.get(EMIT_JS_DOC)));
@@ -285,6 +293,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         additionalProperties.put(USE_PROMISES, usePromises);
         additionalProperties.put(USE_INHERITANCE, supportsInheritance);
         additionalProperties.put(EMIT_MODEL_METHODS, emitModelMethods);
+        additionalProperties.put(WITH_CREDENTIALS, withCredentials);
         additionalProperties.put(EMIT_JS_DOC, emitJSDoc);
 
         // make api and model doc path available in mustache template
@@ -390,6 +399,10 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
 
     public void setEmitModelMethods(boolean emitModelMethods) {
         this.emitModelMethods = emitModelMethods;
+    }
+
+    public void setWithCredentials(boolean withCredentials) {
+        this.withCredentials = withCredentials;
     }
 
     public void setEmitJSDoc(boolean emitJSDoc) {
