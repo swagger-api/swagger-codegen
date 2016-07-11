@@ -5,8 +5,8 @@
 
 get_paths(LogicHandler) ->
     ValidatorState = prepare_validator(),
-    Paths = lists:usort(lists:foldl(
-        fun({_, Path, _, Handler}, Acc) ->
+    Paths = lists:usort(maps:fold(
+        fun(_, #{path := Path, handler := Handler}, Acc) ->
             [{Path, Handler} | Acc]
         end,
         [],
@@ -24,9 +24,15 @@ prepare_validator() ->
 
 
 get_operations() ->
-    [{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
-        {'{{operationId}}', "{{path}}", <<"{{httpMethod}}">> ,'{{classname}}'}{{#hasMore}},{{/hasMore}}{{/operation}}{{#hasMore}},{{/hasMore}}{{/operations}}{{/apis}}{{/apiInfo}}
-    ].
+    #{ {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
+        '{{operationId}}' => #{
+            path => "{{path}}",
+            method => <<"{{httpMethod}}">>,
+            handler => '{{classname}}',
+            return_type => {{#returnType}}"{{returnType}}"{{/returnType}}{{^returnType}}undefined{{/returnType}},
+            return_base_type => {{#returnBaseType}}"{{returnBaseType}}"{{/returnBaseType}}{{^returnBaseType}}undefined{{/returnBaseType}}
+        }{{#hasMore}},{{/hasMore}}{{/operation}}{{#hasMore}},{{/hasMore}}{{/operations}}{{/apis}}{{/apiInfo}}
+    }.
 
 get_swagger_path() ->
     {ok, AppName} = application:get_application(?MODULE),
