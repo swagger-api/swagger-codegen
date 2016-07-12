@@ -10,6 +10,10 @@ protocol JSONEncodable {
     func encodeToJSON() -> AnyObject
 }
 
+public enum ErrorResponse : ErrorType {
+    case Error(Int, NSData?, ErrorType)
+}
+
 public class Response<T> {
     public let statusCode: Int
     public let header: [String: String]
@@ -62,8 +66,14 @@ class Decoders {
         if T.self is Int64.Type && source is NSNumber {
             return source.longLongValue as! T;
         }
+        if T.self is NSUUID.Type && source is String {
+            return NSUUID(UUIDString: source as! String) as! T
+        }
         if source is T {
             return source as! T
+        }
+        if T.self is NSData.Type && source is String {
+            return NSData(base64EncodedString: source as! String, options: NSDataBase64DecodingOptions()) as! T
         }
 
         let key = "\(T.self)"
