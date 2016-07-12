@@ -1,5 +1,23 @@
 package io.swagger.codegen.plugin;
 
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyAdditionalPropertiesKvp;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyImportMappingsKvp;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyInstantiationTypesKvp;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyLanguageSpecificPrimitivesCsv;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyTypeMappingsKvp;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.project.MavenProject;
+
 /*
  * Copyright 2001-2005 The Apache Software Foundation.
  *
@@ -19,25 +37,9 @@ package io.swagger.codegen.plugin;
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.ClientOptInput;
 import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.DefaultGenerator;
 import io.swagger.codegen.config.CodegenConfigurator;
-import io.swagger.models.Swagger;
-import io.swagger.parser.SwaggerParser;
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.project.MavenProject;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.*;
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 /**
  * Goal which generates client/server code from a swagger json/yaml definition.
@@ -288,7 +290,8 @@ public class CodeGenMojo extends AbstractMojo {
         }
 
         if (addCompileSourceRoot) {
-            project.addCompileSourceRoot(output.toString());
+        	String sourceJavaFolder = output.toString() + "/" + configOptions.get(CodegenConstants.SOURCE_FOLDER);
+        	project.addCompileSourceRoot(sourceJavaFolder);
         }
     }
 }
