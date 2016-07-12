@@ -4,11 +4,11 @@ All URIs are relative to *https://petstore.swagger.io *_/ &#39; \&quot; &#x3D;en
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**TestCodeInject * &#39; &quot; &#x3D;end rn n r**](FakeApi.md#TestCodeInject * &#39; &quot; &#x3D;end rn n r) | **Put** /fake | To test code injection *_/ &#39; \&quot; &#x3D;end \\r\\n \\n \\r
+[**TestCodeInjectEndRnNR**](FakeApi.md#TestCodeInjectEndRnNR) | **Put** /fake | To test code injection *_/ &#39; \&quot; &#x3D;end \\r\\n \\n \\r
 
 
-# **TestCodeInject * ' " =end rn n r**
-> TestCodeInject * ' " =end rn n r($test code inject * &#39; &quot; &#x3D;end rn n r)
+# **TestCodeInjectEndRnNR**
+> TestCodeInjectEndRnNR($testCodeInjectEndRnNR)
 
 To test code injection *_/ ' \" =end \\r\\n \\n \\r
 
@@ -17,7 +17,7 @@ To test code injection *_/ ' \" =end \\r\\n \\n \\r
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **test code inject * &#39; &quot; &#x3D;end rn n r** | **string**| To test code injection *_/ &#39; \&quot; &#x3D;end \\r\\n \\n \\r | [optional] 
+ **testCodeInjectEndRnNR** | **string**| To test code injection *_/ &#39; \&quot; &#x3D;end \\r\\n \\n \\r | [optional] 
 
 ### Return type
 
@@ -29,12 +29,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, */ '  =end 
- 
- 
- - **Accept**: application/json, */ '  =end 
- 
- 
+ - **Content-Type**: application/json, *_/ '  =end       
+ - **Accept**: application/json, *_/ '  =end       
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

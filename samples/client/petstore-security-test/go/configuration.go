@@ -46,7 +46,7 @@ type Configuration struct {
 
 func NewConfiguration() *Configuration {
 	return &Configuration{
-		BasePath:      "https://petstore.swagger.io *_/ &#39; \&quot; &#x3D;end \\r\\n \\n \\r/v2 *_/ &#39; \&quot; &#x3D;end \\r\\n \\n \\r",
+		BasePath:      "https://petstore.swagger.io *_/ ' \" =end \\r\\n \\n \\r/v2 *_/ ' \" =end \\r\\n \\n \\r",
 		UserName:      "",
 		debug:         false,
 		DefaultHeader: make(map[string]string),

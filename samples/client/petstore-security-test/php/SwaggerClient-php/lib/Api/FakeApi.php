@@ -134,15 +134,11 @@ class FakeApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = $this->apiClient->selectHeaderAccept(array('application/json', '*/  " =end 
- 
- '));
+        $_header_accept = $this->apiClient->selectHeaderAccept(array('application/json', '*_/  \" =end'));
         if (!is_null($_header_accept)) {
             $headerParams['Accept'] = $_header_accept;
         }
-        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('application/json','*/  " =end 
- 
- '));
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('application/json','*_/  \" =end'));
 
         // default format to json
         $resourcePath = str_replace("{format}", "json", $resourcePath);

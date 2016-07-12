@@ -44,12 +44,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, */  " =end 
- 
- 
- - **Accept**: application/json, */  " =end 
- 
- 
+ - **Content-Type**: application/json, *_/  \" =end
+ - **Accept**: application/json, *_/  \" =end
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 

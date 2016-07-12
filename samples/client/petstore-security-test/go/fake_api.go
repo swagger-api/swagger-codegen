@@ -52,10 +52,10 @@ func NewFakeApiWithBasePath(basePath string) *FakeApi {
 /**
  * To test code injection *_/ &#39; \&quot; &#x3D;end \\r\\n \\n \\r
  *
- * @param test code inject * &#39; &quot; &#x3D;end rn n r To test code injection *_/ &#39; \&quot; &#x3D;end \\r\\n \\n \\r
+ * @param testCodeInjectEndRnNR To test code injection *_/ &#39; \&quot; &#x3D;end \\r\\n \\n \\r
  * @return void
  */
-func (a FakeApi) TestCodeInject * &#39; &quot; &#x3D;end rn n r(test code inject * &#39; &quot; &#x3D;end rn n r string) (*APIResponse, error) {
+func (a FakeApi) TestCodeInjectEndRnNR(testCodeInjectEndRnNR string) (*APIResponse, error) {
 
 	var httpMethod = "Put"
 	// create path and map variables
@@ -76,9 +76,7 @@ func (a FakeApi) TestCodeInject * &#39; &quot; &#x3D;end rn n r(test code inject
 
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json", "*/ '  =end 
- 
- ",  }
+	localVarHttpContentTypes := []string{ "application/json", "*_/ '  =end       ",  }
 
 	// set Content-Type header
 	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
@@ -88,9 +86,7 @@ func (a FakeApi) TestCodeInject * &#39; &quot; &#x3D;end rn n r(test code inject
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-"*/ '  =end 
- 
- ",
+"*_/ '  =end       ",
 	}
 
 	// set Accept header
@@ -99,7 +95,7 @@ func (a FakeApi) TestCodeInject * &#39; &quot; &#x3D;end rn n r(test code inject
 		headerParams["Accept"] = localVarHttpHeaderAccept
 	}
 
-	formParams["test code inject * &#39; &quot; &#x3D;end rn n r"] = test code inject * &#39; &quot; &#x3D;end rn n r
+	formParams["testCodeInjectEndRnNR"] = testCodeInjectEndRnNR
 
 	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
 	if err != nil {
