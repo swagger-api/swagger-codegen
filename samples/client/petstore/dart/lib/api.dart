@@ -1,4 +1,4 @@
-library api;
+library swagger.api;
 
 import 'dart:async';
 import 'dart:convert';

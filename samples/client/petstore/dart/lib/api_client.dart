@@ -1,4 +1,4 @@
-part of api;
+part of swagger.api;
 
 class QueryParam {
   String name;
@@ -9,6 +9,7 @@ class QueryParam {
 
 class ApiClient {
 
+  String basePath;
   var client = new BrowserClient();
 
   Map<String, String> _defaultHeaderMap = {};
@@ -20,7 +21,7 @@ class ApiClient {
   final _RegList = new RegExp(r'^List<(.*)>$');
   final _RegMap = new RegExp(r'^Map<String,(.*)>$');
 
-  ApiClient() {
+  ApiClient({this.basePath: "http://petstore.swagger.io/v2"}) {
     // Setup authentications (key: authentication name, value: authentication).
     _authentications['petstore_auth'] = new OAuth();
     _authentications['api_key'] = new ApiKeyAuth("header", "api_key");
@@ -118,10 +119,9 @@ class ApiClient {
 
   // We don't use a Map<String, String> for queryParams.
   // If collectionFormat is 'multi' a key might appear multiple times.
-  Future<Response> invokeAPI(String host,
-                             String path,
+  Future<Response> invokeAPI(String path,
                              String method,
-                             List<QueryParam> queryParams,
+                             Iterable<QueryParam> queryParams,
                              Object body,
                              Map<String, String> headerParams,
                              Map<String, String> formParams,
@@ -135,7 +135,7 @@ class ApiClient {
                          '?' + ps.join('&') :
                          '';
 
-    String url = host + path + queryString;
+    String url = basePath + path + queryString;
 
     headerParams.addAll(_defaultHeaderMap);
     headerParams['Content-Type'] = contentType;

@@ -116,7 +116,7 @@ class ApiClient {
   // If collectionFormat is 'multi' a key might appear multiple times.
   Future<Response> invokeAPI(String path,
                              String method,
-                             List<QueryParam> queryParams,
+                             Iterable<QueryParam> queryParams,
                              Object body,
                              Map<String, String> headerParams,
                              Map<String, String> formParams,
