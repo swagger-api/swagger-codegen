@@ -1,3 +1,6 @@
 springfox.documentation.swagger.v2.path=/api-docs
 server.contextPath={{^contextPath}}/{{/contextPath}}{{#contextPath}}{{contextPath}}{{/contextPath}}
 #server.port=8090
+
+#Remove this exclusion for use Jpa. But don't miss to declare datasource before...
+spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
