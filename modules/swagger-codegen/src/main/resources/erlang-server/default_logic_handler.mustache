@@ -17,4 +17,4 @@ authorize_api_key(_, _) -> {true, #{}}.
 
 handle_request(OperationID, Req) ->
     io:format(user, "Got request to process: ~p~n", [{OperationID, Req}]),
-    {error, {501, [], <<"Not Implemented">>}}.
+    {501, [], <<"Not Implemented">>}.

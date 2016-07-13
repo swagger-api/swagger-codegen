@@ -1,0 +1,179 @@
+-module({{packageName}}_api).
+
+-export([get_operations/0]).
+-export([get_operation_id/2]).
+-export([request_params/1]).
+-export([request_param_info/2]).
+-export([populate_request/3]).
+-export([validate_response/4]).
+
+get_operations() ->
+    #{ {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
+        '{{operationId}}' => #{
+            path => "{{path}}",
+            method => <<"{{httpMethod}}">>,
+            handler => '{{classname}}'
+        }{{#hasMore}},{{/hasMore}}{{/operation}}{{#hasMore}},{{/hasMore}}{{/operations}}{{/apis}}{{/apiInfo}}
+    }.
+
+get_operation_id(Method, Handler) ->
+    get_operation_id(Method, Handler, get_operations()).
+
+get_operation_id(Method, Handler, Operations) ->
+    maps:fold(
+        fun
+            (OperationID, #{method := M, handler := H}, _) when H =:= Handler, M =:= Method ->
+                OperationID;
+            (_, _, Acc) ->
+                Acc
+        end,
+        undefined,
+        Operations
+    ).
+
+{{#apiInfo}}{{#apis}}
+{{#operations}}{{#operation}}
+request_params('{{operationId}}') ->
+    [{{#allParams}}{{^isBodyParam}}
+        "{{baseName}}"{{/isBodyParam}}{{#isBodyParam}}
+        "{{dataType}}"{{/isBodyParam}}{{#hasMore}},{{/hasMore}}{{/allParams}}
+    ];
+{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
+request_params(_) ->
+    error(unknown_operation).
+
+{{#apiInfo}}{{#apis}}
+{{#operations}}{{#operation}}{{#allParams}}
+request_param_info('{{operationId}}', {{^isBodyParam}}"{{baseName}}"{{/isBodyParam}}{{#isBodyParam}}"{{dataType}}"{{/isBodyParam}}) ->
+    #{
+        source => {{#isQueryParam}}qs_val{{/isQueryParam}} {{#isPathParam}}binding{{/isPathParam}} {{#isHeaderParam}}header{{/isHeaderParam}}{{#isBodyParam}}body{{/isBodyParam}},
+        rules => [{{#isString}}
+            {type, 'string'}, {{/isString}}{{#isInteger}}
+            {type, 'integer'}, {{/isInteger}}{{#isLong}}
+            {type, 'integer'}, {{/isLong}}{{#isFloat}}
+            {type, 'float'}, {{/isFloat}}{{#isDouble}}
+            {type, 'float'}, {{/isDouble}}{{#isByteArray}}
+            {type, 'binary'}, {{/isByteArray}}{{#isBinary}}
+            {type, 'binary'}, {{/isBinary}}{{#isBoolean}}
+            {type, 'boolean'}, {{/isBoolean}}{{#isDate}}
+            {type, 'date'}, {{/isDate}}{{#isDateTime}}
+            {type, 'datetime'}, {{/isDateTime}}{{#isEnum}}
+            {enum, [{{#allowableValues}}{{#values}}{{.}}{{/values}}{{/allowableValues}}] },{{/isEnum}}{{#required}}
+            {required, true}, {{/required}}{{#maximum}}
+            {max, {{maximum}} }, {{/maximum}}{{#exclusiveMaximum}}
+            {exclusive_max, {{exclusiveMaximum}} }, {{/exclusiveMaximum}}{{#minimum}}
+            {min, {{minimum}} }, {{/minimum}}{{#exclusiveMinimum}}
+            {exclusive_min, {{exclusiveMinimum}} }, {{/exclusiveMinimum}}{{#maxLength}}
+            {max_length, {{maxLength}} }, {{/maxLength}}{{#minLength}}
+            {min_length, {{minLength}} }, {{/minLength}}{{#pattern}}
+            {pattern, "{{pattern}}" }, {{/pattern}}{{#isBodyParam}}
+            schema, {{/isBodyParam}}
+            undefined
+        ]
+    };
+{{/allParams}}{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
+request_param_info(OperationID, Name) ->
+    error({unknown_param, OperationID, Name}).
+
+populate_request(OperationID, Req, ValidatorState) ->
+    Params = request_params(OperationID),
+    populate_request_params(OperationID, Params, Req, ValidatorState, #{}).
+
+populate_request_params(_, [], Req, _, Model) ->
+    {ok, Model, Req};
+
+populate_request_params(OperationID, [FieldParams | T], Req0, ValidatorState, Model) ->
+    case populate_request_param(OperationID, FieldParams, Req0, ValidatorState) of
+        {ok, K, V, Req} ->
+            populate_request_params(OperationID, T, Req, ValidatorState, maps:put(K, V, Model));
+        Error ->
+            Error
+    end.
+
+populate_request_param(OperationID, Name, Req0, ValidatorState) ->
+    #{rules := Rules, source := Source} = request_param_info(OperationID, Name),
+    {Value, Req} = get_value(Source, Name, Req0),
+    [validate(R, Name, Value, ValidatorState) || R <- Rules],
+    {ok, Name, Value, Req}.
+
+
+{{#apiInfo}}{{#apis}}
+{{#operations}}{{#operation}}
+{{#responses}}
+validate_response('{{operationId}}', {{code}}, Body, ValidatorState) ->
+    validate_response_body("{{dataType}}", "{{baseType}}", Body, ValidatorState);
+{{/responses}}
+{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
+
+validate_response(_OperationID, _Code, _Body, _ValidatorState) ->
+    ok.
+
+validate_response_body(undefined, _, Body, _) ->
+    case Body of
+        #{} -> ok;
+        _ -> throw(invalid_response)
+    end;
+
+validate_response_body("list", ReturnBaseType, Body, ValidatorState) ->
+    [
+        validate(schema, ReturnBaseType, Item, ValidatorState)
+    || Item <- Body];
+
+validate_response_body(_, ReturnBaseType, Body, ValidatorState) ->
+    validate(schema, ReturnBaseType, Body, ValidatorState).
+
+%%%
+validate({required, true}, _Name, undefined, _ValidatorState) ->
+    throw(missing_param);
+
+validate(_, _Name, undefined, _ValidatorState) ->
+    ok;
+
+validate(schema, Name, Value, ValidatorState) ->
+    Definition =  list_to_binary("#/definitions/" ++ Name),
+    try
+        validate_with_schema(Value, Definition, ValidatorState)
+    catch
+        _:Error ->
+            {error, Error}
+    end;
+
+validate(undefined, _Name, _Value, _ValidatorState) ->
+    ok;
+
+validate(Rule, Name, Value, _ValidatorState) ->
+    io:format("Validated ~p~n", [{Rule, Name, Value}]),
+    ok.
+
+get_value(body, _Name, Req0) ->
+    {ok, Body, Req} = cowboy_req:body(Req0),
+    Value = prepare_body(Body),
+    {Value, Req};
+
+get_value(qs_val, Name, Req0) ->
+    {QS, Req} = cowboy_req:qs_vals(Req0),
+    Value = {{packageName}}_utils:get_opt({{packageName}}_utils:string_to_qs(Name), QS),
+    {Value, Req};
+
+get_value(header, Name, Req0) ->
+    {Headers, Req} = cowboy_req:headers(Req0),
+    Value = {{packageName}}_utils:get_opt({{packageName}}_utils:string_to_header(Name), Headers),
+    {Value, Req};
+
+get_value(binding, Name, Req0) ->
+    {Bindings, Req} = cowboy_req:bindings(Req0),
+    Value = {{packageName}}_utils:get_opt({{packageName}}_utils:string_to_binding(Name), Bindings),
+    {Value, Req}.
+
+prepare_body(Body) ->
+    case Body of
+        <<"">> -> <<"">>;
+        _ -> jsx:decode(Body, [return_maps])
+    end.
+
+validate_with_schema(Body, Definition, ValidatorState) ->
+    jesse_schema_validator:validate_with_state(
+        [{<<"$ref">>, Definition}],
+        Body,
+        ValidatorState
+    ).

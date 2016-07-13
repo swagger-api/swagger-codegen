@@ -1,7 +1,6 @@
 -module({{packageName}}_router).
 
 -export([get_paths/1]).
--export([get_operations/0]).
 
 get_paths(LogicHandler) ->
     ValidatorState = prepare_validator(),
@@ -10,7 +9,7 @@ get_paths(LogicHandler) ->
             [{Path, Handler} | Acc]
         end,
         [],
-        get_operations()
+        {{packageName}}_api:get_operations()
     )),
     [
         {'_',
@@ -22,17 +21,6 @@ prepare_validator() ->
     R = jsx:decode(element(2, file:read_file(get_swagger_path()))),
     jesse_state:new(R, [{default_schema_ver, <<"http://json-schema.org/draft-04/schema#">>}]).
 
-
-get_operations() ->
-    #{ {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
-        '{{operationId}}' => #{
-            path => "{{path}}",
-            method => <<"{{httpMethod}}">>,
-            handler => '{{classname}}',
-            return_type => {{#returnType}}"{{returnType}}"{{/returnType}}{{^returnType}}undefined{{/returnType}},
-            return_base_type => {{#returnBaseType}}"{{returnBaseType}}"{{/returnBaseType}}{{^returnBaseType}}undefined{{/returnBaseType}}
-        }{{#hasMore}},{{/hasMore}}{{/operation}}{{#hasMore}},{{/hasMore}}{{/operations}}{{/apis}}{{/apiInfo}}
-    }.
 
 get_swagger_path() ->
     {ok, AppName} = application:get_application(?MODULE),

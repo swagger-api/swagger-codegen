@@ -30,7 +30,7 @@ init(_Transport, Req, Opts) ->
 
 rest_init(Req0, [LogicHandler, ValidatorState]) ->
     {Method, Req} = cowboy_req:method(Req0),
-    OperationID = get_operation(Method),
+    OperationID = {{packageName}}_api:get_operation_id(Method, ?MODULE),
     State = #state{
         operation_id = OperationID,
         logic_handler = LogicHandler,
@@ -104,127 +104,17 @@ handle_request_json(
         validator_state = ValidatorState
     }
 ) ->
-    case populate_model(OperationID, Req0, ValidatorState) of
-      {ok, Populated, Req1} ->
-        case LogicHandler:handle_request(OperationID, Populated) of
-            {ok, {Headers, Body}} ->
-                validate_response_body(OperationID, Body, ValidatorState),
-                PreparedBody = jsx:encode(Body),
-                Req2 = swagger_utils:set_resp_headers(Headers, Req1),
-                Req = cowboy_req:set_resp_body(PreparedBody, Req2),
-                {true, Req, State};
-            {error, {Status, Headers, Reason}} ->
-                {ok, Req} = cowboy_req:reply(Status, Headers, Reason, Req1),
-                {halt, Req, State}
-        end;
-      {error, _Reason, Req1} ->
-        {halt, Req1, State}
+    case {{packageName}}_api:populate_request(OperationID, Req0, ValidatorState) of
+        {ok, Populated, Req1} ->
+            case LogicHandler:handle_request(OperationID, Populated) of
+                {Code, Headers, Body} ->
+                    {{packageName}}_api:validate_response(OperationID, Code, Body , ValidatorState),
+                    PreparedBody = jsx:encode(Body),
+                    {ok, Req} = cowboy_req:reply(Code, Headers, PreparedBody, Req1),
+                    {halt, Req, State}
+            end;
+        {error, _Reason, Req1} ->
+            {halt, Req1, State}
     end.
-
-    {{#operations}}{{#operation}}
-populate_model('{{operationId}}', Req0, ValidatorState) ->
-    Params = [
-    {{#allParams}}
-        {{#isFormParam}}{ {{dataType}}, form, "{{baseName}}"}{{#hasMore}},{{/hasMore}}{{/isFormParam}}
-        {{#isQueryParam}}{ {{dataType}}, qs_val, '{{baseName}}'}{{#hasMore}},{{/hasMore}}{{/isQueryParam}}
-        {{#isPathParam}}{ {{dataType}}, path, '{{baseName}}'}{{#hasMore}},{{/hasMore}}{{/isPathParam}}
-        {{#isHeaderParam}}{ {{dataType}}, header, "{{baseName}}"}{{#hasMore}},{{/hasMore}}{{/isHeaderParam}}
-        {{#isBodyParam}}{{#baseType}}{ model, body, "{{dataType}}"}{{/baseType}}{{#hasMore}},{{/hasMore}}{{/isBodyParam}}
-    {{/allParams}}
-    ],
-    populate_model_fields(Params, Req0, ValidatorState){{#hasMore}};{{/hasMore}}
-      {{/operation}}{{#hasMore}};{{/hasMore}}{{^hasMore}}.{{/hasMore}}{{/operations}}
-
-
-populate_model_fields(Params, Req, ValidatorState) ->
-    populate_model_fields(Params, Req, ValidatorState, #{}).
-
-populate_model_fields([], Req, _, Model) ->
-    {ok, Model, Req};
-
-populate_model_fields([FieldParams | T], Req0, ValidatorState, Model) ->
-    case populate_model_field(FieldParams, Req0, ValidatorState) of
-        {ok, K, V, Req} ->
-            populate_model_fields(T, Req, ValidatorState, maps:put(K, V, Model));
-        Error ->
-            Error
-    end.
-
-populate_model_field({model, body, Name}, Req0, ValidatorState) ->
-    {ok, Body, Req} = cowboy_req:body(Req0),
-    PreparedBody = prepare_body(Body),
-    Definition =  list_to_binary("#/definitions/" ++ Name),
-    try
-        validate_with_schema(PreparedBody, Definition, ValidatorState),
-        {ok, Name, PreparedBody, Req}
-    catch
-        _:Error ->
-            {error, Error, Req}
-    end;
-
-populate_model_field({_DataType, qs_val, Name}, Req0, _) ->
-    {QS, Req} = cowboy_req:qs_vals(Req0),
-    Value = {{packageName}}_utils:get_opt(Name, QS),
-    {ok, Name, Value, Req};
-
-populate_model_field({_DataType, header, Name}, Req0, _) ->
-    {Headers, Req} = cowboy_req:headers(Req0),
-    Value = {{packageName}}_utils:get_opt(Name, Headers),
-    {ok, Name, Value, Req};
-
-populate_model_field({_DataType, path, Name}, Req0, _) ->
-    {Bindings, Req} = cowboy_req:bindings(Req0),
-    Value = {{packageName}}_utils:get_opt(Name, Bindings),
-    {ok, Name, Value, Req}.
 
 validate_headers(_, Req) -> {true, Req}.
-
-get_operation(Method) ->
-    get_operation(Method, {{packageName}}_router:get_operations()).
-
-get_operation(Method, Operations) ->
-    maps:fold(
-        fun
-            (OperationID, #{method := M, handler := ?MODULE}, _) when M =:= Method ->
-                OperationID;
-            (_, _, Acc) ->
-                Acc
-        end,
-        undefined,
-        Operations
-    ).
-
-prepare_body(Body) ->
-    case Body of
-        <<"">> -> <<"">>;
-        _ -> jsx:decode(Body, [return_maps])
-    end.
-
-validate_response_body(OperationID, Body, ValidatorState) ->
-    #{
-        return_type := ReturnType,
-        return_base_type := ReturnBaseType
-    } = maps:get(OperationID, {{packageName}}_router:get_operations()),
-    validate_response_body(ReturnType, ReturnBaseType, Body, ValidatorState).
-
-validate_response_body(undefined, _, Body, _) ->
-    case Body of
-        #{} -> ok;
-        _ -> throw(invalid_response)
-    end;
-
-validate_response_body("list", ReturnBaseType, Body, ValidatorState) ->
-    [
-        validate_response_body(ReturnBaseType, ReturnBaseType, Item, ValidatorState)
-    || Item <- Body];
-
-validate_response_body(_ReturnType, ReturnBaseType, Body, ValidatorState) ->
-    Definition =  list_to_binary("#/definitions/" ++ ReturnBaseType),
-    validate_with_schema(Body, Definition, ValidatorState).
-
-validate_with_schema(Body, Definition, ValidatorState) ->
-    jesse_schema_validator:validate_with_state(
-        [{<<"$ref">>, Definition}],
-        Body,
-        ValidatorState
-    ).
