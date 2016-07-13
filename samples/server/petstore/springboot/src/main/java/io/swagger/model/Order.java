@@ -11,6 +11,7 @@ import org.joda.time.DateTime;
 
 
 
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-07-13T09:45:49.128+02:00")
 
 public class Order   {
   
@@ -39,7 +40,7 @@ public class Order   {
   }
 
   private StatusEnum status = null;
-  private Boolean complete = false;
+  private Boolean complete = null;
 
   /**
    **/
