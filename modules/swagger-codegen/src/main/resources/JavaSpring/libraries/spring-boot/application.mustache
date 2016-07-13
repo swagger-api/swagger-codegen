@@ -1,6 +1,6 @@
 #SpringBoot application.properties
 springfox.documentation.swagger.v2.path=/api-docs
-server.contextPath=/v2
+server.contextPath={{^contextPath}}/{{/contextPath}}{{#contextPath}}{{contextPath}}{{/contextPath}}
 #server.port=8090
 
 #Remove this exclusion for use Jpa. But don't miss to declare datasource before...

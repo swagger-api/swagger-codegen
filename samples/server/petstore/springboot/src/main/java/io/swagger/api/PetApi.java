@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-07-13T09:45:49.128+02:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-07-13T14:49:07.020+02:00")
 
 @Api(value = "pet", description = "the pet API")
 public interface PetApi {
