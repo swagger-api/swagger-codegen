@@ -1,5 +1,9 @@
 -module({{packageName}}_utils).
 
+-export([to_binary/1]).
+-export([to_list/1]).
+-export([to_float/1]).
+-export([to_int/1]).
 -export([set_resp_headers/2]).
 -export([string_to_header/1]).
 -export([string_to_qs/1]).
@@ -9,6 +13,45 @@
 -export([priv_dir/0]).
 -export([priv_dir/1]).
 -export([priv_path/1]).
+
+
+-spec to_binary(iodata() | atom() | number()) -> binary().
+
+to_binary(V) when is_binary(V)  -> V;
+to_binary(V) when is_list(V)    -> iolist_to_binary(V);
+to_binary(V) when is_atom(V)    -> atom_to_binary(V, utf8);
+to_binary(V) when is_integer(V) -> integer_to_binary(V);
+to_binary(V) when is_float(V)   -> float_to_binary(V).
+
+-spec to_list(iodata() | atom() | number()) -> string().
+
+to_list(V) when is_list(V)      -> V;
+to_list(V)                      -> binary_to_list(to_binary(V)).
+
+-spec to_float(iodata()) -> number().
+
+to_float(V) ->
+    Data = iolist_to_binary([V]),
+    case binary:split(Data, <<$.>>) of
+        [Data] ->
+            binary_to_integer(Data);
+        [<<>>, _] ->
+            binary_to_float(<<$0, Data/binary>>);
+        _ ->
+            binary_to_float(Data)
+    end.
+
+%%
+
+-spec to_int(integer() | binary() | list()) -> integer().
+
+to_int(Data) when is_integer(Data) ->
+    Data;
+to_int(Data) when is_binary(Data) ->
+    binary_to_integer(Data);
+to_int(Data) when is_list(Data) ->
+    list_to_integer(Data).
+
 
 set_resp_headers([], Req) ->
     Req;

@@ -30,7 +30,7 @@ init(_Transport, Req, Opts) ->
 
 rest_init(Req0, [LogicHandler, ValidatorState]) ->
     {Method, Req} = cowboy_req:method(Req0),
-    OperationID = {{packageName}}_api:get_operation_id(Method, ?MODULE),
+    OperationID = {{packageName}}_router:get_operation_id(Method, ?MODULE),
     State = #state{
         operation_id = OperationID,
         logic_handler = LogicHandler,
@@ -114,7 +114,8 @@ handle_request_json(
                     {halt, Req, State}
             end;
         {error, _Reason, Req1} ->
-            {halt, Req1, State}
+            {ok, Req} = cowboy_req:reply(400, [], <<"">>, Req1),
+            {halt, Req, State}
     end.
 
 validate_headers(_, Req) -> {true, Req}.
