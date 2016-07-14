@@ -206,7 +206,20 @@ public class SwaggerResource {
         String filename = Generator.generateServer(framework, opts);
         System.out.println("generated name: " + filename);
 
-        String host = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+        String host = System.getenv("GENERATOR_HOST");
+
+        if(StringUtils.isBlank(host)) {
+            String scheme = request.getHeader("X-SSL");
+            String port = "";
+            if("1".equals(scheme)) {
+                scheme = "https";
+            }
+            else {
+                scheme = request.getScheme();
+                port = ":" + request.getServerPort();
+            }
+            host = scheme + "://" + request.getServerName() + port;
+        }
 
         if (filename != null) {
             String code = String.valueOf(UUID.randomUUID().toString());
