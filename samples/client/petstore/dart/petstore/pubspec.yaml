@@ -3,8 +3,7 @@ version: 1.0.0
 description: Petstore client using swagger API library
 dependencies:
   swagger:
-    path:../swagger
-  swagger_vm:
-    path:../swagger_vm
-    
+    path: ../swagger
 
+dev_dependencies:
+  guinness: '^0.1.17'

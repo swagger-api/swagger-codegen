@@ -17,6 +17,7 @@ int newId() {
 }
 
 main() {
+  defaultApiClient.client = new Client();
   testPetApi();
   testStoreApi();
   testUserApi();
