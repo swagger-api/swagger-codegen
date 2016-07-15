@@ -7,8 +7,8 @@ import io.swagger.api.factories.PetApiServiceFactory;
 import io.swagger.annotations.ApiParam;
 
 import io.swagger.model.Pet;
-import java.io.File;
 import io.swagger.model.ModelApiResponse;
+import java.io.File;
 
 import java.util.List;
 import io.swagger.api.NotFoundException;
@@ -156,8 +156,8 @@ public class PetApi  {
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 405, message = "Invalid input", response = void.class) })
     public Response updatePetWithForm(@ApiParam(value = "ID of pet that needs to be updated",required=true) @PathParam("petId") Long petId
-,@ApiParam(value = "Updated name of the pet")@FormParam("name")  String name
-,@ApiParam(value = "Updated status of the pet")@FormParam("status")  String status
+,@ApiParam(value = "Updated name of the pet")  @FormParam("name")  String name
+,@ApiParam(value = "Updated status of the pet")  @FormParam("status")  String status
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.updatePetWithForm(petId,name,status,securityContext);

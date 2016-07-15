@@ -1,47 +1,68 @@
 package io.swagger.model;
 
+import java.util.Objects;
 
 
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.XmlEnum;
 
-@XmlAccessorType(XmlAccessType.FIELD)
- @XmlType(name = "Tag", propOrder =
-	{ "id", "name"
-})
 
-@XmlRootElement(name="Tag")
-public class Tag  {
+
+public class Tag   {
   
-
-  @XmlElement(name="id")
   private Long id = null;
-
-  @XmlElement(name="name")
   private String name = null;
 
   /**
    **/
+  public Tag id(Long id) {
+    this.id = id;
+    return this;
+  }
+
   
+  @ApiModelProperty(example = "null", value = "")
+  @JsonProperty("id")
   public Long getId() {
     return id;
   }
   public void setId(Long id) {
     this.id = id;
   }
+
   /**
    **/
+  public Tag name(String name) {
+    this.name = name;
+    return this;
+  }
+
   
+  @ApiModelProperty(example = "null", value = "")
+  @JsonProperty("name")
   public String getName() {
     return name;
   }
   public void setName(String name) {
     this.name = name;
+  }
+
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Tag tag = (Tag) o;
+    return Objects.equals(id, tag.id) &&
+        Objects.equals(name, tag.name);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, name);
   }
 
   @Override
@@ -59,7 +80,7 @@ public class Tag  {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private static String toIndentedString(Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }
