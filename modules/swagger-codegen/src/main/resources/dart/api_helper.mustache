@@ -23,7 +23,7 @@ Iterable<QueryParam> _convertParametersForCollectionFormat(
                      : collectionFormat; // default: csv
 
   if (collectionFormat == "multi") {
-    return values.map((v) => new QueryParam(name, '$v')) as Iterable<QueryParam>;
+    return values.map((v) => new QueryParam(name, '$v'));
   }
 
   String delimiter = _delimiters[collectionFormat] ?? ",";

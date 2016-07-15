@@ -15,7 +15,8 @@ class ApiClient {
   Map<String, String> _defaultHeaderMap = {};
   Map<String, Authentication> _authentications = {};
 
-  final dson = new Dartson.JSON();
+  final dson = new Dartson.JSON()
+                   ..addTransformer(new DateTimeParser(), DateTime);
   final DateFormat _dateFormatter = new DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
   final _RegList = new RegExp(r'^List<(.*)>$');
@@ -77,15 +78,13 @@ class ApiClient {
             Match match;
             if (value is List &&
                 (match = _RegList.firstMatch(targetType)) != null) {
-              var valueL = value as List;
               var newTargetType = match[1];
-              return valueL.map((v) => _deserialize(v, newTargetType)).toList();
+              return value.map((v) => _deserialize(v, newTargetType)).toList();
             } else if (value is Map &&
                 (match = _RegMap.firstMatch(targetType)) != null) {
-              var valueM = value as Map;
               var newTargetType = match[1];
-              return new Map.fromIterables(valueM.keys,
-                  valueM.values.map((v) => _deserialize(v, newTargetType)));
+              return new Map.fromIterables(value.keys,
+                  value.values.map((v) => _deserialize(v, newTargetType)));
             }
           }
       }
