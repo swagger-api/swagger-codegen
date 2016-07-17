@@ -21,6 +21,10 @@ limitations under the License.
 
 =end
 
+# https://github.com/typhoeus/typhoeus/issues/226
+require 'typhoeus'
+require 'typhoeus/adapters/faraday'
+
 # Common files
 require 'petstore/api_client'
 require 'petstore/api_error'
@@ -37,6 +41,7 @@ require 'petstore/models/array_of_number_only'
 require 'petstore/models/array_test'
 require 'petstore/models/cat'
 require 'petstore/models/category'
+require 'petstore/models/client'
 require 'petstore/models/dog'
 require 'petstore/models/enum_class'
 require 'petstore/models/enum_test'
