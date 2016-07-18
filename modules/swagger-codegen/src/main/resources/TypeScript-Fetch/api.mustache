@@ -176,7 +176,7 @@ export const {{classname}}Factory = function (fetch?: FetchAPI, basePath?: strin
          * @param {{paramName}} {{description}}{{/allParams}}
          */
         {{nickname}}({{#hasParams}}params: { {{#allParams}} {{paramName}}{{^required}}?{{/required}}: {{{dataType}}};{{/allParams}} }{{/hasParams}}) {
-            return {{classname}}Fp.{{nickname}}({{#hasParams}}params{{/hasParams}})(this.fetch, this.basePath);
+            return {{classname}}Fp.{{nickname}}({{#hasParams}}params{{/hasParams}})(fetch, basePath);
         },
 {{/operation}}
     }

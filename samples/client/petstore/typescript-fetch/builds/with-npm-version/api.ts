@@ -540,7 +540,7 @@ export const PetApiFactory = function (fetch?: FetchAPI, basePath?: string) {
          * @param body Pet object that needs to be added to the store
          */
         addPet(params: {  body?: Pet; }) {
-            return PetApiFp.addPet(params)(this.fetch, this.basePath);
+            return PetApiFp.addPet(params)(fetch, basePath);
         },
         /** 
          * Deletes a pet
@@ -549,7 +549,7 @@ export const PetApiFactory = function (fetch?: FetchAPI, basePath?: string) {
          * @param apiKey 
          */
         deletePet(params: {  petId: number; apiKey?: string; }) {
-            return PetApiFp.deletePet(params)(this.fetch, this.basePath);
+            return PetApiFp.deletePet(params)(fetch, basePath);
         },
         /** 
          * Finds Pets by status
@@ -557,7 +557,7 @@ export const PetApiFactory = function (fetch?: FetchAPI, basePath?: string) {
          * @param status Status values that need to be considered for filter
          */
         findPetsByStatus(params: {  status?: Array<string>; }) {
-            return PetApiFp.findPetsByStatus(params)(this.fetch, this.basePath);
+            return PetApiFp.findPetsByStatus(params)(fetch, basePath);
         },
         /** 
          * Finds Pets by tags
@@ -565,7 +565,7 @@ export const PetApiFactory = function (fetch?: FetchAPI, basePath?: string) {
          * @param tags Tags to filter by
          */
         findPetsByTags(params: {  tags?: Array<string>; }) {
-            return PetApiFp.findPetsByTags(params)(this.fetch, this.basePath);
+            return PetApiFp.findPetsByTags(params)(fetch, basePath);
         },
         /** 
          * Find pet by ID
@@ -573,7 +573,7 @@ export const PetApiFactory = function (fetch?: FetchAPI, basePath?: string) {
          * @param petId ID of pet that needs to be fetched
          */
         getPetById(params: {  petId: number; }) {
-            return PetApiFp.getPetById(params)(this.fetch, this.basePath);
+            return PetApiFp.getPetById(params)(fetch, basePath);
         },
         /** 
          * Update an existing pet
@@ -581,7 +581,7 @@ export const PetApiFactory = function (fetch?: FetchAPI, basePath?: string) {
          * @param body Pet object that needs to be added to the store
          */
         updatePet(params: {  body?: Pet; }) {
-            return PetApiFp.updatePet(params)(this.fetch, this.basePath);
+            return PetApiFp.updatePet(params)(fetch, basePath);
         },
         /** 
          * Updates a pet in the store with form data
@@ -591,7 +591,7 @@ export const PetApiFactory = function (fetch?: FetchAPI, basePath?: string) {
          * @param status Updated status of the pet
          */
         updatePetWithForm(params: {  petId: string; name?: string; status?: string; }) {
-            return PetApiFp.updatePetWithForm(params)(this.fetch, this.basePath);
+            return PetApiFp.updatePetWithForm(params)(fetch, basePath);
         },
         /** 
          * uploads an image
@@ -601,7 +601,7 @@ export const PetApiFactory = function (fetch?: FetchAPI, basePath?: string) {
          * @param file file to upload
          */
         uploadFile(params: {  petId: number; additionalMetadata?: string; file?: any; }) {
-            return PetApiFp.uploadFile(params)(this.fetch, this.basePath);
+            return PetApiFp.uploadFile(params)(fetch, basePath);
         },
     }
 };
@@ -823,14 +823,14 @@ export const StoreApiFactory = function (fetch?: FetchAPI, basePath?: string) {
          * @param orderId ID of the order that needs to be deleted
          */
         deleteOrder(params: {  orderId: string; }) {
-            return StoreApiFp.deleteOrder(params)(this.fetch, this.basePath);
+            return StoreApiFp.deleteOrder(params)(fetch, basePath);
         },
         /** 
          * Returns pet inventories by status
          * Returns a map of status codes to quantities
          */
         getInventory() {
-            return StoreApiFp.getInventory()(this.fetch, this.basePath);
+            return StoreApiFp.getInventory()(fetch, basePath);
         },
         /** 
          * Find purchase order by ID
@@ -838,7 +838,7 @@ export const StoreApiFactory = function (fetch?: FetchAPI, basePath?: string) {
          * @param orderId ID of pet that needs to be fetched
          */
         getOrderById(params: {  orderId: string; }) {
-            return StoreApiFp.getOrderById(params)(this.fetch, this.basePath);
+            return StoreApiFp.getOrderById(params)(fetch, basePath);
         },
         /** 
          * Place an order for a pet
@@ -846,7 +846,7 @@ export const StoreApiFactory = function (fetch?: FetchAPI, basePath?: string) {
          * @param body order placed for purchasing the pet
          */
         placeOrder(params: {  body?: Order; }) {
-            return StoreApiFp.placeOrder(params)(this.fetch, this.basePath);
+            return StoreApiFp.placeOrder(params)(fetch, basePath);
         },
     }
 };
@@ -1271,7 +1271,7 @@ export const UserApiFactory = function (fetch?: FetchAPI, basePath?: string) {
          * @param body Created user object
          */
         createUser(params: {  body?: User; }) {
-            return UserApiFp.createUser(params)(this.fetch, this.basePath);
+            return UserApiFp.createUser(params)(fetch, basePath);
         },
         /** 
          * Creates list of users with given input array
@@ -1279,7 +1279,7 @@ export const UserApiFactory = function (fetch?: FetchAPI, basePath?: string) {
          * @param body List of user object
          */
         createUsersWithArrayInput(params: {  body?: Array<User>; }) {
-            return UserApiFp.createUsersWithArrayInput(params)(this.fetch, this.basePath);
+            return UserApiFp.createUsersWithArrayInput(params)(fetch, basePath);
         },
         /** 
          * Creates list of users with given input array
@@ -1287,7 +1287,7 @@ export const UserApiFactory = function (fetch?: FetchAPI, basePath?: string) {
          * @param body List of user object
          */
         createUsersWithListInput(params: {  body?: Array<User>; }) {
-            return UserApiFp.createUsersWithListInput(params)(this.fetch, this.basePath);
+            return UserApiFp.createUsersWithListInput(params)(fetch, basePath);
         },
         /** 
          * Delete user
@@ -1295,7 +1295,7 @@ export const UserApiFactory = function (fetch?: FetchAPI, basePath?: string) {
          * @param username The name that needs to be deleted
          */
         deleteUser(params: {  username: string; }) {
-            return UserApiFp.deleteUser(params)(this.fetch, this.basePath);
+            return UserApiFp.deleteUser(params)(fetch, basePath);
         },
         /** 
          * Get user by user name
@@ -1303,7 +1303,7 @@ export const UserApiFactory = function (fetch?: FetchAPI, basePath?: string) {
          * @param username The name that needs to be fetched. Use user1 for testing. 
          */
         getUserByName(params: {  username: string; }) {
-            return UserApiFp.getUserByName(params)(this.fetch, this.basePath);
+            return UserApiFp.getUserByName(params)(fetch, basePath);
         },
         /** 
          * Logs user into the system
@@ -1312,14 +1312,14 @@ export const UserApiFactory = function (fetch?: FetchAPI, basePath?: string) {
          * @param password The password for login in clear text
          */
         loginUser(params: {  username?: string; password?: string; }) {
-            return UserApiFp.loginUser(params)(this.fetch, this.basePath);
+            return UserApiFp.loginUser(params)(fetch, basePath);
         },
         /** 
          * Logs out current logged in user session
          * 
          */
         logoutUser() {
-            return UserApiFp.logoutUser()(this.fetch, this.basePath);
+            return UserApiFp.logoutUser()(fetch, basePath);
         },
         /** 
          * Updated user
@@ -1328,7 +1328,7 @@ export const UserApiFactory = function (fetch?: FetchAPI, basePath?: string) {
          * @param body Updated user object
          */
         updateUser(params: {  username: string; body?: User; }) {
-            return UserApiFp.updateUser(params)(this.fetch, this.basePath);
+            return UserApiFp.updateUser(params)(fetch, basePath);
         },
     }
 };
