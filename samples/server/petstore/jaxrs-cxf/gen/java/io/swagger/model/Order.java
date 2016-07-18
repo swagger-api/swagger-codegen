@@ -1,118 +1,165 @@
 package io.swagger.model;
 
+import java.util.Objects;
 
 
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.XmlEnum;
 
-@XmlAccessorType(XmlAccessType.FIELD)
- @XmlType(name = "Order", propOrder =
-	{ "id", "petId", "quantity", "shipDate", "status", "complete"
-})
 
-@XmlRootElement(name="Order")
-public class Order  {
+
+public class Order   {
   
-
-  @XmlElement(name="id")
   private Long id = null;
-
-  @XmlElement(name="petId")
   private Long petId = null;
-
-  @XmlElement(name="quantity")
   private Integer quantity = null;
-
-  @XmlElement(name="shipDate")
   private javax.xml.datatype.XMLGregorianCalendar shipDate = null;
 
-@XmlType(name="StatusEnum")
-@XmlEnum
-public enum StatusEnum {
 
-    PLACED(String.valueOf("&quot;placed&quot;")), APPROVED(String.valueOf("&quot;approved&quot;")), DELIVERED(String.valueOf("&quot;delivered&quot;"));
-
+  public enum StatusEnum {
+    PLACED("placed"),
+    APPROVED("approved"),
+    DELIVERED("delivered");
 
     private String value;
 
-    StatusEnum (String v) {
-        value = v;
+    StatusEnum(String value) {
+      this.value = value;
     }
 
-    public String value() {
-        return value;
+    @Override
+    @JsonValue
+    public String toString() {
+      return value;
     }
+  }
 
-    public static StatusEnum fromValue(String v) {
-        return valueOf(v);
-    }
-}
-
-  @XmlElement(name="status")
   private StatusEnum status = null;
-
-  @XmlElement(name="complete")
   private Boolean complete = false;
 
   /**
    **/
+  public Order id(Long id) {
+    this.id = id;
+    return this;
+  }
+
   
+  @ApiModelProperty(example = "null", value = "")
+  @JsonProperty("id")
   public Long getId() {
     return id;
   }
   public void setId(Long id) {
     this.id = id;
   }
+
   /**
    **/
+  public Order petId(Long petId) {
+    this.petId = petId;
+    return this;
+  }
+
   
+  @ApiModelProperty(example = "null", value = "")
+  @JsonProperty("petId")
   public Long getPetId() {
     return petId;
   }
   public void setPetId(Long petId) {
     this.petId = petId;
   }
+
   /**
    **/
+  public Order quantity(Integer quantity) {
+    this.quantity = quantity;
+    return this;
+  }
+
   
+  @ApiModelProperty(example = "null", value = "")
+  @JsonProperty("quantity")
   public Integer getQuantity() {
     return quantity;
   }
   public void setQuantity(Integer quantity) {
     this.quantity = quantity;
   }
+
   /**
    **/
+  public Order shipDate(javax.xml.datatype.XMLGregorianCalendar shipDate) {
+    this.shipDate = shipDate;
+    return this;
+  }
+
   
+  @ApiModelProperty(example = "null", value = "")
+  @JsonProperty("shipDate")
   public javax.xml.datatype.XMLGregorianCalendar getShipDate() {
     return shipDate;
   }
   public void setShipDate(javax.xml.datatype.XMLGregorianCalendar shipDate) {
     this.shipDate = shipDate;
   }
+
   /**
    * Order Status
    **/
+  public Order status(StatusEnum status) {
+    this.status = status;
+    return this;
+  }
+
   
+  @ApiModelProperty(example = "null", value = "Order Status")
+  @JsonProperty("status")
   public StatusEnum getStatus() {
     return status;
   }
   public void setStatus(StatusEnum status) {
     this.status = status;
   }
+
   /**
    **/
+  public Order complete(Boolean complete) {
+    this.complete = complete;
+    return this;
+  }
+
   
+  @ApiModelProperty(example = "null", value = "")
+  @JsonProperty("complete")
   public Boolean getComplete() {
     return complete;
   }
   public void setComplete(Boolean complete) {
     this.complete = complete;
+  }
+
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Order order = (Order) o;
+    return Objects.equals(id, order.id) &&
+        Objects.equals(petId, order.petId) &&
+        Objects.equals(quantity, order.quantity) &&
+        Objects.equals(shipDate, order.shipDate) &&
+        Objects.equals(status, order.status) &&
+        Objects.equals(complete, order.complete);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, petId, quantity, shipDate, status, complete);
   }
 
   @Override
@@ -134,7 +181,7 @@ public enum StatusEnum {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private static String toIndentedString(Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }
