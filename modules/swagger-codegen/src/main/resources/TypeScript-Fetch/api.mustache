@@ -167,18 +167,20 @@ export class {{classname}} extends BaseAPI {
  * {{classname}} - factory interface{{#description}}
  * {{&description}}{{/description}}
  */
-export const {{classname}}Factory = {
+export const {{classname}}Factory = function (fetch?: FetchAPI, basePath?: string) {
+    return {
 {{#operation}}
-    /** {{#summary}}
-     * {{summary}}{{/summary}}{{#notes}}
-     * {{notes}}{{/notes}}{{#allParams}}
-     * @param {{paramName}} {{description}}{{/allParams}}
-     */
-    {{nickname}}({{#hasParams}}params: { {{#allParams}} {{paramName}}{{^required}}?{{/required}}: {{{dataType}}};{{/allParams}} }{{/hasParams}}) {
-        return {{classname}}Fp.{{nickname}}({{#hasParams}}params{{/hasParams}})(this.fetch, this.basePath);
-    }
+        /** {{#summary}}
+         * {{summary}}{{/summary}}{{#notes}}
+         * {{notes}}{{/notes}}{{#allParams}}
+         * @param {{paramName}} {{description}}{{/allParams}}
+         */
+        {{nickname}}({{#hasParams}}params: { {{#allParams}} {{paramName}}{{^required}}?{{/required}}: {{{dataType}}};{{/allParams}} }{{/hasParams}}) {
+            return {{classname}}Fp.{{nickname}}({{#hasParams}}params{{/hasParams}})(this.fetch, this.basePath);
+        },
 {{/operation}}
-}
+    }
+};
 
 {{/operations}}
 {{/apis}}
