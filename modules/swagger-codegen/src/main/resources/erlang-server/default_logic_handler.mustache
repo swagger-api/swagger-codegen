@@ -1,0 +1,20 @@
+-module({{packageName}}_default_logic_handler).
+
+-behaviour({{packageName}}_logic_handler).
+
+-export([handle_request/2]).
+{{#authMethods}}
+    {{#isApiKey}}
+-export([authorize_api_key/2]).
+    {{/isApiKey}}
+{{/authMethods}}
+
+{{#authMethods}}
+    {{#isApiKey}}
+authorize_api_key(_, _) -> {true, #{}}.
+    {{/isApiKey}}
+{{/authMethods}}
+
+handle_request(OperationID, Req) ->
+    io:format(user, "Got request to process: ~p~n", [{OperationID, Req}]),
+    {501, [], <<"Not Implemented">>}.

@@ -1,0 +1,13 @@
+-module({{packageName}}_logic_handler).
+
+{{#hasAuthMethods}}
+-type context() :: #{binary() => any()}.
+{{/hasAuthMethods}}
+{{#authMethods}}
+    {{#isApiKey}}
+-callback authorize_api_key(ApiKey :: binary(), OperationID :: atom()) -> Result :: boolean() | {boolean(), context()}.
+    {{/isApiKey}}
+{{/authMethods}}
+
+
+-callback handle_request(OperationID :: atom(), Request :: any()) ->  {Status :: integer(), [Header :: binary()], Body :: any()}.
