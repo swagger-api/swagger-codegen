@@ -20,12 +20,11 @@ before_install:
   - gem install bundler
   - npm install -g typescript
   - sudo pip install virtualenv
-  # to run petstore server locally
+  # to run petstore server locally via docker
   - docker pull swaggerapi/petstore
   - docker run -d -e SWAGGER_HOST=http://petstore.swagger.io -e SWAGGER_BASE_PATH=/v2 -p 80:8080 swaggerapi/petstore
   - docker ps -a
-  # update host table
-  #- sudo echo "127.0.0.1    petstore.swagger.io" >> /etc/hosts
+  # show host table to confirm petstore.swagger.io is mapped to localhost
   - cat /etc/hosts
 
 install:
