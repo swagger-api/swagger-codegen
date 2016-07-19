@@ -151,7 +151,7 @@ module Petstore
 
       # verify the required parameter 'string' is set
       fail ArgumentError, "Missing the required parameter 'string' when calling FakeApi.test_endpoint_parameters" if string.nil?
-      if string !~ Regexp.new(//[a-z]/i/)
+      if string !~ Regexp.new(/[a-z]/i)
         fail ArgumentError, 'invalid value for "string" when calling FakeApi.test_endpoint_parameters, must conform to the pattern /[a-z]/i.'
       end
 

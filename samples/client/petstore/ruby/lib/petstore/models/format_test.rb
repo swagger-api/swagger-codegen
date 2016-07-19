@@ -174,7 +174,7 @@ module Petstore
       return false if @float < 54.3
       return false if @double > 123.4
       return false if @double < 67.8
-      return false if @string !~ Regexp.new(//[a-z]/i/)
+      return false if @string !~ Regexp.new(/[a-z]/i)
       return false if @byte.nil?
       return false if @date.nil?
       return false if @password.nil?
@@ -280,7 +280,7 @@ module Petstore
         fail ArgumentError, "string cannot be nil"
       end
 
-      if @string !~ Regexp.new(//[a-z]/i/)
+      if @string !~ Regexp.new(/[a-z]/i)
         fail ArgumentError, "invalid value for 'string', must conform to the pattern /[a-z]/i."
       end
 
