@@ -10,8 +10,8 @@
 {{#operations}}{{#operation}}
 request_params('{{operationId}}') ->
     [{{#allParams}}{{^isBodyParam}}
-        "{{baseName}}"{{/isBodyParam}}{{#isBodyParam}}
-        "{{dataType}}"{{/isBodyParam}}{{#hasMore}},{{/hasMore}}{{/allParams}}
+        '{{baseName}}'{{/isBodyParam}}{{#isBodyParam}}
+        '{{dataType}}'{{/isBodyParam}}{{#hasMore}},{{/hasMore}}{{/allParams}}
     ];
 {{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
 request_params(_) ->
@@ -19,7 +19,7 @@ request_params(_) ->
 
 {{#apiInfo}}{{#apis}}
 {{#operations}}{{#operation}}{{#allParams}}
-request_param_info('{{operationId}}', {{^isBodyParam}}"{{baseName}}"{{/isBodyParam}}{{#isBodyParam}}"{{dataType}}"{{/isBodyParam}}) ->
+request_param_info('{{operationId}}', {{^isBodyParam}}'{{baseName}}'{{/isBodyParam}}{{#isBodyParam}}'{{dataType}}'{{/isBodyParam}}) ->
     #{
         source => {{#isQueryParam}}qs_val{{/isQueryParam}} {{#isPathParam}}binding{{/isPathParam}} {{#isHeaderParam}}header{{/isHeaderParam}}{{#isBodyParam}}body{{/isBodyParam}},
         rules => [{{#isString}}
@@ -33,8 +33,7 @@ request_param_info('{{operationId}}', {{^isBodyParam}}"{{baseName}}"{{/isBodyPar
             {type, 'boolean'}, {{/isBoolean}}{{#isDate}}
             {type, 'date'}, {{/isDate}}{{#isDateTime}}
             {type, 'datetime'}, {{/isDateTime}}{{#isEnum}}
-            {enum, [{{#allowableValues}}{{#values}}{{.}}{{/values}}{{/allowableValues}}] },{{/isEnum}}{{#required}}
-            required, {{/required}}{{#maximum}}
+            {enum, [{{#allowableValues}}{{#values}}{{.}}{{/values}}{{/allowableValues}}] },{{/isEnum}}{{#maximum}}
             {max, {{maximum}} }, {{/maximum}}{{#exclusiveMaximum}}
             {exclusive_max, {{exclusiveMaximum}} }, {{/exclusiveMaximum}}{{#minimum}}
             {min, {{minimum}} }, {{/minimum}}{{#exclusiveMinimum}}
@@ -42,8 +41,9 @@ request_param_info('{{operationId}}', {{^isBodyParam}}"{{baseName}}"{{/isBodyPar
             {max_length, {{maxLength}} }, {{/maxLength}}{{#minLength}}
             {min_length, {{minLength}} }, {{/minLength}}{{#pattern}}
             {pattern, "{{pattern}}" }, {{/pattern}}{{#isBodyParam}}
-            schema, {{/isBodyParam}}
-            ok
+            schema, {{/isBodyParam}}{{#required}}
+            required{{/required}}{{^required}}
+            not_required{{/required}}
         ]
     };
 {{/allParams}}{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
@@ -79,7 +79,7 @@ populate_request_param(OperationID, Name, Req0, ValidatorState) ->
 {{#operations}}{{#operation}}
 {{#responses}}
 validate_response('{{operationId}}', {{code}}, Body, ValidatorState) ->
-    validate_response_body("{{dataType}}", "{{baseType}}", Body, ValidatorState);
+    validate_response_body('{{dataType}}', '{{baseType}}', Body, ValidatorState);
 {{/responses}}
 {{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
 
@@ -92,7 +92,7 @@ validate_response_body(undefined, _, Body, _) ->
         _ -> throw(invalid_response)
     end;
 
-validate_response_body("list", ReturnBaseType, Body, ValidatorState) ->
+validate_response_body('list', ReturnBaseType, Body, ValidatorState) ->
     [
         validate(schema, ReturnBaseType, Item, ValidatorState)
     || Item <- Body];
@@ -106,6 +106,9 @@ validate( Rule = required, Name, Value, _ValidatorState) ->
         undefined -> validation_error(Rule, Name);
         _ -> ok
     end;
+
+validate(not_required, _Name, _Value, _ValidatorState) ->
+    ok;
 
 validate( _, _Name, undefined, _ValidatorState) ->
     ok;
@@ -204,16 +207,14 @@ validate( Rule = {pattern, Pattern}, Name, Value, _ValidatorState) ->
     end;
 
 validate( Rule = schema, Name, Value, ValidatorState) ->
-    Definition =  list_to_binary("#/definitions/" ++ Name),
+    Definition =  list_to_binary("#/definitions/" ++ {{packageName}}_utils:to_list(Name)),
     try
-        validate_with_schema(Value, Definition, ValidatorState)
+        validate_with_schema(Value, Definition, ValidatorState),
+        ok
     catch
         _:_ ->
             validation_error(Rule, Name)
     end;
-
-validate(ok, _Name, _Value, _ValidatorState) ->
-    ok;
 
 validate(Rule, Name, Value, _ValidatorState) ->
     io:format("Skipping unknown validation: ~p~n", [{Rule, Name, Value}]),
@@ -229,17 +230,17 @@ get_value(body, _Name, Req0) ->
 
 get_value(qs_val, Name, Req0) ->
     {QS, Req} = cowboy_req:qs_vals(Req0),
-    Value = {{packageName}}_utils:get_opt({{packageName}}_utils:string_to_qs(Name), QS),
+    Value = {{packageName}}_utils:get_opt({{packageName}}_utils:to_qs(Name), QS),
     {Value, Req};
 
 get_value(header, Name, Req0) ->
     {Headers, Req} = cowboy_req:headers(Req0),
-    Value = {{packageName}}_utils:get_opt({{packageName}}_utils:string_to_header(Name), Headers),
+    Value = {{packageName}}_utils:get_opt({{packageName}}_utils:to_header(Name), Headers),
     {Value, Req};
 
 get_value(binding, Name, Req0) ->
     {Bindings, Req} = cowboy_req:bindings(Req0),
-    Value = {{packageName}}_utils:get_opt({{packageName}}_utils:string_to_binding(Name), Bindings),
+    Value = {{packageName}}_utils:get_opt({{packageName}}_utils:to_binding(Name), Bindings),
     {Value, Req}.
 
 prepare_body(Body) ->

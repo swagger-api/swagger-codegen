@@ -114,8 +114,7 @@ handle_request_json(
                     {halt, Req, State}
             end;
         {error, _Reason, Req1} ->
-            {ok, Req} = cowboy_req:reply(400, [], <<"">>, Req1),
-            {halt, Req, State}
+            {false, Req1, State}
     end.
 
 validate_headers(_, Req) -> {true, Req}.
