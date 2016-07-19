@@ -1,0 +1,27 @@
+{{>licenseInfo}}
+import {Headers} from '@angular/http';
+import {Injectable, Optional} from '@angular/core';
+
+/* tslint:disable:no-unused-variable member-ordering */
+
+'use strict';
+
+@Injectable()
+export class ApiService {
+    protected basePath = '{{basePath}}';
+    public defaultHeaders : Headers = new Headers();
+
+    constructor(@Optional() basePath: string) {
+        if (basePath) {
+            this.basePath = basePath;
+        }
+    }
+    
+    public getBasePath() : string {
+        return this.basePath;
+    }
+
+    public getHeaders() : Headers {
+        return this.defaultHeaders;
+    }
+}
