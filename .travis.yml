@@ -11,6 +11,10 @@ cache:
 services:
   - docker
 
+addons:
+  hosts:
+    - petstore.swagger.io
+
 before_install:
   # required when sudo: required for the Ruby petstore tests
   - gem install bundler
@@ -21,7 +25,7 @@ before_install:
   - docker run -d -e SWAGGER_HOST=http://petstore.swagger.io -e SWAGGER_BASE_PATH=/v2 -p 80:8080 swaggerapi/petstore
   - docker ps -a
   # update host table
-  - sudo echo "127.0.0.1    petstore.swagger.io" >> /etc/hosts
+  #- sudo echo "127.0.0.1    petstore.swagger.io" >> /etc/hosts
   - cat /etc/hosts
 
 install:
