@@ -11,7 +11,7 @@ public class CodegenSecurity {
     public String keyParamName;
     public Boolean isKeyInQuery, isKeyInHeader;
     // Oauth specific
-    public String flow, authorizationUrl, tokenUrl;
+    public String flow, authorizationUrl, tokenUrl, refreshTokenUrl;
     public List<Map<String, Object>> scopes;
     public Boolean isCode, isPassword, isApplication, isImplicit;
 
@@ -51,6 +51,8 @@ public class CodegenSecurity {
             return false;
         if (tokenUrl != null ? !tokenUrl.equals(that.tokenUrl) : that.tokenUrl != null)
             return false;
+        if (refreshTokenUrl != null ? !refreshTokenUrl.equals(that.refreshTokenUrl) : that.refreshTokenUrl != null)
+            return false;
         if (isCode != null ? !isCode.equals(that.isCode) : that.isCode != null)
             return false;
         if (isPassword != null ? !isPassword.equals(that.isPassword) : that.isPassword != null)
@@ -82,6 +84,7 @@ public class CodegenSecurity {
         result = 31 * result + (isApplication != null ? isApplication.hashCode() : 0);
         result = 31 * result + (isImplicit != null ? isImplicit.hashCode() : 0);
         result = 31 * result + (scopes != null ? scopes.hashCode() : 0);
+        result = 31 * result + (refreshTokenUrl != null ? refreshTokenUrl.hashCode() : 0);
         return result;
     }
 }

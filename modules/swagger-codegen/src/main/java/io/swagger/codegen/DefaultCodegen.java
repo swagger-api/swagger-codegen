@@ -2397,6 +2397,13 @@ public class DefaultCodegen {
                 }
                 sec.authorizationUrl = oauth2Definition.getAuthorizationUrl();
                 sec.tokenUrl = oauth2Definition.getTokenUrl();
+                sec.type = oauth2Definition.getType();
+                Map<String,Object> vendorExtensions = oauth2Definition.getVendorExtensions();
+
+                if(vendorExtensions.size() > 0) {
+                    sec.refreshTokenUrl = vendorExtensions.get("x-refreshTokenUrl").toString();
+                }
+
                 if (oauth2Definition.getScopes() != null) {
                     List<Map<String, Object>> scopes = new ArrayList<Map<String, Object>>();
                     int count = 0, numScopes = oauth2Definition.getScopes().size();
