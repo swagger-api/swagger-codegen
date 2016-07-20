@@ -1,9 +1,10 @@
-package io.swagger.codegen.languages;
+package io.swagger.codegen.java;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.languages.AbstractJavaCodegen;
 
 public class AbstractJavaCodegenTest {
 
