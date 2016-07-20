@@ -2,22 +2,7 @@ package io.swagger.codegen.examples;
 
 import io.swagger.models.Model;
 import io.swagger.models.ModelImpl;
-import io.swagger.models.properties.ArrayProperty;
-import io.swagger.models.properties.BooleanProperty;
-import io.swagger.models.properties.DateProperty;
-import io.swagger.models.properties.DateTimeProperty;
-import io.swagger.models.properties.DecimalProperty;
-import io.swagger.models.properties.DoubleProperty;
-import io.swagger.models.properties.FileProperty;
-import io.swagger.models.properties.FloatProperty;
-import io.swagger.models.properties.IntegerProperty;
-import io.swagger.models.properties.LongProperty;
-import io.swagger.models.properties.MapProperty;
-import io.swagger.models.properties.ObjectProperty;
-import io.swagger.models.properties.Property;
-import io.swagger.models.properties.RefProperty;
-import io.swagger.models.properties.StringProperty;
-import io.swagger.models.properties.UUIDProperty;
+import io.swagger.models.properties.*;
 import io.swagger.util.Json;
 
 import java.math.BigDecimal;
@@ -90,8 +75,6 @@ public class ExampleGenerator {
             return "2000-01-23T04:56:07.000+00:00";
         } else if (property instanceof DateTimeProperty) {
             return "2000-01-23T04:56:07.000+00:00";
-        } else if (property instanceof DecimalProperty) {
-            return new BigDecimal(1.3579);
         } else if (property instanceof DoubleProperty) {
             return 3.149;
         } else if (property instanceof FileProperty) {
@@ -102,6 +85,8 @@ public class ExampleGenerator {
             return 123;
         } else if (property instanceof LongProperty) {
             return 123456789L;
+        } else if (property instanceof DecimalProperty) {
+            return new BigDecimal(1.3579);
         } else if (property instanceof MapProperty) {
             Map<String, Object> mp = new HashMap<>();
             if (property.getName() != null) {
