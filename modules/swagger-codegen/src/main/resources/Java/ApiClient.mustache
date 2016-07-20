@@ -6,9 +6,9 @@ import com.fasterxml.jackson.databind.*;
 {{#java8}}
 import com.fasterxml.jackson.datatype.jsr310.*;
 {{/java8}}
-{{^java8}}
+{{#joda}}
 import com.fasterxml.jackson.datatype.joda.*;
-{{/java8}}
+{{/joda}}
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 import com.sun.jersey.api.client.Client;
@@ -74,9 +74,9 @@ public class ApiClient {
     {{#java8}}
     objectMapper.registerModule(new JavaTimeModule());
     {{/java8}}
-    {{^java8}}
+    {{#joda}}
     objectMapper.registerModule(new JodaModule());
-    {{/java8}}
+    {{/joda}}
     objectMapper.setDateFormat(ApiClient.buildDefaultDateFormat());
 
     dateFormat = ApiClient.buildDefaultDateFormat();

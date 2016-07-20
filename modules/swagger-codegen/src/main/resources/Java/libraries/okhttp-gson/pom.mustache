@@ -119,13 +119,13 @@
       <artifactId>gson</artifactId>
       <version>${gson-version}</version>
     </dependency>
-    {{^java8}}
+    {{#joda}}
     <dependency>
       <groupId>joda-time</groupId>
       <artifactId>joda-time</artifactId>
       <version>${jodatime-version}</version>
     </dependency>
-    {{/java8}}
+    {{/joda}}
 
     <!-- test dependencies -->
     <dependency>

@@ -9,12 +9,12 @@ import java.util.Map;
 
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest.AuthenticationRequestBuilder;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest.TokenRequestBuilder;
-{{^java8}}
+{{#joda}}
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
-{{/java8}}
+{{/joda}}
 {{#java8}}
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -121,13 +121,14 @@ public class ApiClient {
     public void createDefaultAdapter() {
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-                {{^java8}}
+                {{#joda}}
                 .registerTypeAdapter(DateTime.class, new DateTimeTypeAdapter())
-                {{/java8}}
+                .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
+                {{/joda}}
                 {{#java8}}
                 .registerTypeAdapter(OffsetDateTime.class, new OffsetDateTimeTypeAdapter())
-                {{/java8}}
                 .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
+                {{/java8}}
                 .create();
 
         okBuilder = new OkHttpClient.Builder();
@@ -368,7 +369,7 @@ class GsonCustomConverterFactory extends Converter.Factory
     }
 }
 
-{{^java8}}
+{{#joda}}
 /**
  * Gson TypeAdapter for Joda DateTime type
  */
@@ -426,7 +427,7 @@ class LocalDateTypeAdapter extends TypeAdapter<LocalDate> {
         }
     }
 }
-{{/java8}}
+{{/joda}}
 {{#java8}}
 /**
  * Gson TypeAdapter for jsr310 OffsetDateTime type

@@ -139,7 +139,7 @@
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
-      <artifactId>jackson-datatype-{{^java8}}joda{{/java8}}{{#java8}}jsr310{{/java8}}</artifactId>
+      <artifactId>jackson-datatype-{{#joda}}joda{{/joda}}{{#java8}}jsr310{{/java8}}</artifactId>
       <version>${jackson-version}</version>
     </dependency>
     <dependency>

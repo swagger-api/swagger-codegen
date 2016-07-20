@@ -19,10 +19,10 @@ lazy val root = (project in file(".")).
       {{#java8}}
 	  "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr310" % "2.7.5",
 	  {{/java8}}
-	  {{^java8}}
+	  {{#joda}}
       "com.fasterxml.jackson.datatype" % "jackson-datatype-joda" % "2.7.5",
       "joda-time" % "joda-time" % "2.9.4",
-      {{/java8}}
+      {{/joda}}
       "com.brsanthu" % "migbase64" % "2.2",
       "junit" % "junit" % "4.12" % "test",
       "com.novocode" % "junit-interface" % "0.10" % "test"

@@ -108,9 +108,9 @@ ext {
     swagger_annotations_version = "1.5.8"
     jackson_version = "2.7.5"
     jersey_version = "2.22.2"
-    {{^java8}}
+    {{#joda}}
     jodatime_version = "2.9.4"
-    {{/java8}}
+    {{/joda}}
     junit_version = "4.12"
 }
 
@@ -125,10 +125,10 @@ dependencies {
     {{#java8}}
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jackson_version"
     {{/java8}}
-    {{^java8}}
+    {{#joda}}
     compile "com.fasterxml.jackson.datatype:jackson-datatype-joda:$jackson_version"
     compile "joda-time:joda-time:$jodatime_version"
-    {{/java8}}
+    {{/joda}}
     compile "com.brsanthu:migbase64:2.2"
     testCompile "junit:junit:$junit_version"
 }

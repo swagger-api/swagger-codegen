@@ -156,7 +156,7 @@
       <version>${jackson-version}</version>
     </dependency>
     {{/java8}}
-    {{^java8}}
+    {{#joda}}
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
       <artifactId>jackson-datatype-joda</artifactId>
@@ -167,7 +167,7 @@
       <artifactId>joda-time</artifactId>
       <version>${jodatime-version}</version>
     </dependency>
-    {{/java8}}
+    {{/joda}}
 
     <!-- Base64 encoding that works in both JVM and Android -->
     <dependency>
@@ -189,9 +189,9 @@
     <swagger-annotations-version>1.5.8</swagger-annotations-version>
     <jersey-version>1.19.1</jersey-version>
     <jackson-version>2.7.5</jackson-version>
-    {{^java8}}
+    {{#joda}}
     <jodatime-version>2.9.4</jodatime-version>
-    {{/java8}}
+    {{/joda}}
     <maven-plugin-version>1.0.0</maven-plugin-version>
     <junit-version>4.12</junit-version>
   </properties>
