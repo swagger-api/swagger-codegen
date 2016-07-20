@@ -9,8 +9,4 @@
 ./bin/java-petstore-retrofit2.sh
 ./bin/java-petstore-retrofit2rx.sh
 ./bin/java8-petstore-jersey2.sh
-
-./bin/java-legacy-petstore-jersey2.sh
-./bin/java-legacy-petstore-feign.sh
 ./bin/java-legacy-petstore-okhttp-gson.sh
-./bin/java-legacy-petstore-retrofit2.sh
