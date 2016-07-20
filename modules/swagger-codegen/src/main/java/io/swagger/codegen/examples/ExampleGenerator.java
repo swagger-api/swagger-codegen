@@ -98,7 +98,7 @@ public class ExampleGenerator {
             }
             return mp;
         } else if (property instanceof ObjectProperty) {
-            return "{}";
+            return Collections.EMPTY_MAP;
         } else if (property instanceof RefProperty) {
             String simpleName = ((RefProperty) property).getSimpleRef();
             Model model = examples.get(simpleName);
