@@ -1,5 +1,0 @@
-{
-    "library": "feign",
-    "artifactId": "swagger-petstore-feign",
-	"dateLibrary": "legacy"
-}
