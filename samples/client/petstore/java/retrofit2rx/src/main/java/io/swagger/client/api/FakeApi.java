@@ -8,6 +8,7 @@ import retrofit2.http.*;
 
 import okhttp3.RequestBody;
 
+import io.swagger.client.model.Client;
 import org.joda.time.LocalDate;
 import java.math.BigDecimal;
 import org.joda.time.DateTime;
@@ -19,16 +20,15 @@ import java.util.Map;
 
 public interface FakeApi {
   /**
-   * To test code injection  &#x3D;end
+   * To test \&quot;client\&quot; model
    * 
-   * @param testCodeInjectEnd To test code injection  &#x3D;end (optional)
-   * @return Call<Void>
+   * @param body client model (required)
+   * @return Call&lt;Client&gt;
    */
   
-  @FormUrlEncoded
-  @PUT("fake")
-  Observable<Void> testCodeInjectEnd(
-    @Field("test code inject */ &#x3D;end") String testCodeInjectEnd
+  @PATCH("fake")
+  Observable<Client> testClientModel(
+    @Body Client body
   );
 
   /**
@@ -46,7 +46,7 @@ public interface FakeApi {
    * @param date None (optional)
    * @param dateTime None (optional)
    * @param password None (optional)
-   * @return Call<Void>
+   * @return Call&lt;Void&gt;
    */
   
   @FormUrlEncoded
@@ -61,7 +61,7 @@ public interface FakeApi {
    * @param enumQueryString Query parameter enum test (string) (optional, default to -efg)
    * @param enumQueryInteger Query parameter enum test (double) (optional)
    * @param enumQueryDouble Query parameter enum test (double) (optional)
-   * @return Call<Void>
+   * @return Call&lt;Void&gt;
    */
   
   @FormUrlEncoded

@@ -14,6 +14,7 @@ Method | HTTP request | Description
 [**UploadFile**](PetApi.md#uploadfile) | **POST** /pet/{petId}/uploadImage | uploads an image
 
 
+<a name="addpet"></a>
 # **AddPet**
 > void AddPet (Pet body)
 
@@ -37,7 +38,7 @@ namespace Example
         {
             
             // Configure OAuth2 access token for authorization: petstore_auth
-            Configuration.Default.AccessToken = 'YOUR_ACCESS_TOKEN';
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new PetApi();
             var body = new Pet(); // Pet | Pet object that needs to be added to the store
@@ -77,6 +78,7 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a name="deletepet"></a>
 # **DeletePet**
 > void DeletePet (long? petId, string apiKey = null)
 
@@ -100,7 +102,7 @@ namespace Example
         {
             
             // Configure OAuth2 access token for authorization: petstore_auth
-            Configuration.Default.AccessToken = 'YOUR_ACCESS_TOKEN';
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new PetApi();
             var petId = 789;  // long? | Pet id to delete
@@ -142,6 +144,7 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a name="findpetsbystatus"></a>
 # **FindPetsByStatus**
 > List<Pet> FindPetsByStatus (List<string> status)
 
@@ -165,7 +168,7 @@ namespace Example
         {
             
             // Configure OAuth2 access token for authorization: petstore_auth
-            Configuration.Default.AccessToken = 'YOUR_ACCESS_TOKEN';
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new PetApi();
             var status = new List<string>(); // List<string> | Status values that need to be considered for filter
@@ -206,6 +209,7 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a name="findpetsbytags"></a>
 # **FindPetsByTags**
 > List<Pet> FindPetsByTags (List<string> tags)
 
@@ -229,7 +233,7 @@ namespace Example
         {
             
             // Configure OAuth2 access token for authorization: petstore_auth
-            Configuration.Default.AccessToken = 'YOUR_ACCESS_TOKEN';
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new PetApi();
             var tags = new List<string>(); // List<string> | Tags to filter by
@@ -270,6 +274,7 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a name="getpetbyid"></a>
 # **GetPetById**
 > Pet GetPetById (long? petId)
 
@@ -293,9 +298,9 @@ namespace Example
         {
             
             // Configure API key authorization: api_key
-            Configuration.Default.ApiKey.Add('api_key', 'YOUR_API_KEY');
+            Configuration.Default.ApiKey.Add("api_key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // Configuration.Default.ApiKeyPrefix.Add('api_key', 'Bearer');
+            // Configuration.Default.ApiKeyPrefix.Add("api_key", "Bearer");
 
             var apiInstance = new PetApi();
             var petId = 789;  // long? | ID of pet to return
@@ -336,6 +341,7 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a name="updatepet"></a>
 # **UpdatePet**
 > void UpdatePet (Pet body)
 
@@ -359,7 +365,7 @@ namespace Example
         {
             
             // Configure OAuth2 access token for authorization: petstore_auth
-            Configuration.Default.AccessToken = 'YOUR_ACCESS_TOKEN';
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new PetApi();
             var body = new Pet(); // Pet | Pet object that needs to be added to the store
@@ -399,6 +405,7 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a name="updatepetwithform"></a>
 # **UpdatePetWithForm**
 > void UpdatePetWithForm (long? petId, string name = null, string status = null)
 
@@ -422,7 +429,7 @@ namespace Example
         {
             
             // Configure OAuth2 access token for authorization: petstore_auth
-            Configuration.Default.AccessToken = 'YOUR_ACCESS_TOKEN';
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new PetApi();
             var petId = 789;  // long? | ID of pet that needs to be updated
@@ -466,6 +473,7 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a name="uploadfile"></a>
 # **UploadFile**
 > ApiResponse UploadFile (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
 
@@ -489,7 +497,7 @@ namespace Example
         {
             
             // Configure OAuth2 access token for authorization: petstore_auth
-            Configuration.Default.AccessToken = 'YOUR_ACCESS_TOKEN';
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new PetApi();
             var petId = 789;  // long? | ID of pet to update

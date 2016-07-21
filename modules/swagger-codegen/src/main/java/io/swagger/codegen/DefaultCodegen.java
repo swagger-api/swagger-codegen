@@ -1195,7 +1195,35 @@ public class DefaultCodegen {
                 allRequired = null;
             }
             // parent model
-            final RefModel parent = (RefModel) composed.getParent();
+            RefModel parent = (RefModel) composed.getParent();
+
+            // interfaces (intermediate models)
+            if (composed.getInterfaces() != null) {
+                if (m.interfaces == null)
+                    m.interfaces = new ArrayList<String>();
+                for (RefModel _interface : composed.getInterfaces()) {
+                    Model interfaceModel = null;
+                    if (allDefinitions != null) {
+                        interfaceModel = allDefinitions.get(_interface.getSimpleRef());
+                    }
+                    // set first interface with discriminator found as parent
+                    if (parent == null && interfaceModel instanceof ModelImpl && ((ModelImpl) interfaceModel).getDiscriminator() != null) {
+                        parent = _interface;
+                    } else {
+                        final String interfaceRef = toModelName(_interface.getSimpleRef());
+                        m.interfaces.add(interfaceRef);
+                        addImport(m, interfaceRef);
+                        if (allDefinitions != null) {
+                            if (supportsInheritance) {
+                                addProperties(allProperties, allRequired, interfaceModel, allDefinitions);
+                            } else {
+                                addProperties(properties, required, interfaceModel, allDefinitions);
+                            }
+                        }
+                    }
+                }
+            }
+
             if (parent != null) {
                 final String parentRef = parent.getSimpleRef();
                 m.parentSchema = parentRef;
@@ -1210,24 +1238,7 @@ public class DefaultCodegen {
                     }
                 }
             }
-            // interfaces (intermediate models)
-            if (composed.getInterfaces() != null) {
-                if (m.interfaces == null)
-                    m.interfaces = new ArrayList<String>();
-                for (RefModel _interface : composed.getInterfaces()) {
-                    final String interfaceRef = toModelName(_interface.getSimpleRef());
-                    m.interfaces.add(interfaceRef);
-                    addImport(m, interfaceRef);
-                    if (allDefinitions != null) {
-                        final Model interfaceModel = allDefinitions.get(_interface.getSimpleRef());
-                        if (supportsInheritance) {
-                            addProperties(allProperties, allRequired, interfaceModel, allDefinitions);
-                        } else {
-                            addProperties(properties, required, interfaceModel, allDefinitions);
-                        }
-                    }
-                }
-            }
+
             // child model (properties owned by the model itself)
             Model child = composed.getChild();
             if (child != null && child instanceof RefModel && allDefinitions != null) {
@@ -1774,7 +1785,7 @@ public class DefaultCodegen {
             for (String key : consumes) {
                 Map<String, String> mediaType = new HashMap<String, String>();
                 // escape quotation to avoid code injection
-                mediaType.put("mediaType", escapeQuotationMark(key));
+                mediaType.put("mediaType", escapeText(escapeQuotationMark(key)));
                 count += 1;
                 if (count < consumes.size()) {
                     mediaType.put("hasMore", "true");
@@ -1808,7 +1819,7 @@ public class DefaultCodegen {
             for (String key : produces) {
                 Map<String, String> mediaType = new HashMap<String, String>();
                 // escape quotation to avoid code injection
-                mediaType.put("mediaType", escapeQuotationMark(key));
+                mediaType.put("mediaType", escapeText(escapeQuotationMark(key)));
                 count += 1;
                 if (count < produces.size()) {
                     mediaType.put("hasMore", "true");
@@ -2351,6 +2362,7 @@ public class DefaultCodegen {
             CodegenSecurity sec = CodegenModelFactory.newInstance(CodegenModelType.SECURITY);
             sec.name = entry.getKey();
             sec.type = schemeDefinition.getType();
+            sec.isCode = sec.isPassword = sec.isApplication = sec.isImplicit = false;
 
             if (schemeDefinition instanceof ApiKeyAuthDefinition) {
                 final ApiKeyAuthDefinition apiKeyDefinition = (ApiKeyAuthDefinition) schemeDefinition;
@@ -2367,6 +2379,22 @@ public class DefaultCodegen {
             	sec.isKeyInHeader = sec.isKeyInQuery = sec.isApiKey = sec.isBasic = false;
                 sec.isOAuth = true;
                 sec.flow = oauth2Definition.getFlow();
+                switch(sec.flow) {
+                    case "accessCode":
+                        sec.isCode = true;
+                        break;
+                    case "password":
+                        sec.isPassword = true;
+                        break;
+                    case "application":
+                        sec.isApplication = true;
+                        break;
+                    case "implicit":
+                        sec.isImplicit = true;
+                        break;
+                    default:
+                        throw new RuntimeException("unknown oauth flow: " + sec.flow);
+                }
                 sec.authorizationUrl = oauth2Definition.getAuthorizationUrl();
                 sec.tokenUrl = oauth2Definition.getTokenUrl();
                 if (oauth2Definition.getScopes() != null) {

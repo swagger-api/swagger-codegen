@@ -1,7 +1,7 @@
 /* 
  * Swagger Petstore
  *
- * This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\ 
+ * This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
  *
  * OpenAPI spec version: 1.0.0
  * Contact: apiteam@swagger.io
@@ -47,16 +47,16 @@ namespace IO.Swagger.Model
         Abc,
         
         /// <summary>
-        /// Enum efg for "-efg"
+        /// Enum Efg for "-efg"
         /// </summary>
         [EnumMember(Value = "-efg")]
-        efg,
+        Efg,
         
         /// <summary>
-        /// Enum xyz for "(xyz)"
+        /// Enum Xyz for "(xyz)"
         /// </summary>
         [EnumMember(Value = "(xyz)")]
-        xyz
+        Xyz
     }
 
 }

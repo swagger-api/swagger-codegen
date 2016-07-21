@@ -4,16 +4,16 @@ All URIs are relative to *http://petstore.swagger.io/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**testCodeInjectEnd**](FakeApi.md#testCodeInjectEnd) | **PUT** fake | To test code injection  &#x3D;end
+[**testClientModel**](FakeApi.md#testClientModel) | **PATCH** fake | To test \&quot;client\&quot; model
 [**testEndpointParameters**](FakeApi.md#testEndpointParameters) | **POST** fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 [**testEnumQueryParameters**](FakeApi.md#testEnumQueryParameters) | **GET** fake | To test enum query parameters
 
 
-<a name="testCodeInjectEnd"></a>
-# **testCodeInjectEnd**
-> Void testCodeInjectEnd(testCodeInjectEnd)
+<a name="testClientModel"></a>
+# **testClientModel**
+> Client testClientModel(body)
 
-To test code injection  &#x3D;end
+To test \&quot;client\&quot; model
 
 ### Example
 ```java
@@ -23,12 +23,12 @@ To test code injection  &#x3D;end
 
 
 FakeApi apiInstance = new FakeApi();
-String testCodeInjectEnd = "testCodeInjectEnd_example"; // String | To test code injection  =end
+Client body = new Client(); // Client | client model
 try {
-    Void result = apiInstance.testCodeInjectEnd(testCodeInjectEnd);
+    Client result = apiInstance.testClientModel(body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling FakeApi#testCodeInjectEnd");
+    System.err.println("Exception when calling FakeApi#testClientModel");
     e.printStackTrace();
 }
 ```
@@ -37,11 +37,11 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **testCodeInjectEnd** | **String**| To test code injection  &#x3D;end | [optional]
+ **body** | [**Client**](Client.md)| client model |
 
 ### Return type
 
-[**Void**](.md)
+[**Client**](Client.md)
 
 ### Authorization
 
@@ -49,8 +49,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, */ =end'));(phpinfo('
- - **Accept**: application/json, */ end
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="testEndpointParameters"></a>
 # **testEndpointParameters**

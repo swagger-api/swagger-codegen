@@ -6,8 +6,8 @@ import io.swagger.model.*;
 import com.sun.jersey.multipart.FormDataParam;
 
 import io.swagger.model.Pet;
-import io.swagger.model.ModelApiResponse;
 import java.io.File;
+import io.swagger.model.ModelApiResponse;
 
 import java.util.List;
 import io.swagger.api.NotFoundException;
@@ -36,6 +36,6 @@ public abstract class PetApiService {
       throws NotFoundException;
       public abstract Response updatePetWithForm(Long petId,String name,String status,SecurityContext securityContext)
       throws NotFoundException;
-      public abstract Response uploadFile(Long petId,String additionalMetadata,InputStream inputStream, FormDataContentDisposition fileDetail,SecurityContext securityContext)
+      public abstract Response uploadFile(Long petId,String additionalMetadata,InputStream fileInputStream, FormDataContentDisposition fileDetail,SecurityContext securityContext)
       throws NotFoundException;
 }

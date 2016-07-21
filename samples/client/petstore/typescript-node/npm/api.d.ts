@@ -15,9 +15,9 @@ export declare class Order {
 }
 export declare namespace Order {
     enum StatusEnum {
-        StatusEnum_placed,
-        StatusEnum_approved,
-        StatusEnum_delivered,
+        Placed,
+        Approved,
+        Delivered,
     }
 }
 export declare class Pet {
@@ -30,9 +30,9 @@ export declare class Pet {
 }
 export declare namespace Pet {
     enum StatusEnum {
-        StatusEnum_available,
-        StatusEnum_pending,
-        StatusEnum_sold,
+        Available,
+        Pending,
+        Sold,
     }
 }
 export declare class Tag {
@@ -82,8 +82,8 @@ export declare class PetApi {
     protected _useQuerystring: boolean;
     protected authentications: {
         'default': Authentication;
-        'petstore_auth': OAuth;
         'api_key': ApiKeyAuth;
+        'petstore_auth': OAuth;
     };
     constructor(basePath?: string);
     useQuerystring: boolean;
@@ -132,8 +132,8 @@ export declare class StoreApi {
     protected _useQuerystring: boolean;
     protected authentications: {
         'default': Authentication;
-        'petstore_auth': OAuth;
         'api_key': ApiKeyAuth;
+        'petstore_auth': OAuth;
     };
     constructor(basePath?: string);
     useQuerystring: boolean;
@@ -168,8 +168,8 @@ export declare class UserApi {
     protected _useQuerystring: boolean;
     protected authentications: {
         'default': Authentication;
-        'petstore_auth': OAuth;
         'api_key': ApiKeyAuth;
+        'petstore_auth': OAuth;
     };
     constructor(basePath?: string);
     useQuerystring: boolean;

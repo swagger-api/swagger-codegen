@@ -1,7 +1,7 @@
 /* 
  * Swagger Petstore
  *
- * This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\ 
+ * This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
  *
  * OpenAPI spec version: 1.0.0
  * Contact: apiteam@swagger.io
@@ -47,10 +47,10 @@ namespace IO.Swagger.Model
         {
             
             /// <summary>
-            /// Enum Upper for "UPPER"
+            /// Enum UPPER for "UPPER"
             /// </summary>
             [EnumMember(Value = "UPPER")]
-            Upper,
+            UPPER,
             
             /// <summary>
             /// Enum Lower for "lower"

@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/swagger-api/swagger-codegen.svg)](https://travis-ci.org/swagger-api/swagger-codegen)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.swagger/swagger-codegen-project/badge.svg?style=plastic)](https://maven-badges.herokuapp.com/maven-central/io.swagger/swagger-codegen-project)
 [![PR Stats](http://issuestats.com/github/swagger-api/swagger-codegen/badge/pr)](http://issuestats.com/github/swagger-api/swagger-codegen) [![Issue Stats](http://issuestats.com/github/swagger-api/swagger-codegen/badge/issue)](http://issuestats.com/github/swagger-api/swagger-codegen)
-[![Windows Test](https://ci.appveyor.com/api/projects/status/github/swagger-api/swagger-codegen?branch=master&svg=true&passingText=Windows%20Test%20-%20OK&failingText=Windows%20Test%20-%20Fails)](#)
+[![Windows Test](https://ci.appveyor.com/api/projects/status/github/swagger-api/swagger-codegen?branch=master&svg=true&passingText=Windows%20Test%20-%20OK&failingText=Windows%20Test%20-%20Fails)](https://ci.appveyor.com/project/WilliamCheng/swagger-codegen-wh2wu)
 
 :star::star::star: If you would like to contribute, please refer to [guidelines](https://github.com/swagger-api/swagger-codegen/blob/master/CONTRIBUTING.md) and a list of [open tasks](https://github.com/swagger-api/swagger-codegen/issues?q=is%3Aopen+is%3Aissue+label%3A%22Need+community+contribution%22).:star::star::star:
 
@@ -12,7 +12,7 @@
 :warning: If the OpenAPI/Swagger spec is obtained from an untrusted source, please make sure you've reviewed the spec before using Swagger Codegen to generate the API client, server stub or documentation as [code injection](https://en.wikipedia.org/wiki/Code_injection) may occur :warning:
 
 ## Overview
-This is the swagger codegen project, which allows generation of API client libraries, server stubs and documentation automatically given an [OpenAPI Spec]((https://github.com/OAI/OpenAPI-Specification).
+This is the swagger codegen project, which allows generation of API client libraries, server stubs and documentation automatically given an [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification).
 
 Check out [Swagger-Spec](https://github.com/OAI/OpenAPI-Specification) for additional information about the Swagger project, including additional libraries with support for other languages and more.
 
@@ -59,8 +59,8 @@ The OpenAPI Specification has undergone 3 revisions since initial creation in 20
 
 Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 -------------------------- | ------------ | -------------------------- | -----
-2.2.0-SNAPSHOT             |              | 1.0, 1.1, 1.2, 2.0   | [master](https://github.com/swagger-api/swagger-codegen)
-2.1.6 (**current stable**) | 2016-04-06   | 1.0, 1.1, 1.2, 2.0   | [tag v2.1.6](https://github.com/swagger-api/swagger-codegen/tree/v2.1.6)
+2.2.0 (**current stable**) | 2016-07-15   | 1.0, 1.1, 1.2, 2.0   | [tag v2.2.0](https://github.com/swagger-api/swagger-codegen/tree/v2.2.0)
+2.1.6 | 2016-04-06   | 1.0, 1.1, 1.2, 2.0   | [tag v2.1.6](https://github.com/swagger-api/swagger-codegen/tree/v2.1.6)
 2.0.17                     | 2014-08-22   | 1.1, 1.2             | [tag v2.0.17](https://github.com/swagger-api/swagger-codegen/tree/v2.0.17)
 1.0.4                      | 2012-04-12   | 1.0, 1.1             | [tag v1.0.4](https://github.com/swagger-api/swagger-codegen/tree/swagger-codegen_2.9.1-1.1)
 
@@ -69,7 +69,7 @@ Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 If you're looking for the latest stable version, you can grab it directly from maven central (you'll need java 7 runtime at a minimum):
 
 ```
-wget http://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.1.6/swagger-codegen-cli-2.1.6.jar -O swagger-codegen-cli.jar
+wget http://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.2.0/swagger-codegen-cli-2.2.0.jar -O swagger-codegen-cli.jar
 
 java -jar swagger-codegen-cli.jar help
 ```
@@ -98,7 +98,7 @@ export PATH=${JAVA_HOME}/bin:$PATH
 
 After cloning the project, you can build it from source with this command:
 ```
-mvn package
+mvn clean package
 ```
 
 ### Docker
@@ -148,7 +148,7 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
 ```
 (if you're on Windows, replace the last command with `java -jar modules\swagger-codegen-cli\target\swagger-codegen-cli.jar generate -i http://petstore.swagger.io/v2/swagger.json -l php -o c:\temp\php_api_client`)
 
-You can also download the JAR (latest relesae) directly from [maven.org]( http://central.maven.org/maven2/io/swagger/swagger-codegen/2.1.6/swagger-codegen-2.1.6.jar)
+You can also download the JAR (latest relesae) directly from [maven.org]( http://central.maven.org/maven2/io/swagger/swagger-codegen/2.2.0/swagger-codegen-2.2.0.jar)
 
 To get a list of **general** options available, please run `java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar help generate`
 
@@ -496,8 +496,15 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -o samples/client/petstore/java \
   -c path/to/config.json
 ```
-Supported config options can be different per language. Running `config-help -l {lang}` will show available options.  **These options are applied
-by passing them with `-D{optionName}={optionValue}**.
+and `config.json` contains the following as an example:
+```
+{
+  "apiPackage" : "petstore"
+}
+```
+
+Supported config options can be different per language. Running `config-help -l {lang}` will show available options.  
+**These options are applied via configuration file (e.g. config.json) or by passing them with `-D{optionName}={optionValue}**. (If `-D{optionName}` does not work, please open a [ticket](https://github.com/swagger-api/swagger-codegen/issues/new) and we'll look into it)
 
 ```
 java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar config-help -l java
@@ -739,6 +746,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Avenida Compras S.A.](https://www.avenida.com.ar)
 - [beemo](http://www.beemo.eu)
 - [bitly](https://bitly.com)
+- [Bufferfly Network](https://www.butterflynetinc.com/)
 - [Cachet Financial](http://www.cachetfinancial.com/)
 - [CloudBoost](https://www.CloudBoost.io/)
 - [Conplement](http://www.conplement.de/)
@@ -751,6 +759,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Expected Behavior](http://www.expectedbehavior.com/)
 - [Finder](http://en.finder.pl/)
 - [FH Münster - University of Applied Sciences](http://www.fh-muenster.de)
+- [Gear Zero Network](https://www.gearzero.ca)
 - [GraphHopper](https://graphhopper.com/)
 - [Gravitate Solutions](http://gravitatesolutions.com/)
 - [IMS Health](http://www.imshealth.com/en/solution-areas/technology-and-applications)
@@ -801,6 +810,7 @@ Swaagger Codegen core team members are contributors who have been making signfic
 | Groovy     |  |  
 | Go     |  @guohuang (2016/05/01) @neilotoole (2016/05/01) |  
 | Java      | @cbornet (2016/05/01) @xhh (2016/05/01) @epaul (2016/06/04) |
+| Java (Spring Cloud) | @cbornet (2016/07/19) |
 | NodeJS/Javascript | @xhh (2016/05/01) | 
 | ObjC      | @mateuszmackowiak (2016/05/09) |
 | Perl      | @wing328 (2016/05/01) |
@@ -819,8 +829,8 @@ Swaagger Codegen core team members are contributors who have been making signfic
 | C# ASP.NET5 |  @jimschubert (2016/05/01) |
 | Go Server | @guohuang (2016/06/13) |
 | Haskell Servant |  |
-| Java Spring Boot |  |
-| Java SpringMVC | @kolyjjj (2016/05/01) |
+| Java Spring Boot | @cbornet (2016/07/19) |
+| Java Spring MVC | @kolyjjj (2016/05/01) @cbornet (2016/07/19) |
 | Java JAX-RS |  |
 | NancyFX |  |
 | NodeJS | @kolyjjj (2016/05/01) |  

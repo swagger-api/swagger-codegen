@@ -38,9 +38,10 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 
+import io.swagger.client.model.Client;
 import org.joda.time.LocalDate;
-import org.joda.time.DateTime;
 import java.math.BigDecimal;
+import org.joda.time.DateTime;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -67,9 +68,14 @@ public class FakeApi {
         this.apiClient = apiClient;
     }
 
-    /* Build call for testCodeInjectEnd */
-    private com.squareup.okhttp.Call testCodeInjectEndCall(String testCodeInjectEnd, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
+    /* Build call for testClientModel */
+    private com.squareup.okhttp.Call testClientModelCall(Client body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = body;
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling testClientModel(Async)");
+        }
         
 
         // create path and map variables
@@ -80,17 +86,15 @@ public class FakeApi {
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-        if (testCodeInjectEnd != null)
-        localVarFormParams.put("test code inject */ &#x3D;end", testCodeInjectEnd);
 
         final String[] localVarAccepts = {
-            "application/json", "*/ end"
+            "application/json"
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
 
         final String[] localVarContentTypes = {
-            "application/json", "*/ =end'));(phpinfo('"
+            "application/json"
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
@@ -108,40 +112,43 @@ public class FakeApi {
         }
 
         String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "PUT", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        return apiClient.buildCall(localVarPath, "PATCH", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
 
     /**
-     * To test code injection  &#x3D;end
+     * To test \&quot;client\&quot; model
      * 
-     * @param testCodeInjectEnd To test code injection  &#x3D;end (optional)
+     * @param body client model (required)
+     * @return Client
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void testCodeInjectEnd(String testCodeInjectEnd) throws ApiException {
-        testCodeInjectEndWithHttpInfo(testCodeInjectEnd);
+    public Client testClientModel(Client body) throws ApiException {
+        ApiResponse<Client> resp = testClientModelWithHttpInfo(body);
+        return resp.getData();
     }
 
     /**
-     * To test code injection  &#x3D;end
+     * To test \&quot;client\&quot; model
      * 
-     * @param testCodeInjectEnd To test code injection  &#x3D;end (optional)
-     * @return ApiResponse&lt;Void&gt;
+     * @param body client model (required)
+     * @return ApiResponse&lt;Client&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> testCodeInjectEndWithHttpInfo(String testCodeInjectEnd) throws ApiException {
-        com.squareup.okhttp.Call call = testCodeInjectEndCall(testCodeInjectEnd, null, null);
-        return apiClient.execute(call);
+    public ApiResponse<Client> testClientModelWithHttpInfo(Client body) throws ApiException {
+        com.squareup.okhttp.Call call = testClientModelCall(body, null, null);
+        Type localVarReturnType = new TypeToken<Client>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
     }
 
     /**
-     * To test code injection  &#x3D;end (asynchronously)
+     * To test \&quot;client\&quot; model (asynchronously)
      * 
-     * @param testCodeInjectEnd To test code injection  &#x3D;end (optional)
+     * @param body client model (required)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call testCodeInjectEndAsync(String testCodeInjectEnd, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call testClientModelAsync(Client body, final ApiCallback<Client> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -162,8 +169,9 @@ public class FakeApi {
             };
         }
 
-        com.squareup.okhttp.Call call = testCodeInjectEndCall(testCodeInjectEnd, progressListener, progressRequestListener);
-        apiClient.executeAsync(call, callback);
+        com.squareup.okhttp.Call call = testClientModelCall(body, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<Client>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /* Build call for testEndpointParameters */
