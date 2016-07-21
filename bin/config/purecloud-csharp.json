@@ -1,1 +1,10 @@
-{"packageName":"ININ.PureCloudApi","packageVersion":"0.10.0.345","packageTitle":"PureCloud Public API Library","packageProductName":"PureCloudPublicAPILibrary","packageDescription":"A .NET library to interface with the PureCloud Public API","packageCompany":"Interactive Intelligence, Inc.","packageCopyright":"Copyright © Interactive Intelligence, Inc. 2015"}
+{
+	"packageName":"ININ.PureCloudApi",
+	"packageVersion":"0.10.0.345",
+	"packageTitle":"PureCloud Public API Library",
+	"packageProductName":"PureCloudPublicAPILibrary",
+	"packageDescription":"A .NET library to interface with the PureCloud Public API",
+	"packageCompany":"Interactive Intelligence, Inc.",
+	"packageCopyright":"Copyright © Interactive Intelligence, Inc. 2015",
+	"httpUserAgent":"PureCloud SDK"
+}
