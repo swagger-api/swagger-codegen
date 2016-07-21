@@ -3,6 +3,7 @@ package io.swagger.codegen.options;
 import com.google.common.collect.ImmutableMap;
 import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.languages.JavaClientCodegen;
+import org.mozilla.javascript.optimizer.Codegen;
 
 import java.util.Map;
 
@@ -20,6 +21,8 @@ public class JavaOptionsProvider implements OptionsProvider {
     public static final String SERIALIZABLE_MODEL_VALUE = "false";
     public static final String FULL_JAVA_UTIL_VALUE = "true";
     public static final String ENSURE_UNIQUE_PARAMS_VALUE = "true";
+    public static final String PACKAGE_URL_VALUE = "https://github.com/swagger-api/swagger-codegen";
+    public static final String PACKAGE_DESCRIPTION_VALUE = "A package description";
 
     private ImmutableMap<String, String> options;
 
@@ -45,6 +48,8 @@ public class JavaOptionsProvider implements OptionsProvider {
                 .put(JavaClientCodegen.USE_RX_JAVA, "false")
                 .put(JavaClientCodegen.DATE_LIBRARY, "joda")
                 .put("hideGenerationTimestamp", "true")
+                .put(CodegenConstants.PACKAGE_URL, PACKAGE_URL_VALUE)
+                .put(CodegenConstants.PACKAGE_DESCRIPTION, PACKAGE_DESCRIPTION_VALUE)
                 .build();
     }
 

@@ -7,5 +7,7 @@
   "groupId": "com.mypurecloud",
   "localVariablePrefix": "pc",
   "serializableModel": "true",
-  "hideGenerationTimestamp": "false"
+  "hideGenerationTimestamp": "false",
+  "packageDescription":"The official Java SDK for the PureCloud Platform API SDK",
+  "packageUrl":"https://developer.mypurecloud.com/api/rest/client-libraries/java/latest/"
 }
