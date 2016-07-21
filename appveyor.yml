@@ -30,9 +30,9 @@ install:
 build_script:
   - nuget restore samples\client\petstore\csharp\SwaggerClient\IO.Swagger.sln
   - msbuild samples\client\petstore\csharp\SwaggerClient\IO.Swagger.sln /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
-  - mvn clean install --batch-mode
+  #- mvn clean install --batch-mode
 test_script:
-  - .\bin\windows\run-all-petstore.cmd
+  #- .\bin\windows\run-all-petstore.cmd
   - nunit-console samples\client\petstore\csharp\SwaggerClient\src\IO.Swagger.Test\bin\Debug\IO.Swagger.Test.dll --result=myresults.xml;format=AppVeyor
 cache:
   - C:\maven\
