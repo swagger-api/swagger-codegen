@@ -195,14 +195,14 @@ public abstract class AbstractPhpCodegen extends DefaultCodegen implements Codeg
             this.setParameterNamingConvention((String) additionalProperties.get(VARIABLE_NAMING_CONVENTION));
         }
 
-        // additionalProperties.put("escapedInvokerPackage", invokerPackage.replace("\\", "\\\\"));
+        additionalProperties.put("escapedInvokerPackage", invokerPackage.replace("\\", "\\\\"));
 
-        // // make api and model doc path available in mustache template
-        // additionalProperties.put("apiDocPath", apiDocPath);
-        // additionalProperties.put("modelDocPath", modelDocPath);
+        // make api and model doc path available in mustache template
+        additionalProperties.put("apiDocPath", apiDocPath);
+        additionalProperties.put("modelDocPath", modelDocPath);
 
-        // // make test path available in mustache template
-        // additionalProperties.put("testBasePath", testBasePath);
+        // make test path available in mustache template
+        additionalProperties.put("testBasePath", testBasePath);
 
         // // apache v2 license
         // supportingFiles.add(new SupportingFile("LICENSE", getPackagePath(), "LICENSE"));
