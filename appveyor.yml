@@ -15,8 +15,14 @@ install:
   - cmd: SET PATH=C:\maven\apache-maven-3.2.5\bin;%JAVA_HOME%\bin;%PATH%
   - cmd: SET MAVEN_OPTS=-XX:MaxPermSize=2g -Xmx4g
   - cmd: SET JAVA_OPTS=-XX:MaxPermSize=2g -Xmx4g
-  - cmd: docker --version
-  - cmd: docker info
+  - powershell -file cpuid.ps1
+  - choco install -y mingw
+  - choco install -y virtualbox
+  - choco install -y docker-machine
+  - choco install -y docker
+  - docker pull swaggerapi/petstore
+  - docker run -d -e SWAGGER_HOST=http://petstore.swagger.io -e SWAGGER_BASE_PATH=/v2 -p 80:8080 swaggerapi/petstore
+  - docker ps -a
 build_script:
   - nuget restore samples\client\petstore\csharp\SwaggerClient\IO.Swagger.sln
   - msbuild samples\client\petstore\csharp\SwaggerClient\IO.Swagger.sln /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
