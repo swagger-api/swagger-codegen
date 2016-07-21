@@ -1,7 +1,9 @@
 package io.swagger.codegen.examples;
 
+import io.swagger.models.ComposedModel;
 import io.swagger.models.Model;
 import io.swagger.models.ModelImpl;
+import io.swagger.models.RefModel;
 import io.swagger.models.properties.*;
 import io.swagger.util.Json;
 
@@ -125,6 +127,22 @@ public class ExampleGenerator {
                 for (String propertyName : impl.getProperties().keySet()) {
                     Property property = impl.getProperties().get(propertyName);
                     values.put(propertyName, resolvePropertyToExample(mediaType, property, processedModels));
+                }
+            }
+            return values;
+        } else if (model instanceof ComposedModel) {
+            Map<String, Object> values = new HashMap<>();
+            ComposedModel composedModel = (ComposedModel) model;
+            if (composedModel.getInterfaces() != null) {
+                for (RefModel refModel : composedModel.getInterfaces()) {
+                    String simpleRef = refModel.getSimpleRef();
+                    Model ifModel = examples.get(simpleRef);
+                    if (ifModel != null){
+                        Object example = resolveModelToExample(simpleRef, mediaType, ifModel, processedModels);
+                        if (example instanceof Map){
+                            values.putAll((Map) example);
+                        }
+                    }
                 }
             }
             return values;
