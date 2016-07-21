@@ -16,9 +16,12 @@ install:
   - cmd: SET MAVEN_OPTS=-XX:MaxPermSize=2g -Xmx4g
   - cmd: SET JAVA_OPTS=-XX:MaxPermSize=2g -Xmx4g
 build_script:
-  - mvn clean install --batch-mode
+  - nuget restore samples\client\petstore\csharp\SwaggerClient\IO.Swagger.sln
+  - msbuild samples\client\petstore\csharp\SwaggerClient\IO.Swagger.sln /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+  #- mvn clean install --batch-mode
 test_script:
-  - .\bin\windows\run-all-petstore.cmd
+  - nunit-console samples\client\petstore\csharp\SwaggerClient\src\IO.Swagger.Test\bin\Debug\IO.Swagger.Test.dll --result=myresults.xml;format=AppVeyor
+  #- .\bin\windows\run-all-petstore.cmd
 cache:
   - C:\maven\
   - C:\Users\appveyor\.m2
