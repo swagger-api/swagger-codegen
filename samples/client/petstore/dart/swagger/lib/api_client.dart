@@ -88,8 +88,8 @@ class ApiClient {
             }
           }
       }
-    } catch(e) {
-      // Just throw the ApiException below
+    } catch (e, stack) {
+      throw new ApiException.withInner(500, 'Exception during deserialization.', e, stack);
     }
     throw new ApiException(500, 'Could not find a suitable class for deserialization');
   }
@@ -156,6 +156,8 @@ class ApiClient {
           return client.put(url, headers: headerParams, body: msgBody);
         case "DELETE":
           return client.delete(url, headers: headerParams);
+        case "PATCH":
+          return client.patch(url, headers: headerParams, body: msgBody);
         default:
           return client.get(url, headers: headerParams);
       }
