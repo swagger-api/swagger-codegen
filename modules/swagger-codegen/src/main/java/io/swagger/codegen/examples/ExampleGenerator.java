@@ -59,7 +59,7 @@ public class ExampleGenerator {
         return output;
     }
 
-    private Object resolvePropertyToExample(String mediaType, Property property, Set<String> processedModels) {
+    protected Object resolvePropertyToExample(String mediaType, Property property, Set<String> processedModels) {
         if (property.getExample() != null) {
             return property.getExample();
         } else if (property instanceof StringProperty) {
@@ -114,7 +114,7 @@ public class ExampleGenerator {
         return "";
     }
 
-    private Object resolveModelToExample(String name, String mediaType, Model model, Set<String> processedModels) {
+    public Object resolveModelToExample(String name, String mediaType, Model model, Set<String> processedModels) {
         if (processedModels.contains(name)) {
             return "";
         }
