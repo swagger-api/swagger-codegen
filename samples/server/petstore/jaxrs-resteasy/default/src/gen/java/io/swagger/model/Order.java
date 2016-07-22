@@ -1,7 +1,6 @@
 package io.swagger.model;
 
 import java.util.Objects;
-import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Date;
@@ -9,7 +8,8 @@ import java.util.Date;
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaResteasyServerCodegen", date = "2016-07-01T21:32:05.980+08:00")
+
+
 public class Order   {
   
   private Long id = null;
@@ -17,15 +17,12 @@ public class Order   {
   private Integer quantity = null;
   private Date shipDate = null;
 
-  /**
-   * Order Status
-   */
+
   public enum StatusEnum {
     PLACED("placed"),
+    APPROVED("approved"),
+    DELIVERED("delivered");
 
-        APPROVED("approved"),
-
-        DELIVERED("delivered");
     private String value;
 
     StatusEnum(String value) {
@@ -35,7 +32,7 @@ public class Order   {
     @Override
     @JsonValue
     public String toString() {
-      return String.valueOf(value);
+      return value;
     }
   }
 
@@ -44,7 +41,13 @@ public class Order   {
 
   /**
    **/
+  public Order id(Long id) {
+    this.id = id;
+    return this;
+  }
+
   
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("id")
   public Long getId() {
     return id;
@@ -55,7 +58,13 @@ public class Order   {
 
   /**
    **/
+  public Order petId(Long petId) {
+    this.petId = petId;
+    return this;
+  }
+
   
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("petId")
   public Long getPetId() {
     return petId;
@@ -66,7 +75,13 @@ public class Order   {
 
   /**
    **/
+  public Order quantity(Integer quantity) {
+    this.quantity = quantity;
+    return this;
+  }
+
   
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("quantity")
   public Integer getQuantity() {
     return quantity;
@@ -77,7 +92,13 @@ public class Order   {
 
   /**
    **/
+  public Order shipDate(Date shipDate) {
+    this.shipDate = shipDate;
+    return this;
+  }
+
   
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("shipDate")
   public Date getShipDate() {
     return shipDate;
@@ -89,7 +110,13 @@ public class Order   {
   /**
    * Order Status
    **/
+  public Order status(StatusEnum status) {
+    this.status = status;
+    return this;
+  }
+
   
+  @ApiModelProperty(example = "null", value = "Order Status")
   @JsonProperty("status")
   public StatusEnum getStatus() {
     return status;
@@ -100,7 +127,13 @@ public class Order   {
 
   /**
    **/
+  public Order complete(Boolean complete) {
+    this.complete = complete;
+    return this;
+  }
+
   
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("complete")
   public Boolean getComplete() {
     return complete;

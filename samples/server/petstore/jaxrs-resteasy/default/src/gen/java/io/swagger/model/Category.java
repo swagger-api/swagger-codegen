@@ -1,13 +1,13 @@
 package io.swagger.model;
 
 import java.util.Objects;
-import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaResteasyServerCodegen", date = "2016-07-01T21:32:05.980+08:00")
+
+
 public class Category   {
   
   private Long id = null;
@@ -15,7 +15,13 @@ public class Category   {
 
   /**
    **/
+  public Category id(Long id) {
+    this.id = id;
+    return this;
+  }
+
   
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("id")
   public Long getId() {
     return id;
@@ -26,7 +32,13 @@ public class Category   {
 
   /**
    **/
+  public Category name(String name) {
+    this.name = name;
+    return this;
+  }
+
   
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("name")
   public String getName() {
     return name;
