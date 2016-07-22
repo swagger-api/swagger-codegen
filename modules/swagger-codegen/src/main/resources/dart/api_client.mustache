@@ -96,7 +96,7 @@ class ApiClient {
     if (targetType == 'String') return json;
 
     var decodedJson = JSON.decode(json);
-    return _deserialize(deccodedJson, targetType);
+    return _deserialize(decodedJson, targetType);
   }
 
   String serialize(Object obj) {
