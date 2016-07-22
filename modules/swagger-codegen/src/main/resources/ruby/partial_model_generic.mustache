@@ -82,18 +82,18 @@
         fail ArgumentError, "{{{name}}} cannot be nil"
       end
 
-      {{#minLength}}
+      {{#maxLength}}
       if @{{{name}}}.to_s.length > {{{maxLength}}}
         invalid_properties.push("invalid value for '{{{name}}}', the character length must be smaller than or equal to {{{maxLength}}}.")
       end
 
-      {{/minLength}}
-      {{#maxLength}}
+      {{/maxLength}}
+      {{#minLength}}
       if @{{{name}}}.to_s.length < {{{minLength}}}
         invalid_properties.push("invalid value for '{{{name}}}', the character length must be great than or equal to {{{minLength}}}.")
       end
 
-      {{/maxLength}}
+      {{/minLength}}
       {{#maximum}}
       if @{{{name}}} > {{{maximum}}}
         invalid_properties.push("invalid value for '{{{name}}}', must be smaller than or equal to {{{maximum}}}.")
@@ -124,16 +124,18 @@
       return false if @{{{name}}}.nil?
       {{/required}}
       {{#isEnum}}
+      {{^isContainer}}
       {{{name}}}_validator = EnumAttributeValidator.new('{{{datatype}}}', [{{#allowableValues}}{{#values}}"{{{this}}}"{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}])
       return false unless {{{name}}}_validator.valid?(@{{{name}}})
+      {{/isContainer}}
       {{/isEnum}}
       {{#hasValidation}}
-      {{#minLength}}
-      return false if @{{{name}}}.to_s.length > {{{maxLength}}}
-      {{/minLength}}
       {{#maxLength}}
-      return false if @{{{name}}}.to_s.length < {{{minLength}}}
+      return false if @{{{name}}}.to_s.length > {{{maxLength}}}
       {{/maxLength}}
+      {{#minLength}}
+      return false if @{{{name}}}.to_s.length < {{{minLength}}}
+      {{/minLength}}
       {{#maximum}}
       return false if @{{{name}}} > {{{maximum}}}
       {{/maximum}}
@@ -150,6 +152,7 @@
 
     {{#vars}}
     {{#isEnum}}
+    {{^isContainer}}
     # Custom attribute writer method checking allowed values (enum).
     # @param [Object] {{{name}}} Object to be assigned
     def {{{name}}}=({{{name}}})
@@ -160,6 +163,7 @@
       @{{{name}}} = {{{name}}}
     end
 
+    {{/isContainer}}
     {{/isEnum}}
     {{^isEnum}}
     {{#hasValidation}}
@@ -170,18 +174,18 @@
         fail ArgumentError, "{{{name}}} cannot be nil"
       end
 
-      {{#minLength}}
+      {{#maxLength}}
       if {{{name}}}.to_s.length > {{{maxLength}}}
         fail ArgumentError, "invalid value for '{{{name}}}', the character length must be smaller than or equal to {{{maxLength}}}."
       end
 
-      {{/minLength}}
-      {{#maxLength}}
+      {{/maxLength}}
+      {{#minLength}}
       if {{{name}}}.to_s.length < {{{minLength}}}
         fail ArgumentError, "invalid value for '{{{name}}}', the character length must be great than or equal to {{{minLength}}}."
       end
 
-      {{/maxLength}}
+      {{/minLength}}
       {{#maximum}}
       if {{{name}}} > {{{maximum}}}
         fail ArgumentError, "invalid value for '{{{name}}}', must be smaller than or equal to {{{maximum}}}."

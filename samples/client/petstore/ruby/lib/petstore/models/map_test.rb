@@ -100,19 +100,7 @@ module Petstore
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      map_of_enum_string_validator = EnumAttributeValidator.new('Hash<String, String>', [])
-      return false unless map_of_enum_string_validator.valid?(@map_of_enum_string)
       return true
-    end
-
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] map_of_enum_string Object to be assigned
-    def map_of_enum_string=(map_of_enum_string)
-      validator = EnumAttributeValidator.new('Hash<String, String>', [])
-      unless validator.valid?(map_of_enum_string)
-        fail ArgumentError, "invalid value for 'map_of_enum_string', must be one of #{validator.allowable_values}."
-      end
-      @map_of_enum_string = map_of_enum_string
     end
 
     # Checks equality by comparing each attribute.

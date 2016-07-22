@@ -140,9 +140,7 @@ class PetApi {
     List<QueryParam> queryParams = [];
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
-    if("null" != status) {
       queryParams.addAll(_convertParametersForCollectionFormat("csv", "status", status));
-    }
     
     List<String> contentTypes = [];
 
@@ -171,7 +169,7 @@ class PetApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return  apiClient.deserialize(response.body, 'List<Pet>') ;
+      return apiClient.deserialize(response.body, 'List<Pet>') as List<Pet> ;
     } else {
       return null;
     }
@@ -198,9 +196,7 @@ class PetApi {
     List<QueryParam> queryParams = [];
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
-    if("null" != tags) {
       queryParams.addAll(_convertParametersForCollectionFormat("csv", "tags", tags));
-    }
     
     List<String> contentTypes = [];
 
@@ -229,7 +225,7 @@ class PetApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return  apiClient.deserialize(response.body, 'List<Pet>') ;
+      return apiClient.deserialize(response.body, 'List<Pet>') as List<Pet> ;
     } else {
       return null;
     }
@@ -284,7 +280,7 @@ class PetApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return  apiClient.deserialize(response.body, 'Pet') ;
+      return apiClient.deserialize(response.body, 'Pet') as Pet ;
     } else {
       return null;
     }
@@ -477,7 +473,7 @@ if (status != null)
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return  apiClient.deserialize(response.body, 'ApiResponse') ;
+      return apiClient.deserialize(response.body, 'ApiResponse') as ApiResponse ;
     } else {
       return null;
     }
