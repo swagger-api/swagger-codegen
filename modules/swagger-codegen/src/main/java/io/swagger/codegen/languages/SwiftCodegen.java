@@ -38,6 +38,7 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
     public static final String POD_SCREENSHOTS = "podScreenshots";
     public static final String POD_DOCUMENTATION_URL = "podDocumentationURL";
     public static final String SWIFT_USE_API_NAMESPACE = "swiftUseApiNamespace";
+    public static final String DEFAULT_POD_AUTHORS = "Swagger Codegen";
     protected static final String LIBRARY_PROMISE_KIT = "PromiseKit";
     protected static final String[] RESPONSE_LIBRARIES = { LIBRARY_PROMISE_KIT };
     protected String projectName = "SwaggerClient";
@@ -86,8 +87,10 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
                 );
         defaultIncludes = new HashSet<String>(
                 Arrays.asList(
+                    "NSData",
                     "NSDate",
                     "NSURL", // for file
+                    "NSUUID",
                     "Array",
                     "Dictionary",
                     "Set",
@@ -127,10 +130,9 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("double", "Double");
         typeMapping.put("object", "AnyObject");
         typeMapping.put("file", "NSURL");
-        //TODO binary should be mapped to byte array
-        // mapped to String as a workaround
-        typeMapping.put("binary", "String");
-        typeMapping.put("ByteArray", "String");
+        typeMapping.put("binary", "NSData");
+        typeMapping.put("ByteArray", "NSData");
+        typeMapping.put("UUID", "NSUUID");
 
         importMapping = new HashMap<String, String>();
 
@@ -191,6 +193,10 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
         }
         additionalProperties.put(SWIFT_USE_API_NAMESPACE, swiftUseApiNamespace);
 
+        if (!additionalProperties.containsKey(POD_AUTHORS)) {
+            additionalProperties.put(POD_AUTHORS, DEFAULT_POD_AUTHORS);
+        }
+
         supportingFiles.add(new SupportingFile("Podspec.mustache", "", projectName + ".podspec"));
         supportingFiles.add(new SupportingFile("Cartfile.mustache", "", "Cartfile"));
         supportingFiles.add(new SupportingFile("APIHelper.mustache", sourceFolder, "APIHelper.swift"));
@@ -249,6 +255,11 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
         } else
             type = swaggerType;
         return toModelName(type);
+    }
+
+    @Override
+    public boolean isDataTypeBinary(final String dataType) {
+      return dataType != null && dataType.equals("NSData");
     }
 
     /**
