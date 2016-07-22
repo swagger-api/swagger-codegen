@@ -96,7 +96,7 @@ class ApiClient {
     if (targetType == 'String') return json;
 
     var decodedJson = JSON.decode(json);
-    return _deserialize(decodedJson, targetType);
+    return _deserialize(deccodedJson, targetType);
   }
 
   String serialize(Object obj) {
@@ -151,6 +151,8 @@ class ApiClient {
           return client.put(url, headers: headerParams, body: msgBody);
         case "DELETE":
           return client.delete(url, headers: headerParams);
+        case "PATCH":
+          return client.patch(url, headers: headerParams, body: msgBody);
         default:
           return client.get(url, headers: headerParams);
       }
