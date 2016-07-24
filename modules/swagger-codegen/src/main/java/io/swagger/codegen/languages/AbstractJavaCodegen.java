@@ -1,20 +1,42 @@
 package io.swagger.codegen.languages;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
+
+import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
+
 import com.google.common.base.Strings;
-import io.swagger.codegen.*;
+
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenParameter;
+import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.DefaultCodegen;
 import io.swagger.models.Model;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
 import io.swagger.models.parameters.FormParameter;
 import io.swagger.models.parameters.Parameter;
-import io.swagger.models.properties.*;
-import org.apache.commons.lang3.BooleanUtils;
-import org.apache.commons.lang3.StringUtils;
-
-import java.io.File;
-import java.util.*;
-import java.util.regex.Pattern;
+import io.swagger.models.properties.ArrayProperty;
+import io.swagger.models.properties.BooleanProperty;
+import io.swagger.models.properties.DoubleProperty;
+import io.swagger.models.properties.FloatProperty;
+import io.swagger.models.properties.IntegerProperty;
+import io.swagger.models.properties.LongProperty;
+import io.swagger.models.properties.MapProperty;
+import io.swagger.models.properties.Property;
+import io.swagger.models.properties.StringProperty;
 
 
 public abstract class AbstractJavaCodegen extends DefaultCodegen implements CodegenConfig {
@@ -43,6 +65,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
     public AbstractJavaCodegen() {
         super();
+        supportsInheritance = true;
         modelTemplateFiles.put("model.mustache", ".java");
         apiTemplateFiles.put("api.mustache", ".java");
         apiTestTemplateFiles.put("api_test.mustache", ".java");
@@ -117,6 +140,18 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
         if (additionalProperties.containsKey(CodegenConstants.INVOKER_PACKAGE)) {
             this.setInvokerPackage((String) additionalProperties.get(CodegenConstants.INVOKER_PACKAGE));
+        } else if (additionalProperties.containsKey(CodegenConstants.API_PACKAGE)) {
+            // guess from api package
+            String derviedInvokerPackage = deriveInvokerPackageName((String)additionalProperties.get(CodegenConstants.API_PACKAGE));
+            this.additionalProperties.put(CodegenConstants.INVOKER_PACKAGE, derviedInvokerPackage);
+            this.setInvokerPackage((String) additionalProperties.get(CodegenConstants.INVOKER_PACKAGE));
+            LOGGER.info("Invoker Package Name, originally not set, is now dervied from api package name: " + derviedInvokerPackage);
+        } else if (additionalProperties.containsKey(CodegenConstants.MODEL_PACKAGE)) {
+            // guess from model package
+            String derviedInvokerPackage = deriveInvokerPackageName((String)additionalProperties.get(CodegenConstants.MODEL_PACKAGE));
+            this.additionalProperties.put(CodegenConstants.INVOKER_PACKAGE, derviedInvokerPackage);
+            this.setInvokerPackage((String) additionalProperties.get(CodegenConstants.INVOKER_PACKAGE));
+            LOGGER.info("Invoker Package Name, originally not set, is now dervied from model package name: " + derviedInvokerPackage);
         } else {
             //not set, use default to be passed to template
             additionalProperties.put(CodegenConstants.INVOKER_PACKAGE, invokerPackage);
@@ -705,7 +740,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         }
 
         // string
-        String var = value.replaceAll("\\W+", "_").replaceAll("_+", "_").toUpperCase();
+        String var = value.replaceAll("\\W+", "_").toUpperCase();
         if (var.matches("\\d.*")) {
             return "_" + var;
         } else {
@@ -843,6 +878,25 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     @Override
     public String escapeUnsafeCharacters(String input) {
         return input.replace("*/", "*_/").replace("/*", "/_*");
+    }
+
+    /*
+     * Derive invoker package name based on the input
+     * e.g. foo.bar.model => foo.bar
+     *
+     * @param input API package/model name
+     * @return Derived invoker package name based on API package/model name
+     */
+    private String deriveInvokerPackageName(String input) {
+        String[] parts = input.split(Pattern.quote(".")); // Split on period.
+
+        StringBuilder sb = new StringBuilder();
+        String delim = "";
+        for (String p : Arrays.copyOf(parts, parts.length-1)) {
+            sb.append(delim).append(p);
+            delim = ".";
+        }
+        return sb.toString();
     }
 
 }

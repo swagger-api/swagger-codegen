@@ -25,7 +25,6 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
 	public JavaJAXRSSpecServerCodegen()
 	{
         super();
-        supportsInheritance = true;
         sourceFolder = "src/main/java";
         invokerPackage = "io.swagger.api";
         artifactId = "swagger-jaxrs-server";
@@ -35,6 +34,15 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
         apiTemplateFiles.put("api.mustache", ".java");
         apiPackage = "io.swagger.api";
         modelPackage = "io.swagger.model";
+
+        apiTestTemplateFiles.clear(); // TODO: add api test template
+        modelTestTemplateFiles.clear(); // TODO: add model test template
+
+        // clear model and api doc template as this codegen
+        // does not support auto-generated markdown doc at the moment
+        //TODO: add doc templates
+        modelDocTemplateFiles.remove("model_doc.mustache");
+        apiDocTemplateFiles.remove("api_doc.mustache");
 
         additionalProperties.put("title", title);
 
