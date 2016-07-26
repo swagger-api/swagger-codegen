@@ -304,7 +304,7 @@
                 <module>samples/client/petstore/java/okhttp-gson</module>
             </modules>
         </profile>
-		<profile>
+        <profile>
             <id>java-client-okhttp-gson-legacy</id>
             <activation>
                 <property>
