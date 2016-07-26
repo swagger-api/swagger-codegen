@@ -63,7 +63,7 @@ public class StoreApiTest {
         assertEquals(order.getId(), fetched.getId());
         assertEquals(order.getPetId(), fetched.getPetId());
         assertEquals(order.getQuantity(), fetched.getQuantity());
-        assertEquals(order.getShipDate().toInstant(), fetched.getShipDate().toInstant());
+        assertEquals(order.getShipDate().getTime(), fetched.getShipDate().getTime());
     }
 
     @Test
