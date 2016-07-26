@@ -581,6 +581,18 @@
             </modules>
         </profile>
         <profile>
+            <id>scalatra-server</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/server/petstore/scalatra</module>
+            </modules>
+        </profile>
+        <profile>
             <id>samples</id>
             <activation>
                 <property>
@@ -591,6 +603,7 @@
             <modules>
                 <!-- run ruby test first which has a random delay script to
                      avoid issues with running 2 CI jobs in parallel.       -->
+                <module>samples/server/petstore/scalatra</module>
                 <module>samples/client/petstore/ruby</module>
                 <module>samples/client/petstore/python</module>
                 <module>samples/client/petstore/typescript-fetch/tests/default</module>
