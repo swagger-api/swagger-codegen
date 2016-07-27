@@ -544,6 +544,17 @@
                 <module>samples/client/petstore/ruby</module>
             </modules>
         </profile>
+            <id>go-client</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/go</module>
+            </modules>
+        </profile>
         <profile>
             <id>spring-mvc</id>
             <activation>
@@ -603,6 +614,7 @@
             <modules>
                 <!-- run ruby test first which has a random delay script to
                      avoid issues with running 2 CI jobs in parallel.       -->
+                <module>samples/client/petstore/go</module>
                 <module>samples/client/petstore/ruby</module>
                 <module>samples/client/petstore/python</module>
                 <module>samples/client/petstore/typescript-fetch/tests/default</module>
