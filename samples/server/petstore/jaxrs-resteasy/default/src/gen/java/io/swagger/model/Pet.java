@@ -1,12 +1,12 @@
 package io.swagger.model;
 
 import java.util.Objects;
+import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.model.Category;
 import io.swagger.model.Tag;
 import java.util.List;
-
 
 
 
@@ -20,12 +20,15 @@ public class Pet   {
   private List<String> photoUrls = new ArrayList<String>();
   private List<Tag> tags = new ArrayList<Tag>();
 
-
+  /**
+   * pet status in the store
+   */
   public enum StatusEnum {
     AVAILABLE("available"),
-    PENDING("pending"),
-    SOLD("sold");
 
+        PENDING("pending"),
+
+        SOLD("sold");
     private String value;
 
     StatusEnum(String value) {
@@ -35,7 +38,7 @@ public class Pet   {
     @Override
     @JsonValue
     public String toString() {
-      return value;
+      return String.valueOf(value);
     }
   }
 
@@ -43,13 +46,7 @@ public class Pet   {
 
   /**
    **/
-  public Pet id(Long id) {
-    this.id = id;
-    return this;
-  }
-
   
-  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("id")
   public Long getId() {
     return id;
@@ -60,13 +57,7 @@ public class Pet   {
 
   /**
    **/
-  public Pet category(Category category) {
-    this.category = category;
-    return this;
-  }
-
   
-  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("category")
   public Category getCategory() {
     return category;
@@ -77,13 +68,7 @@ public class Pet   {
 
   /**
    **/
-  public Pet name(String name) {
-    this.name = name;
-    return this;
-  }
-
   
-  @ApiModelProperty(example = "doggie", required = true, value = "")
   @JsonProperty("name")
   public String getName() {
     return name;
@@ -94,13 +79,7 @@ public class Pet   {
 
   /**
    **/
-  public Pet photoUrls(List<String> photoUrls) {
-    this.photoUrls = photoUrls;
-    return this;
-  }
-
   
-  @ApiModelProperty(example = "null", required = true, value = "")
   @JsonProperty("photoUrls")
   public List<String> getPhotoUrls() {
     return photoUrls;
@@ -111,13 +90,7 @@ public class Pet   {
 
   /**
    **/
-  public Pet tags(List<Tag> tags) {
-    this.tags = tags;
-    return this;
-  }
-
   
-  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("tags")
   public List<Tag> getTags() {
     return tags;
@@ -129,13 +102,7 @@ public class Pet   {
   /**
    * pet status in the store
    **/
-  public Pet status(StatusEnum status) {
-    this.status = status;
-    return this;
-  }
-
   
-  @ApiModelProperty(example = "null", value = "pet status in the store")
   @JsonProperty("status")
   public StatusEnum getStatus() {
     return status;

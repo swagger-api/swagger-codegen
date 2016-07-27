@@ -1,8 +1,8 @@
 package io.swagger.model;
 
 import java.util.Objects;
+import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 
 
 
@@ -21,13 +21,7 @@ public class User   {
 
   /**
    **/
-  public User id(Long id) {
-    this.id = id;
-    return this;
-  }
-
   
-  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("id")
   public Long getId() {
     return id;
@@ -38,13 +32,7 @@ public class User   {
 
   /**
    **/
-  public User username(String username) {
-    this.username = username;
-    return this;
-  }
-
   
-  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("username")
   public String getUsername() {
     return username;
@@ -55,13 +43,7 @@ public class User   {
 
   /**
    **/
-  public User firstName(String firstName) {
-    this.firstName = firstName;
-    return this;
-  }
-
   
-  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("firstName")
   public String getFirstName() {
     return firstName;
@@ -72,13 +54,7 @@ public class User   {
 
   /**
    **/
-  public User lastName(String lastName) {
-    this.lastName = lastName;
-    return this;
-  }
-
   
-  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("lastName")
   public String getLastName() {
     return lastName;
@@ -89,13 +65,7 @@ public class User   {
 
   /**
    **/
-  public User email(String email) {
-    this.email = email;
-    return this;
-  }
-
   
-  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("email")
   public String getEmail() {
     return email;
@@ -106,13 +76,7 @@ public class User   {
 
   /**
    **/
-  public User password(String password) {
-    this.password = password;
-    return this;
-  }
-
   
-  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("password")
   public String getPassword() {
     return password;
@@ -123,13 +87,7 @@ public class User   {
 
   /**
    **/
-  public User phone(String phone) {
-    this.phone = phone;
-    return this;
-  }
-
   
-  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("phone")
   public String getPhone() {
     return phone;
@@ -141,13 +99,7 @@ public class User   {
   /**
    * User Status
    **/
-  public User userStatus(Integer userStatus) {
-    this.userStatus = userStatus;
-    return this;
-  }
-
   
-  @ApiModelProperty(example = "null", value = "User Status")
   @JsonProperty("userStatus")
   public Integer getUserStatus() {
     return userStatus;

@@ -1,8 +1,8 @@
 package io.swagger.model;
 
 import java.util.Objects;
+import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 
 
 
@@ -15,13 +15,7 @@ public class Category   {
 
   /**
    **/
-  public Category id(Long id) {
-    this.id = id;
-    return this;
-  }
-
   
-  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("id")
   public Long getId() {
     return id;
@@ -32,13 +26,7 @@ public class Category   {
 
   /**
    **/
-  public Category name(String name) {
-    this.name = name;
-    return this;
-  }
-
   
-  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("name")
   public String getName() {
     return name;
