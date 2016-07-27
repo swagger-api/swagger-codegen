@@ -544,6 +544,7 @@
                 <module>samples/client/petstore/ruby</module>
             </modules>
         </profile>
+        <profile>
             <id>go-client</id>
             <activation>
                 <property>
