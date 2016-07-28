@@ -1201,13 +1201,28 @@ public class DefaultCodegen {
             if (composed.getInterfaces() != null) {
                 if (m.interfaces == null)
                     m.interfaces = new ArrayList<String>();
+                // search first interface with discriminator
+                RefModel _interfaceWithDiscriminator = null;
+                for (RefModel _interface : composed.getInterfaces()) {
+                    if (allDefinitions != null) {
+                    	Model interfaceModel = allDefinitions.get(_interface.getSimpleRef());
+                    	if (interfaceModel instanceof ModelImpl && ((ModelImpl) interfaceModel).getDiscriminator() != null) {
+                    		_interfaceWithDiscriminator = _interface;
+                    		break;
+                    	}
+                    }
+                }
+                // set first interface with discriminator found as parent
+                if (parent == null && _interfaceWithDiscriminator != null) {
+                	parent = _interfaceWithDiscriminator;
+                }
                 for (RefModel _interface : composed.getInterfaces()) {
                     Model interfaceModel = null;
                     if (allDefinitions != null) {
-                        interfaceModel = allDefinitions.get(_interface.getSimpleRef());
+                    	interfaceModel = allDefinitions.get(_interface.getSimpleRef());
                     }
-                    // set first interface with discriminator found as parent
-                    if (parent == null && interfaceModel instanceof ModelImpl && ((ModelImpl) interfaceModel).getDiscriminator() != null) {
+                    // set first interface that is ComposedModel as parent (supports hierarchies with more than one level)
+                    if (parent == null && interfaceModel instanceof ComposedModel) {
                         parent = _interface;
                     } else {
                         final String interfaceRef = toModelName(_interface.getSimpleRef());
