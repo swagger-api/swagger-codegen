@@ -6,7 +6,12 @@ jdk:
 - oraclejdk7
 - oraclejdk8
 
+
+
 build:
+  cache: true
+  cache_dir_list:
+    - $HOME/.m2
   ci:
     - ./bin/run-all-petstore > run-all-petstore.log 2>&1
   post_ci:
