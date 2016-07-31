@@ -383,7 +383,10 @@
       request.accept(accept);
     }
 
-{{#usePromises}}    return new Promise(function(resolve, reject) {
+{{#withCredentials}}    // Allow cookies
+    request.withCredentials();
+
+{{/withCredentials}}{{#usePromises}}    return new Promise(function(resolve, reject) {
       request.end(function(error, response) {
         if (error) {
           reject(error);
