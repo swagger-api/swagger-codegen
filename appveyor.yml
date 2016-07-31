@@ -24,7 +24,9 @@ build_script:
   - msbuild samples\client\petstore\csharp\SwaggerClient\IO.Swagger.sln /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
   - mvn clean install --batch-mode
 test_script:
+  # test c# API client
   - nunit-console samples\client\petstore\csharp\SwaggerClient\src\IO.Swagger.Test\bin\Debug\IO.Swagger.Test.dll --result=myresults.xml;format=AppVeyor
+  # generate all petstore clients
   - .\bin\windows\run-all-petstore.cmd
 cache:
   - C:\maven\
