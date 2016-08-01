@@ -48,6 +48,8 @@ public class LumenServerCodegen extends AbstractPhpCodegen
     public LumenServerCodegen() {
         super();
 
+        embeddedTemplateDir = templateDir = "lumen";
+
         /**
          * packPath
          */
