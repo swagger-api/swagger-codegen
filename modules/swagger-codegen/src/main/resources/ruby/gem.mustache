@@ -2,6 +2,10 @@
 {{> api_info}}
 =end
 
+# https://github.com/typhoeus/typhoeus/issues/226
+require 'typhoeus'
+require 'typhoeus/adapters/faraday'
+
 # Common files
 require '{{gemName}}/api_client'
 require '{{gemName}}/api_error'

@@ -21,6 +21,10 @@ limitations under the License.
 
 =end
 
+# https://github.com/typhoeus/typhoeus/issues/226
+require 'typhoeus'
+require 'typhoeus/adapters/faraday'
+
 # Common files
 require 'petstore/api_client'
 require 'petstore/api_error'
