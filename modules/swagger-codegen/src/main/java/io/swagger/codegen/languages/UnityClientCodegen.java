@@ -20,14 +20,14 @@ public class UnityClientCodegen extends DefaultCodegen implements CodegenConfig 
     protected String packageName = "IO.Swagger";
     protected String packageVersion = "1.0.0";
     protected String clientPackage = "IO.Swagger.Client";
-    protected String sourceFolder = "src" + File.separator + "main" + File.separator + "Unity";
+    protected String sourceFolder = "src" + File.separator + "main" + File.separator + "unity";
 
     public UnityClientCodegen() {
         super();
-        outputFolder = "generated-code" + File.separator + "Unity";
+        outputFolder = "generated-code" + File.separator + "unity";
         modelTemplateFiles.put("model.mustache", ".cs");
         apiTemplateFiles.put("api.mustache", ".cs");
-        embeddedTemplateDir = templateDir = "Unity";
+        embeddedTemplateDir = templateDir = "unity";
         apiPackage = "IO.Swagger.Api";
         modelPackage = "IO.Swagger.Model";
 
@@ -146,7 +146,7 @@ public class UnityClientCodegen extends DefaultCodegen implements CodegenConfig 
 
     @Override
     public String getName() {
-        return "Unity";
+        return "unity";
     }
 
     @Override

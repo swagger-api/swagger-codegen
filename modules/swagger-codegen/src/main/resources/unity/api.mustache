@@ -59,7 +59,7 @@ namespace {{packageName}}.Api
         {
             {{#allParams}}{{#required}}
             // verify the required parameter '{{paramName}}' is set
-            if ({{paramName}} == null) throw new ApiException(400, "Missing required parameter '{{paramName}}' when calling {{nickname}}");
+            if ({{paramName}} == null) failHandler( new ApiException(400, "Missing required parameter '{{paramName}}' when calling {{nickname}}"));
             {{/required}}{{/allParams}}
 
             var path = "{{path}}";
