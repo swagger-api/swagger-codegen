@@ -117,7 +117,7 @@ namespace {{packageName}}.Client
                       }
                   default:
                       {
-                          failCallback(  new ApiException (request.responseCode, "Error calling api " + path+ "  : "   + request.responseCode, request.responseCode) );
+                          failCallback(  new ApiException ((int)request.responseCode, "Error calling api " + path+ "  : "   + request.responseCode, request.responseCode) );
                           break;
                       }
                   }
