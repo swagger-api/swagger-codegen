@@ -119,6 +119,7 @@
           "application/json",
           "application/xml"
         ],
+	"x-spring-pageable":true,
         "parameters": [
           {
             "name": "status",

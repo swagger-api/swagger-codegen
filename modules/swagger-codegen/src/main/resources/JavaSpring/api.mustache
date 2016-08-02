@@ -7,6 +7,8 @@ import io.swagger.annotations.*;
 {{#java8}}
 import org.springframework.http.HttpStatus;
 {{/java8}}
+import org.springframework.data.domain.Pageable;
+import springfox.documentation.annotations.ApiIgnore;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,8 +36,19 @@ public interface {{classname}} {
             {{/hasMore}}{{/scopes}}
             }{{/isOAuth}}){{#hasMore}},
         {{/hasMore}}{{/authMethods}}
-    }{{/hasAuthMethods}}, tags={ {{#vendorExtensions.x-tags}}"{{tag}}",{{/vendorExtensions.x-tags}} })
-    @ApiResponses(value = { {{#responses}}
+    }{{/hasAuthMethods}}, tags={ {{#vendorExtensions.x-tags}}"{{tag}}"{{#hasMore}}, {{/hasMore}}{{/vendorExtensions.x-tags}} })
+	{{#vendorExtensions.x-spring-paginated}}
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "page", dataType = "integer", paramType = "query",
+				value = "Results page you want to retrieve (0..N)"),
+		@ApiImplicitParam(name = "size", dataType = "integer", paramType = "query",
+				value = "Number of records per page."),
+		@ApiImplicitParam(name = "sort", allowMultiple = true, dataType = "string", paramType = "query",
+				value = "Sorting criteria in the format: property(,asc|desc). " +
+						"Default sort order is ascending. " +
+						"Multiple sort criteria are supported.")
+    }){{/vendorExtensions.x-spring-paginated}} 
+	@ApiResponses(value = { {{#responses}}
         @ApiResponse(code = {{{code}}}, message = "{{{message}}}", response = {{{returnType}}}.class){{#hasMore}},{{/hasMore}}{{/responses}} })
     @RequestMapping(value = "{{{path}}}",{{#singleContentTypes}}
         produces = "{{{vendorExtensions.x-accepts}}}",
@@ -43,7 +56,7 @@ public interface {{classname}} {
         produces = { {{#produces}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/produces}} }, {{/hasProduces}}{{#hasConsumes}}
         consumes = { {{#consumes}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/consumes}} },{{/hasConsumes}}{{/singleContentTypes}}
         method = RequestMethod.{{httpMethod}})
-    {{#java8}}default {{/java8}}{{#async}}{{^java8}}Callable{{/java8}}{{#java8}}CompletableFuture<{{/java8}}{{/async}}ResponseEntity<{{>returnTypes}}>{{#async}}>{{/async}} {{operationId}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},{{/hasMore}}{{/allParams}}){{^java8}};{{/java8}}{{#java8}} {
+    {{#java8}}default {{/java8}}{{#async}}{{^java8}}Callable{{/java8}}{{#java8}}CompletableFuture<{{/java8}}{{/async}}ResponseEntity<{{>returnTypes}}>{{#async}}>{{/async}} {{operationId}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},{{/hasMore}}{{/allParams}}{{#vendorExtensions.x-spring-paginated}}, @ApiIgnore final Pageable pageable{{/vendorExtensions.x-spring-paginated}}){{^java8}};{{/java8}}{{#java8}} {
         // do some magic!
         return {{#async}}CompletableFuture.completedFuture({{/async}}new ResponseEntity<{{>returnTypes}}>(HttpStatus.OK){{#async}}){{/async}};
     }{{/java8}}

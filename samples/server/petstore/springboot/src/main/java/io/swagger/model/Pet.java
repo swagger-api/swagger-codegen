@@ -14,6 +14,7 @@ import java.util.List;
 
 
 
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-07-13T14:49:07.020+02:00")
 
 public class Pet   {
   

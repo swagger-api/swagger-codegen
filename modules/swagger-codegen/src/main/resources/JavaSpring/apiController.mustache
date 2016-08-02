@@ -5,7 +5,8 @@ package {{package}};
 {{/imports}}
 
 import io.swagger.annotations.*;
-
+import org.springframework.data.domain.Pageable;
+import springfox.documentation.annotations.ApiIgnore;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 {{/java8}}
@@ -29,7 +30,7 @@ import java.util.concurrent.Callable;
 public class {{classname}}Controller implements {{classname}} {
 {{^java8}}{{#operation}}
     public {{#async}}Callable<{{/async}}ResponseEntity<{{>returnTypes}}>{{#async}}>{{/async}} {{operationId}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},
-        {{/hasMore}}{{/allParams}}) {
+        {{/hasMore}}{{/allParams}}{{#vendorExtensions.x-spring-paginated}}, @ApiIgnore final Pageable pageable{{/vendorExtensions.x-spring-paginated}}) {
         // do some magic!{{^async}}
         return new ResponseEntity<{{>returnTypes}}>(HttpStatus.OK);{{/async}}{{#async}}
         return new Callable<ResponseEntity<{{>returnTypes}}>>() {

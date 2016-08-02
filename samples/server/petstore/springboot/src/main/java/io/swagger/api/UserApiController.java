@@ -4,7 +4,8 @@ import io.swagger.model.User;
 import java.util.List;
 
 import io.swagger.annotations.*;
-
+import org.springframework.data.domain.Pageable;
+import springfox.documentation.annotations.ApiIgnore;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,21 +19,22 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-07-13T14:49:07.020+02:00")
 
 @Controller
 public class UserApiController implements UserApi {
 
-    public ResponseEntity<Void> createUser(@ApiParam(value = "Created user object" ,required=true ) @RequestBody User body) {
+    public ResponseEntity<Void> createUser(@ApiParam(value = "Created user object"  ) @RequestBody User body) {
         // do some magic!
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    public ResponseEntity<Void> createUsersWithArrayInput(@ApiParam(value = "List of user object" ,required=true ) @RequestBody List<User> body) {
+    public ResponseEntity<Void> createUsersWithArrayInput(@ApiParam(value = "List of user object"  ) @RequestBody List<User> body) {
         // do some magic!
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    public ResponseEntity<Void> createUsersWithListInput(@ApiParam(value = "List of user object" ,required=true ) @RequestBody List<User> body) {
+    public ResponseEntity<Void> createUsersWithListInput(@ApiParam(value = "List of user object"  ) @RequestBody List<User> body) {
         // do some magic!
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
@@ -47,8 +49,8 @@ public class UserApiController implements UserApi {
         return new ResponseEntity<User>(HttpStatus.OK);
     }
 
-    public ResponseEntity<String> loginUser(@ApiParam(value = "The user name for login", required = true) @RequestParam(value = "username", required = true) String username,
-        @ApiParam(value = "The password for login in clear text", required = true) @RequestParam(value = "password", required = true) String password) {
+    public ResponseEntity<String> loginUser(@ApiParam(value = "The user name for login") @RequestParam(value = "username", required = false) String username,
+        @ApiParam(value = "The password for login in clear text") @RequestParam(value = "password", required = false) String password) {
         // do some magic!
         return new ResponseEntity<String>(HttpStatus.OK);
     }
@@ -59,7 +61,7 @@ public class UserApiController implements UserApi {
     }
 
     public ResponseEntity<Void> updateUser(@ApiParam(value = "name that need to be deleted",required=true ) @PathVariable("username") String username,
-        @ApiParam(value = "Updated user object" ,required=true ) @RequestBody User body) {
+        @ApiParam(value = "Updated user object"  ) @RequestBody User body) {
         // do some magic!
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
