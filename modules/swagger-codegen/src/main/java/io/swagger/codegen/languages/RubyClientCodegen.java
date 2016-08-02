@@ -54,6 +54,11 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     public RubyClientCodegen() {
         super();
+
+        // clear import mapping (from default generator) as ruby does not use it
+        // at the moment
+        importMapping.clear();
+
         modelPackage = "models";
         apiPackage = "api";
         outputFolder = "generated-code" + File.separator + "ruby";
@@ -225,7 +230,6 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
-        supportingFiles.add(new SupportingFile("LICENSE", "", "LICENSE"));
 
         // test files should not be overwritten
         writeOptional(outputFolder, new SupportingFile("rspec.mustache", "", ".rspec"));

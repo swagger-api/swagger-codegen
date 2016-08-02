@@ -105,22 +105,8 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.1.2</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.0</version>
+                <version>3.5.1</version>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
@@ -129,7 +115,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
+                <version>3.0.2</version>
                 <configuration>
                     <archive>
                         <manifestEntries>
@@ -144,18 +130,18 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>2.1</version>
+                <version>3.5.1</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>2.1</version>
+                <version>2.5.3</version>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.3</version>
+                <version>2.10.4</version>
                 <configuration>
                     <aggregate>true</aggregate>
                     <source>1.7</source>
@@ -176,7 +162,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.1.2</version>
+                <version>3.0.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -559,6 +545,18 @@
             </modules>
         </profile>
         <profile>
+            <id>go-client</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/go</module>
+            </modules>
+        </profile>
+        <profile>
             <id>spring-mvc</id>
             <activation>
                 <property>
@@ -595,6 +593,18 @@
             </modules>
         </profile>
         <profile>
+            <id>scalatra-server</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/server/petstore/scalatra</module>
+            </modules>
+        </profile>
+        <profile>
             <id>samples</id>
             <activation>
                 <property>
@@ -605,32 +615,36 @@
             <modules>
                 <!-- run ruby test first which has a random delay script to
                      avoid issues with running 2 CI jobs in parallel.       -->
+                <!-- clients -->
                 <module>samples/client/petstore/ruby</module>
-                <module>samples/client/petstore/python</module>
-                <module>samples/client/petstore/typescript-fetch/tests/default</module>
-                <module>samples/client/petstore/typescript-fetch/builds/default</module>
-                <module>samples/client/petstore/typescript-fetch/builds/es6-target</module>
-                <module>samples/client/petstore/typescript-fetch/builds/with-npm-version</module>
-                <module>samples/client/petstore/typescript-angular</module>
-                <module>samples/client/petstore/typescript-node/npm</module>
                 <module>samples/client/petstore/android/volley</module>
                 <module>samples/client/petstore/clojure</module>
-                <module>samples/client/petstore/java/jersey1</module>
+                <module>samples/client/petstore/go</module>
                 <module>samples/client/petstore/java/feign</module>
+                <module>samples/client/petstore/java/jersey1</module>
                 <module>samples/client/petstore/java/jersey2</module>
                 <module>samples/client/petstore/java/okhttp-gson</module>
                 <module>samples/client/petstore/java/retrofit</module>
                 <module>samples/client/petstore/java/retrofit2</module>
                 <module>samples/client/petstore/java/retrofit2rx</module>
                 <module>samples/client/petstore/javascript</module>
+                <module>samples/client/petstore/python</module>
                 <module>samples/client/petstore/scala</module>
-                <module>samples/server/petstore/spring-mvc</module>
-                <module>samples/server/petstore/springboot</module>
-                <module>samples/client/petstore/spring-cloud</module>
+                <module>samples/client/petstore/typescript-fetch/builds/default</module>
+                <module>samples/client/petstore/typescript-fetch/builds/es6-target</module>
+                <module>samples/client/petstore/typescript-fetch/builds/with-npm-version</module>
+                <module>samples/client/petstore/typescript-fetch/tests/default</module>
+                <module>samples/client/petstore/typescript-angular</module>
+                <module>samples/client/petstore/typescript-node/npm</module>
+                <!-- servers -->
                 <module>samples/server/petstore/jaxrs/jersey1</module>
                 <module>samples/server/petstore/jaxrs/jersey2</module>
                 <module>samples/server/petstore/jaxrs-resteasy/default</module>
                 <module>samples/server/petstore/jaxrs-resteasy/joda</module>
+                <module>samples/server/petstore/scalatra</module>
+                <module>samples/server/petstore/spring-mvc</module>
+                <module>samples/client/petstore/spring-cloud</module>
+                <module>samples/server/petstore/springboot</module>
                 <!--module>samples/client/petstore/objc/SwaggerClientTests</module-->
                 <!--module>samples/client/petstore/swift/SwaggerClientTests</module-->
             </modules>
@@ -653,7 +667,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
-                <version>2.3</version>
+                <version>2.5</version>
                 <configuration>
                     <aggregate>true</aggregate>
                 </configuration>
@@ -661,7 +675,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.6</version>
+                <version>2.9</version>
                 <reportSets>
                     <reportSet>
                         <reports>
@@ -717,8 +731,8 @@
         <scala-maven-plugin-version>3.2.1</scala-maven-plugin-version>
         <jmustache-version>1.12</jmustache-version>
         <testng-version>6.9.6</testng-version>
-        <surefire-version>2.18.1</surefire-version>
-        <jmockit-version>1.19</jmockit-version>
+        <surefire-version>2.19.1</surefire-version>
+        <jmockit-version>1.25</jmockit-version>
         <reflections-version>0.9.10</reflections-version>
     </properties>
 </project>

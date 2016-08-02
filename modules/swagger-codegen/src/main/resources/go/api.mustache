@@ -5,7 +5,6 @@ package {{packageName}}
 import (
 	"strings"
 	"fmt"
-	"errors"
 	"net/url"
 	{{#imports}}"{{import}}"
 {{/imports}}
@@ -45,11 +44,7 @@ func (a {{{classname}}}) {{{nickname}}}({{#allParams}}{{paramName}} {{{dataType}
 	// create path and map variables
 	path := a.Configuration.BasePath + "{{path}}"{{#pathParams}}
 	path = strings.Replace(path, "{"+"{{baseName}}"+"}", fmt.Sprintf("%v", {{paramName}}), -1){{/pathParams}}
-{{#allParams}}{{#required}}
-	// verify the required parameter '{{paramName}}' is set
-	if &{{paramName}} == nil {
-		return {{#returnType}}{{#isListContainer}}*{{/isListContainer}}new({{{returnType}}}), {{/returnType}}nil, errors.New("Missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}")
-	}{{/required}}{{/allParams}}
+
 
 	headerParams := make(map[string]string)
 	queryParams := url.Values{}
@@ -58,22 +53,30 @@ func (a {{{classname}}}) {{{nickname}}}({{#allParams}}{{paramName}} {{{dataType}
 	var fileName string
 	var fileBytes []byte
 {{#authMethods}}
-	// authentication ({{name}}) required
-{{#isApiKey}}{{#isKeyInHeader}}
+	// authentication '({{name}})' required
+{{#isApiKey}}
+{{#isKeyInHeader}}
 	// set key with prefix in header
 	headerParams["{{keyParamName}}"] = a.Configuration.GetAPIKeyWithPrefix("{{keyParamName}}")
-{{/isKeyInHeader}}{{#isKeyInQuery}}
-	// set key with prefix in querystring{{#hasKeyParamName}}
+{{/isKeyInHeader}}
+{{#isKeyInQuery}}
+	// set key with prefix in query string
 	queryParams["{{keyParamName}}"] =  a.Configuration.GetAPIKeyWithPrefix("{{keyParamName}}")
-{{/hasKeyParamName}}{{/isKeyInQuery}}{{/isApiKey}}{{#isBasic}}
+{{/isKeyInQuery}}
+{{/isApiKey}}
+{{#isBasic}}
 	// http basic authentication required
 	if a.Configuration.Username != "" || a.Configuration.Password != ""{
 		headerParams["Authorization"] =  "Basic " + a.Configuration.GetBasicAuthEncodedString()
-	}{{/isBasic}}{{#isOAuth}}
+	}
+{{/isBasic}}
+{{#isOAuth}}
 	// oauth required
 	if a.Configuration.AccessToken != ""{
 		headerParams["Authorization"] =  "Bearer " + a.Configuration.AccessToken
-	}{{/isOAuth}}{{/authMethods}}
+	}
+{{/isOAuth}}
+{{/authMethods}}
 	// add default headers if any
 	for key := range a.Configuration.DefaultHeader {
 		headerParams[key] = a.Configuration.DefaultHeader[key]
@@ -84,14 +87,14 @@ func (a {{{classname}}}) {{{nickname}}}({{#allParams}}{{paramName}} {{{dataType}
 	var collectionFormat = "{{#collectionFormat}}{{collectionFormat}}{{/collectionFormat}}"
 	if collectionFormat == "multi" {
 		for _, value := range {{paramName}} {
-			queryParams.Add("{{paramName}}", value)
+			queryParams.Add("{{baseName}}", value)
 		}
 	} else {
-		queryParams.Add("{{paramName}}", a.Configuration.APIClient.ParameterToString({{paramName}}, collectionFormat))
+		queryParams.Add("{{baseName}}", a.Configuration.APIClient.ParameterToString({{paramName}}, collectionFormat))
 	}
 	{{/isListContainer}}
 	{{^isListContainer}}
-		queryParams.Add("{{paramName}}", a.Configuration.APIClient.ParameterToString({{paramName}}, ""))
+		queryParams.Add("{{baseName}}", a.Configuration.APIClient.ParameterToString({{paramName}}, ""))
 	{{/isListContainer}}
 	{{/queryParams}}{{/hasQueryParams}}
 

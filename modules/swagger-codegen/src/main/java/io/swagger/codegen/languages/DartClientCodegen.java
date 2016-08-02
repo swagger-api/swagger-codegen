@@ -28,6 +28,11 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     public DartClientCodegen() {
         super();
+
+        // clear import mapping (from default generator) as dart does not use it
+        // at the moment
+        importMapping.clear();
+
         outputFolder = "generated-code/dart";
         modelTemplateFiles.put("model.mustache", ".dart");
         apiTemplateFiles.put("api.mustache", ".dart");
@@ -140,6 +145,7 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         final String libFolder = sourceFolder + File.separator + "lib";
         supportingFiles.add(new SupportingFile("pubspec.mustache", "", "pubspec.yaml"));
+        supportingFiles.add(new SupportingFile("analysis_options.mustache", "", ".analysis_options"));
         supportingFiles.add(new SupportingFile("api_client.mustache", libFolder, "api_client.dart"));
         supportingFiles.add(new SupportingFile("api_exception.mustache", libFolder, "api_exception.dart"));
         supportingFiles.add(new SupportingFile("api_helper.mustache", libFolder, "api_helper.dart"));
