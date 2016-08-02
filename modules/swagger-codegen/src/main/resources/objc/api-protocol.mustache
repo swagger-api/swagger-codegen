@@ -1,14 +1,14 @@
 #import <Foundation/Foundation.h>
 #import "{{classPrefix}}Object.h"
-#import "{{classPrefix}}ApiSessionManager.h"
+#import "{{classPrefix}}ApiClient.h"
 
 {{>licenceInfo}}
 
 @protocol {{classPrefix}}Api <NSObject>
 
-@property(readonly, nonatomic, strong) {{classPrefix}}ApiSessionManager *apiSessionManager;
+@property(readonly, nonatomic, strong) {{classPrefix}}ApiClient *apiClient;
 
--(instancetype) initWithApiSessionManager:({{classPrefix}}ApiSessionManager *)apiSessionManager;
+-(instancetype) initWithApiClient:({{classPrefix}}ApiClient *)apiClient;
 
 -(void) addHeader:(NSString*)value forKey:(NSString*)key DEPRECATED_MSG_ATTRIBUTE("setDefaultHeaderValue:forKey:");
 

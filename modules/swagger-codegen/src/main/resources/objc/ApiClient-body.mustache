@@ -1,6 +1,6 @@
 #import <ISO8601/NSDate+ISO8601.h>
 
-#import "{{classPrefix}}ApiSessionManager.h"
+#import "{{classPrefix}}ApiClient.h"
 #import "{{classPrefix}}JSONRequestSerializer.h"
 #import "{{classPrefix}}JSONResponseSerializer.h"
 #import "{{classPrefix}}QueryParamCollection.h"
@@ -40,13 +40,26 @@ static NSString * {{classPrefix}}__fileNameForResponse(NSURLResponse *response) 
 }
 
 
-@interface {{classPrefix}}ApiSessionManager ()
+@interface {{classPrefix}}ApiClient ()
 
 @property (nonatomic, strong, readwrite) id<{{classPrefix}}Configuration> configuration;
 
 @end
 
-@implementation {{classPrefix}}ApiSessionManager
+@implementation {{classPrefix}}ApiClient
+
+#pragma mark - Singleton Methods
+
++ (instancetype) sharedClient {
+    static {{classPrefix}}ApiClient *sharedClient = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedClient = [[self alloc] init];
+    });
+    return sharedClient;
+}
+
+#pragma mark - Initialize Methods
 
 - (instancetype)init {
 
@@ -147,7 +160,7 @@ static NSString * {{classPrefix}}__fileNameForResponse(NSURLResponse *response) 
     [self.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         reachabilityStatus = status;
         {{classPrefix}}DebugLog(@"reachability changed to %@",AFStringFromNetworkReachabilityStatus(status));
-        [{{classPrefix}}ApiSessionManager setOfflineState:status == AFNetworkReachabilityStatusUnknown || status == AFNetworkReachabilityStatusNotReachable];
+        [{{classPrefix}}ApiClient setOfflineState:status == AFNetworkReachabilityStatusUnknown || status == AFNetworkReachabilityStatusNotReachable];
 
         // call the reachability block, if configured
         if (reachabilityChangeBlock != nil) {

@@ -13,7 +13,7 @@
 extern NSString *const {{classPrefix}}ResponseObjectErrorKey;
 
 
-@interface {{classPrefix}}ApiSessionManager : AFHTTPSessionManager
+@interface {{classPrefix}}ApiClient : AFHTTPSessionManager
 
 @property (nonatomic, strong, readonly) id<{{classPrefix}}Configuration> configuration;
 
@@ -70,6 +70,11 @@ extern NSString *const {{classPrefix}}ResponseObjectErrorKey;
  * @param changeBlock The block will be executed when the reachability changed.
  */
 +(void) setReachabilityChangeBlock:(void(^)(int))changeBlock;
+
+/**
+ * Gets client singleton instance
+ */
++ (instancetype) sharedClient;
 
 /**
  * Sets the api client reachability strategy

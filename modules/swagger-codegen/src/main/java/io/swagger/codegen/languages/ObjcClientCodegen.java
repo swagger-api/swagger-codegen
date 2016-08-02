@@ -245,8 +245,8 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("Object-body.mustache",  coreFileFolder(), classPrefix + "Object.m"));
         supportingFiles.add(new SupportingFile("QueryParamCollection-header.mustache",  coreFileFolder(), classPrefix + "QueryParamCollection.h"));
         supportingFiles.add(new SupportingFile("QueryParamCollection-body.mustache",  coreFileFolder(), classPrefix + "QueryParamCollection.m"));
-        supportingFiles.add(new SupportingFile("ApiSessionManager-header.mustache",  coreFileFolder(), classPrefix + "ApiSessionManager.h")); 
-        supportingFiles.add(new SupportingFile("ApiSessionManager-body.mustache",  coreFileFolder(), classPrefix + "ApiSessionManager.m")); 
+        supportingFiles.add(new SupportingFile("ApiClient-header.mustache",  coreFileFolder(), classPrefix + "ApiClient.h")); 
+        supportingFiles.add(new SupportingFile("ApiClient-body.mustache",  coreFileFolder(), classPrefix + "ApiClient.m")); 
         supportingFiles.add(new SupportingFile("JSONResponseSerializer-header.mustache",  coreFileFolder(), classPrefix + "JSONResponseSerializer.h"));
         supportingFiles.add(new SupportingFile("JSONResponseSerializer-body.mustache",  coreFileFolder(), classPrefix + "JSONResponseSerializer.m"));
         supportingFiles.add(new SupportingFile("JSONRequestSerializer-body.mustache",  coreFileFolder(), classPrefix + "JSONRequestSerializer.m"));
