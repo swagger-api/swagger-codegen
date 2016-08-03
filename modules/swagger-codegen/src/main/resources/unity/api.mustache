@@ -62,11 +62,24 @@ namespace {{packageName}}.Api
             if ({{paramName}} == null) failHandler( new ApiException(400, "Missing required parameter '{{paramName}}' when calling {{nickname}}"));
             {{/required}}{{/allParams}}
 
+
+
             var path = "{{path}}";
             path = path.Replace("{format}", "json");
             {{#pathParams}}path = path.Replace("{" + "{{baseName}}" + "}", ApiClient.ParameterToString({{{paramName}}}));
             {{/pathParams}}
-            ApiClient.Send<T> (path,successHandler, failHandler );
+
+            Dictionary<string, string> queryParameters = null;
+
+            {{#queryParams}}
+            // add query parameters
+            if ({{paramName}} != null)   {
+              queryParameters = new Dictionary<string, string>();
+              queryParameters.Add("{{baseName}}", ApiClient.ParameterToString({{paramName}}));
+            }
+            {{/queryParams}}
+
+            ApiClient.Send<T> (path,successHandler, failHandler , queryParameters);
 
         }
 
