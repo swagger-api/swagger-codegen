@@ -1,15 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text.RegularExpressions;
 using System.IO;
-using System.Web;
-using System.Linq;
-using System.Net;
 using System.Text;
 using Newtonsoft.Json;
 using System.Collections;
+#if UNITY_5_4
+using UnityEngine.Networking;
+#else
 using UnityEngine.Experimental.Networking;
+#endif
 using Core.Commons.Util;
 
 namespace {{packageName}}.Client
@@ -80,14 +79,15 @@ namespace {{packageName}}.Client
 
   ///////////////////////////////
 
-          public void Send<T>(string api, Action<T> successCallback, Action<ApiException> failCallback)
-
+          public void Send<T>(string api, Action<T> successCallback, Action<ApiException> failCallback, Dictionary<string,string> queryParams = null)
           {
-              CoroutineHelper.Instance.StartCoroutine (GetResponse<T> (BasePath + api, successCallback, failCallback));
+            var path= EncodeQueryParams (BasePath + api, queryParams);
+            CoroutineHelper.Instance.StartCoroutine (GetResponse<T> (path, successCallback, failCallback));
           }
 
           public IEnumerator GetResponse<T>(string path, Action<T> successCallback, Action<ApiException> failCallback)
             {
+              UnityEngine.Debug.Log("sending request to "+ path);
               var request = UnityWebRequest.Get(path);
               // add default header, if any
               foreach(var defaultHeader in _defaultHeaderMap) {
@@ -127,6 +127,31 @@ namespace {{packageName}}.Client
           }
 
 
+
+
+        private string EncodeQueryParams(string api,Dictionary<string, string> queryParams ) {
+
+            if (queryParams == null) {
+                return api;
+            }
+
+            var querystring = new StringBuilder();
+
+            foreach( KeyValuePair<string, string> kvp in queryParams )
+            {
+                if(querystring.Length== 0) {
+                    querystring.Append ("?");
+                }
+              //  UnityEngine.Debug.Log(String.Format("Key = {0}, Value = {1}", kvp.Key, kvp.Value));
+                if (querystring.Length > 2) {
+                    querystring.Append("&");
+                }
+
+                querystring.AppendFormat ("{0}={1}", kvp.Key, kvp.Value);
+            }
+
+            return api + querystring.ToString();
+        }
 
 
 
