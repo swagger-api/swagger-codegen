@@ -101,12 +101,13 @@ handle_request_json(
     State = #state{
         operation_id = OperationID,
         logic_handler = LogicHandler,
-        validator_state = ValidatorState
+        validator_state = ValidatorState,
+        context = Context
     }
 ) ->
     case {{packageName}}_api:populate_request(OperationID, Req0, ValidatorState) of
         {ok, Populated, Req1} ->
-            case LogicHandler:handle_request(OperationID, Populated) of
+            case LogicHandler:handle_request(OperationID, Populated, Context) of
                 {Code, Headers, Body} ->
                     {{packageName}}_api:validate_response(OperationID, Code, Body , ValidatorState),
                     PreparedBody = jsx:encode(Body),
