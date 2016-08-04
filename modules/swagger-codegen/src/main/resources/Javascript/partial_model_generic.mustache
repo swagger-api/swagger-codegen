@@ -23,7 +23,7 @@
     Object.setPrototypeOf(_this, exports);
 {{/vendorExtensions.x-isArray}}{{/parentModel}}{{/parent}}{{#useInheritance}}{{#parentModel}}    {{classname}}.call(_this{{#vendorExtensions.x-all-required}}, {{name}}{{/vendorExtensions.x-all-required}});{{/parentModel}}
 {{#interfaceModels}}    {{classname}}.call(_this{{#vendorExtensions.x-all-required}}, {{name}}{{/vendorExtensions.x-all-required}});
-{{/interfaceModels}}{{/useInheritance}}{{#vars}}{{#required}}    _this['{{baseName}}'] = {{name}};{{/required}}
+{{/interfaceModels}}{{/useInheritance}}{{#vars}}{{#required}}    _this['{{name}}'] = {{name}};{{/required}}
 {{/vars}}{{#parent}}{{^parentModel}}    return _this;
 {{/parentModel}}{{/parent}}  };
 
@@ -43,7 +43,7 @@
 {{/parentModel}}{{/parent}}{{#useInheritance}}{{#parentModel}}      {{classname}}.constructFromObject(data, obj);{{/parentModel}}
 {{#interfaces}}      {{.}}.constructFromObject(data, obj);
 {{/interfaces}}{{/useInheritance}}{{#vars}}      if (data.hasOwnProperty('{{baseName}}')) {
-        obj['{{baseName}}']{{{defaultValueWithParam}}}
+        obj['{{name}}']{{{defaultValueWithParam}}}
       }
 {{/vars}}    }
     return obj;
@@ -56,21 +56,21 @@
 {{#emitJSDoc}}
   /**{{#description}}
    * {{{description}}}{{/description}}
-   * @member {{=< >=}}{<&vendorExtensions.x-jsdoc-type>}<={{ }}=> {{baseName}}{{#defaultValue}}
+   * @member {{=< >=}}{<&vendorExtensions.x-jsdoc-type>}<={{ }}=> {{name}}{{#defaultValue}}
    * @default {{{defaultValue}}}{{/defaultValue}}
    */
 {{/emitJSDoc}}
-  exports.prototype['{{baseName}}'] = {{#defaultValue}}{{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}undefined{{/defaultValue}};
+  exports.prototype['{{name}}'] = {{#defaultValue}}{{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}undefined{{/defaultValue}};
 {{/vars}}{{#useInheritance}}{{#interfaceModels}}
   // Implement {{classname}} interface:{{#allVars}}
 {{#emitJSDoc}}
   /**{{#description}}
    * {{{description}}}{{/description}}
-   * @member {{=< >=}}{<&vendorExtensions.x-jsdoc-type>}<={{ }}=> {{baseName}}{{#defaultValue}}
+   * @member {{=< >=}}{<&vendorExtensions.x-jsdoc-type>}<={{ }}=> {{name}}{{#defaultValue}}
    * @default {{{defaultValue}}}{{/defaultValue}}
    */
 {{/emitJSDoc}}
-exports.prototype['{{baseName}}'] = {{#defaultValue}}{{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}undefined{{/defaultValue}};
+exports.prototype['{{name}}'] = {{#defaultValue}}{{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}undefined{{/defaultValue}};
 {{/allVars}}{{/interfaceModels}}{{/useInheritance}}
 {{#emitModelMethods}}{{#vars}}
 {{#emitJSDoc}}
