@@ -1,7 +1,8 @@
 /// <summary>
     /// {{#description}}{{.}}{{/description}}{{^description}}{{classname}}{{/description}}
     /// </summary>
-    public enum {{>innerApiEnumName}}    {
+    public enum {{>innerApiEnumName}}
+    {
     {{#allowableValues}}
 {{#values}}        {{&.}}{{^-last}}, {{/-last}}
 {{/values}}
