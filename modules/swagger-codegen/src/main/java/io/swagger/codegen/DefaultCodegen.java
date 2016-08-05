@@ -106,7 +106,7 @@ public class DefaultCodegen {
     // How to encode special characters like $
     // They are translated to words like "Dollar" and prefixed with '
     // Then translated back during JSON encoding and decoding
-    protected Map<Character, String> specialCharReplacements = new HashMap<Character, String>();
+    protected Map<String, String> specialCharReplacements = new HashMap<String, String>();
 
     public List<CliOption> cliOptions() {
         return cliOptions;
@@ -789,21 +789,37 @@ public class DefaultCodegen {
      */
     protected void initalizeSpecialCharacterMapping() {
         // Initialize special characters
-        specialCharReplacements.put('$', "Dollar");
-        specialCharReplacements.put('^', "Caret");
-        specialCharReplacements.put('|', "Pipe");
-        specialCharReplacements.put('=', "Equal");
-        specialCharReplacements.put('*', "Star");
-        specialCharReplacements.put('-', "Minus");
-        specialCharReplacements.put('&', "Ampersand");
-        specialCharReplacements.put('%', "Percent");
-        specialCharReplacements.put('#', "Hash");
-        specialCharReplacements.put('@', "At");
-        specialCharReplacements.put('!', "Exclamation");
-        specialCharReplacements.put('+', "Plus");
-        specialCharReplacements.put(':', "Colon");
-        specialCharReplacements.put('>', "GreaterThan");
-        specialCharReplacements.put('<', "LessThan");
+        specialCharReplacements.put("$", "Dollar");
+        specialCharReplacements.put("^", "Caret");
+        specialCharReplacements.put("|", "Pipe");
+        specialCharReplacements.put("=", "Equal");
+        specialCharReplacements.put("*", "Star");
+        specialCharReplacements.put("-", "Minus");
+        specialCharReplacements.put("&", "Ampersand");
+        specialCharReplacements.put("%", "Percent");
+        specialCharReplacements.put("#", "Hash");
+        specialCharReplacements.put("@", "At");
+        specialCharReplacements.put("!", "Exclamation");
+        specialCharReplacements.put("+", "Plus");
+        specialCharReplacements.put(":", "Colon");
+        specialCharReplacements.put(">", "Greater_Than");
+        specialCharReplacements.put("<", "Less_Than");
+        specialCharReplacements.put(".", "Period");
+        specialCharReplacements.put("_", "Underscore");
+
+        specialCharReplacements.put("<=", "Less_Than_Or_Equal_To");
+        specialCharReplacements.put(">=", "Greater_Than_Or_Equal_To");
+        specialCharReplacements.put("!=", "Not_Equal");
+    }
+
+    /**
+     * Return the symbol name of a symbol
+     *
+     * @param input Symbol (e.g. $)
+     * @return Symbol name (e.g. Dollar)
+     */
+    protected String getSymbolName(String input) {
+        return specialCharReplacements.get(input);
     }
 
     /**
@@ -1334,7 +1350,7 @@ public class DefaultCodegen {
 
         property.name = toVarName(name);
         property.baseName = name;
-        property.nameInCamelCase = camelize(name, false);
+        property.nameInCamelCase = camelize(property.name, false);
         property.description = escapeText(p.getDescription());
         property.unescapedDescription = p.getDescription();
         property.getter = "get" + getterAndSetterCapitalize(name);
@@ -1559,6 +1575,7 @@ public class DefaultCodegen {
         // this can cause issues for clients which don't support enums
         if (property.isEnum) {
             property.datatypeWithEnum = toEnumName(property);
+            property.enumName = toEnumName(property);
         } else {
             property.datatypeWithEnum = property.datatype;
         }
@@ -1606,11 +1623,14 @@ public class DefaultCodegen {
             property.items = innerProperty;
             // inner item is Enum
             if (isPropertyInnerMostEnum(property)) {
+                // isEnum is set to true when the type is an enum
+                // or the inner type of an array/map is an enum
                 property.isEnum = true;
                 // update datatypeWithEnum and default value for array
                 // e.g. List<string> => List<StatusEnum>
                 updateDataTypeWithEnumForArray(property);
-
+                // set allowable values to enum values (including array/map of enum)
+                property.allowableValues = getInnerEnumAllowableValues(property);
             }
         }
     }
@@ -1633,10 +1653,14 @@ public class DefaultCodegen {
             property.items = innerProperty;
             // inner item is Enum
             if (isPropertyInnerMostEnum(property)) {
+                // isEnum is set to true when the type is an enum
+                // or the inner type of an array/map is an enum
                 property.isEnum = true;
                 // update datatypeWithEnum and default value for map
                 // e.g. Dictionary<string, string> => Dictionary<string, StatusEnum>
                 updateDataTypeWithEnumForMap(property);
+                // set allowable values to enum values (including array/map of enum)
+                property.allowableValues = getInnerEnumAllowableValues(property);
             }
         }
 
@@ -1657,6 +1681,17 @@ public class DefaultCodegen {
         return currentProperty.isEnum;
     }
 
+    protected Map<String, Object> getInnerEnumAllowableValues(CodegenProperty property) {
+        CodegenProperty currentProperty = property;
+        while (currentProperty != null && (Boolean.TRUE.equals(currentProperty.isMapContainer)
+                    || Boolean.TRUE.equals(currentProperty.isListContainer))) {
+            currentProperty = currentProperty.items;
+        }
+
+        return currentProperty.allowableValues;
+    }
+
+
     /**
      * Update datatypeWithEnum for array container
      * @param property Codegen property
@@ -1670,9 +1705,13 @@ public class DefaultCodegen {
         // set both datatype and datetypeWithEnum as only the inner type is enum
         property.datatypeWithEnum = property.datatypeWithEnum.replace(baseItem.baseType, toEnumName(baseItem));
 
+        // naming the enum with respect to the language enum naming convention
+        // e.g. remove [], {} from array/map of enum
+        property.enumName = toEnumName(property);
+
         // set default value for variable with inner enum
         if (property.defaultValue != null) {
-            property.defaultValue = property.defaultValue.replace(property.items.baseType, toEnumName(property.items));
+            property.defaultValue = property.defaultValue.replace(baseItem.baseType, toEnumName(baseItem));
         }
     }
 
@@ -1688,6 +1727,10 @@ public class DefaultCodegen {
         }
         // set both datatype and datetypeWithEnum as only the inner type is enum
         property.datatypeWithEnum = property.datatypeWithEnum.replace(", " + baseItem.baseType, ", " + toEnumName(baseItem));
+
+        // naming the enum with respect to the language enum naming convention
+        // e.g. remove [], {} from array/map of enum
+        property.enumName = toEnumName(property);
 
         // set default value for variable with inner enum
         if (property.defaultValue != null) {
