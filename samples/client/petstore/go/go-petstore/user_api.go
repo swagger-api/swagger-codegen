@@ -499,3 +499,5 @@ func (a UserApi) UpdateUser(username string, body User) (*APIResponse, error) {
 	return NewAPIResponse(httpResponse.RawResponse), err
 }
 
+var _ = fmt.Sprintf("optional import")
+var _ = strings.Compare("optional", "import")
