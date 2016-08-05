@@ -325,7 +325,7 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
             cm.imports = new TreeSet(cm.imports);
             for (CodegenProperty var : cm.vars) {
                 // name enum with model name, e.g. StatuEnum => Pet.StatusEnum
-                if (Boolean.TRUE.equals(var.isEnum) && Boolean.TRUE.equals(var.isContainer)) {
+                if (Boolean.TRUE.equals(var.isEnum)) {
                     var.datatypeWithEnum = var.datatypeWithEnum.replace(var.enumName, cm.classname + "." + var.enumName);
                 }
             }

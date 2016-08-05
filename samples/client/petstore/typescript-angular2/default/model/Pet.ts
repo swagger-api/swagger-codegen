@@ -39,7 +39,7 @@ export interface Pet {
     /**
      * pet status in the store
      */
-    status?: StatusEnum;
+    status?: Pet.StatusEnum;
 
 }
 export namespace Pet {

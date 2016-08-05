@@ -37,7 +37,7 @@ export interface Order {
     /**
      * Order Status
      */
-    status?: StatusEnum;
+    status?: Order.StatusEnum;
 
     complete?: boolean;
 

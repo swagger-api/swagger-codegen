@@ -47,9 +47,9 @@ namespace API.Client {
 
     export namespace Order {
         export enum StatusEnum {
-            status = <any> [C@2a55de3b,
-            status = <any> [C@6b710933,
-            status = <any> [C@4a132a60
+            Placed = <any> 'placed',
+            Approved = <any> 'approved',
+            Delivered = <any> 'delivered'
         }
     }
 }

@@ -47,9 +47,9 @@ namespace API.Client {
 
     export namespace Pet {
         export enum StatusEnum {
-            status = <any> [C@14dd18cc,
-            status = <any> [C@3f8703c7,
-            status = <any> [C@39091e66
+            Available = <any> 'available',
+            Pending = <any> 'pending',
+            Sold = <any> 'sold'
         }
     }
 }

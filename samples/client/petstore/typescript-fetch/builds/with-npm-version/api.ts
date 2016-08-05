@@ -61,7 +61,7 @@ export interface Order {
     /**
      * Order Status
      */
-    "status"?: StatusEnum;
+    "status"?: Order.StatusEnum;
     "complete"?: boolean;
 }
 
@@ -75,7 +75,7 @@ export interface Pet {
     /**
      * pet status in the store
      */
-    "status"?: StatusEnum;
+    "status"?: Pet.StatusEnum;
 }
 
 export type StatusEnum = "available" | "pending" | "sold";

@@ -47,7 +47,7 @@ export class Order {
     /**
     * Order Status
     */
-    'status': StatusEnum;
+    'status': Order.StatusEnum;
     'complete': boolean;
 }
 
@@ -67,7 +67,7 @@ export class Pet {
     /**
     * pet status in the store
     */
-    'status': StatusEnum;
+    'status': Pet.StatusEnum;
 }
 
 export namespace Pet {
