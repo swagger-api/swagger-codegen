@@ -65,7 +65,7 @@ MyApp.add_route('GET', '/v2/pet/findByStatus', {
       "dataType" => "array[string]",
       "paramType" => "query",
       "collectionFormat" => "csv",
-      "allowableValues" => "[available, pending, sold]",
+      "allowableValues" => "",
       
     },
     ]}) do
