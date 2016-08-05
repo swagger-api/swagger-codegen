@@ -1,0 +1,35 @@
+-module({{packageName}}_server).
+
+
+-define(DEFAULT_ACCEPTORS_POOLSIZE, 100).
+-define(DEFAULT_LOGIC_HANDLER, {{packageName}}_default_logic_handler).
+
+-export([child_spec/2]).
+
+child_spec(Id, #{
+    ip            := Ip,
+    port          := Port,
+    net_opts      := NetOpts
+} = Params) ->
+    AcceptorsPool = ?DEFAULT_ACCEPTORS_POOLSIZE,
+    {Transport, TransportOpts} = get_socket_transport(Ip, Port, NetOpts),
+    LogicHandler = maps:get(logic_handler, Params, ?DEFAULT_LOGIC_HANDLER),
+    CowboyOpts = get_cowboy_config(LogicHandler),
+    ranch:child_spec({?MODULE, Id}, AcceptorsPool,
+        Transport, TransportOpts, cowboy_protocol, CowboyOpts).
+
+get_socket_transport(Ip, Port, Options) ->
+    Opts = [
+        {ip,   Ip},
+        {port, Port}
+    ],
+    case {{packageName}}_utils:get_opt(ssl, Options) of
+        SslOpts = [_|_] ->
+            {ranch_ssl, Opts ++ SslOpts};
+        undefined ->
+            {ranch_tcp, Opts}
+    end.
+
+get_cowboy_config(LogicHandler) ->
+    Paths = swagger_router:get_paths(LogicHandler),
+    [{env, [{dispatch, cowboy_router:compile(Paths)}]}].
