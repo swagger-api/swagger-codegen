@@ -77,7 +77,30 @@ namespace {{packageName}}.Client
                 return Convert.ToString (obj);
         }
 
-  ///////////////////////////////
+
+            private float _timeout;
+            /// <summary>
+            /// unity web request has no timeout (usually requests fail with erro "Cannot connect to destination host" after about 75 seconds)
+            /// Sets the timeout to the value passed as param;
+            /// </summary>
+            /// <param name="value">The timeout in seconds [defaults to 20]</param>
+            /// <returns>Formatted string.</returns>
+            public void SetTimeout(float value =  20) {
+              if(value != null) {
+                  _timeout = value;
+              }
+            }
+
+            private UnityEngine.Coroutine TimeOutChecker;
+
+            public IEnumerator CheckTimeout(UnityWebRequest request) {
+                if(!request.isDone) {
+                    UnityEngine.Debug.LogWarning("aborting request ");
+                    request.Abort ();
+                }
+               yield return request;
+            }
+
 
           public void Send<T>(string api, Action<T> successCallback, Action<ApiException> failCallback, Dictionary<string,string> queryParams = null)
           {
@@ -94,12 +117,17 @@ namespace {{packageName}}.Client
                   request.SetRequestHeader (defaultHeader.Key, defaultHeader.Value);
               }
               request.downloadHandler = new DownloadHandlerBuffer();
-
+              TimeOutChecker=    CoroutineHelper.Instance.DelayedCall (_timeout ,CheckTimeout(request));
               yield return request.Send();
               if (request.isError)
               {
-                  //todo  error is a string
-                  failCallback(  new ApiException (999, "Error calling api " + path + "  : "   + request.error, request.error) );
+                //todo  error is a string - define an unknown error code..
+               int errorCode = 999;
+
+               if(request.error.ToLower().IndexOf("request aborted") != -1) {
+                   errorCode = 408;
+               }
+               failCallback(  new ApiException (errorCode, "Error calling api " + path + "  : "   + request.error, request.error) );
               }
               else
               {
@@ -123,7 +151,7 @@ namespace {{packageName}}.Client
                   }
               }
               request.Dispose ();
-
+              CoroutineHelper.Instance.StopCoroutine (TimeOutChecker);
           }
 
 
