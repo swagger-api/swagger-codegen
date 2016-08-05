@@ -33,9 +33,10 @@ namespace {{packageName}}.Api
         /// Initializes a new instance of the <see cref="{{classname}}"/> class.
         /// </summary>
         /// <returns></returns>
-        public {{classname}}(String basePath, Action<T> successCallback, Action<ApiException> failCallback)
+        public {{classname}}(String basePath, Action<T> successCallback, Action<ApiException> failCallback, float timeout = 20)
         {
           this.ApiClient = new ApiClient(basePath);
+          this.ApiClient.SetTimeout(timeout);
           successHandler = successCallback;
           failHandler = failCallback;
         }
