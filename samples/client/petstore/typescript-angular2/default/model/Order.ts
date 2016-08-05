@@ -26,8 +26,6 @@
 import * as models from './models';
 
 export interface Order {
-    
-
     id?: number;
 
     petId?: number;
@@ -42,10 +40,11 @@ export interface Order {
     status?: Order.StatusEnum;
 
     complete?: boolean;
+
 }
 export namespace Order {
 
-    export enum StatusEnum { 
+    export enum StatusEnum {
         placed = <any> 'placed',
         approved = <any> 'approved',
         delivered = <any> 'delivered',
