@@ -3,14 +3,17 @@ package io.swagger.codegen.languages;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
+import java.util.List;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.TreeSet;
 
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
@@ -303,9 +306,6 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
 
     @Override
     public String toEnumName(CodegenProperty property) {
-
-
-
         String enumName = toModelName(property.name) + "Enum";
 
         if (enumName.matches("\\d.*")) { // starts with number
@@ -318,7 +318,20 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
     @Override
     public Map<String, Object> postProcessModels(Map<String, Object> objs) {
         // process enum in models
-        return postProcessModelsEnum(objs);
+        List<Object> models = (List<Object>) postProcessModelsEnum(objs).get("models");
+        for (Object _mo : models) {
+            Map<String, Object> mo = (Map<String, Object>) _mo;
+            CodegenModel cm = (CodegenModel) mo.get("model");
+            cm.imports = new TreeSet(cm.imports);
+            for (CodegenProperty var : cm.vars) {
+                // name enum with model name, e.g. StatuEnum => Pet.StatusEnum
+                if (Boolean.TRUE.equals(var.isEnum) && Boolean.TRUE.equals(var.isContainer)) {
+                    var.datatypeWithEnum = var.datatypeWithEnum.replace(var.enumName, cm.classname + "." + var.enumName);
+                }
+            }
+        } 
+
+        return objs;
     }
 
     public void setSupportsES6(Boolean value) {

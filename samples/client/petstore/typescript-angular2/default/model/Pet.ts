@@ -39,14 +39,13 @@ export interface Pet {
     /**
      * pet status in the store
      */
-    status?: Pet.StatusEnum;
+    status?: StatusEnum;
 
 }
 export namespace Pet {
-
     export enum StatusEnum {
-        available = <any> 'available',
-        pending = <any> 'pending',
-        sold = <any> 'sold',
+        Available = <any> 'available',
+        Pending = <any> 'pending',
+        Sold = <any> 'sold'
     }
 }

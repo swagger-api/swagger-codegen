@@ -37,16 +37,15 @@ export interface Order {
     /**
      * Order Status
      */
-    status?: Order.StatusEnum;
+    status?: StatusEnum;
 
     complete?: boolean;
 
 }
 export namespace Order {
-
     export enum StatusEnum {
-        placed = <any> 'placed',
-        approved = <any> 'approved',
-        delivered = <any> 'delivered',
+        Placed = <any> 'placed',
+        Approved = <any> 'approved',
+        Delivered = <any> 'delivered'
     }
 }

@@ -60,11 +60,11 @@ export interface Order {
     /**
      * Order Status
      */
-    "status"?: OrderStatusEnum;
+    "status"?: StatusEnum;
     "complete"?: boolean;
 }
 
-export type OrderStatusEnum = "placed" | "approved" | "delivered";
+export type StatusEnum = "placed" | "approved" | "delivered";
 export interface Pet {
     "id"?: number;
     "category"?: Category;
@@ -74,10 +74,10 @@ export interface Pet {
     /**
      * pet status in the store
      */
-    "status"?: PetStatusEnum;
+    "status"?: StatusEnum;
 }
 
-export type PetStatusEnum = "available" | "pending" | "sold";
+export type StatusEnum = "available" | "pending" | "sold";
 export interface Tag {
     "id"?: number;
     "name"?: string;

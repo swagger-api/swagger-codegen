@@ -28,7 +28,6 @@ namespace API.Client {
     'use strict';
 
     export interface Order {
-
         "id"?: number;
 
         "petId"?: number;
@@ -43,14 +42,14 @@ namespace API.Client {
         "status"?: Order.StatusEnum;
 
         "complete"?: boolean;
+
     }
 
     export namespace Order {
-
-        export enum StatusEnum { 
-            placed = <any> 'placed',
-            approved = <any> 'approved',
-            delivered = <any> 'delivered'
+        export enum StatusEnum {
+            status = <any> [C@2a55de3b,
+            status = <any> [C@6b710933,
+            status = <any> [C@4a132a60
         }
     }
 }

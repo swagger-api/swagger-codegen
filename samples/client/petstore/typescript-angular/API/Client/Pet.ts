@@ -28,7 +28,6 @@ namespace API.Client {
     'use strict';
 
     export interface Pet {
-
         "id"?: number;
 
         "category"?: Category;
@@ -43,14 +42,14 @@ namespace API.Client {
          * pet status in the store
          */
         "status"?: Pet.StatusEnum;
+
     }
 
     export namespace Pet {
-
-        export enum StatusEnum { 
-            available = <any> 'available',
-            pending = <any> 'pending',
-            sold = <any> 'sold'
+        export enum StatusEnum {
+            status = <any> [C@14dd18cc,
+            status = <any> [C@3f8703c7,
+            status = <any> [C@39091e66
         }
     }
 }

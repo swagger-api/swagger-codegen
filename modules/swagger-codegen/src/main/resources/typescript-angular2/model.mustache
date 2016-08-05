@@ -20,7 +20,7 @@ export interface {{classname}} {{#parent}}extends models.{{{parent}}} {{/parent}
      * {{{description}}}
      */
 {{/description}}
-    {{name}}?: {{#isEnum}}{{classname}}.{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
+    {{name}}?: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
 
 {{/vars}}
 }
@@ -31,7 +31,7 @@ export namespace {{classname}} {
     export enum {{enumName}} {
     {{#allowableValues}}
     {{#enumVars}}
-        {{{name}}} = <any> {{{value}}},
+        {{{name}}} = <any> {{{value}}}{{^-last}},{{/-last}}
     {{/enumVars}}
     {{/allowableValues}}
     }
