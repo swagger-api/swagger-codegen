@@ -64,8 +64,8 @@
      * @type {Array.<String>}
      */
     this.authentications = {
-      'petstore_auth': {type: 'oauth2'},
-      'api_key': {type: 'apiKey', 'in': 'header', name: 'api_key'}
+      'api_key': {type: 'apiKey', 'in': 'header', name: 'api_key'},
+      'petstore_auth': {type: 'oauth2'}
     };
     /**
      * The default HTTP headers to be included for all API calls.
@@ -80,6 +80,18 @@
      * @default 60000
      */
     this.timeout = 60000;
+
+    /**
+     * Custom request middleware.
+     * @type {Function}
+     * @default function(request) {}
+     */
+    this.requestMiddleware = function(request) {};
+  };
+
+  exports.prototype.withRequestMiddleware = function(middleware) {
+    this.requestMiddleware = middleware;
+    return this;
   };
 
   /**
@@ -403,6 +415,8 @@
     if (accept) {
       request.accept(accept);
     }
+
+    this.requestMiddleware(request);
 
 
     request.end(function(error, response) {
