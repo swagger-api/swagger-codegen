@@ -564,3 +564,5 @@ func (a PetApi) UploadFile(petId int64, additionalMetadata string, file *os.File
 	return successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
+var _ = fmt.Sprintf("optional import")
+var _ = strings.Compare("optional", "import")

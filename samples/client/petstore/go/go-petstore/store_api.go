@@ -271,3 +271,5 @@ func (a StoreApi) PlaceOrder(body Order) (*Order, *APIResponse, error) {
 	return successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
+var _ = fmt.Sprintf("optional import")
+var _ = strings.Compare("optional", "import")

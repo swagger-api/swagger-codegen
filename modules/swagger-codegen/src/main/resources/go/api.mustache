@@ -138,3 +138,5 @@ func (a {{{classname}}}) {{{nickname}}}({{#allParams}}{{paramName}} {{{dataType}
 	return {{#returnType}}{{#isListContainer}}*{{/isListContainer}}successPayload, {{/returnType}}NewAPIResponse(httpResponse.RawResponse), err
 }
 {{/operation}}{{/operations}}
+var _ = fmt.Sprintf("optional import")
+var _ = strings.Compare("optional", "import")
