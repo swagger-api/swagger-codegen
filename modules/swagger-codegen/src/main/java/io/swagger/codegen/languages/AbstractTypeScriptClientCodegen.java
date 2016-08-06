@@ -260,7 +260,7 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
 
     @Override
     public String toEnumValue(String value, String datatype) {
-        if ("int".equals(datatype) || "double".equals(datatype) || "float".equals(datatype)) {
+        if ("number".equals(datatype)) {
             return value;
         } else {
             return "\'" + escapeText(value) + "\'";
@@ -280,8 +280,9 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
         }
 
         // number
-        if ("int".equals(datatype) || "double".equals(datatype) || "float".equals(datatype)) {
-            String varName = new String(name);
+        if ("number".equals(datatype)) {
+            String varName = "NUMBER_" + name;
+
             varName = varName.replaceAll("-", "MINUS_");
             varName = varName.replaceAll("\\+", "PLUS_");
             varName = varName.replaceAll("\\.", "_DOT_");

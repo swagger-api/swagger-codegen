@@ -48,7 +48,7 @@ export interface {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
 {{#hasEnums}}
 {{#vars}}
 {{#isEnum}}
-export type {{{datatypeWithEnum}}} = {{#allowableValues}}{{#values}}"{{{.}}}"{{^-last}} | {{/-last}}{{/values}}{{/allowableValues}};
+export type {{{enumName}}} = {{#allowableValues}}{{#values}}"{{{.}}}"{{^-last}} | {{/-last}}{{/values}}{{/allowableValues}};
 {{/isEnum}}
 {{/vars}}
 {{/hasEnums}}
