@@ -59,6 +59,18 @@
      * @default 60000
      */
     this.timeout = 60000;
+
+    /**
+     * Custom request middleware.
+     * @type {Function}
+     * @default function(request) {}
+     */
+    this.requestMiddleware = function(request) {};
+  };
+
+  exports.prototype.withRequestMiddleware = function(middleware) {
+    this.requestMiddleware = middleware;
+    return this;
   };
 
 {{#emitJSDoc}}  /**
@@ -382,6 +394,8 @@
     if (accept) {
       request.accept(accept);
     }
+
+    this.requestMiddleware(request);
 
 {{#usePromises}}    return new Promise(function(resolve, reject) {
       request.end(function(error, response) {
