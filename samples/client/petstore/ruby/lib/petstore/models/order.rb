@@ -198,9 +198,10 @@ module Petstore
     def _deserialize(type, value)
       case type.to_sym
       when :DateTime
-        DateTime.parse(value)
+        puts "datetime=",value
+        DateTime.parse(value.to_s)
       when :Date
-        Date.parse(value)
+        Date.parse(value.to_s)
       when :String
         value.to_s
       when :Integer

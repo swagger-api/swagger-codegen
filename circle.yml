@@ -5,7 +5,7 @@ machine:
     - docker
   # Override /etc/hosts
   hosts:
-    swagger.petstore.io: 127.0.0.1
+    petstore.swagger.io: 127.0.0.1
 
 dependencies:
   cache_directories:
