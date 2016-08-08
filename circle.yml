@@ -1,4 +1,6 @@
 machine:
+  environment:
+    _JAVA_OPTIONS: "-Xms512m -Xmx1024m"
   java:
     version: oraclejdk7
   node:
@@ -33,7 +35,7 @@ dependencies:
 
 test:
   override:
-    #- mvn verify -Psamples
-    - mvn -q clean install
-    - jdk_switcher use oraclejdk8
-    - mvn -q clean install
+    - mvn -q verify -Psamples
+    #- mvn -q clean install
+    #- jdk_switcher use oraclejdk8
+    #- mvn -q clean install
