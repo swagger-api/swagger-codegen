@@ -1,6 +1,8 @@
 machine:
   java:
     version: oraclejdk7
+  node:
+    version: 5.0.0
   services:
     - docker
   # Override /etc/hosts
@@ -14,8 +16,8 @@ dependencies:
     - ~/builder
     - ~/.m2
   pre:
-    - rvm --default use 2.1.0
-    - ruby -v
+    #- rvm --default use 2.1.0
+    #- ruby -v
     - gem install bundler
     - npm install -g typescript
     - sudo pip install virtualenv
@@ -26,8 +28,8 @@ dependencies:
     # show host table to confirm petstore.swagger.io is mapped to localhost
     - cat /etc/hosts
   override:
-    - rvm --default use 2.1.0
-    - ruby -v
+    #- rvm --default use 2.1.0
+    #- ruby -v
 
 test:
   override:
