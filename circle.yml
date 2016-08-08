@@ -33,4 +33,7 @@ dependencies:
 
 test:
   override:
-    - mvn verify -Psamples
+    #- mvn verify -Psamples
+    - mvn clean install
+    - jdk_switcher use oraclejdk8
+    - mvn clean install
