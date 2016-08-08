@@ -2,6 +2,13 @@ package io.swagger.codegen.languages;
 
 import io.swagger.codegen.*;
 
+/**
+ * This is a temporary workaround, so spring cloud can be listed by
+ *
+ * http://generator.swagger.io/api/gen/clients
+ *
+ * as a client and eventually Spring cloud can be displayed by the swagger editor' generate client menu.
+ */
 public class SpringCloudCodegen extends SpringCodegen {
 
     public SpringCloudCodegen() {
