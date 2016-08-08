@@ -808,7 +808,7 @@ public class DefaultCodegen {
         specialCharReplacements.put("_", "Underscore");
         specialCharReplacements.put("?", "Question_Mark");
         specialCharReplacements.put(",", "Comma");
-        specialCharReplacements.put("'", "Quota");
+        specialCharReplacements.put("'", "Quote");
         specialCharReplacements.put("\"", "Double_Quote");
         specialCharReplacements.put("/", "Slash");
         specialCharReplacements.put("\\", "Back_Slash");
