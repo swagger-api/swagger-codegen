@@ -14,7 +14,7 @@ dependencies:
     - ~/builder
     - ~/.m2
   pre:
-    - rvm use 2.1.0
+    - rvm --default use 2.1.0
     - ruby -v
     - gem install bundler
     - npm install -g typescript
@@ -25,6 +25,9 @@ dependencies:
     - docker ps -a
     # show host table to confirm petstore.swagger.io is mapped to localhost
     - cat /etc/hosts
+  override:
+    - rvm --default use 2.1.0
+    - ruby -v
 
 test:
   override:
