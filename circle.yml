@@ -15,6 +15,7 @@ dependencies:
     - ~/.m2
   pre:
     - rvm use 2.1.0
+    - ruby -v
     - gem install bundler
     - npm install -g typescript
     - sudo pip install virtualenv
