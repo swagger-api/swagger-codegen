@@ -1,9 +1,9 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
-        <groupId>io.swagger</groupId>
+        <groupId>com.medallia</groupId>
         <artifactId>swagger-codegen-project</artifactId>
-        <version>2.2.0</version>
+        <version>2.2.1-SNAPSHOT</version>
         <relativePath>../..</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -11,7 +11,7 @@
     <artifactId>swagger-codegen-cli</artifactId>
     <packaging>jar</packaging>
 
-    <name>swagger-codegen (executable)</name>
+    <name>com.medallia:swagger-codegen (executable)</name>
 
     <build>
         <finalName>swagger-codegen-cli</finalName>
@@ -35,38 +35,13 @@
                     </archive>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>2.3</version>
-                <executions>
-                    <execution>
-                        <id>process-resources</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <minimizeJar>false</minimizeJar>
-                            <createDependencyReducedPom>true</createDependencyReducedPom>
-                            <dependencyReducedPomLocation>
-                                ${java.io.tmpdir}/dependency-reduced-pom.xml
-                            </dependencyReducedPomLocation>
-                            <transformers>
-                                <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-                            </transformers>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 
     <dependencies>
 
         <dependency>
-            <groupId>io.swagger</groupId>
+            <groupId>com.medallia</groupId>
             <artifactId>swagger-codegen</artifactId>
             <version>${project.version}</version>
         </dependency>

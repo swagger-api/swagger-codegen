@@ -1,15 +1,15 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
-        <groupId>io.swagger</groupId>
+        <groupId>com.medallia</groupId>
         <artifactId>swagger-codegen-project</artifactId>
-        <version>2.2.0</version>
+        <version>2.2.1-SNAPSHOT</version>
         <relativePath>../..</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>swagger-codegen</artifactId>
     <packaging>jar</packaging>
-    <name>swagger-codegen (core library)</name>
+    <name>com.medallia:swagger-codegen (core library)</name>
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
         <defaultGoal>install</defaultGoal>
@@ -204,18 +204,18 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>io.swagger</groupId>
+            <groupId>com.medallia</groupId>
             <artifactId>swagger-parser</artifactId>
             <version>${swagger-parser-version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>io.swagger</groupId>
+            <groupId>com.medallia</groupId>
             <artifactId>swagger-compat-spec-parser</artifactId>
             <version>${swagger-parser-version}</version>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>io.swagger</groupId>
             <artifactId>swagger-core</artifactId>
             <version>${swagger-core-version}</version>
         </dependency>
@@ -288,15 +288,6 @@
             <version>${diffutils-version}</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
-    <repositories>
-        <repository>
-            <id>sonatype-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+
 </project>
