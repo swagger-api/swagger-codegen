@@ -684,6 +684,12 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <repositories>
+      <repository>
+        <id>medallia</id>
+        <url>http://maven.medallia.com/nexus/content/groups/public/</url>
+      </repository>
+    </repositories>
     <properties>
         <swagger-parser-version>1.0.23-SNAPSHOT</swagger-parser-version>
         <scala-version>2.11.1</scala-version>
