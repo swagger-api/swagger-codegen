@@ -54,16 +54,19 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets Code
         /// </summary>
+		[JsonProperty(PropertyName = "code")]
         public int? Code { get; set; }
 
         /// <summary>
         /// Gets or Sets Type
         /// </summary>
+		[JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
 
         /// <summary>
         /// Gets or Sets Message
         /// </summary>
+		[JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
 
 

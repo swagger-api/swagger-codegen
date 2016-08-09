@@ -64,42 +64,50 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets Id
         /// </summary>
+		[JsonProperty(PropertyName = "id")]
         public long? Id { get; set; }
 
         /// <summary>
         /// Gets or Sets Username
         /// </summary>
+		[JsonProperty(PropertyName = "username")]
         public string Username { get; set; }
 
         /// <summary>
         /// Gets or Sets FirstName
         /// </summary>
+		[JsonProperty(PropertyName = "firstName")]
         public string FirstName { get; set; }
 
         /// <summary>
         /// Gets or Sets LastName
         /// </summary>
+		[JsonProperty(PropertyName = "lastName")]
         public string LastName { get; set; }
 
         /// <summary>
         /// Gets or Sets Email
         /// </summary>
+		[JsonProperty(PropertyName = "email")]
         public string Email { get; set; }
 
         /// <summary>
         /// Gets or Sets Password
         /// </summary>
+		[JsonProperty(PropertyName = "password")]
         public string Password { get; set; }
 
         /// <summary>
         /// Gets or Sets Phone
         /// </summary>
+		[JsonProperty(PropertyName = "phone")]
         public string Phone { get; set; }
 
         /// <summary>
         /// User Status
         /// </summary>
         /// <value>User Status</value>
+		[JsonProperty(PropertyName = "userStatus")]
         public int? UserStatus { get; set; }
 
 

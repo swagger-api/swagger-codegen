@@ -76,32 +76,38 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets Id
         /// </summary>
+		[JsonProperty(PropertyName = "id")]
         public long? Id { get; set; }
 
         /// <summary>
         /// Gets or Sets Category
         /// </summary>
+		[JsonProperty(PropertyName = "category")]
         public Category Category { get; set; }
 
         /// <summary>
         /// Gets or Sets Name
         /// </summary>
+		[JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or Sets PhotoUrls
         /// </summary>
+		[JsonProperty(PropertyName = "photoUrls")]
         public List<string> PhotoUrls { get; set; }
 
         /// <summary>
         /// Gets or Sets Tags
         /// </summary>
+		[JsonProperty(PropertyName = "tags")]
         public List<Tag> Tags { get; set; }
 
         /// <summary>
         /// pet status in the store
         /// </summary>
         /// <value>pet status in the store</value>
+		[JsonProperty(PropertyName = "status")]
         public string Status { get; set; }
 
 

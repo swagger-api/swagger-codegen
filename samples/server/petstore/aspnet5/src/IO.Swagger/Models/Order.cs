@@ -68,32 +68,38 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets Id
         /// </summary>
+		[JsonProperty(PropertyName = "id")]
         public long? Id { get; set; }
 
         /// <summary>
         /// Gets or Sets PetId
         /// </summary>
+		[JsonProperty(PropertyName = "petId")]
         public long? PetId { get; set; }
 
         /// <summary>
         /// Gets or Sets Quantity
         /// </summary>
+		[JsonProperty(PropertyName = "quantity")]
         public int? Quantity { get; set; }
 
         /// <summary>
         /// Gets or Sets ShipDate
         /// </summary>
+		[JsonProperty(PropertyName = "shipDate")]
         public DateTime? ShipDate { get; set; }
 
         /// <summary>
         /// Order Status
         /// </summary>
         /// <value>Order Status</value>
+		[JsonProperty(PropertyName = "status")]
         public string Status { get; set; }
 
         /// <summary>
         /// Gets or Sets Complete
         /// </summary>
+		[JsonProperty(PropertyName = "complete")]
         public bool? Complete { get; set; }
 
 

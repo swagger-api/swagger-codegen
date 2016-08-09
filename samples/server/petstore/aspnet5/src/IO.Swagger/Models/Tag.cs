@@ -52,11 +52,13 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets Id
         /// </summary>
+		[JsonProperty(PropertyName = "id")]
         public long? Id { get; set; }
 
         /// <summary>
         /// Gets or Sets Name
         /// </summary>
+		[JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
 
