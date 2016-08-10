@@ -54,7 +54,7 @@ func (a {{{classname}}}) {{{nickname}}}({{#allParams}}{{paramName}} {{{dataType}
 {{#isApiKey}}
 {{#isKeyInHeader}}
 	// set key with prefix in header
-	localVarHeaderParams"{{keyParamName}}"] = a.Configuration.GetAPIKeyWithPrefix("{{keyParamName}}")
+	localVarHeaderParams["{{keyParamName}}"] = a.Configuration.GetAPIKeyWithPrefix("{{keyParamName}}")
 {{/isKeyInHeader}}
 {{#isKeyInQuery}}
 	// set key with prefix in query string
@@ -64,7 +64,7 @@ func (a {{{classname}}}) {{{nickname}}}({{#allParams}}{{paramName}} {{{dataType}
 {{#isBasic}}
 	// http basic authentication required
 	if a.Configuration.Username != "" || a.Configuration.Password != ""{
-		localVarHeaderParams"Authorization"] =  "Basic " + a.Configuration.GetBasicAuthEncodedString()
+		localVarHeaderParams["Authorization"] =  "Basic " + a.Configuration.GetBasicAuthEncodedString()
 	}
 {{/isBasic}}
 {{#isOAuth}}
@@ -76,7 +76,7 @@ func (a {{{classname}}}) {{{nickname}}}({{#allParams}}{{paramName}} {{{dataType}
 {{/authMethods}}
 	// add default headers if any
 	for key := range a.Configuration.DefaultHeader {
-		localVarHeaderParamskey] = a.Configuration.DefaultHeader[key]
+		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 	{{#hasQueryParams}}
 	{{#queryParams}}
@@ -101,7 +101,7 @@ func (a {{{classname}}}) {{{nickname}}}({{#allParams}}{{paramName}} {{{dataType}
 	// set Content-Type header
 	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
 	if localVarHttpContentType != "" {
-		localVarHeaderParams"Content-Type"] = localVarHttpContentType
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
 	}
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
@@ -111,11 +111,11 @@ func (a {{{classname}}}) {{{nickname}}}({{#allParams}}{{paramName}} {{{dataType}
 	// set Accept header
 	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
 	if localVarHttpHeaderAccept != "" {
-		localVarHeaderParams"Accept"] = localVarHttpHeaderAccept
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}{{#hasHeaderParams}}
 
 {{#headerParams}}	// header params "{{baseName}}"
-	localVarHeaderParams"{{baseName}}"] = {{paramName}}
+	localVarHeaderParams["{{baseName}}"] = {{paramName}}
 {{/headerParams}}{{/hasHeaderParams}}{{#hasFormParams}}
 {{#formParams}}{{#isFile}}
 	fbs, _ := ioutil.ReadAll(file)
