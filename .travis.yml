@@ -31,6 +31,8 @@ install:
   # Add Godeps dependencies to GOPATH and PATH
    - export GOPATH="${TRAVIS_BUILD_DIR}/Godeps/_workspace"
    - export PATH="${TRAVIS_BUILD_DIR}/Godeps/_workspace/bin:$PATH"
+   - echo $PATH
+   - ls -l /usr/local/go/bin/go
 
 script:
   - mvn verify -Psamples
