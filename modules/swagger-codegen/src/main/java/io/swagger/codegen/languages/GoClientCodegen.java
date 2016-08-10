@@ -115,7 +115,7 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public void processOpts() {
-        //super.processOpts();
+        super.processOpts();
 
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_NAME)) {
             setPackageName((String) additionalProperties.get(CodegenConstants.PACKAGE_NAME));
@@ -147,7 +147,6 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("api_client.mustache", "", "api_client.go"));
         supportingFiles.add(new SupportingFile("api_response.mustache", "", "api_response.go"));
         supportingFiles.add(new SupportingFile(".travis.yml", "", ".travis.yml"));
-        supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
         supportingFiles.add(new SupportingFile("LICENSE", "", "LICENSE"));
     }
 
