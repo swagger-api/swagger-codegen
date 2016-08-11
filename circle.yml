@@ -38,7 +38,7 @@ test:
   override:
     # generate all petstore sampless (client, servers, doc)
     #- ./bin/run-all-petstore 2>&1 > run-all-petstore.log
-    - mvn -q verify -Psamples
+    - mvn verify -Psamples
     #- mvn -q clean install
     #- jdk_switcher use oraclejdk8
     #- mvn -q clean install
