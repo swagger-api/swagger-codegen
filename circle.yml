@@ -18,7 +18,7 @@ dependencies:
     - ~/builder
     - ~/.m2
   pre:
-    - export MAVEN_OPTS="-Xmx512m -XX:MaxPermSize=128m"
+    - export MAVEN_OPTS="-Xmx512m -XX:MaxPermSize=256m"
     #- rvm --default use 2.1.0
     #- ruby -v
     - gem install bundler
