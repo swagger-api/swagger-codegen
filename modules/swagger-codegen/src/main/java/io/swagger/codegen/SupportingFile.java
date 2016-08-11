@@ -1,5 +1,8 @@
 package io.swagger.codegen;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 public class SupportingFile {
     public String templateFile;
     public String folder;
@@ -27,26 +30,13 @@ public class SupportingFile {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        SupportingFile that = (SupportingFile) o;
-
-        if (templateFile != null ? !templateFile.equals(that.templateFile) : that.templateFile != null)
-            return false;
-        if (folder != null ? !folder.equals(that.folder) : that.folder != null)
-            return false;
-        return destinationFilename != null ? destinationFilename.equals(that.destinationFilename) : that.destinationFilename == null;
-
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
     }
 
     @Override
     public int hashCode() {
-        int result = templateFile != null ? templateFile.hashCode() : 0;
-        result = 31 * result + (folder != null ? folder.hashCode() : 0);
-        result = 31 * result + (destinationFilename != null ? destinationFilename.hashCode() : 0);
-        return result;
+        return HashCodeBuilder.reflectionHashCode(this);
     }
 }
 
