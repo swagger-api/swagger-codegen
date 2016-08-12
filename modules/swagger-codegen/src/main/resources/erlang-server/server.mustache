@@ -32,7 +32,7 @@ get_socket_transport(Ip, Port, Options) ->
     end.
 
 get_cowboy_config(LogicHandler, ExtraOpts) ->
-    get_cowboy_config(LogicHandler, ExtraOpts, []).
+    get_cowboy_config(LogicHandler, ExtraOpts, get_default_opts(LogicHandler)).
 
 get_cowboy_config(_LogicHandler, [], Opts) ->
     Opts;
@@ -42,11 +42,17 @@ get_cowboy_config(LogicHandler, [{env, Env} | Rest], Opts) ->
         undefined -> [get_default_dispatch(LogicHandler) | Env];
         _ -> Env
     end,
-    get_cowboy_config(LogicHandler, Rest, [{env, NewEnv} | Opts]);
+    get_cowboy_config(LogicHandler, Rest, store_key(env, NewEnv, Opts));
 
-get_cowboy_config(LogicHandler, [O | Rest], Opts) ->
-    get_cowboy_config(LogicHandler, Rest, [O | Opts]).
+get_cowboy_config(LogicHandler, [{Key, Value}| Rest], Opts) ->
+    get_cowboy_config(LogicHandler, Rest, store_key(Key, Value, Opts)).
 
 get_default_dispatch(LogicHandler) ->
-    Paths = swagger_router:get_paths(LogicHandler),
+    Paths = {{packageName}}_router:get_paths(LogicHandler),
     {dispatch, cowboy_router:compile(Paths)}.
+
+get_default_opts(LogicHandler) ->
+    [{env, [get_default_dispatch(LogicHandler)]}].
+
+store_key(Key, Value, Opts) ->
+    lists:keystore(Key, 1, Opts, {Key, Value}).
