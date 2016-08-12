@@ -53,12 +53,20 @@
      */
 {{/emitJSDoc}}    this.defaultHeaders = {};
 
-    /**
+{{#emitJSDoc}}    /**
      * The default HTTP timeout for all API calls.
      * @type {Number}
      * @default 60000
      */
-    this.timeout = 60000;
+{{/emitJSDoc}}    this.timeout = 60000;
+
+{{#emitJSDoc}}    /**
+     * If set to true, enables the ability to send cookies from the origin,
+     * however only when "Access-Control-Allow-Origin" is not a wildcard ("*"),
+     * and "Access-Control-Allow-Credentials" is "true".
+     * @default false
+     */
+{{/emitJSDoc}}    this.withCredentials = false;
   };
 
 {{#emitJSDoc}}  /**
@@ -381,6 +389,11 @@
     var accept = this.jsonPreferredMime(accepts);
     if (accept) {
       request.accept(accept);
+    }
+
+    // Allow cookies?
+    if (this.withCredentials){
+      request.withCredentials();
     }
 
 {{#usePromises}}    return new Promise(function(resolve, reject) {
