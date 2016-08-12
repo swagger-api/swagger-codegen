@@ -33,7 +33,7 @@ request_param_info('{{operationId}}', {{^isBodyParam}}'{{baseName}}'{{/isBodyPar
             {type, 'boolean'}, {{/isBoolean}}{{#isDate}}
             {type, 'date'}, {{/isDate}}{{#isDateTime}}
             {type, 'datetime'}, {{/isDateTime}}{{#isEnum}}
-            {enum, [{{#allowableValues}}{{#values}}{{.}}{{/values}}{{/allowableValues}}] },{{/isEnum}}{{#maximum}}
+            {enum, [{{#allowableValues}}{{#values}}'{{.}}'{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}] },{{/isEnum}}{{#maximum}}
             {max, {{maximum}} }, {{/maximum}}{{#exclusiveMaximum}}
             {exclusive_max, {{exclusiveMaximum}} }, {{/exclusiveMaximum}}{{#minimum}}
             {min, {{minimum}} }, {{/minimum}}{{#exclusiveMinimum}}
@@ -117,8 +117,8 @@ validate( Rule = {type, 'integer'}, Name, Value, _ValidatorState) ->
     try
         {ok, {{packageName}}_utils:to_int(Value)}
     catch
-        _:_ ->
-            validation_error(Rule, Name)
+        _:Error ->
+            validation_error(Rule, {Name, Error})
     end;
 
 validate( Rule = {type, 'float'}, Name, Value, _ValidatorState) ->
@@ -140,9 +140,14 @@ validate( _Rule = {type, 'boolean'}, _Name, Value, _ValidatorState) when is_bool
 
 validate( Rule = {type, 'boolean'}, Name, Value, _ValidatorState) ->
     V = binary_to_lower(Value),
-    case binary_to_existing_atom(V, utf8) of
-        B when is_boolean(B) -> {ok, B};
-        _ -> validation_error(Rule, Name)
+    try
+        case binary_to_existing_atom(V, utf8) of
+            B when is_boolean(B) -> {ok, B};
+            _ -> validation_error(Rule, Name)
+        end
+    catch
+        error:badarg ->
+            validation_error(Rule, Name)
     end;
 
 validate( Rule = {type, 'date'}, Name, Value, _ValidatorState) ->
@@ -158,9 +163,15 @@ validate( Rule = {type, 'datetime'}, Name, Value, _ValidatorState) ->
     end;
 
 validate( Rule = {enum, Values}, Name, Value, _ValidatorState) ->
-    case lists:member(Value, Values) of
-        true -> ok;
-        false -> validation_error(Rule, Name)
+    try
+        FormattedValue = erlang:binary_to_existing_atom(Value, utf8),
+        case lists:member(FormattedValue, Values) of
+            true -> {ok, FormattedValue};
+            false -> validation_error(Rule, Name)
+        end
+    catch
+        error:badarg ->
+            validation_error(Rule, Name)
     end;
 
 validate( Rule = {max, Max}, Name, Value, _ValidatorState) ->
