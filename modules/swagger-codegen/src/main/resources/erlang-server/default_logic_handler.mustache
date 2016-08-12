@@ -2,7 +2,7 @@
 
 -behaviour({{packageName}}_logic_handler).
 
--export([handle_request/2]).
+-export([handle_request/3]).
 {{#authMethods}}
     {{#isApiKey}}
 -export([authorize_api_key/2]).
@@ -15,6 +15,6 @@ authorize_api_key(_, _) -> {true, #{}}.
     {{/isApiKey}}
 {{/authMethods}}
 
-handle_request(OperationID, Req) ->
-    io:format(user, "Got request to process: ~p~n", [{OperationID, Req}]),
+handle_request(OperationID, Req, Context) ->
+    io:format(user, "Got request to process: ~p~n", [{OperationID, Req, Context}]),
     {501, [], <<"Not Implemented">>}.

@@ -14,7 +14,8 @@ child_spec(Id, #{
     AcceptorsPool = ?DEFAULT_ACCEPTORS_POOLSIZE,
     {Transport, TransportOpts} = get_socket_transport(Ip, Port, NetOpts),
     LogicHandler = maps:get(logic_handler, Params, ?DEFAULT_LOGIC_HANDLER),
-    CowboyOpts = get_cowboy_config(LogicHandler),
+    ExtraOpts = maps:get(cowboy_extra_opts, Params, []),
+    CowboyOpts = get_cowboy_config(LogicHandler, ExtraOpts),
     ranch:child_spec({?MODULE, Id}, AcceptorsPool,
         Transport, TransportOpts, cowboy_protocol, CowboyOpts).
 
@@ -30,6 +31,22 @@ get_socket_transport(Ip, Port, Options) ->
             {ranch_tcp, Opts}
     end.
 
-get_cowboy_config(LogicHandler) ->
+get_cowboy_config(LogicHandler, ExtraOpts) ->
+    get_cowboy_config(LogicHandler, ExtraOpts, []).
+
+get_cowboy_config(_LogicHandler, [], Opts) ->
+    Opts;
+
+get_cowboy_config(LogicHandler, [{env, Env} | Rest], Opts) ->
+    NewEnv = case proplists:get_value(dispatch, Env) of
+        undefined -> [get_default_dispatch(LogicHandler) | Env];
+        _ -> Env
+    end,
+    get_cowboy_config(LogicHandler, Rest, [{env, NewEnv} | Opts]);
+
+get_cowboy_config(LogicHandler, [O | Rest], Opts) ->
+    get_cowboy_config(LogicHandler, Rest, [O | Opts]).
+
+get_default_dispatch(LogicHandler) ->
     Paths = swagger_router:get_paths(LogicHandler),
-    [{env, [{dispatch, cowboy_router:compile(Paths)}]}].
+    {dispatch, cowboy_router:compile(Paths)}.
