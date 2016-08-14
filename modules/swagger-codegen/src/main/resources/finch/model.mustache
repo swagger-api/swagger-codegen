@@ -1,0 +1,28 @@
+{{>licenseInfo}}
+
+package {{package}}
+
+import argonaut.Argonaut._
+import argonaut.CodecJson
+{{#imports}}import {{import}}
+{{/imports}}
+
+{{#models}}
+{{#model}}
+/**
+ * {{{description}}}
+{{#vars}}
+ * @param {{name}} {{{description}}}
+{{/vars}}
+ */
+case class {{classname}}({{#vars}}{{name}}: {{^required}}Option[{{{datatype}}}{{/required}}{{#required}}{{{datatype}}}{{/required}}){{^-last}},{{/-last}}
+                {{/vars}})
+
+object {{classname}} {
+  /**
+   * Creates the codec for converting {{classname}} from and to JSON.
+   */
+  implicit val {{classname}}Codec: CodecJson[{{classname}}] = casecodec2({{classname}}.apply, {{classname}}.unapply)({{#vars}}"{{baseName}}"{{^-last}}, {{/-last}}{{/vars}})
+}
+{{/model}}
+{{/models}}

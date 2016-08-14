@@ -1,0 +1,74 @@
+{{>licenseInfo}}
+
+package {{packageName}}
+
+import _root_.argonaut._, Argonaut._
+import com.twitter.finagle.Service
+import com.twitter.finagle.http.{Request, Response}
+import com.twitter.finagle.http.exp.Multipart.FileUpload
+import com.twitter.util.Future
+import io.finch._, items._
+import io.finch.argonaut._
+
+/**
+ * Provides the paths and endpoints for all the API's public service methods.
+ */
+object endpoint {
+
+  implicit val encodeException: EncodeJson[Exception] = EncodeJson {
+    case Error.NotPresent(ParamItem(p)) => Json.obj(
+      "error" -> jString("param_not_present"), "param" -> jString(p)
+    )
+    case Error.NotPresent(BodyItem) => Json.obj(
+      "error" -> jString("body_not_present")
+    )
+    case Error.NotParsed(ParamItem(p), _, _) => Json.obj(
+      "error" -> jString("param_not_parsed"), "param" -> jString(p)
+    )
+    case Error.NotParsed(BodyItem, _, _) => Json.obj(
+      "error" -> jString("body_not_parsed")
+    )
+    case Error.NotValid(ParamItem(p), rule) => Json.obj(
+      "error" -> jString("param_not_valid"), "param" -> jString(p), "rule" -> jString(rule)
+    )
+    // Domain errors
+    case error: PetstoreError => Json.obj(
+      "error" -> jString(error.message)
+    )
+  }
+
+
+
+{{#apiInfo}}
+{{#apis}}
+  /**
+   * Private method that compiles all service endpoints.
+   * @return Bundled compilation of all service endpoints.
+   */
+  private def pets(db: PetstoreDb) =
+    {{#operations}}
+    {{#operation}}
+    {{{operationId}}}(db){{^-last}} :+:{{/-last}}
+    {{/operation}}
+
+    {{#operation}}
+  /**
+   * {{{description}}}
+   * @return A Router that contains a RequestReader of a sequence of the usernames of the Users added.
+   */
+  def {{operationId}}(db: PetstoreDb): Endpoint[] =
+    post( {{{vendorExtensions.x-scala-path}}} {{#allParams}}{{^isPathParam}}{{{dataType}}}{{^-last}} ? {{/-last}}{{/isPathParam}}{{/allParams}}) { {{#hasParams}}({{#allParams}}{{paramName}}: {{{dataType}}}{{^-last}}, {{/-last}}{{/allParams}}) => {{/hasParams}}
+      {{#returnType}}
+      Ok(db.{{operationId}}({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}))
+      {{/returnType}}
+      {{^returnType}}
+      NoContent(db.{{operationId}}({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}))
+      {{/returnType}}
+    }
+
+    {{/operation}}
+    {{/operations}}
+
+{{/apis}}
+{{/apiInfo}}
+
