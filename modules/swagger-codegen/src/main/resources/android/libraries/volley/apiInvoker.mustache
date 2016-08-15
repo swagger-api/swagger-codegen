@@ -2,6 +2,7 @@
 package {{invokerPackage}};
 
 import com.android.volley.Cache;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -222,6 +223,7 @@ public class ApiInvoker {
   }
 
   public static ApiInvoker getInstance() {
+    if(INSTANCE == null) initializeInstance();
     return INSTANCE;
   }
 
