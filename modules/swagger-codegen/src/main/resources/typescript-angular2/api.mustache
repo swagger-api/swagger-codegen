@@ -93,7 +93,7 @@ export class {{classname}} {
             method: {{httpMethod}},
             headers: headers,
 {{#bodyParam}}
-            body: JSON.stringify({{paramName}}),
+            body: {{paramName}} == null ? '' : JSON.stringify({{paramName}}), // https://github.com/angular/angular/issues/10612
 {{/bodyParam}}
 {{#hasFormParams}}
             body: formParams.toString(),
