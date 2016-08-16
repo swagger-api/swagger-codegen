@@ -18,7 +18,10 @@ import 'rxjs/Rx';
 @Injectable()
 export class {{classname}} {
     protected basePath = '{{basePath}}';
-    public defaultHeaders : Headers = new Headers();
+    public defaultHeaders : Headers = new Headers({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    });
 
     constructor(protected http: Http, @Optional() basePath: string) {
         if (basePath) {
