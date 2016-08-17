@@ -76,7 +76,7 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
         additionalProperties.put("appDescription", "A sample swagger server");
         additionalProperties.put("infoUrl", "http://swagger.io");
         additionalProperties.put("infoEmail", "apiteam@swagger.io");
-        additionalProperties.put("licenseInfo", "All rights reserved");
+        additionalProperties.put("licenseInfo", "Apache 2.0");
         additionalProperties.put("licenseUrl", "http://apache.org/licenses/LICENSE-2.0.html");
         additionalProperties.put(CodegenConstants.INVOKER_PACKAGE, invokerPackage);
         additionalProperties.put(CodegenConstants.GROUP_ID, groupId);
@@ -94,6 +94,7 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
         supportingFiles.add(new SupportingFile("sbt", "", "sbt"));
 
         supportingFiles.add(new SupportingFile("endpoint.mustache", sourceFolder, "endpoint.scala"));
+        supportingFiles.add(new SupportingFile("errors.mustache", sourceFolder, "errors.scala"));
 
         languageSpecificPrimitives = new HashSet<String>(
                 Arrays.asList(
