@@ -304,7 +304,12 @@ public class CodeGenMojo extends AbstractMojo {
         }
 
         if (addCompileSourceRoot) {
-            project.addCompileSourceRoot(output.toString());
+            // The actual directories we want don't have a nice variable,
+            // but they are normally the directory above the package structure (so we chop that bit off).
+            project.addCompileSourceRoot(config.apiFileFolder()
+                    .substring(0, config.apiFileFolder().length() - config.apiPackage().length()));
+            project.addTestCompileSourceRoot(config.apiTestFileFolder()
+                    .substring(0, config.apiTestFileFolder().length() - config.testPackage().length()));
         }
     }
 }
