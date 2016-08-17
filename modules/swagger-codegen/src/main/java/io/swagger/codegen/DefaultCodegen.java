@@ -509,14 +509,14 @@ public class DefaultCodegen {
     }
 
     public String getInputSpec() {
-		return inputSpec;
-	}
+        return inputSpec;
+    }
 
-	public void setInputSpec(String inputSpec) {
-		this.inputSpec = inputSpec;
-	}
+    public void setInputSpec(String inputSpec) {
+        this.inputSpec = inputSpec;
+    }
 
-	public void setTemplateDir(String templateDir) {
+    public void setTemplateDir(String templateDir) {
         this.templateDir = templateDir;
     }
 
