@@ -19,14 +19,19 @@ import java.util.List;
  */
 
 public class Pet   {
+  @JsonProperty("id")
   private Long id = null;
 
+  @JsonProperty("category")
   private Category category = null;
 
+  @JsonProperty("name")
   private String name = null;
 
+  @JsonProperty("photoUrls")
   private List<String> photoUrls = new ArrayList<String>();
 
+  @JsonProperty("tags")
   private List<Tag> tags = new ArrayList<Tag>();
 
   /**
@@ -52,8 +57,8 @@ public class Pet   {
     }
 
     @JsonCreator
-    public static JustSymbolEnum fromValue(String text) {
-      for (JustSymbolEnum b : JustSymbolEnum.values()) {
+    public static StatusEnum fromValue(String text) {
+      for (StatusEnum b : StatusEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
           return b;
         }
@@ -62,6 +67,7 @@ public class Pet   {
     }
   }
 
+  @JsonProperty("status")
   private StatusEnum status = null;
 
   public Pet id(Long id) {

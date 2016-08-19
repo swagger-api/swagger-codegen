@@ -36,8 +36,8 @@ public class EnumTest   {
     }
 
     @JsonCreator
-    public static JustSymbolEnum fromValue(String text) {
-      for (JustSymbolEnum b : JustSymbolEnum.values()) {
+    public static EnumStringEnum fromValue(String text) {
+      for (EnumStringEnum b : EnumStringEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
           return b;
         }
@@ -46,6 +46,7 @@ public class EnumTest   {
     }
   }
 
+  @JsonProperty("enum_string")
   private EnumStringEnum enumString = null;
 
   /**
@@ -69,8 +70,8 @@ public class EnumTest   {
     }
 
     @JsonCreator
-    public static JustSymbolEnum fromValue(String text) {
-      for (JustSymbolEnum b : JustSymbolEnum.values()) {
+    public static EnumIntegerEnum fromValue(String text) {
+      for (EnumIntegerEnum b : EnumIntegerEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
           return b;
         }
@@ -79,6 +80,7 @@ public class EnumTest   {
     }
   }
 
+  @JsonProperty("enum_integer")
   private EnumIntegerEnum enumInteger = null;
 
   /**
@@ -102,8 +104,8 @@ public class EnumTest   {
     }
 
     @JsonCreator
-    public static JustSymbolEnum fromValue(String text) {
-      for (JustSymbolEnum b : JustSymbolEnum.values()) {
+    public static EnumNumberEnum fromValue(String text) {
+      for (EnumNumberEnum b : EnumNumberEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
           return b;
         }
@@ -112,6 +114,7 @@ public class EnumTest   {
     }
   }
 
+  @JsonProperty("enum_number")
   private EnumNumberEnum enumNumber = null;
 
   public EnumTest enumString(EnumStringEnum enumString) {

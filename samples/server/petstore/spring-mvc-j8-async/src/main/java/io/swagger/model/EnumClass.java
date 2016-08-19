@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 /**
  * Gets or Sets EnumClass
  */
@@ -29,8 +31,8 @@ public enum EnumClass {
   }
 
   @JsonCreator
-  public static JustSymbolEnum fromValue(String text) {
-    for (JustSymbolEnum b : JustSymbolEnum.values()) {
+  public static EnumClass fromValue(String text) {
+    for (EnumClass b : EnumClass.values()) {
       if (String.valueOf(b.value).equals(text)) {
         return b;
       }

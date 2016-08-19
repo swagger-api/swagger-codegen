@@ -48,6 +48,7 @@ public class EnumArrays   {
     }
   }
 
+  @JsonProperty("just_symbol")
   private JustSymbolEnum justSymbol = null;
 
   /**
@@ -71,8 +72,8 @@ public class EnumArrays   {
     }
 
     @JsonCreator
-    public static JustSymbolEnum fromValue(String text) {
-      for (JustSymbolEnum b : JustSymbolEnum.values()) {
+    public static ArrayEnumEnum fromValue(String text) {
+      for (ArrayEnumEnum b : ArrayEnumEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
           return b;
         }
@@ -81,6 +82,7 @@ public class EnumArrays   {
     }
   }
 
+  @JsonProperty("array_enum")
   private List<ArrayEnumEnum> arrayEnum = new ArrayList<ArrayEnumEnum>();
 
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {
