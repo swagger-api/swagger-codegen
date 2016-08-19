@@ -30,8 +30,19 @@ public class EnumTest   {
     }
 
     @Override
+    @JsonValue
     public String toString() {
       return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static JustSymbolEnum fromValue(String text) {
+      for (JustSymbolEnum b : JustSymbolEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
     }
   }
 
@@ -52,8 +63,19 @@ public class EnumTest   {
     }
 
     @Override
+    @JsonValue
     public String toString() {
       return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static JustSymbolEnum fromValue(String text) {
+      for (JustSymbolEnum b : JustSymbolEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
     }
   }
 
@@ -74,8 +96,19 @@ public class EnumTest   {
     }
 
     @Override
+    @JsonValue
     public String toString() {
       return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static JustSymbolEnum fromValue(String text) {
+      for (JustSymbolEnum b : JustSymbolEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
     }
   }
 
