@@ -10,8 +10,10 @@ import io.swagger.annotations.ApiModelProperty;
 
 
 
+/**
+ * EnumTest
+ */
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-08-20T17:24:26.037+08:00")
 public class EnumTest   {
   /**
    * Gets or Sets enumString
@@ -115,60 +117,63 @@ public class EnumTest   {
   @JsonProperty("enum_number")
   private EnumNumberEnum enumNumber = null;
 
-  /**
-   **/
   public EnumTest enumString(EnumStringEnum enumString) {
     this.enumString = enumString;
     return this;
   }
 
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("enum_string")
+   /**
+   * Get enumString
+   * @return enumString
+  **/
+  @ApiModelProperty(value = "")
   public EnumStringEnum getEnumString() {
     return enumString;
   }
+
   public void setEnumString(EnumStringEnum enumString) {
     this.enumString = enumString;
   }
 
-  /**
-   **/
   public EnumTest enumInteger(EnumIntegerEnum enumInteger) {
     this.enumInteger = enumInteger;
     return this;
   }
 
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("enum_integer")
+   /**
+   * Get enumInteger
+   * @return enumInteger
+  **/
+  @ApiModelProperty(value = "")
   public EnumIntegerEnum getEnumInteger() {
     return enumInteger;
   }
+
   public void setEnumInteger(EnumIntegerEnum enumInteger) {
     this.enumInteger = enumInteger;
   }
 
-  /**
-   **/
   public EnumTest enumNumber(EnumNumberEnum enumNumber) {
     this.enumNumber = enumNumber;
     return this;
   }
 
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("enum_number")
+   /**
+   * Get enumNumber
+   * @return enumNumber
+  **/
+  @ApiModelProperty(value = "")
   public EnumNumberEnum getEnumNumber() {
     return enumNumber;
   }
+
   public void setEnumNumber(EnumNumberEnum enumNumber) {
     this.enumNumber = enumNumber;
   }
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -176,9 +181,9 @@ public class EnumTest   {
       return false;
     }
     EnumTest enumTest = (EnumTest) o;
-    return Objects.equals(enumString, enumTest.enumString) &&
-        Objects.equals(enumInteger, enumTest.enumInteger) &&
-        Objects.equals(enumNumber, enumTest.enumNumber);
+    return Objects.equals(this.enumString, enumTest.enumString) &&
+        Objects.equals(this.enumInteger, enumTest.enumInteger) &&
+        Objects.equals(this.enumNumber, enumTest.enumNumber);
   }
 
   @Override
@@ -202,7 +207,7 @@ public class EnumTest   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

@@ -14,8 +14,10 @@ import java.util.Map;
 
 
 
+/**
+ * MixedPropertiesAndAdditionalPropertiesClass
+ */
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-08-20T17:24:26.037+08:00")
 public class MixedPropertiesAndAdditionalPropertiesClass   {
   @JsonProperty("uuid")
   private String uuid = null;
@@ -26,60 +28,68 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
   @JsonProperty("map")
   private Map<String, Animal> map = new HashMap<String, Animal>();
 
-  /**
-   **/
   public MixedPropertiesAndAdditionalPropertiesClass uuid(String uuid) {
     this.uuid = uuid;
     return this;
   }
 
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("uuid")
+   /**
+   * Get uuid
+   * @return uuid
+  **/
+  @ApiModelProperty(value = "")
   public String getUuid() {
     return uuid;
   }
+
   public void setUuid(String uuid) {
     this.uuid = uuid;
   }
 
-  /**
-   **/
   public MixedPropertiesAndAdditionalPropertiesClass dateTime(Date dateTime) {
     this.dateTime = dateTime;
     return this;
   }
 
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("dateTime")
+   /**
+   * Get dateTime
+   * @return dateTime
+  **/
+  @ApiModelProperty(value = "")
   public Date getDateTime() {
     return dateTime;
   }
+
   public void setDateTime(Date dateTime) {
     this.dateTime = dateTime;
   }
 
-  /**
-   **/
   public MixedPropertiesAndAdditionalPropertiesClass map(Map<String, Animal> map) {
     this.map = map;
     return this;
   }
 
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("map")
+  public MixedPropertiesAndAdditionalPropertiesClass putMapItem(String key, Animal mapItem) {
+    this.map.put(key, mapItem);
+    return this;
+  }
+
+   /**
+   * Get map
+   * @return map
+  **/
+  @ApiModelProperty(value = "")
   public Map<String, Animal> getMap() {
     return map;
   }
+
   public void setMap(Map<String, Animal> map) {
     this.map = map;
   }
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -87,9 +97,9 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
       return false;
     }
     MixedPropertiesAndAdditionalPropertiesClass mixedPropertiesAndAdditionalPropertiesClass = (MixedPropertiesAndAdditionalPropertiesClass) o;
-    return Objects.equals(uuid, mixedPropertiesAndAdditionalPropertiesClass.uuid) &&
-        Objects.equals(dateTime, mixedPropertiesAndAdditionalPropertiesClass.dateTime) &&
-        Objects.equals(map, mixedPropertiesAndAdditionalPropertiesClass.map);
+    return Objects.equals(this.uuid, mixedPropertiesAndAdditionalPropertiesClass.uuid) &&
+        Objects.equals(this.dateTime, mixedPropertiesAndAdditionalPropertiesClass.dateTime) &&
+        Objects.equals(this.map, mixedPropertiesAndAdditionalPropertiesClass.map);
   }
 
   @Override
@@ -113,7 +123,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

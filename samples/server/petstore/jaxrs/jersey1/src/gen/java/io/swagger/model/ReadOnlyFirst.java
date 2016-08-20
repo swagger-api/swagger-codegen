@@ -9,8 +9,10 @@ import io.swagger.annotations.ApiModelProperty;
 
 
 
+/**
+ * ReadOnlyFirst
+ */
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-08-20T17:24:26.037+08:00")
 public class ReadOnlyFirst   {
   @JsonProperty("bar")
   private String bar = null;
@@ -18,43 +20,36 @@ public class ReadOnlyFirst   {
   @JsonProperty("baz")
   private String baz = null;
 
-  /**
-   **/
-  public ReadOnlyFirst bar(String bar) {
-    this.bar = bar;
-    return this;
-  }
-
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("bar")
+   /**
+   * Get bar
+   * @return bar
+  **/
+  @ApiModelProperty(value = "")
   public String getBar() {
     return bar;
   }
-  public void setBar(String bar) {
-    this.bar = bar;
-  }
 
-  /**
-   **/
   public ReadOnlyFirst baz(String baz) {
     this.baz = baz;
     return this;
   }
 
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("baz")
+   /**
+   * Get baz
+   * @return baz
+  **/
+  @ApiModelProperty(value = "")
   public String getBaz() {
     return baz;
   }
+
   public void setBaz(String baz) {
     this.baz = baz;
   }
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -62,8 +57,8 @@ public class ReadOnlyFirst   {
       return false;
     }
     ReadOnlyFirst readOnlyFirst = (ReadOnlyFirst) o;
-    return Objects.equals(bar, readOnlyFirst.bar) &&
-        Objects.equals(baz, readOnlyFirst.baz);
+    return Objects.equals(this.bar, readOnlyFirst.bar) &&
+        Objects.equals(this.baz, readOnlyFirst.baz);
   }
 
   @Override
@@ -86,7 +81,7 @@ public class ReadOnlyFirst   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

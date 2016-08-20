@@ -12,8 +12,11 @@ import io.swagger.annotations.ApiModelProperty;
  * Model for testing model name starting with number
  **/
 
+/**
+ * Model for testing model name starting with number
+ */
 @ApiModel(description = "Model for testing model name starting with number")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-08-20T17:24:26.037+08:00")
+
 public class Model200Response   {
   @JsonProperty("name")
   private Integer name = null;
@@ -21,43 +24,45 @@ public class Model200Response   {
   @JsonProperty("class")
   private String PropertyClass = null;
 
-  /**
-   **/
   public Model200Response name(Integer name) {
     this.name = name;
     return this;
   }
 
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("name")
+   /**
+   * Get name
+   * @return name
+  **/
+  @ApiModelProperty(value = "")
   public Integer getName() {
     return name;
   }
+
   public void setName(Integer name) {
     this.name = name;
   }
 
-  /**
-   **/
   public Model200Response PropertyClass(String PropertyClass) {
     this.PropertyClass = PropertyClass;
     return this;
   }
 
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("class")
+   /**
+   * Get PropertyClass
+   * @return PropertyClass
+  **/
+  @ApiModelProperty(value = "")
   public String getPropertyClass() {
     return PropertyClass;
   }
+
   public void setPropertyClass(String PropertyClass) {
     this.PropertyClass = PropertyClass;
   }
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -65,8 +70,8 @@ public class Model200Response   {
       return false;
     }
     Model200Response _200Response = (Model200Response) o;
-    return Objects.equals(name, _200Response.name) &&
-        Objects.equals(PropertyClass, _200Response.PropertyClass);
+    return Objects.equals(this.name, _200Response.name) &&
+        Objects.equals(this.PropertyClass, _200Response.PropertyClass);
   }
 
   @Override
@@ -89,7 +94,7 @@ public class Model200Response   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

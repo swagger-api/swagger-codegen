@@ -12,8 +12,11 @@ import io.swagger.annotations.ApiModelProperty;
  * Model for testing model name same as property name
  **/
 
+/**
+ * Model for testing model name same as property name
+ */
 @ApiModel(description = "Model for testing model name same as property name")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-08-20T17:24:26.037+08:00")
+
 public class Name   {
   @JsonProperty("name")
   private Integer name = null;
@@ -27,77 +30,63 @@ public class Name   {
   @JsonProperty("123Number")
   private Integer _123Number = null;
 
-  /**
-   **/
   public Name name(Integer name) {
     this.name = name;
     return this;
   }
 
-  
-  @ApiModelProperty(example = "null", required = true, value = "")
-  @JsonProperty("name")
+   /**
+   * Get name
+   * @return name
+  **/
+  @ApiModelProperty(required = true, value = "")
   public Integer getName() {
     return name;
   }
+
   public void setName(Integer name) {
     this.name = name;
   }
 
-  /**
-   **/
-  public Name snakeCase(Integer snakeCase) {
-    this.snakeCase = snakeCase;
-    return this;
-  }
-
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("snake_case")
+   /**
+   * Get snakeCase
+   * @return snakeCase
+  **/
+  @ApiModelProperty(value = "")
   public Integer getSnakeCase() {
     return snakeCase;
   }
-  public void setSnakeCase(Integer snakeCase) {
-    this.snakeCase = snakeCase;
-  }
 
-  /**
-   **/
   public Name property(String property) {
     this.property = property;
     return this;
   }
 
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("property")
+   /**
+   * Get property
+   * @return property
+  **/
+  @ApiModelProperty(value = "")
   public String getProperty() {
     return property;
   }
+
   public void setProperty(String property) {
     this.property = property;
   }
 
-  /**
-   **/
-  public Name _123Number(Integer _123Number) {
-    this._123Number = _123Number;
-    return this;
-  }
-
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("123Number")
+   /**
+   * Get _123Number
+   * @return _123Number
+  **/
+  @ApiModelProperty(value = "")
   public Integer get123Number() {
     return _123Number;
-  }
-  public void set123Number(Integer _123Number) {
-    this._123Number = _123Number;
   }
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -105,10 +94,10 @@ public class Name   {
       return false;
     }
     Name name = (Name) o;
-    return Objects.equals(name, name.name) &&
-        Objects.equals(snakeCase, name.snakeCase) &&
-        Objects.equals(property, name.property) &&
-        Objects.equals(_123Number, name._123Number);
+    return Objects.equals(this.name, name.name) &&
+        Objects.equals(this.snakeCase, name.snakeCase) &&
+        Objects.equals(this.property, name.property) &&
+        Objects.equals(this._123Number, name._123Number);
   }
 
   @Override
@@ -133,7 +122,7 @@ public class Name   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

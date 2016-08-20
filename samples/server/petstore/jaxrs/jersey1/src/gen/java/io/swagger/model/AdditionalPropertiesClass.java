@@ -12,8 +12,10 @@ import java.util.Map;
 
 
 
+/**
+ * AdditionalPropertiesClass
+ */
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-08-20T17:24:26.037+08:00")
 public class AdditionalPropertiesClass   {
   @JsonProperty("map_property")
   private Map<String, String> mapProperty = new HashMap<String, String>();
@@ -21,43 +23,55 @@ public class AdditionalPropertiesClass   {
   @JsonProperty("map_of_map_property")
   private Map<String, Map<String, String>> mapOfMapProperty = new HashMap<String, Map<String, String>>();
 
-  /**
-   **/
   public AdditionalPropertiesClass mapProperty(Map<String, String> mapProperty) {
     this.mapProperty = mapProperty;
     return this;
   }
 
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("map_property")
+  public AdditionalPropertiesClass putMapPropertyItem(String key, String mapPropertyItem) {
+    this.mapProperty.put(key, mapPropertyItem);
+    return this;
+  }
+
+   /**
+   * Get mapProperty
+   * @return mapProperty
+  **/
+  @ApiModelProperty(value = "")
   public Map<String, String> getMapProperty() {
     return mapProperty;
   }
+
   public void setMapProperty(Map<String, String> mapProperty) {
     this.mapProperty = mapProperty;
   }
 
-  /**
-   **/
   public AdditionalPropertiesClass mapOfMapProperty(Map<String, Map<String, String>> mapOfMapProperty) {
     this.mapOfMapProperty = mapOfMapProperty;
     return this;
   }
 
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("map_of_map_property")
+  public AdditionalPropertiesClass putMapOfMapPropertyItem(String key, Map<String, String> mapOfMapPropertyItem) {
+    this.mapOfMapProperty.put(key, mapOfMapPropertyItem);
+    return this;
+  }
+
+   /**
+   * Get mapOfMapProperty
+   * @return mapOfMapProperty
+  **/
+  @ApiModelProperty(value = "")
   public Map<String, Map<String, String>> getMapOfMapProperty() {
     return mapOfMapProperty;
   }
+
   public void setMapOfMapProperty(Map<String, Map<String, String>> mapOfMapProperty) {
     this.mapOfMapProperty = mapOfMapProperty;
   }
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -65,8 +79,8 @@ public class AdditionalPropertiesClass   {
       return false;
     }
     AdditionalPropertiesClass additionalPropertiesClass = (AdditionalPropertiesClass) o;
-    return Objects.equals(mapProperty, additionalPropertiesClass.mapProperty) &&
-        Objects.equals(mapOfMapProperty, additionalPropertiesClass.mapOfMapProperty);
+    return Objects.equals(this.mapProperty, additionalPropertiesClass.mapProperty) &&
+        Objects.equals(this.mapOfMapProperty, additionalPropertiesClass.mapOfMapProperty);
   }
 
   @Override
@@ -89,7 +103,7 @@ public class AdditionalPropertiesClass   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

@@ -13,8 +13,10 @@ import java.util.Map;
 
 
 
+/**
+ * MapTest
+ */
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-08-20T17:24:26.037+08:00")
 public class MapTest   {
   @JsonProperty("map_map_of_string")
   private Map<String, Map<String, String>> mapMapOfString = new HashMap<String, Map<String, String>>();
@@ -53,43 +55,55 @@ public class MapTest   {
   @JsonProperty("map_of_enum_string")
   private Map<String, InnerEnum> mapOfEnumString = new HashMap<String, InnerEnum>();
 
-  /**
-   **/
   public MapTest mapMapOfString(Map<String, Map<String, String>> mapMapOfString) {
     this.mapMapOfString = mapMapOfString;
     return this;
   }
 
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("map_map_of_string")
+  public MapTest putMapMapOfStringItem(String key, Map<String, String> mapMapOfStringItem) {
+    this.mapMapOfString.put(key, mapMapOfStringItem);
+    return this;
+  }
+
+   /**
+   * Get mapMapOfString
+   * @return mapMapOfString
+  **/
+  @ApiModelProperty(value = "")
   public Map<String, Map<String, String>> getMapMapOfString() {
     return mapMapOfString;
   }
+
   public void setMapMapOfString(Map<String, Map<String, String>> mapMapOfString) {
     this.mapMapOfString = mapMapOfString;
   }
 
-  /**
-   **/
   public MapTest mapOfEnumString(Map<String, InnerEnum> mapOfEnumString) {
     this.mapOfEnumString = mapOfEnumString;
     return this;
   }
 
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("map_of_enum_string")
+  public MapTest putMapOfEnumStringItem(String key, InnerEnum mapOfEnumStringItem) {
+    this.mapOfEnumString.put(key, mapOfEnumStringItem);
+    return this;
+  }
+
+   /**
+   * Get mapOfEnumString
+   * @return mapOfEnumString
+  **/
+  @ApiModelProperty(value = "")
   public Map<String, InnerEnum> getMapOfEnumString() {
     return mapOfEnumString;
   }
+
   public void setMapOfEnumString(Map<String, InnerEnum> mapOfEnumString) {
     this.mapOfEnumString = mapOfEnumString;
   }
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -97,8 +111,8 @@ public class MapTest   {
       return false;
     }
     MapTest mapTest = (MapTest) o;
-    return Objects.equals(mapMapOfString, mapTest.mapMapOfString) &&
-        Objects.equals(mapOfEnumString, mapTest.mapOfEnumString);
+    return Objects.equals(this.mapMapOfString, mapTest.mapMapOfString) &&
+        Objects.equals(this.mapOfEnumString, mapTest.mapOfEnumString);
   }
 
   @Override
@@ -121,7 +135,7 @@ public class MapTest   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

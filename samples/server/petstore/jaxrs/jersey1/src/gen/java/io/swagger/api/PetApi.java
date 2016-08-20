@@ -5,6 +5,7 @@ import io.swagger.api.PetApiService;
 import io.swagger.api.factories.PetApiServiceFactory;
 
 import io.swagger.annotations.ApiParam;
+import io.swagger.jaxrs.*;
 
 import com.sun.jersey.multipart.FormDataParam;
 

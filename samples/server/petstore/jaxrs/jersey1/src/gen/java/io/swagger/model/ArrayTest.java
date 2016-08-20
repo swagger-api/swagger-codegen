@@ -12,8 +12,10 @@ import java.util.List;
 
 
 
+/**
+ * ArrayTest
+ */
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-08-20T17:24:26.037+08:00")
 public class ArrayTest   {
   @JsonProperty("array_of_string")
   private List<String> arrayOfString = new ArrayList<String>();
@@ -24,60 +26,78 @@ public class ArrayTest   {
   @JsonProperty("array_array_of_model")
   private List<List<ReadOnlyFirst>> arrayArrayOfModel = new ArrayList<List<ReadOnlyFirst>>();
 
-  /**
-   **/
   public ArrayTest arrayOfString(List<String> arrayOfString) {
     this.arrayOfString = arrayOfString;
     return this;
   }
 
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("array_of_string")
+  public ArrayTest addArrayOfStringItem(String arrayOfStringItem) {
+    this.arrayOfString.add(arrayOfStringItem);
+    return this;
+  }
+
+   /**
+   * Get arrayOfString
+   * @return arrayOfString
+  **/
+  @ApiModelProperty(value = "")
   public List<String> getArrayOfString() {
     return arrayOfString;
   }
+
   public void setArrayOfString(List<String> arrayOfString) {
     this.arrayOfString = arrayOfString;
   }
 
-  /**
-   **/
   public ArrayTest arrayArrayOfInteger(List<List<Long>> arrayArrayOfInteger) {
     this.arrayArrayOfInteger = arrayArrayOfInteger;
     return this;
   }
 
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("array_array_of_integer")
+  public ArrayTest addArrayArrayOfIntegerItem(List<Long> arrayArrayOfIntegerItem) {
+    this.arrayArrayOfInteger.add(arrayArrayOfIntegerItem);
+    return this;
+  }
+
+   /**
+   * Get arrayArrayOfInteger
+   * @return arrayArrayOfInteger
+  **/
+  @ApiModelProperty(value = "")
   public List<List<Long>> getArrayArrayOfInteger() {
     return arrayArrayOfInteger;
   }
+
   public void setArrayArrayOfInteger(List<List<Long>> arrayArrayOfInteger) {
     this.arrayArrayOfInteger = arrayArrayOfInteger;
   }
 
-  /**
-   **/
   public ArrayTest arrayArrayOfModel(List<List<ReadOnlyFirst>> arrayArrayOfModel) {
     this.arrayArrayOfModel = arrayArrayOfModel;
     return this;
   }
 
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("array_array_of_model")
+  public ArrayTest addArrayArrayOfModelItem(List<ReadOnlyFirst> arrayArrayOfModelItem) {
+    this.arrayArrayOfModel.add(arrayArrayOfModelItem);
+    return this;
+  }
+
+   /**
+   * Get arrayArrayOfModel
+   * @return arrayArrayOfModel
+  **/
+  @ApiModelProperty(value = "")
   public List<List<ReadOnlyFirst>> getArrayArrayOfModel() {
     return arrayArrayOfModel;
   }
+
   public void setArrayArrayOfModel(List<List<ReadOnlyFirst>> arrayArrayOfModel) {
     this.arrayArrayOfModel = arrayArrayOfModel;
   }
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -85,9 +105,9 @@ public class ArrayTest   {
       return false;
     }
     ArrayTest arrayTest = (ArrayTest) o;
-    return Objects.equals(arrayOfString, arrayTest.arrayOfString) &&
-        Objects.equals(arrayArrayOfInteger, arrayTest.arrayArrayOfInteger) &&
-        Objects.equals(arrayArrayOfModel, arrayTest.arrayArrayOfModel);
+    return Objects.equals(this.arrayOfString, arrayTest.arrayOfString) &&
+        Objects.equals(this.arrayArrayOfInteger, arrayTest.arrayArrayOfInteger) &&
+        Objects.equals(this.arrayArrayOfModel, arrayTest.arrayArrayOfModel);
   }
 
   @Override
@@ -111,7 +131,7 @@ public class ArrayTest   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

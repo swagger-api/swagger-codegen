@@ -9,32 +9,35 @@ import io.swagger.annotations.ApiModelProperty;
 
 
 
+/**
+ * SpecialModelName
+ */
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-08-20T17:24:26.037+08:00")
 public class SpecialModelName   {
   @JsonProperty("$special[property.name]")
   private Long specialPropertyName = null;
 
-  /**
-   **/
   public SpecialModelName specialPropertyName(Long specialPropertyName) {
     this.specialPropertyName = specialPropertyName;
     return this;
   }
 
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("$special[property.name]")
+   /**
+   * Get specialPropertyName
+   * @return specialPropertyName
+  **/
+  @ApiModelProperty(value = "")
   public Long getSpecialPropertyName() {
     return specialPropertyName;
   }
+
   public void setSpecialPropertyName(Long specialPropertyName) {
     this.specialPropertyName = specialPropertyName;
   }
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -42,7 +45,7 @@ public class SpecialModelName   {
       return false;
     }
     SpecialModelName specialModelName = (SpecialModelName) o;
-    return Objects.equals(specialPropertyName, specialModelName.specialPropertyName);
+    return Objects.equals(this.specialPropertyName, specialModelName.specialPropertyName);
   }
 
   @Override
@@ -64,7 +67,7 @@ public class SpecialModelName   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

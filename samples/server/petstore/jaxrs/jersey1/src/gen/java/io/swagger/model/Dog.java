@@ -5,57 +5,62 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.model.Animal;
 
 
 
 
+/**
+ * Dog
+ */
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-08-20T17:24:26.037+08:00")
-public class Client   {
-  @JsonProperty("client")
-  private String client = null;
+public class Dog extends Animal  {
+  @JsonProperty("breed")
+  private String breed = null;
 
-  /**
-   **/
-  public Client client(String client) {
-    this.client = client;
+  public Dog breed(String breed) {
+    this.breed = breed;
     return this;
   }
 
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("client")
-  public String getClient() {
-    return client;
+   /**
+   * Get breed
+   * @return breed
+  **/
+  @ApiModelProperty(value = "")
+  public String getBreed() {
+    return breed;
   }
-  public void setClient(String client) {
-    this.client = client;
+
+  public void setBreed(String breed) {
+    this.breed = breed;
   }
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Client client = (Client) o;
-    return Objects.equals(client, client.client);
+    Dog dog = (Dog) o;
+    return Objects.equals(this.breed, dog.breed) &&
+        super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(client);
+    return Objects.hash(breed, super.hashCode());
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Client {\n");
-    
-    sb.append("    client: ").append(toIndentedString(client)).append("\n");
+    sb.append("class Dog {\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+    sb.append("    breed: ").append(toIndentedString(breed)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -64,7 +69,7 @@ public class Client   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

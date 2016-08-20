@@ -9,32 +9,35 @@ import io.swagger.annotations.ApiModelProperty;
 
 
 
+/**
+ * Client
+ */
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-08-20T17:24:26.037+08:00")
 public class Client   {
   @JsonProperty("client")
   private String client = null;
 
-  /**
-   **/
   public Client client(String client) {
     this.client = client;
     return this;
   }
 
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("client")
+   /**
+   * Get client
+   * @return client
+  **/
+  @ApiModelProperty(value = "")
   public String getClient() {
     return client;
   }
+
   public void setClient(String client) {
     this.client = client;
   }
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -42,7 +45,7 @@ public class Client   {
       return false;
     }
     Client client = (Client) o;
-    return Objects.equals(client, client.client);
+    return Objects.equals(this.client, client.client);
   }
 
   @Override
@@ -64,7 +67,7 @@ public class Client   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

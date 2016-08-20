@@ -9,8 +9,10 @@ import io.swagger.annotations.ApiModelProperty;
 
 
 
+/**
+ * Animal
+ */
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-08-20T17:24:26.037+08:00")
 public class Animal   {
   @JsonProperty("className")
   private String className = null;
@@ -18,43 +20,45 @@ public class Animal   {
   @JsonProperty("color")
   private String color = "red";
 
-  /**
-   **/
   public Animal className(String className) {
     this.className = className;
     return this;
   }
 
-  
-  @ApiModelProperty(example = "null", required = true, value = "")
-  @JsonProperty("className")
+   /**
+   * Get className
+   * @return className
+  **/
+  @ApiModelProperty(required = true, value = "")
   public String getClassName() {
     return className;
   }
+
   public void setClassName(String className) {
     this.className = className;
   }
 
-  /**
-   **/
   public Animal color(String color) {
     this.color = color;
     return this;
   }
 
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("color")
+   /**
+   * Get color
+   * @return color
+  **/
+  @ApiModelProperty(value = "")
   public String getColor() {
     return color;
   }
+
   public void setColor(String color) {
     this.color = color;
   }
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -62,8 +66,8 @@ public class Animal   {
       return false;
     }
     Animal animal = (Animal) o;
-    return Objects.equals(className, animal.className) &&
-        Objects.equals(color, animal.color);
+    return Objects.equals(this.className, animal.className) &&
+        Objects.equals(this.color, animal.color);
   }
 
   @Override
@@ -86,7 +90,7 @@ public class Animal   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

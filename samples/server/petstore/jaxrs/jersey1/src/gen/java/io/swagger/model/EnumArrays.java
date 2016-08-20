@@ -12,8 +12,10 @@ import java.util.List;
 
 
 
+/**
+ * EnumArrays
+ */
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-08-20T17:24:26.037+08:00")
 public class EnumArrays   {
   /**
    * Gets or Sets justSymbol
@@ -83,43 +85,50 @@ public class EnumArrays   {
   @JsonProperty("array_enum")
   private List<ArrayEnumEnum> arrayEnum = new ArrayList<ArrayEnumEnum>();
 
-  /**
-   **/
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
     return this;
   }
 
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("just_symbol")
+   /**
+   * Get justSymbol
+   * @return justSymbol
+  **/
+  @ApiModelProperty(value = "")
   public JustSymbolEnum getJustSymbol() {
     return justSymbol;
   }
+
   public void setJustSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
   }
 
-  /**
-   **/
   public EnumArrays arrayEnum(List<ArrayEnumEnum> arrayEnum) {
     this.arrayEnum = arrayEnum;
     return this;
   }
 
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("array_enum")
+  public EnumArrays addArrayEnumItem(ArrayEnumEnum arrayEnumItem) {
+    this.arrayEnum.add(arrayEnumItem);
+    return this;
+  }
+
+   /**
+   * Get arrayEnum
+   * @return arrayEnum
+  **/
+  @ApiModelProperty(value = "")
   public List<ArrayEnumEnum> getArrayEnum() {
     return arrayEnum;
   }
+
   public void setArrayEnum(List<ArrayEnumEnum> arrayEnum) {
     this.arrayEnum = arrayEnum;
   }
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -127,8 +136,8 @@ public class EnumArrays   {
       return false;
     }
     EnumArrays enumArrays = (EnumArrays) o;
-    return Objects.equals(justSymbol, enumArrays.justSymbol) &&
-        Objects.equals(arrayEnum, enumArrays.arrayEnum);
+    return Objects.equals(this.justSymbol, enumArrays.justSymbol) &&
+        Objects.equals(this.arrayEnum, enumArrays.arrayEnum);
   }
 
   @Override
@@ -151,7 +160,7 @@ public class EnumArrays   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

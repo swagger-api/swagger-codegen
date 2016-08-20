@@ -9,8 +9,10 @@ import io.swagger.annotations.ApiModelProperty;
 
 
 
+/**
+ * HasOnlyReadOnly
+ */
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-08-20T17:24:26.037+08:00")
 public class HasOnlyReadOnly   {
   @JsonProperty("bar")
   private String bar = null;
@@ -18,43 +20,27 @@ public class HasOnlyReadOnly   {
   @JsonProperty("foo")
   private String foo = null;
 
-  /**
-   **/
-  public HasOnlyReadOnly bar(String bar) {
-    this.bar = bar;
-    return this;
-  }
-
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("bar")
+   /**
+   * Get bar
+   * @return bar
+  **/
+  @ApiModelProperty(value = "")
   public String getBar() {
     return bar;
   }
-  public void setBar(String bar) {
-    this.bar = bar;
-  }
 
-  /**
-   **/
-  public HasOnlyReadOnly foo(String foo) {
-    this.foo = foo;
-    return this;
-  }
-
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("foo")
+   /**
+   * Get foo
+   * @return foo
+  **/
+  @ApiModelProperty(value = "")
   public String getFoo() {
     return foo;
-  }
-  public void setFoo(String foo) {
-    this.foo = foo;
   }
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -62,8 +48,8 @@ public class HasOnlyReadOnly   {
       return false;
     }
     HasOnlyReadOnly hasOnlyReadOnly = (HasOnlyReadOnly) o;
-    return Objects.equals(bar, hasOnlyReadOnly.bar) &&
-        Objects.equals(foo, hasOnlyReadOnly.foo);
+    return Objects.equals(this.bar, hasOnlyReadOnly.bar) &&
+        Objects.equals(this.foo, hasOnlyReadOnly.foo);
   }
 
   @Override
@@ -86,7 +72,7 @@ public class HasOnlyReadOnly   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
