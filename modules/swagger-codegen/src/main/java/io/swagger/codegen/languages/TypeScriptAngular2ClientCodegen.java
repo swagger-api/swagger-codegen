@@ -67,6 +67,7 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
         super.processOpts();
         supportingFiles.add(new SupportingFile("models.mustache", modelPackage().replace('.', File.separatorChar), "models.ts"));
         supportingFiles.add(new SupportingFile("apis.mustache", apiPackage().replace('.', File.separatorChar), "api.ts"));
+        supportingFiles.add(new SupportingFile("apiservice.mustache", apiPackage().replace('.', File.separatorChar), "ApiService.ts"));
         supportingFiles.add(new SupportingFile("index.mustache", getIndexDirectory(), "index.ts"));
         supportingFiles.add(new SupportingFile("gitignore", "", ".gitignore"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
