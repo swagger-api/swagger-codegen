@@ -6,7 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**test_client_model**](FakeApi.md#test_client_model) | **PATCH** /fake | To test \&quot;client\&quot; model
 [**test_endpoint_parameters**](FakeApi.md#test_endpoint_parameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
-[**test_enum_query_parameters**](FakeApi.md#test_enum_query_parameters) | **GET** /fake | To test enum query parameters
+[**test_enum_parameters**](FakeApi.md#test_enum_parameters) | **GET** /fake | To test enum parameters
 
 
 # **test_client_model**
@@ -55,7 +55,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **test_endpoint_parameters**
-> test_endpoint_parameters(number, double, string, byte, integer=integer, int32=int32, int64=int64, float=float, binary=binary, date=date, date_time=date_time, password=password)
+> test_endpoint_parameters(number, double, pattern_without_delimiter, byte, integer=integer, int32=int32, int64=int64, float=float, string=string, binary=binary, date=date, date_time=date_time, password=password)
 
 Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 
@@ -68,16 +68,21 @@ import petstore_api
 from petstore_api.rest import ApiException
 from pprint import pprint
 
+# Configure HTTP basic authorization: http_basic_test
+petstore_api.configuration.username = 'YOUR_USERNAME'
+petstore_api.configuration.password = 'YOUR_PASSWORD'
+
 # create an instance of the API class
 api_instance = petstore_api.FakeApi()
 number = 3.4 # float | None
 double = 1.2 # float | None
-string = 'string_example' # str | None
+pattern_without_delimiter = 'pattern_without_delimiter_example' # str | None
 byte = 'B' # str | None
 integer = 56 # int | None (optional)
 int32 = 56 # int | None (optional)
 int64 = 789 # int | None (optional)
 float = 3.4 # float | None (optional)
+string = 'string_example' # str | None (optional)
 binary = 'B' # str | None (optional)
 date = '2013-10-20' # date | None (optional)
 date_time = '2013-10-20T19:20:30+01:00' # datetime | None (optional)
@@ -85,7 +90,7 @@ password = 'password_example' # str | None (optional)
 
 try: 
     # Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
-    api_instance.test_endpoint_parameters(number, double, string, byte, integer=integer, int32=int32, int64=int64, float=float, binary=binary, date=date, date_time=date_time, password=password)
+    api_instance.test_endpoint_parameters(number, double, pattern_without_delimiter, byte, integer=integer, int32=int32, int64=int64, float=float, string=string, binary=binary, date=date, date_time=date_time, password=password)
 except ApiException as e:
     print "Exception when calling FakeApi->test_endpoint_parameters: %s\n" % e
 ```
@@ -96,12 +101,13 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **number** | **float**| None | 
  **double** | **float**| None | 
- **string** | **str**| None | 
+ **pattern_without_delimiter** | **str**| None | 
  **byte** | **str**| None | 
  **integer** | **int**| None | [optional] 
  **int32** | **int**| None | [optional] 
  **int64** | **int**| None | [optional] 
  **float** | **float**| None | [optional] 
+ **string** | **str**| None | [optional] 
  **binary** | **str**| None | [optional] 
  **date** | **date**| None | [optional] 
  **date_time** | **datetime**| None | [optional] 
@@ -113,7 +119,7 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[http_basic_test](../README.md#http_basic_test)
 
 ### HTTP request headers
 
@@ -122,10 +128,10 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **test_enum_query_parameters**
-> test_enum_query_parameters(enum_query_string=enum_query_string, enum_query_integer=enum_query_integer, enum_query_double=enum_query_double)
+# **test_enum_parameters**
+> test_enum_parameters(enum_form_string_array=enum_form_string_array, enum_form_string=enum_form_string, enum_header_string_array=enum_header_string_array, enum_header_string=enum_header_string, enum_query_string_array=enum_query_string_array, enum_query_string=enum_query_string, enum_query_integer=enum_query_integer, enum_query_double=enum_query_double)
 
-To test enum query parameters
+To test enum parameters
 
 ### Example 
 ```python
@@ -136,21 +142,31 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = petstore_api.FakeApi()
+enum_form_string_array = ['enum_form_string_array_example'] # list[str] | Form parameter enum test (string array) (optional)
+enum_form_string = '-efg' # str | Form parameter enum test (string) (optional) (default to -efg)
+enum_header_string_array = ['enum_header_string_array_example'] # list[str] | Header parameter enum test (string array) (optional)
+enum_header_string = '-efg' # str | Header parameter enum test (string) (optional) (default to -efg)
+enum_query_string_array = ['enum_query_string_array_example'] # list[str] | Query parameter enum test (string array) (optional)
 enum_query_string = '-efg' # str | Query parameter enum test (string) (optional) (default to -efg)
 enum_query_integer = 3.4 # float | Query parameter enum test (double) (optional)
 enum_query_double = 1.2 # float | Query parameter enum test (double) (optional)
 
 try: 
-    # To test enum query parameters
-    api_instance.test_enum_query_parameters(enum_query_string=enum_query_string, enum_query_integer=enum_query_integer, enum_query_double=enum_query_double)
+    # To test enum parameters
+    api_instance.test_enum_parameters(enum_form_string_array=enum_form_string_array, enum_form_string=enum_form_string, enum_header_string_array=enum_header_string_array, enum_header_string=enum_header_string, enum_query_string_array=enum_query_string_array, enum_query_string=enum_query_string, enum_query_integer=enum_query_integer, enum_query_double=enum_query_double)
 except ApiException as e:
-    print "Exception when calling FakeApi->test_enum_query_parameters: %s\n" % e
+    print "Exception when calling FakeApi->test_enum_parameters: %s\n" % e
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **enum_form_string_array** | [**list[str]**](str.md)| Form parameter enum test (string array) | [optional] 
+ **enum_form_string** | **str**| Form parameter enum test (string) | [optional] [default to -efg]
+ **enum_header_string_array** | [**list[str]**](str.md)| Header parameter enum test (string array) | [optional] 
+ **enum_header_string** | **str**| Header parameter enum test (string) | [optional] [default to -efg]
+ **enum_query_string_array** | [**list[str]**](str.md)| Query parameter enum test (string array) | [optional] 
  **enum_query_string** | **str**| Query parameter enum test (string) | [optional] [default to -efg]
  **enum_query_integer** | **float**| Query parameter enum test (double) | [optional] 
  **enum_query_double** | **float**| Query parameter enum test (double) | [optional] 

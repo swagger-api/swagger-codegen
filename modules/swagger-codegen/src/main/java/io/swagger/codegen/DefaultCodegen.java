@@ -2,6 +2,8 @@ package io.swagger.codegen;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import com.samskivert.mustache.Mustache.Compiler;
+
 import io.swagger.codegen.examples.ExampleGenerator;
 import io.swagger.models.ArrayModel;
 import io.swagger.models.ComposedModel;
@@ -71,7 +73,8 @@ import java.util.regex.Pattern;
 
 public class DefaultCodegen {
     protected static final Logger LOGGER = LoggerFactory.getLogger(DefaultCodegen.class);
-
+    
+    protected String inputSpec;
     protected String outputFolder = "";
     protected Set<String> defaultIncludes = new HashSet<String>();
     protected Map<String, String> typeMapping = new HashMap<String, String>();
@@ -326,6 +329,12 @@ public class DefaultCodegen {
     @SuppressWarnings("unused")
     public void processSwagger(Swagger swagger) {
     }
+    
+    // override with any special handling of the JMustache compiler
+    @SuppressWarnings("unused")
+    public Compiler processCompiler(Compiler compiler) {
+    	return compiler;
+    }
 
     // override with any special text escaping logic
     @SuppressWarnings("static-method")
@@ -499,6 +508,14 @@ public class DefaultCodegen {
         return outputFolder();
     }
 
+    public String getInputSpec() {
+        return inputSpec;
+    }
+
+    public void setInputSpec(String inputSpec) {
+        this.inputSpec = inputSpec;
+    }
+
     public void setTemplateDir(String templateDir) {
         this.templateDir = templateDir;
     }
@@ -534,7 +551,7 @@ public class DefaultCodegen {
      * @return properly-escaped pattern
      */
     public String toRegularExpression(String pattern) {
-        return escapeText(pattern);
+        return escapeText(addRegularExpressionDelimiter(pattern));
     }
 
     /**
@@ -804,10 +821,26 @@ public class DefaultCodegen {
         specialCharReplacements.put(":", "Colon");
         specialCharReplacements.put(">", "Greater_Than");
         specialCharReplacements.put("<", "Less_Than");
+        specialCharReplacements.put(".", "Period");
+        specialCharReplacements.put("_", "Underscore");
+        specialCharReplacements.put("?", "Question_Mark");
+        specialCharReplacements.put(",", "Comma");
+        specialCharReplacements.put("'", "Quote");
+        specialCharReplacements.put("\"", "Double_Quote");
+        specialCharReplacements.put("/", "Slash");
+        specialCharReplacements.put("\\", "Back_Slash");
+        specialCharReplacements.put("(", "Left_Parenthesis");
+        specialCharReplacements.put(")", "Right_Parenthesis");
+        specialCharReplacements.put("{", "Left_Curly_Bracket");
+        specialCharReplacements.put("}", "Right_Curly_Bracket");
+        specialCharReplacements.put("[", "Left_Square_Bracket");
+        specialCharReplacements.put("]", "Right_Square_Bracket");
+        specialCharReplacements.put("~", "Tilde");
+        specialCharReplacements.put("`", "Backtick");
 
         specialCharReplacements.put("<=", "Less_Than_Or_Equal_To");
         specialCharReplacements.put(">=", "Greater_Than_Or_Equal_To");
-        specialCharReplacements.put("!=", "Greater_Than_Or_Equal_To");
+        specialCharReplacements.put("!=", "Not_Equal");
     }
 
     /**
@@ -2444,7 +2477,7 @@ public class DefaultCodegen {
                     for(Map.Entry<String, String> scopeEntry : oauth2Definition.getScopes().entrySet()) {
                         Map<String, Object> scope = new HashMap<String, Object>();
                         scope.put("scope", scopeEntry.getKey());
-                        scope.put("description", scopeEntry.getValue());
+                        scope.put("description", escapeText(scopeEntry.getValue()));
 
                         count += 1;
                         if (count < numScopes) {
@@ -3239,5 +3272,20 @@ public class DefaultCodegen {
                 var.defaultValue = toEnumDefaultValue(enumName, var.datatypeWithEnum);
             }
         }
+    }
+
+    /**
+     * If the pattern misses the delimiter, add "/" to the beginning and end
+     * Otherwise, return the original pattern
+     *
+     * @param pattern the pattern (regular expression)
+     * @return the pattern with delimiter
+     */
+    public String addRegularExpressionDelimiter(String pattern) {
+        if (pattern != null && !pattern.matches("^/.*")) {
+            return "/" + pattern + "/";
+        }
+
+        return pattern;
     }
 }

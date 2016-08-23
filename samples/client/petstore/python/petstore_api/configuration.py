@@ -236,6 +236,13 @@ class Configuration(object):
                     'key': 'Authorization',
                     'value': 'Bearer ' + self.access_token
                 },
+            'http_basic_test':
+                {
+                    'type': 'basic',
+                    'in': 'header',
+                    'key': 'Authorization',
+                    'value': self.get_basic_auth_token()
+                },
 
         }
 
