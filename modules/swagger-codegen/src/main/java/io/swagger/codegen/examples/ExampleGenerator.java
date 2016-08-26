@@ -1,33 +1,14 @@
 package io.swagger.codegen.examples;
 
+import io.swagger.models.ComposedModel;
 import io.swagger.models.Model;
 import io.swagger.models.ModelImpl;
-import io.swagger.models.properties.ArrayProperty;
-import io.swagger.models.properties.BooleanProperty;
-import io.swagger.models.properties.DateProperty;
-import io.swagger.models.properties.DateTimeProperty;
-import io.swagger.models.properties.DecimalProperty;
-import io.swagger.models.properties.DoubleProperty;
-import io.swagger.models.properties.FileProperty;
-import io.swagger.models.properties.FloatProperty;
-import io.swagger.models.properties.IntegerProperty;
-import io.swagger.models.properties.LongProperty;
-import io.swagger.models.properties.MapProperty;
-import io.swagger.models.properties.ObjectProperty;
-import io.swagger.models.properties.Property;
-import io.swagger.models.properties.RefProperty;
-import io.swagger.models.properties.StringProperty;
-import io.swagger.models.properties.UUIDProperty;
+import io.swagger.models.RefModel;
+import io.swagger.models.properties.*;
 import io.swagger.util.Json;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class ExampleGenerator {
     protected Map<String, Model> examples;
@@ -37,15 +18,15 @@ public class ExampleGenerator {
     }
 
     public List<Map<String, String>> generate(Map<String, Object> examples, List<String> mediaTypes, Property property) {
-        List<Map<String, String>> output = new ArrayList<Map<String, String>>();
-        Set<String> processedModels = new HashSet<String>();
+        List<Map<String, String>> output = new ArrayList<>();
+        Set<String> processedModels = new HashSet<>();
         if (examples == null) {
             if (mediaTypes == null) {
                 // assume application/json for this
                 mediaTypes = Arrays.asList("application/json"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
             }
             for (String mediaType : mediaTypes) {
-                Map<String, String> kv = new HashMap<String, String>();
+                Map<String, String> kv = new HashMap<>();
                 kv.put("contentType", mediaType);
                 if (property != null && mediaType.startsWith("application/json")) {
                     String example = Json.pretty(resolvePropertyToExample(mediaType, property, processedModels));
@@ -64,14 +45,14 @@ public class ExampleGenerator {
             }
         } else {
             for (Map.Entry<String, Object> entry : examples.entrySet()) {
-                final Map<String, String> kv = new HashMap<String, String>();
+                final Map<String, String> kv = new HashMap<>();
                 kv.put("contentType", entry.getKey());
                 kv.put("example", Json.pretty(entry.getValue()));
                 output.add(kv);
             }
         }
         if (output.size() == 0) {
-            Map<String, String> kv = new HashMap<String, String>();
+            Map<String, String> kv = new HashMap<>();
             kv.put("output", "none");
             output.add(kv);
         }
@@ -96,20 +77,20 @@ public class ExampleGenerator {
             return "2000-01-23T04:56:07.000+00:00";
         } else if (property instanceof DateTimeProperty) {
             return "2000-01-23T04:56:07.000+00:00";
-        } else if (property instanceof DecimalProperty) {
-            return new BigDecimal(1.3579);
         } else if (property instanceof DoubleProperty) {
-            return new Double(3.149);
+            return 3.149;
         } else if (property instanceof FileProperty) {
             return "";  // TODO
         } else if (property instanceof FloatProperty) {
-            return new Float(1.23);
+            return 1.23f;
         } else if (property instanceof IntegerProperty) {
-            return new Integer(123);
+            return 123;
         } else if (property instanceof LongProperty) {
-            return new Long(123456789);
+            return 123456789L;
+        } else if (property instanceof DecimalProperty) {
+            return new BigDecimal(1.3579);
         } else if (property instanceof MapProperty) {
-            Map<String, Object> mp = new HashMap<String, Object>();
+            Map<String, Object> mp = new HashMap<>();
             if (property.getName() != null) {
                 mp.put(property.getName(),
                         resolvePropertyToExample(mediaType, ((MapProperty) property).getAdditionalProperties(), processedModels));
@@ -119,7 +100,7 @@ public class ExampleGenerator {
             }
             return mp;
         } else if (property instanceof ObjectProperty) {
-            return "{}";
+            return Collections.EMPTY_MAP;
         } else if (property instanceof RefProperty) {
             String simpleName = ((RefProperty) property).getSimpleRef();
             Model model = examples.get(simpleName);
@@ -140,12 +121,28 @@ public class ExampleGenerator {
         if (model instanceof ModelImpl) {
             processedModels.add(name);
             ModelImpl impl = (ModelImpl) model;
-            Map<String, Object> values = new HashMap<String, Object>();
+            Map<String, Object> values = new HashMap<>();
 
             if (impl.getProperties() != null) {
                 for (String propertyName : impl.getProperties().keySet()) {
                     Property property = impl.getProperties().get(propertyName);
                     values.put(propertyName, resolvePropertyToExample(mediaType, property, processedModels));
+                }
+            }
+            return values;
+        } else if (model instanceof ComposedModel) {
+            Map<String, Object> values = new HashMap<>();
+            ComposedModel composedModel = (ComposedModel) model;
+            if (composedModel.getInterfaces() != null) {
+                for (RefModel refModel : composedModel.getInterfaces()) {
+                    String simpleRef = refModel.getSimpleRef();
+                    Model ifModel = examples.get(simpleRef);
+                    if (ifModel != null){
+                        Object example = resolveModelToExample(simpleRef, mediaType, ifModel, processedModels);
+                        if (example instanceof Map){
+                            values.putAll((Map) example);
+                        }
+                    }
                 }
             }
             return values;
