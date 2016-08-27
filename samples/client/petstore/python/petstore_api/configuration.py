@@ -23,7 +23,7 @@
 """
 
 from __future__ import absolute_import
-import base64
+
 import urllib3
 
 import sys

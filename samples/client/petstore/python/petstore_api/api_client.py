@@ -25,10 +25,8 @@ from .rest import ApiException
 
 import os
 import re
-import urllib
 import json
 import mimetypes
-import random
 import tempfile
 import threading
 
