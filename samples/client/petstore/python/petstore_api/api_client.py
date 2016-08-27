@@ -19,6 +19,7 @@ Copyright 2016 SmartBear Software
 """
 
 from __future__ import absolute_import
+
 from . import models
 from .rest import RESTClientObject
 from .rest import ApiException
@@ -150,11 +151,10 @@ class ApiClient(object):
         if callback:
             callback(deserialized_data) if _return_http_data_only else callback((deserialized_data, response_data.status, response_data.getheaders()))
         elif _return_http_data_only:
-            return ( deserialized_data );
+            return (deserialized_data)
         else:
             return (deserialized_data, response_data.status, response_data.getheaders())
         
-
     def to_path_value(self, obj):
         """
         Takes value and turn it into a string suitable for inclusion in
@@ -322,7 +322,7 @@ class ApiClient(object):
                                             header_params, body,
                                             post_params, files,
                                             response_type, auth_settings,
-                                            callback,_return_http_data_only))
+                                            callback, _return_http_data_only))
         thread.start()
         return thread
 

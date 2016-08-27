@@ -224,7 +224,7 @@ class Configuration(object):
                     'value': self.get_api_key_with_prefix('api_key')
                 },
 
-            'petstore_auth': 
+            'petstore_auth':
                 {
                     'type': 'oauth2',
                     'in': 'header',
