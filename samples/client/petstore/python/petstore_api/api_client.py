@@ -97,7 +97,7 @@ class ApiClient(object):
                    body=None, post_params=None, files=None,
                    response_type=None, auth_settings=None, callback=None, _return_http_data_only=None):
 
-        # headers parameters
+        # header parameters
         header_params = header_params or {}
         header_params.update(self.default_headers)
         if self.cookie:
@@ -216,7 +216,7 @@ class ApiClient(object):
 
         :param response: RESTResponse object to be deserialized.
         :param response_type: class literal for
-            deserialzied object, or string of class name.
+            deserialized object, or string of class name.
 
         :return: deserialized object.
         """

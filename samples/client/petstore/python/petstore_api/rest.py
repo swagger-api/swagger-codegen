@@ -113,7 +113,7 @@ class RESTClientObject(object):
         :param headers: http request headers
         :param body: request json body, for `application/json`
         :param post_params: request post parameters,
-                            `application/x-www-form-urlencode`
+                            `application/x-www-form-urlencoded`
                             and `multipart/form-data`
         """
         method = method.upper()
