@@ -251,6 +251,8 @@ use warnings;
 {{/model}}{{/models}}
 # for displaying the API response data
 use Data::Dumper;
+use {{{moduleName}}}::Configuration;
+use {{moduleName}}::{{classname}};
 {{#apiInfo}}{{#apis}}{{#-first}}{{#operations}}{{#operation}}{{#-first}}{{#hasAuthMethods}}{{#authMethods}}{{#isBasic}}
 # Configure HTTP basic authorization: {{{name}}}
 ${{{moduleName}}}::Configuration::username = 'YOUR_USERNAME';

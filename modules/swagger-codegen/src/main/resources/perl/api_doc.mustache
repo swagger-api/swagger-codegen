@@ -25,6 +25,8 @@ Method | HTTP request | Description
 ### Example 
 ```perl
 use Data::Dumper;
+use {{{moduleName}}}::Configuration;
+use {{moduleName}}::{{classname}};
 {{#hasAuthMethods}}{{#authMethods}}{{#isBasic}}
 # Configure HTTP basic authorization: {{{name}}}
 ${{{moduleName}}}::Configuration::username = 'YOUR_USERNAME';
