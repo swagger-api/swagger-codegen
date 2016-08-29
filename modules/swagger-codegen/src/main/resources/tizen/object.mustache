@@ -1,27 +1,42 @@
-#ifndef _{{prefix}}_OBJECT_H_
-#define _{{prefix}}_OBJECT_H_
+/*
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd All Rights Reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-#include <FNet.h>
-#include <FWebJson.h>
-#include <FBase.h>
+#ifndef _OBJECT_H_
+#define _OBJECT_H_
 
-using Tizen::Base::String;
+namespace Tizen{
+namespace {{prefix}} {
 
-using namespace Tizen::Web::Json;
+class Object {
+public:
 
-class {{prefix}}Object {
-  public:
-    virtual JsonObject* asJsonObject() {
-      return null;
-    }
-    virtual ~{{prefix}}Object() {}
-    virtual {{prefix}}Object* fromJson(String* obj) {
-      return null;
-    }
-    virtual void fromJsonObject(IJsonValue* obj) {}
-    virtual String asJson() {
-      return L"";
-    }
+	virtual char* toJson()
+	{
+	return NULL;
+	}
+
+	virtual ~Object()
+	{
+	}
+
+	virtual void fromJson(char* jsonStr)
+	{
+	}
 };
 
-#endif /* _{{prefix}}_OBJECT_H_ */
+}
+}
+#endif /* _OBJECT_H_ */

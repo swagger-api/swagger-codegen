@@ -14,33 +14,36 @@
  * limitations under the License.
  */
 
-#ifndef _HELPERS_H_
-#define _HELPERS_H_
-
+#ifndef _Error_H_
+#define _Error_H_
 #include <string>
-#include <glib-object.h>
-#include <json-glib/json-glib.h>
 
-using namespace std;
+namespace Tizen{
+namespace ArtikCloud {
 
-JsonNode *
-json_from_string (const char  *str,
-				  GError **mygerror);
+class Error {
+public:
+	Error();
+	Error(int code, std::string message);
+	virtual ~Error();
 
-char *
-json_to_string (JsonNode *node,
-				gboolean  pretty);
 
-JsonNode*
-converttoJson(void* v, string type, string containerType);
+	void init();
 
-void
-jsonToValue(void* target, JsonNode* ptr, string type, string innerType);
+	void cleanup();
 
-void helper_func(JsonObject *object, const gchar* member_name, JsonNode *member_node,gpointer user_data);
+	int getCode();
+	void setCode(int pCode);
 
-string
-stringify(void* ptr, string type);
+	std::string getMessage();
+	void setMessage(std::string pMessage);
 
-bool isprimitive(string type);
-#endif /* HELPERS_H_ */
+
+private:
+	int pCode;
+	std::string pMessage;
+};
+
+}
+}
+#endif /* Error_H_ */

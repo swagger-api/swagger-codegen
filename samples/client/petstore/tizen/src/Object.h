@@ -14,33 +14,29 @@
  * limitations under the License.
  */
 
-#ifndef _HELPERS_H_
-#define _HELPERS_H_
+#ifndef _OBJECT_H_
+#define _OBJECT_H_
 
-#include <string>
-#include <glib-object.h>
-#include <json-glib/json-glib.h>
+namespace Tizen{
+namespace ArtikCloud {
 
-using namespace std;
+class Object {
+public:
 
-JsonNode *
-json_from_string (const char  *str,
-				  GError **mygerror);
+	virtual char* toJson()
+	{
+	return NULL;
+	}
 
-char *
-json_to_string (JsonNode *node,
-				gboolean  pretty);
+	virtual ~Object()
+	{
+	}
 
-JsonNode*
-converttoJson(void* v, string type, string containerType);
+	virtual void fromJson(char* jsonStr)
+	{
+	}
+};
 
-void
-jsonToValue(void* target, JsonNode* ptr, string type, string innerType);
-
-void helper_func(JsonObject *object, const gchar* member_name, JsonNode *member_node,gpointer user_data);
-
-string
-stringify(void* ptr, string type);
-
-bool isprimitive(string type);
-#endif /* HELPERS_H_ */
+}
+}
+#endif /* _OBJECT_H_ */

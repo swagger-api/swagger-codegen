@@ -14,33 +14,61 @@
  * limitations under the License.
  */
 
-#ifndef _HELPERS_H_
-#define _HELPERS_H_
-
-#include <string>
-#include <glib-object.h>
-#include <json-glib/json-glib.h>
+#include "Error.h"
 
 using namespace std;
+using namespace Tizen::ArtikCloud;
 
-JsonNode *
-json_from_string (const char  *str,
-				  GError **mygerror);
+Error::Error()
+{
+	init();
+}
 
-char *
-json_to_string (JsonNode *node,
-				gboolean  pretty);
+Error::Error(int code, string message)
+{
+	init();
+	this->setCode(code);
+	this->setMessage(message);
+}
 
-JsonNode*
-converttoJson(void* v, string type, string containerType);
+Error::~Error()
+{
+	this->cleanup();
+}
 
 void
-jsonToValue(void* target, JsonNode* ptr, string type, string innerType);
+Error::init()
+{
+	pCode = 0;
+	pMessage = "";
+}
 
-void helper_func(JsonObject *object, const gchar* member_name, JsonNode *member_node,gpointer user_data);
+void
+Error::cleanup()
+{
+
+}
+
+int
+Error::getCode()
+{
+	return pCode;
+}
+
+void
+Error::setCode(int pCode)
+{
+	this->pCode = pCode;
+}
 
 string
-stringify(void* ptr, string type);
+Error::getMessage()
+{
+	return pMessage;
+}
 
-bool isprimitive(string type);
-#endif /* HELPERS_H_ */
+void
+Error::setMessage(string pMessage)
+{
+	this->pMessage = pMessage;
+}
