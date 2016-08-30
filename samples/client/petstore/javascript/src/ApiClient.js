@@ -64,9 +64,9 @@
      * @type {Array.<String>}
      */
     this.authentications = {
-      'api_key': {type: 'apiKey', 'in': 'header', name: 'api_key'},
       'petstore_auth': {type: 'oauth2'},
-      'http_basic_test': {type: 'basic'}
+      'http_basic_test': {type: 'basic'},
+      'api_key': {type: 'apiKey', 'in': 'header', name: 'api_key'}
     };
     /**
      * The default HTTP headers to be included for all API calls.
@@ -81,6 +81,14 @@
      * @default 60000
      */
     this.timeout = 60000;
+
+    /**
+     * If set to true, enables the ability to send cookies from the origin,
+     * however only when "Access-Control-Allow-Origin" is not a wildcard ("*"),
+     * and "Access-Control-Allow-Credentials" is "true".
+     * @default false
+     */
+    this.withCredentials = false;
   };
 
   /**
@@ -403,6 +411,11 @@
     var accept = this.jsonPreferredMime(accepts);
     if (accept) {
       request.accept(accept);
+    }
+
+    // Allow cookies?
+    if (this.withCredentials){
+      request.withCredentials();
     }
 
 
