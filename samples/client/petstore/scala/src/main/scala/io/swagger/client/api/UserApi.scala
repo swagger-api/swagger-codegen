@@ -51,7 +51,7 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
    * @param body Created user object 
    * @return void
    */
-  def createUserbody: User) = {
+  def createUser(body: User) = {
     // create path and map variables
     val path = "/user".replaceAll("\\{format\\}","json")
     val contentTypes = List("application/json")
@@ -93,7 +93,7 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
    * @param body List of user object 
    * @return void
    */
-  def createUsersWithArrayInputbody: List[User]) = {
+  def createUsersWithArrayInput(body: List[User]) = {
     // create path and map variables
     val path = "/user/createWithArray".replaceAll("\\{format\\}","json")
     val contentTypes = List("application/json")
@@ -135,7 +135,7 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
    * @param body List of user object 
    * @return void
    */
-  def createUsersWithListInputbody: List[User]) = {
+  def createUsersWithListInput(body: List[User]) = {
     // create path and map variables
     val path = "/user/createWithList".replaceAll("\\{format\\}","json")
     val contentTypes = List("application/json")
@@ -177,7 +177,7 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
    * @param username The name that needs to be deleted 
    * @return void
    */
-  def deleteUserusername: String) = {
+  def deleteUser(username: String) = {
     // create path and map variables
     val path = "/user/{username}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "username" + "\\}",apiInvoker.escape(username))
 
@@ -219,7 +219,7 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
    * @param username The name that needs to be fetched. Use user1 for testing.  
    * @return User
    */
-  def getUserByNameusername: String): Option[User] = {
+  def getUserByName(username: String): Option[User] = {
     // create path and map variables
     val path = "/user/{username}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "username" + "\\}",apiInvoker.escape(username))
 
@@ -263,7 +263,7 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
    * @param password The password for login in clear text 
    * @return String
    */
-  def loginUserusername: String, password: String): Option[String] = {
+  def loginUser(username: String, password: String): Option[String] = {
     // create path and map variables
     val path = "/user/login".replaceAll("\\{format\\}","json")
     val contentTypes = List("application/json")
@@ -305,7 +305,7 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
    * 
    * @return void
    */
-  def logoutUser) = {
+  def logoutUser() = {
     // create path and map variables
     val path = "/user/logout".replaceAll("\\{format\\}","json")
     val contentTypes = List("application/json")
@@ -346,7 +346,7 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
    * @param body Updated user object 
    * @return void
    */
-  def updateUserusername: String, body: User) = {
+  def updateUser(username: String, body: User) = {
     // create path and map variables
     val path = "/user/{username}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "username" + "\\}",apiInvoker.escape(username))
 
