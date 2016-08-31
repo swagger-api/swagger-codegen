@@ -67,7 +67,7 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     if (body == null) throw new Exception("Missing required parameter 'body' when calling PetApi->addPet")
 
     
-    
+
     var postBody: AnyRef = body
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -110,7 +110,7 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     val formParams = new HashMap[String, String]
 
     
-    headerParams += "api_key" -> apiKey
+    apiKey.map(paramVal => headerParams += "api_key" -> paramVal)
 
     var postBody: AnyRef = null
 
@@ -154,7 +154,7 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
     if(String.valueOf(status) != "null") queryParams += "status" -> status.toString
     
-    
+
     var postBody: AnyRef = null
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -198,7 +198,7 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
     if(String.valueOf(tags) != "null") queryParams += "tags" -> tags.toString
     
-    
+
     var postBody: AnyRef = null
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -241,7 +241,7 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     val formParams = new HashMap[String, String]
 
     
-    
+
     var postBody: AnyRef = null
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -284,7 +284,7 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     if (body == null) throw new Exception("Missing required parameter 'body' when calling PetApi->updatePet")
 
     
-    
+
     var postBody: AnyRef = body
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -328,7 +328,7 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     val formParams = new HashMap[String, String]
 
     
-    
+
     var postBody: AnyRef = null
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -378,7 +378,7 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     val formParams = new HashMap[String, String]
 
     
-    
+
     var postBody: AnyRef = null
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -386,8 +386,8 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       
       additionalMetadata.map(paramVal => mp.field("additionalMetadata", paramVal.toString, MediaType.MULTIPART_FORM_DATA_TYPE))
       
-      mp.field("file", file.getName)
-      file.map(paramVal => mp.bodyPart(new FileDataBodyPart("file", paramVal, MediaType.MULTIPART_FORM_DATA_TYPE))
+      file.map(fileVal => mp.field("file", fileVal.getName))
+      file.map(paramVal => mp.bodyPart(new FileDataBodyPart("file", paramVal, MediaType.MULTIPART_FORM_DATA_TYPE)))
       
       postBody = mp
     }

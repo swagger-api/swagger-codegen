@@ -65,7 +65,7 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     if (body == null) throw new Exception("Missing required parameter 'body' when calling UserApi->createUser")
 
     
-    
+
     var postBody: AnyRef = body
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -107,7 +107,7 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     if (body == null) throw new Exception("Missing required parameter 'body' when calling UserApi->createUsersWithArrayInput")
 
     
-    
+
     var postBody: AnyRef = body
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -149,7 +149,7 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     if (body == null) throw new Exception("Missing required parameter 'body' when calling UserApi->createUsersWithListInput")
 
     
-    
+
     var postBody: AnyRef = body
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -191,7 +191,7 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     val formParams = new HashMap[String, String]
 
     
-    
+
     var postBody: AnyRef = null
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -233,7 +233,7 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     val formParams = new HashMap[String, String]
 
     
-    
+
     var postBody: AnyRef = null
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -277,7 +277,7 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     if(String.valueOf(username) != "null") queryParams += "username" -> username.toString
     if(String.valueOf(password) != "null") queryParams += "password" -> password.toString
     
-    
+
     var postBody: AnyRef = null
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -317,7 +317,7 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     val formParams = new HashMap[String, String]
 
     
-    
+
     var postBody: AnyRef = null
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -362,7 +362,7 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     if (body == null) throw new Exception("Missing required parameter 'body' when calling UserApi->updateUser")
 
     
-    
+
     var postBody: AnyRef = body
 
     if(contentType.startsWith("multipart/form-data")) {

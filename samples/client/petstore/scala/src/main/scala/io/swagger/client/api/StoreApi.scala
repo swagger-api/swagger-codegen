@@ -65,7 +65,7 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     val formParams = new HashMap[String, String]
 
     
-    
+
     var postBody: AnyRef = null
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -104,7 +104,7 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     val formParams = new HashMap[String, String]
 
     
-    
+
     var postBody: AnyRef = null
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -147,7 +147,7 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     val formParams = new HashMap[String, String]
 
     
-    
+
     var postBody: AnyRef = null
 
     if(contentType.startsWith("multipart/form-data")) {
@@ -190,7 +190,7 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     if (body == null) throw new Exception("Missing required parameter 'body' when calling StoreApi->placeOrder")
 
     
-    
+
     var postBody: AnyRef = body
 
     if(contentType.startsWith("multipart/form-data")) {

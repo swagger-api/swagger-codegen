@@ -62,7 +62,13 @@ class {{classname}}(val defBasePath: String = "{{basePath}}",
     {{/required}}
     {{/queryParams}}
     
-    {{#headerParams}}headerParams += "{{baseName}}" -> {{paramName}}
+    {{#headerParams}}
+    {{#required}}
+    headerParams += "{{baseName}}" -> {{paramName}}
+    {{/required}}
+    {{^required}}
+    {{paramName}}.map(paramVal => headerParams += "{{baseName}}" -> paramVal)
+    {{/required}}
     {{/headerParams}}
 
     var postBody: AnyRef = {{#bodyParam}}{{#required}}{{paramName}}{{/required}}{{^required}}{{paramName}}.map(paramVal => paramVal){{/required}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}}
@@ -77,12 +83,13 @@ class {{classname}}(val defBasePath: String = "{{basePath}}",
       {{paramName}}.map(paramVal => mp.field("{{baseName}}", paramVal.toString, MediaType.MULTIPART_FORM_DATA_TYPE))
       {{/required}}
       {{/notFile}}{{#isFile}}
-      mp.field("{{baseName}}", file.getName)
       {{#required}}
+      mp.field("{{baseName}}", file.getName)
       mp.bodyPart(new FileDataBodyPart("{{baseName}}", {{paramName}}, MediaType.MULTIPART_FORM_DATA_TYPE))
       {{/required}}
       {{^required}}
-      {{paramName}}.map(paramVal => mp.bodyPart(new FileDataBodyPart("{{baseName}}", paramVal, MediaType.MULTIPART_FORM_DATA_TYPE))
+      file.map(fileVal => mp.field("{{baseName}}", fileVal.getName))
+      {{paramName}}.map(paramVal => mp.bodyPart(new FileDataBodyPart("{{baseName}}", paramVal, MediaType.MULTIPART_FORM_DATA_TYPE)))
       {{/required}}
       {{/isFile}}{{/formParams}}
       postBody = mp
