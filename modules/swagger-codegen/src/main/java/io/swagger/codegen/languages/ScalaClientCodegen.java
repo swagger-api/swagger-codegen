@@ -326,12 +326,6 @@ public class ScalaClientCodegen extends DefaultCodegen implements CodegenConfig 
             return name;
         }
 
-        // camelize (lower first character) the variable name
-        // pet_id => petId
-        name = camelize(name, true);
-
-        // should be the same as variable name
-        String str = getNameUsingModelPropertyNaming(name);
         name = getNameUsingModelPropertyNaming(name);
 
         // for reserved word or word starting with number, append _
