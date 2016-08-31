@@ -370,7 +370,7 @@ class ApiClient(object):
                                            body=body)
         else:
             raise ValueError(
-                "http method must be `GET`, `HEAD`,"
+                "http method must be `GET`, `HEAD`, `OPTIONS`,"
                 " `POST`, `PATCH`, `PUT` or `DELETE`."
             )
 
