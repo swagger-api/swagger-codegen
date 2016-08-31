@@ -54,6 +54,7 @@ to_int(Data) when is_binary(Data) ->
 to_int(Data) when is_list(Data) ->
     list_to_integer(Data).
 
+-spec set_resp_headers([{binary(), iodata()}], cowboy_req:req()) -> cowboy_req:req().
 
 set_resp_headers([], Req) ->
     Req;
@@ -61,19 +62,29 @@ set_resp_headers([{K, V} | T], Req0) ->
     Req = cowboy_req:set_resp_header(K, V, Req0),
     set_resp_headers(T, Req).
 
+-spec to_header(iodata() | atom() | number()) -> binary().
+
 to_header(Name) ->
     Prepared = to_binary(Name),
     to_lower(Prepared).
 
+-spec to_qs(iodata() | atom() | number()) -> binary().
+
 to_qs(Name) ->
     to_binary(Name).
+
+-spec to_binding(iodata() | atom() | number()) -> atom().
 
 to_binding(Name) ->
     Prepared = to_binary(Name),
     binary_to_atom(Prepared, utf8).
 
+-spec get_opt(any(), []) -> any().
+
 get_opt(Key, Opts) ->
     get_opt(Key, Opts, undefined).
+
+-spec get_opt(any(), [], any()) -> any().
 
 get_opt(Key, Opts, Default) ->
     case lists:keyfind(Key, 1, Opts) of

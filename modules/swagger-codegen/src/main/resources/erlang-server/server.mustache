@@ -6,22 +6,28 @@
 
 -export([child_spec/2]).
 
-child_spec(Id, #{
-    ip            := Ip,
+-spec child_spec( ID :: any(), #{
+    ip            => inet:ip_address(),
+    port          => inet:port_number(),
+    net_opts      => []
+}) -> supervisor:child_spec().
+
+child_spec(ID, #{
+    ip            := IP ,
     port          := Port,
     net_opts      := NetOpts
 } = Params) ->
     AcceptorsPool = ?DEFAULT_ACCEPTORS_POOLSIZE,
-    {Transport, TransportOpts} = get_socket_transport(Ip, Port, NetOpts),
+    {Transport, TransportOpts} = get_socket_transport(IP, Port, NetOpts),
     LogicHandler = maps:get(logic_handler, Params, ?DEFAULT_LOGIC_HANDLER),
     ExtraOpts = maps:get(cowboy_extra_opts, Params, []),
     CowboyOpts = get_cowboy_config(LogicHandler, ExtraOpts),
-    ranch:child_spec({?MODULE, Id}, AcceptorsPool,
+    ranch:child_spec({?MODULE, ID}, AcceptorsPool,
         Transport, TransportOpts, cowboy_protocol, CowboyOpts).
 
-get_socket_transport(Ip, Port, Options) ->
+get_socket_transport(IP, Port, Options) ->
     Opts = [
-        {ip,   Ip},
+        {ip,   IP},
         {port, Port}
     ],
     case {{packageName}}_utils:get_opt(ssl, Options) of

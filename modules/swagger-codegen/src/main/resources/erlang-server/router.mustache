@@ -2,6 +2,24 @@
 
 -export([get_paths/1]).
 
+-type operations() :: #{
+    Method :: binary() => {{packageName}}_api:operation_id()
+}.
+
+-type init_opts()  :: {
+    Operations :: operations(),
+    LogicHandler :: atom(),
+    ValidatorState :: jesse_state:state()
+}.
+
+-export_type([init_opts/0]).
+
+-spec get_paths(LogicHandler :: atom()) ->  [{'_',[{
+    Path :: string(),
+    Handler :: atom(),
+    InitOpts :: init_opts()
+}]}].
+
 get_paths(LogicHandler) ->
     ValidatorState = prepare_validator(),
     PreparedPaths = maps:fold(
@@ -13,7 +31,7 @@ get_paths(LogicHandler) ->
     ),
     [
         {'_',
-            [{P, H, [O, LogicHandler, ValidatorState]} || {P, H, O} <- PreparedPaths]
+            [{P, H, {O, LogicHandler, ValidatorState}} || {P, H, O} <- PreparedPaths]
         }
     ].
 
