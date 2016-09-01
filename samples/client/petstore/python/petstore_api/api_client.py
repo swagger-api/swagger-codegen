@@ -95,7 +95,8 @@ class ApiClient(object):
     def __call_api(self, resource_path, method,
                    path_params=None, query_params=None, header_params=None,
                    body=None, post_params=None, files=None,
-                   response_type=None, auth_settings=None, callback=None, _return_http_data_only=None):
+                   response_type=None, auth_settings=None, callback=None,
+                   _return_http_data_only=None, collection_formats=None):
 
         # header parameters
         header_params = header_params or {}
@@ -123,6 +124,8 @@ class ApiClient(object):
         if post_params or files:
             post_params = self.prepare_post_parameters(post_params, files)
             post_params = self.sanitize_for_serialization(post_params)
+            post_params = self.parameters_to_tuples(post_params,
+                                                    collection_formats)
 
         # auth setting
         self.update_params_for_auth(header_params, query_params, auth_settings)
@@ -281,7 +284,8 @@ class ApiClient(object):
     def call_api(self, resource_path, method,
                  path_params=None, query_params=None, header_params=None,
                  body=None, post_params=None, files=None,
-                 response_type=None, auth_settings=None, callback=None, _return_http_data_only=None):
+                 response_type=None, auth_settings=None, callback=None,
+                 _return_http_data_only=None, collection_formats=None):
         """
         Makes the HTTP request (synchronous) and return the deserialized data.
         To make an async request, define a function for callback.
@@ -303,6 +307,8 @@ class ApiClient(object):
             If provide this parameter,
             the request will be called asynchronously.
         :param _return_http_data_only: response data without head status code and headers
+        :param collection_formats: dict of collection formats for path, query,
+            header, and post parameters.
         :return:
             If provide parameter callback,
             the request will be called asynchronously.
@@ -314,7 +320,8 @@ class ApiClient(object):
             return self.__call_api(resource_path, method,
                                    path_params, query_params, header_params,
                                    body, post_params, files,
-                                   response_type, auth_settings, callback, _return_http_data_only)
+                                   response_type, auth_settings, callback,
+                                   _return_http_data_only, collection_formats)
         else:
             thread = threading.Thread(target=self.__call_api,
                                       args=(resource_path, method,
@@ -322,7 +329,8 @@ class ApiClient(object):
                                             header_params, body,
                                             post_params, files,
                                             response_type, auth_settings,
-                                            callback, _return_http_data_only))
+                                            callback, _return_http_data_only,
+                                            collection_formats))
         thread.start()
         return thread
 
@@ -374,30 +382,36 @@ class ApiClient(object):
                 " `POST`, `PATCH`, `PUT` or `DELETE`."
             )
 
-    def parameter_to_tuples(self, collection_format, name, value):
+    def parameters_to_tuples(self, params, collection_formats):
         """
-        Get parameter as list of tuples according to collection format.
+        Get parameters as list of tuples, formatting collections.
 
-        :param str collection_format: Collection format
-        :param str name: Parameter name
-        :param value: Parameter value
-        :return: Parameter as list of tuples
+        :param params: Parameters as dict or list of two-tuples
+        :param dict collection_formats: Parameter collection formats
+        :return: Parameters as list of tuples, collections formatted
         """
-        if isinstance(value, (list, tuple)):
-            if collection_format == "multi":
-                return [(name, v) for v in value]
+        new_params = []
+        if collection_formats is None:
+            collection_formats = {}
+        for k, v in iteritems(params) if isinstance(params, dict) else params:
+            if k in collection_formats:
+                collection_format = collection_formats[k]
+                if collection_format == 'multi':
+                    new_params.extend((k, value) for value in v)
+                else:
+                    if collection_format == 'ssv':
+                        delimiter = ' '
+                    elif collection_format == 'tsv':
+                        delimiter = '\t'
+                    elif collection_format == 'pipes':
+                        delimiter = '|'
+                    else:  # csv is the default
+                        delimiter = ','
+                    new_params.append(
+                        (k, delimiter.join(str(value) for value in v)))
             else:
-                if collection_format == "ssv":
-                    delimiter = " "
-                elif collection_format == "tsv":
-                    delimiter = "\t"
-                elif collection_format == "pipes":
-                    delimiter = "|"
-                else:  # csv is the default
-                    delimiter = ","
-                return [(name, delimiter.join(value))]
-        else:
-            return [(name, value)]
+                new_params.append((k, v))
+        return new_params
 
     def prepare_post_parameters(self, post_params=None, files=None):
         """
