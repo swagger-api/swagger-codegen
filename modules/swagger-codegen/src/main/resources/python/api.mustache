@@ -161,7 +161,8 @@ class {{classname}}(object):
         header_params = {}
 {{#headerParams}}
         if '{{paramName}}' in params:
-            header_params['{{baseName}}'] = params['{{paramName}}']
+            header_params['{{baseName}}'] = params['{{paramName}}']{{#isListContainer}}
+            collection_formats['{{baseName}}'] = '{{collectionFormat}}'{{/isListContainer}}
 {{/headerParams}}
 
         form_params = []

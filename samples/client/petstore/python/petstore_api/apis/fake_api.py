@@ -444,6 +444,7 @@ class FakeApi(object):
         header_params = {}
         if 'enum_header_string_array' in params:
             header_params['enum_header_string_array'] = params['enum_header_string_array']
+            collection_formats['enum_header_string_array'] = 'csv'
         if 'enum_header_string' in params:
             header_params['enum_header_string'] = params['enum_header_string']
 
