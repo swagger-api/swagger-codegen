@@ -164,19 +164,8 @@ public class ScalatraServerCodegen extends DefaultCodegen implements CodegenConf
         for (CodegenOperation op : operationList) {
             // force http method to lower case
             op.httpMethod = op.httpMethod.toLowerCase();
-
-
-            String path = new String(op.path);
-            /*// remove first /
-            if (path.startsWith("/")) {
-                path = path.substring(1);
-            }
-            // remove last /
-            if (path.endsWith("/")) {
-                path = path.substring(0, path.length()-1);
-            }*/
-
-            String[] items = path.split("/", -1);
+ 
+            String[] items = op.path.split("/", -1);
             String scalaPath = "";
             int pathParamIndex = 0;
 
