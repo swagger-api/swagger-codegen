@@ -1,7 +1,7 @@
 /* 
  * Swagger Petstore
  *
- * This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
+ * This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
  *
  * OpenAPI spec version: 1.0.0
  * Contact: apiteam@swagger.io
@@ -51,12 +51,12 @@ func NewStoreApiWithBasePath(basePath string) *StoreApi {
 
 /**
  * Delete purchase order by ID
- * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
+ * For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
  *
  * @param orderId ID of the order that needs to be deleted
  * @return void
  */
-func (a StoreApi) DeleteOrder(orderId string) (*APIResponse, error) {
+func (a StoreApi) DeleteOrder(orderId int64) (*APIResponse, error) {
 
 	var localVarHttpMethod = "Delete"
 	// create path and map variables
@@ -161,7 +161,7 @@ func (a StoreApi) GetInventory() (*map[string]int32, *APIResponse, error) {
 
 /**
  * Find purchase order by ID
- * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+ * For valid response try integer IDs with value &gt;&#x3D; 1 and &lt;&#x3D; 10. Other values will generated exceptions
  *
  * @param orderId ID of pet that needs to be fetched
  * @return *Order

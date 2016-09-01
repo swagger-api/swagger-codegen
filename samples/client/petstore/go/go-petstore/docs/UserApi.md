@@ -227,7 +227,7 @@ This can only be done by the logged in user.
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **string**| name that need to be deleted | 
+ **username** | **string**| name that need to be updated | 
  **body** | [**User**](User.md)| Updated user object | 
 
 ### Return type

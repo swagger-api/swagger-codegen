@@ -1,7 +1,7 @@
 /* 
  * Swagger Petstore
  *
- * This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
+ * This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
  *
  * OpenAPI spec version: 1.0.0
  * Contact: apiteam@swagger.io
@@ -441,7 +441,7 @@ func (a UserApi) LogoutUser() (*APIResponse, error) {
  * Updated user
  * This can only be done by the logged in user.
  *
- * @param username name that need to be deleted
+ * @param username name that need to be updated
  * @param body Updated user object
  * @return void
  */
