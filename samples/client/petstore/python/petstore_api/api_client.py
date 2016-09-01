@@ -109,10 +109,11 @@ class ApiClient(object):
         # path parameters
         if path_params:
             path_params = self.sanitize_for_serialization(path_params)
-            for k, v in iteritems(path_params):
-                replacement = quote(str(self.to_path_value(v)))
-                resource_path = resource_path.\
-                    replace('{' + k + '}', replacement)
+            path_params = self.parameters_to_tuples(path_params,
+                                                    collection_formats)
+            for k, v in path_params:
+                resource_path = resource_path.replace(
+                    '{%s}' % k, quote(str(v)))
 
         # query parameters
         if query_params:
@@ -157,20 +158,6 @@ class ApiClient(object):
             return (deserialized_data)
         else:
             return (deserialized_data, response_data.status, response_data.getheaders())
-        
-    def to_path_value(self, obj):
-        """
-        Takes value and turn it into a string suitable for inclusion in
-        the path, by url-encoding.
-
-        :param obj: object or string value.
-
-        :return string: quoted value.
-        """
-        if type(obj) == list:
-            return ','.join(obj)
-        else:
-            return str(obj)
 
     def sanitize_for_serialization(self, obj):
         """
