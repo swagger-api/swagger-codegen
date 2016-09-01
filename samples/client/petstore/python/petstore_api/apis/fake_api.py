@@ -435,6 +435,7 @@ class FakeApi(object):
         query_params = {}
         if 'enum_query_string_array' in params:
             query_params['enum_query_string_array'] = params['enum_query_string_array']
+            collection_formats['enum_query_string_array'] = 'csv'
         if 'enum_query_string' in params:
             query_params['enum_query_string'] = params['enum_query_string']
         if 'enum_query_integer' in params:

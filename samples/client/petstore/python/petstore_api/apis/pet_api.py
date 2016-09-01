@@ -345,6 +345,7 @@ class PetApi(object):
         query_params = {}
         if 'status' in params:
             query_params['status'] = params['status']
+            collection_formats['status'] = 'csv'
 
         header_params = {}
 
@@ -453,6 +454,7 @@ class PetApi(object):
         query_params = {}
         if 'tags' in params:
             query_params['tags'] = params['tags']
+            collection_formats['tags'] = 'csv'
 
         header_params = {}
 

@@ -117,8 +117,8 @@ class ApiClient(object):
         # query parameters
         if query_params:
             query_params = self.sanitize_for_serialization(query_params)
-            query_params = {k: self.to_path_value(v)
-                            for k, v in iteritems(query_params)}
+            query_params = self.parameters_to_tuples(query_params,
+                                                     collection_formats)
 
         # post parameters
         if post_params or files:
@@ -480,7 +480,7 @@ class ApiClient(object):
         Updates header and query params based on authentication setting.
 
         :param headers: Header parameters dict to be updated.
-        :param querys: Query parameters dict to be updated.
+        :param querys: Query parameters tuple list to be updated.
         :param auth_settings: Authentication setting identifiers list.
         """
         config = Configuration()
@@ -496,7 +496,7 @@ class ApiClient(object):
                 elif auth_setting['in'] == 'header':
                     headers[auth_setting['key']] = auth_setting['value']
                 elif auth_setting['in'] == 'query':
-                    querys[auth_setting['key']] = auth_setting['value']
+                    querys.append((auth_setting['key'], auth_setting['value']))
                 else:
                     raise ValueError(
                         'Authentication token must be in `query` or `header`'

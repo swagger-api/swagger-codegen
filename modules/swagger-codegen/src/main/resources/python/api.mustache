@@ -153,7 +153,8 @@ class {{classname}}(object):
         query_params = {}
 {{#queryParams}}
         if '{{paramName}}' in params:
-            query_params['{{baseName}}'] = params['{{paramName}}']
+            query_params['{{baseName}}'] = params['{{paramName}}']{{#isListContainer}}
+            collection_formats['{{baseName}}'] = '{{collectionFormat}}'{{/isListContainer}}
 {{/queryParams}}
 
         header_params = {}
