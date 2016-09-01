@@ -12,6 +12,7 @@ import AlamofireObjectMapper
 {{#description}}
 /** {{description}} */{{/description}}
 class {{classname}} {
+    public static var alternativeHost:String? = nil
 {{#operation}}
 
     enum {{operationId}}Response {
@@ -30,7 +31,12 @@ class {{classname}} {
     class func request{{operationId}}({{#allParams}}{{paramName}}: {{#isListContainer}}[{{/isListContainer}}{{{dataType}}}{{#isListContainer}}]{{/isListContainer}}{{^required}}?{{/required}}, {{/allParams}}callback:(({{operationId}}Response, NSURLRequest?, NSHTTPURLResponse?, NSData?) -> Void)?=nil) {
         {{^pathParams}}let{{/pathParams}}{{#pathParams}}{{^secondaryParam}}var{{/secondaryParam}}{{/pathParams}} path = "{{path}}"{{#pathParams}}
         path = path.stringByReplacingOccurrencesOfString("{{=<% %>=}}{<%paramName%>}<%={{ }}=%>", withString: "\({{paramName}})", options: .LiteralSearch, range: nil){{/pathParams}}
-        let URLString = "{{basePath}}" + path
+        let URLString:String
+        if let alternativeHost = {{classname}}.alternativeHost {
+            URLString = alternativeHost + "{{basePathWithoutHost}}" + path
+        } else {
+            URLString = "{{basePath}}" + path
+        }
         
         var headerFields:[String:String] = [:]
         {{#consumes}}headerFields["Content-Type"] = "{{mediaType}}"{{/consumes}}{{#headerParams}}
