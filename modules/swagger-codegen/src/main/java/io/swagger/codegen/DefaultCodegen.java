@@ -2585,10 +2585,10 @@ public class DefaultCodegen {
         if (objs != null) {
             for (int i = 0; i < objs.size(); i++) {
                 if (i > 0) {
-                    objs.get(i).secondaryParam = new Boolean(true);
+                    objs.get(i).secondaryParam = true;
                 }
                 if (i < objs.size() - 1) {
-                    objs.get(i).hasMore = new Boolean(true);
+                    objs.get(i).hasMore = true;
                 }
             }
         }
@@ -2599,7 +2599,7 @@ public class DefaultCodegen {
         if (objs != null) {
             for (int i = 0; i < objs.size() - 1; i++) {
                 if (i > 0) {
-                    objs.put("secondaryParam", new Boolean(true));
+                    objs.put("secondaryParam", true);
                 }
                 if (i < objs.size() - 1) {
                     objs.put("hasMore", true);
