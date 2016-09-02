@@ -30,6 +30,7 @@ import org.joda.time.format.ISODateTimeFormat;
 {{#java8}}
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 {{/java8}}
 
@@ -173,7 +174,7 @@ class DateAdapter implements JsonSerializer<Date>, JsonDeserializer<Date> {
  */
 class DateTimeTypeAdapter extends TypeAdapter<DateTime> {
 
-    private final DateTimeFormatter formatter = ISODateTimeFormat.dateTime();
+    private final DateTimeFormatter formatter = ISODateTimeFormat.dateTime().withZoneUTC();
 
     @Override
     public void write(JsonWriter out, DateTime date) throws IOException {
@@ -232,14 +233,15 @@ class LocalDateTypeAdapter extends TypeAdapter<LocalDate> {
  */
 class OffsetDateTimeTypeAdapter extends TypeAdapter<OffsetDateTime> {
 
-    private final DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+    private final DateTimeFormatter inFormat = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+    private final DateTimeFormatter outFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").withZone(ZoneId.of("Z"));
 
     @Override
     public void write(JsonWriter out, OffsetDateTime date) throws IOException {
         if (date == null) {
             out.nullValue();
         } else {
-            out.value(formatter.format(date));
+            out.value(outFormat.format(date));
         }
     }
 
@@ -255,7 +257,7 @@ class OffsetDateTimeTypeAdapter extends TypeAdapter<OffsetDateTime> {
                     date = date.substring(0, date.length()-5) + "Z";
                 }
 
-                return OffsetDateTime.parse(date, formatter);
+                return OffsetDateTime.parse(date, inFormat);
         }
     }
 }
