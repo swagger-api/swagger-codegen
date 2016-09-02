@@ -13,9 +13,9 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
+
 import retrofit2.Converter;
 import retrofit2.Retrofit;
-
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
@@ -55,6 +55,8 @@ public class ApiClient {
             Interceptor auth;
             if (authName == "api_key") { 
                 auth = new ApiKeyAuth("header", "api_key");
+            } else if (authName == "http_basic_test") { 
+                auth = new HttpBasicAuth();
             } else if (authName == "petstore_auth") { 
                 auth = new OAuth(OAuthFlow.implicit, "http://petstore.swagger.io/api/oauth/dialog", "", "write:pets, read:pets");
             } else {
@@ -126,7 +128,6 @@ public class ApiClient {
         adapterBuilder = new Retrofit
                 .Builder()
                 .baseUrl(baseUrl)
-                
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonCustomConverterFactory.create(gson));
     }
