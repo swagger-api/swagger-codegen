@@ -2,19 +2,32 @@ package {{invokerPackage}};
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.*;
-{{#java8}}
-import com.fasterxml.jackson.datatype.jsr310.*;
-{{/java8}}
 {{^java8}}
 import com.fasterxml.jackson.datatype.joda.*;
-{{/java8}}
 
+{{/java8}}
+{{#java8}}
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.ser.OffsetDateTimeSerializer;
+
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+
+{{/java8}}
 import java.text.DateFormat;
 
 import javax.ws.rs.ext.ContextResolver;
 
 {{>generatedAnnotation}}
 public class JSON implements ContextResolver<ObjectMapper> {
+
+  {{#java8}}
+  //Formatter with fixed length and timezone
+  public static final DateTimeFormatter ISO_FIXED_FORMAT =
+    DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").withZone(ZoneId.of("UTC"));
+
+  {{/java8}}
   private ObjectMapper mapper;
 
   public JSON() {
@@ -25,7 +38,9 @@ public class JSON implements ContextResolver<ObjectMapper> {
     mapper.enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
     mapper.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
     {{#java8}}
-    mapper.registerModule(new JavaTimeModule());
+    mapper.registerModule(new JavaTimeModule()
+      .addSerializer(OffsetDateTime.class, new CustomOffsetDateTimeSerializer(ISO_FIXED_FORMAT))
+    );
     {{/java8}}
     {{^java8}}
     mapper.registerModule(new JodaModule());
@@ -44,3 +59,12 @@ public class JSON implements ContextResolver<ObjectMapper> {
     return mapper;
   }
 }
+
+{{#java8}}
+class CustomOffsetDateTimeSerializer extends OffsetDateTimeSerializer {
+
+  public CustomOffsetDateTimeSerializer(DateTimeFormatter format) {
+    super(OffsetDateTimeSerializer.INSTANCE, false, format);
+  }
+}
+{{/java8}}
