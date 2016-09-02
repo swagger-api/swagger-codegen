@@ -373,7 +373,7 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String toOperationId(String operationId) {
-        String sanitizedOperationId = new String(sanitizeName(operationId));
+        String sanitizedOperationId = sanitizeName(operationId);
 
         // method name cannot use reserved keyword, e.g. return
         if (isReservedWord(sanitizedOperationId)) {

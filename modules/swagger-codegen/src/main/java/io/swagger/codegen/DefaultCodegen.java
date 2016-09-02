@@ -2354,28 +2354,28 @@ public class DefaultCodegen {
         } else if (Boolean.TRUE.equals(p.isString)) {
             p.example = p.paramName + "_example";
         } else if (Boolean.TRUE.equals(p.isBoolean)) {
-            p.example = new String("true");
+            p.example = "true";
         } else if (Boolean.TRUE.equals(p.isLong)) {
-            p.example = new String("789");
+            p.example = "789";
         } else if (Boolean.TRUE.equals(p.isInteger)) {
-            p.example = new String("56");
+            p.example = "56";
         } else if (Boolean.TRUE.equals(p.isFloat)) {
-            p.example = new String("3.4");
+            p.example = "3.4";
         } else if (Boolean.TRUE.equals(p.isDouble)) {
-            p.example = new String("1.2");
+            p.example = "1.2";
         } else if (Boolean.TRUE.equals(p.isBinary)) {
-            p.example = new String("BINARY_DATA_HERE");
+            p.example = "BINARY_DATA_HERE";
         } else if (Boolean.TRUE.equals(p.isByteArray)) {
-            p.example = new String("B");
+            p.example = "B";
         } else if (Boolean.TRUE.equals(p.isDate)) {
-            p.example = new String("2013-10-20");
+            p.example = "2013-10-20";
         } else if (Boolean.TRUE.equals(p.isDateTime)) {
-            p.example = new String("2013-10-20T19:20:30+01:00");
+            p.example = "2013-10-20T19:20:30+01:00";
         } else if (param instanceof FormParameter &&
                 ("file".equalsIgnoreCase(((FormParameter) param).getType()) ||
                 "file".equals(p.baseType))) {
             p.isFile = true;
-            p.example = new String("/path/to/file.txt");
+            p.example = "/path/to/file.txt";
         }
 
         // set the parameter excample value
