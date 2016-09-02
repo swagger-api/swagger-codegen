@@ -886,7 +886,7 @@ public class DefaultCodegen {
                     paramPart.append(param.getName()).append("=");
                     paramPart.append("{");
                     if (qp.getCollectionFormat() != null) {
-                        paramPart.append(param.getName() + "1");
+                        paramPart.append(param.getName()).append("1");
                         if ("csv".equals(qp.getCollectionFormat())) {
                             paramPart.append(",");
                         } else if ("pipes".equals(qp.getCollectionFormat())) {
@@ -895,7 +895,7 @@ public class DefaultCodegen {
                             paramPart.append("\t");
                         } else if ("multi".equals(qp.getCollectionFormat())) {
                             paramPart.append("&").append(param.getName()).append("=");
-                            paramPart.append(param.getName() + "2");
+                            paramPart.append(param.getName()).append("2");
                         }
                     } else {
                         paramPart.append(param.getName());
