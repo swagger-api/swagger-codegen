@@ -2530,8 +2530,7 @@ public class DefaultCodegen {
                 // must be root tmpPath
                 builder.append("root");
             }
-            for (int i = 0; i < parts.length; i++) {
-                String part = parts[i];
+            for (String part : parts) {
                 if (part.length() > 0) {
                     if (builder.toString().length() == 0) {
                         part = Character.toLowerCase(part.charAt(0)) + part.substring(1);

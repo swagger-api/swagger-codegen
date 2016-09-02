@@ -514,8 +514,8 @@ public class ObjcClientCodegen extends DefaultCodegen implements CodegenConfig {
         }
 
         // if name starting with special word, escape with '_'
-        for(int i =0; i < specialWords.length; i++) {
-            if (name.matches("(?i:^" + specialWords[i] + ".*)"))
+        for (String specialWord : specialWords) {
+            if (name.matches("(?i:^" + specialWord + ".*)"))
                 name = escapeSpecialWord(name);
         }
 
