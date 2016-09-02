@@ -1,0 +1,34 @@
+swagger: 2
+info:
+  title: Array enum test
+  description: API for testing generation of enum types in arrays
+  version: "1.0.0"
+host: "localhost:8002"
+schemes:
+  - http
+basePath: /v1
+produces:
+  - application/json
+paths:
+  /enum-strings:
+    post:
+      description: "Accepts an array of strings"
+      operationId: "enum-strings"
+      parameters:
+      - name: enumarray
+        in: body
+        schema:
+          $ref: EnumStringRequest
+definitions:
+  EnumStringRequest:
+    required:
+      - values
+    properties:
+      values:
+        type: array
+        items:
+          type: string
+          enum:
+            - value1
+            - value2
+            - value3
