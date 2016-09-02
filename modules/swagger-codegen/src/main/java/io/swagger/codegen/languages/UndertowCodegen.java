@@ -9,6 +9,7 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.util.*;
 
 public class UndertowCodegen extends AbstractJavaCodegen {
@@ -52,7 +53,7 @@ public class UndertowCodegen extends AbstractJavaCodegen {
 
     @Override
     public String getHelp() {
-        return "Generates a Java Inflector Server application.";
+        return "Generates a Java Undertow Server application.";
     }
 
     @Override
@@ -61,10 +62,10 @@ public class UndertowCodegen extends AbstractJavaCodegen {
 
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
         writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
-        supportingFiles.add(new SupportingFile("swagger.mustache",
-                        "src/main/swagger",
-                        "swagger.yaml")
-        );
+
+        supportingFiles.add(new SupportingFile("apiException.mustache",
+                (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiException.java"));
+
     }
 
     @Override
@@ -195,9 +196,9 @@ public class UndertowCodegen extends AbstractJavaCodegen {
     @Override
     public String toApiName(String name) {
         if (name.length() == 0) {
-            return "DefaultController";
+            return "DefaultHandler";
         }
         name = name.replaceAll("[^a-zA-Z0-9]+", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
-        return camelize(name)+ "Controller";
+        return camelize(name)+ "Handler";
     }
 }
