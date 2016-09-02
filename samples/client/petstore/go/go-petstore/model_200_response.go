@@ -22,23 +22,10 @@
 
 package petstore
 
-import (
-	"net/http"
-)
+// Model for testing model name starting with number
+type Model200Response struct {
 
-type APIResponse struct {
-	*http.Response
-	Message string `json:"message,omitempty"`
-}
+	Name int32 `json:"name,omitempty"`
 
-func NewAPIResponse(r *http.Response) *APIResponse {
-
-	response := &APIResponse{Response: r}
-	return response
-}
-
-func NewAPIResponseWithError(errorMessage string) *APIResponse {
-
-	response := &APIResponse{Message: errorMessage}
-	return response
+	Class string `json:"class,omitempty"`
 }

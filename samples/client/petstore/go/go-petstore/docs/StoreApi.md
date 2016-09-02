@@ -15,14 +15,14 @@ Method | HTTP request | Description
 
 Delete purchase order by ID
 
-For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
 
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **orderId** | **int64**| ID of the order that needs to be deleted | 
+ **orderId** | **string**| ID of the order that needs to be deleted | 
 
 ### Return type
 
@@ -70,7 +70,7 @@ This endpoint does not need any parameter.
 
 Find purchase order by ID
 
-For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions
 
 
 ### Parameters

@@ -22,23 +22,11 @@
 
 package petstore
 
-import (
-	"net/http"
-)
+type ArrayTest struct {
 
-type APIResponse struct {
-	*http.Response
-	Message string `json:"message,omitempty"`
-}
+	ArrayOfString []string `json:"array_of_string,omitempty"`
 
-func NewAPIResponse(r *http.Response) *APIResponse {
+	ArrayArrayOfInteger [][]int64 `json:"array_array_of_integer,omitempty"`
 
-	response := &APIResponse{Response: r}
-	return response
-}
-
-func NewAPIResponseWithError(errorMessage string) *APIResponse {
-
-	response := &APIResponse{Message: errorMessage}
-	return response
+	ArrayArrayOfModel [][]ReadOnlyFirst `json:"array_array_of_model,omitempty"`
 }

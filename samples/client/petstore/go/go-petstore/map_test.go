@@ -22,23 +22,9 @@
 
 package petstore
 
-import (
-	"net/http"
-)
+type MapTest struct {
 
-type APIResponse struct {
-	*http.Response
-	Message string `json:"message,omitempty"`
-}
+	MapMapOfString map[string]map[string]string `json:"map_map_of_string,omitempty"`
 
-func NewAPIResponse(r *http.Response) *APIResponse {
-
-	response := &APIResponse{Response: r}
-	return response
-}
-
-func NewAPIResponseWithError(errorMessage string) *APIResponse {
-
-	response := &APIResponse{Message: errorMessage}
-	return response
+	MapOfEnumString map[string]string `json:"map_of_enum_string,omitempty"`
 }

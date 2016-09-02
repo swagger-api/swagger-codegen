@@ -23,22 +23,34 @@
 package petstore
 
 import (
-	"net/http"
+	"time"
 )
 
-type APIResponse struct {
-	*http.Response
-	Message string `json:"message,omitempty"`
-}
+type FormatTest struct {
 
-func NewAPIResponse(r *http.Response) *APIResponse {
+	Integer int32 `json:"integer,omitempty"`
 
-	response := &APIResponse{Response: r}
-	return response
-}
+	Int32_ int32 `json:"int32,omitempty"`
 
-func NewAPIResponseWithError(errorMessage string) *APIResponse {
+	Int64_ int64 `json:"int64,omitempty"`
 
-	response := &APIResponse{Message: errorMessage}
-	return response
+	Number float32 `json:"number,omitempty"`
+
+	Float float32 `json:"float,omitempty"`
+
+	Double float64 `json:"double,omitempty"`
+
+	String_ string `json:"string,omitempty"`
+
+	Byte_ string `json:"byte,omitempty"`
+
+	Binary string `json:"binary,omitempty"`
+
+	Date time.Time `json:"date,omitempty"`
+
+	DateTime time.Time `json:"dateTime,omitempty"`
+
+	Uuid string `json:"uuid,omitempty"`
+
+	Password string `json:"password,omitempty"`
 }

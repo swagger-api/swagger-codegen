@@ -23,22 +23,14 @@
 package petstore
 
 import (
-	"net/http"
+	"time"
 )
 
-type APIResponse struct {
-	*http.Response
-	Message string `json:"message,omitempty"`
-}
+type MixedPropertiesAndAdditionalPropertiesClass struct {
 
-func NewAPIResponse(r *http.Response) *APIResponse {
+	Uuid string `json:"uuid,omitempty"`
 
-	response := &APIResponse{Response: r}
-	return response
-}
+	DateTime time.Time `json:"dateTime,omitempty"`
 
-func NewAPIResponseWithError(errorMessage string) *APIResponse {
-
-	response := &APIResponse{Message: errorMessage}
-	return response
+	Map_ map[string]Animal `json:"map,omitempty"`
 }

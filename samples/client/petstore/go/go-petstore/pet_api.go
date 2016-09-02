@@ -1,7 +1,7 @@
 /* 
  * Swagger Petstore
  *
- * This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
+ * This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
  *
  * OpenAPI spec version: 1.0.0
  * Contact: apiteam@swagger.io
@@ -205,7 +205,7 @@ func (a PetApi) FindPetsByStatus(status []string) ([]Pet, *APIResponse, error) {
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
-	var collectionFormat = "multi"
+	var collectionFormat = "csv"
 	if collectionFormat == "multi" {
 		for _, value := range status {
 			localVarQueryParams.Add("status", value)
@@ -246,7 +246,7 @@ func (a PetApi) FindPetsByStatus(status []string) ([]Pet, *APIResponse, error) {
 
 /**
  * Finds Pets by tags
- * Muliple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+ * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
  *
  * @param tags Tags to filter by
  * @return []Pet
@@ -272,7 +272,7 @@ func (a PetApi) FindPetsByTags(tags []string) ([]Pet, *APIResponse, error) {
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
-	var collectionFormat = "multi"
+	var collectionFormat = "csv"
 	if collectionFormat == "multi" {
 		for _, value := range tags {
 			localVarQueryParams.Add("tags", value)

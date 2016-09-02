@@ -22,23 +22,11 @@
 
 package petstore
 
-import (
-	"net/http"
-)
+type Cat struct {
 
-type APIResponse struct {
-	*http.Response
-	Message string `json:"message,omitempty"`
-}
+	ClassName string `json:"className,omitempty"`
 
-func NewAPIResponse(r *http.Response) *APIResponse {
+	Color string `json:"color,omitempty"`
 
-	response := &APIResponse{Response: r}
-	return response
-}
-
-func NewAPIResponseWithError(errorMessage string) *APIResponse {
-
-	response := &APIResponse{Message: errorMessage}
-	return response
+	Declawed bool `json:"declawed,omitempty"`
 }

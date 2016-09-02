@@ -22,23 +22,8 @@
 
 package petstore
 
-import (
-	"net/http"
-)
+// Model for testing reserved words
+type ModelReturn struct {
 
-type APIResponse struct {
-	*http.Response
-	Message string `json:"message,omitempty"`
-}
-
-func NewAPIResponse(r *http.Response) *APIResponse {
-
-	response := &APIResponse{Response: r}
-	return response
-}
-
-func NewAPIResponseWithError(errorMessage string) *APIResponse {
-
-	response := &APIResponse{Message: errorMessage}
-	return response
+	Return_ int32 `json:"return,omitempty"`
 }

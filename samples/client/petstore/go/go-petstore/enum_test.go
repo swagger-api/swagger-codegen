@@ -22,23 +22,11 @@
 
 package petstore
 
-import (
-	"net/http"
-)
+type EnumTest struct {
 
-type APIResponse struct {
-	*http.Response
-	Message string `json:"message,omitempty"`
-}
+	EnumString string `json:"enum_string,omitempty"`
 
-func NewAPIResponse(r *http.Response) *APIResponse {
+	EnumInteger int32 `json:"enum_integer,omitempty"`
 
-	response := &APIResponse{Response: r}
-	return response
-}
-
-func NewAPIResponseWithError(errorMessage string) *APIResponse {
-
-	response := &APIResponse{Message: errorMessage}
-	return response
+	EnumNumber float64 `json:"enum_number,omitempty"`
 }

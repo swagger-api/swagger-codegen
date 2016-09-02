@@ -22,23 +22,14 @@
 
 package petstore
 
-import (
-	"net/http"
-)
+// Model for testing model name same as property name
+type Name struct {
 
-type APIResponse struct {
-	*http.Response
-	Message string `json:"message,omitempty"`
-}
+	Name int32 `json:"name,omitempty"`
 
-func NewAPIResponse(r *http.Response) *APIResponse {
+	SnakeCase int32 `json:"snake_case,omitempty"`
 
-	response := &APIResponse{Response: r}
-	return response
-}
+	Property string `json:"property,omitempty"`
 
-func NewAPIResponseWithError(errorMessage string) *APIResponse {
-
-	response := &APIResponse{Message: errorMessage}
-	return response
+	Var123Number int32 `json:"123Number,omitempty"`
 }
