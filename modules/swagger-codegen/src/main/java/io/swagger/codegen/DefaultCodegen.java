@@ -1573,7 +1573,7 @@ public class DefaultCodegen {
                 List<String> _enum = sp.getEnum();
                 property._enum = new ArrayList<String>();
                 for(String i : _enum) {
-                  property._enum.add(i.toString());
+                  property._enum.add(i);
                 }
                 property.isEnum = true;
 
@@ -1591,7 +1591,7 @@ public class DefaultCodegen {
                 List<String> _enum = sp.getEnum();
                 property._enum = new ArrayList<String>();
                 for(String i : _enum) {
-                  property._enum.add(i.toString());
+                  property._enum.add(i);
                 }
                 property.isEnum = true;
 

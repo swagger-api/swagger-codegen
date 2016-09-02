@@ -414,7 +414,7 @@ public class CodegenConfigurator {
                 codegenConfig.additionalProperties().put(opt, dynamicProperties.get(opt));
             }
             else if(systemProperties.containsKey(opt)) {
-                codegenConfig.additionalProperties().put(opt, systemProperties.get(opt).toString());
+                codegenConfig.additionalProperties().put(opt, systemProperties.get(opt));
             }
         }
     }
