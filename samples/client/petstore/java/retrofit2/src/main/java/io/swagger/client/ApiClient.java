@@ -361,7 +361,7 @@ class GsonCustomConverterFactory extends Converter.Factory
  */
 class DateTimeTypeAdapter extends TypeAdapter<DateTime> {
 
-    private final DateTimeFormatter formatter = ISODateTimeFormat.dateTime();
+    private final DateTimeFormatter formatter = ISODateTimeFormat.dateTime().withZoneUTC();
 
     @Override
     public void write(JsonWriter out, DateTime date) throws IOException {

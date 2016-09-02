@@ -13,6 +13,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
+
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -55,6 +56,8 @@ public class ApiClient {
             Interceptor auth;
             if (authName == "api_key") { 
                 auth = new ApiKeyAuth("header", "api_key");
+            } else if (authName == "http_basic_test") { 
+                auth = new HttpBasicAuth();
             } else if (authName == "petstore_auth") { 
                 auth = new OAuth(OAuthFlow.implicit, "http://petstore.swagger.io/api/oauth/dialog", "", "write:pets, read:pets");
             } else {
@@ -360,7 +363,7 @@ class GsonCustomConverterFactory extends Converter.Factory
  */
 class DateTimeTypeAdapter extends TypeAdapter<DateTime> {
 
-    private final DateTimeFormatter formatter = ISODateTimeFormat.dateTime();
+    private final DateTimeFormatter formatter = ISODateTimeFormat.dateTime().withZoneUTC();
 
     @Override
     public void write(JsonWriter out, DateTime date) throws IOException {
