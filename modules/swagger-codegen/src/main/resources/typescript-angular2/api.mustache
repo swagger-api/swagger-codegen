@@ -86,8 +86,12 @@ export class {{classname}} {
         headers.set('Content-Type', 'application/json');
 
 {{/bodyParam}}
+
+
 {{#formParams}}
-        formParams['{{baseName}}'] = {{paramName}};
+        // use <any> since paramName could be of any type and formParams just accepts <string> 
+        // see: http://stackoverflow.com/a/32607656
+        formParams.set('{{baseName}}', <any>{{paramName}}); 
 
 {{/formParams}}
         let requestOptions: RequestOptionsArgs = new RequestOptions({
