@@ -95,9 +95,13 @@ public class InlineModelResolver {
                                         Model model = modelFromProperty(op, modelName);
                                         String existing = matchGenerated(model);
                                         if (existing != null) {
-                                            response.setSchema(new RefProperty(existing));
+                                            RefProperty newSchema = new RefProperty(existing);
+                                            this.copyVenderExtensions(property, newSchema);
+											response.setSchema(newSchema);
                                         } else {
-                                            response.setSchema(new RefProperty(modelName));
+                                            RefProperty newSchema = new RefProperty(modelName);
+											response.setSchema(newSchema);
+                                            this.copyVenderExtensions(property, newSchema);
                                             addGenerated(modelName, model);
                                             swagger.addDefinition(modelName, model);
                                         }
@@ -320,18 +324,21 @@ public class InlineModelResolver {
         if(obj != null) {
             example = obj.toString();
         }
+        
         Property inner = object.getItems();
         if (inner instanceof ObjectProperty) {
             ArrayModel model = new ArrayModel();
             model.setDescription(description);
             model.setExample(example);
             model.setItems(object.getItems());
+            this.copyVenderExtensions(object, model);
             return model;
         }
+        
         return null;
     }
 
-    public Model modelFromProperty(ObjectProperty object, String path) {
+	public Model modelFromProperty(ObjectProperty object, String path) {
         String description = object.getDescription();
         String example = null;
 
@@ -354,6 +361,8 @@ public class InlineModelResolver {
             model.setProperties(properties);
         }
 
+        this.copyVenderExtensions(object, model);
+
         return model;
     }
 
@@ -371,11 +380,38 @@ public class InlineModelResolver {
         model.setDescription(description);
         model.setExample(example);
         model.setItems(object.getAdditionalProperties());
-
+        this.copyVenderExtensions(object, model);
+		
         return model;
     }
 
-    public boolean isSkipMatches() {
+    /**
+     * Copy vender extensions from Property to Model
+     * 
+     * @param source
+     * @param target
+     */
+    private void copyVenderExtensions(Property source, AbstractModel target) {
+		Map<String, Object> venderExtensions = source.getVendorExtensions();
+		for (String extName : venderExtensions.keySet()) {
+			target.setVendorExtension(extName, venderExtensions.get(extName));
+		}
+	}
+
+    /**
+     * Copy vender extensions from Property to another Property
+     * 
+     * @param source
+     * @param target
+     */
+	private void copyVenderExtensions(Property source, AbstractProperty target) {
+		Map<String, Object> venderExtensions = source.getVendorExtensions();
+		for (String extName : venderExtensions.keySet()) {
+			target.setVendorExtension(extName, venderExtensions.get(extName));
+		}
+	}
+
+	public boolean isSkipMatches() {
         return skipMatches;
     }
 
