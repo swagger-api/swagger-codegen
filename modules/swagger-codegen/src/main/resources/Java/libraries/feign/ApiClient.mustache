@@ -1,5 +1,10 @@
 package {{invokerPackage}};
 
+{{#java8}}
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+{{/java8}}
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -14,6 +19,7 @@ import com.fasterxml.jackson.datatype.joda.JodaModule;
 {{/java8}}
 {{#java8}}
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.ser.OffsetDateTimeSerializer;
 {{/java8}}
 
 import feign.Feign;
@@ -28,6 +34,12 @@ import {{invokerPackage}}.auth.OAuth.AccessTokenListener;
 public class ApiClient {
   public interface Api {}
 
+  {{#java8}}
+  //Formatter with fixed length and timezone
+  public static final DateTimeFormatter ISO_FIXED_FORMAT =
+    DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").withZone(ZoneId.of("UTC"));
+
+  {{/java8}}
   protected ObjectMapper objectMapper;
   private String basePath = "{{{basePath}}}";
   private Map<String, RequestInterceptor> apiAuthorizations;
@@ -140,7 +152,9 @@ public class ApiClient {
     objectMapper.registerModule(new JodaModule());
     {{/java8}}
     {{#java8}}
-    objectMapper.registerModule(new JavaTimeModule());
+    objectMapper.registerModule(new JavaTimeModule()
+      .addSerializer(OffsetDateTime.class, new CustomOffsetDateTimeSerializer(ISO_FIXED_FORMAT))
+    );
     {{/java8}}
     return objectMapper;
   }
@@ -323,5 +337,13 @@ public class ApiClient {
     apiAuthorizations.put(authName, authorization);
     feignBuilder.requestInterceptor(authorization);
   }
-
 }
+
+{{#java8}}
+class CustomOffsetDateTimeSerializer extends OffsetDateTimeSerializer {
+
+  public CustomOffsetDateTimeSerializer(DateTimeFormatter format) {
+    super(OffsetDateTimeSerializer.INSTANCE, false, format);
+  }
+}
+{{/java8}}

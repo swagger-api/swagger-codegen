@@ -13,6 +13,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
+
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -362,7 +363,7 @@ class GsonCustomConverterFactory extends Converter.Factory
  */
 class DateTimeTypeAdapter extends TypeAdapter<DateTime> {
 
-    private final DateTimeFormatter formatter = ISODateTimeFormat.dateTime();
+    private final DateTimeFormatter formatter = ISODateTimeFormat.dateTime().withZoneUTC();
 
     @Override
     public void write(JsonWriter out, DateTime date) throws IOException {

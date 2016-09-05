@@ -10,6 +10,7 @@ import javax.ws.rs.ext.ContextResolver;
 
 
 public class JSON implements ContextResolver<ObjectMapper> {
+
   private ObjectMapper mapper;
 
   public JSON() {
@@ -34,3 +35,4 @@ public class JSON implements ContextResolver<ObjectMapper> {
     return mapper;
   }
 }
+

@@ -3,6 +3,12 @@ package {{invokerPackage}};
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+{{#java8}}
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+{{/java8}}
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -15,14 +21,12 @@ import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 {{/java8}}
-{{#java8}}
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
-import java.time.format.DateTimeFormatter;
-{{/java8}}
+
 import retrofit2.Converter;
 import retrofit2.Retrofit;
-{{#useRxJava}}import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;{{/useRxJava}}
+{{#useRxJava}}
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+{{/useRxJava}}
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
@@ -139,7 +143,9 @@ public class ApiClient {
         adapterBuilder = new Retrofit
                 .Builder()
                 .baseUrl(baseUrl)
-                {{#useRxJava}}.addCallAdapterFactory(RxJavaCallAdapterFactory.create()){{/useRxJava}}
+                {{#useRxJava}}
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                {{/useRxJava}}
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonCustomConverterFactory.create(gson));
     }
@@ -374,7 +380,7 @@ class GsonCustomConverterFactory extends Converter.Factory
  */
 class DateTimeTypeAdapter extends TypeAdapter<DateTime> {
 
-    private final DateTimeFormatter formatter = ISODateTimeFormat.dateTime();
+    private final DateTimeFormatter formatter = ISODateTimeFormat.dateTime().withZoneUTC();
 
     @Override
     public void write(JsonWriter out, DateTime date) throws IOException {
@@ -433,14 +439,15 @@ class LocalDateTypeAdapter extends TypeAdapter<LocalDate> {
  */
 class OffsetDateTimeTypeAdapter extends TypeAdapter<OffsetDateTime> {
 
-    private final DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+    private final DateTimeFormatter inFormat = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+    private final DateTimeFormatter outFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").withZone(ZoneId.of("Z"));
 
     @Override
     public void write(JsonWriter out, OffsetDateTime date) throws IOException {
         if (date == null) {
             out.nullValue();
         } else {
-            out.value(formatter.format(date));
+            out.value(outFormat.format(date));
         }
     }
 
@@ -456,7 +463,7 @@ class OffsetDateTimeTypeAdapter extends TypeAdapter<OffsetDateTime> {
                     date = date.substring(0, date.length()-5) + "Z";
                 }
 
-                return OffsetDateTime.parse(date, formatter);
+                return OffsetDateTime.parse(date, inFormat);
         }
     }
 }
