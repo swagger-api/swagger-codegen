@@ -58,6 +58,7 @@ export class UserApi {
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.values()); // https://github.com/angular/angular/issues/6845
 
+
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
@@ -68,9 +69,10 @@ export class UserApi {
             'application/xml'
         ];
 
+
         headers.set('Content-Type', 'application/json');
 
-
+// add form parameters if provided
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
@@ -101,6 +103,7 @@ export class UserApi {
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.values()); // https://github.com/angular/angular/issues/6845
 
+
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
@@ -111,9 +114,10 @@ export class UserApi {
             'application/xml'
         ];
 
+
         headers.set('Content-Type', 'application/json');
 
-
+// add form parameters if provided
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
@@ -144,6 +148,7 @@ export class UserApi {
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.values()); // https://github.com/angular/angular/issues/6845
 
+
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
@@ -154,9 +159,10 @@ export class UserApi {
             'application/xml'
         ];
 
+
         headers.set('Content-Type', 'application/json');
 
-
+// add form parameters if provided
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
@@ -191,6 +197,7 @@ export class UserApi {
             throw new Error('Required parameter username was null or undefined when calling deleteUser.');
         }
 
+
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
@@ -202,6 +209,8 @@ export class UserApi {
         ];
 
 
+
+// add form parameters if provided
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Delete,
@@ -235,6 +244,7 @@ export class UserApi {
             throw new Error('Required parameter username was null or undefined when calling getUserByName.');
         }
 
+
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
@@ -246,6 +256,8 @@ export class UserApi {
         ];
 
 
+
+// add form parameters if provided
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
@@ -276,11 +288,10 @@ export class UserApi {
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.values()); // https://github.com/angular/angular/issues/6845
         if (username !== undefined) {
-            queryParameters.set('username', String(username));
+            queryParameters.set('username', <any>username);
         }
-
         if (password !== undefined) {
-            queryParameters.set('password', String(password));
+            queryParameters.set('password', <any>password);
         }
 
 
@@ -295,6 +306,8 @@ export class UserApi {
         ];
 
 
+
+// add form parameters if provided
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
@@ -323,6 +336,7 @@ export class UserApi {
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.values()); // https://github.com/angular/angular/issues/6845
 
+
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
@@ -334,6 +348,8 @@ export class UserApi {
         ];
 
 
+
+// add form parameters if provided
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
@@ -368,6 +384,7 @@ export class UserApi {
             throw new Error('Required parameter username was null or undefined when calling updateUser.');
         }
 
+
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
@@ -378,9 +395,10 @@ export class UserApi {
             'application/xml'
         ];
 
+
         headers.set('Content-Type', 'application/json');
 
-
+// add form parameters if provided
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Put,

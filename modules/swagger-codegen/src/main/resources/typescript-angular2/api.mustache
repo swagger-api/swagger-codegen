@@ -55,10 +55,10 @@ export class {{classname}} {
 {{/allParams}}
 {{#queryParams}}
         if ({{paramName}} !== undefined) {
-            queryParameters.set('{{baseName}}', String({{paramName}}));
+            queryParameters.set('{{baseName}}', <any>{{paramName}});
         }
-
 {{/queryParams}}
+
 {{#headers}}
         headers.set('{{baseName}}', String({{paramName}}));
 
@@ -80,20 +80,18 @@ export class {{classname}} {
 
 {{#hasFormParams}}
         headers.set('Content-Type', 'application/x-www-form-urlencoded');
-
 {{/hasFormParams}}
+
 {{#bodyParam}}
         headers.set('Content-Type', 'application/json');
-
 {{/bodyParam}}
 
-
 {{#formParams}}
-        // use <any> since paramName could be of any type and formParams just accepts <string> 
-        // see: http://stackoverflow.com/a/32607656
-        formParams.set('{{baseName}}', <any>{{paramName}}); 
-
+        if ({{paramName}} !== undefined) {
+        	formParams.set('{{baseName}}', <any>{{paramName}}); 
+        }
 {{/formParams}}
+
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: {{httpMethod}},
             headers: headers,

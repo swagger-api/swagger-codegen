@@ -62,6 +62,7 @@ export class StoreApi {
             throw new Error('Required parameter orderId was null or undefined when calling deleteOrder.');
         }
 
+
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
@@ -73,6 +74,8 @@ export class StoreApi {
         ];
 
 
+
+// add form parameters if provided
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Delete,
@@ -101,6 +104,7 @@ export class StoreApi {
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.values()); // https://github.com/angular/angular/issues/6845
 
+
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
@@ -112,6 +116,8 @@ export class StoreApi {
         ];
 
 
+
+// add form parameters if provided
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
@@ -145,6 +151,7 @@ export class StoreApi {
             throw new Error('Required parameter orderId was null or undefined when calling getOrderById.');
         }
 
+
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
@@ -156,6 +163,8 @@ export class StoreApi {
         ];
 
 
+
+// add form parameters if provided
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
@@ -185,6 +194,7 @@ export class StoreApi {
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.values()); // https://github.com/angular/angular/issues/6845
 
+
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
@@ -195,9 +205,10 @@ export class StoreApi {
             'application/xml'
         ];
 
+
         headers.set('Content-Type', 'application/json');
 
-
+// add form parameters if provided
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
