@@ -123,7 +123,7 @@ class FakeApi
      * To test \"client\" model
      *
      * @param \Swagger\Client\Model\Client $body client model (required)
-     * @return Array of \Swagger\Client\Model\Client, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Swagger\Client\Model\Client, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function testClientModelWithHttpInfo($body)
@@ -229,7 +229,7 @@ class FakeApi
      * @param \DateTime $date None (optional)
      * @param \DateTime $date_time None (optional)
      * @param string $password None (optional)
-     * @return Array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function testEndpointParametersWithHttpInfo($number, $double, $pattern_without_delimiter, $byte, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null)
@@ -261,7 +261,7 @@ class FakeApi
             throw new \InvalidArgumentException('Missing the required parameter $pattern_without_delimiter when calling testEndpointParameters');
         }
         if (!preg_match("/^[A-Z].*_/", $pattern_without_delimiter)) {
-            throw new \InvalidArgumentException('invalid value for "pattern_without_delimiter" when calling FakeApi.testEndpointParameters, must conform to the pattern /^[A-Z].*_/.');
+            throw new \InvalidArgumentException("invalid value for \"pattern_without_delimiter\" when calling FakeApi.testEndpointParameters, must conform to the pattern /^[A-Z].*_/.");
         }
 
         // verify the required parameter 'byte' is set
@@ -287,7 +287,7 @@ class FakeApi
         }
 
         if (!is_null($string) && !preg_match("/[a-z]/i", $string)) {
-            throw new \InvalidArgumentException('invalid value for "string" when calling FakeApi.testEndpointParameters, must conform to the pattern /[a-z]/i.');
+            throw new \InvalidArgumentException("invalid value for \"string\" when calling FakeApi.testEndpointParameters, must conform to the pattern /[a-z]/i.");
         }
 
         if (!is_null($password) && (strlen($password) > 64)) {
@@ -431,7 +431,7 @@ class FakeApi
      * @param string $enum_query_string Query parameter enum test (string) (optional, default to -efg)
      * @param float $enum_query_integer Query parameter enum test (double) (optional)
      * @param double $enum_query_double Query parameter enum test (double) (optional)
-     * @return Array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function testEnumParametersWithHttpInfo($enum_form_string_array = null, $enum_form_string = null, $enum_header_string_array = null, $enum_header_string = null, $enum_query_string_array = null, $enum_query_string = null, $enum_query_integer = null, $enum_query_double = null)
