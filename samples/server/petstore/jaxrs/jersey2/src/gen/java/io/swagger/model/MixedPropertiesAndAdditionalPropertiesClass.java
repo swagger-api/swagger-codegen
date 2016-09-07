@@ -2,6 +2,7 @@ package io.swagger.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.Animal;
@@ -9,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 
 
@@ -18,13 +20,16 @@ import java.util.Map;
  */
 
 public class MixedPropertiesAndAdditionalPropertiesClass   {
-  private String uuid = null;
+  @JsonProperty("uuid")
+  private UUID uuid = null;
 
+  @JsonProperty("dateTime")
   private Date dateTime = null;
 
+  @JsonProperty("map")
   private Map<String, Animal> map = new HashMap<String, Animal>();
 
-  public MixedPropertiesAndAdditionalPropertiesClass uuid(String uuid) {
+  public MixedPropertiesAndAdditionalPropertiesClass uuid(UUID uuid) {
     this.uuid = uuid;
     return this;
   }
@@ -34,11 +39,11 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
    * @return uuid
   **/
   @ApiModelProperty(value = "")
-  public String getUuid() {
+  public UUID getUuid() {
     return uuid;
   }
 
-  public void setUuid(String uuid) {
+  public void setUuid(UUID uuid) {
     this.uuid = uuid;
   }
 
