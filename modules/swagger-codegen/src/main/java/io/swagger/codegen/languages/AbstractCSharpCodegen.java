@@ -2,7 +2,7 @@ package io.swagger.codegen.languages;
 
 import io.swagger.codegen.*;
 import io.swagger.models.properties.*;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +12,8 @@ import java.util.*;
 public abstract class AbstractCSharpCodegen extends DefaultCodegen implements CodegenConfig {
 
     protected boolean optionalAssemblyInfoFlag = true;
-    protected boolean optionalProjectFileFlag = false;
+    protected boolean optionalProjectFileFlag = true;
+    protected boolean optionalEmitDefaultValue = false;
     protected boolean optionalMethodArgumentFlag = true;
     protected boolean useDateTimeOffsetFlag = false;
     protected boolean useCollection = false;
@@ -20,7 +21,17 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
     protected String packageVersion = "1.0.0";
     protected String packageName = "IO.Swagger";
-    protected String sourceFolder = "src" + File.separator + packageName;
+    protected String packageTitle = "Swagger Library";
+    protected String packageProductName = "SwaggerLibrary";
+    protected String packageDescription = "A library generated from a Swagger doc";
+    protected String packageCompany = "Swagger";
+    protected String packageCopyright = "No Copyright";
+
+    protected String sourceFolder = "src";
+
+    // TODO: Add option for test folder output location. Nice to allow e.g. ./test instead of ./src.
+    //       This would require updating relative paths (e.g. path to main project file in test project file)
+    protected String testFolder = sourceFolder;
 
     protected Set<String> collectionTypes;
     protected Set<String> mapTypes;
@@ -29,6 +40,9 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
     public AbstractCSharpCodegen() {
         super();
+
+        // C# does not use import mapping
+        importMapping.clear();
 
         outputFolder = "generated-code" + File.separator + this.getName();
         embeddedTemplateDir = templateDir = this.getName();
@@ -46,6 +60,10 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
         setReservedWordsLowerCase(
                 Arrays.asList(
+                        // set client as a reserved word to avoid conflicts with IO.Swagger.Client
+                        // this is a workaround and can be removed if c# api client is updated to use
+                        // fully qualified name
+                        "client",
                         // local variable names in API methods (endpoints)
                         "localVarPath", "localVarPathParams", "localVarQueryParams", "localVarHeaderParams", 
                         "localVarFormParams", "localVarFileParams", "localVarStatusCode", "localVarResponse",
@@ -71,6 +89,7 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
                         "string",
                         "bool?",
                         "double?",
+                        "decimal?",
                         "int?",
                         "long?",
                         "float?",
@@ -87,8 +106,8 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
                         "Int32",
                         "Int64",
                         "Float",
-                        "Guid",
-                        "Stream", // not really a primitive, we include it to avoid model import
+                        "Guid?",
+                        "System.IO.Stream", // not really a primitive, we include it to avoid model import
                         "Object")
         );
 
@@ -100,24 +119,29 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         typeMapping = new HashMap<String, String>();
         typeMapping.put("string", "string");
         typeMapping.put("binary", "byte[]");
+        typeMapping.put("bytearray", "byte[]");
         typeMapping.put("boolean", "bool?");
         typeMapping.put("integer", "int?");
         typeMapping.put("float", "float?");
         typeMapping.put("long", "long?");
         typeMapping.put("double", "double?");
-        typeMapping.put("number", "double?");
+        typeMapping.put("number", "decimal?");
         typeMapping.put("datetime", "DateTime?");
         typeMapping.put("date", "DateTime?");
-        typeMapping.put("file", "Stream");
+        typeMapping.put("file", "System.IO.Stream");
         typeMapping.put("array", "List");
         typeMapping.put("list", "List");
         typeMapping.put("map", "Dictionary");
         typeMapping.put("object", "Object");
-        typeMapping.put("uuid", "Guid");
+        typeMapping.put("uuid", "Guid?");
     }
 
     public void setReturnICollection(boolean returnICollection) {
         this.returnICollection = returnICollection;
+    }
+
+    public void setOptionalEmitDefaultValue(boolean optionalEmitDefaultValue) {
+        this.optionalEmitDefaultValue = optionalEmitDefaultValue;
     }
 
     public void setUseCollection(boolean useCollection) {
@@ -177,7 +201,42 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         } else {
             additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
         }
+        
+        // {{packageTitle}}
+        if (additionalProperties.containsKey(CodegenConstants.PACKAGE_TITLE)) {
+            setPackageTitle((String) additionalProperties.get(CodegenConstants.PACKAGE_TITLE));
+        } else {
+            additionalProperties.put(CodegenConstants.PACKAGE_TITLE, packageTitle);
+        }
+        
+        // {{packageProductName}}
+        if (additionalProperties.containsKey(CodegenConstants.PACKAGE_PRODUCTNAME)) {
+            setPackageProductName((String) additionalProperties.get(CodegenConstants.PACKAGE_PRODUCTNAME));
+        } else {
+            additionalProperties.put(CodegenConstants.PACKAGE_PRODUCTNAME, packageProductName);
+        }
 
+        // {{packageDescription}}
+        if (additionalProperties.containsKey(CodegenConstants.PACKAGE_DESCRIPTION)) {
+            setPackageDescription((String) additionalProperties.get(CodegenConstants.PACKAGE_DESCRIPTION));
+        } else {
+            additionalProperties.put(CodegenConstants.PACKAGE_DESCRIPTION, packageDescription);
+        }
+        
+        // {{packageCompany}}
+        if (additionalProperties.containsKey(CodegenConstants.PACKAGE_COMPANY)) {
+            setPackageCompany((String) additionalProperties.get(CodegenConstants.PACKAGE_COMPANY));
+        } else {
+            additionalProperties.put(CodegenConstants.PACKAGE_COMPANY, packageCompany);
+        }
+        
+        // {{packageCopyright}}
+        if (additionalProperties.containsKey(CodegenConstants.PACKAGE_COPYRIGHT)) {
+            setPackageCopyright((String) additionalProperties.get(CodegenConstants.PACKAGE_COPYRIGHT));
+        } else {
+            additionalProperties.put(CodegenConstants.PACKAGE_COPYRIGHT, packageCopyright);
+        }
+        
         // {{useDateTimeOffset}}
         if (additionalProperties.containsKey(CodegenConstants.USE_DATETIME_OFFSET)) {
             useDateTimeOffset(Boolean.valueOf(additionalProperties.get(CodegenConstants.USE_DATETIME_OFFSET).toString()));
@@ -191,6 +250,10 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         if (additionalProperties.containsKey(CodegenConstants.RETURN_ICOLLECTION)) {
             setReturnICollection(Boolean.valueOf(additionalProperties.get(CodegenConstants.RETURN_ICOLLECTION).toString()));
         }
+
+        if (additionalProperties.containsKey(CodegenConstants.OPTIONAL_EMIT_DEFAULT_VALUES)) {
+            setOptionalEmitDefaultValue(Boolean.valueOf(additionalProperties.get(CodegenConstants.OPTIONAL_EMIT_DEFAULT_VALUES).toString()));
+        }
     }
 
     @Override
@@ -203,12 +266,13 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
                 // check to see if model name is same as the property name
                 // which will result in compilation error
                 // if found, prepend with _ to workaround the limitation
-                if (var.name.equals(cm.name)) {
+                if (var.name.equalsIgnoreCase(cm.name)) {
                     var.name = "_" + var.name;
                 }
             }
         }
-        return objs;
+        // process enum in models
+        return postProcessModelsEnum(objs);
     }
 
     @Override
@@ -262,12 +326,12 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
     @Override
     public String apiFileFolder() {
-        return outputFolder + File.separator + sourceFolder + File.separator + apiPackage().replace('.', File.separatorChar);
+        return outputFolder + File.separator + sourceFolder + File.separator + packageName + File.separator + apiPackage();
     }
 
     @Override
     public String modelFileFolder() {
-        return outputFolder + File.separator + sourceFolder + File.separator + modelPackage().replace('.', File.separatorChar);
+        return outputFolder + File.separator + sourceFolder + File.separator + packageName + File.separator + modelPackage();
     }
 
     @Override
@@ -402,7 +466,7 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         if (p instanceof StringProperty) {
             StringProperty dp = (StringProperty) p;
             if (dp.getDefault() != null) {
-                return "\"" + dp.getDefault().toString() + "\"";
+                return "\"" + dp.getDefault() + "\"";
             }
         } else if (p instanceof BooleanProperty) {
             BooleanProperty dp = (BooleanProperty) p;
@@ -421,7 +485,7 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         } else if (p instanceof FloatProperty) {
             FloatProperty dp = (FloatProperty) p;
             if (dp.getDefault() != null) {
-                return dp.getDefault().toString();
+                return String.format("%1$sF", dp.getDefault());
             }
         } else if (p instanceof IntegerProperty) {
             IntegerProperty dp = (IntegerProperty) p;
@@ -470,12 +534,26 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
     @Override
     public String toModelName(String name) {
-        name = sanitizeName(modelNamePrefix + name + modelNameSuffix);
+        if (!StringUtils.isEmpty(modelNamePrefix)) {
+            name = modelNamePrefix + "_" + name;
+        }
+
+        if (!StringUtils.isEmpty(modelNameSuffix)) {
+            name = name + "_" + modelNameSuffix;
+        }
+
+        name = sanitizeName(name);
 
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
-            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + camelize("object_" + name));
-            name = "object_" + name; // e.g. return => ObjectReturn (after camelize)
+            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + camelize("model_" + name));
+            name = "model_" + name; // e.g. return => ModelReturn (after camelize)
+        }
+
+        // model name starts with number
+        if (name.matches("^\\d.*")) {
+            LOGGER.warn(name + " (model name starts with number) cannot be used as model name. Renamed to " + camelize("model_" + name));
+            name = "model_" + name; // e.g. 200Response => Model200Response (after camelize)
         }
 
         // camelize the model name
@@ -503,7 +581,6 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         return toModelName(name) + "Tests";
     }
 
-
     public void setPackageName(String packageName) {
         this.packageName = packageName;
     }
@@ -511,8 +588,91 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     public void setPackageVersion(String packageVersion) {
         this.packageVersion = packageVersion;
     }
+    
+    public void setPackageTitle(String packageTitle) {
+		this.packageTitle = packageTitle;
+	}
+    
+    public void setPackageProductName(String packageProductName) {
+		this.packageProductName = packageProductName;
+	}
 
+	public void setPackageDescription(String packageDescription) {
+		this.packageDescription = packageDescription;
+	}
+	
+    public void setPackageCompany(String packageCompany) {
+		this.packageCompany = packageCompany;
+	}
+    
+    public void setPackageCopyright(String packageCopyright) {
+		this.packageCopyright = packageCopyright;
+	}
+    
     public void setSourceFolder(String sourceFolder) {
         this.sourceFolder = sourceFolder;
     }
+
+    @Override
+    public String toEnumVarName(String name, String datatype) {
+        String enumName = sanitizeName(name);
+
+        enumName = enumName.replaceFirst("^_", "");
+        enumName = enumName.replaceFirst("_$", "");
+
+        enumName = camelize(enumName) + "Enum";
+
+        if (enumName.matches("\\d.*")) { // starts with number
+            return "_" + enumName;
+        } else {
+            return enumName;
+        }
+    }
+
+    @Override
+    public String toEnumName(CodegenProperty property) {
+        return sanitizeName(camelize(property.name)) + "Enum";
+    }
+
+    /*
+    @Override
+    public String toEnumName(CodegenProperty property) {
+        String enumName = sanitizeName(property.name);
+        if (!StringUtils.isEmpty(modelNamePrefix)) {
+            enumName = modelNamePrefix + "_" + enumName;
+        }
+
+        if (!StringUtils.isEmpty(modelNameSuffix)) {
+            enumName = enumName + "_" + modelNameSuffix;
+        }
+
+        // model name cannot use reserved keyword, e.g. return
+        if (isReservedWord(enumName)) {
+            LOGGER.warn(enumName + " (reserved word) cannot be used as model name. Renamed to " + camelize("model_" + enumName));
+            enumName = "model_" + enumName; // e.g. return => ModelReturn (after camelize)
+        }
+
+        if (enumName.matches("\\d.*")) { // starts with number
+            return "_" + enumName;
+        } else {
+            return enumName;
+        }
+    }
+    */
+
+    public String testPackageName() {
+        return this.packageName + ".Test";
+    }
+
+    @Override
+    public String escapeQuotationMark(String input) {
+        // remove " to avoid code injection
+        return input.replace("\"", "");
+    }
+
+    @Override
+    public String escapeUnsafeCharacters(String input) {
+        return input.replace("*/", "*_/").replace("/*", "/_*").replace("--", "- -");
+    }
+
 }

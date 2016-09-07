@@ -93,21 +93,21 @@ public class ExampleGenerator {
                 };
             }
         } else if (property instanceof DateProperty) {
-            return "2000-01-23T04:56:07.000+0000";
+            return "2000-01-23T04:56:07.000+00:00";
         } else if (property instanceof DateTimeProperty) {
-            return "2000-01-23T04:56:07.000+0000";
+            return "2000-01-23T04:56:07.000+00:00";
         } else if (property instanceof DecimalProperty) {
             return new BigDecimal(1.3579);
         } else if (property instanceof DoubleProperty) {
-            return new Double(3.149);
+            return 3.149;
         } else if (property instanceof FileProperty) {
             return "";  // TODO
         } else if (property instanceof FloatProperty) {
-            return new Float(1.23);
+            return 1.23f;
         } else if (property instanceof IntegerProperty) {
-            return new Integer(123);
+            return 123;
         } else if (property instanceof LongProperty) {
-            return new Long(123456789);
+            return 123456789L;
         } else if (property instanceof MapProperty) {
             Map<String, Object> mp = new HashMap<String, Object>();
             if (property.getName() != null) {

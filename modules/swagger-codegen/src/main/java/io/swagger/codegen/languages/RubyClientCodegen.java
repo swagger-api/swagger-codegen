@@ -3,17 +3,24 @@ package io.swagger.codegen.languages;
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenParameter;
+import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
 import io.swagger.codegen.SupportingFile;
+import io.swagger.models.Model;
+import io.swagger.models.Operation;
+import io.swagger.models.Swagger;
 import io.swagger.models.properties.*;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +30,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     public static final String MODULE_NAME = "moduleName";
     public static final String GEM_VERSION = "gemVersion";
     public static final String GEM_LICENSE = "gemLicense";
+    public static final String GEM_REQUIRED_RUBY_VERSION = "gemRequiredRubyVersion";
     public static final String GEM_HOMEPAGE = "gemHomepage";
     public static final String GEM_SUMMARY = "gemSummary";
     public static final String GEM_DESCRIPTION = "gemDescription";
@@ -35,21 +43,31 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     protected String specFolder = "spec";
     protected String libFolder = "lib";
     protected String gemLicense = "Apache-2.0";
+    protected String gemRequiredRubyVersion = ">= 1.9";
     protected String gemHomepage = "http://swagger.io";
     protected String gemSummary = "A ruby wrapper for the swagger APIs";
     protected String gemDescription = "This gem maps to a swagger API";
     protected String gemAuthor = "";
     protected String gemAuthorEmail = "";
+    protected String apiDocPath = "docs/";
+    protected String modelDocPath = "docs/";
 
     protected static int emptyMethodNameCounter = 0;
 
     public RubyClientCodegen() {
         super();
+
+        // clear import mapping (from default generator) as ruby does not use it
+        // at the moment
+        importMapping.clear();
+
         modelPackage = "models";
         apiPackage = "api";
         outputFolder = "generated-code" + File.separator + "ruby";
         modelTemplateFiles.put("model.mustache", ".rb");
         apiTemplateFiles.put("api.mustache", ".rb");
+        modelDocTemplateFiles.put("model_doc.mustache", ".md");
+        apiDocTemplateFiles.put("api_doc.mustache", ".md");
         embeddedTemplateDir = templateDir = "ruby";
 
         modelTestTemplateFiles.put("model_test.mustache", ".rb");
@@ -86,6 +104,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         languageSpecificPrimitives.add("Array");
         languageSpecificPrimitives.add("Hash");
         languageSpecificPrimitives.add("File");
+        languageSpecificPrimitives.add("Object");
 
         typeMapping.put("string", "String");
         typeMapping.put("char", "String");
@@ -105,6 +124,8 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("object", "Object");
         typeMapping.put("file", "File");
         typeMapping.put("binary", "String");
+        typeMapping.put("ByteArray", "String");
+        typeMapping.put("UUID", "String");
 
         // remove modelPackage and apiPackage added by default
         Iterator<CliOption> itr = cliOptions.iterator();
@@ -124,6 +145,9 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         cliOptions.add(new CliOption(GEM_LICENSE, "gem license. ").
                 defaultValue("Apache-2.0"));
 
+        cliOptions.add(new CliOption(GEM_REQUIRED_RUBY_VERSION, "gem required Ruby version. ").
+                defaultValue(">= 1.9"));
+
         cliOptions.add(new CliOption(GEM_HOMEPAGE, "gem homepage. ").
                 defaultValue("http://swagger.io"));
 
@@ -137,11 +161,22 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         cliOptions.add(new CliOption(GEM_AUTHOR_EMAIL, "gem author email (only one is supported)."));
 
+        cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "hides the timestamp when files were generated").
+                defaultValue(Boolean.TRUE.toString()));
+
     }
 
     @Override
     public void processOpts() {
         super.processOpts();
+
+        // default HIDE_GENERATION_TIMESTAMP to true
+        if (!additionalProperties.containsKey(CodegenConstants.HIDE_GENERATION_TIMESTAMP)) {
+            additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, Boolean.TRUE.toString());
+        } else {
+            additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP,
+                    Boolean.valueOf(additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP).toString()));
+        }
 
         if (additionalProperties.containsKey(GEM_NAME)) {
             setGemName((String) additionalProperties.get(GEM_NAME));
@@ -173,6 +208,10 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
             setGemLicense((String) additionalProperties.get(GEM_LICENSE));
         }
 
+        if (additionalProperties.containsKey(GEM_REQUIRED_RUBY_VERSION)) {
+            setGemRequiredRubyVersion((String) additionalProperties.get(GEM_REQUIRED_RUBY_VERSION));
+        }
+
         if (additionalProperties.containsKey(GEM_HOMEPAGE)) {
             setGemHomepage((String) additionalProperties.get(GEM_HOMEPAGE));
         }
@@ -193,6 +232,9 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
             setGemAuthorEmail((String) additionalProperties.get(GEM_AUTHOR_EMAIL));
         }
 
+        // make api and model doc path available in mustache template
+        additionalProperties.put("apiDocPath", apiDocPath);
+        additionalProperties.put("modelDocPath", modelDocPath);
 
         // use constant model/api package (folder path)
         setModelPackage("models");
@@ -205,8 +247,48 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("api_error.mustache", gemFolder, "api_error.rb"));
         supportingFiles.add(new SupportingFile("configuration.mustache", gemFolder, "configuration.rb"));
         supportingFiles.add(new SupportingFile("version.mustache", gemFolder, "version.rb"));
+        supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
+        supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
+        supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
+
+        // test files should not be overwritten
+        writeOptional(outputFolder, new SupportingFile("rspec.mustache", "", ".rspec"));
+        writeOptional(outputFolder, new SupportingFile("spec_helper.mustache", specFolder, "spec_helper.rb"));
+        writeOptional(outputFolder, new SupportingFile("configuration_spec.mustache", specFolder, "configuration_spec.rb"));
+        writeOptional(outputFolder, new SupportingFile("api_client_spec.mustache", specFolder, "api_client_spec.rb"));
+        // not including base object test as the moment as not all API has model
+        //writeOptional(outputFolder, new SupportingFile("base_object_spec.mustache", specFolder, "base_object_spec.rb"));
     }
 
+    @Override
+    public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, Map<String, Model> definitions, Swagger swagger) {
+        CodegenOperation op = super.fromOperation(path, httpMethod, operation, definitions, swagger);
+        // Set vendor-extension to be used in template:
+        //     x-codegen-hasMoreRequired
+        //     x-codegen-hasMoreOptional
+        //     x-codegen-hasRequiredParams
+        CodegenParameter lastRequired = null;
+        CodegenParameter lastOptional = null;
+        for (CodegenParameter p : op.allParams) {
+            if (p.required != null && p.required) {
+                lastRequired = p;
+            } else {
+                lastOptional = p;
+            }
+        }
+        for (CodegenParameter p : op.allParams) {
+            if (p == lastRequired) {
+                p.vendorExtensions.put("x-codegen-hasMoreRequired", false);
+            } else if (p == lastOptional) {
+                p.vendorExtensions.put("x-codegen-hasMoreOptional", false);
+            } else {
+                p.vendorExtensions.put("x-codegen-hasMoreRequired", true);
+                p.vendorExtensions.put("x-codegen-hasMoreOptional", true);
+            }
+        }
+        op.vendorExtensions.put("x-codegen-hasRequiredParams", lastRequired != null);
+        return op;
+    }
 
     @Override
     public CodegenType getTag() {
@@ -271,6 +353,16 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
+    public String apiDocFileFolder() {
+        return (outputFolder + "/" + apiDocPath).replace('/', File.separatorChar);
+    }
+
+    @Override
+    public String modelDocFileFolder() {
+        return (outputFolder + "/" + modelDocPath).replace('/', File.separatorChar);
+    }
+
+    @Override
     public String getTypeDeclaration(Property p) {
         if (p instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) p;
@@ -327,7 +419,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         String type = null;
         if (typeMapping.containsKey(swaggerType)) {
             type = typeMapping.get(swaggerType);
-            if (languageSpecificPrimitives.contains(type)) { 
+            if (languageSpecificPrimitives.contains(type)) {
                 return type;
             }
         } else {
@@ -380,9 +472,15 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
-            String modelName = camelize("object_" + name);
+            String modelName = camelize("Model" + name);
             LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + modelName);
             return modelName;
+        }
+
+        // model name starts with number
+        if (name.matches("^\\d.*")) {
+            LOGGER.warn(name + " (model name starts with number) cannot be used as model name. Renamed to " + camelize("model_" + name));
+            name = "model_" + name; // e.g. 200Response => Model200Response (after camelize)
         }
 
         // camelize the model name
@@ -403,14 +501,25 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         }
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
-            String filename = underscore("object_" + name);
+            String filename = underscore("model_" + name);
             LOGGER.warn(name + " (reserved word) cannot be used as model filename. Renamed to " + filename);
             return filename;
+        }
+
+        // model name starts with number
+        if (name.matches("^\\d.*")) {
+            LOGGER.warn(name + " (model name starts with number) cannot be used as model name. Renamed to " + underscore("model_" + name));
+            name = "model_" + name; // e.g. 200Response => model_200_response
         }
 
         // underscore the model file name
         // PhoneNumber.rb => phone_number.rb
         return underscore(name);
+    }
+
+    @Override
+    public String toModelDocFilename(String name) {
+        return toModelName(name);
     }
 
     @Override
@@ -420,6 +529,11 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         // e.g. PhoneNumberApi.rb => phone_number_api.rb
         return underscore(name) + "_api";
+    }
+
+    @Override
+    public String toApiDocFilename(String name) {
+        return toApiName(name);
     }
 
     @Override
@@ -442,6 +556,57 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
+    public String toEnumValue(String value, String datatype) {
+        if ("Integer".equals(datatype) || "Float".equals(datatype)) {
+            return value;
+        } else {
+            return "\"" + escapeText(value) + "\"";
+        }
+    }
+
+    @Override
+    public String toEnumVarName(String name, String datatype) {
+        // number
+        if ("Integer".equals(datatype) || "Float".equals(datatype)) {
+            String varName = name;
+            varName = varName.replaceAll("-", "MINUS_");
+            varName = varName.replaceAll("\\+", "PLUS_");
+            varName = varName.replaceAll("\\.", "_DOT_");
+            return varName;
+        }
+
+        // string
+        String enumName = sanitizeName(underscore(name).toUpperCase());
+        enumName = enumName.replaceFirst("^_", "");
+        enumName = enumName.replaceFirst("_$", "");
+
+        if (enumName.matches("\\d.*")) { // starts with number
+            return "N" + enumName;
+        } else {
+            return enumName;
+        }
+    }
+
+    @Override
+    public String toEnumName(CodegenProperty property) {
+        String enumName = underscore(toModelName(property.name)).toUpperCase();
+        enumName = enumName.replaceFirst("^_", "");
+        enumName = enumName.replaceFirst("_$", "");
+
+        if (enumName.matches("\\d.*")) { // starts with number
+            return "N" + enumName;
+        } else {
+            return enumName;
+        }
+    }
+
+    @Override
+    public Map<String, Object> postProcessModels(Map<String, Object> objs) {
+        // process enum in models
+        return postProcessModelsEnum(objs);
+    }
+
+    @Override
     public String toOperationId(String operationId) {
         // rename to empty_method_name_1 (e.g.) if method name is empty
         if (StringUtils.isEmpty(operationId)) {
@@ -461,13 +626,71 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
-    public String toModelImport(String name) {
-        return gemName + "/" + modelPackage() + "/" + toModelFilename(name);
+    public String toApiImport(String name) {
+        return gemName + "/" + apiPackage() + "/" + toApiFilename(name);
     }
 
     @Override
-    public String toApiImport(String name) {
-        return gemName + "/" + apiPackage() + "/" + toApiFilename(name);
+    public void setParameterExampleValue(CodegenParameter p) {
+        String example;
+
+        if (p.defaultValue == null) {
+            example = p.example;
+        } else {
+            example = p.defaultValue;
+        }
+
+        String type = p.baseType;
+        if (type == null) {
+            type = p.dataType;
+        }
+
+        if ("String".equals(type)) {
+            if (example == null) {
+                example = p.paramName + "_example";
+            }
+            example = "\"" + escapeText(example) + "\"";
+        } else if ("Integer".equals(type)) {
+            if (example == null) {
+                example = "56";
+            }
+        } else if ("Float".equals(type)) {
+            if (example == null) {
+                example = "3.4";
+            }
+        } else if ("BOOLEAN".equals(type)) {
+            if (example == null) {
+                example = "true";
+            }
+        } else if ("File".equals(type)) {
+            if (example == null) {
+                example = "/path/to/file";
+            }
+            example = "File.new(\"" + escapeText(example) + "\")";
+        } else if ("Date".equals(type)) {
+            if (example == null) {
+                example = "2013-10-20";
+            }
+            example = "Date.parse(\"" + escapeText(example) + "\")";
+        } else if ("DateTime".equals(type)) {
+            if (example == null) {
+                example = "2013-10-20T19:20:30+01:00";
+            }
+            example = "DateTime.parse(\"" + escapeText(example) + "\")";
+        } else if (!languageSpecificPrimitives.contains(type)) {
+            // type is a model class, e.g. User
+            example = moduleName + "::" + type + ".new";
+        }
+
+        if (example == null) {
+            example = "nil";
+        } else if (Boolean.TRUE.equals(p.isListContainer)) {
+            example = "[" + example + "]";
+        } else if (Boolean.TRUE.equals(p.isMapContainer)) {
+            example = "{'key' => " + example + "}";
+        }
+
+        p.example = example;
     }
 
     public void setGemName(String gemName) {
@@ -494,6 +717,10 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         this.gemLicense = gemLicense;
     }
 
+    public void setGemRequiredRubyVersion(String gemRequiredRubyVersion) {
+        this.gemRequiredRubyVersion = gemRequiredRubyVersion;
+    }
+
     public void setGemHomepage(String gemHomepage) {
         this.gemHomepage = gemHomepage;
     }
@@ -505,4 +732,24 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     public void setGemAuthorEmail(String gemAuthorEmail) {
         this.gemAuthorEmail = gemAuthorEmail;
     }
+
+    @Override
+    public boolean shouldOverwrite(String filename) {
+        // skip spec file as the file might have been updated with new test cases
+        return !(skipOverwrite && new File(filename).exists());
+        //
+        //return super.shouldOverwrite(filename) && !filename.endsWith("_spec.rb");
+    }
+
+    @Override
+    public String escapeQuotationMark(String input) {
+        // remove ' to avoid code injection
+        return input.replace("'", "");
+    }
+
+    @Override
+    public String escapeUnsafeCharacters(String input) {
+        return input.replace("=end", "=_end").replace("=begin", "=_begin");
+    }
+
 }

@@ -4,35 +4,42 @@ if (typeof module === 'object' && module.exports) {
   var sinon = require('sinon');
 }
 
-var apiClient = SwaggerPetstore.ApiClient.default;
+var apiClient = SwaggerPetstore.ApiClient.instance;
 
 describe('ApiClient', function() {
   describe('defaults', function() {
     it('should have correct default values with the default API client', function() {
       expect(apiClient).to.be.ok();
+      expect(apiClient.basePath).to.be('http://petstore.swagger.io/v2');
       expect(apiClient.authentications).to.eql({
         petstore_auth: {type: 'oauth2'},
-        api_key: {type: 'apiKey', in: 'header', name: 'api_key'},
+        http_basic_test: {type: 'basic'},
+        api_key: {type: 'apiKey', 'in': 'header', name: 'api_key'}
+      /* comment out the following as these fake security def (testing purpose)
+       * are removed from the spec, we'll add these back after updating the 
+       * petstore server
+       *
+        test_http_basic: {type: 'basic'},
         test_api_client_id: {
           type: 'apiKey',
-          in: 'header',
+          'in': 'header',
           name: 'x-test_api_client_id'
         },
         test_api_client_secret: {
           type: 'apiKey',
-          in: 'header',
+          'in': 'header',
           name: 'x-test_api_client_secret'
         },
         test_api_key_query: {
           type: 'apiKey',
-          in: 'query',
+          'in': 'query',
           name: 'test_api_key_query'
         },
         test_api_key_header: {
           type: 'apiKey',
-          in: 'header',
+          'in': 'header',
           name: 'test_api_key_header'
-        }
+        }*/
       });
     });
 
@@ -273,7 +280,7 @@ describe('ApiClient', function() {
       var apiKeyAuth, oauth2;
 
       beforeEach(function() {
-        newClient.authentications[apiKeyAuthName] = {type: 'apiKey', name: 'api_key', in: 'query'};
+        newClient.authentications[apiKeyAuthName] = {type: 'apiKey', name: 'api_key', 'in': 'query'};
         newClient.authentications[oauth2Name] = {type: 'oauth2'};
         apiKeyAuth = newClient.authentications[apiKeyAuthName];
         oauth2 = newClient.authentications[oauth2Name];
@@ -376,10 +383,10 @@ function makeDumbRequest(apiClient, opts) {
   var headerParams = opts.headerParams || {};
   var formParams = opts.formParams || {};
   var bodyParam = opts.bodyParam;
+  var authNames = [];
   var contentTypes = opts.contentTypes || [];
   var accepts = opts.accepts || [];
   var callback = opts.callback;
   return apiClient.callApi(path, httpMethod, pathParams, queryParams,
-    headerParams, formParams, bodyParam, contentTypes, accepts, callback
-  );
+    headerParams, formParams, bodyParam, authNames, contentTypes, accepts);
 }

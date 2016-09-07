@@ -1,6 +1,8 @@
+{{>licenseInfo}}
 package {{invokerPackage}};
 
 import com.android.volley.Cache;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -185,7 +187,7 @@ public class ApiInvoker {
 
   public static void initializeInstance(Cache cache, Network network, int threadPoolSize, ResponseDelivery delivery, int connectionTimeout) {
      INSTANCE = new ApiInvoker(cache, network, threadPoolSize, delivery, connectionTimeout);
-     setUserAgent("Android-Volley-Swagger");
+     setUserAgent("{{#httpUserAgent}}{{{.}}}{{/httpUserAgent}}{{^httpUserAgent}}Swagger-Codegen/{{{artifactVersion}}}/android{{/httpUserAgent}}");
 
      // Setup authentications (key: authentication name, value: authentication).
      INSTANCE.authentications = new HashMap<String, Authentication>();
@@ -197,7 +199,8 @@ public class ApiInvoker {
      INSTANCE.authentications.put("{{name}}", new HttpBasicAuth());
      {{/isBasic}}
      {{#isOAuth}}
-     INSTANCE.authentications.put("{{name}}", new OAuth());
+     // TODO: comment out below as OAuth does not exist
+     //INSTANCE.authentications.put("{{name}}", new OAuth());
      {{/isOAuth}}
      {{/authMethods}}
      // Prevent the authentications from being modified.
@@ -484,7 +487,12 @@ public class ApiInvoker {
           } else {
              request = new PatchRequest(url, headers, null, null, stringRequest, errorListener);
           }
-       }
+    }
+
+    if (request != null) {
+        request.setRetryPolicy(new DefaultRetryPolicy((int)TimeUnit.SECONDS.toMillis(this.connectionTimeout), DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+    }
+
     return request;
   }
 

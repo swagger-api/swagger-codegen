@@ -4,6 +4,7 @@ import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenParameter;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
 import io.swagger.codegen.SupportingFile;
@@ -42,7 +43,7 @@ public class ScalatraServerCodegen extends DefaultCodegen implements CodegenConf
                         "import", "public", "throws", "case", "enum", "instanceof", "return", "transient",
                         "catch", "extends", "int", "short", "try", "char", "final", "interface", "static",
                         "void", "class", "finally", "long", "strictfp", "volatile", "const", "float",
-                        "native", "super", "while")
+                        "native", "super", "while", "type")
         );
 
         defaultIncludes = new HashSet<String>(
@@ -86,7 +87,7 @@ public class ScalatraServerCodegen extends DefaultCodegen implements CodegenConf
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("build.sbt", "", "build.sbt"));
         supportingFiles.add(new SupportingFile("web.xml", "/src/main/webapp/WEB-INF", "web.xml"));
-        supportingFiles.add(new SupportingFile("JettyMain.scala", sourceFolder, "JettyMain.scala"));
+        supportingFiles.add(new SupportingFile("JettyMain.mustache", sourceFolder, "JettyMain.scala"));
         supportingFiles.add(new SupportingFile("Bootstrap.mustache", sourceFolder, "ScalatraBootstrap.scala"));
         supportingFiles.add(new SupportingFile("ServletApp.mustache", sourceFolder, "ServletApp.scala"));
         supportingFiles.add(new SupportingFile("project/build.properties", "project", "build.properties"));
@@ -161,8 +162,29 @@ public class ScalatraServerCodegen extends DefaultCodegen implements CodegenConf
         Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
         List<CodegenOperation> operationList = (List<CodegenOperation>) operations.get("operation");
         for (CodegenOperation op : operationList) {
+            // force http method to lower case
             op.httpMethod = op.httpMethod.toLowerCase();
+ 
+            String[] items = op.path.split("/", -1);
+            String scalaPath = "";
+            int pathParamIndex = 0;
+
+            for (int i = 0; i < items.length; ++i) {
+                if (items[i].matches("^\\{(.*)\\}$")) { // wrap in {}
+                    scalaPath = scalaPath + ":" + items[i].replace("{", "").replace("}", "");
+                    pathParamIndex++;
+                } else {
+                    scalaPath = scalaPath + items[i];
+                }
+
+                if (i != items.length -1) {
+                    scalaPath = scalaPath + "/";
+                }
+            }
+
+            op.vendorExtensions.put("x-scalatra-path", scalaPath);
         }
+
         return objs;
     }
 
@@ -196,4 +218,16 @@ public class ScalatraServerCodegen extends DefaultCodegen implements CodegenConf
         }
         return toModelName(type);
     }
+
+    @Override
+    public String escapeQuotationMark(String input) {
+        // remove " to avoid code injection
+        return input.replace("\"", "");
+    }
+
+    @Override
+    public String escapeUnsafeCharacters(String input) {
+        return input.replace("*/", "*_/").replace("/*", "/_*");
+    }
+
 }

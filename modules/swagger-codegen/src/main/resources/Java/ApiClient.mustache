@@ -1,8 +1,14 @@
+{{>licenseInfo}}
 package {{invokerPackage}};
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.*;
+{{#java8}}
+import com.fasterxml.jackson.datatype.jsr310.*;
+{{/java8}}
+{{^java8}}
 import com.fasterxml.jackson.datatype.joda.*;
+{{/java8}}
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 import com.sun.jersey.api.client.Client;
@@ -65,13 +71,18 @@ public class ApiClient {
     objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     objectMapper.enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
     objectMapper.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
+    {{#java8}}
+    objectMapper.registerModule(new JavaTimeModule());
+    {{/java8}}
+    {{^java8}}
     objectMapper.registerModule(new JodaModule());
+    {{/java8}}
     objectMapper.setDateFormat(ApiClient.buildDefaultDateFormat());
 
     dateFormat = ApiClient.buildDefaultDateFormat();
 
     // Set default User-Agent.
-    setUserAgent("Java-Swagger");
+    setUserAgent("{{#httpUserAgent}}{{{.}}}{{/httpUserAgent}}{{^httpUserAgent}}Swagger-Codegen/{{{artifactVersion}}}/java{{/httpUserAgent}}");
 
     // Setup authentications (key: authentication name, value: authentication).
     authentications = new HashMap<String, Authentication>();{{#authMethods}}{{#isBasic}}
@@ -486,9 +497,16 @@ public class ApiClient {
     if (contentType.startsWith("multipart/form-data")) {
       FormDataMultiPart mp = new FormDataMultiPart();
       for (Entry<String, Object> param: formParams.entrySet()) {
-        if (param.getValue() instanceof File) {
+        if( param.getValue() instanceof List && !( ( List ) param.getValue() ).isEmpty()
+                  && ( ( List ) param.getValue() ).get( 0 ) instanceof File ) {
+            @SuppressWarnings( "unchecked" )
+            List<File> files = ( List<File> ) param.getValue();
+            for( File file : files ) {
+              mp.bodyPart( new FileDataBodyPart( param.getKey(), file, MediaType.APPLICATION_OCTET_STREAM_TYPE ) );
+            }
+        } else if (param.getValue() instanceof File) {
           File file = (File) param.getValue();
-          mp.bodyPart(new FileDataBodyPart(param.getKey(), file, MediaType.MULTIPART_FORM_DATA_TYPE));
+          mp.bodyPart(new FileDataBodyPart(param.getKey(), file, MediaType.APPLICATION_OCTET_STREAM_TYPE));
         } else {
           mp.field(param.getKey(), parameterToString(param.getValue()), MediaType.MULTIPART_FORM_DATA_TYPE);
         }

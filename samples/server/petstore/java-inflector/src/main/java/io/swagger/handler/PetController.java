@@ -12,23 +12,24 @@ import io.swagger.model.*;
 
 import io.swagger.model.Pet;
 import java.io.File;
+import io.swagger.model.ModelApiResponse;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-01-19T23:33:17.124+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-08-20T17:24:26.037+08:00")
 public class PetController  {
   /** 
    * Uncomment and implement as you see fit.  These operations will map
-   * Direclty to operation calls from the routing logic.  Because the inflector
+   * Directly to operation calls from the routing logic.  Because the inflector
    * Code allows you to implement logic incrementally, they are disabled.
    **/
 
   /*
-    public ResponseContext updatePet(RequestContext request , Pet body) {
+    public ResponseContext addPet(RequestContext request , Pet body) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext addPet(RequestContext request , Pet body) {
+    public ResponseContext deletePet(RequestContext request , Long petId, String apiKey) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
@@ -52,25 +53,19 @@ public class PetController  {
   */
 
   /*
-    public ResponseContext updatePetWithForm(RequestContext request , String petId, String name, String status) {
+    public ResponseContext updatePet(RequestContext request , Pet body) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext deletePet(RequestContext request , Long petId, String apiKey) {
+    public ResponseContext updatePetWithForm(RequestContext request , Long petId, String name, String status) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
     public ResponseContext uploadFile(RequestContext request , Long petId, String additionalMetadata, FormDataContentDisposition fileDetail) {
-        return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
-    }
-  */
-
-  /*
-    public ResponseContext getPetByIdWithByteArray(RequestContext request , Long petId) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */

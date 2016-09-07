@@ -60,6 +60,10 @@ public class CodegenConfigurator {
     private Map<String, String> additionalProperties = new HashMap<String, String>();
     private Map<String, String> importMappings = new HashMap<String, String>();
     private Set<String> languageSpecificPrimitives = new HashSet<String>();
+    private String gitUserId="GIT_USER_ID";
+    private String gitRepoId="GIT_REPO_ID";
+    private String releaseNote="Minor update";
+    private String httpUserAgent;
 
     private final Map<String, String> dynamicProperties = new HashMap<String, String>(); //the map that holds the JsonAnySetter/JsonAnyGetter values
 
@@ -144,7 +148,14 @@ public class CodegenConfigurator {
     }
 
     public CodegenConfigurator setTemplateDir(String templateDir) {
-        this.templateDir = new File(templateDir).getAbsolutePath();
+        File f = new File(templateDir);
+
+        // check to see if the folder exists
+        if (!(f.exists() && f.isDirectory())) {
+            throw new IllegalArgumentException("Template directory " + templateDir + " does not exist."); 
+        }
+
+        this.templateDir = f.getAbsolutePath();
         return this;
     }
 
@@ -295,6 +306,42 @@ public class CodegenConfigurator {
         return this;
     }
 
+    public String getGitUserId() {
+        return gitUserId;
+    }
+
+    public CodegenConfigurator setGitUserId(String gitUserId) {
+        this.gitUserId = gitUserId;
+        return this;
+    }
+
+    public String getGitRepoId() {
+        return gitRepoId;
+    }
+
+    public CodegenConfigurator setGitRepoId(String gitRepoId) {
+        this.gitRepoId = gitRepoId;
+        return this;
+    }
+
+    public String getReleaseNote() {
+        return releaseNote;
+    }
+
+    public CodegenConfigurator setReleaseNote(String releaseNote) {
+        this.releaseNote = releaseNote;
+        return this;
+    }
+
+    public String getHttpUserAgent() {
+        return httpUserAgent;
+    }
+
+    public CodegenConfigurator setHttpUserAgent(String httpUserAgent) {
+        this.httpUserAgent= httpUserAgent;
+        return this;
+    }
+
     public ClientOptInput toClientOptInput() {
 
         Validate.notEmpty(lang, "language must be specified");
@@ -305,6 +352,7 @@ public class CodegenConfigurator {
 
         CodegenConfig config = CodegenConfigLoader.forName(lang);
 
+        config.setInputSpec(inputSpec);
         config.setOutputDir(outputDir);
         config.setSkipOverwrite(skipOverwrite);
 
@@ -322,6 +370,10 @@ public class CodegenConfigurator {
         checkAndSetAdditionalProperty(templateDir, toAbsolutePathStr(templateDir), CodegenConstants.TEMPLATE_DIR);
         checkAndSetAdditionalProperty(modelNamePrefix, CodegenConstants.MODEL_NAME_PREFIX);
         checkAndSetAdditionalProperty(modelNameSuffix, CodegenConstants.MODEL_NAME_SUFFIX);
+        checkAndSetAdditionalProperty(gitUserId, CodegenConstants.GIT_USER_ID);
+        checkAndSetAdditionalProperty(gitRepoId, CodegenConstants.GIT_REPO_ID);
+        checkAndSetAdditionalProperty(releaseNote, CodegenConstants.RELEASE_NOTE);
+        checkAndSetAdditionalProperty(httpUserAgent, CodegenConstants.HTTP_USER_AGENT);
 
         handleDynamicProperties(config);
 
@@ -362,7 +414,7 @@ public class CodegenConfigurator {
                 codegenConfig.additionalProperties().put(opt, dynamicProperties.get(opt));
             }
             else if(systemProperties.containsKey(opt)) {
-                codegenConfig.additionalProperties().put(opt, systemProperties.get(opt).toString());
+                codegenConfig.additionalProperties().put(opt, systemProperties.get(opt));
             }
         }
     }

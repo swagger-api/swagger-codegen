@@ -13,9 +13,9 @@ import io.swagger.models.parameters.Parameter;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.WordUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.text.WordUtils;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -38,8 +38,10 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
     public static final String POD_SCREENSHOTS = "podScreenshots";
     public static final String POD_DOCUMENTATION_URL = "podDocumentationURL";
     public static final String SWIFT_USE_API_NAMESPACE = "swiftUseApiNamespace";
+    public static final String DEFAULT_POD_AUTHORS = "Swagger Codegen";
     protected static final String LIBRARY_PROMISE_KIT = "PromiseKit";
-    protected static final String[] RESPONSE_LIBRARIES = { LIBRARY_PROMISE_KIT };
+    protected static final String LIBRARY_RX_SWIFT = "RxSwift";
+    protected static final String[] RESPONSE_LIBRARIES = { LIBRARY_PROMISE_KIT, LIBRARY_RX_SWIFT };
     protected String projectName = "SwaggerClient";
     protected boolean unwrapRequired;
     protected boolean swiftUseApiNamespace;
@@ -74,6 +76,8 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
         languageSpecificPrimitives = new HashSet<String>(
                 Arrays.asList(
                     "Int",
+                    "Int32",
+                    "Int64",
                     "Float",
                     "Double",
                     "Bool",
@@ -84,8 +88,10 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
                 );
         defaultIncludes = new HashSet<String>(
                 Arrays.asList(
+                    "NSData",
                     "NSDate",
                     "NSURL", // for file
+                    "NSUUID",
                     "Array",
                     "Dictionary",
                     "Set",
@@ -93,9 +99,10 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
                     "Empty",
                     "AnyObject")
                 );
-        setReservedWordsLowerCase(
+        reservedWords = new HashSet<String>(
                 Arrays.asList(
-                    "class", "break", "as", "associativity", "deinit", "case", "dynamicType", "convenience", "enum", "continue",
+                    "Int", "Int32", "Int64", "Int64", "Float", "Double", "Bool", "Void", "String", "Character", "AnyObject",
+                    "class", "Class", "break", "as", "associativity", "deinit", "case", "dynamicType", "convenience", "enum", "continue",
                     "false", "dynamic", "extension", "default", "is", "didSet", "func", "do", "nil", "final", "import", "else",
                     "self", "get", "init", "fallthrough", "Self", "infix", "internal", "for", "super", "inout", "let", "if",
                     "true", "lazy", "operator", "in", "COLUMN", "left", "private", "return", "FILE", "mutating", "protocol",
@@ -115,18 +122,18 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("string", "String");
         typeMapping.put("char", "Character");
         typeMapping.put("short", "Int");
-        typeMapping.put("int", "Int");
-        typeMapping.put("long", "Int");
-        typeMapping.put("integer", "Int");
-        typeMapping.put("Integer", "Int");
+        typeMapping.put("int", "Int32");
+        typeMapping.put("long", "Int64");
+        typeMapping.put("integer", "Int32");
+        typeMapping.put("Integer", "Int32");
         typeMapping.put("float", "Float");
         typeMapping.put("number", "Double");
         typeMapping.put("double", "Double");
         typeMapping.put("object", "AnyObject");
         typeMapping.put("file", "NSURL");
-        //TODO binary should be mapped to byte array
-        // mapped to String as a workaround
-        typeMapping.put("binary", "String");
+        typeMapping.put("binary", "NSData");
+        typeMapping.put("ByteArray", "NSData");
+        typeMapping.put("UUID", "NSUUID");
 
         importMapping = new HashMap<String, String>();
 
@@ -147,11 +154,21 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
         cliOptions.add(new CliOption(POD_SCREENSHOTS, "Screenshots used for Podspec"));
         cliOptions.add(new CliOption(POD_DOCUMENTATION_URL, "Documentation URL used for Podspec"));
         cliOptions.add(new CliOption(SWIFT_USE_API_NAMESPACE, "Flag to make all the API classes inner-class of {{projectName}}API"));
+        cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "hides the timestamp when files were generated")
+                .defaultValue(Boolean.TRUE.toString()));
+
     }
 
     @Override
     public void processOpts() {
         super.processOpts();
+        // default HIDE_GENERATION_TIMESTAMP to true
+        if (!additionalProperties.containsKey(CodegenConstants.HIDE_GENERATION_TIMESTAMP)) {
+            additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, Boolean.TRUE.toString());
+        } else {
+            additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP,
+                    Boolean.valueOf(additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP).toString()));
+        }
 
         // Setup project name
         if (additionalProperties.containsKey(PROJECT_NAME)) {
@@ -180,12 +197,19 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
         if (ArrayUtils.contains(responseAs, LIBRARY_PROMISE_KIT)) {
             additionalProperties.put("usePromiseKit", true);
         }
+        if (ArrayUtils.contains(responseAs, LIBRARY_RX_SWIFT)) {
+            additionalProperties.put("useRxSwift", true);
+        }
 
         // Setup swiftUseApiNamespace option, which makes all the API classes inner-class of {{projectName}}API
         if (additionalProperties.containsKey(SWIFT_USE_API_NAMESPACE)) {
             swiftUseApiNamespace = Boolean.parseBoolean(String.valueOf(additionalProperties.get(SWIFT_USE_API_NAMESPACE)));
         }
         additionalProperties.put(SWIFT_USE_API_NAMESPACE, swiftUseApiNamespace);
+
+        if (!additionalProperties.containsKey(POD_AUTHORS)) {
+            additionalProperties.put(POD_AUTHORS, DEFAULT_POD_AUTHORS);
+        }
 
         supportingFiles.add(new SupportingFile("Podspec.mustache", "", projectName + ".podspec"));
         supportingFiles.add(new SupportingFile("Cartfile.mustache", "", "Cartfile"));
@@ -195,6 +219,14 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("Extensions.mustache", sourceFolder, "Extensions.swift"));
         supportingFiles.add(new SupportingFile("Models.mustache", sourceFolder, "Models.swift"));
         supportingFiles.add(new SupportingFile("APIs.mustache", sourceFolder, "APIs.swift"));
+        supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
+        supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
+
+    }
+
+    @Override
+    protected boolean isReservedWord(String word) {
+        return word != null && reservedWords.contains(word); //don't lowercase as super does
     }
 
     @Override
@@ -239,6 +271,11 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
         return toModelName(type);
     }
 
+    @Override
+    public boolean isDataTypeBinary(final String dataType) {
+      return dataType != null && dataType.equals("NSData");
+    }
+
     /**
      * Output the proper model name (capitalized)
      *
@@ -263,8 +300,15 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
 
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
-            String modelName = "Object" + name;
+            String modelName = "Model" + name;
             LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + modelName);
+            return modelName;
+        }
+
+        // model name starts with number
+        if (name.matches("^\\d.*")) {
+            String modelName = "Model" + name; // e.g. 200Response => Model200Response (after camelize)
+            LOGGER.warn(name + " (model name starts with number) cannot be used as model name. Renamed to " + modelName);
             return modelName;
         }
 
@@ -306,25 +350,34 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public CodegenProperty fromProperty(String name, Property p) {
         CodegenProperty codegenProperty = super.fromProperty(name, p);
+        // TODO skip array/map of enum for the time being,
+        // we need to add logic here to handle array/map of enum for any
+        // dimensions
+        if (Boolean.TRUE.equals(codegenProperty.isContainer)) {
+            return codegenProperty;
+        }
+
         if (codegenProperty.isEnum) {
             List<Map<String, String>> swiftEnums = new ArrayList<Map<String, String>>();
             List<String> values = (List<String>) codegenProperty.allowableValues.get("values");
-            for (String value : values) {
+            
+            for (Object value : values) {
                 Map<String, String> map = new HashMap<String, String>();
-                map.put("enum", toSwiftyEnumName(value));
-                map.put("raw", value);
+                map.put("enum", toSwiftyEnumName(String.valueOf(value)));
+                map.put("raw", String.valueOf(value));
                 swiftEnums.add(map);
             }
             codegenProperty.allowableValues.put("values", swiftEnums);
-            codegenProperty.datatypeWithEnum =
-                StringUtils.left(codegenProperty.datatypeWithEnum, codegenProperty.datatypeWithEnum.length() - "Enum".length());
+            codegenProperty.datatypeWithEnum = toEnumName(codegenProperty);
+            //codegenProperty.datatypeWithEnum =
+            //    StringUtils.left(codegenProperty.datatypeWithEnum, codegenProperty.datatypeWithEnum.length() - "Enum".length());
+ 
             // Ensure that the enum type doesn't match a reserved word or
             // the variable name doesn't match the generated enum type or the
             // Swift compiler will generate an error
-            if (isReservedWord(codegenProperty.datatypeWithEnum) ||
-                    name.equals(codegenProperty.datatypeWithEnum)) {
-                codegenProperty.datatypeWithEnum = escapeReservedWord(codegenProperty.datatypeWithEnum);
-                    }
+            if (isReservedWord(codegenProperty.datatypeWithEnum) || toVarName(name).equals(codegenProperty.datatypeWithEnum)) {
+                codegenProperty.datatypeWithEnum = codegenProperty.datatypeWithEnum + "Enum";
+            }
         }
         return codegenProperty;
     }
@@ -335,8 +388,8 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
         if (value.matches("[A-Z][a-z0-9]+[a-zA-Z0-9]*")) {
             return value;
         }
-        char[] separators = {'-', '_', ' '};
-        return WordUtils.capitalizeFully(StringUtils.lowerCase(value), separators).replaceAll("[-_ ]", "");
+        char[] separators = {'-', '_', ' ', ':'};
+        return WordUtils.capitalizeFully(StringUtils.lowerCase(value), separators).replaceAll("[-_  :]", "");
     }
 
 
@@ -465,4 +518,72 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
     public void setResponseAs(String[] responseAs) {
         this.responseAs = responseAs;
     }
+
+    @Override
+    public String toEnumValue(String value, String datatype) {
+        if ("int".equals(datatype) || "double".equals(datatype) || "float".equals(datatype)) {
+            return value;
+        } else {
+            return "\'" + escapeText(value) + "\'";
+        }
+    }
+
+    @Override
+    public String toEnumDefaultValue(String value, String datatype) {
+        return datatype + "_" + value;
+    }
+
+    @Override
+    public String toEnumVarName(String name, String datatype) {
+        // TODO: this code is probably useless, because the var name is computed from the value in map.put("enum", toSwiftyEnumName(value));
+        // number
+        if ("int".equals(datatype) || "double".equals(datatype) || "float".equals(datatype)) {
+            String varName = name;
+            varName = varName.replaceAll("-", "MINUS_");
+            varName = varName.replaceAll("\\+", "PLUS_");
+            varName = varName.replaceAll("\\.", "_DOT_");
+            return varName;
+        }
+
+        // string
+        String enumName = sanitizeName(underscore(name).toUpperCase());
+        enumName = enumName.replaceFirst("^_", "");
+        enumName = enumName.replaceFirst("_$", "");
+
+        if (enumName.matches("\\d.*")) { // starts with number
+            return "_" + enumName;
+        } else {
+            return enumName;
+        }
+    }
+
+    @Override
+    public String toEnumName(CodegenProperty property) {
+        String enumName = toModelName(property.name);
+
+        // TODO: toModelName already does something for names starting with number, so this code is probably never called
+        if (enumName.matches("\\d.*")) { // starts with number
+            return "_" + enumName;
+        } else {
+            return enumName;
+        }
+    }
+
+    @Override
+    public Map<String, Object> postProcessModels(Map<String, Object> objs) {
+        // process enum in models
+        return postProcessModelsEnum(objs);
+    }
+
+    @Override
+    public String escapeQuotationMark(String input) {
+        // remove " to avoid code injection
+        return input.replace("\"", "");
+    }
+
+    @Override
+    public String escapeUnsafeCharacters(String input) {
+        return input.replace("*/", "*_/").replace("/*", "/_*");
+    }
+
 }

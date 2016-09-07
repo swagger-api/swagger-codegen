@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.samskivert.mustache.Mustache.Compiler;
+
 public interface CodegenConfig {
     CodegenType getTag();
 
@@ -29,6 +31,8 @@ public interface CodegenConfig {
 
     String apiTestFileFolder();
 
+    String apiDocFileFolder();
+
     String fileSuffix();
 
     String outputFolder();
@@ -40,6 +44,8 @@ public interface CodegenConfig {
     String modelFileFolder();
 
     String modelTestFileFolder();
+
+    String modelDocFileFolder();
 
     String modelPackage();
 
@@ -53,7 +59,11 @@ public interface CodegenConfig {
 
     String escapeText(String text);
 
+    String escapeUnsafeCharacters(String input);
+
     String escapeReservedWord(String name);
+
+    String escapeQuotationMark(String input);
 
     String getTypeDeclaration(Property p);
 
@@ -68,6 +78,10 @@ public interface CodegenConfig {
     Set<String> reservedWords();
 
     List<SupportingFile> supportingFiles();
+
+    String getInputSpec();
+
+    void setInputSpec(String inputSpec);
 
     String getOutputDir();
 
@@ -99,11 +113,17 @@ public interface CodegenConfig {
 
     Map<String, String> modelTestTemplateFiles();
 
+    Map<String, String> apiDocTemplateFiles();
+
+    Map<String, String> modelDocTemplateFiles();
+
     Set<String> languageSpecificPrimitives();
 
     void preprocessSwagger(Swagger swagger);
 
     void processSwagger(Swagger swagger);
+
+    Compiler processCompiler(Compiler compiler);
 
     String sanitizeTag(String tag);
 
@@ -114,6 +134,10 @@ public interface CodegenConfig {
     String toApiTestFilename(String name);
 
     String toModelTestFilename(String name);
+    
+    String toApiDocFilename(String name);
+
+    String toModelDocFilename(String name);
     
     String toModelImport(String name);
 
@@ -137,6 +161,8 @@ public interface CodegenConfig {
 
     String apiTestFilename(String templateName, String tag);
 
+    String apiDocFilename(String templateName, String tag);
+
     boolean shouldOverwrite(String filename);
 
     boolean isSkipOverwrite();
@@ -153,4 +179,22 @@ public interface CodegenConfig {
      * @return libray template
      */
     String getLibrary();
+
+    void setGitUserId(String gitUserId);
+
+    String getGitUserId();
+
+    void setGitRepoId(String gitRepoId);
+
+    String getGitRepoId();
+
+    void setReleaseNote(String releaseNote);
+
+    String getReleaseNote();
+
+    void setHttpUserAgent(String httpUserAgent);
+
+    String getHttpUserAgent();
+
+    String getCommonTemplateDir();
 }

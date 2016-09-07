@@ -1,3 +1,4 @@
+{{>licenseInfo}}
 package {{package}}
 
 {{#imports}}import {{import}}
@@ -27,16 +28,16 @@ class {{classname}}(val defBasePath: String = "{{basePath}}",
   /**
    * {{summary}}
    * {{notes}}
-{{#allParams}}   * @param {{paramName}} {{description}}
+{{#allParams}}   * @param {{paramName}} {{description}} {{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
 {{/allParams}}   * @return {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}
    */
-  def {{operationId}} ({{#allParams}}{{paramName}}: {{dataType}}{{#defaultValue}} /* = {{{defaultValue}}} */{{/defaultValue}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {{#returnType}}: Option[{{returnType}}]{{/returnType}} = {
+  def {{operationId}}({{#allParams}}{{paramName}}: {{#required}}{{dataType}}{{#defaultValue}} /* = {{{defaultValue}}}*/{{/defaultValue}}{{/required}}{{^required}}Option[{{dataType}}]{{#defaultValue}} /* = {{{defaultValue}}}*/{{/defaultValue}}{{^defaultValue}} = None{{/defaultValue}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}}){{#returnType}}: Option[{{returnType}}]{{/returnType}} = {
     // create path and map variables
     val path = "{{path}}".replaceAll("\\{format\\}","json"){{#pathParams}}.replaceAll("\\{" + "{{baseName}}" + "\\}",apiInvoker.escape({{paramName}}))
 
     {{/pathParams}}
 
-    val contentTypes = List({{#consumes}}"{{mediaType}}", {{/consumes}}"application/json")
+    val contentTypes = List({{#consumes}}"{{{mediaType}}}", {{/consumes}}"application/json")
     val contentType = contentTypes(0)
 
     // query params
@@ -44,34 +45,65 @@ class {{classname}}(val defBasePath: String = "{{basePath}}",
     val headerParams = new HashMap[String, String]
     val formParams = new HashMap[String, String]
 
-    {{#requiredParamCount}}
-    // verify required params are set
-    (List({{/requiredParamCount}}{{#requiredParams}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/requiredParams}}{{#requiredParamCount}}).filter(_ != null)).size match {
-       case {{requiredParamCount}} => // all required values set
-       case _ => throw new Exception("missing required params")
-    }
-    {{/requiredParamCount}}
+    {{#allParams}}
+    {{#required}}
+    {{^isPrimitiveType}}
+    if ({{paramName}} == null) throw new Exception("Missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}")
 
-    {{#queryParams}}if(String.valueOf({{paramName}}) != "null") queryParams += "{{baseName}}" -> {{paramName}}.toString
+    {{/isPrimitiveType}}
+    {{/required}}
+    {{/allParams}}
+    {{#queryParams}}
+    {{#required}}
+    if(String.valueOf({{paramName}}) != "null") queryParams += "{{baseName}}" -> {{paramName}}.toString
+    {{/required}}
+    {{^required}}
+    {{paramName}}.map(paramVal => queryParams += "{{baseName}}" -> paramVal.toString)
+    {{/required}}
     {{/queryParams}}
     
-    {{#headerParams}}headerParams += "{{baseName}}" -> {{paramName}}
+    {{#headerParams}}
+    {{#required}}
+    headerParams += "{{baseName}}" -> {{paramName}}
+    {{/required}}
+    {{^required}}
+    {{paramName}}.map(paramVal => headerParams += "{{baseName}}" -> paramVal)
+    {{/required}}
     {{/headerParams}}
 
-    var postBody: AnyRef = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}}
+    var postBody: AnyRef = {{#bodyParam}}{{#required}}{{paramName}}{{/required}}{{^required}}{{paramName}}.map(paramVal => paramVal){{/required}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}}
 
     if(contentType.startsWith("multipart/form-data")) {
       val mp = new FormDataMultiPart()
       {{#formParams}}{{#notFile}}
+      {{#required}}
       mp.field("{{baseName}}", {{paramName}}.toString(), MediaType.MULTIPART_FORM_DATA_TYPE)
+      {{/required}}
+      {{^required}}
+      {{paramName}}.map(paramVal => mp.field("{{baseName}}", paramVal.toString, MediaType.MULTIPART_FORM_DATA_TYPE))
+      {{/required}}
       {{/notFile}}{{#isFile}}
+      {{#required}}
       mp.field("{{baseName}}", file.getName)
       mp.bodyPart(new FileDataBodyPart("{{baseName}}", {{paramName}}, MediaType.MULTIPART_FORM_DATA_TYPE))
+      {{/required}}
+      {{^required}}
+      file.map(fileVal => mp.field("{{baseName}}", fileVal.getName))
+      {{paramName}}.map(paramVal => mp.bodyPart(new FileDataBodyPart("{{baseName}}", paramVal, MediaType.MULTIPART_FORM_DATA_TYPE)))
+      {{/required}}
       {{/isFile}}{{/formParams}}
       postBody = mp
     }
     else {
-      {{#formParams}}{{#notFile}}formParams += "{{baseName}}" -> {{paramName}}.toString(){{/notFile}}
+      {{#formParams}}
+      {{#notFile}}
+      {{#required}}
+      formParams += "{{baseName}}" -> {{paramName}}.toString()
+      {{/required}}
+      {{^required}}
+      {{paramName}}.map(paramVal => formParams += "{{baseName}}" -> paramVal.toString)
+      {{/required}}
+      {{/notFile}}
       {{/formParams}}
     }
 
@@ -87,6 +119,7 @@ class {{classname}}(val defBasePath: String = "{{basePath}}",
       case ex: ApiException => throw ex
     }
   }
+
   {{/operation}}
 }
 {{/operations}}
