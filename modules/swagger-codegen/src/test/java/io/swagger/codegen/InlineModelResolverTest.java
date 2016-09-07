@@ -191,14 +191,14 @@ public class InlineModelResolverTest {
                     .response(200, new Response()
                             .description("it works!")
                             .schema(new ObjectProperty()
-                                    .property("name", new StringProperty()).vendorExtension("x-ext", "ext-value")))))
+                                    .property("name", new StringProperty()).vendorExtension("x-ext", "ext-prop")))))
         .path("/foo/baz", new Path()
                 .get(new Operation()
                         .response(200, new Response()
                                 .vendorExtension("x-foo", "bar")
                                 .description("it works!")
                                 .schema(new ObjectProperty()
-                                        .property("name", new StringProperty()).vendorExtension("x-ext", "ext-value")))));
+                                        .property("name", new StringProperty()).vendorExtension("x-ext", "ext-prop")))));
         new InlineModelResolver().flatten(swagger);
 
         Map<String, Response> responses = swagger.getPaths().get("/foo/bar").getGet().getResponses();
@@ -208,14 +208,12 @@ public class InlineModelResolverTest {
         Property schema = response.getSchema();
 		assertTrue(schema instanceof RefProperty);
         assertEquals(1, schema.getVendorExtensions().size());
-        assertEquals("ext-value", schema.getVendorExtensions().get("x-ext"));
+        assertEquals("ext-prop", schema.getVendorExtensions().get("x-ext"));
 
         ModelImpl model = (ModelImpl)swagger.getDefinitions().get("inline_response_200");
         assertTrue(model.getProperties().size() == 1);
         assertNotNull(model.getProperties().get("name"));
         assertTrue(model.getProperties().get("name") instanceof StringProperty);
-        assertEquals(1, model.getVendorExtensions().size());
-        assertEquals("ext-value", model.getVendorExtensions().get("x-ext"));
     }
 
     
@@ -441,8 +439,8 @@ public class InlineModelResolverTest {
 		ArrayProperty schema = new ArrayProperty()
 				.items(new ObjectProperty()
 						.property("name", new StringProperty())
-						.vendorExtension("x-ext", "ext-value"))
-				.vendorExtension("x-ext", "ext-value");
+						.vendorExtension("x-ext", "ext-items"))
+				.vendorExtension("x-ext", "ext-prop");
 		swagger.path("/foo/baz", new Path()
                 .get(new Operation()
                         .response(200, new Response()
@@ -463,7 +461,7 @@ public class InlineModelResolverTest {
 
         ArrayProperty ap = (ArrayProperty) responseProperty;
         assertEquals(1, ap.getVendorExtensions().size());
-        assertEquals("ext-value", ap.getVendorExtensions().get("x-ext"));
+        assertEquals("ext-prop", ap.getVendorExtensions().get("x-ext"));
         
         Property p = ap.getItems();
 
@@ -473,6 +471,8 @@ public class InlineModelResolverTest {
         assertEquals(rp.getType(), "ref");
         assertEquals(rp.get$ref(), "#/definitions/inline_response_200");
         assertEquals(rp.getSimpleRef(), "inline_response_200");
+        assertEquals(1, rp.getVendorExtensions().size());
+        assertEquals("ext-items", rp.getVendorExtensions().get("x-ext"));
 
         Model inline = swagger.getDefinitions().get("inline_response_200");
         assertNotNull(inline);
@@ -480,8 +480,6 @@ public class InlineModelResolverTest {
         ModelImpl impl = (ModelImpl) inline;
         assertNotNull(impl.getProperties().get("name"));
         assertTrue(impl.getProperties().get("name") instanceof StringProperty);
-        assertEquals(1, impl.getVendorExtensions().size());
-        assertEquals("ext-value", impl.getVendorExtensions().get("x-ext"));
     }
 
     @Test
@@ -534,6 +532,7 @@ public class InlineModelResolverTest {
 
         MapProperty schema = new MapProperty();
         schema.setAdditionalProperties(new StringProperty());
+        schema.setVendorExtension("x-ext", "ext-prop");
 
         swagger.path("/foo/baz", new Path()
                 .get(new Operation()
@@ -549,6 +548,8 @@ public class InlineModelResolverTest {
         Property property = response.getSchema();
         assertTrue(property instanceof MapProperty);
         assertTrue(swagger.getDefinitions().size() == 0);
+        assertEquals(1, property.getVendorExtensions().size());
+        assertEquals("ext-prop", property.getVendorExtensions().get("x-ext"));
     }
 
     @Test
@@ -558,7 +559,7 @@ public class InlineModelResolverTest {
         MapProperty schema = new MapProperty();
         schema.setAdditionalProperties(new ObjectProperty()
                 .property("name", new StringProperty()));
-        schema.setVendorExtension("x-ext", "ext-value");
+        schema.setVendorExtension("x-ext", "ext-prop");
 
         swagger.path("/foo/baz", new Path()
                 .get(new Operation()
@@ -572,7 +573,7 @@ public class InlineModelResolverTest {
         Property property = response.getSchema();
         assertTrue(property instanceof MapProperty);
         assertEquals(1, property.getVendorExtensions().size());
-        assertEquals("ext-value", property.getVendorExtensions().get("x-ext"));
+        assertEquals("ext-prop", property.getVendorExtensions().get("x-ext"));
         assertTrue(swagger.getDefinitions().size() == 1);
 
         Model inline = swagger.getDefinitions().get("inline_response_200");

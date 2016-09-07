@@ -94,13 +94,9 @@ public class InlineModelResolver {
                                         Model model = modelFromProperty(op, modelName);
                                         String existing = matchGenerated(model);
                                         if (existing != null) {
-                                            RefProperty newSchema = new RefProperty(existing);
-                                            this.copyVenderExtensions(property, newSchema);
-                                            response.setSchema(newSchema);
+                                            response.setSchema(this.makeRefProperty(existing, property));
                                         } else {
-                                            RefProperty newSchema = new RefProperty(modelName);
-                                            response.setSchema(newSchema);
-                                            this.copyVenderExtensions(property, newSchema);
+                                            response.setSchema(this.makeRefProperty(modelName, property));
                                             addGenerated(modelName, model);
                                             swagger.addDefinition(modelName, model);
                                         }
@@ -118,9 +114,9 @@ public class InlineModelResolver {
                                             Model innerModel = modelFromProperty(op, modelName);
                                             String existing = matchGenerated(innerModel);
                                             if (existing != null) {
-                                                ap.setItems(new RefProperty(existing));
+                                                ap.setItems(this.makeRefProperty(existing, op));
                                             } else {
-                                                ap.setItems(new RefProperty(modelName));
+                                                ap.setItems(this.makeRefProperty(modelName, op));
                                                 addGenerated(modelName, innerModel);
                                                 swagger.addDefinition(modelName, innerModel);
                                             }
@@ -334,7 +330,6 @@ public class InlineModelResolver {
             model.setDescription(description);
             model.setExample(example);
             model.setItems(object.getItems());
-            this.copyVenderExtensions(object, model);
             return model;
         }
 
@@ -364,8 +359,6 @@ public class InlineModelResolver {
             model.setProperties(properties);
         }
 
-        this.copyVenderExtensions(object, model);
-
         return model;
     }
 
@@ -383,34 +376,33 @@ public class InlineModelResolver {
         model.setDescription(description);
         model.setExample(example);
         model.setItems(object.getAdditionalProperties());
-        this.copyVenderExtensions(object, model);
 
         return model;
     }
 
     /**
-     * Copy vender extensions from Property to Model
+     * Make a RefProperty
      * 
-     * @param source
-     * @param target
+     * @param ref
+     * @param property
+     * @return
      */
-    private void copyVenderExtensions(Property source, AbstractModel target) {
-        Map<String, Object> venderExtensions = source.getVendorExtensions();
-        for (String extName : venderExtensions.keySet()) {
-            target.setVendorExtension(extName, venderExtensions.get(extName));
-        }
+    public Property makeRefProperty(String ref, Property property) {
+        RefProperty newProperty = new RefProperty(ref);
+        this.copyVendorExtensions(property, newProperty);
+        return newProperty;
     }
 
     /**
-     * Copy vender extensions from Property to another Property
+     * Copy vendor extensions from Property to another Property
      * 
      * @param source
      * @param target
      */
-    private void copyVenderExtensions(Property source, AbstractProperty target) {
-        Map<String, Object> venderExtensions = source.getVendorExtensions();
-        for (String extName : venderExtensions.keySet()) {
-            target.setVendorExtension(extName, venderExtensions.get(extName));
+    public void copyVendorExtensions(Property source, AbstractProperty target) {
+        Map<String, Object> vendorExtensions = source.getVendorExtensions();
+        for (String extName : vendorExtensions.keySet()) {
+            target.setVendorExtension(extName, vendorExtensions.get(extName));
         }
     }
 
