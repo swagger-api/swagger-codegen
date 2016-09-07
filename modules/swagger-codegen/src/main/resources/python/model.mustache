@@ -74,7 +74,7 @@ class {{classname}}(object):
         if not set({{{name}}}.keys()).issubset(set(allowed_values)):
             raise ValueError(
                 "Invalid keys in `{{{name}}}` [{0}], must be a subset of [{1}]"
-                .format(", ".join(map(str, set({{{name}}})-set(allowed_values))), 
+                .format(", ".join(map(str, set({{{name}}}.keys())-set(allowed_values))), 
                         ", ".join(map(str, allowed_values)))
             )
 {{/isMapContainer}}
