@@ -99,9 +99,9 @@ class MapTest(object):
         :type: dict(str, str)
         """
         allowed_values = ["UPPER", "lower"]
-        if not set(map_of_enum_string).issubset(set(allowed_values)):
+        if not set(map_of_enum_string.keys()).issubset(set(allowed_values)):
             raise ValueError(
-                "Invalid values for `map_of_enum_string` [{0}], must be a subset of [{1}]"
+                "Invalid keys in `map_of_enum_string` [{0}], must be a subset of [{1}]"
                 .format(", ".join(map(str, set(map_of_enum_string)-set(allowed_values))), 
                         ", ".join(map(str, allowed_values)))
             )
