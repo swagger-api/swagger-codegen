@@ -25,6 +25,7 @@
 package io.swagger.client;
 
 import com.android.volley.Cache;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -213,9 +214,9 @@ public class ApiInvoker {
 
      // Setup authentications (key: authentication name, value: authentication).
      INSTANCE.authentications = new HashMap<String, Authentication>();
-     INSTANCE.authentications.put("api_key", new ApiKeyAuth("header", "api_key"));
      // TODO: comment out below as OAuth does not exist
      //INSTANCE.authentications.put("petstore_auth", new OAuth());
+     INSTANCE.authentications.put("api_key", new ApiKeyAuth("header", "api_key"));
      // Prevent the authentications from being modified.
      INSTANCE.authentications = Collections.unmodifiableMap(INSTANCE.authentications);
   }
@@ -236,6 +237,7 @@ public class ApiInvoker {
   }
 
   public static ApiInvoker getInstance() {
+    if(INSTANCE == null) initializeInstance();
     return INSTANCE;
   }
 
@@ -373,6 +375,9 @@ public class ApiInvoker {
      RequestFuture<String> future = RequestFuture.newFuture();
      Request request = createRequest(host, path, method, queryParams, body, headerParams, formParams, contentType, authNames, future, future);
      if(request != null) {
+        request.setRetryPolicy(new DefaultRetryPolicy((int) TimeUnit.MILLISECONDS.convert(connectionTimeout, TimeUnit.SECONDS),
+          DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+          DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         mRequestQueue.add(request);
         return future.get(connectionTimeout, TimeUnit.SECONDS);
      } else return "no data";
