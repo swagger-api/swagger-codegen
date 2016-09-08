@@ -1447,19 +1447,6 @@ public class DefaultCodegen {
         if (p instanceof BaseIntegerProperty && !(p instanceof IntegerProperty) && !(p instanceof LongProperty)) {
             BaseIntegerProperty sp = (BaseIntegerProperty) p;
             property.isInteger = true;
-            /*if (sp.getEnum() != null) {
-                List<Integer> _enum = sp.getEnum();
-                property._enum = new ArrayList<String>();
-                for(Integer i : _enum) {
-                  property._enum.add(i.toString());
-                }
-                property.isEnum = true;
-
-                // legacy support
-                Map<String, Object> allowableValues = new HashMap<String, Object>();
-                allowableValues.put("values", _enum);
-                property.allowableValues = allowableValues;
-            }*/
         }
 
         if (p instanceof IntegerProperty) {
@@ -1624,6 +1611,10 @@ public class DefaultCodegen {
             ArrayProperty ap = (ArrayProperty) p;
             CodegenProperty cp = fromProperty(property.name, ap.getItems());
             updatePropertyForArray(property, cp);
+
+            // ref: http://json-schema.org/latest/json-schema-validation.html#anchor42
+            property.maxItems = ap.getMaxItems();
+            property.minItems = ap.getMinItems();
       	} else if (p instanceof MapProperty) {
             property.isContainer = true;
             property.isMapContainer = true;

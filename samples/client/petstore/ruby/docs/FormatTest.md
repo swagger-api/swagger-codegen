@@ -16,5 +16,6 @@ Name | Type | Description | Notes
 **date_time** | **DateTime** |  | [optional] 
 **uuid** | **String** |  | [optional] 
 **password** | **String** |  | 
+**integer_array** | **Array&lt;Integer&gt;** |  | [optional] 
 
 

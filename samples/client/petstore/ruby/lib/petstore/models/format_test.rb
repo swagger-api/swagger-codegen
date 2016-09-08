@@ -52,6 +52,8 @@ module Petstore
 
     attr_accessor :password
 
+    attr_accessor :integer_array
+
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -68,7 +70,8 @@ module Petstore
         :'date' => :'date',
         :'date_time' => :'dateTime',
         :'uuid' => :'uuid',
-        :'password' => :'password'
+        :'password' => :'password',
+        :'integer_array' => :'integer_array'
       }
     end
 
@@ -87,7 +90,8 @@ module Petstore
         :'date' => :'Date',
         :'date_time' => :'DateTime',
         :'uuid' => :'String',
-        :'password' => :'String'
+        :'password' => :'String',
+        :'integer_array' => :'Array<Integer>'
       }
     end
 
@@ -149,6 +153,12 @@ module Petstore
 
       if attributes.has_key?(:'password')
         self.password = attributes[:'password']
+      end
+
+      if attributes.has_key?(:'integer_array')
+        if (value = attributes[:'integer_array']).is_a?(Array)
+          self.integer_array = value
+        end
       end
 
     end
@@ -372,7 +382,8 @@ module Petstore
           date == o.date &&
           date_time == o.date_time &&
           uuid == o.uuid &&
-          password == o.password
+          password == o.password &&
+          integer_array == o.integer_array
     end
 
     # @see the `==` method
@@ -384,7 +395,7 @@ module Petstore
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [integer, int32, int64, number, float, double, string, byte, binary, date, date_time, uuid, password].hash
+      [integer, int32, int64, number, float, double, string, byte, binary, date, date_time, uuid, password, integer_array].hash
     end
 
     # Builds the object from hash

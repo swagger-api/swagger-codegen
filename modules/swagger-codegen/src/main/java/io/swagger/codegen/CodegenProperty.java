@@ -32,6 +32,8 @@ public class CodegenProperty implements Cloneable {
     public Double maximum;
     public Boolean exclusiveMinimum;
     public Boolean exclusiveMaximum;
+    public Integer minItems;
+    public Integer maxItems;
     public Boolean hasMore, required, secondaryParam;
     public Boolean hasMoreNonReadOnly; // for model constructor, true if next properyt is not readonly
     public Boolean isPrimitiveType, isContainer, isNotContainer;
@@ -73,6 +75,8 @@ public class CodegenProperty implements Cloneable {
         result = prime * result + ((defaultValueWithParam == null) ? 0 : defaultValueWithParam.hashCode());
         result = prime * result + ((description == null) ? 0 : description.hashCode());
         result = prime * result + ((example == null) ? 0 : example.hashCode());
+        result = prime * result + ((maxItems == null) ? 0 : maxItems.hashCode());
+        result = prime * result + ((minItems == null) ? 0 : minItems.hashCode());
         result = prime * result + ((exclusiveMaximum == null) ? 0 : exclusiveMaximum.hashCode());
         result = prime * result + ((exclusiveMinimum == null) ? 0 : exclusiveMinimum.hashCode());
         result = prime * result + ((getter == null) ? 0 : getter.hashCode());
@@ -187,6 +191,12 @@ public class CodegenProperty implements Cloneable {
             return false;
         }
         if (this.maximum != other.maximum && (this.maximum == null || !this.maximum.equals(other.maximum))) {
+            return false;
+        }
+        if (this.minItems != other.minItems && (this.minItems == null || !this.minItems.equals(other.minItems))) {
+            return false;
+        }
+        if (this.maxItems != other.maxItems && (this.maxItems == null || !this.maxItems.equals(other.maxItems))) {
             return false;
         }
         if (this.exclusiveMinimum != other.exclusiveMinimum && (this.exclusiveMinimum == null || !this.exclusiveMinimum.equals(other.exclusiveMinimum))) {

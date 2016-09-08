@@ -1043,6 +1043,12 @@ definitions:
         format: password
         maxLength: 64
         minLength: 10
+      integer_array:
+        maxItems: 5
+        type: array
+        items:
+          type: integer
+          format: int32
   EnumClass:
     type: string
     default: '-efg'
