@@ -40,7 +40,7 @@ class {{classname}} {
         
         var headerFields:[String:String] = [:]
         {{#consumes}}headerFields["Content-Type"] = "{{mediaType}}"{{/consumes}}{{#headerParams}}
-        headerFields["{{baseName}}"] = {{#required}}"\({{paramName}})"{{/required}}{{^required}}{{paramName}} == nil ? "" : "\({{paramName}})"!{{/required}}{{/headerParams}}
+        headerFields["{{baseName}}"] = {{#required}}"\({{paramName}})"{{/required}}{{^required}}{{paramName}} == nil ? "" : "\({{paramName}}!)"{{/required}}{{/headerParams}}
 
         {{#bodyParam}}
         let sentData:NSData
