@@ -135,9 +135,6 @@ public class AkkaScalaClientCodegen extends AbstractScalaCodegen implements Code
 
         instantiationTypes.put("array", "ListBuffer");
         instantiationTypes.put("map", "Map");
-
-        cliOptions.add(new CliOption(CodegenConstants.MODEL_PACKAGE, CodegenConstants.MODEL_PACKAGE_DESC));
-        cliOptions.add(new CliOption(CodegenConstants.API_PACKAGE, CodegenConstants.API_PACKAGE_DESC));
     }
 
     @Override

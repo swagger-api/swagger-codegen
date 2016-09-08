@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.DefaultCodegen;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.BooleanProperty;
@@ -41,6 +43,9 @@ public abstract class AbstractScalaCodegen extends DefaultCodegen {
                         "List",
                         "Seq",
                         "Map"));
+
+        cliOptions.add(new CliOption(CodegenConstants.MODEL_PACKAGE, CodegenConstants.MODEL_PACKAGE_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.API_PACKAGE, CodegenConstants.API_PACKAGE_DESC));
     }
 
     @Override
