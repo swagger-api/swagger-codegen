@@ -9,7 +9,6 @@ import io.swagger.codegen.SupportingFile;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class AsyncScalaClientCodegen extends AbstractScalaCodegen implements CodegenConfig {
     protected String groupId = "io.swagger";
@@ -80,19 +79,6 @@ public class AsyncScalaClientCodegen extends AbstractScalaCodegen implements Cod
         typeMapping.put("object", "Any");
         typeMapping.put("file", "File");
 
-        languageSpecificPrimitives = new HashSet<String>(
-                Arrays.asList(
-                        "String",
-                        "boolean",
-                        "Boolean",
-                        "Double",
-                        "Int",
-                        "Long",
-                        "Float",
-                        "Object",
-                        "List",
-                        "Map")
-        );
         instantiationTypes.put("array", "ListBuffer");
         instantiationTypes.put("map", "HashMap");
 

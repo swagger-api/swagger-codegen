@@ -133,20 +133,6 @@ public class AkkaScalaClientCodegen extends AbstractScalaCodegen implements Code
         typeMapping.put("file", "File");
         typeMapping.put("number", "Double");
 
-        languageSpecificPrimitives = new HashSet<String>(
-                Arrays.asList(
-                        "String",
-                        "boolean",
-                        "Boolean",
-                        "Double",
-                        "Int",
-                        "Long",
-                        "Float",
-                        "Object",
-                        "List",
-                        "Seq",
-                        "Map")
-        );
         instantiationTypes.put("array", "ListBuffer");
         instantiationTypes.put("map", "Map");
 

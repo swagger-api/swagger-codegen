@@ -4,7 +4,6 @@ import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenParameter;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.SupportingFile;
 
@@ -88,17 +87,6 @@ public class ScalatraServerCodegen extends AbstractScalaCodegen implements Codeg
         supportingFiles.add(new SupportingFile("project/plugins.sbt", "project", "plugins.sbt"));
         supportingFiles.add(new SupportingFile("sbt", "", "sbt"));
 
-        languageSpecificPrimitives = new HashSet<String>(
-                Arrays.asList(
-                        "String",
-                        "boolean",
-                        "Boolean",
-                        "Double",
-                        "Integer",
-                        "Long",
-                        "Float",
-                        "Object")
-        );
         instantiationTypes.put("array", "ArrayList");
         instantiationTypes.put("map", "HashMap");
 

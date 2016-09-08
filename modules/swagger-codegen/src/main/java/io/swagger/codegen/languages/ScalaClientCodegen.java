@@ -9,7 +9,6 @@ import io.swagger.codegen.SupportingFile;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -100,20 +99,6 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
         typeMapping.put("binary", "String");
         typeMapping.put("ByteArray", "String");
 
-        languageSpecificPrimitives = new HashSet<String>(
-                Arrays.asList(
-                        "String",
-                        "boolean",
-                        "Boolean",
-                        "Double",
-                        "Int",
-                        "Long",
-                        "Float",
-                        "Object",
-                        "Any",
-                        "List",
-                        "Map")
-        );
         instantiationTypes.put("array", "ListBuffer");
         instantiationTypes.put("map", "HashMap");
 
