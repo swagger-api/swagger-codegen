@@ -112,7 +112,7 @@ export class {{classname}} {
 {{/formParams}}
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: '{{httpMethod}}',
+            method: {{httpMethod}},
             headers: headers,
 {{#bodyParam}}
             body: {{paramName}} == null ? '' : JSON.stringify({{paramName}}), // https://github.com/angular/angular/issues/10612
