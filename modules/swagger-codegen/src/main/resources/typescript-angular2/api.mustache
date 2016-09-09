@@ -24,17 +24,6 @@ export class {{classname}} {
     protected basePath = '{{basePath}}';
     public defaultHeaders: Headers = new Headers();
 
-    private _statusCode: number;
-    private _responseHeaders: Headers;
-
-    public get statusCode (): number {
-        return this._statusCode;
-    }
-    
-    public get responseHeaders (): Headers {
-        return this._responseHeaders;
-    }
-
     constructor(protected http: Http, @Optional()@Inject(BASE_PATH) basePath: string) {
         if (basePath) {
             this.basePath = basePath;
@@ -48,6 +37,25 @@ export class {{classname}} {
      {{#allParams}}* @param {{paramName}} {{description}}
      {{/allParams}}*/
     public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}extraHttpRequestParams?: any): Observable<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}> {
+        return this.{{nickname}}WithHttpInfo({{#allParams}}{{paramName}}, {{/allParams}}extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+{{/operation}}
+
+{{#operation}}
+    /**
+     * {{summary}}
+     * {{notes}}
+     {{#allParams}}* @param {{paramName}} {{description}}
+     {{/allParams}}*/
+    public {{nickname}}WithHttpInfo({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `{{path}}`;
 
         let queryParameters = new URLSearchParams();
@@ -104,7 +112,7 @@ export class {{classname}} {
 {{/formParams}}
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: {{httpMethod}},
+            method: '{{httpMethod}}',
             headers: headers,
 {{#bodyParam}}
             body: {{paramName}} == null ? '' : JSON.stringify({{paramName}}), // https://github.com/angular/angular/issues/10612
@@ -116,18 +124,7 @@ export class {{classname}} {
             responseType: ResponseContentType.Json
         });
 
-        return this.http.request(path, requestOptions)
-            .map((response: Response) => {
-            
-                this._statusCode = response.status;
-                this._responseHeaders = response.headers;
-            
-                if (response.status === 204) {
-                    return undefined;
-                } else {
-                    return response.json();
-                }
-            });
+        return this.http.request(path, requestOptions);
     }
 
 {{/operation}}
