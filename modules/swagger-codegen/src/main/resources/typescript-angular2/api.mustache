@@ -24,6 +24,17 @@ export class {{classname}} {
     protected basePath = '{{basePath}}';
     public defaultHeaders: Headers = new Headers();
 
+    private _statusCode: number;
+    private _responseHeaders: Headers;
+
+    public get statusCode (): number {
+        return this._statusCode;
+    }
+    
+    public get responseHeaders (): Headers {
+        return this._responseHeaders;
+    }
+
     constructor(protected http: Http, @Optional()@Inject(BASE_PATH) basePath: string) {
         if (basePath) {
             this.basePath = basePath;
@@ -107,6 +118,10 @@ export class {{classname}} {
 
         return this.http.request(path, requestOptions)
             .map((response: Response) => {
+            
+                this._statusCode = response.status;
+                this._responseHeaders = response.headers;
+            
                 if (response.status === 204) {
                     return undefined;
                 } else {
