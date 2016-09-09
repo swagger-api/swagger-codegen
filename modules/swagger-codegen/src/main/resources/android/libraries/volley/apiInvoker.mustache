@@ -223,6 +223,7 @@ public class ApiInvoker {
   }
 
   public static ApiInvoker getInstance() {
+    if(INSTANCE == null) initializeInstance();
     return INSTANCE;
   }
 
@@ -360,6 +361,9 @@ public class ApiInvoker {
      RequestFuture<String> future = RequestFuture.newFuture();
      Request request = createRequest(host, path, method, queryParams, body, headerParams, formParams, contentType, authNames, future, future);
      if(request != null) {
+        request.setRetryPolicy(new DefaultRetryPolicy((int) TimeUnit.MILLISECONDS.convert(connectionTimeout, TimeUnit.SECONDS),
+          DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+          DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         mRequestQueue.add(request);
         return future.get(connectionTimeout, TimeUnit.SECONDS);
      } else return "no data";
