@@ -4,7 +4,12 @@ package io.swagger.codegen.languages;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
 
+import org.slf4j.LoggerFactory;
+
+
+import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenProperty;
@@ -21,7 +26,14 @@ import io.swagger.models.Operation;
  *
  */
 public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
-{    
+{   
+    private static final Logger LOGGER = LoggerFactory.getLogger(JavaCXFServerCodegen.class);
+    
+    public static final String USE_BEANVALIDATION = "useBeanValidation";
+
+    protected boolean useBeanValidation = false;
+    
+    
     public JavaCXFServerCodegen()
     {
         super();
@@ -50,6 +62,8 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
 
         embeddedTemplateDir = templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME + File.separator + "cxf";
 
+        cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
+
     }
 
 
@@ -58,6 +72,15 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
     {
         super.processOpts();
         
+        if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
+              boolean useBeanValidationProp = Boolean.valueOf(additionalProperties.get(USE_BEANVALIDATION).toString());
+              this.setUseBeanValidation(useBeanValidationProp);
+           
+           // write back as boolean
+           additionalProperties.put(USE_BEANVALIDATION, useBeanValidationProp);
+       }
+        
+       
         supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
         
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
@@ -98,5 +121,9 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
     public String getHelp()
     {
         return "Generates a Java JAXRS Server application based on Apache CXF framework.";
+    }
+    
+    public void setUseBeanValidation(boolean useBeanValidation) {
+        this.useBeanValidation = useBeanValidation;
     }
 }

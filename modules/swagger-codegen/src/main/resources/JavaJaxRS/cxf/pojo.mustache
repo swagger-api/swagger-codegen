@@ -23,6 +23,26 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {
 {{>enumClass}}{{/items}}{{/items.isEnum}}
 
   @XmlElement(name="{{baseName}}")
+  @ApiModelProperty({{#example}}example = "{{example}}", {{/example}}{{#required}}required = {{required}}, {{/required}}value = "{{{description}}}")
+  private {{{datatypeWithEnum}}} {{name}} = {{{defaultValue}}};{{/vars}}
+
+  {{#vars}}
+ /**
+  {{#description}}
+   * {{{description}}}
+  {{/description}}
+  {{^description}}
+   * Get {{name}}
+  {{/description}}
+  {{#minimum}}
+   * minimum: {{minimum}}
+  {{/minimum}}
+  {{#maximum}}
+   * maximum: {{maximum}}
+  {{/maximum}}
+   * @return {{name}}
+  **/
+{{#useBeanValidation}}
 {{#required}}
   @NotNull
 {{/required}}
@@ -49,26 +69,8 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {
 {{/minimum}}
 {{#maximum}}
   //@Max({{maximum}})
-{{/maximum}}  
-  @ApiModelProperty({{#example}}example = "{{example}}", {{/example}}{{#required}}required = {{required}}, {{/required}}value = "{{{description}}}")
-  private {{{datatypeWithEnum}}} {{name}} = {{{defaultValue}}};{{/vars}}
-
-  {{#vars}}
- /**
-  {{#description}}
-   * {{{description}}}
-  {{/description}}
-  {{^description}}
-   * Get {{name}}
-  {{/description}}
-  {{#minimum}}
-   * minimum: {{minimum}}
-  {{/minimum}}
-  {{#maximum}}
-   * maximum: {{maximum}}
-  {{/maximum}}
-   * @return {{name}}
-  **/
+{{/maximum}}   
+{{/useBeanValidation}} 
 {{#vendorExtensions.extraAnnotation}}
   {{vendorExtensions.extraAnnotation}}
 {{/vendorExtensions.extraAnnotation}}

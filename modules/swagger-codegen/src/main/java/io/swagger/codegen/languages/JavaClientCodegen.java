@@ -15,6 +15,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen {
 
     public static final String USE_RX_JAVA = "useRxJava";
     public static final String PARCELABLE_MODEL = "parcelableModel";
+    public static final String USE_BEANVALIDATION = "useBeanValidation";
 
     public static final String RETROFIT_1 = "retrofit";
     public static final String RETROFIT_2 = "retrofit2";
@@ -22,6 +23,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen {
     protected String gradleWrapperPackage = "gradle.wrapper";
     protected boolean useRxJava = false;
     protected boolean parcelableModel = false;
+    protected boolean useBeanValidation = false;
 
     public JavaClientCodegen() {
         super();
@@ -34,6 +36,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen {
 
         cliOptions.add(CliOption.newBoolean(USE_RX_JAVA, "Whether to use the RxJava adapter with the retrofit2 library."));
         cliOptions.add(CliOption.newBoolean(PARCELABLE_MODEL, "Whether to generate models for Android that implement Parcelable with the okhttp-gson library."));
+        cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
 
         supportedLibraries.put("jersey1", "HTTP client: Jersey client 1.19.1. JSON processing: Jackson 2.7.0");
         supportedLibraries.put("feign", "HTTP client: Netflix Feign 8.16.0. JSON processing: Jackson 2.7.0");
@@ -78,6 +81,14 @@ public class JavaClientCodegen extends AbstractJavaCodegen {
         }
         // put the boolean value back to PARCELABLE_MODEL in additionalProperties
         additionalProperties.put(PARCELABLE_MODEL, parcelableModel);
+        
+        if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
+            boolean useBeanValidationProp = Boolean.valueOf(additionalProperties.get(USE_BEANVALIDATION).toString());
+            this.setUseBeanValidation(useBeanValidationProp);
+            
+            // write back as boolean
+            additionalProperties.put(USE_BEANVALIDATION, useBeanValidationProp);
+        }
 
         final String invokerFolder = (sourceFolder + '/' + invokerPackage).replace(".", "/");
         final String authFolder = (sourceFolder + '/' + invokerPackage + ".auth").replace(".", "/");
@@ -176,7 +187,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen {
                         operation.returnType = "Void";
                     }
                     if (usesRetrofit2Library() && StringUtils.isNotEmpty(operation.path) && operation.path.startsWith("/"))
-                    	operation.path = operation.path.substring(1);
+                        operation.path = operation.path.substring(1);
                 }
             }
         }
@@ -232,4 +243,8 @@ public class JavaClientCodegen extends AbstractJavaCodegen {
     public void setParcelableModel(boolean parcelableModel) {
         this.parcelableModel = parcelableModel;
     }
+    public void setUseBeanValidation(boolean useBeanValidation) {
+        this.useBeanValidation = useBeanValidation;
+    }
+
 }

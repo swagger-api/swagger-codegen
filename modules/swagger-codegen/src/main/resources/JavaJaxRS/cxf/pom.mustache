@@ -116,6 +116,7 @@
       <version>${junit-version}</version>
       <scope>test</scope>
     </dependency>
+{{#useBeanValidation}}
     <!-- Bean Validation API support -->
     <dependency>
         <groupId>javax.validation</groupId>
@@ -123,6 +124,7 @@
         <version>${beanvalidation-version}</version>
         <scope>provided</scope>
     </dependency>
+{{/useBeanValidation}}
     <!-- CXF Client -->
     <dependency>
         <groupId>org.apache.cxf</groupId>
