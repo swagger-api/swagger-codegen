@@ -65,7 +65,7 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
 
         modelTemplateFiles.clear();
 
-        apiTemplateFiles.clear();
+        apiTemplateFiles.put("controller.mustache", ".py");
 
         /*
          * Template Location.  This is the location which templates will be read from.  The generator
@@ -122,7 +122,7 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
     @Override
     public void processOpts() {
         super.processOpts();
-        apiTemplateFiles.clear();
+        //apiTemplateFiles.clear();
 
         if (additionalProperties.containsKey(CONTROLLER_PACKAGE)) {
             this.controllerPackage = additionalProperties.get(CONTROLLER_PACKAGE).toString();
@@ -145,10 +145,10 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
         }
 
         if(!new java.io.File(controllerPackage + File.separator + defaultController + ".py").exists()) {
-            supportingFiles.add(new SupportingFile("controller.mustache",
-                            controllerPackage,
-                            defaultController + ".py")
-            );
+            //supportingFiles.add(new SupportingFile("controller.mustache",
+            //                controllerPackage,
+            //                defaultController + ".py")
+            //);
             supportingFiles.add(new SupportingFile("__init__.mustache",
                             controllerPackage,
                             "__init__.py")
@@ -198,14 +198,14 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
     @Override
     public String toApiName(String name) {
         if (name.length() == 0) {
-            return "DefaultController";
+            return "DefaultControllej";
         }
-        return initialCaps(name);
+        return camelize(name, false) + "Controller";
     }
 
     @Override
     public String toApiFilename(String name) {
-        return toApiName(name);
+        return underscore(toApiName(name));
     }
 
     /**
@@ -228,6 +228,7 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
         return outputFolder + File.separator + apiPackage().replace('.', File.separatorChar);
     }
 
+    /*
     @Override
     public void preprocessSwagger(Swagger swagger) {
         if(swagger != null && swagger.getPaths() != null) {
@@ -271,6 +272,7 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
             }
         }
     }
+    */
 
     @SuppressWarnings("unchecked")
     private static List<Map<String, Object>> getOperations(Map<String, Object> objs) {
