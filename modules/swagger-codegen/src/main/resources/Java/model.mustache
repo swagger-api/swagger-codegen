@@ -6,7 +6,9 @@ import java.util.Objects;
 {{#imports}}
 import {{import}};
 {{/imports}}
+{{#useBeanValidation}}
 import javax.validation.constraints.*;
+{{/useBeanValidation}}
 
 {{#serializableModel}}import java.io.Serializable;{{/serializableModel}}
 {{#models}}

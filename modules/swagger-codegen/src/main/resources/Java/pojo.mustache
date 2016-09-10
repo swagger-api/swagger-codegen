@@ -49,6 +49,7 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {{#seriali
   {{/maximum}}
    * @return {{name}}
   **/
+{{#useBeanValidation}}
 {{#required}}
   @NotNull
 {{/required}}
@@ -76,6 +77,7 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {{#seriali
 {{#maximum}}
   //@Max({{maximum}})
 {{/maximum}}
+{{/useBeanValidation}}
   @ApiModelProperty({{#example}}example = "{{example}}", {{/example}}{{#required}}required = {{required}}, {{/required}}value = "{{{description}}}")
 {{#vendorExtensions.extraAnnotation}}
   {{vendorExtensions.extraAnnotation}}

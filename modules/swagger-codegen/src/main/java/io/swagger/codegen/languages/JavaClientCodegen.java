@@ -14,12 +14,14 @@ public class JavaClientCodegen extends AbstractJavaCodegen {
     private static final Logger LOGGER = LoggerFactory.getLogger(JavaClientCodegen.class);
 
     public static final String USE_RX_JAVA = "useRxJava";
+    public static final String USE_BEANVALIDATION = "useBeanValidation";
 
     public static final String RETROFIT_1 = "retrofit";
     public static final String RETROFIT_2 = "retrofit2";
 
     protected String gradleWrapperPackage = "gradle.wrapper";
     protected boolean useRxJava = false;
+    protected boolean useBeanValidation = false;
 
     public JavaClientCodegen() {
         super();
@@ -31,6 +33,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen {
         modelPackage = "io.swagger.client.model";
 
         cliOptions.add(CliOption.newBoolean(USE_RX_JAVA, "Whether to use the RxJava adapter with the retrofit2 library."));
+        cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
 
         supportedLibraries.put(DEFAULT_LIBRARY, "HTTP client: Jersey client 1.19.1. JSON processing: Jackson 2.7.0");
         supportedLibraries.put("feign", "HTTP client: Netflix Feign 8.16.0. JSON processing: Jackson 2.7.0");
@@ -67,6 +70,14 @@ public class JavaClientCodegen extends AbstractJavaCodegen {
 
         if (additionalProperties.containsKey(USE_RX_JAVA)) {
             this.setUseRxJava(Boolean.valueOf(additionalProperties.get(USE_RX_JAVA).toString()));
+        }
+        
+        if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
+            boolean useBeanValidationProp = Boolean.valueOf(additionalProperties.get(USE_BEANVALIDATION).toString());
+            this.setUseBeanValidation(useBeanValidationProp);
+            
+            // write back as boolean
+            additionalProperties.put(USE_BEANVALIDATION, useBeanValidationProp);
         }
 
         final String invokerFolder = (sourceFolder + '/' + invokerPackage).replace(".", "/");
@@ -164,7 +175,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen {
                         operation.returnType = "Void";
                     }
                     if (usesRetrofit2Library() && StringUtils.isNotEmpty(operation.path) && operation.path.startsWith("/"))
-                    	operation.path = operation.path.substring(1);
+                        operation.path = operation.path.substring(1);
                 }
             }
         }
@@ -210,6 +221,10 @@ public class JavaClientCodegen extends AbstractJavaCodegen {
 
     public void setUseRxJava(boolean useRxJava) {
         this.useRxJava = useRxJava;
+    }
+
+    public void setUseBeanValidation(boolean useBeanValidation) {
+        this.useBeanValidation = useBeanValidation;
     }
 
 }

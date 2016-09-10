@@ -17,22 +17,12 @@ import org.apache.cxf.jaxrs.ext.multipart.*;
 
 import io.swagger.annotations.Api;
 
-@Path("/")
 {{#description}}
-@Api(value = "/", description = "{{description}}")
 {{/description}}
 public class {{classname}}ServiceImpl implements {{classname}} {
 {{#operations}}
 {{#operation}}
-    @{{httpMethod}}
-    {{#subresourceOperation}}@Path("{{path}}"){{/subresourceOperation}}
-    {{#hasConsumes}}@Consumes({ {{#consumes}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/consumes}} }){{/hasConsumes}}
-    {{#hasProduces}}@Produces({ {{#produces}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/produces}} }){{/hasProduces}}
-    {{! add description for CXF WADL (must be added to implementation class }}
-{{#summary}}
-    @Description(value = "{{summary}}", target = DocTarget.METHOD)
-{{/summary}}
-    public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}} {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},{{/hasMore}}{{/allParams}}) {
+    public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}} {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {
         // TODO: Implement...
         
         {{#returnType}}return null;{{/returnType}}
