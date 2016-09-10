@@ -58,7 +58,6 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import io.swagger.client.auth.Authentication;
 import io.swagger.client.auth.HttpBasicAuth;
@@ -100,6 +99,7 @@ public class ApiClient {
     // Setup authentications (key: authentication name, value: authentication).
     authentications = new HashMap<String, Authentication>();
     authentications.put("api_key", new ApiKeyAuth("header", "api_key"));
+    authentications.put("http_basic_test", new HttpBasicAuth());
     authentications.put("petstore_auth", new OAuth());
     // Prevent the authentications from being modified.
     authentications = Collections.unmodifiableMap(authentications);
@@ -108,12 +108,7 @@ public class ApiClient {
   }
 
   public static DateFormat buildDefaultDateFormat() {
-    // Use RFC3339 format for date and datetime.
-    // See http://xml2rfc.ietf.org/public/rfc/html/rfc3339.html#anchor14
-    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-    // Use UTC as the default time zone.
-    dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-    return dateFormat;
+    return new RFC3339DateFormat();
   }
 
   /**
