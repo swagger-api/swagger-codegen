@@ -197,8 +197,8 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
 
     @Override
     public String toApiName(String name) {
-        if (name.length() == 0) {
-            return "DefaultControllej";
+        if (name == null || name.length() == 0) {
+            return "DefaultController";
         }
         return camelize(name, false) + "Controller";
     }
