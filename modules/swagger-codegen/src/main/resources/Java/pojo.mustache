@@ -66,36 +66,7 @@ public class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{{#parcela
  {{#vendorExtensions.extraAnnotation}}
   {{{vendorExtensions.extraAnnotation}}}
   {{/vendorExtensions.extraAnnotation}}
-{{#useBeanValidation}}
-{{#required}}
-  @NotNull
-{{/required}}
-{{#pattern}}
-  @Pattern(regexp="{{pattern}}")
-{{/pattern}}
-{{#minLength}}
-{{#maxLength}}
-  @Size(min={{minLength}},max={{maxLength}})
-{{/maxLength}}
-{{/minLength}}
-{{#minLength}}
-{{^maxLength}}
-  @Size(min={{minLength}})
-{{/maxLength}}
-{{/minLength}}
-{{^minLength}}
-{{#maxLength}}
-  @Size(max={{maxLength}})
-  {{/maxLength}}
-  {{/minLength}}
-{{#minimum}}
-  //@Min({{minimum}})
-{{/minimum}}
-{{#maximum}}
-  //@Max({{maximum}})
-{{/maximum}}
-{{/useBeanValidation}}
-  @ApiModelProperty({{#example}}example = "{{example}}", {{/example}}{{#required}}required = {{required}}, {{/required}}value = "{{{description}}}")
+{{#useBeanValidation}}{{>beanValidation}}{{/useBeanValidation}}  @ApiModelProperty({{#example}}example = "{{example}}", {{/example}}{{#required}}required = {{required}}, {{/required}}value = "{{{description}}}")
 {{#vendorExtensions.extraAnnotation}}
   {{vendorExtensions.extraAnnotation}}
 {{/vendorExtensions.extraAnnotation}}
