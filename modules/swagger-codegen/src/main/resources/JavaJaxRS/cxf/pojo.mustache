@@ -42,39 +42,10 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {
   {{/maximum}}
    * @return {{name}}
   **/
-{{#useBeanValidation}}
-{{#required}}
-  @NotNull
-{{/required}}
-{{#pattern}}
-  @Pattern(regexp="{{pattern}}")
-{{/pattern}}
-{{#minLength}}
-{{#maxLength}}
-  @Size(min={{minLength}},max={{maxLength}})
-{{/maxLength}}
-{{/minLength}}
-{{#minLength}}
-{{^maxLength}}
-  @Size(min={{minLength}})
-{{/maxLength}}
-{{/minLength}}
-{{^minLength}}
-{{#maxLength}}
-  @Size(max={{maxLength}})
-  {{/maxLength}}
-  {{/minLength}}
-{{#minimum}}
-  //@Min({{minimum}})
-{{/minimum}}
-{{#maximum}}
-  //@Max({{maximum}})
-{{/maximum}}   
-{{/useBeanValidation}} 
 {{#vendorExtensions.extraAnnotation}}
   {{vendorExtensions.extraAnnotation}}
 {{/vendorExtensions.extraAnnotation}}
-  public {{{datatypeWithEnum}}} {{getter}}() {
+{{#useBeanValidation}}{{>..\..\java\beanValidation}}{{/useBeanValidation}}  public {{{datatypeWithEnum}}} {{getter}}() {
     return {{name}};
   }
   public void {{setter}}({{{datatypeWithEnum}}} {{name}}) {
