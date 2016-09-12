@@ -39,7 +39,7 @@ class PetApi(client: TransportClient, config: SwaggerConfig) extends ApiClient(c
     val headerParams = new mutable.HashMap[String, String]
 
 
-    headerParams += "api_key" -> apiKey.toString
+          if (apiKey != null) apiKey.map { v => headerParams += "api_key" -> v.toString }
 
     val resFuture = client.submit("DELETE", path, queryParams.toMap, headerParams.toMap, "")
     resFuture flatMap { resp =>
