@@ -310,7 +310,7 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
             RefProperty rp = (RefProperty) p;
             return "new " + toModelName(rp.getSimpleRef()) + "()";
         }
-		//System.out.println(p.getClass().getName());
+
         return "nullptr";
     }
 
