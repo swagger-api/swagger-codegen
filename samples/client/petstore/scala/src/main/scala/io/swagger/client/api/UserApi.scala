@@ -53,7 +53,7 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
    */
   def createUser(body: User) = {
     // create path and map variables
-    val path = "/user".replaceAll("\\{format\\}","json")
+    val path = "/user".replaceAll("\\{format\\}", "json")
 
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
@@ -68,11 +68,10 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
     var postBody: AnyRef = body
 
-    if(contentType.startsWith("multipart/form-data")) {
-      val mp = new FormDataMultiPart()
+    if (contentType.startsWith("multipart/form-data")) {
+      val mp = new FormDataMultiPart
       postBody = mp
-    }
-    else {
+    } else {
     }
 
     try {
@@ -94,7 +93,7 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
    */
   def createUsersWithArrayInput(body: List[User]) = {
     // create path and map variables
-    val path = "/user/createWithArray".replaceAll("\\{format\\}","json")
+    val path = "/user/createWithArray".replaceAll("\\{format\\}", "json")
 
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
@@ -109,11 +108,10 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
     var postBody: AnyRef = body
 
-    if(contentType.startsWith("multipart/form-data")) {
-      val mp = new FormDataMultiPart()
+    if (contentType.startsWith("multipart/form-data")) {
+      val mp = new FormDataMultiPart
       postBody = mp
-    }
-    else {
+    } else {
     }
 
     try {
@@ -135,7 +133,7 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
    */
   def createUsersWithListInput(body: List[User]) = {
     // create path and map variables
-    val path = "/user/createWithList".replaceAll("\\{format\\}","json")
+    val path = "/user/createWithList".replaceAll("\\{format\\}", "json")
 
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
@@ -150,11 +148,10 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
     var postBody: AnyRef = body
 
-    if(contentType.startsWith("multipart/form-data")) {
-      val mp = new FormDataMultiPart()
+    if (contentType.startsWith("multipart/form-data")) {
+      val mp = new FormDataMultiPart
       postBody = mp
-    }
-    else {
+    } else {
     }
 
     try {
@@ -176,7 +173,7 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
    */
   def deleteUser(username: String) = {
     // create path and map variables
-    val path = "/user/{username}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "username" + "\\}",apiInvoker.escape(username))
+    val path = "/user/{username}".replaceAll("\\{format\\}", "json").replaceAll("\\{" + "username" + "\\}",apiInvoker.escape(username))
 
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
@@ -191,11 +188,10 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
     var postBody: AnyRef = null
 
-    if(contentType.startsWith("multipart/form-data")) {
-      val mp = new FormDataMultiPart()
+    if (contentType.startsWith("multipart/form-data")) {
+      val mp = new FormDataMultiPart
       postBody = mp
-    }
-    else {
+    } else {
     }
 
     try {
@@ -217,7 +213,7 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
    */
   def getUserByName(username: String): Option[User] = {
     // create path and map variables
-    val path = "/user/{username}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "username" + "\\}",apiInvoker.escape(username))
+    val path = "/user/{username}".replaceAll("\\{format\\}", "json").replaceAll("\\{" + "username" + "\\}",apiInvoker.escape(username))
 
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
@@ -232,11 +228,10 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
     var postBody: AnyRef = null
 
-    if(contentType.startsWith("multipart/form-data")) {
-      val mp = new FormDataMultiPart()
+    if (contentType.startsWith("multipart/form-data")) {
+      val mp = new FormDataMultiPart
       postBody = mp
-    }
-    else {
+    } else {
     }
 
     try {
@@ -260,7 +255,7 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
    */
   def loginUser(username: String, password: String): Option[String] = {
     // create path and map variables
-    val path = "/user/login".replaceAll("\\{format\\}","json")
+    val path = "/user/login".replaceAll("\\{format\\}", "json")
 
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
@@ -279,11 +274,10 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
     var postBody: AnyRef = null
 
-    if(contentType.startsWith("multipart/form-data")) {
-      val mp = new FormDataMultiPart()
+    if (contentType.startsWith("multipart/form-data")) {
+      val mp = new FormDataMultiPart
       postBody = mp
-    }
-    else {
+    } else {
     }
 
     try {
@@ -305,7 +299,7 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
    */
   def logoutUser() = {
     // create path and map variables
-    val path = "/user/logout".replaceAll("\\{format\\}","json")
+    val path = "/user/logout".replaceAll("\\{format\\}", "json")
 
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
@@ -318,11 +312,10 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
     var postBody: AnyRef = null
 
-    if(contentType.startsWith("multipart/form-data")) {
-      val mp = new FormDataMultiPart()
+    if (contentType.startsWith("multipart/form-data")) {
+      val mp = new FormDataMultiPart
       postBody = mp
-    }
-    else {
+    } else {
     }
 
     try {
@@ -345,7 +338,7 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
    */
   def updateUser(username: String, body: User) = {
     // create path and map variables
-    val path = "/user/{username}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "username" + "\\}",apiInvoker.escape(username))
+    val path = "/user/{username}".replaceAll("\\{format\\}", "json").replaceAll("\\{" + "username" + "\\}",apiInvoker.escape(username))
 
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
@@ -362,11 +355,10 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
     var postBody: AnyRef = body
 
-    if(contentType.startsWith("multipart/form-data")) {
-      val mp = new FormDataMultiPart()
+    if (contentType.startsWith("multipart/form-data")) {
+      val mp = new FormDataMultiPart
       postBody = mp
-    }
-    else {
+    } else {
     }
 
     try {
