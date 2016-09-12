@@ -2,8 +2,8 @@ package io.swagger.api;
 
 import io.swagger.model.Client;
 import org.joda.time.LocalDate;
-import org.joda.time.DateTime;
 import java.math.BigDecimal;
+import org.joda.time.DateTime;
 
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
@@ -57,7 +57,7 @@ public interface FakeApi {
 ,
 
 
-@ApiParam(value = "None", required=true ) @RequestPart(value="string", required=true)  String string
+@ApiParam(value = "None", required=true ) @RequestPart(value="patternWithoutDelimiter", required=true)  String patternWithoutDelimiter
 ,
 
 
@@ -78,6 +78,10 @@ public interface FakeApi {
 
 
 @ApiParam(value = "None" ) @RequestPart(value="_float", required=false)  Float _float
+,
+
+
+@ApiParam(value = "None" ) @RequestPart(value="string", required=false)  String string
 ,
 
 
@@ -108,13 +112,13 @@ public interface FakeApi {
     ResponseEntity<Void> testEnumParameters(
 
 
-@ApiParam(value = "Form parameter enum test (string array)" ) @RequestPart(value="enumFormStringArray", required=false)  List<String> enumFormStringArray
+@ApiParam(value = "Form parameter enum test (string array)" , allowableValues="GREATER_THAN, DOLLAR") @RequestPart(value="enumFormStringArray", required=false)  List<String> enumFormStringArray
 ,
 
 
 @ApiParam(value = "Form parameter enum test (string)" , allowableValues="_ABC, _EFG, _XYZ_", defaultValue="-efg") @RequestPart(value="enumFormString", required=false)  String enumFormString
 ,
-@ApiParam(value = "Header parameter enum test (string array)"  ) @RequestHeader(value="enum_header_string_array", required=false) List<String> enumHeaderStringArray
+@ApiParam(value = "Header parameter enum test (string array)"  , allowableValues="GREATER_THAN, DOLLAR") @RequestHeader(value="enum_header_string_array", required=false) List<String> enumHeaderStringArray
 
 
 ,
