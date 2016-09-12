@@ -54,10 +54,10 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
   def createUser(body: User) = {
     // create path and map variables
     val path = "/user".replaceAll("\\{format\\}","json")
+
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
 
-    // query params
     val queryParams = new HashMap[String, String]
     val headerParams = new HashMap[String, String]
     val formParams = new HashMap[String, String]
@@ -70,7 +70,6 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
     if(contentType.startsWith("multipart/form-data")) {
       val mp = new FormDataMultiPart()
-      
       postBody = mp
     }
     else {
@@ -96,10 +95,10 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
   def createUsersWithArrayInput(body: List[User]) = {
     // create path and map variables
     val path = "/user/createWithArray".replaceAll("\\{format\\}","json")
+
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
 
-    // query params
     val queryParams = new HashMap[String, String]
     val headerParams = new HashMap[String, String]
     val formParams = new HashMap[String, String]
@@ -112,7 +111,6 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
     if(contentType.startsWith("multipart/form-data")) {
       val mp = new FormDataMultiPart()
-      
       postBody = mp
     }
     else {
@@ -138,10 +136,10 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
   def createUsersWithListInput(body: List[User]) = {
     // create path and map variables
     val path = "/user/createWithList".replaceAll("\\{format\\}","json")
+
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
 
-    // query params
     val queryParams = new HashMap[String, String]
     val headerParams = new HashMap[String, String]
     val formParams = new HashMap[String, String]
@@ -154,7 +152,6 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
     if(contentType.startsWith("multipart/form-data")) {
       val mp = new FormDataMultiPart()
-      
       postBody = mp
     }
     else {
@@ -181,14 +178,14 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     // create path and map variables
     val path = "/user/{username}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "username" + "\\}",apiInvoker.escape(username))
 
-
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
 
-    // query params
     val queryParams = new HashMap[String, String]
     val headerParams = new HashMap[String, String]
     val formParams = new HashMap[String, String]
+
+    if (username == null) throw new Exception("Missing required parameter 'username' when calling UserApi->deleteUser")
 
     
 
@@ -196,7 +193,6 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
     if(contentType.startsWith("multipart/form-data")) {
       val mp = new FormDataMultiPart()
-      
       postBody = mp
     }
     else {
@@ -223,14 +219,14 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     // create path and map variables
     val path = "/user/{username}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "username" + "\\}",apiInvoker.escape(username))
 
-
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
 
-    // query params
     val queryParams = new HashMap[String, String]
     val headerParams = new HashMap[String, String]
     val formParams = new HashMap[String, String]
+
+    if (username == null) throw new Exception("Missing required parameter 'username' when calling UserApi->getUserByName")
 
     
 
@@ -238,7 +234,6 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
     if(contentType.startsWith("multipart/form-data")) {
       val mp = new FormDataMultiPart()
-      
       postBody = mp
     }
     else {
@@ -266,23 +261,26 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
   def loginUser(username: String, password: String): Option[String] = {
     // create path and map variables
     val path = "/user/login".replaceAll("\\{format\\}","json")
+
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
 
-    // query params
     val queryParams = new HashMap[String, String]
     val headerParams = new HashMap[String, String]
     val formParams = new HashMap[String, String]
 
-    if(String.valueOf(username) != "null") queryParams += "username" -> username.toString
-    if(String.valueOf(password) != "null") queryParams += "password" -> password.toString
+    if (username == null) throw new Exception("Missing required parameter 'username' when calling UserApi->loginUser")
+
+    if (password == null) throw new Exception("Missing required parameter 'password' when calling UserApi->loginUser")
+
+    queryParams += "username" -> username.toString
+    queryParams += "password" -> password.toString
     
 
     var postBody: AnyRef = null
 
     if(contentType.startsWith("multipart/form-data")) {
       val mp = new FormDataMultiPart()
-      
       postBody = mp
     }
     else {
@@ -308,10 +306,10 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
   def logoutUser() = {
     // create path and map variables
     val path = "/user/logout".replaceAll("\\{format\\}","json")
+
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
 
-    // query params
     val queryParams = new HashMap[String, String]
     val headerParams = new HashMap[String, String]
     val formParams = new HashMap[String, String]
@@ -322,7 +320,6 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
     if(contentType.startsWith("multipart/form-data")) {
       val mp = new FormDataMultiPart()
-      
       postBody = mp
     }
     else {
@@ -350,14 +347,14 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
     // create path and map variables
     val path = "/user/{username}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "username" + "\\}",apiInvoker.escape(username))
 
-
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
 
-    // query params
     val queryParams = new HashMap[String, String]
     val headerParams = new HashMap[String, String]
     val formParams = new HashMap[String, String]
+
+    if (username == null) throw new Exception("Missing required parameter 'username' when calling UserApi->updateUser")
 
     if (body == null) throw new Exception("Missing required parameter 'body' when calling UserApi->updateUser")
 
@@ -367,7 +364,6 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
     if(contentType.startsWith("multipart/form-data")) {
       val mp = new FormDataMultiPart()
-      
       postBody = mp
     }
     else {
