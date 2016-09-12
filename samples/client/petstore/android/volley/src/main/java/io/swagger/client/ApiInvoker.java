@@ -237,7 +237,7 @@ public class ApiInvoker {
   }
 
   public static ApiInvoker getInstance() {
-    if(INSTANCE == null) initializeInstance();
+    if (INSTANCE == null) initializeInstance();
     return INSTANCE;
   }
 
