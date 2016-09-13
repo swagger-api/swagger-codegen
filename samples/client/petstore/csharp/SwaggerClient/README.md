@@ -138,16 +138,19 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Authorization
 
+<a name="api_key"></a>
 ### api_key
 
 - **Type**: API key
 - **API key parameter name**: api_key
 - **Location**: HTTP header
 
+<a name="http_basic_test"></a>
 ### http_basic_test
 
 - **Type**: HTTP basic authentication
 
+<a name="petstore_auth"></a>
 ### petstore_auth
 
 - **Type**: OAuth
