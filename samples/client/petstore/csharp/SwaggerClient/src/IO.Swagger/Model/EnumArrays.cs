@@ -47,16 +47,16 @@ namespace IO.Swagger.Model
         {
             
             /// <summary>
-            /// Enum  for ">="
+            /// Enum GreaterThanOrEqualTo for ">="
             /// </summary>
             [EnumMember(Value = ">=")]
-            ,
+            GreaterThanOrEqualTo,
             
             /// <summary>
-            /// Enum  for "$"
+            /// Enum Dollar for "$"
             /// </summary>
             [EnumMember(Value = "$")]
-            
+            Dollar
         }
 
 
