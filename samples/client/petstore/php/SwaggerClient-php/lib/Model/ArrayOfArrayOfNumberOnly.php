@@ -171,6 +171,11 @@ class ArrayOfArrayOfNumberOnly implements ArrayAccess
      */
     public function setArrayArrayNumber($array_array_number)
     {
+        if (is_null($array_array_number)) {
+            $this->container['array_array_number'] = $array_array_number;
+
+            return $this;
+        }
         $this->container['array_array_number'] = $array_array_number;
 
         return $this;

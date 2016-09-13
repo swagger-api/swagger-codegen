@@ -190,6 +190,11 @@ class MapTest implements ArrayAccess
      */
     public function setMapMapOfString($map_map_of_string)
     {
+        if (is_null($map_map_of_string)) {
+            $this->container['map_map_of_string'] = $map_map_of_string;
+
+            return $this;
+        }
         $this->container['map_map_of_string'] = $map_map_of_string;
 
         return $this;
@@ -211,6 +216,11 @@ class MapTest implements ArrayAccess
      */
     public function setMapOfEnumString($map_of_enum_string)
     {
+        if (is_null($map_of_enum_string)) {
+            $this->container['map_of_enum_string'] = $map_of_enum_string;
+
+            return $this;
+        }
         $allowed_values = array('UPPER', 'lower');
         if (array_diff($map_of_enum_string, $allowed_values)) {
             throw new \InvalidArgumentException("Invalid value for 'map_of_enum_string', must be one of 'UPPER', 'lower'");

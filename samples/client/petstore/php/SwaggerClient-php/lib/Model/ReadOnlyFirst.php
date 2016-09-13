@@ -176,6 +176,11 @@ class ReadOnlyFirst implements ArrayAccess
      */
     public function setBar($bar)
     {
+        if (is_null($bar)) {
+            $this->container['bar'] = $bar;
+
+            return $this;
+        }
         $this->container['bar'] = $bar;
 
         return $this;
@@ -197,6 +202,11 @@ class ReadOnlyFirst implements ArrayAccess
      */
     public function setBaz($baz)
     {
+        if (is_null($baz)) {
+            $this->container['baz'] = $baz;
+
+            return $this;
+        }
         $this->container['baz'] = $baz;
 
         return $this;

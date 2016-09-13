@@ -171,6 +171,11 @@ class SpecialModelName implements ArrayAccess
      */
     public function setSpecialPropertyName($special_property_name)
     {
+        if (is_null($special_property_name)) {
+            $this->container['special_property_name'] = $special_property_name;
+
+            return $this;
+        }
         $this->container['special_property_name'] = $special_property_name;
 
         return $this;

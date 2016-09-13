@@ -171,6 +171,11 @@ class ModelList implements ArrayAccess
      */
     public function set123List($_123_list)
     {
+        if (is_null($_123_list)) {
+            $this->container['_123_list'] = $_123_list;
+
+            return $this;
+        }
         $this->container['_123_list'] = $_123_list;
 
         return $this;

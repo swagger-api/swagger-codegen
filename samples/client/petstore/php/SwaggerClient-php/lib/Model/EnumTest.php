@@ -250,6 +250,11 @@ class EnumTest implements ArrayAccess
      */
     public function setEnumString($enum_string)
     {
+        if (is_null($enum_string)) {
+            $this->container['enum_string'] = $enum_string;
+
+            return $this;
+        }
         $allowed_values = array('UPPER', 'lower');
         if (!in_array($enum_string, $allowed_values)) {
             throw new \InvalidArgumentException("Invalid value for 'enum_string', must be one of 'UPPER', 'lower'");
@@ -275,6 +280,11 @@ class EnumTest implements ArrayAccess
      */
     public function setEnumInteger($enum_integer)
     {
+        if (is_null($enum_integer)) {
+            $this->container['enum_integer'] = $enum_integer;
+
+            return $this;
+        }
         $allowed_values = array('1', '-1');
         if (!in_array($enum_integer, $allowed_values)) {
             throw new \InvalidArgumentException("Invalid value for 'enum_integer', must be one of '1', '-1'");
@@ -300,6 +310,11 @@ class EnumTest implements ArrayAccess
      */
     public function setEnumNumber($enum_number)
     {
+        if (is_null($enum_number)) {
+            $this->container['enum_number'] = $enum_number;
+
+            return $this;
+        }
         $allowed_values = array('1.1', '-1.2');
         if (!in_array($enum_number, $allowed_values)) {
             throw new \InvalidArgumentException("Invalid value for 'enum_number', must be one of '1.1', '-1.2'");

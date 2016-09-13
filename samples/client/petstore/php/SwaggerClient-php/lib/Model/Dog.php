@@ -173,6 +173,11 @@ class Dog extends Animal implements ArrayAccess
      */
     public function setBreed($breed)
     {
+        if (is_null($breed)) {
+            $this->container['breed'] = $breed;
+
+            return $this;
+        }
         $this->container['breed'] = $breed;
 
         return $this;

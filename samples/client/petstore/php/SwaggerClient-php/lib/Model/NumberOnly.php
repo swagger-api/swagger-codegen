@@ -171,6 +171,11 @@ class NumberOnly implements ArrayAccess
      */
     public function setJustNumber($just_number)
     {
+        if (is_null($just_number)) {
+            $this->container['just_number'] = $just_number;
+
+            return $this;
+        }
         $this->container['just_number'] = $just_number;
 
         return $this;

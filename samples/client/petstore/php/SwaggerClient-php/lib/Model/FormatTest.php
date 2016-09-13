@@ -346,6 +346,11 @@ class FormatTest implements ArrayAccess
      */
     public function setInteger($integer)
     {
+        if (is_null($integer)) {
+            $this->container['integer'] = $integer;
+
+            return $this;
+        }
 
         if ($integer > 100.0) {
             throw new \InvalidArgumentException('invalid value for $integer when calling FormatTest., must be smaller than or equal to 100.0.');
@@ -375,6 +380,11 @@ class FormatTest implements ArrayAccess
      */
     public function setInt32($int32)
     {
+        if (is_null($int32)) {
+            $this->container['int32'] = $int32;
+
+            return $this;
+        }
 
         if ($int32 > 200.0) {
             throw new \InvalidArgumentException('invalid value for $int32 when calling FormatTest., must be smaller than or equal to 200.0.');
@@ -404,6 +414,11 @@ class FormatTest implements ArrayAccess
      */
     public function setInt64($int64)
     {
+        if (is_null($int64)) {
+            $this->container['int64'] = $int64;
+
+            return $this;
+        }
         $this->container['int64'] = $int64;
 
         return $this;
@@ -454,6 +469,11 @@ class FormatTest implements ArrayAccess
      */
     public function setFloat($float)
     {
+        if (is_null($float)) {
+            $this->container['float'] = $float;
+
+            return $this;
+        }
 
         if ($float > 987.6) {
             throw new \InvalidArgumentException('invalid value for $float when calling FormatTest., must be smaller than or equal to 987.6.');
@@ -483,6 +503,11 @@ class FormatTest implements ArrayAccess
      */
     public function setDouble($double)
     {
+        if (is_null($double)) {
+            $this->container['double'] = $double;
+
+            return $this;
+        }
 
         if ($double > 123.4) {
             throw new \InvalidArgumentException('invalid value for $double when calling FormatTest., must be smaller than or equal to 123.4.');
@@ -512,6 +537,11 @@ class FormatTest implements ArrayAccess
      */
     public function setString($string)
     {
+        if (is_null($string)) {
+            $this->container['string'] = $string;
+
+            return $this;
+        }
 
         if (!preg_match("/[a-z]/i", $string)) {
             throw new \InvalidArgumentException("invalid value for $string when calling FormatTest., must conform to the pattern /[a-z]/i.");
@@ -559,6 +589,11 @@ class FormatTest implements ArrayAccess
      */
     public function setBinary($binary)
     {
+        if (is_null($binary)) {
+            $this->container['binary'] = $binary;
+
+            return $this;
+        }
         $this->container['binary'] = $binary;
 
         return $this;
@@ -601,6 +636,11 @@ class FormatTest implements ArrayAccess
      */
     public function setDateTime($date_time)
     {
+        if (is_null($date_time)) {
+            $this->container['date_time'] = $date_time;
+
+            return $this;
+        }
         $this->container['date_time'] = $date_time;
 
         return $this;
@@ -622,6 +662,11 @@ class FormatTest implements ArrayAccess
      */
     public function setUuid($uuid)
     {
+        if (is_null($uuid)) {
+            $this->container['uuid'] = $uuid;
+
+            return $this;
+        }
         $this->container['uuid'] = $uuid;
 
         return $this;

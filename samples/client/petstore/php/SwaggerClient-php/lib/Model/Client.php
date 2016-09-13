@@ -171,6 +171,11 @@ class Client implements ArrayAccess
      */
     public function setClient($client)
     {
+        if (is_null($client)) {
+            $this->container['client'] = $client;
+
+            return $this;
+        }
         $this->container['client'] = $client;
 
         return $this;

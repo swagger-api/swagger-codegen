@@ -173,6 +173,11 @@ class Cat extends Animal implements ArrayAccess
      */
     public function setDeclawed($declawed)
     {
+        if (is_null($declawed)) {
+            $this->container['declawed'] = $declawed;
+
+            return $this;
+        }
         $this->container['declawed'] = $declawed;
 
         return $this;

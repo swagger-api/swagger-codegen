@@ -214,6 +214,11 @@ class Name implements ArrayAccess
      */
     public function setSnakeCase($snake_case)
     {
+        if (is_null($snake_case)) {
+            $this->container['snake_case'] = $snake_case;
+
+            return $this;
+        }
         $this->container['snake_case'] = $snake_case;
 
         return $this;
@@ -235,6 +240,11 @@ class Name implements ArrayAccess
      */
     public function setProperty($property)
     {
+        if (is_null($property)) {
+            $this->container['property'] = $property;
+
+            return $this;
+        }
         $this->container['property'] = $property;
 
         return $this;
@@ -256,6 +266,11 @@ class Name implements ArrayAccess
      */
     public function set123Number($_123_number)
     {
+        if (is_null($_123_number)) {
+            $this->container['_123_number'] = $_123_number;
+
+            return $this;
+        }
         $this->container['_123_number'] = $_123_number;
 
         return $this;

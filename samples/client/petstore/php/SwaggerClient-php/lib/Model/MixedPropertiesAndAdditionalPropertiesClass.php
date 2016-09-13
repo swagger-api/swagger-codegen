@@ -181,6 +181,11 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ArrayAccess
      */
     public function setUuid($uuid)
     {
+        if (is_null($uuid)) {
+            $this->container['uuid'] = $uuid;
+
+            return $this;
+        }
         $this->container['uuid'] = $uuid;
 
         return $this;
@@ -202,6 +207,11 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ArrayAccess
      */
     public function setDateTime($date_time)
     {
+        if (is_null($date_time)) {
+            $this->container['date_time'] = $date_time;
+
+            return $this;
+        }
         $this->container['date_time'] = $date_time;
 
         return $this;
@@ -223,6 +233,11 @@ class MixedPropertiesAndAdditionalPropertiesClass implements ArrayAccess
      */
     public function setMap($map)
     {
+        if (is_null($map)) {
+            $this->container['map'] = $map;
+
+            return $this;
+        }
         $this->container['map'] = $map;
 
         return $this;

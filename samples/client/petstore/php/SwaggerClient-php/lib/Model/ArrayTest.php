@@ -181,6 +181,11 @@ class ArrayTest implements ArrayAccess
      */
     public function setArrayOfString($array_of_string)
     {
+        if (is_null($array_of_string)) {
+            $this->container['array_of_string'] = $array_of_string;
+
+            return $this;
+        }
         $this->container['array_of_string'] = $array_of_string;
 
         return $this;
@@ -202,6 +207,11 @@ class ArrayTest implements ArrayAccess
      */
     public function setArrayArrayOfInteger($array_array_of_integer)
     {
+        if (is_null($array_array_of_integer)) {
+            $this->container['array_array_of_integer'] = $array_array_of_integer;
+
+            return $this;
+        }
         $this->container['array_array_of_integer'] = $array_array_of_integer;
 
         return $this;
@@ -223,6 +233,11 @@ class ArrayTest implements ArrayAccess
      */
     public function setArrayArrayOfModel($array_array_of_model)
     {
+        if (is_null($array_array_of_model)) {
+            $this->container['array_array_of_model'] = $array_array_of_model;
+
+            return $this;
+        }
         $this->container['array_array_of_model'] = $array_array_of_model;
 
         return $this;

@@ -176,6 +176,11 @@ class Category implements ArrayAccess
      */
     public function setId($id)
     {
+        if (is_null($id)) {
+            $this->container['id'] = $id;
+
+            return $this;
+        }
         $this->container['id'] = $id;
 
         return $this;
@@ -197,6 +202,11 @@ class Category implements ArrayAccess
      */
     public function setName($name)
     {
+        if (is_null($name)) {
+            $this->container['name'] = $name;
+
+            return $this;
+        }
         $this->container['name'] = $name;
 
         return $this;

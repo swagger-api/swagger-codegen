@@ -207,6 +207,11 @@ class Animal implements ArrayAccess
      */
     public function setColor($color)
     {
+        if (is_null($color)) {
+            $this->container['color'] = $color;
+
+            return $this;
+        }
         $this->container['color'] = $color;
 
         return $this;

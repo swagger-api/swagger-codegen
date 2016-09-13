@@ -181,6 +181,11 @@ class ApiResponse implements ArrayAccess
      */
     public function setCode($code)
     {
+        if (is_null($code)) {
+            $this->container['code'] = $code;
+
+            return $this;
+        }
         $this->container['code'] = $code;
 
         return $this;
@@ -202,6 +207,11 @@ class ApiResponse implements ArrayAccess
      */
     public function setType($type)
     {
+        if (is_null($type)) {
+            $this->container['type'] = $type;
+
+            return $this;
+        }
         $this->container['type'] = $type;
 
         return $this;
@@ -223,6 +233,11 @@ class ApiResponse implements ArrayAccess
      */
     public function setMessage($message)
     {
+        if (is_null($message)) {
+            $this->container['message'] = $message;
+
+            return $this;
+        }
         $this->container['message'] = $message;
 
         return $this;
