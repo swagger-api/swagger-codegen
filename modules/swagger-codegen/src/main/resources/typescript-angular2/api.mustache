@@ -24,7 +24,7 @@ import { Configuration }                                     from '../configurat
 export class {{classname}} {
     protected basePath = '{{basePath}}';
     public defaultHeaders: Headers = new Headers();
-    public configuration: Configuration = null;
+    public configuration: Configuration = new Configuration();
 
     constructor(protected http: Http, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
@@ -106,13 +106,13 @@ export class {{classname}} {
         // authentication ({{name}}) required
 {{#isApiKey}}
 {{#isKeyInHeader}}
-        if (this.configuration && this.configuration.apiKey)
+        if (this.configuration.apiKey)
         {
             headers.set('{{keyParamName}}', this.configuration.apiKey);
         }
 {{/isKeyInHeader}}
 {{#isKeyInQuery}}
-        if (this.configuration && this.configuration.apiKey)
+        if (this.configuration.apiKey)
         {
             formParams.set('{{keyParamName}}', this.configuration.apiKey);
         }
@@ -120,14 +120,14 @@ export class {{classname}} {
 {{/isApiKey}}
 {{#isBasic}}
         // http basic authentication required
-        if (this.configuration && this.configuration.username || this.configuration.password)
+        if (this.configuration.username || this.configuration.password)
         {
             headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
         }
 {{/isBasic}}
 {{#isOAuth}}
         // oauth required
-        if (this.configuration && this.configuration.accessToken)
+        if (this.configuration.accessToken)
         {
             headers.set('Authorization', 'Bearer ' + this.configuration.accessToken);
         }

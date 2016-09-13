@@ -32,7 +32,6 @@ import 'rxjs/add/operator/map';
 
 import * as models                                           from '../model/models';
 import { BASE_PATH }                                         from '../variables';
-
 import { Configuration }                                     from '../configuration';
 
 /* tslint:disable:no-unused-variable member-ordering */
@@ -42,7 +41,7 @@ import { Configuration }                                     from '../configurat
 export class UserApi {
     protected basePath = 'http://petstore.swagger.io/v2';
     public defaultHeaders: Headers = new Headers();
-    public configuration: Configuration = null;
+    public configuration: Configuration = new Configuration();
 
     constructor(protected http: Http, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
@@ -204,8 +203,8 @@ export class UserApi {
             'application/json', 
             'application/xml'
         ];
-		
-			
+        
+            
 
         headers.set('Content-Type', 'application/json');
 
@@ -242,8 +241,8 @@ export class UserApi {
             'application/json', 
             'application/xml'
         ];
-		
-			
+        
+            
 
         headers.set('Content-Type', 'application/json');
 
@@ -280,8 +279,8 @@ export class UserApi {
             'application/json', 
             'application/xml'
         ];
-		
-			
+        
+            
 
         headers.set('Content-Type', 'application/json');
 
@@ -322,8 +321,8 @@ export class UserApi {
             'application/json', 
             'application/xml'
         ];
-		
-			
+        
+            
 
 
 
@@ -362,8 +361,8 @@ export class UserApi {
             'application/json', 
             'application/xml'
         ];
-		
-			
+        
+            
 
 
 
@@ -405,8 +404,8 @@ export class UserApi {
             'application/json', 
             'application/xml'
         ];
-		
-			
+        
+            
 
 
 
@@ -440,8 +439,8 @@ export class UserApi {
             'application/json', 
             'application/xml'
         ];
-		
-			
+        
+            
 
 
 
@@ -481,8 +480,8 @@ export class UserApi {
             'application/json', 
             'application/xml'
         ];
-		
-			
+        
+            
 
         headers.set('Content-Type', 'application/json');
 
