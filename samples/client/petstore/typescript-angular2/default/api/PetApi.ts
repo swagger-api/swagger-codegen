@@ -33,6 +33,8 @@ import 'rxjs/add/operator/map';
 import * as models                                           from '../model/models';
 import { BASE_PATH }                                         from '../variables';
 
+import { Configuration }                                     from '../configuration';
+
 /* tslint:disable:no-unused-variable member-ordering */
 
 
@@ -40,10 +42,14 @@ import { BASE_PATH }                                         from '../variables'
 export class PetApi {
     protected basePath = 'http://petstore.swagger.io/v2';
     public defaultHeaders: Headers = new Headers();
+    public configuration: Configuration = null;
 
-    constructor(protected http: Http, @Optional()@Inject(BASE_PATH) basePath: string) {
+    constructor(protected http: Http, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
+        }
+        if (configuration) {
+            this.configuration = configuration;
         }
     }
 
@@ -204,7 +210,14 @@ export class PetApi {
             'application/json', 
             'application/xml'
         ];
-
+		
+		// authentication (petstore_auth) required
+		// oauth required
+		if (this.configuration && this.configuration.accessToken)
+		{
+			headers.set('Authorization', 'Bearer ' + this.configuration.accessToken);
+		}
+			
 
         headers.set('Content-Type', 'application/json');
 
@@ -246,7 +259,14 @@ export class PetApi {
             'application/json', 
             'application/xml'
         ];
-
+		
+		// authentication (petstore_auth) required
+		// oauth required
+		if (this.configuration && this.configuration.accessToken)
+		{
+			headers.set('Authorization', 'Bearer ' + this.configuration.accessToken);
+		}
+			
 
 
 
@@ -284,7 +304,14 @@ export class PetApi {
             'application/json', 
             'application/xml'
         ];
-
+		
+		// authentication (petstore_auth) required
+		// oauth required
+		if (this.configuration && this.configuration.accessToken)
+		{
+			headers.set('Authorization', 'Bearer ' + this.configuration.accessToken);
+		}
+			
 
 
 
@@ -322,7 +349,14 @@ export class PetApi {
             'application/json', 
             'application/xml'
         ];
-
+		
+		// authentication (petstore_auth) required
+		// oauth required
+		if (this.configuration && this.configuration.accessToken)
+		{
+			headers.set('Authorization', 'Bearer ' + this.configuration.accessToken);
+		}
+			
 
 
 
@@ -361,7 +395,19 @@ export class PetApi {
             'application/json', 
             'application/xml'
         ];
-
+		
+		// authentication (petstore_auth) required
+		// oauth required
+		if (this.configuration && this.configuration.accessToken)
+		{
+			headers.set('Authorization', 'Bearer ' + this.configuration.accessToken);
+		}
+		// authentication (api_key) required
+		if (this.configuration && this.configuration.apiKey)
+		{
+			headers.set('api_key', this.configuration.apiKey);
+		}
+			
 
 
 
@@ -398,7 +444,14 @@ export class PetApi {
             'application/json', 
             'application/xml'
         ];
-
+		
+		// authentication (petstore_auth) required
+		// oauth required
+		if (this.configuration && this.configuration.accessToken)
+		{
+			headers.set('Authorization', 'Bearer ' + this.configuration.accessToken);
+		}
+			
 
         headers.set('Content-Type', 'application/json');
 
@@ -444,7 +497,14 @@ export class PetApi {
             'application/json', 
             'application/xml'
         ];
-
+		
+		// authentication (petstore_auth) required
+		// oauth required
+		if (this.configuration && this.configuration.accessToken)
+		{
+			headers.set('Authorization', 'Bearer ' + this.configuration.accessToken);
+		}
+			
         headers.set('Content-Type', 'application/x-www-form-urlencoded');
 
 
@@ -496,7 +556,14 @@ export class PetApi {
             'application/json', 
             'application/xml'
         ];
-
+		
+		// authentication (petstore_auth) required
+		// oauth required
+		if (this.configuration && this.configuration.accessToken)
+		{
+			headers.set('Authorization', 'Bearer ' + this.configuration.accessToken);
+		}
+			
         headers.set('Content-Type', 'application/x-www-form-urlencoded');
 
 
