@@ -258,6 +258,13 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}imple
      */
     public function {{setter}}(${{name}})
     {
+        {{^required}}
+        if (is_null(${{name}})) {
+            $this->container['{{name}}'] = ${{name}};
+
+            return $this;
+        }
+        {{/required}}
         {{#isEnum}}
         $allowed_values = array({{#allowableValues}}{{#values}}'{{{this}}}'{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}});
         {{^isContainer}}
