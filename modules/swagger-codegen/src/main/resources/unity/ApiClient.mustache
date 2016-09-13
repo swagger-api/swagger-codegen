@@ -1,0 +1,271 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using Newtonsoft.Json;
+using System.Collections;
+#if UNITY_5_4
+using UnityEngine.Networking;
+#else
+using UnityEngine.Experimental.Networking;
+#endif
+using Core.Commons.Util;
+
+namespace {{packageName}}.Client
+{
+    /// <summary>
+    /// API client is mainly responible for making the HTTP call to the API backend.
+    /// </summary>
+    public class ApiClient
+    {
+        private readonly Dictionary<String, String> _defaultHeaderMap = new Dictionary<String, String>();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ApiClient" /> class.
+        /// </summary>
+        /// <param name="basePath">The base path.</param>
+        public ApiClient(String basePath="{{basePath}}")
+        {
+            BasePath = basePath;
+        }
+
+        /// <summary>
+        /// Gets or sets the base path.
+        /// </summary>
+        /// <value>The base path</value>
+        public string BasePath { get; set; }
+
+        /// <summary>
+        /// Gets the default header.
+        /// </summary>
+        public Dictionary<String, String> DefaultHeader
+        {
+            get { return _defaultHeaderMap; }
+        }
+
+
+        /// <summary>
+        /// Add default header.
+        /// </summary>
+        /// <param name="key">Header field name.</param>
+        /// <param name="value">Header field value.</param>
+        /// <returns></returns>
+        public void AddDefaultHeader(string key, string value)
+        {
+            _defaultHeaderMap.Add(key, value);
+        }
+
+
+        /// <summary>
+        /// If parameter is DateTime, output in a formatted string (default ISO 8601), customizable with Configuration.DateTime.
+        /// If parameter is a list of string, join the list with ",".
+        /// Otherwise just return the string.
+        /// </summary>
+        /// <param name="obj">The parameter (header, path, query, form).</param>
+        /// <returns>Formatted string.</returns>
+        public string ParameterToString(object obj)
+        {
+            if (obj is DateTime)
+                // Return a formatted date string - Can be customized with Configuration.DateTimeFormat
+                // Defaults to an ISO 8601, using the known as a Round-trip date/time pattern ("o")
+                // https://msdn.microsoft.com/en-us/library/az4se3k1(v=vs.110).aspx#Anchor_8
+                // For example: 2009-06-15T13:45:30.0000000
+                return ((DateTime)obj).ToString (Configuration.DateTimeFormat);
+            else if (obj is List<string>)
+                return String.Join(",", (obj as List<string>).ToArray());
+            else
+                return Convert.ToString (obj);
+        }
+
+
+            private float _timeout;
+            /// <summary>
+            /// unity web request has no timeout (usually requests fail with erro "Cannot connect to destination host" after about 75 seconds)
+            /// Sets the timeout to the value passed as param;
+            /// </summary>
+            /// <param name="value">The timeout in seconds [defaults to 20]</param>
+            /// <returns>Formatted string.</returns>
+            public void SetTimeout(float value =  20) {
+              if(value != null) {
+                  _timeout = value;
+              }
+            }
+
+            private UnityEngine.Coroutine TimeOutChecker;
+
+            public IEnumerator CheckTimeout(UnityWebRequest request) {
+                if(!request.isDone) {
+                    UnityEngine.Debug.LogWarning("aborting request ");
+                    request.Abort ();
+                }
+               yield return request;
+            }
+
+
+          public void Send<T>(string api, Action<T> successCallback, Action<ApiException> failCallback, Dictionary<string,string> queryParams = null)
+          {
+            var path= EncodeQueryParams (BasePath + api, queryParams);
+            CoroutineHelper.Instance.StartCoroutine (GetResponse<T> (path, successCallback, failCallback));
+          }
+
+          public IEnumerator GetResponse<T>(string path, Action<T> successCallback, Action<ApiException> failCallback)
+            {
+              UnityEngine.Debug.Log("sending request to "+ path);
+              var request = UnityWebRequest.Get(path);
+              // add default header, if any
+              foreach(var defaultHeader in _defaultHeaderMap) {
+                  request.SetRequestHeader (defaultHeader.Key, defaultHeader.Value);
+              }
+              request.downloadHandler = new DownloadHandlerBuffer();
+              TimeOutChecker=    CoroutineHelper.Instance.DelayedCall (_timeout ,CheckTimeout(request));
+              yield return request.Send();
+              if (request.isError)
+              {
+                //todo  error is a string - define an unknown error code..
+               int errorCode = 999;
+
+               if(request.error.ToLower().IndexOf("request aborted") != -1) {
+                   errorCode = 408;
+               }
+               failCallback(  new ApiException (errorCode, "Error calling api " + path + "  : "   + request.error, request.error) );
+              }
+              else
+              {
+                  switch (request.responseCode/100)
+                  {
+                  case 2:
+                      {
+                          var resp = "";
+                          if (request.downloadHandler.data != null && request.downloadHandler.data.Length > 0)
+                          {
+                              resp = request.downloadHandler.text;
+                          }
+                          successCallback( (T)Deserialize(resp, typeof(T)));
+                          break;
+                      }
+                  default:
+                      {
+                          failCallback(  new ApiException ((int)request.responseCode, "Error calling api " + path+ "  : "   + request.responseCode, request.responseCode) );
+                          break;
+                      }
+                  }
+              }
+              request.Dispose ();
+              CoroutineHelper.Instance.StopCoroutine (TimeOutChecker);
+          }
+
+
+
+
+        private string EncodeQueryParams(string api,Dictionary<string, string> queryParams ) {
+
+            if (queryParams == null) {
+                return api;
+            }
+
+            var querystring = new StringBuilder();
+
+            foreach( KeyValuePair<string, string> kvp in queryParams )
+            {
+                if(querystring.Length== 0) {
+                    querystring.Append ("?");
+                }
+              //  UnityEngine.Debug.Log(String.Format("Key = {0}, Value = {1}", kvp.Key, kvp.Value));
+                if (querystring.Length > 2) {
+                    querystring.Append("&");
+                }
+
+                querystring.AppendFormat ("{0}={1}", kvp.Key, kvp.Value);
+            }
+
+            return api + querystring.ToString();
+        }
+
+
+
+
+        ///////////////////////////////
+
+        /// <summary>
+        /// Deserialize the JSON string into a proper object.
+        /// </summary>
+        /// <param name="content">HTTP body (e.g. string, JSON).</param>
+        /// <param name="type">Object type.</param>
+        /// <param name="headers">HTTP headers.</param>
+        /// <returns>Object representation of the JSON string.</returns>
+        public object Deserialize(string content, Type type)
+        {
+            if (type == typeof(Object)) // return an object
+            {
+                return content;
+            }
+            if (type.Name.StartsWith("System.Nullable`1[[System.DateTime")) // return a datetime object
+            {
+                return DateTime.Parse(content,  null, System.Globalization.DateTimeStyles.RoundtripKind);
+            }
+
+            if (type == typeof(String) || type.Name.StartsWith("System.Nullable")) // return primitive type
+            {
+                return ConvertType(content, type);
+            }
+
+            // at this point, it must be a model (json)
+            try
+            {
+                return JsonConvert.DeserializeObject(content, type);
+            }
+            catch (IOException e)
+            {
+                throw new ApiException(500, e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Serialize an object into JSON string.
+        /// </summary>
+        /// <param name="obj">Object.</param>
+        /// <returns>JSON string.</returns>
+        public string Serialize(object obj)
+        {
+            try
+            {
+                return obj != null ? JsonConvert.SerializeObject(obj) : null;
+            }
+            catch (Exception e)
+            {
+                throw new ApiException(500, e.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// Encode string in base64 format.
+        /// </summary>
+        /// <param name="text">String to be encoded.</param>
+        /// <returns>Encoded string.</returns>
+        public static string Base64Encode(string text)
+        {
+            var textByte = System.Text.Encoding.UTF8.GetBytes(text);
+            return System.Convert.ToBase64String(textByte);
+        }
+
+        /// <summary>
+        /// Dynamically cast the object into target type.
+        /// Ref: http://stackoverflow.com/questions/4925718/c-dynamic-runtime-cast
+        /// </summary>
+        /// <param name="source">Object to be casted</param>
+        /// <param name="dest">Target type</param>
+        /// <returns>Casted object</returns>
+        public static Object ConvertType(Object source, Type dest) {
+            return Convert.ChangeType(source, dest);
+        }
+
+    }
+
+    public class HTTPMethods {
+      public const string GET = "GET";
+      public const string POST = "POST";
+      public const string DELETE = "DELETE";
+      public const string PUT = "PUT";
+  }
+}

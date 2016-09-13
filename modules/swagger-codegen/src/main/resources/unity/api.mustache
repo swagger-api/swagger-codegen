@@ -1,0 +1,90 @@
+using System;
+using System.Collections.Generic;
+
+using {{packageName}}.Client;
+{{#hasImport}}using {{packageName}}.Model;
+{{/hasImport}}
+
+namespace {{packageName}}.Api
+{
+    {{#operations}}
+    /// <summary>
+    /// Represents a collection of functions to interact with the API endpoints
+    /// </summary>
+    public interface I{{classname}}
+    {
+        {{#operation}}
+        /// <summary>
+        /// {{summary}} {{notes}}
+        /// </summary>
+        {{#allParams}}/// <param name="{{paramName}}">{{description}}</param>
+        {{/allParams}}/// <returns>{{#returnType}}{{returnType}}{{/returnType}} **** actually api returns alway void but this is the type of content that will be passed to the callback</returns>
+        {{#returnType}}void{{/returnType}} {{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        {{/operation}}
+    }
+
+    /// <summary>
+    /// Represents a collection of functions to interact with the API endpoints
+    /// </summary>
+    public class {{classname}}<T> : I{{classname}}
+    {
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="{{classname}}"/> class.
+        /// </summary>
+        /// <returns></returns>
+        public {{classname}}(String basePath, Action<T> successCallback, Action<ApiException> failCallback, float timeout = 20)
+        {
+          this.ApiClient = new ApiClient(basePath);
+          this.ApiClient.SetTimeout(timeout);
+          successHandler = successCallback;
+          failHandler = failCallback;
+        }
+
+        Action<T> successHandler;
+        Action<ApiException> failHandler;
+
+        /// <summary>
+        /// Gets or sets the API client.
+        /// </summary>
+        /// <value>An instance of the ApiClient</value>
+        public ApiClient ApiClient {get; set;}
+
+        {{#operation}}
+        /// <summary>
+        /// {{summary}} {{notes}}
+        /// </summary>
+        {{#allParams}}/// <param name="{{paramName}}">{{description}}</param>
+        {{/allParams}}/// <returns>{{#returnType}}{{returnType}}{{/returnType}}</returns>
+        public {{#returnType}}void{{/returnType}} {{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+        {
+            {{#allParams}}{{#required}}
+            // verify the required parameter '{{paramName}}' is set
+            if ({{paramName}} == null) failHandler( new ApiException(400, "Missing required parameter '{{paramName}}' when calling {{nickname}}"));
+            {{/required}}{{/allParams}}
+
+
+
+            var path = "{{path}}";
+            path = path.Replace("{format}", "json");
+            {{#pathParams}}path = path.Replace("{" + "{{baseName}}" + "}", ApiClient.ParameterToString({{{paramName}}}));
+            {{/pathParams}}
+
+            Dictionary<string, string> queryParameters = null;
+
+            {{#queryParams}}
+            // add query parameters
+            if ({{paramName}} != null)   {
+              queryParameters = new Dictionary<string, string>();
+              queryParameters.Add("{{baseName}}", ApiClient.ParameterToString({{paramName}}));
+            }
+            {{/queryParams}}
+
+            ApiClient.Send<T> (path,successHandler, failHandler , queryParameters);
+
+        }
+
+        {{/operation}}
+    }
+    {{/operations}}
+}
