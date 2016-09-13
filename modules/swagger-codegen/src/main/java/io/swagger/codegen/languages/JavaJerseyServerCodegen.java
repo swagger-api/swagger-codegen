@@ -73,7 +73,7 @@ public class JavaJerseyServerCodegen extends AbstractJavaJAXRSServerCodegen {
     public void processOpts() {
         super.processOpts();
 
-        // clear model and api doc template as this codegen 
+        // clear model and api doc template as this codegen
         // does not support auto-generated markdown doc at the moment
         modelDocTemplateFiles.remove("model_doc.mustache");
         apiDocTemplateFiles.remove("api_doc.mustache");
@@ -94,6 +94,8 @@ public class JavaJerseyServerCodegen extends AbstractJavaJAXRSServerCodegen {
 
         writeOptional(outputFolder, new SupportingFile("web.mustache", ("src/main/webapp/WEB-INF"), "web.xml"));
         supportingFiles.add(new SupportingFile("StringUtil.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "StringUtil.java"));
+        supportingFiles.add(new SupportingFile("ApiDateFormat.mustache",
+                (sourceFolder + '/' + apiPackage).replace(".", "/"), "ApiDateFormat.java"));
 
         if ( additionalProperties.containsKey("dateLibrary") ) {
             setDateLibrary(additionalProperties.get("dateLibrary").toString());
