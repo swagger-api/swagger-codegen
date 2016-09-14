@@ -27,6 +27,7 @@ build_script:
   # build C# API client (with PropertyChanged)
   - nuget restore samples\client\petstore\csharp\SwaggerClientWithPropertyChanged\IO.Swagger.sln
   - msbuild samples\client\petstore\csharp\SwaggerClientWithPropertyChanged\IO.Swagger.sln /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+  # install swagger codegen locally
   - mvn clean install --batch-mode
 test_script:
   # test c# API client
