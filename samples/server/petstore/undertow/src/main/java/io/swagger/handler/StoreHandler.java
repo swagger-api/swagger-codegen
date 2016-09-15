@@ -13,11 +13,11 @@ import io.swagger.model.*;
 import java.util.Map;
 import io.swagger.model.Order;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-09-02T01:09:51.378-04:00")
-public class StoreController  {
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-09-14T21:52:42.570-04:00")
+public class StoreHandler  {
   /** 
    * Uncomment and implement as you see fit.  These operations will map
-   * Direclty to operation calls from the routing logic.  Because the inflector
+   * Directly to operation calls from the routing logic.  Because the inflector
    * Code allows you to implement logic incrementally, they are disabled.
    **/
 

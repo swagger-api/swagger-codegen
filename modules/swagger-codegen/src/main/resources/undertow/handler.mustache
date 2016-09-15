@@ -1,0 +1,11 @@
+{{#apiInfo}}
+{{#apis}}
+{{#operations}}
+{{#operation}}
+
+def {{operationId}}({{#allParams}}{{paramName}}{{^required}} = None{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}}){{^supportPython2}} -> str{{/supportPython2}}:
+    return 'do some magic!'
+{{/operation}}
+{{/operations}}
+{{/apis}}
+{{/apiInfo}}

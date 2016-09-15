@@ -10,61 +10,62 @@ import java.util.List;
 
 import io.swagger.model.*;
 
-import io.swagger.model.User;
-import java.util.List;
+import io.swagger.model.Pet;
+import io.swagger.model.ModelApiResponse;
+import java.io.File;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-09-02T01:09:51.378-04:00")
-public class UserController  {
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-09-14T21:52:42.570-04:00")
+public class PetHandler  {
   /** 
    * Uncomment and implement as you see fit.  These operations will map
-   * Direclty to operation calls from the routing logic.  Because the inflector
+   * Directly to operation calls from the routing logic.  Because the inflector
    * Code allows you to implement logic incrementally, they are disabled.
    **/
 
   /*
-    public ResponseContext createUser(RequestContext request , User body) {
+    public ResponseContext addPet(RequestContext request , Pet body) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext createUsersWithArrayInput(RequestContext request , List<User> body) {
+    public ResponseContext deletePet(RequestContext request , Long petId, String apiKey) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext createUsersWithListInput(RequestContext request , List<User> body) {
+    public ResponseContext findPetsByStatus(RequestContext request , List<String> status) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext deleteUser(RequestContext request , String username) {
+    public ResponseContext findPetsByTags(RequestContext request , List<String> tags) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext getUserByName(RequestContext request , String username) {
+    public ResponseContext getPetById(RequestContext request , Long petId) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext loginUser(RequestContext request , String username, String password) {
+    public ResponseContext updatePet(RequestContext request , Pet body) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext logoutUser(RequestContext request ) {
+    public ResponseContext updatePetWithForm(RequestContext request , Long petId, String name, String status) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext updateUser(RequestContext request , String username, User body) {
+    public ResponseContext uploadFile(RequestContext request , Long petId, String additionalMetadata, FormDataContentDisposition fileDetail) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */

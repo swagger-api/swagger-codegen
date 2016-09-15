@@ -12,7 +12,7 @@ import java.util.Date;
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-09-02T01:09:51.378-04:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-09-14T21:52:42.570-04:00")
 public class Order   {
   
   private Long id = null;

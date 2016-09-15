@@ -63,8 +63,10 @@ public class UndertowCodegen extends AbstractJavaCodegen {
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
         writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
 
-        supportingFiles.add(new SupportingFile("apiException.mustache",
-                (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiException.java"));
+        // keep the yaml in config folder for framework validation.
+        supportingFiles.add(new SupportingFile("swagger.mustache", "config", "swagger.yaml"));
+        supportingFiles.add(new SupportingFile("handler.mustache", "src/main/java/io/swagger/handler", "RootHandlerProvider.java"));
+        supportingFiles.add(new SupportingFile("service.mustache", "src/main/resources/META-INF/services", "com.networknt.server.HandlerProvider"));
 
     }
 
