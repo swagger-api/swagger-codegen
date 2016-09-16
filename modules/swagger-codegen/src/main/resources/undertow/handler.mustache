@@ -1,3 +1,20 @@
+package com.networknt.example.handler;
+
+import com.networknt.config.Config;
+import com.networknt.server.HandlerProvider;
+import io.undertow.Handlers;
+import io.undertow.predicate.Predicates;
+import io.undertow.server.HttpHandler;
+import io.undertow.server.HttpServerExchange;
+import io.undertow.server.handlers.PathHandler;
+import io.undertow.server.handlers.PathTemplateHandler;
+import io.undertow.util.Methods;
+
+public class ExampleHandlerProvider implements HandlerProvider {
+
+    public HttpHandler getHandler() {
+        HttpHandler handler = Handlers.routing()
+
 {{#apiInfo}}
 {{#apis}}
 {{#operations}}
@@ -5,7 +22,20 @@
 
 def {{operationId}}({{#allParams}}{{paramName}}{{^required}} = None{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}}){{^supportPython2}} -> str{{/supportPython2}}:
     return 'do some magic!'
+
+
+                    .add(Methods.GET, "/baz", new HttpHandler() {
+                        public void handleRequest(HttpServerExchange exchange) throws Exception {
+                            exchange.getResponseSender().send("baz");
+                        }
+                    })
+
 {{/operation}}
 {{/operations}}
 {{/apis}}
 {{/apiInfo}}
+;
+        return handler;
+    }
+}
+
