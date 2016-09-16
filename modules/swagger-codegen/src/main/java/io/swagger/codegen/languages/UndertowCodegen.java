@@ -68,9 +68,14 @@ public class UndertowCodegen extends AbstractJavaCodegen {
         writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
 
         // keep the yaml in config folder for framework validation.
-        supportingFiles.add(new SupportingFile("swagger.mustache", "src/main/resources/config", "swagger.json"));
-        supportingFiles.add(new SupportingFile("handler.mustache", "src/main/java/io/swagger/handler", "PathHandlerProvider.java"));
-        supportingFiles.add(new SupportingFile("service.mustache", "src/main/resources/META-INF/services", "com.networknt.server.HandlerProvider"));
+        supportingFiles.add(new SupportingFile("swagger.mustache", ("src.main.resources.config").replace(".", java.io.File.separator), "swagger.json"));
+        supportingFiles.add(new SupportingFile("handler.mustache", ("src.main.java.io.swagger.handler").replace(".", java.io.File.separator), "PathHandlerProvider.java"));
+        supportingFiles.add(new SupportingFile("service.mustache", ("src.main.resources.META-INF.services").replace(".", java.io.File.separator), "com.networknt.server.HandlerProvider"));
+
+        // configuration files
+        supportingFiles.add(new SupportingFile("server.json", ("src.main.resources.config").replace(".", java.io.File.separator), "server.json"));
+        supportingFiles.add(new SupportingFile("security.json", ("src.main.resources.config").replace(".", java.io.File.separator), "security.json"));
+        supportingFiles.add(new SupportingFile("primary.crt", ("src.main.resources.config.oauth").replace(".", java.io.File.separator), "primary.crt"));
 
     }
 
