@@ -11,7 +11,7 @@ namespace {{packageName}}.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public interface I{{classname}}
+    public interface I{{classname}}<T>
     {
         {{#operation}}
         /// <summary>
@@ -21,34 +21,78 @@ namespace {{packageName}}.Api
         {{/allParams}}/// <returns>{{#returnType}}{{returnType}}{{/returnType}} **** actually api returns alway void but this is the type of content that will be passed to the callback</returns>
         {{#returnType}}void{{/returnType}} {{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
         {{/operation}}
+
+        /// <summary>
+        /// Callback to be invoke when we get successful response from the webservice
+        /// T is the type of the response we expect
+        /// </summary>
+        Action<T> successHandler { get; set; }
+        /// <summary>
+        // Callback to be invoke when we get failed response from the webservice
+        /// </summary>
+        Action<ApiException> failHandler { get; set; }
+        /// <summary>
+        /// Timeout for the request to the webservice
+        /// </summary>
+        /// <param name="timeout">in seconds </param>
+        void SetTimeout(float timeout);
+        /// <summary>
+        /// Sets the base path for the request
+        /// </summary>
+        /// <param name="path"></param>
+        void SetBasePath(string path);
+        /// <summary>
+       /// Add header.
+       /// </summary>
+       /// <param name="key">Header field name.</param>
+       /// <param name="value">Header field value.</param>
+       /// <returns></returns>
+       void AddHeader(string key, string value);
+
+
     }
 
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public class {{classname}}<T> : I{{classname}}
+    public class {{classname}}<T> : I{{classname}}<T>
     {
 
         /// <summary>
         /// Initializes a new instance of the <see cref="{{classname}}"/> class.
         /// </summary>
         /// <returns></returns>
-        public {{classname}}(String basePath, Action<T> successCallback, Action<ApiException> failCallback, float timeout = 20)
+        public {{classname}}(ApiClient apiClient)
         {
-          this.ApiClient = new ApiClient(basePath);
-          this.ApiClient.SetTimeout(timeout);
-          successHandler = successCallback;
-          failHandler = failCallback;
+        ApiClient = apiClient;
         }
 
-        Action<T> successHandler;
-        Action<ApiException> failHandler;
+
+
+        public Action<T> successHandler { get; set; }
+        public Action<ApiException> failHandler { get; set; }
+
+        public void SetTimeout(float timeout)
+        {
+            ApiClient.SetTimeout(timeout);
+        }
+
+        public void SetBasePath(string path)
+        {
+            ApiClient.BasePath=path;
+        }
+
+        public void AddHeader(string key, string value)
+         {
+             ApiClient.AddDefaultHeader(key,value);
+         }
+
 
         /// <summary>
         /// Gets or sets the API client.
         /// </summary>
         /// <value>An instance of the ApiClient</value>
-        public ApiClient ApiClient {get; set;}
+        private ApiClient ApiClient {get; set;}
 
         {{#operation}}
         /// <summary>
