@@ -62,6 +62,8 @@ public class UndertowCodegen extends AbstractJavaCodegen {
     public void processOpts() {
         super.processOpts();
 
+        apiTemplateFiles.remove("api.mustache");
+
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
         writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
 
