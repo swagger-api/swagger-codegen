@@ -3,11 +3,8 @@ package io.swagger.handler;
 import com.networknt.config.Config;
 import com.networknt.server.HandlerProvider;
 import io.undertow.Handlers;
-import io.undertow.predicate.Predicates;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
-import io.undertow.server.handlers.PathHandler;
-import io.undertow.server.handlers.PathTemplateHandler;
 import io.undertow.util.Methods;
 
 public class PathHandlerProvider implements HandlerProvider {
