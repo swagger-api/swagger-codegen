@@ -6,9 +6,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.swagger</groupId>
-    <artifactId>swagger-inflector-server</artifactId>
+    <artifactId>swagger-undertow-server</artifactId>
     <packaging>jar</packaging>
-    <name>swagger-inflector-server</name>
+    <name>swagger-undertow-server</name>
     <version>1.0.0</version>
     <prerequisites>
         <maven>2.2.0</maven>

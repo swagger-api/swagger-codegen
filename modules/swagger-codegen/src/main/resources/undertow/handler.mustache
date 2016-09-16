@@ -1,4 +1,4 @@
-package com.networknt.example.handler;
+package io.swagger.handler;
 
 import com.networknt.config.Config;
 import com.networknt.server.HandlerProvider;
@@ -10,7 +10,7 @@ import io.undertow.server.handlers.PathHandler;
 import io.undertow.server.handlers.PathTemplateHandler;
 import io.undertow.util.Methods;
 
-public class ExampleHandlerProvider implements HandlerProvider {
+public class PathHandlerProvider implements HandlerProvider {
 
     public HttpHandler getHandler() {
         HttpHandler handler = Handlers.routing()
@@ -20,13 +20,9 @@ public class ExampleHandlerProvider implements HandlerProvider {
 {{#operations}}
 {{#operation}}
 
-def {{operationId}}({{#allParams}}{{paramName}}{{^required}} = None{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}}){{^supportPython2}} -> str{{/supportPython2}}:
-    return 'do some magic!'
-
-
-                    .add(Methods.GET, "/baz", new HttpHandler() {
+            .add(Methods.{{httpMethod}}, "/{{baseName}}{{path}}", new HttpHandler() {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
-                            exchange.getResponseSender().send("baz");
+                            exchange.getResponseSender().send("{{operationId}}");
                         }
                     })
 
@@ -34,7 +30,7 @@ def {{operationId}}({{#allParams}}{{paramName}}{{^required}} = None{{/required}}
 {{/operations}}
 {{/apis}}
 {{/apiInfo}}
-;
+        ;
         return handler;
     }
 }

@@ -1,9 +1,11 @@
 package io.swagger.codegen.languages;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.codegen.*;
 import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
+import io.swagger.util.Json;
 import io.swagger.util.Yaml;
 import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
@@ -16,7 +18,7 @@ public class UndertowCodegen extends AbstractJavaCodegen {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UndertowCodegen.class);
 
-    protected String title = "Swagger Inflector";
+    protected String title = "Swagger Undertow Server";
     protected String implFolder = "src/main/java";
     public UndertowCodegen() {
         super();
@@ -25,7 +27,7 @@ public class UndertowCodegen extends AbstractJavaCodegen {
         apiTestTemplateFiles.clear(); // TODO: add test template
         embeddedTemplateDir = templateDir = "undertow";
         invokerPackage = "io.swagger.handler";
-        artifactId = "swagger-inflector-server";
+        artifactId = "swagger-undertow-server";
         dateLibrary = "legacy"; //TODO: add joda support
 
         // clear model and api doc template as this codegen
@@ -64,8 +66,8 @@ public class UndertowCodegen extends AbstractJavaCodegen {
         writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
 
         // keep the yaml in config folder for framework validation.
-        supportingFiles.add(new SupportingFile("swagger.mustache", "config", "swagger.yaml"));
-        supportingFiles.add(new SupportingFile("handler.mustache", "src/main/java/io/swagger/handler", "RootHandlerProvider.java"));
+        supportingFiles.add(new SupportingFile("swagger.mustache", "src/main/resources/config", "swagger.json"));
+        supportingFiles.add(new SupportingFile("handler.mustache", "src/main/java/io/swagger/handler", "PathHandlerProvider.java"));
         supportingFiles.add(new SupportingFile("service.mustache", "src/main/resources/META-INF/services", "com.networknt.server.HandlerProvider"));
 
     }
@@ -185,9 +187,11 @@ public class UndertowCodegen extends AbstractJavaCodegen {
     @Override
     public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
         Swagger swagger = (Swagger)objs.get("swagger");
+        System.out.println("swagger" + swagger.toString());
         if(swagger != null) {
             try {
-                objs.put("swagger-yaml", Yaml.mapper().writeValueAsString(swagger));
+                //objs.put("swagger-json", Json.mapper().writeValueAsString(swagger));
+                objs.put("swagger-json", Json.pretty().writeValueAsString(swagger));
             } catch (JsonProcessingException e) {
                 LOGGER.error(e.getMessage(), e);
             }
