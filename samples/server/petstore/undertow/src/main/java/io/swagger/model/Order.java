@@ -12,7 +12,7 @@ import java.util.Date;
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-09-15T22:36:39.868-04:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-09-16T05:54:20.576-04:00")
 public class Order   {
   
   private Long id = null;
@@ -22,9 +22,9 @@ public class Order   {
 
 
   public enum StatusEnum {
-    PLACED(""placed""),
-    APPROVED(""approved""),
-    DELIVERED(""delivered"");
+    PLACED("placed"),
+    APPROVED("approved"),
+    DELIVERED("delivered");
 
     private String value;
 

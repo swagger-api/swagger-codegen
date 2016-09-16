@@ -15,7 +15,7 @@ import java.util.List;
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-09-15T22:36:39.868-04:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-09-16T05:54:20.576-04:00")
 public class Pet   {
   
   private Long id = null;
@@ -26,9 +26,9 @@ public class Pet   {
 
 
   public enum StatusEnum {
-    AVAILABLE(""available""),
-    PENDING(""pending""),
-    SOLD(""sold"");
+    AVAILABLE("available"),
+    PENDING("pending"),
+    SOLD("sold");
 
     private String value;
 

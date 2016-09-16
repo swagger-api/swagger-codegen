@@ -14,40 +14,118 @@
         <maven>2.2.0</maven>
     </prerequisites>
 
+    <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <version.framework>0.1.1-SNAPSHOT</version.framework>
+        <version.jackson>2.8.2</version.jackson>
+        <version.slf4j>1.7.21</version.slf4j>
+        <version.jose4j>0.5.2</version.jose4j>
+        <version.antlr4>4.5.3</version.antlr4>
+        <version.commons-lang>2.6</version.commons-lang>
+        <version.commons.io>2.5</version.commons.io>
+        <version.commons.codec>1.10</version.commons.codec>
+        <version.encoder>1.2</version.encoder>
+        <version.metrics>3.1.2</version.metrics>
+        <version.logback>1.1.7</version.logback>
+        <version.junit>4.12</version.junit>
+        <version.mockito>2.1.0-beta.124</version.mockito>
+        <version.undertow>1.4.0.Final</version.undertow>
+        <version.jsonpath>2.2.0</version.jsonpath>
+        <version.httpclient>4.5.2</version.httpclient>
+        <version.httpasyncclient>4.1.2</version.httpasyncclient>
+        <version.swagger>1.5.10</version.swagger>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>config</artifactId>
+            <version>${version.framework}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>utility</artifactId>
+            <version>${version.framework}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>security</artifactId>
+            <version>${version.framework}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>server</artifactId>
+            <version>${version.framework}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${version.jackson}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${version.jackson}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>${version.jsonpath}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${version.logback}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.undertow</groupId>
+            <artifactId>undertow-core</artifactId>
+            <version>${version.undertow}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${version.swagger}</version>
+        </dependency>
+
+        <!-- Test Dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${version.junit}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${version.httpclient}</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+
     <build>
         <defaultGoal>install</defaultGoal>
         <directory>target</directory>
         <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.10</version>
-                <executions>
-                    <execution>
-                        <id>add-source</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>src/gen/java</source>
-                            </sources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-dependency-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.4.3</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
                         <goals>
-                            <goal>copy-dependencies</goal>
+                            <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                            </transformers>
                         </configuration>
                     </execution>
                 </executions>
@@ -55,51 +133,30 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
+                <version>2.6</version>
                 <configuration>
-                    <excludes>
-                        <exclude>**/logback.xml</exclude>
-                    </excludes>
                     <archive>
-                        <manifestEntries>
-                            <mode>development</mode>
-                            <url>${project.url}</url>
-                            <implementation-version>${project.version}</implementation-version>
-                            <package>io.swagger</package>
-                        </manifestEntries>
+                        <manifest>
+                            <mainClass>com.networknt.server.Server</mainClass>
+                        </manifest>
                     </archive>
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>${jetty-version}</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.4.0</version>
                 <configuration>
-                    <monitoredDirName>.</monitoredDirName>
-                    <scanTargets>
-                        <scanTarget>inflector.yaml</scanTarget>
-                        <scanTarget>src/main/swagger/swagger.yaml</scanTarget>
-                    </scanTargets>
-                    <scanIntervalSeconds>1</scanIntervalSeconds>
-                    <webApp>
-                        <contextPath>/</contextPath>
-                    </webApp>
-                    <httpConnector>
-                        <port>8080</port>
-                        <idleTimeout>60000</idleTimeout>
-                    </httpConnector>
+                    <executable>java</executable>
+                    <arguments>
+                        <argument>-jar</argument>
+                        <argument>target/${project.build.finalName}.jar</argument>
+                    </arguments>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-    <dependencies>
-        <!-- inflector library -->
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-inflector</artifactId>
-            <version>${swagger-inflector-version}</version>
-        </dependency>
-    </dependencies>
+
     <repositories>
         <repository>
             <id>sonatype-snapshots</id>
@@ -109,12 +166,4 @@
             </snapshots>
         </repository>
     </repositories>
-    <properties>
-        <maven-plugin-version>1.0.0</maven-plugin-version>
-        <swagger-inflector-version>1.0.8</swagger-inflector-version>
-        <jetty-version>9.2.9.v20150224</jetty-version>
-        <logback-version>1.0.1</logback-version>
-        <junit-version>4.8.2</junit-version>
-        <slf4j-version>1.6.3</slf4j-version>
-    </properties>
 </project>
