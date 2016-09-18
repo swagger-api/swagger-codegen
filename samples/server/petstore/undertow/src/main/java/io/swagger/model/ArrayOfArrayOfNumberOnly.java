@@ -5,49 +5,34 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 
 
 
 
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-09-18T18:53:43.115-04:00")
-public class Category   {
+public class ArrayOfArrayOfNumberOnly   {
   
-  private Long id = null;
-  private String name = null;
+  private List<List<BigDecimal>> arrayArrayNumber = new ArrayList<List<BigDecimal>>();
 
   /**
    **/
-  public Category id(Long id) {
-    this.id = id;
+  public ArrayOfArrayOfNumberOnly arrayArrayNumber(List<List<BigDecimal>> arrayArrayNumber) {
+    this.arrayArrayNumber = arrayArrayNumber;
     return this;
   }
 
   
   @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("id")
-  public Long getId() {
-    return id;
+  @JsonProperty("ArrayArrayNumber")
+  public List<List<BigDecimal>> getArrayArrayNumber() {
+    return arrayArrayNumber;
   }
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  /**
-   **/
-  public Category name(String name) {
-    this.name = name;
-    return this;
-  }
-
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("name")
-  public String getName() {
-    return name;
-  }
-  public void setName(String name) {
-    this.name = name;
+  public void setArrayArrayNumber(List<List<BigDecimal>> arrayArrayNumber) {
+    this.arrayArrayNumber = arrayArrayNumber;
   }
 
 
@@ -59,23 +44,21 @@ public class Category   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Category category = (Category) o;
-    return Objects.equals(id, category.id) &&
-        Objects.equals(name, category.name);
+    ArrayOfArrayOfNumberOnly arrayOfArrayOfNumberOnly = (ArrayOfArrayOfNumberOnly) o;
+    return Objects.equals(arrayArrayNumber, arrayOfArrayOfNumberOnly.arrayArrayNumber);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(arrayArrayNumber);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Category {\n");
+    sb.append("class ArrayOfArrayOfNumberOnly {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    arrayArrayNumber: ").append(toIndentedString(arrayArrayNumber)).append("\n");
     sb.append("}");
     return sb.toString();
   }

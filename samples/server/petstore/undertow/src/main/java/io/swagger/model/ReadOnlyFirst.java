@@ -11,43 +11,43 @@ import io.swagger.annotations.ApiModelProperty;
 
 
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-09-18T18:53:43.115-04:00")
-public class Category   {
+public class ReadOnlyFirst   {
   
-  private Long id = null;
-  private String name = null;
+  private String bar = null;
+  private String baz = null;
 
   /**
    **/
-  public Category id(Long id) {
-    this.id = id;
+  public ReadOnlyFirst bar(String bar) {
+    this.bar = bar;
     return this;
   }
 
   
   @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("id")
-  public Long getId() {
-    return id;
+  @JsonProperty("bar")
+  public String getBar() {
+    return bar;
   }
-  public void setId(Long id) {
-    this.id = id;
+  public void setBar(String bar) {
+    this.bar = bar;
   }
 
   /**
    **/
-  public Category name(String name) {
-    this.name = name;
+  public ReadOnlyFirst baz(String baz) {
+    this.baz = baz;
     return this;
   }
 
   
   @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("name")
-  public String getName() {
-    return name;
+  @JsonProperty("baz")
+  public String getBaz() {
+    return baz;
   }
-  public void setName(String name) {
-    this.name = name;
+  public void setBaz(String baz) {
+    this.baz = baz;
   }
 
 
@@ -59,23 +59,23 @@ public class Category   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Category category = (Category) o;
-    return Objects.equals(id, category.id) &&
-        Objects.equals(name, category.name);
+    ReadOnlyFirst readOnlyFirst = (ReadOnlyFirst) o;
+    return Objects.equals(bar, readOnlyFirst.bar) &&
+        Objects.equals(baz, readOnlyFirst.baz);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(bar, baz);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Category {\n");
+    sb.append("class ReadOnlyFirst {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    bar: ").append(toIndentedString(bar)).append("\n");
+    sb.append("    baz: ").append(toIndentedString(baz)).append("\n");
     sb.append("}");
     return sb.toString();
   }

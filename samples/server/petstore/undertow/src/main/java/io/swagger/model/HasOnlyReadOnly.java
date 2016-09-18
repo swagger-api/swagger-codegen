@@ -11,43 +11,43 @@ import io.swagger.annotations.ApiModelProperty;
 
 
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-09-18T18:53:43.115-04:00")
-public class Category   {
+public class HasOnlyReadOnly   {
   
-  private Long id = null;
-  private String name = null;
+  private String bar = null;
+  private String foo = null;
 
   /**
    **/
-  public Category id(Long id) {
-    this.id = id;
+  public HasOnlyReadOnly bar(String bar) {
+    this.bar = bar;
     return this;
   }
 
   
   @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("id")
-  public Long getId() {
-    return id;
+  @JsonProperty("bar")
+  public String getBar() {
+    return bar;
   }
-  public void setId(Long id) {
-    this.id = id;
+  public void setBar(String bar) {
+    this.bar = bar;
   }
 
   /**
    **/
-  public Category name(String name) {
-    this.name = name;
+  public HasOnlyReadOnly foo(String foo) {
+    this.foo = foo;
     return this;
   }
 
   
   @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("name")
-  public String getName() {
-    return name;
+  @JsonProperty("foo")
+  public String getFoo() {
+    return foo;
   }
-  public void setName(String name) {
-    this.name = name;
+  public void setFoo(String foo) {
+    this.foo = foo;
   }
 
 
@@ -59,23 +59,23 @@ public class Category   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Category category = (Category) o;
-    return Objects.equals(id, category.id) &&
-        Objects.equals(name, category.name);
+    HasOnlyReadOnly hasOnlyReadOnly = (HasOnlyReadOnly) o;
+    return Objects.equals(bar, hasOnlyReadOnly.bar) &&
+        Objects.equals(foo, hasOnlyReadOnly.foo);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(bar, foo);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Category {\n");
+    sb.append("class HasOnlyReadOnly {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    bar: ").append(toIndentedString(bar)).append("\n");
+    sb.append("    foo: ").append(toIndentedString(foo)).append("\n");
     sb.append("}");
     return sb.toString();
   }

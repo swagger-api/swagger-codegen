@@ -5,49 +5,32 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.model.Animal;
 
 
 
 
 
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-09-18T18:53:43.115-04:00")
-public class Category   {
+public class Dog extends Animal  {
   
-  private Long id = null;
-  private String name = null;
+  private String breed = null;
 
   /**
    **/
-  public Category id(Long id) {
-    this.id = id;
+  public Dog breed(String breed) {
+    this.breed = breed;
     return this;
   }
 
   
   @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("id")
-  public Long getId() {
-    return id;
+  @JsonProperty("breed")
+  public String getBreed() {
+    return breed;
   }
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  /**
-   **/
-  public Category name(String name) {
-    this.name = name;
-    return this;
-  }
-
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("name")
-  public String getName() {
-    return name;
-  }
-  public void setName(String name) {
-    this.name = name;
+  public void setBreed(String breed) {
+    this.breed = breed;
   }
 
 
@@ -59,23 +42,21 @@ public class Category   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Category category = (Category) o;
-    return Objects.equals(id, category.id) &&
-        Objects.equals(name, category.name);
+    Dog dog = (Dog) o;
+    return Objects.equals(breed, dog.breed);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(breed);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Category {\n");
-    
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("class Dog {\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+    sb.append("    breed: ").append(toIndentedString(breed)).append("\n");
     sb.append("}");
     return sb.toString();
   }

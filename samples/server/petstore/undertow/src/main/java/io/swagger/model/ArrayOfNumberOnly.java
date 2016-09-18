@@ -5,49 +5,34 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 
 
 
 
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-09-18T18:53:43.115-04:00")
-public class Category   {
+public class ArrayOfNumberOnly   {
   
-  private Long id = null;
-  private String name = null;
+  private List<BigDecimal> arrayNumber = new ArrayList<BigDecimal>();
 
   /**
    **/
-  public Category id(Long id) {
-    this.id = id;
+  public ArrayOfNumberOnly arrayNumber(List<BigDecimal> arrayNumber) {
+    this.arrayNumber = arrayNumber;
     return this;
   }
 
   
   @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("id")
-  public Long getId() {
-    return id;
+  @JsonProperty("ArrayNumber")
+  public List<BigDecimal> getArrayNumber() {
+    return arrayNumber;
   }
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  /**
-   **/
-  public Category name(String name) {
-    this.name = name;
-    return this;
-  }
-
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("name")
-  public String getName() {
-    return name;
-  }
-  public void setName(String name) {
-    this.name = name;
+  public void setArrayNumber(List<BigDecimal> arrayNumber) {
+    this.arrayNumber = arrayNumber;
   }
 
 
@@ -59,23 +44,21 @@ public class Category   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Category category = (Category) o;
-    return Objects.equals(id, category.id) &&
-        Objects.equals(name, category.name);
+    ArrayOfNumberOnly arrayOfNumberOnly = (ArrayOfNumberOnly) o;
+    return Objects.equals(arrayNumber, arrayOfNumberOnly.arrayNumber);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(arrayNumber);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Category {\n");
+    sb.append("class ArrayOfNumberOnly {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    arrayNumber: ").append(toIndentedString(arrayNumber)).append("\n");
     sb.append("}");
     return sb.toString();
   }
