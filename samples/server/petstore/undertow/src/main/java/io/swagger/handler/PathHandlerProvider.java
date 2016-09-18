@@ -13,140 +13,140 @@ public class PathHandlerProvider implements HandlerProvider {
         HttpHandler handler = Handlers.routing()
 
 
-            .add(Methods.POST, "/pet", new HttpHandler() {
+            .add(Methods.POST, "/v2/pet", new HttpHandler() {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
                             exchange.getResponseSender().send("addPet");
                         }
                     })
 
 
-            .add(Methods.DELETE, "/pet/{petId}", new HttpHandler() {
+            .add(Methods.DELETE, "/v2/pet/{petId}", new HttpHandler() {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
                             exchange.getResponseSender().send("deletePet");
                         }
                     })
 
 
-            .add(Methods.GET, "/pet/findByStatus", new HttpHandler() {
+            .add(Methods.GET, "/v2/pet/findByStatus", new HttpHandler() {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
                             exchange.getResponseSender().send("findPetsByStatus");
                         }
                     })
 
 
-            .add(Methods.GET, "/pet/findByTags", new HttpHandler() {
+            .add(Methods.GET, "/v2/pet/findByTags", new HttpHandler() {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
                             exchange.getResponseSender().send("findPetsByTags");
                         }
                     })
 
 
-            .add(Methods.GET, "/pet/{petId}", new HttpHandler() {
+            .add(Methods.GET, "/v2/pet/{petId}", new HttpHandler() {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
                             exchange.getResponseSender().send("getPetById");
                         }
                     })
 
 
-            .add(Methods.PUT, "/pet", new HttpHandler() {
+            .add(Methods.PUT, "/v2/pet", new HttpHandler() {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
                             exchange.getResponseSender().send("updatePet");
                         }
                     })
 
 
-            .add(Methods.POST, "/pet/{petId}", new HttpHandler() {
+            .add(Methods.POST, "/v2/pet/{petId}", new HttpHandler() {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
                             exchange.getResponseSender().send("updatePetWithForm");
                         }
                     })
 
 
-            .add(Methods.POST, "/pet/{petId}/uploadImage", new HttpHandler() {
+            .add(Methods.POST, "/v2/pet/{petId}/uploadImage", new HttpHandler() {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
                             exchange.getResponseSender().send("uploadFile");
                         }
                     })
 
 
-            .add(Methods.DELETE, "/store/order/{orderId}", new HttpHandler() {
+            .add(Methods.DELETE, "/v2/store/order/{orderId}", new HttpHandler() {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
                             exchange.getResponseSender().send("deleteOrder");
                         }
                     })
 
 
-            .add(Methods.GET, "/store/inventory", new HttpHandler() {
+            .add(Methods.GET, "/v2/store/inventory", new HttpHandler() {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
                             exchange.getResponseSender().send("getInventory");
                         }
                     })
 
 
-            .add(Methods.GET, "/store/order/{orderId}", new HttpHandler() {
+            .add(Methods.GET, "/v2/store/order/{orderId}", new HttpHandler() {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
                             exchange.getResponseSender().send("getOrderById");
                         }
                     })
 
 
-            .add(Methods.POST, "/store/order", new HttpHandler() {
+            .add(Methods.POST, "/v2/store/order", new HttpHandler() {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
                             exchange.getResponseSender().send("placeOrder");
                         }
                     })
 
 
-            .add(Methods.POST, "/user", new HttpHandler() {
+            .add(Methods.POST, "/v2/user", new HttpHandler() {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
                             exchange.getResponseSender().send("createUser");
                         }
                     })
 
 
-            .add(Methods.POST, "/user/createWithArray", new HttpHandler() {
+            .add(Methods.POST, "/v2/user/createWithArray", new HttpHandler() {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
                             exchange.getResponseSender().send("createUsersWithArrayInput");
                         }
                     })
 
 
-            .add(Methods.POST, "/user/createWithList", new HttpHandler() {
+            .add(Methods.POST, "/v2/user/createWithList", new HttpHandler() {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
                             exchange.getResponseSender().send("createUsersWithListInput");
                         }
                     })
 
 
-            .add(Methods.DELETE, "/user/{username}", new HttpHandler() {
+            .add(Methods.DELETE, "/v2/user/{username}", new HttpHandler() {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
                             exchange.getResponseSender().send("deleteUser");
                         }
                     })
 
 
-            .add(Methods.GET, "/user/{username}", new HttpHandler() {
+            .add(Methods.GET, "/v2/user/{username}", new HttpHandler() {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
                             exchange.getResponseSender().send("getUserByName");
                         }
                     })
 
 
-            .add(Methods.GET, "/user/login", new HttpHandler() {
+            .add(Methods.GET, "/v2/user/login", new HttpHandler() {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
                             exchange.getResponseSender().send("loginUser");
                         }
                     })
 
 
-            .add(Methods.GET, "/user/logout", new HttpHandler() {
+            .add(Methods.GET, "/v2/user/logout", new HttpHandler() {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
                             exchange.getResponseSender().send("logoutUser");
                         }
                     })
 
 
-            .add(Methods.PUT, "/user/{username}", new HttpHandler() {
+            .add(Methods.PUT, "/v2/user/{username}", new HttpHandler() {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
                             exchange.getResponseSender().send("updateUser");
                         }

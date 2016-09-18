@@ -79,6 +79,7 @@ public class UndertowCodegen extends AbstractJavaCodegen {
 
     }
 
+    /*
     @Override
     public void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co, Map<String, List<CodegenOperation>> operations) {
         String basePath = resourcePath;
@@ -106,6 +107,7 @@ public class UndertowCodegen extends AbstractJavaCodegen {
         opList.add(co);
         co.baseName = basePath;
     }
+    */
 
     @Override
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {

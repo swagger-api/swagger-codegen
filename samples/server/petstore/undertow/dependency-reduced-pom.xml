@@ -86,16 +86,6 @@
       <artifactId>httpclient</artifactId>
       <version>4.5.2</version>
       <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>httpcore</artifactId>
-          <groupId>org.apache.httpcomponents</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>commons-logging</artifactId>
-          <groupId>commons-logging</groupId>
-        </exclusion>
-      </exclusions>
     </dependency>
   </dependencies>
   <properties>
@@ -111,7 +101,7 @@
     <version.commons-lang>2.6</version.commons-lang>
     <java.version>1.8</java.version>
     <version.jackson>2.8.2</version.jackson>
-    <version.framework>0.1.1-SNAPSHOT</version.framework>
+    <version.framework>0.1.1</version.framework>
     <version.swagger>1.5.10</version.swagger>
     <version.mockito>2.1.0-beta.124</version.mockito>
     <version.slf4j>1.7.21</version.slf4j>
