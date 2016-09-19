@@ -36,7 +36,7 @@
 
 #include "Pet.h"
 #include <cpprest/details/basic_types.h>
-#include "HttpContent.h"
+#include <cpprest/streams.h>
 
 namespace io {
 namespace swagger {
@@ -113,7 +113,7 @@ public:
     /// 
     /// </remarks>
     /// <param name="petId">ID of pet to update</param>/// <param name="additionalMetadata">Additional data to pass to server (optional)</param>/// <param name="file">file to upload (optional)</param>
-    pplx::task<void> uploadFile(int64_t petId, utility::string_t additionalMetadata, std::shared_ptr<HttpContent> file);
+    pplx::task<void> uploadFile(int64_t petId, utility::string_t additionalMetadata, std::shared_ptr<Concurrency::streams::istream> file);
     
 protected:
     std::shared_ptr<ApiClient> m_ApiClient;    

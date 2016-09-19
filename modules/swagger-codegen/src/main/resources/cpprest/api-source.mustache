@@ -62,10 +62,19 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
     {
         responseHttpContentType = U("multipart/form-data");
     }
+	{{#vendorExtensions.x-codegen-response-istream}}
     else
+	{
+		//It's going to be binary, so just use the first one.
+		responseHttpContentType = *responseHttpContentTypes.begin();
+	}
+	{{/vendorExtensions.x-codegen-response-istream}}
+	{{^vendorExtensions.x-codegen-response-istream}}
+	else
     {
         throw ApiException(400, U("{{classname}}->{{operationId}} does not produce any supported media type"));
     }    
+	{{/vendorExtensions.x-codegen-response-istream}}
     
     headerParams[U("Accept")] = responseHttpContentType;
     
@@ -201,10 +210,12 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
 				, std::make_shared<std::stringstream>(response.extract_utf8string(true).get()));
 		}
         
+		utility::string_t contentType = U("");
+		
         // check response content type
         if(response.headers().has(U("Content-Type")))
         {
-            utility::string_t contentType = response.headers()[U("Content-Type")];
+            contentType = response.headers()[U("Content-Type")];
             if( contentType.find(responseHttpContentType) == std::string::npos )
             {
                 throw ApiException(500
@@ -212,13 +223,18 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
                     , std::make_shared<std::stringstream>(response.extract_utf8string(true).get()));
             }
         }
-        
-        return response.extract_string();
+		
+		{{#vendorExtensions.x-codegen-response-istream}}
+		return response.body();
+		{{/vendorExtensions.x-codegen-response-istream}}
+		{{^vendorExtensions.x-codegen-response-istream}}
+		return response.extract_string();
     })
     .then([=](utility::string_t response)
     {
         {{^returnType}}return void();
-        {{/returnType}}{{#returnType}}{{#returnContainer}}{{{returnType}}} result;
+        {{/returnType}}
+		{{#returnType}}{{#returnContainer}}{{{returnType}}} result;
         {{/returnContainer}}{{^returnContainer}}{{{returnType}}} result({{{defaultResponse}}});{{/returnContainer}}
         
         if(responseHttpContentType == U("application/json"))
@@ -259,6 +275,7 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
         
         return result;
         {{/returnType}}
+		{{/vendorExtensions.x-codegen-response-istream}}
     });            
 }
 {{/operation}}

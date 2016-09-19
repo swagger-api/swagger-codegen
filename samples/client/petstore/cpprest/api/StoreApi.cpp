@@ -77,7 +77,7 @@ responseHttpContentTypes.insert( U("application/xml") );
     {
         responseHttpContentType = U("multipart/form-data");
     }
-    else
+	else
     {
         throw ApiException(400, U("StoreApi->deleteOrder does not produce any supported media type"));
     }    
@@ -128,10 +128,12 @@ responseHttpContentTypes.insert( U("application/xml") );
 				, std::make_shared<std::stringstream>(response.extract_utf8string(true).get()));
 		}
         
+		utility::string_t contentType = U("");
+		
         // check response content type
         if(response.headers().has(U("Content-Type")))
         {
-            utility::string_t contentType = response.headers()[U("Content-Type")];
+            contentType = response.headers()[U("Content-Type")];
             if( contentType.find(responseHttpContentType) == std::string::npos )
             {
                 throw ApiException(500
@@ -139,13 +141,13 @@ responseHttpContentTypes.insert( U("application/xml") );
                     , std::make_shared<std::stringstream>(response.extract_utf8string(true).get()));
             }
         }
-        
-        return response.extract_string();
+		
+		return response.extract_string();
     })
     .then([=](utility::string_t response)
     {
         return void();
-            });            
+		    });            
 }
 pplx::task<std::map<utility::string_t, int32_t>> StoreApi::getInventory()
 {
@@ -175,7 +177,7 @@ responseHttpContentTypes.insert( U("application/xml") );
     {
         responseHttpContentType = U("multipart/form-data");
     }
-    else
+	else
     {
         throw ApiException(400, U("StoreApi->getInventory does not produce any supported media type"));
     }    
@@ -230,10 +232,12 @@ responseHttpContentTypes.insert( U("application/xml") );
 				, std::make_shared<std::stringstream>(response.extract_utf8string(true).get()));
 		}
         
+		utility::string_t contentType = U("");
+		
         // check response content type
         if(response.headers().has(U("Content-Type")))
         {
-            utility::string_t contentType = response.headers()[U("Content-Type")];
+            contentType = response.headers()[U("Content-Type")];
             if( contentType.find(responseHttpContentType) == std::string::npos )
             {
                 throw ApiException(500
@@ -241,12 +245,12 @@ responseHttpContentTypes.insert( U("application/xml") );
                     , std::make_shared<std::stringstream>(response.extract_utf8string(true).get()));
             }
         }
-        
-        return response.extract_string();
+		
+		return response.extract_string();
     })
     .then([=](utility::string_t response)
     {
-        std::map<utility::string_t, int32_t> result;
+        		std::map<utility::string_t, int32_t> result;
         
         
         if(responseHttpContentType == U("application/json"))
@@ -302,7 +306,7 @@ responseHttpContentTypes.insert( U("application/xml") );
     {
         responseHttpContentType = U("multipart/form-data");
     }
-    else
+	else
     {
         throw ApiException(400, U("StoreApi->getOrderById does not produce any supported media type"));
     }    
@@ -353,10 +357,12 @@ responseHttpContentTypes.insert( U("application/xml") );
 				, std::make_shared<std::stringstream>(response.extract_utf8string(true).get()));
 		}
         
+		utility::string_t contentType = U("");
+		
         // check response content type
         if(response.headers().has(U("Content-Type")))
         {
-            utility::string_t contentType = response.headers()[U("Content-Type")];
+            contentType = response.headers()[U("Content-Type")];
             if( contentType.find(responseHttpContentType) == std::string::npos )
             {
                 throw ApiException(500
@@ -364,12 +370,12 @@ responseHttpContentTypes.insert( U("application/xml") );
                     , std::make_shared<std::stringstream>(response.extract_utf8string(true).get()));
             }
         }
-        
-        return response.extract_string();
+		
+		return response.extract_string();
     })
     .then([=](utility::string_t response)
     {
-        std::shared_ptr<Order> result(new Order());
+        		std::shared_ptr<Order> result(new Order());
         
         if(responseHttpContentType == U("application/json"))
         {
@@ -418,7 +424,7 @@ responseHttpContentTypes.insert( U("application/xml") );
     {
         responseHttpContentType = U("multipart/form-data");
     }
-    else
+	else
     {
         throw ApiException(400, U("StoreApi->placeOrder does not produce any supported media type"));
     }    
@@ -482,10 +488,12 @@ responseHttpContentTypes.insert( U("application/xml") );
 				, std::make_shared<std::stringstream>(response.extract_utf8string(true).get()));
 		}
         
+		utility::string_t contentType = U("");
+		
         // check response content type
         if(response.headers().has(U("Content-Type")))
         {
-            utility::string_t contentType = response.headers()[U("Content-Type")];
+            contentType = response.headers()[U("Content-Type")];
             if( contentType.find(responseHttpContentType) == std::string::npos )
             {
                 throw ApiException(500
@@ -493,12 +501,12 @@ responseHttpContentTypes.insert( U("application/xml") );
                     , std::make_shared<std::stringstream>(response.extract_utf8string(true).get()));
             }
         }
-        
-        return response.extract_string();
+		
+		return response.extract_string();
     })
     .then([=](utility::string_t response)
     {
-        std::shared_ptr<Order> result(new Order());
+        		std::shared_ptr<Order> result(new Order());
         
         if(responseHttpContentType == U("application/json"))
         {

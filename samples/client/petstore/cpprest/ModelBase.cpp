@@ -67,7 +67,7 @@ web::json::value ModelBase::toJson( std::shared_ptr<HttpContent> content )
     return value;
 }
 
-std::shared_ptr<HttpContent> ModelBase::fileFromJson(web::json::value& val)
+/*std::shared_ptr<HttpContent> ModelBase::fileFromJson(web::json::value& val)
 {
     std::shared_ptr<HttpContent> content(new HttpContent);
     
@@ -89,7 +89,7 @@ std::shared_ptr<HttpContent> ModelBase::fileFromJson(web::json::value& val)
     }
 
     return content;
-}
+}*/
 
 web::json::value ModelBase::toJson( std::shared_ptr<ModelBase> content )
 {

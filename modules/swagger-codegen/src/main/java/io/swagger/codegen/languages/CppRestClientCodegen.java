@@ -110,7 +110,7 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
         typeMapping.put("boolean", "bool");
         typeMapping.put("array", "std::vector");
         typeMapping.put("map", "std::map");
-        typeMapping.put("file", "HttpContent");
+        typeMapping.put("file", "Concurrency::streams::istream");
         typeMapping.put("object", "Object");
         typeMapping.put("binary", "std::string");
 
@@ -118,6 +118,7 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
         importMapping.put("std::vector", "#include <vector>");
         importMapping.put("std::map", "#include <map>");
         importMapping.put("std::string", "#include <string>");
+		importMapping.put("Concurrency::streams::istream", "#include <cpprest/streams.h>");
         importMapping.put("HttpContent", "#include \"HttpContent.h\"");
         importMapping.put("Object", "#include \"Object.h\"");
         importMapping.put("utility::string_t", "#include <cpprest/details/basic_types.h>");
@@ -217,6 +218,10 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
                 if (methodResponse.getSchema() != null) {
                     CodegenProperty cm = fromProperty("response", methodResponse.getSchema());
                     op.vendorExtensions.put("x-codegen-response", cm);
+					if(cm.datatype == "Concurrency::streams::istream")
+					{
+						op.vendorExtensions.put("x-codegen-response-istream", true);
+					}
                 }
             }
         }
@@ -232,7 +237,7 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
     }
 
     protected boolean isFileProperty(CodegenProperty property) {
-        return property.baseType.equals("HttpContent");
+        return property.baseType.equals("Concurrency::streams::istream");
     }
 
     @Override
@@ -267,7 +272,8 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
             Property inner = mp.getAdditionalProperties();
             return getSwaggerType(p) + "<utility::string_t, " + getTypeDeclaration(inner) + ">";
         }
-        if (p instanceof StringProperty || p instanceof DateProperty || p instanceof DateTimeProperty
+        if (p instanceof StringProperty || p instanceof DateProperty
+				|| p instanceof DateTimeProperty || p instanceof FileProperty
                 || languageSpecificPrimitives.contains(swaggerType)) {
             return toModelName(swaggerType);
         }
@@ -310,6 +316,9 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
             RefProperty rp = (RefProperty) p;
             return "new " + toModelName(rp.getSimpleRef()) + "()";
         }
+		else if (p instanceof FileProperty) {
+			return "Concurrency::streams::istream()";
+		}
         return "nullptr";
     }
 

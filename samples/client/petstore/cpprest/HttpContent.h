@@ -66,7 +66,7 @@ public:
     
     virtual void writeTo( std::ostream& stream );
 
-	virtual void fromJson(web::json::value& val);
+	//virtual void fromJson(web::json::value& val);
        
 protected:
 	// NOTE: no utility::string_t here because those strings can only contain ascii

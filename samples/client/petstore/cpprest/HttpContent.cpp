@@ -94,7 +94,7 @@ void HttpContent::writeTo( std::ostream& stream )
     stream << m_Data->rdbuf();
 }
 
-void HttpContent::fromJson(web::json::value& val)
+/*void HttpContent::fromJson(web::json::value& val)
 {
 	std::shared_ptr<HttpContent> toCopy = ModelBase::fileFromJson(val);
 	
@@ -102,7 +102,7 @@ void HttpContent::fromJson(web::json::value& val)
 	setFileName(toCopy->getFileName());
 	setContentType(toCopy->getContentType());
 	setData(toCopy->getData());
-}
+}*/
 
 }
 }
