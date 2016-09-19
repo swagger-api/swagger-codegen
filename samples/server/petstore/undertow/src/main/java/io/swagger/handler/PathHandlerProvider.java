@@ -13,27 +13,6 @@ public class PathHandlerProvider implements HandlerProvider {
         HttpHandler handler = Handlers.routing()
 
 
-            .add(Methods.PATCH, "/v2/fake", new HttpHandler() {
-                        public void handleRequest(HttpServerExchange exchange) throws Exception {
-                            exchange.getResponseSender().send("testClientModel");
-                        }
-                    })
-
-
-            .add(Methods.POST, "/v2/fake", new HttpHandler() {
-                        public void handleRequest(HttpServerExchange exchange) throws Exception {
-                            exchange.getResponseSender().send("testEndpointParameters");
-                        }
-                    })
-
-
-            .add(Methods.GET, "/v2/fake", new HttpHandler() {
-                        public void handleRequest(HttpServerExchange exchange) throws Exception {
-                            exchange.getResponseSender().send("testEnumParameters");
-                        }
-                    })
-
-
             .add(Methods.POST, "/v2/pet", new HttpHandler() {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
                             exchange.getResponseSender().send("addPet");

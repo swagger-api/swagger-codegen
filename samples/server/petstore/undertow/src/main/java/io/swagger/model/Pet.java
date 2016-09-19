@@ -15,7 +15,7 @@ import java.util.List;
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-09-18T18:53:43.115-04:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-09-19T05:56:00.864-04:00")
 public class Pet   {
   
   private Long id = null;
