@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using RSG;
 
 using {{packageName}}.Client;
 {{#hasImport}}using {{packageName}}.Model;
@@ -18,19 +19,10 @@ namespace {{packageName}}.Api
         /// {{summary}} {{notes}}
         /// </summary>
         {{#allParams}}/// <param name="{{paramName}}">{{description}}</param>
-        {{/allParams}}/// <returns>{{#returnType}}{{returnType}}{{/returnType}} **** actually api returns alway void but this is the type of content that will be passed to the callback</returns>
-        {{#returnType}}void{{/returnType}} {{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        {{/allParams}}/// <returns>IPromise<T>. Concrete T will be {{#returnType}}{{returnType}}{{/returnType}}  </returns>
+        {{#returnType}}IPromise<T>{{/returnType}} {{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
         {{/operation}}
 
-        /// <summary>
-        /// Callback to be invoke when we get successful response from the webservice
-        /// T is the type of the response we expect
-        /// </summary>
-        Action<T> successHandler { get; set; }
-        /// <summary>
-        // Callback to be invoke when we get failed response from the webservice
-        /// </summary>
-        Action<ApiException> failHandler { get; set; }
         /// <summary>
         /// Timeout for the request to the webservice
         /// </summary>
@@ -67,11 +59,6 @@ namespace {{packageName}}.Api
         ApiClient = apiClient;
         }
 
-
-
-        public Action<T> successHandler { get; set; }
-        public Action<ApiException> failHandler { get; set; }
-
         public void SetTimeout(float timeout)
         {
             ApiClient.SetTimeout(timeout);
@@ -99,15 +86,17 @@ namespace {{packageName}}.Api
         /// {{summary}} {{notes}}
         /// </summary>
         {{#allParams}}/// <param name="{{paramName}}">{{description}}</param>
-        {{/allParams}}/// <returns>{{#returnType}}{{returnType}}{{/returnType}}</returns>
-        public {{#returnType}}void{{/returnType}} {{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+        {{/allParams}}/// <returns>A Promise with {{#returnType}}{{returnType}}{{/returnType}}</returns>
+        public {{#returnType}}IPromise<T>{{/returnType}} {{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
         {
+            var promise = new Promise<T>();
             {{#allParams}}{{#required}}
             // verify the required parameter '{{paramName}}' is set
-            if ({{paramName}} == null) failHandler( new ApiException(400, "Missing required parameter '{{paramName}}' when calling {{nickname}}"));
+            if ({{paramName}} == null) {
+              promise.Reject(new ApiException(400, "Missing required parameter '{{paramName}}' when calling {{nickname}}"));
+              return promise;
+            }
             {{/required}}{{/allParams}}
-
-
 
             var path = "{{path}}";
             path = path.Replace("{format}", "json");
@@ -124,8 +113,9 @@ namespace {{packageName}}.Api
             }
             {{/queryParams}}
 
-            ApiClient.Send<T> (path,successHandler, failHandler , queryParameters);
 
+            ApiClient.Send<T> (path, (response) => promise.Resolve(response), (exception) => promise.Reject(exception) , queryParameters);
+            return promise;
         }
 
         {{/operation}}
