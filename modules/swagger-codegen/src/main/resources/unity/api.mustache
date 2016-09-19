@@ -12,15 +12,15 @@ namespace {{packageName}}.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public interface I{{classname}}<T>
+    public interface I{{classname}}
     {
         {{#operation}}
         /// <summary>
         /// {{summary}} {{notes}}
         /// </summary>
         {{#allParams}}/// <param name="{{paramName}}">{{description}}</param>
-        {{/allParams}}/// <returns>IPromise<T>. Concrete T will be {{#returnType}}{{returnType}}{{/returnType}}  </returns>
-        {{#returnType}}IPromise<T>{{/returnType}} {{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        {{/allParams}}/// <returns>IPromise<{{{returnType}}}></returns>
+        {{#returnType}}IPromise<{{{returnType}}}>{{/returnType}} {{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
         {{/operation}}
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace {{packageName}}.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public class {{classname}}<T> : I{{classname}}<T>
+    public class {{classname}} : I{{classname}}
     {
 
         /// <summary>
@@ -86,10 +86,10 @@ namespace {{packageName}}.Api
         /// {{summary}} {{notes}}
         /// </summary>
         {{#allParams}}/// <param name="{{paramName}}">{{description}}</param>
-        {{/allParams}}/// <returns>A Promise with {{#returnType}}{{returnType}}{{/returnType}}</returns>
-        public {{#returnType}}IPromise<T>{{/returnType}} {{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+        {{/allParams}}/// <returns>A Promise with {{#returnType}}{{{returnType}}}{{/returnType}}</returns>
+        public {{#returnType}}IPromise<{{{returnType}}}>{{/returnType}} {{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
         {
-            var promise = new Promise<T>();
+            var promise = new Promise<{{{returnType}}}>();
             {{#allParams}}{{#required}}
             // verify the required parameter '{{paramName}}' is set
             if ({{paramName}} == null) {
@@ -114,7 +114,7 @@ namespace {{packageName}}.Api
             {{/queryParams}}
 
 
-            ApiClient.Send<T> (path, (response) => promise.Resolve(response), (exception) => promise.Reject(exception) , queryParameters);
+            ApiClient.Send<{{{returnType}}}> (path, (response) => promise.Resolve(response), (exception) => promise.Reject(exception) , queryParameters);
             return promise;
         }
 
