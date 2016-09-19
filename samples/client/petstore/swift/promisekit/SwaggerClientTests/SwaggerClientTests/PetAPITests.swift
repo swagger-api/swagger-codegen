@@ -26,7 +26,7 @@ class PetAPITests: XCTestCase {
     }
     
     func test1CreatePet() {
-        let expectation = self.expectationWithDescription("testCreatePet")
+        let expectation = self.expectation(description: "testCreatePet")
         let newPet = Pet()
         let category = PetstoreClient.Category()
         category.id = 1234
@@ -39,31 +39,31 @@ class PetAPITests: XCTestCase {
                 expectation.fulfill()
             }.always {
                 // Noop for now
-            }.error { errorType -> Void in
+            }.catch { errorType in
                 XCTFail("error creating pet")
         }
-        self.waitForExpectationsWithTimeout(testTimeout, handler: nil)
+        self.waitForExpectations(timeout: testTimeout, handler: nil)
     }
     
     func test2GetPet() {
-        let expectation = self.expectationWithDescription("testGetPet")
+        let expectation = self.expectation(description: "testGetPet")
         PetAPI.getPetById(petId: 1000).then { pet -> Void in
                 XCTAssert(pet.id == 1000, "invalid id")
                 XCTAssert(pet.name == "Fluffy", "invalid name")
                 expectation.fulfill()
             }.always {
                 // Noop for now
-            }.error { errorType -> Void in
+            }.catch { errorType in
                 XCTFail("error creating pet")
         }
-        self.waitForExpectationsWithTimeout(testTimeout, handler: nil)
+        self.waitForExpectations(timeout: testTimeout, handler: nil)
     }
     
     func test3DeletePet() {
-        let expectation = self.expectationWithDescription("testDeletePet")
+        let expectation = self.expectation(description: "testDeletePet")
         PetAPI.deletePet(petId: 1000).then {
             expectation.fulfill()
         }
-        self.waitForExpectationsWithTimeout(testTimeout, handler: nil)
+        self.waitForExpectations(timeout: testTimeout, handler: nil)
     }
 }

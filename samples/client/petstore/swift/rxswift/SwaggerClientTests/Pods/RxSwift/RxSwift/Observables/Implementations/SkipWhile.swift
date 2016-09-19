@@ -6,74 +6,74 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-class SkipWhileSink<ElementType, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
+class SkipWhileSink<ElementType, O: ObserverType> : Sink<O>, ObserverType where O.E == ElementType {
 
     typealias Parent = SkipWhile<ElementType>
     typealias Element = ElementType
 
-    private let _parent: Parent
-    private var _running = false
+    fileprivate let _parent: Parent
+    fileprivate var _running = false
 
     init(parent: Parent, observer: O) {
         _parent = parent
         super.init(observer: observer)
     }
 
-    func on(event: Event<Element>) {
+    func on(_ event: Event<Element>) {
         switch event {
-        case .Next(let value):
+        case .next(let value):
             if !_running {
                 do {
                     _running = try !_parent._predicate(value)
                 } catch let e {
-                    forwardOn(.Error(e))
+                    forwardOn(.error(e))
                     dispose()
                     return
                 }
             }
 
             if _running {
-                forwardOn(.Next(value))
+                forwardOn(.next(value))
             }
-        case .Error, .Completed:
+        case .error, .completed:
             forwardOn(event)
             dispose()
         }
     }
 }
 
-class SkipWhileSinkWithIndex<ElementType, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
+class SkipWhileSinkWithIndex<ElementType, O: ObserverType> : Sink<O>, ObserverType where O.E == ElementType {
 
     typealias Parent = SkipWhile<ElementType>
     typealias Element = ElementType
 
-    private let _parent: Parent
-    private var _index = 0
-    private var _running = false
+    fileprivate let _parent: Parent
+    fileprivate var _index = 0
+    fileprivate var _running = false
 
     init(parent: Parent, observer: O) {
         _parent = parent
         super.init(observer: observer)
     }
 
-    func on(event: Event<Element>) {
+    func on(_ event: Event<Element>) {
         switch event {
-        case .Next(let value):
+        case .next(let value):
             if !_running {
                 do {
                     _running = try !_parent._predicateWithIndex(value, _index)
-                    try incrementChecked(&_index)
+                    let _ = try incrementChecked(&_index)
                 } catch let e {
-                    forwardOn(.Error(e))
+                    forwardOn(.error(e))
                     dispose()
                     return
                 }
             }
 
             if _running {
-                forwardOn(.Next(value))
+                forwardOn(.next(value))
             }
-        case .Error, .Completed:
+        case .error, .completed:
             forwardOn(event)
             dispose()
         }
@@ -84,23 +84,23 @@ class SkipWhile<Element>: Producer<Element> {
     typealias Predicate = (Element) throws -> Bool
     typealias PredicateWithIndex = (Element, Int) throws -> Bool
 
-    private let _source: Observable<Element>
-    private let _predicate: Predicate!
-    private let _predicateWithIndex: PredicateWithIndex!
+    fileprivate let _source: Observable<Element>
+    fileprivate let _predicate: Predicate!
+    fileprivate let _predicateWithIndex: PredicateWithIndex!
 
-    init(source: Observable<Element>, predicate: Predicate) {
+    init(source: Observable<Element>, predicate: @escaping Predicate) {
         _source = source
         _predicate = predicate
         _predicateWithIndex = nil
     }
 
-    init(source: Observable<Element>, predicate: PredicateWithIndex) {
+    init(source: Observable<Element>, predicate: @escaping PredicateWithIndex) {
         _source = source
         _predicate = nil
         _predicateWithIndex = predicate
     }
 
-    override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
+    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         if let _ = _predicate {
             let sink = SkipWhileSink(parent: self, observer: observer)
             sink.disposable = _source.subscribe(sink)

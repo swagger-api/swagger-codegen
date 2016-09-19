@@ -10,16 +10,16 @@ import Foundation
 
 class AddRefSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias Element = O.E
-
+    
     override init(observer: O) {
         super.init(observer: observer)
     }
-
-    func on(event: Event<Element>) {
+    
+    func on(_ event: Event<Element>) {
         switch event {
-        case .Next(_):
+        case .next(_):
             forwardOn(event)
-        case .Completed, .Error(_):
+        case .completed, .error(_):
             forwardOn(event)
             dispose()
         }
@@ -27,20 +27,20 @@ class AddRefSink<O: ObserverType> : Sink<O>, ObserverType {
 }
 
 class AddRef<Element> : Producer<Element> {
-    typealias EventHandler = Event<Element> throws -> Void
-
+    typealias EventHandler = (Event<Element>) throws -> Void
+    
     private let _source: Observable<Element>
     private let _refCount: RefCountDisposable
-
+    
     init(source: Observable<Element>, refCount: RefCountDisposable) {
         _source = source
         _refCount = refCount
     }
-
-    override func run<O: ObserverType where O.E == Element>(observer: O) -> Disposable {
+    
+    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         let releaseDisposable = _refCount.retain()
         let sink = AddRefSink(observer: observer)
-        sink.disposable = StableCompositeDisposable.create(releaseDisposable, _source.subscribeSafe(sink))
+        sink.disposable = Disposables.create(releaseDisposable, _source.subscribeSafe(sink))
 
         return sink
     }

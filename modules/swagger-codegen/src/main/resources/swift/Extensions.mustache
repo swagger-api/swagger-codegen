@@ -8,86 +8,86 @@ import Alamofire{{#usePromiseKit}}
 import PromiseKit{{/usePromiseKit}}
 
 extension Bool: JSONEncodable {
-    func encodeToJSON() -> AnyObject { return self }
+    func encodeToJSON() -> Any { return self as Any }
 }
 
 extension Float: JSONEncodable {
-    func encodeToJSON() -> AnyObject { return self }
+    func encodeToJSON() -> Any { return self as Any }
 }
 
 extension Int: JSONEncodable {
-    func encodeToJSON() -> AnyObject { return self }
+    func encodeToJSON() -> Any { return self as Any }
 }
 
 extension Int32: JSONEncodable {
-    func encodeToJSON() -> AnyObject { return NSNumber(int: self) }
+    func encodeToJSON() -> Any { return NSNumber(value: self as Int32) }
 }
 
 extension Int64: JSONEncodable {
-    func encodeToJSON() -> AnyObject { return NSNumber(longLong: self) }
+    func encodeToJSON() -> Any { return NSNumber(value: self as Int64) }
 }
 
 extension Double: JSONEncodable {
-    func encodeToJSON() -> AnyObject { return self }
+    func encodeToJSON() -> Any { return self as Any }
 }
 
 extension String: JSONEncodable {
-    func encodeToJSON() -> AnyObject { return self }
+    func encodeToJSON() -> Any { return self as Any }
 }
 
-private func encodeIfPossible<T>(object: T) -> AnyObject {
+private func encodeIfPossible<T>(_ object: T) -> Any {
     if object is JSONEncodable {
         return (object as! JSONEncodable).encodeToJSON()
     } else {
-        return object as! AnyObject
+        return object as Any
     }
 }
 
 extension Array: JSONEncodable {
-    func encodeToJSON() -> AnyObject {
+    func encodeToJSON() -> Any {
         return self.map(encodeIfPossible)
     }
 }
 
 extension Dictionary: JSONEncodable {
-    func encodeToJSON() -> AnyObject {
-        var dictionary = [NSObject:AnyObject]()
+    func encodeToJSON() -> Any {
+        var dictionary = [AnyHashable: Any]()
         for (key, value) in self {
             dictionary[key as! NSObject] = encodeIfPossible(value)
         }
-        return dictionary
+        return dictionary as Any
     }
 }
 
-extension NSData: JSONEncodable {
-    func encodeToJSON() -> AnyObject {
-        return self.base64EncodedStringWithOptions(NSDataBase64EncodingOptions())
+extension Data: JSONEncodable {
+    func encodeToJSON() -> Any {
+        return self.base64EncodedString(options: Data.Base64EncodingOptions())
     }
 }
 
-private let dateFormatter: NSDateFormatter = {
-    let fmt = NSDateFormatter()
+private let dateFormatter: DateFormatter = {
+    let fmt = DateFormatter()
     fmt.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
-    fmt.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+    fmt.locale = Locale(identifier: "en_US_POSIX")
     return fmt
 }()
 
-extension NSDate: JSONEncodable {
-    func encodeToJSON() -> AnyObject {
-        return dateFormatter.stringFromDate(self)
+extension Date: JSONEncodable {
+    func encodeToJSON() -> Any {
+        return dateFormatter.string(from: self) as Any
     }
 }
 
 extension NSUUID: JSONEncodable {
-    func encodeToJSON() -> AnyObject {
-        return self.UUIDString
+    func encodeToJSON() -> Any {
+        return self.uuidString
     }
 }
 
 {{#usePromiseKit}}extension RequestBuilder {
     public func execute() -> Promise<Response<T>>  {
-        let deferred = Promise<Response<T>>.pendingPromise()
-        self.execute { (response: Response<T>?, error: ErrorType?) in
+        let deferred = Promise<Response<T>>.pending()
+        self.execute { (response: Response<T>?, error: Error?) in
             if let response = response {
                 deferred.fulfill(response)
             } else {

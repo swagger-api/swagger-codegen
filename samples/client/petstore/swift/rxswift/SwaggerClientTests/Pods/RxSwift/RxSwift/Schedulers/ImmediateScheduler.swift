@@ -16,7 +16,7 @@ private class ImmediateScheduler : ImmediateSchedulerType {
     private let _asyncLock = AsyncLock<AnonymousInvocable>()
 
     /**
-    Schedules an action to be executed immediately.
+    Schedules an action to be executed immediatelly.
 
     In case `schedule` is called recursively from inside of `action` callback, scheduled `action` will be enqueued
     and executed after current `action`. (`AsyncLock` behavior)
@@ -25,10 +25,10 @@ private class ImmediateScheduler : ImmediateSchedulerType {
     - parameter action: Action to be executed.
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
-    func schedule<StateType>(state: StateType, action: (StateType) -> Disposable) -> Disposable {
+    func schedule<StateType>(_ state: StateType, action: @escaping (StateType) -> Disposable) -> Disposable {
         let disposable = SingleAssignmentDisposable()
         _asyncLock.invoke(AnonymousInvocable {
-            if disposable.disposed {
+            if disposable.isDisposed {
                 return
             }
             disposable.disposable = action(state)

@@ -15,11 +15,11 @@ public class HistoricalScheduler : VirtualTimeScheduler<HistoricalSchedulerTimeC
 
     /**
       Creates a new historical scheduler with initial clock value.
-
+     
      - parameter initialClock: Initial value for virtual clock.
     */
-    public init(initialClock: RxTime = NSDate(timeIntervalSince1970: 0)) {
+    public init(initialClock: RxTime = Date(timeIntervalSince1970: 0)) {
         super.init(initialClock: initialClock, converter: HistoricalSchedulerTimeConverter())
     }
-
+    
 }

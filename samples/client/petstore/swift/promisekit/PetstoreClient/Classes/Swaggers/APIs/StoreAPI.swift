@@ -10,16 +10,16 @@ import PromiseKit
 
 
 
-public class StoreAPI: APIBase {
+open class StoreAPI: APIBase {
     /**
      Delete purchase order by ID
      
      - parameter orderId: (path) ID of the order that needs to be deleted 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func deleteOrder(orderId orderId: String, completion: ((error: ErrorType?) -> Void)) {
+    open class func deleteOrder(orderId orderId: String, completion: @escaping ((_ error: Error?) -> Void)) {
         deleteOrderWithRequestBuilder(orderId: orderId).execute { (response, error) -> Void in
-            completion(error: error);
+            completion(error);
         }
     }
 
@@ -29,8 +29,8 @@ public class StoreAPI: APIBase {
      - parameter orderId: (path) ID of the order that needs to be deleted 
      - returns: Promise<Void>
      */
-    public class func deleteOrder(orderId orderId: String) -> Promise<Void> {
-        let deferred = Promise<Void>.pendingPromise()
+    open class func deleteOrder(orderId orderId: String) -> Promise<Void> {
+        let deferred = Promise<Void>.pending()
         deleteOrder(orderId: orderId) { error in
             if let error = error {
                 deferred.reject(error)
@@ -50,12 +50,12 @@ public class StoreAPI: APIBase {
 
      - returns: RequestBuilder<Void> 
      */
-    public class func deleteOrderWithRequestBuilder(orderId orderId: String) -> RequestBuilder<Void> {
+    open class func deleteOrderWithRequestBuilder(orderId orderId: String) -> RequestBuilder<Void> {
         var path = "/store/order/{orderId}"
-        path = path.stringByReplacingOccurrencesOfString("{orderId}", withString: "\(orderId)", options: .LiteralSearch, range: nil)
+        path = path.replacingOccurrences(of: "{orderId}", with: "\(orderId)", options: .literal, range: nil)
         let URLString = PetstoreClientAPI.basePath + path
 
-        let nillableParameters: [String:AnyObject?] = [:]
+        let nillableParameters: [String:Any?] = [:]
  
         let parameters = APIHelper.rejectNil(nillableParameters)
  
@@ -71,9 +71,9 @@ public class StoreAPI: APIBase {
      
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func getInventory(completion: ((data: [String:Int32]?, error: ErrorType?) -> Void)) {
+    open class func getInventory(completion: @escaping ((_ data: [String:Int32]?,_ error: Error?) -> Void)) {
         getInventoryWithRequestBuilder().execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+            completion(response?.body, error);
         }
     }
 
@@ -82,8 +82,8 @@ public class StoreAPI: APIBase {
      
      - returns: Promise<[String:Int32]>
      */
-    public class func getInventory() -> Promise<[String:Int32]> {
-        let deferred = Promise<[String:Int32]>.pendingPromise()
+    open class func getInventory() -> Promise<[String:Int32]> {
+        let deferred = Promise<[String:Int32]>.pending()
         getInventory() { data, error in
             if let error = error {
                 deferred.reject(error)
@@ -110,11 +110,11 @@ public class StoreAPI: APIBase {
 
      - returns: RequestBuilder<[String:Int32]> 
      */
-    public class func getInventoryWithRequestBuilder() -> RequestBuilder<[String:Int32]> {
+    open class func getInventoryWithRequestBuilder() -> RequestBuilder<[String:Int32]> {
         let path = "/store/inventory"
         let URLString = PetstoreClientAPI.basePath + path
 
-        let nillableParameters: [String:AnyObject?] = [:]
+        let nillableParameters: [String:Any?] = [:]
  
         let parameters = APIHelper.rejectNil(nillableParameters)
  
@@ -131,9 +131,9 @@ public class StoreAPI: APIBase {
      - parameter orderId: (path) ID of pet that needs to be fetched 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func getOrderById(orderId orderId: String, completion: ((data: Order?, error: ErrorType?) -> Void)) {
+    open class func getOrderById(orderId orderId: String, completion: @escaping ((_ data: Order?,_ error: Error?) -> Void)) {
         getOrderByIdWithRequestBuilder(orderId: orderId).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+            completion(response?.body, error);
         }
     }
 
@@ -143,8 +143,8 @@ public class StoreAPI: APIBase {
      - parameter orderId: (path) ID of pet that needs to be fetched 
      - returns: Promise<Order>
      */
-    public class func getOrderById(orderId orderId: String) -> Promise<Order> {
-        let deferred = Promise<Order>.pendingPromise()
+    open class func getOrderById(orderId orderId: String) -> Promise<Order> {
+        let deferred = Promise<Order>.pending()
         getOrderById(orderId: orderId) { data, error in
             if let error = error {
                 deferred.reject(error)
@@ -194,12 +194,12 @@ public class StoreAPI: APIBase {
 
      - returns: RequestBuilder<Order> 
      */
-    public class func getOrderByIdWithRequestBuilder(orderId orderId: String) -> RequestBuilder<Order> {
+    open class func getOrderByIdWithRequestBuilder(orderId orderId: String) -> RequestBuilder<Order> {
         var path = "/store/order/{orderId}"
-        path = path.stringByReplacingOccurrencesOfString("{orderId}", withString: "\(orderId)", options: .LiteralSearch, range: nil)
+        path = path.replacingOccurrences(of: "{orderId}", with: "\(orderId)", options: .literal, range: nil)
         let URLString = PetstoreClientAPI.basePath + path
 
-        let nillableParameters: [String:AnyObject?] = [:]
+        let nillableParameters: [String:Any?] = [:]
  
         let parameters = APIHelper.rejectNil(nillableParameters)
  
@@ -216,9 +216,9 @@ public class StoreAPI: APIBase {
      - parameter body: (body) order placed for purchasing the pet (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func placeOrder(body body: Order? = nil, completion: ((data: Order?, error: ErrorType?) -> Void)) {
+    open class func placeOrder(body body: Order? = nil, completion: @escaping ((_ data: Order?,_ error: Error?) -> Void)) {
         placeOrderWithRequestBuilder(body: body).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+            completion(response?.body, error);
         }
     }
 
@@ -228,8 +228,8 @@ public class StoreAPI: APIBase {
      - parameter body: (body) order placed for purchasing the pet (optional)
      - returns: Promise<Order>
      */
-    public class func placeOrder(body body: Order? = nil) -> Promise<Order> {
-        let deferred = Promise<Order>.pendingPromise()
+    open class func placeOrder(body body: Order? = nil) -> Promise<Order> {
+        let deferred = Promise<Order>.pending()
         placeOrder(body: body) { data, error in
             if let error = error {
                 deferred.reject(error)
@@ -279,7 +279,7 @@ public class StoreAPI: APIBase {
 
      - returns: RequestBuilder<Order> 
      */
-    public class func placeOrderWithRequestBuilder(body body: Order? = nil) -> RequestBuilder<Order> {
+    open class func placeOrderWithRequestBuilder(body body: Order? = nil) -> RequestBuilder<Order> {
         let path = "/store/order"
         let URLString = PetstoreClientAPI.basePath + path
         let parameters = body?.encodeToJSON() as? [String:AnyObject]

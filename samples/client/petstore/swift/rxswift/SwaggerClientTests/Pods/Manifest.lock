@@ -1,21 +1,21 @@
 PODS:
-  - Alamofire (3.1.5)
+  - Alamofire (4.0.0)
   - PetstoreClient (0.0.1):
-    - Alamofire (~> 3.1.5)
-    - RxSwift (~> 2.0)
-  - RxSwift (2.6.0)
+    - Alamofire (~> 4.0)
+    - RxSwift (~> 3.0.0-beta.1)
+  - RxSwift (3.0.0-beta.1)
 
 DEPENDENCIES:
   - PetstoreClient (from `../`)
 
 EXTERNAL SOURCES:
   PetstoreClient:
-    :path: "../"
+    :path: ../
 
 SPEC CHECKSUMS:
-  Alamofire: 5f730ba29fd113b7ddd71c1e65d0c630acf5d7b0
-  PetstoreClient: 0baad893079f270b6bcf2e868ba68d8b9ce36812
-  RxSwift: 77f3a0b15324baa7a1c9bfa9f199648a82424e26
+  Alamofire: fef59f00388f267e52d9b432aa5d93dc97190f14
+  PetstoreClient: a58edc9541bf0e2a0a7f8464907f26c9b7bafe74
+  RxSwift: 0823e8d7969c23bfa9ddfb2afa4881e424a1a710
 
 PODFILE CHECKSUM: cedb3058b02f4776d7c31f6d92ae2f674fdf424d
 

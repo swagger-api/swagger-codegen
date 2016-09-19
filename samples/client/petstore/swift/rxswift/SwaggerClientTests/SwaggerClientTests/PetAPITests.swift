@@ -27,7 +27,7 @@ class PetAPITests: XCTestCase {
     }
 
     func test1CreatePet() {
-        let expectation = self.expectationWithDescription("testCreatePet")
+        let expectation = self.expectation(description: "testCreatePet")
         let newPet = Pet()
         let category = PetstoreClient.Category()
         category.id = 1234
@@ -41,11 +41,11 @@ class PetAPITests: XCTestCase {
             }, onError: { errorType in
                 XCTFail("error creating pet")
             }, onCompleted: nil, onDisposed: nil).addDisposableTo(disposeBag)
-        self.waitForExpectationsWithTimeout(testTimeout, handler: nil)
+        self.waitForExpectations(timeout: testTimeout, handler: nil)
     }
 
     func test2GetPet() {
-        let expectation = self.expectationWithDescription("testGetPet")
+        let expectation = self.expectation(description: "testGetPet")
         PetAPI.getPetById(petId: 1000).subscribe(onNext: { pet in
             XCTAssert(pet.id == 1000, "invalid id")
             XCTAssert(pet.name == "Fluffy", "invalid name")
@@ -53,11 +53,11 @@ class PetAPITests: XCTestCase {
             }, onError: { errorType in
                 XCTFail("error getting pet")
             }, onCompleted: nil, onDisposed: nil).addDisposableTo(disposeBag)
-        self.waitForExpectationsWithTimeout(testTimeout, handler: nil)
+        self.waitForExpectations(timeout: testTimeout, handler: nil)
     }
 
     func test3DeletePet() {
-        let expectation = self.expectationWithDescription("testDeletePet")
+        let expectation = self.expectation(description: "testDeletePet")
         PetAPI.deletePet(petId: 1000).subscribe(onNext: {
 //            expectation.fulfill()
             }, onError: { errorType in
@@ -73,6 +73,6 @@ class PetAPITests: XCTestCase {
                     XCTFail("error deleting pet")
                 }
             }, onCompleted: nil, onDisposed: nil).addDisposableTo(disposeBag)
-        self.waitForExpectationsWithTimeout(testTimeout, handler: nil)
+        self.waitForExpectations(timeout: testTimeout, handler: nil)
     }
 }

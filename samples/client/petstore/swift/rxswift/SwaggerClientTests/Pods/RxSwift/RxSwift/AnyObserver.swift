@@ -18,7 +18,7 @@ public struct AnyObserver<Element> : ObserverType {
     The type of elements in sequence that observer can observe.
     */
     public typealias E = Element
-
+    
     /**
     Anonymous event handler type.
     */
@@ -28,28 +28,28 @@ public struct AnyObserver<Element> : ObserverType {
 
     /**
     Construct an instance whose `on(event)` calls `eventHandler(event)`
-
+    
     - parameter eventHandler: Event handler that observes sequences events.
     */
-    public init(eventHandler: EventHandler) {
+    public init(eventHandler: @escaping EventHandler) {
         self.observer = eventHandler
     }
-
+    
     /**
     Construct an instance whose `on(event)` calls `observer.on(event)`
-
+    
     - parameter observer: Observer that receives sequence events.
     */
-    public init<O : ObserverType where O.E == Element>(_ observer: O) {
+    public init<O : ObserverType>(_ observer: O) where O.E == Element {
         self.observer = observer.on
     }
-
+    
     /**
     Send `event` to this observer.
-
+    
     - parameter event: Event instance.
     */
-    public func on(event: Event<Element>) {
+    public func on(_ event: Event<Element>) {
         return self.observer(event)
     }
 
@@ -66,7 +66,7 @@ public struct AnyObserver<Element> : ObserverType {
 extension ObserverType {
     /**
     Erases type of observer and returns canonical observer.
-
+    
     - returns: type erased observer.
     */
     public func asObserver() -> AnyObserver<E> {

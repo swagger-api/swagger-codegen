@@ -22,8 +22,8 @@ public class User: JSONEncodable {
     public init() {}
 
     // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
+    func encodeToJSON() -> Any {
+        var nillableDictionary = [String:Any?]()
         nillableDictionary["id"] = self.id?.encodeToJSON()
         nillableDictionary["username"] = self.username
         nillableDictionary["firstName"] = self.firstName
@@ -32,7 +32,7 @@ public class User: JSONEncodable {
         nillableDictionary["password"] = self.password
         nillableDictionary["phone"] = self.phone
         nillableDictionary["userStatus"] = self.userStatus?.encodeToJSON()
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
     }
 }

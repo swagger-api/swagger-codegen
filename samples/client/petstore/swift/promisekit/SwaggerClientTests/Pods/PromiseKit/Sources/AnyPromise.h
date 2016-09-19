@@ -1,35 +1,58 @@
-#import <dispatch/object.h>
-#import <dispatch/queue.h>
-#import <Foundation/NSObject.h>
-#import "Umbrella.h"
+#import <Foundation/Foundation.h>
+#import <dispatch/dispatch.h>
 
-typedef void (^PMKResolver)(id __nullable);
+typedef void (^PMKResolver)(id __nullable) NS_REFINED_FOR_SWIFT;
 
 typedef NS_ENUM(NSInteger, PMKCatchPolicy) {
     PMKCatchPolicyAllErrors,
     PMKCatchPolicyAllErrorsExceptCancellation
-};
+} NS_SWIFT_NAME(CatchPolicy);
 
 
-/**
- @see AnyPromise.swift
-*/
-@interface AnyPromise (objc)
+#if __has_include("PromiseKit-Swift.h")
+
+    // we define this because PromiseKit-Swift.h imports
+    // PromiseKit.h which then expects this header already
+    // to have been fully imported… !
+    @class AnyPromise;
+
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored"-Wdocumentation"
+    #import "PromiseKit-Swift.h"
+    #pragma clang diagnostic pop
+#else
+    // this hack because `AnyPromise` is Swift, but we add
+    // our own methods via the below category. This hack is
+    // only required while building PromiseKit since, once
+    // built, the generated -Swift header exists.
+
+    __attribute__((objc_subclassing_restricted)) __attribute__((objc_runtime_name("AnyPromise")))
+    @interface AnyPromise : NSObject
+    @property (nonatomic, readonly) BOOL resolved;
+    @property (nonatomic, readonly) BOOL pending;
+    @property (nonatomic, readonly) __nullable id value;
+    + (instancetype __nonnull)promiseWithResolverBlock:(void (^ __nonnull)(__nonnull PMKResolver))resolveBlock;
+    + (instancetype __nonnull)promiseWithValue:(__nullable id)value;
+    @end
+#endif
+
+
+@interface AnyPromise (obj)
+
+@property (nonatomic, readonly) __nullable id value;
 
 /**
  The provided block is executed when its receiver is resolved.
 
  If you provide a block that takes a parameter, the value of the receiver will be passed as that parameter.
 
- @param block The block that is executed when the receiver is resolved.
-
-    [NSURLConnection GET:url].then(^(NSData *data){
+    [NSURLSession GET:url].then(^(NSData *data){
         // do something with data
     });
 
  @return A new promise that is resolved with the value returned from the provided block. For example:
 
-    [NSURLConnection GET:url].then(^(NSData *data){
+    [NSURLSession GET:url].then(^(NSData *data){
         return data.length;
     }).then(^(NSNumber *number){
         //…
@@ -37,14 +60,14 @@ typedef NS_ENUM(NSInteger, PMKCatchPolicy) {
 
  @warning *Important* The block passed to `then` may take zero, one, two or three arguments, and return an object or return nothing. This flexibility is why the method signature for then is `id`, which means you will not get completion for the block parameter, and must type it yourself. It is safe to type any block syntax here, so to start with try just: `^{}`.
 
- @warning *Important* If an exception is thrown inside your block, or you return an `NSError` object the next `Promise` will be rejected. See `catch` for documentation on error handling.
+ @warning *Important* If an `NSError` or `NSString` is thrown inside your block, or you return an `NSError` object the next `Promise` will be rejected. See `catch` for documentation on error handling.
 
  @warning *Important* `then` is always executed on the main queue.
 
  @see thenOn
  @see thenInBackground
 */
-- (AnyPromise * __nonnull (^ __nonnull)(id __nonnull))then;
+- (AnyPromise * __nonnull (^ __nonnull)(id __nonnull))then NS_REFINED_FOR_SWIFT;
 
 
 /**
@@ -55,7 +78,7 @@ typedef NS_ENUM(NSInteger, PMKCatchPolicy) {
  @see then
  @see thenOn
 */
-- (AnyPromise * __nonnull(^ __nonnull)(id __nonnull))thenInBackground;
+- (AnyPromise * __nonnull(^ __nonnull)(id __nonnull))thenInBackground NS_REFINED_FOR_SWIFT;
 
 /**
  The provided block is executed on the dispatch queue of your choice when the receiver is fulfilled.
@@ -63,7 +86,7 @@ typedef NS_ENUM(NSInteger, PMKCatchPolicy) {
  @see then
  @see thenInBackground
 */
-- (AnyPromise * __nonnull(^ __nonnull)(dispatch_queue_t __nonnull, id __nonnull))thenOn;
+- (AnyPromise * __nonnull(^ __nonnull)(dispatch_queue_t __nonnull, id __nonnull))thenOn NS_REFINED_FOR_SWIFT;
 
 #ifndef __cplusplus
 /**
@@ -75,108 +98,55 @@ typedef NS_ENUM(NSInteger, PMKCatchPolicy) {
  
  @warning *Note* Cancellation errors are not caught.
  
- @warning *Note* Since catch is a c++ keyword, this method is not available in Objective-C++ files. Instead use catchWithPolicy.
+ @warning *Note* Since catch is a c++ keyword, this method is not availble in Objective-C++ files. Instead use catchWithPolicy.
 
  @see catchWithPolicy
 */
-- (AnyPromise * __nonnull(^ __nonnull)(id __nonnull))catch;
+- (AnyPromise * __nonnull(^ __nonnull)(id __nonnull))catch NS_REFINED_FOR_SWIFT;
 #endif
 
 /**
  The provided block is executed when the receiver is rejected with the specified policy.
 
- @param policy The policy with which to catch. Either for all errors, or all errors *except* cancellation errors.
+ Specify the policy with which to catch as the first parameter to your block. Either for all errors, or all errors *except* cancellation errors.
 
  @see catch
 */
-- (AnyPromise * __nonnull(^ __nonnull)(PMKCatchPolicy, id __nonnull))catchWithPolicy;
+- (AnyPromise * __nonnull(^ __nonnull)(PMKCatchPolicy, id __nonnull))catchWithPolicy NS_REFINED_FOR_SWIFT;
 
 /**
  The provided block is executed when the receiver is resolved.
 
  The provided block always runs on the main queue.
 
- @see finallyOn
+ @see alwaysOn
 */
-- (AnyPromise * __nonnull(^ __nonnull)(dispatch_block_t __nonnull))finally;
+- (AnyPromise * __nonnull(^ __nonnull)(dispatch_block_t __nonnull))always NS_REFINED_FOR_SWIFT;
 
 /**
  The provided block is executed on the dispatch queue of your choice when the receiver is resolved.
 
- @see finally
+ @see always
  */
-- (AnyPromise * __nonnull(^ __nonnull)(dispatch_queue_t __nonnull, dispatch_block_t __nonnull))finallyOn;
+- (AnyPromise * __nonnull(^ __nonnull)(dispatch_queue_t __nonnull, dispatch_block_t __nonnull))alwaysOn NS_REFINED_FOR_SWIFT;
 
-/**
- The value of the asynchronous task this promise represents.
-
- A promise has `nil` value if the asynchronous task it represents has not
- finished. If the value is `nil` the promise is still `pending`.
-
- @warning *Note* Our Swift variant’s value property returns nil if the
- promise is rejected where AnyPromise will return the error object. This
- fits with the pattern where AnyPromise is not strictly typed and is more
- dynamic, but you should be aware of the distinction.
-
- @return If `resolved`, the object that was used to resolve this promise;
- if `pending`, nil.
-*/
-- (id __nullable)value;
-
-/**
- Creates a resolved promise.
-
- When developing your own promise systems, it is occasionally useful to be able to return an already resolved promise.
-
- @param value The value with which to resolve this promise. Passing an `NSError` will cause the promise to be rejected, otherwise the promise will be fulfilled.
-
- @return A resolved promise.
-*/
-+ (instancetype __nonnull)promiseWithValue:(id __nullable)value;
-
-/**
- Create a new promise that resolves with the provided block.
-
- Use this method when wrapping asynchronous code that does *not* use
- promises so that this code can be used in promise chains.
- 
- If `resolve` is called with an `NSError` object, the promise is
- rejected, otherwise the promise is fulfilled.
-
- Don’t use this method if you already have promises! Instead, just
- return your promise.
-
- Should you need to fulfill a promise but have no sensical value to use:
- your promise is a `void` promise: fulfill with `nil`.
-
- The block you pass is executed immediately on the calling thread.
-
- @param block The provided block is immediately executed, inside the block
- call `resolve` to resolve this promise and cause any attached handlers to
- execute. If you are wrapping a delegate-based system, we recommend
- instead to use: initWithResolver:
-
- @return A new promise.
- 
- @warning *Important* Resolving a promise with `nil` fulfills it.
-
- @see http://promisekit.org/sealing-your-own-promises/
- @see http://promisekit.org/wrapping-delegation/
-*/
-+ (instancetype __nonnull)promiseWithResolverBlock:(void (^ __nonnull)(PMKResolver __nonnull resolve))resolverBlock;
+/// @see always
+- (AnyPromise * __nonnull(^ __nonnull)(dispatch_block_t __nonnull))finally __attribute__((deprecated("Use always")));
+/// @see alwaysOn
+- (AnyPromise * __nonnull(^ __nonnull)(dispatch_block_t __nonnull, dispatch_block_t __nonnull))finallyOn __attribute__((deprecated("Use always")));
 
 /**
  Create a new promise with an associated resolver.
 
  Use this method when wrapping asynchronous code that does *not* use
  promises so that this code can be used in promise chains. Generally,
- prefer resolverWithBlock: as the resulting code is more elegant.
+ prefer `promiseWithResolverBlock:` as the resulting code is more elegant.
 
-    PMKResolver resolve;
-    AnyPromise *promise = [[AnyPromise alloc] initWithResolver:&resolve];
+     PMKResolver resolve;
+     AnyPromise *promise = [[AnyPromise alloc] initWithResolver:&resolve];
 
-    // later
-    resolve(@"foo");
+     // later
+     resolve(@"foo");
 
  @param resolver A reference to a block pointer of PMKResolver type.
  You can then call your resolver to resolve this promise.
@@ -187,7 +157,7 @@ typedef NS_ENUM(NSInteger, PMKCatchPolicy) {
 
  @see promiseWithResolverBlock:
 */
-- (instancetype __nonnull)initWithResolver:(PMKResolver __strong __nonnull * __nonnull)resolver;
+- (instancetype __nonnull)initWithResolver:(PMKResolver __strong __nonnull * __nonnull)resolver NS_REFINED_FOR_SWIFT;
 
 @end
 
@@ -202,9 +172,10 @@ typedef NS_ENUM(NSInteger, PMKCatchPolicy) {
 
 
 
-typedef void (^PMKAdapter)(id __nullable, NSError * __nullable);
-typedef void (^PMKIntegerAdapter)(NSInteger, NSError * __nullable);
-typedef void (^PMKBooleanAdapter)(BOOL, NSError * __nullable);
+typedef void (^PMKAdapter)(id __nullable, NSError * __nullable) NS_REFINED_FOR_SWIFT;
+typedef void (^PMKIntegerAdapter)(NSInteger, NSError * __nullable) NS_REFINED_FOR_SWIFT;
+typedef void (^PMKBooleanAdapter)(BOOL, NSError * __nullable) NS_REFINED_FOR_SWIFT;
+
 
 @interface AnyPromise (Adapters)
 
@@ -226,7 +197,7 @@ typedef void (^PMKBooleanAdapter)(BOOL, NSError * __nullable);
 
  @see http://promisekit.org/sealing-your-own-promises/
  */
-+ (instancetype __nonnull)promiseWithAdapterBlock:(void (^ __nonnull)(PMKAdapter __nonnull adapter))block;
++ (instancetype __nonnull)promiseWithAdapterBlock:(void (^ __nonnull)(PMKAdapter __nonnull adapter))block NS_REFINED_FOR_SWIFT;
 
 /**
  Create a new promise by adapting an existing asynchronous system.
@@ -238,7 +209,7 @@ typedef void (^PMKBooleanAdapter)(BOOL, NSError * __nullable);
 
  @see promiseWithAdapter
  */
-+ (instancetype __nonnull)promiseWithIntegerAdapterBlock:(void (^ __nonnull)(PMKIntegerAdapter __nonnull adapter))block;
++ (instancetype __nonnull)promiseWithIntegerAdapterBlock:(void (^ __nonnull)(PMKIntegerAdapter __nonnull adapter))block NS_REFINED_FOR_SWIFT;
 
 /**
  Create a new promise by adapting an existing asynchronous system.
@@ -247,7 +218,7 @@ typedef void (^PMKBooleanAdapter)(BOOL, NSError * __nullable);
 
  @see promiseWithAdapter
  */
-+ (instancetype __nonnull)promiseWithBooleanAdapterBlock:(void (^ __nonnull)(PMKBooleanAdapter __nonnull adapter))block;
++ (instancetype __nonnull)promiseWithBooleanAdapterBlock:(void (^ __nonnull)(PMKBooleanAdapter __nonnull adapter))block NS_REFINED_FOR_SWIFT;
 
 @end
 
@@ -266,3 +237,18 @@ typedef void (^PMKBooleanAdapter)(BOOL, NSError * __nullable);
 #define PMKManifold(...) __PMKManifold(__VA_ARGS__, 3, 2, 1)
 #define __PMKManifold(_1, _2, _3, N, ...) __PMKArrayWithCount(N, _1, _2, _3)
 extern id __nonnull __PMKArrayWithCount(NSUInteger, ...);
+
+
+
+@interface AnyPromise (Deprecations)
+
++ (instancetype __nonnull)new:(__nullable id)resolvers __attribute__((unavailable("See +promiseWithResolverBlock:")));
++ (instancetype __nonnull)when:(__nullable id)promises __attribute__((unavailable("See PMKWhen()")));
++ (instancetype __nonnull)join:(__nullable id)promises __attribute__((unavailable("See PMKJoin()")));
+
+@end
+
+
+__attribute__((unavailable("See AnyPromise")))
+@interface PMKPromise
+@end

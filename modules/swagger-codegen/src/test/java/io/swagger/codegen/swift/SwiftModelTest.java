@@ -57,30 +57,30 @@ public class SwiftModelTest {
 
         final CodegenProperty property3 = cm.vars.get(2);
         Assert.assertEquals(property3.baseName, "createdAt");
-        Assert.assertEquals(property3.datatype, "NSDate");
+        Assert.assertEquals(property3.datatype, "Date");
         Assert.assertEquals(property3.name, "createdAt");
         Assert.assertNull(property3.defaultValue);
-        Assert.assertEquals(property3.baseType, "NSDate");
+        Assert.assertEquals(property3.baseType, "Date");
         Assert.assertTrue(property3.hasMore);
         Assert.assertNull(property3.required);
         Assert.assertTrue(property3.isNotContainer);
 
         final CodegenProperty property4 = cm.vars.get(3);
         Assert.assertEquals(property4.baseName, "binary");
-        Assert.assertEquals(property4.datatype, "NSData");
+        Assert.assertEquals(property4.datatype, "Data");
         Assert.assertEquals(property4.name, "binary");
         Assert.assertNull(property4.defaultValue);
-        Assert.assertEquals(property4.baseType, "NSData");
+        Assert.assertEquals(property4.baseType, "Data");
         Assert.assertTrue(property4.hasMore);
         Assert.assertNull(property4.required);
         Assert.assertTrue(property4.isNotContainer);
 
         final CodegenProperty property5 = cm.vars.get(4);
         Assert.assertEquals(property5.baseName, "byte");
-        Assert.assertEquals(property5.datatype, "NSData");
+        Assert.assertEquals(property5.datatype, "Data");
         Assert.assertEquals(property5.name, "byte");
         Assert.assertNull(property5.defaultValue);
-        Assert.assertEquals(property5.baseType, "NSData");
+        Assert.assertEquals(property5.baseType, "Data");
         Assert.assertTrue(property5.hasMore);
         Assert.assertNull(property5.required);
         Assert.assertTrue(property5.isNotContainer);
