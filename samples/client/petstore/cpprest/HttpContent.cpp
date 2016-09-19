@@ -23,7 +23,6 @@
  */
 
 #include "HttpContent.h"
-#include "ModelBase.h"
 
 namespace io {
 namespace swagger {
@@ -93,16 +92,6 @@ void HttpContent::writeTo( std::ostream& stream )
     m_Data->seekg( 0, m_Data->beg );
     stream << m_Data->rdbuf();
 }
-
-/*void HttpContent::fromJson(web::json::value& val)
-{
-	std::shared_ptr<HttpContent> toCopy = ModelBase::fileFromJson(val);
-	
-	setName(toCopy->getName());
-	setFileName(toCopy->getFileName());
-	setContentType(toCopy->getContentType());
-	setData(toCopy->getData());
-}*/
 
 }
 }

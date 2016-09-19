@@ -13,7 +13,6 @@
 #include <memory>
 
 #include <cpprest/details/basic_types.h> 
-#include <cpprest/json.h> 
 
 {{#modelNamespaceDeclarations}}
 namespace {{this}} {
@@ -41,7 +40,7 @@ public:
     virtual void setData( std::shared_ptr<std::istream> value );
     
     virtual void writeTo( std::ostream& stream );
-  
+
 protected:
 	// NOTE: no utility::string_t here because those strings can only contain ascii
     utility::string_t m_ContentDisposition;

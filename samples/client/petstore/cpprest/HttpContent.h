@@ -36,7 +36,6 @@
 #include <memory>
 
 #include <cpprest/details/basic_types.h> 
-#include <cpprest/json.h> 
 
 namespace io {
 namespace swagger {
@@ -66,8 +65,6 @@ public:
     
     virtual void writeTo( std::ostream& stream );
 
-	//virtual void fromJson(web::json::value& val);
-       
 protected:
 	// NOTE: no utility::string_t here because those strings can only contain ascii
     utility::string_t m_ContentDisposition;

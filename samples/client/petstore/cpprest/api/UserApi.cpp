@@ -140,12 +140,10 @@ responseHttpContentTypes.insert( U("application/xml") );
 				, std::make_shared<std::stringstream>(response.extract_utf8string(true).get()));
 		}
         
-		utility::string_t contentType = U("");
-		
-        // check response content type
+		// check response content type
         if(response.headers().has(U("Content-Type")))
         {
-            contentType = response.headers()[U("Content-Type")];
+            utility::string_t contentType = response.headers()[U("Content-Type")];
             if( contentType.find(responseHttpContentType) == std::string::npos )
             {
                 throw ApiException(500
@@ -159,7 +157,7 @@ responseHttpContentTypes.insert( U("application/xml") );
     .then([=](utility::string_t response)
     {
         return void();
-		    });            
+            });            
 }
 pplx::task<void> UserApi::createUsersWithArrayInput(std::vector<std::shared_ptr<User>> body)
 {
@@ -267,12 +265,10 @@ responseHttpContentTypes.insert( U("application/xml") );
 				, std::make_shared<std::stringstream>(response.extract_utf8string(true).get()));
 		}
         
-		utility::string_t contentType = U("");
-		
-        // check response content type
+		// check response content type
         if(response.headers().has(U("Content-Type")))
         {
-            contentType = response.headers()[U("Content-Type")];
+            utility::string_t contentType = response.headers()[U("Content-Type")];
             if( contentType.find(responseHttpContentType) == std::string::npos )
             {
                 throw ApiException(500
@@ -286,7 +282,7 @@ responseHttpContentTypes.insert( U("application/xml") );
     .then([=](utility::string_t response)
     {
         return void();
-		    });            
+            });            
 }
 pplx::task<void> UserApi::createUsersWithListInput(std::vector<std::shared_ptr<User>> body)
 {
@@ -394,12 +390,10 @@ responseHttpContentTypes.insert( U("application/xml") );
 				, std::make_shared<std::stringstream>(response.extract_utf8string(true).get()));
 		}
         
-		utility::string_t contentType = U("");
-		
-        // check response content type
+		// check response content type
         if(response.headers().has(U("Content-Type")))
         {
-            contentType = response.headers()[U("Content-Type")];
+            utility::string_t contentType = response.headers()[U("Content-Type")];
             if( contentType.find(responseHttpContentType) == std::string::npos )
             {
                 throw ApiException(500
@@ -413,7 +407,7 @@ responseHttpContentTypes.insert( U("application/xml") );
     .then([=](utility::string_t response)
     {
         return void();
-		    });            
+            });            
 }
 pplx::task<void> UserApi::deleteUser(utility::string_t username)
 {
@@ -495,12 +489,10 @@ responseHttpContentTypes.insert( U("application/xml") );
 				, std::make_shared<std::stringstream>(response.extract_utf8string(true).get()));
 		}
         
-		utility::string_t contentType = U("");
-		
-        // check response content type
+		// check response content type
         if(response.headers().has(U("Content-Type")))
         {
-            contentType = response.headers()[U("Content-Type")];
+            utility::string_t contentType = response.headers()[U("Content-Type")];
             if( contentType.find(responseHttpContentType) == std::string::npos )
             {
                 throw ApiException(500
@@ -514,7 +506,7 @@ responseHttpContentTypes.insert( U("application/xml") );
     .then([=](utility::string_t response)
     {
         return void();
-		    });            
+            });            
 }
 pplx::task<std::shared_ptr<User>> UserApi::getUserByName(utility::string_t username)
 {
@@ -596,12 +588,10 @@ responseHttpContentTypes.insert( U("application/xml") );
 				, std::make_shared<std::stringstream>(response.extract_utf8string(true).get()));
 		}
         
-		utility::string_t contentType = U("");
-		
-        // check response content type
+		// check response content type
         if(response.headers().has(U("Content-Type")))
         {
-            contentType = response.headers()[U("Content-Type")];
+            utility::string_t contentType = response.headers()[U("Content-Type")];
             if( contentType.find(responseHttpContentType) == std::string::npos )
             {
                 throw ApiException(500
@@ -614,7 +604,7 @@ responseHttpContentTypes.insert( U("application/xml") );
     })
     .then([=](utility::string_t response)
     {
-        		std::shared_ptr<User> result(new User());
+        std::shared_ptr<User> result(new User());
         
         if(responseHttpContentType == U("application/json"))
         {
@@ -720,12 +710,10 @@ responseHttpContentTypes.insert( U("application/xml") );
 				, std::make_shared<std::stringstream>(response.extract_utf8string(true).get()));
 		}
         
-		utility::string_t contentType = U("");
-		
-        // check response content type
+		// check response content type
         if(response.headers().has(U("Content-Type")))
         {
-            contentType = response.headers()[U("Content-Type")];
+            utility::string_t contentType = response.headers()[U("Content-Type")];
             if( contentType.find(responseHttpContentType) == std::string::npos )
             {
                 throw ApiException(500
@@ -738,7 +726,7 @@ responseHttpContentTypes.insert( U("application/xml") );
     })
     .then([=](utility::string_t response)
     {
-        		utility::string_t result(U(""));
+        utility::string_t result(U(""));
         
         if(responseHttpContentType == U("application/json"))
         {
@@ -835,12 +823,10 @@ responseHttpContentTypes.insert( U("application/xml") );
 				, std::make_shared<std::stringstream>(response.extract_utf8string(true).get()));
 		}
         
-		utility::string_t contentType = U("");
-		
-        // check response content type
+		// check response content type
         if(response.headers().has(U("Content-Type")))
         {
-            contentType = response.headers()[U("Content-Type")];
+            utility::string_t contentType = response.headers()[U("Content-Type")];
             if( contentType.find(responseHttpContentType) == std::string::npos )
             {
                 throw ApiException(500
@@ -854,7 +840,7 @@ responseHttpContentTypes.insert( U("application/xml") );
     .then([=](utility::string_t response)
     {
         return void();
-		    });            
+            });            
 }
 pplx::task<void> UserApi::updateUser(utility::string_t username, std::shared_ptr<User> body)
 {
@@ -953,12 +939,10 @@ responseHttpContentTypes.insert( U("application/xml") );
 				, std::make_shared<std::stringstream>(response.extract_utf8string(true).get()));
 		}
         
-		utility::string_t contentType = U("");
-		
-        // check response content type
+		// check response content type
         if(response.headers().has(U("Content-Type")))
         {
-            contentType = response.headers()[U("Content-Type")];
+            utility::string_t contentType = response.headers()[U("Content-Type")];
             if( contentType.find(responseHttpContentType) == std::string::npos )
             {
                 throw ApiException(500
@@ -972,7 +956,7 @@ responseHttpContentTypes.insert( U("application/xml") );
     .then([=](utility::string_t response)
     {
         return void();
-		    });            
+            });            
 }
 
 }

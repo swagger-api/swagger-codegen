@@ -210,12 +210,10 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
 				, std::make_shared<std::stringstream>(response.extract_utf8string(true).get()));
 		}
         
-		utility::string_t contentType = U("");
-		
-        // check response content type
+		// check response content type
         if(response.headers().has(U("Content-Type")))
         {
-            contentType = response.headers()[U("Content-Type")];
+            utility::string_t contentType = response.headers()[U("Content-Type")];
             if( contentType.find(responseHttpContentType) == std::string::npos )
             {
                 throw ApiException(500
@@ -233,8 +231,7 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
     .then([=](utility::string_t response)
     {
         {{^returnType}}return void();
-        {{/returnType}}
-		{{#returnType}}{{#returnContainer}}{{{returnType}}} result;
+        {{/returnType}}{{#returnType}}{{#returnContainer}}{{{returnType}}} result;
         {{/returnContainer}}{{^returnContainer}}{{{returnType}}} result({{{defaultResponse}}});{{/returnContainer}}
         
         if(responseHttpContentType == U("application/json"))

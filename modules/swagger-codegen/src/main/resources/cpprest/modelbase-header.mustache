@@ -47,7 +47,7 @@ public:
     static utility::datetime dateFromJson(web::json::value& val);
     static double doubleFromJson(web::json::value& val);
     static bool boolFromJson(web::json::value& val);
-    //static std::shared_ptr<HttpContent> fileFromJson(web::json::value& val);
+    static std::shared_ptr<HttpContent> fileFromJson(web::json::value& val);
         
     static std::shared_ptr<HttpContent> toHttpContent( const utility::string_t& name, const utility::string_t& value, const utility::string_t& contentType = U(""));
     static std::shared_ptr<HttpContent> toHttpContent( const utility::string_t& name, const utility::datetime& value, const utility::string_t& contentType = U(""));
