@@ -1,15 +1,16 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Core.Commons.Util;
+using Core.Logging;
 using Newtonsoft.Json;
-using System.Collections;
 #if UNITY_5_4
 using UnityEngine.Networking;
 #else
 using UnityEngine.Experimental.Networking;
 #endif
-using Core.Commons.Util;
 
 namespace {{packageName}}.Client
 {
@@ -20,6 +21,8 @@ namespace {{packageName}}.Client
     {
         private readonly Dictionary<String, String> _defaultHeaderMap = new Dictionary<String, String>();
 
+        private readonly ICoreLogger _logger;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiClient" /> class.
         /// </summary>
@@ -27,6 +30,7 @@ namespace {{packageName}}.Client
         public ApiClient(String basePath="{{basePath}}")
         {
             BasePath = basePath;
+            _logger = CoreLoggerFactory.GetLogger(this);
         }
 
         /// <summary>
@@ -93,9 +97,9 @@ namespace {{packageName}}.Client
 
             private UnityEngine.Coroutine TimeOutChecker;
 
-            public IEnumerator CheckTimeout(UnityWebRequest request) {
+            private IEnumerator CheckTimeout(UnityWebRequest request) {
                 if(!request.isDone) {
-                    UnityEngine.Debug.LogWarning("aborting request ");
+                     _logger.Warn("aborting request ");
                     request.Abort ();
                 }
                yield return request;
@@ -110,7 +114,7 @@ namespace {{packageName}}.Client
 
           public IEnumerator GetResponse<T>(string path, Action<T> successCallback, Action<ApiException> failCallback)
             {
-              UnityEngine.Debug.Log("sending request to "+ path);
+              _logger.Debug("sending request to " + path);
               var request = UnityWebRequest.Get(path);
               // add default header, if any
               foreach(var defaultHeader in _defaultHeaderMap) {
@@ -119,42 +123,49 @@ namespace {{packageName}}.Client
               request.downloadHandler = new DownloadHandlerBuffer();
               TimeOutChecker=    CoroutineHelper.Instance.DelayedCall (_timeout ,CheckTimeout(request));
               yield return request.Send();
+
+              object outcome = null;
+              ApiException exception = null;
+
               if (request.isError)
               {
-                //todo  error is a string - define an unknown error code..
-               int errorCode = 999;
-
-               if(request.error.ToLower().IndexOf("request aborted") != -1) {
-                   errorCode = 408;
-               }
-               failCallback(  new ApiException (errorCode, "Error calling api " + path + "  : "   + request.error, request.error) );
+                 int errorCode = -1;
+                 exception = new ApiException(errorCode, "Error calling api " + path + "  : "   + request.error, request.error);
+                 exception.Path = path;
               }
               else
               {
                   switch (request.responseCode/100)
                   {
-                  case 2:
-                      {
-                          var resp = "";
-                          if (request.downloadHandler.data != null && request.downloadHandler.data.Length > 0)
-                          {
-                              resp = request.downloadHandler.text;
-                          }
-                          successCallback( (T)Deserialize(resp, typeof(T)));
+                    case 2:
+                    {
+                      if (request.downloadHandler.data != null && request.downloadHandler.data.Length > 0)
+                        {
+                            var resp = request.downloadHandler.text;
+                            outcome = Deserialize(resp, typeof (T));
+                        }
+                        break;
+                    }
+                    default:
+                        {
+                          exception =  new ApiException ((int)request.responseCode, "Error calling api " + path+ "  : "   + request.responseCode, request.responseCode);
+                          exception.Path = path;
                           break;
-                      }
-                  default:
-                      {
-                          failCallback(  new ApiException ((int)request.responseCode, "Error calling api " + path+ "  : "   + request.responseCode, request.responseCode) );
-                          break;
-                      }
-                  }
+                        }
+                    }
               }
+              CoroutineHelper.Instance.StopCoroutine(TimeOutChecker);
+              if (outcome != null)
+               {
+                   successCallback((T) outcome);
+               }
+               else
+               {
+                   failCallback(exception);
+               }
               request.Dispose ();
-              CoroutineHelper.Instance.StopCoroutine (TimeOutChecker);
+
           }
-
-
 
 
         private string EncodeQueryParams(string api,Dictionary<string, string> queryParams ) {
@@ -165,19 +176,17 @@ namespace {{packageName}}.Client
 
             var querystring = new StringBuilder();
 
-            foreach( KeyValuePair<string, string> kvp in queryParams )
+           foreach (var kvp in queryParams)
             {
                 if(querystring.Length== 0) {
                     querystring.Append ("?");
                 }
-              //  UnityEngine.Debug.Log(String.Format("Key = {0}, Value = {1}", kvp.Key, kvp.Value));
+              _logger.Debug(String.Format("Key = {0}, Value = {1}", kvp.Key, kvp.Value));
                 if (querystring.Length > 2) {
                     querystring.Append("&");
                 }
-
                 querystring.AppendFormat ("{0}={1}", kvp.Key, kvp.Value);
             }
-
             return api + querystring.ToString();
         }
 
