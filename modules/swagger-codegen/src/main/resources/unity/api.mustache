@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System;
 using RSG;
 
 using {{packageName}}.Client;
@@ -28,18 +28,26 @@ namespace {{packageName}}.Api
         /// </summary>
         /// <param name="timeout">in seconds </param>
         void SetTimeout(float timeout);
+
+        /// <summary>
+        /// number of retries that will be attempted if the request fails
+        /// </summary>
+        /// <param name="value"></param>
+        void SetRetries(int value);
+
         /// <summary>
         /// Sets the base path for the request
         /// </summary>
         /// <param name="path"></param>
         void SetBasePath(string path);
+
         /// <summary>
-       /// Add header.
-       /// </summary>
-       /// <param name="key">Header field name.</param>
-       /// <param name="value">Header field value.</param>
-       /// <returns></returns>
-       void AddHeader(string key, string value);
+        /// Adds header.
+        /// </summary>
+        /// <param name="key">Header field name.</param>
+        /// <param name="value">Header field value.</param>
+        /// <returns></returns>
+        void AddHeader(string key, string value);
 
 
     }
@@ -56,7 +64,7 @@ namespace {{packageName}}.Api
         /// <returns></returns>
         public {{classname}}(ApiClient apiClient)
         {
-        ApiClient = apiClient;
+          ApiClient = apiClient;
         }
 
         public void SetTimeout(float timeout)
@@ -74,6 +82,11 @@ namespace {{packageName}}.Api
              ApiClient.AddDefaultHeader(key,value);
          }
 
+        private int _retries = 0;
+        public void SetRetries(int retries)
+             {
+                _retries =retries;
+             }
 
         /// <summary>
         /// Gets or sets the API client.
@@ -93,7 +106,7 @@ namespace {{packageName}}.Api
             {{#allParams}}{{#required}}
             // verify the required parameter '{{paramName}}' is set
             if ({{paramName}} == null) {
-              promise.Reject(new ApiException(400, "Missing required parameter '{{paramName}}' when calling {{nickname}}"));
+              promise.Reject(new ApiException(400, "Missing required parameter '{{paramName}}' when calling {{classname}}.{{nickname}}"));
               return promise;
             }
             {{/required}}{{/allParams}}
@@ -113,12 +126,27 @@ namespace {{packageName}}.Api
             }
             {{/queryParams}}
 
-
-            ApiClient.Send<{{{returnType}}}> (path, (response) => promise.Resolve(response), (exception) => promise.Reject(exception) , queryParameters);
+            //  ApiClient.Send<{{{returnType}}}> (path, (response) => promise.Resolve(response), (exception) => promise.Reject(exception) , queryParameters);
+            invokeWithRetries<{{{returnType}}}>(_retries, path, queryParameters, promise, null);
             return promise;
         }
 
         {{/operation}}
+
+        private void invokeWithRetries<T>(int counter, string path, Dictionary<string, string> queryParameters, Promise<T> promise, ApiException apiException)
+       {
+           if (counter >= 0)
+           {
+               ApiClient.Send<T>(path, (response) => promise.Resolve(response), (exception) => invokeWithRetries(--counter, path, queryParameters, promise, exception), queryParameters);
+           }
+           else
+           {
+               var retryException = new ApiException(999, String.Format("Too Many Retries({2}). ErrorCode {0} - Error: {1} ", apiException.ErrorCode, apiException.Message, this._retries), apiException.ErrorContent);
+               retryException.Path = path;
+               promise.Reject(retryException);
+           }
+       }
+
     }
     {{/operations}}
 }
