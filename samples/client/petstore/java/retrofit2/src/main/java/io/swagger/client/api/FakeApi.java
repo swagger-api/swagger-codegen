@@ -29,7 +29,6 @@ public interface FakeApi {
   @PATCH("fake")
   Call<Client> testClientModel(
     @Body Client body
-
   );
 
   /**
@@ -54,20 +53,7 @@ public interface FakeApi {
   @FormUrlEncoded
   @POST("fake")
   Call<Void> testEndpointParameters(
-    @Field("number") BigDecimal number
-, @Field("double") Double _double
-, @Field("pattern_without_delimiter") String patternWithoutDelimiter
-, @Field("byte") byte[] _byte
-, @Field("integer") Integer integer
-, @Field("int32") Integer int32
-, @Field("int64") Long int64
-, @Field("float") Float _float
-, @Field("string") String string
-, @Field("binary") byte[] binary
-, @Field("date") LocalDate date
-, @Field("dateTime") DateTime dateTime
-, @Field("password") String password
-
+    @Field("number") BigDecimal number, @Field("double") Double _double, @Field("pattern_without_delimiter") String patternWithoutDelimiter, @Field("byte") byte[] _byte, @Field("integer") Integer integer, @Field("int32") Integer int32, @Field("int64") Long int64, @Field("float") Float _float, @Field("string") String string, @Field("binary") byte[] binary, @Field("date") LocalDate date, @Field("dateTime") DateTime dateTime, @Field("password") String password
   );
 
   /**
@@ -87,15 +73,7 @@ public interface FakeApi {
   @FormUrlEncoded
   @GET("fake")
   Call<Void> testEnumParameters(
-    @Field("enum_form_string_array") List<String> enumFormStringArray
-, @Field("enum_form_string") String enumFormString
-, @Header("enum_header_string_array") List<String> enumHeaderStringArray
-, @Header("enum_header_string") String enumHeaderString
-, @Query("enum_query_string_array") CSVParams enumQueryStringArray
-, @Query("enum_query_string") String enumQueryString
-, @Query("enum_query_integer") BigDecimal enumQueryInteger
-, @Field("enum_query_double") Double enumQueryDouble
-
+    @Field("enum_form_string_array") List<String> enumFormStringArray, @Field("enum_form_string") String enumFormString, @Header("enum_header_string_array") List<String> enumHeaderStringArray, @Header("enum_header_string") String enumHeaderString, @Query("enum_query_string_array") CSVParams enumQueryStringArray, @Query("enum_query_string") String enumQueryString, @Query("enum_query_integer") BigDecimal enumQueryInteger, @Field("enum_query_double") Double enumQueryDouble
   );
 
 }

@@ -26,7 +26,6 @@ public interface StoreApi {
   @DELETE("store/order/{orderId}")
   Call<Void> deleteOrder(
     @Path("orderId") String orderId
-
   );
 
   /**
@@ -49,7 +48,6 @@ public interface StoreApi {
   @GET("store/order/{orderId}")
   Call<Order> getOrderById(
     @Path("orderId") Long orderId
-
   );
 
   /**
@@ -62,7 +60,6 @@ public interface StoreApi {
   @POST("store/order")
   Call<Order> placeOrder(
     @Body Order body
-
   );
 
 }

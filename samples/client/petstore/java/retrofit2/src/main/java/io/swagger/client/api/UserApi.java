@@ -26,7 +26,6 @@ public interface UserApi {
   @POST("user")
   Call<Void> createUser(
     @Body User body
-
   );
 
   /**
@@ -39,7 +38,6 @@ public interface UserApi {
   @POST("user/createWithArray")
   Call<Void> createUsersWithArrayInput(
     @Body List<User> body
-
   );
 
   /**
@@ -52,7 +50,6 @@ public interface UserApi {
   @POST("user/createWithList")
   Call<Void> createUsersWithListInput(
     @Body List<User> body
-
   );
 
   /**
@@ -65,7 +62,6 @@ public interface UserApi {
   @DELETE("user/{username}")
   Call<Void> deleteUser(
     @Path("username") String username
-
   );
 
   /**
@@ -78,7 +74,6 @@ public interface UserApi {
   @GET("user/{username}")
   Call<User> getUserByName(
     @Path("username") String username
-
   );
 
   /**
@@ -91,9 +86,7 @@ public interface UserApi {
   
   @GET("user/login")
   Call<String> loginUser(
-    @Query("username") String username
-, @Query("password") String password
-
+    @Query("username") String username, @Query("password") String password
   );
 
   /**
@@ -116,9 +109,7 @@ public interface UserApi {
   
   @PUT("user/{username}")
   Call<Void> updateUser(
-    @Path("username") String username
-, @Body User body
-
+    @Path("username") String username, @Body User body
   );
 
 }
