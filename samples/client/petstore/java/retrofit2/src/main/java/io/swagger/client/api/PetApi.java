@@ -28,6 +28,7 @@ public interface PetApi {
   @POST("pet")
   Call<Void> addPet(
     @Body Pet body
+
   );
 
   /**
@@ -40,7 +41,9 @@ public interface PetApi {
   
   @DELETE("pet/{petId}")
   Call<Void> deletePet(
-    @Path("petId") Long petId, @Header("api_key") String apiKey
+    @Path("petId") Long petId
+, @Header("api_key") String apiKey
+
   );
 
   /**
@@ -53,6 +56,7 @@ public interface PetApi {
   @GET("pet/findByStatus")
   Call<List<Pet>> findPetsByStatus(
     @Query("status") CSVParams status
+
   );
 
   /**
@@ -65,6 +69,7 @@ public interface PetApi {
   @GET("pet/findByTags")
   Call<List<Pet>> findPetsByTags(
     @Query("tags") CSVParams tags
+
   );
 
   /**
@@ -77,6 +82,7 @@ public interface PetApi {
   @GET("pet/{petId}")
   Call<Pet> getPetById(
     @Path("petId") Long petId
+
   );
 
   /**
@@ -89,6 +95,7 @@ public interface PetApi {
   @PUT("pet")
   Call<Void> updatePet(
     @Body Pet body
+
   );
 
   /**
@@ -103,7 +110,10 @@ public interface PetApi {
   @FormUrlEncoded
   @POST("pet/{petId}")
   Call<Void> updatePetWithForm(
-    @Path("petId") Long petId, @Field("name") String name, @Field("status") String status
+    @Path("petId") Long petId
+, @Field("name") String name
+, @Field("status") String status
+
   );
 
   /**
@@ -118,7 +128,10 @@ public interface PetApi {
   @Multipart
   @POST("pet/{petId}/uploadImage")
   Call<ModelApiResponse> uploadFile(
-    @Path("petId") Long petId, @Part("additionalMetadata") String additionalMetadata, @Part("file\"; filename=\"file\"") RequestBody file
+    @Path("petId") Long petId
+, @Part("additionalMetadata") String additionalMetadata
+, @Part("file\"; filename=\"file") RequestBody file
+
   );
 
 }
