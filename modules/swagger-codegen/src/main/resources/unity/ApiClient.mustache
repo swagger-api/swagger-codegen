@@ -116,21 +116,17 @@ namespace {{packageName}}.Client
             _defaultHeaderMap.Add(key, value);
         }
 
-
-
-
-
-            /// <summary>
-            /// unity web request has no timeout (usually requests fail with erro "Cannot connect to destination host" after about 75 seconds)
-            /// Sets the timeout to the value passed as param;
-            /// </summary>
-            /// <param name="value">The timeout in seconds </param>
-            /// <returns>Formatted string.</returns>
-            public void SetTimeout(float value) {
-              if(value != null && value >1 )  {
-                  _timeout = value;
-              }
+          /// <summary>
+          /// unity web request has no timeout (usually requests fail with erro "Cannot connect to destination host" after about 75 seconds)
+          /// Sets the timeout to the value passed as param;
+          /// </summary>
+          /// <param name="value">The timeout in seconds </param>
+          /// <returns>Formatted string.</returns>
+          public void SetTimeout(float value) {
+            if(value >1 )  {
+                _timeout = value;
             }
+          }
 
 
           public void Send<T>(string api, Action<T> successCallback, Action<ApiException> failCallback, Dictionary<string,string> queryParams = null)
@@ -194,7 +190,8 @@ namespace {{packageName}}.Client
 
           }
 
-#region private_members
+        #region private_members
+
         private float _timeout = 5;
         private UnityEngine.Coroutine TimeOutChecker;
         private readonly Dictionary<String, String> _defaultHeaderMap = new Dictionary<String, String>();
@@ -229,9 +226,9 @@ namespace {{packageName}}.Client
             }
            yield return request;
         }
-#endregion
 
-        ///////////////////////////////
+        #endregion
+
         #region serialization
 
         /// <summary>
