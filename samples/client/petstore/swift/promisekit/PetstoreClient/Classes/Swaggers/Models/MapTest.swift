@@ -22,7 +22,6 @@ open class MapTest: JSONEncodable {
     func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
         nillableDictionary["map_map_of_string"] = self.mapMapOfString?.encodeToJSON()
-        nillableDictionary["map_of_enum_string"] = self.mapOfEnumString?.encodeToJSON()
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
     }

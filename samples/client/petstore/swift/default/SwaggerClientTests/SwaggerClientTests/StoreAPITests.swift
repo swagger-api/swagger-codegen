@@ -27,7 +27,7 @@ class StoreAPITests: XCTestCase {
         newOrder.quantity = 10
         newOrder.shipDate = shipDate
         // use explicit naming to reference the enum so that we test we don't regress on enum naming
-        newOrder.status = Order.Status.Placed
+        newOrder.status = Order.Status.placed
         
         StoreAPI.placeOrder(body: newOrder) { (order, error) in
             guard error == nil else {
@@ -38,7 +38,7 @@ class StoreAPITests: XCTestCase {
             if let order = order {
                 XCTAssert(order.id == 1000, "invalid id")
                 XCTAssert(order.quantity == 10, "invalid quantity")
-                XCTAssert(order.status == .Placed, "invalid status")
+                XCTAssert(order.status == .placed, "invalid status")
                 XCTAssert(order.shipDate!.isEqual(shipDate, format: self.isoDateFormat),
                           "Date should be idempotent")
                 
@@ -52,7 +52,7 @@ class StoreAPITests: XCTestCase {
     func test2GetOrder() {
         let expectation = self.expectation(description: "testGetOrder")
         
-        StoreAPI.getOrderById(orderId: "1000") { (order, error) in
+        StoreAPI.getOrderById(orderId: 1000) { (order, error) in
             guard error == nil else {
                 XCTFail("error retrieving order: \(error.debugDescription)")
                 return
@@ -61,7 +61,7 @@ class StoreAPITests: XCTestCase {
             if let order = order {
                 XCTAssert(order.id == 1000, "invalid id")
                 XCTAssert(order.quantity == 10, "invalid quantity")
-                XCTAssert(order.status == .Placed, "invalid status")
+                XCTAssert(order.status == .placed, "invalid status")
                 
                 expectation.fulfill()
             }
@@ -88,7 +88,7 @@ class StoreAPITests: XCTestCase {
     func testDownloadProgress() {
         let responseExpectation = self.expectation(description: "obtain response")
         let progressExpectation = self.expectation(description: "obtain progress")
-        let requestBuilder = StoreAPI.getOrderByIdWithRequestBuilder(orderId: "1000")
+        let requestBuilder = StoreAPI.getOrderByIdWithRequestBuilder(orderId: 1000)
 
         requestBuilder.onProgressReady = { (progress) in
             progressExpectation.fulfill()

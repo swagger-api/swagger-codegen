@@ -34,7 +34,7 @@ class PetAPITests: XCTestCase {
         newPet.category = category
         newPet.id = 1000
         newPet.name = "Fluffy"
-        newPet.status = .Available
+        newPet.status = .available
         PetAPI.addPet(body: newPet).then {
                 expectation.fulfill()
             }.always {

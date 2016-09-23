@@ -26,7 +26,6 @@ open class EnumArrays: JSONEncodable {
     func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
         nillableDictionary["just_symbol"] = self.justSymbol?.rawValue
-        nillableDictionary["array_enum"] = self.arrayEnum?.encodeToJSON()
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
     }
