@@ -14,10 +14,10 @@ open class UserAPI: APIBase {
     /**
      Create user
      
-     - parameter body: (body) Created user object (optional)
+     - parameter body: (body) Created user object 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func createUser(body body: User? = nil, completion: @escaping ((_ error: Error?) -> Void)) {
+    open class func createUser(body: User, completion: @escaping ((_ error: Error?) -> Void)) {
         createUserWithRequestBuilder(body: body).execute { (response, error) -> Void in
             completion(error);
         }
@@ -26,10 +26,10 @@ open class UserAPI: APIBase {
     /**
      Create user
      
-     - parameter body: (body) Created user object (optional)
+     - parameter body: (body) Created user object 
      - returns: Promise<Void>
      */
-    open class func createUser(body body: User? = nil) -> Promise<Void> {
+    open class func createUser( body: User) -> Promise<Void> {
         let deferred = Promise<Void>.pending()
         createUser(body: body) { error in
             if let error = error {
@@ -46,14 +46,14 @@ open class UserAPI: APIBase {
      - POST /user
      - This can only be done by the logged in user.
      
-     - parameter body: (body) Created user object (optional)
+     - parameter body: (body) Created user object 
 
      - returns: RequestBuilder<Void> 
      */
-    open class func createUserWithRequestBuilder(body body: User? = nil) -> RequestBuilder<Void> {
+    open class func createUserWithRequestBuilder(body: User) -> RequestBuilder<Void> {
         let path = "/user"
         let URLString = PetstoreClientAPI.basePath + path
-        let parameters = body?.encodeToJSON() as? [String:AnyObject]
+        let parameters = body.encodeToJSON() as? [String:AnyObject]
  
         let convertedParameters = APIHelper.convertBoolToString(parameters)
  
@@ -65,10 +65,10 @@ open class UserAPI: APIBase {
     /**
      Creates list of users with given input array
      
-     - parameter body: (body) List of user object (optional)
+     - parameter body: (body) List of user object 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func createUsersWithArrayInput(body body: [User]? = nil, completion: @escaping ((_ error: Error?) -> Void)) {
+    open class func createUsersWithArrayInput(body: [User], completion: @escaping ((_ error: Error?) -> Void)) {
         createUsersWithArrayInputWithRequestBuilder(body: body).execute { (response, error) -> Void in
             completion(error);
         }
@@ -77,10 +77,10 @@ open class UserAPI: APIBase {
     /**
      Creates list of users with given input array
      
-     - parameter body: (body) List of user object (optional)
+     - parameter body: (body) List of user object 
      - returns: Promise<Void>
      */
-    open class func createUsersWithArrayInput(body body: [User]? = nil) -> Promise<Void> {
+    open class func createUsersWithArrayInput( body: [User]) -> Promise<Void> {
         let deferred = Promise<Void>.pending()
         createUsersWithArrayInput(body: body) { error in
             if let error = error {
@@ -97,14 +97,14 @@ open class UserAPI: APIBase {
      - POST /user/createWithArray
      - 
      
-     - parameter body: (body) List of user object (optional)
+     - parameter body: (body) List of user object 
 
      - returns: RequestBuilder<Void> 
      */
-    open class func createUsersWithArrayInputWithRequestBuilder(body body: [User]? = nil) -> RequestBuilder<Void> {
+    open class func createUsersWithArrayInputWithRequestBuilder(body: [User]) -> RequestBuilder<Void> {
         let path = "/user/createWithArray"
         let URLString = PetstoreClientAPI.basePath + path
-        let parameters = body?.encodeToJSON() as? [String:AnyObject]
+        let parameters = body.encodeToJSON() as? [String:AnyObject]
  
         let convertedParameters = APIHelper.convertBoolToString(parameters)
  
@@ -116,10 +116,10 @@ open class UserAPI: APIBase {
     /**
      Creates list of users with given input array
      
-     - parameter body: (body) List of user object (optional)
+     - parameter body: (body) List of user object 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func createUsersWithListInput(body body: [User]? = nil, completion: @escaping ((_ error: Error?) -> Void)) {
+    open class func createUsersWithListInput(body: [User], completion: @escaping ((_ error: Error?) -> Void)) {
         createUsersWithListInputWithRequestBuilder(body: body).execute { (response, error) -> Void in
             completion(error);
         }
@@ -128,10 +128,10 @@ open class UserAPI: APIBase {
     /**
      Creates list of users with given input array
      
-     - parameter body: (body) List of user object (optional)
+     - parameter body: (body) List of user object 
      - returns: Promise<Void>
      */
-    open class func createUsersWithListInput(body body: [User]? = nil) -> Promise<Void> {
+    open class func createUsersWithListInput( body: [User]) -> Promise<Void> {
         let deferred = Promise<Void>.pending()
         createUsersWithListInput(body: body) { error in
             if let error = error {
@@ -148,14 +148,14 @@ open class UserAPI: APIBase {
      - POST /user/createWithList
      - 
      
-     - parameter body: (body) List of user object (optional)
+     - parameter body: (body) List of user object 
 
      - returns: RequestBuilder<Void> 
      */
-    open class func createUsersWithListInputWithRequestBuilder(body body: [User]? = nil) -> RequestBuilder<Void> {
+    open class func createUsersWithListInputWithRequestBuilder(body: [User]) -> RequestBuilder<Void> {
         let path = "/user/createWithList"
         let URLString = PetstoreClientAPI.basePath + path
-        let parameters = body?.encodeToJSON() as? [String:AnyObject]
+        let parameters = body.encodeToJSON() as? [String:AnyObject]
  
         let convertedParameters = APIHelper.convertBoolToString(parameters)
  
@@ -170,7 +170,7 @@ open class UserAPI: APIBase {
      - parameter username: (path) The name that needs to be deleted 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deleteUser(username username: String, completion: @escaping ((_ error: Error?) -> Void)) {
+    open class func deleteUser(username: String, completion: @escaping ((_ error: Error?) -> Void)) {
         deleteUserWithRequestBuilder(username: username).execute { (response, error) -> Void in
             completion(error);
         }
@@ -182,7 +182,7 @@ open class UserAPI: APIBase {
      - parameter username: (path) The name that needs to be deleted 
      - returns: Promise<Void>
      */
-    open class func deleteUser(username username: String) -> Promise<Void> {
+    open class func deleteUser( username: String) -> Promise<Void> {
         let deferred = Promise<Void>.pending()
         deleteUser(username: username) { error in
             if let error = error {
@@ -203,7 +203,7 @@ open class UserAPI: APIBase {
 
      - returns: RequestBuilder<Void> 
      */
-    open class func deleteUserWithRequestBuilder(username username: String) -> RequestBuilder<Void> {
+    open class func deleteUserWithRequestBuilder(username: String) -> RequestBuilder<Void> {
         var path = "/user/{username}"
         path = path.replacingOccurrences(of: "{username}", with: "\(username)", options: .literal, range: nil)
         let URLString = PetstoreClientAPI.basePath + path
@@ -225,7 +225,7 @@ open class UserAPI: APIBase {
      - parameter username: (path) The name that needs to be fetched. Use user1 for testing.  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getUserByName(username username: String, completion: @escaping ((_ data: User?,_ error: Error?) -> Void)) {
+    open class func getUserByName(username: String, completion: @escaping ((_ data: User?,_ error: Error?) -> Void)) {
         getUserByNameWithRequestBuilder(username: username).execute { (response, error) -> Void in
             completion(response?.body, error);
         }
@@ -237,7 +237,7 @@ open class UserAPI: APIBase {
      - parameter username: (path) The name that needs to be fetched. Use user1 for testing.  
      - returns: Promise<User>
      */
-    open class func getUserByName(username username: String) -> Promise<User> {
+    open class func getUserByName( username: String) -> Promise<User> {
         let deferred = Promise<User>.pending()
         getUserByName(username: username) { data, error in
             if let error = error {
@@ -253,16 +253,7 @@ open class UserAPI: APIBase {
      Get user by user name
      - GET /user/{username}
      - 
-     - examples: [{contentType=application/json, example={
-  "firstName" : "aeiou",
-  "lastName" : "aeiou",
-  "password" : "aeiou",
-  "userStatus" : 123,
-  "phone" : "aeiou",
-  "id" : 123456789,
-  "email" : "aeiou",
-  "username" : "aeiou"
-}}, {contentType=application/xml, example=<User>
+     - examples: [{contentType=application/xml, example=<User>
   <id>123456</id>
   <username>string</username>
   <firstName>string</firstName>
@@ -271,8 +262,7 @@ open class UserAPI: APIBase {
   <password>string</password>
   <phone>string</phone>
   <userStatus>0</userStatus>
-</User>}]
-     - examples: [{contentType=application/json, example={
+</User>}, {contentType=application/json, example={
   "firstName" : "aeiou",
   "lastName" : "aeiou",
   "password" : "aeiou",
@@ -281,7 +271,8 @@ open class UserAPI: APIBase {
   "id" : 123456789,
   "email" : "aeiou",
   "username" : "aeiou"
-}}, {contentType=application/xml, example=<User>
+}}]
+     - examples: [{contentType=application/xml, example=<User>
   <id>123456</id>
   <username>string</username>
   <firstName>string</firstName>
@@ -290,13 +281,22 @@ open class UserAPI: APIBase {
   <password>string</password>
   <phone>string</phone>
   <userStatus>0</userStatus>
-</User>}]
+</User>}, {contentType=application/json, example={
+  "firstName" : "aeiou",
+  "lastName" : "aeiou",
+  "password" : "aeiou",
+  "userStatus" : 123,
+  "phone" : "aeiou",
+  "id" : 123456789,
+  "email" : "aeiou",
+  "username" : "aeiou"
+}}]
      
      - parameter username: (path) The name that needs to be fetched. Use user1 for testing.  
 
      - returns: RequestBuilder<User> 
      */
-    open class func getUserByNameWithRequestBuilder(username username: String) -> RequestBuilder<User> {
+    open class func getUserByNameWithRequestBuilder(username: String) -> RequestBuilder<User> {
         var path = "/user/{username}"
         path = path.replacingOccurrences(of: "{username}", with: "\(username)", options: .literal, range: nil)
         let URLString = PetstoreClientAPI.basePath + path
@@ -315,11 +315,11 @@ open class UserAPI: APIBase {
     /**
      Logs user into the system
      
-     - parameter username: (query) The user name for login (optional)
-     - parameter password: (query) The password for login in clear text (optional)
+     - parameter username: (query) The user name for login 
+     - parameter password: (query) The password for login in clear text 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func loginUser(username username: String? = nil, password: String? = nil, completion: @escaping ((_ data: String?,_ error: Error?) -> Void)) {
+    open class func loginUser(username: String, password: String, completion: @escaping ((_ data: String?,_ error: Error?) -> Void)) {
         loginUserWithRequestBuilder(username: username, password: password).execute { (response, error) -> Void in
             completion(response?.body, error);
         }
@@ -328,11 +328,11 @@ open class UserAPI: APIBase {
     /**
      Logs user into the system
      
-     - parameter username: (query) The user name for login (optional)
-     - parameter password: (query) The password for login in clear text (optional)
+     - parameter username: (query) The user name for login 
+     - parameter password: (query) The password for login in clear text 
      - returns: Promise<String>
      */
-    open class func loginUser(username username: String? = nil, password: String? = nil) -> Promise<String> {
+    open class func loginUser( username: String,  password: String) -> Promise<String> {
         let deferred = Promise<String>.pending()
         loginUser(username: username, password: password) { data, error in
             if let error = error {
@@ -348,15 +348,17 @@ open class UserAPI: APIBase {
      Logs user into the system
      - GET /user/login
      - 
-     - examples: [{contentType=application/json, example="aeiou"}, {contentType=application/xml, example=string}]
-     - examples: [{contentType=application/json, example="aeiou"}, {contentType=application/xml, example=string}]
+     - responseHeaders: [X-Rate-Limit(Int32), X-Expires-After(Date)]
+     - responseHeaders: [X-Rate-Limit(Int32), X-Expires-After(Date)]
+     - examples: [{contentType=application/xml, example=string}, {contentType=application/json, example="aeiou"}]
+     - examples: [{contentType=application/xml, example=string}, {contentType=application/json, example="aeiou"}]
      
-     - parameter username: (query) The user name for login (optional)
-     - parameter password: (query) The password for login in clear text (optional)
+     - parameter username: (query) The user name for login 
+     - parameter password: (query) The password for login in clear text 
 
      - returns: RequestBuilder<String> 
      */
-    open class func loginUserWithRequestBuilder(username username: String? = nil, password: String? = nil) -> RequestBuilder<String> {
+    open class func loginUserWithRequestBuilder(username: String, password: String) -> RequestBuilder<String> {
         let path = "/user/login"
         let URLString = PetstoreClientAPI.basePath + path
 
@@ -428,10 +430,10 @@ open class UserAPI: APIBase {
      Updated user
      
      - parameter username: (path) name that need to be deleted 
-     - parameter body: (body) Updated user object (optional)
+     - parameter body: (body) Updated user object 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func updateUser(username username: String, body: User? = nil, completion: @escaping ((_ error: Error?) -> Void)) {
+    open class func updateUser(username: String, body: User, completion: @escaping ((_ error: Error?) -> Void)) {
         updateUserWithRequestBuilder(username: username, body: body).execute { (response, error) -> Void in
             completion(error);
         }
@@ -441,10 +443,10 @@ open class UserAPI: APIBase {
      Updated user
      
      - parameter username: (path) name that need to be deleted 
-     - parameter body: (body) Updated user object (optional)
+     - parameter body: (body) Updated user object 
      - returns: Promise<Void>
      */
-    open class func updateUser(username username: String, body: User? = nil) -> Promise<Void> {
+    open class func updateUser( username: String,  body: User) -> Promise<Void> {
         let deferred = Promise<Void>.pending()
         updateUser(username: username, body: body) { error in
             if let error = error {
@@ -462,15 +464,15 @@ open class UserAPI: APIBase {
      - This can only be done by the logged in user.
      
      - parameter username: (path) name that need to be deleted 
-     - parameter body: (body) Updated user object (optional)
+     - parameter body: (body) Updated user object 
 
      - returns: RequestBuilder<Void> 
      */
-    open class func updateUserWithRequestBuilder(username username: String, body: User? = nil) -> RequestBuilder<Void> {
+    open class func updateUserWithRequestBuilder(username: String, body: User) -> RequestBuilder<Void> {
         var path = "/user/{username}"
         path = path.replacingOccurrences(of: "{username}", with: "\(username)", options: .literal, range: nil)
         let URLString = PetstoreClientAPI.basePath + path
-        let parameters = body?.encodeToJSON() as? [String:AnyObject]
+        let parameters = body.encodeToJSON() as? [String:AnyObject]
  
         let convertedParameters = APIHelper.convertBoolToString(parameters)
  

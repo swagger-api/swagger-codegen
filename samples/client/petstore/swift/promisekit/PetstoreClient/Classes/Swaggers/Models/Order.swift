@@ -8,11 +8,11 @@
 import Foundation
 
 
-public class Order: JSONEncodable {
+open class Order: JSONEncodable {
     public enum Status: String { 
-        case Placed = "placed"
-        case Approved = "approved"
-        case Delivered = "delivered"
+        case placed = "placed"
+        case approved = "approved"
+        case delivered = "delivered"
     }
     public var id: Int64?
     public var petId: Int64?

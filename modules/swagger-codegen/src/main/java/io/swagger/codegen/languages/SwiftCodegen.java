@@ -263,7 +263,7 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
-        String type = null;
+        String type;
         if (typeMapping.containsKey(swaggerType)) {
             type = typeMapping.get(swaggerType);
             if (languageSpecificPrimitives.contains(type) || defaultIncludes.contains(type))
@@ -352,28 +352,28 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public CodegenProperty fromProperty(String name, Property p) {
         CodegenProperty codegenProperty = super.fromProperty(name, p);
-        // TODO skip array/map of enum for the time being,
-        // we need to add logic here to handle array/map of enum for any
-        // dimensions
-        if (Boolean.TRUE.equals(codegenProperty.isContainer)) {
-            return codegenProperty;
-        }
 
         if (codegenProperty.isEnum) {
-            List<Map<String, String>> swiftEnums = new ArrayList<Map<String, String>>();
-            List<String> values = (List<String>) codegenProperty.allowableValues.get("values");
-            
-            for (Object value : values) {
-                Map<String, String> map = new HashMap<String, String>();
-                map.put("enum", toSwiftyEnumName(String.valueOf(value)));
-                map.put("raw", String.valueOf(value));
-                swiftEnums.add(map);
+            // TODO skip array/map of enum for the time being,
+            // we need to add logic here to handle array/map of enum for any
+            // dimensions
+            if (!Boolean.TRUE.equals(codegenProperty.isContainer)) {
+                List<Map<String, String>> swiftEnums = new ArrayList<>();
+                List<String> values = (List<String>) codegenProperty.allowableValues.get("values");
+
+                for (Object value : values) {
+                    Map<String, String> map = new HashMap<>();
+                    map.put("enum", toSwiftEnumName(String.valueOf(value)));
+                    map.put("raw", String.valueOf(value));
+                    swiftEnums.add(map);
+                }
+                codegenProperty.allowableValues.put("values", swiftEnums);
             }
-            codegenProperty.allowableValues.put("values", swiftEnums);
+
             codegenProperty.datatypeWithEnum = toEnumName(codegenProperty);
             //codegenProperty.datatypeWithEnum =
             //    StringUtils.left(codegenProperty.datatypeWithEnum, codegenProperty.datatypeWithEnum.length() - "Enum".length());
- 
+
             // Ensure that the enum type doesn't match a reserved word or
             // the variable name doesn't match the generated enum type or the
             // Swift compiler will generate an error
@@ -385,13 +385,30 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
     }
 
     @SuppressWarnings("static-method")
-    public String toSwiftyEnumName(String value) {
-        // Prevent from breaking properly cased identifier
-        if (value.matches("[A-Z][a-z0-9]+[a-zA-Z0-9]*")) {
-            return value;
+    public String toSwiftEnumName(String value) {
+        // for symbol, e.g. $, #
+        if (getSymbolName(value) != null) {
+            return camelize(WordUtils.capitalizeFully(getSymbolName(value).toUpperCase()),true);
         }
-        char[] separators = {'-', '_', ' ', ':'};
-        return WordUtils.capitalizeFully(StringUtils.lowerCase(value), separators).replaceAll("[-_  :]", "");
+
+        try {
+            Double.valueOf(value);
+
+            String varName = "number" + camelize(value);
+            varName = varName.replaceAll("-", "minus");
+            varName = varName.replaceAll("\\+", "plus");
+            varName = varName.replaceAll("\\.", "dot");
+
+            return varName;
+        } catch (NumberFormatException ex) {
+            // Prevent from breaking properly cased identifier
+            if (value.matches("[A-Z][a-z0-9]+[a-zA-Z0-9]*")) {
+                return camelize(value,true);
+            }
+
+            char[] separators = {'-', '_', ' ', ':','(',')'};
+            return camelize(WordUtils.capitalizeFully(StringUtils.lowerCase(value), separators).replaceAll("[-_ :\\(\\)]", ""),true);
+        }
     }
 
 
@@ -537,7 +554,7 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String toEnumVarName(String name, String datatype) {
-        // TODO: this code is probably useless, because the var name is computed from the value in map.put("enum", toSwiftyEnumName(value));
+        // TODO: this code is probably useless, because the var name is computed from the value in map.put("enum", toSwiftEnumName(value));
         // number
         if ("int".equals(datatype) || "double".equals(datatype) || "float".equals(datatype)) {
             String varName = name;

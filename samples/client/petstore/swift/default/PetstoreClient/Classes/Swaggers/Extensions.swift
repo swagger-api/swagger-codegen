@@ -35,8 +35,8 @@ extension String: JSONEncodable {
 }
 
 private func encodeIfPossible<T>(_ object: T) -> Any {
-    if object is JSONEncodable {
-        return (object as! JSONEncodable).encodeToJSON()
+    if let encodableObject = object as? JSONEncodable {
+        return encodableObject.encodeToJSON()
     } else {
         return object as Any
     }

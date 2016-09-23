@@ -2,7 +2,6 @@ package io.swagger.codegen.swift;
 
 import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.DefaultCodegen;
-import io.swagger.codegen.InlineModelResolver;
 import io.swagger.codegen.languages.SwiftCodegen;
 import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
@@ -16,37 +15,37 @@ public class SwiftCodegenTest {
 
     @Test
     public void shouldNotBreakCorrectName() throws Exception {
-        Assert.assertEquals(swiftCodegen.toSwiftyEnumName("EntryName"), "EntryName");
+        Assert.assertEquals(swiftCodegen.toSwiftEnumName("EntryName"), "entryName");
     }
 
     @Test
     public void testSingleWordAllCaps() throws Exception {
-        Assert.assertEquals(swiftCodegen.toSwiftyEnumName("VALUE"), "Value");
+        Assert.assertEquals(swiftCodegen.toSwiftEnumName("VALUE"), "value");
     }
 
     @Test
     public void testSingleWordLowercase() throws Exception {
-        Assert.assertEquals(swiftCodegen.toSwiftyEnumName("value"), "Value");
+        Assert.assertEquals(swiftCodegen.toSwiftEnumName("value"), "value");
     }
 
     @Test
     public void testCapitalsWithUnderscore() throws Exception {
-        Assert.assertEquals(swiftCodegen.toSwiftyEnumName("ENTRY_NAME"), "EntryName");
+        Assert.assertEquals(swiftCodegen.toSwiftEnumName("ENTRY_NAME"), "entryName");
     }
 
     @Test
     public void testCapitalsWithDash() throws Exception {
-        Assert.assertEquals(swiftCodegen.toSwiftyEnumName("ENTRY-NAME"), "EntryName");
+        Assert.assertEquals(swiftCodegen.toSwiftEnumName("ENTRY-NAME"), "entryName");
     }
 
     @Test
     public void testCapitalsWithSpace() throws Exception {
-        Assert.assertEquals(swiftCodegen.toSwiftyEnumName("ENTRY NAME"), "EntryName");
+        Assert.assertEquals(swiftCodegen.toSwiftEnumName("ENTRY NAME"), "entryName");
     }
 
     @Test
     public void testLowercaseWithUnderscore() throws Exception {
-        Assert.assertEquals(swiftCodegen.toSwiftyEnumName("entry_name"), "EntryName");
+        Assert.assertEquals(swiftCodegen.toSwiftEnumName("entry_name"), "entryName");
     }
 
     @Test(description = "returns NSData when response format is binary")

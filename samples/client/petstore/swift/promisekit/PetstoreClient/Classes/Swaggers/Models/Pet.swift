@@ -8,11 +8,11 @@
 import Foundation
 
 
-public class Pet: JSONEncodable {
+open class Pet: JSONEncodable {
     public enum Status: String { 
-        case Available = "available"
-        case Pending = "pending"
-        case Sold = "sold"
+        case available = "available"
+        case pending = "pending"
+        case sold = "sold"
     }
     public var id: Int64?
     public var category: Category?
