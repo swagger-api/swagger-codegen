@@ -10,18 +10,22 @@ protocol JSONEncodable {
     func encodeToJSON() -> AnyObject
 }
 
+public enum ErrorResponse : ErrorType {
+    case Error(Int, NSData?, ErrorType)
+}
+
 public class Response<T> {
     public let statusCode: Int
     public let header: [String: String]
-    public let body: T
+    public let body: T?
 
-    public init(statusCode: Int, header: [String: String], body: T) {
+    public init(statusCode: Int, header: [String: String], body: T?) {
         self.statusCode = statusCode
         self.header = header
         self.body = body
     }
 
-    public convenience init(response: NSHTTPURLResponse, body: T) {
+    public convenience init(response: NSHTTPURLResponse, body: T?) {
         let rawHeader = response.allHeaderFields
         var header = [String:String]()
         for (key, value) in rawHeader {
@@ -137,6 +141,15 @@ class Decoders {
                 fatalError("formatter failed to parse \(source)")
             }
 
+            // Decoder for ISOFullDate
+            Decoders.addDecoder(clazz: ISOFullDate.self, decoder: { (source: AnyObject) -> ISOFullDate in
+                if let string = source as? String,
+                   let isoDate = ISOFullDate.from(string: string) {
+                    return isoDate
+                }
+                fatalError("formatter failed to parse \(source)")
+            }) 
+
             // Decoder for [Category]
             Decoders.addDecoder(clazz: [Category].self) { (source: AnyObject) -> [Category] in
                 return Decoders.decode(clazz: [Category].self, source: source)
@@ -163,7 +176,7 @@ class Decoders {
                 instance.petId = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["petId"])
                 instance.quantity = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["quantity"])
                 instance.shipDate = Decoders.decodeOptional(clazz: NSDate.self, source: sourceDictionary["shipDate"])
-                instance.status = Order.Status(rawValue: (sourceDictionary["status"] as? String) ?? "")
+                instance.status = Order.Status(rawValue: (sourceDictionary["status"] as? String) ?? "") 
                 instance.complete = Decoders.decodeOptional(clazz: Bool.self, source: sourceDictionary["complete"])
                 return instance
             }
@@ -182,7 +195,7 @@ class Decoders {
                 instance.name = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["name"])
                 instance.photoUrls = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["photoUrls"])
                 instance.tags = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["tags"])
-                instance.status = Pet.Status(rawValue: (sourceDictionary["status"] as? String) ?? "")
+                instance.status = Pet.Status(rawValue: (sourceDictionary["status"] as? String) ?? "") 
                 return instance
             }
 
@@ -211,6 +224,7 @@ class Decoders {
                 let instance = User()
                 instance.id = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["id"])
                 instance.username = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["username"])
+                instance.dateOfBirth = Decoders.decodeOptional(clazz: ISOFullDate.self, source: sourceDictionary["dateOfBirth"])
                 instance.firstName = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["firstName"])
                 instance.lastName = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["lastName"])
                 instance.email = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["email"])
