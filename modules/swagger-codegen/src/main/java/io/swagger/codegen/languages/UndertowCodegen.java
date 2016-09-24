@@ -76,6 +76,7 @@ public class UndertowCodegen extends AbstractJavaCodegen {
         supportingFiles.add(new SupportingFile("server.json", ("src.main.resources.config").replace(".", java.io.File.separator), "server.json"));
         supportingFiles.add(new SupportingFile("security.json", ("src.main.resources.config").replace(".", java.io.File.separator), "security.json"));
         supportingFiles.add(new SupportingFile("primary.crt", ("src.main.resources.config.oauth").replace(".", java.io.File.separator), "primary.crt"));
+        supportingFiles.add(new SupportingFile("secondary.crt", ("src.main.resources.config.oauth").replace(".", java.io.File.separator), "secondary.crt"));
 
     }
 
