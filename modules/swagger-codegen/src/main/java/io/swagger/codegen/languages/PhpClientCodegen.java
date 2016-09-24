@@ -276,6 +276,12 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         additionalProperties.put("escapedInvokerPackage", invokerPackage.replace("\\", "\\\\"));
 
+        // make api and model src path available in mustache template
+        additionalProperties.put("apiSrcPath", toPackagePath(apiPackage, srcBasePath));
+        additionalProperties.put("modelSrcPath", toPackagePath(modelPackage, srcBasePath));
+        additionalProperties.put("apiTestPath", getPackagePath() + "/" + testBasePath + "/" + apiDirName);
+        additionalProperties.put("modelTestPath", getPackagePath() + "/" + testBasePath + "/" + modelDirName);
+
         // make api and model doc path available in mustache template
         additionalProperties.put("apiDocPath", apiDocPath);
         additionalProperties.put("modelDocPath", modelDocPath);
@@ -290,6 +296,7 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("composer.mustache", getPackagePath(), "composer.json"));
         supportingFiles.add(new SupportingFile("autoload.mustache", getPackagePath(), "autoload.php"));
         supportingFiles.add(new SupportingFile("README.mustache", getPackagePath(), "README.md"));
+        supportingFiles.add(new SupportingFile("phpunit.xml.mustache", getPackagePath(), "phpunit.xml.dist"));
         supportingFiles.add(new SupportingFile(".travis.yml", getPackagePath(), ".travis.yml"));
         supportingFiles.add(new SupportingFile(".php_cs", getPackagePath(), ".php_cs"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", getPackagePath(), "git_push.sh"));

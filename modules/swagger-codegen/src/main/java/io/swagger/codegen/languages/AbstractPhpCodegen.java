@@ -56,7 +56,7 @@ public abstract class AbstractPhpCodegen extends DefaultCodegen implements Codeg
         apiTestTemplateFiles.put("api_test.mustache", ".php");
         modelDocTemplateFiles.put("model_doc.mustache", ".md");
         apiDocTemplateFiles.put("api_doc.mustache", ".md");
-       
+
         apiPackage = invokerPackage + "\\" + apiDirName;
         modelPackage = invokerPackage + "\\" + modelDirName;
 
@@ -196,6 +196,12 @@ public abstract class AbstractPhpCodegen extends DefaultCodegen implements Codeg
         }
 
         additionalProperties.put("escapedInvokerPackage", invokerPackage.replace("\\", "\\\\"));
+
+        // make api and model src path available in mustache template
+        additionalProperties.put("apiSrcPath", toPackagePath(apiPackage, srcBasePath));
+        additionalProperties.put("modelSrcPath", toPackagePath(modelPackage, srcBasePath));
+        additionalProperties.put("apiTestPath", getPackagePath() + "/" + testBasePath + "/" + apiDirName);
+        additionalProperties.put("modelTestPath", getPackagePath() + "/" + testBasePath + "/" + modelDirName);
 
         // make api and model doc path available in mustache template
         additionalProperties.put("apiDocPath", apiDocPath);
@@ -392,7 +398,7 @@ public abstract class AbstractPhpCodegen extends DefaultCodegen implements Codeg
 
     @Override
     public String toModelName(String name) {
-        // remove [ 
+        // remove [
         name = name.replaceAll("\\]", "");
 
         // Note: backslash ("\\") is allowed for e.g. "\\DateTime"
@@ -417,7 +423,7 @@ public abstract class AbstractPhpCodegen extends DefaultCodegen implements Codeg
         if (!name.matches("^\\\\.*")) {
             name = modelNamePrefix + name + modelNameSuffix;
         }
-        
+
         // camelize the model name
         // phone_number => PhoneNumber
         return camelize(name);
@@ -642,5 +648,5 @@ public abstract class AbstractPhpCodegen extends DefaultCodegen implements Codeg
     public String escapeUnsafeCharacters(String input) {
         return input.replace("*/", "");
     }
-    
+
 }
