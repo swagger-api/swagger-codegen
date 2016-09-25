@@ -68,7 +68,7 @@ class AlamofireRequestBuilder<T>: RequestBuilder<T> {
             if let onProgressReady = self.onProgressReady {
                 onProgressReady(request.progress)
             }
-            processRequest(request: manager.request(URLString, method: xMethod!, parameters: parameters, encoding: encoding), managerId, completion)
+            processRequest(request: request, managerId, completion)
         }
 
     }
