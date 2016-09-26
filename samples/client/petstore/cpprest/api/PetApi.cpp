@@ -877,7 +877,7 @@ responseHttpContentTypes.insert( U("application/xml") );
         return void();
             });            
 }
-pplx::task<void> PetApi::uploadFile(int64_t petId, utility::string_t additionalMetadata, std::shared_ptr<Concurrency::streams::istream> file)
+pplx::task<void> PetApi::uploadFile(int64_t petId, utility::string_t additionalMetadata, std::shared_ptr<HttpContent> file)
 {
     
     

@@ -62,19 +62,19 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
     {
         responseHttpContentType = U("multipart/form-data");
     }
-	{{#vendorExtensions.x-codegen-response-istream}}
+	{{#vendorExtensions.x-codegen-response-ishttpcontent}}
     else
 	{
 		//It's going to be binary, so just use the first one.
 		responseHttpContentType = *responseHttpContentTypes.begin();
 	}
-	{{/vendorExtensions.x-codegen-response-istream}}
-	{{^vendorExtensions.x-codegen-response-istream}}
+	{{/vendorExtensions.x-codegen-response-ishttpcontent}}
+	{{^vendorExtensions.x-codegen-response-ishttpcontent}}
 	else
     {
         throw ApiException(400, U("{{classname}}->{{operationId}} does not produce any supported media type"));
     }    
-	{{/vendorExtensions.x-codegen-response-istream}}
+	{{/vendorExtensions.x-codegen-response-ishttpcontent}}
     
     headerParams[U("Accept")] = responseHttpContentType;
     
@@ -222,10 +222,19 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
             }
         }
 		
-		{{#vendorExtensions.x-codegen-response-istream}}
-		return response.body();
-		{{/vendorExtensions.x-codegen-response-istream}}
-		{{^vendorExtensions.x-codegen-response-istream}}
+		{{#vendorExtensions.x-codegen-response-ishttpcontent}}
+		return response.extract_vector();
+	})
+	.then([=](std::vector<uint8_t> response)
+	{
+		HttpContent result;
+		std::shared_ptr<std::stringstream> stream = std::make_shared<std::stringstream>();
+		std::copy( response.begin(), response.end(), std::ostreambuf_iterator<char>( *stream.get() ) );
+		result.setData(stream);
+		return result;
+		{{/returnType}}
+		{{/vendorExtensions.x-codegen-response-ishttpcontent}}
+		{{^vendorExtensions.x-codegen-response-ishttpcontent}}
 		return response.extract_string();
     })
     .then([=](utility::string_t response)
@@ -272,7 +281,7 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
         
         return result;
         {{/returnType}}
-		{{/vendorExtensions.x-codegen-response-istream}}
+		{{/vendorExtensions.x-codegen-response-ishttpcontent}}
     });            
 }
 {{/operation}}
