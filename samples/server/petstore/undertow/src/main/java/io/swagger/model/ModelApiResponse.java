@@ -8,9 +8,12 @@ import io.swagger.annotations.ApiModelProperty;
 
 
 
+/**
+ * Describes the result of uploading an image resource
+ **/
 
-
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-09-24T23:23:59.511+08:00")
+@ApiModel(description = "Describes the result of uploading an image resource")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-09-26T16:15:27.984+08:00")
 public class ModelApiResponse   {
   
   private Integer code = null;
