@@ -79,7 +79,7 @@ class AlamofireRequestBuilder<T>: RequestBuilder<T> {
         }
 
         let cleanupRequest = {
-            managerStore.removeValue(forKey: managerId)
+            _ = managerStore.removeValue(forKey: managerId)
         }
 
         let validatedRequest = request.validate()
