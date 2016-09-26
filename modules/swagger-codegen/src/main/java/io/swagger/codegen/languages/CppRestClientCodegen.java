@@ -315,9 +315,6 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
             RefProperty rp = (RefProperty) p;
             return "new " + toModelName(rp.getSimpleRef()) + "()";
         }
-		else if (p instanceof FileProperty) {
-			return "";
-		}
         return "nullptr";
     }
 

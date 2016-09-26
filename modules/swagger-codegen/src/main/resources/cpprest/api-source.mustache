@@ -232,7 +232,6 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
 		std::copy( response.begin(), response.end(), std::ostreambuf_iterator<char>( *stream.get() ) );
 		result.setData(stream);
 		return result;
-		{{/returnType}}
 		{{/vendorExtensions.x-codegen-response-ishttpcontent}}
 		{{^vendorExtensions.x-codegen-response-ishttpcontent}}
 		return response.extract_string();
