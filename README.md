@@ -767,6 +767,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [FH Münster - University of Applied Sciences](http://www.fh-muenster.de)
 - [Gear Zero Network](https://www.gearzero.ca)
 - [Germin8](http://www.germin8.com)
+- [goTransverse](http://www.gotransverse.com/api)
 - [GraphHopper](https://graphhopper.com/)
 - [Gravitate Solutions](http://gravitatesolutions.com/)
 - [IMS Health](http://www.imshealth.com/en/solution-areas/technology-and-applications)
@@ -777,6 +778,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Kabuku](http://www.kabuku.co.jp/en)
 - [Kuroi](http://kuroiwebdesign.com/)
 - [Kuary](https://kuary.com/)
+- [Mindera](http://mindera.com/)
 - [Mporium](http://mporium.com/) 
 - [nViso](http://www.nviso.ch/)
 - [Okiok](https://www.okiok.com)
@@ -807,7 +809,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 
 # Swagger Codegen Core Team
 
-Swaagger Codegen core team members are contributors who have been making significant contributions (review issues, fix bugs, make enhancements, etc) to the project on a regular basis.
+Swagger Codegen core team members are contributors who have been making significant contributions (review issues, fix bugs, make enhancements, etc) to the project on a regular basis.
 
 ## API Clients
 | Languages     | Core Team (join date) | 
