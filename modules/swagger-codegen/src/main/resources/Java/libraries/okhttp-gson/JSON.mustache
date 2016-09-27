@@ -21,12 +21,12 @@ import java.io.StringReader;
 import java.lang.reflect.Type;
 import java.util.Date;
 
-{{^java8}}
+{{#joda}}
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
-{{/java8}}
+{{/joda}}
 {{#java8}}
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -46,13 +46,14 @@ public class JSON {
         this.apiClient = apiClient;
         gson = new GsonBuilder()
             .registerTypeAdapter(Date.class, new DateAdapter(apiClient))
-            {{^java8}}
+            {{#joda}}
             .registerTypeAdapter(DateTime.class, new DateTimeTypeAdapter())
-            {{/java8}}
+            .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
+            {{/joda}}
             {{#java8}}
             .registerTypeAdapter(OffsetDateTime.class, new OffsetDateTimeTypeAdapter())
-            {{/java8}}
             .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
+            {{/java8}}
             .create();
     }
 
@@ -166,7 +167,7 @@ class DateAdapter implements JsonSerializer<Date>, JsonDeserializer<Date> {
     }
 }
 
-{{^java8}}
+{{#joda}}
 /**
  * Gson TypeAdapter for Joda DateTime type
  */
@@ -224,7 +225,7 @@ class LocalDateTypeAdapter extends TypeAdapter<LocalDate> {
         }
     }
 }
-{{/java8}}
+{{/joda}}
 {{#java8}}
 /**
  * Gson TypeAdapter for jsr310 OffsetDateTime type

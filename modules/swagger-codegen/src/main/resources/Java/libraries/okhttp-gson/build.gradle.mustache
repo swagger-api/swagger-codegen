@@ -98,8 +98,8 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.7.5'
     compile 'com.squareup.okhttp:logging-interceptor:2.7.5'
     compile 'com.google.code.gson:gson:2.6.2'
-    {{^java8}}
+    {{#joda}}
     compile 'joda-time:joda-time:2.9.3'
-    {{/java8}}
+    {{/joda}}
     testCompile 'junit:junit:4.12'
 }

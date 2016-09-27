@@ -1,0 +1,5 @@
+{
+    "library": "okhttp-gson",
+    "artifactId": "swagger-petstore-okhttp-gson",
+    "dateLibrary": "legacy"
+}

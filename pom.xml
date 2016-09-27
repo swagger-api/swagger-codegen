@@ -305,6 +305,18 @@
             </modules>
         </profile>
         <profile>
+            <id>java-client-okhttp-gson-legacy</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/java/okhttp-gson-legacy</module>
+            </modules>
+        </profile>
+        <profile>
             <id>java-client-retrofit</id>
             <activation>
                 <property>
@@ -648,6 +660,7 @@
                 <module>samples/client/petstore/java/jersey1</module>
                 <module>samples/client/petstore/java/jersey2</module>
                 <module>samples/client/petstore/java/okhttp-gson</module>
+                <module>samples/client/petstore/java/okhttp-gson-legacy</module>
                 <module>samples/client/petstore/java/retrofit</module>
                 <module>samples/client/petstore/java/retrofit2</module>
                 <module>samples/client/petstore/java/retrofit2rx</module>

@@ -254,10 +254,12 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         // used later in recursive import in postProcessingModels
         importMapping.put("com.fasterxml.jackson.annotation.JsonProperty", "com.fasterxml.jackson.annotation.JsonCreator");
 
-        if(additionalProperties.containsKey(DATE_LIBRARY)) {
-            setDateLibrary(additionalProperties.get("dateLibrary").toString());
-            additionalProperties.put(dateLibrary, "true");
+        if (additionalProperties.containsKey(DATE_LIBRARY)) {
+            setDateLibrary(additionalProperties.get(DATE_LIBRARY).toString());
+        } else {
+            additionalProperties.put(DATE_LIBRARY, dateLibrary);
         }
+        additionalProperties.put(dateLibrary, "true");
 
         if("joda".equals(dateLibrary)) {
             typeMapping.put("date", "LocalDate");
