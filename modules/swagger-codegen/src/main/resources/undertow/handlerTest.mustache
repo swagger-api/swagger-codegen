@@ -3,6 +3,7 @@ package {{apiPackage}};
 import com.networknt.client.Client;
 import com.networknt.server.Server;
 import com.networknt.status.ClientException;
+import com.networknt.status.ApiException;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -53,10 +54,11 @@ public class PathHandlerProviderTest {
 {{#operations}}
 {{#operation}}
     @Test
-    public void {{operationId}}Test() throws ClientException {
+    public void {{operationId}}Test() throws ClientException, ApiException {
         CloseableHttpClient client = Client.getInstance().getSyncClient();
         Http{{notes}} http{{notes}} = new Http{{notes}}("http://localhost:8080{{basePathWithoutHost}}{{unescapedNotes}}");
         /*
+        Client.getInstance().addAuthorization(httpPost);
         try {
             CloseableHttpResponse response = client.execute(http{{notes}});
             Assert.assertEquals(200, response.getStatusLine().getStatusCode());
