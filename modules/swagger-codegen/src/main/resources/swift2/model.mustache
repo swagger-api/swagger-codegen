@@ -12,7 +12,7 @@ import ObjectMapper
 
 /** {{description}} */{{/description}}
 
-{{#swiftUseApiNamespace}}extension {{projectNamespace}} { {{/swiftUseApiNamespace}}class {{classname}}: Mappable, SwaggerRequiredFieldValidating {
+{{#swiftUseApiNamespace}}extension {{projectNamespace}} { {{/swiftUseApiNamespace}}class {{classname}}: Mappable, SwaggerRequiredFieldValidating{{#vendorExtensions.x-protocol}}, {{vendorExtensions.x-protocol}}{{/vendorExtensions.x-protocol}} {
 {{#vars}}{{#isEnum}}
     enum {{datatypeWithEnum}}: String { {{#allowableValues}}{{#values}}
         case {{enum}} = "{{raw}}"{{/values}}{{/allowableValues}}
