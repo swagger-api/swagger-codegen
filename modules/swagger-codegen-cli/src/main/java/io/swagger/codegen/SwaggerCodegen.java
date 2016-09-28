@@ -1,5 +1,7 @@
 package io.swagger.codegen;
 
+import static io.swagger.codegen.cmd.Version.UNKNOWN_VERSION;
+
 import io.airlift.airline.Cli;
 import io.airlift.airline.Help;
 import io.swagger.codegen.cmd.ConfigHelp;
@@ -22,9 +24,12 @@ public class SwaggerCodegen {
 
 
     public static void main(String[] args) {
+        String version = Version.readVersionFromResources().or(UNKNOWN_VERSION);
         @SuppressWarnings("unchecked")
         Cli.CliBuilder<Runnable> builder = Cli.<Runnable>builder("swagger-codegen-cli")
-                .withDescription("Swagger code generator CLI. More info on swagger.io")
+                .withDescription(String.format(
+                        "Swagger code generator CLI (version %s). More info on swagger.io",
+                        version))
                 .withDefaultCommand(Langs.class)
                 .withCommands(
                         Generate.class,

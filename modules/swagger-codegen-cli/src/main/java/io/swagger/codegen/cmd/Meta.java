@@ -22,6 +22,7 @@ import java.util.Map;
 
 import static ch.lambdaj.collection.LambdaCollections.with;
 import static com.google.common.base.Joiner.on;
+import static io.swagger.codegen.cmd.Version.UNKNOWN_VERSION;
 
 /**
  * User: lanwen
@@ -76,7 +77,7 @@ public class Meta implements Runnable {
                 .put("generatorClass", mainClass)
                 .put("name", name)
                 .put("fullyQualifiedGeneratorClass", targetPackage + "." + mainClass)
-                .put("swaggerCodegenVersion", swaggerVersion.or("unknown")).build();
+                .put("swaggerCodegenVersion", swaggerVersion.or(UNKNOWN_VERSION)).build();
 
 
         with(supportingFiles).convert(processFiles(targetDir, data));

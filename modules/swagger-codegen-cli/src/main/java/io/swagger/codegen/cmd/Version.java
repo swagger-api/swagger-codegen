@@ -15,7 +15,9 @@ public class Version implements Runnable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Meta.class);
 
-    static Optional<String> readVersionFromResources() {
+    public static final String UNKNOWN_VERSION = "unknown";
+
+    public static Optional<String> readVersionFromResources() {
         Properties versionProperties = new Properties();
         try (InputStream is = Version.class.getResourceAsStream("/version.properties")) {
             versionProperties.load(is);
