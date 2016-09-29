@@ -22,32 +22,24 @@
  * limitations under the License.
  */
 
-package com.wordnik.client.model
+package io.swagger.petstore
 
 import argonaut.Argonaut._
 import argonaut.CodecJson
-import java.util.Date
 
 /**
- * 
- * @param id 
- * @param petId 
- * @param quantity 
- * @param shipDate 
- * @param status Order Status
- * @param complete 
+ *
+ * @param code
+ * @param _type
+ * @param message
  */
-case class Order(id: Option[Long),
-                petId: Option[Long),
-                quantity: Option[Int),
-                shipDate: Option[Date),
-                status: Option[String),
-                complete: Option[Boolean)
-                )
+case class ApiResponse(code: Option[Int],
+  _type: Option[String],
+  message: Option[String])
 
-object Order {
+object ApiResponse {
   /**
-   * Creates the codec for converting Order from and to JSON.
+   * Creates the codec for converting ApiResponse from and to JSON.
    */
-  implicit val OrderCodec: CodecJson[Order] = casecodec2(Order.apply, Order.unapply)("id", "petId", "quantity", "shipDate", "status", "complete")
+  implicit val ApiResponseCodec: CodecJson[ApiResponse] = casecodec2(ApiResponse.apply, ApiResponse.unapply)("code", "type", "message")
 }

@@ -25,6 +25,7 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
     protected String artifactId = "swagger-client";
     protected String artifactVersion = "1.0.0";
     protected String sourceFolder = "src/main/scala";
+    protected String packageName = "io.swagger.petstore";
 
     public FinchServerCodegen() {
         super();
@@ -32,8 +33,13 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
         modelTemplateFiles.put("model.mustache", ".scala");
         apiTemplateFiles.put("api.mustache", ".scala");
         embeddedTemplateDir = templateDir = "finch";
-        apiPackage = "com.wordnik.client.api";
-        modelPackage = "com.wordnik.client.model";
+        // TODO organize the API scala files into proper folder
+        // e.g. io/swagger/client/api
+        apiPackage = "";
+        // TODO organize the model scala files into proper folder
+        // e.g. io/swagger/client/model
+        modelPackage = "";
+
 
         setReservedWordsLowerCase(
                 Arrays.asList(
@@ -83,15 +89,21 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
         additionalProperties.put(CodegenConstants.ARTIFACT_ID, artifactId);
         additionalProperties.put(CodegenConstants.ARTIFACT_VERSION, artifactVersion);
 
+        if (additionalProperties.containsKey(CodegenConstants.PACKAGE_NAME)) {
+            setPackageName((String) additionalProperties.get(CodegenConstants.PACKAGE_NAME));
+        } else {
+            additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
+        };
+
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("build.sbt", "", "build.sbt"));
-        supportingFiles.add(new SupportingFile("web.xml", "/src/main/webapp/WEB-INF", "web.xml"));
-        supportingFiles.add(new SupportingFile("JettyMain.mustache", sourceFolder, "JettyMain.scala"));
-        supportingFiles.add(new SupportingFile("Bootstrap.mustache", sourceFolder, "FinchBootstrap.scala"));
-        supportingFiles.add(new SupportingFile("ServletApp.mustache", sourceFolder, "ServletApp.scala"));
-        supportingFiles.add(new SupportingFile("project/build.properties", "project", "build.properties"));
-        supportingFiles.add(new SupportingFile("project/plugins.sbt", "project", "plugins.sbt"));
-        supportingFiles.add(new SupportingFile("sbt", "", "sbt"));
+        //supportingFiles.add(new SupportingFile("web.xml", "/src/main/webapp/WEB-INF", "web.xml"));
+        //supportingFiles.add(new SupportingFile("JettyMain.mustache", sourceFolder, "JettyMain.scala"));
+        //supportingFiles.add(new SupportingFile("Bootstrap.mustache", sourceFolder, "FinchBootstrap.scala"));
+        //supportingFiles.add(new SupportingFile("ServletApp.mustache", sourceFolder, "ServletApp.scala"));
+        //supportingFiles.add(new SupportingFile("project/build.properties", "project", "build.properties"));
+        //supportingFiles.add(new SupportingFile("project/plugins.sbt", "project", "plugins.sbt"));
+        //supportingFiles.add(new SupportingFile("sbt", "", "sbt"));
 
         supportingFiles.add(new SupportingFile("endpoint.mustache", sourceFolder, "endpoint.scala"));
         supportingFiles.add(new SupportingFile("errors.mustache", sourceFolder, "errors.scala"));
@@ -125,6 +137,9 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
         importMapping.put("LocalDate", "org.joda.time.LocalDate");
         importMapping.put("LocalTime", "org.joda.time.LocalTime");
 
+        cliOptions.clear();
+        cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "Finch package name (e.g. io.swagger.petstore).")
+                .defaultValue(this.packageName));
         cliOptions.add(new CliOption(CodegenConstants.MODEL_PACKAGE, CodegenConstants.MODEL_PACKAGE_DESC));
         cliOptions.add(new CliOption(CodegenConstants.API_PACKAGE, CodegenConstants.API_PACKAGE_DESC));
     }
@@ -176,14 +191,11 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
                 path = path.substring(0, path.length()-1);
             }
 
-            LOGGER.info("processing path: " + path);
             String[] items = path.split("/", -1);
             String scalaPath = "";
             int pathParamIndex = 0;
 
             for (int i = 0; i < items.length; ++i) {
-                //String i : items) {
-                LOGGER.info("processing item: " + i);
                 if (items[i].matches("^\\{(.*)\\}$")) { // wrap in {}
                     // find the datatype of the parameter
                     final CodegenParameter cp = op.pathParams.get(pathParamIndex);
@@ -196,7 +208,6 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
                 if (i != items.length -1) {
                     scalaPath = scalaPath + " / ";
                 }
-                LOGGER.info("processing scalaPath: " + scalaPath);
             }
 
             // add ? to indicate query/header/form parameter
@@ -204,7 +215,7 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
                 scalaPath = scalaPath + " ?";
             }
 
-            op.vendorExtensions.put("x-scala-path", scalaPath);
+            op.vendorExtensions.put("x-scalatra-path", scalaPath);
         }
         return objs;
     }
@@ -249,6 +260,10 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
     @Override
     public String escapeUnsafeCharacters(String input) {
         return input.replace("*/", "*_/").replace("/*", "/_*");
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
     }
 
 }

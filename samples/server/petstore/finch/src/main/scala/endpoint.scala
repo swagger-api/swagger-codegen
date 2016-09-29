@@ -22,7 +22,7 @@
  * limitations under the License.
  */
 
-package 
+package io.swagger.petstore
 
 import _root_.argonaut._, Argonaut._
 import com.twitter.finagle.Service
@@ -80,7 +80,7 @@ object endpoint {
    * @return A Router that contains a RequestReader of a sequence of the usernames of the Users added.
    */
   def addPet(db: PetstoreDb): Endpoint[] =
-    post( "pet" Pet) { (body: Pet) => 
+    post(  Pet) { (body: Pet) => 
       NoContent(db.addPet(body))
     }
 
@@ -89,7 +89,7 @@ object endpoint {
    * @return A Router that contains a RequestReader of a sequence of the usernames of the Users added.
    */
   def deletePet(db: PetstoreDb): Endpoint[] =
-    post( "pet" / Long ? String) { (petId: Long, apiKey: String) => 
+    post(  String) { (petId: Long, apiKey: String) => 
       NoContent(db.deletePet(petId, apiKey))
     }
 
@@ -98,7 +98,7 @@ object endpoint {
    * @return A Router that contains a RequestReader of a sequence of the usernames of the Users added.
    */
   def findPetsByStatus(db: PetstoreDb): Endpoint[] =
-    post( "pet" / "findByStatus" ? List[String]) { (status: List[String]) => 
+    post(  List[String]) { (status: List[String]) => 
       Ok(db.findPetsByStatus(status))
     }
 
@@ -107,7 +107,7 @@ object endpoint {
    * @return A Router that contains a RequestReader of a sequence of the usernames of the Users added.
    */
   def findPetsByTags(db: PetstoreDb): Endpoint[] =
-    post( "pet" / "findByTags" ? List[String]) { (tags: List[String]) => 
+    post(  List[String]) { (tags: List[String]) => 
       Ok(db.findPetsByTags(tags))
     }
 
@@ -116,7 +116,7 @@ object endpoint {
    * @return A Router that contains a RequestReader of a sequence of the usernames of the Users added.
    */
   def getPetById(db: PetstoreDb): Endpoint[] =
-    post( "pet" / Long ) { (petId: Long) => 
+    post(  ) { (petId: Long) => 
       Ok(db.getPetById(petId))
     }
 
@@ -125,7 +125,7 @@ object endpoint {
    * @return A Router that contains a RequestReader of a sequence of the usernames of the Users added.
    */
   def updatePet(db: PetstoreDb): Endpoint[] =
-    post( "pet" Pet) { (body: Pet) => 
+    post(  Pet) { (body: Pet) => 
       NoContent(db.updatePet(body))
     }
 
@@ -134,7 +134,7 @@ object endpoint {
    * @return A Router that contains a RequestReader of a sequence of the usernames of the Users added.
    */
   def updatePetWithForm(db: PetstoreDb): Endpoint[] =
-    post( "pet" / Long ? String ? String) { (petId: Long, name: String, status: String) => 
+    post(  String ? String) { (petId: Long, name: String, status: String) => 
       NoContent(db.updatePetWithForm(petId, name, status))
     }
 
@@ -143,7 +143,7 @@ object endpoint {
    * @return A Router that contains a RequestReader of a sequence of the usernames of the Users added.
    */
   def uploadFile(db: PetstoreDb): Endpoint[] =
-    post( "pet" / Long / "uploadImage" ? String ? File) { (petId: Long, additionalMetadata: String, file: File) => 
+    post(  String ? File) { (petId: Long, additionalMetadata: String, file: File) => 
       Ok(db.uploadFile(petId, additionalMetadata, file))
     }
 
@@ -163,7 +163,7 @@ object endpoint {
    * @return A Router that contains a RequestReader of a sequence of the usernames of the Users added.
    */
   def deleteOrder(db: PetstoreDb): Endpoint[] =
-    post( "store" / "order" / String ) { (orderId: String) => 
+    post(  ) { (orderId: String) => 
       NoContent(db.deleteOrder(orderId))
     }
 
@@ -172,7 +172,7 @@ object endpoint {
    * @return A Router that contains a RequestReader of a sequence of the usernames of the Users added.
    */
   def getInventory(db: PetstoreDb): Endpoint[] =
-    post( "store" / "inventory" ) { 
+    post(  ) { 
       Ok(db.getInventory())
     }
 
@@ -181,7 +181,7 @@ object endpoint {
    * @return A Router that contains a RequestReader of a sequence of the usernames of the Users added.
    */
   def getOrderById(db: PetstoreDb): Endpoint[] =
-    post( "store" / "order" / Long ) { (orderId: Long) => 
+    post(  ) { (orderId: Long) => 
       Ok(db.getOrderById(orderId))
     }
 
@@ -190,7 +190,7 @@ object endpoint {
    * @return A Router that contains a RequestReader of a sequence of the usernames of the Users added.
    */
   def placeOrder(db: PetstoreDb): Endpoint[] =
-    post( "store" / "order" Order) { (body: Order) => 
+    post(  Order) { (body: Order) => 
       Ok(db.placeOrder(body))
     }
 
@@ -214,7 +214,7 @@ object endpoint {
    * @return A Router that contains a RequestReader of a sequence of the usernames of the Users added.
    */
   def createUser(db: PetstoreDb): Endpoint[] =
-    post( "user" User) { (body: User) => 
+    post(  User) { (body: User) => 
       NoContent(db.createUser(body))
     }
 
@@ -223,7 +223,7 @@ object endpoint {
    * @return A Router that contains a RequestReader of a sequence of the usernames of the Users added.
    */
   def createUsersWithArrayInput(db: PetstoreDb): Endpoint[] =
-    post( "user" / "createWithArray" List[User]) { (body: List[User]) => 
+    post(  List[User]) { (body: List[User]) => 
       NoContent(db.createUsersWithArrayInput(body))
     }
 
@@ -232,7 +232,7 @@ object endpoint {
    * @return A Router that contains a RequestReader of a sequence of the usernames of the Users added.
    */
   def createUsersWithListInput(db: PetstoreDb): Endpoint[] =
-    post( "user" / "createWithList" List[User]) { (body: List[User]) => 
+    post(  List[User]) { (body: List[User]) => 
       NoContent(db.createUsersWithListInput(body))
     }
 
@@ -241,7 +241,7 @@ object endpoint {
    * @return A Router that contains a RequestReader of a sequence of the usernames of the Users added.
    */
   def deleteUser(db: PetstoreDb): Endpoint[] =
-    post( "user" / String ) { (username: String) => 
+    post(  ) { (username: String) => 
       NoContent(db.deleteUser(username))
     }
 
@@ -250,7 +250,7 @@ object endpoint {
    * @return A Router that contains a RequestReader of a sequence of the usernames of the Users added.
    */
   def getUserByName(db: PetstoreDb): Endpoint[] =
-    post( "user" / String ) { (username: String) => 
+    post(  ) { (username: String) => 
       Ok(db.getUserByName(username))
     }
 
@@ -259,7 +259,7 @@ object endpoint {
    * @return A Router that contains a RequestReader of a sequence of the usernames of the Users added.
    */
   def loginUser(db: PetstoreDb): Endpoint[] =
-    post( "user" / "login" ? String ? String) { (username: String, password: String) => 
+    post(  String ? String) { (username: String, password: String) => 
       Ok(db.loginUser(username, password))
     }
 
@@ -268,7 +268,7 @@ object endpoint {
    * @return A Router that contains a RequestReader of a sequence of the usernames of the Users added.
    */
   def logoutUser(db: PetstoreDb): Endpoint[] =
-    post( "user" / "logout" ) { 
+    post(  ) { 
       NoContent(db.logoutUser())
     }
 
@@ -277,7 +277,7 @@ object endpoint {
    * @return A Router that contains a RequestReader of a sequence of the usernames of the Users added.
    */
   def updateUser(db: PetstoreDb): Endpoint[] =
-    post( "user" / String User) { (username: String, body: User) => 
+    post(  User) { (username: String, body: User) => 
       NoContent(db.updateUser(username, body))
     }
 

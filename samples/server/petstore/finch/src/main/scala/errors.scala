@@ -22,25 +22,32 @@
  * limitations under the License.
  */
 
-package com.wordnik.client.model
+package io.swagger.petstore
 
-import argonaut.Argonaut._
-import argonaut.CodecJson
+package io.finch.petstore
 
 /**
- * 
- * @param code 
- * @param _type 
- * @param message 
+ * The parent error from which most PetstoreAPI errors extend. Thrown whenever something in the api goes wrong.
  */
-case class ApiResponse(code: Option[Int),
-                _type: Option[String),
-                message: Option[String)
-                )
-
-object ApiResponse {
-  /**
-   * Creates the codec for converting ApiResponse from and to JSON.
-   */
-  implicit val ApiResponseCodec: CodecJson[ApiResponse] = casecodec2(ApiResponse.apply, ApiResponse.unapply)("code", "type", "message")
+sealed abstract class PetstoreError(msg: String) extends Exception(msg) {
+  def message: String
 }
+
+/**
+ * Thrown when the object given is invalid
+ * @param message An error message
+ */
+case class InvalidInput(message: String) extends PetstoreError(message)
+
+/**
+ * Thrown when the given object is missing a unique ID.
+ * @param message An error message
+ */
+case class MissingIdentifier(message: String) extends PetstoreError(message)
+
+/**
+ * Thrown when the given record does not exist in the database.
+ * @param message An error message
+ */
+case class RecordNotFound(message: String) extends PetstoreError(message)
+

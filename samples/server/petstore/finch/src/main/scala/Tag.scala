@@ -22,33 +22,22 @@
  * limitations under the License.
  */
 
-package com.wordnik.client.model
+package io.swagger.petstore
 
 import argonaut.Argonaut._
 import argonaut.CodecJson
-import com.wordnik.client.model.Category
-import com.wordnik.client.model.Tag
 
 /**
- * 
- * @param id 
- * @param category 
- * @param name 
- * @param photoUrls 
- * @param tags 
- * @param status pet status in the store
+ *
+ * @param id
+ * @param name
  */
-case class Pet(id: Option[Long),
-                category: Option[Category),
-                name: String),
-                photoUrls: List[String]),
-                tags: Option[List[Tag]),
-                status: Option[String)
-                )
+case class Tag(id: Option[Long],
+  name: Option[String])
 
-object Pet {
+object Tag {
   /**
-   * Creates the codec for converting Pet from and to JSON.
+   * Creates the codec for converting Tag from and to JSON.
    */
-  implicit val PetCodec: CodecJson[Pet] = casecodec2(Pet.apply, Pet.unapply)("id", "category", "name", "photoUrls", "tags", "status")
+  implicit val TagCodec: CodecJson[Tag] = casecodec2(Tag.apply, Tag.unapply)("id", "name")
 }

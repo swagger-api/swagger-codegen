@@ -22,25 +22,22 @@
  * limitations under the License.
  */
 
-import com.wordnik.client.api._
-import akka.actor.ActorSystem
-import io.swagger.app.{ResourcesApp, SwaggerApp}
-import javax.servlet.ServletContext
-import org.scalatra.LifeCycle
+package io.swagger.petstore
 
-class ScalatraBootstrap extends LifeCycle {
-  implicit val swagger = new SwaggerApp
+import argonaut.Argonaut._
+import argonaut.CodecJson
 
-  override def init(context: ServletContext) {
-    implicit val system = ActorSystem("appActorSystem")
-    try {
-      context mount (new PetApi, "/v2/Pet/*")
-      context mount (new StoreApi, "/v2/Store/*")
-      context mount (new UserApi, "/v2/User/*")
-      
-      context mount (new ResourcesApp, "/api-docs/*")
-    } catch {
-      case e: Throwable => e.printStackTrace()
-    }
-  }
+/**
+ *
+ * @param id
+ * @param name
+ */
+case class Category(id: Option[Long],
+  name: Option[String])
+
+object Category {
+  /**
+   * Creates the codec for converting Category from and to JSON.
+   */
+  implicit val CategoryCodec: CodecJson[Category] = casecodec2(Category.apply, Category.unapply)("id", "name")
 }

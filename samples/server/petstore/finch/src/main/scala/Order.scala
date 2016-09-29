@@ -22,23 +22,31 @@
  * limitations under the License.
  */
 
-package com.wordnik.client.model
+package io.swagger.petstore
 
 import argonaut.Argonaut._
 import argonaut.CodecJson
+//import java.util.Date
 
 /**
- * 
- * @param id 
- * @param name 
+ *
+ * @param id
+ * @param petId
+ * @param quantity
+ * @param shipDate
+ * @param status Order Status
+ * @param complete
  */
-case class Category(id: Option[Long),
-                name: Option[String)
-                )
+case class Order(id: Option[Long],
+  petId: Option[Long],
+  quantity: Option[Int],
+  shipDate: Option[Date],
+  status: Option[String],
+  complete: Option[Boolean])
 
-object Category {
+object Order {
   /**
-   * Creates the codec for converting Category from and to JSON.
+   * Creates the codec for converting Order from and to JSON.
    */
-  implicit val CategoryCodec: CodecJson[Category] = casecodec2(Category.apply, Category.unapply)("id", "name")
+  implicit val OrderCodec: CodecJson[Order] = casecodec2(Order.apply, Order.unapply)("id", "petId", "quantity", "shipDate", "status", "complete")
 }

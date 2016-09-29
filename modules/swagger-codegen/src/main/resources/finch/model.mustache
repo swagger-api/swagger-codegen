@@ -1,10 +1,10 @@
 {{>licenseInfo}}
 
-package {{package}}
+package {{packageName}}
 
 import argonaut.Argonaut._
 import argonaut.CodecJson
-{{#imports}}import {{import}}
+{{#imports}}//import {{import}}
 {{/imports}}
 
 {{#models}}
@@ -15,7 +15,7 @@ import argonaut.CodecJson
  * @param {{name}} {{{description}}}
 {{/vars}}
  */
-case class {{classname}}({{#vars}}{{name}}: {{^required}}Option[{{{datatype}}}{{/required}}{{#required}}{{{datatype}}}{{/required}}){{^-last}},{{/-last}}
+case class {{classname}}({{#vars}}{{name}}: {{^required}}Option[{{{datatype}}}]{{/required}}{{#required}}{{{datatype}}}{{/required}}{{^-last}},{{/-last}}
                 {{/vars}})
 
 object {{classname}} {
