@@ -26,22 +26,13 @@
 #import "AnyPromise.h"
 
 @interface AnyPromise (Swift)
-- (void)pipe:(void (^ __nonnull)(id __nonnull))body;
-- (AnyPromise * __nonnull)initWithBridge:(void (^ __nonnull)(PMKResolver __nonnull))resolver;
+- (AnyPromise * __nonnull)__thenOn:(__nonnull dispatch_queue_t)q execute:(id __nullable (^ __nonnull)(id __nullable))body;
+- (AnyPromise * __nonnull)__catchWithPolicy:(PMKCatchPolicy)policy execute:(id __nullable (^ __nonnull)(id __nullable))body;
+- (AnyPromise * __nonnull)__alwaysOn:(__nonnull dispatch_queue_t)q execute:(void (^ __nonnull)(void))body;
+- (void)__pipe:(void(^ __nonnull)(__nullable id))body;
+- (AnyPromise * __nonnull)initWithResolverBlock:(void (^ __nonnull)(PMKResolver __nonnull))resolver;
 @end
 
 extern NSError * __nullable PMKProcessUnhandledException(id __nonnull thrown);
 
-// TODO really this is not valid, we should instead nest the errors with NSUnderlyingError
-// since a special error subclass may be being used and we may not set it up correctly
-// with our copy
-#define NSErrorSupplement(_err, supplements) ({ \
-    NSError *err = _err; \
-    id userInfo = err.userInfo.mutableCopy ?: [NSMutableArray new]; \
-    [userInfo addEntriesFromDictionary:supplements]; \
-    [[[err class] alloc] initWithDomain:err.domain code:err.code userInfo:userInfo]; \
-})
-
-@interface NSError (PMKUnhandledErrorHandler)
-- (void)pmk_consume;
-@end
+@class PMKArray;

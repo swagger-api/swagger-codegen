@@ -20,7 +20,7 @@ public var numberOfSerialDispatchQueueObservables: AtomicInt = 0
 class ObserveOnSerialDispatchQueueSink<O: ObserverType> : ObserverBase<O.E> {
     let scheduler: SerialDispatchQueueScheduler
     let observer: O
-
+    
     let subscription = SingleAssignmentDisposable()
 
     var cachedScheduleLambda: ((ObserveOnSerialDispatchQueueSink<O>, Event<E>) -> Disposable)!
@@ -37,45 +37,45 @@ class ObserveOnSerialDispatchQueueSink<O: ObserverType> : ObserverBase<O.E> {
                 sink.dispose()
             }
 
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 
-    override func onCore(event: Event<E>) {
-        self.scheduler.schedule((self, event), action: cachedScheduleLambda)
+    override func onCore(_ event: Event<E>) {
+        let _ = self.scheduler.schedule((self, event), action: cachedScheduleLambda)
     }
-
+   
     override func dispose() {
         super.dispose()
 
         subscription.dispose()
     }
 }
-
+    
 class ObserveOnSerialDispatchQueue<E> : Producer<E> {
     let scheduler: SerialDispatchQueueScheduler
     let source: Observable<E>
-
+    
     init(source: Observable<E>, scheduler: SerialDispatchQueueScheduler) {
         self.scheduler = scheduler
         self.source = source
-
+        
 #if TRACE_RESOURCES
-        AtomicIncrement(&resourceCount)
-        AtomicIncrement(&numberOfSerialDispatchQueueObservables)
+        let _ = AtomicIncrement(&resourceCount)
+        let _ = AtomicIncrement(&numberOfSerialDispatchQueueObservables)
 #endif
     }
-
-    override func run<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+    
+    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
         let sink = ObserveOnSerialDispatchQueueSink(scheduler: scheduler, observer: observer)
         sink.subscription.disposable = source.subscribe(sink)
         return sink
     }
-
+    
 #if TRACE_RESOURCES
     deinit {
-        AtomicDecrement(&resourceCount)
-        AtomicDecrement(&numberOfSerialDispatchQueueObservables)
+        let _ = AtomicDecrement(&resourceCount)
+        let _ = AtomicDecrement(&numberOfSerialDispatchQueueObservables)
     }
 #endif
 }

@@ -21,25 +21,25 @@ class JustScheduledSink<O: ObserverType> : Sink<O> {
     func run() -> Disposable {
         let scheduler = _parent._scheduler
         return scheduler.schedule(_parent._element) { element in
-            self.forwardOn(.Next(element))
+            self.forwardOn(.next(element))
             return scheduler.schedule(()) { _ in
-                self.forwardOn(.Completed)
-                return NopDisposable.instance
+                self.forwardOn(.completed)
+                return Disposables.create()
             }
         }
     }
 }
 
 class JustScheduled<Element> : Producer<Element> {
-    private let _scheduler: ImmediateSchedulerType
-    private let _element: Element
+    fileprivate let _scheduler: ImmediateSchedulerType
+    fileprivate let _element: Element
 
     init(element: Element, scheduler: ImmediateSchedulerType) {
         _scheduler = scheduler
         _element = element
     }
 
-    override func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+    override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
         let sink = JustScheduledSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
@@ -48,14 +48,14 @@ class JustScheduled<Element> : Producer<Element> {
 
 class Just<Element> : Producer<Element> {
     private let _element: Element
-
+    
     init(element: Element) {
         _element = element
     }
-
-    override func subscribe<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
-        observer.on(.Next(_element))
-        observer.on(.Completed)
-        return NopDisposable.instance
+    
+    override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
+        observer.on(.next(_element))
+        observer.on(.completed)
+        return Disposables.create()
     }
 }

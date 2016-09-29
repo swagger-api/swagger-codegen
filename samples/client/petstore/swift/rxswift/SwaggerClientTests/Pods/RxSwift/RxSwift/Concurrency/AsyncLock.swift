@@ -23,9 +23,9 @@ class AsyncLock<I: InvocableType>
     , Lock
     , SynchronizedDisposeType {
     typealias Action = () -> Void
-
+    
     var _lock = SpinLock()
-
+    
     private var _queue: Queue<I> = Queue(capacity: 0)
 
     private var _isExecuting: Bool = false
@@ -41,7 +41,7 @@ class AsyncLock<I: InvocableType>
     }
     // }
 
-    private func enqueue(action: I) -> I? {
+    private func enqueue(_ action: I) -> I? {
         _lock.lock(); defer { _lock.unlock() } // {
             if _hasFaulted {
                 return nil
@@ -70,9 +70,9 @@ class AsyncLock<I: InvocableType>
         // }
     }
 
-    func invoke(action: I) {
+    func invoke(_ action: I) {
         let firstEnqueuedAction = enqueue(action)
-
+        
         if let firstEnqueuedAction = firstEnqueuedAction {
             firstEnqueuedAction.invoke()
         }
@@ -80,7 +80,7 @@ class AsyncLock<I: InvocableType>
             // action is enqueued, it's somebody else's concern now
             return
         }
-
+        
         while true {
             let nextAction = dequeue()
 
@@ -92,7 +92,7 @@ class AsyncLock<I: InvocableType>
             }
         }
     }
-
+    
     func dispose() {
         synchronizedDispose()
     }

@@ -2,7 +2,6 @@ package io.swagger.codegen.swift;
 
 import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.DefaultCodegen;
-import io.swagger.codegen.InlineModelResolver;
 import io.swagger.codegen.languages.SwiftCodegen;
 import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
@@ -16,37 +15,37 @@ public class SwiftCodegenTest {
 
     @Test
     public void shouldNotBreakCorrectName() throws Exception {
-        Assert.assertEquals(swiftCodegen.toSwiftyEnumName("EntryName"), "EntryName");
+        Assert.assertEquals(swiftCodegen.toEnumVarName("EntryName", null), "entryName");
     }
 
     @Test
     public void testSingleWordAllCaps() throws Exception {
-        Assert.assertEquals(swiftCodegen.toSwiftyEnumName("VALUE"), "Value");
+        Assert.assertEquals(swiftCodegen.toEnumVarName("VALUE", null), "value");
     }
 
     @Test
     public void testSingleWordLowercase() throws Exception {
-        Assert.assertEquals(swiftCodegen.toSwiftyEnumName("value"), "Value");
+        Assert.assertEquals(swiftCodegen.toEnumVarName("value", null), "value");
     }
 
     @Test
     public void testCapitalsWithUnderscore() throws Exception {
-        Assert.assertEquals(swiftCodegen.toSwiftyEnumName("ENTRY_NAME"), "EntryName");
+        Assert.assertEquals(swiftCodegen.toEnumVarName("ENTRY_NAME", null), "entryName");
     }
 
     @Test
     public void testCapitalsWithDash() throws Exception {
-        Assert.assertEquals(swiftCodegen.toSwiftyEnumName("ENTRY-NAME"), "EntryName");
+        Assert.assertEquals(swiftCodegen.toEnumVarName("ENTRY-NAME", null), "entryName");
     }
 
     @Test
     public void testCapitalsWithSpace() throws Exception {
-        Assert.assertEquals(swiftCodegen.toSwiftyEnumName("ENTRY NAME"), "EntryName");
+        Assert.assertEquals(swiftCodegen.toEnumVarName("ENTRY NAME", null), "entryName");
     }
 
     @Test
     public void testLowercaseWithUnderscore() throws Exception {
-        Assert.assertEquals(swiftCodegen.toSwiftyEnumName("entry_name"), "EntryName");
+        Assert.assertEquals(swiftCodegen.toEnumVarName("entry_name", null), "entryName");
     }
 
     @Test(description = "returns NSData when response format is binary")
@@ -57,8 +56,8 @@ public class SwiftCodegenTest {
         final Operation p = model.getPaths().get(path).getPost();
         final CodegenOperation op = codegen.fromOperation(path, "post", p, model.getDefinitions());
 
-        Assert.assertEquals(op.returnType, "NSData");
-        Assert.assertEquals(op.bodyParam.dataType, "NSData");
+        Assert.assertEquals(op.returnType, "Data");
+        Assert.assertEquals(op.bodyParam.dataType, "Data");
         Assert.assertTrue(op.bodyParam.isBinary);
         Assert.assertTrue(op.responses.get(0).isBinary);
     }

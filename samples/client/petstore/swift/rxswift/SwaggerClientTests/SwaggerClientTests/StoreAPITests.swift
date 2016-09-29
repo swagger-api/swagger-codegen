@@ -20,19 +20,19 @@ class StoreAPITests: XCTestCase {
 
     func test1PlaceOrder() {
         let order = Order()
-        let shipDate = NSDate()
+        let shipDate = Date()
         order.id = 1000
         order.petId = 1000
         order.complete = false
         order.quantity = 10
         order.shipDate = shipDate
         // use explicit naming to reference the enum so that we test we don't regress on enum naming
-        order.status = Order.Status.Placed
-        let expectation = self.expectationWithDescription("testPlaceOrder")
+        order.status = Order.Status.placed
+        let expectation = self.expectation(description: "testPlaceOrder")
         StoreAPI.placeOrder(body: order).subscribe(onNext: { order in
             XCTAssert(order.id == 1000, "invalid id")
             XCTAssert(order.quantity == 10, "invalid quantity")
-            XCTAssert(order.status == .Placed, "invalid status")
+            XCTAssert(order.status == .placed, "invalid status")
             XCTAssert(order.shipDate!.isEqual(shipDate, format: self.isoDateFormat),
                 "Date should be idempotent")
 
@@ -40,24 +40,24 @@ class StoreAPITests: XCTestCase {
         }, onError: { errorType in
             XCTFail("error placing order")
         }, onCompleted: nil, onDisposed: nil).addDisposableTo(disposeBag)
-        self.waitForExpectationsWithTimeout(testTimeout, handler: nil)
+        self.waitForExpectations(timeout: testTimeout, handler: nil)
     }
 
     func test2GetOrder() {
-        let expectation = self.expectationWithDescription("testGetOrder")
-        StoreAPI.getOrderById(orderId: "1000").subscribe(onNext: { order -> Void in
+        let expectation = self.expectation(description: "testGetOrder")
+        StoreAPI.getOrderById(orderId: 1000).subscribe(onNext: { order -> Void in
             XCTAssert(order.id == 1000, "invalid id")
             XCTAssert(order.quantity == 10, "invalid quantity")
-            XCTAssert(order.status == .Placed, "invalid status")
+            XCTAssert(order.status == .placed, "invalid status")
             expectation.fulfill()
             }, onError: { errorType in
                 XCTFail("error placing order")
             }, onCompleted: nil, onDisposed: nil).addDisposableTo(disposeBag)
-        self.waitForExpectationsWithTimeout(testTimeout, handler: nil)
+        self.waitForExpectations(timeout: testTimeout, handler: nil)
     }
 
     func test3DeleteOrder() {
-        let expectation = self.expectationWithDescription("testDeleteOrder")
+        let expectation = self.expectation(description: "testDeleteOrder")
         StoreAPI.deleteOrder(orderId: "1000").subscribe(onNext: {
             expectation.fulfill()
             }, onError: { errorType -> Void in
@@ -73,12 +73,12 @@ class StoreAPITests: XCTestCase {
                     XCTFail("error deleting order")
                 }
             }, onCompleted: nil, onDisposed: nil).addDisposableTo(disposeBag)
-        self.waitForExpectationsWithTimeout(testTimeout, handler: nil)
+        self.waitForExpectations(timeout: testTimeout, handler: nil)
     }
 
 }
 
-private extension NSDate {
+private extension Date {
 
     /**
      Returns true if the dates are equal given the format string.
@@ -88,10 +88,10 @@ private extension NSDate {
 
      - returns: true if the dates are equal, given the format string.
      */
-    func isEqual(date: NSDate, format: String) -> Bool {
-        let fmt = NSDateFormatter()
+    func isEqual(_ date: Date, format: String) -> Bool {
+        let fmt = DateFormatter()
         fmt.dateFormat = format
-        return fmt.stringFromDate(self).isEqual(fmt.stringFromDate(date))
+        return fmt.string(from: self).isEqual(fmt.string(from: date))
     }
 
 }

@@ -17,7 +17,7 @@ public class ConnectableObservable<Element>
 
     /**
      Connects the observable wrapper to its source. All subscribed observers will receive values from the underlying observable sequence as long as the connection is established.
-
+     
      - returns: Disposable used to disconnect the observable wrapper from its source, causing subscribed observer to stop receiving values from the underlying observable sequence.
     */
     public func connect() -> Disposable {
@@ -37,7 +37,7 @@ class Connection<S: SubjectType> : Disposable {
         _subscription = subscription
         _lock = lock
     }
-
+    
     func dispose() {
         _lock.lock(); defer { _lock.unlock() } // {
             guard let parent = _parent else {
@@ -47,13 +47,13 @@ class Connection<S: SubjectType> : Disposable {
             guard let oldSubscription = _subscription else {
                 return
             }
-
+            
             _subscription = nil
             if parent._connection === self {
                 parent._connection = nil
             }
             _parent = nil
-
+            
             oldSubscription.dispose()
         // }
     }
@@ -62,35 +62,35 @@ class Connection<S: SubjectType> : Disposable {
 class ConnectableObservableAdapter<S: SubjectType>
     : ConnectableObservable<S.E> {
     typealias ConnectionType = Connection<S>
-
-    private let _subject: S
-    private let _source: Observable<S.SubjectObserverType.E>
-
-    private let _lock = NSRecursiveLock()
-
+    
+    fileprivate let _subject: S
+    fileprivate let _source: Observable<S.SubjectObserverType.E>
+    
+    fileprivate let _lock = NSRecursiveLock()
+    
     // state
-    private var _connection: ConnectionType?
-
+    fileprivate var _connection: ConnectionType?
+    
     init(source: Observable<S.SubjectObserverType.E>, subject: S) {
         _source = source
         _subject = subject
         _connection = nil
     }
-
+    
     override func connect() -> Disposable {
         return _lock.calculateLocked {
             if let connection = _connection {
                 return connection
             }
-
+            
             let disposable = _source.subscribe(_subject.asObserver())
             let connection = Connection(parent: self, lock: _lock, subscription: disposable)
             _connection = connection
             return connection
         }
     }
-
-    override func subscribe<O : ObserverType where O.E == S.E>(observer: O) -> Disposable {
+    
+    override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == S.E {
         return _subject.subscribe(observer)
     }
 }

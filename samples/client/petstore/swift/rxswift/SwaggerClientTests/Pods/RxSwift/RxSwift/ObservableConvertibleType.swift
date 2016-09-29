@@ -16,10 +16,10 @@ public protocol ObservableConvertibleType {
     Type of elements in sequence.
     */
     associatedtype E
-
+    
     /**
     Converts `self` to `Observable` sequence.
-
+    
     - returns: Observable sequence that represents `self`.
     */
     func asObservable() -> Observable<E>

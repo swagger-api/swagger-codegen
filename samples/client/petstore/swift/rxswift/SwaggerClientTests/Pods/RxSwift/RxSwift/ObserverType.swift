@@ -19,38 +19,38 @@ public protocol ObserverType {
 
     /**
     Notify observer about sequence event.
-
-    - parameter event: Event that occurred.
+    
+    - parameter event: Event that occured.
     */
-    func on(event: Event<E>)
+    func on(_ event: Event<E>)
 }
 
 /**
 Convenience API extensions to provide alternate next, error, completed events
 */
 public extension ObserverType {
-
+    
     /**
-    Convenience method equivalent to `on(.Next(element: E))`
-
+    Convenience method equivalent to `on(.next(element: E))`
+    
     - parameter element: Next element to send to observer(s)
     */
-    final func onNext(element: E) {
-        on(.Next(element))
+    final func onNext(_ element: E) {
+        on(.next(element))
     }
-
+    
     /**
-    Convenience method equivalent to `on(.Completed)`
+    Convenience method equivalent to `on(.completed)`
     */
     final func onCompleted() {
-        on(.Completed)
+        on(.completed)
     }
-
+    
     /**
-    Convenience method equivalent to `on(.Error(error: ErrorType))`
-    - parameter error: ErrorType to send to observer(s)
+    Convenience method equivalent to `on(.error(Swift.Error))`
+    - parameter error: Swift.Error to send to observer(s)
     */
-    final func onError(error: ErrorType) {
-        on(.Error(error))
+    final func onError(_ error: Swift.Error) {
+        on(.error(error))
     }
 }

@@ -21,6 +21,8 @@ public class CodegenParameter {
     public CodegenProperty items;
     public Map<String, Object> vendorExtensions;
     public Boolean hasValidation;
+    // enum name based on the property name, usually use as a prefix (e.g. VAR_NAME) for enum name (e.g. VAR_NAME_VALUE1)
+    public String enumName;
 
     /**
      * Determines whether this parameter is mandatory. If the parameter is in "path",

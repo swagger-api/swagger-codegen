@@ -15,17 +15,17 @@ If an underlying disposable resource has already been set, future attempts to se
 */
 public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
     private var _lock = SpinLock()
-
+    
     // state
-    private var _disposed = false
+    private var _isDisposed = false
     private var _disposableSet = false
     private var _disposable = nil as Disposable?
 
     /**
     - returns: A value that indicates whether the object is disposed.
     */
-    public var disposed: Bool {
-        return _disposed
+    public var isDisposed: Bool {
+        return _isDisposed
     }
 
     /**
@@ -37,20 +37,20 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
 
     /**
     Gets or sets the underlying disposable. After disposal, the result of getting this property is undefined.
-
+    
     **Throws exception if the `SingleAssignmentDisposable` has already been assigned to.**
     */
     public var disposable: Disposable {
         get {
             _lock.lock(); defer { _lock.unlock() }
-            return _disposable ?? NopDisposable.instance
+            return _disposable ?? Disposables.create()
         }
         set {
             _setDisposable(newValue)?.dispose()
         }
     }
 
-    private func _setDisposable(newValue: Disposable) -> Disposable? {
+    private func _setDisposable(_ newValue: Disposable) -> Disposable? {
         _lock.lock(); defer { _lock.unlock() }
         if _disposableSet {
             rxFatalError("oldState.disposable != nil")
@@ -58,7 +58,7 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
 
         _disposableSet = true
 
-        if _disposed {
+        if _isDisposed {
             return newValue
         }
 
@@ -71,7 +71,7 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
     Disposes the underlying disposable.
     */
     public func dispose() {
-        if _disposed {
+        if _isDisposed {
             return
         }
         _dispose()?.dispose()
@@ -80,7 +80,7 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
     private func _dispose() -> Disposable? {
         _lock.lock(); defer { _lock.unlock() }
 
-        _disposed = true
+        _isDisposed = true
         let disposable = _disposable
         _disposable = nil
 

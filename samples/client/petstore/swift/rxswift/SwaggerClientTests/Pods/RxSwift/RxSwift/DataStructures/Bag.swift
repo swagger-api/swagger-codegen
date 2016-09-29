@@ -19,7 +19,7 @@ class Identity {
     var _forceAllocation: Int32 = 0
 }
 
-func hash(_x: Int) -> Int {
+func hash(_ _x: Int) -> Int {
     var x = _x
     x = ((x >> 16) ^ x) &* 0x45d9f3b
     x = ((x >> 16) ^ x) &* 0x45d9f3b
@@ -36,7 +36,7 @@ public struct BagKey : Hashable {
 
     public var hashValue: Int {
         if let uniqueIdentity = uniqueIdentity {
-            return hash(key) ^ (unsafeAddressOf(uniqueIdentity).hashValue)
+            return hash(key) ^ (ObjectIdentifier(uniqueIdentity).hashValue)
         }
         else {
             return hash(key)
@@ -56,7 +56,7 @@ Data structure that represents a bag of elements typed `T`.
 
 Single element can be stored multiple times.
 
-Time and space complexity of insertion an deletion is O(n).
+Time and space complexity of insertion an deletion is O(n). 
 
 It is suitable for storing small number of elements.
 */
@@ -65,50 +65,50 @@ public struct Bag<T> : CustomDebugStringConvertible {
     Type of identifier for inserted elements.
     */
     public typealias KeyType = BagKey
-
-    private typealias ScopeUniqueTokenType = Int
-
+    
+    fileprivate typealias ScopeUniqueTokenType = Int
+    
     typealias Entry = (key: BagKey, value: T)
-
-    private var _uniqueIdentity: Identity?
-    private var _nextKey: ScopeUniqueTokenType = 0
+ 
+    fileprivate var _uniqueIdentity: Identity?
+    fileprivate var _nextKey: ScopeUniqueTokenType = 0
 
     // data
 
     // first fill inline variables
-    private var _key0: BagKey? = nil
-    private var _value0: T? = nil
+    fileprivate var _key0: BagKey? = nil
+    fileprivate var _value0: T? = nil
 
-    private var _key1: BagKey? = nil
-    private var _value1: T? = nil
+    fileprivate var _key1: BagKey? = nil
+    fileprivate var _value1: T? = nil
 
     // then fill "array dictionary"
-    private var _pairs = ContiguousArray<Entry>()
+    fileprivate var _pairs = ContiguousArray<Entry>()
 
     // last is sparse dictionary
-    private var _dictionary: [BagKey : T]? = nil
+    fileprivate var _dictionary: [BagKey : T]? = nil
 
-    private var _onlyFastPath = true
+    fileprivate var _onlyFastPath = true
 
     /**
     Creates new empty `Bag`.
     */
     public init() {
     }
-
+    
     /**
     Inserts `value` into bag.
-
+    
     - parameter element: Element to insert.
     - returns: Key that can be used to remove element from bag.
     */
-    public mutating func insert(element: T) -> BagKey {
+    public mutating func insert(_ element: T) -> BagKey {
         _nextKey = _nextKey &+ 1
 
 #if DEBUG
         _nextKey = _nextKey % 20
 #endif
-
+        
         if _nextKey == 0 {
             _uniqueIdentity = Identity()
         }
@@ -144,10 +144,10 @@ public struct Bag<T> : CustomDebugStringConvertible {
         }
 
         _dictionary![key] = element
-
+        
         return key
     }
-
+    
     /**
     - returns: Number of elements in bag.
     */
@@ -155,7 +155,7 @@ public struct Bag<T> : CustomDebugStringConvertible {
         let dictionaryCount: Int = _dictionary?.count ?? 0
         return _pairs.count + (_value0 != nil ? 1 : 0) + (_value1 != nil ? 1 : 0) + dictionaryCount
     }
-
+    
     /**
     Removes all elements from bag and clears capacity.
     */
@@ -165,17 +165,17 @@ public struct Bag<T> : CustomDebugStringConvertible {
         _key1 = nil
         _value1 = nil
 
-        _pairs.removeAll(keepCapacity: false)
-        _dictionary?.removeAll(keepCapacity: false)
+        _pairs.removeAll(keepingCapacity: false)
+        _dictionary?.removeAll(keepingCapacity: false)
     }
-
+    
     /**
     Removes element with a specific `key` from bag.
-
+    
     - parameter key: Key that identifies element to remove from bag.
     - returns: Element that bag contained, or nil in case element was already removed.
     */
-    public mutating func removeKey(key: BagKey) -> T? {
+    public mutating func removeKey(_ key: BagKey) -> T? {
         if _key0 == key {
             _key0 = nil
             let value = _value0!
@@ -190,14 +190,14 @@ public struct Bag<T> : CustomDebugStringConvertible {
             return value
         }
 
-        if let existingObject = _dictionary?.removeValueForKey(key) {
+        if let existingObject = _dictionary?.removeValue(forKey: key) {
             return existingObject
         }
 
         for i in 0 ..< _pairs.count {
             if _pairs[i].key == key {
                 let value = _pairs[i].value
-                _pairs.removeAtIndex(i)
+                _pairs.remove(at: i)
                 return value
             }
         }
@@ -221,10 +221,10 @@ extension Bag {
 extension Bag {
     /**
     Enumerates elements inside the bag.
-
+    
     - parameter action: Enumeration closure.
     */
-    public func forEach(@noescape action: (T) -> Void) {
+    public func forEach(_ action: (T) -> Void) {
         if _onlyFastPath {
             if let value0 = _value0 {
                 action(value0)
@@ -263,7 +263,7 @@ extension Bag where T: ObserverType {
 
      - parameter action: Enumeration closure.
      */
-    public func on(event: Event<T.E>) {
+    public func on(_ event: Event<T.E>) {
         if _onlyFastPath {
             _value0?.on(event)
             return
@@ -297,7 +297,15 @@ extension Bag where T: ObserverType {
 /**
 Dispatches `dispose` to all disposables contained inside bag.
 */
-public func disposeAllIn(bag: Bag<Disposable>) {
+@available(*, deprecated, renamed: "disposeAll(in:)")
+public func disposeAllIn(_ bag: Bag<Disposable>) {
+    disposeAll(in: bag)
+}
+
+/**
+ Dispatches `dispose` to all disposables contained inside bag.
+ */
+public func disposeAll(in bag: Bag<Disposable>) {
     if bag._onlyFastPath {
         bag._value0?.dispose()
         return

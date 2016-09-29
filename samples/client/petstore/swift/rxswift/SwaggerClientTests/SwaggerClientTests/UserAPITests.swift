@@ -27,7 +27,7 @@ class UserAPITests: XCTestCase {
     }
 
     func testLogin() {
-        let expectation = self.expectationWithDescription("testLogin")
+        let expectation = self.expectation(description: "testLogin")
         UserAPI.loginUser(username: "swiftTester", password: "swift").subscribe(onNext: { _ in
             expectation.fulfill()
             }, onError: { errorType in
@@ -42,11 +42,11 @@ class UserAPITests: XCTestCase {
                     XCTFail("error logging in")
                 }
             }, onCompleted: nil, onDisposed: nil).addDisposableTo(disposeBag)
-        self.waitForExpectationsWithTimeout(testTimeout, handler: nil)
+        self.waitForExpectations(timeout: testTimeout, handler: nil)
     }
 
     func testLogout() {
-        let expectation = self.expectationWithDescription("testLogout")
+        let expectation = self.expectation(description: "testLogout")
         UserAPI.logoutUser().subscribe(onNext: {
             expectation.fulfill()
             }, onError: { errorType in
@@ -62,11 +62,11 @@ class UserAPITests: XCTestCase {
                     XCTFail("error logging out")
                 }
             }, onCompleted: nil, onDisposed: nil).addDisposableTo(disposeBag)
-        self.waitForExpectationsWithTimeout(testTimeout, handler: nil)
+        self.waitForExpectations(timeout: testTimeout, handler: nil)
     }
 
     func test1CreateUser() {
-        let expectation = self.expectationWithDescription("testCreateUser")
+        let expectation = self.expectation(description: "testCreateUser")
         let newUser = User()
         newUser.email = "test@test.com"
         newUser.firstName = "Test"
@@ -91,11 +91,11 @@ class UserAPITests: XCTestCase {
                     XCTFail("error creating user")
                 }
             }, onCompleted: nil, onDisposed: nil).addDisposableTo(disposeBag)
-        self.waitForExpectationsWithTimeout(testTimeout, handler: nil)
+        self.waitForExpectations(timeout: testTimeout, handler: nil)
     }
 
     func test2GetUser() {
-        let expectation = self.expectationWithDescription("testGetUser")
+        let expectation = self.expectation(description: "testGetUser")
         UserAPI.getUserByName(username: "test@test.com").subscribe(onNext: {user -> Void in
             XCTAssert(user.userStatus == 0, "invalid userStatus")
             XCTAssert(user.email == "test@test.com", "invalid email")
@@ -107,11 +107,11 @@ class UserAPITests: XCTestCase {
             }, onError: { errorType in
                 XCTFail("error getting user")
             }, onCompleted: nil, onDisposed: nil).addDisposableTo(disposeBag)
-        self.waitForExpectationsWithTimeout(testTimeout, handler: nil)
+        self.waitForExpectations(timeout: testTimeout, handler: nil)
     }
 
     func test3DeleteUser() {
-        let expectation = self.expectationWithDescription("testDeleteUser")
+        let expectation = self.expectation(description: "testDeleteUser")
         UserAPI.deleteUser(username: "test@test.com").subscribe(onNext: {
             expectation.fulfill()
             }, onError: { errorType -> Void in
@@ -127,7 +127,7 @@ class UserAPITests: XCTestCase {
                     XCTFail("error deleting user")
                 }
             }, onCompleted: nil, onDisposed: nil).addDisposableTo(disposeBag)
-        self.waitForExpectationsWithTimeout(testTimeout, handler: nil)
+        self.waitForExpectations(timeout: testTimeout, handler: nil)
     }
 
 }

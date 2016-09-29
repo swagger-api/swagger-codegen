@@ -16,14 +16,14 @@ averaged over N operations.
 
 Complexity of `peek` is O(1).
 */
-public struct Queue<T>: SequenceType {
+public struct Queue<T>: Sequence {
     /**
     Type of generator.
     */
-    public typealias Generator = AnyGenerator<T>
-
+    public typealias Generator = AnyIterator<T>
+    
     private let _resizeFactor = 2
-
+    
     private var _storage: ContiguousArray<T?>
     private var _count = 0
     private var _pushNextIndex = 0
@@ -31,86 +31,86 @@ public struct Queue<T>: SequenceType {
 
     /**
     Creates new queue.
-
+    
     - parameter capacity: Capacity of newly created queue.
     */
     public init(capacity: Int) {
         _initialCapacity = capacity
 
-        _storage = ContiguousArray<T?>(count: capacity, repeatedValue: nil)
+        _storage = ContiguousArray<T?>(repeating: nil, count: capacity)
     }
-
+    
     private var dequeueIndex: Int {
         let index = _pushNextIndex - count
         return index < 0 ? index + _storage.count : index
     }
-
+    
     /**
     - returns: Is queue empty.
     */
     public var isEmpty: Bool {
         return count == 0
     }
-
+    
     /**
     - returns: Number of elements inside queue.
     */
     public var count: Int {
         return _count
     }
-
+    
     /**
     - returns: Element in front of a list of elements to `dequeue`.
     */
     public func peek() -> T {
         precondition(count > 0)
-
+        
         return _storage[dequeueIndex]!
     }
-
-    mutating private func resizeTo(size: Int) {
-        var newStorage = ContiguousArray<T?>(count: size, repeatedValue: nil)
-
+    
+    mutating private func resizeTo(_ size: Int) {
+        var newStorage = ContiguousArray<T?>(repeating: nil, count: size)
+        
         let count = _count
-
+        
         let dequeueIndex = self.dequeueIndex
         let spaceToEndOfQueue = _storage.count - dequeueIndex
-
+        
         // first batch is from dequeue index to end of array
-        let countElementsInFirstBatch = min(count, spaceToEndOfQueue)
+        let countElementsInFirstBatch = Swift.min(count, spaceToEndOfQueue)
         // second batch is wrapped from start of array to end of queue
         let numberOfElementsInSecondBatch = count - countElementsInFirstBatch
-
+        
         newStorage[0 ..< countElementsInFirstBatch] = _storage[dequeueIndex ..< (dequeueIndex + countElementsInFirstBatch)]
         newStorage[countElementsInFirstBatch ..< (countElementsInFirstBatch + numberOfElementsInSecondBatch)] = _storage[0 ..< numberOfElementsInSecondBatch]
-
+        
         _count = count
         _pushNextIndex = count
         _storage = newStorage
     }
-
+    
     /**
     Enqueues `element`.
-
+    
     - parameter element: Element to enqueue.
     */
-    public mutating func enqueue(element: T) {
+    public mutating func enqueue(_ element: T) {
         if count == _storage.count {
-            resizeTo(max(_storage.count, 1) * _resizeFactor)
+            resizeTo(Swift.max(_storage.count, 1) * _resizeFactor)
         }
-
+        
         _storage[_pushNextIndex] = element
         _pushNextIndex += 1
         _count += 1
-
+        
         if _pushNextIndex >= _storage.count {
             _pushNextIndex -= _storage.count
         }
     }
-
+    
     private mutating func dequeueElementOnly() -> T {
         precondition(count > 0)
-
+        
         let index = dequeueIndex
 
         defer {
@@ -123,7 +123,7 @@ public struct Queue<T>: SequenceType {
 
     /**
     Dequeues element or throws an exception in case queue is empty.
-
+    
     - returns: Dequeued element.
     */
     public mutating func dequeue() -> T? {
@@ -140,15 +140,15 @@ public struct Queue<T>: SequenceType {
 
         return dequeueElementOnly()
     }
-
+    
     /**
     - returns: Generator of contained elements.
     */
-    public func generate() -> Generator {
+    public func makeIterator() -> AnyIterator<T> {
         var i = dequeueIndex
         var count = _count
 
-        return AnyGenerator {
+        return AnyIterator {
             if count == 0 {
                 return nil
             }
