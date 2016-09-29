@@ -4,6 +4,8 @@
 // https://github.com/swagger-api/swagger-codegen
 //
 
+import Foundation
+
 class APIHelper {
     static func rejectNil(_ source: [String:Any?]) -> [String:Any]? {
         var destination = [String:Any]()
