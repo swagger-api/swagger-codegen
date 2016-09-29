@@ -15,7 +15,7 @@ public class Version implements Runnable {
 
     private static final String VERSION_PLACEHOLDER = "${project.version}";
 
-    private static final String UNREADABLE_VERSION = "unset";
+    private static final String UNREADABLE_VERSION = "unreadable";
     private static final String UNSET_VERSION = "unset";
     private static final String UNKNOWN_VERSION = "unknown";
 
