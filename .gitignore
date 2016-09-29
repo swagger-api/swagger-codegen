@@ -33,7 +33,7 @@ packages/
 
 /target
 /generated-files
-/nbactions.xml
+nbactions.xml
 
 # scalatra
 samples/server-generator/scalatra/output
