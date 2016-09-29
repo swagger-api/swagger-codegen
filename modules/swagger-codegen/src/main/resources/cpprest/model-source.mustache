@@ -29,7 +29,7 @@ web::json::value {{classname}}::toJson() const
 {
     web::json::value val = web::json::value::object();
      
-	{{#vars}}{{#isPrimitiveType}}{{^isListContainer}}{{^required}}if(m_{{name}}IsSet)
+    {{#vars}}{{#isPrimitiveType}}{{^isListContainer}}{{^required}}if(m_{{name}}IsSet)
     {
         val[U("{{baseName}}")] = ModelBase::toJson(m_{{name}});
     }
@@ -117,12 +117,12 @@ void {{classname}}::fromJson(web::json::value& val)
 void {{classname}}::toMultipart(std::shared_ptr<MultipartFormData> multipart, const utility::string_t& prefix) const
 {
     utility::string_t namePrefix = prefix;
-	if(namePrefix.size() > 0 && namePrefix[namePrefix.size() - 1] != U('.'))
-	{
-		namePrefix += U(".");
-	}
+    if(namePrefix.size() > 0 && namePrefix[namePrefix.size() - 1] != U('.'))
+    {
+        namePrefix += U(".");
+    }
 
-	{{#vars}}{{#isPrimitiveType}}{{^isListContainer}}{{^required}}if(m_{{name}}IsSet)
+    {{#vars}}{{#isPrimitiveType}}{{^isListContainer}}{{^required}}if(m_{{name}}IsSet)
     {
         multipart->add(ModelBase::toHttpContent(namePrefix + U("{{baseName}}"), m_{{name}}));
     }
@@ -161,10 +161,10 @@ void {{classname}}::toMultipart(std::shared_ptr<MultipartFormData> multipart, co
 void {{classname}}::fromMultiPart(std::shared_ptr<MultipartFormData> multipart, const utility::string_t& prefix)
 {
     utility::string_t namePrefix = prefix;
-	if(namePrefix.size() > 0 && namePrefix[namePrefix.size() - 1] != U('.'))
-	{
-		namePrefix += U(".");
-	}
+    if(namePrefix.size() > 0 && namePrefix[namePrefix.size() - 1] != U('.'))
+    {
+        namePrefix += U(".");
+    }
 
     {{#vars}}{{#isPrimitiveType}}{{^isListContainer}}{{^required}}if(multipart->hasContent(U("{{baseName}}")))
     {
@@ -224,15 +224,15 @@ void {{classname}}::fromMultiPart(std::shared_ptr<MultipartFormData> multipart, 
    
 {{#vars}}{{^isNotContainer}}{{{datatype}}}& {{classname}}::{{getter}}()
 {
-	return m_{{name}};
+    return m_{{name}};
 }
 {{/isNotContainer}}{{#isNotContainer}}{{{datatype}}} {{classname}}::{{getter}}() const
 {
-	return m_{{name}};
+    return m_{{name}};
 }
 void {{classname}}::{{setter}}({{{datatype}}} value)
 {
-	m_{{name}} = value;
+    m_{{name}} = value;
     {{^required}}m_{{name}}IsSet = true;{{/required}}
 }
 {{/isNotContainer}} 

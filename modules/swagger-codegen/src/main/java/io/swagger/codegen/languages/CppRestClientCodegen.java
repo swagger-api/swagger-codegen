@@ -118,7 +118,7 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
         importMapping.put("std::vector", "#include <vector>");
         importMapping.put("std::map", "#include <map>");
         importMapping.put("std::string", "#include <string>");
-		importMapping.put("HttpContent", "#include \"HttpContent.h\"");
+        importMapping.put("HttpContent", "#include \"HttpContent.h\"");
         importMapping.put("Object", "#include \"Object.h\"");
         importMapping.put("utility::string_t", "#include <cpprest/details/basic_types.h>");
         importMapping.put("utility::datetime", "#include <cpprest/details/basic_types.h>");
@@ -217,10 +217,10 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
                 if (methodResponse.getSchema() != null) {
                     CodegenProperty cm = fromProperty("response", methodResponse.getSchema());
                     op.vendorExtensions.put("x-codegen-response", cm);
-					if(cm.datatype == "HttpContent")
-					{
-						op.vendorExtensions.put("x-codegen-response-ishttpcontent", true);
-					}
+                    if(cm.datatype == "HttpContent")
+                    {
+                        op.vendorExtensions.put("x-codegen-response-ishttpcontent", true);
+                    }
                 }
             }
         }
@@ -272,7 +272,7 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
             return getSwaggerType(p) + "<utility::string_t, " + getTypeDeclaration(inner) + ">";
         }
         if (p instanceof StringProperty || p instanceof DateProperty
-				|| p instanceof DateTimeProperty || p instanceof FileProperty
+                || p instanceof DateTimeProperty || p instanceof FileProperty
                 || languageSpecificPrimitives.contains(swaggerType)) {
             return toModelName(swaggerType);
         }
