@@ -14,7 +14,7 @@ open class MapTest: JSONEncodable {
         case lower = "lower"
     }
     public var mapMapOfString: [String:[String:String]]?
-    public var mapOfEnumString: MapOfEnumString?
+    public var mapOfEnumString: [String:String]?
 
     public init() {}
 

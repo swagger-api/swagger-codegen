@@ -20,7 +20,7 @@ open class FormatTest: JSONEncodable {
     public var binary: Data?
     public var date: Date?
     public var dateTime: Date?
-    public var uuid: NSUUID?
+    public var uuid: UUID?
     public var password: String?
 
     public init() {}

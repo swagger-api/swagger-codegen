@@ -13,13 +13,13 @@ open class EnumTest: JSONEncodable {
         case upper = "UPPER"
         case lower = "lower"
     }
-    public enum EnumInteger: String { 
-        case number1 = "1"
-        case numberminus1 = "-1"
+    public enum EnumInteger: Int32 { 
+        case number1 = 1
+        case numberminus1 = -1
     }
-    public enum EnumNumber: String { 
-        case number11 = "1.1"
-        case numberminus12 = "-1.2"
+    public enum EnumNumber: Double { 
+        case number11 = 1.1
+        case numberminus12 = -1.2
     }
     public var enumString: EnumString?
     public var enumInteger: EnumInteger?

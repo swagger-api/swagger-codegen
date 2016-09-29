@@ -77,7 +77,7 @@ extension Date: JSONEncodable {
     }
 }
 
-extension NSUUID: JSONEncodable {
+extension UUID: JSONEncodable {
     func encodeToJSON() -> Any {
         return self.uuidString
     }

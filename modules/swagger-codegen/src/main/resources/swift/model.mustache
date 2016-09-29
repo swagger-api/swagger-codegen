@@ -13,8 +13,8 @@ import Foundation
 open class {{classname}}: JSONEncodable {
 {{#vars}}
 {{#isEnum}}
-    public enum {{datatypeWithEnum}}: String { {{#allowableValues}}{{#values}}
-        case {{enum}} = "{{raw}}"{{/values}}{{/allowableValues}}
+    public enum {{enumName}}: {{^isContainer}}{{datatype}}{{/isContainer}}{{#isContainer}}String{{/isContainer}} { {{#allowableValues}}{{#enumVars}}
+        case {{name}} = {{#isContainer}}"{{/isContainer}}{{#isString}}"{{/isString}}{{{value}}}{{#isString}}"{{/isString}}{{#isContainer}}"{{/isContainer}}{{/enumVars}}{{/allowableValues}}
     }
 {{/isEnum}}
 {{/vars}}

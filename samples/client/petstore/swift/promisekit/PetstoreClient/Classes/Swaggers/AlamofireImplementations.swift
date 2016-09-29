@@ -21,7 +21,7 @@ class AlamofireRequestBuilder<T>: RequestBuilder<T> {
     }
 
     override func execute(_ completion: @escaping (_ response: Response<T>?, _ error: Error?) -> Void) {
-        let managerId:String = NSUUID().uuidString
+        let managerId:String = UUID().uuidString
         // Create a new manager for each request to customize its request header
         let configuration = URLSessionConfiguration.default
         configuration.httpAdditionalHeaders = buildHeaders()

@@ -9,7 +9,7 @@ import Foundation
 
 
 open class MixedPropertiesAndAdditionalPropertiesClass: JSONEncodable {
-    public var uuid: NSUUID?
+    public var uuid: UUID?
     public var dateTime: Date?
     public var map: [String:Animal]?
 

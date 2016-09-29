@@ -66,8 +66,8 @@ class Decoders {
         if T.self is Int64.Type && source is NSNumber {
             return source.int64Value as! T;
         }
-        if T.self is NSUUID.Type && source is String {
-            return NSUUID(uuidString: source as! String) as! T
+        if T.self is UUID.Type && source is String {
+            return UUID(uuidString: source as! String) as! T
         }
         if source is T {
             return source as! T
@@ -300,8 +300,14 @@ class Decoders {
         Decoders.addDecoder(clazz: EnumArrays.self) { (source: AnyObject) -> EnumArrays in
             let sourceDictionary = source as! [AnyHashable: Any]
             let instance = EnumArrays()
-            instance.justSymbol = EnumArrays.JustSymbol(rawValue: (sourceDictionary["just_symbol"] as? String) ?? "") 
-            instance.arrayEnum = EnumArrays.ArrayEnum(rawValue: (sourceDictionary["array_enum"] as? String) ?? "") 
+            if let justSymbol = sourceDictionary["just_symbol"] as? String { 
+                instance.justSymbol = EnumArrays.JustSymbol(rawValue: (justSymbol))
+            }
+            
+            if let arrayEnum = sourceDictionary["array_enum"] as? [String] { 
+                instance.arrayEnum  = arrayEnum.map ({ EnumArrays.ArrayEnum(rawValue: $0)! })
+            }
+            
             return instance
         }
 
@@ -326,9 +332,18 @@ class Decoders {
         Decoders.addDecoder(clazz: EnumTest.self) { (source: AnyObject) -> EnumTest in
             let sourceDictionary = source as! [AnyHashable: Any]
             let instance = EnumTest()
-            instance.enumString = EnumTest.EnumString(rawValue: (sourceDictionary["enum_string"] as? String) ?? "") 
-            instance.enumInteger = EnumTest.EnumInteger(rawValue: (sourceDictionary["enum_integer"] as? String) ?? "") 
-            instance.enumNumber = EnumTest.EnumNumber(rawValue: (sourceDictionary["enum_number"] as? String) ?? "") 
+            if let enumString = sourceDictionary["enum_string"] as? String { 
+                instance.enumString = EnumTest.EnumString(rawValue: (enumString))
+            }
+            
+            if let enumInteger = sourceDictionary["enum_integer"] as? Int32 { 
+                instance.enumInteger = EnumTest.EnumInteger(rawValue: (enumInteger))
+            }
+            
+            if let enumNumber = sourceDictionary["enum_number"] as? Double { 
+                instance.enumNumber = EnumTest.EnumNumber(rawValue: (enumNumber))
+            }
+            
             return instance
         }
 
@@ -352,7 +367,7 @@ class Decoders {
             instance.binary = Decoders.decodeOptional(clazz: Data.self, source: sourceDictionary["binary"] as AnyObject?)
             instance.date = Decoders.decodeOptional(clazz: Date.self, source: sourceDictionary["date"] as AnyObject?)
             instance.dateTime = Decoders.decodeOptional(clazz: Date.self, source: sourceDictionary["dateTime"] as AnyObject?)
-            instance.uuid = Decoders.decodeOptional(clazz: NSUUID.self, source: sourceDictionary["uuid"] as AnyObject?)
+            instance.uuid = Decoders.decodeOptional(clazz: UUID.self, source: sourceDictionary["uuid"] as AnyObject?)
             instance.password = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["password"] as AnyObject?)
             return instance
         }
@@ -394,7 +409,9 @@ class Decoders {
             let sourceDictionary = source as! [AnyHashable: Any]
             let instance = MapTest()
             instance.mapMapOfString = Decoders.decodeOptional(clazz: Dictionary.self, source: sourceDictionary["map_map_of_string"] as AnyObject?)
-            instance.mapOfEnumString = MapTest.MapOfEnumString(rawValue: (sourceDictionary["map_of_enum_string"] as? String) ?? "") 
+            if let mapOfEnumString = sourceDictionary["map_of_enum_string"] as? [String:String] { //TODO: handle enum map scenario
+            }
+            
             return instance
         }
 
@@ -407,7 +424,7 @@ class Decoders {
         Decoders.addDecoder(clazz: MixedPropertiesAndAdditionalPropertiesClass.self) { (source: AnyObject) -> MixedPropertiesAndAdditionalPropertiesClass in
             let sourceDictionary = source as! [AnyHashable: Any]
             let instance = MixedPropertiesAndAdditionalPropertiesClass()
-            instance.uuid = Decoders.decodeOptional(clazz: NSUUID.self, source: sourceDictionary["uuid"] as AnyObject?)
+            instance.uuid = Decoders.decodeOptional(clazz: UUID.self, source: sourceDictionary["uuid"] as AnyObject?)
             instance.dateTime = Decoders.decodeOptional(clazz: Date.self, source: sourceDictionary["dateTime"] as AnyObject?)
             instance.map = Decoders.decodeOptional(clazz: Dictionary.self, source: sourceDictionary["map"] as AnyObject?)
             return instance
@@ -469,7 +486,10 @@ class Decoders {
             instance.petId = Decoders.decodeOptional(clazz: Int64.self, source: sourceDictionary["petId"] as AnyObject?)
             instance.quantity = Decoders.decodeOptional(clazz: Int32.self, source: sourceDictionary["quantity"] as AnyObject?)
             instance.shipDate = Decoders.decodeOptional(clazz: Date.self, source: sourceDictionary["shipDate"] as AnyObject?)
-            instance.status = Order.Status(rawValue: (sourceDictionary["status"] as? String) ?? "") 
+            if let status = sourceDictionary["status"] as? String { 
+                instance.status = Order.Status(rawValue: (status))
+            }
+            
             instance.complete = Decoders.decodeOptional(clazz: Bool.self, source: sourceDictionary["complete"] as AnyObject?)
             return instance
         }
@@ -488,7 +508,10 @@ class Decoders {
             instance.name = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["name"] as AnyObject?)
             instance.photoUrls = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["photoUrls"] as AnyObject?)
             instance.tags = Decoders.decodeOptional(clazz: Array.self, source: sourceDictionary["tags"] as AnyObject?)
-            instance.status = Pet.Status(rawValue: (sourceDictionary["status"] as? String) ?? "") 
+            if let status = sourceDictionary["status"] as? String { 
+                instance.status = Pet.Status(rawValue: (status))
+            }
+            
             return instance
         }
 

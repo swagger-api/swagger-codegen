@@ -2234,6 +2234,7 @@ public class DefaultCodegen {
             p.dataFormat = cp.dataFormat;
             if(cp.isEnum) {
                 p.datatypeWithEnum = cp.datatypeWithEnum;
+                p.enumName = cp.enumName;
             }
 
             // enum
@@ -2245,6 +2246,7 @@ public class DefaultCodegen {
 
             if (cp.items != null && cp.items.isEnum) {
                 p.datatypeWithEnum = cp.datatypeWithEnum;
+                p.enumName = cp.enumName;
                 p.items = cp.items;
             }
             p.collectionFormat = collectionFormat;

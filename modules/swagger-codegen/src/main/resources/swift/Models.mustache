@@ -66,8 +66,8 @@ class Decoders {
         if T.self is Int64.Type && source is NSNumber {
             return source.int64Value as! T;
         }
-        if T.self is NSUUID.Type && source is String {
-            return NSUUID(uuidString: source as! String) as! T
+        if T.self is UUID.Type && source is String {
+            return UUID(uuidString: source as! String) as! T
         }
         if source is T {
             return source as! T
@@ -148,19 +148,21 @@ class Decoders {
             let sourceDictionary = source as! [AnyHashable: Any]
             {{#unwrapRequired}}
             let instance = {{classname}}({{#requiredVars}}{{^-first}}, {{/-first}}{{#isEnum}}{{name}}: {{classname}}.{{datatypeWithEnum}}(rawValue: (sourceDictionary["{{baseName}}"] as? String) ?? "")! {{/isEnum}}{{^isEnum}}{{name}}: Decoders.decode(clazz: {{{baseType}}}.self, source: sourceDictionary["{{baseName}}"]!){{/isEnum}}{{/requiredVars}})
-            {{#optionalVars}}
-            {{#isEnum}}
-            instance.{{name}} = {{classname}}.{{datatypeWithEnum}}(rawValue: (sourceDictionary["{{baseName}}"] as? String) ?? "")
-            {{/isEnum}}
-            {{^isEnum}}
-            instance.{{name}} = Decoders.decodeOptional(clazz: {{{baseType}}}.self, source: sourceDictionary["{{baseName}}"] as AnyObject?)
-            {{/isEnum}}
+            {{#optionalVars}}{{#isEnum}}
+            if let {{name}} = sourceDictionary["{{baseName}}"] as? {{datatype}} { {{^isContainer}}
+                instance.{{name}} = {{classname}}.{{datatypeWithEnum}}(rawValue: ({{name}})){{/isContainer}}{{#isListContainer}}
+                instance.{{name}}  = {{name}}.map ({ {{classname}}.{{enumName}}(rawValue: $0)! }){{/isListContainer}}
+            }{{/isEnum}}{{^isEnum}}
+            instance.{{name}} = Decoders.decodeOptional(clazz: {{{baseType}}}.self, source: sourceDictionary["{{baseName}}"] as AnyObject?){{/isEnum}}
             {{/optionalVars}}
             {{/unwrapRequired}}
             {{^unwrapRequired}}
             let instance = {{classname}}(){{#vars}}{{#isEnum}}
-            instance.{{name}} = {{classname}}.{{datatypeWithEnum}}(rawValue: (sourceDictionary["{{baseName}}"] as? String) ?? "") {{/isEnum}}{{^isEnum}}
-            instance.{{name}} = Decoders.decodeOptional(clazz: {{{baseType}}}.self, source: sourceDictionary["{{baseName}}"] as AnyObject?){{/isEnum}}{{/vars}}
+            if let {{name}} = sourceDictionary["{{baseName}}"] as? {{datatype}} { {{^isContainer}}
+                instance.{{name}} = {{classname}}.{{datatypeWithEnum}}(rawValue: ({{name}})){{/isContainer}}{{#isListContainer}}
+                instance.{{name}}  = {{name}}.map ({ {{classname}}.{{enumName}}(rawValue: $0)! }){{/isListContainer}}{{#isMapContainer}}//TODO: handle enum map scenario{{/isMapContainer}}
+            }{{/isEnum}}
+            {{^isEnum}}instance.{{name}} = Decoders.decodeOptional(clazz: {{{baseType}}}.self, source: sourceDictionary["{{baseName}}"] as AnyObject?){{/isEnum}}{{/vars}}
             {{/unwrapRequired}}
             return instance
         }{{/model}}

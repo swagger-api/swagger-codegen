@@ -15,37 +15,37 @@ public class SwiftCodegenTest {
 
     @Test
     public void shouldNotBreakCorrectName() throws Exception {
-        Assert.assertEquals(swiftCodegen.toSwiftEnumName("EntryName"), "entryName");
+        Assert.assertEquals(swiftCodegen.toEnumVarName("EntryName", null), "entryName");
     }
 
     @Test
     public void testSingleWordAllCaps() throws Exception {
-        Assert.assertEquals(swiftCodegen.toSwiftEnumName("VALUE"), "value");
+        Assert.assertEquals(swiftCodegen.toEnumVarName("VALUE", null), "value");
     }
 
     @Test
     public void testSingleWordLowercase() throws Exception {
-        Assert.assertEquals(swiftCodegen.toSwiftEnumName("value"), "value");
+        Assert.assertEquals(swiftCodegen.toEnumVarName("value", null), "value");
     }
 
     @Test
     public void testCapitalsWithUnderscore() throws Exception {
-        Assert.assertEquals(swiftCodegen.toSwiftEnumName("ENTRY_NAME"), "entryName");
+        Assert.assertEquals(swiftCodegen.toEnumVarName("ENTRY_NAME", null), "entryName");
     }
 
     @Test
     public void testCapitalsWithDash() throws Exception {
-        Assert.assertEquals(swiftCodegen.toSwiftEnumName("ENTRY-NAME"), "entryName");
+        Assert.assertEquals(swiftCodegen.toEnumVarName("ENTRY-NAME", null), "entryName");
     }
 
     @Test
     public void testCapitalsWithSpace() throws Exception {
-        Assert.assertEquals(swiftCodegen.toSwiftEnumName("ENTRY NAME"), "entryName");
+        Assert.assertEquals(swiftCodegen.toEnumVarName("ENTRY NAME", null), "entryName");
     }
 
     @Test
     public void testLowercaseWithUnderscore() throws Exception {
-        Assert.assertEquals(swiftCodegen.toSwiftEnumName("entry_name"), "entryName");
+        Assert.assertEquals(swiftCodegen.toEnumVarName("entry_name", null), "entryName");
     }
 
     @Test(description = "returns NSData when response format is binary")

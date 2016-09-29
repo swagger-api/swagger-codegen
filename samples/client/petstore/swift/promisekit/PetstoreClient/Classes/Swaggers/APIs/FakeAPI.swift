@@ -175,7 +175,7 @@ open class FakeAPI: APIBase {
      * enum for parameter enumFormStringArray
      */
     public enum EnumFormStringArray_testEnumParameters: String { 
-        case greaterThan = "&gt;"
+        case greaterThan = ">"
         case dollar = "$"
     }
 
@@ -192,7 +192,7 @@ open class FakeAPI: APIBase {
      * enum for parameter enumQueryStringArray
      */
     public enum EnumQueryStringArray_testEnumParameters: String { 
-        case greaterThan = "&gt;"
+        case greaterThan = ">"
         case dollar = "$"
     }
 
