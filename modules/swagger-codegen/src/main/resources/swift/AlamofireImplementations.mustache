@@ -15,17 +15,25 @@ class AlamofireRequestBuilderFactory: RequestBuilderFactory {
 // Store manager to retain its reference
 private var managerStore: [String: Alamofire.SessionManager] = [:]
 
-class AlamofireRequestBuilder<T>: RequestBuilder<T> {
-    required init(method: String, URLString: String, parameters: [String : Any]?, isBody: Bool) {
+open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
+    required public init(method: String, URLString: String, parameters: [String : Any]?, isBody: Bool) {
         super.init(method: method, URLString: URLString, parameters: parameters, isBody: isBody)
     }
 
-    override func execute(_ completion: @escaping (_ response: Response<T>?, _ error: Error?) -> Void) {
-        let managerId:String = UUID().uuidString
-        // Create a new manager for each request to customize its request header
+    /**
+     May be overridden by a subclass if you want to control the session
+     configuration.
+     */
+    open func createSessionManager() -> Alamofire.SessionManager {
         let configuration = URLSessionConfiguration.default
         configuration.httpAdditionalHeaders = buildHeaders()
-        let manager = Alamofire.SessionManager(configuration: configuration)
+        return Alamofire.SessionManager(configuration: configuration)
+    }
+
+    override open func execute(_ completion: @escaping (_ response: Response<T>?, _ error: Error?) -> Void) {
+        let managerId:String = UUID().uuidString
+        // Create a new manager for each request to customize its request header
+        let manager = createSessionManager()
         managerStore[managerId] = manager
 
         let encoding:ParameterEncoding = isBody ? JSONEncoding() : URLEncoding()
