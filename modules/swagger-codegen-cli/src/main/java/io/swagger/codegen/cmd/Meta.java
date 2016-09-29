@@ -2,6 +2,7 @@ package io.swagger.codegen.cmd;
 
 import ch.lambdaj.function.convert.Converter;
 import com.google.common.base.CaseFormat;
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.samskivert.mustache.Mustache;
@@ -21,6 +22,7 @@ import java.util.Map;
 
 import static ch.lambdaj.collection.LambdaCollections.with;
 import static com.google.common.base.Joiner.on;
+import static io.swagger.codegen.cmd.Version.UNKNOWN_VERSION;
 
 /**
  * User: lanwen
@@ -68,18 +70,14 @@ public class Meta implements Runnable {
                         "src/main/resources/META-INF/services", "io.swagger.codegen.CodegenConfig")
         );
 
-        String swaggerVersion = this.getClass().getPackage().getImplementationVersion();
-        // if the code is running outside of the jar (i.e. from the IDE), it will not have the version available.
-        // let's default it with something.
-        if (swaggerVersion==null) {
-            swaggerVersion = "2.1.3";
-        }
+        Optional<String> swaggerVersion = Version.readVersionFromResources();
+
         Map<String, Object> data = new ImmutableMap.Builder<String, Object>()
                 .put("generatorPackage", targetPackage)
                 .put("generatorClass", mainClass)
                 .put("name", name)
                 .put("fullyQualifiedGeneratorClass", targetPackage + "." + mainClass)
-                .put("swaggerCodegenVersion", swaggerVersion).build();
+                .put("swaggerCodegenVersion", swaggerVersion.or(UNKNOWN_VERSION)).build();
 
 
         with(supportingFiles).convert(processFiles(targetDir, data));
