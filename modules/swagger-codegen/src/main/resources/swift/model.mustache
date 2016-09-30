@@ -10,6 +10,10 @@ import Foundation
 {{#description}}
 
 /** {{description}} */{{/description}}
+{{#isArrayModel}}
+public typealias {{classname}} = [{{arrayModelType}}]
+{{/isArrayModel}}
+{{^isArrayModel}}
 open class {{classname}}: JSONEncodable {
 {{#vars}}
 {{#isEnum}}
@@ -57,5 +61,7 @@ open class {{classname}}: JSONEncodable {
         return dictionary
 {{/vars.isEmpty}}
     }
-}{{/model}}
+}
+{{/isArrayModel}}
+{{/model}}
 {{/models}}
