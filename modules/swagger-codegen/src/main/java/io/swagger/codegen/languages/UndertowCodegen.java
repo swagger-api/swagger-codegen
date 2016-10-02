@@ -8,6 +8,7 @@ import io.swagger.models.Swagger;
 import io.swagger.util.Json;
 import io.swagger.util.Yaml;
 import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,13 +70,15 @@ public class UndertowCodegen extends AbstractJavaCodegen {
 
         // keep the yaml in config folder for framework validation.
         supportingFiles.add(new SupportingFile("swagger.mustache", ("src.main.resources.config").replace(".", java.io.File.separator), "swagger.json"));
-        supportingFiles.add(new SupportingFile("handler.mustache", ("src.main.java.io.swagger.handler").replace(".", java.io.File.separator), "PathHandlerProvider.java"));
+        supportingFiles.add(new SupportingFile("handler.mustache", ("src.main.java." + apiPackage).replace(".", java.io.File.separator), "PathHandlerProvider.java"));
+        supportingFiles.add(new SupportingFile("handlerTest.mustache", ("src.test.java." + apiPackage).replace(".", java.io.File.separator), "PathHandlerProviderTest.java"));
         supportingFiles.add(new SupportingFile("service.mustache", ("src.main.resources.META-INF.services").replace(".", java.io.File.separator), "com.networknt.server.HandlerProvider"));
 
         // configuration files
         supportingFiles.add(new SupportingFile("server.json", ("src.main.resources.config").replace(".", java.io.File.separator), "server.json"));
         supportingFiles.add(new SupportingFile("security.json", ("src.main.resources.config").replace(".", java.io.File.separator), "security.json"));
         supportingFiles.add(new SupportingFile("primary.crt", ("src.main.resources.config.oauth").replace(".", java.io.File.separator), "primary.crt"));
+        supportingFiles.add(new SupportingFile("secondary.crt", ("src.main.resources.config.oauth").replace(".", java.io.File.separator), "secondary.crt"));
 
     }
 
@@ -138,6 +141,25 @@ public class UndertowCodegen extends AbstractJavaCodegen {
                         operation.returnType = rt.substring("Set<".length(), end);
                         operation.returnContainer = "Set";
                     }
+                }
+
+                // convert patch operation to update as undertow doesn't support it currently.
+                if(operation.httpMethod.equalsIgnoreCase("patch")) {
+                    operation.httpMethod = "UPDATE";
+                }
+
+                if(operation.httpMethod != null) {
+                    if(operation.httpMethod.equalsIgnoreCase("UPDATE")) {
+                        operation.notes = "Patch";
+                    } else {
+                        operation.notes = operation.httpMethod.substring(0, 1) + operation.httpMethod.substring(1).toLowerCase();
+                    }
+                }
+
+                if(operation.path != null) {
+                    operation.unescapedNotes = operation.path;
+                    operation.unescapedNotes = StringUtils.remove(operation.unescapedNotes, "{");
+                    operation.unescapedNotes = StringUtils.remove(operation.unescapedNotes, "}");
                 }
             }
         }

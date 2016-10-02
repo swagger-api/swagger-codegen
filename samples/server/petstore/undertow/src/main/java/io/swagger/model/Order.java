@@ -10,23 +10,26 @@ import java.util.Date;
 
 
 
-/**
- * An order for a pets from the pet store
- **/
 
-@ApiModel(description = "An order for a pets from the pet store")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-09-26T16:15:27.984+08:00")
+
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-10-02T18:33:08.301-04:00")
 public class Order   {
-  
   private Long id = null;
+
   private Long petId = null;
+
   private Integer quantity = null;
+
   private Date shipDate = null;
 
-
+  /**
+   * Order Status
+   */
   public enum StatusEnum {
     PLACED("placed"),
+    
     APPROVED("approved"),
+    
     DELIVERED("delivered");
 
     private String value;
@@ -38,11 +41,22 @@ public class Order   {
     @Override
     @JsonValue
     public String toString() {
-      return value;
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static StatusEnum fromValue(String text) {
+      for (StatusEnum b : StatusEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
     }
   }
 
   private StatusEnum status = null;
+
   private Boolean complete = false;
 
   /**
