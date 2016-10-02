@@ -85,6 +85,21 @@
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
+            <artifactId>body</artifactId>
+            <version>${version.framework}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>mask</artifactId>
+            <version>${version.framework}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>swagger</artifactId>
+            <version>${version.framework}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
             <artifactId>server</artifactId>
             <version>${version.framework}</version>
         </dependency>
