@@ -85,6 +85,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen {
         if (additionalProperties.containsKey(SUPPORT_JAVA6)) {
             this.setSupportJava6(Boolean.valueOf(additionalProperties.get(SUPPORT_JAVA6).toString()));
         }
+        additionalProperties.put(SUPPORT_JAVA6, supportJava6);
 
         final String invokerFolder = (sourceFolder + '/' + invokerPackage).replace(".", "/");
         final String authFolder = (sourceFolder + '/' + invokerPackage + ".auth").replace(".", "/");
