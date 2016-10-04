@@ -94,7 +94,7 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
         writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
         if (System.getProperty("noservice") == null) {
             apiTemplateFiles.put(
-                    "service.mustache",   // the template to use
+                    "routingService.mustache",   // the template to use
                     "Service.js");       // the extension for each file to write
         }
     }
