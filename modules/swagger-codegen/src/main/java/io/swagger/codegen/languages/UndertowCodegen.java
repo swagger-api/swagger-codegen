@@ -67,7 +67,7 @@ public class UndertowCodegen extends AbstractJavaCodegen {
 
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
         writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
-        writeOptional(outputFolder, new SupportingFile(".gitignore", "", ".gitignore"));
+        writeOptional(outputFolder, new SupportingFile("gitignore.mustache", "", ".gitignore"));
 
         // keep the yaml in config folder for framework validation.
         supportingFiles.add(new SupportingFile("swagger.mustache", ("src.main.resources.config").replace(".", java.io.File.separator), "swagger.json"));
