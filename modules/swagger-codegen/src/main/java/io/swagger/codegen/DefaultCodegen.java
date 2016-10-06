@@ -2738,7 +2738,7 @@ public class DefaultCodegen {
 
             Set<String> mandatory = required == null ? Collections.<String> emptySet()
                     : new TreeSet<String>(required);
-            addVars(m, m.vars, properties, mandatory);
+            addVars(m, m.vars, properties, mandatory, null);
             m.allMandatory = m.mandatory = mandatory;
         } else {
             m.emptyVars = true;
@@ -2749,12 +2749,12 @@ public class DefaultCodegen {
         if (allProperties != null) {
             Set<String> allMandatory = allRequired == null ? Collections.<String> emptySet()
                     : new TreeSet<String>(allRequired);
-            addVars(m, m.allVars, allProperties, allMandatory);
+            addVars(m, m.allVars, allProperties, allMandatory, properties.keySet());
             m.allMandatory = allMandatory;
         }
     }
 
-    private void addVars(CodegenModel m, List<CodegenProperty> vars, Map<String, Property> properties, Set<String> mandatory) {
+    private void addVars(CodegenModel m, List<CodegenProperty> vars, Map<String, Property> properties, Set<String> mandatory, Set<String> alreadyAdded) {
         // convert set to list so that we can access the next entry in the loop
         List<Map.Entry<String, Property>> propertyList = new ArrayList<Map.Entry<String, Property>>(properties.entrySet());
         final int totalCount = propertyList.size();
@@ -2801,18 +2801,22 @@ public class DefaultCodegen {
                 }
                 vars.add(cp);
 
-                // if required, add to the list "requiredVars"
-                if (Boolean.TRUE.equals(cp.required)) {
-                    m.requiredVars.add(cp);
-                } else { // else add to the list "optionalVars" for optional property
-                    m.optionalVars.add(cp);
-                }
+                // only add to the other lists if we haven't done so already
+                if (alreadyAdded == null || !alreadyAdded.contains(key)) {
 
-                // if readonly, add to readOnlyVars (list of properties)
-                if (Boolean.TRUE.equals(cp.isReadOnly)) {
-                    m.readOnlyVars.add(cp);
-                } else { // else add to readWriteVars (list of properties)
-                    m.readWriteVars.add(cp);
+                    // if required, add to the list "requiredVars"
+                    if (Boolean.TRUE.equals(cp.required)) {
+                        m.requiredVars.add(cp);
+                    } else { // else add to the list "optionalVars" for optional property
+                        m.optionalVars.add(cp);
+                    }
+
+                    // if readonly, add to readOnlyVars (list of properties)
+                    if (Boolean.TRUE.equals(cp.isReadOnly)) {
+                        m.readOnlyVars.add(cp);
+                    } else { // else add to readWriteVars (list of properties)
+                        m.readWriteVars.add(cp);
+                    }
                 }
             }
         }
