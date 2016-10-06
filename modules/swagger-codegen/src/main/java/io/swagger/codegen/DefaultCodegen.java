@@ -2817,6 +2817,16 @@ public class DefaultCodegen {
                     } else { // else add to readWriteVars (list of properties)
                         m.readWriteVars.add(cp);
                     }
+
+                    if (alreadyAdded != null) {
+                        // the current var comes from the parent 
+                        CodegenProperty parent_cp = cp.clone();
+                        parent_cp.hasMore = Boolean.FALSE;
+                        if (!m.parentVars.isEmpty()) {
+                            m.parentVars.get( m.parentVars.size() - 1 ).hasMore = Boolean.TRUE;
+                        }
+                        m.parentVars.add( parent_cp );
+                    }
                 }
             }
         }
