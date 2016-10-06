@@ -90,7 +90,7 @@ class {{classname}}(object):
 {{^isEnum}}
 {{#hasValidation}}
 {{#required}}
-        if not {{name}}:
+        if {{name}} is None:
             raise ValueError("Invalid value for `{{name}}`, must not be `None`")
 {{/required}}
 {{#maxLength}}
