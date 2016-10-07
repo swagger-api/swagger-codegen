@@ -107,12 +107,14 @@ namespace {{packageName}}.Client
         /// </summary>
         public Configuration()
         {
-            Timeout = 100000;
             UserAgent = "{{#httpUserAgent}}{{.}}{{/httpUserAgent}}{{^httpUserAgent}}Swagger-Codegen/{{packageVersion}}/csharp{{/httpUserAgent}}";
             BasePath = "{{{basePath}}}";
             DefaultHeader = new ConcurrentDictionary<string, string>();
             ApiKey = new ConcurrentDictionary<string, string>();
             ApiKeyPrefix = new ConcurrentDictionary<string, string>();
+
+            // Setting Timeout has side effects (forces ApiClient creation).
+            Timeout = 100000;
         }
 
         /// <summary>
@@ -227,7 +229,11 @@ namespace {{packageName}}.Client
         /// <summary>
         /// Gets or sets the HTTP timeout (milliseconds) of ApiClient. Default to 100000 milliseconds.
         /// </summary>
-        public virtual int Timeout { get; set; }
+        public virtual int Timeout
+        {
+            get { return ApiClient.RestClient.Timeout; }
+            set { ApiClient.RestClient.Timeout = value; }
+        }
 
         /// <summary>
         /// Gets or sets the HTTP user agent.
