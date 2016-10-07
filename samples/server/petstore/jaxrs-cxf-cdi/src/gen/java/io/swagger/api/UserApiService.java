@@ -9,14 +9,13 @@ import io.swagger.model.User;
 import java.util.List;
 
 import java.util.List;
-import io.swagger.api.NotFoundException;
 
 import java.io.InputStream;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJAXRSCXFCDIServerCodegen", date = "2016-10-06T16:59:45.939+01:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJAXRSCXFCDIServerCodegen", date = "2016-10-07T11:14:51.064+01:00")
 public interface UserApiService {
       public Response createUser(User body, SecurityContext securityContext);
       public Response createUsersWithArrayInput(List<User> body, SecurityContext securityContext);

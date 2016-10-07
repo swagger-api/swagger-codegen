@@ -10,14 +10,13 @@ import io.swagger.model.ModelApiResponse;
 import java.io.File;
 
 import java.util.List;
-import io.swagger.api.NotFoundException;
 
 import java.io.InputStream;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJAXRSCXFCDIServerCodegen", date = "2016-10-06T16:59:45.939+01:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJAXRSCXFCDIServerCodegen", date = "2016-10-07T11:14:51.064+01:00")
 public interface PetApiService {
       public Response addPet(Pet body, SecurityContext securityContext);
       public Response deletePet(Long petId, String apiKey, SecurityContext securityContext);
