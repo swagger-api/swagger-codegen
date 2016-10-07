@@ -176,12 +176,12 @@ class ApiClient(object):
         :param obj: The data to serialize.
         :return: The serialized form of data.
         """
-        types = (str, float, bool, tuple) + tuple(integer_types) + (text_type,)
+        types = (str, float, bool) + tuple(integer_types) + (text_type,)
         if isinstance(obj, type(None)):
             return None
         elif isinstance(obj, types):
             return obj
-        elif isinstance(obj, list):
+        elif isinstance(obj, (list, tuple)):
             return [self.sanitize_for_serialization(sub_obj)
                     for sub_obj in obj]
         elif isinstance(obj, (datetime, date)):
