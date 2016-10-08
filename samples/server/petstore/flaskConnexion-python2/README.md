@@ -10,8 +10,8 @@ This example uses the [Connexion](https://github.com/zalando/connexion) library 
 To run the server, please execute the following:
 
 ```
-sudo pip3 install -U connexion # install Connexion from PyPI
-python3 app.py
+sudo pip install -U connexion # install Connexion from PyPI
+python app.py
 ```
 
 and open your browser to here:
