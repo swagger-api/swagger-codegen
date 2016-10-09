@@ -128,12 +128,14 @@ namespace IO.Swagger.Client
         /// </summary>
         public Configuration()
         {
-            Timeout = 100000;
             UserAgent = "Swagger-Codegen/1.0.0/csharp";
             BasePath = "http://petstore.swagger.io/v2";
             DefaultHeader = new ConcurrentDictionary<string, string>();
             ApiKey = new ConcurrentDictionary<string, string>();
             ApiKeyPrefix = new ConcurrentDictionary<string, string>();
+
+            // Setting Timeout has side effects (forces ApiClient creation).
+            Timeout = 100000;
         }
 
         /// <summary>
@@ -203,7 +205,7 @@ namespace IO.Swagger.Client
             // ReSharper restore UnusedParameter.Local
             )
         {
-            
+
         }
 
         /// <summary>
@@ -214,7 +216,7 @@ namespace IO.Swagger.Client
         // ReSharper disable once UnusedParameter.Local
         public Configuration(ApiClient apiClient)
         {
-            
+
         }
 
         #endregion Constructors
@@ -248,7 +250,11 @@ namespace IO.Swagger.Client
         /// <summary>
         /// Gets or sets the HTTP timeout (milliseconds) of ApiClient. Default to 100000 milliseconds.
         /// </summary>
-        public virtual int Timeout { get; set; }
+        public virtual int Timeout
+        {
+            get { return ApiClient.RestClient.Timeout; }
+            set { ApiClient.RestClient.Timeout = value; }
+        }
 
         /// <summary>
         /// Gets or sets the HTTP user agent.
