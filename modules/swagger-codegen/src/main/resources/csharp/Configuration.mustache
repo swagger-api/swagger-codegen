@@ -216,10 +216,20 @@ namespace {{packageName}}.Client
             }
         }
 
+        private String _basePath = null;
         /// <summary>
         /// Gets or sets the base path for API access.
         /// </summary>
-        public virtual string BasePath { get; set; }
+        public virtual string BasePath {
+            get { return _basePath; }
+            set {
+                _basePath = value;
+                // pass-through to ApiClient if it's set.
+                if(_apiClient != null) {
+                    _apiClient.RestClient.BaseUrl = new Uri(_basePath);
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the default header.
