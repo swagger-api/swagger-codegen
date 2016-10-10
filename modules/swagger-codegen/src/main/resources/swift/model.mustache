@@ -47,8 +47,8 @@ open class {{classname}}: JSONEncodable {
         nillableDictionary["{{baseName}}"] = self.{{name}}{{^unwrapRequired}}?{{/unwrapRequired}}{{#unwrapRequired}}{{^required}}?{{/required}}{{/unwrapRequired}}.encodeToJSON(){{/isLong}}{{^isLong}}{{^isInteger}}
         nillableDictionary["{{baseName}}"] = self.{{name}}{{/isInteger}}{{/isLong}}{{/isEnum}}{{/isPrimitiveType}}{{#isEnum}}
         nillableDictionary["{{baseName}}"] = self.{{name}}{{^unwrapRequired}}?{{/unwrapRequired}}{{#unwrapRequired}}{{^required}}?{{/required}}{{/unwrapRequired}}.rawValue{{/isEnum}}{{^isPrimitiveType}}
-        nillableDictionary["{{baseName}}"] = self.{{name}}{{^unwrapRequired}}?{{/unwrapRequired}}{{#unwrapRequired}}{{^required}}?{{/required}}{{/unwrapRequired}}.encodeToJSON(){{/isPrimitiveType}}{{/isNotContainer}}{{#isContainer}}{{^isEnum}}
-        nillableDictionary["{{baseName}}"] = self.{{name}}{{^unwrapRequired}}?{{/unwrapRequired}}{{#unwrapRequired}}{{^required}}?{{/required}}{{/unwrapRequired}}.encodeToJSON(){{/isEnum}}{{/isContainer}}{{/vars}}
+        nillableDictionary["{{baseName}}"] = self.{{name}}{{^unwrapRequired}}?{{/unwrapRequired}}{{#unwrapRequired}}{{^required}}?{{/required}}{{/unwrapRequired}}.encodeToJSON(){{/isPrimitiveType}}{{/isNotContainer}}{{#isContainer}}
+        nillableDictionary["{{baseName}}"] = self.{{name}}{{^unwrapRequired}}?{{/unwrapRequired}}{{#unwrapRequired}}{{^required}}?{{/required}}{{/unwrapRequired}}.encodeToJSON(){{/isContainer}}{{/vars}}
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
     }
