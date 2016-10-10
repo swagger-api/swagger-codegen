@@ -87,9 +87,6 @@ public class JavaInflectorServerCodegen extends JavaClientCodegen {
         );
         supportingFiles.add(new SupportingFile("StringUtil.mustache",
                 (sourceFolder + '/' + invokerPackage).replace(".", "/"), "StringUtil.java"));
-
-        supportingFiles.add(new SupportingFile("ApiDateFormat.mustache",
-                (sourceFolder + '/' + invokerPackage).replace(".", "/"), "ApiDateFormat.java"));
     }
 
     @Override

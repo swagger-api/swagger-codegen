@@ -115,8 +115,6 @@ public class JavaResteasyServerCodegen extends JavaClientCodegen implements Code
                 (sourceFolder + '/' + invokerPackage).replace(".", "/"), "RestApplication.java"));
         supportingFiles.add(new SupportingFile("StringUtil.mustache",
                 (sourceFolder + '/' + invokerPackage).replace(".", "/"), "StringUtil.java"));
-        supportingFiles.add(new SupportingFile("ApiDateFormat.mustache",
-                (sourceFolder + '/' + invokerPackage).replace(".", "/"), "ApiDateFormat.java"));
 
         if (additionalProperties.containsKey("dateLibrary")) {
             setDateLibrary(additionalProperties.get("dateLibrary").toString());
