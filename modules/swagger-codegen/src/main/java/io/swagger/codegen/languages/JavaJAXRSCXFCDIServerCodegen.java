@@ -1,5 +1,6 @@
 package io.swagger.codegen.languages;
 
+import io.swagger.codegen.*;
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenProperty;
 
@@ -34,6 +35,8 @@ public class JavaJAXRSCXFCDIServerCodegen extends JavaJAXRSSpecServerCodegen
 		super.processOpts();
 
 		supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
+
+		writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
 	}
 
 	@Override
