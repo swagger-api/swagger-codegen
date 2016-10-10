@@ -10,17 +10,19 @@ public class JavaJAXRSCXFCDIServerCodegen extends JavaJAXRSSpecServerCodegen
 {
 	public JavaJAXRSCXFCDIServerCodegen()
 	{
-				sourceFolder = "src" + File.separator + "gen" + File.separator + "java";
+		artifactId = "swagger-jaxrs-cxf-cdi-server";
 
-				// Three API templates to support CDI injection
-				apiTemplateFiles.put("apiService.mustache", ".java");
-        apiTemplateFiles.put("apiServiceImpl.mustache", ".java");
+		sourceFolder = "src" + File.separator + "gen" + File.separator + "java";
 
-				// Use standard types
-				typeMapping.put("DateTime", "java.util.Date");
+		// Three API templates to support CDI injection
+		apiTemplateFiles.put("apiService.mustache", ".java");
+	  apiTemplateFiles.put("apiServiceImpl.mustache", ".java");
 
-				// Updated template directory
-        embeddedTemplateDir = templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME + File.separator + "cxf-cdi";
+		// Use standard types
+		typeMapping.put("DateTime", "java.util.Date");
+
+		// Updated template directory
+	  embeddedTemplateDir = templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME + File.separator + "cxf-cdi";
 	}
 
 	@Override
@@ -41,16 +43,16 @@ public class JavaJAXRSCXFCDIServerCodegen extends JavaJAXRSSpecServerCodegen
 
 	@Override
 	public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
-			super.postProcessModelProperty(model, property);
+		super.postProcessModelProperty(model, property);
 
-			// Reinstate JsonProperty
-			model.imports.add("JsonProperty");
+		// Reinstate JsonProperty
+		model.imports.add("JsonProperty");
 	}
 
 	@Override
 	public String getHelp()
 	{
-			return "Generates a Java JAXRS Server according to JAXRS 2.0 specification, assuming an Apache CXF runtime and a Java EE runtime with CDI enabled.";
+		return "Generates a Java JAXRS Server according to JAXRS 2.0 specification, assuming an Apache CXF runtime and a Java EE runtime with CDI enabled.";
 	}
 
 }
