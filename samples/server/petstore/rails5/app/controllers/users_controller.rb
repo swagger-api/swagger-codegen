@@ -20,7 +20,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 =end
-class UserController < ApplicationController
+class UsersController < ApplicationController
 
   def create
     # Your code here

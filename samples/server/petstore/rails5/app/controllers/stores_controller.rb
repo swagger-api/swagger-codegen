@@ -20,7 +20,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 =end
-class StoreController < ApplicationController
+class StoresController < ApplicationController
 
   def delete_order
     # Your code here

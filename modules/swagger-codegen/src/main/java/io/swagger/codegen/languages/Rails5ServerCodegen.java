@@ -291,7 +291,7 @@ public class Rails5ServerCodegen extends DefaultCodegen implements CodegenConfig
             return "ApiController";
         }
         // e.g. phone_number_api => PhoneNumberApi
-        return camelize(name) + "Controller";
+        return camelize(name) + "sController";
     }
 
     @Override
