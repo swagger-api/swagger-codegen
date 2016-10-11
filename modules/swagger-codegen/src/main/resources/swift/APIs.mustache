@@ -70,7 +70,7 @@ open class RequestBuilder<T> {
     }
 }
 
-protocol RequestBuilderFactory {
+public protocol RequestBuilderFactory {
     func getBuilder<T>() -> RequestBuilder<T>.Type
 }
 
