@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2016 Network New Technologies Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ You may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<configuration>
+    TODO create logger for audit only.
+    http://stackoverflow.com/questions/2488558/logback-to-log-different-messages-to-two-files
+    <turboFilter class="ch.qos.logback.classic.turbo.MarkerFilter">
+        <Marker>PROFILER</Marker>
+        <!--<OnMatch>DENY</OnMatch>-->
+        <OnMatch>NEUTRAL</OnMatch>
+    </turboFilter>
+
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoders are assigned the type
+             ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5marker %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="log" class="ch.qos.logback.core.FileAppender">
+        <File>target/test.log</File>
+        <Append>false</Append>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %class{36}:%L %M - %msg%n</Pattern>
+        </layout>
+    </appender>
+
+    <!--audit log-->
+    <appender name="audit" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>target/audit.log</file> <!-- logfile location -->
+        <encoder>
+            <pattern>%-5level [%thread] %date{ISO8601} %F:%L - %msg%n
+            </pattern> <!-- the layout pattern used to format log entries -->
+            <immediateFlush>true</immediateFlush>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>target/audit.log.%i.zip</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>5</maxIndex> <!-- max number of archived logs that are kept -->
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>200MB
+            </maxFileSize> <!-- The size of the logfile that triggers a switch to a new logfile, and the current one archived -->
+        </triggeringPolicy>
+    </appender>
+
+    <root level="error">
+        <appender-ref ref="stdout"/>
+    </root>
+
+    <logger name="com.networknt" level="error">
+        <appender-ref ref="log"/>
+    </logger>
+
+    <logger name="Audit" level="error" additivity="false">
+        <appender-ref ref="audit"/>
+    </logger>
+
+</configuration>

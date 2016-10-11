@@ -83,6 +83,8 @@ public class UndertowCodegen extends AbstractJavaCodegen {
         supportingFiles.add(new SupportingFile("primary.crt", ("src.main.resources.config.oauth").replace(".", java.io.File.separator), "primary.crt"));
         supportingFiles.add(new SupportingFile("secondary.crt", ("src.main.resources.config.oauth").replace(".", java.io.File.separator), "secondary.crt"));
 
+        supportingFiles.add(new SupportingFile("logback.xml", ("src.main.resources").replace(".", java.io.File.separator), "logback.xml"));
+
     }
 
     /*
