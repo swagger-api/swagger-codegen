@@ -14,8 +14,6 @@ open class AnimalFarm: JSONEncodable {
 
     // MARK: JSONEncodable
     func encodeToJSON() -> Any {
-        var nillableDictionary = [String:Any?]()
-        let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+        return [:]
     }
 }

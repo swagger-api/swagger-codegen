@@ -79,7 +79,7 @@ class AlamofireRequestBuilder<T>: RequestBuilder<T> {
         }
 
         let cleanupRequest = {
-            managerStore.removeValue(forKey: managerId)
+            _ = managerStore.removeValue(forKey: managerId)
         }
 
         let validatedRequest = request.validate()
@@ -100,7 +100,7 @@ class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 completion(
                     Response(
                         response: stringResponse.response!,
-                        body: (stringResponse.result.value ?? "") as! T
+                        body: ((stringResponse.result.value ?? "") as! T)
                     ),
                     nil
                 )
@@ -139,7 +139,7 @@ class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 completion(
                     Response(
                         response: dataResponse.response!,
-                        body: dataResponse.data as! T
+                        body: (dataResponse.data as! T)
                     ),
                     nil
                 )
@@ -154,7 +154,7 @@ class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 }
 
                 if () is T {
-                    completion(Response(response: response.response!, body: () as! T), nil)
+                    completion(Response(response: response.response!, body: (() as! T)), nil)
                     return
                 }
                 if let json: Any = response.result.value {
@@ -164,7 +164,7 @@ class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 } else if "" is T {
                     // swagger-parser currently doesn't support void, which will be fixed in future swagger-parser release
                     // https://github.com/swagger-api/swagger-parser/pull/34
-                    completion(Response(response: response.response!, body: "" as! T), nil)
+                    completion(Response(response: response.response!, body: ("" as! T)), nil)
                     return
                 }
 
