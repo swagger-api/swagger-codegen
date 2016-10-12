@@ -1,0 +1,15 @@
+package {{package}};
+
+import io.undertow.server.HttpHandler;
+import io.undertow.server.HttpServerExchange;
+
+{{#operations}}
+{{#operation}}
+public class {{classname}} implements HttpHandler {
+
+    public void handleRequest(HttpServerExchange exchange) throws Exception {
+        exchange.getResponseSender().send("{{operationId}}");
+    }
+}
+{{/operation}}
+{{/operations}}

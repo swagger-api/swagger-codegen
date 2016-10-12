@@ -25,7 +25,6 @@ public class UndertowCodegen extends AbstractJavaCodegen {
         super();
 
         sourceFolder = "src/main/java";
-        apiTestTemplateFiles.clear(); // TODO: add test template
         embeddedTemplateDir = templateDir = "undertow";
         invokerPackage = "io.swagger.handler";
         artifactId = "swagger-undertow-server";
@@ -63,7 +62,7 @@ public class UndertowCodegen extends AbstractJavaCodegen {
     public void processOpts() {
         super.processOpts();
 
-        apiTemplateFiles.remove("api.mustache");
+        //apiTemplateFiles.remove("api.mustache");
 
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
         writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
@@ -72,7 +71,6 @@ public class UndertowCodegen extends AbstractJavaCodegen {
         // keep the yaml in config folder for framework validation.
         supportingFiles.add(new SupportingFile("swagger.mustache", ("src.main.resources.config").replace(".", java.io.File.separator), "swagger.json"));
         supportingFiles.add(new SupportingFile("handler.mustache", ("src.main.java." + apiPackage).replace(".", java.io.File.separator), "PathHandlerProvider.java"));
-        supportingFiles.add(new SupportingFile("handlerTest.mustache", ("src.test.java." + apiPackage).replace(".", java.io.File.separator), "PathHandlerProviderTest.java"));
 
         supportingFiles.add(new SupportingFile("routingService.mustache", ("src.main.resources.META-INF.services").replace(".", java.io.File.separator), "com.networknt.server.HandlerProvider"));
         supportingFiles.add(new SupportingFile("middlewareService.mustache", ("src.main.resources.META-INF.services").replace(".", java.io.File.separator), "com.networknt.handler.MiddlewareHandler"));
@@ -116,6 +114,16 @@ public class UndertowCodegen extends AbstractJavaCodegen {
         co.baseName = basePath;
     }
     */
+
+    @Override
+    public void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co, Map<String, List<CodegenOperation>> operations) {
+        String method = co.httpMethod.substring(0, 1).toUpperCase() + co.httpMethod.substring(1).toLowerCase();
+        String basePath = toApiName(resourcePath + method);
+        List<CodegenOperation> opList = new ArrayList<CodegenOperation>();
+        opList.add(co);
+        operations.put(basePath, opList);
+    }
+
 
     @Override
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
@@ -241,6 +249,10 @@ public class UndertowCodegen extends AbstractJavaCodegen {
             return "DefaultHandler";
         }
         name = name.replaceAll("[^a-zA-Z0-9]+", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
-        return camelize(name)+ "Handler";
+        if(name.endsWith("Handler")) {
+            return camelize(name);
+        } else {
+            return camelize(name) + "Handler";
+        }
     }
 }

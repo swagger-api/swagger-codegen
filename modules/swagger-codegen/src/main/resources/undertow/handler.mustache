@@ -11,18 +11,11 @@ public class PathHandlerProvider implements HandlerProvider {
 
     public HttpHandler getHandler() {
         HttpHandler handler = Handlers.routing()
-
 {{#apiInfo}}
 {{#apis}}
 {{#operations}}
 {{#operation}}
-
-            .add(Methods.{{httpMethod}}, "{{basePathWithoutHost}}{{path}}", new HttpHandler() {
-                        public void handleRequest(HttpServerExchange exchange) throws Exception {
-                            exchange.getResponseSender().send("{{operationId}}");
-                        }
-                    })
-
+            .add(Methods.{{httpMethod}}, "{{basePathWithoutHost}}{{path}}", new {{classname}}())
 {{/operation}}
 {{/operations}}
 {{/apis}}
