@@ -14,6 +14,10 @@ import Foundation
 public typealias {{classname}} = [{{arrayModelType}}]
 {{/isArrayModel}}
 {{^isArrayModel}}
+{{#vars.isEmpty}}
+public typealias {{classname}} = {{dataType}}
+{{/vars.isEmpty}}
+{{^vars.isEmpty}}
 open class {{classname}}: JSONEncodable {
 {{#vars}}
 {{#isEnum}}
@@ -46,10 +50,6 @@ open class {{classname}}: JSONEncodable {
 
     // MARK: JSONEncodable
     func encodeToJSON() -> Any {
-{{#vars.isEmpty}}
-        return [:]
-{{/vars.isEmpty}}
-{{^vars.isEmpty}}
         var nillableDictionary = [String:Any?](){{#vars}}{{#isNotContainer}}{{#isPrimitiveType}}{{^isEnum}}{{#isInteger}}
         nillableDictionary["{{baseName}}"] = self.{{name}}{{^unwrapRequired}}?{{/unwrapRequired}}{{#unwrapRequired}}{{^required}}?{{/required}}{{/unwrapRequired}}.encodeToJSON(){{/isInteger}}{{#isLong}}
         nillableDictionary["{{baseName}}"] = self.{{name}}{{^unwrapRequired}}?{{/unwrapRequired}}{{#unwrapRequired}}{{^required}}?{{/required}}{{/unwrapRequired}}.encodeToJSON(){{/isLong}}{{^isLong}}{{^isInteger}}
@@ -59,9 +59,9 @@ open class {{classname}}: JSONEncodable {
         nillableDictionary["{{baseName}}"] = self.{{name}}{{^unwrapRequired}}?{{/unwrapRequired}}{{#unwrapRequired}}{{^required}}?{{/required}}{{/unwrapRequired}}.encodeToJSON(){{/isContainer}}{{/vars}}
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
-{{/vars.isEmpty}}
     }
 }
+{{/vars.isEmpty}}
 {{/isArrayModel}}
 {{/model}}
 {{/models}}
