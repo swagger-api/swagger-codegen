@@ -185,11 +185,8 @@ class ApiClient(object):
             return [self.sanitize_for_serialization(sub_obj)
                     for sub_obj in obj]
         elif isinstance(obj, tuple):
-            if len(obj) == 1 and isinstance(obj[0], list) and len(obj[0]) == 3:
-                return obj
-            else:
-                return tuple(self.sanitize_for_serialization(sub_obj)
-                    for sub_obj in obj)
+            return tuple(self.sanitize_for_serialization(sub_obj)
+                for sub_obj in obj)
         elif isinstance(obj, (datetime, date)):
             return obj.isoformat()
         else:
