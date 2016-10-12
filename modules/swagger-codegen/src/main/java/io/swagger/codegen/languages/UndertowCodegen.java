@@ -71,6 +71,7 @@ public class UndertowCodegen extends AbstractJavaCodegen {
         // keep the yaml in config folder for framework validation.
         supportingFiles.add(new SupportingFile("swagger.mustache", ("src.main.resources.config").replace(".", java.io.File.separator), "swagger.json"));
         supportingFiles.add(new SupportingFile("handler.mustache", ("src.main.java." + apiPackage).replace(".", java.io.File.separator), "PathHandlerProvider.java"));
+        supportingFiles.add(new SupportingFile("testServer.mustache", ("src.test.java." + apiPackage).replace(".", java.io.File.separator), "TestServer.java"));
 
         supportingFiles.add(new SupportingFile("routingService.mustache", ("src.main.resources.META-INF.services").replace(".", java.io.File.separator), "com.networknt.server.HandlerProvider"));
         supportingFiles.add(new SupportingFile("middlewareService.mustache", ("src.main.resources.META-INF.services").replace(".", java.io.File.separator), "com.networknt.handler.MiddlewareHandler"));
