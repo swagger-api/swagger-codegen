@@ -8,12 +8,4 @@
 import Foundation
 
 
-open class EnumClass: JSONEncodable {
-
-    public init() {}
-
-    // MARK: JSONEncodable
-    func encodeToJSON() -> Any {
-        return [:]
-    }
-}
+public typealias EnumClass = String
