@@ -145,6 +145,11 @@ class Decoders {
         }
         // Decoder for {{{classname}}}
         Decoders.addDecoder(clazz: {{{classname}}}.self) { (source: AnyObject) -> {{{classname}}} in
+{{#isArrayModel}}
+            let sourceArray = source as! [AnyObject]
+            return sourceArray.map({ Decoders.decode(clazz: {{{arrayModelType}}}.self, source: $0) })
+{{/isArrayModel}}
+{{^isArrayModel}}
             let sourceDictionary = source as! [AnyHashable: Any]
             {{#unwrapRequired}}
             let instance = {{classname}}({{#requiredVars}}{{^-first}}, {{/-first}}{{#isEnum}}{{name}}: {{classname}}.{{datatypeWithEnum}}(rawValue: (sourceDictionary["{{baseName}}"] as! {{datatype}}))! {{/isEnum}}{{^isEnum}}{{name}}: Decoders.decode(clazz: {{{baseType}}}.self, source: sourceDictionary["{{baseName}}"]! as AnyObject){{/isEnum}}{{/requiredVars}})
@@ -165,6 +170,7 @@ class Decoders {
             {{^isEnum}}instance.{{name}} = Decoders.decodeOptional(clazz: {{{baseType}}}.self, source: sourceDictionary["{{baseName}}"] as AnyObject?){{/isEnum}}{{/vars}}
             {{/unwrapRequired}}
             return instance
+{{/isArrayModel}}
         }{{/model}}
         {{/models}}
     }()

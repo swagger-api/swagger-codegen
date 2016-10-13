@@ -173,9 +173,8 @@ class Decoders {
         }
         // Decoder for AnimalFarm
         Decoders.addDecoder(clazz: AnimalFarm.self) { (source: AnyObject) -> AnimalFarm in
-            let sourceDictionary = source as! [AnyHashable: Any]
-            let instance = AnimalFarm()
-            return instance
+            let sourceArray = source as! [AnyObject]
+            return sourceArray.map({ Decoders.decode(clazz: Animal.self, source: $0) })
         }
 
 

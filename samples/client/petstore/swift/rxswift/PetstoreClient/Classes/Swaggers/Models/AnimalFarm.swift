@@ -8,12 +8,4 @@
 import Foundation
 
 
-open class AnimalFarm: JSONEncodable {
-
-    public init() {}
-
-    // MARK: JSONEncodable
-    func encodeToJSON() -> Any {
-        return [:]
-    }
-}
+public typealias AnimalFarm = [Animal]
