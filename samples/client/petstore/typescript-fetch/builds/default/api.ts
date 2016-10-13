@@ -48,9 +48,7 @@ export class BaseAPI {
     constructor(fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH, configuration: Configuration = new Configuration()) {
         this.basePath = basePath;
         this.fetch = fetch;
-        if (configuration) {
-            this.configuration = configuration;
-        }
+        this.configuration = configuration;
     }
 
 }
