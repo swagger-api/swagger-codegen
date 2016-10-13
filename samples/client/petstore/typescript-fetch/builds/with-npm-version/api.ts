@@ -28,6 +28,8 @@ import * as url from "url";
 import * as isomorphicFetch from "isomorphic-fetch";
 import * as assign from "core-js/library/fn/object/assign";
 
+import { Configuration } from 'configuration';
+
 interface Dictionary<T> { [index: string]: T; }
 export interface FetchAPI { (url: string, init?: any): Promise<any>; }
 
@@ -41,11 +43,22 @@ export interface FetchArgs {
 export class BaseAPI {
     basePath: string;
     fetch: FetchAPI;
+    public configuration: Configuration = new Configuration();
 
     constructor(fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) {
         this.basePath = basePath;
         this.fetch = fetch;
     }
+
+    constructor(fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH, configuration: Configuration) {
+        this.basePath = basePath;
+        this.fetch = fetch;
+        this.configuration = configuration
+        if (configuration) {
+            this.configuration = configuration;
+        }
+    }
+
 }
 
 export interface Category {
@@ -122,6 +135,14 @@ export const PetApiFetchParamCreactor = {
         if (contentTypeHeader) {
             fetchOptions.headers = contentTypeHeader;
         }
+        // authentication (petstore_auth) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            fetchOptions.headers = assign({
+                    'Authorization': 'Bearer ' + this.configuration.accessToken,
+                    }, contentTypeHeader);
+        }
+
         return {
             url: url.format(urlObj),
             options: fetchOptions,
@@ -147,6 +168,14 @@ export const PetApiFetchParamCreactor = {
         if (contentTypeHeader) {
             fetchOptions.headers = contentTypeHeader;
         }
+        // authentication (petstore_auth) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            fetchOptions.headers = assign({
+                    'Authorization': 'Bearer ' + this.configuration.accessToken,
+                    }, contentTypeHeader);
+        }
+
         return {
             url: url.format(urlObj),
             options: fetchOptions,
@@ -169,6 +198,14 @@ export const PetApiFetchParamCreactor = {
         if (contentTypeHeader) {
             fetchOptions.headers = contentTypeHeader;
         }
+        // authentication (petstore_auth) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            fetchOptions.headers = assign({
+                    'Authorization': 'Bearer ' + this.configuration.accessToken,
+                    }, contentTypeHeader);
+        }
+
         return {
             url: url.format(urlObj),
             options: fetchOptions,
@@ -191,6 +228,14 @@ export const PetApiFetchParamCreactor = {
         if (contentTypeHeader) {
             fetchOptions.headers = contentTypeHeader;
         }
+        // authentication (petstore_auth) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            fetchOptions.headers = assign({
+                    'Authorization': 'Bearer ' + this.configuration.accessToken,
+                    }, contentTypeHeader);
+        }
+
         return {
             url: url.format(urlObj),
             options: fetchOptions,
@@ -215,6 +260,20 @@ export const PetApiFetchParamCreactor = {
         if (contentTypeHeader) {
             fetchOptions.headers = contentTypeHeader;
         }
+        // authentication (api_key) required
+        if (this.configuration.apiKey) {
+            fetchOptions.headers = assign({
+                    'api_key': this.configuration.apiKey,
+                    }, contentTypeHeader);
+        }
+        // authentication (petstore_auth) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            fetchOptions.headers = assign({
+                    'Authorization': 'Bearer ' + this.configuration.accessToken,
+                    }, contentTypeHeader);
+        }
+
         return {
             url: url.format(urlObj),
             options: fetchOptions,
@@ -238,6 +297,14 @@ export const PetApiFetchParamCreactor = {
         if (contentTypeHeader) {
             fetchOptions.headers = contentTypeHeader;
         }
+        // authentication (petstore_auth) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            fetchOptions.headers = assign({
+                    'Authorization': 'Bearer ' + this.configuration.accessToken,
+                    }, contentTypeHeader);
+        }
+
         return {
             url: url.format(urlObj),
             options: fetchOptions,
@@ -269,6 +336,14 @@ export const PetApiFetchParamCreactor = {
         if (contentTypeHeader) {
             fetchOptions.headers = contentTypeHeader;
         }
+        // authentication (petstore_auth) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            fetchOptions.headers = assign({
+                    'Authorization': 'Bearer ' + this.configuration.accessToken,
+                    }, contentTypeHeader);
+        }
+
         return {
             url: url.format(urlObj),
             options: fetchOptions,
@@ -300,6 +375,14 @@ export const PetApiFetchParamCreactor = {
         if (contentTypeHeader) {
             fetchOptions.headers = contentTypeHeader;
         }
+        // authentication (petstore_auth) required
+        // oauth required
+        if (this.configuration.accessToken) {
+            fetchOptions.headers = assign({
+                    'Authorization': 'Bearer ' + this.configuration.accessToken,
+                    }, contentTypeHeader);
+        }
+
         return {
             url: url.format(urlObj),
             options: fetchOptions,
@@ -630,6 +713,7 @@ export const StoreApiFetchParamCreactor = {
         if (contentTypeHeader) {
             fetchOptions.headers = contentTypeHeader;
         }
+
         return {
             url: url.format(urlObj),
             options: fetchOptions,
@@ -648,6 +732,13 @@ export const StoreApiFetchParamCreactor = {
         if (contentTypeHeader) {
             fetchOptions.headers = contentTypeHeader;
         }
+        // authentication (api_key) required
+        if (this.configuration.apiKey) {
+            fetchOptions.headers = assign({
+                    'api_key': this.configuration.apiKey,
+                    }, contentTypeHeader);
+        }
+
         return {
             url: url.format(urlObj),
             options: fetchOptions,
@@ -672,6 +763,7 @@ export const StoreApiFetchParamCreactor = {
         if (contentTypeHeader) {
             fetchOptions.headers = contentTypeHeader;
         }
+
         return {
             url: url.format(urlObj),
             options: fetchOptions,
@@ -695,6 +787,7 @@ export const StoreApiFetchParamCreactor = {
         if (contentTypeHeader) {
             fetchOptions.headers = contentTypeHeader;
         }
+
         return {
             url: url.format(urlObj),
             options: fetchOptions,
@@ -874,6 +967,7 @@ export const UserApiFetchParamCreactor = {
         if (contentTypeHeader) {
             fetchOptions.headers = contentTypeHeader;
         }
+
         return {
             url: url.format(urlObj),
             options: fetchOptions,
@@ -897,6 +991,7 @@ export const UserApiFetchParamCreactor = {
         if (contentTypeHeader) {
             fetchOptions.headers = contentTypeHeader;
         }
+
         return {
             url: url.format(urlObj),
             options: fetchOptions,
@@ -920,6 +1015,7 @@ export const UserApiFetchParamCreactor = {
         if (contentTypeHeader) {
             fetchOptions.headers = contentTypeHeader;
         }
+
         return {
             url: url.format(urlObj),
             options: fetchOptions,
@@ -944,6 +1040,7 @@ export const UserApiFetchParamCreactor = {
         if (contentTypeHeader) {
             fetchOptions.headers = contentTypeHeader;
         }
+
         return {
             url: url.format(urlObj),
             options: fetchOptions,
@@ -968,6 +1065,7 @@ export const UserApiFetchParamCreactor = {
         if (contentTypeHeader) {
             fetchOptions.headers = contentTypeHeader;
         }
+
         return {
             url: url.format(urlObj),
             options: fetchOptions,
@@ -992,6 +1090,7 @@ export const UserApiFetchParamCreactor = {
         if (contentTypeHeader) {
             fetchOptions.headers = contentTypeHeader;
         }
+
         return {
             url: url.format(urlObj),
             options: fetchOptions,
@@ -1010,6 +1109,7 @@ export const UserApiFetchParamCreactor = {
         if (contentTypeHeader) {
             fetchOptions.headers = contentTypeHeader;
         }
+
         return {
             url: url.format(urlObj),
             options: fetchOptions,
@@ -1039,6 +1139,7 @@ export const UserApiFetchParamCreactor = {
         if (contentTypeHeader) {
             fetchOptions.headers = contentTypeHeader;
         }
+
         return {
             url: url.format(urlObj),
             options: fetchOptions,
