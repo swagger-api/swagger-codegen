@@ -150,6 +150,15 @@ class Decoders {
             return sourceArray.map({ Decoders.decode(clazz: {{{arrayModelType}}}.self, source: $0) })
 {{/isArrayModel}}
 {{^isArrayModel}}
+{{#isEnum}}
+            if let source = source as? {{dataType}} {
+                if let result = {{classname}}(rawValue: source) {
+                    return result
+                }
+            }
+            fatalError("Source \(source) is not convertible to enum type {{classname}}: Maybe swagger file is insufficient")
+{{/isEnum}}
+{{^isEnum}}
 {{#vars.isEmpty}}
             if let source = source as? {{dataType}} {
                 return source
@@ -178,6 +187,7 @@ class Decoders {
             {{/unwrapRequired}}
             return instance
 {{/vars.isEmpty}}
+{{/isEnum}}
 {{/isArrayModel}}
         }{{/model}}
         {{/models}}

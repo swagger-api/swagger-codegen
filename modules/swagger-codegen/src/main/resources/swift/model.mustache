@@ -14,6 +14,14 @@ import Foundation
 public typealias {{classname}} = [{{arrayModelType}}]
 {{/isArrayModel}}
 {{^isArrayModel}}
+{{#isEnum}}
+public enum {{classname}}: {{dataType}} {
+{{#allowableValues}}{{#enumVars}}    case {{name}} = "{{{value}}}"
+{{/enumVars}}{{/allowableValues}}
+    func encodeToJSON() -> Any { return self.rawValue }
+}
+{{/isEnum}}
+{{^isEnum}}
 {{#vars.isEmpty}}
 public typealias {{classname}} = {{dataType}}
 {{/vars.isEmpty}}
@@ -62,6 +70,7 @@ open class {{classname}}: JSONEncodable {
     }
 }
 {{/vars.isEmpty}}
+{{/isEnum}}
 {{/isArrayModel}}
 {{/model}}
 {{/models}}
