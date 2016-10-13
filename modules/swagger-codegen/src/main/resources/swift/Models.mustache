@@ -150,6 +150,13 @@ class Decoders {
             return sourceArray.map({ Decoders.decode(clazz: {{{arrayModelType}}}.self, source: $0) })
 {{/isArrayModel}}
 {{^isArrayModel}}
+{{#vars.isEmpty}}
+            if let source = source as? {{dataType}} {
+                return source
+            }
+            fatalError("Source \(source) is not convertible to typealias {{classname}}: Maybe swagger file is insufficient")
+{{/vars.isEmpty}}
+{{^vars.isEmpty}}
             let sourceDictionary = source as! [AnyHashable: Any]
             {{#unwrapRequired}}
             let instance = {{classname}}({{#requiredVars}}{{^-first}}, {{/-first}}{{#isEnum}}{{name}}: {{classname}}.{{datatypeWithEnum}}(rawValue: (sourceDictionary["{{baseName}}"] as! {{datatype}}))! {{/isEnum}}{{^isEnum}}{{name}}: Decoders.decode(clazz: {{{baseType}}}.self, source: sourceDictionary["{{baseName}}"]! as AnyObject){{/isEnum}}{{/requiredVars}})
@@ -170,6 +177,7 @@ class Decoders {
             {{^isEnum}}instance.{{name}} = Decoders.decodeOptional(clazz: {{{baseType}}}.self, source: sourceDictionary["{{baseName}}"] as AnyObject?){{/isEnum}}{{/vars}}
             {{/unwrapRequired}}
             return instance
+{{/vars.isEmpty}}
 {{/isArrayModel}}
         }{{/model}}
         {{/models}}

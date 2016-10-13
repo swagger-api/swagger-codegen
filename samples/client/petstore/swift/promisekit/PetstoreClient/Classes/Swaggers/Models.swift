@@ -317,9 +317,10 @@ class Decoders {
         }
         // Decoder for EnumClass
         Decoders.addDecoder(clazz: EnumClass.self) { (source: AnyObject) -> EnumClass in
-            let sourceDictionary = source as! [AnyHashable: Any]
-            let instance = EnumClass()
-            return instance
+            if let source = source as? String {
+                return source
+            }
+            fatalError("Source \(source) is not convertible to typealias EnumClass: Maybe swagger file is insufficient")
         }
 
 
