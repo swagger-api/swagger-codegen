@@ -27,7 +27,7 @@ import * as url from "url";
 
 import * as isomorphicFetch from "isomorphic-fetch";
 
-import { Configuration } from 'configuration';
+import { Configuration } from './configuration';
 
 interface Dictionary<T> { [index: string]: T; }
 export interface FetchAPI { (url: string, init?: any): Promise<any>; }
@@ -42,17 +42,11 @@ export interface FetchArgs {
 export class BaseAPI {
     basePath: string;
     fetch: FetchAPI;
-    public configuration: Configuration = new Configuration();
+    public configuration: Configuration;
 
-    constructor(fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) {
+    constructor(fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH, configuration: Configuration = new Configuration()) {
         this.basePath = basePath;
         this.fetch = fetch;
-    }
-
-    constructor(fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH, configuration: Configuration) {
-        this.basePath = basePath;
-        this.fetch = fetch;
-        this.configuration = configuration
         if (configuration) {
             this.configuration = configuration;
         }
@@ -164,9 +158,9 @@ export const PetApiFetchParamCreactor = {
         let fetchOptions: RequestInit = { method: "DELETE" };
 
         let contentTypeHeader: Dictionary<string>;
-        if (contentTypeHeader) {
-            fetchOptions.headers = contentTypeHeader;
-        }
+        fetchOptions.headers = Object.assign({ 
+            "api_key": params.apiKey,
+        }, contentTypeHeader);
         // authentication (petstore_auth) required
         // oauth required
         if (this.configuration.accessToken) {
