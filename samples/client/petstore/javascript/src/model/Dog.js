@@ -41,7 +41,6 @@
 
 
 
-
   /**
    * The Dog model module.
    * @module model/Dog
@@ -70,7 +69,9 @@
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
-      obj = obj || new exports();
+      if (!obj) {
+        obj = new exports();
+      }
       Animal.constructFromObject(data, obj);
       if (data.hasOwnProperty('breed')) {
         obj['breed'] = ApiClient.convertToType(data['breed'], 'String');

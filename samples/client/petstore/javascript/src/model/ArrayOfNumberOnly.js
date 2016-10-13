@@ -41,7 +41,6 @@
 
 
 
-
   /**
    * The ArrayOfNumberOnly model module.
    * @module model/ArrayOfNumberOnly
@@ -68,7 +67,9 @@
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
-      obj = obj || new exports();
+      if (!obj) {
+        obj = new exports();
+      }
 
       if (data.hasOwnProperty('ArrayNumber')) {
         obj['ArrayNumber'] = ApiClient.convertToType(data['ArrayNumber'], ['Number']);

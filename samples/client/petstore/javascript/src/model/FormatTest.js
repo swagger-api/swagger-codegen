@@ -41,7 +41,6 @@
 
 
 
-
   /**
    * The FormatTest model module.
    * @module model/FormatTest
@@ -84,7 +83,9 @@
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
-      obj = obj || new exports();
+      if (!obj) {
+        obj = new exports();
+      }
 
       if (data.hasOwnProperty('integer')) {
         obj['integer'] = ApiClient.convertToType(data['integer'], 'Number');

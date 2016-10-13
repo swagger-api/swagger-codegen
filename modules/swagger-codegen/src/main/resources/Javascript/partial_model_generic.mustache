@@ -38,7 +38,18 @@
 {{/emitJSDoc}}
   exports.constructFromObject = function(data, obj) {
     if (data){{! TODO: support polymorphism: discriminator property on data determines class to instantiate.}} {
-      obj = obj || new exports();
+      if (!obj) {
+{{#childModels}}
+        if(data['{{parentModel.discriminator}}'].toUpperCase() == '{{classname}}'.toUpperCase())
+          obj = {{moduleName}}.{{classname}}.constructFromObject(data, obj);
+{{#-last}}
+        return obj;
+{{/-last}}
+{{/childModels}}
+{{^childModels}}
+        obj = new exports();
+{{/childModels}}
+      }
 {{#parent}}{{^parentModel}}      ApiClient.constructFromObject(data, obj, {{vendorExtensions.x-itemType}});
 {{/parentModel}}{{/parent}}{{#useInheritance}}{{#parentModel}}      {{classname}}.constructFromObject(data, obj);{{/parentModel}}
 {{#interfaces}}      {{.}}.constructFromObject(data, obj);

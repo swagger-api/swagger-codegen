@@ -41,7 +41,6 @@
 
 
 
-
   /**
    * The Name model module.
    * @module model/Name
@@ -73,7 +72,9 @@
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
-      obj = obj || new exports();
+      if (!obj) {
+        obj = new exports();
+      }
 
       if (data.hasOwnProperty('name')) {
         obj['name'] = ApiClient.convertToType(data['name'], 'Number');

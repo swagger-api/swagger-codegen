@@ -41,7 +41,6 @@
 
 
 
-
   /**
    * The Cat model module.
    * @module model/Cat
@@ -70,7 +69,9 @@
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
-      obj = obj || new exports();
+      if (!obj) {
+        obj = new exports();
+      }
       Animal.constructFromObject(data, obj);
       if (data.hasOwnProperty('declawed')) {
         obj['declawed'] = ApiClient.convertToType(data['declawed'], 'Boolean');

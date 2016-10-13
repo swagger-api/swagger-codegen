@@ -41,7 +41,6 @@
 
 
 
-
   /**
    * The HasOnlyReadOnly model module.
    * @module model/HasOnlyReadOnly
@@ -69,7 +68,9 @@
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
-      obj = obj || new exports();
+      if (!obj) {
+        obj = new exports();
+      }
 
       if (data.hasOwnProperty('bar')) {
         obj['bar'] = ApiClient.convertToType(data['bar'], 'String');

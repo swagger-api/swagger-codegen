@@ -41,7 +41,6 @@
 
 
 
-
   /**
    * The MapTest model module.
    * @module model/MapTest
@@ -69,7 +68,9 @@
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
-      obj = obj || new exports();
+      if (!obj) {
+        obj = new exports();
+      }
 
       if (data.hasOwnProperty('map_map_of_string')) {
         obj['map_map_of_string'] = ApiClient.convertToType(data['map_map_of_string'], {'String': {'String': 'String'}});

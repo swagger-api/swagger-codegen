@@ -39,7 +39,6 @@
 }(this, function(ApiClient) {
   'use strict';
 
-
   /**
    * Enum class EnumClass.
    * @enum {}

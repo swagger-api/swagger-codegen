@@ -41,7 +41,6 @@
 
 
 
-
   /**
    * The EnumTest model module.
    * @module model/EnumTest
@@ -70,7 +69,9 @@
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
-      obj = obj || new exports();
+      if (!obj) {
+        obj = new exports();
+      }
 
       if (data.hasOwnProperty('enum_string')) {
         obj['enum_string'] = ApiClient.convertToType(data['enum_string'], 'String');

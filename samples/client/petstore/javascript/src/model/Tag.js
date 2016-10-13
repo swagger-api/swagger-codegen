@@ -41,7 +41,6 @@
 
 
 
-
   /**
    * The Tag model module.
    * @module model/Tag
@@ -69,7 +68,9 @@
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
-      obj = obj || new exports();
+      if (!obj) {
+        obj = new exports();
+      }
 
       if (data.hasOwnProperty('id')) {
         obj['id'] = ApiClient.convertToType(data['id'], 'Number');

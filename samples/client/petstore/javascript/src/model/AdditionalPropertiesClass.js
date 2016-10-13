@@ -41,7 +41,6 @@
 
 
 
-
   /**
    * The AdditionalPropertiesClass model module.
    * @module model/AdditionalPropertiesClass
@@ -69,7 +68,9 @@
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
-      obj = obj || new exports();
+      if (!obj) {
+        obj = new exports();
+      }
 
       if (data.hasOwnProperty('map_property')) {
         obj['map_property'] = ApiClient.convertToType(data['map_property'], {'String': 'String'});

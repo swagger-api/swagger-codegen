@@ -41,7 +41,6 @@
 
 
 
-
   /**
    * The Client model module.
    * @module model/Client
@@ -68,7 +67,9 @@
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
-      obj = obj || new exports();
+      if (!obj) {
+        obj = new exports();
+      }
 
       if (data.hasOwnProperty('client')) {
         obj['client'] = ApiClient.convertToType(data['client'], 'String');

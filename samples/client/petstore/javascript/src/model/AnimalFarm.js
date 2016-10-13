@@ -41,7 +41,6 @@
 
 
 
-
   /**
    * The AnimalFarm model module.
    * @module model/AnimalFarm
@@ -71,7 +70,9 @@
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
-      obj = obj || new exports();
+      if (!obj) {
+        obj = new exports();
+      }
       ApiClient.constructFromObject(data, obj, Animal);
 
     }
