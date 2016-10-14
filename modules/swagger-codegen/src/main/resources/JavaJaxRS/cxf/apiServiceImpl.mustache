@@ -22,7 +22,7 @@ import io.swagger.annotations.Api;
 public class {{classname}}ServiceImpl implements {{classname}} {
 {{#operations}}
 {{#operation}}
-    public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}} {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {
+    public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}} {{nickname}}({{#allParams}}{{>queryParamsImpl}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {
         // TODO: Implement...
         
         {{#returnType}}return null;{{/returnType}}
