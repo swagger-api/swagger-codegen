@@ -18,8 +18,6 @@ import io.swagger.models.Operation;
 
 /**
  * TODO #2017:
- * - reuse bean-validation-annotations in Java?
- * - pom.xml: maybe add cxf-version property
  * - api_test.mustache: add switch for using gzip in test cases?
  * 
  * 
@@ -30,8 +28,12 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
     private static final Logger LOGGER = LoggerFactory.getLogger(JavaCXFServerCodegen.class);
     
     public static final String USE_BEANVALIDATION = "useBeanValidation";
+    
+    public static final String GENERATE_SPRING_APPLICATION = "generateSpringApplication";
 
     protected boolean useBeanValidation = false;
+    
+    protected boolean generateSpringApplication = false;
     
     
     public JavaCXFServerCodegen()
@@ -63,7 +65,8 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
         embeddedTemplateDir = templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME + File.separator + "cxf";
 
         cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
-
+        cliOptions.add(CliOption.newBoolean(GENERATE_SPRING_APPLICATION, "Generate Spring application"));
+        
     }
 
 
@@ -78,21 +81,32 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
            
            // write back as boolean
            additionalProperties.put(USE_BEANVALIDATION, useBeanValidationProp);
-       }
+        }
+        
+        if (additionalProperties.containsKey(GENERATE_SPRING_APPLICATION)) {
+            boolean generateSpringApplicationProp = Boolean.valueOf(additionalProperties.get(GENERATE_SPRING_APPLICATION).toString());
+            this.setGenerateSpringApplication(generateSpringApplicationProp);
+         
+            // write back as boolean
+            additionalProperties.put(GENERATE_SPRING_APPLICATION, generateSpringApplicationProp);
+        }
         
        
         supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
         
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
         
-        writeOptional(outputFolder, new SupportingFile("readme.md", "", "readme.md"));
+        if (this.generateSpringApplication) {
+        	writeOptional(outputFolder, new SupportingFile("readme.md", "", "readme.md"));
+            
+            writeOptional(outputFolder, new SupportingFile("web.mustache",
+                    ("src/main/webapp/WEB-INF"), "web.xml"));
+            writeOptional(outputFolder, new SupportingFile("context.xml.mustache",
+                    ("src/main/webapp/WEB-INF"), "context.xml"));
+            writeOptional(outputFolder, new SupportingFile("jboss-web.xml.mustache",
+                    ("src/main/webapp/WEB-INF"), "jboss-web.xml"));
+        }
         
-        writeOptional(outputFolder, new SupportingFile("web.mustache",
-                ("src/main/webapp/WEB-INF"), "web.xml"));
-        writeOptional(outputFolder, new SupportingFile("context.xml.mustache",
-                ("src/main/webapp/WEB-INF"), "context.xml"));
-        writeOptional(outputFolder, new SupportingFile("jboss-web.xml.mustache",
-                ("src/main/webapp/WEB-INF"), "jboss-web.xml"));
         
     } 
     
@@ -125,5 +139,9 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
     
     public void setUseBeanValidation(boolean useBeanValidation) {
         this.useBeanValidation = useBeanValidation;
+    }
+    
+    public void setGenerateSpringApplication(boolean generateSpringApplication) {
+        this.generateSpringApplication = generateSpringApplication;
     }
 }

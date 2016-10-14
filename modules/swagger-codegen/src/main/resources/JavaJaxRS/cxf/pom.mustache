@@ -158,6 +158,7 @@
         <version>${cxf-version}</version>
         <scope>compile</scope>
     </dependency>
+{{#generateSpringApplication}}    
     <!-- Spring -->
     <dependency>
         <groupId>org.springframework</groupId>
@@ -169,6 +170,7 @@
         <artifactId>spring-web</artifactId>
         <version>${spring-version}</version>
     </dependency>    
+{{/generateSpringApplication}}
   </dependencies>
   <repositories>
     <repository>
