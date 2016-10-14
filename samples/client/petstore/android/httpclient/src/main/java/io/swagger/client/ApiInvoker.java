@@ -230,7 +230,7 @@ public class ApiInvoker {
   }
 
   public String escapeString(String str) {
-    return str;
+    return URLEncoder.encode(str, "UTF-8");
   }
 
   public static Object deserialize(String json, String containerType, Class cls) throws ApiException {
