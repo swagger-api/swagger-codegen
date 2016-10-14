@@ -235,7 +235,6 @@ public class JavaClientCodegen extends AbstractJavaCodegen {
         }
         return objs;
     }
-    
     public void setUseRxJava(boolean useRxJava) {
         this.useRxJava = useRxJava;
     }
