@@ -4,24 +4,50 @@ package io.swagger.codegen.languages;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
 
+import org.slf4j.LoggerFactory;
+
+
+import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.SupportingFile;
 import io.swagger.models.Operation;
 
+/**
+ * TODO #2017:
+ * - reuse bean-validation-annotations in Java?
+ * - pom.xml: maybe add cxf-version property
+ * - api_test.mustache: add switch for using gzip in test cases?
+ * 
+ * 
+ *
+ */
 public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
-{	
-	public JavaCXFServerCodegen()
-	{
+{   
+    private static final Logger LOGGER = LoggerFactory.getLogger(JavaCXFServerCodegen.class);
+    
+    public static final String USE_BEANVALIDATION = "useBeanValidation";
+
+    protected boolean useBeanValidation = false;
+    
+    
+    public JavaCXFServerCodegen()
+    {
         super();
-        sourceFolder = "gen" + File.separator + "java";
-        outputFolder = "generated-code/JavaJaxRS-CXF";
         apiTestTemplateFiles.clear(); // TODO: add test template
 
-        //TODO add auto-generated pom.xml for maven
-        //apiTemplateFiles.put("pom.mustache", "pom.xml");
-
+        supportsInheritance = true;
+        
+        artifactId = "swagger-cxf-server";
+        
+        sourceFolder = "gen" + File.separator + "java";
+        outputFolder = "generated-code/JavaJaxRS-CXF";
+        
+        apiTemplateFiles.put("apiServiceImpl.mustache", ".java");
+        
         // clear model and api doc template as this codegen
         // does not support auto-generated markdown doc at the moment
         //TODO: add doc templates
@@ -36,14 +62,45 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
 
         embeddedTemplateDir = templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME + File.separator + "cxf";
 
-	}
+        cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
+
+    }
 
 
-	@Override
-	public String getName()
-	{
-		return "jaxrs-cxf";
-	}
+    @Override
+    public void processOpts()
+    {
+        super.processOpts();
+        
+        if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
+              boolean useBeanValidationProp = Boolean.valueOf(additionalProperties.get(USE_BEANVALIDATION).toString());
+              this.setUseBeanValidation(useBeanValidationProp);
+           
+           // write back as boolean
+           additionalProperties.put(USE_BEANVALIDATION, useBeanValidationProp);
+       }
+        
+       
+        supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
+        
+        writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
+        
+        writeOptional(outputFolder, new SupportingFile("readme.md", "", "readme.md"));
+        
+        writeOptional(outputFolder, new SupportingFile("web.mustache",
+                ("src/main/webapp/WEB-INF"), "web.xml"));
+        writeOptional(outputFolder, new SupportingFile("context.xml.mustache",
+                ("src/main/webapp/WEB-INF"), "context.xml"));
+        writeOptional(outputFolder, new SupportingFile("jboss-web.xml.mustache",
+                ("src/main/webapp/WEB-INF"), "jboss-web.xml"));
+        
+    } 
+    
+    @Override
+    public String getName()
+    {
+        return "jaxrs-cxf";
+    }
 
     @Override
     public void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co, Map<String, List<CodegenOperation>> operations) {
@@ -64,5 +121,9 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
     public String getHelp()
     {
         return "Generates a Java JAXRS Server application based on Apache CXF framework.";
+    }
+    
+    public void setUseBeanValidation(boolean useBeanValidation) {
+        this.useBeanValidation = useBeanValidation;
     }
 }

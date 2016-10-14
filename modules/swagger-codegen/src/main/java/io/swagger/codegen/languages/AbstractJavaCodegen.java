@@ -930,5 +930,11 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         }
         return sb.toString();
     }
+    
+
+    // TODO: Override DefaultCodeGen - Temporary solution to fix invalid BeanValidation-Regexp-patterns surrounded with "/" 
+    public String toRegularExpression(String pattern) {
+        return escapeText(pattern);
+    }
 
 }
