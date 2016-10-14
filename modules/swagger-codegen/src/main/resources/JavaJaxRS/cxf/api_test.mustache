@@ -1,0 +1,73 @@
+{{>licenseInfo}}
+
+package {{package}};
+
+{{#imports}}import {{import}};
+{{/imports}}
+import org.junit.Test;
+import org.junit.Before;
+
+import javax.ws.rs.core.Response;
+import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
+import org.apache.cxf.jaxrs.client.ClientConfiguration;
+import org.apache.cxf.jaxrs.client.WebClient;
+import org.apache.cxf.transport.common.gzip.GZIPInInterceptor;
+import org.apache.cxf.transport.common.gzip.GZIPOutInterceptor;
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+
+{{^fullJavaUtil}}
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+{{/fullJavaUtil}}
+
+/**
+ * API tests for {{classname}}
+ */
+public class {{classname}}Test {
+
+    private {{classname}} api;
+    
+    @Before
+    public void setup() {
+        JacksonJsonProvider provider = new JacksonJsonProvider();
+        List providers = new ArrayList();
+        providers.add(provider);
+        
+        api = JAXRSClientFactory.create("{{basePath}}", {{classname}}.class, providers);
+        
+        org.apache.cxf.jaxrs.client.Client client = WebClient.client(api);
+        
+        ClientConfiguration config = WebClient.getConfig(client); 
+        
+        // Example for using Gzipping
+        GZIPOutInterceptor gzipOutInterceptor = new GZIPOutInterceptor();
+        // use Gzipping for first request sent to server
+        //gzipOutInterceptor.setForce(true);
+        config.getOutInterceptors().add(gzipOutInterceptor);
+        
+        config.getInInterceptors().add(new GZIPInInterceptor()); 
+        
+    }
+
+    {{#operations}}{{#operation}}
+    /**
+     * {{summary}}
+     *
+     * {{notes}}
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void {{operationId}}Test() {
+        {{#allParams}}
+        {{{dataType}}} {{paramName}} = new {{{dataType}}}();
+        {{/allParams}}
+        {{#returnType}}{{{returnType}}} response = {{/returnType}}api.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+
+        // TODO: test validations
+    }
+    {{/operation}}{{/operations}}
+}
