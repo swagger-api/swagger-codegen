@@ -430,7 +430,6 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         // replace - with _ e.g. created-at => created_at
         name = name.replaceAll("-", "_");
 
-        LOGGER.info("To API filename: " + name + " ==> " + underscore(name) + "_api");
         // e.g. PhoneNumberApi.py => phone_number_api.py
         return underscore(name) + "_api";
     }
