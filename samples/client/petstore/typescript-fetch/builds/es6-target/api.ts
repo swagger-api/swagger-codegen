@@ -113,7 +113,7 @@ export const PetApiFetchParamCreactor = {
      * 
      * @param body Pet object that needs to be added to the store
      */
-    addPet(params: {  body?: Pet; }): FetchArgs {
+    addPet(params: {  body?: Pet; }, configuration: Configuration): FetchArgs {
         const baseUrl = `/pet`;
         let urlObj = url.parse(baseUrl, true);
         let fetchOptions: RequestInit = { method: "POST" };
@@ -128,9 +128,9 @@ export const PetApiFetchParamCreactor = {
         }
         // authentication (petstore_auth) required
         // oauth required
-        if (this.configuration.accessToken) {
+        if (configuration.accessToken) {
             fetchOptions.headers = Object.assign({
-                    'Authorization': 'Bearer ' + this.configuration.accessToken,
+                    'Authorization': 'Bearer ' + configuration.accessToken,
                     }, contentTypeHeader);
         }
 
@@ -145,7 +145,7 @@ export const PetApiFetchParamCreactor = {
      * @param petId Pet id to delete
      * @param apiKey 
      */
-    deletePet(params: {  petId: number; apiKey?: string; }): FetchArgs {
+    deletePet(params: {  petId: number; apiKey?: string; }, configuration: Configuration): FetchArgs {
         // verify required parameter "petId" is set
         if (params["petId"] == null) {
             throw new Error("Missing required parameter petId when calling deletePet");
@@ -161,9 +161,9 @@ export const PetApiFetchParamCreactor = {
         }, contentTypeHeader);
         // authentication (petstore_auth) required
         // oauth required
-        if (this.configuration.accessToken) {
+        if (configuration.accessToken) {
             fetchOptions.headers = Object.assign({
-                    'Authorization': 'Bearer ' + this.configuration.accessToken,
+                    'Authorization': 'Bearer ' + configuration.accessToken,
                     }, contentTypeHeader);
         }
 
@@ -177,7 +177,7 @@ export const PetApiFetchParamCreactor = {
      * Multiple status values can be provided with comma separated strings
      * @param status Status values that need to be considered for filter
      */
-    findPetsByStatus(params: {  status?: Array<string>; }): FetchArgs {
+    findPetsByStatus(params: {  status?: Array<string>; }, configuration: Configuration): FetchArgs {
         const baseUrl = `/pet/findByStatus`;
         let urlObj = url.parse(baseUrl, true);
         urlObj.query = Object.assign({}, urlObj.query, { 
@@ -191,9 +191,9 @@ export const PetApiFetchParamCreactor = {
         }
         // authentication (petstore_auth) required
         // oauth required
-        if (this.configuration.accessToken) {
+        if (configuration.accessToken) {
             fetchOptions.headers = Object.assign({
-                    'Authorization': 'Bearer ' + this.configuration.accessToken,
+                    'Authorization': 'Bearer ' + configuration.accessToken,
                     }, contentTypeHeader);
         }
 
@@ -207,7 +207,7 @@ export const PetApiFetchParamCreactor = {
      * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
      * @param tags Tags to filter by
      */
-    findPetsByTags(params: {  tags?: Array<string>; }): FetchArgs {
+    findPetsByTags(params: {  tags?: Array<string>; }, configuration: Configuration): FetchArgs {
         const baseUrl = `/pet/findByTags`;
         let urlObj = url.parse(baseUrl, true);
         urlObj.query = Object.assign({}, urlObj.query, { 
@@ -221,9 +221,9 @@ export const PetApiFetchParamCreactor = {
         }
         // authentication (petstore_auth) required
         // oauth required
-        if (this.configuration.accessToken) {
+        if (configuration.accessToken) {
             fetchOptions.headers = Object.assign({
-                    'Authorization': 'Bearer ' + this.configuration.accessToken,
+                    'Authorization': 'Bearer ' + configuration.accessToken,
                     }, contentTypeHeader);
         }
 
@@ -237,7 +237,7 @@ export const PetApiFetchParamCreactor = {
      * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
      * @param petId ID of pet that needs to be fetched
      */
-    getPetById(params: {  petId: number; }): FetchArgs {
+    getPetById(params: {  petId: number; }, configuration: Configuration): FetchArgs {
         // verify required parameter "petId" is set
         if (params["petId"] == null) {
             throw new Error("Missing required parameter petId when calling getPetById");
@@ -252,16 +252,16 @@ export const PetApiFetchParamCreactor = {
             fetchOptions.headers = contentTypeHeader;
         }
         // authentication (api_key) required
-        if (this.configuration.apiKey) {
+        if (configuration.apiKey) {
             fetchOptions.headers = Object.assign({
-                    'api_key': this.configuration.apiKey,
+                    'api_key': configuration.apiKey,
                     }, contentTypeHeader);
         }
         // authentication (petstore_auth) required
         // oauth required
-        if (this.configuration.accessToken) {
+        if (configuration.accessToken) {
             fetchOptions.headers = Object.assign({
-                    'Authorization': 'Bearer ' + this.configuration.accessToken,
+                    'Authorization': 'Bearer ' + configuration.accessToken,
                     }, contentTypeHeader);
         }
 
@@ -275,7 +275,7 @@ export const PetApiFetchParamCreactor = {
      * 
      * @param body Pet object that needs to be added to the store
      */
-    updatePet(params: {  body?: Pet; }): FetchArgs {
+    updatePet(params: {  body?: Pet; }, configuration: Configuration): FetchArgs {
         const baseUrl = `/pet`;
         let urlObj = url.parse(baseUrl, true);
         let fetchOptions: RequestInit = { method: "PUT" };
@@ -290,9 +290,9 @@ export const PetApiFetchParamCreactor = {
         }
         // authentication (petstore_auth) required
         // oauth required
-        if (this.configuration.accessToken) {
+        if (configuration.accessToken) {
             fetchOptions.headers = Object.assign({
-                    'Authorization': 'Bearer ' + this.configuration.accessToken,
+                    'Authorization': 'Bearer ' + configuration.accessToken,
                     }, contentTypeHeader);
         }
 
@@ -308,7 +308,7 @@ export const PetApiFetchParamCreactor = {
      * @param name Updated name of the pet
      * @param status Updated status of the pet
      */
-    updatePetWithForm(params: {  petId: string; name?: string; status?: string; }): FetchArgs {
+    updatePetWithForm(params: {  petId: string; name?: string; status?: string; }, configuration: Configuration): FetchArgs {
         // verify required parameter "petId" is set
         if (params["petId"] == null) {
             throw new Error("Missing required parameter petId when calling updatePetWithForm");
@@ -329,9 +329,9 @@ export const PetApiFetchParamCreactor = {
         }
         // authentication (petstore_auth) required
         // oauth required
-        if (this.configuration.accessToken) {
+        if (configuration.accessToken) {
             fetchOptions.headers = Object.assign({
-                    'Authorization': 'Bearer ' + this.configuration.accessToken,
+                    'Authorization': 'Bearer ' + configuration.accessToken,
                     }, contentTypeHeader);
         }
 
@@ -347,7 +347,7 @@ export const PetApiFetchParamCreactor = {
      * @param additionalMetadata Additional data to pass to server
      * @param file file to upload
      */
-    uploadFile(params: {  petId: number; additionalMetadata?: string; file?: any; }): FetchArgs {
+    uploadFile(params: {  petId: number; additionalMetadata?: string; file?: any; }, configuration: Configuration): FetchArgs {
         // verify required parameter "petId" is set
         if (params["petId"] == null) {
             throw new Error("Missing required parameter petId when calling uploadFile");
@@ -368,9 +368,9 @@ export const PetApiFetchParamCreactor = {
         }
         // authentication (petstore_auth) required
         // oauth required
-        if (this.configuration.accessToken) {
+        if (configuration.accessToken) {
             fetchOptions.headers = Object.assign({
-                    'Authorization': 'Bearer ' + this.configuration.accessToken,
+                    'Authorization': 'Bearer ' + configuration.accessToken,
                     }, contentTypeHeader);
         }
 
@@ -390,8 +390,8 @@ export const PetApiFp = {
      * 
      * @param body Pet object that needs to be added to the store
      */
-    addPet(params: { body?: Pet;  }): (fetch: FetchAPI, basePath?: string) => Promise<any> {
-        const fetchArgs = PetApiFetchParamCreactor.addPet(params);
+    addPet(params: { body?: Pet;  }, configuration: Configuration): (fetch: FetchAPI, basePath?: string) => Promise<any> {
+        const fetchArgs = PetApiFetchParamCreactor.addPet(params, configuration);
         return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
             return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                 if (response.status >= 200 && response.status < 300) {
@@ -408,8 +408,8 @@ export const PetApiFp = {
      * @param petId Pet id to delete
      * @param apiKey 
      */
-    deletePet(params: { petId: number; apiKey?: string;  }): (fetch: FetchAPI, basePath?: string) => Promise<any> {
-        const fetchArgs = PetApiFetchParamCreactor.deletePet(params);
+    deletePet(params: { petId: number; apiKey?: string;  }, configuration: Configuration): (fetch: FetchAPI, basePath?: string) => Promise<any> {
+        const fetchArgs = PetApiFetchParamCreactor.deletePet(params, configuration);
         return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
             return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                 if (response.status >= 200 && response.status < 300) {
@@ -425,8 +425,8 @@ export const PetApiFp = {
      * Multiple status values can be provided with comma separated strings
      * @param status Status values that need to be considered for filter
      */
-    findPetsByStatus(params: { status?: Array<string>;  }): (fetch: FetchAPI, basePath?: string) => Promise<Array<Pet>> {
-        const fetchArgs = PetApiFetchParamCreactor.findPetsByStatus(params);
+    findPetsByStatus(params: { status?: Array<string>;  }, configuration: Configuration): (fetch: FetchAPI, basePath?: string) => Promise<Array<Pet>> {
+        const fetchArgs = PetApiFetchParamCreactor.findPetsByStatus(params, configuration);
         return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
             return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                 if (response.status >= 200 && response.status < 300) {
@@ -442,8 +442,8 @@ export const PetApiFp = {
      * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
      * @param tags Tags to filter by
      */
-    findPetsByTags(params: { tags?: Array<string>;  }): (fetch: FetchAPI, basePath?: string) => Promise<Array<Pet>> {
-        const fetchArgs = PetApiFetchParamCreactor.findPetsByTags(params);
+    findPetsByTags(params: { tags?: Array<string>;  }, configuration: Configuration): (fetch: FetchAPI, basePath?: string) => Promise<Array<Pet>> {
+        const fetchArgs = PetApiFetchParamCreactor.findPetsByTags(params, configuration);
         return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
             return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                 if (response.status >= 200 && response.status < 300) {
@@ -459,8 +459,8 @@ export const PetApiFp = {
      * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
      * @param petId ID of pet that needs to be fetched
      */
-    getPetById(params: { petId: number;  }): (fetch: FetchAPI, basePath?: string) => Promise<Pet> {
-        const fetchArgs = PetApiFetchParamCreactor.getPetById(params);
+    getPetById(params: { petId: number;  }, configuration: Configuration): (fetch: FetchAPI, basePath?: string) => Promise<Pet> {
+        const fetchArgs = PetApiFetchParamCreactor.getPetById(params, configuration);
         return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
             return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                 if (response.status >= 200 && response.status < 300) {
@@ -476,8 +476,8 @@ export const PetApiFp = {
      * 
      * @param body Pet object that needs to be added to the store
      */
-    updatePet(params: { body?: Pet;  }): (fetch: FetchAPI, basePath?: string) => Promise<any> {
-        const fetchArgs = PetApiFetchParamCreactor.updatePet(params);
+    updatePet(params: { body?: Pet;  }, configuration: Configuration): (fetch: FetchAPI, basePath?: string) => Promise<any> {
+        const fetchArgs = PetApiFetchParamCreactor.updatePet(params, configuration);
         return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
             return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                 if (response.status >= 200 && response.status < 300) {
@@ -495,8 +495,8 @@ export const PetApiFp = {
      * @param name Updated name of the pet
      * @param status Updated status of the pet
      */
-    updatePetWithForm(params: { petId: string; name?: string; status?: string;  }): (fetch: FetchAPI, basePath?: string) => Promise<any> {
-        const fetchArgs = PetApiFetchParamCreactor.updatePetWithForm(params);
+    updatePetWithForm(params: { petId: string; name?: string; status?: string;  }, configuration: Configuration): (fetch: FetchAPI, basePath?: string) => Promise<any> {
+        const fetchArgs = PetApiFetchParamCreactor.updatePetWithForm(params, configuration);
         return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
             return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                 if (response.status >= 200 && response.status < 300) {
@@ -514,8 +514,8 @@ export const PetApiFp = {
      * @param additionalMetadata Additional data to pass to server
      * @param file file to upload
      */
-    uploadFile(params: { petId: number; additionalMetadata?: string; file?: any;  }): (fetch: FetchAPI, basePath?: string) => Promise<any> {
-        const fetchArgs = PetApiFetchParamCreactor.uploadFile(params);
+    uploadFile(params: { petId: number; additionalMetadata?: string; file?: any;  }, configuration: Configuration): (fetch: FetchAPI, basePath?: string) => Promise<any> {
+        const fetchArgs = PetApiFetchParamCreactor.uploadFile(params, configuration);
         return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
             return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                 if (response.status >= 200 && response.status < 300) {
@@ -538,7 +538,7 @@ export class PetApi extends BaseAPI {
      * @param body Pet object that needs to be added to the store
      */
     addPet(params: {  body?: Pet; }) {
-        return PetApiFp.addPet(params)(this.fetch, this.basePath);
+        return PetApiFp.addPet(params, this.configuration)(this.fetch, this.basePath);
     }
     /** 
      * Deletes a pet
@@ -547,7 +547,7 @@ export class PetApi extends BaseAPI {
      * @param apiKey 
      */
     deletePet(params: {  petId: number; apiKey?: string; }) {
-        return PetApiFp.deletePet(params)(this.fetch, this.basePath);
+        return PetApiFp.deletePet(params, this.configuration)(this.fetch, this.basePath);
     }
     /** 
      * Finds Pets by status
@@ -555,7 +555,7 @@ export class PetApi extends BaseAPI {
      * @param status Status values that need to be considered for filter
      */
     findPetsByStatus(params: {  status?: Array<string>; }) {
-        return PetApiFp.findPetsByStatus(params)(this.fetch, this.basePath);
+        return PetApiFp.findPetsByStatus(params, this.configuration)(this.fetch, this.basePath);
     }
     /** 
      * Finds Pets by tags
@@ -563,7 +563,7 @@ export class PetApi extends BaseAPI {
      * @param tags Tags to filter by
      */
     findPetsByTags(params: {  tags?: Array<string>; }) {
-        return PetApiFp.findPetsByTags(params)(this.fetch, this.basePath);
+        return PetApiFp.findPetsByTags(params, this.configuration)(this.fetch, this.basePath);
     }
     /** 
      * Find pet by ID
@@ -571,7 +571,7 @@ export class PetApi extends BaseAPI {
      * @param petId ID of pet that needs to be fetched
      */
     getPetById(params: {  petId: number; }) {
-        return PetApiFp.getPetById(params)(this.fetch, this.basePath);
+        return PetApiFp.getPetById(params, this.configuration)(this.fetch, this.basePath);
     }
     /** 
      * Update an existing pet
@@ -579,7 +579,7 @@ export class PetApi extends BaseAPI {
      * @param body Pet object that needs to be added to the store
      */
     updatePet(params: {  body?: Pet; }) {
-        return PetApiFp.updatePet(params)(this.fetch, this.basePath);
+        return PetApiFp.updatePet(params, this.configuration)(this.fetch, this.basePath);
     }
     /** 
      * Updates a pet in the store with form data
@@ -589,7 +589,7 @@ export class PetApi extends BaseAPI {
      * @param status Updated status of the pet
      */
     updatePetWithForm(params: {  petId: string; name?: string; status?: string; }) {
-        return PetApiFp.updatePetWithForm(params)(this.fetch, this.basePath);
+        return PetApiFp.updatePetWithForm(params, this.configuration)(this.fetch, this.basePath);
     }
     /** 
      * uploads an image
@@ -599,7 +599,7 @@ export class PetApi extends BaseAPI {
      * @param file file to upload
      */
     uploadFile(params: {  petId: number; additionalMetadata?: string; file?: any; }) {
-        return PetApiFp.uploadFile(params)(this.fetch, this.basePath);
+        return PetApiFp.uploadFile(params, this.configuration)(this.fetch, this.basePath);
     }
 };
 
@@ -613,8 +613,8 @@ export const PetApiFactory = function (fetch?: FetchAPI, basePath?: string) {
          * 
          * @param body Pet object that needs to be added to the store
          */
-        addPet(params: {  body?: Pet; }) {
-            return PetApiFp.addPet(params)(fetch, basePath);
+        addPet(params: {  body?: Pet; }, configuration: Configuration) {
+            return PetApiFp.addPet(params, configuration)(fetch, basePath);
         },
         /** 
          * Deletes a pet
@@ -622,40 +622,40 @@ export const PetApiFactory = function (fetch?: FetchAPI, basePath?: string) {
          * @param petId Pet id to delete
          * @param apiKey 
          */
-        deletePet(params: {  petId: number; apiKey?: string; }) {
-            return PetApiFp.deletePet(params)(fetch, basePath);
+        deletePet(params: {  petId: number; apiKey?: string; }, configuration: Configuration) {
+            return PetApiFp.deletePet(params, configuration)(fetch, basePath);
         },
         /** 
          * Finds Pets by status
          * Multiple status values can be provided with comma separated strings
          * @param status Status values that need to be considered for filter
          */
-        findPetsByStatus(params: {  status?: Array<string>; }) {
-            return PetApiFp.findPetsByStatus(params)(fetch, basePath);
+        findPetsByStatus(params: {  status?: Array<string>; }, configuration: Configuration) {
+            return PetApiFp.findPetsByStatus(params, configuration)(fetch, basePath);
         },
         /** 
          * Finds Pets by tags
          * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
          * @param tags Tags to filter by
          */
-        findPetsByTags(params: {  tags?: Array<string>; }) {
-            return PetApiFp.findPetsByTags(params)(fetch, basePath);
+        findPetsByTags(params: {  tags?: Array<string>; }, configuration: Configuration) {
+            return PetApiFp.findPetsByTags(params, configuration)(fetch, basePath);
         },
         /** 
          * Find pet by ID
          * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
          * @param petId ID of pet that needs to be fetched
          */
-        getPetById(params: {  petId: number; }) {
-            return PetApiFp.getPetById(params)(fetch, basePath);
+        getPetById(params: {  petId: number; }, configuration: Configuration) {
+            return PetApiFp.getPetById(params, configuration)(fetch, basePath);
         },
         /** 
          * Update an existing pet
          * 
          * @param body Pet object that needs to be added to the store
          */
-        updatePet(params: {  body?: Pet; }) {
-            return PetApiFp.updatePet(params)(fetch, basePath);
+        updatePet(params: {  body?: Pet; }, configuration: Configuration) {
+            return PetApiFp.updatePet(params, configuration)(fetch, basePath);
         },
         /** 
          * Updates a pet in the store with form data
@@ -664,8 +664,8 @@ export const PetApiFactory = function (fetch?: FetchAPI, basePath?: string) {
          * @param name Updated name of the pet
          * @param status Updated status of the pet
          */
-        updatePetWithForm(params: {  petId: string; name?: string; status?: string; }) {
-            return PetApiFp.updatePetWithForm(params)(fetch, basePath);
+        updatePetWithForm(params: {  petId: string; name?: string; status?: string; }, configuration: Configuration) {
+            return PetApiFp.updatePetWithForm(params, configuration)(fetch, basePath);
         },
         /** 
          * uploads an image
@@ -674,8 +674,8 @@ export const PetApiFactory = function (fetch?: FetchAPI, basePath?: string) {
          * @param additionalMetadata Additional data to pass to server
          * @param file file to upload
          */
-        uploadFile(params: {  petId: number; additionalMetadata?: string; file?: any; }) {
-            return PetApiFp.uploadFile(params)(fetch, basePath);
+        uploadFile(params: {  petId: number; additionalMetadata?: string; file?: any; }, configuration: Configuration) {
+            return PetApiFp.uploadFile(params, configuration)(fetch, basePath);
         },
     }
 };
@@ -714,7 +714,7 @@ export const StoreApiFetchParamCreactor = {
      * Returns pet inventories by status
      * Returns a map of status codes to quantities
      */
-    getInventory(): FetchArgs {
+    getInventory(configuration: Configuration): FetchArgs {
         const baseUrl = `/store/inventory`;
         let urlObj = url.parse(baseUrl, true);
         let fetchOptions: RequestInit = { method: "GET" };
@@ -724,9 +724,9 @@ export const StoreApiFetchParamCreactor = {
             fetchOptions.headers = contentTypeHeader;
         }
         // authentication (api_key) required
-        if (this.configuration.apiKey) {
+        if (configuration.apiKey) {
             fetchOptions.headers = Object.assign({
-                    'api_key': this.configuration.apiKey,
+                    'api_key': configuration.apiKey,
                     }, contentTypeHeader);
         }
 
@@ -811,8 +811,8 @@ export const StoreApiFp = {
      * Returns pet inventories by status
      * Returns a map of status codes to quantities
      */
-    getInventory(): (fetch: FetchAPI, basePath?: string) => Promise<{ [key: string]: number; }> {
-        const fetchArgs = StoreApiFetchParamCreactor.getInventory();
+    getInventory(configuration: Configuration): (fetch: FetchAPI, basePath?: string) => Promise<{ [key: string]: number; }> {
+        const fetchArgs = StoreApiFetchParamCreactor.getInventory(configuration);
         return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
             return fetch(basePath + fetchArgs.url, fetchArgs.options).then((response) => {
                 if (response.status >= 200 && response.status < 300) {
@@ -876,7 +876,7 @@ export class StoreApi extends BaseAPI {
      * Returns a map of status codes to quantities
      */
     getInventory() {
-        return StoreApiFp.getInventory()(this.fetch, this.basePath);
+        return StoreApiFp.getInventory(this.configuration)(this.fetch, this.basePath);
     }
     /** 
      * Find purchase order by ID
@@ -913,8 +913,8 @@ export const StoreApiFactory = function (fetch?: FetchAPI, basePath?: string) {
          * Returns pet inventories by status
          * Returns a map of status codes to quantities
          */
-        getInventory() {
-            return StoreApiFp.getInventory()(fetch, basePath);
+        getInventory(configuration: Configuration) {
+            return StoreApiFp.getInventory(configuration)(fetch, basePath);
         },
         /** 
          * Find purchase order by ID
