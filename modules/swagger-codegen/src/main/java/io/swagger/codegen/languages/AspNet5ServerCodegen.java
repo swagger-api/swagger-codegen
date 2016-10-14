@@ -13,7 +13,6 @@ import static java.util.UUID.randomUUID;
 
 public class AspNet5ServerCodegen extends AbstractCSharpCodegen {
 
-    protected String sourceFolder = "src" + File.separator + packageName;
 
     private final String packageGuid = "{" + randomUUID().toString().toUpperCase() + "}";
 
@@ -22,6 +21,8 @@ public class AspNet5ServerCodegen extends AbstractCSharpCodegen {
 
     public AspNet5ServerCodegen() {
         super();
+
+        this.sourceFolder = "src" + File.separator + packageName;
 
         outputFolder = "generated-code" + File.separator + this.getName();
 
