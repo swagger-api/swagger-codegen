@@ -235,6 +235,11 @@ public class JavaClientCodegen extends AbstractJavaCodegen {
         }
         return objs;
     }
+    
+    // TODO: Override DefaultCodeGen - Temporary solution to fix invalid BeanValidation-Regexp-patterns surrounded with "/" 
+    public String toRegularExpression(String pattern) {
+        return escapeText(pattern);
+    }
 
     public void setUseRxJava(boolean useRxJava) {
         this.useRxJava = useRxJava;
