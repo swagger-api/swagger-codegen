@@ -20,6 +20,7 @@ import io.swagger.annotations.ApiOperation;
 public interface {{classname}}  {
 {{#operations}}
 {{#operation}}
+
     @{{httpMethod}}
     {{#subresourceOperation}}@Path("{{path}}"){{/subresourceOperation}}
     {{#hasConsumes}}@Consumes({ {{#consumes}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/consumes}} }){{/hasConsumes}}
