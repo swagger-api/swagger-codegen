@@ -18,6 +18,7 @@ import io.swagger.annotations.ApiOperation;
 import javax.validation.constraints.*;
 {{/useBeanValidation}}
 
+@Path("/")
 @Api(value = "/", description = "{{description}}")
 public interface {{classname}}  {
 {{#operations}}
