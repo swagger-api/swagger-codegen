@@ -19,6 +19,21 @@
   @Size(max={{maxLength}})
   {{/maxLength}}
   {{/minLength}}
+{{#minItems}}
+{{#maxItems}}
+  @Size(min={{minItems}},max={{maxItems}})
+{{/maxItems}}
+{{/minItems}}
+{{#minItems}}
+{{^maxItems}}
+  @Size(min={{minItems}})
+{{/maxItems}}
+{{/minItems}}
+{{^minItems}}
+{{#maxItems}}
+  @Size(max={{maxItems}})
+  {{/maxItems}}
+  {{/minItems}}
 {{#minimum}}
   //@Min({{minimum}})
 {{/minimum}}
