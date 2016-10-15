@@ -30,7 +30,19 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
     public static final String USE_BEANVALIDATION = "useBeanValidation";
     
     public static final String GENERATE_SPRING_APPLICATION = "generateSpringApplication";
-
+    
+    public static final String USE_SWAGGER_FEATURE = "useSwaggerFeature";
+    
+    public static final String USE_WADL_FEATURE = "useWadlFeature";
+    
+    public static final String USE_MULTIPART_FEATURE = "useMultipartFeature";
+    
+    public static final String USE_GZIP_FEATURE = "useGzipFeature";
+    
+    public static final String USE_LOGGING_FEATURE = "useLoggingFeature";
+    
+    public static final String USE_BEANVALIDATION_FEATURE = "useBeanValidationFeature";
+    
     protected boolean useBeanValidation = false;
     
     protected boolean generateSpringApplication = false;
@@ -67,6 +79,14 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
         cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
         cliOptions.add(CliOption.newBoolean(GENERATE_SPRING_APPLICATION, "Generate Spring application"));
         
+        cliOptions.add(CliOption.newBoolean(USE_SWAGGER_FEATURE, "Use Swagger Feature"));
+        cliOptions.add(CliOption.newBoolean(USE_WADL_FEATURE, "Use WADL Feature"));
+        cliOptions.add(CliOption.newBoolean(USE_MULTIPART_FEATURE, "Use Multipart Feature"));
+        cliOptions.add(CliOption.newBoolean(USE_GZIP_FEATURE, "Use Gzip Feature"));
+        cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION_FEATURE, "Use BeanValidation Feature"));
+        cliOptions.add(CliOption.newBoolean(USE_LOGGING_FEATURE, "Use Logging Feature"));
+        
+        
     }
 
 
@@ -76,19 +96,23 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
         super.processOpts();
         
         if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
-              boolean useBeanValidationProp = Boolean.valueOf(additionalProperties.get(USE_BEANVALIDATION).toString());
-              this.setUseBeanValidation(useBeanValidationProp);
-           
-           // write back as boolean
-           additionalProperties.put(USE_BEANVALIDATION, useBeanValidationProp);
+        	boolean useBeanValidationProp = convertPropertyToBooleanAndWriteBack(USE_BEANVALIDATION);
+            this.setUseBeanValidation(useBeanValidationProp);
         }
         
         if (additionalProperties.containsKey(GENERATE_SPRING_APPLICATION)) {
-            boolean generateSpringApplicationProp = Boolean.valueOf(additionalProperties.get(GENERATE_SPRING_APPLICATION).toString());
+        	boolean generateSpringApplicationProp = convertPropertyToBooleanAndWriteBack(GENERATE_SPRING_APPLICATION);
             this.setGenerateSpringApplication(generateSpringApplicationProp);
-         
-            // write back as boolean
-            additionalProperties.put(GENERATE_SPRING_APPLICATION, generateSpringApplicationProp);
+            
+            convertPropertyToBooleanAndWriteBack(USE_SWAGGER_FEATURE);
+            convertPropertyToBooleanAndWriteBack(USE_WADL_FEATURE);
+            convertPropertyToBooleanAndWriteBack(USE_MULTIPART_FEATURE);
+            convertPropertyToBooleanAndWriteBack(USE_GZIP_FEATURE);
+            convertPropertyToBooleanAndWriteBack(USE_LOGGING_FEATURE);
+            boolean useBeanValidationFeature = convertPropertyToBooleanAndWriteBack(USE_BEANVALIDATION_FEATURE);
+            if (useBeanValidationFeature) {
+            	LOGGER.info("make sure your target server supports Bean Validation 1.1");
+            }
         }
         
        
@@ -108,7 +132,19 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
         }
         
         
-    } 
+    }
+
+
+	private boolean convertPropertyToBooleanAndWriteBack(String propertyKey) {
+		boolean booleanValue = false;
+		if (additionalProperties.containsKey(propertyKey)) {
+			booleanValue = Boolean.valueOf(additionalProperties.get(propertyKey).toString());
+		    // write back as boolean
+		    additionalProperties.put(propertyKey, booleanValue);
+		}
+		
+		return booleanValue;
+	} 
     
     @Override
     public String getName()
