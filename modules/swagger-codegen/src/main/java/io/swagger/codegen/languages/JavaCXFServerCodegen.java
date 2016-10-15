@@ -16,13 +16,6 @@ import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.SupportingFile;
 import io.swagger.models.Operation;
 
-/**
- * TODO #2017:
- * - api_test.mustache: add switch for using gzip in test cases?
- * 
- * 
- *
- */
 public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
 {   
     private static final Logger LOGGER = LoggerFactory.getLogger(JavaCXFServerCodegen.class);
@@ -63,7 +56,6 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
     public JavaCXFServerCodegen()
     {
         super();
-        apiTestTemplateFiles.clear(); // TODO: add test template
 
         supportsInheritance = true;
         

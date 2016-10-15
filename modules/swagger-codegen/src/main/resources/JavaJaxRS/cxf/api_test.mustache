@@ -40,7 +40,7 @@ public class {{classname}}Test {
         org.apache.cxf.jaxrs.client.Client client = WebClient.client(api);
         
         ClientConfiguration config = WebClient.getConfig(client); 
-        
+{{#useGzipFeature}}        
         // Example for using Gzipping
         GZIPOutInterceptor gzipOutInterceptor = new GZIPOutInterceptor();
         // use Gzipping for first request sent to server
@@ -48,7 +48,7 @@ public class {{classname}}Test {
         config.getOutInterceptors().add(gzipOutInterceptor);
         
         config.getInInterceptors().add(new GZIPInInterceptor()); 
-        
+{{/useGzipFeature}}        
     }
 
     {{#operations}}{{#operation}}
