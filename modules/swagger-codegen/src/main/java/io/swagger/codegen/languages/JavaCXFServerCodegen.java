@@ -69,7 +69,6 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
         
         artifactId = "swagger-cxf-server";
         
-        sourceFolder = "gen" + File.separator + "java";
         outputFolder = "generated-code/JavaJaxRS-CXF";
         
         apiTemplateFiles.put("apiServiceImpl.mustache", ".java");
