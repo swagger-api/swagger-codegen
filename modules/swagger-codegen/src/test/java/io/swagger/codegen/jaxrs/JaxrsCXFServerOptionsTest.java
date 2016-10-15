@@ -56,8 +56,19 @@ public class JaxrsCXFServerOptionsTest extends AbstractOptionsTest {
             
             clientCodegen.setUseBeanValidation(Boolean.valueOf(JavaCXFServerOptionsProvider.USE_BEANVALIDATION));
             times = 1;
-            clientCodegen.setGenerateSpringApplication(Boolean.valueOf(JavaCXFServerOptionsProvider.GENERATE_SPRING_APPLICATION));
+            clientCodegen.setGenerateSpringApplication(Boolean.valueOf(JavaCXFServerOptionsProvider.USE_SWAGGER_FEATURE));
             times = 1;
+            clientCodegen.setGenerateSpringApplication(Boolean.valueOf(JavaCXFServerOptionsProvider.USE_WADL_FEATURE));
+            times = 1;
+            clientCodegen.setGenerateSpringApplication(Boolean.valueOf(JavaCXFServerOptionsProvider.USE_MULTIPART_FEATURE));
+            times = 1;
+            clientCodegen.setGenerateSpringApplication(Boolean.valueOf(JavaCXFServerOptionsProvider.USE_GZIP_FEATURE));
+            times = 1;
+            clientCodegen.setGenerateSpringApplication(Boolean.valueOf(JavaCXFServerOptionsProvider.USE_LOGGING_FEATURE));
+            times = 1;
+            clientCodegen.setGenerateSpringApplication(Boolean.valueOf(JavaCXFServerOptionsProvider.USE_BEANVALIDATION_FEATURE));
+            times = 1;
+            
             
             
         }};

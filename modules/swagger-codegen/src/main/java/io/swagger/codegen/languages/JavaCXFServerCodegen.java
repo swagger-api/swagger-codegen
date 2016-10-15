@@ -47,6 +47,18 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
     
     protected boolean generateSpringApplication = false;
     
+    protected boolean useSwaggerFeature = false;
+    
+    protected boolean useWadlFeature = false;
+    
+    protected boolean useMultipartFeature = false;
+    
+    protected boolean useGzipFeature = false;
+    
+    protected boolean useLoggingFeature = false;
+    
+    protected boolean useBeanValidationFeature = false;
+    
     
     public JavaCXFServerCodegen()
     {
@@ -101,15 +113,16 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
         }
         
         if (additionalProperties.containsKey(GENERATE_SPRING_APPLICATION)) {
-        	boolean generateSpringApplicationProp = convertPropertyToBooleanAndWriteBack(GENERATE_SPRING_APPLICATION);
-            this.setGenerateSpringApplication(generateSpringApplicationProp);
+        	this.setGenerateSpringApplication(convertPropertyToBooleanAndWriteBack(GENERATE_SPRING_APPLICATION));
             
-            convertPropertyToBooleanAndWriteBack(USE_SWAGGER_FEATURE);
-            convertPropertyToBooleanAndWriteBack(USE_WADL_FEATURE);
-            convertPropertyToBooleanAndWriteBack(USE_MULTIPART_FEATURE);
-            convertPropertyToBooleanAndWriteBack(USE_GZIP_FEATURE);
-            convertPropertyToBooleanAndWriteBack(USE_LOGGING_FEATURE);
+        	this.setUseSwaggerFeature(convertPropertyToBooleanAndWriteBack(USE_SWAGGER_FEATURE));
+            this.setUseWadlFeature(convertPropertyToBooleanAndWriteBack(USE_WADL_FEATURE));
+            this.setUseMultipartFeature(convertPropertyToBooleanAndWriteBack(USE_MULTIPART_FEATURE));
+            this.setUseGzipFeature(convertPropertyToBooleanAndWriteBack(USE_GZIP_FEATURE));
+            this.setUseLoggingFeature(convertPropertyToBooleanAndWriteBack(USE_LOGGING_FEATURE));
+            
             boolean useBeanValidationFeature = convertPropertyToBooleanAndWriteBack(USE_BEANVALIDATION_FEATURE);
+            this.setUseBeanValidationFeature(useBeanValidationFeature);
             if (useBeanValidationFeature) {
             	LOGGER.info("make sure your target server supports Bean Validation 1.1");
             }
@@ -180,4 +193,36 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
     public void setGenerateSpringApplication(boolean generateSpringApplication) {
         this.generateSpringApplication = generateSpringApplication;
     }
+
+
+	public void setUseSwaggerFeature(boolean useSwaggerFeature) {
+		this.useSwaggerFeature = useSwaggerFeature;
+	}
+
+
+	public void setUseWadlFeature(boolean useWadlFeature) {
+		this.useWadlFeature = useWadlFeature;
+	}
+
+
+	public void setUseMultipartFeature(boolean useMultipartFeature) {
+		this.useMultipartFeature = useMultipartFeature;
+	}
+
+
+	public void setUseGzipFeature(boolean useGzipFeature) {
+		this.useGzipFeature = useGzipFeature;
+	}
+
+
+	public void setUseLoggingFeature(boolean useLoggingFeature) {
+		this.useLoggingFeature = useLoggingFeature;
+	}
+
+
+	public void setUseBeanValidationFeature(boolean useBeanValidationFeature) {
+		this.useBeanValidationFeature = useBeanValidationFeature;
+	}
+    
+    
 }
