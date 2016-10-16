@@ -4,39 +4,21 @@ package io.swagger.codegen.languages;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+
 import org.slf4j.Logger;
-
 import org.slf4j.LoggerFactory;
-
 
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.languages.features.CXFServerFeatures;
 import io.swagger.models.Operation;
 
-public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
+public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen implements CXFServerFeatures
 {   
     private static final Logger LOGGER = LoggerFactory.getLogger(JavaCXFServerCodegen.class);
-    
-    public static final String USE_BEANVALIDATION = "useBeanValidation";
-    
-    public static final String GENERATE_SPRING_APPLICATION = "generateSpringApplication";
-    
-    public static final String USE_SWAGGER_FEATURE = "useSwaggerFeature";
-    
-    public static final String USE_WADL_FEATURE = "useWadlFeature";
-    
-    public static final String USE_MULTIPART_FEATURE = "useMultipartFeature";
-    
-    public static final String USE_GZIP_FEATURE = "useGzipFeature";
-    
-    public static final String USE_LOGGING_FEATURE = "useLoggingFeature";
-    
-    public static final String USE_BEANVALIDATION_FEATURE = "useBeanValidationFeature";
-    
-    public static final String GENERATE_SPRING_BOOT_APPLICATION = "generateSpringBootApplication";
     
     protected boolean useBeanValidation = false;
     

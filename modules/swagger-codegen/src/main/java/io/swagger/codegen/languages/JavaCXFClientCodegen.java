@@ -14,9 +14,11 @@ import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.languages.features.CXFFeatures;
+import io.swagger.codegen.languages.features.LoggingFeatures;
 import io.swagger.models.Operation;
 
-public class JavaCXFClientCodegen extends AbstractJavaCodegen
+public class JavaCXFClientCodegen extends AbstractJavaCodegen implements CXFFeatures 
 {   
     private static final Logger LOGGER = LoggerFactory.getLogger(JavaCXFClientCodegen.class);
     
@@ -25,14 +27,6 @@ public class JavaCXFClientCodegen extends AbstractJavaCodegen
      * Mustache template for the JAX-RS Codegen.
      */
     protected static final String JAXRS_TEMPLATE_DIRECTORY_NAME = "JavaJaxRS";
-    
-    public static final String USE_BEANVALIDATION = "useBeanValidation";
-    
-    public static final String USE_GZIP_FEATURE = "useGzipFeature";
-    
-    public static final String USE_LOGGING_FEATURE = "useLoggingFeature";
-    
-    public static final String USE_BEANVALIDATION_FEATURE = "useBeanValidationFeature";
     
     protected boolean useBeanValidation = false;
     

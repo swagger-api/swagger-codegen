@@ -1,6 +1,8 @@
 package io.swagger.codegen.languages;
 
 import io.swagger.codegen.*;
+import io.swagger.codegen.languages.features.BeanValidationFeatures;
+
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -9,13 +11,12 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.*;
 
-public class JavaClientCodegen extends AbstractJavaCodegen {
+public class JavaClientCodegen extends AbstractJavaCodegen implements BeanValidationFeatures {
     @SuppressWarnings("hiding")
     private static final Logger LOGGER = LoggerFactory.getLogger(JavaClientCodegen.class);
 
     public static final String USE_RX_JAVA = "useRxJava";
     public static final String PARCELABLE_MODEL = "parcelableModel";
-    public static final String USE_BEANVALIDATION = "useBeanValidation";
 
     public static final String RETROFIT_1 = "retrofit";
     public static final String RETROFIT_2 = "retrofit2";
