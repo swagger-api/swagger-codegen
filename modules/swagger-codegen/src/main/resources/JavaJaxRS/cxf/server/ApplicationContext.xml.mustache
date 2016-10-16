@@ -73,6 +73,9 @@
             <ref bean="commonValidationFeature" />
 {{/useBeanValidationFeature}}                        
         </cxf:features>
+        <cxf:properties>
+            <entry key="javax.ws.rs.ext.ExceptionMapper" value-ref="exceptionMapper"/>
+        </cxf:properties>
     </cxf:bus>
     
 {{#useWadlFeature}}     
@@ -104,7 +107,12 @@
     <bean id="validationOutInterceptor" class="org.apache.cxf.jaxrs.validation.JAXRSBeanValidationOutInterceptor">
         <property name="provider" ref="validationProvider" />
     </bean>   
-{{/useBeanValidationFeature}}    
+{{/useBeanValidationFeature}}
+{{^useBeanValidationFeature}}
+    <bean id="exceptionMapper" class="org.apache.cxf.jaxrs.impl.WebApplicationExceptionMapper">
+        <property name="addMessageToResponse" value="true" />
+    </bean>
+{{/useBeanValidationFeature}}
     
     <!-- REST server -->
     <jaxrs:server id="restServer" address="/services">

@@ -130,25 +130,25 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
        
         supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
         
-        writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
+        writeOptional(outputFolder, new SupportingFile("server/pom.mustache", "", "pom.xml"));
         
         if (this.generateSpringApplication) {
-        	writeOptional(outputFolder, new SupportingFile("readme.md", "", "readme.md"));
+        	writeOptional(outputFolder, new SupportingFile("server/readme.md", "", "readme.md"));
             
-        	writeOptional(outputFolder, new SupportingFile("ApplicationContext.xml.mustache",
+        	writeOptional(outputFolder, new SupportingFile("server/ApplicationContext.xml.mustache",
                     ("src/main/resources"), "ApplicationContext.xml"));
-            writeOptional(outputFolder, new SupportingFile("web.mustache",
+            writeOptional(outputFolder, new SupportingFile("server/web.mustache",
                     ("src/main/webapp/WEB-INF"), "web.xml"));
-            writeOptional(outputFolder, new SupportingFile("context.xml.mustache",
+            writeOptional(outputFolder, new SupportingFile("server/context.xml.mustache",
                     ("src/main/webapp/WEB-INF"), "context.xml"));
             
             // Jboss
-            writeOptional(outputFolder, new SupportingFile("jboss-web.xml.mustache",
+            writeOptional(outputFolder, new SupportingFile("server/jboss-web.xml.mustache",
                     ("src/main/webapp/WEB-INF"), "jboss-web.xml"));
             
             // Spring Boot
             if (this.generateSpringBootApplication) {
-            	writeOptional(outputFolder, new SupportingFile("SpringBootApplication.mustache",
+            	writeOptional(outputFolder, new SupportingFile("server/SpringBootApplication.mustache",
                         (testFolder + '/' + apiPackage).replace(".", "/"), "SpringBootApplication.java"));
                 	
             }
@@ -173,7 +173,7 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
     @Override
     public String getName()
     {
-        return "jaxrs-cxf";
+        return "jaxrs-cxf-server";
     }
 
     @Override

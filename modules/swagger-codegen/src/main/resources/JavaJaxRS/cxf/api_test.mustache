@@ -11,8 +11,19 @@ import javax.ws.rs.core.Response;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.apache.cxf.jaxrs.client.ClientConfiguration;
 import org.apache.cxf.jaxrs.client.WebClient;
+{{#useGzipFeature}}
 import org.apache.cxf.transport.common.gzip.GZIPInInterceptor;
 import org.apache.cxf.transport.common.gzip.GZIPOutInterceptor;
+{{/useGzipFeature}}
+
+{{#useLoggingFeature}}
+import org.apache.cxf.interceptor.LoggingOutInterceptor;
+{{/useLoggingFeature}}
+{{#useBeanValidationFeature}}
+import org.apache.cxf.validation.BeanValidationProvider;
+import org.apache.cxf.validation.BeanValidationOutInterceptor;
+{{/useBeanValidationFeature}}
+
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 {{^fullJavaUtil}}
@@ -30,6 +41,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 {{/generateSpringBootApplication}}
+
 
 
 /**
@@ -73,7 +85,17 @@ public class {{classname}}Test {
         config.getOutInterceptors().add(gzipOutInterceptor);
         
         config.getInInterceptors().add(new GZIPInInterceptor()); 
-{{/useGzipFeature}}        
+{{/useGzipFeature}}
+{{#useLoggingFeature}}
+        LoggingOutInterceptor loggingOutInterceptor = new LoggingOutInterceptor();
+        config.getOutInterceptors().add(loggingOutInterceptor);
+{{/useLoggingFeature}}
+{{#useBeanValidationFeature}}
+        BeanValidationProvider beanValProv = new BeanValidationProvider();
+        BeanValidationOutInterceptor beanValidationOutInterceptor = new BeanValidationOutInterceptor();
+        beanValidationOutInterceptor.setProvider(beanValProv);
+        config.getOutInterceptors().add(beanValidationOutInterceptor);
+{{/useBeanValidationFeature}}        
     }
 
     {{#operations}}{{#operation}}
