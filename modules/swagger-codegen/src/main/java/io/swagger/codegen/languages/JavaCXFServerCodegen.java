@@ -38,7 +38,6 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
     
     protected boolean generateSpringBootApplication= false;
     
-    
     public JavaCXFServerCodegen()
     {
         super();
