@@ -46,9 +46,7 @@ Then include the DLL (under the `bin` folder) in the C# project, and use the nam
 ```csharp
 using {{packageName}}.{{apiPackage}};
 using {{packageName}}.Client;
-{{#modelPackage}}
-using {{{.}}};
-{{/modelPackage}}
+using {{packageName}}.{{modelPackage}};
 ```
 
 ## Getting Started
@@ -58,9 +56,7 @@ using System;
 using System.Diagnostics;
 using {{packageName}}.{{apiPackage}};
 using {{packageName}}.Client;
-{{#modelPackage}}
-using {{{.}}};
-{{/modelPackage}}
+using {{packageName}}.{{modelPackage}};
 
 namespace Example
 {
