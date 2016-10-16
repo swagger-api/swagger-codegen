@@ -36,6 +36,8 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
     
     public static final String USE_BEANVALIDATION_FEATURE = "useBeanValidationFeature";
     
+    public static final String GENERATE_SPRING_BOOT_APPLICATION = "generateSpringBootApplication";
+    
     protected boolean useBeanValidation = false;
     
     protected boolean generateSpringApplication = false;
@@ -51,6 +53,8 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
     protected boolean useLoggingFeature = false;
     
     protected boolean useBeanValidationFeature = false;
+    
+    protected boolean generateSpringBootApplication= false;
     
     
     public JavaCXFServerCodegen()
@@ -89,6 +93,8 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
         cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION_FEATURE, "Use BeanValidation Feature"));
         cliOptions.add(CliOption.newBoolean(USE_LOGGING_FEATURE, "Use Logging Feature"));
         
+        cliOptions.add(CliOption.newBoolean(GENERATE_SPRING_BOOT_APPLICATION, "Generate Spring Boot application"));
+        
         
     }
 
@@ -117,6 +123,8 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
             if (useBeanValidationFeature) {
             	LOGGER.info("make sure your target server supports Bean Validation 1.1");
             }
+            
+            this.setGenerateSpringBootApplication(convertPropertyToBooleanAndWriteBack(GENERATE_SPRING_BOOT_APPLICATION));
         }
         
        
@@ -127,12 +135,24 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
         if (this.generateSpringApplication) {
         	writeOptional(outputFolder, new SupportingFile("readme.md", "", "readme.md"));
             
+        	writeOptional(outputFolder, new SupportingFile("ApplicationContext.xml.mustache",
+                    ("src/main/resources"), "ApplicationContext.xml"));
             writeOptional(outputFolder, new SupportingFile("web.mustache",
                     ("src/main/webapp/WEB-INF"), "web.xml"));
             writeOptional(outputFolder, new SupportingFile("context.xml.mustache",
                     ("src/main/webapp/WEB-INF"), "context.xml"));
+            
+            // Jboss
             writeOptional(outputFolder, new SupportingFile("jboss-web.xml.mustache",
                     ("src/main/webapp/WEB-INF"), "jboss-web.xml"));
+            
+            // Spring Boot
+            if (this.generateSpringBootApplication) {
+            	writeOptional(outputFolder, new SupportingFile("SpringBootApplication.mustache",
+                        (testFolder + '/' + apiPackage).replace(".", "/"), "SpringBootApplication.java"));
+                	
+            }
+            
         }
         
         
@@ -215,5 +235,7 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
 		this.useBeanValidationFeature = useBeanValidationFeature;
 	}
     
-    
+	 public void setGenerateSpringBootApplication(boolean generateSpringBootApplication) {
+        this.generateSpringBootApplication = generateSpringBootApplication;
+    }
 }
