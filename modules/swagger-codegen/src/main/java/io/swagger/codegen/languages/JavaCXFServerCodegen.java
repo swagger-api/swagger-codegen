@@ -154,7 +154,7 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
     @Override
     public String getName()
     {
-        return "jaxrs-cxf-server";
+        return "jaxrs-cxf";
     }
 
     @Override

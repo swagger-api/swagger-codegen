@@ -117,7 +117,7 @@ public class JavaCXFClientCodegen extends AbstractJavaCodegen implements CXFFeat
     @Override
     public String getName()
     {
-        return "jaxrs-cxf";
+        return "jaxrs-cxf-client";
     }
 
 
