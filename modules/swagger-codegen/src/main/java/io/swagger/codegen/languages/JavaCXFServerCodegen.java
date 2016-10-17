@@ -138,18 +138,6 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
         
         
     }
-
-
-    private boolean convertPropertyToBooleanAndWriteBack(String propertyKey) {
-        boolean booleanValue = false;
-        if (additionalProperties.containsKey(propertyKey)) {
-            booleanValue = Boolean.valueOf(additionalProperties.get(propertyKey).toString());
-            // write back as boolean
-            additionalProperties.put(propertyKey, booleanValue);
-        }
-        
-        return booleanValue;
-    } 
     
     @Override
     public String getName()
