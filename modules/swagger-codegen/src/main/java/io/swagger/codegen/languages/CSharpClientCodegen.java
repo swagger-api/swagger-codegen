@@ -47,6 +47,9 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
 
     public CSharpClientCodegen() {
         super();
+
+        supportsInheritance = true;
+
         modelTemplateFiles.put("model.mustache", ".cs");
         apiTemplateFiles.put("api.mustache", ".cs");
 
