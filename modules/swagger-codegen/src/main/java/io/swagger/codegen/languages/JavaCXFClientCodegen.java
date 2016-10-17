@@ -83,7 +83,7 @@ public class JavaCXFClientCodegen extends AbstractJavaCodegen implements CXFFeat
         super.processOpts();
         
         if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
-        	boolean useBeanValidationProp = convertPropertyToBooleanAndWriteBack(USE_BEANVALIDATION);
+            boolean useBeanValidationProp = convertPropertyToBooleanAndWriteBack(USE_BEANVALIDATION);
             this.setUseBeanValidation(useBeanValidationProp);
         }
         
@@ -93,7 +93,7 @@ public class JavaCXFClientCodegen extends AbstractJavaCodegen implements CXFFeat
         boolean useBeanValidationFeature = convertPropertyToBooleanAndWriteBack(USE_BEANVALIDATION_FEATURE);
             this.setUseBeanValidationFeature(useBeanValidationFeature);
             if (useBeanValidationFeature) {
-            	LOGGER.info("make sure your client supports Bean Validation 1.1");
+                LOGGER.info("make sure your client supports Bean Validation 1.1");
             }
        
         supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
@@ -103,16 +103,16 @@ public class JavaCXFClientCodegen extends AbstractJavaCodegen implements CXFFeat
     }
 
 
-	private boolean convertPropertyToBooleanAndWriteBack(String propertyKey) {
-		boolean booleanValue = false;
-		if (additionalProperties.containsKey(propertyKey)) {
-			booleanValue = Boolean.valueOf(additionalProperties.get(propertyKey).toString());
-		    // write back as boolean
-		    additionalProperties.put(propertyKey, booleanValue);
-		}
-		
-		return booleanValue;
-	} 
+    private boolean convertPropertyToBooleanAndWriteBack(String propertyKey) {
+        boolean booleanValue = false;
+        if (additionalProperties.containsKey(propertyKey)) {
+            booleanValue = Boolean.valueOf(additionalProperties.get(propertyKey).toString());
+            // write back as boolean
+            additionalProperties.put(propertyKey, booleanValue);
+        }
+        
+        return booleanValue;
+    } 
     
     @Override
     public String getName()
@@ -153,18 +153,18 @@ public class JavaCXFClientCodegen extends AbstractJavaCodegen implements CXFFeat
     }
     
 
-	public void setUseGzipFeature(boolean useGzipFeature) {
-		this.useGzipFeature = useGzipFeature;
-	}
+    public void setUseGzipFeature(boolean useGzipFeature) {
+        this.useGzipFeature = useGzipFeature;
+    }
 
 
-	public void setUseLoggingFeature(boolean useLoggingFeature) {
-		this.useLoggingFeature = useLoggingFeature;
-	}
+    public void setUseLoggingFeature(boolean useLoggingFeature) {
+        this.useLoggingFeature = useLoggingFeature;
+    }
 
 
-	public void setUseBeanValidationFeature(boolean useBeanValidationFeature) {
-		this.useBeanValidationFeature = useBeanValidationFeature;
-	}
+    public void setUseBeanValidationFeature(boolean useBeanValidationFeature) {
+        this.useBeanValidationFeature = useBeanValidationFeature;
+    }
     
 }

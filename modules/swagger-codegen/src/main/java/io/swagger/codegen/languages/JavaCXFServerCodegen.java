@@ -86,14 +86,14 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
         super.processOpts();
         
         if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
-        	boolean useBeanValidationProp = convertPropertyToBooleanAndWriteBack(USE_BEANVALIDATION);
+            boolean useBeanValidationProp = convertPropertyToBooleanAndWriteBack(USE_BEANVALIDATION);
             this.setUseBeanValidation(useBeanValidationProp);
         }
         
         if (additionalProperties.containsKey(GENERATE_SPRING_APPLICATION)) {
-        	this.setGenerateSpringApplication(convertPropertyToBooleanAndWriteBack(GENERATE_SPRING_APPLICATION));
+            this.setGenerateSpringApplication(convertPropertyToBooleanAndWriteBack(GENERATE_SPRING_APPLICATION));
             
-        	this.setUseSwaggerFeature(convertPropertyToBooleanAndWriteBack(USE_SWAGGER_FEATURE));
+            this.setUseSwaggerFeature(convertPropertyToBooleanAndWriteBack(USE_SWAGGER_FEATURE));
             this.setUseWadlFeature(convertPropertyToBooleanAndWriteBack(USE_WADL_FEATURE));
             this.setUseMultipartFeature(convertPropertyToBooleanAndWriteBack(USE_MULTIPART_FEATURE));
             this.setUseGzipFeature(convertPropertyToBooleanAndWriteBack(USE_GZIP_FEATURE));
@@ -102,7 +102,7 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
             boolean useBeanValidationFeature = convertPropertyToBooleanAndWriteBack(USE_BEANVALIDATION_FEATURE);
             this.setUseBeanValidationFeature(useBeanValidationFeature);
             if (useBeanValidationFeature) {
-            	LOGGER.info("make sure your target server supports Bean Validation 1.1");
+                LOGGER.info("make sure your target server supports Bean Validation 1.1");
             }
             
             this.setGenerateSpringBootApplication(convertPropertyToBooleanAndWriteBack(GENERATE_SPRING_BOOT_APPLICATION));
@@ -114,9 +114,9 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
         writeOptional(outputFolder, new SupportingFile("server/pom.mustache", "", "pom.xml"));
         
         if (this.generateSpringApplication) {
-        	writeOptional(outputFolder, new SupportingFile("server/readme.md", "", "readme.md"));
+            writeOptional(outputFolder, new SupportingFile("server/readme.md", "", "readme.md"));
             
-        	writeOptional(outputFolder, new SupportingFile("server/ApplicationContext.xml.mustache",
+            writeOptional(outputFolder, new SupportingFile("server/ApplicationContext.xml.mustache",
                     ("src/main/resources"), "ApplicationContext.xml"));
             writeOptional(outputFolder, new SupportingFile("server/web.mustache",
                     ("src/main/webapp/WEB-INF"), "web.xml"));
@@ -129,9 +129,9 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
             
             // Spring Boot
             if (this.generateSpringBootApplication) {
-            	writeOptional(outputFolder, new SupportingFile("server/SpringBootApplication.mustache",
+                writeOptional(outputFolder, new SupportingFile("server/SpringBootApplication.mustache",
                         (testFolder + '/' + apiPackage).replace(".", "/"), "SpringBootApplication.java"));
-                	
+                    
             }
             
         }
@@ -140,16 +140,16 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
     }
 
 
-	private boolean convertPropertyToBooleanAndWriteBack(String propertyKey) {
-		boolean booleanValue = false;
-		if (additionalProperties.containsKey(propertyKey)) {
-			booleanValue = Boolean.valueOf(additionalProperties.get(propertyKey).toString());
-		    // write back as boolean
-		    additionalProperties.put(propertyKey, booleanValue);
-		}
-		
-		return booleanValue;
-	} 
+    private boolean convertPropertyToBooleanAndWriteBack(String propertyKey) {
+        boolean booleanValue = false;
+        if (additionalProperties.containsKey(propertyKey)) {
+            booleanValue = Boolean.valueOf(additionalProperties.get(propertyKey).toString());
+            // write back as boolean
+            additionalProperties.put(propertyKey, booleanValue);
+        }
+        
+        return booleanValue;
+    } 
     
     @Override
     public String getName()
@@ -187,36 +187,36 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
     }
 
 
-	public void setUseSwaggerFeature(boolean useSwaggerFeature) {
-		this.useSwaggerFeature = useSwaggerFeature;
-	}
+    public void setUseSwaggerFeature(boolean useSwaggerFeature) {
+        this.useSwaggerFeature = useSwaggerFeature;
+    }
 
 
-	public void setUseWadlFeature(boolean useWadlFeature) {
-		this.useWadlFeature = useWadlFeature;
-	}
+    public void setUseWadlFeature(boolean useWadlFeature) {
+        this.useWadlFeature = useWadlFeature;
+    }
 
 
-	public void setUseMultipartFeature(boolean useMultipartFeature) {
-		this.useMultipartFeature = useMultipartFeature;
-	}
+    public void setUseMultipartFeature(boolean useMultipartFeature) {
+        this.useMultipartFeature = useMultipartFeature;
+    }
 
 
-	public void setUseGzipFeature(boolean useGzipFeature) {
-		this.useGzipFeature = useGzipFeature;
-	}
+    public void setUseGzipFeature(boolean useGzipFeature) {
+        this.useGzipFeature = useGzipFeature;
+    }
 
 
-	public void setUseLoggingFeature(boolean useLoggingFeature) {
-		this.useLoggingFeature = useLoggingFeature;
-	}
+    public void setUseLoggingFeature(boolean useLoggingFeature) {
+        this.useLoggingFeature = useLoggingFeature;
+    }
 
 
-	public void setUseBeanValidationFeature(boolean useBeanValidationFeature) {
-		this.useBeanValidationFeature = useBeanValidationFeature;
-	}
+    public void setUseBeanValidationFeature(boolean useBeanValidationFeature) {
+        this.useBeanValidationFeature = useBeanValidationFeature;
+    }
     
-	 public void setGenerateSpringBootApplication(boolean generateSpringBootApplication) {
+     public void setGenerateSpringBootApplication(boolean generateSpringBootApplication) {
         this.generateSpringBootApplication = generateSpringBootApplication;
     }
 }

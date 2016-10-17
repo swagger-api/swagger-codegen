@@ -29,7 +29,7 @@ public class JaxrsCXFServerOptionsTest extends AbstractOptionsTest {
     @Override
     protected void setExpectations() {
         new Expectations(clientCodegen) {{
-        	clientCodegen.setModelPackage(JavaCXFServerOptionsProvider.MODEL_PACKAGE_VALUE);
+            clientCodegen.setModelPackage(JavaCXFServerOptionsProvider.MODEL_PACKAGE_VALUE);
             times = 1;
             clientCodegen.setApiPackage(JavaCXFServerOptionsProvider.API_PACKAGE_VALUE);
             times = 1;
