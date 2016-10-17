@@ -37,10 +37,10 @@ public class Swift3ModelTest {
 
         final CodegenProperty property1 = cm.vars.get(0);
         Assert.assertEquals(property1.baseName, "id");
-        Assert.assertEquals(property1.datatype, "Int64");
+        Assert.assertEquals(property1.datatype, "Int");
         Assert.assertEquals(property1.name, "id");
         Assert.assertNull(property1.defaultValue);
-        Assert.assertEquals(property1.baseType, "Int64");
+        Assert.assertEquals(property1.baseType, "Int");
         Assert.assertTrue(property1.hasMore);
         Assert.assertTrue(property1.required);
         Assert.assertTrue(property1.isPrimitiveType);
