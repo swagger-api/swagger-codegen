@@ -11,7 +11,7 @@ import org.junit.*;
 import static org.junit.Assert.*;
 
 public class StoreApiTest {
-    StoreApi api = null;
+    private StoreApi api = null;
 
     @Before
     public void setup() {
@@ -75,9 +75,9 @@ public class StoreApiTest {
 
     private Order createOrder() {
         Order order = new Order();
-        order.setPetId(new Long(200));
-        order.setQuantity(new Integer(13));
-        order.setShipDate(org.joda.time.DateTime.now());
+        order.setPetId(200L);
+        order.setQuantity(13);
+        order.setShipDate(org.threeten.bp.OffsetDateTime.now());
         order.setStatus(Order.StatusEnum.PLACED);
         order.setComplete(true);
 
