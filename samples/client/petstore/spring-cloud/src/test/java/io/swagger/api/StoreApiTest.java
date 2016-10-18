@@ -59,22 +59,13 @@ public class StoreApiTest {
     }
 
     private Order createOrder() {
-        Order order = new Order();
-        order.setPetId(200L);
-        order.setQuantity(13);
-        order.setShipDate(org.joda.time.DateTime.now());
-        order.setStatus(Order.StatusEnum.PLACED);
-        order.setComplete(true);
-
-        try {
-            Field idField = Order.class.getDeclaredField("id");
-            idField.setAccessible(true);
-            idField.set(order, TestUtils.nextId());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        return order;
+        return new Order()
+                .id(TestUtils.nextId())
+                .petId(200L)
+                .quantity(13)
+                .shipDate(org.threeten.bp.OffsetDateTime.now())
+                .status(Order.StatusEnum.PLACED)
+                .complete(true);
     }
 
 }
