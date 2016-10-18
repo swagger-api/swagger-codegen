@@ -83,6 +83,7 @@ public class DefaultCodegen {
     protected Set<String> languageSpecificPrimitives = new HashSet<String>();
     protected Map<String, String> importMapping = new HashMap<String, String>();
     protected String modelPackage = "", apiPackage = "", fileSuffix;
+    protected String apiNameSuffix = "Api";
     protected String modelNamePrefix = "", modelNameSuffix = "";
     protected String testPackage = "";
     protected Map<String, String> apiTemplateFiles = new HashMap<String, String>();
@@ -148,6 +149,9 @@ public class DefaultCodegen {
             this.setModelNameSuffix((String) additionalProperties.get(CodegenConstants.MODEL_NAME_SUFFIX));
         }
 
+        if(additionalProperties.containsKey(CodegenConstants.API_NAME_SUFFIX)){
+            this.setApiNameSuffix((String) additionalProperties.get(CodegenConstants.API_NAME_SUFFIX));
+        }
     }
 
     // override with any special post-processing for all models
@@ -524,6 +528,10 @@ public class DefaultCodegen {
 
     public void setModelPackage(String modelPackage) {
         this.modelPackage = modelPackage;
+    }
+
+    public void setApiNameSuffix(String apiNameSuffix){
+        this.apiNameSuffix = apiNameSuffix;
     }
 
     public void setModelNamePrefix(String modelNamePrefix){
@@ -1167,7 +1175,7 @@ public class DefaultCodegen {
         if (name.length() == 0) {
             return "DefaultApi";
         }
-        return initialCaps(name) + "Api";
+        return initialCaps(name) + apiNameSuffix;
     }
 
     /**
