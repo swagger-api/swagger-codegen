@@ -8,9 +8,10 @@ import io.swagger.client.model.*;
 
 import java.lang.reflect.Field;
 import java.util.Map;
-import java.text.SimpleDateFormat;
 
 import org.junit.*;
+import org.threeten.bp.OffsetDateTime;
+
 import static org.junit.Assert.*;
 
 public class StoreApiTest {
@@ -55,7 +56,7 @@ public class StoreApiTest {
         assertEquals(order.getId(), fetched.getId());
         assertEquals(order.getPetId(), fetched.getPetId());
         assertEquals(order.getQuantity(), fetched.getQuantity());
-        assertEquals(order.getShipDate().toInstant(), fetched.getShipDate().toInstant());
+        assertTrue(order.getShipDate().isEqual(fetched.getShipDate()));
     }
 
     @Test
@@ -80,7 +81,7 @@ public class StoreApiTest {
         Order order = new Order();
         order.setPetId(200L);
         order.setQuantity(13);
-        order.setShipDate(org.joda.time.DateTime.now());
+        order.setShipDate(OffsetDateTime.now());
         order.setStatus(Order.StatusEnum.PLACED);
         order.setComplete(true);
 
