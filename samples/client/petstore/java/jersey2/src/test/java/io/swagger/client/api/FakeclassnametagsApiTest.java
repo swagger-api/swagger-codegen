@@ -23,54 +23,39 @@
  */
 
 
-package io.swagger.client.model;
+package io.swagger.client.api;
 
-import java.util.Objects;
-import io.swagger.client.model.Animal;
+import io.swagger.client.ApiException;
+import io.swagger.client.model.Client;
+import org.junit.Test;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * AnimalFarm
+ * API tests for FakeclassnametagsApi
  */
+public class FakeclassnametagsApiTest {
 
-public class AnimalFarm extends ArrayList<Animal> {
+    private final FakeclassnametagsApi api = new FakeclassnametagsApi();
 
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
+    
+    /**
+     * To test class name in snake case
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void testClassnameTest() throws ApiException {
+        Client body = null;
+        // Client response = api.testClassname(body);
+
+        // TODO: test validations
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    return true;
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(super.hashCode());
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class AnimalFarm {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
-  
+    
 }
-

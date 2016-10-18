@@ -22,43 +22,23 @@
  * limitations under the License.
  */
 
+package io.swagger.client;
 
-package io.swagger.client.model;
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.fasterxml.jackson.databind.util.ISO8601Utils;
 
-import java.util.Objects;
+import java.text.FieldPosition;
+import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 
-/**
- * Gets or Sets EnumClass
- */
-public enum EnumClass {
-  
-  _ABC("_abc"),
-  
-  _EFG("-efg"),
-  
-  _XYZ_("(xyz)");
+public class RFC3339DateFormat extends ISO8601DateFormat {
 
-  private String value;
-
-  EnumClass(String value) {
-    this.value = value;
-  }
-
+  // Same as ISO8601DateFormat but serializing milliseconds.
   @Override
-  public String toString() {
-    return String.valueOf(value);
+  public StringBuffer format(Date date, StringBuffer toAppendTo, FieldPosition fieldPosition) {
+    String value = ISO8601Utils.format(date, true);
+    toAppendTo.append(value);
+    return toAppendTo;
   }
 
-  @JsonCreator
-  public static EnumClass fromValue(String text) {
-    for (EnumClass b : EnumClass.values()) {
-      if (String.valueOf(b.value).equals(text)) {
-        return b;
-      }
-    }
-    return null;
-  }
 }
-
