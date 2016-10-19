@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.threeten.bp.OffsetDateTime;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -63,7 +64,8 @@ public class StoreApiTest {
                 .id(TestUtils.nextId())
                 .petId(200L)
                 .quantity(13)
-                .shipDate(org.threeten.bp.OffsetDateTime.now())
+                //Ensure 3 fractional digits because of a bug in the petstore server
+                .shipDate(OffsetDateTime.now().withNano(123000000))
                 .status(Order.StatusEnum.PLACED)
                 .complete(true);
     }

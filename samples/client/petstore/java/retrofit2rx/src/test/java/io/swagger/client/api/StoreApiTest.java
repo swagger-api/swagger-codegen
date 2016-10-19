@@ -7,6 +7,7 @@ import java.lang.reflect.Field;
 import java.util.Map;
 
 import org.junit.*;
+import org.threeten.bp.OffsetDateTime;
 
 import static org.junit.Assert.*;
 
@@ -77,7 +78,8 @@ public class StoreApiTest {
         Order order = new Order();
         order.setPetId(200L);
         order.setQuantity(13);
-        order.setShipDate(org.threeten.bp.OffsetDateTime.now());
+        //Ensure 3 fractional digits because of a bug in the petstore server
+        order.setShipDate(OffsetDateTime.now().withNano(123000000));
         order.setStatus(Order.StatusEnum.PLACED);
         order.setComplete(true);
 
