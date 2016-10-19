@@ -301,6 +301,11 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         } else if (usesAnyRetrofitLibrary()) {
             supportingFiles.add(new SupportingFile("auth/OAuthOkHttpClient.mustache", authFolder, "OAuthOkHttpClient.java"));
             supportingFiles.add(new SupportingFile("CollectionFormats.mustache", invokerFolder, "CollectionFormats.java"));
+            //generate markdown docs for retrofit2
+            if ( usesRetrofit2Library() ){
+                modelDocTemplateFiles.put("model_doc.mustache", ".md");
+                apiDocTemplateFiles.put("api_doc.mustache", ".md");
+            }
         } else if("jersey2".equals(getLibrary())) {
             // generate markdown docs
             modelDocTemplateFiles.put("model_doc.mustache", ".md");
