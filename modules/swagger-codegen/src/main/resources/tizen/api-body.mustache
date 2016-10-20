@@ -58,9 +58,6 @@ bool {{nickname}}Processor(MemoryStruct_s p_chunk, long code, char* errormsg, vo
 	{{^returnType}}void(* handler)(Error, void* ) = reinterpret_cast<void(*)(Error, void* )> (voidHandler);{{/returnType}}
 	JsonNode* pJson;
 	char * data = p_chunk.memory;
-	{{#returnType}}
-	printf("%s\n", data);
-	{{/returnType}}
 
 	{{#returnType}}{{#returnContainer}}{{#isListContainer}}{{returnType}}<{{returnBaseType}}>{{/isListContainer}}{{#isMapContainer}}{{returnType}}<string,string>{{/isMapContainer}} out;{{/returnContainer}}
 	{{^returnContainer}}{{returnType}} out;{{/returnContainer}}{{/returnType}}
