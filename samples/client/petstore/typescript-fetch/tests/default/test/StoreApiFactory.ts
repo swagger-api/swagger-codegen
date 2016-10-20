@@ -7,7 +7,9 @@ let config: Configuration;
 before(function() {
   config = new Configuration();
   config.accessToken = "foobar";
-  config.apiKey = "foobar";
+  config.apiKey = {
+    api_key: "foobar"
+  };
   config.username = "foo";
   config.password = "bar";
 });
