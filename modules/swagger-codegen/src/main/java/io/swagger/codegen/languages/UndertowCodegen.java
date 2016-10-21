@@ -62,6 +62,14 @@ public class UndertowCodegen extends AbstractJavaCodegen {
     public void processOpts() {
         super.processOpts();
 
+        if (additionalProperties.containsKey(CodegenConstants.MODEL_PACKAGE)) {
+            this.setModelPackage((String) additionalProperties.get(CodegenConstants.MODEL_PACKAGE));
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.API_PACKAGE)) {
+            this.setApiPackage((String) additionalProperties.get(CodegenConstants.API_PACKAGE));
+        }
+
         //apiTemplateFiles.remove("api.mustache");
 
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
