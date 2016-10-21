@@ -27,13 +27,15 @@ namespace Swagger {
 
 void
 {{classname}}::init() {
-    {{#vars}}{{name}} = {{{defaultValue}}};
+    {{#vars}}
+    {{name}} = {{{defaultValue}}};
     {{/vars}}
 }
 
 void
 {{classname}}::cleanup() {
-    {{#vars}}{{#complexType}}if({{name}} != NULL) {
+    {{#vars}}{{#complexType}}
+    if({{name}} != nullptr) {
         {{#isContainer}}QList<{{complexType}}*>* arr = {{name}};
         foreach({{complexType}}* o, *arr) {
             delete o;
