@@ -27,7 +27,7 @@ public class UndertowCodegen extends AbstractJavaCodegen {
         sourceFolder = "src/main/java";
         embeddedTemplateDir = templateDir = "undertow";
         invokerPackage = "io.swagger.handler";
-        artifactId = "swagger-undertow-server";
+        artifactId = "swagger-light-java";
         dateLibrary = "legacy"; //TODO: add joda support
 
         // clear model and api doc template as this codegen
