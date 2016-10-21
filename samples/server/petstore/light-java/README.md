@@ -1,4 +1,4 @@
-# Swagger Undertow Server
+# Swagger Light Java Server
 
 ## Start server
 

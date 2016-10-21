@@ -1,31 +1,28 @@
 package io.swagger.codegen.languages;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.codegen.*;
 import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
 import io.swagger.util.Json;
-import io.swagger.util.Yaml;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.util.*;
 
-public class UndertowCodegen extends AbstractJavaCodegen {
+public class LightJavaCodegen extends AbstractJavaCodegen {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UndertowCodegen.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LightJavaCodegen.class);
 
-    protected String title = "Swagger Undertow Server";
+    protected String title = "Swagger Light Java Server";
     protected String implFolder = "src/main/java";
-    public UndertowCodegen() {
+    public LightJavaCodegen() {
         super();
 
         sourceFolder = "src/main/java";
-        embeddedTemplateDir = templateDir = "undertow";
+        embeddedTemplateDir = templateDir = "light-java";
         invokerPackage = "io.swagger.handler";
         artifactId = "swagger-light-java";
         dateLibrary = "legacy"; //TODO: add joda support
@@ -37,8 +34,8 @@ public class UndertowCodegen extends AbstractJavaCodegen {
         apiDocTemplateFiles.remove("api_doc.mustache");
 
 
-        apiPackage = System.getProperty("swagger.codegen.undertow.apipackage", "io.swagger.handler");
-        modelPackage = System.getProperty("swagger.codegen.undertow.modelpackage", "io.swagger.model");
+        apiPackage = System.getProperty("swagger.codegen.light.apipackage", "io.swagger.handler");
+        modelPackage = System.getProperty("swagger.codegen.light.modelpackage", "io.swagger.model");
 
         additionalProperties.put("title", title);
     }
@@ -50,12 +47,12 @@ public class UndertowCodegen extends AbstractJavaCodegen {
 
     @Override
     public String getName() {
-        return "undertow";
+        return "light-java";
     }
 
     @Override
     public String getHelp() {
-        return "Generates a Java Undertow Server application.";
+        return "Generates a Light Java Server application.";
     }
 
     @Override
@@ -168,7 +165,7 @@ public class UndertowCodegen extends AbstractJavaCodegen {
                     }
                 }
 
-                // convert patch operation to update as undertow doesn't support it currently.
+                // TODO convert patch operation to update as undertow doesn't support it currently.
                 if(operation.httpMethod.equalsIgnoreCase("patch")) {
                     operation.httpMethod = "UPDATE";
                 }

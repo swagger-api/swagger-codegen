@@ -3,10 +3,10 @@ package io.swagger.codegen.options;
 /**
  * Created by steve on 18/09/16.
  */
-public class JavaUndertowServerOptionsProvider extends JavaOptionsProvider {
+public class JavaLightJavaServerOptionsProvider extends JavaOptionsProvider {
     @Override
     public String getLanguage() {
-        return "undertow";
+        return "light-java";
     }
 
     @Override

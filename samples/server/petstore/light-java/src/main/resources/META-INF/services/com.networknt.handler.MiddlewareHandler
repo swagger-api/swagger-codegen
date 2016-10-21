@@ -1,0 +1,20 @@
+# This file is generated and should not be changed unless you want to plug in more handlers into the handler chain
+# for cross cutting concerns. In most cases, you should replace some of the default handlers with your own implementation
+# Please note: the sequence of these handlers are very important.
+
+#Validator
+com.networknt.validator.ValidatorHandler
+#FullAudit
+com.networknt.audit.FullAuditHandler
+#SimpleAudit
+com.networknt.audit.SimpleAuditHandler
+#Body
+com.networknt.body.BodyHandler
+#Security
+com.networknt.security.JwtVerifyHandler
+#Swagger
+com.networknt.swagger.SwaggerHandler
+#Metrics
+com.networknt.metrics.MetricsHandler
+#Exception
+com.networknt.exception.ExceptionHandler
