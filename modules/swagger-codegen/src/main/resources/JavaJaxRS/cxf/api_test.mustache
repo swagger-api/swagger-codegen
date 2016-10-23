@@ -19,10 +19,6 @@ import org.apache.cxf.transport.common.gzip.GZIPOutInterceptor;
 {{#useLoggingFeature}}
 import org.apache.cxf.interceptor.LoggingOutInterceptor;
 {{/useLoggingFeature}}
-{{#useBeanValidationFeature}}
-import org.apache.cxf.validation.BeanValidationProvider;
-import org.apache.cxf.validation.BeanValidationOutInterceptor;
-{{/useBeanValidationFeature}}
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
@@ -90,12 +86,6 @@ public class {{classname}}Test {
         LoggingOutInterceptor loggingOutInterceptor = new LoggingOutInterceptor();
         config.getOutInterceptors().add(loggingOutInterceptor);
 {{/useLoggingFeature}}
-{{#useBeanValidationFeature}}
-        BeanValidationProvider beanValProv = new BeanValidationProvider();
-        BeanValidationOutInterceptor beanValidationOutInterceptor = new BeanValidationOutInterceptor();
-        beanValidationOutInterceptor.setProvider(beanValProv);
-        config.getOutInterceptors().add(beanValidationOutInterceptor);
-{{/useBeanValidationFeature}}        
     }
 
     {{#operations}}{{#operation}}
