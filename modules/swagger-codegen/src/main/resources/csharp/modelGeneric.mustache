@@ -47,9 +47,10 @@
     {{#hasOnlyReadOnly}}
         [JsonConstructorAttribute]
     {{/hasOnlyReadOnly}}
-        public {{classname}}({{#readWriteVars}}{{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}?{{/isContainer}}{{/isEnum}} {{name}} = null{{^-last}}, {{/-last}}{{/readWriteVars}})
+        public {{classname}}({{#readWriteVars}}{{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}?{{/isContainer}}{{/isEnum}} {{name}} = null{{^-last}}, {{/-last}}{{/readWriteVars}}){{#parent}} : base({{#parentVars}}{{name}}{{#hasMore}}, {{/hasMore}}{{/parentVars}}){{/parent}}
         {
             {{#vars}}
+            {{^isInherited}}
             {{^isReadOnly}}
             {{#required}}
             // to ensure "{{name}}" is required (not null)
@@ -63,8 +64,10 @@
             }
             {{/required}}
             {{/isReadOnly}}
+            {{/isInherited}}
             {{/vars}}
             {{#vars}}
+            {{^isInherited}}
             {{^isReadOnly}}
             {{^required}}
             {{#defaultValue}}// use default value if no "{{name}}" provided
@@ -82,10 +85,12 @@ this.{{name}} = {{name}};
             {{/defaultValue}}
             {{/required}}
             {{/isReadOnly}}
+            {{/isInherited}}
             {{/vars}}
         }
-        
+
         {{#vars}}
+        {{^isInherited}}
         {{^isEnum}}
         /// <summary>
         /// {{^description}}Gets or Sets {{{name}}}{{/description}}{{#description}}{{description}}{{/description}}
@@ -93,8 +98,8 @@ this.{{name}} = {{name}};
         /// <value>{{description}}</value>{{/description}}
         [DataMember(Name="{{baseName}}", EmitDefaultValue={{emitDefaultValue}})]
         public {{{datatype}}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
-        {{/isEnum}}
-        {{/vars}}
+
+        {{/isEnum}}{{/isInherited}}{{/vars}}
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -103,13 +108,14 @@ this.{{name}} = {{name}};
         {
             var sb = new StringBuilder();
             sb.Append("class {{classname}} {\n");
+            {{#parent}}sb.Append("  ").Append(base.ToString().Replace("\n", "\n  ")).Append("\n");{{/parent}}
             {{#vars}}
             sb.Append("  {{name}}: ").Append({{name}}).Append("\n");
             {{/vars}}
             sb.Append("}\n");
             return sb.ToString();
         }
-  
+
         /// <summary>
         /// Returns the JSON string presentation of the object
         /// </summary>
@@ -189,7 +195,8 @@ this.{{name}} = {{name}};
 
 {{/generatePropertyChanged}}
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        { {{#vars}}{{#hasValidation}}{{#maxLength}}
+        { {{#parent}}{{^isArrayModel}}{{#parentVars}}
+            foreach(var x in base.Validate(validationContext)) yield return x;{{/parentVars}}{{/isArrayModel}}{{/parent}}{{#vars}}{{#hasValidation}}{{#maxLength}}
             // {{{name}}} ({{{datatype}}}) maxLength
             if(this.{{{name}}} != null && this.{{{name}}}.Length > {{maxLength}})
             {
