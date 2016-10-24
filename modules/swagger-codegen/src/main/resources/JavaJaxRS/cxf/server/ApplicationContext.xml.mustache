@@ -69,9 +69,6 @@
 {{#useGzipFeature}} 
             <ref bean="compressGZIPFeature"/>
 {{/useGzipFeature}}      
-{{#useBeanValidationFeature}}            
-            <ref bean="commonValidationFeature" />
-{{/useBeanValidationFeature}}                        
         </cxf:features>
         <cxf:properties>
             <entry key="javax.ws.rs.ext.ExceptionMapper" value-ref="exceptionMapper"/>
@@ -136,6 +133,9 @@
 {{#useSwaggerFeature}}          
             <ref bean="swagger2Feature" />
 {{/useSwaggerFeature}}              
+{{#useBeanValidationFeature}}            
+            <ref bean="commonValidationFeature" />
+{{/useBeanValidationFeature}}                        
         </jaxrs:features>
     </jaxrs:server>
      
