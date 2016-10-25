@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.*;
 
-public class JavaClientCodegen extends AbstractJavaCodegen implements BeanValidationFeatures {
+public class JavaClientCodegen extends AbstractJavaCodegen {
     @SuppressWarnings("hiding")
     private static final Logger LOGGER = LoggerFactory.getLogger(JavaClientCodegen.class);
 
