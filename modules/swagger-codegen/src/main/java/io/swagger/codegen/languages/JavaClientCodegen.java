@@ -1,8 +1,6 @@
 package io.swagger.codegen.languages;
 
 import io.swagger.codegen.*;
-import io.swagger.codegen.languages.features.BeanValidationFeatures;
-
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -25,7 +23,6 @@ public class JavaClientCodegen extends AbstractJavaCodegen implements BeanValida
     protected String gradleWrapperPackage = "gradle.wrapper";
     protected boolean useRxJava = false;
     protected boolean parcelableModel = false;
-    protected boolean supportJava6= false;
     protected boolean useBeanValidation = false;
 
     public JavaClientCodegen() {
@@ -85,20 +82,14 @@ public class JavaClientCodegen extends AbstractJavaCodegen implements BeanValida
         }
         // put the boolean value back to PARCELABLE_MODEL in additionalProperties
         additionalProperties.put(PARCELABLE_MODEL, parcelableModel);
-        
+
         if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
             boolean useBeanValidationProp = Boolean.valueOf(additionalProperties.get(USE_BEANVALIDATION).toString());
             this.setUseBeanValidation(useBeanValidationProp);
-            
+
             // write back as boolean
             additionalProperties.put(USE_BEANVALIDATION, useBeanValidationProp);
         }
-
-        if (additionalProperties.containsKey(SUPPORT_JAVA6)) {
-            this.setSupportJava6(Boolean.valueOf(additionalProperties.get(SUPPORT_JAVA6).toString()));
-        }
-        additionalProperties.put(SUPPORT_JAVA6, supportJava6);
-
         final String invokerFolder = (sourceFolder + '/' + invokerPackage).replace(".", "/");
         final String authFolder = (sourceFolder + '/' + invokerPackage + ".auth").replace(".", "/");
 
@@ -244,17 +235,13 @@ public class JavaClientCodegen extends AbstractJavaCodegen implements BeanValida
         }
         return objs;
     }
-    
+
     public void setUseRxJava(boolean useRxJava) {
         this.useRxJava = useRxJava;
     }
 
     public void setParcelableModel(boolean parcelableModel) {
         this.parcelableModel = parcelableModel;
-    }
-
-    public void setSupportJava6(boolean value) {
-        this.supportJava6 = value;
     }
 
     public void setUseBeanValidation(boolean useBeanValidation) {
