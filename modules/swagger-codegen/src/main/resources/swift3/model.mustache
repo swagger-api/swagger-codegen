@@ -58,7 +58,7 @@ open class {{classname}}: {{#parent}}{{{parent}}}{{/parent}}{{^parent}}JSONEncod
 {{/unwrapRequired}}
 
     // MARK: JSONEncodable
-    {{#parent}}override {{/parent}}public func encodeToJSON() -> Any {
+    {{#parent}}override {{/parent}}open func encodeToJSON() -> Any {
         var nillableDictionary = {{#parent}}super.encodeToJSON() as? [String:Any?] ?? {{/parent}}[String:Any?](){{#vars}}{{#isNotContainer}}{{#isPrimitiveType}}{{^isEnum}}{{#isInteger}}
         nillableDictionary["{{baseName}}"] = self.{{name}}{{^unwrapRequired}}?{{/unwrapRequired}}{{#unwrapRequired}}{{^required}}?{{/required}}{{/unwrapRequired}}.encodeToJSON(){{/isInteger}}{{#isLong}}
         nillableDictionary["{{baseName}}"] = self.{{name}}{{^unwrapRequired}}?{{/unwrapRequired}}{{#unwrapRequired}}{{^required}}?{{/required}}{{/unwrapRequired}}.encodeToJSON(){{/isLong}}{{^isLong}}{{^isInteger}}

@@ -14,7 +14,7 @@ open class Client: JSONEncodable {
     public init() {}
 
     // MARK: JSONEncodable
-    public func encodeToJSON() -> Any {
+    open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
         nillableDictionary["client"] = self.client
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]

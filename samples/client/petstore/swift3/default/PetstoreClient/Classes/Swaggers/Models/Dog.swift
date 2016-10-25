@@ -14,7 +14,7 @@ open class Dog: Animal {
     
 
     // MARK: JSONEncodable
-    override public func encodeToJSON() -> Any {
+    override open func encodeToJSON() -> Any {
         var nillableDictionary = super.encodeToJSON() as? [String:Any?] ?? [String:Any?]()
         nillableDictionary["breed"] = self.breed
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
