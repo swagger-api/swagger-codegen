@@ -52,6 +52,15 @@ export class StoreApi {
         }
     }
 
+    private extendObj<T1,T2>(objA: T1, objB: T2) {
+        for(let key in objB){
+            if(objB.hasOwnProperty(key)){
+                objA[key] = objB[key];
+            }
+        }
+        return <T1&T2>objA;
+    }
+
     /**
      * Delete purchase order by ID
      * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
@@ -149,9 +158,13 @@ export class StoreApi {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Delete,
             headers: headers,
-            search: queryParameters,
-            responseType: ResponseContentType.Json
+            search: queryParameters
         });
+        
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = this.extendObj(requestOptions, extraHttpRequestParams);
+        }
 
         return this.http.request(path, requestOptions);
     }
@@ -189,9 +202,13 @@ export class StoreApi {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
             headers: headers,
-            search: queryParameters,
-            responseType: ResponseContentType.Json
+            search: queryParameters
         });
+        
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = this.extendObj(requestOptions, extraHttpRequestParams);
+        }
 
         return this.http.request(path, requestOptions);
     }
@@ -229,9 +246,13 @@ export class StoreApi {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
             headers: headers,
-            search: queryParameters,
-            responseType: ResponseContentType.Json
+            search: queryParameters
         });
+        
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = this.extendObj(requestOptions, extraHttpRequestParams);
+        }
 
         return this.http.request(path, requestOptions);
     }
@@ -267,9 +288,13 @@ export class StoreApi {
             method: RequestMethod.Post,
             headers: headers,
             body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
-            search: queryParameters,
-            responseType: ResponseContentType.Json
+            search: queryParameters
         });
+        
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = this.extendObj(requestOptions, extraHttpRequestParams);
+        }
 
         return this.http.request(path, requestOptions);
     }
