@@ -193,16 +193,17 @@
       <version>${commons_io_version}</version>
     </dependency>
     {{/supportJava6}}
-{{#useBeanValidation}}    
-    <!-- Bean Validation API support -->
+    {{#useBeanValidation}}
+  <!-- Bean Validation API support -->
     <dependency>
-        <groupId>javax.validation</groupId>
-        <artifactId>validation-api</artifactId>
-        <version>1.1.0.Final</version>
-        <scope>provided</scope>
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
+      <version>1.1.0.Final</version>
+      <scope>provided</scope>
     </dependency>
-{{/useBeanValidation}}    
-    <!-- test dependencies -->
+    {{/useBeanValidation}}
+
+      <!-- test dependencies -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
