@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE module PUBLIC "-//Puppy Crawl//DTD Check Configuration 1.3//EN" "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
 
+<!-- 
+    Adjusted from original Google Checkstyle config to match requirements for swagger-codegen
+    See detailed comments next to changes
+-->
+
 <!--
     Checkstyle configuration that checks the Google coding conventions from Google Java Style
     that can be found at https://google.github.io/styleguide/javaguide.html.
