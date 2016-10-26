@@ -583,7 +583,7 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
           while (iterator.hasNext()) {
               CodegenProperty codegenProperty = iterator.next();
               if (codegenProperty.equals(parentModelCodegenProperty)) {
-                  // We found an enum in the child class that is
+                  // We found a property in the child class that is
                   // a duplicate of the one in the parent, so remove it.
                   iterator.remove();
                   removedChildProperty = true;
