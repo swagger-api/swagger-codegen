@@ -562,7 +562,7 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
     }
 
     private static CodegenModel reconcileProperties(CodegenModel codegenModel, CodegenModel parentCodegenModel) {
-        // To support inheritgance in this generator, we will analyze
+        // To support inheritance in this generator, we will analyze
         // the parent and child models, look for properties that match, and remove
         // them from the child models and leave them in the parent.
         // Because the child models extend the parents, the properties will be available via the parent.
