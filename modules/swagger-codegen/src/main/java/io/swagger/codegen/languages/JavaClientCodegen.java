@@ -83,11 +83,11 @@ public class JavaClientCodegen extends AbstractJavaCodegen implements BeanValida
         }
         // put the boolean value back to PARCELABLE_MODEL in additionalProperties
         additionalProperties.put(PARCELABLE_MODEL, parcelableModel);
-        
+
         if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
             boolean useBeanValidationProp = Boolean.valueOf(additionalProperties.get(USE_BEANVALIDATION).toString());
             this.setUseBeanValidation(useBeanValidationProp);
-            
+
             // write back as boolean
             additionalProperties.put(USE_BEANVALIDATION, useBeanValidationProp);
         }
@@ -189,7 +189,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen implements BeanValida
                         operation.returnType = "Void";
                     }
                     if (usesRetrofit2Library() && StringUtils.isNotEmpty(operation.path) && operation.path.startsWith("/"))
-                        operation.path = operation.path.substring(1);
+                    	operation.path = operation.path.substring(1);
                 }
             }
         }
@@ -237,7 +237,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen implements BeanValida
         }
         return objs;
     }
-    
+
     public void setUseRxJava(boolean useRxJava) {
         this.useRxJava = useRxJava;
     }

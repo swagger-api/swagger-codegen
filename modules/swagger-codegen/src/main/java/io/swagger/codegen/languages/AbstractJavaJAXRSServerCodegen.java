@@ -200,11 +200,4 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
     private String implFileFolder(String output) {
         return outputFolder + "/" + output + "/" + apiPackage().replace('.', '/');
     }
-
-// TODO: @scannerscan: I think we need to allow overriding because the number of methods and signature can be changed.
-//    @Override
-//    public boolean shouldOverwrite(String filename) {
-//        return super.shouldOverwrite(filename) && !filename.endsWith("ServiceImpl.java") && !filename.endsWith("ServiceFactory.java");
-//    }
-
 }
