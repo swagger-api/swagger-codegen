@@ -166,12 +166,12 @@ namespace IO.Swagger.v2.Utils
             parsers.Put(typeof(LocalTime), SafeParse(ParseLocalTime));
             parsers.Put(typeof(LocalTime?), SafeParse(ParseLocalTime));
 
-            parsers.Put(typeof(IEnumerable<string>), value => value);
-            parsers.Put(typeof(ICollection<string>), value => value);
-            parsers.Put(typeof(IList<string>), value => value);
-            parsers.Put(typeof(List<string>), value => value);
-            parsers.Put(typeof(ISet<string>), value => value);
-            parsers.Put(typeof(HashSet<string>), value => value);
+            parsers.Put(typeof(IEnumerable<string>), ImmutableListParse(value => value));
+            parsers.Put(typeof(ICollection<string>), ImmutableListParse(value => value));
+            parsers.Put(typeof(IList<string>), ImmutableListParse(value => value));
+            parsers.Put(typeof(List<string>), ListParse(value => value));
+            parsers.Put(typeof(ISet<string>), ImmutableListParse(value => value));
+            parsers.Put(typeof(HashSet<string>), SetParse(value => value));
 
             parsers.Put(typeof(IEnumerable<bool>), ImmutableListParse(bool.Parse));
             parsers.Put(typeof(ICollection<bool>), ImmutableListParse(bool.Parse));
