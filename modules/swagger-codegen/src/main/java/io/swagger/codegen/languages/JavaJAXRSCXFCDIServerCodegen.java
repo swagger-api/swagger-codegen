@@ -10,6 +10,8 @@ public class JavaJAXRSCXFCDIServerCodegen extends JavaJAXRSSpecServerCodegen
 {
 	public JavaJAXRSCXFCDIServerCodegen()
 	{
+        outputFolder = "generated-code/JavaJaxRS-CXF-CDI";
+
 		artifactId = "swagger-jaxrs-cxf-cdi-server";
 
 		sourceFolder = "src" + File.separator + "gen" + File.separator + "java";
