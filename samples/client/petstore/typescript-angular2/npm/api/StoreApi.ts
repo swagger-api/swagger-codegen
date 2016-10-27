@@ -51,7 +51,13 @@ export class StoreApi {
             this.configuration = configuration;
         }
     }
-
+	
+	/**
+     * 
+     * Extends object by coping non-existing property.
+     * @param objA object to be extended
+     * @param objB source object
+     */
     private extendObj<T1,T2>(objA: T1, objB: T2) {
         for(let key in objB){
             if(objB.hasOwnProperty(key)){
