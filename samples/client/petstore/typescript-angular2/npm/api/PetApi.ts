@@ -54,7 +54,7 @@ export class PetApi {
 	
 	/**
      * 
-     * Extends object by coping non-existing property.
+     * Extends object by coping non-existing properties.
      * @param objA object to be extended
      * @param objB source object
      */
