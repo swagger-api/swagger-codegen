@@ -64,7 +64,11 @@ json_from_string(const char *str, GError **mygerror)
 	if (!json_parser_load_from_data(parser, str, -1, mygerror))
 	{
 		g_object_unref(parser);
-		return NULL;
+		if(str == NULL)
+			return NULL;
+		retval = json_node_alloc();
+		retval = json_node_init_string (retval, str);
+		return retval;
 	}
 
 	retval = json_node_copy(json_parser_get_root(parser));
