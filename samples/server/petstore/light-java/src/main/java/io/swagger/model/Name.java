@@ -13,7 +13,7 @@ import io.swagger.annotations.ApiModelProperty;
  **/
 
 @ApiModel(description = "Model for testing model name same as property name")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.LightJavaCodegen", date = "2016-10-21T17:24:04.462-04:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.LightJavaCodegen", date = "2016-10-29T17:13:03.418-04:00")
 public class Name   {
   private Integer name = null;
 

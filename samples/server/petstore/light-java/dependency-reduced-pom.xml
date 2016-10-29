@@ -98,7 +98,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <version.encoder>1.2</version.encoder>
     <version.httpclient>4.5.2</version.httpclient>
-    <version.undertow>1.4.0.Final</version.undertow>
+    <version.undertow>1.4.4.Final</version.undertow>
     <version.jose4j>0.5.2</version.jose4j>
     <version.commons-lang>2.6</version.commons-lang>
     <java.version>1.8</java.version>

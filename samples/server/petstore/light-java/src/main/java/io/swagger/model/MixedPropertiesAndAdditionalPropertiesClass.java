@@ -16,7 +16,7 @@ import java.util.UUID;
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.LightJavaCodegen", date = "2016-10-21T17:24:04.462-04:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.LightJavaCodegen", date = "2016-10-29T17:13:03.418-04:00")
 public class MixedPropertiesAndAdditionalPropertiesClass   {
   private UUID uuid = null;
 

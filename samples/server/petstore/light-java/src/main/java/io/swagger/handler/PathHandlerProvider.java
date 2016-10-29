@@ -12,7 +12,7 @@ public class PathHandlerProvider implements HandlerProvider {
     public HttpHandler getHandler() {
         HttpHandler handler = Handlers.routing()
             .add(Methods.GET, "/v2/fake", new FakeGetHandler())
-            .add(Methods.UPDATE, "/v2/fake", new FakePatchHandler())
+            .add(Methods.PATCH, "/v2/fake", new FakePatchHandler())
             .add(Methods.POST, "/v2/fake", new FakePostHandler())
             .add(Methods.GET, "/v2/pet/findByStatus", new PetFindByStatusGetHandler())
             .add(Methods.GET, "/v2/pet/findByTags", new PetFindByTagsGetHandler())
