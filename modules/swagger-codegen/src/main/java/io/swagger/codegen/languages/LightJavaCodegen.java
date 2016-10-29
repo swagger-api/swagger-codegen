@@ -165,17 +165,8 @@ public class LightJavaCodegen extends AbstractJavaCodegen {
                     }
                 }
 
-                // TODO convert patch operation to update as undertow doesn't support it currently.
-                if(operation.httpMethod.equalsIgnoreCase("patch")) {
-                    operation.httpMethod = "UPDATE";
-                }
-
                 if(operation.httpMethod != null) {
-                    if(operation.httpMethod.equalsIgnoreCase("UPDATE")) {
-                        operation.notes = "Patch";
-                    } else {
-                        operation.notes = operation.httpMethod.substring(0, 1) + operation.httpMethod.substring(1).toLowerCase();
-                    }
+                    operation.notes = operation.httpMethod.substring(0, 1) + operation.httpMethod.substring(1).toLowerCase();
                 }
 
                 if(operation.path != null) {
