@@ -2,19 +2,19 @@
 # for cross cutting concerns. In most cases, you should replace some of the default handlers with your own implementation
 # Please note: the sequence of these handlers are very important.
 
-#Validator
+#Validator Validate request based on swagger specification (depending on Swagger and Body)
 com.networknt.validator.ValidatorHandler
-#FullAudit
-com.networknt.audit.FullAuditHandler
-#SimpleAudit
+#Sanitizer Encode cross site scripting
+com.networknt.sanitizer.SanitizerHandler
+#SimpleAudit Log important info about the request into audit log
 com.networknt.audit.SimpleAuditHandler
-#Body
+#Body Parse body based on content type in the header.
 com.networknt.body.BodyHandler
-#Security
+#Security JWT token verification and scope verification (depending on SwaggerHandler)
 com.networknt.security.JwtVerifyHandler
-#Swagger
+#Swagger Parsing swagger specification based on request uri and method.
 com.networknt.swagger.SwaggerHandler
-#Metrics
+#Metrics In order to calculate response time accurately, this needs to be the second.
 com.networknt.metrics.MetricsHandler
-#Exception
+#Exception Global exception handler that needs to be called first.
 com.networknt.exception.ExceptionHandler
