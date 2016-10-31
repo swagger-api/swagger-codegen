@@ -38,7 +38,6 @@ public class TypeScriptFetchClientCodegen extends AbstractTypeScriptClientCodege
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("README.md", "", "README.md"));
         supportingFiles.add(new SupportingFile("package.json.mustache", "", "package.json"));
-        supportingFiles.add(new SupportingFile("typings.json.mustache", "", "typings.json"));
         supportingFiles.add(new SupportingFile("tsconfig.json.mustache", "", "tsconfig.json"));
         supportingFiles.add(new SupportingFile("gitignore", "", ".gitignore"));
 

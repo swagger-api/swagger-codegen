@@ -6,14 +6,16 @@
   "browser": "./dist/api.js",
   "typings": "./dist/api.d.ts",
   "dependencies": {
-    {{^supportsES6}}"core-js": "^2.4.0",
-    {{/supportsES6}}"isomorphic-fetch": "^2.2.1"
+    "@types/node": "6.0.46",
+    "@types/isomorphic-fetch": "0.0.31",{{^supportsES6}}
+    "@types/core-js": "0.9.34",
+    "core-js": "2.4.1",{{/supportsES6}}
+    "isomorphic-fetch": "2.2.1"
   },
   "scripts" : {
-    "prepublish" : "typings install && tsc"
+    "prepublish" : "tsc"
   },
   "devDependencies": {
-    "typescript": "^1.8.10",
-    "typings": "^1.0.4"
+    "typescript": "^2.0.7"
   }
 }

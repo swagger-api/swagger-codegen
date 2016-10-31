@@ -41,7 +41,7 @@ export interface {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
      * {{{description}}}
      */
 {{/description}}
-    "{{name}}"{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
+    "{{baseName}}"{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
 {{/vars}}
 }
 
