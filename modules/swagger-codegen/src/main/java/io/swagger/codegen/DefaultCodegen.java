@@ -180,6 +180,17 @@ public class DefaultCodegen {
                     }
                 }
             }
+            // Let parent know about all its children
+            for (String name : allModels.keySet()) {
+                CodegenModel cm = allModels.get(name);
+                if (cm.parent == null) continue;
+                CodegenModel parent = allModels.get(cm.parent);
+                if (parent == null) continue;
+                if (parent.children == null) {
+                    parent.children = new ArrayList<CodegenModel>();
+                }
+                parent.children.add(cm);
+            }
         }
         return objs;
     }
