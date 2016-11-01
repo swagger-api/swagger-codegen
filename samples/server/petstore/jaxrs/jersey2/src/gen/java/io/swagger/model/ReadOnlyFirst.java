@@ -2,19 +2,19 @@ package io.swagger.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-
-
 
 /**
  * ReadOnlyFirst
  */
 
 public class ReadOnlyFirst   {
+  @JsonProperty("bar")
   private String bar = null;
 
+  @JsonProperty("baz")
   private String baz = null;
 
    /**

@@ -100,6 +100,7 @@ public class DefaultCodegen {
     protected List<CliOption> cliOptions = new ArrayList<CliOption>();
     protected boolean skipOverwrite;
     protected boolean supportsInheritance;
+    protected boolean supportsMixins;
     protected Map<String, String> supportedLibraries = new LinkedHashMap<String, String>();
     protected String library;
     protected Boolean sortParamsByRequiredFlag = true;
@@ -1205,6 +1206,7 @@ public class DefaultCodegen {
         } else {
             m.name = name;
         }
+        m.title = escapeText(model.getTitle());
         m.description = escapeText(model.getDescription());
         m.unescapedDescription = model.getDescription();
         m.classname = toModelName(name);
@@ -1234,7 +1236,7 @@ public class DefaultCodegen {
             List<String> required = new ArrayList<String>();
             Map<String, Property> allProperties;
             List<String> allRequired;
-            if (supportsInheritance) {
+            if (supportsInheritance || supportsMixins) {
                 allProperties = new LinkedHashMap<String, Property>();
                 allRequired = new ArrayList<String>();
                 m.allVars = new ArrayList<CodegenProperty>();
@@ -1255,17 +1257,20 @@ public class DefaultCodegen {
                         interfaceModel = allDefinitions.get(_interface.getSimpleRef());
                     }
                     // set first interface with discriminator found as parent
-                    if (parent == null && interfaceModel instanceof ModelImpl && ((ModelImpl) interfaceModel).getDiscriminator() != null) {
+                    if (parent == null
+                            && ((interfaceModel instanceof ModelImpl && ((ModelImpl) interfaceModel).getDiscriminator() != null)
+                            || (interfaceModel instanceof ComposedModel && isDiscriminatorInInterfaceTree((ComposedModel) interfaceModel, allDefinitions)))) {
                         parent = _interface;
                     } else {
                         final String interfaceRef = toModelName(_interface.getSimpleRef());
                         m.interfaces.add(interfaceRef);
                         addImport(m, interfaceRef);
                         if (allDefinitions != null) {
+                            if (!supportsMixins) {
+                                addProperties(properties, required, interfaceModel, allDefinitions);
+                            }
                             if (supportsInheritance) {
                                 addProperties(allProperties, allRequired, interfaceModel, allDefinitions);
-                            } else {
-                                addProperties(properties, required, interfaceModel, allDefinitions);
                             }
                         }
                     }
@@ -1302,13 +1307,15 @@ public class DefaultCodegen {
             addVars(m, properties, required, allProperties, allRequired);
         } else {
             ModelImpl impl = (ModelImpl) model;
+            if (m != null && impl.getType() != null) {
+                Property p = PropertyBuilder.build(impl.getType(), impl.getFormat(), null);
+                m.dataType = getSwaggerType(p);
+            }
             if(impl.getEnum() != null && impl.getEnum().size() > 0) {
                 m.isEnum = true;
                 // comment out below as allowableValues is not set in post processing model enum
                 m.allowableValues = new HashMap<String, Object>();
                 m.allowableValues.put("values", impl.getEnum());
-                Property p = PropertyBuilder.build(impl.getType(), impl.getFormat(), null);
-                m.dataType = getSwaggerType(p);
             }
             if (impl.getAdditionalProperties() != null) {
                 addAdditionPropertiesToCodeGenModel(m, impl);
@@ -1322,6 +1329,30 @@ public class DefaultCodegen {
             }
         }
         return m;
+    }
+
+    /**
+     * Recursively look for a discriminator in the interface tree
+     */
+    private boolean isDiscriminatorInInterfaceTree(ComposedModel model, Map<String, Model> allDefinitions) {
+        if (model == null || allDefinitions == null)
+            return false;
+
+        Model child = ((ComposedModel) model).getChild();
+        if (child instanceof ModelImpl && ((ModelImpl) child).getDiscriminator() != null) {
+            return true;
+        }
+        for (RefModel _interface : model.getInterfaces()) {
+            Model interfaceModel = allDefinitions.get(_interface.getSimpleRef());
+            if (interfaceModel instanceof ModelImpl && ((ModelImpl) interfaceModel).getDiscriminator() != null) {
+                return true;
+            }
+            if (interfaceModel instanceof ComposedModel) {
+
+                return isDiscriminatorInInterfaceTree((ComposedModel) interfaceModel, allDefinitions);
+            }
+        }
+        return false;
     }
 
     protected void addAdditionPropertiesToCodeGenModel(CodegenModel codegenModel, ModelImpl swaggerModel) {
@@ -2234,6 +2265,7 @@ public class DefaultCodegen {
             p.dataFormat = cp.dataFormat;
             if(cp.isEnum) {
                 p.datatypeWithEnum = cp.datatypeWithEnum;
+                p.enumName = cp.enumName;
             }
 
             // enum
@@ -2245,6 +2277,7 @@ public class DefaultCodegen {
 
             if (cp.items != null && cp.items.isEnum) {
                 p.datatypeWithEnum = cp.datatypeWithEnum;
+                p.enumName = cp.enumName;
                 p.items = cp.items;
             }
             p.collectionFormat = collectionFormat;
@@ -2455,6 +2488,9 @@ public class DefaultCodegen {
             	sec.isKeyInHeader = sec.isKeyInQuery = sec.isApiKey = sec.isBasic = false;
                 sec.isOAuth = true;
                 sec.flow = oauth2Definition.getFlow();
+                if (sec.flow == null) {
+                    throw new RuntimeException("missing oauth flow in " + sec.name);
+                }
                 switch(sec.flow) {
                     case "accessCode":
                         sec.isCode = true;
@@ -3135,7 +3171,12 @@ public class DefaultCodegen {
                 buf.append(StringUtils.capitalize(part));
             }
         }
-        return buf.toString().replaceAll("[^a-zA-Z ]", "");
+        String returnTag = buf.toString().replaceAll("[^a-zA-Z0-9_]", "");
+        if (returnTag.matches("\\d.*")) {
+            return "_" + returnTag;
+        } else {
+            return returnTag;
+        }
     }
 
     /**
@@ -3288,5 +3329,24 @@ public class DefaultCodegen {
         }
 
         return pattern;
+    }
+
+    /**
+     * reads propertyKey from additionalProperties, converts it to a boolean and
+     * writes it back to additionalProperties to be usable as a boolean in
+     * mustache files.
+     * 
+     * @param propertyKey
+     * @return property value as boolean
+     */
+    public boolean convertPropertyToBooleanAndWriteBack(String propertyKey) {
+        boolean booleanValue = false;
+        if (additionalProperties.containsKey(propertyKey)) {
+            booleanValue = Boolean.valueOf(additionalProperties.get(propertyKey).toString());
+            // write back as boolean
+            additionalProperties.put(propertyKey, booleanValue);
+        }
+
+        return booleanValue;
     }
 }

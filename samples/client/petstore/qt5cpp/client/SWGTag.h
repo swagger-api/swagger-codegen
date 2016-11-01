@@ -25,7 +25,7 @@
 /*
  * SWGTag.h
  * 
- * 
+ * A tag for a pet
  */
 
 #ifndef SWGTag_H_
@@ -56,12 +56,14 @@ public:
 
     qint64 getId();
     void setId(qint64 id);
-QString* getName();
+
+    QString* getName();
     void setName(QString* name);
+
 
 private:
     qint64 id;
-QString* name;
+    QString* name;
 };
 
 } /* namespace Swagger */

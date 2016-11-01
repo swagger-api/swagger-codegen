@@ -10,7 +10,7 @@ import * as assign from "core-js/library/fn/object/assign";
 interface Dictionary<T> { [index: string]: T; }
 export interface FetchAPI { (url: string, init?: any): Promise<any>; }
 
-const BASE_PATH = "{{basePath}}";
+const BASE_PATH = "{{{basePath}}}".replace(/\/+$/, '');
 
 export interface FetchArgs {
     url: string;
@@ -102,16 +102,16 @@ export const {{classname}}FetchParamCreactor = {
             fetchOptions.body = JSON.stringify(params["{{paramName}}"] || {});
         }{{/bodyParam}}
 {{/hasBodyParam}}
-{{#hasHeaderParam}}
+{{#hasHeaderParams}}
         fetchOptions.headers = {{#supportsES6}}Object.{{/supportsES6}}assign({ {{#headerParams}}
             "{{baseName}}": params.{{paramName}},{{/headerParams}}
         }, contentTypeHeader);
-{{/hasHeaderParam}}
-{{^hasHeaderParam}}
+{{/hasHeaderParams}}
+{{^hasHeaderParams}}
         if (contentTypeHeader) {
             fetchOptions.headers = contentTypeHeader;
         }
-{{/hasHeaderParam}}
+{{/hasHeaderParams}}
         return {
             url: url.format(urlObj),
             options: fetchOptions,

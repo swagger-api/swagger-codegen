@@ -4,6 +4,7 @@ out/
 *.iws
 classpath.txt
 version.properties
+!modules/swagger-codegen-cli/src/main/resources/version.properties
 .project
 .classpath
 lib/*
@@ -33,7 +34,7 @@ packages/
 
 /target
 /generated-files
-/nbactions.xml
+nbactions.xml
 
 # scalatra
 samples/server-generator/scalatra/output
@@ -52,6 +53,7 @@ samples/client/petstore/qt5cpp/PetStore/*.o
 samples/client/petstore/qt5cpp/build-*
 samples/client/petstore/qt5cpp/PetStore/PetStore
 samples/client/petstore/qt5cpp/PetStore/Makefile
+samples/client/petstore/qt5cpp/PetStore/PetStore.pro.user
 
 #Java/Android
 **/.gradle
@@ -124,6 +126,7 @@ samples/client/petstore/csharp/SwaggerClient/obj/Debug/
 samples/client/petstore/csharp/SwaggerClient/bin/Debug/
 samples/client/petstore/csharp/SwaggerClient/packages
 samples/client/petstore/csharp/SwaggerClient/TestResult.xml
+samples/client/petstore/csharp/SwaggerClientWithPropertyChanged/IO.Swagger.userprefs
 
 # Python
 *.pyc
@@ -140,4 +143,7 @@ samples/client/petstore/typescript-node/**/typings
 samples/client/petstore/typescript-angular/**/typings
 samples/client/petstore/typescript-fetch/**/dist/
 samples/client/petstore/typescript-fetch/**/typings
+
+# aspnetcore
+samples/server/petstore/aspnetcore/.vs/
 

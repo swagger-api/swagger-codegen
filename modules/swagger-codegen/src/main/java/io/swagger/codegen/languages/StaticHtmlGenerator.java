@@ -19,12 +19,10 @@ import java.util.List;
 import java.util.Map;
 
 public class StaticHtmlGenerator extends DefaultCodegen implements CodegenConfig {
-    private static final String ALL_OPERATIONS = "";
     protected String invokerPackage = "io.swagger.client";
     protected String groupId = "io.swagger";
     protected String artifactId = "swagger-client";
     protected String artifactVersion = "1.0.0";
-    protected String sourceFolder = "src/main/scala";
 
     public StaticHtmlGenerator() {
         super();
@@ -60,6 +58,12 @@ public class StaticHtmlGenerator extends DefaultCodegen implements CodegenConfig
 
         languageSpecificPrimitives = new HashSet<String>();
         importMapping = new HashMap<String, String>();
+    }
+
+    @Override
+    public String escapeText(String input) {
+        // newline escaping disabled for HTML documentation for markdown to work correctly
+        return input;
     }
 
     @Override
@@ -100,5 +104,18 @@ public class StaticHtmlGenerator extends DefaultCodegen implements CodegenConfig
             op.httpMethod = op.httpMethod.toLowerCase();
         }
         return objs;
+    }
+
+
+    @Override
+    public String escapeQuotationMark(String input) {
+        // just return the original string
+        return input;
+    }
+
+    @Override
+    public String escapeUnsafeCharacters(String input) {
+        // just return the original string
+        return input;
     }
 }

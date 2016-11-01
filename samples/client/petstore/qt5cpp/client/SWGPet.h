@@ -25,7 +25,7 @@
 /*
  * SWGPet.h
  * 
- * 
+ * A pet for sale in the pet store
  */
 
 #ifndef SWGPet_H_
@@ -59,24 +59,30 @@ public:
 
     qint64 getId();
     void setId(qint64 id);
-SWGCategory* getCategory();
+
+    SWGCategory* getCategory();
     void setCategory(SWGCategory* category);
-QString* getName();
+
+    QString* getName();
     void setName(QString* name);
-QList<QString*>* getPhotoUrls();
-    void setPhotoUrls(QList<QString*>* photoUrls);
-QList<SWGTag*>* getTags();
+
+    QList<QString*>* getPhotoUrls();
+    void setPhotoUrls(QList<QString*>* photo_urls);
+
+    QList<SWGTag*>* getTags();
     void setTags(QList<SWGTag*>* tags);
-QString* getStatus();
+
+    QString* getStatus();
     void setStatus(QString* status);
+
 
 private:
     qint64 id;
-SWGCategory* category;
-QString* name;
-QList<QString*>* photoUrls;
-QList<SWGTag*>* tags;
-QString* status;
+    SWGCategory* category;
+    QString* name;
+    QList<QString*>* photo_urls;
+    QList<SWGTag*>* tags;
+    QString* status;
 };
 
 } /* namespace Swagger */

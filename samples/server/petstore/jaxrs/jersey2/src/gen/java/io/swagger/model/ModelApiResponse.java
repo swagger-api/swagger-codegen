@@ -2,21 +2,22 @@ package io.swagger.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-
-
 
 /**
  * ModelApiResponse
  */
 
 public class ModelApiResponse   {
+  @JsonProperty("code")
   private Integer code = null;
 
+  @JsonProperty("type")
   private String type = null;
 
+  @JsonProperty("message")
   private String message = null;
 
   public ModelApiResponse code(Integer code) {

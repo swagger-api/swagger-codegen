@@ -14,12 +14,10 @@ import java.util.List;
 import java.util.Map;
 
 public class StaticHtml2Generator extends DefaultCodegen implements CodegenConfig {
-    private static final String ALL_OPERATIONS = "";
     protected String invokerPackage = "io.swagger.client";
     protected String groupId = "io.swagger";
     protected String artifactId = "swagger-client";
     protected String artifactVersion = "1.0.0";
-    protected String sourceFolder = "src/main/scala";
 
     public StaticHtml2Generator() {
         super();
@@ -65,6 +63,12 @@ public class StaticHtml2Generator extends DefaultCodegen implements CodegenConfi
     @Override
     public String getName() {
         return "html2";
+    }
+
+    @Override
+    public String escapeText(String input) {
+        // newline escaping disabled for HTML documentation for markdown to work correctly
+        return input;
     }
 
     @Override
@@ -151,4 +155,16 @@ public class StaticHtml2Generator extends DefaultCodegen implements CodegenConfi
     public String normalizeType(String type) {
         return type.replaceAll("\\b(Boolean|Integer|Number|String|Date)\\b", "'$1'");
     }
+
+    @Override
+    public String escapeQuotationMark(String input) {
+        // just return the original string
+        return input;
+    }
+
+    @Override
+    public String escapeUnsafeCharacters(String input) {
+        // just return the original string
+        return input;
+    }   
 }

@@ -1,34 +1,27 @@
 package io.swagger.codegen.languages;
 
-import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableMap;
-import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.CodegenParameter;
 import io.swagger.codegen.SupportingFile;
 import io.swagger.codegen.CodegenProperty;
-import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenParameter;
-import io.swagger.models.properties.*;
 import io.swagger.codegen.CliOption;
 import io.swagger.models.Model;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.text.WordUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 public class CSharpClientCodegen extends AbstractCSharpCodegen {
     @SuppressWarnings({"unused", "hiding"})
@@ -48,17 +41,14 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
     protected String targetFrameworkNuget = "net45";
     protected boolean supportsAsync = Boolean.TRUE;
     protected boolean supportsUWP = Boolean.FALSE;
-
-
+    protected boolean generatePropertyChanged = Boolean.FALSE;
+    protected Map<Character, String> regexModifiers;
     protected final Map<String, String> frameworks;
 
     public CSharpClientCodegen() {
         super();
         modelTemplateFiles.put("model.mustache", ".cs");
         apiTemplateFiles.put("api.mustache", ".cs");
-
-        modelTestTemplateFiles.put("model_test.mustache", ".cs");
-        apiTestTemplateFiles.put("api_test.mustache", ".cs");
 
         modelDocTemplateFiles.put("model_doc.mustache", ".md");
         apiDocTemplateFiles.put("api_doc.mustache", ".md");
@@ -132,7 +122,15 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
                 CodegenConstants.OPTIONAL_EMIT_DEFAULT_VALUES_DESC,
                 this.optionalEmitDefaultValue);
 
+        addSwitch(CodegenConstants.GENERATE_PROPERTY_CHANGED,
+                CodegenConstants.PACKAGE_DESCRIPTION_DESC,
+                this.generatePropertyChanged);
 
+        regexModifiers = new HashMap<Character, String>();
+        regexModifiers.put('i', "IgnoreCase");
+        regexModifiers.put('m', "Multiline");
+        regexModifiers.put('s', "Singleline");
+        regexModifiers.put('x', "IgnorePatternWhitespace");
     }
 
     @Override
@@ -147,14 +145,22 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
                     Boolean.valueOf(additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP).toString()));
         }
 
+        if(isEmpty(apiPackage)) {
+            apiPackage = "Api";
+        }
+        if(isEmpty(modelPackage)) {
+            modelPackage = "Model";
+        }
+        clientPackage = "Client";
+
         Boolean excludeTests = false;
         if(additionalProperties.containsKey(CodegenConstants.EXCLUDE_TESTS)) {
             excludeTests = Boolean.valueOf(additionalProperties.get(CodegenConstants.EXCLUDE_TESTS).toString());
         }
 
-        apiPackage = "Api";
-        modelPackage = "Model";
-        clientPackage = "Client";
+        additionalProperties.put(CodegenConstants.API_PACKAGE, apiPackage);
+
+        additionalProperties.put(CodegenConstants.MODEL_PACKAGE, modelPackage);
 
         additionalProperties.put("clientPackage", clientPackage);
 
@@ -185,6 +191,14 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
             setTargetFrameworkNuget("net45");
             setSupportsAsync(Boolean.TRUE);
             additionalProperties.put("supportsAsync", this.supportsAsync);
+        }
+
+        if(additionalProperties.containsKey(CodegenConstants.GENERATE_PROPERTY_CHANGED)) {
+            if(NET35.equals(targetFramework)) {
+                LOGGER.warn(CodegenConstants.GENERATE_PROPERTY_CHANGED + " is only supported by generated code for .NET 4+.");
+            } else {
+                setGeneratePropertyChanged(Boolean.valueOf(additionalProperties.get(CodegenConstants.GENERATE_PROPERTY_CHANGED).toString()));
+            }
         }
 
         additionalProperties.put("targetFrameworkNuget", this.targetFrameworkNuget);
@@ -241,16 +255,25 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
 
         supportingFiles.add(new SupportingFile("compile.mustache", "", "build.bat"));
         supportingFiles.add(new SupportingFile("compile-mono.sh.mustache", "", "build.sh"));
-        // shell script to run the nunit test
-        supportingFiles.add(new SupportingFile("mono_nunit_test.mustache", "", "mono_nunit_test.sh"));
 
         // copy package.config to nuget's standard location for project-level installs
         supportingFiles.add(new SupportingFile("packages.config.mustache", packageFolder + File.separator, "packages.config"));
         // .travis.yml for travis-ci.org CI
         supportingFiles.add(new SupportingFile("travis.mustache", "", ".travis.yml"));
 
+        // Only write out test related files if excludeTests is unset or explicitly set to false (see start of this method)
         if(Boolean.FALSE.equals(excludeTests)) {
+            // shell script to run the nunit test
+            supportingFiles.add(new SupportingFile("mono_nunit_test.mustache", "", "mono_nunit_test.sh"));
+
+            modelTestTemplateFiles.put("model_test.mustache", ".cs");
+            apiTestTemplateFiles.put("api_test.mustache", ".cs");
+
             supportingFiles.add(new SupportingFile("packages_test.config.mustache", testPackageFolder + File.separator, "packages.config"));
+        }
+
+        if(Boolean.TRUE.equals(generatePropertyChanged)) {
+            supportingFiles.add(new SupportingFile("FodyWeavers.xml", packageFolder, "FodyWeavers.xml"));
         }
 
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
@@ -268,6 +291,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
             supportingFiles.add(new SupportingFile("Project.mustache", packageFolder, packageName + ".csproj"));
 
             if(Boolean.FALSE.equals(excludeTests)) {
+                // NOTE: This exists here rather than previous excludeTests block because the test project is considered an optional project file.
                 supportingFiles.add(new SupportingFile("TestProject.mustache", testPackageFolder, testPackageName + ".csproj"));
             }
         }
@@ -347,6 +371,56 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
     	return super.postProcessModels(objMap);
     }
 
+    @Override
+    public void postProcessParameter(CodegenParameter parameter) {
+        postProcessPattern(parameter.pattern, parameter.vendorExtensions);
+        super.postProcessParameter(parameter);
+    }
+
+    @Override
+    public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
+        postProcessPattern(property.pattern, property.vendorExtensions);
+        super.postProcessModelProperty(model, property);
+    }
+
+
+    /*
+    * The swagger pattern spec follows the Perl convention and style of modifiers. .NET
+    * does not support this syntax directly so we need to convert the pattern to a .NET compatible
+    * format and apply modifiers in a compatible way.
+    * See https://msdn.microsoft.com/en-us/library/yd1hzczs(v=vs.110).aspx for .NET options.
+    * See https://github.com/swagger-api/swagger-codegen/pull/2794 for Python's initial implementation from which this is copied.
+    */
+    public void postProcessPattern(String pattern, Map<String, Object> vendorExtensions) {
+        if(pattern != null) {
+            int i = pattern.lastIndexOf('/');
+
+            //Must follow Perl /pattern/modifiers convention
+            if(pattern.charAt(0) != '/' || i < 2) {
+                throw new IllegalArgumentException("Pattern must follow the Perl "
+                        + "/pattern/modifiers convention. "+pattern+" is not valid.");
+            }
+
+            String regex = pattern.substring(1, i).replace("'", "\'");
+            List<String> modifiers = new ArrayList<String>();
+
+            // perl requires an explicit modifier to be culture specific and .NET is the reverse.
+            modifiers.add("CultureInvariant");
+
+            for(char c : pattern.substring(i).toCharArray()) {
+                if(regexModifiers.containsKey(c)) {
+                    String modifier = regexModifiers.get(c);
+                    modifiers.add(modifier);
+                } else if (c == 'l') {
+                    modifiers.remove("CultureInvariant");
+                }
+            }
+
+            vendorExtensions.put("x-regex", regex);
+            vendorExtensions.put("x-modifiers", modifiers);
+        }
+    }
+
     public void setTargetFramework(String dotnetFramework) {
         if(!frameworks.containsKey(dotnetFramework)){
             LOGGER.warn("Invalid .NET framework version, defaulting to " + this.targetFramework);
@@ -416,6 +490,11 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
 
     @Override
     public String toEnumVarName(String value, String datatype) {
+        // for symbol, e.g. $, #
+        if (getSymbolName(value) != null) {
+            return camelize(getSymbolName(value));
+        }
+
         // number
         if ("int?".equals(datatype) || "long?".equals(datatype) || 
             "double?".equals(datatype) || "float?".equals(datatype)) {
@@ -458,6 +537,10 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
 
     public void setSupportsUWP(Boolean supportsUWP){
         this.supportsUWP = supportsUWP;
+    }
+
+    public void setGeneratePropertyChanged(final Boolean generatePropertyChanged){
+        this.generatePropertyChanged = generatePropertyChanged;
     }
 
     @Override

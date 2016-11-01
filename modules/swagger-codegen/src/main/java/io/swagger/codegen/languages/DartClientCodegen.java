@@ -58,6 +58,7 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
                         "String",
                         "bool",
                         "int",
+                        "num",
                         "double")
         );
         instantiationTypes.put("array", "List");
@@ -69,11 +70,12 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("List", "List");
         typeMapping.put("boolean", "bool");
         typeMapping.put("string", "String");
+        typeMapping.put("char", "String");
         typeMapping.put("int", "int");
-        typeMapping.put("float", "double");
         typeMapping.put("long", "int");
         typeMapping.put("short", "int");
-        typeMapping.put("char", "String");
+        typeMapping.put("number", "num");
+        typeMapping.put("float", "double");
         typeMapping.put("double", "double");
         typeMapping.put("object", "Object");
         typeMapping.put("integer", "int");
@@ -209,7 +211,8 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
     public String toModelName(String name) {
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
-            throw new RuntimeException(name + " (reserved word) cannot be used as a model name");
+            LOGGER.warn(name + " (reserved word) cannot be used as model filename. Renamed to " + camelize("model_" + name));
+            name = "model_" + name; // e.g. return => ModelReturn (after camelize)
         }
 
         // camelize the model name
@@ -271,7 +274,9 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
     public String toOperationId(String operationId) {
         // method name cannot use reserved keyword, e.g. return
         if (isReservedWord(operationId)) {
-            throw new RuntimeException(operationId + " (reserved word) cannot be used as method name");
+            String newOperationId = camelize("call_" + operationId, true);
+            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + newOperationId);
+            return newOperationId;
         }
 
         return camelize(operationId, true);

@@ -4,7 +4,8 @@
 
  - If you're not using the latest master to generate API clients or server stubs, please give it another try by pulling the latest master as the issue may have already been addressed. Ref: [Getting Started](https://github.com/swagger-api/swagger-codegen#getting-started)
  - Search the [open issue](https://github.com/swagger-api/swagger-codegen/issues) and [closed issue](https://github.com/swagger-api/swagger-codegen/issues?q=is%3Aissue+is%3Aclosed) to ensure no one else has reported something similar before.
- - File an [issue ticket](https://github.com/swagger-api/swagger-codegen/issues/new) by providing all the required information. 
+ - File an [issue ticket](https://github.com/swagger-api/swagger-codegen/issues/new) by providing all the required information.
+ - Test with the latest master by building the JAR locally to see if the issue has already been addressed.
  - You can also make a suggestion or ask a question by opening an "issue".
 
 ## Before submitting a PR
@@ -72,3 +73,4 @@ To start the CI tests, you can run `mvn verify -Psamples` (assuming you've all t
 - Add test case(s) to cover the change
 - Document the fix in the code to make the code more readable
 - Make sure test cases passed after the change (one way is to leverage https://travis-ci.org/ to run the CI tests)
+- File a PR with meaningful title, description and commit messages. A good example is [PR-3306](https://github.com/swagger-api/swagger-codegen/pull/3306)

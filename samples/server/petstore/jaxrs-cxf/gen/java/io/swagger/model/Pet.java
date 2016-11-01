@@ -1,11 +1,10 @@
 package io.swagger.model;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.model.Category;
 import io.swagger.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
-
-
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -42,7 +41,7 @@ public class Pet  {
 @XmlEnum
 public enum StatusEnum {
 
-    AVAILABLE(String.valueOf("&quot;available&quot;")), PENDING(String.valueOf("&quot;pending&quot;")), SOLD(String.valueOf("&quot;sold&quot;"));
+    AVAILABLE(String.valueOf("available")), PENDING(String.valueOf("pending")), SOLD(String.valueOf("sold"));
 
 
     private String value;
@@ -59,6 +58,7 @@ public enum StatusEnum {
         return valueOf(v);
     }
 }
+
 
   @XmlElement(name="status")
   private StatusEnum status = null;

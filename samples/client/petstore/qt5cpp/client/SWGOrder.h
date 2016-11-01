@@ -25,7 +25,7 @@
 /*
  * SWGOrder.h
  * 
- * 
+ * An order for a pets from the pet store
  */
 
 #ifndef SWGOrder_H_
@@ -57,24 +57,30 @@ public:
 
     qint64 getId();
     void setId(qint64 id);
-qint64 getPetId();
-    void setPetId(qint64 petId);
-qint32 getQuantity();
+
+    qint64 getPetId();
+    void setPetId(qint64 pet_id);
+
+    qint32 getQuantity();
     void setQuantity(qint32 quantity);
-QDateTime* getShipDate();
-    void setShipDate(QDateTime* shipDate);
-QString* getStatus();
+
+    QDateTime* getShipDate();
+    void setShipDate(QDateTime* ship_date);
+
+    QString* getStatus();
     void setStatus(QString* status);
-bool getComplete();
+
+    bool getComplete();
     void setComplete(bool complete);
+
 
 private:
     qint64 id;
-qint64 petId;
-qint32 quantity;
-QDateTime* shipDate;
-QString* status;
-bool complete;
+    qint64 pet_id;
+    qint32 quantity;
+    QDateTime* ship_date;
+    QString* status;
+    bool complete;
 };
 
 } /* namespace Swagger */

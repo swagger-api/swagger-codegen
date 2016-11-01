@@ -47,7 +47,7 @@ use \ArrayAccess;
  * FormatTest Class Doc Comment
  *
  * @category    Class */
-/** 
+/**
  * @package     Swagger\Client
  * @author      http://github.com/swagger-api/swagger-codegen
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
@@ -65,7 +65,7 @@ class FormatTest implements ArrayAccess
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
-    protected static $swaggerTypes = array(
+    protected static $swaggerTypes = [
         'integer' => 'int',
         'int32' => 'int',
         'int64' => 'int',
@@ -79,7 +79,7 @@ class FormatTest implements ArrayAccess
         'date_time' => '\DateTime',
         'uuid' => 'string',
         'password' => 'string'
-    );
+    ];
 
     public static function swaggerTypes()
     {
@@ -90,7 +90,7 @@ class FormatTest implements ArrayAccess
      * Array of attributes where the key is the local name, and the value is the original name
      * @var string[]
      */
-    protected static $attributeMap = array(
+    protected static $attributeMap = [
         'integer' => 'integer',
         'int32' => 'int32',
         'int64' => 'int64',
@@ -104,18 +104,14 @@ class FormatTest implements ArrayAccess
         'date_time' => 'dateTime',
         'uuid' => 'uuid',
         'password' => 'password'
-    );
+    ];
 
-    public static function attributeMap()
-    {
-        return self::$attributeMap;
-    }
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
      * @var string[]
      */
-    protected static $setters = array(
+    protected static $setters = [
         'integer' => 'setInteger',
         'int32' => 'setInt32',
         'int64' => 'setInt64',
@@ -129,18 +125,14 @@ class FormatTest implements ArrayAccess
         'date_time' => 'setDateTime',
         'uuid' => 'setUuid',
         'password' => 'setPassword'
-    );
+    ];
 
-    public static function setters()
-    {
-        return self::$setters;
-    }
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
      * @var string[]
      */
-    protected static $getters = array(
+    protected static $getters = [
         'integer' => 'getInteger',
         'int32' => 'getInt32',
         'int64' => 'getInt64',
@@ -154,7 +146,17 @@ class FormatTest implements ArrayAccess
         'date_time' => 'getDateTime',
         'uuid' => 'getUuid',
         'password' => 'getPassword'
-    );
+    ];
+
+    public static function attributeMap()
+    {
+        return self::$attributeMap;
+    }
+
+    public static function setters()
+    {
+        return self::$setters;
+    }
 
     public static function getters()
     {
@@ -169,7 +171,7 @@ class FormatTest implements ArrayAccess
      * Associative array for storing property values
      * @var mixed[]
      */
-    protected $container = array();
+    protected $container = [];
 
     /**
      * Constructor
@@ -199,7 +201,7 @@ class FormatTest implements ArrayAccess
      */
     public function listInvalidProperties()
     {
-        $invalid_properties = array();
+        $invalid_properties = [];
         if (!is_null($this->container['integer']) && ($this->container['integer'] > 100.0)) {
             $invalid_properties[] = "invalid value for 'integer', must be smaller than or equal to 100.0.";
         }
@@ -347,12 +349,13 @@ class FormatTest implements ArrayAccess
     public function setInteger($integer)
     {
 
-        if ($integer > 100.0) {
+        if (!is_null($integer) && ($integer > 100.0)) {
             throw new \InvalidArgumentException('invalid value for $integer when calling FormatTest., must be smaller than or equal to 100.0.');
         }
-        if ($integer < 10.0) {
+        if (!is_null($integer) && ($integer < 10.0)) {
             throw new \InvalidArgumentException('invalid value for $integer when calling FormatTest., must be bigger than or equal to 10.0.');
         }
+
         $this->container['integer'] = $integer;
 
         return $this;
@@ -375,12 +378,13 @@ class FormatTest implements ArrayAccess
     public function setInt32($int32)
     {
 
-        if ($int32 > 200.0) {
+        if (!is_null($int32) && ($int32 > 200.0)) {
             throw new \InvalidArgumentException('invalid value for $int32 when calling FormatTest., must be smaller than or equal to 200.0.');
         }
-        if ($int32 < 20.0) {
+        if (!is_null($int32) && ($int32 < 20.0)) {
             throw new \InvalidArgumentException('invalid value for $int32 when calling FormatTest., must be bigger than or equal to 20.0.');
         }
+
         $this->container['int32'] = $int32;
 
         return $this;
@@ -424,12 +428,13 @@ class FormatTest implements ArrayAccess
     public function setNumber($number)
     {
 
-        if ($number > 543.2) {
+        if (($number > 543.2)) {
             throw new \InvalidArgumentException('invalid value for $number when calling FormatTest., must be smaller than or equal to 543.2.');
         }
-        if ($number < 32.1) {
+        if (($number < 32.1)) {
             throw new \InvalidArgumentException('invalid value for $number when calling FormatTest., must be bigger than or equal to 32.1.');
         }
+
         $this->container['number'] = $number;
 
         return $this;
@@ -452,12 +457,13 @@ class FormatTest implements ArrayAccess
     public function setFloat($float)
     {
 
-        if ($float > 987.6) {
+        if (!is_null($float) && ($float > 987.6)) {
             throw new \InvalidArgumentException('invalid value for $float when calling FormatTest., must be smaller than or equal to 987.6.');
         }
-        if ($float < 54.3) {
+        if (!is_null($float) && ($float < 54.3)) {
             throw new \InvalidArgumentException('invalid value for $float when calling FormatTest., must be bigger than or equal to 54.3.');
         }
+
         $this->container['float'] = $float;
 
         return $this;
@@ -480,12 +486,13 @@ class FormatTest implements ArrayAccess
     public function setDouble($double)
     {
 
-        if ($double > 123.4) {
+        if (!is_null($double) && ($double > 123.4)) {
             throw new \InvalidArgumentException('invalid value for $double when calling FormatTest., must be smaller than or equal to 123.4.');
         }
-        if ($double < 67.8) {
+        if (!is_null($double) && ($double < 67.8)) {
             throw new \InvalidArgumentException('invalid value for $double when calling FormatTest., must be bigger than or equal to 67.8.');
         }
+
         $this->container['double'] = $double;
 
         return $this;
@@ -508,9 +515,10 @@ class FormatTest implements ArrayAccess
     public function setString($string)
     {
 
-        if (!preg_match("/[a-z]/i", $string)) {
+        if (!is_null($string) && (!preg_match("/[a-z]/i", $string))) {
             throw new \InvalidArgumentException("invalid value for $string when calling FormatTest., must conform to the pattern /[a-z]/i.");
         }
+
         $this->container['string'] = $string;
 
         return $this;
@@ -637,12 +645,13 @@ class FormatTest implements ArrayAccess
      */
     public function setPassword($password)
     {
-        if (strlen($password) > 64) {
+        if ((strlen($password) > 64)) {
             throw new \InvalidArgumentException('invalid length for $password when calling FormatTest., must be smaller than or equal to 64.');
         }
-        if (strlen($password) < 10) {
+        if ((strlen($password) < 10)) {
             throw new \InvalidArgumentException('invalid length for $password when calling FormatTest., must be bigger than or equal to 10.');
         }
+
         $this->container['password'] = $password;
 
         return $this;
@@ -705,5 +714,3 @@ class FormatTest implements ArrayAccess
         return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
-

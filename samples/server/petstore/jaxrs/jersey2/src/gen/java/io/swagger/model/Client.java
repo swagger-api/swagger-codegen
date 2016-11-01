@@ -2,17 +2,16 @@ package io.swagger.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-
-
 
 /**
  * Client
  */
 
 public class Client   {
+  @JsonProperty("client")
   private String client = null;
 
   public Client client(String client) {

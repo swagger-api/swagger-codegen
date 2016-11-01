@@ -51,11 +51,11 @@ SWGOrder::~SWGOrder() {
 void
 SWGOrder::init() {
     id = 0L;
-petId = 0L;
-quantity = 0;
-shipDate = NULL;
-status = new QString("");
-complete = false;
+    pet_id = 0L;
+    quantity = 0;
+    ship_date = NULL;
+    status = new QString("");
+    complete = false;
 }
 
 void
@@ -63,10 +63,12 @@ SWGOrder::cleanup() {
     
 
 
-if(shipDate != NULL) {
-        delete shipDate;
+
+    if(ship_date != nullptr) {
+        delete ship_date;
     }
-if(status != NULL) {
+
+    if(status != nullptr) {
         delete status;
     }
 
@@ -83,12 +85,12 @@ SWGOrder::fromJson(QString &json) {
 
 void
 SWGOrder::fromJsonObject(QJsonObject &pJson) {
-    setValue(&id, pJson["id"], "qint64", "");
-setValue(&petId, pJson["petId"], "qint64", "");
-setValue(&quantity, pJson["quantity"], "qint32", "");
-setValue(&shipDate, pJson["shipDate"], "QDateTime", "QDateTime");
-setValue(&status, pJson["status"], "QString", "QString");
-setValue(&complete, pJson["complete"], "bool", "");
+    ::Swagger::setValue(&id, pJson["id"], "qint64", "");
+    ::Swagger::setValue(&pet_id, pJson["pet_id"], "qint64", "");
+    ::Swagger::setValue(&quantity, pJson["quantity"], "qint32", "");
+    ::Swagger::setValue(&ship_date, pJson["ship_date"], "QDateTime", "QDateTime");
+    ::Swagger::setValue(&status, pJson["status"], "QString", "QString");
+    ::Swagger::setValue(&complete, pJson["complete"], "bool", "");
 }
 
 QString
@@ -104,20 +106,18 @@ SWGOrder::asJson ()
 QJsonObject*
 SWGOrder::asJsonObject() {
     QJsonObject* obj = new QJsonObject();
+    
     obj->insert("id", QJsonValue(id));
-obj->insert("petId", QJsonValue(petId));
-obj->insert("quantity", QJsonValue(quantity));
 
-    
-    toJsonValue(QString("shipDate"), shipDate, obj, QString("QDateTime"));
-    
-        
+    obj->insert("pet_id", QJsonValue(pet_id));
 
-    
+    obj->insert("quantity", QJsonValue(quantity));
+
+    toJsonValue(QString("ship_date"), ship_date, obj, QString("QDateTime"));
+
     toJsonValue(QString("status"), status, obj, QString("QString"));
-    
-        
-obj->insert("complete", QJsonValue(complete));
+
+    obj->insert("complete", QJsonValue(complete));
 
     return obj;
 }
@@ -133,11 +133,11 @@ SWGOrder::setId(qint64 id) {
 
 qint64
 SWGOrder::getPetId() {
-    return petId;
+    return pet_id;
 }
 void
-SWGOrder::setPetId(qint64 petId) {
-    this->petId = petId;
+SWGOrder::setPetId(qint64 pet_id) {
+    this->pet_id = pet_id;
 }
 
 qint32
@@ -151,11 +151,11 @@ SWGOrder::setQuantity(qint32 quantity) {
 
 QDateTime*
 SWGOrder::getShipDate() {
-    return shipDate;
+    return ship_date;
 }
 void
-SWGOrder::setShipDate(QDateTime* shipDate) {
-    this->shipDate = shipDate;
+SWGOrder::setShipDate(QDateTime* ship_date) {
+    this->ship_date = ship_date;
 }
 
 QString*
