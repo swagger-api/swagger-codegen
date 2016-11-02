@@ -23,7 +23,6 @@ public class LightJavaCodegen extends AbstractJavaCodegen {
 
         sourceFolder = "src/main/java";
         embeddedTemplateDir = templateDir = "light-java";
-        invokerPackage = "io.swagger.handler";
         artifactId = "swagger-light-java";
         dateLibrary = "legacy"; //TODO: add joda support
 
@@ -33,7 +32,7 @@ public class LightJavaCodegen extends AbstractJavaCodegen {
         modelDocTemplateFiles.remove("model_doc.mustache");
         apiDocTemplateFiles.remove("api_doc.mustache");
 
-
+        invokerPackage = System.getProperty("swagger.codegen.light.invokerpackage", "io.swagger");
         apiPackage = System.getProperty("swagger.codegen.light.apipackage", "io.swagger.handler");
         modelPackage = System.getProperty("swagger.codegen.light.modelpackage", "io.swagger.model");
 
@@ -67,6 +66,10 @@ public class LightJavaCodegen extends AbstractJavaCodegen {
             this.setApiPackage((String) additionalProperties.get(CodegenConstants.API_PACKAGE));
         }
 
+        if (additionalProperties.containsKey(CodegenConstants.INVOKER_PACKAGE)) {
+            this.setInvokerPackage((String) additionalProperties.get(CodegenConstants.INVOKER_PACKAGE));
+        }
+
         //apiTemplateFiles.remove("api.mustache");
 
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
@@ -76,7 +79,7 @@ public class LightJavaCodegen extends AbstractJavaCodegen {
 
         // keep the yaml in config folder for framework validation.
         supportingFiles.add(new SupportingFile("swagger.mustache", ("src.main.resources.config").replace(".", java.io.File.separator), "swagger.json"));
-        supportingFiles.add(new SupportingFile("handler.mustache", ("src.main.java." + apiPackage).replace(".", java.io.File.separator), "PathHandlerProvider.java"));
+        supportingFiles.add(new SupportingFile("handler.mustache", ("src.main.java." + invokerPackage).replace(".", java.io.File.separator), "PathHandlerProvider.java"));
         supportingFiles.add(new SupportingFile("testServer.mustache", ("src.test.java." + apiPackage).replace(".", java.io.File.separator), "TestServer.java"));
 
         supportingFiles.add(new SupportingFile("routingService.mustache", ("src.main.resources.META-INF.services").replace(".", java.io.File.separator), "com.networknt.server.HandlerProvider"));
