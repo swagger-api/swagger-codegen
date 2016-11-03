@@ -178,7 +178,20 @@ namespace {{packageName}}.Client
             // set user agent
             RestClient.UserAgent = Configuration.UserAgent;
 
-            InterceptRequest(request);
+            if(!String.IsNullOrEmpty(Configuration.ProxyUrl)){
+
+                IWebProxy proxy = new WebProxy(Configuration.ProxyUrl, true);
+                if (!String.IsNullOrEmpty(Configuration.ProxyUsername))
+                {
+                    var credential = new NetworkCredential(Configuration.ProxyUsername, Configuration.ProxyPassword);
+                    proxy.Credentials = credential;
+                }
+            }
+
+            RestClient.Proxy=proxy;
+
+
+InterceptRequest(request);
             {{^supportsUWP}}
             var response = RestClient.Execute(request);
             {{/supportsUWP}}
