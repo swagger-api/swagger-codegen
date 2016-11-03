@@ -201,6 +201,24 @@ namespace {{packageName}}.Client
         public String Password { get; set; }
 
         /// <summary>
+            /// Gets or sets the proxyurl (HTTP basic authentication).
+            /// </summary>
+        /// <value>The proxyurl.</value>
+        public String ProxyUrl { get; set; }
+
+        /// <summary>
+            /// Gets or sets the proxy username (HTTP basic authentication).
+            /// </summary>
+        /// <value>The proxy username.</value>
+        public String ProxyUsername { get; set; }
+
+        /// <summary>
+            /// Gets or sets the proxy password (HTTP basic authentication).
+            /// </summary>
+        /// <value>The proxy password.</value>
+        public String ProxyPassword { get; set; }
+
+        /// <summary>
         /// Gets or sets the access token for OAuth2 authentication.
         /// </summary>
         /// <value>The access token.</value>
