@@ -136,7 +136,6 @@ public class JavaClientCodegen extends AbstractJavaCodegen implements BeanValida
         }
 
         if ("feign".equals(getLibrary())) {
-            supportingFiles.add(new SupportingFile("FormAwareEncoder.mustache", invokerFolder, "FormAwareEncoder.java"));
             additionalProperties.put("jackson", "true");
         } else if ("okhttp-gson".equals(getLibrary()) || StringUtils.isEmpty(getLibrary())) {
             // the "okhttp-gson" library template requires "ApiCallback.mustache" for async call

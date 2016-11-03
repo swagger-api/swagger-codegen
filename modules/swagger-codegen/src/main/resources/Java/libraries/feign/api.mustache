@@ -25,7 +25,7 @@ public interface {{classname}} extends ApiClient.Api {
    */
   @RequestLine("{{httpMethod}} {{{path}}}{{#hasQueryParams}}?{{/hasQueryParams}}{{#queryParams}}{{baseName}}={{=<% %>=}}{<%paramName%>}<%={{ }}=%>{{#hasMore}}&{{/hasMore}}{{/queryParams}}")
   @Headers({
-    "Content-type: {{vendorExtensions.x-contentType}}",
+    "Content-Type: {{vendorExtensions.x-contentType}}",
     "Accept: {{vendorExtensions.x-accepts}}",{{#headerParams}}
     "{{baseName}}: {{=<% %>=}}{<%paramName%>}<%={{ }}=%>"{{#hasMore}},
     {{/hasMore}}{{/headerParams}}
