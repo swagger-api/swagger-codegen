@@ -9,7 +9,12 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.List;
@@ -18,7 +23,10 @@ import java.util.Set;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.Assert.fail;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.assertTrue;
 
 /**
  * Tests for DefaultGenerator logic
@@ -219,6 +227,39 @@ public class DefaultGeneratorTest {
                 assertFalse(opIds.contains(op.operationId));
                 opIds.add(op.operationId);
             }
+        }
+    }
+
+    @Test
+    public void testGenerateMethodsWithCollapsedParameters() {
+        final File output = folder.getRoot();
+
+        final Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/wordnik-with-paramCollapseThreshold.yaml");
+        CodegenConfig codegenConfig = new JavaClientCodegen();
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+        codegenConfig.vendorExtensions().putAll(swagger.getVendorExtensions());
+        final Integer paramCollapseThreshold = (Integer)codegenConfig.vendorExtensions().get("x-paramCollapseThreshold");
+
+        assertTrue(paramCollapseThreshold == 5, paramCollapseThreshold.toString());
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        DefaultGenerator generator = new DefaultGenerator();
+        generator.opts(clientOptInput);
+
+        String tag = "Word";
+        Map<String, List<CodegenOperation>> paths = generator.processPaths(swagger.getPaths());
+        List<CodegenOperation> ops = paths.get(tag);
+        for (CodegenOperation op : ops) {
+            assertNull(op.collapsedParametersClassName);
+        }
+
+        generator.processOperations(codegenConfig, tag, ops);
+
+        // An op has collapsedParametersClassName set if and only if param count is over the threshold
+        for (CodegenOperation op : ops) {
+            assertTrue((op.allParams.size() >= paramCollapseThreshold && op.collapsedParametersClassName != null)
+                            || (op.allParams.size() < paramCollapseThreshold && op.collapsedParametersClassName == null) );
         }
     }
 

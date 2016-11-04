@@ -831,6 +831,24 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 counter++;
                 op.nickname += "_" + counter;
             }
+
+            // Use an object instead of separate variables for GET operations with too many variables
+            int paramCollapseThreshold = Integer.MAX_VALUE;
+            String paramCollapseThresholdKey = "x-paramCollapseThreshold";
+            if (op.vendorExtensions.containsKey(paramCollapseThresholdKey)) {
+                paramCollapseThreshold = new Integer(op.vendorExtensions.get(paramCollapseThresholdKey).toString());
+            } else if (config.vendorExtensions().containsKey(paramCollapseThresholdKey)) {
+                paramCollapseThreshold = new Integer(config.vendorExtensions().get(paramCollapseThresholdKey).toString());
+            }
+            if ("GET".equals(op.httpMethod) && op.allParams.size() >= paramCollapseThreshold) {
+                String opInitial = op.operationId.substring(0,1);
+                op.collapsedParametersClassName = op.operationId.replaceFirst(opInitial, opInitial.toUpperCase()) + "Params";
+
+                for (CodegenParameter param: op.allParams) {
+                    String paramInitial = param.paramName.substring(0, 1);
+                    param.paramNameUpperInitial = param.paramName.replaceFirst(paramInitial, paramInitial.toUpperCase());
+                }
+            }
             opIds.add(opId);
         }
         objs.put("operation", ops);
