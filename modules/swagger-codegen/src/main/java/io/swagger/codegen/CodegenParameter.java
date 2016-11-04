@@ -123,7 +123,7 @@ public class CodegenParameter {
             output.items = this.items;
         }
         if(this.vendorExtensions != null){
-        	output.vendorExtensions = new HashMap<String, Object>(this.vendorExtensions);
+            output.vendorExtensions = new HashMap<String, Object>(this.vendorExtensions);
         }
         output.hasValidation = this.hasValidation;
         output.isBinary = this.isBinary;
