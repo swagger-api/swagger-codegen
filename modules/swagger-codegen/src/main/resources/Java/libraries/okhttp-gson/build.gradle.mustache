@@ -114,9 +114,9 @@ uploadArchives {
             snapshotRepository(url: "{{nexus_url}}/content/repositories/snapshots") {
                 authentication(userName: "{{nexus_username}}", password: "{{nexus_password}}")
             }
-            pom.version = "{{artifactVersion}}"
-            pom.artifactId = "{{artifactId}}"
-            pom.groupId = "{{groupId}}"
+            pom.version = '{{artifactVersion}}'
+            pom.artifactId = '{{artifactId}}'
+            pom.groupId = '{{groupId}}'
         }
     }
 }
