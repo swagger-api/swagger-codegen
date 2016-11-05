@@ -9,7 +9,7 @@ public class CodegenParameter {
     public Boolean isFormParam, isQueryParam, isPathParam, isHeaderParam,
             isCookieParam, isBodyParam, hasMore, isContainer,
             secondaryParam, isCollectionFormatMulti, isPrimitiveType;
-    public String baseName, paramName, dataType, datatypeWithEnum, dataFormat, collectionFormat, description, unescapedDescription, baseType, defaultValue, enumName;
+    public String baseName, paramName, dataType, datatypeWithEnum, dataFormat, collectionFormat, description, unescapedDescription, baseType, defaultValue, enumName, paramNameUpperInitial;
     public String example; // example value (x-example)
     public String jsonSchema;
     public Boolean isString, isInteger, isLong, isFloat, isDouble, isByteArray, isBinary, isBoolean, isDate, isDateTime;
@@ -136,6 +136,7 @@ public class CodegenParameter {
         output.isDateTime = this.isDateTime;
         output.isListContainer = this.isListContainer;
         output.isMapContainer = this.isMapContainer;
+        output.paramNameUpperInitial = this.paramNameUpperInitial;
 
         return output;
     }
@@ -261,6 +262,8 @@ public class CodegenParameter {
             return false;
         if (uniqueItems != null ? !uniqueItems.equals(that.uniqueItems) : that.uniqueItems != null)
             return false;
+        if (paramNameUpperInitial != null ? !paramNameUpperInitial.equals(that.paramNameUpperInitial) : that.paramNameUpperInitial != null)
+            return false;
         return multipleOf != null ? multipleOf.equals(that.multipleOf) : that.multipleOf == null;
 
     }
@@ -323,6 +326,7 @@ public class CodegenParameter {
         result = 31 * result + (minItems != null ? minItems.hashCode() : 0);
         result = 31 * result + (uniqueItems != null ? uniqueItems.hashCode() : 0);
         result = 31 * result + (multipleOf != null ? multipleOf.hashCode() : 0);
+        result = 31 * result + (paramNameUpperInitial != null ? paramNameUpperInitial.hashCode() : 0);
         return result;
     }
 }

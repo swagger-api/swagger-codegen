@@ -47,31 +47,48 @@ public class {{classname}} {
     }
 
     {{#operation}}
+    {{#collapsedParametersClassName}}
+    public static class {{collapsedParametersClassName}}{
+        {{#allParams}}
+        {{{dataType}}} {{paramName}};
+        {{/allParams}}
+
+        {{#allParams}}{{#paramNameUpperInitial}}
+        public void set{{paramNameUpperInitial}}({{{dataType}}} {{paramName}}) {
+            this.{{paramName}} = {{paramName}};
+        }
+        {{/paramNameUpperInitial}}{{/allParams}}
+    }
+    {{/collapsedParametersClassName}}
+
     /* Build call for {{operationId}} */
-    private com.squareup.okhttp.Call {{operationId}}Call({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call {{operationId}}Call(
+            {{#collapsedParametersClassName}}{{collapsedParametersClassName}} params, {{/collapsedParametersClassName}}
+            {{^collapsedParametersClassName}}{{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}{{/collapsedParametersClassName}}
+            final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object {{localVariablePrefix}}localVarPostBody = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
         {{#allParams}}{{#required}}
         // verify the required parameter '{{paramName}}' is set
-        if ({{paramName}} == null) {
+        if ({{#collapsedParametersClassName}}params.{{paramName}}{{/collapsedParametersClassName}}{{^collapsedParametersClassName}}{{paramName}}{{/collapsedParametersClassName}} == null) {
             throw new ApiException("Missing the required parameter '{{paramName}}' when calling {{operationId}}(Async)");
         }
         {{/required}}{{/allParams}}
 
         // create path and map variables
         String {{localVariablePrefix}}localVarPath = "{{{path}}}".replaceAll("\\{format\\}","json"){{#pathParams}}
-        .replaceAll("\\{" + "{{baseName}}" + "\\}", {{localVariablePrefix}}apiClient.escapeString({{{paramName}}}.toString())){{/pathParams}};
+        .replaceAll("\\{" + "{{baseName}}" + "\\}", {{localVariablePrefix}}apiClient.escapeString({{#collapsedParametersClassName}}params.{{paramName}}{{/collapsedParametersClassName}}{{^collapsedParametersClassName}}{{paramName}}{{/collapsedParametersClassName}}.toString())){{/pathParams}};
 
         {{javaUtilPrefix}}List<Pair> {{localVariablePrefix}}localVarQueryParams = new {{javaUtilPrefix}}ArrayList<Pair>();{{#queryParams}}
-        if ({{paramName}} != null)
-        {{localVariablePrefix}}localVarQueryParams.addAll({{localVariablePrefix}}apiClient.parameterToPairs("{{#collectionFormat}}{{{collectionFormat}}}{{/collectionFormat}}", "{{baseName}}", {{paramName}}));{{/queryParams}}
+        if ({{#collapsedParametersClassName}}params.{{paramName}}{{/collapsedParametersClassName}}{{^collapsedParametersClassName}}{{paramName}}{{/collapsedParametersClassName}} != null)
+        {{localVariablePrefix}}localVarQueryParams.addAll({{localVariablePrefix}}apiClient.parameterToPairs("{{#collectionFormat}}{{{collectionFormat}}}{{/collectionFormat}}", "{{baseName}}", {{#collapsedParametersClassName}}params.{{paramName}}{{/collapsedParametersClassName}}{{^collapsedParametersClassName}}{{paramName}}{{/collapsedParametersClassName}}));{{/queryParams}}
 
-        {{javaUtilPrefix}}Map<String, String> {{localVariablePrefix}}localVarHeaderParams = new {{javaUtilPrefix}}HashMap<String, String>();{{#headerParams}}
-        if ({{paramName}} != null)
-        {{localVariablePrefix}}localVarHeaderParams.put("{{baseName}}", {{localVariablePrefix}}apiClient.parameterToString({{paramName}}));{{/headerParams}}
+        {{javaUtilPrefix}}Map<String , String> {{localVariablePrefix}}localVarHeaderParams = new {{javaUtilPrefix}}HashMap<String , String>();{{#headerParams}}
+        if ({{#collapsedParametersClassName}}params.{{paramName}}{{/collapsedParametersClassName}}{{^collapsedParametersClassName}}{{paramName}}{{/collapsedParametersClassName}} != null)
+        {{localVariablePrefix}}localVarHeaderParams.put("{{baseName}}", {{localVariablePrefix}}apiClient.parameterToString({{#collapsedParametersClassName}}params.{{paramName}}{{/collapsedParametersClassName}}{{^collapsedParametersClassName}}{{paramName}}{{/collapsedParametersClassName}}));{{/headerParams}}
 
-        {{javaUtilPrefix}}Map<String, Object> {{localVariablePrefix}}localVarFormParams = new {{javaUtilPrefix}}HashMap<String, Object>();{{#formParams}}
-        if ({{paramName}} != null)
-        {{localVariablePrefix}}localVarFormParams.put("{{baseName}}", {{paramName}});{{/formParams}}
+        {{javaUtilPrefix}}Map<String , Object> {{localVariablePrefix}}localVarFormParams = new {{javaUtilPrefix}}HashMap<String , Object>();{{#formParams}}
+        if ({{#collapsedParametersClassName}}params.{{paramName}}{{/collapsedParametersClassName}}{{^collapsedParametersClassName}}{{paramName}}{{/collapsedParametersClassName}} != null)
+        {{localVariablePrefix}}localVarFormParams.put("{{baseName}}", {{#collapsedParametersClassName}}params.{{paramName}}{{/collapsedParametersClassName}}{{^collapsedParametersClassName}}{{paramName}}{{/collapsedParametersClassName}});{{/formParams}}
 
         final String[] {{localVariablePrefix}}localVarAccepts = {
             {{#produces}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/produces}}
@@ -108,8 +125,13 @@ public class {{classname}} {
      * @return {{returnType}}{{/returnType}}
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws ApiException {
-        {{#returnType}}ApiResponse<{{{returnType}}}> {{localVariablePrefix}}resp = {{/returnType}}{{operationId}}WithHttpInfo({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});{{#returnType}}
+    public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}(
+            {{#collapsedParametersClassName}}{{collapsedParametersClassName}} params{{/collapsedParametersClassName}}
+            {{^collapsedParametersClassName}}{{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}{{/collapsedParametersClassName}}
+            ) throws ApiException {
+        {{#returnType}}ApiResponse<{{{returnType}}}> {{localVariablePrefix}}resp = {{/returnType}}{{operationId}}WithHttpInfo(
+                {{#collapsedParametersClassName}}params{{/collapsedParametersClassName}}
+                {{^collapsedParametersClassName}}{{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}{{/collapsedParametersClassName}});{{#returnType}}
         return {{localVariablePrefix}}resp.getData();{{/returnType}}
     }
 
@@ -120,8 +142,13 @@ public class {{classname}} {
      * @return ApiResponse&lt;{{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}Void{{/returnType}}&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{operationId}}WithHttpInfo({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) throws ApiException {
-        com.squareup.okhttp.Call {{localVariablePrefix}}call = {{operationId}}Call({{#allParams}}{{paramName}}, {{/allParams}}null, null);
+    public ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{operationId}}WithHttpInfo(
+            {{#collapsedParametersClassName}}{{collapsedParametersClassName}} params{{/collapsedParametersClassName}}
+            {{^collapsedParametersClassName}}{{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}{{/collapsedParametersClassName}}
+            ) throws ApiException {
+        com.squareup.okhttp.Call {{localVariablePrefix}}call = {{operationId}}Call(
+                {{#collapsedParametersClassName}}params, {{/collapsedParametersClassName}}
+                {{^collapsedParametersClassName}}{{#allParams}}{{paramName}}, {{/allParams}}{{/collapsedParametersClassName}}null, null);
         {{#returnType}}Type {{localVariablePrefix}}localVarReturnType = new TypeToken<{{{returnType}}}>(){}.getType();
         return {{localVariablePrefix}}apiClient.execute({{localVariablePrefix}}call, {{localVariablePrefix}}localVarReturnType);{{/returnType}}{{^returnType}}return {{localVariablePrefix}}apiClient.execute({{localVariablePrefix}}call);{{/returnType}}
     }
@@ -134,7 +161,10 @@ public class {{classname}} {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{localVariablePrefix}}callback) throws ApiException {
+    public com.squareup.okhttp.Call {{operationId}}Async(
+            {{#collapsedParametersClassName}}{{collapsedParametersClassName}} params, {{/collapsedParametersClassName}}
+            {{^collapsedParametersClassName}}{{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}{{/collapsedParametersClassName}}
+            final ApiCallback<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{localVariablePrefix}}callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -155,7 +185,9 @@ public class {{classname}} {
             };
         }
 
-        com.squareup.okhttp.Call {{localVariablePrefix}}call = {{operationId}}Call({{#allParams}}{{paramName}}, {{/allParams}}progressListener, progressRequestListener);
+        com.squareup.okhttp.Call {{localVariablePrefix}}call = {{operationId}}Call(
+                {{#collapsedParametersClassName}}params, {{/collapsedParametersClassName}}
+                {{^collapsedParametersClassName}}{{#allParams}}{{paramName}}, {{/allParams}}{{/collapsedParametersClassName}}progressListener, progressRequestListener);
         {{#returnType}}Type {{localVariablePrefix}}localVarReturnType = new TypeToken<{{{returnType}}}>(){}.getType();
         {{localVariablePrefix}}apiClient.executeAsync({{localVariablePrefix}}call, {{localVariablePrefix}}localVarReturnType, {{localVariablePrefix}}callback);{{/returnType}}{{^returnType}}{{localVariablePrefix}}apiClient.executeAsync({{localVariablePrefix}}call, {{localVariablePrefix}}callback);{{/returnType}}
         return {{localVariablePrefix}}call;

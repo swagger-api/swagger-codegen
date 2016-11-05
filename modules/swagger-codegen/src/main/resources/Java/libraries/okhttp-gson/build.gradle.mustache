@@ -103,3 +103,21 @@ dependencies {
     {{/java8}}
     testCompile 'junit:junit:4.12'
 }
+
+{{#nexus_url}}
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "{{nexus_url}}/content/repositories/releases") {
+                authentication(userName: "{{nexus_username}}", password: "{{nexus_password}}")
+            }
+            snapshotRepository(url: "{{nexus_url}}/content/repositories/snapshots") {
+                authentication(userName: "{{nexus_username}}", password: "{{nexus_password}}")
+            }
+            pom.version = "{{artifactVersion}}"
+            pom.artifactId = "{{artifactId}}"
+            pom.groupId = "{{groupId}}"
+        }
+    }
+}
+{{/nexus_url}}

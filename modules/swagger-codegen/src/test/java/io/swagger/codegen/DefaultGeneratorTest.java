@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -219,6 +220,53 @@ public class DefaultGeneratorTest {
                 assertFalse(opIds.contains(op.operationId));
                 opIds.add(op.operationId);
             }
+        }
+    }
+
+    @Test
+    public void testGenerateMethodsWithCollapsedParameters() {
+        final File output = folder.getRoot();
+
+        final Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/wordnik-with-paramCollapseThreshold.yaml");
+        CodegenConfig codegenConfig = new JavaClientCodegen();
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+
+        if(swagger.getVendorExtensions() != null) {
+            codegenConfig.vendorExtensions().putAll(swagger.getVendorExtensions());
+        }
+        final Integer paramCollapseThreshold = (Integer)codegenConfig.vendorExtensions().get("x-paramCollapseThreshold");
+
+        assertTrue(paramCollapseThreshold > 0, paramCollapseThreshold.toString());
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        DefaultGenerator generator = new DefaultGenerator();
+        generator.opts(clientOptInput);
+
+        String tag = "Word";
+        Map<String, List<CodegenOperation>> paths = generator.processPaths(swagger.getPaths());
+        List<CodegenOperation> ops = paths.get(tag);
+        for (CodegenOperation op : ops) {
+            assertNull(op.collapsedParametersClassName);
+        }
+
+        generator.processOperations(codegenConfig, tag, ops);
+
+        List<CodegenOperation> opsWithTooManyParams = new ArrayList<>();
+        for (CodegenOperation op : ops) {
+            if (op.allParams.size() >= paramCollapseThreshold) {
+                opsWithTooManyParams.add(op);
+            }
+        }
+
+        assertTrue(opsWithTooManyParams.size() > 0);
+        for (CodegenOperation op : opsWithTooManyParams) {
+            assertNotNull(op.collapsedParametersClassName);
+        }
+
+        ops.removeAll(opsWithTooManyParams);
+        for (CodegenOperation op : ops) {
+            assertNull(op.collapsedParametersClassName);
         }
     }
 
