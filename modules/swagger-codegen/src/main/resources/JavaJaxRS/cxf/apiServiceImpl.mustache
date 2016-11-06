@@ -16,7 +16,13 @@ import org.apache.cxf.jaxrs.model.wadl.DocTarget;
 import org.apache.cxf.jaxrs.ext.multipart.*;
 
 import io.swagger.annotations.Api;
+{{#useSpringAnnotationConfig}}
+import org.springframework.stereotype.Service;
+{{/useSpringAnnotationConfig}}
 
+{{#useSpringAnnotationConfig}}
+@Service("{{classname}}")
+{{/useSpringAnnotationConfig}}
 {{#description}}
 {{/description}}
 public class {{classname}}ServiceImpl implements {{classname}} {

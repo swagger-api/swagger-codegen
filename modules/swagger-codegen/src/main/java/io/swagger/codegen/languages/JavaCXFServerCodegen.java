@@ -26,6 +26,8 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
     
     protected boolean generateSpringApplication = false;
     
+    protected boolean useSpringAnnotationConfig = false;
+
     protected boolean useSwaggerFeature = false;
     
     protected boolean useWadlFeature = false;
@@ -70,6 +72,7 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
 
         cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
         cliOptions.add(CliOption.newBoolean(GENERATE_SPRING_APPLICATION, "Generate Spring application"));
+        cliOptions.add(CliOption.newBoolean(USE_SPRING_ANNOTATION_CONFIG, "Use Spring Annotation Config"));
         
         cliOptions.add(CliOption.newBoolean(USE_SWAGGER_FEATURE, "Use Swagger Feature"));
         cliOptions.add(CliOption.newBoolean(USE_WADL_FEATURE, "Use WADL Feature"));
@@ -107,6 +110,7 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
             this.setUseMultipartFeature(convertPropertyToBooleanAndWriteBack(USE_MULTIPART_FEATURE));
             this.setUseGzipFeature(convertPropertyToBooleanAndWriteBack(USE_GZIP_FEATURE));
             this.setUseLoggingFeature(convertPropertyToBooleanAndWriteBack(USE_LOGGING_FEATURE));
+            this.setUseSpringAnnotationConfig(convertPropertyToBooleanAndWriteBack(USE_SPRING_ANNOTATION_CONFIG));
             
             boolean useBeanValidationFeature = convertPropertyToBooleanAndWriteBack(USE_BEANVALIDATION_FEATURE);
             this.setUseBeanValidationFeature(useBeanValidationFeature);
@@ -183,6 +187,9 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
         this.generateSpringApplication = generateSpringApplication;
     }
 
+    public void setUseSpringAnnotationConfig(boolean useSpringAnnotationConfig) {
+        this.useSpringAnnotationConfig = useSpringAnnotationConfig;
+    }
 
     public void setUseSwaggerFeature(boolean useSwaggerFeature) {
         this.useSwaggerFeature = useSwaggerFeature;
