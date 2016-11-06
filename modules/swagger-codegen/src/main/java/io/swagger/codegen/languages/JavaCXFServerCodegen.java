@@ -20,6 +20,8 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
 {   
     private static final Logger LOGGER = LoggerFactory.getLogger(JavaCXFServerCodegen.class);
     
+    protected boolean useJaxbAnnotations = true;
+
     protected boolean useBeanValidation = false;
     
     protected boolean generateSpringApplication = false;
@@ -64,6 +66,8 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
 
         embeddedTemplateDir = templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME + File.separator + "cxf";
 
+        cliOptions.add(CliOption.newBoolean(USE_JAXB_ANNOTATIONS, "Use JAXB annotations for XML"));
+
         cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
         cliOptions.add(CliOption.newBoolean(GENERATE_SPRING_APPLICATION, "Generate Spring application"));
         
@@ -84,6 +88,11 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
     public void processOpts()
     {
         super.processOpts();
+        
+        if (additionalProperties.containsKey(USE_JAXB_ANNOTATIONS)) {
+            boolean useJaxbAnnotationsProp = convertPropertyToBooleanAndWriteBack(USE_JAXB_ANNOTATIONS);
+            this.setUseJaxbAnnotations(useJaxbAnnotationsProp);
+        }
         
         if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
             boolean useBeanValidationProp = convertPropertyToBooleanAndWriteBack(USE_BEANVALIDATION);
@@ -204,7 +213,12 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
         this.useBeanValidationFeature = useBeanValidationFeature;
     }
     
-     public void setGenerateSpringBootApplication(boolean generateSpringBootApplication) {
+    public void setGenerateSpringBootApplication(boolean generateSpringBootApplication) {
         this.generateSpringBootApplication = generateSpringBootApplication;
     }
+
+    public void setUseJaxbAnnotations(boolean useJaxbAnnotations) {
+        this.useJaxbAnnotations = useJaxbAnnotations;
+    }
+
 }
