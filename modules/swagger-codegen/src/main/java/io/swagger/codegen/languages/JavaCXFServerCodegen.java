@@ -42,6 +42,8 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
     
     protected boolean generateSpringBootApplication= false;
     
+    protected boolean generateJbossDeploymentDescriptor = false;
+
     public JavaCXFServerCodegen()
     {
         super();
@@ -82,6 +84,8 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
         cliOptions.add(CliOption.newBoolean(USE_LOGGING_FEATURE, "Use Logging Feature"));
         
         cliOptions.add(CliOption.newBoolean(GENERATE_SPRING_BOOT_APPLICATION, "Generate Spring Boot application"));
+        cliOptions.add(
+                CliOption.newBoolean(GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR, "Generate Jboss Deployment Descriptor"));
         
         
     }
@@ -120,8 +124,13 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
             
             this.setGenerateSpringBootApplication(convertPropertyToBooleanAndWriteBack(GENERATE_SPRING_BOOT_APPLICATION));
         }
-        
        
+        if (additionalProperties.containsKey(GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR)) {
+            boolean generateJbossDeploymentDescriptorProp = convertPropertyToBooleanAndWriteBack(
+                    GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR);
+            this.setGenerateJbossDeploymentDescriptor(generateJbossDeploymentDescriptorProp);
+        }
+
         supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
         
         writeOptional(outputFolder, new SupportingFile("server/pom.mustache", "", "pom.xml"));
@@ -137,8 +146,11 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
                     ("src/main/webapp/WEB-INF"), "context.xml"));
             
             // Jboss
-            writeOptional(outputFolder, new SupportingFile("server/jboss-web.xml.mustache",
-                    ("src/main/webapp/WEB-INF"), "jboss-web.xml"));
+            if (generateJbossDeploymentDescriptor) {
+                writeOptional(outputFolder, new SupportingFile("server/jboss-web.xml.mustache",
+                        ("src/main/webapp/WEB-INF"), "jboss-web.xml"));
+
+            }
             
             // Spring Boot
             if (this.generateSpringBootApplication) {
@@ -226,6 +238,10 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
 
     public void setUseJaxbAnnotations(boolean useJaxbAnnotations) {
         this.useJaxbAnnotations = useJaxbAnnotations;
+    }
+
+    public void setGenerateJbossDeploymentDescriptor(boolean generateJbossDeploymentDescriptor) {
+        this.generateJbossDeploymentDescriptor = generateJbossDeploymentDescriptor;
     }
 
 }
