@@ -42,6 +42,10 @@ class {{classname}} {
         {{#consumes}}headerFields["Content-Type"] = "{{mediaType}}"{{/consumes}}{{#headerParams}}
         headerFields["{{baseName}}"] = {{#required}}"\({{paramName}})"{{/required}}{{^required}}{{paramName}} == nil ? "" : "\({{paramName}}!)"{{/required}}{{/headerParams}}
 
+        let queryParams = APIHelper.prepareParameters({{^queryParams}}nil{{/queryParams}}{{#queryParams}}{{^secondaryParam}}[{{/secondaryParam}}
+            "{{baseName}}": {{paramName}}{{#hasMore}},{{/hasMore}}{{^hasMore}}
+        ]{{/hasMore}}{{/queryParams}})
+
         {{#bodyParam}}
         let sentData:NSData
         if let {{^required}}{{paramName}} = {{paramName}}, {{/required}}dataString = Mapper().toJSONString({{paramName}}), encodedData = dataString.dataUsingEncoding(NSUTF8StringEncoding) {
@@ -49,13 +53,16 @@ class {{classname}} {
         } else {
             sentData = NSData()
         }
+
+        let postURLString = Alamofire.ParameterEncoding.URL.encode(
+            NSURLRequest(URL: NSURL(string: URLString)!),
+            parameters: queryParams
+        ).0
         {{/bodyParam}}
-        {{^bodyParam}}
-        let queryParams = APIHelper.prepareParameters({{^queryParams}}nil{{/queryParams}}{{#queryParams}}{{^secondaryParam}}[{{/secondaryParam}}
-            "{{baseName}}": {{paramName}}{{#hasMore}},{{/hasMore}}{{^hasMore}}
-        ]{{/hasMore}}{{/queryParams}})
         
-        Alamofire.request(Method.{{httpMethod}}, URLString, parameters: queryParams, encoding: .URL, headers: headerFields){{/bodyParam}}{{#bodyParam}}        Alamofire.upload(Method.{{httpMethod}}, URLString, headers: headerFields, data: sentData){{/bodyParam}}.response { (urlRequest, nshttpUrlResponse, data, err) in
+        {{^bodyParam}}Alamofire.request(Method.{{httpMethod}}, URLString, parameters: queryParams, encoding: .URL, headers: headerFields){{/bodyParam}}
+        {{#bodyParam}}Alamofire.upload(Method.{{httpMethod}}, postURLString, headers: headerFields, data: sentData){{/bodyParam}}
+        .response { (urlRequest, nshttpUrlResponse, data, err) in
             guard let callback = callback else {
                 return
             }
