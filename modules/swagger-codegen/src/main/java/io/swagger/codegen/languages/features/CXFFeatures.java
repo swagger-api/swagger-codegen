@@ -6,4 +6,8 @@ package io.swagger.codegen.languages.features;
  */
 public interface CXFFeatures extends LoggingFeatures, GzipFeatures, BeanValidationFeatures, BeanValidationExtendedFeatures {
 
+    public static final String USE_JAXB_ANNOTATIONS = "useJaxbAnnotations";
+
+    public void setUseJaxbAnnotations(boolean useJaxbAnnotations);
+
 }

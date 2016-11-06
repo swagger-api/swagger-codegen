@@ -28,6 +28,8 @@ public class JavaCXFClientCodegen extends AbstractJavaCodegen implements CXFFeat
      */
     protected static final String JAXRS_TEMPLATE_DIRECTORY_NAME = "JavaJaxRS";
     
+    protected boolean useJaxbAnnotations = true;
+
     protected boolean useBeanValidation = false;
     
     protected boolean useGzipFeature = false;
@@ -67,6 +69,8 @@ public class JavaCXFClientCodegen extends AbstractJavaCodegen implements CXFFeat
 
         embeddedTemplateDir = templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME + File.separator + "cxf";
 
+        cliOptions.add(CliOption.newBoolean(USE_JAXB_ANNOTATIONS, "Use JAXB annotations for XML"));
+
         cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
         
         cliOptions.add(CliOption.newBoolean(USE_GZIP_FEATURE, "Use Gzip Feature"));
@@ -82,6 +86,11 @@ public class JavaCXFClientCodegen extends AbstractJavaCodegen implements CXFFeat
     {
         super.processOpts();
         
+        if (additionalProperties.containsKey(USE_JAXB_ANNOTATIONS)) {
+            boolean useJaxbAnnotationsProp = convertPropertyToBooleanAndWriteBack(USE_JAXB_ANNOTATIONS);
+            this.setUseJaxbAnnotations(useJaxbAnnotationsProp);
+        }
+
         if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
             boolean useBeanValidationProp = convertPropertyToBooleanAndWriteBack(USE_BEANVALIDATION);
             this.setUseBeanValidation(useBeanValidationProp);
@@ -155,4 +164,8 @@ public class JavaCXFClientCodegen extends AbstractJavaCodegen implements CXFFeat
         this.useBeanValidationFeature = useBeanValidationFeature;
     }
     
+    public void setUseJaxbAnnotations(boolean useJaxbAnnotations) {
+        this.useJaxbAnnotations = useJaxbAnnotations;
+    }
+
 }
