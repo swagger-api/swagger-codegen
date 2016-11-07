@@ -20,7 +20,7 @@ object {{classname}} {
   /**
    * Creates the codec for converting {{classname}} from and to JSON.
    */
-  implicit val {{classname}}Codec: CodecJson[{{classname}}] = casecodec2({{classname}}.apply, {{classname}}.unapply)({{#vars}}"{{baseName}}"{{^-last}}, {{/-last}}{{/vars}})
+  implicit val {{classname}}Codec: CodecJson[{{classname}}] = casecodec{{#vendorExtensions.x-varcount}}{{vendorExtensions.x-varcount}}{{/vendorExtensions.x-varcount}}({{classname}}.apply, {{classname}}.unapply)({{#vars}}"{{baseName}}"{{^-last}}, {{/-last}}{{/vars}})
 }
 {{/model}}
 {{/models}}

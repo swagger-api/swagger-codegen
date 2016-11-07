@@ -1,13 +1,8 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenParameter;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.DefaultCodegen;
-import io.swagger.codegen.SupportingFile;
+import com.google.common.base.Strings;
+import io.swagger.codegen.*;
+import io.swagger.models.Model;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
@@ -93,17 +88,16 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
             setPackageName((String) additionalProperties.get(CodegenConstants.PACKAGE_NAME));
         } else {
             additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
-        };
+        }
 
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("build.sbt", "", "build.sbt"));
-        //supportingFiles.add(new SupportingFile("web.xml", "/src/main/webapp/WEB-INF", "web.xml"));
-        //supportingFiles.add(new SupportingFile("JettyMain.mustache", sourceFolder, "JettyMain.scala"));
-        //supportingFiles.add(new SupportingFile("Bootstrap.mustache", sourceFolder, "FinchBootstrap.scala"));
-        //supportingFiles.add(new SupportingFile("ServletApp.mustache", sourceFolder, "ServletApp.scala"));
-        //supportingFiles.add(new SupportingFile("project/build.properties", "project", "build.properties"));
-        //supportingFiles.add(new SupportingFile("project/plugins.sbt", "project", "plugins.sbt"));
-        //supportingFiles.add(new SupportingFile("sbt", "", "sbt"));
+        supportingFiles.add(new SupportingFile("Server.mustache", sourceFolder, "Server.scala"));
+        supportingFiles.add(new SupportingFile("DataAccessor.mustache", sourceFolder, "DataAccessor.scala"));
+
+        supportingFiles.add(new SupportingFile("project/build.properties", "project", "build.properties"));
+        supportingFiles.add(new SupportingFile("project/plugins.sbt", "project", "plugins.sbt"));
+        supportingFiles.add(new SupportingFile("sbt", "", "sbt"));
 
         supportingFiles.add(new SupportingFile("endpoint.mustache", sourceFolder, "endpoint.scala"));
         supportingFiles.add(new SupportingFile("errors.mustache", sourceFolder, "errors.scala"));
@@ -172,6 +166,23 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
     @Override
     public String modelFileFolder() {
         return outputFolder + "/" + sourceFolder + "/" + modelPackage().replace('.', File.separatorChar);
+    }
+
+    /**
+     * Convert Swagger Model object to Codegen Model object
+     *
+     * @param name           the name of the model
+     * @param model          Swagger Model object
+     * @param allDefinitions a map of all Swagger models from the spec
+     * @return Codegen Model object
+     */
+    @Override
+    public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
+        CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
+
+        codegenModel.vendorExtensions.put("x-varcount", codegenModel.vars.size());
+
+        return codegenModel;
     }
 
     @Override

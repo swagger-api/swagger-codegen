@@ -5,6 +5,7 @@ import com.twitter.finagle.Service
 import com.twitter.finagle.http.{Request, Response}
 import com.twitter.finagle.http.exp.Multipart.FileUpload
 import com.twitter.util.Future
+import argonaut.Argonaut._
 import io.finch._, items._
 import io.finch.argonaut._
 
@@ -35,38 +36,21 @@ object endpoint {
     )
   }
 
-
-
-{{#apiInfo}}
-{{#apis}}
   /**
-   * Private method that compiles all service endpoints.
-   * @return Bundled compilation of all service endpoints.
-   */
-  private def pets(db: PetstoreDb) =
-    {{#operations}}
-    {{#operation}}
-    {{{operationId}}}(db){{^-last}} :+:{{/-last}}
-    {{/operation}}
+  * Compiles together all the endpoints relating to public service methods.
+  *
+  * @return A service that contains all provided endpoints of the API.
+  */
+  def makeService(da: DataAccessor): Service[Request, Response] = (
+  {{#apiInfo}}
+      {{#apis}}
+          {{classname}}.endpoints(da) {{^-last}} :+:{{/-last}}
+      {{/apis}}
+  {{/apiInfo}}
+  ).handle({
+      case e: PetstoreError => NotFound(e)
+  }).toService
 
-    {{#operation}}
-  /**
-   * {{{description}}}
-   * @return A Router that contains a RequestReader of a sequence of the usernames of the Users added.
-   */
-  def {{operationId}}(db: PetstoreDb): Endpoint[] =
-    post( {{{vendorExtensions.x-scala-path}}} {{#allParams}}{{^isPathParam}}{{{dataType}}}{{^-last}} ? {{/-last}}{{/isPathParam}}{{/allParams}}) { {{#hasParams}}({{#allParams}}{{paramName}}: {{{dataType}}}{{^-last}}, {{/-last}}{{/allParams}}) => {{/hasParams}}
-      {{#returnType}}
-      Ok(db.{{operationId}}({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}))
-      {{/returnType}}
-      {{^returnType}}
-      NoContent(db.{{operationId}}({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}))
-      {{/returnType}}
-    }
 
-    {{/operation}}
-    {{/operations}}
 
-{{/apis}}
-{{/apiInfo}}
-
+}

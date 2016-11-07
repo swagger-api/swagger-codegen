@@ -1,13 +1,18 @@
 package {{packageName}}
 
 import com.twitter.finagle.Http
+import com.twitter.finagle.util.LoadService
 import com.twitter.util.{Await, Future}
 
 {{#imports}}import {{import}}
 {{/imports}}
 
-class PetstoreApp {
-  val db = new PetstoreDb()
+class Server {
+  // Loads implementation defined in resources/META-INF/services/{{packageName}}.DataAccessor
+  val db = LoadService[DataAccessor]() match {
+    case accessor :: _ => accessor
+    case _ => new DataAccessor { }
+  }
 
   val service = endpoint.makeService(db)
 
@@ -23,6 +28,6 @@ class PetstoreApp {
 /**
  * Launches the PetstoreAPI service when the system is ready.
  */
-object PetstoreApp extends PetstoreApp with App {
+object Server extends Server with App {
   Await.ready(server)
 }
