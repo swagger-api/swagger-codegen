@@ -6,6 +6,7 @@ package {{package}};
 {{/imports}}
 import org.junit.Test;
 import org.junit.Before;
+import static org.junit.Assert.*;
 
 import javax.ws.rs.core.Response;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
@@ -73,7 +74,7 @@ public class {{classname}}Test {
         org.apache.cxf.jaxrs.client.Client client = WebClient.client(api);
         
         ClientConfiguration config = WebClient.getConfig(client); 
-{{#useGzipFeature}}        
+{{#useGzipFeatureForTests}}        
         // Example for using Gzipping
         GZIPOutInterceptor gzipOutInterceptor = new GZIPOutInterceptor();
         // use Gzipping for first request sent to server
@@ -81,11 +82,11 @@ public class {{classname}}Test {
         config.getOutInterceptors().add(gzipOutInterceptor);
         
         config.getInInterceptors().add(new GZIPInInterceptor()); 
-{{/useGzipFeature}}
-{{#useLoggingFeature}}
+{{/useGzipFeatureForTests}}
+{{#useLoggingFeatureForTests}}
         LoggingOutInterceptor loggingOutInterceptor = new LoggingOutInterceptor();
         config.getOutInterceptors().add(loggingOutInterceptor);
-{{/useLoggingFeature}}
+{{/useLoggingFeatureForTests}}
     }
 
     {{#operations}}{{#operation}}
@@ -102,8 +103,8 @@ public class {{classname}}Test {
         {{#allParams}}
         {{{dataType}}} {{paramName}} = null;
         {{/allParams}}
-        // {{#returnType}}{{{returnType}}} response = {{/returnType}}api.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
-
+        {{^vendorExtensions.x-java-is-response-void}}{{{returnType}}} response = {{/vendorExtensions.x-java-is-response-void}}api.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        {{^vendorExtensions.x-java-is-response-void}}assertNotNull(response);{{/vendorExtensions.x-java-is-response-void}}
         // TODO: test validations
     }
     {{/operation}}{{/operations}}

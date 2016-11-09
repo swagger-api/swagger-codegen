@@ -14,30 +14,44 @@ import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.SupportingFile;
 import io.swagger.codegen.languages.features.CXFServerFeatures;
+import io.swagger.codegen.languages.features.GzipTestFeatures;
+import io.swagger.codegen.languages.features.JaxbFeatures;
+import io.swagger.codegen.languages.features.LoggingTestFeatures;
 import io.swagger.models.Operation;
 
-public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen implements CXFServerFeatures
+public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
+        implements CXFServerFeatures, GzipTestFeatures, LoggingTestFeatures, JaxbFeatures
 {   
     private static final Logger LOGGER = LoggerFactory.getLogger(JavaCXFServerCodegen.class);
     
+    protected boolean useJaxbAnnotations = true;
+
     protected boolean useBeanValidation = false;
     
     protected boolean generateSpringApplication = false;
     
+    protected boolean useSpringAnnotationConfig = false;
+
     protected boolean useSwaggerFeature = false;
     
     protected boolean useWadlFeature = false;
     
     protected boolean useMultipartFeature = false;
     
-    protected boolean useGzipFeature = false;
-    
-    protected boolean useLoggingFeature = false;
-    
     protected boolean useBeanValidationFeature = false;
     
     protected boolean generateSpringBootApplication= false;
     
+    protected boolean generateJbossDeploymentDescriptor = false;
+
+    protected boolean useGzipFeature = false;
+
+    protected boolean useGzipFeatureForTests = false;
+
+    protected boolean useLoggingFeature = false;
+
+    protected boolean useLoggingFeatureForTests = false;
+
     public JavaCXFServerCodegen()
     {
         super();
@@ -64,17 +78,26 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
 
         embeddedTemplateDir = templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME + File.separator + "cxf";
 
+        cliOptions.add(CliOption.newBoolean(USE_JAXB_ANNOTATIONS, "Use JAXB annotations for XML"));
+
         cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
         cliOptions.add(CliOption.newBoolean(GENERATE_SPRING_APPLICATION, "Generate Spring application"));
+        cliOptions.add(CliOption.newBoolean(USE_SPRING_ANNOTATION_CONFIG, "Use Spring Annotation Config"));
         
         cliOptions.add(CliOption.newBoolean(USE_SWAGGER_FEATURE, "Use Swagger Feature"));
         cliOptions.add(CliOption.newBoolean(USE_WADL_FEATURE, "Use WADL Feature"));
         cliOptions.add(CliOption.newBoolean(USE_MULTIPART_FEATURE, "Use Multipart Feature"));
+
         cliOptions.add(CliOption.newBoolean(USE_GZIP_FEATURE, "Use Gzip Feature"));
+        cliOptions.add(CliOption.newBoolean(USE_GZIP_FEATURE_FOR_TESTS, "Use Gzip Feature for tests"));
+
         cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION_FEATURE, "Use BeanValidation Feature"));
         cliOptions.add(CliOption.newBoolean(USE_LOGGING_FEATURE, "Use Logging Feature"));
+        cliOptions.add(CliOption.newBoolean(USE_LOGGING_FEATURE_FOR_TESTS, "Use Logging Feature for tests"));
         
         cliOptions.add(CliOption.newBoolean(GENERATE_SPRING_BOOT_APPLICATION, "Generate Spring Boot application"));
+        cliOptions.add(
+                CliOption.newBoolean(GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR, "Generate Jboss Deployment Descriptor"));
         
         
     }
@@ -84,6 +107,11 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
     public void processOpts()
     {
         super.processOpts();
+        
+        if (additionalProperties.containsKey(USE_JAXB_ANNOTATIONS)) {
+            boolean useJaxbAnnotationsProp = convertPropertyToBooleanAndWriteBack(USE_JAXB_ANNOTATIONS);
+            this.setUseJaxbAnnotations(useJaxbAnnotationsProp);
+        }
         
         if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
             boolean useBeanValidationProp = convertPropertyToBooleanAndWriteBack(USE_BEANVALIDATION);
@@ -97,7 +125,10 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
             this.setUseWadlFeature(convertPropertyToBooleanAndWriteBack(USE_WADL_FEATURE));
             this.setUseMultipartFeature(convertPropertyToBooleanAndWriteBack(USE_MULTIPART_FEATURE));
             this.setUseGzipFeature(convertPropertyToBooleanAndWriteBack(USE_GZIP_FEATURE));
+            this.setUseGzipFeatureForTests(convertPropertyToBooleanAndWriteBack(USE_GZIP_FEATURE_FOR_TESTS));
             this.setUseLoggingFeature(convertPropertyToBooleanAndWriteBack(USE_LOGGING_FEATURE));
+            this.setUseLoggingFeatureForTests(convertPropertyToBooleanAndWriteBack(USE_LOGGING_FEATURE_FOR_TESTS));
+            this.setUseSpringAnnotationConfig(convertPropertyToBooleanAndWriteBack(USE_SPRING_ANNOTATION_CONFIG));
             
             boolean useBeanValidationFeature = convertPropertyToBooleanAndWriteBack(USE_BEANVALIDATION_FEATURE);
             this.setUseBeanValidationFeature(useBeanValidationFeature);
@@ -107,8 +138,13 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
             
             this.setGenerateSpringBootApplication(convertPropertyToBooleanAndWriteBack(GENERATE_SPRING_BOOT_APPLICATION));
         }
-        
        
+        if (additionalProperties.containsKey(GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR)) {
+            boolean generateJbossDeploymentDescriptorProp = convertPropertyToBooleanAndWriteBack(
+                    GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR);
+            this.setGenerateJbossDeploymentDescriptor(generateJbossDeploymentDescriptorProp);
+        }
+
         supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
         
         writeOptional(outputFolder, new SupportingFile("server/pom.mustache", "", "pom.xml"));
@@ -124,8 +160,11 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
                     ("src/main/webapp/WEB-INF"), "context.xml"));
             
             // Jboss
-            writeOptional(outputFolder, new SupportingFile("server/jboss-web.xml.mustache",
-                    ("src/main/webapp/WEB-INF"), "jboss-web.xml"));
+            if (generateJbossDeploymentDescriptor) {
+                writeOptional(outputFolder, new SupportingFile("server/jboss-web.xml.mustache",
+                        ("src/main/webapp/WEB-INF"), "jboss-web.xml"));
+
+            }
             
             // Spring Boot
             if (this.generateSpringBootApplication) {
@@ -174,6 +213,9 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
         this.generateSpringApplication = generateSpringApplication;
     }
 
+    public void setUseSpringAnnotationConfig(boolean useSpringAnnotationConfig) {
+        this.useSpringAnnotationConfig = useSpringAnnotationConfig;
+    }
 
     public void setUseSwaggerFeature(boolean useSwaggerFeature) {
         this.useSwaggerFeature = useSwaggerFeature;
@@ -204,7 +246,24 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen impleme
         this.useBeanValidationFeature = useBeanValidationFeature;
     }
     
-     public void setGenerateSpringBootApplication(boolean generateSpringBootApplication) {
+    public void setGenerateSpringBootApplication(boolean generateSpringBootApplication) {
         this.generateSpringBootApplication = generateSpringBootApplication;
     }
+
+    public void setUseJaxbAnnotations(boolean useJaxbAnnotations) {
+        this.useJaxbAnnotations = useJaxbAnnotations;
+    }
+
+    public void setGenerateJbossDeploymentDescriptor(boolean generateJbossDeploymentDescriptor) {
+        this.generateJbossDeploymentDescriptor = generateJbossDeploymentDescriptor;
+    }
+
+    public void setUseGzipFeatureForTests(boolean useGzipFeatureForTests) {
+        this.useGzipFeatureForTests = useGzipFeatureForTests;
+    }
+
+    public void setUseLoggingFeatureForTests(boolean useLoggingFeatureForTests) {
+        this.useLoggingFeatureForTests = useLoggingFeatureForTests;
+    }
+
 }
