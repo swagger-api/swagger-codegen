@@ -6,6 +6,7 @@ package {{package}};
 {{/imports}}
 import org.junit.Test;
 import org.junit.Before;
+import static org.junit.Assert.*;
 
 import javax.ws.rs.core.Response;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
@@ -102,8 +103,8 @@ public class {{classname}}Test {
         {{#allParams}}
         {{{dataType}}} {{paramName}} = null;
         {{/allParams}}
-        // {{#returnType}}{{{returnType}}} response = {{/returnType}}api.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
-
+        {{^vendorExtensions.x-java-is-response-void}}{{{returnType}}} response = {{/vendorExtensions.x-java-is-response-void}}api.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        {{^vendorExtensions.x-java-is-response-void}}assertNotNull(response);{{/vendorExtensions.x-java-is-response-void}}
         // TODO: test validations
     }
     {{/operation}}{{/operations}}
