@@ -28,36 +28,40 @@ public class JavaResteasyServerOptionsTest extends AbstractOptionsTest {
 
     @Override
     protected void setExpectations() {
-        new Expectations(clientCodegen) {{
-            clientCodegen.setModelPackage(JavaResteasyServerOptionsProvider.MODEL_PACKAGE_VALUE);
-            times = 1;
-            clientCodegen.setApiPackage(JavaResteasyServerOptionsProvider.API_PACKAGE_VALUE);
-            times = 1;
-            clientCodegen.setSortParamsByRequiredFlag(Boolean.valueOf(JavaResteasyServerOptionsProvider.SORT_PARAMS_VALUE));
-            times = 1;
-            clientCodegen.setInvokerPackage(JavaResteasyServerOptionsProvider.INVOKER_PACKAGE_VALUE);
-            times = 1;
-            clientCodegen.setGroupId(JavaResteasyServerOptionsProvider.GROUP_ID_VALUE);
-            times = 1;
-            clientCodegen.setArtifactId(JavaResteasyServerOptionsProvider.ARTIFACT_ID_VALUE);
-            times = 1;
-            clientCodegen.setArtifactVersion(JavaResteasyServerOptionsProvider.ARTIFACT_VERSION_VALUE);
-            times = 1;
-            clientCodegen.setSourceFolder(JavaResteasyServerOptionsProvider.SOURCE_FOLDER_VALUE);
-            times = 1;
-            clientCodegen.setLocalVariablePrefix(JavaResteasyServerOptionsProvider.LOCAL_PREFIX_VALUE);
-            times = 1;
-            clientCodegen.setSerializableModel(Boolean.valueOf(JavaResteasyServerOptionsProvider.SERIALIZABLE_MODEL_VALUE));
-            times = 1;
-            clientCodegen.setFullJavaUtil(Boolean.valueOf(JavaResteasyServerOptionsProvider.FULL_JAVA_UTIL_VALUE));
-            times = 1;
-            clientCodegen.setSerializeBigDecimalAsString(true);
-            times = 1;
-            
-            clientCodegen.setGenerateJbossDeploymentDescriptor(
-                    Boolean.valueOf(JavaResteasyServerOptionsProvider.GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR));
-            times = 1;
-            
-        }};
+        new Expectations(clientCodegen) {
+            {
+                clientCodegen.setModelPackage(JavaResteasyServerOptionsProvider.MODEL_PACKAGE_VALUE);
+                times = 1;
+                clientCodegen.setApiPackage(JavaResteasyServerOptionsProvider.API_PACKAGE_VALUE);
+                times = 1;
+                clientCodegen.setSortParamsByRequiredFlag(
+                        Boolean.valueOf(JavaResteasyServerOptionsProvider.SORT_PARAMS_VALUE));
+                times = 1;
+                clientCodegen.setInvokerPackage(JavaResteasyServerOptionsProvider.INVOKER_PACKAGE_VALUE);
+                times = 1;
+                clientCodegen.setGroupId(JavaResteasyServerOptionsProvider.GROUP_ID_VALUE);
+                times = 1;
+                clientCodegen.setArtifactId(JavaResteasyServerOptionsProvider.ARTIFACT_ID_VALUE);
+                times = 1;
+                clientCodegen.setArtifactVersion(JavaResteasyServerOptionsProvider.ARTIFACT_VERSION_VALUE);
+                times = 1;
+                clientCodegen.setSourceFolder(JavaResteasyServerOptionsProvider.SOURCE_FOLDER_VALUE);
+                times = 1;
+                clientCodegen.setLocalVariablePrefix(JavaResteasyServerOptionsProvider.LOCAL_PREFIX_VALUE);
+                times = 1;
+                clientCodegen.setSerializableModel(
+                        Boolean.valueOf(JavaResteasyServerOptionsProvider.SERIALIZABLE_MODEL_VALUE));
+                times = 1;
+                clientCodegen.setFullJavaUtil(Boolean.valueOf(JavaResteasyServerOptionsProvider.FULL_JAVA_UTIL_VALUE));
+                times = 1;
+                clientCodegen.setSerializeBigDecimalAsString(true);
+                times = 1;
+
+                clientCodegen.setGenerateJbossDeploymentDescriptor(
+                        Boolean.valueOf(JavaResteasyServerOptionsProvider.GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR));
+                times = 1;
+
+            }
+        };
     }
 }
