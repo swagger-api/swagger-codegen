@@ -73,7 +73,7 @@ public class {{classname}}Test {
         org.apache.cxf.jaxrs.client.Client client = WebClient.client(api);
         
         ClientConfiguration config = WebClient.getConfig(client); 
-{{#useGzipFeature}}        
+{{#useGzipFeatureForTests}}        
         // Example for using Gzipping
         GZIPOutInterceptor gzipOutInterceptor = new GZIPOutInterceptor();
         // use Gzipping for first request sent to server
@@ -81,11 +81,11 @@ public class {{classname}}Test {
         config.getOutInterceptors().add(gzipOutInterceptor);
         
         config.getInInterceptors().add(new GZIPInInterceptor()); 
-{{/useGzipFeature}}
-{{#useLoggingFeature}}
+{{/useGzipFeatureForTests}}
+{{#useLoggingFeatureForTests}}
         LoggingOutInterceptor loggingOutInterceptor = new LoggingOutInterceptor();
         config.getOutInterceptors().add(loggingOutInterceptor);
-{{/useLoggingFeature}}
+{{/useLoggingFeatureForTests}}
     }
 
     {{#operations}}{{#operation}}

@@ -70,7 +70,12 @@ public class JaxrsCXFServerOptionsTest extends AbstractOptionsTest {
                 times = 1;
                 clientCodegen.setUseGzipFeature(Boolean.valueOf(JavaCXFServerOptionsProvider.USE_GZIP_FEATURE));
                 times = 1;
+                clientCodegen.setUseGzipFeatureForTests(Boolean.valueOf(JavaCXFServerOptionsProvider.USE_GZIP_FEATURE));
+                times = 1;
                 clientCodegen.setUseLoggingFeature(Boolean.valueOf(JavaCXFServerOptionsProvider.USE_LOGGING_FEATURE));
+                times = 1;
+                clientCodegen.setUseLoggingFeatureForTests(
+                        Boolean.valueOf(JavaCXFServerOptionsProvider.USE_LOGGING_FEATURE_FOR_TESTS));
                 times = 1;
                 clientCodegen.setUseBeanValidationFeature(
                         Boolean.valueOf(JavaCXFServerOptionsProvider.USE_BEANVALIDATION_FEATURE));
