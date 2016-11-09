@@ -14,11 +14,14 @@ import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.SupportingFile;
-import io.swagger.codegen.languages.features.CXFFeatures;
-import io.swagger.codegen.languages.features.LoggingFeatures;
+import io.swagger.codegen.languages.features.BeanValidationFeatures;
+import io.swagger.codegen.languages.features.GzipTestFeatures;
+import io.swagger.codegen.languages.features.JaxbFeatures;
+import io.swagger.codegen.languages.features.LoggingTestFeatures;
 import io.swagger.models.Operation;
 
-public class JavaCXFClientCodegen extends AbstractJavaCodegen implements CXFFeatures 
+public class JavaCXFClientCodegen extends AbstractJavaCodegen
+        implements BeanValidationFeatures, JaxbFeatures, GzipTestFeatures, LoggingTestFeatures 
 {   
     private static final Logger LOGGER = LoggerFactory.getLogger(JavaCXFClientCodegen.class);
     
@@ -32,12 +35,9 @@ public class JavaCXFClientCodegen extends AbstractJavaCodegen implements CXFFeat
 
     protected boolean useBeanValidation = false;
     
-    protected boolean useGzipFeature = false;
+    protected boolean useGzipFeatureForTests = false;
     
-    protected boolean useLoggingFeature = false;
-    
-    protected boolean useBeanValidationFeature = false;
-    
+    protected boolean useLoggingFeatureForTests = false;
     
     public JavaCXFClientCodegen()
     {
@@ -73,9 +73,8 @@ public class JavaCXFClientCodegen extends AbstractJavaCodegen implements CXFFeat
 
         cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
         
-        cliOptions.add(CliOption.newBoolean(USE_GZIP_FEATURE, "Use Gzip Feature"));
-        cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION_FEATURE, "Use BeanValidation Feature"));
-        cliOptions.add(CliOption.newBoolean(USE_LOGGING_FEATURE, "Use Logging Feature"));
+        cliOptions.add(CliOption.newBoolean(USE_GZIP_FEATURE_FOR_TESTS, "Use Gzip Feature for tests"));
+        cliOptions.add(CliOption.newBoolean(USE_LOGGING_FEATURE_FOR_TESTS, "Use Logging Feature for tests"));
         
         
     }
@@ -96,14 +95,9 @@ public class JavaCXFClientCodegen extends AbstractJavaCodegen implements CXFFeat
             this.setUseBeanValidation(useBeanValidationProp);
         }
         
-        this.setUseGzipFeature(convertPropertyToBooleanAndWriteBack(USE_GZIP_FEATURE));
-        this.setUseLoggingFeature(convertPropertyToBooleanAndWriteBack(USE_LOGGING_FEATURE));
+        this.setUseGzipFeatureForTests(convertPropertyToBooleanAndWriteBack(USE_GZIP_FEATURE_FOR_TESTS));
+        this.setUseLoggingFeatureForTests(convertPropertyToBooleanAndWriteBack(USE_LOGGING_FEATURE_FOR_TESTS));
             
-        boolean useBeanValidationFeature = convertPropertyToBooleanAndWriteBack(USE_BEANVALIDATION_FEATURE);
-            this.setUseBeanValidationFeature(useBeanValidationFeature);
-            if (useBeanValidationFeature) {
-                LOGGER.info("make sure your client supports Bean Validation 1.1");
-            }
        
         supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
         
@@ -150,22 +144,16 @@ public class JavaCXFClientCodegen extends AbstractJavaCodegen implements CXFFeat
     }
     
 
-    public void setUseGzipFeature(boolean useGzipFeature) {
-        this.useGzipFeature = useGzipFeature;
-    }
-
-
-    public void setUseLoggingFeature(boolean useLoggingFeature) {
-        this.useLoggingFeature = useLoggingFeature;
-    }
-
-
-    public void setUseBeanValidationFeature(boolean useBeanValidationFeature) {
-        this.useBeanValidationFeature = useBeanValidationFeature;
-    }
-    
     public void setUseJaxbAnnotations(boolean useJaxbAnnotations) {
         this.useJaxbAnnotations = useJaxbAnnotations;
+    }
+
+    public void setUseGzipFeatureForTests(boolean useGzipFeatureForTests) {
+        this.useGzipFeatureForTests = useGzipFeatureForTests;
+    }
+
+    public void setUseLoggingFeatureForTests(boolean useLoggingFeatureForTests) {
+        this.useLoggingFeatureForTests = useLoggingFeatureForTests;
     }
 
 }

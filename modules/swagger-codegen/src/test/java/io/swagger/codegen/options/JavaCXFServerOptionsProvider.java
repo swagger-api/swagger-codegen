@@ -21,8 +21,12 @@ public class JavaCXFServerOptionsProvider extends JavaOptionsProvider {
     
     public static final String USE_GZIP_FEATURE = "true";
     
+    public static final String USE_GZIP_FEATURE_FOR_TESTS = "true";
+
     public static final String USE_LOGGING_FEATURE = "true";
     
+    public static final String USE_LOGGING_FEATURE_FOR_TESTS = "true";
+
     public static final String USE_BEANVALIDATION_FEATURE = "true";
     
     public static final String USE_SPRING_ANNOTATION_CONFIG = "true";
@@ -64,7 +68,9 @@ public class JavaCXFServerOptionsProvider extends JavaOptionsProvider {
         builder.put(JavaCXFServerCodegen.USE_WADL_FEATURE, USE_WADL_FEATURE);
         builder.put(JavaCXFServerCodegen.USE_MULTIPART_FEATURE, USE_MULTIPART_FEATURE);
         builder.put(JavaCXFServerCodegen.USE_GZIP_FEATURE, USE_GZIP_FEATURE);
+        builder.put(JavaCXFServerCodegen.USE_GZIP_FEATURE_FOR_TESTS, USE_GZIP_FEATURE_FOR_TESTS);
         builder.put(JavaCXFServerCodegen.USE_LOGGING_FEATURE, USE_LOGGING_FEATURE);
+        builder.put(JavaCXFServerCodegen.USE_LOGGING_FEATURE_FOR_TESTS, USE_LOGGING_FEATURE_FOR_TESTS);
         builder.put(JavaCXFServerCodegen.USE_BEANVALIDATION_FEATURE, USE_BEANVALIDATION_FEATURE);
         
         builder.put(JavaCXFServerCodegen.GENERATE_SPRING_BOOT_APPLICATION, GENERATE_SPRING_BOOT_APPLICATION);
