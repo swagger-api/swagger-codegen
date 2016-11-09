@@ -9,30 +9,40 @@ import java.util.List;
 import java.util.Map;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-
+import javax.ws.rs.core.MediaType;
 import org.apache.cxf.jaxrs.ext.multipart.*;
 
-@Path("/v2")
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Path("/")
+@Api(value = "/", description = "")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public interface StoreApi  {
+
     @DELETE
     @Path("/store/order/{orderId}")
-    
     @Produces({ "application/xml", "application/json" })
-    Response deleteOrder(@PathParam("orderId") String orderId);
+    @ApiOperation(value = "Delete purchase order by ID", tags={ "store",  })
+    public void  deleteOrder(@PathParam("orderId") String orderId);
+
     @GET
     @Path("/store/inventory")
-    
     @Produces({ "application/json" })
-    Response getInventory();
+    @ApiOperation(value = "Returns pet inventories by status", tags={ "store",  })
+    public Integer  getInventory();
+
     @GET
     @Path("/store/order/{orderId}")
-    
     @Produces({ "application/xml", "application/json" })
-    Response getOrderById(@PathParam("orderId") Long orderId);
+    @ApiOperation(value = "Find purchase order by ID", tags={ "store",  })
+    public Order  getOrderById(@PathParam("orderId") Long orderId);
+
     @POST
     @Path("/store/order")
-    
     @Produces({ "application/xml", "application/json" })
-    Response placeOrder(Order body);
+    @ApiOperation(value = "Place an order for a pet", tags={ "store" })
+    public Order  placeOrder(Order body);
 }
 
