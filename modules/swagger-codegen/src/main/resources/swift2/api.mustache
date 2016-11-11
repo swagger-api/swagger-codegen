@@ -11,8 +11,9 @@ import AlamofireObjectMapper
 
 {{#description}}
 /** {{description}} */{{/description}}
-class {{classname}} {
+public class {{classname}} {
     public static var alternativeHost:String? = nil
+    public static var useLocalHost:Bool = false
 {{#operation}}
 
     enum {{operationId}}Response {
@@ -32,7 +33,10 @@ class {{classname}} {
         {{^pathParams}}let{{/pathParams}}{{#pathParams}}{{^secondaryParam}}var{{/secondaryParam}}{{/pathParams}} path = "{{path}}"{{#pathParams}}
         path = path.stringByReplacingOccurrencesOfString("{{=<% %>=}}{<%paramName%>}<%={{ }}=%>", withString: "\({{paramName}})", options: .LiteralSearch, range: nil){{/pathParams}}
         let URLString:String
-        if let alternativeHost = {{classname}}.alternativeHost {
+
+        if {{classname}}.useLocalHost {
+            URLString = "{{termsOfService}}\(path)"
+        } else if let alternativeHost = {{classname}}.alternativeHost {
             URLString = alternativeHost + "{{basePathWithoutHost}}" + path
         } else {
             URLString = "{{basePath}}" + path
