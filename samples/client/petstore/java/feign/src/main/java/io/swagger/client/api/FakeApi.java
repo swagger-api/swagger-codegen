@@ -4,8 +4,8 @@ import io.swagger.client.ApiClient;
 
 import io.swagger.client.model.Client;
 import org.joda.time.LocalDate;
-import java.math.BigDecimal;
 import org.joda.time.DateTime;
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,8 +71,8 @@ public interface FakeApi extends ApiClient.Api {
    */
   @RequestLine("GET /fake?enum_query_string_array={enumQueryStringArray}&enum_query_string={enumQueryString}&enum_query_integer={enumQueryInteger}")
   @Headers({
-    "Content-Type: application/json",
-    "Accept: application/json",
+    "Content-Type: */*",
+    "Accept: */*",
     "enum_header_string_array: {enumHeaderStringArray}",
     
     "enum_header_string: {enumHeaderString}"

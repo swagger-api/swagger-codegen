@@ -10,14 +10,13 @@ import io.swagger.models.parameters.Parameter;
 import io.swagger.util.Json;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.*;
-
-import org.apache.commons.lang3.StringUtils;
 
 public class DefaultGenerator extends AbstractGenerator implements Generator {
     protected Logger LOGGER = LoggerFactory.getLogger(DefaultGenerator.class);
@@ -630,19 +629,6 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 }
                 files.add(ignoreFile);
             }
-
-            // Add default LICENSE (Apache-2.0) for all generators
-            final String apache2License = "LICENSE";
-            String licenseFileNameTarget = config.outputFolder() + File.separator + apache2License;
-            File licenseFile = new File(licenseFileNameTarget);
-            String licenseFileNameSource = File.separator + config.getCommonTemplateDir() + File.separator + apache2License;
-            String licenseFileContents = readResourceContents(licenseFileNameSource);
-            try {
-                writeToFile(licenseFileNameTarget, licenseFileContents);
-            } catch (IOException e) {
-                throw new RuntimeException("Could not generate LICENSE file '" + apache2License + "'", e);
-            }
-            files.add(licenseFile);
         }
         config.processSwagger(swagger);
         return files;

@@ -25,6 +25,9 @@ public interface PetApi {
    * @return Call&lt;Void&gt;
    */
   
+  @Headers({
+  	"Content-Type:application/json" 
+  })
   @POST("pet")
   Observable<Void> addPet(
     @retrofit2.http.Body Pet body
@@ -86,6 +89,9 @@ public interface PetApi {
    * @return Call&lt;Void&gt;
    */
   
+  @Headers({
+  	"Content-Type:application/json" 
+  })
   @PUT("pet")
   Observable<Void> updatePet(
     @retrofit2.http.Body Pet body
