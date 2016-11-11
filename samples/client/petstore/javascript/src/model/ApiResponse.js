@@ -41,7 +41,6 @@
 
 
 
-
   /**
    * The ApiResponse model module.
    * @module model/ApiResponse
@@ -70,7 +69,9 @@
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
-      obj = obj || new exports();
+      if (!obj) {
+        obj = new exports();
+      }
 
       if (data.hasOwnProperty('code')) {
         obj['code'] = ApiClient.convertToType(data['code'], 'Number');

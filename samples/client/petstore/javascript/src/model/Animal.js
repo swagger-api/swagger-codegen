@@ -41,7 +41,6 @@
 
 
 
-
   /**
    * The Animal model module.
    * @module model/Animal
@@ -70,7 +69,13 @@
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
-      obj = obj || new exports();
+      if (!obj) {
+        if(data['className'].toUpperCase() == 'Cat'.toUpperCase())
+          obj = SwaggerPetstore.Cat.constructFromObject(data, obj);
+        if(data['className'].toUpperCase() == 'Dog'.toUpperCase())
+          obj = SwaggerPetstore.Dog.constructFromObject(data, obj);
+        return obj;
+      }
 
       if (data.hasOwnProperty('className')) {
         obj['className'] = ApiClient.convertToType(data['className'], 'String');

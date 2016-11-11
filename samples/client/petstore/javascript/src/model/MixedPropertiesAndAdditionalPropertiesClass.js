@@ -41,7 +41,6 @@
 
 
 
-
   /**
    * The MixedPropertiesAndAdditionalPropertiesClass model module.
    * @module model/MixedPropertiesAndAdditionalPropertiesClass
@@ -70,7 +69,9 @@
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
-      obj = obj || new exports();
+      if (!obj) {
+        obj = new exports();
+      }
 
       if (data.hasOwnProperty('uuid')) {
         obj['uuid'] = ApiClient.convertToType(data['uuid'], 'String');

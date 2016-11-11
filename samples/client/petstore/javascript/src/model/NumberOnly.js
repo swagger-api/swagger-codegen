@@ -41,7 +41,6 @@
 
 
 
-
   /**
    * The NumberOnly model module.
    * @module model/NumberOnly
@@ -68,7 +67,9 @@
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
-      obj = obj || new exports();
+      if (!obj) {
+        obj = new exports();
+      }
 
       if (data.hasOwnProperty('JustNumber')) {
         obj['JustNumber'] = ApiClient.convertToType(data['JustNumber'], 'Number');

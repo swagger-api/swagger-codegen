@@ -1,11 +1,6 @@
 package io.swagger.codegen;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.Objects;
+import java.util.*;
 
 import io.swagger.models.ExternalDocs;
 
@@ -17,6 +12,8 @@ public class CodegenModel {
     // References to parent and interface CodegenModels. Only set when code generator supports inheritance.
     public CodegenModel parentModel;
     public List<CodegenModel> interfaceModels;
+    public Set<CodegenModel> childModels = new HashSet<>();
+    public Set<String> children = new HashSet<>();
 
     public String name, classname, title, description, classVarName, modelJson, dataType;
     public String classFilename; // store the class file name, mainly used for import

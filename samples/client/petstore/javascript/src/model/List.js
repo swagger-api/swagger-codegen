@@ -41,7 +41,6 @@
 
 
 
-
   /**
    * The List model module.
    * @module model/List
@@ -68,7 +67,9 @@
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
-      obj = obj || new exports();
+      if (!obj) {
+        obj = new exports();
+      }
 
       if (data.hasOwnProperty('123-list')) {
         obj['123-list'] = ApiClient.convertToType(data['123-list'], 'String');

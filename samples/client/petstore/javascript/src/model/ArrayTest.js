@@ -41,7 +41,6 @@
 
 
 
-
   /**
    * The ArrayTest model module.
    * @module model/ArrayTest
@@ -70,7 +69,9 @@
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
-      obj = obj || new exports();
+      if (!obj) {
+        obj = new exports();
+      }
 
       if (data.hasOwnProperty('array_of_string')) {
         obj['array_of_string'] = ApiClient.convertToType(data['array_of_string'], ['String']);

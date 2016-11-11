@@ -2,6 +2,8 @@ package io.swagger.codegen.languages;
 
 import com.google.common.base.Strings;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
@@ -12,14 +14,7 @@ import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.SupportingFile;
 import io.swagger.codegen.DefaultCodegen;
-import io.swagger.models.ArrayModel;
-import io.swagger.models.ComposedModel;
-import io.swagger.models.Info;
-import io.swagger.models.License;
-import io.swagger.models.Model;
-import io.swagger.models.ModelImpl;
-import io.swagger.models.Operation;
-import io.swagger.models.Swagger;
+import io.swagger.models.*;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.BooleanProperty;
 import io.swagger.models.properties.DateProperty;
@@ -38,13 +33,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static com.google.common.base.Strings.isNullOrEmpty;
 
 public class JavascriptClientCodegen extends DefaultCodegen implements CodegenConfig {
     @SuppressWarnings("hiding")
@@ -76,6 +67,9 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     protected String modelDocPath = "docs/";
     protected String apiTestPath = "api/";
     protected String modelTestPath = "model/";
+
+    private final Set<String> parentModels = new HashSet<>();
+    private final Multimap<String, CodegenModel> childrenByParent = ArrayListMultimap.create();
 
     public JavascriptClientCodegen() {
         super();
@@ -727,10 +721,38 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
 
       return op;
     }
+    private Set<String> getChildren(String name, Map<String, Model> allDefinitions) {
+        Set<String> result = new HashSet<>();
+        if(allDefinitions == null) return result;
+        for(Map.Entry<String, Model> entry : allDefinitions.entrySet()) {
+            String classname = entry.getKey();
+            Model model = entry.getValue();
+            if(model instanceof ComposedModel) {
+                for(Model child: ((ComposedModel) model).getInterfaces()){
+                    if(child instanceof RefModel) {
+                        if(((RefModel) child).getSimpleRef().equals(name)){
+                            result.add(classname);
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
 
     @Override
     public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
         CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
+
+        Set<String> children = getChildren(codegenModel.classname, allDefinitions);
+        if(children.size() > 0) {
+            codegenModel.children.addAll(children);
+            //codegenModel.imports.addAll(children);
+            if(!parentModels.contains(codegenModel.classname)){
+                parentModels.add(codegenModel.classname);
+                LOGGER.info("parentModels:" + parentModels);
+            }
+        }
 
         if (allDefinitions != null && codegenModel != null && codegenModel.parent != null && codegenModel.hasEnums) {
             final Model parentModel = allDefinitions.get(codegenModel.parentSchema);
@@ -940,6 +962,48 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
             }
         }
         return objs;
+    }
+
+    @Override
+    public Map<String, Object> postProcessAllModels(final Map<String, Object> models) {
+        final Map<String, Object> processed =  super.postProcessAllModels(models);
+        postProcessParentModels(models);
+        return processed;
+    }
+
+    private void postProcessParentModels(final Map<String, Object> models) {
+        LOGGER.info("####Processing parents:  " + parentModels);
+        for (final String parent : parentModels) {
+            final CodegenModel parentModel = modelByName(parent, models);
+            if(parentModel == null) continue;
+            parentModel.hasChildren = true;
+            for(String childClassName : parentModel.children) {
+                CodegenModel childModel = modelByName(childClassName, models);
+                if(childModel == null) continue;
+                parentModel.childModels.add(childModel);
+            }
+        }
+    }
+
+    private CodegenModel modelByName(final String name, final Map<String, Object> models) {
+        final Object data = models.get(name);
+        if (data instanceof Map) {
+            final Map<?, ?> dataMap = (Map<?, ?>) data;
+            final Object dataModels = dataMap.get("models");
+            if (dataModels instanceof List) {
+                final List<?> dataModelsList = (List<?>) dataModels;
+                for (final Object entry : dataModelsList) {
+                    if (entry instanceof Map) {
+                        final Map<?, ?> entryMap = (Map<?, ?>) entry;
+                        final Object model = entryMap.get("model");
+                        if (model instanceof CodegenModel) {
+                            return (CodegenModel) model;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     @Override

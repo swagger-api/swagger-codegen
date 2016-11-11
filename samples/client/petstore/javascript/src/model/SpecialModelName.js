@@ -41,7 +41,6 @@
 
 
 
-
   /**
    * The SpecialModelName model module.
    * @module model/SpecialModelName
@@ -68,7 +67,9 @@
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
-      obj = obj || new exports();
+      if (!obj) {
+        obj = new exports();
+      }
 
       if (data.hasOwnProperty('$special[property.name]')) {
         obj['$special[property.name]'] = ApiClient.convertToType(data['$special[property.name]'], 'Number');
