@@ -25,13 +25,13 @@
     <context:annotation-config/>
     <context:component-scan base-package="{{apiPackage}}.impl" />
 {{/useSpringAnnotationConfig}}
-{{#^useSpringAnnotationConfig}}    
+{{^useSpringAnnotationConfig}}    
 {{#apiInfo}}
 {{#apis}}
     <bean id="{{classname}}" class="{{package}}.impl.{{classname}}ServiceImpl" />
 {{/apis}}
 {{/apiInfo}}
-{{/^useSpringAnnotationConfig}}
+{{/useSpringAnnotationConfig}}
 
 {{#useSwaggerFeature}}  
     <!-- CXF Swagger2Feature -->
