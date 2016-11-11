@@ -96,6 +96,9 @@ public class JaxrsCXFServerOptionsTest extends AbstractOptionsTest {
                         Boolean.valueOf(JavaCXFServerOptionsProvider.GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR));
                 times = 1;
 
+                clientCodegen.setUseSwaggerUI(Boolean.valueOf(JavaCXFServerOptionsProvider.USE_SWAGGER_UI));
+                times = 1;
+
             }
         };
     }

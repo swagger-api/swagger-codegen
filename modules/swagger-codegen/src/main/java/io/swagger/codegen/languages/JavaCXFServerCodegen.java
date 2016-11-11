@@ -34,6 +34,8 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
 
     protected boolean useSwaggerFeature = false;
     
+    protected boolean useSwaggerUI = false;
+
     protected boolean useWadlFeature = false;
     
     protected boolean useMultipartFeature = false;
@@ -85,6 +87,8 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
         cliOptions.add(CliOption.newBoolean(USE_SPRING_ANNOTATION_CONFIG, "Use Spring Annotation Config"));
         
         cliOptions.add(CliOption.newBoolean(USE_SWAGGER_FEATURE, "Use Swagger Feature"));
+        cliOptions.add(CliOption.newBoolean(USE_SWAGGER_UI, "Use Swagger UI"));
+
         cliOptions.add(CliOption.newBoolean(USE_WADL_FEATURE, "Use WADL Feature"));
         cliOptions.add(CliOption.newBoolean(USE_MULTIPART_FEATURE, "Use Multipart Feature"));
 
@@ -122,6 +126,8 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
             this.setGenerateSpringApplication(convertPropertyToBooleanAndWriteBack(GENERATE_SPRING_APPLICATION));
             
             this.setUseSwaggerFeature(convertPropertyToBooleanAndWriteBack(USE_SWAGGER_FEATURE));
+            this.setUseSwaggerUI(convertPropertyToBooleanAndWriteBack(USE_SWAGGER_UI));
+
             this.setUseWadlFeature(convertPropertyToBooleanAndWriteBack(USE_WADL_FEATURE));
             this.setUseMultipartFeature(convertPropertyToBooleanAndWriteBack(USE_MULTIPART_FEATURE));
             this.setUseGzipFeature(convertPropertyToBooleanAndWriteBack(USE_GZIP_FEATURE));
@@ -264,6 +270,10 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
 
     public void setUseLoggingFeatureForTests(boolean useLoggingFeatureForTests) {
         this.useLoggingFeatureForTests = useLoggingFeatureForTests;
+    }
+
+    public void setUseSwaggerUI(boolean useSwaggerUI) {
+        this.useSwaggerUI = useSwaggerUI;
     }
 
 }

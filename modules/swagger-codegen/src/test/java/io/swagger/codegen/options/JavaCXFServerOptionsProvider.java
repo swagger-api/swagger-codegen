@@ -14,6 +14,8 @@ public class JavaCXFServerOptionsProvider extends JavaOptionsProvider {
     public static final String GENERATE_SPRING_APPLICATION = "true";
     
     public static final String USE_SWAGGER_FEATURE = "true";
+
+    public static final String USE_SWAGGER_UI = "true";
         
     public static final String USE_WADL_FEATURE = "true";
     
@@ -65,6 +67,8 @@ public class JavaCXFServerOptionsProvider extends JavaOptionsProvider {
         builder.put(JavaCXFServerCodegen.USE_SPRING_ANNOTATION_CONFIG, USE_SPRING_ANNOTATION_CONFIG);
 
         builder.put(JavaCXFServerCodegen.USE_SWAGGER_FEATURE, USE_SWAGGER_FEATURE);
+        builder.put(JavaCXFServerCodegen.USE_SWAGGER_UI, USE_SWAGGER_UI);
+
         builder.put(JavaCXFServerCodegen.USE_WADL_FEATURE, USE_WADL_FEATURE);
         builder.put(JavaCXFServerCodegen.USE_MULTIPART_FEATURE, USE_MULTIPART_FEATURE);
         builder.put(JavaCXFServerCodegen.USE_GZIP_FEATURE, USE_GZIP_FEATURE);
