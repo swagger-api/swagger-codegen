@@ -38,6 +38,9 @@
     {{! http://cxf.apache.org/docs/swagger2feature.html }}  
     <bean id="swagger2Feature" class="org.apache.cxf.jaxrs.swagger.Swagger2Feature">
         <property name="basePath" value="/services/services"/>
+{{#useSwaggerUI}}        
+        <property name="supportSwaggerUi" value="true" />
+{{/useSwaggerUI}}        
         <!--property name="contact" value="${swagger.contact}" />
         <property name="title" value="${swagger.title}" />
         <property name="version" value="${swagger.version}" />
