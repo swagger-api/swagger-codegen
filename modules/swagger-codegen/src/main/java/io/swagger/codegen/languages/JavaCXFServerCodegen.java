@@ -176,7 +176,8 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
             if (this.generateSpringBootApplication) {
                 writeOptional(outputFolder, new SupportingFile("server/SpringBootApplication.mustache",
                         (testFolder + '/' + apiPackage).replace(".", "/"), "SpringBootApplication.java"));
-                    
+                writeOptional(outputFolder, new SupportingFile("server/application.properties.mustache",
+                        (testFolder + '/'), "application.properties"));
             }
             
         }
