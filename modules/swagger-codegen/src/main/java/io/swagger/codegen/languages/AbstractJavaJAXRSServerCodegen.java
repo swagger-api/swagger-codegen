@@ -139,8 +139,11 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
                         }
                     }
                 }
+
                 if ( operation.returnType == null ) {
                     operation.returnType = "void";
+                    // set vendorExtensions.x-java-is-response-void to true as returnType is set to "void"
+                    operation.vendorExtensions.put("x-java-is-response-void", true);
                 } else if ( operation.returnType.startsWith("List") ) {
                     String rt = operation.returnType;
                     int end = rt.lastIndexOf(">");
@@ -200,10 +203,4 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
     private String implFileFolder(String output) {
         return outputFolder + "/" + output + "/" + apiPackage().replace('.', '/');
     }
-
-    @Override
-    public boolean shouldOverwrite(String filename) {
-        return super.shouldOverwrite(filename) && !filename.endsWith("ServiceImpl.java") && !filename.endsWith("ServiceFactory.java");
-    }
-
 }

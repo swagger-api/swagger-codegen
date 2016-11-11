@@ -1892,7 +1892,11 @@ public class DefaultCodegen {
             for (String key : consumes) {
                 Map<String, String> mediaType = new HashMap<String, String>();
                 // escape quotation to avoid code injection
-                mediaType.put("mediaType", escapeText(escapeQuotationMark(key)));
+                if ("*/*".equals(key)) { // "*/*" is a special case, do nothing
+                    mediaType.put("mediaType", key);
+                } else {
+                    mediaType.put("mediaType", escapeText(escapeQuotationMark(key)));
+                }
                 count += 1;
                 if (count < consumes.size()) {
                     mediaType.put("hasMore", "true");
@@ -1926,7 +1930,11 @@ public class DefaultCodegen {
             for (String key : produces) {
                 Map<String, String> mediaType = new HashMap<String, String>();
                 // escape quotation to avoid code injection
-                mediaType.put("mediaType", escapeText(escapeQuotationMark(key)));
+                if ("*/*".equals(key)) { // "*/*" is a special case, do nothing
+                    mediaType.put("mediaType", key);
+                } else {
+                    mediaType.put("mediaType", escapeText(escapeQuotationMark(key)));
+                }
                 count += 1;
                 if (count < produces.size()) {
                     mediaType.put("hasMore", "true");
@@ -2947,7 +2955,7 @@ public class DefaultCodegen {
             m = p.matcher(word);
         }
 
-        if (lowercaseFirstLetter) {
+        if (lowercaseFirstLetter && word.length() > 0) {
             word = word.substring(0, 1).toLowerCase() + word.substring(1);
         }
 
@@ -3171,7 +3179,12 @@ public class DefaultCodegen {
                 buf.append(StringUtils.capitalize(part));
             }
         }
-        return buf.toString().replaceAll("[^a-zA-Z ]", "");
+        String returnTag = buf.toString().replaceAll("[^a-zA-Z0-9_]", "");
+        if (returnTag.matches("\\d.*")) {
+            return "_" + returnTag;
+        } else {
+            return returnTag;
+        }
     }
 
     /**
@@ -3324,5 +3337,24 @@ public class DefaultCodegen {
         }
 
         return pattern;
+    }
+
+    /**
+     * reads propertyKey from additionalProperties, converts it to a boolean and
+     * writes it back to additionalProperties to be usable as a boolean in
+     * mustache files.
+     * 
+     * @param propertyKey
+     * @return property value as boolean
+     */
+    public boolean convertPropertyToBooleanAndWriteBack(String propertyKey) {
+        boolean booleanValue = false;
+        if (additionalProperties.containsKey(propertyKey)) {
+            booleanValue = Boolean.valueOf(additionalProperties.get(propertyKey).toString());
+            // write back as boolean
+            additionalProperties.put(propertyKey, booleanValue);
+        }
+
+        return booleanValue;
     }
 }
