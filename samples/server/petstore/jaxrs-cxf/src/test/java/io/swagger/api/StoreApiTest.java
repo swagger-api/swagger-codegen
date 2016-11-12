@@ -80,8 +80,10 @@ public class StoreApiTest {
     public void deleteOrderTest() {
         String orderId = null;
         //api.deleteOrder(orderId);
-        //
+        
         // TODO: test validations
+        
+        
     }
     
     /**
@@ -97,6 +99,8 @@ public class StoreApiTest {
         //Integer response = api.getInventory();
         //assertNotNull(response);
         // TODO: test validations
+        
+        
     }
     
     /**
@@ -113,6 +117,8 @@ public class StoreApiTest {
         //Order response = api.getOrderById(orderId);
         //assertNotNull(response);
         // TODO: test validations
+        
+        
     }
     
     /**
@@ -129,6 +135,8 @@ public class StoreApiTest {
         //Order response = api.placeOrder(body);
         //assertNotNull(response);
         // TODO: test validations
+        
+        
     }
     
 }

@@ -66,7 +66,7 @@ public class {{classname}}Test {
         providers.add(provider);
         
 {{#generateSpringBootApplication}}        
-        api = JAXRSClientFactory.create("http://localhost:" + serverPort + "/services/services", {{classname}}.class, providers);
+        api = JAXRSClientFactory.create("http://localhost:" + serverPort + "/services", {{classname}}.class, providers);
 {{/generateSpringBootApplication}}        
 {{^generateSpringBootApplication}}
         api = JAXRSClientFactory.create("{{basePath}}", {{classname}}.class, providers);
@@ -101,11 +101,13 @@ public class {{classname}}Test {
     @Test
     public void {{operationId}}Test() {
         {{#allParams}}
-        {{{dataType}}} {{paramName}} = null;
+        {{^isFile}}{{{dataType}}} {{paramName}} = null;{{/isFile}}{{#isFile}}org.apache.cxf.jaxrs.ext.multipart.Attachment {{paramName}} = null;{{/isFile}}
         {{/allParams}}
         //{{^vendorExtensions.x-java-is-response-void}}{{{returnType}}} response = {{/vendorExtensions.x-java-is-response-void}}api.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
-        //{{^vendorExtensions.x-java-is-response-void}}assertNotNull(response);{{/vendorExtensions.x-java-is-response-void}}
+        {{^vendorExtensions.x-java-is-response-void}}//assertNotNull(response);{{/vendorExtensions.x-java-is-response-void}}
         // TODO: test validations
+        
+        
     }
     {{/operation}}{{/operations}}
 }

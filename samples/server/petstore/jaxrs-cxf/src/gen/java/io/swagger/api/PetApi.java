@@ -72,7 +72,6 @@ public interface PetApi  {
     @Consumes({ "multipart/form-data" })
     @Produces({ "application/json" })
     @ApiOperation(value = "uploads an image", tags={ "pet" })
-    public ModelApiResponse  uploadFile(@PathParam("petId") Long petId, @Multipart(value = "additionalMetadata", required = false)  String additionalMetadata,  @Multipart(value = "file", required = false) InputStream fileInputStream,
-   @Multipart(value = "file" , required = false) Attachment fileDetail);
+    public ModelApiResponse  uploadFile(@PathParam("petId") Long petId, @Multipart(value = "additionalMetadata", required = false)  String additionalMetadata,  @Multipart(value = "file" , required = false) Attachment fileDetail);
 }
 

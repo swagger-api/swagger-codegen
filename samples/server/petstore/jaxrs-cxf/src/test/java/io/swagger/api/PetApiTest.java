@@ -81,8 +81,10 @@ public class PetApiTest {
     public void addPetTest() {
         Pet body = null;
         //api.addPet(body);
-        //
+        
         // TODO: test validations
+        
+        
     }
     
     /**
@@ -98,8 +100,10 @@ public class PetApiTest {
         Long petId = null;
         String apiKey = null;
         //api.deletePet(petId, apiKey);
-        //
+        
         // TODO: test validations
+        
+        
     }
     
     /**
@@ -116,6 +120,8 @@ public class PetApiTest {
         //Pet response = api.findPetsByStatus(status);
         //assertNotNull(response);
         // TODO: test validations
+        
+        
     }
     
     /**
@@ -132,6 +138,8 @@ public class PetApiTest {
         //Pet response = api.findPetsByTags(tags);
         //assertNotNull(response);
         // TODO: test validations
+        
+        
     }
     
     /**
@@ -148,6 +156,8 @@ public class PetApiTest {
         //Pet response = api.getPetById(petId);
         //assertNotNull(response);
         // TODO: test validations
+        
+        
     }
     
     /**
@@ -162,8 +172,10 @@ public class PetApiTest {
     public void updatePetTest() {
         Pet body = null;
         //api.updatePet(body);
-        //
+        
         // TODO: test validations
+        
+        
     }
     
     /**
@@ -180,8 +192,10 @@ public class PetApiTest {
         String name = null;
         String status = null;
         //api.updatePetWithForm(petId, name, status);
-        //
+        
         // TODO: test validations
+        
+        
     }
     
     /**
@@ -196,10 +210,12 @@ public class PetApiTest {
     public void uploadFileTest() {
         Long petId = null;
         String additionalMetadata = null;
-        File file = null;
+        org.apache.cxf.jaxrs.ext.multipart.Attachment file = null;
         //ModelApiResponse response = api.uploadFile(petId, additionalMetadata, file);
         //assertNotNull(response);
         // TODO: test validations
+        
+        
     }
     
 }

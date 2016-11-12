@@ -80,8 +80,10 @@ public class UserApiTest {
     public void createUserTest() {
         User body = null;
         //api.createUser(body);
-        //
+        
         // TODO: test validations
+        
+        
     }
     
     /**
@@ -96,8 +98,10 @@ public class UserApiTest {
     public void createUsersWithArrayInputTest() {
         List<User> body = null;
         //api.createUsersWithArrayInput(body);
-        //
+        
         // TODO: test validations
+        
+        
     }
     
     /**
@@ -112,8 +116,10 @@ public class UserApiTest {
     public void createUsersWithListInputTest() {
         List<User> body = null;
         //api.createUsersWithListInput(body);
-        //
+        
         // TODO: test validations
+        
+        
     }
     
     /**
@@ -128,8 +134,10 @@ public class UserApiTest {
     public void deleteUserTest() {
         String username = null;
         //api.deleteUser(username);
-        //
+        
         // TODO: test validations
+        
+        
     }
     
     /**
@@ -146,6 +154,8 @@ public class UserApiTest {
         //User response = api.getUserByName(username);
         //assertNotNull(response);
         // TODO: test validations
+        
+        
     }
     
     /**
@@ -163,6 +173,8 @@ public class UserApiTest {
         //String response = api.loginUser(username, password);
         //assertNotNull(response);
         // TODO: test validations
+        
+        
     }
     
     /**
@@ -176,8 +188,10 @@ public class UserApiTest {
     @Test
     public void logoutUserTest() {
         //api.logoutUser();
-        //
+        
         // TODO: test validations
+        
+        
     }
     
     /**
@@ -193,8 +207,10 @@ public class UserApiTest {
         String username = null;
         User body = null;
         //api.updateUser(username, body);
-        //
+        
         // TODO: test validations
+        
+        
     }
     
 }
