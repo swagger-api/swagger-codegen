@@ -25,7 +25,7 @@ public class PetApiServiceImpl implements PetApi {
         
     }
     
-    public void  deletePet(@PathParam("petId") Long petId, @HeaderParam("api_key") String apiKey) {
+    public void  deletePet(Long petId, String apiKey) {
         // TODO: Implement...
         
         
@@ -43,7 +43,7 @@ public class PetApiServiceImpl implements PetApi {
         return null;
     }
     
-    public Pet  getPetById(@PathParam("petId") Long petId) {
+    public Pet  getPetById(Long petId) {
         // TODO: Implement...
         
         return null;
@@ -55,14 +55,13 @@ public class PetApiServiceImpl implements PetApi {
         
     }
     
-    public void  updatePetWithForm(@PathParam("petId") Long petId, @Multipart(value = "name", required = false)  String name, @Multipart(value = "status", required = false)  String status) {
+    public void  updatePetWithForm(Long petId, String name, String status) {
         // TODO: Implement...
         
         
     }
     
-    public ModelApiResponse  uploadFile(@PathParam("petId") Long petId, @Multipart(value = "additionalMetadata", required = false)  String additionalMetadata,  @Multipart(value = "file", required = false) InputStream fileInputStream,
-   @Multipart(value = "file" , required = false) Attachment fileDetail) {
+    public ModelApiResponse  uploadFile(Long petId, String additionalMetadata,  Attachment fileDetail) {
         // TODO: Implement...
         
         return null;

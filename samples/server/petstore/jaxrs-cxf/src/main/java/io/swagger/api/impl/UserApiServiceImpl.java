@@ -36,13 +36,13 @@ public class UserApiServiceImpl implements UserApi {
         
     }
     
-    public void  deleteUser(@PathParam("username") String username) {
+    public void  deleteUser(String username) {
         // TODO: Implement...
         
         
     }
     
-    public User  getUserByName(@PathParam("username") String username) {
+    public User  getUserByName(String username) {
         // TODO: Implement...
         
         return null;
@@ -60,7 +60,7 @@ public class UserApiServiceImpl implements UserApi {
         
     }
     
-    public void  updateUser(@PathParam("username") String username, User body) {
+    public void  updateUser(String username, User body) {
         // TODO: Implement...
         
         

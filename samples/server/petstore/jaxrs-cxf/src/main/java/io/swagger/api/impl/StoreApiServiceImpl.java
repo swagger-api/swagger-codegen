@@ -18,7 +18,7 @@ import org.apache.cxf.jaxrs.ext.multipart.*;
 import io.swagger.annotations.Api;
 
 public class StoreApiServiceImpl implements StoreApi {
-    public void  deleteOrder(@PathParam("orderId") String orderId) {
+    public void  deleteOrder(String orderId) {
         // TODO: Implement...
         
         
@@ -30,7 +30,7 @@ public class StoreApiServiceImpl implements StoreApi {
         return null;
     }
     
-    public Order  getOrderById(@PathParam("orderId") Long orderId) {
+    public Order  getOrderById(Long orderId) {
         // TODO: Implement...
         
         return null;
