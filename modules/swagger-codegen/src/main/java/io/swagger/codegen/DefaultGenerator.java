@@ -217,15 +217,15 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         String contextRoot=strippedBasePath;
         String relativeBasePath="";
         
-		int slashPos = strippedBasePath.indexOf('/');
-		if (slashPos != -1)
-		{
-			contextRoot = strippedBasePath.substring(0, slashPos);
-			contextRoot = trimSlash(contextRoot);
+        int slashPos = strippedBasePath.indexOf('/');
+        if (slashPos != -1)
+        {
+            contextRoot = strippedBasePath.substring(0, slashPos);
+            contextRoot = trimSlash(contextRoot);
 
-			relativeBasePath = strippedBasePath.substring(slashPos);
-			relativeBasePath = "/"+trimSlash(relativeBasePath);
-		}
+            relativeBasePath = strippedBasePath.substring(slashPos);
+            relativeBasePath = "/"+trimSlash(relativeBasePath);
+        }
         
 		
         // resolve inline models
