@@ -210,7 +210,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         String basePath = config.escapeText(hostBuilder.toString());
         String basePathWithoutHost = config.escapeText(swagger.getBasePath());
 
-		//when the basepath in spec looks like this:  context/basePath
+        //when the basepath in spec looks like this:  context/basePath
         //normally, the first part indicates the context root,  the second is the relative path.
         String strippedBasePath=trimSlash(contextPath);
 
@@ -419,7 +419,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     operation.put("contextPath", contextPath);
 					
 					//
-					operation.put("contextRoot", contextRoot);
+                    operation.put("contextRoot", contextRoot);
                     operation.put("relativeBasePath", relativeBasePath);
 					
                     operation.put("baseName", tag);
