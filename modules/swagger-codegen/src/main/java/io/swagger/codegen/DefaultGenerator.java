@@ -210,6 +210,24 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         String basePath = config.escapeText(hostBuilder.toString());
         String basePathWithoutHost = config.escapeText(swagger.getBasePath());
 
+		//when the basepath in spec looks like this:  context/basePath
+        //normally, the first part indicates the context root,  the second is the relative path.
+        String strippedBasePath=trimSlash(contextPath);
+
+        String contextRoot=strippedBasePath;
+        String relativeBasePath="";
+        
+		int slashPos = strippedBasePath.indexOf('/');
+		if (slashPos != -1)
+		{
+			contextRoot = strippedBasePath.substring(0, slashPos);
+			contextRoot = trimSlash(contextRoot);
+
+			relativeBasePath = strippedBasePath.substring(slashPos);
+			relativeBasePath = "/"+trimSlash(relativeBasePath);
+		}
+        
+		
         // resolve inline models
         InlineModelResolver inlineModelResolver = new InlineModelResolver();
         inlineModelResolver.flatten(swagger);
@@ -399,6 +417,11 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     operation.put("basePath", basePath);
                     operation.put("basePathWithoutHost", basePathWithoutHost);
                     operation.put("contextPath", contextPath);
+					
+					//
+					operation.put("contextRoot", contextRoot);
+                    operation.put("relativeBasePath", relativeBasePath);
+					
                     operation.put("baseName", tag);
                     operation.put("modelPackage", config.modelPackage());
                     operation.putAll(config.additionalProperties());
@@ -648,6 +671,11 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         return files;
     }
 
+	private String trimSlash(String contextPath)
+	{
+		return contextPath.replaceAll("(^/+|/+$)", "");
+	}
+	
     private File processTemplateToFile(Map<String, Object> templateData, String templateName, String outputFilename) throws IOException {
         if(ignoreProcessor.allowsFile(new File(outputFilename.replaceAll("//", "/")))) {
             String templateFile = getFullTemplateFile(config, templateName);
