@@ -26,6 +26,9 @@ public interface FakeApi {
    * @return Call&lt;Client&gt;
    */
   
+  @Headers({
+  	"Content-Type:application/json" 
+  })
   @PATCH("fake")
   Observable<Client> testClientModel(
     @retrofit2.http.Body Client body
