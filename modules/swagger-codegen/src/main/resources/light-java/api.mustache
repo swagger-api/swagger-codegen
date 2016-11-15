@@ -2,13 +2,33 @@ package {{package}};
 
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
+import io.undertow.util.HttpString;
+import java.util.HashMap;
+import java.util.Map;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 {{#operations}}
 {{#operation}}
 public class {{classname}} implements HttpHandler {
 
     public void handleRequest(HttpServerExchange exchange) throws Exception {
-        exchange.getResponseSender().send("{{operationId}}");
+        {{^returnType}}
+        {{/returnType}}
+        {{#returnType}}
+        Map<String, Object> examples = new HashMap<String, Object>();
+        {{#examples}}
+        examples.put("{{contentType}}", StringEscapeUtils.unescapeHtml4("{{example}}"));
+        {{/examples}}
+        if(examples.size() > 0) {
+            exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");
+            exchange.getResponseSender().send((String)examples.get("application/json"));
+        } else {
+            exchange.endExchange();
+        }
+        {{/returnType}}
+        {{^returnType}}
+        exchange.endExchange();
+        {{/returnType}}
     }
 }
 {{/operation}}

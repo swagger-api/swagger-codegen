@@ -177,6 +177,13 @@ public class LightJavaCodegen extends AbstractJavaCodegen {
                     operation.unescapedNotes = StringUtils.remove(operation.unescapedNotes, "{");
                     operation.unescapedNotes = StringUtils.remove(operation.unescapedNotes, "}");
                 }
+
+                // make sure example in one line so that it can be loaded to Java code.
+                if(operation.examples != null) {
+                    for(Map<String, String> object: operation.examples) {
+                        object.put("example", object.get("example").replace("\n", "").replace("\r", ""));
+                    }
+                }
             }
         }
         return objs;
