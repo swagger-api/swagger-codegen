@@ -55,7 +55,8 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
                 "Array",
                 "Date",
                 "number",
-                "any"
+                "any",
+		"Error"
         ));
         instantiationTypes.put("array", "Array");
 
