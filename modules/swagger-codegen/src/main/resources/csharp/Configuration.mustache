@@ -85,6 +85,10 @@ namespace {{packageName}}.Client
         /// </summary>
         public static readonly ExceptionFactory DefaultExceptionFactory = (methodName, response) =>
         {
+            if (response.ErrorException is WebException && (response.ErrorException as WebException).Status == WebExceptionStatus.NameResolutionFailure)
+            {
+                return new ApiException(523, String.Format("Error calling {0}: {1}", methodName, response.ErrorMessage), response.ErrorMessage);
+            }
             int status = (int) response.StatusCode;
             if (status >= 400) return new ApiException(status, String.Format("Error calling {0}: {1}", methodName, response.Content), response.Content);
             if (status == 0) return new ApiException(status, String.Format("Error calling {0}: {1}", methodName, response.ErrorMessage), response.ErrorMessage);
