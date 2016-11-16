@@ -31,8 +31,20 @@ public class JavaJAXRSCXFCDIServerCodegen extends JavaJAXRSSpecServerCodegen {
     @Override
     public void processOpts() {
         super.processOpts();
+
         supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
+
+        // writeOptional means these files are only written if they don't already exist
+
+        // POM
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
+
+        // RestApplication into src/main/java
+        writeOptional(outputFolder, new SupportingFile("RestApplication.mustache",
+                (implFolder + '/' + invokerPackage).replace(".", "/"), "RestApplication.java"));
+
+        // Make CDI work in containers with implicit archive scanning disabled
+        writeOptional(outputFolder, new SupportingFile("beans.mustache", "src/main/webapp/WEB-INF", "beans.xml"));
     }
 
     @Override
