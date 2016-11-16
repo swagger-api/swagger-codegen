@@ -5,8 +5,7 @@
  *
  * @category Class
  * @package  Swagger\Client
- * @author   http://github.com/swagger-api/swagger-codegen
- * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
+ * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
@@ -35,8 +34,7 @@ namespace Swagger\Client;
  *
  * @category Class
  * @package  Swagger\Client
- * @author   http://github.com/swagger-api/swagger-codegen
- * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
+ * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 class Configuration
