@@ -190,8 +190,7 @@ namespace {{packageName}}.Client
 
             RestClient.Proxy=proxy;
 
-
-InterceptRequest(request);
+            InterceptRequest(request);
             {{^supportsUWP}}
             var response = RestClient.Execute(request);
             {{/supportsUWP}}

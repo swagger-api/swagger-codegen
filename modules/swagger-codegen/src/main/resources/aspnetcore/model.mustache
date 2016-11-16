@@ -17,6 +17,7 @@ namespace {{packageName}}.Models
     /// {{description}}
     /// </summary>
     [DataContract]
+    [Serializable]
     public partial class {{classname}} : {{#parent}}{{{parent}}}, {{/parent}} IEquatable<{{classname}}>
     {
         /// <summary>
