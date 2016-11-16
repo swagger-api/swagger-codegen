@@ -1018,6 +1018,16 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         Set<String> allImports = new LinkedHashSet<String>();
         for (String key : definitions.keySet()) {
             Model mm = definitions.get(key);
+            if(mm.getVendorExtensions() !=  null && mm.getVendorExtensions().containsKey("x-codegen-ignore")) {
+                // skip this model
+                LOGGER.debug("skipping model " + key);
+                return null;
+            }
+            else if(mm.getVendorExtensions() !=  null && mm.getVendorExtensions().containsKey("x-codegen-import-mapping")) {
+                String codegenImport = mm.getVendorExtensions().get("x-codegen-import-mapping").toString();
+                config.importMapping().put(key, codegenImport);
+                allImports.add(codegenImport);
+            }
             CodegenModel cm = config.fromModel(key, mm, allDefinitions);
             Map<String, Object> mo = new HashMap<String, Object>();
             mo.put("model", cm);
