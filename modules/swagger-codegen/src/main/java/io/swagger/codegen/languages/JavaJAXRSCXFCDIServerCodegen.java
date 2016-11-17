@@ -1,12 +1,22 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.*;
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.SupportingFile;
 
 import java.io.File;
 
+/**
+ * Generates a Java JAXRS Server according to JAXRS 2.0 specification, assuming an
+ * Apache CXF runtime and a Java EE runtime with CDI enabled.
+ * Similar to the original JAXRS generator, this creates API and Service classes
+ * in /src/gen/java and a sample ServiceImpl in /src/main/java. The API uses CDI
+ * to get an instance of ServiceImpl that implements the Service interface.
+ */
 public class JavaJAXRSCXFCDIServerCodegen extends JavaJAXRSSpecServerCodegen {
+    /**
+     * Default constructor
+     */
     public JavaJAXRSCXFCDIServerCodegen() {
         outputFolder = "generated-code/JavaJaxRS-CXF-CDI";
         artifactId = "swagger-jaxrs-cxf-cdi-server";
@@ -20,7 +30,8 @@ public class JavaJAXRSCXFCDIServerCodegen extends JavaJAXRSSpecServerCodegen {
         typeMapping.put("DateTime", "java.util.Date");
 
         // Updated template directory
-        embeddedTemplateDir = templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME + File.separator + "cxf-cdi";
+        embeddedTemplateDir = templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME
+                + File.separator + "cxf-cdi";
     }
 
     @Override
@@ -44,7 +55,8 @@ public class JavaJAXRSCXFCDIServerCodegen extends JavaJAXRSSpecServerCodegen {
                 (implFolder + '/' + invokerPackage).replace(".", "/"), "RestApplication.java"));
 
         // Make CDI work in containers with implicit archive scanning disabled
-        writeOptional(outputFolder, new SupportingFile("beans.mustache", "src/main/webapp/WEB-INF", "beans.xml"));
+        writeOptional(outputFolder, new SupportingFile("beans.mustache",
+                "src/main/webapp/WEB-INF", "beans.xml"));
     }
 
     @Override
@@ -57,7 +69,8 @@ public class JavaJAXRSCXFCDIServerCodegen extends JavaJAXRSSpecServerCodegen {
 
     @Override
     public String getHelp() {
-        return "Generates a Java JAXRS Server according to JAXRS 2.0 specification, assuming an Apache CXF runtime and a Java EE runtime with CDI enabled.";
+        return "Generates a Java JAXRS Server according to JAXRS 2.0 specification, assuming an "
+                + "Apache CXF runtime and a Java EE runtime with CDI enabled.";
     }
 
 }
