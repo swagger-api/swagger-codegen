@@ -7,9 +7,9 @@ import io.swagger.api.factories.FakeApiServiceFactory;
 import io.swagger.annotations.ApiParam;
 import io.swagger.jaxrs.*;
 
+import java.math.BigDecimal;
 import io.swagger.model.Client;
 import java.util.Date;
-import java.math.BigDecimal;
 
 import java.util.List;
 import io.swagger.api.NotFoundException;
@@ -75,8 +75,8 @@ public class FakeApi  {
     }
     @GET
     
-    @Consumes({ "application/json" })
-    @Produces({ "application/json" })
+    @Consumes({ "*/*" })
+    @Produces({ "*/*" })
     @io.swagger.annotations.ApiOperation(value = "To test enum parameters", notes = "", response = void.class, tags={ "fake", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid request", response = void.class),

@@ -71,6 +71,18 @@ public class CodeGenMojo extends AbstractMojo {
     private String inputSpec;
 
     /**
+     * Git user ID, e.g. swagger-api.
+     */
+    @Parameter(name = "gitUserId", required = false)
+    private String gitUserId;
+
+    /**
+     * Git repo ID, e.g. swagger-codegen.
+     */
+    @Parameter(name = "gitRepoId", required = false)
+    private String gitRepoId;
+
+    /**
      * Folder containing the template files.
      */
     @Parameter(name = "templateDirectory")
@@ -195,6 +207,14 @@ public class CodeGenMojo extends AbstractMojo {
             configurator.setInputSpec(inputSpec);
         }
 
+        if(isNotEmpty(gitUserId)) {
+            configurator.setGitUserId(gitUserId);
+        }
+
+        if(isNotEmpty(gitRepoId)) {
+            configurator.setGitRepoId(gitRepoId);
+        }
+
         configurator.setLang(language);
 
         configurator.setOutputDir(output.getAbsolutePath());
@@ -310,7 +330,10 @@ public class CodeGenMojo extends AbstractMojo {
         }
 
         if (addCompileSourceRoot) {
-            String sourceJavaFolder = output.toString() + "/" + configOptions.get(CodegenConstants.SOURCE_FOLDER);
+            final Object sourceFolderObject = configOptions.get(CodegenConstants.SOURCE_FOLDER);
+            final String sourceFolder =  sourceFolderObject == null ? "src/main/java" : sourceFolderObject.toString();
+
+            String sourceJavaFolder = output.toString() + "/" + sourceFolder;
             project.addCompileSourceRoot(sourceJavaFolder);
         }
     }

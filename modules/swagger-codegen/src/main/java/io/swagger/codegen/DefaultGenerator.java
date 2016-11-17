@@ -141,7 +141,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         config.additionalProperties().put("generatedDate", DateTime.now().toString());
         config.additionalProperties().put("generatorClass", config.getClass().toString());
         config.additionalProperties().put("inputSpec", config.getInputSpec());
-        
+
         if (swagger.getInfo() != null) {
             Info info = swagger.getInfo();
             if (info.getTitle() != null) {
@@ -405,6 +405,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     operation.put("classname", config.toApiName(tag));
                     operation.put("classVarName", config.toApiVarName(tag));
                     operation.put("importPath", config.toApiImport(tag));
+                    operation.put("classFilename", config.toApiFilename(tag));
 
                     if(!config.vendorExtensions().isEmpty()) {
                     	operation.put("vendorExtensions", config.vendorExtensions());
@@ -630,7 +631,11 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 files.add(ignoreFile);
             }
 
-            // Add default LICENSE (Apache-2.0) for all generators
+            /* 
+             * The following code adds default LICENSE (Apache-2.0) for all generators
+             * To use license other than Apache2.0, update the following file:
+             *   modules/swagger-codegen/src/main/resources/_common/LICENSE
+             *
             final String apache2License = "LICENSE";
             String licenseFileNameTarget = config.outputFolder() + File.separator + apache2License;
             File licenseFile = new File(licenseFileNameTarget);
@@ -642,6 +647,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 throw new RuntimeException("Could not generate LICENSE file '" + apache2License + "'", e);
             }
             files.add(licenseFile);
+             */
         }
         config.processSwagger(swagger);
         return files;
@@ -839,7 +845,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         operations.put("package", config.apiPackage());
 
 
-        Set<String> allImports = new LinkedHashSet<String>();
+        Set<String> allImports = new TreeSet<String>();
         for (CodegenOperation op : ops) {
             allImports.addAll(op.imports);
         }
