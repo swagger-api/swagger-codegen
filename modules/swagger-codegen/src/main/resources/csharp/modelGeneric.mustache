@@ -1,8 +1,8 @@
     /// <summary>
     /// {{#description}}{{.}}{{/description}}{{^description}}{{classname}}{{/description}}
     /// </summary>
-    [DataContract]
     [Serializable]
+    [DataContract]
     {{#generatePropertyChanged}}
     [ImplementPropertyChanged]
     {{/generatePropertyChanged}}
@@ -85,7 +85,7 @@ this.{{name}} = {{name}};
             {{/isReadOnly}}
             {{/vars}}
         }
-        
+
         {{#vars}}
         {{^isEnum}}
         /// <summary>
@@ -110,7 +110,7 @@ this.{{name}} = {{name}};
             sb.Append("}\n");
             return sb.ToString();
         }
-  
+
         /// <summary>
         /// Returns the JSON string presentation of the object
         /// </summary>
