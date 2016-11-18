@@ -25,14 +25,15 @@
 
 package io.swagger.client.model;
 
-import java.util.Objects;
-import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
-import android.os.Parcelable;
+import java.util.Objects;
+
+import com.google.gson.annotations.SerializedName;
+
 import android.os.Parcel;
+import android.os.Parcelable;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * EnumArrays

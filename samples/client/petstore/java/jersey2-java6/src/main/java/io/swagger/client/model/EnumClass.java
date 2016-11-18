@@ -25,8 +25,6 @@
 
 package io.swagger.client.model;
 
-import org.apache.commons.lang3.ObjectUtils;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 /**

@@ -25,16 +25,18 @@
 
 package io.swagger.client.model;
 
-import java.util.Objects;
-import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.UUID;
+
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
-import android.os.Parcelable;
+
+import com.google.gson.annotations.SerializedName;
+
 import android.os.Parcel;
+import android.os.Parcelable;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * FormatTest

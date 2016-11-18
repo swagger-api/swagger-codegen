@@ -1,17 +1,7 @@
 package io.swagger.client.model;
 
-import java.io.StringWriter;
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.List;
-
-import io.swagger.client.Pair;
-import org.junit.*;
 import static org.junit.Assert.*;
 
-import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.SerializationFeature.*;
 
 public class EnumValueTest {

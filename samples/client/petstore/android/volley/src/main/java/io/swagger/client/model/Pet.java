@@ -24,11 +24,10 @@
 
 package io.swagger.client.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import io.swagger.client.model.Category;
 import io.swagger.client.model.Tag;
-import java.util.*;
-import io.swagger.annotations.*;
-import com.google.gson.annotations.SerializedName;
 
 @ApiModel(description = "")
 public class Pet {

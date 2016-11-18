@@ -1,24 +1,16 @@
 package io.swagger.api.impl;
 
-import io.swagger.api.*;
-import io.swagger.model.*;
-
-import com.sun.jersey.multipart.FormDataParam;
-
-import io.swagger.model.Pet;
-import io.swagger.model.ModelApiResponse;
-import java.io.File;
-
-import java.util.List;
-import io.swagger.api.NotFoundException;
-
 import java.io.InputStream;
-
-import com.sun.jersey.core.header.FormDataContentDisposition;
-import com.sun.jersey.multipart.FormDataParam;
+import java.util.List;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+
+import com.sun.jersey.core.header.FormDataContentDisposition;
+
+import io.swagger.api.*;
+import io.swagger.api.NotFoundException;
+import io.swagger.model.Pet;
 
 
 public class PetApiServiceImpl extends PetApiService {

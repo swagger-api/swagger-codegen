@@ -1,17 +1,14 @@
 package io.swagger.client;
 
-import java.io.*;
 import java.lang.reflect.Type;
-import java.net.URLEncoder;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
-import java.util.*;
-
 import java.text.DateFormat;
 
+import feign.RequestTemplate;
 import feign.codec.EncodeException;
 import feign.codec.Encoder;
-import feign.RequestTemplate;
 
 
 public class FormAwareEncoder implements Encoder {

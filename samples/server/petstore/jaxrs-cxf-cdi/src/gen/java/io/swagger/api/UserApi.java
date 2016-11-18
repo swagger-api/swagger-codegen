@@ -1,16 +1,12 @@
 package io.swagger.api;
 
-import io.swagger.model.User;
 import java.util.List;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.List;
-import java.util.Map;
-import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
 import org.apache.cxf.jaxrs.ext.multipart.*;
+
+import io.swagger.model.User;
 
 @Path("/v2")
 public interface UserApi  {

@@ -1,20 +1,16 @@
 package io.swagger.client.api;
 
-import io.swagger.client.CollectionFormats.*;
+import java.math.BigDecimal;
+import java.util.List;
 
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+
+import io.swagger.client.CollectionFormats.*;
+import io.swagger.client.model.Client;
 import retrofit.Callback;
 import retrofit.http.*;
 import retrofit.mime.*;
-
-import io.swagger.client.model.Client;
-import org.joda.time.LocalDate;
-import java.math.BigDecimal;
-import org.joda.time.DateTime;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public interface FakeApi {
   /**

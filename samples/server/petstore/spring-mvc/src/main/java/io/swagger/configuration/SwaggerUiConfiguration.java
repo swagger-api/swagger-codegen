@@ -1,12 +1,11 @@
 package io.swagger.configuration;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.threetenbp.ThreeTenModule;
+import java.util.List;
+
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -16,9 +15,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.threeten.bp.Instant;
 import org.threeten.bp.OffsetDateTime;
 import org.threeten.bp.ZonedDateTime;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.util.List;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.threetenbp.ThreeTenModule;
+
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
 @Configuration

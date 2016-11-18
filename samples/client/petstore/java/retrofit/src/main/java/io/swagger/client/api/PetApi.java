@@ -1,19 +1,13 @@
 package io.swagger.client.api;
 
-import io.swagger.client.CollectionFormats.*;
+import java.util.List;
 
+import io.swagger.client.CollectionFormats.*;
+import io.swagger.client.model.ModelApiResponse;
+import io.swagger.client.model.Pet;
 import retrofit.Callback;
 import retrofit.http.*;
 import retrofit.mime.*;
-
-import io.swagger.client.model.Pet;
-import io.swagger.client.model.ModelApiResponse;
-import java.io.File;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public interface PetApi {
   /**

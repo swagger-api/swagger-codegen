@@ -24,25 +24,6 @@
 
 package io.swagger.client;
 
-import com.android.volley.Cache;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Network;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.ResponseDelivery;
-import com.android.volley.toolbox.BasicNetwork;
-import com.android.volley.toolbox.HttpStack;
-import com.android.volley.toolbox.HurlStack;
-import com.android.volley.toolbox.NoCache;
-import com.android.volley.toolbox.RequestFuture;
-import com.google.gson.JsonParseException;
-
-import org.apache.http.Consts;
-import org.apache.http.HttpEntity;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -58,14 +39,33 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import io.swagger.client.auth.Authentication;
+import org.apache.http.Consts;
+import org.apache.http.HttpEntity;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+
+import com.android.volley.Cache;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Network;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.ResponseDelivery;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.HttpStack;
+import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.NoCache;
+import com.android.volley.toolbox.RequestFuture;
+import com.google.gson.JsonParseException;
+
 import io.swagger.client.auth.ApiKeyAuth;
+import io.swagger.client.auth.Authentication;
 import io.swagger.client.auth.HttpBasicAuth;
+import io.swagger.client.request.DeleteRequest;
 import io.swagger.client.request.GetRequest;
+import io.swagger.client.request.PatchRequest;
 import io.swagger.client.request.PostRequest;
 import io.swagger.client.request.PutRequest;
-import io.swagger.client.request.DeleteRequest;
-import io.swagger.client.request.PatchRequest;
 
 public class ApiInvoker {
   private static ApiInvoker INSTANCE;

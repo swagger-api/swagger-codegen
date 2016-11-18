@@ -1,12 +1,10 @@
 package io.swagger.client;
 
-import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
 import java.text.DateFormat;
 
 import javax.ws.rs.ext.ContextResolver;
+
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 
 public class JSON implements ContextResolver<ObjectMapper> {

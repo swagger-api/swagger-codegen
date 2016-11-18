@@ -1,14 +1,8 @@
 package io.swagger.client.api;
 
-import io.swagger.client.ApiClient;
-
-import io.swagger.client.model.Client;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import feign.*;
+import io.swagger.client.ApiClient;
+import io.swagger.client.model.Client;
 
 
 public interface FakeclassnametagsApi extends ApiClient.Api {

@@ -1,19 +1,15 @@
 package io.swagger.client.api;
 
-import feign.FeignException;
-
-import io.swagger.TestUtils;
-
-import io.swagger.client.ApiClient;
-import io.swagger.client.model.*;
+import static org.junit.Assert.*;
 
 import java.lang.reflect.Field;
 import java.util.Map;
 
-import org.junit.*;
 import org.threeten.bp.OffsetDateTime;
 
-import static org.junit.Assert.*;
+import feign.FeignException;
+import io.swagger.TestUtils;
+import io.swagger.client.ApiClient;
 
 public class StoreApiTest {
     private StoreApi api;

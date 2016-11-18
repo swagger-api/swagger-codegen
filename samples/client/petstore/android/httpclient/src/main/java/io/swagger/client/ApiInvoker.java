@@ -24,55 +24,32 @@
 
 package io.swagger.client;
 
-import org.apache.http.*;
-import org.apache.http.client.*;
-import org.apache.http.client.methods.*;
-import org.apache.http.conn.*;
-import org.apache.http.conn.scheme.*;
-import org.apache.http.conn.ssl.*;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.*;
-import org.apache.http.impl.conn.*;
-import org.apache.http.impl.conn.tsccm.*;
-import org.apache.http.params.*;
-import org.apache.http.util.EntityUtils;
-
-import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.net.URLEncoder;
-
-import java.util.Collection;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
-
+import java.net.UnknownHostException;
 import java.security.GeneralSecurityException;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.security.cert.*;
-
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.util.EntityUtils;
 
 import com.google.gson.JsonParseException;
 

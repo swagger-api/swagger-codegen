@@ -25,14 +25,12 @@
 
 package io.swagger.client.auth;
 
-import io.swagger.client.Pair;
+import java.util.List;
+import java.util.Map;
 
 import com.squareup.okhttp.Credentials;
 
-import java.util.Map;
-import java.util.List;
-
-import java.io.UnsupportedEncodingException;
+import io.swagger.client.Pair;
 
 public class HttpBasicAuth implements Authentication {
     private String username;

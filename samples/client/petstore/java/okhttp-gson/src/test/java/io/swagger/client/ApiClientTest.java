@@ -1,14 +1,8 @@
 package io.swagger.client;
 
-import io.swagger.client.auth.*;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.TimeZone;
-
-import org.junit.*;
 import static org.junit.Assert.*;
+
+import io.swagger.client.auth.*;
 
 
 public class ApiClientTest {

@@ -1,13 +1,12 @@
 package io.swagger.client;
 
-import org.threeten.bp.*;
-import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.datatype.threetenbp.ThreeTenModule;
-
 import java.text.DateFormat;
 
 import javax.ws.rs.ext.ContextResolver;
+
+import org.threeten.bp.*;
+
+import com.fasterxml.jackson.datatype.threetenbp.ThreeTenModule;
 
 
 public class JSON implements ContextResolver<ObjectMapper> {

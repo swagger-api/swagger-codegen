@@ -1,9 +1,14 @@
 package io.swagger.codegen.config;
 
-import io.swagger.codegen.utils.OptionUtils;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.*;
+import io.swagger.codegen.utils.OptionUtils;
 
 /**
  * Contains shared logic for applying key-value pairs and CSV strings

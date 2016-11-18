@@ -1,21 +1,20 @@
 package io.swagger.client.api;
 
-import io.swagger.client.ApiException;
-import io.swagger.client.ApiClient;
-import io.swagger.client.Configuration;
-import io.swagger.client.Pair;
-
-import javax.ws.rs.core.GenericType;
-
-import io.swagger.client.model.Client;
-import java.time.OffsetDateTime;
-import java.time.LocalDate;
 import java.math.BigDecimal;
-
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.ws.rs.core.GenericType;
+
+import io.swagger.client.ApiClient;
+import io.swagger.client.ApiException;
+import io.swagger.client.Configuration;
+import io.swagger.client.Pair;
+import io.swagger.client.model.Client;
 
 
 public class FakeApi {

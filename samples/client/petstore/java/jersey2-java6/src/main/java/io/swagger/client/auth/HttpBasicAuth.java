@@ -25,14 +25,13 @@
 
 package io.swagger.client.auth;
 
-import io.swagger.client.Pair;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+import java.util.Map;
 
 import com.migcomponents.migbase64.Base64;
 
-import java.util.Map;
-import java.util.List;
-
-import java.io.UnsupportedEncodingException;
+import io.swagger.client.Pair;
 
 
 public class HttpBasicAuth implements Authentication {
