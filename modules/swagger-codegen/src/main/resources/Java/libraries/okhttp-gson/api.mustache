@@ -57,6 +57,10 @@ public class {{classname}} {
         public void set{{paramNameUpperInitial}}({{{dataType}}} {{paramName}}) {
             this.{{paramName}} = {{paramName}};
         }
+
+        public {{{dataType}}} get{{paramNameUpperInitial}}() {
+            return {{paramName}};
+        }
         {{/paramNameUpperInitial}}{{/allParams}}
     }
     {{/collapsedParametersClassName}}

@@ -278,7 +278,7 @@ public class CodegenOperation {
             return false;
         if ( prioritizedContentTypes != null ? !prioritizedContentTypes.equals(that.prioritizedContentTypes) : that.prioritizedContentTypes != null )
             return false;
-        if (collapsedParametersClassName != null ? !collapsedParametersClassName.equals(that.nickname) : that.collapsedParametersClassName != null)
+        if (collapsedParametersClassName != null ? !collapsedParametersClassName.equals(that.collapsedParametersClassName) : that.collapsedParametersClassName != null)
             return false;
         return operationIdLowerCase != null ? operationIdLowerCase.equals(that.operationIdLowerCase) : that.operationIdLowerCase == null;
 
