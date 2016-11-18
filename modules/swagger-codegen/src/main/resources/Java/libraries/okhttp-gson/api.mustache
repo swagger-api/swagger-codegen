@@ -57,6 +57,10 @@ public class {{classname}} {
         public void set{{paramNameUpperInitial}}({{{dataType}}} {{paramName}}) {
             this.{{paramName}} = {{paramName}};
         }
+
+        public {{{dataType}}} get{{paramNameUpperInitial}}() {
+            return {{paramName}};
+            }
         {{/paramNameUpperInitial}}{{/allParams}}
     }
     {{/collapsedParametersClassName}}
@@ -142,7 +146,7 @@ public class {{classname}} {
      * @return ApiResponse&lt;{{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}Void{{/returnType}}&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{operationId}}WithHttpInfo(
+    private ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{operationId}}WithHttpInfo(
             {{#collapsedParametersClassName}}{{collapsedParametersClassName}} params{{/collapsedParametersClassName}}
             {{^collapsedParametersClassName}}{{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}{{/collapsedParametersClassName}}
             ) throws ApiException {
@@ -161,7 +165,7 @@ public class {{classname}} {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call {{operationId}}Async(
+    private com.squareup.okhttp.Call {{operationId}}Async(
             {{#collapsedParametersClassName}}{{collapsedParametersClassName}} params, {{/collapsedParametersClassName}}
             {{^collapsedParametersClassName}}{{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}{{/collapsedParametersClassName}}
             final ApiCallback<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{localVariablePrefix}}callback) throws ApiException {
