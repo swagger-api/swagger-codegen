@@ -155,6 +155,9 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
         
         writeOptional(outputFolder, new SupportingFile("server/pom.mustache", "", "pom.xml"));
         
+        writeOptional(outputFolder,
+                new SupportingFile("server/swagger-codegen-ignore.mustache", "", ".swagger-codegen-ignore"));
+
         if (this.generateSpringApplication) {
             writeOptional(outputFolder, new SupportingFile("server/readme.md", "", "readme.md"));
             
@@ -177,7 +180,8 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
                 writeOptional(outputFolder, new SupportingFile("server/SpringBootApplication.mustache",
                         (testFolder + '/' + apiPackage).replace(".", "/"), "SpringBootApplication.java"));
                 writeOptional(outputFolder, new SupportingFile("server/application.properties.mustache",
-                        (testFolder + '/'), "application.properties"));
+                        (testResourcesFolder + '/'), "application.properties"));
+
             }
             
         }
