@@ -48,6 +48,11 @@ public class Swift3CodegenTest {
         Assert.assertEquals(swiftCodegen.toEnumVarName("entry_name", null), "entryName");
     }
 
+    @Test
+    public void testEnumReservedWord() throws Exception {
+        Assert.assertEquals(swiftCodegen.toEnumVarName("class", null), "classValue");
+    }
+
     @Test(description = "returns NSData when response format is binary")
     public void binaryDataTest() {
         final Swagger model = new SwaggerParser().read("src/test/resources/2_0/binaryDataTest.json");
