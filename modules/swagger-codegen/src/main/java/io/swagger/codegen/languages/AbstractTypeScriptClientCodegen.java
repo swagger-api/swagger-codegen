@@ -56,7 +56,7 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
                 "Date",
                 "number",
                 "any",
-		        "Error"
+                "Error"
         ));
         instantiationTypes.put("array", "Array");
 
@@ -175,7 +175,7 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
                 return modelName;
             }
 
-            if(languageSpecificPrimitives.contains(name)){
+            if (languageSpecificPrimitives.contains(name)) {
                 String modelName = camelize("model_" + name);
                 LOGGER.warn(name + " (model name matches existing language type) cannot be used as a model name. Renamed to " + modelName);
                 return modelName;
