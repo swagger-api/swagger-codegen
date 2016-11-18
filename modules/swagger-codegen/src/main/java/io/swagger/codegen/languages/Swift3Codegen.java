@@ -516,13 +516,28 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
             return varName;
         }
 
+        String varName;
+
         // Prevent from breaking properly cased identifier
         if (name.matches("[A-Z][a-z0-9]+[a-zA-Z0-9]*")) {
-            return camelize(name, true);
+            varName = camelize(name, true);
+
+            if (isReservedWord(varName)) {
+                return varName + "Value";
+            } else {
+                return varName;
+            }
         }
 
         char[] separators = {'-', '_', ' ', ':', '(', ')'};
-        return camelize(WordUtils.capitalizeFully(StringUtils.lowerCase(name), separators).replaceAll("[-_ :\\(\\)]", ""), true);
+        varName = camelize(WordUtils.capitalizeFully(StringUtils.lowerCase(name), separators).replaceAll("[-_ :\\(\\)]", ""), true);
+
+        if (isReservedWord(varName)) {
+            return varName + "Value";
+        }
+        else {
+            return varName;
+        }
     }
 
     @Override
