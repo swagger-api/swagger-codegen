@@ -24,6 +24,8 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
 {   
     private static final Logger LOGGER = LoggerFactory.getLogger(JavaCXFServerCodegen.class);
     
+    protected boolean addConsumesProducesJson = true;
+
     protected boolean useJaxbAnnotations = true;
 
     protected boolean useBeanValidation = false;
@@ -103,6 +105,8 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
         cliOptions.add(
                 CliOption.newBoolean(GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR, "Generate Jboss Deployment Descriptor"));
         
+        cliOptions
+                .add(CliOption.newBoolean(ADD_CONSUMES_PRODUCES_JSON, "Add @Consumes/@Produces Json to API interface"));
         
     }
 
@@ -122,6 +126,10 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
             this.setUseBeanValidation(useBeanValidationProp);
         }
         
+        if (additionalProperties.containsKey(ADD_CONSUMES_PRODUCES_JSON)) {
+            this.setAddConsumesProducesJson(convertPropertyToBooleanAndWriteBack(ADD_CONSUMES_PRODUCES_JSON));
+        }
+
         if (additionalProperties.containsKey(GENERATE_SPRING_APPLICATION)) {
             this.setGenerateSpringApplication(convertPropertyToBooleanAndWriteBack(GENERATE_SPRING_APPLICATION));
             
@@ -279,6 +287,10 @@ public class JavaCXFServerCodegen extends AbstractJavaJAXRSServerCodegen
 
     public void setUseSwaggerUI(boolean useSwaggerUI) {
         this.useSwaggerUI = useSwaggerUI;
+    }
+
+    public void setAddConsumesProducesJson(boolean addConsumesProducesJson) {
+        this.addConsumesProducesJson = addConsumesProducesJson;
     }
 
 }

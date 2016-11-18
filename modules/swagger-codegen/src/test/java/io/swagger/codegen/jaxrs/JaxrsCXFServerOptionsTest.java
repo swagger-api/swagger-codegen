@@ -99,6 +99,9 @@ public class JaxrsCXFServerOptionsTest extends AbstractOptionsTest {
                 clientCodegen.setUseSwaggerUI(Boolean.valueOf(JavaCXFServerOptionsProvider.USE_SWAGGER_UI));
                 times = 1;
 
+                clientCodegen.setAddConsumesProducesJson(
+                        Boolean.valueOf(JavaCXFServerOptionsProvider.ADD_CONSUMES_PRODUCES_JSON));
+                times = 1;
             }
         };
     }

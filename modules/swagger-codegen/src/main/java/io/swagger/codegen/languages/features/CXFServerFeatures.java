@@ -13,8 +13,12 @@ public interface CXFServerFeatures
     
     public static final String USE_MULTIPART_FEATURE = "useMultipartFeature";
     
+    public static final String ADD_CONSUMES_PRODUCES_JSON = "addConsumesProducesJson";
+
     public void setUseWadlFeature(boolean useWadlFeature);
 
     public void setUseMultipartFeature(boolean useMultipartFeature);
+
+    public void setAddConsumesProducesJson(boolean addConsumesProducesJson);
 
 }

@@ -20,8 +20,10 @@ import javax.validation.constraints.*;
 
 @Path("/")
 @Api(value = "/", description = "{{description}}")
+{{#addConsumesProducesJson}}
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+{{/addConsumesProducesJson}}
 public interface {{classname}}  {
 {{#operations}}
 {{#operation}}
