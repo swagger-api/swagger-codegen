@@ -9,9 +9,13 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +23,10 @@ import java.util.Set;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.Assert.fail;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.assertTrue;
 
 /**
  * Tests for DefaultGenerator logic
@@ -230,13 +237,10 @@ public class DefaultGeneratorTest {
         final Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/wordnik-with-paramCollapseThreshold.yaml");
         CodegenConfig codegenConfig = new JavaClientCodegen();
         codegenConfig.setOutputDir(output.getAbsolutePath());
-
-        if(swagger.getVendorExtensions() != null) {
-            codegenConfig.vendorExtensions().putAll(swagger.getVendorExtensions());
-        }
+        codegenConfig.vendorExtensions().putAll(swagger.getVendorExtensions());
         final Integer paramCollapseThreshold = (Integer)codegenConfig.vendorExtensions().get("x-paramCollapseThreshold");
 
-        assertTrue(paramCollapseThreshold > 0, paramCollapseThreshold.toString());
+        assertTrue(paramCollapseThreshold == 5, paramCollapseThreshold.toString());
 
         ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
 
@@ -252,21 +256,10 @@ public class DefaultGeneratorTest {
 
         generator.processOperations(codegenConfig, tag, ops);
 
-        List<CodegenOperation> opsWithTooManyParams = new ArrayList<>();
+        // An op has collapsedParametersClassName set if and only if param count is over the threshold
         for (CodegenOperation op : ops) {
-            if (op.allParams.size() >= paramCollapseThreshold) {
-                opsWithTooManyParams.add(op);
-            }
-        }
-
-        assertTrue(opsWithTooManyParams.size() > 0);
-        for (CodegenOperation op : opsWithTooManyParams) {
-            assertNotNull(op.collapsedParametersClassName);
-        }
-
-        ops.removeAll(opsWithTooManyParams);
-        for (CodegenOperation op : ops) {
-            assertNull(op.collapsedParametersClassName);
+            assertTrue((op.allParams.size() >= paramCollapseThreshold && op.collapsedParametersClassName != null)
+                            || (op.allParams.size() < paramCollapseThreshold && op.collapsedParametersClassName == null) );
         }
     }
 
