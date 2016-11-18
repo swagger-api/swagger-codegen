@@ -17,6 +17,7 @@ public class SpringCodegen extends AbstractJavaCodegen {
     public static final String SINGLE_CONTENT_TYPES = "singleContentTypes";
     public static final String JAVA_8 = "java8";
     public static final String ASYNC = "async";
+    public static final String RESPONSE_WRAPPER = "responseWrapper";
     public static final String SPRING_MVC_LIBRARY = "spring-mvc";
     public static final String SPRING_CLOUD_LIBRARY = "spring-cloud";
 
@@ -27,6 +28,7 @@ public class SpringCodegen extends AbstractJavaCodegen {
     protected boolean singleContentTypes = false;
     protected boolean java8 = false;
     protected boolean async = false;
+    protected String responseWrapper = "";
 
     public SpringCodegen() {
         super();
@@ -51,6 +53,7 @@ public class SpringCodegen extends AbstractJavaCodegen {
         cliOptions.add(CliOption.newBoolean(SINGLE_CONTENT_TYPES, "Whether to select only one produces/consumes content-type by operation."));
         cliOptions.add(CliOption.newBoolean(JAVA_8, "use java8 default interface"));
         cliOptions.add(CliOption.newBoolean(ASYNC, "use async Callable controllers"));
+        cliOptions.add(new CliOption(RESPONSE_WRAPPER, "wrap the responses in given type (Future,Callable,CompletableFuture,ListenableFuture,DeferredResult,HystrixCommand,RxObservable,RxSingle or fully qualified type)"));
 
         supportedLibraries.put(DEFAULT_LIBRARY, "Spring-boot Server application using the SpringFox integration.");
         supportedLibraries.put(SPRING_MVC_LIBRARY, "Spring-MVC Server application using the SpringFox integration.");
@@ -81,6 +84,19 @@ public class SpringCodegen extends AbstractJavaCodegen {
 
     @Override
     public void processOpts() {
+
+        // Process java8 option before common java ones to change the default dateLibrary to java8.
+        if (additionalProperties.containsKey(JAVA_8)) {
+            this.setJava8(Boolean.valueOf(additionalProperties.get(JAVA_8).toString()));
+        }
+        if (this.java8) {
+            additionalProperties.put("javaVersion", "1.8");
+            additionalProperties.put("jdk8", "true");
+            if (!additionalProperties.containsKey(DATE_LIBRARY)) {
+                setDateLibrary("java8");
+            }
+        }
+
         super.processOpts();
 
         // clear model and api doc template as this codegen
@@ -109,12 +125,12 @@ public class SpringCodegen extends AbstractJavaCodegen {
             this.setSingleContentTypes(Boolean.valueOf(additionalProperties.get(SINGLE_CONTENT_TYPES).toString()));
         }
 
-        if (additionalProperties.containsKey(JAVA_8)) {
-            this.setJava8(Boolean.valueOf(additionalProperties.get(JAVA_8).toString()));
-        }
-
         if (additionalProperties.containsKey(ASYNC)) {
             this.setAsync(Boolean.valueOf(additionalProperties.get(ASYNC).toString()));
+        }
+
+        if (additionalProperties.containsKey(RESPONSE_WRAPPER)) {
+            this.setResponseWrapper((String) additionalProperties.get(RESPONSE_WRAPPER));
         }
 
         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
@@ -126,6 +142,8 @@ public class SpringCodegen extends AbstractJavaCodegen {
                         (sourceFolder + File.separator + configPackage).replace(".", java.io.File.separator), "HomeController.java"));
                 supportingFiles.add(new SupportingFile("swagger2SpringBoot.mustache",
                         (sourceFolder + File.separator + basePackage).replace(".", java.io.File.separator), "Swagger2SpringBoot.java"));
+                supportingFiles.add(new SupportingFile("RFC3339DateFormat.mustache",
+                        (sourceFolder + File.separator + basePackage).replace(".", java.io.File.separator), "RFC3339DateFormat.java"));
                 supportingFiles.add(new SupportingFile("application.mustache",
                         ("src.main.resources").replace(".", java.io.File.separator), "application.properties"));
             }
@@ -136,6 +154,8 @@ public class SpringCodegen extends AbstractJavaCodegen {
                         (sourceFolder + File.separator + configPackage).replace(".", java.io.File.separator), "WebMvcConfiguration.java"));
                 supportingFiles.add(new SupportingFile("swaggerUiConfiguration.mustache",
                         (sourceFolder + File.separator + configPackage).replace(".", java.io.File.separator), "SwaggerUiConfiguration.java"));
+                supportingFiles.add(new SupportingFile("RFC3339DateFormat.mustache",
+                        (sourceFolder + File.separator + configPackage).replace(".", java.io.File.separator), "RFC3339DateFormat.java"));
                 supportingFiles.add(new SupportingFile("application.properties",
                         ("src.main.resources").replace(".", java.io.File.separator), "swagger.properties"));
             }
@@ -166,13 +186,55 @@ public class SpringCodegen extends AbstractJavaCodegen {
             }
         }
 
+        if ("threetenbp".equals(dateLibrary)) {
+            supportingFiles.add(new SupportingFile("customInstantDeserializer.mustache",
+                    (sourceFolder + File.separator + configPackage).replace(".", java.io.File.separator), "CustomInstantDeserializer.java"));
+            if (library.equals(DEFAULT_LIBRARY) || library.equals(SPRING_CLOUD_LIBRARY)) {
+                supportingFiles.add(new SupportingFile("jacksonConfiguration.mustache",
+                        (sourceFolder + File.separator + configPackage).replace(".", java.io.File.separator), "JacksonConfiguration.java"));
+            }
+        }
+
         if (this.java8) {
             additionalProperties.put("javaVersion", "1.8");
+            additionalProperties.put("jdk8", "true");
+            if (this.async) {
+                additionalProperties.put(RESPONSE_WRAPPER, "CompletableFuture");
+            }
             typeMapping.put("date", "LocalDate");
             typeMapping.put("DateTime", "OffsetDateTime");
             importMapping.put("LocalDate", "java.time.LocalDate");
             importMapping.put("OffsetDateTime", "java.time.OffsetDateTime");
+        } else if (this.async) {
+            additionalProperties.put(RESPONSE_WRAPPER, "Callable");
         }
+
+        // Some well-known Spring or Spring-Cloud response wrappers
+        switch (this.responseWrapper) {
+            case "Future":
+            case "Callable":
+            case "CompletableFuture":
+                additionalProperties.put(RESPONSE_WRAPPER, "java.util.concurrent" + this.responseWrapper);
+                break;
+            case "ListenableFuture":
+                additionalProperties.put(RESPONSE_WRAPPER, "org.springframework.util.concurrent.ListenableFuture");
+                break;
+            case "DeferredResult":
+                additionalProperties.put(RESPONSE_WRAPPER, "org.springframework.web.context.request.DeferredResult");
+                break;
+            case "HystrixCommand":
+                additionalProperties.put(RESPONSE_WRAPPER, "com.netflix.hystrix.HystrixCommand");
+                break;
+            case "RxObservable":
+                additionalProperties.put(RESPONSE_WRAPPER, "rx.Observable");
+                break;
+            case "RxSingle":
+                additionalProperties.put(RESPONSE_WRAPPER, "rx.Single");
+                break;
+            default:
+                break;
+        }
+
     }
 
     @Override
@@ -186,7 +248,7 @@ public class SpringCodegen extends AbstractJavaCodegen {
             basePath = basePath.substring(0, pos);
         }
 
-        if (basePath == "") {
+        if (basePath.equals("")) {
             basePath = "default";
         } else {
             co.subresourceOperation = !co.path.isEmpty();
@@ -349,6 +411,8 @@ public class SpringCodegen extends AbstractJavaCodegen {
     public void setJava8(boolean java8) { this.java8 = java8; }
 
     public void setAsync(boolean async) { this.async = async; }
+
+    public void setResponseWrapper(String responseWrapper) { this.responseWrapper = responseWrapper; }
 
     @Override
     public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {

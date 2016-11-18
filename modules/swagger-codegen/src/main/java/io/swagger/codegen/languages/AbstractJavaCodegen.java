@@ -45,8 +45,9 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     public static final String FULL_JAVA_UTIL = "fullJavaUtil";
     public static final String DEFAULT_LIBRARY = "<default>";
     public static final String DATE_LIBRARY = "dateLibrary";
+    public static final String SUPPORT_JAVA6 = "supportJava6";
 
-    protected String dateLibrary = "joda";
+    protected String dateLibrary = "threetenbp";
     protected String invokerPackage = "io.swagger";
     protected String groupId = "io.swagger";
     protected String artifactId = "swagger-java";
@@ -63,6 +64,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     protected boolean hideGenerationTimestamp = false;
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
+    protected boolean supportJava6= false;
 
     public AbstractJavaCodegen() {
         super();
@@ -107,7 +109,6 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         instantiationTypes.put("map", "HashMap");
         typeMapping.put("date", "Date");
         typeMapping.put("file", "File");
-        typeMapping.put("UUID", "String");
 
         cliOptions.add(new CliOption(CodegenConstants.MODEL_PACKAGE, CodegenConstants.MODEL_PACKAGE_DESC));
         cliOptions.add(new CliOption(CodegenConstants.API_PACKAGE, CodegenConstants.API_PACKAGE_DESC));
@@ -125,10 +126,11 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
         CliOption dateLibrary = new CliOption(DATE_LIBRARY, "Option. Date library to use");
         Map<String, String> dateOptions = new HashMap<String, String>();
-        dateOptions.put("java8", "Java 8 native");
+        dateOptions.put("java8", "Java 8 native JSR310 (preferred for jdk 1.8+)");
+        dateOptions.put("threetenbp", "Backport of JSR310 (preferred for jdk < 1.8)");
         dateOptions.put("java8-localdatetime", "Java 8 using LocalDateTime (for legacy app only)");
-        dateOptions.put("joda", "Joda");
-        dateOptions.put("legacy", "Legacy java.util.Date");
+        dateOptions.put("joda", "Joda (for legacy app only)");
+        dateOptions.put("legacy", "Legacy java.util.Date (if you really have a good reason not to use threetenbp");
         dateLibrary.setEnum(dateOptions);
 
         cliOptions.add(dateLibrary);
@@ -138,6 +140,12 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     @Override
     public void processOpts() {
         super.processOpts();
+
+        if (additionalProperties.containsKey(SUPPORT_JAVA6)) {
+            this.setSupportJava6(Boolean.valueOf(additionalProperties.get(SUPPORT_JAVA6).toString()));
+        }
+        additionalProperties.put(SUPPORT_JAVA6, supportJava6);
+
 
         if (additionalProperties.containsKey(CodegenConstants.INVOKER_PACKAGE)) {
             this.setInvokerPackage((String) additionalProperties.get(CodegenConstants.INVOKER_PACKAGE));
@@ -254,20 +262,26 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         // used later in recursive import in postProcessingModels
         importMapping.put("com.fasterxml.jackson.annotation.JsonProperty", "com.fasterxml.jackson.annotation.JsonCreator");
 
-        if(additionalProperties.containsKey(DATE_LIBRARY)) {
+        if (additionalProperties.containsKey(DATE_LIBRARY)) {
             setDateLibrary(additionalProperties.get("dateLibrary").toString());
-            additionalProperties.put(dateLibrary, "true");
         }
 
-        if("joda".equals(dateLibrary)) {
+        if ("threetenbp".equals(dateLibrary)) {
+            additionalProperties.put("threetenbp", "true");
+            additionalProperties.put("jsr310", "true");
+            typeMapping.put("date", "LocalDate");
+            typeMapping.put("DateTime", "OffsetDateTime");
+            importMapping.put("LocalDate", "org.threeten.bp.LocalDate");
+            importMapping.put("OffsetDateTime", "org.threeten.bp.OffsetDateTime");
+        } else if ("joda".equals(dateLibrary)) {
+            additionalProperties.put("joda", "true");
             typeMapping.put("date", "LocalDate");
             typeMapping.put("DateTime", "DateTime");
-
             importMapping.put("LocalDate", "org.joda.time.LocalDate");
             importMapping.put("DateTime", "org.joda.time.DateTime");
-        }
-        else if (dateLibrary.startsWith("java8")) {
+        } else if (dateLibrary.startsWith("java8")) {
             additionalProperties.put("java8", "true");
+            additionalProperties.put("jsr310", "true");
             typeMapping.put("date", "LocalDate");
             importMapping.put("LocalDate", "java.time.LocalDate");
             if ("java8-localdatetime".equals(dateLibrary)) {
@@ -277,6 +291,8 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
                 typeMapping.put("DateTime", "OffsetDateTime");
                 importMapping.put("OffsetDateTime", "java.time.OffsetDateTime");
             }
+        } else {
+            additionalProperties.put("legacyDates", "true");
         }
     }
 
@@ -363,6 +379,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             return name;
         }
 
+        if(startsWithTwoUppercaseLetters(name)){
+            name = name.substring(0, 2).toLowerCase() + name.substring(2);
+        }
+
         // camelize (lower first character) the variable name
         // pet_id => petId
         name = camelize(name, true);
@@ -373,6 +393,14 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         }
 
         return name;
+    }
+
+    private boolean startsWithTwoUppercaseLetters(String name) {
+        boolean startsWithTwoUppercaseLetters = false;
+        if(name.length() > 1) {
+            startsWithTwoUppercaseLetters = name.substring(0, 2).equals(name.substring(0, 2).toUpperCase());
+        }
+        return startsWithTwoUppercaseLetters;
     }
 
     @Override
@@ -795,10 +823,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         CodegenOperation op = super.fromOperation(path, httpMethod, operation, definitions, swagger);
 
         op.path = sanitizePath(op.path);
-        
+
         return op;
     }
-    
+
     private static CodegenModel reconcileInlineEnums(CodegenModel codegenModel, CodegenModel parentCodegenModel) {
         // This generator uses inline classes to define enums, which breaks when
         // dealing with models that have subTypes. To clean this up, we will analyze
@@ -876,6 +904,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         this.sourceFolder = sourceFolder;
     }
 
+    public void setTestFolder(String testFolder) {
+        this.testFolder = testFolder;
+    }
+
     public void setLocalVariablePrefix(String localVariablePrefix) {
         this.localVariablePrefix = localVariablePrefix;
     }
@@ -929,6 +961,14 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             delim = ".";
         }
         return sb.toString();
+    }
+    
+    public void setSupportJava6(boolean value) {
+        this.supportJava6 = value;
+    }
+
+    public String toRegularExpression(String pattern) {
+        return escapeText(pattern);
     }
 
 }

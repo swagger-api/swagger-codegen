@@ -151,7 +151,7 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
 ```
 (if you're on Windows, replace the last command with `java -jar modules\swagger-codegen-cli\target\swagger-codegen-cli.jar generate -i http://petstore.swagger.io/v2/swagger.json -l php -o c:\temp\php_api_client`)
 
-You can also download the JAR (latest relesae) directly from [maven.org](http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.2.1/swagger-codegen-cli-2.2.1.jar )
+You can also download the JAR (latest release) directly from [maven.org](http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.2.1/swagger-codegen-cli-2.2.1.jar )
 
 To get a list of **general** options available, please run `java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar help generate`
 
@@ -450,6 +450,7 @@ AbstractTypeScriptClientCodegen.java
 AkkaScalaClientCodegen.java
 AndroidClientCodegen.java
 AspNet5ServerCodegen.java
+AspNetCoreServerCodegen.java
 AsyncScalaClientCodegen.java
 CSharpClientCodegen.java
 ClojureClientCodegen.java
@@ -751,6 +752,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [bitly](https://bitly.com)
 - [Bufferfly Network](https://www.butterflynetinc.com/)
 - [Cachet Financial](http://www.cachetfinancial.com/)
+- [carpolo](http://www.carpolo.co/)
 - [CloudBoost](https://www.CloudBoost.io/)
 - [Conplement](http://www.conplement.de/)
 - [Cummins] (http://www.cummins.com/)
@@ -783,6 +785,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [nViso](http://www.nviso.ch/)
 - [Okiok](https://www.okiok.com)
 - [Onedata](http://onedata.org)
+- [OrderCloud.io](http://ordercloud.io)
 - [OSDN](https://osdn.jp)
 - [PagerDuty](https://www.pagerduty.com)
 - [Pepipost](https://www.pepipost.com)
@@ -807,6 +810,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [WEXO A/S](https://www.wexo.dk/)
 - [Zalando](https://tech.zalando.com)
 - [ZEEF.com](https://zeef.com/)
+
 
 # Swagger Codegen Core Team
 
@@ -872,6 +876,7 @@ Here is a list of template creators:
    * Javascript (Closure-annotated Angular) @achew22
    * Perl: @wing328
    * Swift: @tkqubo
+   * Swift 3: @hexelon
    * TypeScript (Node):  @mhardorf 
    * TypeScript (Angular1):  @mhardorf 
    * TypeScript (Fetch): @leonyu
@@ -882,10 +887,12 @@ Here is a list of template creators:
    * Erlang Server: @galaxie
    * Go Server: @guohuang
    * Haskell Servant: @algas
-   * Java Undertow: @stevehu
+   * Java MSF4J: @sanjeewa-malalgoda
    * Java Spring Boot: @diyfr
+   * Java Undertow: @stevehu
    * JAX-RS RestEasy: @chameleon82
-   * JAX-RS CXF: @hiveship 
+   * JAX-RS CXF: @hiveship
+   * JAX-RS CXF (CDI): @nickcmaynard
    * PHP Lumen: @abcsum
    * PHP Slim: @jfastnacht
    * Ruby on Rails 5: @zlx 

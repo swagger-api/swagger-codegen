@@ -53,6 +53,7 @@ samples/client/petstore/qt5cpp/PetStore/*.o
 samples/client/petstore/qt5cpp/build-*
 samples/client/petstore/qt5cpp/PetStore/PetStore
 samples/client/petstore/qt5cpp/PetStore/Makefile
+samples/client/petstore/qt5cpp/PetStore/PetStore.pro.user
 
 #Java/Android
 **/.gradle
@@ -142,4 +143,7 @@ samples/client/petstore/typescript-node/**/typings
 samples/client/petstore/typescript-angular/**/typings
 samples/client/petstore/typescript-fetch/**/dist/
 samples/client/petstore/typescript-fetch/**/typings
+
+# aspnetcore
+samples/server/petstore/aspnetcore/.vs/
 

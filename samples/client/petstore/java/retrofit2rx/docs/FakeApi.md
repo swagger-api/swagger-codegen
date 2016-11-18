@@ -54,7 +54,7 @@ No authorization required
 
 <a name="testEndpointParameters"></a>
 # **testEndpointParameters**
-> Void testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password)
+> Void testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback)
 
 Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 
@@ -88,10 +88,11 @@ Float _float = 3.4F; // Float | None
 String string = "string_example"; // String | None
 byte[] binary = B; // byte[] | None
 LocalDate date = new LocalDate(); // LocalDate | None
-DateTime dateTime = new DateTime(); // DateTime | None
+OffsetDateTime dateTime = new OffsetDateTime(); // OffsetDateTime | None
 String password = "password_example"; // String | None
+String paramCallback = "paramCallback_example"; // String | None
 try {
-    Void result = apiInstance.testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password);
+    Void result = apiInstance.testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling FakeApi#testEndpointParameters");
@@ -114,8 +115,9 @@ Name | Type | Description  | Notes
  **string** | **String**| None | [optional]
  **binary** | **byte[]**| None | [optional]
  **date** | **LocalDate**| None | [optional]
- **dateTime** | **DateTime**| None | [optional]
+ **dateTime** | **OffsetDateTime**| None | [optional]
  **password** | **String**| None | [optional]
+ **paramCallback** | **String**| None | [optional]
 
 ### Return type
 

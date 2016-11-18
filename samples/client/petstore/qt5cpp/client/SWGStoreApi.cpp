@@ -170,7 +170,7 @@ SWGStoreApi::getOrderByIdCallback(HttpRequestWorker * worker) {
 
     
         QString json(worker->response);
-    SWGOrder* output = static_cast<SWGOrder*>(create(json, QString("SWGOrder")));
+    Order* output = static_cast<Order*>(create(json, QString("Order")));
     
 
     worker->deleteLater();
@@ -179,7 +179,7 @@ SWGStoreApi::getOrderByIdCallback(HttpRequestWorker * worker) {
     
 }
 void
-SWGStoreApi::placeOrder(SWGOrder body) {
+SWGStoreApi::placeOrder(Order body) {
     QString fullPath;
     fullPath.append(this->host).append(this->basePath).append("/store/order");
 
@@ -214,7 +214,7 @@ SWGStoreApi::placeOrderCallback(HttpRequestWorker * worker) {
 
     
         QString json(worker->response);
-    SWGOrder* output = static_cast<SWGOrder*>(create(json, QString("SWGOrder")));
+    Order* output = static_cast<Order*>(create(json, QString("Order")));
     
 
     worker->deleteLater();

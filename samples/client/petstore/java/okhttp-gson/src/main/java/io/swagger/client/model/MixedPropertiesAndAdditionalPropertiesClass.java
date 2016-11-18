@@ -1,4 +1,4 @@
-/**
+/*
  * Swagger Petstore
  * This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
  *
@@ -33,7 +33,8 @@ import io.swagger.client.model.Animal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.joda.time.DateTime;
+import java.util.UUID;
+import org.threeten.bp.OffsetDateTime;
 
 /**
  * MixedPropertiesAndAdditionalPropertiesClass
@@ -41,15 +42,15 @@ import org.joda.time.DateTime;
 
 public class MixedPropertiesAndAdditionalPropertiesClass {
   @SerializedName("uuid")
-  private String uuid = null;
+  private UUID uuid = null;
 
   @SerializedName("dateTime")
-  private DateTime dateTime = null;
+  private OffsetDateTime dateTime = null;
 
   @SerializedName("map")
   private Map<String, Animal> map = new HashMap<String, Animal>();
 
-  public MixedPropertiesAndAdditionalPropertiesClass uuid(String uuid) {
+  public MixedPropertiesAndAdditionalPropertiesClass uuid(UUID uuid) {
     this.uuid = uuid;
     return this;
   }
@@ -59,15 +60,15 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
    * @return uuid
   **/
   @ApiModelProperty(example = "null", value = "")
-  public String getUuid() {
+  public UUID getUuid() {
     return uuid;
   }
 
-  public void setUuid(String uuid) {
+  public void setUuid(UUID uuid) {
     this.uuid = uuid;
   }
 
-  public MixedPropertiesAndAdditionalPropertiesClass dateTime(DateTime dateTime) {
+  public MixedPropertiesAndAdditionalPropertiesClass dateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
     return this;
   }
@@ -77,16 +78,21 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
    * @return dateTime
   **/
   @ApiModelProperty(example = "null", value = "")
-  public DateTime getDateTime() {
+  public OffsetDateTime getDateTime() {
     return dateTime;
   }
 
-  public void setDateTime(DateTime dateTime) {
+  public void setDateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
   }
 
   public MixedPropertiesAndAdditionalPropertiesClass map(Map<String, Animal> map) {
     this.map = map;
+    return this;
+  }
+
+  public MixedPropertiesAndAdditionalPropertiesClass putMapItem(String key, Animal mapItem) {
+    this.map.put(key, mapItem);
     return this;
   }
 

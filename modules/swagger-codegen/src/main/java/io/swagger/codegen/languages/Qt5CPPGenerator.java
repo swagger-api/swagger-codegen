@@ -183,7 +183,12 @@ public class Qt5CPPGenerator extends DefaultCodegen implements CodegenConfig {
         } else if (systemIncludes.contains(name)) {
             return "#include <" + name + ">";
         }
-        return "#include \"" + name + ".h\"";
+
+        String folder = modelPackage().replace("::", File.separator);
+        if (!folder.isEmpty())
+            folder += File.separator;
+
+        return "#include \"" + folder + name + ".h\"";
     }
 
     /**
@@ -203,7 +208,7 @@ public class Qt5CPPGenerator extends DefaultCodegen implements CodegenConfig {
      */
     @Override
     public String modelFileFolder() {
-        return outputFolder + "/" + sourceFolder + "/" + modelPackage().replace('.', File.separatorChar);
+        return outputFolder + "/" + sourceFolder + "/" + modelPackage().replace("::", File.separator);
     }
 
     /**
@@ -212,12 +217,12 @@ public class Qt5CPPGenerator extends DefaultCodegen implements CodegenConfig {
      */
     @Override
     public String apiFileFolder() {
-        return outputFolder + "/" + sourceFolder + "/" + apiPackage().replace('.', File.separatorChar);
+        return outputFolder + "/" + sourceFolder + "/" + apiPackage().replace("::", File.separator);
     }
 
     @Override
     public String toModelFilename(String name) {
-        return PREFIX + initialCaps(name);
+        return modelNamePrefix + initialCaps(name);
     }
 
     @Override
@@ -332,8 +337,35 @@ public class Qt5CPPGenerator extends DefaultCodegen implements CodegenConfig {
                 languageSpecificPrimitives.contains(type)) {
             return type;
         } else {
-            return PREFIX + Character.toUpperCase(type.charAt(0)) + type.substring(1);
+            return modelNamePrefix + Character.toUpperCase(type.charAt(0)) + type.substring(1);
         }
+    }
+
+    @Override
+    public String toVarName(String name) {
+        // sanitize name
+        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+
+        // if it's all uppper case, convert to lower case
+        if (name.matches("^[A-Z_]*$")) {
+            name = name.toLowerCase();
+        }
+
+        // camelize (lower first character) the variable name
+        // petId => pet_id
+        name = underscore(name);
+
+        // for reserved word or word starting with number, append _
+        if (isReservedWord(name) || name.matches("^\\d.*")) {
+            name = escapeReservedWord(name);
+        }
+
+        return name;
+    }
+
+    @Override
+    public String toParamName(String name) {
+        return toVarName(name);
     }
 
     @Override
