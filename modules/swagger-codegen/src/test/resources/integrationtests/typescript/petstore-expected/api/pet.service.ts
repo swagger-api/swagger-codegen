@@ -30,8 +30,8 @@ import { Response, ResponseContentType }                     from '@angular/http
 import { Observable }                                        from 'rxjs/Observable';
 import '../rxjs-operators';
 
-import { Pet } from '../model/pet';
 import { ApiResponse } from '../model/apiResponse';
+import { Pet } from '../model/pet';
 
 import { BASE_PATH }                                         from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -54,9 +54,9 @@ export class PetService {
 			this.basePath = basePath || configuration.basePath || this.basePath;
         }
     }
-
+	
 	/**
-     *
+     * 
      * Extends object by coping non-existing properties.
      * @param objA object to be extended
      * @param objB source object
@@ -228,7 +228,7 @@ export class PetService {
 
         // to determine the Accept header
         let produces: string[] = [
-            'application/xml',
+            'application/xml', 
             'application/json'
         ];
         
@@ -249,7 +249,7 @@ export class PetService {
             body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
             search: queryParameters
         });
-
+        
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = this.extendObj(requestOptions, extraHttpRequestParams);
@@ -281,7 +281,7 @@ export class PetService {
 
         // to determine the Accept header
         let produces: string[] = [
-            'application/xml',
+            'application/xml', 
             'application/json'
         ];
         
@@ -300,7 +300,7 @@ export class PetService {
             headers: headers,
             search: queryParameters
         });
-
+        
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = this.extendObj(requestOptions, extraHttpRequestParams);
@@ -334,7 +334,7 @@ export class PetService {
 
         // to determine the Accept header
         let produces: string[] = [
-            'application/xml',
+            'application/xml', 
             'application/json'
         ];
         
@@ -353,7 +353,7 @@ export class PetService {
             headers: headers,
             search: queryParameters
         });
-
+        
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = this.extendObj(requestOptions, extraHttpRequestParams);
@@ -387,7 +387,7 @@ export class PetService {
 
         // to determine the Accept header
         let produces: string[] = [
-            'application/xml',
+            'application/xml', 
             'application/json'
         ];
         
@@ -406,7 +406,7 @@ export class PetService {
             headers: headers,
             search: queryParameters
         });
-
+        
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = this.extendObj(requestOptions, extraHttpRequestParams);
@@ -437,16 +437,10 @@ export class PetService {
 
         // to determine the Accept header
         let produces: string[] = [
-            'application/xml',
+            'application/xml', 
             'application/json'
         ];
         
-        // authentication (petstore_auth) required
-        // oauth required
-        if (this.configuration.accessToken)
-        {
-            headers.set('Authorization', 'Bearer ' + this.configuration.accessToken);
-        }
         // authentication (api_key) required
         if (this.configuration.apiKey)
         {
@@ -461,7 +455,7 @@ export class PetService {
             headers: headers,
             search: queryParameters
         });
-
+        
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = this.extendObj(requestOptions, extraHttpRequestParams);
@@ -494,7 +488,7 @@ export class PetService {
 
         // to determine the Accept header
         let produces: string[] = [
-            'application/xml',
+            'application/xml', 
             'application/json'
         ];
         
@@ -515,7 +509,7 @@ export class PetService {
             body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
             search: queryParameters
         });
-
+        
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = this.extendObj(requestOptions, extraHttpRequestParams);
@@ -551,7 +545,7 @@ export class PetService {
 
         // to determine the Accept header
         let produces: string[] = [
-            'application/xml',
+            'application/xml', 
             'application/json'
         ];
         
@@ -578,7 +572,7 @@ export class PetService {
             body: formParams.toString(),
             search: queryParameters
         });
-
+        
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = this.extendObj(requestOptions, extraHttpRequestParams);
@@ -640,7 +634,7 @@ export class PetService {
             body: formParams.toString(),
             search: queryParameters
         });
-
+        
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = this.extendObj(requestOptions, extraHttpRequestParams);
