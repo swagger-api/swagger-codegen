@@ -1,12 +1,27 @@
 package io.swagger.api;
 
-import javax.ws.rs.core.Response;
-
-import io.swagger.annotations.ApiParam;
-import io.swagger.api.NotFoundException;
+import io.swagger.model.*;
 import io.swagger.api.StoreApiService;
 import io.swagger.api.factories.StoreApiServiceFactory;
+
+import io.swagger.annotations.ApiParam;
+import io.swagger.jaxrs.*;
+
+import java.util.Map;
 import io.swagger.model.Order;
+
+import java.util.List;
+import io.swagger.api.NotFoundException;
+
+import java.io.InputStream;
+
+import org.wso2.msf4j.formparam.FormDataParam;
+import org.wso2.msf4j.formparam.FileInfo;
+
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+import javax.ws.rs.*;
 
 @Path("/store")
 

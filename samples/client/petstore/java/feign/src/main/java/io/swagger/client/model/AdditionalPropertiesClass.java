@@ -109,6 +109,7 @@ public class AdditionalPropertiesClass {
     return Objects.hash(mapProperty, mapOfMapProperty);
   }
 
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();

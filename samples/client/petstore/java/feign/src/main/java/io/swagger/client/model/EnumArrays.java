@@ -165,6 +165,7 @@ public class EnumArrays {
     return Objects.hash(justSymbol, arrayEnum);
   }
 
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
