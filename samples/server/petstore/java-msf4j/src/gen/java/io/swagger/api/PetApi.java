@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.ws.rs.core.Response;
 
-import org.wso2.msf4j.formparam.FormDataParam;
 import org.wso2.msf4j.formparam.FileInfo;
+import org.wso2.msf4j.formparam.FormDataParam;
 
 import io.swagger.annotations.ApiParam;
 import io.swagger.api.NotFoundException;

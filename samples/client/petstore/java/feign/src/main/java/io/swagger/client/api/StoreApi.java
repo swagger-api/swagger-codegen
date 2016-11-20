@@ -1,14 +1,10 @@
 package io.swagger.client.api;
 
-import io.swagger.client.ApiClient;
-
-import io.swagger.client.model.Order;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
 import feign.*;
+import io.swagger.client.ApiClient;
+import io.swagger.client.model.Order;
 
 
 public interface StoreApi extends ApiClient.Api {

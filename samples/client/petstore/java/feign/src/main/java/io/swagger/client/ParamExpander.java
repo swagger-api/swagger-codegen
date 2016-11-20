@@ -1,9 +1,9 @@
 package io.swagger.client;
 
-import feign.Param;
-
 import java.text.DateFormat;
 import java.util.Date;
+
+import feign.Param;
 
 /**
  * Param Expander to convert {@link Date} to RFC3339
