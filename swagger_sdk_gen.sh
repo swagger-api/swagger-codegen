@@ -16,12 +16,11 @@ then java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar genera
   -o samples/client/intouch_api/php_client/php_$BUILD_NUMBER
   tar cvzf samples/client/intouch_api/php_client/php_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./samples/client/intouch_api/php_client/php_$BUILD_NUMBER/ .
 elif [ "$Client" = "nodejs" ]
-then mkdir -p samples/client/intouch_api/nodejs_client
+then mkdir -p samples/client/intouch_api/nodejs_client/
 	 curl http://newapi.nightly.capillary.in/swagger.json > swagger.json
      npm install swagger-js-codegen
      cd swagger-js-codegen
-     node ../nodejs_sdk_gen > ../samples/client/intouch_api/nodejs_client/node_client/node_$BUILD_NUMBER
-     tar cvzf /samples/client/intouch_api/nodejs_client/node_client/node_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./samples/client/intouch_api/nodejs_client/node_client/node_$BUILD_NUMBER/ .
+     node ../nodejs_sdk_gen > ../samples/client/intouch_api/nodejs_client/node_$BUILD_NUMBER
 else " no client is selected"
 fi
 echo "SWAGGER SDK SUCCESSFULLY GENERATED"
