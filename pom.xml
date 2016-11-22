@@ -55,7 +55,7 @@
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-ssh-external</artifactId>
-                <version>1.0-alpha-6</version>
+                <version>1.0-alpha-2</version>
             </extension>
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
