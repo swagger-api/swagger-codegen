@@ -184,11 +184,15 @@ public class DefaultCodegen {
             for (String name : allModels.keySet()) {
                 CodegenModel cm = allModels.get(name);
                 CodegenModel parent = allModels.get(cm.parent);
-                while (parent != null) {
+                // if a discriminator exists on this child, and it is different that its parent
+                // discriminator, don't add this child to the inheritance heirarchy
+                CodegenModel lastParent = null;
+                while (parent != null && parent.discriminator != null && (lastParent == null || (lastParent != null && lastParent.discriminator.equals(parent.discriminator)))) {
                     if (parent.children == null) {
-                        parent.children = new ArrayList<CodegenModel>();
+                       parent.children = new ArrayList<CodegenModel>();
                     }
                     parent.children.add(cm);
+                    lastParent = parent;
                     parent = allModels.get(parent.parent);
                 }
             }
@@ -1252,6 +1256,16 @@ public class DefaultCodegen {
                 allProperties = new LinkedHashMap<String, Property>();
                 allRequired = new ArrayList<String>();
                 m.allVars = new ArrayList<CodegenProperty>();
+                for (Model innerModel: ((ComposedModel)model).getAllOf()) {
+                    if (innerModel instanceof ModelImpl) {
+                        if (m.discriminator != null) {
+                            LOGGER.warn("More than one inline schema specified in allOf:. Only the first one is recognized. All others are ignored.");
+                            break; // only one ModelImpl with discriminator allowed in allOf
+                        } else {
+                            m.discriminator = ((ModelImpl) innerModel).getDiscriminator();
+                        }
+                    }
+                }
             } else {
                 allProperties = null;
                 allRequired = null;
