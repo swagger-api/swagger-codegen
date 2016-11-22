@@ -128,7 +128,8 @@ cd /vagrant
 
 #### Public Docker image
 
-https://hub.docker.com/r/swaggerapi/swagger-generator/
+ - https://hub.docker.com/r/swaggerapi/swagger-generator/ (official)
+ - https://hub.docker.com/r/jimschubert/swagger-codegen-cli/ (unofficial)
 
 ### Homebrew
 To install, run `brew install swagger-codegen`
@@ -748,6 +749,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Acunetix](https://www.acunetix.com/)
 - [Atlassian](https://www.atlassian.com/)
 - [Avenida Compras S.A.](https://www.avenida.com.ar)
+- [Balance Internet](https://www.balanceinternet.com.au/)
 - [beemo](http://www.beemo.eu)
 - [bitly](https://bitly.com)
 - [Bufferfly Network](https://www.butterflynetinc.com/)
@@ -765,6 +767,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [eureka](http://eure.jp/)
 - [everystory.us](http://everystory.us)
 - [Expected Behavior](http://www.expectedbehavior.com/)
+- [Flat](https://flat.io)
 - [Finder](http://en.finder.pl/)
 - [FH Münster - University of Applied Sciences](http://www.fh-muenster.de)
 - [Gear Zero Network](https://www.gearzero.ca)
@@ -773,6 +776,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [GraphHopper](https://graphhopper.com/)
 - [Gravitate Solutions](http://gravitatesolutions.com/)
 - [IMS Health](http://www.imshealth.com/en/solution-areas/technology-and-applications)
+- [Intent HQ](http://www.intenthq.com)
 - [Interactive Intelligence](http://developer.mypurecloud.com/)
 - [LANDR Audio](https://www.landr.com/)
 - [Lascaux](http://www.lascaux.it/)
@@ -798,12 +802,14 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Reload! A/S](https://reload.dk/) 
 - [REstore](https://www.restore.eu)
 - [Revault Sàrl](http://revault.ch)
+- [Riffyn](https://riffyn.com)
 - [Royal Bank of Canada (RBC)](http://www.rbc.com/canada.html)
 - [SCOOP Software GmbH](http://www.scoop-software.de)
 - [Skurt](http://www.skurt.com)
 - [SmartRecruiters](https://www.smartrecruiters.com/)
 - [StyleRecipe](http://stylerecipe.co.jp)
 - [Svenska Spel AB](https://www.svenskaspel.se/)
+- [TaskData](http://www.taskdata.com/) 
 - [ThoughtWorks](https://www.thoughtworks.com)
 - [uShip](https://www.uship.com/)
 - [W.UP](http://wup.hu/?siteLang=en)
