@@ -7,7 +7,9 @@ import io.swagger.models.Swagger;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
+import io.swagger.models.Info;
 
+import org.apache.commons.lang3.StringUtils;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -18,6 +20,8 @@ public class StaticHtml2Generator extends DefaultCodegen implements CodegenConfi
     protected String groupId = "io.swagger";
     protected String artifactId = "swagger-client";
     protected String artifactVersion = "1.0.0";
+    protected String jsProjectName;
+    protected String jsModuleName;
 
     public StaticHtml2Generator() {
         super();
@@ -101,6 +105,29 @@ public class StaticHtml2Generator extends DefaultCodegen implements CodegenConfi
         return objs;
     }
 
+    @Override
+    public void preprocessSwagger(Swagger swagger) {
+        super.preprocessSwagger(swagger);
+
+        if (swagger.getInfo() != null) {
+            Info info = swagger.getInfo();
+            if (StringUtils.isBlank(jsProjectName) && info.getTitle() != null) {
+                // when jsProjectName is not specified, generate it from info.title
+                jsProjectName = sanitizeName(dashize(info.getTitle()));
+            }
+        }
+
+        // default values
+        if (StringUtils.isBlank(jsProjectName)) {
+            jsProjectName = "swagger-js-client";
+        }
+        if (StringUtils.isBlank(jsModuleName)) {
+            jsModuleName = camelize(underscore(jsProjectName));
+        }
+
+        additionalProperties.put("jsProjectName", jsProjectName);
+        additionalProperties.put("jsModuleName", jsModuleName);
+    }
 
     @Override
     public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, Map<String, Model> definitions, Swagger swagger) {
