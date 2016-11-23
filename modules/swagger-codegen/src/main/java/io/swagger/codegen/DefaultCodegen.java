@@ -184,16 +184,18 @@ public class DefaultCodegen {
             for (String name : allModels.keySet()) {
                 CodegenModel cm = allModels.get(name);
                 CodegenModel parent = allModels.get(cm.parent);
-                // if a discriminator exists on this child, and it is different that its parent
-                // discriminator, don't add this child to the inheritance heirarchy
-                CodegenModel lastParent = null;
-                while (parent != null && parent.discriminator != null && (lastParent == null || (lastParent != null && lastParent.discriminator.equals(parent.discriminator)))) {
+                // if a discriminator exists on the parent, don't add this child to the inheritance heirarchy
+                // TODO Determine what to do if the parent discriminator name == the grandparent discriminator name
+                while (parent != null) {
                     if (parent.children == null) {
                        parent.children = new ArrayList<CodegenModel>();
                     }
                     parent.children.add(cm);
-                    lastParent = parent;
-                    parent = allModels.get(parent.parent);
+                    if (parent.discriminator == null) {
+                        parent = allModels.get(parent.parent);
+                    } else {
+                        parent = null;
+                    }
                 }
             }
         }
@@ -1258,11 +1260,11 @@ public class DefaultCodegen {
                 m.allVars = new ArrayList<CodegenProperty>();
                 for (Model innerModel: ((ComposedModel)model).getAllOf()) {
                     if (innerModel instanceof ModelImpl) {
-                        if (m.discriminator != null) {
+                        if (m.discriminator == null) {
+                            m.discriminator = ((ModelImpl) innerModel).getDiscriminator();
+                        } else {
                             LOGGER.warn("More than one inline schema specified in allOf:. Only the first one is recognized. All others are ignored.");
                             break; // only one ModelImpl with discriminator allowed in allOf
-                        } else {
-                            m.discriminator = ((ModelImpl) innerModel).getDiscriminator();
                         }
                     }
                 }
