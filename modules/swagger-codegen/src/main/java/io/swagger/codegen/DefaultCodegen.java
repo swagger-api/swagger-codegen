@@ -223,7 +223,6 @@ public class DefaultCodegen {
             // for enum model
             if (Boolean.TRUE.equals(cm.isEnum) && cm.allowableValues != null) {
                 Map<String, Object> allowableValues = cm.allowableValues;
-
                 List<Object> values = (List<Object>) allowableValues.get("values");
                 List<Map<String, String>> enumVars = new ArrayList<Map<String, String>>();
                 String commonPrefix = findCommonPrefixOfVars(values);
@@ -265,7 +264,6 @@ public class DefaultCodegen {
     public String findCommonPrefixOfVars(List<Object> vars) {
         try {
             String[] listStr = vars.toArray(new String[vars.size()]);
-
             String prefix = StringUtils.getCommonPrefix(listStr);
             // exclude trailing characters that should be part of a valid variable
             // e.g. ["status-on", "status-off"] => "status-" (not "status-o")
@@ -368,7 +366,13 @@ public class DefaultCodegen {
         // replace " with \"
         // outter unescape to retain the original multi-byte characters
         // finally escalate characters avoiding code injection
-        return escapeUnsafeCharacters(StringEscapeUtils.unescapeJava(StringEscapeUtils.escapeJava(input).replace("\\/", "/")).replaceAll("[\\t\\n\\r]"," ").replace("\\", "\\\\").replace("\"", "\\\""));
+        return escapeUnsafeCharacters(
+                StringEscapeUtils.unescapeJava(
+                        StringEscapeUtils.escapeJava(input)
+                                .replace("\\/", "/"))
+                        .replaceAll("[\\t\\n\\r]"," ")
+                        .replace("\\", "\\\\")
+                        .replace("\"", "\\\""));
     }
 
     /**
@@ -378,7 +382,8 @@ public class DefaultCodegen {
      * @return string with unsafe characters removed or escaped
      */
     public String escapeUnsafeCharacters(String input) {
-        LOGGER.warn("escapeUnsafeCharacters should be overridden in the code generator with proper logic to escape unsafe characters");
+        LOGGER.warn("escapeUnsafeCharacters should be overridden in the code generator with proper logic to escape " +
+                "unsafe characters");
         // doing nothing by default and code generator should implement
         // the logic to prevent code injection
         // later we'll make this method abstract to make sure
@@ -392,7 +397,8 @@ public class DefaultCodegen {
      * @return string with quotation mark removed or escaped
      */
     public String escapeQuotationMark(String input) {
-        LOGGER.warn("escapeQuotationMark should be overridden in the code generator with proper logic to escape single/double quote");
+        LOGGER.warn("escapeQuotationMark should be overridden in the code generator with proper logic to escape " +
+                "single/double quote");
         return input.replace("\"", "\\\"");
     }
 
@@ -1238,7 +1244,6 @@ public class DefaultCodegen {
             m.discriminator = ((ModelImpl) model).getDiscriminator();
         }
 
-
         if (model instanceof ArrayModel) {
             ArrayModel am = (ArrayModel) model;
             ArrayProperty arrayProperty = new ArrayProperty(am.getItems());
@@ -1335,7 +1340,7 @@ public class DefaultCodegen {
             addVars(m, properties, required, allProperties, allRequired);
         } else {
             ModelImpl impl = (ModelImpl) model;
-            if (m != null && impl.getType() != null) {
+            if (impl.getType() != null) {
                 Property p = PropertyBuilder.build(impl.getType(), impl.getFormat(), null);
                 m.dataType = getSwaggerType(p);
             }
@@ -1366,7 +1371,7 @@ public class DefaultCodegen {
         if (model == null || allDefinitions == null)
             return false;
 
-        Model child = ((ComposedModel) model).getChild();
+        Model child = model.getChild();
         if (child instanceof ModelImpl && ((ModelImpl) child).getDiscriminator() != null) {
             return true;
         }
@@ -1388,7 +1393,9 @@ public class DefaultCodegen {
         addParentContainer(codegenModel, codegenModel.name, mapProperty);
     }
 
-    protected void addProperties(Map<String, Property> properties, List<String> required, Model model, Map<String, Model> allDefinitions) {
+    protected void addProperties(Map<String, Property> properties,
+                                 List<String> required, Model model,
+                                 Map<String, Model> allDefinitions) {
 
         if (model instanceof ModelImpl) {
             ModelImpl mi = (ModelImpl) model;
@@ -1419,9 +1426,7 @@ public class DefaultCodegen {
         if (name == null || name.length() == 0) {
             return name;
         }
-
         return camelize(toVarName(name));
-
     }
 
     /**
@@ -1438,7 +1443,6 @@ public class DefaultCodegen {
         }
 
         CodegenProperty property = CodegenModelFactory.newInstance(CodegenModelType.PROPERTY);
-
         property.name = toVarName(name);
         property.baseName = name;
         property.nameInCamelCase = camelize(property.name, false);
@@ -1520,7 +1524,6 @@ public class DefaultCodegen {
                 property.allowableValues = allowableValues;
             }*/
         }
-
         if (p instanceof IntegerProperty) {
             IntegerProperty sp = (IntegerProperty) p;
             property.isInteger = true;
@@ -1538,7 +1541,6 @@ public class DefaultCodegen {
                 property.allowableValues = allowableValues;
             }
         }
-
         if (p instanceof LongProperty) {
             LongProperty sp = (LongProperty) p;
             property.isLong = true;
@@ -1556,11 +1558,9 @@ public class DefaultCodegen {
                 property.allowableValues = allowableValues;
             }
         }
-
         if (p instanceof BooleanProperty) {
             property.isBoolean = true;
         }
-
         if (p instanceof BinaryProperty) {
             property.isBinary = true;
         }
@@ -1570,7 +1570,6 @@ public class DefaultCodegen {
         if (p instanceof ByteArrayProperty) {
             property.isByteArray = true;
         }
-
         // type is number and without format
         if (p instanceof DecimalProperty && !(p instanceof DoubleProperty) && !(p instanceof FloatProperty)) {
             DecimalProperty sp = (DecimalProperty) p;
@@ -1589,7 +1588,6 @@ public class DefaultCodegen {
                 property.allowableValues = allowableValues;
             }*/
         }
-
         if (p instanceof DoubleProperty) {
             DoubleProperty sp = (DoubleProperty) p;
             property.isDouble = true;
@@ -1607,7 +1605,6 @@ public class DefaultCodegen {
                 property.allowableValues = allowableValues;
             }
         }
-
         if (p instanceof FloatProperty) {
             FloatProperty sp = (FloatProperty) p;
             property.isFloat = true;
@@ -1643,7 +1640,6 @@ public class DefaultCodegen {
                 property.allowableValues = allowableValues;
             }
         }
-
         if (p instanceof DateTimeProperty) {
             DateTimeProperty sp = (DateTimeProperty) p;
             property.isDateTime = true;
@@ -1706,25 +1702,26 @@ public class DefaultCodegen {
     protected void updatePropertyForArray(CodegenProperty property, CodegenProperty innerProperty) {
         if (innerProperty == null) {
             LOGGER.warn("skipping invalid array property " + Json.pretty(property));
-        } else {
-            if (!languageSpecificPrimitives.contains(innerProperty.baseType)) {
-                property.complexType = innerProperty.baseType;
-            } else {
-                property.isPrimitiveType = true;
-            }
-            property.items = innerProperty;
-            // inner item is Enum
-            if (isPropertyInnerMostEnum(property)) {
-                // isEnum is set to true when the type is an enum
-                // or the inner type of an array/map is an enum
-                property.isEnum = true;
-                // update datatypeWithEnum and default value for array
-                // e.g. List<string> => List<StatusEnum>
-                updateDataTypeWithEnumForArray(property);
-                // set allowable values to enum values (including array/map of enum)
-                property.allowableValues = getInnerEnumAllowableValues(property);
-            }
+            return;
         }
+        if (!languageSpecificPrimitives.contains(innerProperty.baseType)) {
+            property.complexType = innerProperty.baseType;
+        } else {
+            property.isPrimitiveType = true;
+        }
+        property.items = innerProperty;
+        // inner item is Enum
+        if (isPropertyInnerMostEnum(property)) {
+            // isEnum is set to true when the type is an enum
+            // or the inner type of an array/map is an enum
+            property.isEnum = true;
+            // update datatypeWithEnum and default value for array
+            // e.g. List<string> => List<StatusEnum>
+            updateDataTypeWithEnumForArray(property);
+            // set allowable values to enum values (including array/map of enum)
+            property.allowableValues = getInnerEnumAllowableValues(property);
+        }
+
     }
 
     /**
@@ -1736,24 +1733,23 @@ public class DefaultCodegen {
         if (innerProperty == null) {
             LOGGER.warn("skipping invalid map property " + Json.pretty(property));
             return;
+        }
+        if (!languageSpecificPrimitives.contains(innerProperty.baseType)) {
+            property.complexType = innerProperty.baseType;
         } else {
-            if (!languageSpecificPrimitives.contains(innerProperty.baseType)) {
-                property.complexType = innerProperty.baseType;
-            } else {
-                property.isPrimitiveType = true;
-            }
-            property.items = innerProperty;
-            // inner item is Enum
-            if (isPropertyInnerMostEnum(property)) {
-                // isEnum is set to true when the type is an enum
-                // or the inner type of an array/map is an enum
-                property.isEnum = true;
-                // update datatypeWithEnum and default value for map
-                // e.g. Dictionary<string, string> => Dictionary<string, StatusEnum>
-                updateDataTypeWithEnumForMap(property);
-                // set allowable values to enum values (including array/map of enum)
-                property.allowableValues = getInnerEnumAllowableValues(property);
-            }
+            property.isPrimitiveType = true;
+        }
+        property.items = innerProperty;
+        // inner item is Enum
+        if (isPropertyInnerMostEnum(property)) {
+            // isEnum is set to true when the type is an enum
+            // or the inner type of an array/map is an enum
+            property.isEnum = true;
+            // update datatypeWithEnum and default value for map
+            // e.g. Dictionary<string, string> => Dictionary<string, StatusEnum>
+            updateDataTypeWithEnumForMap(property);
+            // set allowable values to enum values (including array/map of enum)
+            property.allowableValues = getInnerEnumAllowableValues(property);
         }
 
     }
@@ -1883,7 +1879,11 @@ public class DefaultCodegen {
      * @param swagger a Swagger object representing the spec
      * @return Codegen Operation object
      */
-    public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, Map<String, Model> definitions, Swagger swagger) {
+    public CodegenOperation fromOperation(String path,
+                                          String httpMethod,
+                                          Operation operation,
+                                          Map<String, Model> definitions,
+                                          Swagger swagger) {
         CodegenOperation op = CodegenModelFactory.newInstance(CodegenModelType.OPERATION);
         Set<String> imports = new HashSet<String>();
         op.vendorExtensions = operation.getVendorExtensions();
@@ -1952,7 +1952,7 @@ public class DefaultCodegen {
         }
 
         // if "produces" is defined (per operation or using global definition)
-        if (produces != null && produces.size() > 0) {
+        if (produces != null && !produces.isEmpty()) {
             List<Map<String, String>> c = new ArrayList<Map<String, String>>();
             int count = 0;
             for (String key : produces) {
@@ -2244,7 +2244,7 @@ public class DefaultCodegen {
 
         if (param instanceof SerializableParameter) {
             SerializableParameter qp = (SerializableParameter) param;
-            Property property = null;
+            Property property;
             String collectionFormat = null;
             String type = qp.getType();
             if (null == type) {
@@ -3361,7 +3361,6 @@ public class DefaultCodegen {
         if (pattern != null && !pattern.matches("^/.*")) {
             return "/" + pattern + "/";
         }
-
         return pattern;
     }
 
