@@ -56,6 +56,8 @@ use \ArrayAccess;
  */
 class Model200Response implements ArrayAccess
 {
+    const DISCRIMINATOR = null;
+
     /**
       * The original name of the model.
       * @var string
@@ -262,3 +264,4 @@ class Model200Response implements ArrayAccess
         return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+

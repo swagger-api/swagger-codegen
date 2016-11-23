@@ -55,6 +55,8 @@ use \ArrayAccess;
  */
 class NumberOnly implements ArrayAccess
 {
+    const DISCRIMINATOR = null;
+
     /**
       * The original name of the model.
       * @var string
@@ -235,3 +237,4 @@ class NumberOnly implements ArrayAccess
         return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+

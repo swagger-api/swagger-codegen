@@ -55,6 +55,8 @@ use \ArrayAccess;
  */
 class MapTest implements ArrayAccess
 {
+    const DISCRIMINATOR = null;
+
     /**
       * The original name of the model.
       * @var string
@@ -279,3 +281,4 @@ class MapTest implements ArrayAccess
         return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+

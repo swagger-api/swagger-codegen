@@ -201,12 +201,13 @@ class FakeApi
      * @param \DateTime $date None (optional)
      * @param \DateTime $date_time None (optional)
      * @param string $password None (optional)
+     * @param string $callback None (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @return void
      */
-    public function testEndpointParameters($number, $double, $pattern_without_delimiter, $byte, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null)
+    public function testEndpointParameters($number, $double, $pattern_without_delimiter, $byte, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null, $callback = null)
     {
-        list($response) = $this->testEndpointParametersWithHttpInfo($number, $double, $pattern_without_delimiter, $byte, $integer, $int32, $int64, $float, $string, $binary, $date, $date_time, $password);
+        list($response) = $this->testEndpointParametersWithHttpInfo($number, $double, $pattern_without_delimiter, $byte, $integer, $int32, $int64, $float, $string, $binary, $date, $date_time, $password, $callback);
         return $response;
     }
 
@@ -228,10 +229,11 @@ class FakeApi
      * @param \DateTime $date None (optional)
      * @param \DateTime $date_time None (optional)
      * @param string $password None (optional)
+     * @param string $callback None (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function testEndpointParametersWithHttpInfo($number, $double, $pattern_without_delimiter, $byte, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null)
+    public function testEndpointParametersWithHttpInfo($number, $double, $pattern_without_delimiter, $byte, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null, $callback = null)
     {
         // verify the required parameter 'number' is set
         if ($number === null) {
@@ -362,6 +364,10 @@ class FakeApi
         // form params
         if ($password !== null) {
             $formParams['password'] = $this->apiClient->getSerializer()->toFormValue($password);
+        }
+        // form params
+        if ($callback !== null) {
+            $formParams['callback'] = $this->apiClient->getSerializer()->toFormValue($callback);
         }
         
         // for model (json/xml)
