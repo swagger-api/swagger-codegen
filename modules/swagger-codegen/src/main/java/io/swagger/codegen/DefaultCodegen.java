@@ -1263,11 +1263,13 @@ public class DefaultCodegen {
                 allProperties = new LinkedHashMap<String, Property>();
                 allRequired = new ArrayList<String>();
                 m.allVars = new ArrayList<CodegenProperty>();
+                int modelImplCnt = 0; // only one inline object allowed in a ComposedModel
                 for (Model innerModel: ((ComposedModel)model).getAllOf()) {
                     if (innerModel instanceof ModelImpl) {
                         if (m.discriminator == null) {
                             m.discriminator = ((ModelImpl) innerModel).getDiscriminator();
-                        } else {
+                        }
+                        if (modelImplCnt++ > 1) {
                             LOGGER.warn("More than one inline schema specified in allOf:. Only the first one is recognized. All others are ignored.");
                             break; // only one ModelImpl with discriminator allowed in allOf
                         }
