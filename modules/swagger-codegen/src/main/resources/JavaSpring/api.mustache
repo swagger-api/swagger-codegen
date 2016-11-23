@@ -37,7 +37,7 @@ public interface {{classname}} {
     }{{/hasAuthMethods}}, tags={ {{#vendorExtensions.x-tags}}"{{tag}}",{{/vendorExtensions.x-tags}} })
     @ApiResponses(value = { {{#responses}}
         @ApiResponse(code = {{{code}}}, message = "{{{message}}}", response = {{{returnType}}}.class){{#hasMore}},{{/hasMore}}{{/responses}} })
-    @RequestMapping(value = "{{{path}}}",{{#singleContentTypes}}
+    @RequestMapping(value = "{{{relativeBasePath}}}{{{path}}}",{{#singleContentTypes}}
         produces = "{{{vendorExtensions.x-accepts}}}",
         consumes = "{{{vendorExtensions.x-contentType}}}",{{/singleContentTypes}}{{^singleContentTypes}}{{#hasProduces}}
         produces = { {{#produces}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/produces}} }, {{/hasProduces}}{{#hasConsumes}}
