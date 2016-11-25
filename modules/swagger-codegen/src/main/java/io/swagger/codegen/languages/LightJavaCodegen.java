@@ -84,8 +84,8 @@ public class LightJavaCodegen extends AbstractJavaCodegen {
 
         supportingFiles.add(new SupportingFile("routingService.mustache", ("src.main.resources.META-INF.services").replace(".", java.io.File.separator), "com.networknt.server.HandlerProvider"));
         supportingFiles.add(new SupportingFile("middlewareService.mustache", ("src.main.resources.META-INF.services").replace(".", java.io.File.separator), "com.networknt.handler.MiddlewareHandler"));
-        supportingFiles.add(new SupportingFile("startupHookProvider.mustache", ("src.main.resources.META-INF.services").replace(".", java.io.File.separator), "com.networknt.handler.StartupHookProvider"));
-        supportingFiles.add(new SupportingFile("shutdownHookProvider.mustache", ("src.main.resources.META-INF.services").replace(".", java.io.File.separator), "com.networknt.handler.ShutdownHookProvider"));
+        supportingFiles.add(new SupportingFile("startupHookProvider.mustache", ("src.main.resources.META-INF.services").replace(".", java.io.File.separator), "com.networknt.server.StartupHookProvider"));
+        supportingFiles.add(new SupportingFile("shutdownHookProvider.mustache", ("src.main.resources.META-INF.services").replace(".", java.io.File.separator), "com.networknt.server.ShutdownHookProvider"));
 
         // configuration files
         supportingFiles.add(new SupportingFile("server.json", ("src.main.resources.config").replace(".", java.io.File.separator), "server.json"));
