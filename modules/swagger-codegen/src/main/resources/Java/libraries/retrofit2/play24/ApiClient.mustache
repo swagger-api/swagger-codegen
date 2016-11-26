@@ -19,6 +19,9 @@ import okhttp3.Interceptor;
 import {{invokerPackage}}.auth.ApiKeyAuth;
 import {{invokerPackage}}.auth.Authentication;
 
+/**
+ *
+ */
 public class ApiClient {
 
     private WSClient wsClient;
@@ -33,8 +36,8 @@ public class ApiClient {
         // Setup authentications (key: authentication name, value: authentication).
         authentications = new HashMap<>();{{#authMethods}}{{#isBasic}}
         authentications.put("{{name}}", new HttpBasicAuth());{{/isBasic}}{{#isApiKey}}
-        authentications.put("{{name}}", new ApiKeyAuth({{#isKeyInHeader}}"header"{{/isKeyInHeader}}{{^isKeyInHeader}}"query"{{/isKeyInHeader}}, "{{keyParamName}}"));{{/isApiKey}}{{#isOAuth}}
-        authentications.put("{{name}}", new OAuth());{{/isOAuth}}{{/authMethods}}
+        // authentications.put("{{name}}", new ApiKeyAuth({{#isKeyInHeader}}"header"{{/isKeyInHeader}}{{^isKeyInHeader}}"query"{{/isKeyInHeader}}, "{{keyParamName}}"));{{/isApiKey}}{{#isOAuth}}
+        // authentications.put("{{name}}", new OAuth());{{/isOAuth}}{{/authMethods}}
         // Prevent the authentications from being modified.
         authentications = Collections.unmodifiableMap(authentications);
 
@@ -66,48 +69,48 @@ public class ApiClient {
                        .create(serviceClass);
     }
 
-      /**
-       * Get authentications (key: authentication name, value: authentication).
-       */
-      public Map<String, Authentication> getAuthentications() {
+    /**
+     * Get authentications (key: authentication name, value: authentication).
+     */
+    public Map<String, Authentication> getAuthentications() {
         return authentications;
-      }
+    }
 
-      /**
-       * Get authentication for the given name.
-       *
-       * @param authName The authentication name
-       * @return The authentication, null if not found
-       */
-      public Authentication getAuthentication(String authName) {
+    /**
+     * Get authentication for the given name.
+     *
+     * @param authName The authentication name
+     * @return The authentication, null if not found
+     */
+    public Authentication getAuthentication(String authName) {
         return authentications.get(authName);
-      }
+    }
 
-      /**
-       * Helper method to set API key value for the first API key authentication.
-       */
-      public void setApiKey(String apiKey) {
+    /**
+     * Helper method to set API key value for the first API key authentication.
+     */
+    public void setApiKey(String apiKey) {
         for (Authentication auth : authentications.values()) {
-          if (auth instanceof ApiKeyAuth) {
-            ((ApiKeyAuth) auth).setApiKey(apiKey);
-            return;
-          }
+            if (auth instanceof ApiKeyAuth) {
+                ((ApiKeyAuth) auth).setApiKey(apiKey);
+                return;
+            }
         }
         throw new RuntimeException("No API key authentication configured!");
-      }
+    }
 
-      /**
-       * Helper method to set API key prefix for the first API key authentication.
-       */
-      public void setApiKeyPrefix(String apiKeyPrefix) {
+    /**
+     * Helper method to set API key prefix for the first API key authentication.
+     */
+    public void setApiKeyPrefix(String apiKeyPrefix) {
         for (Authentication auth : authentications.values()) {
-          if (auth instanceof ApiKeyAuth) {
-            ((ApiKeyAuth) auth).setApiKeyPrefix(apiKeyPrefix);
-            return;
-          }
+            if (auth instanceof ApiKeyAuth) {
+                ((ApiKeyAuth) auth).setApiKeyPrefix(apiKeyPrefix);
+                return;
+            }
         }
         throw new RuntimeException("No API key authentication configured!");
-      }
+    }
 
 
 }
