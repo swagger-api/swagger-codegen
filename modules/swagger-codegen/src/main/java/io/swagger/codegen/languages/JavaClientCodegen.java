@@ -186,8 +186,8 @@ public class JavaClientCodegen extends AbstractJavaCodegen implements BeanValida
 
             // adapters
             supportingFiles
-                    .add(new SupportingFile("Play24CallFactory.mustache", invokerFolder, "Play24CallFactory.java"));
-            supportingFiles.add(new SupportingFile("Play24CallAdapterFactory.mustache", invokerFolder,
+                    .add(new SupportingFile("play24/Play24CallFactory.mustache", invokerFolder, "Play24CallFactory.java"));
+            supportingFiles.add(new SupportingFile("play24/Play24CallAdapterFactory.mustache", invokerFolder,
                     "Play24CallAdapterFactory.java"));
             additionalProperties.put("jackson", "true");
             additionalProperties.remove("gson");
