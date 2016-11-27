@@ -15,8 +15,8 @@ export class {{classname}}Serializer {
      *
      * For example, converts date-time strings into Date objects.
      */
-    deserialize(responseObj: any): {{{classname}}} {
-        let {{{classVarName}}}: {{{classname}}} = {};
+    deserialize(responseObj: any): models.{{{classname}}} {
+        let {{{classVarName}}}: models.{{{classname}}} = {};
 {{#vars}}
         {{{classVarName}}}.{{{name}}} = {{{vendorExtensions.deserializeSnippet}}};
 {{/vars}}
