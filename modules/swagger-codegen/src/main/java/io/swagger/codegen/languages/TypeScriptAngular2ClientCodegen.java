@@ -2,6 +2,7 @@ package io.swagger.codegen.languages;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,7 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
 
         embeddedTemplateDir = templateDir = "typescript-angular2";
         modelTemplateFiles.put("model.mustache", ".ts");
+        modelTemplateFiles.put("serializer.mustache", "Serializer.ts");
         apiTemplateFiles.put("api.mustache", ".ts");
         typeMapping.put("Date","Date");
         apiPackage = "api";
@@ -55,6 +57,74 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
         addImport(codegenModel, codegenModel.additionalPropertiesType);
     }
 
+
+    /**
+     * Override of superclass method used to create a `vendorExtensions` entry
+     * on each model property for the code snippet that is used in the
+     * XyzModelSerializer.ts classes to deserialize the value.
+     *
+     * For example, this is used to deserialize date strings coming from a server
+     * into real JavaScript Date objects using the `new Date(dateStr)` constructor
+     * in the `serializer.mustache` template.
+     *
+     * @param objs
+     */
+    @Override
+    public Map<String, Object> postProcessAllModels(Map<String, Object> objs) {
+        objs = super.postProcessAllModels(objs);
+
+        List<CodegenModel> models = extractModels(objs);
+        for (CodegenModel model : models) {
+            for (CodegenProperty prop : model.vars) {
+                String snippet = createDeserializeSnippet(prop);
+
+                prop.vendorExtensions.put("deserializeSnippet", snippet);
+            }
+        }
+
+        return objs;  // return original parameter
+    }
+
+
+    /**
+     * Processes the `objs` Map provided to `postProcessAllModels`, extracting
+     * the {@link CodegenModel}s from them into an array.
+     *
+     * @param objs
+     */
+    @SuppressWarnings({ "unchecked" })
+    private List<CodegenModel> extractModels(Map<String, Object> objs) {
+        List<CodegenModel> allModels = new ArrayList<CodegenModel>();
+
+        for (Map.Entry<String, Object> entry : objs.entrySet()) {
+            Map<String, Object> inner = (Map<String, Object>) entry.getValue();
+            List<Map<String, Object>> models = (List<Map<String, Object>>) inner.get("models");
+            for (Map<String, Object> mo : models) {
+                CodegenModel cm = (CodegenModel) mo.get("model");
+                allModels.add(cm);
+            }
+        }
+        return allModels;
+    }
+
+
+    /**
+     * Creates the TypeScript deserialization code snippet for a given model
+     * property.
+     *
+     * This is used in the `serializer.mustache` template to create the
+     * `[ModelName]Serializer.ts` classes.
+     */
+    private String createDeserializeSnippet(CodegenProperty prop) {
+        if("Date".equals(prop.datatype)) {
+            return "new Date(responseObj." + prop.name + ")";
+
+        } else {
+            return "responseObj." + prop.name;
+        }
+    }
+
+
     @Override
     public String getName() {
         return "typescript-angular2";
@@ -69,6 +139,7 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
     public void processOpts() {
         super.processOpts();
         supportingFiles.add(new SupportingFile("models.mustache", modelPackage().replace('.', File.separatorChar), "models.ts"));
+        supportingFiles.add(new SupportingFile("serializers.mustache", modelPackage().replace('.', File.separatorChar), "serializers.ts"));
         supportingFiles.add(new SupportingFile("apis.mustache", apiPackage().replace('.', File.separatorChar), "api.ts"));
         supportingFiles.add(new SupportingFile("index.mustache", getIndexDirectory(), "index.ts"));
         supportingFiles.add(new SupportingFile("configuration.mustache", getIndexDirectory(), "configuration.ts"));

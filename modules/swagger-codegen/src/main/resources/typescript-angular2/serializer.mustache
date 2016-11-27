@@ -1,0 +1,28 @@
+{{>licenseInfo}}
+{{#models}}
+{{#model}}
+import * as models from './models';
+
+{{#description}}
+/**
+ * {{{description}}}
+ */
+{{/description}}
+export class {{classname}}Serializer {
+
+    /**
+     * De-serializes an endpoint's response into a {{{classname}}} instance.
+     *
+     * For example, converts date-time strings into Date objects.
+     */
+    deserialize(responseObj: any): {{{classname}}} {
+        let {{{classVarName}}}: {{{classname}}} = {};
+{{#vars}}
+        {{{classVarName}}}.{{{name}}} = {{{vendorExtensions.deserializeSnippet}}};
+{{/vars}}
+        return {{{classVarName}}};
+    }
+
+}
+{{/model}}
+{{/models}}
