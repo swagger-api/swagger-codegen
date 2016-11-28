@@ -1,11 +1,12 @@
 package io.swagger.api;
 
-import com.netflix.hystrix.exception.HystrixRuntimeException;
-import io.swagger.Application;
-import io.swagger.TestUtils;
-import io.swagger.model.Category;
-import io.swagger.model.Pet;
-import io.swagger.model.Tag;
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,12 +15,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import com.netflix.hystrix.exception.HystrixRuntimeException;
 
-import static org.junit.Assert.*;
+import io.swagger.Application;
+import io.swagger.TestUtils;
+import io.swagger.model.Category;
+import io.swagger.model.Pet;
+import io.swagger.model.Tag;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = Application.class)

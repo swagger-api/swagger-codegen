@@ -1,10 +1,6 @@
 package io.swagger.api;
 
-import io.swagger.model.Pet;
-import java.io.File;
-import io.swagger.model.ModelApiResponse;
-
-import io.swagger.annotations.*;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import io.swagger.model.ModelApiResponse;
+import io.swagger.model.Pet;
 
 
 

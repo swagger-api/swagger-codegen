@@ -1,21 +1,15 @@
 package io.swagger.api;
 
-import io.swagger.model.*;
-import io.swagger.api.UserApiService;
-import io.swagger.api.factories.UserApiServiceFactory;
-
-import io.swagger.model.User;
 import java.util.List;
-
-import java.util.List;
-import io.swagger.api.NotFoundException;
-
-import java.io.InputStream;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
-import javax.ws.rs.*;
+
+import io.swagger.api.NotFoundException;
+import io.swagger.api.UserApiService;
+import io.swagger.api.factories.UserApiServiceFactory;
+import io.swagger.model.User;
 
 @Path("/user")
 

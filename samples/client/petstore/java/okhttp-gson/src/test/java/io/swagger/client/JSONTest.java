@@ -1,10 +1,7 @@
 package io.swagger.client;
 
-import com.google.gson.reflect.TypeToken;
+import static org.junit.Assert.*;
 
-import io.swagger.client.model.Order;
-
-import java.lang.Exception;
 import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -13,14 +10,15 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-import org.junit.*;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
 import org.threeten.bp.ZoneId;
 import org.threeten.bp.ZoneOffset;
 import org.threeten.bp.format.DateTimeFormatter;
 
-import static org.junit.Assert.*;
+import com.google.gson.reflect.TypeToken;
+
+import io.swagger.client.model.Order;
 
 public class JSONTest {
     private ApiClient apiClient = null;

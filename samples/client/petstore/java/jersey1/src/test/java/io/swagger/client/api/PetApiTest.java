@@ -1,21 +1,13 @@
 package io.swagger.client.api;
 
-import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.databind.*;
-
-import io.swagger.TestUtils;
-
-import io.swagger.client.*;
-import io.swagger.client.auth.*;
-import io.swagger.client.model.*;
+import static org.junit.Assert.*;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.util.*;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import io.swagger.TestUtils;
+import io.swagger.client.auth.*;
 
 public class PetApiTest {
     private PetApi api;

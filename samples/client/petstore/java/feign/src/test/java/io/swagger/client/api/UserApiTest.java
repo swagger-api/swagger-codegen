@@ -1,14 +1,11 @@
 package io.swagger.client.api;
 
-import io.swagger.TestUtils;
-
-import io.swagger.client.ApiClient;
-import io.swagger.client.model.*;
+import static org.junit.Assert.*;
 
 import java.util.Arrays;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import io.swagger.TestUtils;
+import io.swagger.client.ApiClient;
 
 public class UserApiTest {
     private UserApi api;

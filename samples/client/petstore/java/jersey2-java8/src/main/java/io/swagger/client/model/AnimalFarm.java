@@ -25,10 +25,10 @@
 
 package io.swagger.client.model;
 
-import java.util.Objects;
-import io.swagger.client.model.Animal;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
+
+import io.swagger.client.model.Animal;
 
 /**
  * AnimalFarm

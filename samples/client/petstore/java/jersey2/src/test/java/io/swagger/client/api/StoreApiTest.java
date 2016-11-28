@@ -1,19 +1,15 @@
 package io.swagger.client.api;
 
-import io.swagger.TestUtils;
-
-import io.swagger.client.*;
-import io.swagger.client.auth.*;
-import io.swagger.client.model.*;
+import static org.junit.Assert.*;
 
 import java.lang.reflect.Field;
-import java.util.Map;
 import java.text.SimpleDateFormat;
+import java.util.Map;
 
-import org.junit.*;
 import org.threeten.bp.OffsetDateTime;
 
-import static org.junit.Assert.*;
+import io.swagger.TestUtils;
+import io.swagger.client.auth.*;
 
 public class StoreApiTest {
     private StoreApi api = null;

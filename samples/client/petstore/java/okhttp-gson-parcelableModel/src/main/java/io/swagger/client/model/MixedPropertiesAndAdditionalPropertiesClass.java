@@ -25,18 +25,19 @@
 
 package io.swagger.client.model;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
+
+import org.threeten.bp.OffsetDateTime;
+
 import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
+
+import android.os.Parcel;
+import android.os.Parcelable;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.Animal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import org.threeten.bp.OffsetDateTime;
-import android.os.Parcelable;
-import android.os.Parcel;
 
 /**
  * MixedPropertiesAndAdditionalPropertiesClass

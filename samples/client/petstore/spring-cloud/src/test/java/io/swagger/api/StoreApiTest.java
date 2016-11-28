@@ -1,9 +1,9 @@
 package io.swagger.api;
 
-import com.netflix.hystrix.exception.HystrixRuntimeException;
-import io.swagger.Application;
-import io.swagger.TestUtils;
-import io.swagger.model.Order;
+import static org.junit.Assert.*;
+
+import java.util.Map;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +11,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.threeten.bp.OffsetDateTime;
 
-import java.lang.reflect.Field;
-import java.util.Map;
+import com.netflix.hystrix.exception.HystrixRuntimeException;
 
-import static org.junit.Assert.*;
+import io.swagger.Application;
+import io.swagger.TestUtils;
+import io.swagger.model.Order;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = Application.class)
