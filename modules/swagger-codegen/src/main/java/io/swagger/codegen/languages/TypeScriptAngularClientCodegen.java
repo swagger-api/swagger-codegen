@@ -33,7 +33,7 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
         embeddedTemplateDir = templateDir = "TypeScript-Angular";
         apiPackage = "";
         modelPackage = "";
-        ///supportingFiles.add(new SupportingFile("api.d.mustache", apiPackage().replace('.', File.separatorChar), "api.d.ts"));
+        supportingFiles.add(new SupportingFile("api.ts.mustache", apiPackage().replace('.', File.separatorChar), "api.ts"));
         additionalProperties.put("fnEnumEntry", new EnumEntryLambda());
     }
 

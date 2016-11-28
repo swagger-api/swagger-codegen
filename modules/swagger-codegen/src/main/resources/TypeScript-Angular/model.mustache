@@ -11,7 +11,7 @@
  * {{{description}}}
  */
 {{/description}}
-interface {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
+export interface {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
 {{#vars}}
 
 {{#description}}
@@ -24,7 +24,7 @@ interface {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
 }
 
 {{#hasEnums}}
-namespace {{classname}} {
+export namespace {{classname}} {
 {{#vars}}
 {{#isEnum}}
 
