@@ -252,7 +252,7 @@ public class DefaultCodegen {
 
     /**
      * Return the file name of the Api
-     * 
+     *
      * @param name the file name of the Api
      * @return the file name of the Api
      */
@@ -262,7 +262,7 @@ public class DefaultCodegen {
 
     /**
      * Return the variable name in the Api
-     * 
+     *
      * @param name the varible name of the Api
      * @return the snake-cased variable name
      */
@@ -272,7 +272,7 @@ public class DefaultCodegen {
 
     /**
      * Return the capitalized file name of the model
-     * 
+     *
      * @param name the model name
      * @return the file name of the model
      */
@@ -282,7 +282,7 @@ public class DefaultCodegen {
 
     /**
      * Return the operation ID (method name)
-     * 
+     *
      * @param operationId operation ID
      * @return the sanitized method name
      */
@@ -298,7 +298,7 @@ public class DefaultCodegen {
     /**
      * Return the variable name by removing invalid characters and proper escaping if
      * it's a reserved word.
-     * 
+     *
      * @param name the variable name
      * @return the sanitized variable name
      */
@@ -313,7 +313,7 @@ public class DefaultCodegen {
     /**
      * Return the parameter name by removing invalid characters and proper escaping if
      * it's a reserved word.
-     * 
+     *
      * @param name Codegen property object
      * @return the sanitized parameter name
      */
@@ -327,17 +327,17 @@ public class DefaultCodegen {
 
     /**
      * Return the Enum name (e.g. StatusEnum given 'status')
-     * 
+     *
      * @param property Codegen property object
      * @return the Enum name
      */
     public String toEnumName(CodegenProperty property) {
         return StringUtils.capitalize(property.name) + "Enum";
     }
-    
+
     /**
      * Return the escaped name of the reserved word
-     * 
+     *
      * @param name the name to be escaped
      * @return the escaped reserved word
      *
@@ -349,7 +349,7 @@ public class DefaultCodegen {
 
     /**
      * Return the fully-qualified "Model" name for import
-     * 
+     *
      * @param name the name of the "Model"
      * @return the fully-qualified "Model" name for import
      */
@@ -363,7 +363,7 @@ public class DefaultCodegen {
 
     /**
      * Return the fully-qualified "Api" name for import
-     * 
+     *
      * @param name the name of the "Api"
      * @return the fully-qualified "Api" name for import
      */
@@ -374,7 +374,7 @@ public class DefaultCodegen {
     /**
      * Default constructor.
      * This method will map between Swagger type and language-specified type, as well as mapping
-     * between Swagger type and the corresponding import statement for the language. This will 
+     * between Swagger type and the corresponding import statement for the language. This will
      * also add some language specified CLI options, if any.
      *
      *
@@ -571,7 +571,7 @@ public class DefaultCodegen {
             return "null";
         }
     }
-    
+
     /**
      * Return the property initialized from a data object
      * Useful for initialization with a plain object in Javascript
@@ -875,7 +875,7 @@ public class DefaultCodegen {
         return camelize(toVarName(name));
 
     }
-    
+
     /**
      * Convert Swagger Property object to Codegen Property object
      *
@@ -943,7 +943,7 @@ public class DefaultCodegen {
                 property.allowableValues = allowableValues;
             }
         }
-        
+
         if (p instanceof IntegerProperty) {
             IntegerProperty sp = (IntegerProperty) p;
             if (sp.getEnum() != null) {
@@ -960,7 +960,7 @@ public class DefaultCodegen {
                 property.allowableValues = allowableValues;
             }
         }
-        
+
         if (p instanceof LongProperty) {
             LongProperty sp = (LongProperty) p;
             if (sp.getEnum() != null) {
@@ -977,7 +977,7 @@ public class DefaultCodegen {
                 property.allowableValues = allowableValues;
             }
         }
-        
+
         if (p instanceof DoubleProperty) {
             DoubleProperty sp = (DoubleProperty) p;
             if (sp.getEnum() != null) {
@@ -994,7 +994,7 @@ public class DefaultCodegen {
                 property.allowableValues = allowableValues;
             }
         }
-        
+
         if (p instanceof FloatProperty) {
             FloatProperty sp = (FloatProperty) p;
             if (sp.getEnum() != null) {
@@ -1011,7 +1011,7 @@ public class DefaultCodegen {
                 property.allowableValues = allowableValues;
             }
         }
-        
+
         if (p instanceof DateProperty) {
             DateProperty sp = (DateProperty) p;
             if (sp.getEnum() != null) {
@@ -1028,7 +1028,7 @@ public class DefaultCodegen {
                 property.allowableValues = allowableValues;
             }
         }
-        
+
         if (p instanceof DateTimeProperty) {
             DateTimeProperty sp = (DateTimeProperty) p;
             if (sp.getEnum() != null) {
@@ -1120,7 +1120,7 @@ public class DefaultCodegen {
         }
         return responses.get(code);
     }
-    
+
     /**
      * Convert Swagger Operation object to Codegen Operation object (without providing a Swagger object)
      *
@@ -1133,7 +1133,7 @@ public class DefaultCodegen {
     public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, Map<String, Model> definitions) {
     	return fromOperation(path, httpMethod, operation, definitions, null);
     }
-    
+
     /**
      * Convert Swagger Operation object to Codegen Operation object
      *
@@ -1168,11 +1168,11 @@ public class DefaultCodegen {
                 // empty list, do nothing to override global setting
             }
         } else if (swagger != null && swagger.getConsumes() != null && swagger.getConsumes().size() > 0) {
-            // use consumes defined globally 
+            // use consumes defined globally
             consumes = swagger.getConsumes();
             LOGGER.debug("No consumes defined in operation. Using global consumes (" + swagger.getConsumes() + ") for " + op.operationId);
         }
-        
+
         // if "consumes" is defined (per operation or using global definition)
         if (consumes != null && consumes.size() > 0) {
             List<Map<String, String>> c = new ArrayList<Map<String, String>>();
@@ -1201,11 +1201,11 @@ public class DefaultCodegen {
                 // empty list, do nothing to override global setting
             }
         } else if (swagger != null && swagger.getProduces() != null && swagger.getProduces().size() > 0) {
-            // use produces defined globally 
+            // use produces defined globally
             produces = swagger.getProduces();
             LOGGER.debug("No produces defined in operation. Using global produces (" + swagger.getProduces() + ") for " + op.operationId);
         }
-        
+
         // if "produces" is defined (per operation or using global definition)
         if (produces != null && produces.size() > 0) {
             List<Map<String, String>> c = new ArrayList<Map<String, String>>();
@@ -1350,7 +1350,11 @@ public class DefaultCodegen {
         }
         for (String i : imports) {
             if (needToImport(i)) {
-                op.imports.add(i);
+                if (!i.endsWith("Model")) {
+                  op.imports.add(i + "Model");
+                } else {
+                  op.imports.add(i);
+                }
             }
         }
         op.bodyParam = bodyParam;
@@ -1444,7 +1448,7 @@ public class DefaultCodegen {
         }
         return r;
     }
-    
+
     /**
      * Convert Swagger Parameter object to Codegen Parameter object
      *
@@ -1538,7 +1542,7 @@ public class DefaultCodegen {
             p.maxLength = qp.getMaxLength();
             p.minLength = qp.getMinLength();
             p.pattern = qp.getPattern();
-            
+
             p.maximum = qp.getMaximum();
             p.exclusiveMaximum = qp.isExclusiveMaximum();
             p.minimum = qp.getMinimum();
@@ -1661,14 +1665,14 @@ public class DefaultCodegen {
                         Map<String, Object> scope = new HashMap<String, Object>();
                         scope.put("scope", scopeEntry.getKey());
                         scope.put("description", scopeEntry.getValue());
-                        
+
                         count += 1;
                         if (count < numScopes) {
                             scope.put("hasMore", "true");
                         } else {
                             scope.put("hasMore", null);
                         }
-                        
+
                         scopes.add(scope);
                     }
                     sec.scopes = scopes;
@@ -1888,6 +1892,9 @@ public class DefaultCodegen {
 
     private void addImport(CodegenModel m, String type) {
         if (type != null && needToImport(type)) {
+            if (!type.endsWith("Model")) {
+              type = type + "Model";
+            }
             m.imports.add(type);
         }
     }
@@ -1923,9 +1930,9 @@ public class DefaultCodegen {
                     m.vars.add(cp);
                 }
             }
-            
+
             m.mandatory = mandatory;
-            
+
         } else {
             m.emptyVars = true;
             m.hasVars = false;
@@ -1953,7 +1960,7 @@ public class DefaultCodegen {
         }
         return name;
     }
-    
+
     /**
      * Camelize name (parameter, property, method, etc) with upper case for first letter
      * copied from Twitter elephant bird
@@ -2088,7 +2095,7 @@ public class DefaultCodegen {
         // character with _ or empty character. Below aims to spell out different cases we've
         // encountered so far and hopefully make it easier for others to add more special
         // cases in the future.
-    	
+
     	// better error handling when map/array type is invalid
     	if (name == null) {
     	    LOGGER.error("String to be sanitized is null. Default to ERROR_UNKNOWN");

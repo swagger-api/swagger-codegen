@@ -2,11 +2,16 @@
 // DO NOT MODIFY - GENERATED FILE
 //
 
+/* tslint:disable:no-unused-variable member-ordering max-line-length no-string-literal  */
+
 import * as angular from 'angular';
 
-import { {{#operation}}{{#returnType}}{{{returnType}}}{{/returnType}}, {{/operation}} } from '../api';
+import { {{#imports}}{{import}}{{^-last}},
+         {{/-last}}{{/imports}} } from '../api';
 
-/* tslint:disable:no-unused-variable member-ordering max-line-length no-string-literal  */
+import { LogService, Logger } from 'lib/log/log-module';
+import { ApiConfig, ApiResultFactory } from 'lib/api-client/api-client-module';
+import { Cache, CacheOptions, CacheService } from 'lib/cache/cache-module';
 
 {{#operations}}
 {{#description}}
@@ -14,7 +19,7 @@ import { {{#operation}}{{#returnType}}{{{returnType}}}{{/returnType}}, {{/operat
 * {{&description}}
 */
 {{/description}}
-class {{classname}} {
+export class {{classname}} {
   public defaultHeaders: any = {};
 
   private logger: Logger;

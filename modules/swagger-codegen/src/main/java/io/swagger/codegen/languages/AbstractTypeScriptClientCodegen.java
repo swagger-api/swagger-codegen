@@ -30,7 +30,8 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
                 "try", "typeof", "var", "void", "volatile", "while", "with", "yield"));
 
         languageSpecificPrimitives = new HashSet<String>(
-                Arrays.asList("String", "boolean", "Boolean", "Double", "Integer", "Long", "Float", "Object"));
+                Arrays.asList("String", "string", "boolean", "Boolean", "Double",
+                "Integer", "Long", "Float", "Object", "Array", "number", "Number"));
         instantiationTypes.put("array", "Array");
 
         typeMapping = new HashMap<String, String>();
@@ -53,7 +54,6 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
         typeMapping.put("null", "any");
 
         importMapping = new HashMap<String, String>();
-
     }
 
     @Override

@@ -28,7 +28,7 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
     public TypeScriptAngularClientCodegen() {
         super();
         outputFolder = "generated-code/typescript-angular";
-        modelTemplateFiles.put("model.mustache", ".ts");
+        // modelTemplateFiles.put("model.mustache", ".ts");
         apiTemplateFiles.put("api.mustache", ".ts");
         embeddedTemplateDir = templateDir = "TypeScript-Angular";
         apiPackage = "";
