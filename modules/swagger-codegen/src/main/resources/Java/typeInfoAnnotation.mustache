@@ -1,5 +1,5 @@
 {{#jackson}}
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "{{discriminator}}" )
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "{{discriminator}}", visible = true )
 @JsonSubTypes({
   {{#children}}
   @JsonSubTypes.Type(value = {{name}}.class, name = "{{name}}"),
