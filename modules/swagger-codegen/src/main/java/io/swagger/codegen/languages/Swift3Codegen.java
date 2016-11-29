@@ -102,14 +102,18 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         );
         reservedWords = new HashSet<>(
                 Arrays.asList(
-                        "Int", "Int32", "Int64", "Int64", "Float", "Double", "Bool", "Void", "String", "Character", "AnyObject", "Any", "Error", "URL",
-                        "class", "Class", "break", "as", "associativity", "deinit", "case", "dynamicType", "convenience", "enum", "continue",
-                        "false", "dynamic", "extension", "default", "is", "didSet", "func", "do", "nil", "final", "import", "else",
-                        "self", "get", "init", "fallthrough", "Self", "infix", "internal", "for", "super", "inout", "let", "if",
-                        "true", "lazy", "operator", "in", "COLUMN", "left", "private", "return", "FILE", "mutating", "protocol",
-                        "switch", "FUNCTION", "none", "public", "where", "LINE", "nonmutating", "static", "while", "optional",
-                        "struct", "override", "subscript", "postfix", "typealias", "precedence", "var", "prefix", "Protocol",
-                        "required", "right", "set", "Type", "unowned", "weak")
+                    // name used by swift client
+                    "ErrorResponse",
+
+                    // swift keywords
+                    "Int", "Int32", "Int64", "Int64", "Float", "Double", "Bool", "Void", "String", "Character", "AnyObject", "Any", "Error", "URL",
+                    "class", "Class", "break", "as", "associativity", "deinit", "case", "dynamicType", "convenience", "enum", "continue",
+                    "false", "dynamic", "extension", "default", "is", "didSet", "func", "do", "nil", "final", "import", "else",
+                    "self", "get", "init", "fallthrough", "Self", "infix", "internal", "for", "super", "inout", "let", "if",
+                    "true", "lazy", "operator", "in", "COLUMN", "left", "private", "return", "FILE", "mutating", "protocol",
+                    "switch", "FUNCTION", "none", "public", "where", "LINE", "nonmutating", "static", "while", "optional",
+                    "struct", "override", "subscript", "postfix", "typealias", "precedence", "var", "prefix", "Protocol",
+                    "required", "right", "set", "Type", "unowned", "weak")
         );
 
         typeMapping = new HashMap<>();
@@ -427,10 +431,18 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         if(codegenModel.description != null) {
             codegenModel.imports.add("ApiModel");
         }
-        if (allDefinitions != null && codegenModel.parentSchema != null) {
-            final Model parentModel = allDefinitions.get(codegenModel.parentSchema);
-            final CodegenModel parentCodegenModel = super.fromModel(codegenModel.parent, parentModel);
+        if (allDefinitions != null) {
+          String parentSchema = codegenModel.parentSchema;
+
+          // multilevel inheritance: reconcile properties of all the parents
+          while (parentSchema != null) {
+            final Model parentModel = allDefinitions.get(parentSchema);
+            final CodegenModel parentCodegenModel = super.fromModel(codegenModel.parent, parentModel, allDefinitions);
             codegenModel = Swift3Codegen.reconcileProperties(codegenModel, parentCodegenModel);
+
+            // get the next parent
+            parentSchema = parentCodegenModel.parentSchema;
+          }
         }
 
         return codegenModel;
@@ -504,6 +516,11 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         // for symbol, e.g. $, #
         if (getSymbolName(name) != null) {
             return camelize(WordUtils.capitalizeFully(getSymbolName(name).toUpperCase()), true);
+        }
+
+        // Reserved Name
+        if (isReservedWord(name)) {
+            return escapeReservedWord(name);
         }
 
         if ("Int".equals(datatype) || "Int32".equals(datatype) || "Int64".equals(datatype) ||
@@ -582,7 +599,7 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
           Iterator<CodegenProperty> iterator = codegenProperties.iterator();
           while (iterator.hasNext()) {
               CodegenProperty codegenProperty = iterator.next();
-              if (codegenProperty.equals(parentModelCodegenProperty)) {
+              if (codegenProperty.baseName == parentModelCodegenProperty.baseName) {
                   // We found a property in the child class that is
                   // a duplicate of the one in the parent, so remove it.
                   iterator.remove();

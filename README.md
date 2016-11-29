@@ -128,7 +128,8 @@ cd /vagrant
 
 #### Public Docker image
 
-https://hub.docker.com/r/swaggerapi/swagger-generator/
+ - https://hub.docker.com/r/swaggerapi/swagger-generator/ (official)
+ - https://hub.docker.com/r/jimschubert/swagger-codegen-cli/ (unofficial)
 
 ### Homebrew
 To install, run `brew install swagger-codegen`
@@ -748,6 +749,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Acunetix](https://www.acunetix.com/)
 - [Atlassian](https://www.atlassian.com/)
 - [Avenida Compras S.A.](https://www.avenida.com.ar)
+- [Balance Internet](https://www.balanceinternet.com.au/)
 - [beemo](http://www.beemo.eu)
 - [bitly](https://bitly.com)
 - [Bufferfly Network](https://www.butterflynetinc.com/)
@@ -765,6 +767,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [eureka](http://eure.jp/)
 - [everystory.us](http://everystory.us)
 - [Expected Behavior](http://www.expectedbehavior.com/)
+- [Flat](https://flat.io)
 - [Finder](http://en.finder.pl/)
 - [FH Münster - University of Applied Sciences](http://www.fh-muenster.de)
 - [Gear Zero Network](https://www.gearzero.ca)
@@ -773,9 +776,11 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [GraphHopper](https://graphhopper.com/)
 - [Gravitate Solutions](http://gravitatesolutions.com/)
 - [IMS Health](http://www.imshealth.com/en/solution-areas/technology-and-applications)
+- [Intent HQ](http://www.intenthq.com)
 - [Interactive Intelligence](http://developer.mypurecloud.com/)
 - [LANDR Audio](https://www.landr.com/)
 - [Lascaux](http://www.lascaux.it/)
+- [Leica Geosystems AG](http://leica-geosystems.com)
 - [LiveAgent](https://www.ladesk.com/)
 - [Kabuku](http://www.kabuku.co.jp/en)
 - [Kuroi](http://kuroiwebdesign.com/)
@@ -792,17 +797,20 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Plexxi](http://www.plexxi.com)
 - [Pixoneye](http://www.pixoneye.com/)
 - [PostAffiliatePro](https://www.postaffiliatepro.com/)
+- [QAdept](http://qadept.com/)
 - [QuantiModo](https://quantimo.do/)
 - [Rapid7](https://rapid7.com/)
 - [Reload! A/S](https://reload.dk/) 
 - [REstore](https://www.restore.eu)
 - [Revault Sàrl](http://revault.ch)
+- [Riffyn](https://riffyn.com)
 - [Royal Bank of Canada (RBC)](http://www.rbc.com/canada.html)
 - [SCOOP Software GmbH](http://www.scoop-software.de)
 - [Skurt](http://www.skurt.com)
 - [SmartRecruiters](https://www.smartrecruiters.com/)
 - [StyleRecipe](http://stylerecipe.co.jp)
 - [Svenska Spel AB](https://www.svenskaspel.se/)
+- [TaskData](http://www.taskdata.com/) 
 - [ThoughtWorks](https://www.thoughtworks.com)
 - [uShip](https://www.uship.com/)
 - [W.UP](http://wup.hu/?siteLang=en)
@@ -912,6 +920,15 @@ Here are the requirements to become a core team member:
  To join the core team, please reach out to wing328hk@gmail.com (@wing328) for more information.
  
  To become a Template Creator, simply submit a PR for new API client (e.g. Rust, Elixir) or server stub (e.g. Ruby Grape) generator.
+
+## License information on Generated Code
+
+The Swagger Codegen project is intended as a benefit for users of the Swagger / Open API Specification.  The project itself has the [License](#license) as specified.  In addition, please understand the following points:
+
+* The templates included with this project are subject to the [License](#license).
+* Generated code is intentionally _not_ subject to the parent project license
+
+When code is generated from this project, it shall be considered **AS IS** and owned by the user of the software.  There are no warranties--expressed or implied--for generated code.  You can do what you wish with it, and once generated, the code is your responsibility and subject to the licensing terms that you deem appropriate.
 
 License
 -------
