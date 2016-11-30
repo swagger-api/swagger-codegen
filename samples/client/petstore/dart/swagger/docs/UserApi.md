@@ -31,8 +31,8 @@ This can only be done by the logged in user.
 import 'swagger.api';
 import 'swagger.model';
 
-var api_instance = swagger.api.UserApi->new();
-var body = new swagger:User(); # User | Created user object
+var api_instance = new UserApi();
+var body = new User(); // User | Created user object
 
 try { 
     api_instance.createUser(body);
@@ -74,8 +74,8 @@ Creates list of users with given input array
 import 'swagger.api';
 import 'swagger.model';
 
-var api_instance = swagger.api.UserApi->new();
-var body = [new swagger:List&lt;User&gt;()]; # List<User> | List of user object
+var api_instance = new UserApi();
+var body = [new List&lt;User&gt;()]; // List<User> | List of user object
 
 try { 
     api_instance.createUsersWithArrayInput(body);
@@ -117,8 +117,8 @@ Creates list of users with given input array
 import 'swagger.api';
 import 'swagger.model';
 
-var api_instance = swagger.api.UserApi->new();
-var body = [new swagger:List&lt;User&gt;()]; # List<User> | List of user object
+var api_instance = new UserApi();
+var body = [new List&lt;User&gt;()]; // List<User> | List of user object
 
 try { 
     api_instance.createUsersWithListInput(body);
@@ -160,8 +160,8 @@ This can only be done by the logged in user.
 import 'swagger.api';
 import 'swagger.model';
 
-var api_instance = swagger.api.UserApi->new();
-var username = username_example; # String | The name that needs to be deleted
+var api_instance = new UserApi();
+var username = username_example; // String | The name that needs to be deleted
 
 try { 
     api_instance.deleteUser(username);
@@ -203,8 +203,8 @@ Get user by user name
 import 'swagger.api';
 import 'swagger.model';
 
-var api_instance = swagger.api.UserApi->new();
-var username = username_example; # String | The name that needs to be fetched. Use user1 for testing. 
+var api_instance = new UserApi();
+var username = username_example; // String | The name that needs to be fetched. Use user1 for testing. 
 
 try { 
     var result = api_instance.getUserByName(username);
@@ -247,9 +247,9 @@ Logs user into the system
 import 'swagger.api';
 import 'swagger.model';
 
-var api_instance = swagger.api.UserApi->new();
-var username = username_example; # String | The user name for login
-var password = password_example; # String | The password for login in clear text
+var api_instance = new UserApi();
+var username = username_example; // String | The user name for login
+var password = password_example; // String | The password for login in clear text
 
 try { 
     var result = api_instance.loginUser(username, password);
@@ -293,7 +293,7 @@ Logs out current logged in user session
 import 'swagger.api';
 import 'swagger.model';
 
-var api_instance = swagger.api.UserApi->new();
+var api_instance = new UserApi();
 
 try { 
     api_instance.logoutUser();
@@ -332,9 +332,9 @@ This can only be done by the logged in user.
 import 'swagger.api';
 import 'swagger.model';
 
-var api_instance = swagger.api.UserApi->new();
-var username = username_example; # String | name that need to be deleted
-var body = new swagger:User(); # User | Updated user object
+var api_instance = new UserApi();
+var username = username_example; // String | name that need to be deleted
+var body = new User(); // User | Updated user object
 
 try { 
     api_instance.updateUser(username, body);

@@ -30,11 +30,11 @@ Add a new pet to the store
 ```dart
 import 'swagger.api';
 import 'swagger.model';
-// Configure OAuth2 access token for authorization: petstore_auth
+// TODO Configure OAuth2 access token for authorization: petstore_auth
 //swagger.api.Configuration.accessToken = 'YOUR_ACCESS_TOKEN';
 
-var api_instance = swagger.api.PetApi->new();
-var body = new swagger:Pet(); # Pet | Pet object that needs to be added to the store
+var api_instance = new PetApi();
+var body = new Pet(); // Pet | Pet object that needs to be added to the store
 
 try { 
     api_instance.addPet(body);
@@ -75,12 +75,12 @@ Deletes a pet
 ```dart
 import 'swagger.api';
 import 'swagger.model';
-// Configure OAuth2 access token for authorization: petstore_auth
+// TODO Configure OAuth2 access token for authorization: petstore_auth
 //swagger.api.Configuration.accessToken = 'YOUR_ACCESS_TOKEN';
 
-var api_instance = swagger.api.PetApi->new();
-var petId = 789; # int | Pet id to delete
-var apiKey = apiKey_example; # String | 
+var api_instance = new PetApi();
+var petId = 789; // int | Pet id to delete
+var apiKey = apiKey_example; // String | 
 
 try { 
     api_instance.deletePet(petId, apiKey);
@@ -122,11 +122,11 @@ Multiple status values can be provided with comma separated strings
 ```dart
 import 'swagger.api';
 import 'swagger.model';
-// Configure OAuth2 access token for authorization: petstore_auth
+// TODO Configure OAuth2 access token for authorization: petstore_auth
 //swagger.api.Configuration.accessToken = 'YOUR_ACCESS_TOKEN';
 
-var api_instance = swagger.api.PetApi->new();
-var status = []; # List<String> | Status values that need to be considered for filter
+var api_instance = new PetApi();
+var status = []; // List<String> | Status values that need to be considered for filter
 
 try { 
     var result = api_instance.findPetsByStatus(status);
@@ -168,11 +168,11 @@ Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3
 ```dart
 import 'swagger.api';
 import 'swagger.model';
-// Configure OAuth2 access token for authorization: petstore_auth
+// TODO Configure OAuth2 access token for authorization: petstore_auth
 //swagger.api.Configuration.accessToken = 'YOUR_ACCESS_TOKEN';
 
-var api_instance = swagger.api.PetApi->new();
-var tags = []; # List<String> | Tags to filter by
+var api_instance = new PetApi();
+var tags = []; // List<String> | Tags to filter by
 
 try { 
     var result = api_instance.findPetsByTags(tags);
@@ -214,13 +214,13 @@ Returns a single pet
 ```dart
 import 'swagger.api';
 import 'swagger.model';
-// Configure API key authorization: api_key
+// TODO Configure API key authorization: api_key
 //swagger.api.Configuration.apiKey{'api_key'} = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 //swagger.api.Configuration.apiKeyPrefix{'api_key'} = "Bearer";
 
-var api_instance = swagger.api.PetApi->new();
-var petId = 789; # int | ID of pet to return
+var api_instance = new PetApi();
+var petId = 789; // int | ID of pet to return
 
 try { 
     var result = api_instance.getPetById(petId);
@@ -262,11 +262,11 @@ Update an existing pet
 ```dart
 import 'swagger.api';
 import 'swagger.model';
-// Configure OAuth2 access token for authorization: petstore_auth
+// TODO Configure OAuth2 access token for authorization: petstore_auth
 //swagger.api.Configuration.accessToken = 'YOUR_ACCESS_TOKEN';
 
-var api_instance = swagger.api.PetApi->new();
-var body = new swagger:Pet(); # Pet | Pet object that needs to be added to the store
+var api_instance = new PetApi();
+var body = new Pet(); // Pet | Pet object that needs to be added to the store
 
 try { 
     api_instance.updatePet(body);
@@ -307,13 +307,13 @@ Updates a pet in the store with form data
 ```dart
 import 'swagger.api';
 import 'swagger.model';
-// Configure OAuth2 access token for authorization: petstore_auth
+// TODO Configure OAuth2 access token for authorization: petstore_auth
 //swagger.api.Configuration.accessToken = 'YOUR_ACCESS_TOKEN';
 
-var api_instance = swagger.api.PetApi->new();
-var petId = 789; # int | ID of pet that needs to be updated
-var name = name_example; # String | Updated name of the pet
-var status = status_example; # String | Updated status of the pet
+var api_instance = new PetApi();
+var petId = 789; // int | ID of pet that needs to be updated
+var name = name_example; // String | Updated name of the pet
+var status = status_example; // String | Updated status of the pet
 
 try { 
     api_instance.updatePetWithForm(petId, name, status);
@@ -356,13 +356,13 @@ uploads an image
 ```dart
 import 'swagger.api';
 import 'swagger.model';
-// Configure OAuth2 access token for authorization: petstore_auth
+// TODO Configure OAuth2 access token for authorization: petstore_auth
 //swagger.api.Configuration.accessToken = 'YOUR_ACCESS_TOKEN';
 
-var api_instance = swagger.api.PetApi->new();
-var petId = 789; # int | ID of pet to update
-var additionalMetadata = additionalMetadata_example; # String | Additional data to pass to server
-var file = /path/to/file.txt; # MultipartFile | file to upload
+var api_instance = new PetApi();
+var petId = 789; // int | ID of pet to update
+var additionalMetadata = additionalMetadata_example; // String | Additional data to pass to server
+var file = /path/to/file.txt; // MultipartFile | file to upload
 
 try { 
     var result = api_instance.uploadFile(petId, additionalMetadata, file);

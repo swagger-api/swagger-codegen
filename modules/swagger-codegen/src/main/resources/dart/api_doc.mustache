@@ -29,26 +29,26 @@ import '{{pubName}}.model';
 {{#hasAuthMethods}}
 {{#authMethods}}
 {{#isBasic}}
-// Configure HTTP basic authorization: {{{name}}}
+// TODO Configure HTTP basic authorization: {{{name}}}
 //{{pubName}}.api.Configuration.username = 'YOUR_USERNAME';
 //{{pubName}}.api.Configuration.password = 'YOUR_PASSWORD';
 {{/isBasic}}
 {{#isApiKey}}
-// Configure API key authorization: {{{name}}}
+// TODO Configure API key authorization: {{{name}}}
 //{{pubName}}.api.Configuration.apiKey{'{{{keyParamName}}}'} = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 //{{pubName}}.api.Configuration.apiKeyPrefix{'{{{keyParamName}}}'} = "Bearer";
 {{/isApiKey}}
 {{#isOAuth}}
-// Configure OAuth2 access token for authorization: {{{name}}}
+// TODO Configure OAuth2 access token for authorization: {{{name}}}
 //{{pubName}}.api.Configuration.accessToken = 'YOUR_ACCESS_TOKEN';
 {{/isOAuth}}
 {{/authMethods}}
 {{/hasAuthMethods}}
 
-var api_instance = {{pubName}}.api.{{classname}}->new();
+var api_instance = new {{classname}}();
 {{#allParams}}
-var {{paramName}} = {{#isListContainer}}[{{/isListContainer}}{{#isBodyParam}}new {{{pubName}}}:{{dataType}}(){{/isBodyParam}}{{^isBodyParam}}{{{example}}}{{/isBodyParam}}{{#isListContainer}}]{{/isListContainer}}; # {{{dataType}}} | {{{description}}}
+var {{paramName}} = {{#isListContainer}}[{{/isListContainer}}{{#isBodyParam}}new {{dataType}}(){{/isBodyParam}}{{^isBodyParam}}{{{example}}}{{/isBodyParam}}{{#isListContainer}}]{{/isListContainer}}; // {{{dataType}}} | {{{description}}}
 {{/allParams}}
 
 try { 
