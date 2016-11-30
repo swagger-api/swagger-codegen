@@ -1,8 +1,8 @@
-# ::Object::User
+# swagger.model.User
 
 ## Load the model package
-```perl
-use ::Object::User;
+```dart
+import swagger.model.User;
 ```
 
 ## Properties

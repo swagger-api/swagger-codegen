@@ -1,8 +1,8 @@
-# ::Object::Order
+# swagger.model.Order
 
 ## Load the model package
-```perl
-use ::Object::Order;
+```dart
+import swagger.model.Order;
 ```
 
 ## Properties

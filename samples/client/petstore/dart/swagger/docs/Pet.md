@@ -1,8 +1,8 @@
-# ::Object::Pet
+# swagger.model.Pet
 
 ## Load the model package
-```perl
-use ::Object::Pet;
+```dart
+import swagger.model.Pet;
 ```
 
 ## Properties

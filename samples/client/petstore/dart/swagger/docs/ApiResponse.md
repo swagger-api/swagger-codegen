@@ -1,8 +1,8 @@
-# ::Object::ApiResponse
+# swagger.model.ApiResponse
 
 ## Load the model package
-```perl
-use ::Object::ApiResponse;
+```dart
+import swagger.model.ApiResponse;
 ```
 
 ## Properties

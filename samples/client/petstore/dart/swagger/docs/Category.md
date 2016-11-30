@@ -1,8 +1,8 @@
-# ::Object::Category
+# swagger.model.Category
 
 ## Load the model package
-```perl
-use ::Object::Category;
+```dart
+import swagger.model.Category;
 ```
 
 ## Properties

@@ -1,4 +1,4 @@
-# ::UserApi
+# swagger.api.UserApi
 
 ## Load the API package
 ```dart
@@ -28,11 +28,11 @@ This can only be done by the logged in user.
 
 ### Example 
 ```dart
-import 'swagger.api.UserApi':
-import 'swagger.model.UserApi':
+import 'swagger.api';
+import 'swagger.model';
 
-var api_instance = ::UserApi->new();
-var body = new :User(); # User | Created user object
+var api_instance = swagger.api.UserApi->new();
+var body = new swagger:User(); # User | Created user object
 
 try { 
     api_instance.createUser(body);
@@ -71,11 +71,11 @@ Creates list of users with given input array
 
 ### Example 
 ```dart
-import 'swagger.api.UserApi':
-import 'swagger.model.UserApi':
+import 'swagger.api';
+import 'swagger.model';
 
-var api_instance = ::UserApi->new();
-var body = [new :List&lt;User&gt;()]; # List<User> | List of user object
+var api_instance = swagger.api.UserApi->new();
+var body = [new swagger:List&lt;User&gt;()]; # List<User> | List of user object
 
 try { 
     api_instance.createUsersWithArrayInput(body);
@@ -114,11 +114,11 @@ Creates list of users with given input array
 
 ### Example 
 ```dart
-import 'swagger.api.UserApi':
-import 'swagger.model.UserApi':
+import 'swagger.api';
+import 'swagger.model';
 
-var api_instance = ::UserApi->new();
-var body = [new :List&lt;User&gt;()]; # List<User> | List of user object
+var api_instance = swagger.api.UserApi->new();
+var body = [new swagger:List&lt;User&gt;()]; # List<User> | List of user object
 
 try { 
     api_instance.createUsersWithListInput(body);
@@ -157,10 +157,10 @@ This can only be done by the logged in user.
 
 ### Example 
 ```dart
-import 'swagger.api.UserApi':
-import 'swagger.model.UserApi':
+import 'swagger.api';
+import 'swagger.model';
 
-var api_instance = ::UserApi->new();
+var api_instance = swagger.api.UserApi->new();
 var username = username_example; # String | The name that needs to be deleted
 
 try { 
@@ -200,10 +200,10 @@ Get user by user name
 
 ### Example 
 ```dart
-import 'swagger.api.UserApi':
-import 'swagger.model.UserApi':
+import 'swagger.api';
+import 'swagger.model';
 
-var api_instance = ::UserApi->new();
+var api_instance = swagger.api.UserApi->new();
 var username = username_example; # String | The name that needs to be fetched. Use user1 for testing. 
 
 try { 
@@ -244,10 +244,10 @@ Logs user into the system
 
 ### Example 
 ```dart
-import 'swagger.api.UserApi':
-import 'swagger.model.UserApi':
+import 'swagger.api';
+import 'swagger.model';
 
-var api_instance = ::UserApi->new();
+var api_instance = swagger.api.UserApi->new();
 var username = username_example; # String | The user name for login
 var password = password_example; # String | The password for login in clear text
 
@@ -290,10 +290,10 @@ Logs out current logged in user session
 
 ### Example 
 ```dart
-import 'swagger.api.UserApi':
-import 'swagger.model.UserApi':
+import 'swagger.api';
+import 'swagger.model';
 
-var api_instance = ::UserApi->new();
+var api_instance = swagger.api.UserApi->new();
 
 try { 
     api_instance.logoutUser();
@@ -329,12 +329,12 @@ This can only be done by the logged in user.
 
 ### Example 
 ```dart
-import 'swagger.api.UserApi':
-import 'swagger.model.UserApi':
+import 'swagger.api';
+import 'swagger.model';
 
-var api_instance = ::UserApi->new();
+var api_instance = swagger.api.UserApi->new();
 var username = username_example; # String | name that need to be deleted
-var body = new :User(); # User | Updated user object
+var body = new swagger:User(); # User | Updated user object
 
 try { 
     api_instance.updateUser(username, body);

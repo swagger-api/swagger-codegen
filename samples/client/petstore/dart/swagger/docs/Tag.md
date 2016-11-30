@@ -1,8 +1,8 @@
-# ::Object::Tag
+# swagger.model.Tag
 
 ## Load the model package
-```perl
-use ::Object::Tag;
+```dart
+import swagger.model.Tag;
 ```
 
 ## Properties

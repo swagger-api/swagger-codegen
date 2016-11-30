@@ -1,4 +1,4 @@
-# ::StoreApi
+# swagger.api.StoreApi
 
 ## Load the API package
 ```dart
@@ -24,10 +24,10 @@ For valid response try integer IDs with value < 1000. Anything above 1000 or non
 
 ### Example 
 ```dart
-import 'swagger.api.StoreApi':
-import 'swagger.model.StoreApi':
+import 'swagger.api';
+import 'swagger.model';
 
-var api_instance = ::StoreApi->new();
+var api_instance = swagger.api.StoreApi->new();
 var orderId = orderId_example; # String | ID of the order that needs to be deleted
 
 try { 
@@ -67,14 +67,14 @@ Returns a map of status codes to quantities
 
 ### Example 
 ```dart
-import 'swagger.api.StoreApi':
-import 'swagger.model.StoreApi':
+import 'swagger.api';
+import 'swagger.model';
 // Configure API key authorization: api_key
 //swagger.api.Configuration.apiKey{'api_key'} = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 //swagger.api.Configuration.apiKeyPrefix{'api_key'} = "Bearer";
 
-var api_instance = ::StoreApi->new();
+var api_instance = swagger.api.StoreApi->new();
 
 try { 
     var result = api_instance.getInventory();
@@ -111,10 +111,10 @@ For valid response try integer IDs with value <= 5 or > 10. Other values will ge
 
 ### Example 
 ```dart
-import 'swagger.api.StoreApi':
-import 'swagger.model.StoreApi':
+import 'swagger.api';
+import 'swagger.model';
 
-var api_instance = ::StoreApi->new();
+var api_instance = swagger.api.StoreApi->new();
 var orderId = 789; # int | ID of pet that needs to be fetched
 
 try { 
@@ -155,11 +155,11 @@ Place an order for a pet
 
 ### Example 
 ```dart
-import 'swagger.api.StoreApi':
-import 'swagger.model.StoreApi':
+import 'swagger.api';
+import 'swagger.model';
 
-var api_instance = ::StoreApi->new();
-var body = new :Order(); # Order | order placed for purchasing the pet
+var api_instance = swagger.api.StoreApi->new();
+var body = new swagger:Order(); # Order | order placed for purchasing the pet
 
 try { 
     var result = api_instance.placeOrder(body);
