@@ -260,9 +260,15 @@ public class DefaultCodegen {
                             enumName = value.toString();
                         }
                     }
-                    enumVar.put("name", toEnumVarName(enumName, var.datatype));
-                    enumVar.put("value", toEnumValue(value.toString(), var.datatype));
-                    enumVars.add(enumVar);
+
+                    // This will remove empty enum values from the SDKs if swagger specifies "" as a valid value
+                    String enumVarName = toEnumVarName(enumName, var.datatype);
+                    String enumValue = toEnumValue(value.toString(), var.datatype);
+                    if (!enumVarName.isEmpty() && !enumValue.isEmpty()) {
+                        enumVar.put("name", enumVarName);
+                        enumVar.put("value", enumValue);
+                        enumVars.add(enumVar);
+                    }
                 }
                 allowableValues.put("enumVars", enumVars);
                 // handle default value for enum, e.g. available => StatusEnum.AVAILABLE
