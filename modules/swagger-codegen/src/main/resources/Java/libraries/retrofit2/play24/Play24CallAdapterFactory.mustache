@@ -46,6 +46,9 @@ public class Play24CallAdapterFactory extends CallAdapter.Factory {
         return new ValueAdapter(parameterType);
     }
 
+    /**
+     * Adpater that coverts values returned by API interface into Play promises
+     */
     static final class ValueAdapter implements CallAdapter<F.Promise<?>> {
 
         private final Type responseType;
@@ -70,7 +73,6 @@ public class Play24CallAdapterFactory extends CallAdapter.Factory {
                     if (response.isSuccessful()) {
                         promise.success(response.body());
                     } else {
-                        // TODO:
                         promise.failure(new Exception(response.errorBody().toString()));
                     }
                 }
@@ -79,6 +81,7 @@ public class Play24CallAdapterFactory extends CallAdapter.Factory {
                 public void onFailure(Call<R> call, Throwable t) {
                     promise.failure(t);
                 }
+
             });
 
             return promise;

@@ -20,12 +20,18 @@ import {{invokerPackage}}.auth.ApiKeyAuth;
 import {{invokerPackage}}.auth.Authentication;
 
 /**
- *
+ * API client
  */
 public class ApiClient {
 
+    /** Underlying HTTP-client */
     private WSClient wsClient;
+
+    /** Supported auths */
     private Map<String, Authentication> authentications;
+
+    /** API base path */
+    private String basePath = "{{{basePath}}}";
 
     public ApiClient(WSClient wsClient) {
         this();
@@ -43,10 +49,12 @@ public class ApiClient {
 
     }
 
+    /**
+     * Creates a retrofit2 client for given API interface
+     */
     public <S> S createService(Class<S> serviceClass) {
-        String baseUrl = "{{{basePath}}}";
-        if(!baseUrl.endsWith("/")) {
-            baseUrl = baseUrl + "/";
+        if(!basePath.endsWith("/")) {
+            basePath = basePath + "/";
         }
 
         Map<String, String> extraHeaders = new HashMap<>();
@@ -60,13 +68,21 @@ public class ApiClient {
         }
 
         return new Retrofit.Builder()
-                       .baseUrl(baseUrl)
+                       .baseUrl(basePath)
                        .addConverterFactory(ScalarsConverterFactory.create())
                        .addConverterFactory(JacksonConverterFactory.create(Json.mapper()))
                        .callFactory(new Play24CallFactory(wsClient, extraHeaders, extraQueryParams))
                        .addCallAdapterFactory(new Play24CallAdapterFactory())
                        .build()
                        .create(serviceClass);
+    }
+
+    /**
+     * Helper method to set API base path
+     */
+    public ApiClient setBasePath(String basePath) {
+        this.basePath = basePath;
+        return this;
     }
 
     /**
@@ -89,26 +105,28 @@ public class ApiClient {
     /**
      * Helper method to set API key value for the first API key authentication.
      */
-    public void setApiKey(String apiKey) {
+    public ApiClient setApiKey(String apiKey) {
         for (Authentication auth : authentications.values()) {
             if (auth instanceof ApiKeyAuth) {
                 ((ApiKeyAuth) auth).setApiKey(apiKey);
-                return;
+                return this;
             }
         }
+
         throw new RuntimeException("No API key authentication configured!");
     }
 
     /**
      * Helper method to set API key prefix for the first API key authentication.
      */
-    public void setApiKeyPrefix(String apiKeyPrefix) {
+    public ApiClient setApiKeyPrefix(String apiKeyPrefix) {
         for (Authentication auth : authentications.values()) {
             if (auth instanceof ApiKeyAuth) {
                 ((ApiKeyAuth) auth).setApiKeyPrefix(apiKeyPrefix);
-                return;
+                return this;
             }
         }
+
         throw new RuntimeException("No API key authentication configured!");
     }
 

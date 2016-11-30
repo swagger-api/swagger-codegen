@@ -76,6 +76,9 @@ public class Play24CallFactory implements okhttp3.Call.Factory {
         return new PlayWSCall(wsClient, rb.build());
     }
 
+    /**
+     * Call implementation that delegates to Play WS Client
+     */
     static class PlayWSCall implements Call {
 
         private final WSClient wsClient;
