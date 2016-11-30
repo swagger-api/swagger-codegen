@@ -2,7 +2,7 @@
 
 ## Load the model package
 ```dart
-import swagger.model.Pet;
+import 'package:swagger/api.dart';
 ```
 
 ## Properties

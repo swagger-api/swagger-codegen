@@ -2,7 +2,7 @@
 
 ## Load the model package
 ```dart
-import swagger.model.Category;
+import 'package:swagger/api.dart';
 ```
 
 ## Properties

@@ -2,7 +2,7 @@
 
 ## Load the API package
 ```dart
-import 'swagger.api.StoreApi';
+import 'package:swagger/api.dart';
 ```
 
 All URIs are relative to **
