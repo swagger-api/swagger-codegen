@@ -1,9 +1,9 @@
-# {{apiPackage}}::{{classname}}{{#description}}
+# {{pubName}}.api.{{classname}}{{#description}}
 {{description}}{{/description}}
 
 ## Load the API package
 ```dart
-import 'swagger.api.{{classname}}';
+import '{{pubName}}.api.{{classname}}';
 ```
 
 All URIs are relative to *{{basePath}}*
@@ -24,31 +24,31 @@ Method | HTTP request | Description
 
 ### Example 
 ```dart
-import 'swagger.api.{{classname}}':
-import 'swagger.model.{{classname}}':
+import '{{pubName}}.api';
+import '{{pubName}}.model';
 {{#hasAuthMethods}}
 {{#authMethods}}
 {{#isBasic}}
 // Configure HTTP basic authorization: {{{name}}}
-//swagger.api.Configuration.username = 'YOUR_USERNAME';
-//swagger.api.Configuration.password = 'YOUR_PASSWORD';
+//{{pubName}}.api.Configuration.username = 'YOUR_USERNAME';
+//{{pubName}}.api.Configuration.password = 'YOUR_PASSWORD';
 {{/isBasic}}
 {{#isApiKey}}
 // Configure API key authorization: {{{name}}}
-//swagger.api.Configuration.apiKey{'{{{keyParamName}}}'} = 'YOUR_API_KEY';
+//{{pubName}}.api.Configuration.apiKey{'{{{keyParamName}}}'} = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//swagger.api.Configuration.apiKeyPrefix{'{{{keyParamName}}}'} = "Bearer";
+//{{pubName}}.api.Configuration.apiKeyPrefix{'{{{keyParamName}}}'} = "Bearer";
 {{/isApiKey}}
 {{#isOAuth}}
 // Configure OAuth2 access token for authorization: {{{name}}}
-swagger.api.Configuration.accessToken = 'YOUR_ACCESS_TOKEN';
+//{{pubName}}.api.Configuration.accessToken = 'YOUR_ACCESS_TOKEN';
 {{/isOAuth}}
 {{/authMethods}}
 {{/hasAuthMethods}}
 
-var api_instance = {{moduleName}}::{{classname}}->new();
+var api_instance = {{pubName}}.api.{{classname}}->new();
 {{#allParams}}
-var {{paramName}} = {{#isListContainer}}[{{/isListContainer}}{{#isBodyParam}}new {{{moduleName}}}:{{dataType}}(){{/isBodyParam}}{{^isBodyParam}}{{{example}}}{{/isBodyParam}}{{#isListContainer}}]{{/isListContainer}}; # {{{dataType}}} | {{{description}}}
+var {{paramName}} = {{#isListContainer}}[{{/isListContainer}}{{#isBodyParam}}new {{{pubName}}}:{{dataType}}(){{/isBodyParam}}{{^isBodyParam}}{{{example}}}{{/isBodyParam}}{{#isListContainer}}]{{/isListContainer}}; # {{{dataType}}} | {{{description}}}
 {{/allParams}}
 
 try { 
