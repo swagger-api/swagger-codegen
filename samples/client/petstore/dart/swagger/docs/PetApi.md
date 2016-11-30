@@ -1,8 +1,8 @@
 # ::PetApi
 
 ## Load the API package
-```perl
-use ::Object::PetApi;
+```dart
+import 'swagger.api.PetApi';
 ```
 
 All URIs are relative to **
@@ -20,7 +20,7 @@ Method | HTTP request | Description
 
 
 # **addPet**
-> addPet(body => $body)
+> addPet(body)
 
 Add a new pet to the store
 
@@ -28,11 +28,10 @@ Add a new pet to the store
 
 ### Example 
 ```dart
-import '':
-import '';
-
+import 'swagger.api.PetApi':
+import 'swagger.model.PetApi':
 // Configure OAuth2 access token for authorization: petstore_auth
-$::Configuration::access_token = 'YOUR_ACCESS_TOKEN';
+swagger.api.Configuration.accessToken = 'YOUR_ACCESS_TOKEN';
 
 var api_instance = ::PetApi->new();
 var body = new :Pet(); # Pet | Pet object that needs to be added to the store
@@ -66,7 +65,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **deletePet**
-> deletePet(petId => $petId, apiKey => $apiKey)
+> deletePet(petId, apiKey)
 
 Deletes a pet
 
@@ -74,11 +73,10 @@ Deletes a pet
 
 ### Example 
 ```dart
-import '':
-import '';
-
+import 'swagger.api.PetApi':
+import 'swagger.model.PetApi':
 // Configure OAuth2 access token for authorization: petstore_auth
-$::Configuration::access_token = 'YOUR_ACCESS_TOKEN';
+swagger.api.Configuration.accessToken = 'YOUR_ACCESS_TOKEN';
 
 var api_instance = ::PetApi->new();
 var petId = 789; # int | Pet id to delete
@@ -114,7 +112,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **findPetsByStatus**
-> List<Pet> findPetsByStatus(status => $status)
+> List<Pet> findPetsByStatus(status)
 
 Finds Pets by status
 
@@ -122,11 +120,10 @@ Multiple status values can be provided with comma separated strings
 
 ### Example 
 ```dart
-import '':
-import '';
-
+import 'swagger.api.PetApi':
+import 'swagger.model.PetApi':
 // Configure OAuth2 access token for authorization: petstore_auth
-$::Configuration::access_token = 'YOUR_ACCESS_TOKEN';
+swagger.api.Configuration.accessToken = 'YOUR_ACCESS_TOKEN';
 
 var api_instance = ::PetApi->new();
 var status = []; # List<String> | Status values that need to be considered for filter
@@ -161,7 +158,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **findPetsByTags**
-> List<Pet> findPetsByTags(tags => $tags)
+> List<Pet> findPetsByTags(tags)
 
 Finds Pets by tags
 
@@ -169,11 +166,10 @@ Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3
 
 ### Example 
 ```dart
-import '':
-import '';
-
+import 'swagger.api.PetApi':
+import 'swagger.model.PetApi':
 // Configure OAuth2 access token for authorization: petstore_auth
-$::Configuration::access_token = 'YOUR_ACCESS_TOKEN';
+swagger.api.Configuration.accessToken = 'YOUR_ACCESS_TOKEN';
 
 var api_instance = ::PetApi->new();
 var tags = []; # List<String> | Tags to filter by
@@ -208,7 +204,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getPetById**
-> Pet getPetById(petId => $petId)
+> Pet getPetById(petId)
 
 Find pet by ID
 
@@ -216,12 +212,13 @@ Returns a single pet
 
 ### Example 
 ```dart
-import '':
-import '';
+import 'swagger.api.PetApi':
+import 'swagger.model.PetApi':
 // Configure API key authorization: api_key
-//::Configuration::api_key->{'api_key'} = 'YOUR_API_KEY';
+//swagger.api.Configuration.apiKey{'api_key'} = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//$::Configuration::api_key_prefix->{'api_key'} = "Bearer";
+//swagger.api.Configuration.apiKeyPrefix{'api_key'} = "Bearer";
+
 var api_instance = ::PetApi->new();
 var petId = 789; # int | ID of pet to return
 
@@ -255,7 +252,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **updatePet**
-> updatePet(body => $body)
+> updatePet(body)
 
 Update an existing pet
 
@@ -263,11 +260,10 @@ Update an existing pet
 
 ### Example 
 ```dart
-import '':
-import '';
-
+import 'swagger.api.PetApi':
+import 'swagger.model.PetApi':
 // Configure OAuth2 access token for authorization: petstore_auth
-$::Configuration::access_token = 'YOUR_ACCESS_TOKEN';
+swagger.api.Configuration.accessToken = 'YOUR_ACCESS_TOKEN';
 
 var api_instance = ::PetApi->new();
 var body = new :Pet(); # Pet | Pet object that needs to be added to the store
@@ -301,7 +297,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **updatePetWithForm**
-> updatePetWithForm(petId => $petId, name => $name, status => $status)
+> updatePetWithForm(petId, name, status)
 
 Updates a pet in the store with form data
 
@@ -309,11 +305,10 @@ Updates a pet in the store with form data
 
 ### Example 
 ```dart
-import '':
-import '';
-
+import 'swagger.api.PetApi':
+import 'swagger.model.PetApi':
 // Configure OAuth2 access token for authorization: petstore_auth
-$::Configuration::access_token = 'YOUR_ACCESS_TOKEN';
+swagger.api.Configuration.accessToken = 'YOUR_ACCESS_TOKEN';
 
 var api_instance = ::PetApi->new();
 var petId = 789; # int | ID of pet that needs to be updated
@@ -351,7 +346,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **uploadFile**
-> ApiResponse uploadFile(petId => $petId, additionalMetadata => $additionalMetadata, file => $file)
+> ApiResponse uploadFile(petId, additionalMetadata, file)
 
 uploads an image
 
@@ -359,11 +354,10 @@ uploads an image
 
 ### Example 
 ```dart
-import '':
-import '';
-
+import 'swagger.api.PetApi':
+import 'swagger.model.PetApi':
 // Configure OAuth2 access token for authorization: petstore_auth
-$::Configuration::access_token = 'YOUR_ACCESS_TOKEN';
+swagger.api.Configuration.accessToken = 'YOUR_ACCESS_TOKEN';
 
 var api_instance = ::PetApi->new();
 var petId = 789; # int | ID of pet to update

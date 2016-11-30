@@ -1,8 +1,8 @@
 # ::StoreApi
 
 ## Load the API package
-```perl
-use ::Object::StoreApi;
+```dart
+import 'swagger.api.StoreApi';
 ```
 
 All URIs are relative to **
@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 
 # **deleteOrder**
-> deleteOrder(orderId => $orderId)
+> deleteOrder(orderId)
 
 Delete purchase order by ID
 
@@ -24,8 +24,8 @@ For valid response try integer IDs with value < 1000. Anything above 1000 or non
 
 ### Example 
 ```dart
-import '':
-import '';
+import 'swagger.api.StoreApi':
+import 'swagger.model.StoreApi':
 
 var api_instance = ::StoreApi->new();
 var orderId = orderId_example; # String | ID of the order that needs to be deleted
@@ -67,12 +67,13 @@ Returns a map of status codes to quantities
 
 ### Example 
 ```dart
-import '':
-import '';
+import 'swagger.api.StoreApi':
+import 'swagger.model.StoreApi':
 // Configure API key authorization: api_key
-//::Configuration::api_key->{'api_key'} = 'YOUR_API_KEY';
+//swagger.api.Configuration.apiKey{'api_key'} = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//$::Configuration::api_key_prefix->{'api_key'} = "Bearer";
+//swagger.api.Configuration.apiKeyPrefix{'api_key'} = "Bearer";
+
 var api_instance = ::StoreApi->new();
 
 try { 
@@ -102,7 +103,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getOrderById**
-> Order getOrderById(orderId => $orderId)
+> Order getOrderById(orderId)
 
 Find purchase order by ID
 
@@ -110,8 +111,8 @@ For valid response try integer IDs with value <= 5 or > 10. Other values will ge
 
 ### Example 
 ```dart
-import '':
-import '';
+import 'swagger.api.StoreApi':
+import 'swagger.model.StoreApi':
 
 var api_instance = ::StoreApi->new();
 var orderId = 789; # int | ID of pet that needs to be fetched
@@ -146,7 +147,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **placeOrder**
-> Order placeOrder(body => $body)
+> Order placeOrder(body)
 
 Place an order for a pet
 
@@ -154,8 +155,8 @@ Place an order for a pet
 
 ### Example 
 ```dart
-import '':
-import '';
+import 'swagger.api.StoreApi':
+import 'swagger.model.StoreApi':
 
 var api_instance = ::StoreApi->new();
 var body = new :Order(); # Order | order placed for purchasing the pet

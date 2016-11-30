@@ -1,8 +1,8 @@
 # ::UserApi
 
 ## Load the API package
-```perl
-use ::Object::UserApi;
+```dart
+import 'swagger.api.UserApi';
 ```
 
 All URIs are relative to **
@@ -20,7 +20,7 @@ Method | HTTP request | Description
 
 
 # **createUser**
-> createUser(body => $body)
+> createUser(body)
 
 Create user
 
@@ -28,8 +28,8 @@ This can only be done by the logged in user.
 
 ### Example 
 ```dart
-import '':
-import '';
+import 'swagger.api.UserApi':
+import 'swagger.model.UserApi':
 
 var api_instance = ::UserApi->new();
 var body = new :User(); # User | Created user object
@@ -63,7 +63,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **createUsersWithArrayInput**
-> createUsersWithArrayInput(body => $body)
+> createUsersWithArrayInput(body)
 
 Creates list of users with given input array
 
@@ -71,8 +71,8 @@ Creates list of users with given input array
 
 ### Example 
 ```dart
-import '':
-import '';
+import 'swagger.api.UserApi':
+import 'swagger.model.UserApi':
 
 var api_instance = ::UserApi->new();
 var body = [new :List&lt;User&gt;()]; # List<User> | List of user object
@@ -106,7 +106,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **createUsersWithListInput**
-> createUsersWithListInput(body => $body)
+> createUsersWithListInput(body)
 
 Creates list of users with given input array
 
@@ -114,8 +114,8 @@ Creates list of users with given input array
 
 ### Example 
 ```dart
-import '':
-import '';
+import 'swagger.api.UserApi':
+import 'swagger.model.UserApi':
 
 var api_instance = ::UserApi->new();
 var body = [new :List&lt;User&gt;()]; # List<User> | List of user object
@@ -149,7 +149,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **deleteUser**
-> deleteUser(username => $username)
+> deleteUser(username)
 
 Delete user
 
@@ -157,8 +157,8 @@ This can only be done by the logged in user.
 
 ### Example 
 ```dart
-import '':
-import '';
+import 'swagger.api.UserApi':
+import 'swagger.model.UserApi':
 
 var api_instance = ::UserApi->new();
 var username = username_example; # String | The name that needs to be deleted
@@ -192,7 +192,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getUserByName**
-> User getUserByName(username => $username)
+> User getUserByName(username)
 
 Get user by user name
 
@@ -200,8 +200,8 @@ Get user by user name
 
 ### Example 
 ```dart
-import '':
-import '';
+import 'swagger.api.UserApi':
+import 'swagger.model.UserApi':
 
 var api_instance = ::UserApi->new();
 var username = username_example; # String | The name that needs to be fetched. Use user1 for testing. 
@@ -236,7 +236,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **loginUser**
-> String loginUser(username => $username, password => $password)
+> String loginUser(username, password)
 
 Logs user into the system
 
@@ -244,8 +244,8 @@ Logs user into the system
 
 ### Example 
 ```dart
-import '':
-import '';
+import 'swagger.api.UserApi':
+import 'swagger.model.UserApi':
 
 var api_instance = ::UserApi->new();
 var username = username_example; # String | The user name for login
@@ -290,8 +290,8 @@ Logs out current logged in user session
 
 ### Example 
 ```dart
-import '':
-import '';
+import 'swagger.api.UserApi':
+import 'swagger.model.UserApi':
 
 var api_instance = ::UserApi->new();
 
@@ -321,7 +321,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **updateUser**
-> updateUser(username => $username, body => $body)
+> updateUser(username, body)
 
 Updated user
 
@@ -329,8 +329,8 @@ This can only be done by the logged in user.
 
 ### Example 
 ```dart
-import '':
-import '';
+import 'swagger.api.UserApi':
+import 'swagger.model.UserApi':
 
 var api_instance = ::UserApi->new();
 var username = username_example; # String | name that need to be deleted

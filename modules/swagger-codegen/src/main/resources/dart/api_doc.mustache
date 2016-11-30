@@ -1,9 +1,9 @@
-# {{moduleName}}::{{classname}}{{#description}}
+# {{apiPackage}}::{{classname}}{{#description}}
 {{description}}{{/description}}
 
 ## Load the API package
-```perl
-use {{moduleName}}::Object::{{classname}};
+```dart
+import 'swagger.api.{{classname}}';
 ```
 
 All URIs are relative to *{{basePath}}*
@@ -16,7 +16,7 @@ Method | HTTP request | Description
 {{#operations}}
 {{#operation}}
 # **{{{operationId}}}**
-> {{#returnType}}{{{returnType}}} {{/returnType}}{{{operationId}}}({{#allParams}}{{paramName}} => ${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+> {{#returnType}}{{{returnType}}} {{/returnType}}{{{operationId}}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
 
 {{{summary}}}{{#notes}}
 
@@ -24,22 +24,24 @@ Method | HTTP request | Description
 
 ### Example 
 ```dart
-import '{{{moduleName}}}':
-import '{{{moduleName}}}';
+import 'swagger.api.{{classname}}':
+import 'swagger.model.{{classname}}':
 {{#hasAuthMethods}}
 {{#authMethods}}
 {{#isBasic}}
 // Configure HTTP basic authorization: {{{name}}}
-//{{{moduleName}}}::Configuration::username = 'YOUR_USERNAME';
-//{{{moduleName}}}::Configuration::password = 'YOUR_PASSWORD';
+//swagger.api.Configuration.username = 'YOUR_USERNAME';
+//swagger.api.Configuration.password = 'YOUR_PASSWORD';
 {{/isBasic}}
 {{#isApiKey}}
 // Configure API key authorization: {{{name}}}
-//{{{moduleName}}}::Configuration::api_key->{'{{{keyParamName}}}'} = 'YOUR_API_KEY';
+//swagger.api.Configuration.apiKey{'{{{keyParamName}}}'} = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//${{{moduleName}}}::Configuration::api_key_prefix->{'{{{keyParamName}}}'} = "Bearer";{{/isApiKey}}{{#isOAuth}}
+//swagger.api.Configuration.apiKeyPrefix{'{{{keyParamName}}}'} = "Bearer";
+{{/isApiKey}}
+{{#isOAuth}}
 // Configure OAuth2 access token for authorization: {{{name}}}
-${{{moduleName}}}::Configuration::access_token = 'YOUR_ACCESS_TOKEN';
+swagger.api.Configuration.accessToken = 'YOUR_ACCESS_TOKEN';
 {{/isOAuth}}
 {{/authMethods}}
 {{/hasAuthMethods}}
