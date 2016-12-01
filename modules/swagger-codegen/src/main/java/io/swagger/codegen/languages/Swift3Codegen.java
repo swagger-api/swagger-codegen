@@ -431,10 +431,18 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         if(codegenModel.description != null) {
             codegenModel.imports.add("ApiModel");
         }
-        if (allDefinitions != null && codegenModel.parentSchema != null) {
-            final Model parentModel = allDefinitions.get(codegenModel.parentSchema);
-            final CodegenModel parentCodegenModel = super.fromModel(codegenModel.parent, parentModel);
+        if (allDefinitions != null) {
+          String parentSchema = codegenModel.parentSchema;
+
+          // multilevel inheritance: reconcile properties of all the parents
+          while (parentSchema != null) {
+            final Model parentModel = allDefinitions.get(parentSchema);
+            final CodegenModel parentCodegenModel = super.fromModel(codegenModel.parent, parentModel, allDefinitions);
             codegenModel = Swift3Codegen.reconcileProperties(codegenModel, parentCodegenModel);
+
+            // get the next parent
+            parentSchema = parentCodegenModel.parentSchema;
+          }
         }
 
         return codegenModel;
@@ -510,25 +518,33 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
             return camelize(WordUtils.capitalizeFully(getSymbolName(name).toUpperCase()), true);
         }
 
+	// Camelize only when we have a structure defined below
+	Boolean camelized = false;
+	if (name.matches("[A-Z][a-z0-9]+[a-zA-Z0-9]*")) {
+	    name = camelize(name, true);
+	    camelized = true;
+	}
+
         // Reserved Name
         if (isReservedWord(name)) {
             return escapeReservedWord(name);
         }
 
+	// Check for numerical conversions
         if ("Int".equals(datatype) || "Int32".equals(datatype) || "Int64".equals(datatype) ||
                 "Float".equals(datatype) || "Double".equals(datatype)) {
             String varName = "number" + camelize(name);
             varName = varName.replaceAll("-", "minus");
             varName = varName.replaceAll("\\+", "plus");
             varName = varName.replaceAll("\\.", "dot");
-
             return varName;
         }
 
-        // Prevent from breaking properly cased identifier
-        if (name.matches("[A-Z][a-z0-9]+[a-zA-Z0-9]*")) {
-            return camelize(name, true);
-        }
+	// If we have already camelized the word, don't progress
+	// any further
+	if (camelized) {
+	    return name;
+	}
 
         char[] separators = {'-', '_', ' ', ':', '(', ')'};
         return camelize(WordUtils.capitalizeFully(StringUtils.lowerCase(name), separators).replaceAll("[-_ :\\(\\)]", ""), true);
@@ -591,7 +607,7 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
           Iterator<CodegenProperty> iterator = codegenProperties.iterator();
           while (iterator.hasNext()) {
               CodegenProperty codegenProperty = iterator.next();
-              if (codegenProperty.equals(parentModelCodegenProperty)) {
+              if (codegenProperty.baseName == parentModelCodegenProperty.baseName) {
                   // We found a property in the child class that is
                   // a duplicate of the one in the parent, so remove it.
                   iterator.remove();
