@@ -9,9 +9,11 @@
     "isomorphic-fetch": "^2.2.1"
   },
   "scripts" : {
-    "prepublish" : "typings install && tsc"
+    "prepublish" : "typings install && tsc", 
+    "test": "tslint api.ts"
   },
   "devDependencies": {
+    "tslint": "^4.0.2",
     "typescript": "^1.8.10",
     "typings": "^1.0.4"
   }
