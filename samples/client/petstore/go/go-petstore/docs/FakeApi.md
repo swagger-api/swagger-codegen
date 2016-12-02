@@ -1,6 +1,6 @@
 # \FakeApi
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to **
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -58,8 +58,8 @@ Name | Type | Description  | Notes
  **float** | **float32**| None | [optional] 
  **string_** | **string**| None | [optional] 
  **binary** | **string**| None | [optional] 
- **date** | **time.Time**| None | [optional] 
- **dateTime** | **time.Time**| None | [optional] 
+ **date** | [**time.Time**](.md)| None | [optional] 
+ **dateTime** | [**time.Time**](.md)| None | [optional] 
  **password** | **string**| None | [optional] 
  **callback** | **string**| None | [optional] 
 

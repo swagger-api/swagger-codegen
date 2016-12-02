@@ -8,6 +8,7 @@ import (
 	"reflect"
 	"strings"
 	"net/url"
+    "errors"
 	"io/ioutil"
 	"github.com/go-resty/resty"
 )
@@ -79,7 +80,7 @@ func (c *APIClient) CallAPI(path string, method string,
 	return nil, fmt.Errorf("invalid method %v", method)
 }
 
-func (c *APIClient) ParameterToString(obj interface{},collectionFormat string) string {
+func (c *APIClient) parameterToString(obj interface{},collectionFormat string) string {
 	if reflect.TypeOf(obj).String() == "[]string" {
 		switch	collectionFormat {
 		case "pipes":
@@ -94,6 +95,20 @@ func (c *APIClient) ParameterToString(obj interface{},collectionFormat string) s
 	}
 
 	return fmt.Sprintf("%v", obj)
+}
+
+// Verify optional parameters are of the correct type.
+func (c *APIClient) typeCheckParameter(obj interface{}, expected string, name string) error {
+    // Make sure there is an object.
+    if obj == nil {
+        return nil    
+    }
+
+    // Check the type is as expected.
+	if reflect.TypeOf(obj).String() != expected {
+        return errors.New(fmt.Sprintf("Expected %s to be of type %s but received %s.", name, expected, reflect.TypeOf(obj).String()))
+	}
+	return nil
 }
 
 func (c *APIClient) prepareClient() *resty.Client {
