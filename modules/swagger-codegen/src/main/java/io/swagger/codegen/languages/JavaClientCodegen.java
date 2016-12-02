@@ -216,9 +216,9 @@ public class JavaClientCodegen extends AbstractJavaCodegen implements BeanValida
                 for (CodegenOperation operation : ops) {
                     if (operation.hasConsumes == Boolean.TRUE) {
 
-                        if ( isMultipartType(operation.consumes) ) {
+                        if ( isMultipartType(operation.consumes) ) { 
                             operation.isMultipart = Boolean.TRUE;
-                        }
+                        }	
                         else {
                             operation.prioritizedContentTypes = prioritizeContentTypes(operation.consumes);
                         }
@@ -235,22 +235,22 @@ public class JavaClientCodegen extends AbstractJavaCodegen implements BeanValida
     }
 
     /**
-     *  Prioritizes consumes mime-type list by moving json-vendor and json mime-types up front, but
-     *  otherwise preserves original consumes definition order.
-     *  [application/vnd...+json,... application/json, ..as is..]
-     *
+     *  Prioritizes consumes mime-type list by moving json-vendor and json mime-types up front, but 
+     *  otherwise preserves original consumes definition order. 
+     *  [application/vnd...+json,... application/json, ..as is..]  
+     *  
      * @param consumes consumes mime-type list
-     * @return
+     * @return 
      */
     static List<Map<String, String>> prioritizeContentTypes(List<Map<String, String>> consumes) {
         if ( consumes.size() <= 1 )
             return consumes;
-
+        
         List<Map<String, String>> prioritizedContentTypes = new ArrayList<>(consumes.size());
-
+        
         List<Map<String, String>> jsonVendorMimeTypes = new ArrayList<>(consumes.size());
         List<Map<String, String>> jsonMimeTypes = new ArrayList<>(consumes.size());
-
+        
         for ( Map<String, String> consume : consumes) {
             if ( isJsonVendorMimeType(consume.get(MEDIA_TYPE))) {
                 jsonVendorMimeTypes.add(consume);
@@ -260,18 +260,18 @@ public class JavaClientCodegen extends AbstractJavaCodegen implements BeanValida
             }
             else
                 prioritizedContentTypes.add(consume);
-
+            
             consume.put("hasMore", "true");
         }
-
+        
         prioritizedContentTypes.addAll(0, jsonMimeTypes);
         prioritizedContentTypes.addAll(0, jsonVendorMimeTypes);
-
+        
         prioritizedContentTypes.get(prioritizedContentTypes.size()-1).put("hasMore", null);
-
+        
         return prioritizedContentTypes;
     }
-
+    
     private static boolean isMultipartType(List<Map<String, String>> consumes) {
         Map<String, String> firstType = consumes.get(0);
         if (firstType != null) {
@@ -342,7 +342,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen implements BeanValida
     }
 
     final private static Pattern JSON_MIME_PATTERN = Pattern.compile("(?i)application\\/json(;.*)?");
-    final private static Pattern JSON_VENDOR_MIME_PATTERN = Pattern.compile("(?i)application\\/vnd.(.*)+json(;.*)?");
+    final private static Pattern JSON_VENDOR_MIME_PATTERN = Pattern.compile("(?i)application\\/vnd.(.*)+json(;.*)?"); 
 
     /**
      * Check if the given MIME is a JSON MIME.
