@@ -173,6 +173,8 @@ public interface CodegenConfig {
 
     void setLibrary(String library);
 
+    String getFullTemplateFile(String templateFile);
+
     /**
      * Library template (sub-template).
      *
