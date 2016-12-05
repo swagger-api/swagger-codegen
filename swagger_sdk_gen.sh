@@ -2,7 +2,13 @@ if $Build_Codegen ; then
     mvn3 clean package -Dmaven.test.skip=true
 fi
 echo "GENERATING SDK"
-if [ "$Client" = "c#" ]
+if [ "$Client" = "java" ]
+then java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
+  -i http://newapi.nightly.capillary.in/swagger.json  \
+  -l java \
+  -o samples/client/intouch_api/java_client/java_$BUILD_NUMBER
+  tar cvzf samples/client/intouch_api/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./samples/client/intouch_api/java_client/java_$BUILD_NUMBER/ .
+elif [ "$Client" = "c#" ]
 then java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -i http://newapi.nightly.capillary.in/swagger.json \
   -l csharp\
