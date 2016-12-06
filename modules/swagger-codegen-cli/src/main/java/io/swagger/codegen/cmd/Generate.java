@@ -117,6 +117,9 @@ public class Generate implements Runnable {
 
     @Option(name = {"--http-user-agent"}, title = "http user agent", description = CodegenConstants.HTTP_USER_AGENT_DESC)
     private String httpUserAgent;
+    
+    @Option(name = {"--use-enum-common-prefix"}, title = "use enum common prefix", description = CodegenConstants.USE_ENUM_COMMON_PREFIX)
+    private Boolean useEnumCommonPrefix;
 
     @Override
     public void run() {
@@ -209,6 +212,10 @@ public class Generate implements Runnable {
 
         if (isNotEmpty(httpUserAgent)) {
             configurator.setHttpUserAgent(httpUserAgent);
+        }
+
+        if (useEnumCommonPrefix != null) {
+            configurator.setUseEnumCommonPrefix(useEnumCommonPrefix);
         }
 
         applySystemPropertiesKvp(systemProperties, configurator);

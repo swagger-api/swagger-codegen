@@ -64,6 +64,7 @@ public class CodegenConfigurator {
     private String gitRepoId="GIT_REPO_ID";
     private String releaseNote="Minor update";
     private String httpUserAgent;
+    private Boolean useEnumCommonPrefix = true;
 
     private final Map<String, String> dynamicProperties = new HashMap<String, String>(); //the map that holds the JsonAnySetter/JsonAnyGetter values
 
@@ -342,6 +343,15 @@ public class CodegenConfigurator {
         return this;
     }
 
+    public Boolean getUseEnumCommonPrefix() {
+        return useEnumCommonPrefix;
+    }
+
+    public CodegenConfigurator setUseEnumCommonPrefix(Boolean useEnumCommonPrefix) {
+        this.useEnumCommonPrefix = useEnumCommonPrefix;
+        return this;
+    }
+
     public ClientOptInput toClientOptInput() {
 
         Validate.notEmpty(lang, "language must be specified");
@@ -374,6 +384,10 @@ public class CodegenConfigurator {
         checkAndSetAdditionalProperty(gitRepoId, CodegenConstants.GIT_REPO_ID);
         checkAndSetAdditionalProperty(releaseNote, CodegenConstants.RELEASE_NOTE);
         checkAndSetAdditionalProperty(httpUserAgent, CodegenConstants.HTTP_USER_AGENT);
+
+        // set enum common prefix (boolean)
+        //additionalProperties.put(useEnumCommonPrefix, CodegenConstants.USE_ENUM_COMMON_PREFIX);
+        checkAndSetAdditionalProperty(String.valueOf(useEnumCommonPrefix), CodegenConstants.USE_ENUM_COMMON_PREFIX);
 
         handleDynamicProperties(config);
 
