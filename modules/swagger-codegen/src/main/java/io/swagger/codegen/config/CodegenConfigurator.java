@@ -64,7 +64,7 @@ public class CodegenConfigurator {
     private String gitRepoId="GIT_REPO_ID";
     private String releaseNote="Minor update";
     private String httpUserAgent;
-    private Boolean useEnumCommonPrefix = true;
+    private Boolean useEnumCommonPrefix = false;
 
     private final Map<String, String> dynamicProperties = new HashMap<String, String>(); //the map that holds the JsonAnySetter/JsonAnyGetter values
 
