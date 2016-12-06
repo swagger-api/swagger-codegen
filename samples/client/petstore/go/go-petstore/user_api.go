@@ -53,8 +53,8 @@ func NewUserApiWithBasePath(basePath string) *UserApi {
  * Create user
  * This can only be done by the logged in user.
  *
- * @param body Created user object
- * @return void
+ * @param body Created user object 
+ * @return nil
  */
 func (a UserApi) CreateUser(body User) (*APIResponse, error) {
 
@@ -72,6 +72,7 @@ func (a UserApi) CreateUser(body User) (*APIResponse, error) {
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -114,8 +115,8 @@ func (a UserApi) CreateUser(body User) (*APIResponse, error) {
  * Creates list of users with given input array
  * 
  *
- * @param body List of user object
- * @return void
+ * @param body List of user object 
+ * @return nil
  */
 func (a UserApi) CreateUsersWithArrayInput(body []User) (*APIResponse, error) {
 
@@ -133,6 +134,7 @@ func (a UserApi) CreateUsersWithArrayInput(body []User) (*APIResponse, error) {
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -175,8 +177,8 @@ func (a UserApi) CreateUsersWithArrayInput(body []User) (*APIResponse, error) {
  * Creates list of users with given input array
  * 
  *
- * @param body List of user object
- * @return void
+ * @param body List of user object 
+ * @return nil
  */
 func (a UserApi) CreateUsersWithListInput(body []User) (*APIResponse, error) {
 
@@ -194,6 +196,7 @@ func (a UserApi) CreateUsersWithListInput(body []User) (*APIResponse, error) {
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -236,8 +239,8 @@ func (a UserApi) CreateUsersWithListInput(body []User) (*APIResponse, error) {
  * Delete user
  * This can only be done by the logged in user.
  *
- * @param username The name that needs to be deleted
- * @return void
+ * @param username The name that needs to be deleted 
+ * @return nil
  */
 func (a UserApi) DeleteUser(username string) (*APIResponse, error) {
 
@@ -256,6 +259,7 @@ func (a UserApi) DeleteUser(username string) (*APIResponse, error) {
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -296,7 +300,7 @@ func (a UserApi) DeleteUser(username string) (*APIResponse, error) {
  * Get user by user name
  * 
  *
- * @param username The name that needs to be fetched. Use user1 for testing. 
+ * @param username The name that needs to be fetched. Use user1 for testing.  
  * @return *User
  */
 func (a UserApi) GetUserByName(username string) (*User, *APIResponse, error) {
@@ -316,6 +320,7 @@ func (a UserApi) GetUserByName(username string) (*User, *APIResponse, error) {
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -358,8 +363,8 @@ func (a UserApi) GetUserByName(username string) (*User, *APIResponse, error) {
  * Logs user into the system
  * 
  *
- * @param username The user name for login
- * @param password The password for login in clear text
+ * @param username The user name for login 
+ * @param password The password for login in clear text 
  * @return *string
  */
 func (a UserApi) LoginUser(username string, password string) (*string, *APIResponse, error) {
@@ -378,8 +383,9 @@ func (a UserApi) LoginUser(username string, password string) (*string, *APIRespo
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
-		localVarQueryParams.Add("username", a.Configuration.APIClient.ParameterToString(username, ""))
-		localVarQueryParams.Add("password", a.Configuration.APIClient.ParameterToString(password, ""))
+
+		localVarQueryParams.Add("username", a.Configuration.APIClient.parameterToString(username, ""))
+		localVarQueryParams.Add("password", a.Configuration.APIClient.parameterToString(password, ""))
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -422,7 +428,7 @@ func (a UserApi) LoginUser(username string, password string) (*string, *APIRespo
  * Logs out current logged in user session
  * 
  *
- * @return void
+ * @return nil
  */
 func (a UserApi) LogoutUser() (*APIResponse, error) {
 
@@ -440,6 +446,7 @@ func (a UserApi) LogoutUser() (*APIResponse, error) {
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -480,9 +487,9 @@ func (a UserApi) LogoutUser() (*APIResponse, error) {
  * Updated user
  * This can only be done by the logged in user.
  *
- * @param username name that need to be deleted
- * @param body Updated user object
- * @return void
+ * @param username name that need to be deleted 
+ * @param body Updated user object 
+ * @return nil
  */
 func (a UserApi) UpdateUser(username string, body User) (*APIResponse, error) {
 
@@ -501,6 +508,7 @@ func (a UserApi) UpdateUser(username string, body User) (*APIResponse, error) {
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
