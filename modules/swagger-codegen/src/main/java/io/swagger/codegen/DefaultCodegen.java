@@ -1446,7 +1446,7 @@ public class DefaultCodegen {
             AbstractNumericProperty np = (AbstractNumericProperty) p;
             if (np.getMinimum() != null) {
                 if (p instanceof BaseIntegerProperty) { // int, long
-                    property.minimum = String.valueOf(np.getMinimum().intValue());
+                    property.minimum = String.valueOf(np.getMinimum().longValue());
                 } else { // double, decimal
                     property.minimum = String.valueOf(np.getMinimum());
                 }
@@ -1457,7 +1457,7 @@ public class DefaultCodegen {
 
             if (np.getMaximum() != null) {
                 if (p instanceof BaseIntegerProperty) { // int, long
-                    property.maximum = String.valueOf(np.getMaximum().intValue());
+                    property.maximum = String.valueOf(np.getMaximum().longValue());
                 } else { // double, decimal
                     property.maximum = String.valueOf(np.getMaximum());
                 }
@@ -2335,14 +2335,14 @@ public class DefaultCodegen {
 
             // validation
             // handle maximum, minimum properly for int/long by removing the trailing ".0"
-            if ("long".equals(type)) {
-                p.maximum = qp.getMaximum() == null ? null : String.valueOf(qp.getMaximum().intValue());
+            if ("integer".equals(type)) {
+                p.maximum = qp.getMaximum() == null ? null : String.valueOf(qp.getMaximum().longValue());
+                p.minimum = qp.getMinimum() == null ? null : String.valueOf(qp.getMinimum().longValue());
             } else {
                 p.maximum = qp.getMaximum() == null ? null : String.valueOf(qp.getMaximum());
+                p.minimum = qp.getMinimum() == null ? null : String.valueOf(qp.getMinimum());
             }
-            LOGGER.info("#### type = " + type);
             p.exclusiveMaximum = qp.isExclusiveMaximum();
-            p.minimum = String.valueOf(qp.getMinimum());
             p.exclusiveMinimum = qp.isExclusiveMinimum();
             p.maxLength = qp.getMaxLength();
             p.minLength = qp.getMinLength();
