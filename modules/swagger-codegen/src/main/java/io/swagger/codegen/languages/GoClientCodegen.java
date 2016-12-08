@@ -415,12 +415,11 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         // this will only import "fmt" if there are items in pathParams
         for (CodegenOperation operation : operations) {
-            if(operation.pathParams != null && operation.pathParams.size() > 0) {
+            if(operation.allParams != null && operation.allParams.size() > 0) {
                 imports.add(createMapping("import", "fmt"));
                 break; //just need to import once
             }
         }
-
 
         // recursively add import for mapping one type to multiple imports
         List<Map<String, String>> recursiveImports = (List<Map<String, String>>) objs.get("imports");
