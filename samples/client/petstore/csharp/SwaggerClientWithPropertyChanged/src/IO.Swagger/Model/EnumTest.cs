@@ -114,7 +114,7 @@ namespace IO.Swagger.Model
         /// <param name="EnumInteger">EnumInteger.</param>
         /// <param name="EnumNumber">EnumNumber.</param>
         /// <param name="OuterEnum">OuterEnum.</param>
-        public EnumTest(EnumStringEnum? EnumString = null, EnumIntegerEnum? EnumInteger = null, EnumNumberEnum? EnumNumber = null, OuterEnum OuterEnum = null)
+        public EnumTest(EnumStringEnum? EnumString = null, EnumIntegerEnum? EnumInteger = null, EnumNumberEnum? EnumNumber = null, OuterEnum? OuterEnum = null)
         {
             this.EnumString = EnumString;
             this.EnumInteger = EnumInteger;
@@ -126,7 +126,7 @@ namespace IO.Swagger.Model
         /// Gets or Sets OuterEnum
         /// </summary>
         [DataMember(Name="outerEnum", EmitDefaultValue=false)]
-        public OuterEnum OuterEnum { get; set; }
+        public OuterEnum? OuterEnum { get; set; }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
