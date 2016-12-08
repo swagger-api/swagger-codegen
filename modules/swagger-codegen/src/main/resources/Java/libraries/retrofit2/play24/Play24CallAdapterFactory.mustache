@@ -63,8 +63,8 @@ public class Play24CallAdapterFactory extends CallAdapter.Factory {
         }
 
         @Override
-        public <R> F.Promise<R> adapt(Call<R> call) {
-            F.RedeemablePromise<R> promise = F.RedeemablePromise.empty();
+        public <R> F.Promise<R> adapt(final Call<R> call) {
+            final F.RedeemablePromise<R> promise = F.RedeemablePromise.empty();
 
             call.enqueue(new Callback<R>() {
 

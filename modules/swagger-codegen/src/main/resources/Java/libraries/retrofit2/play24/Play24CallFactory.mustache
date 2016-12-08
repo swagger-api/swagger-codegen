@@ -97,19 +97,30 @@ public class Play24CallFactory implements okhttp3.Call.Factory {
         }
 
         @Override
-        public void enqueue(okhttp3.Callback responseCallback) {
+        public void enqueue(final okhttp3.Callback responseCallback) {
             final Call call = this;
-            F.Promise<WSResponse> promise = executeAsync();
+            final F.Promise<WSResponse> promise = executeAsync();
 
-            promise.onRedeem(wsResponse ->
-                responseCallback.onResponse(call, toWSResponse(wsResponse))
-            );
-            promise.onFailure(t -> {
-                if (t instanceof IOException) {
-                    responseCallback.onFailure(call, (IOException) t);
-                } else {
-                    responseCallback.onFailure(call, new IOException(t));
+            promise.onRedeem(new F.Callback<WSResponse>() {
+
+                @Override
+                public void invoke(WSResponse wsResponse) throws Throwable {
+                    responseCallback.onResponse(call, PlayWSCall.this.toWSResponse(wsResponse));
                 }
+
+            });
+
+            promise.onFailure(new F.Callback<Throwable>() {
+
+                @Override
+                public void invoke(Throwable throwable) throws Throwable {
+                    if (throwable instanceof IOException) {
+                        responseCallback.onFailure(call, (IOException) throwable);
+                    } else {
+                        responseCallback.onFailure(call, new IOException(throwable));
+                    }
+                }
+                
             });
 
         }
@@ -144,8 +155,8 @@ public class Play24CallFactory implements okhttp3.Call.Factory {
             wsRequest.setContentType(request.body().contentType().toString());
         }
 
-        private Response toWSResponse(WSResponse r) {
-            Response.Builder builder = new Response.Builder();
+        private Response toWSResponse(final WSResponse r) {
+            final Response.Builder builder = new Response.Builder();
             builder.request(request)
                    .code(r.getStatus())
                    .body(new ResponseBody() {
