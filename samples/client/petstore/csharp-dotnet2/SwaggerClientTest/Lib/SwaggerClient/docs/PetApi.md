@@ -26,9 +26,9 @@ Add a new pet to the store
 ```csharp
 using System;
 using System.Diagnostics;
-using IO.Swagger.;
+using IO.Swagger.Api;
 using IO.Swagger.Client;
-using IO.Swagger.IO.Swagger.Model;
+using IO.Swagger.Model;
 
 namespace Example
 {
@@ -90,9 +90,9 @@ Deletes a pet
 ```csharp
 using System;
 using System.Diagnostics;
-using IO.Swagger.;
+using IO.Swagger.Api;
 using IO.Swagger.Client;
-using IO.Swagger.IO.Swagger.Model;
+using IO.Swagger.Model;
 
 namespace Example
 {
@@ -156,9 +156,9 @@ Multiple status values can be provided with comma separated strings
 ```csharp
 using System;
 using System.Diagnostics;
-using IO.Swagger.;
+using IO.Swagger.Api;
 using IO.Swagger.Client;
-using IO.Swagger.IO.Swagger.Model;
+using IO.Swagger.Model;
 
 namespace Example
 {
@@ -221,9 +221,9 @@ Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3
 ```csharp
 using System;
 using System.Diagnostics;
-using IO.Swagger.;
+using IO.Swagger.Api;
 using IO.Swagger.Client;
-using IO.Swagger.IO.Swagger.Model;
+using IO.Swagger.Model;
 
 namespace Example
 {
@@ -286,9 +286,9 @@ Returns a single pet
 ```csharp
 using System;
 using System.Diagnostics;
-using IO.Swagger.;
+using IO.Swagger.Api;
 using IO.Swagger.Client;
-using IO.Swagger.IO.Swagger.Model;
+using IO.Swagger.Model;
 
 namespace Example
 {
@@ -353,9 +353,9 @@ Update an existing pet
 ```csharp
 using System;
 using System.Diagnostics;
-using IO.Swagger.;
+using IO.Swagger.Api;
 using IO.Swagger.Client;
-using IO.Swagger.IO.Swagger.Model;
+using IO.Swagger.Model;
 
 namespace Example
 {
@@ -417,9 +417,9 @@ Updates a pet in the store with form data
 ```csharp
 using System;
 using System.Diagnostics;
-using IO.Swagger.;
+using IO.Swagger.Api;
 using IO.Swagger.Client;
-using IO.Swagger.IO.Swagger.Model;
+using IO.Swagger.Model;
 
 namespace Example
 {
@@ -485,9 +485,9 @@ uploads an image
 ```csharp
 using System;
 using System.Diagnostics;
-using IO.Swagger.;
+using IO.Swagger.Api;
 using IO.Swagger.Client;
-using IO.Swagger.IO.Swagger.Model;
+using IO.Swagger.Model;
 
 namespace Example
 {

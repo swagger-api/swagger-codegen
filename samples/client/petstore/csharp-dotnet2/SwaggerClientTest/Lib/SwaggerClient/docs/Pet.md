@@ -1,4 +1,4 @@
-# IO.Swagger..Pet
+# IO.Swagger.Model.Pet
 ## Properties
 
 Name | Type | Description | Notes

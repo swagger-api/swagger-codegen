@@ -1,4 +1,4 @@
-# IO.Swagger..Tag
+# IO.Swagger.Model.Tag
 ## Properties
 
 Name | Type | Description | Notes

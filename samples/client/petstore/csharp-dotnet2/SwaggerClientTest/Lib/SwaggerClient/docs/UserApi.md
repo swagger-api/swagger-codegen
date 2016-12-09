@@ -26,9 +26,9 @@ This can only be done by the logged in user.
 ```csharp
 using System;
 using System.Diagnostics;
-using IO.Swagger.;
+using IO.Swagger.Api;
 using IO.Swagger.Client;
-using IO.Swagger.IO.Swagger.Model;
+using IO.Swagger.Model;
 
 namespace Example
 {
@@ -87,9 +87,9 @@ Creates list of users with given input array
 ```csharp
 using System;
 using System.Diagnostics;
-using IO.Swagger.;
+using IO.Swagger.Api;
 using IO.Swagger.Client;
-using IO.Swagger.IO.Swagger.Model;
+using IO.Swagger.Model;
 
 namespace Example
 {
@@ -148,9 +148,9 @@ Creates list of users with given input array
 ```csharp
 using System;
 using System.Diagnostics;
-using IO.Swagger.;
+using IO.Swagger.Api;
 using IO.Swagger.Client;
-using IO.Swagger.IO.Swagger.Model;
+using IO.Swagger.Model;
 
 namespace Example
 {
@@ -209,9 +209,9 @@ This can only be done by the logged in user.
 ```csharp
 using System;
 using System.Diagnostics;
-using IO.Swagger.;
+using IO.Swagger.Api;
 using IO.Swagger.Client;
-using IO.Swagger.IO.Swagger.Model;
+using IO.Swagger.Model;
 
 namespace Example
 {
@@ -270,9 +270,9 @@ Get user by user name
 ```csharp
 using System;
 using System.Diagnostics;
-using IO.Swagger.;
+using IO.Swagger.Api;
 using IO.Swagger.Client;
-using IO.Swagger.IO.Swagger.Model;
+using IO.Swagger.Model;
 
 namespace Example
 {
@@ -332,9 +332,9 @@ Logs user into the system
 ```csharp
 using System;
 using System.Diagnostics;
-using IO.Swagger.;
+using IO.Swagger.Api;
 using IO.Swagger.Client;
-using IO.Swagger.IO.Swagger.Model;
+using IO.Swagger.Model;
 
 namespace Example
 {
@@ -396,9 +396,9 @@ Logs out current logged in user session
 ```csharp
 using System;
 using System.Diagnostics;
-using IO.Swagger.;
+using IO.Swagger.Api;
 using IO.Swagger.Client;
-using IO.Swagger.IO.Swagger.Model;
+using IO.Swagger.Model;
 
 namespace Example
 {
@@ -453,9 +453,9 @@ This can only be done by the logged in user.
 ```csharp
 using System;
 using System.Diagnostics;
-using IO.Swagger.;
+using IO.Swagger.Api;
 using IO.Swagger.Client;
-using IO.Swagger.IO.Swagger.Model;
+using IO.Swagger.Model;
 
 namespace Example
 {
