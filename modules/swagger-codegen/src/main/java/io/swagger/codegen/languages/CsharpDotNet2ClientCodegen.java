@@ -138,7 +138,7 @@ public class CsharpDotNet2ClientCodegen extends DefaultCodegen implements Codege
                 sourceFolder + File.separator + clientPackage.replace(".", java.io.File.separator), "ApiException.cs"));
         supportingFiles.add(new SupportingFile("packages.config.mustache", "vendor", "packages.config"));
         supportingFiles.add(new SupportingFile("compile-mono.sh.mustache", "", "compile-mono.sh"));
-        supportingFiles.add(new SupportingFile("README.md", "", "README.md"));
+        supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
 
     }
 
