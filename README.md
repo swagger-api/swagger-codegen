@@ -822,6 +822,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [WEXO A/S](https://www.wexo.dk/)
 - [Zalando](https://tech.zalando.com)
 - [ZEEF.com](https://zeef.com/)
+- [SRC](https://www.src.si/)
 
 
 # Swagger Codegen Core Team
