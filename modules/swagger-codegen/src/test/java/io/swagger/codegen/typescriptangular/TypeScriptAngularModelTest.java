@@ -32,7 +32,7 @@ public class TypeScriptAngularModelTest {
         final CodegenModel cm = codegen.fromModel("sample", model);
 
         Assert.assertEquals(cm.name, "sample");
-        Assert.assertEquals(cm.classname, "Sample");
+        Assert.assertEquals(cm.classname, "SampleModel");
         Assert.assertEquals(cm.description, "a sample model");
         Assert.assertEquals(cm.vars.size(), 3);
 
@@ -78,7 +78,7 @@ public class TypeScriptAngularModelTest {
         final CodegenModel cm = codegen.fromModel("sample", model);
 
         Assert.assertEquals(cm.name, "sample");
-        Assert.assertEquals(cm.classname, "Sample");
+        Assert.assertEquals(cm.classname, "SampleModel");
         Assert.assertEquals(cm.description, "a sample model");
         Assert.assertEquals(cm.vars.size(), 2);
 
@@ -111,13 +111,13 @@ public class TypeScriptAngularModelTest {
         final CodegenModel cm = codegen.fromModel("sample", model);
 
         Assert.assertEquals(cm.name, "sample");
-        Assert.assertEquals(cm.classname, "Sample");
+        Assert.assertEquals(cm.classname, "SampleModel");
         Assert.assertEquals(cm.description, "a sample model");
         Assert.assertEquals(cm.vars.size(), 1);
 
         final CodegenProperty property1 = cm.vars.get(0);
         Assert.assertEquals(property1.baseName, "children");
-        Assert.assertEquals(property1.datatype, "Children");
+        Assert.assertEquals(property1.datatype, "ChildrenModel");
         Assert.assertEquals(property1.name, "children");
         Assert.assertEquals(property1.defaultValue, "null");
         Assert.assertEquals(property1.baseType, "Children");
@@ -135,14 +135,14 @@ public class TypeScriptAngularModelTest {
         final CodegenModel cm = codegen.fromModel("sample", model);
 
         Assert.assertEquals(cm.name, "sample");
-        Assert.assertEquals(cm.classname, "Sample");
+        Assert.assertEquals(cm.classname, "SampleModel");
         Assert.assertEquals(cm.description, "a sample model");
         Assert.assertEquals(cm.vars.size(), 1);
 
         final CodegenProperty property1 = cm.vars.get(0);
         Assert.assertEquals(property1.baseName, "children");
         Assert.assertEquals(property1.complexType, "Children");
-        Assert.assertEquals(property1.datatype, "Array<Children>");
+        Assert.assertEquals(property1.datatype, "Array<ChildrenModel>");
         Assert.assertEquals(property1.name, "children");
         Assert.assertEquals(property1.baseType, "Array");
         Assert.assertNull(property1.required);
@@ -158,7 +158,7 @@ public class TypeScriptAngularModelTest {
         final CodegenModel cm = codegen.fromModel("sample", model);
 
         Assert.assertEquals(cm.name, "sample");
-        Assert.assertEquals(cm.classname, "Sample");
+        Assert.assertEquals(cm.classname, "SampleModel");
         Assert.assertEquals(cm.description, "an array model");
         Assert.assertEquals(cm.vars.size(), 0);
     }
@@ -172,7 +172,7 @@ public class TypeScriptAngularModelTest {
         final CodegenModel cm = codegen.fromModel("sample", model);
 
         Assert.assertEquals(cm.name, "sample");
-        Assert.assertEquals(cm.classname, "Sample");
+        Assert.assertEquals(cm.classname, "SampleModel");
         Assert.assertEquals(cm.description, "a map model");
         Assert.assertEquals(cm.vars.size(), 0);
         Assert.assertEquals(cm.imports.size(), 1);

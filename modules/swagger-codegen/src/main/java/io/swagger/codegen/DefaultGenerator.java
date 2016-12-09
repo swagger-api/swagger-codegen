@@ -248,6 +248,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     operation.put("classname", config.toApiName(tag));
                     operation.put("classVarName", config.toApiVarName(tag));
                     operation.put("importPath", config.toApiImport(tag));
+                    operation.put("classFileName", config.toApiFilename(tag));
 
                     // Pass sortParamsByRequiredFlag through to the Mustache template...
                     boolean sortParamsByRequiredFlag = true;
@@ -269,6 +270,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
                     for (String templateName : config.apiTemplateFiles().keySet()) {
                         String filename = config.apiFilename(templateName, tag);
+
                         if (!config.shouldOverwrite(filename) && new File(filename).exists()) {
                             continue;
                         }
@@ -519,7 +521,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 tags = new ArrayList<String>();
                 tags.add("default");
             }
-            
+
             /*
              build up a set of parameter "ids" defined at the operation level
              per the swagger 2.0 spec "A unique parameter is defined by a combination of a name and location"

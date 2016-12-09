@@ -15,6 +15,7 @@ generated-code/*
 *.swo
 *.csproj.user
 
+/apiOutput
 /target
 /generated-files
 /nbactions.xml

@@ -2,10 +2,11 @@
 // DO NOT MODIFY - GENERATED FILE
 //
 
-/* tslint:disable:max-line-length */
+/* tslint:disable:no-unused-variable member-ordering max-line-length no-string-literal  */
 
-import { {{#imports}}{{import}}{{^-last}}, {{/-last}}{{/imports}} } from '../api';
-
+/*
+ * Models
+ */
 {{#models}}
 {{#model}}
 {{#description}}
@@ -14,14 +15,7 @@ import { {{#imports}}{{import}}{{^-last}}, {{/-last}}{{/imports}} } from '../api
  */
 {{/description}}
 export interface {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
-{{#vars}}
-
-{{#description}}
-  /**
-   * {{{description}}}
-   */
-{{/description}}
-  {{name}}{{^required}}?{{/required}}: {{#isEnum}}{{classname}}.{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
+{{#vars}}   {{name}}{{^required}}?{{/required}}: {{#isEnum}}{{classname}}.{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};  // {{#description}}{{{description}}}{{/description}}
 {{/vars}}
 }
 
@@ -38,5 +32,6 @@ export namespace {{classname}} {
 {{/vars}}
 }
 {{/hasEnums}}
+
 {{/model}}
 {{/models}}
