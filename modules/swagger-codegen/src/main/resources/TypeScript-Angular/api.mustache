@@ -10,7 +10,7 @@ import { {{#imports}}{{import}}{{^-last}},
          {{/-last}}{{/imports}} } from '../api';
 
 import { LogService, Logger } from 'lib/log/log-module';
-import { ApiConfig, ApiResultFactory } from 'lib/api-client/api-client-module';
+import { ApiResult, ApiError, ApiConfig, ApiResultFactory } from 'lib/api-client/api-client-module';
 import { Cache, CacheOptions, CacheService } from 'lib/cache/cache-module';
 
 {{#operations}}
