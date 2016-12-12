@@ -565,7 +565,7 @@ paths:
       tags:
         - fake
       summary: To test "client" model
-      descriptions: To test "client" model
+      description: To test "client" model
       operationId: testClientModel
       consumes:
         - application/json
@@ -587,7 +587,7 @@ paths:
       tags:
         - fake
       summary: To test enum parameters
-      descriptions: To test enum parameters
+      description: To test enum parameters
       operationId: testEnumParameters
       consumes:
         - "*/*"
@@ -652,7 +652,7 @@ paths:
           in: query 
           description: Query parameter enum test (string)
         - name: enum_query_integer
-          type: number
+          type: integer
           format: int32 
           enum:
             - 1
@@ -1080,7 +1080,6 @@ definitions:
           - 1.1
           - -1.2
       outerEnum:
-        type: string
         $ref: '#/definitions/OuterEnum'
   AdditionalPropertiesClass:
     type: object

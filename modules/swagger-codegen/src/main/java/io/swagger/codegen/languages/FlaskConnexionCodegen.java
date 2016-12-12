@@ -345,7 +345,7 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
             opsByPathEntry.put("path", entry.getKey());
             opsByPathEntry.put("operation", entry.getValue());
             List<CodegenOperation> operationsForThisPath = Lists.newArrayList(entry.getValue());
-            operationsForThisPath.get(operationsForThisPath.size() - 1).hasMore = null;
+            operationsForThisPath.get(operationsForThisPath.size() - 1).hasMore = false;
             if (opsByPathList.size() < opsByPath.asMap().size()) {
                 opsByPathEntry.put("hasMore", "true");
             }
@@ -553,20 +553,20 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
             example = "'" + escapeText(example) + "'";
         } else if ("Integer".equals(type) || "int".equals(type)) {
             if(p.minimum != null) {
-                example = "" + (p.minimum.intValue() + 1);
+                example = "" + (Integer.valueOf(p.minimum) + 1);
             }
             if(p.maximum != null) {
-                example = "" + p.maximum.intValue();
+                example = "" + p.maximum;
             } else if (example == null) {
                 example = "56";
             }
 
         } else if ("Long".equalsIgnoreCase(type)) {
             if(p.minimum != null) {
-                example = "" + (p.minimum.longValue() + 1);
+                example = "" + (Long.valueOf(p.minimum) + 1);
             }
             if(p.maximum != null) {
-                example = "" + p.maximum.longValue();
+                example = "" + p.maximum;
             } else if (example == null) {
                 example = "789";
             }
