@@ -1,3 +1,6 @@
+# work in progress: the goal is to move all the existing tests
+# handled by travis-ci to circle CI so that travis-ci can test
+# objc/swift API client instead
 machine:
   environment:
     _JAVA_OPTIONS: "-Xms512m -Xmx1024m"
