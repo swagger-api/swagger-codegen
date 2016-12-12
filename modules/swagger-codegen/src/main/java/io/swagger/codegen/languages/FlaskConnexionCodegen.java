@@ -10,8 +10,7 @@ import io.swagger.models.HttpMethod;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
-import io.swagger.models.parameters.BodyParameter;
-import io.swagger.models.parameters.FormParameter;
+import io.swagger.models.parameters.Parameter;
 import io.swagger.models.properties.*;
 import io.swagger.util.Yaml;
 
@@ -30,9 +29,9 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
     public static final String DEFAULT_CONTROLLER = "defaultController";
     public static final String SUPPORT_PYTHON2= "supportPython2";
 
-    protected String apiVersion = "1.0.0";
     protected int serverPort = 8080;
-    protected String projectName = "swagger-server";
+    protected String packageName;
+    protected String packageVersion;
     protected String controllerPackage;
     protected String defaultController;
 
@@ -92,7 +91,6 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
          * Additional Properties.  These values can be passed to the templates and
          * are available in models, apis, and supporting files
          */
-        additionalProperties.put("apiVersion", apiVersion);
         additionalProperties.put("serverPort", serverPort);
 
         /*
@@ -100,28 +98,19 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
          * entire object tree available.  If the input file has a suffix of `.mustache
          * it will be processed by the template engine.  Otherwise, it will be copied
          */
+        supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
+        supportingFiles.add(new SupportingFile("setup.mustache", "", "setup.py"));
+        supportingFiles.add(new SupportingFile("tox.mustache", "", "tox.ini"));
+        supportingFiles.add(new SupportingFile("test-requirements.mustache", "", "test-requirements.txt"));
+        supportingFiles.add(new SupportingFile("requirements.mustache", "", "requirements.txt"));
+        supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
+        supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
+        supportingFiles.add(new SupportingFile("travis.mustache", "", ".travis.yml"));
 
-        supportingFiles.add(new SupportingFile("swagger.mustache",
-                        "swagger",
-                        "swagger.yaml")
-        );
-        supportingFiles.add(new SupportingFile("app.mustache",
-                        "",
-                        "app.py")
-        );
-        supportingFiles.add(new SupportingFile("util.mustache",
-                "",
-                "util.py")
-        );
-        supportingFiles.add(new SupportingFile("README.mustache",
-                        "",
-                        "README.md")
-        );
-        supportingFiles.add(new SupportingFile("__init__controller.mustache",
-                        "",
-                        "__init__.py")
-        );
-
+        cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "python package name (convention: snake_case).")
+                .defaultValue("swagger_server"));
+        cliOptions.add(new CliOption(CodegenConstants.PACKAGE_VERSION, "python package version.")
+                .defaultValue("1.0.0"));
         cliOptions.add(new CliOption(CONTROLLER_PACKAGE, "controller package").
                 defaultValue("controllers"));
         cliOptions.add(new CliOption(DEFAULT_CONTROLLER, "default controller").
@@ -135,48 +124,47 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
         super.processOpts();
         //apiTemplateFiles.clear();
 
+        if (additionalProperties.containsKey(CodegenConstants.PACKAGE_NAME)) {
+            setPackageName((String) additionalProperties.get(CodegenConstants.PACKAGE_NAME));
+        } else {
+            setPackageName("swagger_server");
+            additionalProperties.put(CodegenConstants.PACKAGE_NAME, this.packageName);
+        }
+        if (additionalProperties.containsKey(CodegenConstants.PACKAGE_VERSION)) {
+            setPackageVersion((String) additionalProperties.get(CodegenConstants.PACKAGE_VERSION));
+        } else {
+            setPackageVersion("1.0.0");
+            additionalProperties.put(CodegenConstants.PACKAGE_VERSION, this.packageVersion);
+        }
         if (additionalProperties.containsKey(CONTROLLER_PACKAGE)) {
             this.controllerPackage = additionalProperties.get(CONTROLLER_PACKAGE).toString();
-        }
-        else {
+        } else {
             this.controllerPackage = "controllers";
             additionalProperties.put(CONTROLLER_PACKAGE, this.controllerPackage);
         }
-
         if (additionalProperties.containsKey(DEFAULT_CONTROLLER)) {
             this.defaultController = additionalProperties.get(DEFAULT_CONTROLLER).toString();
-        }
-        else {
+        } else {
             this.defaultController = "default_controller";
             additionalProperties.put(DEFAULT_CONTROLLER, this.defaultController);
         }
-
         if (Boolean.TRUE.equals(additionalProperties.get(SUPPORT_PYTHON2))) {
             additionalProperties.put(SUPPORT_PYTHON2, Boolean.TRUE);
             typeMapping.put("long", "long");
         }
+        supportingFiles.add(new SupportingFile("__init__.mustache", packageName, "__init__.py"));
+        supportingFiles.add(new SupportingFile("__main__.mustache", packageName, "__main__.py"));
+        supportingFiles.add(new SupportingFile("encoder.mustache", packageName, "encoder.py"));
+        supportingFiles.add(new SupportingFile("util.mustache", packageName, "util.py"));
+        supportingFiles.add(new SupportingFile("__init__.mustache", packageName + File.separatorChar + controllerPackage, "__init__.py"));
+        supportingFiles.add(new SupportingFile("__init__model.mustache", packageName + File.separatorChar + modelPackage, "__init__.py"));
+        supportingFiles.add(new SupportingFile("base_model_.mustache", packageName + File.separatorChar + modelPackage, "base_model_.py"));
+        supportingFiles.add(new SupportingFile("__init__test.mustache", packageName + File.separatorChar + testPackage, "__init__.py"));
+        supportingFiles.add(new SupportingFile("swagger.mustache", packageName + File.separatorChar + "swagger", "swagger.yaml"));
 
-        if(!new java.io.File(controllerPackage + File.separator + defaultController + ".py").exists()) {
-            supportingFiles.add(new SupportingFile("__init__controller.mustache",
-                            controllerPackage,
-                            "__init__.py")
-            );
-        }
-
-        supportingFiles.add(new SupportingFile("__init__model.mustache",
-                modelPackage,
-                "__init__.py")
-        );
-
-        supportingFiles.add(new SupportingFile("base_model_.mustache",
-                modelPackage,
-                "base_model_.py")
-        );
-
-        supportingFiles.add(new SupportingFile("__init__test.mustache",
-                testPackage,
-                "__init__.py")
-        );
+        modelPackage = packageName + "." + modelPackage;
+        controllerPackage = packageName + "." + controllerPackage;
+        testPackage = packageName + "." + testPackage;
     }
 
     private static String dropDots(String str) {
@@ -317,6 +305,15 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
                                     controllerPackage + "." + toApiFilename(tag)
                             );
                         }
+                        for (Parameter param: operation.getParameters()) {
+                            // sanitize the param name but don't underscore it since it's used for request mapping
+                            String name = param.getName();
+                            String paramName = sanitizeName(name);
+                            if (!paramName.equals(name)) {
+                                LOGGER.warn(name + " cannot be used as parameter name with flask-connexion and was sanitized as " + paramName);
+                            }
+                            param.setName(paramName);
+                        }
                     }
                 }
             }
@@ -348,7 +345,7 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
             opsByPathEntry.put("path", entry.getKey());
             opsByPathEntry.put("operation", entry.getValue());
             List<CodegenOperation> operationsForThisPath = Lists.newArrayList(entry.getValue());
-            operationsForThisPath.get(operationsForThisPath.size() - 1).hasMore = null;
+            operationsForThisPath.get(operationsForThisPath.size() - 1).hasMore = false;
             if (opsByPathList.size() < opsByPath.asMap().size()) {
                 opsByPathEntry.put("hasMore", "true");
             }
@@ -402,6 +399,12 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
             name = escapeReservedWord(name);
         }
 
+        return name;
+    }
+
+    @Override
+    public String toParamName(String name) {
+        // Param name is already sanitized in swagger spec processing
         return name;
     }
 
@@ -550,20 +553,20 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
             example = "'" + escapeText(example) + "'";
         } else if ("Integer".equals(type) || "int".equals(type)) {
             if(p.minimum != null) {
-                example = "" + (p.minimum.intValue() + 1);
+                example = "" + (Integer.valueOf(p.minimum) + 1);
             }
             if(p.maximum != null) {
-                example = "" + p.maximum.intValue();
+                example = "" + p.maximum;
             } else if (example == null) {
                 example = "56";
             }
 
         } else if ("Long".equalsIgnoreCase(type)) {
             if(p.minimum != null) {
-                example = "" + (p.minimum.longValue() + 1);
+                example = "" + (Long.valueOf(p.minimum) + 1);
             }
             if(p.maximum != null) {
-                example = "" + p.maximum.longValue();
+                example = "" + p.maximum;
             } else if (example == null) {
                 example = "789";
             }
@@ -612,6 +615,14 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
         }
 
         p.example = example;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
+    }
+
+    public void setPackageVersion(String packageVersion) {
+        this.packageVersion = packageVersion;
     }
 
 

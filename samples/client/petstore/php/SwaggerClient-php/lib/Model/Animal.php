@@ -42,6 +42,8 @@ use \ArrayAccess;
  */
 class Animal implements ArrayAccess
 {
+    const DISCRIMINATOR = 'className';
+
     /**
       * The original name of the model.
       * @var string
@@ -126,8 +128,8 @@ class Animal implements ArrayAccess
         $this->container['color'] = isset($data['color']) ? $data['color'] : 'red';
 
         // Initialize discriminator property with the model name.
-        $discrimintor = array_search('className', self::$attributeMap);
-        $this->container[$discrimintor] = static::$swaggerModelName;
+        $discriminator = array_search('className', self::$attributeMap);
+        $this->container[$discriminator] = static::$swaggerModelName;
     }
 
     /**
@@ -258,4 +260,5 @@ class Animal implements ArrayAccess
         return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

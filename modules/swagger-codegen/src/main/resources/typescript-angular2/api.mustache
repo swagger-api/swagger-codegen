@@ -22,7 +22,7 @@ import { Configuration }                                     from '../configurat
 {{/description}}
 @Injectable()
 export class {{classname}} {
-    protected basePath = '{{basePath}}';
+    protected basePath = '{{{basePath}}}';
     public defaultHeaders: Headers = new Headers();
     public configuration: Configuration = new Configuration();
 
@@ -34,8 +34,8 @@ export class {{classname}} {
             this.configuration = configuration;
         }
     }
-	
-	/**
+
+    /**
      * 
      * Extends object by coping non-existing properties.
      * @param objA object to be extended
@@ -98,10 +98,9 @@ export class {{classname}} {
         }
 {{/queryParams}}
 
-{{#headers}}
+{{#headerParams}}
         headers.set('{{baseName}}', String({{paramName}}));
-
-{{/headers}}
+{{/headerParams}}
 
         // to determine the Content-Type header
         let consumes: string[] = [
@@ -144,7 +143,10 @@ export class {{classname}} {
         // oauth required
         if (this.configuration.accessToken)
         {
-            headers.set('Authorization', 'Bearer ' + this.configuration.accessToken);
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
         }
 {{/isOAuth}}
 {{/authMethods}}
