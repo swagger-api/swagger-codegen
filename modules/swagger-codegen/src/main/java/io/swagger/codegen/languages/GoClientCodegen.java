@@ -300,6 +300,11 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         StringBuilder sb = new StringBuilder(parameter.paramName);
         sb.setCharAt(0, Character.toUpperCase(firstChar));
         parameter.vendorExtensions.put("x-exportParamName", sb.toString());
+
+		// Dates are not a primitive. Not sure how this is getting flagged as such.
+		if (parameter.isDate != null|| parameter.isDateTime != null || parameter.isFile != null) {
+            parameter.isPrimitiveType = Boolean.FALSE;
+        }
     }
 
 

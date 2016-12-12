@@ -40,7 +40,7 @@ func NewFakeApiWithBasePath(basePath string) *FakeApi {
 /**
  * To test \&quot;client\&quot; model
  *
- * @param body client model
+ * @param body client model 
  * @return *Client
  */
 func (a FakeApi) TestClientModel(body Client) (*Client, *APIResponse, error) {
@@ -59,6 +59,7 @@ func (a FakeApi) TestClientModel(body Client) (*Client, *APIResponse, error) {
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
@@ -102,23 +103,23 @@ func (a FakeApi) TestClientModel(body Client) (*Client, *APIResponse, error) {
  * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
  * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
  *
- * @param number None
- * @param double None
- * @param patternWithoutDelimiter None
- * @param byte_ None
- * @param integer None
- * @param int32_ None
- * @param int64_ None
- * @param float None
- * @param string_ None
- * @param binary None
- * @param date None
- * @param dateTime None
- * @param password None
- * @param callback None
- * @return void
+ * @param number None 
+ * @param double None 
+ * @param patternWithoutDelimiter None 
+ * @param byte_ None 
+ * @param integer(nil) None 
+ * @param int32_(nil) None 
+ * @param int64_(nil) None 
+ * @param float(nil) None 
+ * @param string_(nil) None 
+ * @param binary(nil) None 
+ * @param date None 
+ * @param dateTime None 
+ * @param password(nil) None 
+ * @param callback(nil) None 
+ * @return nil
  */
-func (a FakeApi) TestEndpointParameters(number float32, double float64, patternWithoutDelimiter string, byte_ string, integer int32, int32_ int32, int64_ int64, float float32, string_ string, binary string, date time.Time, dateTime time.Time, password string, callback string) (*APIResponse, error) {
+func (a FakeApi) TestEndpointParameters(number float32, double float64, patternWithoutDelimiter string, byte_ string, integer interface{}, int32_ interface{}, int64_ interface{}, float interface{}, string_ interface{}, binary interface{}, date time.Time, dateTime time.Time, password interface{}, callback interface{}) (*APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Post")
 	// create path and map variables
@@ -140,6 +141,31 @@ func (a FakeApi) TestEndpointParameters(number float32, double float64, patternW
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+	if err := a.Configuration.APIClient.typeCheckParameter(integer, "int32", "integer"); err != nil {
+		return  nil, err
+	}
+	if err := a.Configuration.APIClient.typeCheckParameter(int32_, "int32", "int32_"); err != nil {
+		return  nil, err
+	}
+	if err := a.Configuration.APIClient.typeCheckParameter(int64_, "int64", "int64_"); err != nil {
+		return  nil, err
+	}
+	if err := a.Configuration.APIClient.typeCheckParameter(float, "float32", "float"); err != nil {
+		return  nil, err
+	}
+	if err := a.Configuration.APIClient.typeCheckParameter(string_, "string", "string_"); err != nil {
+		return  nil, err
+	}
+	if err := a.Configuration.APIClient.typeCheckParameter(binary, "string", "binary"); err != nil {
+		return  nil, err
+	}
+	if err := a.Configuration.APIClient.typeCheckParameter(password, "string", "password"); err != nil {
+		return  nil, err
+	}
+	if err := a.Configuration.APIClient.typeCheckParameter(callback, "string", "callback"); err != nil {
+		return  nil, err
+	}
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/xml; charset=utf-8", "application/json; charset=utf-8",  }
 
@@ -159,20 +185,20 @@ func (a FakeApi) TestEndpointParameters(number float32, double float64, patternW
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	localVarFormParams["integer"] = a.Configuration.APIClient.ParameterToString(integer, "")
-	localVarFormParams["int32_"] = a.Configuration.APIClient.ParameterToString(int32_, "")
-	localVarFormParams["int64_"] = a.Configuration.APIClient.ParameterToString(int64_, "")
-	localVarFormParams["number"] = a.Configuration.APIClient.ParameterToString(number, "")
-	localVarFormParams["float"] = a.Configuration.APIClient.ParameterToString(float, "")
-	localVarFormParams["double"] = a.Configuration.APIClient.ParameterToString(double, "")
-	localVarFormParams["string_"] = a.Configuration.APIClient.ParameterToString(string_, "")
-	localVarFormParams["patternWithoutDelimiter"] = a.Configuration.APIClient.ParameterToString(patternWithoutDelimiter, "")
-	localVarFormParams["byte_"] = a.Configuration.APIClient.ParameterToString(byte_, "")
-	localVarFormParams["binary"] = a.Configuration.APIClient.ParameterToString(binary, "")
-	localVarFormParams["date"] = a.Configuration.APIClient.ParameterToString(date, "")
-	localVarFormParams["dateTime"] = a.Configuration.APIClient.ParameterToString(dateTime, "")
-	localVarFormParams["password"] = a.Configuration.APIClient.ParameterToString(password, "")
-	localVarFormParams["callback"] = a.Configuration.APIClient.ParameterToString(callback, "")
+	localVarFormParams["integer"] = a.Configuration.APIClient.parameterToString(integer, "")
+	localVarFormParams["int32_"] = a.Configuration.APIClient.parameterToString(int32_, "")
+	localVarFormParams["int64_"] = a.Configuration.APIClient.parameterToString(int64_, "")
+	localVarFormParams["number"] = a.Configuration.APIClient.parameterToString(number, "")
+	localVarFormParams["float"] = a.Configuration.APIClient.parameterToString(float, "")
+	localVarFormParams["double"] = a.Configuration.APIClient.parameterToString(double, "")
+	localVarFormParams["string_"] = a.Configuration.APIClient.parameterToString(string_, "")
+	localVarFormParams["patternWithoutDelimiter"] = a.Configuration.APIClient.parameterToString(patternWithoutDelimiter, "")
+	localVarFormParams["byte_"] = a.Configuration.APIClient.parameterToString(byte_, "")
+	localVarFormParams["binary"] = a.Configuration.APIClient.parameterToString(binary, "")
+	localVarFormParams["date"] = a.Configuration.APIClient.parameterToString(date, "")
+	localVarFormParams["dateTime"] = a.Configuration.APIClient.parameterToString(dateTime, "")
+	localVarFormParams["password"] = a.Configuration.APIClient.parameterToString(password, "")
+	localVarFormParams["callback"] = a.Configuration.APIClient.parameterToString(callback, "")
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 
 	var localVarURL, _ = url.Parse(localVarPath)
@@ -192,17 +218,17 @@ func (a FakeApi) TestEndpointParameters(number float32, double float64, patternW
 /**
  * To test enum parameters
  *
- * @param enumFormStringArray Form parameter enum test (string array)
- * @param enumFormString Form parameter enum test (string)
- * @param enumHeaderStringArray Header parameter enum test (string array)
- * @param enumHeaderString Header parameter enum test (string)
- * @param enumQueryStringArray Query parameter enum test (string array)
- * @param enumQueryString Query parameter enum test (string)
- * @param enumQueryInteger Query parameter enum test (double)
- * @param enumQueryDouble Query parameter enum test (double)
- * @return void
+ * @param enumFormStringArray Form parameter enum test (string array) 
+ * @param enumFormString(nil) Form parameter enum test (string) 
+ * @param enumHeaderStringArray Header parameter enum test (string array) 
+ * @param enumHeaderString(nil) Header parameter enum test (string) 
+ * @param enumQueryStringArray Query parameter enum test (string array) 
+ * @param enumQueryString(nil) Query parameter enum test (string) 
+ * @param enumQueryInteger(nil) Query parameter enum test (double) 
+ * @param enumQueryDouble(nil) Query parameter enum test (double) 
+ * @return nil
  */
-func (a FakeApi) TestEnumParameters(enumFormStringArray []string, enumFormString string, enumHeaderStringArray []string, enumHeaderString string, enumQueryStringArray []string, enumQueryString string, enumQueryInteger float32, enumQueryDouble float64) (*APIResponse, error) {
+func (a FakeApi) TestEnumParameters(enumFormStringArray []string, enumFormString interface{}, enumHeaderStringArray []string, enumHeaderString interface{}, enumQueryStringArray []string, enumQueryString interface{}, enumQueryInteger interface{}, enumQueryDouble interface{}) (*APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -218,16 +244,31 @@ func (a FakeApi) TestEnumParameters(enumFormStringArray []string, enumFormString
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
-	var collectionFormat = "csv"
-	if collectionFormat == "multi" {
-		for _, value := range enumQueryStringArray {
-			localVarQueryParams.Add("enum_query_string_array", value)
-		}
-	} else {
-		localVarQueryParams.Add("enum_query_string_array", a.Configuration.APIClient.ParameterToString(enumQueryStringArray, collectionFormat))
+
+	if err := a.Configuration.APIClient.typeCheckParameter(enumFormString, "string", "enumFormString"); err != nil {
+		return  nil, err
 	}
-		localVarQueryParams.Add("enum_query_string", a.Configuration.APIClient.ParameterToString(enumQueryString, ""))
-		localVarQueryParams.Add("enum_query_integer", a.Configuration.APIClient.ParameterToString(enumQueryInteger, ""))
+	if err := a.Configuration.APIClient.typeCheckParameter(enumHeaderString, "string", "enumHeaderString"); err != nil {
+		return  nil, err
+	}
+	if err := a.Configuration.APIClient.typeCheckParameter(enumQueryString, "string", "enumQueryString"); err != nil {
+		return  nil, err
+	}
+	if err := a.Configuration.APIClient.typeCheckParameter(enumQueryInteger, "float32", "enumQueryInteger"); err != nil {
+		return  nil, err
+	}
+	if err := a.Configuration.APIClient.typeCheckParameter(enumQueryDouble, "float64", "enumQueryDouble"); err != nil {
+		return  nil, err
+	}
+	if enumQueryStringArray != nil {
+		localVarQueryParams.Add("enum_query_string_array", a.Configuration.APIClient.parameterToString(enumQueryStringArray, "csv"))
+	}
+	if enumQueryString != nil {
+		localVarQueryParams.Add("enum_query_string", a.Configuration.APIClient.parameterToString(enumQueryString, ""))
+	}
+	if enumQueryInteger != nil {
+		localVarQueryParams.Add("enum_query_integer", a.Configuration.APIClient.parameterToString(enumQueryInteger, ""))
+	}
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "*/*",  }
@@ -248,12 +289,12 @@ func (a FakeApi) TestEnumParameters(enumFormStringArray []string, enumFormString
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// header params "enum_header_string_array"
-	localVarHeaderParams["enum_header_string_array"] = a.Configuration.APIClient.ParameterToString(enumHeaderStringArray, "")
+	localVarHeaderParams["enum_header_string_array"] = a.Configuration.APIClient.parameterToString(enumHeaderStringArray, "")
 	// header params "enum_header_string"
-	localVarHeaderParams["enum_header_string"] = a.Configuration.APIClient.ParameterToString(enumHeaderString, "")
-	localVarFormParams["enumFormStringArray"] = a.Configuration.APIClient.ParameterToString(enumFormStringArray, "")
-	localVarFormParams["enumFormString"] = a.Configuration.APIClient.ParameterToString(enumFormString, "")
-	localVarFormParams["enumQueryDouble"] = a.Configuration.APIClient.ParameterToString(enumQueryDouble, "")
+	localVarHeaderParams["enum_header_string"] = a.Configuration.APIClient.parameterToString(enumHeaderString, "")
+	localVarFormParams["enumFormStringArray"] = a.Configuration.APIClient.parameterToString(enumFormStringArray, "")
+	localVarFormParams["enumFormString"] = a.Configuration.APIClient.parameterToString(enumFormString, "")
+	localVarFormParams["enumQueryDouble"] = a.Configuration.APIClient.parameterToString(enumQueryDouble, "")
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 
 	var localVarURL, _ = url.Parse(localVarPath)

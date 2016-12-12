@@ -34,10 +34,10 @@ func New{{classname}}WithBasePath(basePath string) *{{classname}} {
  * {{summary}}{{#notes}}
  * {{notes}}{{/notes}}
  *
-{{#allParams}} * @param {{paramName}} {{description}}
-{{/allParams}} * @return {{#returnType}}{{^isListContainer}}*{{/isListContainer}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}
+{{#allParams}} * @param {{paramName}}{{^required}}{{#isPrimitiveType}}(nil){{/isPrimitiveType}}{{/required}} {{description}} 
+{{/allParams}} * @return {{#returnType}}{{^isListContainer}}*{{/isListContainer}}{{{returnType}}}{{/returnType}}{{^returnType}}nil{{/returnType}}
  */
-func (a {{{classname}}}) {{{nickname}}}({{#allParams}}{{paramName}} {{{dataType}}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) ({{#returnType}}{{^isListContainer}}*{{/isListContainer}}{{{returnType}}}, {{/returnType}}*APIResponse, error) {
+func (a {{{classname}}}) {{{nickname}}}({{#allParams}}{{paramName}} {{#required}}{{{dataType}}}{{/required}}{{^required}}{{#isPrimitiveType}}interface{}{{/isPrimitiveType}}{{^isPrimitiveType}}{{{dataType}}}{{/isPrimitiveType}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) ({{#returnType}}{{^isListContainer}}*{{/isListContainer}}{{{returnType}}}, {{/returnType}}*APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("{{httpMethod}}")
 	// create path and map variables
@@ -79,21 +79,30 @@ func (a {{{classname}}}) {{{nickname}}}({{#allParams}}{{paramName}} {{{dataType}
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
+{{#allParams}}
+{{^required}}
+{{#isPrimitiveType}}
+	if err := a.Configuration.APIClient.typeCheckParameter({{paramName}}, "{{{dataType}}}", "{{paramName}}"); err != nil {
+		return {{#returnType}}nil, {{/returnType}} nil, err
+	}
+{{/isPrimitiveType}}
+{{/required}}
+{{/allParams}}
 	{{#hasQueryParams}}
 	{{#queryParams}}
+	{{^required}}
+	if {{paramName}} != nil {
+    {{/required}}
 	{{#isListContainer}}
-	var collectionFormat = "{{#collectionFormat}}{{collectionFormat}}{{/collectionFormat}}"
-	if collectionFormat == "multi" {
-		for _, value := range {{paramName}} {
-			localVarQueryParams.Add("{{baseName}}", value)
-		}
-	} else {
-		localVarQueryParams.Add("{{baseName}}", a.Configuration.APIClient.ParameterToString({{paramName}}, collectionFormat))
-	}
+		localVarQueryParams.Add("{{baseName}}", a.Configuration.APIClient.parameterToString({{paramName}}, "{{collectionFormat}}"))
 	{{/isListContainer}}
 	{{^isListContainer}}
-		localVarQueryParams.Add("{{baseName}}", a.Configuration.APIClient.ParameterToString({{paramName}}, ""))
+		localVarQueryParams.Add("{{baseName}}", a.Configuration.APIClient.parameterToString({{paramName}}, ""))
 	{{/isListContainer}}
+    {{^required}}
+	}
+    {{/required}}
 	{{/queryParams}}
 	{{/hasQueryParams}}
 
@@ -120,7 +129,7 @@ func (a {{{classname}}}) {{{nickname}}}({{#allParams}}{{paramName}} {{{dataType}
 {{#hasHeaderParams}}
 {{#headerParams}}
 	// header params "{{baseName}}"
-	localVarHeaderParams["{{baseName}}"] = a.Configuration.APIClient.ParameterToString({{paramName}}, "")
+	localVarHeaderParams["{{baseName}}"] = a.Configuration.APIClient.parameterToString({{paramName}}, "")
 {{/headerParams}}
 {{/hasHeaderParams}}
 {{#hasFormParams}}
@@ -131,7 +140,7 @@ func (a {{{classname}}}) {{{nickname}}}({{#allParams}}{{paramName}} {{{dataType}
 	localVarFileName = file.Name()
 {{/isFile}}
 {{^isFile}}
-	localVarFormParams["{{paramName}}"] = a.Configuration.APIClient.ParameterToString({{paramName}}, "")
+	localVarFormParams["{{paramName}}"] = a.Configuration.APIClient.parameterToString({{paramName}}, "")
 {{/isFile}}
 {{/formParams}}
 {{/hasFormParams}}

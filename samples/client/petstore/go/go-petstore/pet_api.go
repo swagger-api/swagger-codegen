@@ -43,8 +43,8 @@ func NewPetApiWithBasePath(basePath string) *PetApi {
  * Add a new pet to the store
  * 
  *
- * @param body Pet object that needs to be added to the store
- * @return void
+ * @param body Pet object that needs to be added to the store 
+ * @return nil
  */
 func (a PetApi) AddPet(body Pet) (*APIResponse, error) {
 
@@ -67,6 +67,7 @@ func (a PetApi) AddPet(body Pet) (*APIResponse, error) {
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json", "application/xml",  }
@@ -109,11 +110,11 @@ func (a PetApi) AddPet(body Pet) (*APIResponse, error) {
  * Deletes a pet
  * 
  *
- * @param petId Pet id to delete
- * @param apiKey 
- * @return void
+ * @param petId Pet id to delete 
+ * @param apiKey(nil)  
+ * @return nil
  */
-func (a PetApi) DeletePet(petId int64, apiKey string) (*APIResponse, error) {
+func (a PetApi) DeletePet(petId int64, apiKey interface{}) (*APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Delete")
 	// create path and map variables
@@ -136,6 +137,10 @@ func (a PetApi) DeletePet(petId int64, apiKey string) (*APIResponse, error) {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+	if err := a.Configuration.APIClient.typeCheckParameter(apiKey, "string", "apiKey"); err != nil {
+		return  nil, err
+	}
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
 
@@ -156,7 +161,7 @@ func (a PetApi) DeletePet(petId int64, apiKey string) (*APIResponse, error) {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// header params "api_key"
-	localVarHeaderParams["api_key"] = a.Configuration.APIClient.ParameterToString(apiKey, "")
+	localVarHeaderParams["api_key"] = a.Configuration.APIClient.parameterToString(apiKey, "")
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 
 	var localVarURL, _ = url.Parse(localVarPath)
@@ -177,7 +182,7 @@ func (a PetApi) DeletePet(petId int64, apiKey string) (*APIResponse, error) {
  * Finds Pets by status
  * Multiple status values can be provided with comma separated strings
  *
- * @param status Status values that need to be considered for filter
+ * @param status Status values that need to be considered for filter 
  * @return []Pet
  */
 func (a PetApi) FindPetsByStatus(status []string) ([]Pet, *APIResponse, error) {
@@ -201,14 +206,8 @@ func (a PetApi) FindPetsByStatus(status []string) ([]Pet, *APIResponse, error) {
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
-	var collectionFormat = "csv"
-	if collectionFormat == "multi" {
-		for _, value := range status {
-			localVarQueryParams.Add("status", value)
-		}
-	} else {
-		localVarQueryParams.Add("status", a.Configuration.APIClient.ParameterToString(status, collectionFormat))
-	}
+
+		localVarQueryParams.Add("status", a.Configuration.APIClient.parameterToString(status, "csv"))
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -251,7 +250,7 @@ func (a PetApi) FindPetsByStatus(status []string) ([]Pet, *APIResponse, error) {
  * Finds Pets by tags
  * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
  *
- * @param tags Tags to filter by
+ * @param tags Tags to filter by 
  * @return []Pet
  */
 func (a PetApi) FindPetsByTags(tags []string) ([]Pet, *APIResponse, error) {
@@ -275,14 +274,8 @@ func (a PetApi) FindPetsByTags(tags []string) ([]Pet, *APIResponse, error) {
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
-	var collectionFormat = "csv"
-	if collectionFormat == "multi" {
-		for _, value := range tags {
-			localVarQueryParams.Add("tags", value)
-		}
-	} else {
-		localVarQueryParams.Add("tags", a.Configuration.APIClient.ParameterToString(tags, collectionFormat))
-	}
+
+		localVarQueryParams.Add("tags", a.Configuration.APIClient.parameterToString(tags, "csv"))
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -325,7 +318,7 @@ func (a PetApi) FindPetsByTags(tags []string) ([]Pet, *APIResponse, error) {
  * Find pet by ID
  * Returns a single pet
  *
- * @param petId ID of pet to return
+ * @param petId ID of pet to return 
  * @return *Pet
  */
 func (a PetApi) GetPetById(petId int64) (*Pet, *APIResponse, error) {
@@ -348,6 +341,7 @@ func (a PetApi) GetPetById(petId int64) (*Pet, *APIResponse, error) {
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -390,8 +384,8 @@ func (a PetApi) GetPetById(petId int64) (*Pet, *APIResponse, error) {
  * Update an existing pet
  * 
  *
- * @param body Pet object that needs to be added to the store
- * @return void
+ * @param body Pet object that needs to be added to the store 
+ * @return nil
  */
 func (a PetApi) UpdatePet(body Pet) (*APIResponse, error) {
 
@@ -414,6 +408,7 @@ func (a PetApi) UpdatePet(body Pet) (*APIResponse, error) {
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json", "application/xml",  }
@@ -456,12 +451,12 @@ func (a PetApi) UpdatePet(body Pet) (*APIResponse, error) {
  * Updates a pet in the store with form data
  * 
  *
- * @param petId ID of pet that needs to be updated
- * @param name Updated name of the pet
- * @param status Updated status of the pet
- * @return void
+ * @param petId ID of pet that needs to be updated 
+ * @param name(nil) Updated name of the pet 
+ * @param status(nil) Updated status of the pet 
+ * @return nil
  */
-func (a PetApi) UpdatePetWithForm(petId int64, name string, status string) (*APIResponse, error) {
+func (a PetApi) UpdatePetWithForm(petId int64, name interface{}, status interface{}) (*APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Post")
 	// create path and map variables
@@ -484,6 +479,13 @@ func (a PetApi) UpdatePetWithForm(petId int64, name string, status string) (*API
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+	if err := a.Configuration.APIClient.typeCheckParameter(name, "string", "name"); err != nil {
+		return  nil, err
+	}
+	if err := a.Configuration.APIClient.typeCheckParameter(status, "string", "status"); err != nil {
+		return  nil, err
+	}
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/x-www-form-urlencoded",  }
 
@@ -503,8 +505,8 @@ func (a PetApi) UpdatePetWithForm(petId int64, name string, status string) (*API
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	localVarFormParams["name"] = a.Configuration.APIClient.ParameterToString(name, "")
-	localVarFormParams["status"] = a.Configuration.APIClient.ParameterToString(status, "")
+	localVarFormParams["name"] = a.Configuration.APIClient.parameterToString(name, "")
+	localVarFormParams["status"] = a.Configuration.APIClient.parameterToString(status, "")
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 
 	var localVarURL, _ = url.Parse(localVarPath)
@@ -525,12 +527,12 @@ func (a PetApi) UpdatePetWithForm(petId int64, name string, status string) (*API
  * uploads an image
  * 
  *
- * @param petId ID of pet to update
- * @param additionalMetadata Additional data to pass to server
- * @param file file to upload
+ * @param petId ID of pet to update 
+ * @param additionalMetadata(nil) Additional data to pass to server 
+ * @param file file to upload 
  * @return *ModelApiResponse
  */
-func (a PetApi) UploadFile(petId int64, additionalMetadata string, file *os.File) (*ModelApiResponse, *APIResponse, error) {
+func (a PetApi) UploadFile(petId int64, additionalMetadata interface{}, file *os.File) (*ModelApiResponse, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Post")
 	// create path and map variables
@@ -553,6 +555,10 @@ func (a PetApi) UploadFile(petId int64, additionalMetadata string, file *os.File
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+	if err := a.Configuration.APIClient.typeCheckParameter(additionalMetadata, "string", "additionalMetadata"); err != nil {
+		return nil,  nil, err
+	}
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "multipart/form-data",  }
 
@@ -571,7 +577,7 @@ func (a PetApi) UploadFile(petId int64, additionalMetadata string, file *os.File
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	localVarFormParams["additionalMetadata"] = a.Configuration.APIClient.ParameterToString(additionalMetadata, "")
+	localVarFormParams["additionalMetadata"] = a.Configuration.APIClient.parameterToString(additionalMetadata, "")
 	fbs, _ := ioutil.ReadAll(file)
 	localVarFileBytes = fbs
 	localVarFileName = file.Name()

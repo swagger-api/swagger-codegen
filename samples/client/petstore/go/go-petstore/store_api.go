@@ -41,8 +41,8 @@ func NewStoreApiWithBasePath(basePath string) *StoreApi {
  * Delete purchase order by ID
  * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
  *
- * @param orderId ID of the order that needs to be deleted
- * @return void
+ * @param orderId ID of the order that needs to be deleted 
+ * @return nil
  */
 func (a StoreApi) DeleteOrder(orderId string) (*APIResponse, error) {
 
@@ -61,6 +61,7 @@ func (a StoreApi) DeleteOrder(orderId string) (*APIResponse, error) {
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -123,6 +124,7 @@ func (a StoreApi) GetInventory() (*map[string]int32, *APIResponse, error) {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
 
@@ -163,7 +165,7 @@ func (a StoreApi) GetInventory() (*map[string]int32, *APIResponse, error) {
  * Find purchase order by ID
  * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
  *
- * @param orderId ID of pet that needs to be fetched
+ * @param orderId ID of pet that needs to be fetched 
  * @return *Order
  */
 func (a StoreApi) GetOrderById(orderId int64) (*Order, *APIResponse, error) {
@@ -183,6 +185,7 @@ func (a StoreApi) GetOrderById(orderId int64) (*Order, *APIResponse, error) {
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -225,7 +228,7 @@ func (a StoreApi) GetOrderById(orderId int64) (*Order, *APIResponse, error) {
  * Place an order for a pet
  * 
  *
- * @param body order placed for purchasing the pet
+ * @param body order placed for purchasing the pet 
  * @return *Order
  */
 func (a StoreApi) PlaceOrder(body Order) (*Order, *APIResponse, error) {
@@ -244,6 +247,7 @@ func (a StoreApi) PlaceOrder(body Order) (*Order, *APIResponse, error) {
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
