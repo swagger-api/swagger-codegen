@@ -10,9 +10,8 @@
 
 package petstore
 
-type Animal struct {
+// Model for testing model with \"_class\" property
+type ClassModel struct {
 
-	ClassName string `json:"className"`
-
-	Color string `json:"color,omitempty"`
+	Class string `json:"_class,omitempty"`
 }
