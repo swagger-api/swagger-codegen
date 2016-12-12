@@ -5,6 +5,7 @@ machine:
   environment:
     _JAVA_OPTIONS: "-Xms512m -Xmx1024m"
   java:
+    # TODO we also need to test oraclejdk8
     version: oraclejdk7
   node:
     version: 5.0.0
@@ -22,8 +23,6 @@ dependencies:
     - ~/.m2
   pre:
     - export MAVEN_OPTS="-Xmx512m -XX:MaxPermSize=256m"
-    #- rvm --default use 2.1.0
-    #- ruby -v
     - gem install bundler
     - npm install -g typescript
     - sudo pip install virtualenv
@@ -39,8 +38,6 @@ dependencies:
 
 test:
   override:
-    # generate all petstore sampless (client, servers, doc)
-    #- ./bin/run-all-petstore 2>&1 > run-all-petstore.log
     - mvn verify -Psamples
     #- mvn -q clean install
     #- jdk_switcher use oraclejdk8
