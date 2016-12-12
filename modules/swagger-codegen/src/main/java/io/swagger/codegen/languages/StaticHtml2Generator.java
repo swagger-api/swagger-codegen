@@ -16,7 +16,9 @@ import java.util.List;
 import java.util.Map;
 
 public class StaticHtml2Generator extends DefaultCodegen implements CodegenConfig {
-    protected String invokerPackage = "io.swagger.client";
+    protected String invokerPackage = "io.swagger.client"; // default for Java and Android
+    protected String phpInvokerPackage = "Swagger\\Client"; // default for PHP
+    protected String packageName = "IO.Swagger"; // default for C#
     protected String groupId = "io.swagger";
     protected String artifactId = "swagger-client";
     protected String artifactVersion = "1.0.0";
@@ -37,6 +39,8 @@ public class StaticHtml2Generator extends DefaultCodegen implements CodegenConfi
         cliOptions.add(new CliOption("licenseInfo", "a short description of the license"));
         cliOptions.add(new CliOption("licenseUrl", "a URL pointing to the full license"));
         cliOptions.add(new CliOption(CodegenConstants.INVOKER_PACKAGE, CodegenConstants.INVOKER_PACKAGE_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.PHP_INVOKER_PACKAGE, CodegenConstants.PHP_INVOKER_PACKAGE_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "C# package name"));
         cliOptions.add(new CliOption(CodegenConstants.GROUP_ID, CodegenConstants.GROUP_ID_DESC));
         cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_ID, CodegenConstants.ARTIFACT_ID_DESC));
         cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_VERSION, CodegenConstants.ARTIFACT_VERSION_DESC));
@@ -48,6 +52,8 @@ public class StaticHtml2Generator extends DefaultCodegen implements CodegenConfi
         additionalProperties.put("licenseInfo", "All rights reserved");
         additionalProperties.put("licenseUrl", "http://apache.org/licenses/LICENSE-2.0.html");
         additionalProperties.put(CodegenConstants.INVOKER_PACKAGE, invokerPackage);
+        additionalProperties.put(CodegenConstants.PHP_INVOKER_PACKAGE, phpInvokerPackage);
+        additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
         additionalProperties.put(CodegenConstants.GROUP_ID, groupId);
         additionalProperties.put(CodegenConstants.ARTIFACT_ID, artifactId);
         additionalProperties.put(CodegenConstants.ARTIFACT_VERSION, artifactVersion);
