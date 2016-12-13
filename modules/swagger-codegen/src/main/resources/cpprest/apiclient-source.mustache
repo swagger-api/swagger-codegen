@@ -40,13 +40,13 @@ utility::string_t ApiClient::parameterToString(int32_t value)
     return utility::conversions::to_string_t(std::to_string(value));
 }
 
-pplx::task<web::http::http_response> ApiClient::callApi( 
-    const utility::string_t& path, 
-    const utility::string_t& method, 
-    const std::map<utility::string_t, utility::string_t>& queryParams, 
+pplx::task<web::http::http_response> ApiClient::callApi(
+    const utility::string_t& path,
+    const utility::string_t& method,
+    const std::map<utility::string_t, utility::string_t>& queryParams,
     const std::shared_ptr<IHttpBody> postBody,
-    const std::map<utility::string_t, utility::string_t>& headerParams, 
-    const std::map<utility::string_t, utility::string_t>& formParams, 
+    const std::map<utility::string_t, utility::string_t>& headerParams,
+    const std::map<utility::string_t, utility::string_t>& formParams,
     const std::map<utility::string_t, std::shared_ptr<HttpContent>>& fileParams,
     const utility::string_t& contentType
 ) const
@@ -122,7 +122,7 @@ pplx::task<web::http::http_response> ApiClient::callApi(
     if ( !request.headers().has( web::http::header_names::user_agent ) )
     {
         request.headers().add( web::http::header_names::user_agent, m_Configuration->getUserAgent() );
-    }    
+    }
 
     return client.request(request);
 }
