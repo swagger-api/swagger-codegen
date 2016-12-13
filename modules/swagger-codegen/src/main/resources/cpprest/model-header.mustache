@@ -22,15 +22,15 @@ namespace {{this}} {
 /// {{description}}
 /// </summary>
 class {{declspec}} {{classname}}
-	: public ModelBase
+    : public ModelBase
 {
 public:
     {{classname}}();
     virtual ~{{classname}}();
 
-	/////////////////////////////////////////////
-	/// ModelBase overrides
-	
+    /////////////////////////////////////////////
+    /// ModelBase overrides
+    
     void validate() override;
 
     web::json::value toJson() const override;
@@ -39,9 +39,9 @@ public:
     void toMultipart(std::shared_ptr<MultipartFormData> multipart, const utility::string_t& namePrefix) const override;
     void fromMultiPart(std::shared_ptr<MultipartFormData> multipart, const utility::string_t& namePrefix) override;
     
- 	/////////////////////////////////////////////
-	/// {{classname}} members
-	   
+    /////////////////////////////////////////////
+    /// {{classname}} members
+
     {{#vars}}
     /// <summary>
     /// {{description}}

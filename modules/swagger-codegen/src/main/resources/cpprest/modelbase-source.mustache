@@ -14,7 +14,7 @@ ModelBase::~ModelBase()
 
 web::json::value ModelBase::toJson( const utility::string_t& value )
 {
-	return web::json::value::string(value);
+    return web::json::value::string(value);
 }
 web::json::value ModelBase::toJson( const utility::datetime& value )
 {
@@ -26,7 +26,7 @@ web::json::value ModelBase::toJson( int32_t value )
 }
 web::json::value ModelBase::toJson( int64_t value )
 {
-	return web::json::value::number(value);
+    return web::json::value::number(value);
 }
 web::json::value ModelBase::toJson( double value )
 {
@@ -203,7 +203,7 @@ std::shared_ptr<std::istream> ModelBase::fromBase64( const utility::string_t& en
             temp <<= 6;
             if ( *cursor >= 0x41 && *cursor <= 0x5A )   
             {
-                temp |= *cursor - 0x41;		              
+                temp |= *cursor - 0x41;
             }
             else if ( *cursor >= 0x61 && *cursor <= 0x7A )
             {
