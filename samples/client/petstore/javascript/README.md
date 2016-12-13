@@ -110,6 +110,7 @@ Class | Method | HTTP request | Description
  - [SwaggerPetstore.ArrayTest](docs/ArrayTest.md)
  - [SwaggerPetstore.Cat](docs/Cat.md)
  - [SwaggerPetstore.Category](docs/Category.md)
+ - [SwaggerPetstore.ClassModel](docs/ClassModel.md)
  - [SwaggerPetstore.Client](docs/Client.md)
  - [SwaggerPetstore.Dog](docs/Dog.md)
  - [SwaggerPetstore.EnumArrays](docs/EnumArrays.md)

@@ -61,7 +61,12 @@ responseHttpContentTypes.insert( U("application/json") );
     utility::string_t responseHttpContentType;
     
     // use JSON if possible
-    if ( responseHttpContentTypes.size() == 0 || responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
+    if ( responseHttpContentTypes.size() == 0 )
+    {
+        responseHttpContentType = U("application/json");
+    }
+    // JSON
+    else if ( responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
     {
         responseHttpContentType = U("application/json");
     }
@@ -177,7 +182,12 @@ responseHttpContentTypes.insert( U("application/json") );
     utility::string_t responseHttpContentType;
     
     // use JSON if possible
-    if ( responseHttpContentTypes.size() == 0 || responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
+    if ( responseHttpContentTypes.size() == 0 )
+    {
+        responseHttpContentType = U("application/json");
+    }
+    // JSON
+    else if ( responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
     {
         responseHttpContentType = U("application/json");
     }
@@ -282,7 +292,12 @@ responseHttpContentTypes.insert( U("application/json") );
     utility::string_t responseHttpContentType;
     
     // use JSON if possible
-    if ( responseHttpContentTypes.size() == 0 || responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
+    if ( responseHttpContentTypes.size() == 0 )
+    {
+        responseHttpContentType = U("application/json");
+    }
+    // JSON
+    else if ( responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
     {
         responseHttpContentType = U("application/json");
     }
@@ -409,7 +424,12 @@ responseHttpContentTypes.insert( U("application/json") );
     utility::string_t responseHttpContentType;
     
     // use JSON if possible
-    if ( responseHttpContentTypes.size() == 0 || responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
+    if ( responseHttpContentTypes.size() == 0 )
+    {
+        responseHttpContentType = U("application/json");
+    }
+    // JSON
+    else if ( responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
     {
         responseHttpContentType = U("application/json");
     }
@@ -429,7 +449,7 @@ responseHttpContentTypes.insert( U("application/json") );
         
     
     {
-        queryParams[U("tags")] = ApiClient::parameterToArrayString<>(tags);
+        queryParams[U("tags")] = ApiClient::parameterToArrayString<utility::string_t>(tags);
         
     }
     
@@ -537,7 +557,12 @@ responseHttpContentTypes.insert( U("application/json") );
     utility::string_t responseHttpContentType;
     
     // use JSON if possible
-    if ( responseHttpContentTypes.size() == 0 || responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
+    if ( responseHttpContentTypes.size() == 0 )
+    {
+        responseHttpContentType = U("application/json");
+    }
+    // JSON
+    else if ( responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
     {
         responseHttpContentType = U("application/json");
     }
@@ -667,7 +692,12 @@ responseHttpContentTypes.insert( U("application/json") );
     utility::string_t responseHttpContentType;
     
     // use JSON if possible
-    if ( responseHttpContentTypes.size() == 0 || responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
+    if ( responseHttpContentTypes.size() == 0 )
+    {
+        responseHttpContentType = U("application/json");
+    }
+    // JSON
+    else if ( responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
     {
         responseHttpContentType = U("application/json");
     }
@@ -783,7 +813,12 @@ responseHttpContentTypes.insert( U("application/json") );
     utility::string_t responseHttpContentType;
     
     // use JSON if possible
-    if ( responseHttpContentTypes.size() == 0 || responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
+    if ( responseHttpContentTypes.size() == 0 )
+    {
+        responseHttpContentType = U("application/json");
+    }
+    // JSON
+    else if ( responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
     {
         responseHttpContentType = U("application/json");
     }
@@ -894,7 +929,12 @@ pplx::task<std::shared_ptr<ApiResponse>> PetApi::uploadFile(int64_t petId, utili
     utility::string_t responseHttpContentType;
     
     // use JSON if possible
-    if ( responseHttpContentTypes.size() == 0 || responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
+    if ( responseHttpContentTypes.size() == 0 )
+    {
+        responseHttpContentType = U("application/json");
+    }
+    // JSON
+    else if ( responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
     {
         responseHttpContentType = U("application/json");
     }

@@ -1,8 +1,8 @@
 package io.swagger.api;
 
-import io.swagger.model.Pet;
-import io.swagger.model.ModelApiResponse;
 import java.io.File;
+import io.swagger.model.ModelApiResponse;
+import io.swagger.model.Pet;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -18,8 +18,6 @@ import io.swagger.annotations.ApiOperation;
 
 @Path("/")
 @Api(value = "/", description = "")
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
 public interface PetApi  {
 
     @POST

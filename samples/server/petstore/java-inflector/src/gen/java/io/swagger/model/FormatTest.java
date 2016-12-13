@@ -12,7 +12,7 @@ import java.util.Date;
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-08-20T17:24:26.037+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-12-13T19:14:30.773+11:00")
 public class FormatTest   {
   @JsonProperty("integer")
   private Integer integer = null;
@@ -54,8 +54,8 @@ public class FormatTest   {
   private String password = null;
 
   /**
-   * minimum: 10.0
-   * maximum: 100.0
+   * minimum: 10
+   * maximum: 100
    **/
   public FormatTest integer(Integer integer) {
     this.integer = integer;
@@ -73,8 +73,8 @@ public class FormatTest   {
   }
 
   /**
-   * minimum: 20.0
-   * maximum: 200.0
+   * minimum: 20
+   * maximum: 200
    **/
   public FormatTest int32(Integer int32) {
     this.int32 = int32;

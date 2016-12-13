@@ -61,7 +61,12 @@ responseHttpContentTypes.insert( U("application/json") );
     utility::string_t responseHttpContentType;
     
     // use JSON if possible
-    if ( responseHttpContentTypes.size() == 0 || responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
+    if ( responseHttpContentTypes.size() == 0 )
+    {
+        responseHttpContentType = U("application/json");
+    }
+    // JSON
+    else if ( responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
     {
         responseHttpContentType = U("application/json");
     }
@@ -172,7 +177,12 @@ responseHttpContentTypes.insert( U("application/json") );
     utility::string_t responseHttpContentType;
     
     // use JSON if possible
-    if ( responseHttpContentTypes.size() == 0 || responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
+    if ( responseHttpContentTypes.size() == 0 )
+    {
+        responseHttpContentType = U("application/json");
+    }
+    // JSON
+    else if ( responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
     {
         responseHttpContentType = U("application/json");
     }
@@ -297,7 +307,12 @@ responseHttpContentTypes.insert( U("application/json") );
     utility::string_t responseHttpContentType;
     
     // use JSON if possible
-    if ( responseHttpContentTypes.size() == 0 || responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
+    if ( responseHttpContentTypes.size() == 0 )
+    {
+        responseHttpContentType = U("application/json");
+    }
+    // JSON
+    else if ( responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
     {
         responseHttpContentType = U("application/json");
     }
@@ -423,7 +438,12 @@ responseHttpContentTypes.insert( U("application/json") );
     utility::string_t responseHttpContentType;
     
     // use JSON if possible
-    if ( responseHttpContentTypes.size() == 0 || responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
+    if ( responseHttpContentTypes.size() == 0 )
+    {
+        responseHttpContentType = U("application/json");
+    }
+    // JSON
+    else if ( responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
     {
         responseHttpContentType = U("application/json");
     }
@@ -522,7 +542,12 @@ responseHttpContentTypes.insert( U("application/json") );
     utility::string_t responseHttpContentType;
     
     // use JSON if possible
-    if ( responseHttpContentTypes.size() == 0 || responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
+    if ( responseHttpContentTypes.size() == 0 )
+    {
+        responseHttpContentType = U("application/json");
+    }
+    // JSON
+    else if ( responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
     {
         responseHttpContentType = U("application/json");
     }
@@ -638,7 +663,12 @@ responseHttpContentTypes.insert( U("application/json") );
     utility::string_t responseHttpContentType;
     
     // use JSON if possible
-    if ( responseHttpContentTypes.size() == 0 || responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
+    if ( responseHttpContentTypes.size() == 0 )
+    {
+        responseHttpContentType = U("text/plain");
+    }
+    // JSON
+    else if ( responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
     {
         responseHttpContentType = U("application/json");
     }
@@ -646,6 +676,11 @@ responseHttpContentTypes.insert( U("application/json") );
     else if( responseHttpContentTypes.find(U("multipart/form-data")) != responseHttpContentTypes.end() )
     {
         responseHttpContentType = U("multipart/form-data");
+    }
+    // plain text 
+    else if( responseHttpContentTypes.find(U("text/plain")) != responseHttpContentTypes.end() )
+    {
+        responseHttpContentType = U("text/plain");
     }
     else
     {
@@ -729,6 +764,10 @@ responseHttpContentTypes.insert( U("application/json") );
             result = ModelBase::stringFromJson(json);
             
         }
+        else if(responseHttpContentType == U("text/plain"))
+        {
+            result = response;
+        }
         // else if(responseHttpContentType == U("multipart/form-data"))
         // {
         // TODO multipart response parsing    
@@ -761,7 +800,12 @@ responseHttpContentTypes.insert( U("application/json") );
     utility::string_t responseHttpContentType;
     
     // use JSON if possible
-    if ( responseHttpContentTypes.size() == 0 || responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
+    if ( responseHttpContentTypes.size() == 0 )
+    {
+        responseHttpContentType = U("application/json");
+    }
+    // JSON
+    else if ( responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
     {
         responseHttpContentType = U("application/json");
     }
@@ -862,7 +906,12 @@ responseHttpContentTypes.insert( U("application/json") );
     utility::string_t responseHttpContentType;
     
     // use JSON if possible
-    if ( responseHttpContentTypes.size() == 0 || responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
+    if ( responseHttpContentTypes.size() == 0 )
+    {
+        responseHttpContentType = U("application/json");
+    }
+    // JSON
+    else if ( responseHttpContentTypes.find(U("application/json")) != responseHttpContentTypes.end() )
     {
         responseHttpContentType = U("application/json");
     }

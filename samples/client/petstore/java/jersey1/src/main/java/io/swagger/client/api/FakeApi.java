@@ -201,7 +201,7 @@ if (paramCallback != null)
    * @param enumQueryDouble Query parameter enum test (double) (optional)
    * @throws ApiException if fails to make API call
    */
-  public void testEnumParameters(List<String> enumFormStringArray, String enumFormString, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, BigDecimal enumQueryInteger, Double enumQueryDouble) throws ApiException {
+  public void testEnumParameters(List<String> enumFormStringArray, String enumFormString, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, Double enumQueryDouble) throws ApiException {
     Object localVarPostBody = null;
     
     // create path and map variables

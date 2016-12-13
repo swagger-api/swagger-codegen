@@ -7,10 +7,10 @@ import io.swagger.client.Pair;
 
 import javax.ws.rs.core.GenericType;
 
-import io.swagger.client.model.Client;
-import org.joda.time.LocalDate;
-import org.joda.time.DateTime;
 import java.math.BigDecimal;
+import io.swagger.client.model.Client;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -187,7 +187,7 @@ if (paramCallback != null)
    * @param enumQueryDouble Query parameter enum test (double) (optional)
    * @throws ApiException if fails to make API call
    */
-  public void testEnumParameters(List<String> enumFormStringArray, String enumFormString, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, BigDecimal enumQueryInteger, Double enumQueryDouble) throws ApiException {
+  public void testEnumParameters(List<String> enumFormStringArray, String enumFormString, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, Double enumQueryDouble) throws ApiException {
     Object localVarPostBody = null;
     
     // create path and map variables
@@ -215,12 +215,12 @@ if (enumQueryDouble != null)
       localVarFormParams.put("enum_query_double", enumQueryDouble);
 
     final String[] localVarAccepts = {
-      "application/json"
+      "*/*"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json"
+      "*/*"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 

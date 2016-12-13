@@ -202,7 +202,7 @@ func (a FakeApi) TestEndpointParameters(number float32, double float64, patternW
  * @param enumQueryDouble Query parameter enum test (double)
  * @return void
  */
-func (a FakeApi) TestEnumParameters(enumFormStringArray []string, enumFormString string, enumHeaderStringArray []string, enumHeaderString string, enumQueryStringArray []string, enumQueryString string, enumQueryInteger float32, enumQueryDouble float64) (*APIResponse, error) {
+func (a FakeApi) TestEnumParameters(enumFormStringArray []string, enumFormString string, enumHeaderStringArray []string, enumHeaderString string, enumQueryStringArray []string, enumQueryString string, enumQueryInteger int32, enumQueryDouble float64) (*APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables

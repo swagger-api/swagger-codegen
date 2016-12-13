@@ -15,7 +15,7 @@ import java.io.InputStream;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJAXRSCXFCDIServerCodegen", date = "2016-11-17T08:53:42.205Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJAXRSCXFCDIServerCodegen", date = "2016-12-13T19:15:21.873+11:00")
 public interface StoreApiService {
       public Response deleteOrder(String orderId, SecurityContext securityContext);
       public Response getInventory(SecurityContext securityContext);

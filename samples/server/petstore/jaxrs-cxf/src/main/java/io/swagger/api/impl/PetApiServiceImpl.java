@@ -1,9 +1,9 @@
 package io.swagger.api.impl;
 
 import io.swagger.api.*;
-import io.swagger.model.Pet;
-import io.swagger.model.ModelApiResponse;
 import java.io.File;
+import io.swagger.model.ModelApiResponse;
+import io.swagger.model.Pet;
 
 import java.io.InputStream;
 import java.io.OutputStream;

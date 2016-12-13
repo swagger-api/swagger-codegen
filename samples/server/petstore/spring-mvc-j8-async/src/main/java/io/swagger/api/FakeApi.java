@@ -1,9 +1,9 @@
 package io.swagger.api;
 
-import io.swagger.model.Client;
-import java.time.OffsetDateTime;
-import java.time.LocalDate;
 import java.math.BigDecimal;
+import io.swagger.model.Client;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
@@ -80,7 +80,7 @@ public interface FakeApi {
         @ApiParam(value = "Header parameter enum test (string)"  , allowableValues="_ABC, _EFG, _XYZ_", defaultValue="-efg") @RequestHeader(value="enum_header_string", required=false) String enumHeaderString,
         @ApiParam(value = "Query parameter enum test (string array)", allowableValues = "GREATER_THAN, DOLLAR") @RequestParam(value = "enumQueryStringArray", required = false) List<String> enumQueryStringArray,
         @ApiParam(value = "Query parameter enum test (string)", allowableValues = "_ABC, _EFG, _XYZ_", defaultValue = "-efg") @RequestParam(value = "enumQueryString", required = false, defaultValue="-efg") String enumQueryString,
-        @ApiParam(value = "Query parameter enum test (double)") @RequestParam(value = "enumQueryInteger", required = false) BigDecimal enumQueryInteger,
+        @ApiParam(value = "Query parameter enum test (double)") @RequestParam(value = "enumQueryInteger", required = false) Integer enumQueryInteger,
         @ApiParam(value = "Query parameter enum test (double)" ) @RequestPart(value="enumQueryDouble", required=false)  Double enumQueryDouble) {
         // do some magic!
         return CompletableFuture.completedFuture(new ResponseEntity<Void>(HttpStatus.OK));

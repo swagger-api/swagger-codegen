@@ -88,7 +88,7 @@ public class FakeApi  {
 ,@ApiParam(value = "Header parameter enum test (string)" , allowableValues="_abc, -efg, (xyz)", defaultValue="-efg")@HeaderParam("enum_header_string") String enumHeaderString
 ,@ApiParam(value = "Query parameter enum test (string array)", allowableValues=">, $") @QueryParam("enum_query_string_array") List<String> enumQueryStringArray
 ,@ApiParam(value = "Query parameter enum test (string)", allowableValues="_abc, -efg, (xyz)", defaultValue="-efg") @DefaultValue("-efg") @QueryParam("enum_query_string") String enumQueryString
-,@ApiParam(value = "Query parameter enum test (double)") @QueryParam("enum_query_integer") BigDecimal enumQueryInteger
+,@ApiParam(value = "Query parameter enum test (double)") @QueryParam("enum_query_integer") Integer enumQueryInteger
 ,@ApiParam(value = "Query parameter enum test (double)")  @FormParam("enum_query_double")  Double enumQueryDouble
 ,@Context SecurityContext securityContext)
     throws NotFoundException {

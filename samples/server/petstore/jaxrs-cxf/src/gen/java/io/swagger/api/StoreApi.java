@@ -17,8 +17,6 @@ import io.swagger.annotations.ApiOperation;
 
 @Path("/")
 @Api(value = "/", description = "")
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
 public interface StoreApi  {
 
     @DELETE

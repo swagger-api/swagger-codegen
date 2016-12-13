@@ -1,7 +1,7 @@
 package io.swagger.api;
 
-import io.swagger.model.User;
 import java.util.List;
+import io.swagger.model.User;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -17,8 +17,6 @@ import io.swagger.annotations.ApiOperation;
 
 @Path("/")
 @Api(value = "/", description = "")
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
 public interface UserApi  {
 
     @POST
