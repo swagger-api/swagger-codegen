@@ -28,7 +28,7 @@
         <!-- encoders are assigned the type
              ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %X{cId} %logger{36} - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %X{cId} %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
@@ -36,7 +36,7 @@
         <File>target/test.log</File>
         <Append>false</Append>
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>%d{HH:mm:ss.SSS} [%thread] %X{cId} %class{36}:%L %M - %msg%n</Pattern>
+            <Pattern>%d{HH:mm:ss.SSS} [%thread] %X{cId} %-5level %class{36}:%L %M - %msg%n</Pattern>
         </layout>
     </appender>
 
