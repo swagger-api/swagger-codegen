@@ -46,6 +46,10 @@ public class JavaClientOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setArtifactVersion(JavaOptionsProvider.ARTIFACT_VERSION_VALUE);
             times = 1;
+            clientCodegen.setLicenseName(JavaOptionsProvider.LICENSE_NAME_VALUE);
+            times = 1;
+            clientCodegen.setLicenseUrl(JavaOptionsProvider.LICENSE_URL_VALUE);
+            times = 1;
             clientCodegen.setSourceFolder(JavaOptionsProvider.SOURCE_FOLDER_VALUE);
             times = 1;
             clientCodegen.setLocalVariablePrefix(JavaOptionsProvider.LOCAL_PREFIX_VALUE);
