@@ -41,10 +41,23 @@ func NewUserApiWithBasePath(basePath string) *UserApi {
  * Create user
  * This can only be done by the logged in user.
  *
- * @param body Created user object
+ * @param body *User (required) Created user object
  * @return void
  */
-func (a UserApi) CreateUser(body User) (*APIResponse, error) {
+func (a UserApi) CreateUser(params map[string]interface{}) (localVarAPIResponse *APIResponse, err error) {
+
+	var body *User
+	if params["body"] == nil {
+		err = fmt.Errorf("Param 'body' is required")	
+		return
+	} else {
+		var ok bool
+		body, ok = params["body"].(*User)
+		if !ok {
+			err = fmt.Errorf("Invalid type for param 'body', must be '*User'")
+			return
+		}
+	}
 
 	var localVarHttpMethod = strings.ToUpper("Post")
 	// create path and map variables
@@ -81,20 +94,22 @@ func (a UserApi) CreateUser(body User) (*APIResponse, error) {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// body params
-	localVarPostBody = &body
+	if params["body"] != nil {
+		localVarPostBody = body
+	}
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return
+	}
 
 	var localVarURL, _ = url.Parse(localVarPath)
 	localVarURL.RawQuery = localVarQueryParams.Encode()
-	var localVarAPIResponse = &APIResponse{Operation: "CreateUser", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
+	localVarAPIResponse = &APIResponse{Operation: "CreateUser", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
 	if localVarHttpResponse != nil {
 		localVarAPIResponse.Response = localVarHttpResponse.RawResponse
 		localVarAPIResponse.Payload = localVarHttpResponse.Body()
 	}
 
-	if err != nil {
-		return localVarAPIResponse, err
-	}
 	return localVarAPIResponse, err
 }
 
@@ -102,10 +117,23 @@ func (a UserApi) CreateUser(body User) (*APIResponse, error) {
  * Creates list of users with given input array
  * 
  *
- * @param body List of user object
+ * @param body []User (required) List of user object
  * @return void
  */
-func (a UserApi) CreateUsersWithArrayInput(body []User) (*APIResponse, error) {
+func (a UserApi) CreateUsersWithArrayInput(params map[string]interface{}) (localVarAPIResponse *APIResponse, err error) {
+
+	var body []User
+	if params["body"] == nil {
+		err = fmt.Errorf("Param 'body' is required")	
+		return
+	} else {
+		var ok bool
+		body, ok = params["body"].([]User)
+		if !ok {
+			err = fmt.Errorf("Invalid type for param 'body', must be '[]User'")
+			return
+		}
+	}
 
 	var localVarHttpMethod = strings.ToUpper("Post")
 	// create path and map variables
@@ -142,20 +170,22 @@ func (a UserApi) CreateUsersWithArrayInput(body []User) (*APIResponse, error) {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// body params
-	localVarPostBody = &body
+	if params["body"] != nil {
+		localVarPostBody = body
+	}
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return
+	}
 
 	var localVarURL, _ = url.Parse(localVarPath)
 	localVarURL.RawQuery = localVarQueryParams.Encode()
-	var localVarAPIResponse = &APIResponse{Operation: "CreateUsersWithArrayInput", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
+	localVarAPIResponse = &APIResponse{Operation: "CreateUsersWithArrayInput", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
 	if localVarHttpResponse != nil {
 		localVarAPIResponse.Response = localVarHttpResponse.RawResponse
 		localVarAPIResponse.Payload = localVarHttpResponse.Body()
 	}
 
-	if err != nil {
-		return localVarAPIResponse, err
-	}
 	return localVarAPIResponse, err
 }
 
@@ -163,10 +193,23 @@ func (a UserApi) CreateUsersWithArrayInput(body []User) (*APIResponse, error) {
  * Creates list of users with given input array
  * 
  *
- * @param body List of user object
+ * @param body []User (required) List of user object
  * @return void
  */
-func (a UserApi) CreateUsersWithListInput(body []User) (*APIResponse, error) {
+func (a UserApi) CreateUsersWithListInput(params map[string]interface{}) (localVarAPIResponse *APIResponse, err error) {
+
+	var body []User
+	if params["body"] == nil {
+		err = fmt.Errorf("Param 'body' is required")	
+		return
+	} else {
+		var ok bool
+		body, ok = params["body"].([]User)
+		if !ok {
+			err = fmt.Errorf("Invalid type for param 'body', must be '[]User'")
+			return
+		}
+	}
 
 	var localVarHttpMethod = strings.ToUpper("Post")
 	// create path and map variables
@@ -203,20 +246,22 @@ func (a UserApi) CreateUsersWithListInput(body []User) (*APIResponse, error) {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// body params
-	localVarPostBody = &body
+	if params["body"] != nil {
+		localVarPostBody = body
+	}
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return
+	}
 
 	var localVarURL, _ = url.Parse(localVarPath)
 	localVarURL.RawQuery = localVarQueryParams.Encode()
-	var localVarAPIResponse = &APIResponse{Operation: "CreateUsersWithListInput", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
+	localVarAPIResponse = &APIResponse{Operation: "CreateUsersWithListInput", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
 	if localVarHttpResponse != nil {
 		localVarAPIResponse.Response = localVarHttpResponse.RawResponse
 		localVarAPIResponse.Payload = localVarHttpResponse.Body()
 	}
 
-	if err != nil {
-		return localVarAPIResponse, err
-	}
 	return localVarAPIResponse, err
 }
 
@@ -224,15 +269,31 @@ func (a UserApi) CreateUsersWithListInput(body []User) (*APIResponse, error) {
  * Delete user
  * This can only be done by the logged in user.
  *
- * @param username The name that needs to be deleted
+ * @param username string (required) The name that needs to be deleted
  * @return void
  */
-func (a UserApi) DeleteUser(username string) (*APIResponse, error) {
+func (a UserApi) DeleteUser(params map[string]interface{}) (localVarAPIResponse *APIResponse, err error) {
+
+	var username string
+	if params["username"] == nil {
+		err = fmt.Errorf("Param 'username' is required")	
+		return
+	} else {
+		var ok bool
+		username, ok = params["username"].(string)
+		if !ok {
+			err = fmt.Errorf("Invalid type for param 'username', must be 'string'")
+			return
+		}
+	}
 
 	var localVarHttpMethod = strings.ToUpper("Delete")
 	// create path and map variables
 	localVarPath := a.Configuration.BasePath + "/user/{username}"
-	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
+	if params["username"] != nil {
+		localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", a.Configuration.APIClient.ParameterToString(
+			username, ""), -1)
+	}
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -265,18 +326,18 @@ func (a UserApi) DeleteUser(username string) (*APIResponse, error) {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return
+	}
 
 	var localVarURL, _ = url.Parse(localVarPath)
 	localVarURL.RawQuery = localVarQueryParams.Encode()
-	var localVarAPIResponse = &APIResponse{Operation: "DeleteUser", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
+	localVarAPIResponse = &APIResponse{Operation: "DeleteUser", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
 	if localVarHttpResponse != nil {
 		localVarAPIResponse.Response = localVarHttpResponse.RawResponse
 		localVarAPIResponse.Payload = localVarHttpResponse.Body()
 	}
 
-	if err != nil {
-		return localVarAPIResponse, err
-	}
 	return localVarAPIResponse, err
 }
 
@@ -284,15 +345,31 @@ func (a UserApi) DeleteUser(username string) (*APIResponse, error) {
  * Get user by user name
  * 
  *
- * @param username The name that needs to be fetched. Use user1 for testing. 
+ * @param username string (required) The name that needs to be fetched. Use user1 for testing. 
  * @return *User
  */
-func (a UserApi) GetUserByName(username string) (*User, *APIResponse, error) {
+func (a UserApi) GetUserByName(params map[string]interface{}) (successPayload *User, localVarAPIResponse *APIResponse, err error) {
+
+	var username string
+	if params["username"] == nil {
+		err = fmt.Errorf("Param 'username' is required")	
+		return
+	} else {
+		var ok bool
+		username, ok = params["username"].(string)
+		if !ok {
+			err = fmt.Errorf("Invalid type for param 'username', must be 'string'")
+			return
+		}
+	}
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
 	localVarPath := a.Configuration.BasePath + "/user/{username}"
-	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
+	if params["username"] != nil {
+		localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", a.Configuration.APIClient.ParameterToString(
+			username, ""), -1)
+	}
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -324,20 +401,20 @@ func (a UserApi) GetUserByName(username string) (*User, *APIResponse, error) {
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	var successPayload = new(User)
+	successPayload = new(User)
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return
+	}
 
 	var localVarURL, _ = url.Parse(localVarPath)
 	localVarURL.RawQuery = localVarQueryParams.Encode()
-	var localVarAPIResponse = &APIResponse{Operation: "GetUserByName", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
+	localVarAPIResponse = &APIResponse{Operation: "GetUserByName", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
 	if localVarHttpResponse != nil {
 		localVarAPIResponse.Response = localVarHttpResponse.RawResponse
 		localVarAPIResponse.Payload = localVarHttpResponse.Body()
 	}
 
-	if err != nil {
-		return successPayload, localVarAPIResponse, err
-	}
 	err = json.Unmarshal(localVarHttpResponse.Body(), &successPayload)
 	return successPayload, localVarAPIResponse, err
 }
@@ -346,11 +423,36 @@ func (a UserApi) GetUserByName(username string) (*User, *APIResponse, error) {
  * Logs user into the system
  * 
  *
- * @param username The user name for login
- * @param password The password for login in clear text
+ * @param username string (required) The user name for login
+ * @param password string (required) The password for login in clear text
  * @return *string
  */
-func (a UserApi) LoginUser(username string, password string) (*string, *APIResponse, error) {
+func (a UserApi) LoginUser(params map[string]interface{}) (successPayload *string, localVarAPIResponse *APIResponse, err error) {
+
+	var username string
+	if params["username"] == nil {
+		err = fmt.Errorf("Param 'username' is required")	
+		return
+	} else {
+		var ok bool
+		username, ok = params["username"].(string)
+		if !ok {
+			err = fmt.Errorf("Invalid type for param 'username', must be 'string'")
+			return
+		}
+	}
+	var password string
+	if params["password"] == nil {
+		err = fmt.Errorf("Param 'password' is required")	
+		return
+	} else {
+		var ok bool
+		password, ok = params["password"].(string)
+		if !ok {
+			err = fmt.Errorf("Invalid type for param 'password', must be 'string'")
+			return
+		}
+	}
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -366,8 +468,12 @@ func (a UserApi) LoginUser(username string, password string) (*string, *APIRespo
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
+	if params["username"] != nil {
 		localVarQueryParams.Add("username", a.Configuration.APIClient.ParameterToString(username, ""))
+	}
+	if params["password"] != nil {
 		localVarQueryParams.Add("password", a.Configuration.APIClient.ParameterToString(password, ""))
+	}
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -388,20 +494,20 @@ func (a UserApi) LoginUser(username string, password string) (*string, *APIRespo
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	var successPayload = new(string)
+	successPayload = new(string)
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return
+	}
 
 	var localVarURL, _ = url.Parse(localVarPath)
 	localVarURL.RawQuery = localVarQueryParams.Encode()
-	var localVarAPIResponse = &APIResponse{Operation: "LoginUser", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
+	localVarAPIResponse = &APIResponse{Operation: "LoginUser", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
 	if localVarHttpResponse != nil {
 		localVarAPIResponse.Response = localVarHttpResponse.RawResponse
 		localVarAPIResponse.Payload = localVarHttpResponse.Body()
 	}
 
-	if err != nil {
-		return successPayload, localVarAPIResponse, err
-	}
 	err = json.Unmarshal(localVarHttpResponse.Body(), &successPayload)
 	return successPayload, localVarAPIResponse, err
 }
@@ -412,7 +518,8 @@ func (a UserApi) LoginUser(username string, password string) (*string, *APIRespo
  *
  * @return void
  */
-func (a UserApi) LogoutUser() (*APIResponse, error) {
+func (a UserApi) LogoutUser(params map[string]interface{}) (localVarAPIResponse *APIResponse, err error) {
+
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -449,18 +556,18 @@ func (a UserApi) LogoutUser() (*APIResponse, error) {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return
+	}
 
 	var localVarURL, _ = url.Parse(localVarPath)
 	localVarURL.RawQuery = localVarQueryParams.Encode()
-	var localVarAPIResponse = &APIResponse{Operation: "LogoutUser", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
+	localVarAPIResponse = &APIResponse{Operation: "LogoutUser", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
 	if localVarHttpResponse != nil {
 		localVarAPIResponse.Response = localVarHttpResponse.RawResponse
 		localVarAPIResponse.Payload = localVarHttpResponse.Body()
 	}
 
-	if err != nil {
-		return localVarAPIResponse, err
-	}
 	return localVarAPIResponse, err
 }
 
@@ -468,16 +575,44 @@ func (a UserApi) LogoutUser() (*APIResponse, error) {
  * Updated user
  * This can only be done by the logged in user.
  *
- * @param username name that need to be deleted
- * @param body Updated user object
+ * @param username string (required) name that need to be deleted
+ * @param body *User (required) Updated user object
  * @return void
  */
-func (a UserApi) UpdateUser(username string, body User) (*APIResponse, error) {
+func (a UserApi) UpdateUser(params map[string]interface{}) (localVarAPIResponse *APIResponse, err error) {
+
+	var username string
+	if params["username"] == nil {
+		err = fmt.Errorf("Param 'username' is required")	
+		return
+	} else {
+		var ok bool
+		username, ok = params["username"].(string)
+		if !ok {
+			err = fmt.Errorf("Invalid type for param 'username', must be 'string'")
+			return
+		}
+	}
+	var body *User
+	if params["body"] == nil {
+		err = fmt.Errorf("Param 'body' is required")	
+		return
+	} else {
+		var ok bool
+		body, ok = params["body"].(*User)
+		if !ok {
+			err = fmt.Errorf("Invalid type for param 'body', must be '*User'")
+			return
+		}
+	}
 
 	var localVarHttpMethod = strings.ToUpper("Put")
 	// create path and map variables
 	localVarPath := a.Configuration.BasePath + "/user/{username}"
-	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
+	if params["username"] != nil {
+		localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", a.Configuration.APIClient.ParameterToString(
+			username, ""), -1)
+	}
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -510,20 +645,22 @@ func (a UserApi) UpdateUser(username string, body User) (*APIResponse, error) {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// body params
-	localVarPostBody = &body
+	if params["body"] != nil {
+		localVarPostBody = body
+	}
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return
+	}
 
 	var localVarURL, _ = url.Parse(localVarPath)
 	localVarURL.RawQuery = localVarQueryParams.Encode()
-	var localVarAPIResponse = &APIResponse{Operation: "UpdateUser", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
+	localVarAPIResponse = &APIResponse{Operation: "UpdateUser", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
 	if localVarHttpResponse != nil {
 		localVarAPIResponse.Response = localVarHttpResponse.RawResponse
 		localVarAPIResponse.Payload = localVarHttpResponse.Body()
 	}
 
-	if err != nil {
-		return localVarAPIResponse, err
-	}
 	return localVarAPIResponse, err
 }
 

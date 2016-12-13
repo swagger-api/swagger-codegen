@@ -43,10 +43,23 @@ func NewPetApiWithBasePath(basePath string) *PetApi {
  * Add a new pet to the store
  * 
  *
- * @param body Pet object that needs to be added to the store
+ * @param body *Pet (required) Pet object that needs to be added to the store
  * @return void
  */
-func (a PetApi) AddPet(body Pet) (*APIResponse, error) {
+func (a PetApi) AddPet(params map[string]interface{}) (localVarAPIResponse *APIResponse, err error) {
+
+	var body *Pet
+	if params["body"] == nil {
+		err = fmt.Errorf("Param 'body' is required")	
+		return
+	} else {
+		var ok bool
+		body, ok = params["body"].(*Pet)
+		if !ok {
+			err = fmt.Errorf("Invalid type for param 'body', must be '*Pet'")
+			return
+		}
+	}
 
 	var localVarHttpMethod = strings.ToUpper("Post")
 	// create path and map variables
@@ -88,20 +101,22 @@ func (a PetApi) AddPet(body Pet) (*APIResponse, error) {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// body params
-	localVarPostBody = &body
+	if params["body"] != nil {
+		localVarPostBody = body
+	}
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return
+	}
 
 	var localVarURL, _ = url.Parse(localVarPath)
 	localVarURL.RawQuery = localVarQueryParams.Encode()
-	var localVarAPIResponse = &APIResponse{Operation: "AddPet", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
+	localVarAPIResponse = &APIResponse{Operation: "AddPet", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
 	if localVarHttpResponse != nil {
 		localVarAPIResponse.Response = localVarHttpResponse.RawResponse
 		localVarAPIResponse.Payload = localVarHttpResponse.Body()
 	}
 
-	if err != nil {
-		return localVarAPIResponse, err
-	}
 	return localVarAPIResponse, err
 }
 
@@ -109,16 +124,41 @@ func (a PetApi) AddPet(body Pet) (*APIResponse, error) {
  * Deletes a pet
  * 
  *
- * @param petId Pet id to delete
- * @param apiKey 
+ * @param petId int64 (required) Pet id to delete
+ * @param api_key string 
  * @return void
  */
-func (a PetApi) DeletePet(petId int64, apiKey string) (*APIResponse, error) {
+func (a PetApi) DeletePet(params map[string]interface{}) (localVarAPIResponse *APIResponse, err error) {
+
+	var petId int64
+	if params["petId"] == nil {
+		err = fmt.Errorf("Param 'petId' is required")	
+		return
+	} else {
+		var ok bool
+		petId, ok = params["petId"].(int64)
+		if !ok {
+			err = fmt.Errorf("Invalid type for param 'petId', must be 'int64'")
+			return
+		}
+	}
+	var apiKey string
+	if params["api_key"] != nil {
+		var ok bool
+		apiKey, ok = params["api_key"].(string)
+		if !ok {
+			err = fmt.Errorf("Invalid type for param 'api_key', must be 'string'")
+			return
+		}
+	}
 
 	var localVarHttpMethod = strings.ToUpper("Delete")
 	// create path and map variables
 	localVarPath := a.Configuration.BasePath + "/pet/{petId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"petId"+"}", fmt.Sprintf("%v", petId), -1)
+	if params["petId"] != nil {
+		localVarPath = strings.Replace(localVarPath, "{"+"petId"+"}", a.Configuration.APIClient.ParameterToString(
+			petId, ""), -1)
+	}
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -156,20 +196,22 @@ func (a PetApi) DeletePet(petId int64, apiKey string) (*APIResponse, error) {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// header params "api_key"
-	localVarHeaderParams["api_key"] = a.Configuration.APIClient.ParameterToString(apiKey, "")
+	if params["api_key"] != nil {
+		localVarHeaderParams["api_key"] = a.Configuration.APIClient.ParameterToString(apiKey, "")
+	}
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return
+	}
 
 	var localVarURL, _ = url.Parse(localVarPath)
 	localVarURL.RawQuery = localVarQueryParams.Encode()
-	var localVarAPIResponse = &APIResponse{Operation: "DeletePet", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
+	localVarAPIResponse = &APIResponse{Operation: "DeletePet", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
 	if localVarHttpResponse != nil {
 		localVarAPIResponse.Response = localVarHttpResponse.RawResponse
 		localVarAPIResponse.Payload = localVarHttpResponse.Body()
 	}
 
-	if err != nil {
-		return localVarAPIResponse, err
-	}
 	return localVarAPIResponse, err
 }
 
@@ -177,10 +219,23 @@ func (a PetApi) DeletePet(petId int64, apiKey string) (*APIResponse, error) {
  * Finds Pets by status
  * Multiple status values can be provided with comma separated strings
  *
- * @param status Status values that need to be considered for filter
+ * @param status []string (required) Status values that need to be considered for filter
  * @return []Pet
  */
-func (a PetApi) FindPetsByStatus(status []string) ([]Pet, *APIResponse, error) {
+func (a PetApi) FindPetsByStatus(params map[string]interface{}) (successPayload []Pet, localVarAPIResponse *APIResponse, err error) {
+
+	var status []string
+	if params["status"] == nil {
+		err = fmt.Errorf("Param 'status' is required")	
+		return
+	} else {
+		var ok bool
+		status, ok = params["status"].([]string)
+		if !ok {
+			err = fmt.Errorf("Invalid type for param 'status', must be '[]string'")
+			return
+		}
+	}
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -202,11 +257,11 @@ func (a PetApi) FindPetsByStatus(status []string) ([]Pet, *APIResponse, error) {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 	var collectionFormat = "csv"
-	if collectionFormat == "multi" {
+	if collectionFormat == "multi" && params["status"] != nil {
 		for _, value := range status {
-			localVarQueryParams.Add("status", value)
+			localVarQueryParams.Add("status", fmt.Sprintf("%v", value))
 		}
-	} else {
+	} else if params["status"] != nil {
 		localVarQueryParams.Add("status", a.Configuration.APIClient.ParameterToString(status, collectionFormat))
 	}
 
@@ -229,20 +284,20 @@ func (a PetApi) FindPetsByStatus(status []string) ([]Pet, *APIResponse, error) {
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	var successPayload = new([]Pet)
+	successPayload = new([]Pet)
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return
+	}
 
 	var localVarURL, _ = url.Parse(localVarPath)
 	localVarURL.RawQuery = localVarQueryParams.Encode()
-	var localVarAPIResponse = &APIResponse{Operation: "FindPetsByStatus", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
+	localVarAPIResponse = &APIResponse{Operation: "FindPetsByStatus", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
 	if localVarHttpResponse != nil {
 		localVarAPIResponse.Response = localVarHttpResponse.RawResponse
 		localVarAPIResponse.Payload = localVarHttpResponse.Body()
 	}
 
-	if err != nil {
-		return *successPayload, localVarAPIResponse, err
-	}
 	err = json.Unmarshal(localVarHttpResponse.Body(), &successPayload)
 	return *successPayload, localVarAPIResponse, err
 }
@@ -251,10 +306,23 @@ func (a PetApi) FindPetsByStatus(status []string) ([]Pet, *APIResponse, error) {
  * Finds Pets by tags
  * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
  *
- * @param tags Tags to filter by
+ * @param tags []string (required) Tags to filter by
  * @return []Pet
  */
-func (a PetApi) FindPetsByTags(tags []string) ([]Pet, *APIResponse, error) {
+func (a PetApi) FindPetsByTags(params map[string]interface{}) (successPayload []Pet, localVarAPIResponse *APIResponse, err error) {
+
+	var tags []string
+	if params["tags"] == nil {
+		err = fmt.Errorf("Param 'tags' is required")	
+		return
+	} else {
+		var ok bool
+		tags, ok = params["tags"].([]string)
+		if !ok {
+			err = fmt.Errorf("Invalid type for param 'tags', must be '[]string'")
+			return
+		}
+	}
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -276,11 +344,11 @@ func (a PetApi) FindPetsByTags(tags []string) ([]Pet, *APIResponse, error) {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
 	}
 	var collectionFormat = "csv"
-	if collectionFormat == "multi" {
+	if collectionFormat == "multi" && params["tags"] != nil {
 		for _, value := range tags {
-			localVarQueryParams.Add("tags", value)
+			localVarQueryParams.Add("tags", fmt.Sprintf("%v", value))
 		}
-	} else {
+	} else if params["tags"] != nil {
 		localVarQueryParams.Add("tags", a.Configuration.APIClient.ParameterToString(tags, collectionFormat))
 	}
 
@@ -303,20 +371,20 @@ func (a PetApi) FindPetsByTags(tags []string) ([]Pet, *APIResponse, error) {
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	var successPayload = new([]Pet)
+	successPayload = new([]Pet)
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return
+	}
 
 	var localVarURL, _ = url.Parse(localVarPath)
 	localVarURL.RawQuery = localVarQueryParams.Encode()
-	var localVarAPIResponse = &APIResponse{Operation: "FindPetsByTags", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
+	localVarAPIResponse = &APIResponse{Operation: "FindPetsByTags", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
 	if localVarHttpResponse != nil {
 		localVarAPIResponse.Response = localVarHttpResponse.RawResponse
 		localVarAPIResponse.Payload = localVarHttpResponse.Body()
 	}
 
-	if err != nil {
-		return *successPayload, localVarAPIResponse, err
-	}
 	err = json.Unmarshal(localVarHttpResponse.Body(), &successPayload)
 	return *successPayload, localVarAPIResponse, err
 }
@@ -325,15 +393,31 @@ func (a PetApi) FindPetsByTags(tags []string) ([]Pet, *APIResponse, error) {
  * Find pet by ID
  * Returns a single pet
  *
- * @param petId ID of pet to return
+ * @param petId int64 (required) ID of pet to return
  * @return *Pet
  */
-func (a PetApi) GetPetById(petId int64) (*Pet, *APIResponse, error) {
+func (a PetApi) GetPetById(params map[string]interface{}) (successPayload *Pet, localVarAPIResponse *APIResponse, err error) {
+
+	var petId int64
+	if params["petId"] == nil {
+		err = fmt.Errorf("Param 'petId' is required")	
+		return
+	} else {
+		var ok bool
+		petId, ok = params["petId"].(int64)
+		if !ok {
+			err = fmt.Errorf("Invalid type for param 'petId', must be 'int64'")
+			return
+		}
+	}
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
 	localVarPath := a.Configuration.BasePath + "/pet/{petId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"petId"+"}", fmt.Sprintf("%v", petId), -1)
+	if params["petId"] != nil {
+		localVarPath = strings.Replace(localVarPath, "{"+"petId"+"}", a.Configuration.APIClient.ParameterToString(
+			petId, ""), -1)
+	}
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -368,20 +452,20 @@ func (a PetApi) GetPetById(petId int64) (*Pet, *APIResponse, error) {
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	var successPayload = new(Pet)
+	successPayload = new(Pet)
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return
+	}
 
 	var localVarURL, _ = url.Parse(localVarPath)
 	localVarURL.RawQuery = localVarQueryParams.Encode()
-	var localVarAPIResponse = &APIResponse{Operation: "GetPetById", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
+	localVarAPIResponse = &APIResponse{Operation: "GetPetById", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
 	if localVarHttpResponse != nil {
 		localVarAPIResponse.Response = localVarHttpResponse.RawResponse
 		localVarAPIResponse.Payload = localVarHttpResponse.Body()
 	}
 
-	if err != nil {
-		return successPayload, localVarAPIResponse, err
-	}
 	err = json.Unmarshal(localVarHttpResponse.Body(), &successPayload)
 	return successPayload, localVarAPIResponse, err
 }
@@ -390,10 +474,23 @@ func (a PetApi) GetPetById(petId int64) (*Pet, *APIResponse, error) {
  * Update an existing pet
  * 
  *
- * @param body Pet object that needs to be added to the store
+ * @param body *Pet (required) Pet object that needs to be added to the store
  * @return void
  */
-func (a PetApi) UpdatePet(body Pet) (*APIResponse, error) {
+func (a PetApi) UpdatePet(params map[string]interface{}) (localVarAPIResponse *APIResponse, err error) {
+
+	var body *Pet
+	if params["body"] == nil {
+		err = fmt.Errorf("Param 'body' is required")	
+		return
+	} else {
+		var ok bool
+		body, ok = params["body"].(*Pet)
+		if !ok {
+			err = fmt.Errorf("Invalid type for param 'body', must be '*Pet'")
+			return
+		}
+	}
 
 	var localVarHttpMethod = strings.ToUpper("Put")
 	// create path and map variables
@@ -435,20 +532,22 @@ func (a PetApi) UpdatePet(body Pet) (*APIResponse, error) {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// body params
-	localVarPostBody = &body
+	if params["body"] != nil {
+		localVarPostBody = body
+	}
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return
+	}
 
 	var localVarURL, _ = url.Parse(localVarPath)
 	localVarURL.RawQuery = localVarQueryParams.Encode()
-	var localVarAPIResponse = &APIResponse{Operation: "UpdatePet", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
+	localVarAPIResponse = &APIResponse{Operation: "UpdatePet", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
 	if localVarHttpResponse != nil {
 		localVarAPIResponse.Response = localVarHttpResponse.RawResponse
 		localVarAPIResponse.Payload = localVarHttpResponse.Body()
 	}
 
-	if err != nil {
-		return localVarAPIResponse, err
-	}
 	return localVarAPIResponse, err
 }
 
@@ -456,17 +555,51 @@ func (a PetApi) UpdatePet(body Pet) (*APIResponse, error) {
  * Updates a pet in the store with form data
  * 
  *
- * @param petId ID of pet that needs to be updated
- * @param name Updated name of the pet
- * @param status Updated status of the pet
+ * @param petId int64 (required) ID of pet that needs to be updated
+ * @param name string Updated name of the pet
+ * @param status string Updated status of the pet
  * @return void
  */
-func (a PetApi) UpdatePetWithForm(petId int64, name string, status string) (*APIResponse, error) {
+func (a PetApi) UpdatePetWithForm(params map[string]interface{}) (localVarAPIResponse *APIResponse, err error) {
+
+	var petId int64
+	if params["petId"] == nil {
+		err = fmt.Errorf("Param 'petId' is required")	
+		return
+	} else {
+		var ok bool
+		petId, ok = params["petId"].(int64)
+		if !ok {
+			err = fmt.Errorf("Invalid type for param 'petId', must be 'int64'")
+			return
+		}
+	}
+	var name string
+	if params["name"] != nil {
+		var ok bool
+		name, ok = params["name"].(string)
+		if !ok {
+			err = fmt.Errorf("Invalid type for param 'name', must be 'string'")
+			return
+		}
+	}
+	var status string
+	if params["status"] != nil {
+		var ok bool
+		status, ok = params["status"].(string)
+		if !ok {
+			err = fmt.Errorf("Invalid type for param 'status', must be 'string'")
+			return
+		}
+	}
 
 	var localVarHttpMethod = strings.ToUpper("Post")
 	// create path and map variables
 	localVarPath := a.Configuration.BasePath + "/pet/{petId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"petId"+"}", fmt.Sprintf("%v", petId), -1)
+	if params["petId"] != nil {
+		localVarPath = strings.Replace(localVarPath, "{"+"petId"+"}", a.Configuration.APIClient.ParameterToString(
+			petId, ""), -1)
+	}
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -503,21 +636,25 @@ func (a PetApi) UpdatePetWithForm(petId int64, name string, status string) (*API
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	localVarFormParams["name"] = a.Configuration.APIClient.ParameterToString(name, "")
-	localVarFormParams["status"] = a.Configuration.APIClient.ParameterToString(status, "")
+	if params["name"] != nil {
+		localVarFormParams["name"] = a.Configuration.APIClient.ParameterToString(name, "")
+	}
+	if params["status"] != nil {
+		localVarFormParams["status"] = a.Configuration.APIClient.ParameterToString(status, "")
+	}
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return
+	}
 
 	var localVarURL, _ = url.Parse(localVarPath)
 	localVarURL.RawQuery = localVarQueryParams.Encode()
-	var localVarAPIResponse = &APIResponse{Operation: "UpdatePetWithForm", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
+	localVarAPIResponse = &APIResponse{Operation: "UpdatePetWithForm", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
 	if localVarHttpResponse != nil {
 		localVarAPIResponse.Response = localVarHttpResponse.RawResponse
 		localVarAPIResponse.Payload = localVarHttpResponse.Body()
 	}
 
-	if err != nil {
-		return localVarAPIResponse, err
-	}
 	return localVarAPIResponse, err
 }
 
@@ -525,17 +662,51 @@ func (a PetApi) UpdatePetWithForm(petId int64, name string, status string) (*API
  * uploads an image
  * 
  *
- * @param petId ID of pet to update
- * @param additionalMetadata Additional data to pass to server
- * @param file file to upload
+ * @param petId int64 (required) ID of pet to update
+ * @param additionalMetadata string Additional data to pass to server
+ * @param file **os.File file to upload
  * @return *ModelApiResponse
  */
-func (a PetApi) UploadFile(petId int64, additionalMetadata string, file *os.File) (*ModelApiResponse, *APIResponse, error) {
+func (a PetApi) UploadFile(params map[string]interface{}) (successPayload *ModelApiResponse, localVarAPIResponse *APIResponse, err error) {
+
+	var petId int64
+	if params["petId"] == nil {
+		err = fmt.Errorf("Param 'petId' is required")	
+		return
+	} else {
+		var ok bool
+		petId, ok = params["petId"].(int64)
+		if !ok {
+			err = fmt.Errorf("Invalid type for param 'petId', must be 'int64'")
+			return
+		}
+	}
+	var additionalMetadata string
+	if params["additionalMetadata"] != nil {
+		var ok bool
+		additionalMetadata, ok = params["additionalMetadata"].(string)
+		if !ok {
+			err = fmt.Errorf("Invalid type for param 'additionalMetadata', must be 'string'")
+			return
+		}
+	}
+	var file **os.File
+	if params["file"] != nil {
+		var ok bool
+		file, ok = params["file"].(**os.File)
+		if !ok {
+			err = fmt.Errorf("Invalid type for param 'file', must be '**os.File'")
+			return
+		}
+	}
 
 	var localVarHttpMethod = strings.ToUpper("Post")
 	// create path and map variables
 	localVarPath := a.Configuration.BasePath + "/pet/{petId}/uploadImage"
-	localVarPath = strings.Replace(localVarPath, "{"+"petId"+"}", fmt.Sprintf("%v", petId), -1)
+	if params["petId"] != nil {
+		localVarPath = strings.Replace(localVarPath, "{"+"petId"+"}", a.Configuration.APIClient.ParameterToString(
+			petId, ""), -1)
+	}
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -571,24 +742,26 @@ func (a PetApi) UploadFile(petId int64, additionalMetadata string, file *os.File
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	localVarFormParams["additionalMetadata"] = a.Configuration.APIClient.ParameterToString(additionalMetadata, "")
+	if params["additionalMetadata"] != nil {
+		localVarFormParams["additionalMetadata"] = a.Configuration.APIClient.ParameterToString(additionalMetadata, "")
+	}
 	fbs, _ := ioutil.ReadAll(file)
 	localVarFileBytes = fbs
 	localVarFileName = file.Name()
-	var successPayload = new(ModelApiResponse)
+	successPayload = new(ModelApiResponse)
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return
+	}
 
 	var localVarURL, _ = url.Parse(localVarPath)
 	localVarURL.RawQuery = localVarQueryParams.Encode()
-	var localVarAPIResponse = &APIResponse{Operation: "UploadFile", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
+	localVarAPIResponse = &APIResponse{Operation: "UploadFile", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
 	if localVarHttpResponse != nil {
 		localVarAPIResponse.Response = localVarHttpResponse.RawResponse
 		localVarAPIResponse.Payload = localVarHttpResponse.Body()
 	}
 
-	if err != nil {
-		return successPayload, localVarAPIResponse, err
-	}
 	err = json.Unmarshal(localVarHttpResponse.Body(), &successPayload)
 	return successPayload, localVarAPIResponse, err
 }
