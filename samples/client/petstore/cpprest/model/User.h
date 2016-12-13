@@ -12,7 +12,7 @@
 
 /*
  * User.h
- * 
+ *
  * A User who is purchasing from the pet store
  */
 
@@ -41,7 +41,7 @@ public:
 
     /////////////////////////////////////////////
     /// ModelBase overrides
-    
+
     void validate() override;
 
     web::json::value toJson() const override;
@@ -49,7 +49,7 @@ public:
 
     void toMultipart(std::shared_ptr<MultipartFormData> multipart, const utility::string_t& namePrefix) const override;
     void fromMultiPart(std::shared_ptr<MultipartFormData> multipart, const utility::string_t& namePrefix) override;
-    
+
     /////////////////////////////////////////////
     /// User members
 
@@ -109,7 +109,7 @@ public:
     void setUserStatus(int32_t value);
     bool userStatusIsSet() const;
     void unsetUserStatus();
-    
+
 protected:
     int64_t m_Id;
     bool m_IdIsSet;

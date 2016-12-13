@@ -47,7 +47,8 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
     std::map<utility::string_t, std::shared_ptr<HttpContent>> fileParams;
 
     std::unordered_set<utility::string_t> responseHttpContentTypes;
-    {{#produces}}responseHttpContentTypes.insert( U("{{mediaType}}") );
+    {{#produces}}
+    responseHttpContentTypes.insert( U("{{mediaType}}") );
     {{/produces}}
 
     utility::string_t responseHttpContentType;
@@ -96,7 +97,8 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
     headerParams[U("Accept")] = responseHttpContentType;
 
     std::unordered_set<utility::string_t> consumeHttpContentTypes;
-    {{#consumes}}consumeHttpContentTypes.insert( U("{{mediaType}}") );
+    {{#consumes}}
+    consumeHttpContentTypes.insert( U("{{mediaType}}") );
     {{/consumes}}
 
     {{#allParams}}{{^isBodyParam}}{{^isPrimitiveType}}{{^isContainer}}if ({{paramName}} != nullptr){{/isContainer}}{{/isPrimitiveType}}
@@ -119,12 +121,14 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
     if ( consumeHttpContentTypes.size() == 0 || consumeHttpContentTypes.find(U("application/json")) != consumeHttpContentTypes.end() )
     {
         requestHttpContentType = U("application/json");
-
         {{#bodyParam}}
         web::json::value json;
 
-        {{#isPrimitiveType}} json = ModelBase::toJson({{paramName}});
-        {{/isPrimitiveType}}{{^isPrimitiveType}}{{#isListContainer}}
+        {{#isPrimitiveType}}
+        json = ModelBase::toJson({{paramName}});
+        {{/isPrimitiveType}}
+        {{^isPrimitiveType}}
+        {{#isListContainer}}
         {
             std::vector<web::json::value> jsonArray;
             for( auto& item : {{paramName}} )
@@ -137,22 +141,26 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
             }
             json = web::json::value::array(jsonArray);
         }
-        {{/isListContainer}}{{^isListContainer}}json = ModelBase::toJson({{paramName}});
-        {{/isListContainer}}{{/isPrimitiveType}}
+        {{/isListContainer}}
+        {{^isListContainer}}
+        json = ModelBase::toJson({{paramName}});
+        {{/isListContainer}}
+        {{/isPrimitiveType}}
 
         httpBody = std::shared_ptr<IHttpBody>( new JsonBody( json ) );
-
         {{/bodyParam}}
     }
     // multipart formdata
     else if( consumeHttpContentTypes.find(U("multipart/form-data")) != consumeHttpContentTypes.end() )
     {
         requestHttpContentType = U("multipart/form-data");
-
         {{#bodyParam}}
         std::shared_ptr<MultipartFormData> multipart(new MultipartFormData);
-        {{#isPrimitiveType}} multipart->add(ModelBase::toHttpContent("{{paramName}}", {{paramName}}));
-        {{/isPrimitiveType}}{{^isPrimitiveType}}{{#isListContainer}}
+        {{#isPrimitiveType}}
+        multipart->add(ModelBase::toHttpContent("{{paramName}}", {{paramName}}));
+        {{/isPrimitiveType}}
+        {{^isPrimitiveType}}
+        {{#isListContainer}}
         {
             std::vector<web::json::value> jsonArray;
             for( auto& item : {{paramName}} )
@@ -165,13 +173,18 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
             }
             multipart->add(ModelBase::toHttpContent(U("{{paramName}}"), web::json::value::array(jsonArray), U("application/json")));
         }
-        {{/isListContainer}}{{^isListContainer}}{{#isString}}multipart->add(ModelBase::toHttpContent(U("{{paramName}}"), {{paramName}}));
-        {{/isString}}{{^isString}}
+        {{/isListContainer}}
+        {{^isListContainer}}
+        {{#isString}}multipart->add(ModelBase::toHttpContent(U("{{paramName}}"), {{paramName}}));
+        {{/isString}}
+        {{^isString}}
         if({{paramName}}.get())
         {
             {{paramName}}->toMultipart(multipart, U("{{paramName}}"));
         }
-        {{/isString}}{{/isListContainer}}{{/isPrimitiveType}}
+        {{/isString}}
+        {{/isListContainer}}
+        {{/isPrimitiveType}}
 
         httpBody = multipart;
         requestHttpContentType += U("; boundary=") + multipart->getBoundary();
@@ -257,9 +270,16 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
     })
     .then([=](utility::string_t response)
     {
-        {{^returnType}}return void();
-        {{/returnType}}{{#returnType}}{{#returnContainer}}{{{returnType}}} result;
-        {{/returnContainer}}{{^returnContainer}}{{{returnType}}} result({{{defaultResponse}}});{{/returnContainer}}
+        {{^returnType}}
+        return void();
+        {{/returnType}}
+        {{#returnType}}
+        {{#returnContainer}}
+        {{{returnType}}} result;
+        {{/returnContainer}}
+        {{^returnContainer}}
+        {{{returnType}}} result({{{defaultResponse}}});
+        {{/returnContainer}}
 
         if(responseHttpContentType == U("application/json"))
         {

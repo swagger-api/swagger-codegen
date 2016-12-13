@@ -12,7 +12,7 @@
 
 /*
  * Pet.h
- * 
+ *
  * A pet for sale in the pet store
  */
 
@@ -44,7 +44,7 @@ public:
 
     /////////////////////////////////////////////
     /// ModelBase overrides
-    
+
     void validate() override;
 
     web::json::value toJson() const override;
@@ -52,7 +52,7 @@ public:
 
     void toMultipart(std::shared_ptr<MultipartFormData> multipart, const utility::string_t& namePrefix) const override;
     void fromMultiPart(std::shared_ptr<MultipartFormData> multipart, const utility::string_t& namePrefix) override;
-    
+
     /////////////////////////////////////////////
     /// Pet members
 
@@ -92,7 +92,7 @@ public:
     void setStatus(utility::string_t value);
     bool statusIsSet() const;
     void unsetStatus();
-    
+
 protected:
     int64_t m_Id;
     bool m_IdIsSet;

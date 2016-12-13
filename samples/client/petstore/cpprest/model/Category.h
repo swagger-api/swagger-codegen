@@ -12,7 +12,7 @@
 
 /*
  * Category.h
- * 
+ *
  * A category for a pet
  */
 
@@ -41,7 +41,7 @@ public:
 
     /////////////////////////////////////////////
     /// ModelBase overrides
-    
+
     void validate() override;
 
     web::json::value toJson() const override;
@@ -49,7 +49,7 @@ public:
 
     void toMultipart(std::shared_ptr<MultipartFormData> multipart, const utility::string_t& namePrefix) const override;
     void fromMultiPart(std::shared_ptr<MultipartFormData> multipart, const utility::string_t& namePrefix) override;
-    
+
     /////////////////////////////////////////////
     /// Category members
 
@@ -67,7 +67,7 @@ public:
     void setName(utility::string_t value);
     bool nameIsSet() const;
     void unsetName();
-    
+
 protected:
     int64_t m_Id;
     bool m_IdIsSet;
