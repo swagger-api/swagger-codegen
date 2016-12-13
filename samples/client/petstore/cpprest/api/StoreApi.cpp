@@ -79,11 +79,6 @@ pplx::task<void> StoreApi::deleteOrder(utility::string_t orderId)
 
     std::unordered_set<utility::string_t> consumeHttpContentTypes;
 
-    
-    {
-        
-    }
-    
 
     std::shared_ptr<IHttpBody> httpBody;
     utility::string_t requestHttpContentType;
@@ -182,7 +177,6 @@ pplx::task<std::map<utility::string_t, int32_t>> StoreApi::getInventory()
 
     std::unordered_set<utility::string_t> consumeHttpContentTypes;
 
-    
 
     std::shared_ptr<IHttpBody> httpBody;
     utility::string_t requestHttpContentType;
@@ -314,11 +308,6 @@ pplx::task<std::shared_ptr<Order>> StoreApi::getOrderById(int64_t orderId)
 
     std::unordered_set<utility::string_t> consumeHttpContentTypes;
 
-    
-    {
-        
-    }
-    
 
     std::shared_ptr<IHttpBody> httpBody;
     utility::string_t requestHttpContentType;
@@ -442,7 +431,6 @@ pplx::task<std::shared_ptr<Order>> StoreApi::placeOrder(std::shared_ptr<Order> b
 
     std::unordered_set<utility::string_t> consumeHttpContentTypes;
 
-    
 
     std::shared_ptr<IHttpBody> httpBody;
     utility::string_t requestHttpContentType;

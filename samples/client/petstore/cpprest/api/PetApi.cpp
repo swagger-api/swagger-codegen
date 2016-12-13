@@ -86,7 +86,6 @@ pplx::task<void> PetApi::addPet(std::shared_ptr<Pet> body)
     consumeHttpContentTypes.insert( U("application/json") );
     consumeHttpContentTypes.insert( U("application/xml") );
 
-    
 
     std::shared_ptr<IHttpBody> httpBody;
     utility::string_t requestHttpContentType;
@@ -204,14 +203,8 @@ pplx::task<void> PetApi::deletePet(int64_t petId, utility::string_t apiKey)
 
     
     {
-        
-    }
-    
-    {
         headerParams[U("api_key")] = ApiClient::parameterToString(apiKey);
-        
     }
-    
 
     std::shared_ptr<IHttpBody> httpBody;
     utility::string_t requestHttpContentType;
@@ -316,9 +309,7 @@ pplx::task<std::vector<std::shared_ptr<Pet>>> PetApi::findPetsByStatus(std::vect
     
     {
         queryParams[U("status")] = ApiClient::parameterToArrayString<utility::string_t>(status);
-        
     }
-    
 
     std::shared_ptr<IHttpBody> httpBody;
     utility::string_t requestHttpContentType;
@@ -448,9 +439,7 @@ pplx::task<std::vector<std::shared_ptr<Pet>>> PetApi::findPetsByTags(std::vector
     
     {
         queryParams[U("tags")] = ApiClient::parameterToArrayString<utility::string_t>(tags);
-        
     }
-    
 
     std::shared_ptr<IHttpBody> httpBody;
     utility::string_t requestHttpContentType;
@@ -578,11 +567,6 @@ pplx::task<std::shared_ptr<Pet>> PetApi::getPetById(int64_t petId)
 
     std::unordered_set<utility::string_t> consumeHttpContentTypes;
 
-    
-    {
-        
-    }
-    
 
     std::shared_ptr<IHttpBody> httpBody;
     utility::string_t requestHttpContentType;
@@ -716,7 +700,6 @@ pplx::task<void> PetApi::updatePet(std::shared_ptr<Pet> body)
     consumeHttpContentTypes.insert( U("application/json") );
     consumeHttpContentTypes.insert( U("application/xml") );
 
-    
 
     std::shared_ptr<IHttpBody> httpBody;
     utility::string_t requestHttpContentType;
@@ -835,19 +818,12 @@ pplx::task<void> PetApi::updatePetWithForm(int64_t petId, utility::string_t name
 
     
     {
-        
-    }
-    
-    {
         formParams[ U("name") ] = ApiClient::parameterToString(name);
-        
     }
     
     {
         formParams[ U("status") ] = ApiClient::parameterToString(status);
-        
     }
-    
 
     std::shared_ptr<IHttpBody> httpBody;
     utility::string_t requestHttpContentType;
@@ -952,19 +928,12 @@ pplx::task<std::shared_ptr<ApiResponse>> PetApi::uploadFile(int64_t petId, utili
 
     
     {
-        
-    }
-    
-    {
         formParams[ U("additionalMetadata") ] = ApiClient::parameterToString(additionalMetadata);
-        
     }
     if (file != nullptr)
     {
         fileParams[ U("file") ] = file;
-        
     }
-    
 
     std::shared_ptr<IHttpBody> httpBody;
     utility::string_t requestHttpContentType;

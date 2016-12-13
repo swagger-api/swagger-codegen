@@ -84,7 +84,6 @@ pplx::task<void> UserApi::createUser(std::shared_ptr<User> body)
 
     std::unordered_set<utility::string_t> consumeHttpContentTypes;
 
-    
 
     std::shared_ptr<IHttpBody> httpBody;
     utility::string_t requestHttpContentType;
@@ -197,7 +196,6 @@ pplx::task<void> UserApi::createUsersWithArrayInput(std::vector<std::shared_ptr<
 
     std::unordered_set<utility::string_t> consumeHttpContentTypes;
 
-    
 
     std::shared_ptr<IHttpBody> httpBody;
     utility::string_t requestHttpContentType;
@@ -323,7 +321,6 @@ pplx::task<void> UserApi::createUsersWithListInput(std::vector<std::shared_ptr<U
 
     std::unordered_set<utility::string_t> consumeHttpContentTypes;
 
-    
 
     std::shared_ptr<IHttpBody> httpBody;
     utility::string_t requestHttpContentType;
@@ -450,11 +447,6 @@ pplx::task<void> UserApi::deleteUser(utility::string_t username)
 
     std::unordered_set<utility::string_t> consumeHttpContentTypes;
 
-    
-    {
-        
-    }
-    
 
     std::shared_ptr<IHttpBody> httpBody;
     utility::string_t requestHttpContentType;
@@ -555,11 +547,6 @@ pplx::task<std::shared_ptr<User>> UserApi::getUserByName(utility::string_t usern
 
     std::unordered_set<utility::string_t> consumeHttpContentTypes;
 
-    
-    {
-        
-    }
-    
 
     std::shared_ptr<IHttpBody> httpBody;
     utility::string_t requestHttpContentType;
@@ -685,14 +672,11 @@ pplx::task<utility::string_t> UserApi::loginUser(utility::string_t username, uti
     
     {
         queryParams[U("username")] = ApiClient::parameterToString(username);
-        
     }
     
     {
         queryParams[U("password")] = ApiClient::parameterToString(password);
-        
     }
-    
 
     std::shared_ptr<IHttpBody> httpBody;
     utility::string_t requestHttpContentType;
@@ -815,7 +799,6 @@ pplx::task<void> UserApi::logoutUser()
 
     std::unordered_set<utility::string_t> consumeHttpContentTypes;
 
-    
 
     std::shared_ptr<IHttpBody> httpBody;
     utility::string_t requestHttpContentType;
@@ -922,11 +905,6 @@ pplx::task<void> UserApi::updateUser(utility::string_t username, std::shared_ptr
 
     std::unordered_set<utility::string_t> consumeHttpContentTypes;
 
-    
-    {
-        
-    }
-    
 
     std::shared_ptr<IHttpBody> httpBody;
     utility::string_t requestHttpContentType;

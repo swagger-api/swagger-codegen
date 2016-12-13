@@ -101,18 +101,44 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
     consumeHttpContentTypes.insert( U("{{mediaType}}") );
     {{/consumes}}
 
-    {{#allParams}}{{^isBodyParam}}{{^isPrimitiveType}}{{^isContainer}}if ({{paramName}} != nullptr){{/isContainer}}{{/isPrimitiveType}}
+    {{#allParams}}
+    {{^isBodyParam}}
+    {{^isPathParam}}
+    {{^isPrimitiveType}}{{^isContainer}}if ({{paramName}} != nullptr){{/isContainer}}{{/isPrimitiveType}}
     {
-        {{#isContainer}}{{#isQueryParam}}queryParams[U("{{baseName}}")] = ApiClient::parameterToArrayString<{{items.datatype}}>({{paramName}});
-        {{/isQueryParam}}{{#isHeaderParam}}headerParams[U("{{baseName}}")] = ApiClient::parameterToArrayString<{{items.datatype}}>({{paramName}});
-        {{/isHeaderParam}}{{#isFormParam}}{{^isFile}}formParams[ U("{{baseName}}") ] = ApiClient::parameterToArrayString<{{items.datatype}}>({{paramName}});
-        {{/isFile}}{{/isFormParam}}{{/isContainer}}{{^isContainer}}{{#isQueryParam}}queryParams[U("{{baseName}}")] = ApiClient::parameterToString({{paramName}});
-        {{/isQueryParam}}{{#isHeaderParam}}headerParams[U("{{baseName}}")] = ApiClient::parameterToString({{paramName}});
-        {{/isHeaderParam}}{{#isFormParam}}{{#isFile}}fileParams[ U("{{baseName}}") ] = {{paramName}};
-        {{/isFile}}{{^isFile}}formParams[ U("{{baseName}}") ] = ApiClient::parameterToString({{paramName}});
-        {{/isFile}}{{/isFormParam}}{{/isContainer}}
+        {{#isContainer}}
+        {{#isQueryParam}}
+        queryParams[U("{{baseName}}")] = ApiClient::parameterToArrayString<{{items.datatype}}>({{paramName}});
+        {{/isQueryParam}}
+        {{#isHeaderParam}}
+        headerParams[U("{{baseName}}")] = ApiClient::parameterToArrayString<{{items.datatype}}>({{paramName}});
+        {{/isHeaderParam}}
+        {{#isFormParam}}
+        {{^isFile}}
+        formParams[ U("{{baseName}}") ] = ApiClient::parameterToArrayString<{{items.datatype}}>({{paramName}});
+        {{/isFile}}
+        {{/isFormParam}}
+        {{/isContainer}}
+        {{^isContainer}}
+        {{#isQueryParam}}
+        queryParams[U("{{baseName}}")] = ApiClient::parameterToString({{paramName}});
+        {{/isQueryParam}}
+        {{#isHeaderParam}}
+        headerParams[U("{{baseName}}")] = ApiClient::parameterToString({{paramName}});
+        {{/isHeaderParam}}
+        {{#isFormParam}}
+        {{#isFile}}
+        fileParams[ U("{{baseName}}") ] = {{paramName}};
+        {{/isFile}}
+        {{^isFile}}
+        formParams[ U("{{baseName}}") ] = ApiClient::parameterToString({{paramName}});
+        {{/isFile}}
+        {{/isFormParam}}
+        {{/isContainer}}
     }
-    {{/isBodyParam}}{{/allParams}}
+    {{/isPathParam}}
+    {{/isBodyParam}}
+    {{/allParams}}
 
     std::shared_ptr<IHttpBody> httpBody;
     utility::string_t requestHttpContentType;
