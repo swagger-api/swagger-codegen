@@ -3,6 +3,8 @@
 #include "MultipartFormData.h"
 #include "ModelBase.h"
 
+#include "Utils/Log.h"
+
 {{#apiNamespaceDeclarations}}
 namespace {{this}} {
 {{/apiNamespaceDeclarations}}
@@ -85,11 +87,17 @@ pplx::task<web::http::http_response> ApiClient::callApi(
 		{
 			uploadData.add(ModelBase::toHttpContent(kvp.first, kvp.second));
 		}
-		std::stringstream data;
-		postBody->writeTo(data);
-		auto bodyString = data.str();
-		auto length = bodyString.size();
-		request.set_body(concurrency::streams::bytestream::open_istream(std::move(bodyString)), length, contentType);
+        std::stringstream data;
+        uploadData.writeTo(data);
+
+        auto bodyString = data.str();
+        auto length = bodyString.size();
+        CO_LOG_TRACE << "bodyString: " << bodyString;
+        CO_LOG_TRACE << "length: " << length;
+
+        request.set_body(concurrency::streams::bytestream::open_istream(std::move(bodyString)),
+                        length,
+                        contentType + "; boundary=" + uploadData.getBoundary());
 	}
 	else
 	{
@@ -122,9 +130,15 @@ pplx::task<web::http::http_response> ApiClient::callApi(
 	if ( !request.headers().has( web::http::header_names::user_agent ) )
 	{
 		request.headers().add( web::http::header_names::user_agent, m_Configuration->getUserAgent() );
-	}	
+	}
 
-	return client.request(request);
+    CO_LOG_TRACE << "Request: " << request.to_string();
+    return client.request(request, m_CancelationTokenSource.get_token());
+}
+
+void ApiClient::cancel()
+{
+    m_CancelationTokenSource.cancel();
 }
 
 {{#apiNamespaceDeclarations}}

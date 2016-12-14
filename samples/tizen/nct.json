@@ -480,7 +480,7 @@
         },
         "previewFailureMark": {
           "description": "Flag to show unsuccessful preview generation.",
-          "type": "boolean"
+          "type": "string"
         },
         "properties": {
           "description": "The list of file's properties. Currently supported ids: flagged, shared, shared_withme_role",
@@ -509,6 +509,7 @@
         "mediaType",
         "createdDate",
         "fileSize",
+        "headRevisionId",
         "lastModifyingUserId",
         "modifiedDate",
         "ownerId"

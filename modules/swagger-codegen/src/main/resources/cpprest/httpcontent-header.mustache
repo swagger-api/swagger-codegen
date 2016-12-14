@@ -12,7 +12,9 @@
 
 #include <memory>
 
-#include <cpprest/details/basic_types.h> 
+#include <cpprest/details/basic_types.h>
+
+#include <vector>
 
 {{#modelNamespaceDeclarations}}
 namespace {{this}} {
@@ -22,6 +24,8 @@ class {{declspec}} HttpContent
 {
 public:
     HttpContent();
+    HttpContent(std::vector<uint8_t> data);
+
     virtual ~HttpContent();
 
     virtual utility::string_t getContentDisposition();
@@ -38,6 +42,8 @@ public:
 
     virtual std::shared_ptr<std::istream> getData();
     virtual void setData( std::shared_ptr<std::istream> value );
+    virtual const std::vector<uint8_t>& getDataVec() const;
+    virtual std::vector<uint8_t>&& moveDataVec();
     
     virtual void writeTo( std::ostream& stream );
 
@@ -48,6 +54,7 @@ protected:
     utility::string_t m_FileName;
     utility::string_t m_ContentType;
     std::shared_ptr<std::istream> m_Data;
+    std::vector<uint8_t> m_DataVec;
 };
 
 {{#modelNamespaceDeclarations}}

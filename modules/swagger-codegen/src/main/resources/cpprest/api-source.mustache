@@ -8,7 +8,12 @@
 
 #include <unordered_set>
 
+#define _TURN_OFF_PLATFORM_STRING
 #include <boost/algorithm/string/replace.hpp>
+#include <boost/algorithm/string/join.hpp>
+#undef _TURN_OFF_PLATFORM_STRING
+
+#include "Utils/Log.h"
 
 {{#apiNamespaceDeclarations}}
 namespace {{this}} {
