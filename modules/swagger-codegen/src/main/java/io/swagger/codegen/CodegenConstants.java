@@ -133,4 +133,6 @@ public class CodegenConstants {
     public static final String GENERATE_PROPERTY_CHANGED = "generatePropertyChanged";
     public static final String GENERATE_PROPERTY_CHANGED_DESC = "Specifies that models support raising property changed events.";
 
+    public static final String USE_ENUM_COMMON_PREFIX = "useEnumCommonPrefix";
+    public static final String USE_ENUM_COMMON_PREFIX_DESC = "Use common prefix from Enum names.";
 }
