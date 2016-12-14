@@ -1,6 +1,6 @@
 *.iml
 generated/
-generated_new/
+generated_old/
 out/
 *.ipr
 *.iws
