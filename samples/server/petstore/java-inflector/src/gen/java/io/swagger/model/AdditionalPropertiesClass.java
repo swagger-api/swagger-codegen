@@ -13,7 +13,7 @@ import java.util.Map;
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-12-13T19:14:30.773+11:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-12-14T00:20:20.886+11:00")
 public class AdditionalPropertiesClass   {
   @JsonProperty("map_property")
   private Map<String, String> mapProperty = new HashMap<String, String>();

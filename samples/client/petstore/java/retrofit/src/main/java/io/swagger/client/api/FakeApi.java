@@ -20,7 +20,7 @@ public interface FakeApi {
   /**
    * To test \&quot;client\&quot; model
    * Sync method
-   * 
+   * To test \&quot;client\&quot; model
    * @param body client model (required)
    * @return Client
    */
@@ -98,7 +98,7 @@ public interface FakeApi {
   /**
    * To test enum parameters
    * Sync method
-   * 
+   * To test enum parameters
    * @param enumFormStringArray Form parameter enum test (string array) (optional)
    * @param enumFormString Form parameter enum test (string) (optional, default to -efg)
    * @param enumHeaderStringArray Header parameter enum test (string array) (optional)

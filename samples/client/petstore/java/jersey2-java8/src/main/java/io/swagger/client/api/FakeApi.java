@@ -39,7 +39,7 @@ public class FakeApi {
 
   /**
    * To test \&quot;client\&quot; model
-   * 
+   * To test \&quot;client\&quot; model
    * @param body client model (required)
    * @return Client
    * @throws ApiException if fails to make API call
@@ -176,7 +176,7 @@ if (paramCallback != null)
   }
   /**
    * To test enum parameters
-   * 
+   * To test enum parameters
    * @param enumFormStringArray Form parameter enum test (string array) (optional)
    * @param enumFormString Form parameter enum test (string) (optional, default to -efg)
    * @param enumHeaderStringArray Header parameter enum test (string array) (optional)

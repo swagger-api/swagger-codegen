@@ -14,6 +14,8 @@ Method | HTTP request | Description
 
 To test \"client\" model
 
+To test \"client\" model
+
 
 ### Parameters
 
@@ -80,6 +82,8 @@ void (empty response body)
 
 # **TestEnumParameters**
 > TestEnumParameters($enumFormStringArray, $enumFormString, $enumHeaderStringArray, $enumHeaderString, $enumQueryStringArray, $enumQueryString, $enumQueryInteger, $enumQueryDouble)
+
+To test enum parameters
 
 To test enum parameters
 

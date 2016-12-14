@@ -13,7 +13,7 @@ import io.swagger.model.*;
 import java.util.Map;
 import io.swagger.model.Order;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-12-13T19:14:30.773+11:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-12-14T00:20:20.886+11:00")
 public class StoreController  {
   /** 
    * Uncomment and implement as you see fit.  These operations will map

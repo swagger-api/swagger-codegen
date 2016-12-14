@@ -14,6 +14,8 @@ Method | HTTP request | Description
 
 To test \"client\" model
 
+To test \"client\" model
+
 ### Example
 ```php
 <?php
@@ -128,6 +130,8 @@ void (empty response body)
 
 # **testEnumParameters**
 > testEnumParameters($enum_form_string_array, $enum_form_string, $enum_header_string_array, $enum_header_string, $enum_query_string_array, $enum_query_string, $enum_query_integer, $enum_query_double)
+
+To test enum parameters
 
 To test enum parameters
 

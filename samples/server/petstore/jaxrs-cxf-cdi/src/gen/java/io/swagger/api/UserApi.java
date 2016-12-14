@@ -23,7 +23,7 @@ import java.util.List;
 @Api(description = "the user API")
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJAXRSCXFCDIServerCodegen", date = "2016-12-13T19:15:21.873+11:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJAXRSCXFCDIServerCodegen", date = "2016-12-14T00:21:14.102+11:00")
 
 public class UserApi  {
 

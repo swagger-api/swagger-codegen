@@ -43,6 +43,7 @@ class FakeApi(object):
     def test_client_model(self, body, **kwargs):
         """
         To test \"client\" model
+        To test \"client\" model
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please define a `callback` function
         to be invoked when receiving the response.
@@ -67,6 +68,7 @@ class FakeApi(object):
 
     def test_client_model_with_http_info(self, body, **kwargs):
         """
+        To test \"client\" model
         To test \"client\" model
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please define a `callback` function
@@ -348,6 +350,7 @@ class FakeApi(object):
     def test_enum_parameters(self, **kwargs):
         """
         To test enum parameters
+        To test enum parameters
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please define a `callback` function
         to be invoked when receiving the response.
@@ -379,6 +382,7 @@ class FakeApi(object):
 
     def test_enum_parameters_with_http_info(self, **kwargs):
         """
+        To test enum parameters
         To test enum parameters
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please define a `callback` function

@@ -15,6 +15,8 @@ Method | HTTP request | Description
 
 To test \&quot;client\&quot; model
 
+To test \&quot;client\&quot; model
+
 ### Example
 ```javascript
 var SwaggerPetstore = require('swagger_petstore');
@@ -133,6 +135,8 @@ null (empty response body)
 <a name="testEnumParameters"></a>
 # **testEnumParameters**
 > testEnumParameters(opts)
+
+To test enum parameters
 
 To test enum parameters
 

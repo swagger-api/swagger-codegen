@@ -35,6 +35,7 @@ paths:
       tags:
       - "fake"
       summary: "To test enum parameters"
+      description: "To test enum parameters"
       operationId: "testEnumParameters"
       consumes:
       - "*/*"
@@ -243,6 +244,7 @@ paths:
       tags:
       - "fake"
       summary: "To test \"client\" model"
+      description: "To test \"client\" model"
       operationId: "testClientModel"
       consumes:
       - "application/json"

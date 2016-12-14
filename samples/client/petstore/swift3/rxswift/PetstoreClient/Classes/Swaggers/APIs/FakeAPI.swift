@@ -46,6 +46,7 @@ open class FakeAPI: APIBase {
     /**
      To test \"client\" model
      - PATCH /fake
+     - To test \"client\" model
      - examples: [{contentType=application/json, example={
   "client" : "aeiou"
 }}]
@@ -258,6 +259,7 @@ open class FakeAPI: APIBase {
     /**
      To test enum parameters
      - GET /fake
+     - To test enum parameters
      
      - parameter enumFormStringArray: (form) Form parameter enum test (string array) (optional)
      - parameter enumFormString: (form) Form parameter enum test (string) (optional, default to -efg)

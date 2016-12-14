@@ -24,7 +24,7 @@ import java.util.concurrent.CompletableFuture;
 @Api(value = "fake", description = "the fake API")
 public interface FakeApi {
 
-    @ApiOperation(value = "To test \"client\" model", notes = "", response = Client.class, tags={ "fake", })
+    @ApiOperation(value = "To test \"client\" model", notes = "To test \"client\" model", response = Client.class, tags={ "fake", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Client.class) })
     @RequestMapping(value = "/fake",
@@ -66,7 +66,7 @@ public interface FakeApi {
     }
 
 
-    @ApiOperation(value = "To test enum parameters", notes = "", response = Void.class, tags={ "fake", })
+    @ApiOperation(value = "To test enum parameters", notes = "To test enum parameters", response = Void.class, tags={ "fake", })
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid request", response = Void.class),
         @ApiResponse(code = 404, message = "Not found", response = Void.class) })

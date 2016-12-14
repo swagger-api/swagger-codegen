@@ -15,7 +15,7 @@ import java.io.InputStream;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJAXRSCXFCDIServerCodegen", date = "2016-12-13T19:15:21.873+11:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJAXRSCXFCDIServerCodegen", date = "2016-12-14T00:21:14.102+11:00")
 public interface UserApiService {
       public Response createUser(User body, SecurityContext securityContext);
       public Response createUsersWithArrayInput(List<User> body, SecurityContext securityContext);

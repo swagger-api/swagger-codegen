@@ -19,7 +19,7 @@ public interface FakeApi extends ApiClient.Api {
 
   /**
    * To test \&quot;client\&quot; model
-   * 
+   * To test \&quot;client\&quot; model
    * @param body client model (required)
    * @return Client
    */
@@ -58,7 +58,7 @@ public interface FakeApi extends ApiClient.Api {
 
   /**
    * To test enum parameters
-   * 
+   * To test enum parameters
    * @param enumFormStringArray Form parameter enum test (string array) (optional)
    * @param enumFormString Form parameter enum test (string) (optional, default to -efg)
    * @param enumHeaderStringArray Header parameter enum test (string array) (optional)

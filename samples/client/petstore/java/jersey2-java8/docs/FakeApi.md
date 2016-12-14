@@ -15,6 +15,8 @@ Method | HTTP request | Description
 
 To test \&quot;client\&quot; model
 
+To test \&quot;client\&quot; model
+
 ### Example
 ```java
 // Import classes:
@@ -134,6 +136,8 @@ null (empty response body)
 <a name="testEnumParameters"></a>
 # **testEnumParameters**
 > testEnumParameters(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble)
+
+To test enum parameters
 
 To test enum parameters
 

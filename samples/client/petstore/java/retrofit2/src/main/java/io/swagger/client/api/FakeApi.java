@@ -21,7 +21,7 @@ import java.util.Map;
 public interface FakeApi {
   /**
    * To test \&quot;client\&quot; model
-   * 
+   * To test \&quot;client\&quot; model
    * @param body client model (required)
    * @return Call&lt;Client&gt;
    */
@@ -62,7 +62,7 @@ public interface FakeApi {
 
   /**
    * To test enum parameters
-   * 
+   * To test enum parameters
    * @param enumFormStringArray Form parameter enum test (string array) (optional)
    * @param enumFormString Form parameter enum test (string) (optional, default to -efg)
    * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
