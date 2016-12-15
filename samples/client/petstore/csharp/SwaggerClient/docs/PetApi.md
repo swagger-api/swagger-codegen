@@ -502,7 +502,7 @@ namespace Example
             var apiInstance = new PetApi();
             var petId = 789;  // long? | ID of pet to update
             var additionalMetadata = additionalMetadata_example;  // string | Additional data to pass to server (optional) 
-            var file = new System.IO.Stream(); // System.IO.Stream | file to upload (optional) 
+            var file = /path/to/file.txt;  // System.IO.Stream | file to upload (optional) 
 
             try
             {
@@ -525,7 +525,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **petId** | **long?**| ID of pet to update | 
  **additionalMetadata** | **string**| Additional data to pass to server | [optional] 
- **file** | **System.IO.Stream**| file to upload | [optional] 
+ **file** | **System.IO.Stream****System.IO.Stream**| file to upload | [optional] 
 
 ### Return type
 
