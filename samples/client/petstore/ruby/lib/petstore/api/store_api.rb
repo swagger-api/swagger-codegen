@@ -52,14 +52,8 @@ module Petstore
 
       # header parameters
       header_params = {}
-
       # HTTP header 'Accept' (if needed)
-      local_header_accept = ['application/xml', 'application/json']
-      local_header_accept_result = @api_client.select_header_accept(local_header_accept) and header_params['Accept'] = local_header_accept_result
-
-      # HTTP header 'Content-Type'
-      local_header_content_type = []
-      header_params['Content-Type'] = @api_client.select_header_content_type(local_header_content_type)
+      header_params['Accept'] = @api_client.select_header_accept(['application/xml', 'application/json'])
 
       # form parameters
       form_params = {}
@@ -104,14 +98,8 @@ module Petstore
 
       # header parameters
       header_params = {}
-
       # HTTP header 'Accept' (if needed)
-      local_header_accept = ['application/json']
-      local_header_accept_result = @api_client.select_header_accept(local_header_accept) and header_params['Accept'] = local_header_accept_result
-
-      # HTTP header 'Content-Type'
-      local_header_content_type = []
-      header_params['Content-Type'] = @api_client.select_header_content_type(local_header_content_type)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
       # form parameters
       form_params = {}
@@ -153,12 +141,12 @@ module Petstore
       end
       # verify the required parameter 'order_id' is set
       fail ArgumentError, "Missing the required parameter 'order_id' when calling StoreApi.get_order_by_id" if order_id.nil?
-      if order_id > 5.0
-        fail ArgumentError, 'invalid value for "order_id" when calling StoreApi.get_order_by_id, must be smaller than or equal to 5.0.'
+      if order_id > 5
+        fail ArgumentError, 'invalid value for "order_id" when calling StoreApi.get_order_by_id, must be smaller than or equal to 5.'
       end
 
-      if order_id < 1.0
-        fail ArgumentError, 'invalid value for "order_id" when calling StoreApi.get_order_by_id, must be greater than or equal to 1.0.'
+      if order_id < 1
+        fail ArgumentError, 'invalid value for "order_id" when calling StoreApi.get_order_by_id, must be greater than or equal to 1.'
       end
 
       # resource path
@@ -169,14 +157,8 @@ module Petstore
 
       # header parameters
       header_params = {}
-
       # HTTP header 'Accept' (if needed)
-      local_header_accept = ['application/xml', 'application/json']
-      local_header_accept_result = @api_client.select_header_accept(local_header_accept) and header_params['Accept'] = local_header_accept_result
-
-      # HTTP header 'Content-Type'
-      local_header_content_type = []
-      header_params['Content-Type'] = @api_client.select_header_content_type(local_header_content_type)
+      header_params['Accept'] = @api_client.select_header_accept(['application/xml', 'application/json'])
 
       # form parameters
       form_params = {}
@@ -226,14 +208,8 @@ module Petstore
 
       # header parameters
       header_params = {}
-
       # HTTP header 'Accept' (if needed)
-      local_header_accept = ['application/xml', 'application/json']
-      local_header_accept_result = @api_client.select_header_accept(local_header_accept) and header_params['Accept'] = local_header_accept_result
-
-      # HTTP header 'Content-Type'
-      local_header_content_type = []
-      header_params['Content-Type'] = @api_client.select_header_content_type(local_header_content_type)
+      header_params['Accept'] = @api_client.select_header_accept(['application/xml', 'application/json'])
 
       # form parameters
       form_params = {}
