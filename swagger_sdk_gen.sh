@@ -7,6 +7,7 @@ if [ "$Client" = "java" ]
 then java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -i http://newapi.nightly.capillary.in/swagger.json  \
   -l java \
+  -DdateLibrary=java8 \
   -o intouch_api/java_client/java_$BUILD_NUMBER \
   -c config.json
   tar cvzf intouch_api/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/java_client/java_$BUILD_NUMBER/ .
