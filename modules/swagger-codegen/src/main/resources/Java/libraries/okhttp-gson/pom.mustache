@@ -161,4 +161,18 @@
     <junit-version>4.12</junit-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+  <distributionManagement>
+        <repository>
+            <id>capillarymavenrepo</id>
+            <name>Capillary Maven Repo</name>
+            <url>scp://capillary@mvnrepo.capillary.co.in/data/mvn/releases</url>
+            <layout>default</layout>
+        </repository>
+        <snapshotRepository>
+            <id>capillarymavensnapshotrepo</id>
+            <name>Capillary Maven Snapshot Repo</name>
+            <url>scp://capillary@mvnrepo.capillary.co.in/data/mvn/snapshots</url>
+            <layout>default</layout>
+        </snapshotRepository>
+</distributionManagement>
 </project>
