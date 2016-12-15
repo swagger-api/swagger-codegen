@@ -11,6 +11,12 @@ then java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar genera
   -o intouch_api/java_client/java_$BUILD_NUMBER \
   -c config.json
   tar cvzf intouch_api/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/java_client/java_$BUILD_NUMBER/ .
+  cd intouch_api/java_client/java_$BUILD_NUMBER
+ mvn3 clean package -Dmaven.test.skip=true
+ pwd
+ $file = `ls swagger-java-c*`
+ echo $file
+ 
 elif [ "$Client" = "c#" ]
 then java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -i http://newapi.nightly.capillary.in/swagger.json \
