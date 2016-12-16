@@ -155,7 +155,13 @@ func (a {{{classname}}}) {{{nickname}}}({{#allParams}}{{#required}}{{paramName}}
 {{/hasFormParams}}
 {{#hasBodyParam}}
 {{#bodyParams}}	// body params
-	localVarPostBody = &{{paramName}}
+{{#required}}
+	localVarPostBody = &{{paramName}}{{/required}}
+{{^required}}
+	if localVarTempParam, localVarOk := localVarOptionals["{{paramName}}"].({{dataType}}); localVarOptionals != nil && localVarOk {
+		localVarPostBody = &localVarTempParam
+	}
+{{/required}}
 {{/bodyParams}}
 {{/hasBodyParam}}
 {{#returnType}}
