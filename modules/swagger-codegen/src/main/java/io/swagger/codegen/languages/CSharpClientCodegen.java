@@ -262,6 +262,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
 
         // copy package.config to nuget's standard location for project-level installs
         supportingFiles.add(new SupportingFile("packages.config.mustache", packageFolder + File.separator, "packages.config"));
+
         // .travis.yml for travis-ci.org CI
         supportingFiles.add(new SupportingFile("travis.mustache", "", ".travis.yml"));
 
@@ -274,6 +275,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
             apiTestTemplateFiles.put("api_test.mustache", ".cs");
 
             supportingFiles.add(new SupportingFile("packages_test.config.mustache", testPackageFolder + File.separator, "packages.config"));
+                    supportingFiles.add(new SupportingFile("app_test.config.mustache", testPackageFolder + File.separator, "app.config"));
         }
 
         if(Boolean.TRUE.equals(generatePropertyChanged)) {
@@ -500,7 +502,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         }
 
         // number
-        if ("int?".equals(datatype) || "long?".equals(datatype) || 
+        if ("int?".equals(datatype) || "long?".equals(datatype) ||
             "double?".equals(datatype) || "float?".equals(datatype)) {
             String varName = "NUMBER_" + value;
             varName = varName.replaceAll("-", "MINUS_");
@@ -554,7 +556,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
 
     @Override
     public String apiDocFileFolder() {
-        return (outputFolder + "/" + apiDocPath).replace('/', File.separatorChar);
+        return (outputFolder).replace('/', File.separatorChar);
     }
 
     @Override
