@@ -2,10 +2,10 @@ package io.swagger.client.api;
 
 import io.swagger.client.ApiClient;
 
-import io.swagger.client.model.Client;
-import org.joda.time.LocalDate;
 import java.math.BigDecimal;
+import io.swagger.client.model.Client;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +19,7 @@ public interface FakeApi extends ApiClient.Api {
 
   /**
    * To test \&quot;client\&quot; model
-   * 
+   * To test \&quot;client\&quot; model
    * @param body client model (required)
    * @return Client
    */
@@ -58,7 +58,7 @@ public interface FakeApi extends ApiClient.Api {
 
   /**
    * To test enum parameters
-   * 
+   * To test enum parameters
    * @param enumFormStringArray Form parameter enum test (string array) (optional)
    * @param enumFormString Form parameter enum test (string) (optional, default to -efg)
    * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
@@ -71,11 +71,11 @@ public interface FakeApi extends ApiClient.Api {
    */
   @RequestLine("GET /fake?enum_query_string_array={enumQueryStringArray}&enum_query_string={enumQueryString}&enum_query_integer={enumQueryInteger}")
   @Headers({
-    "Content-Type: application/json",
-    "Accept: application/json",
+    "Content-Type: */*",
+    "Accept: */*",
     "enum_header_string_array: {enumHeaderStringArray}",
     
     "enum_header_string: {enumHeaderString}"
   })
-  void testEnumParameters(@Param("enumFormStringArray") List<String> enumFormStringArray, @Param("enumFormString") String enumFormString, @Param("enumHeaderStringArray") List<String> enumHeaderStringArray, @Param("enumHeaderString") String enumHeaderString, @Param("enumQueryStringArray") List<String> enumQueryStringArray, @Param("enumQueryString") String enumQueryString, @Param("enumQueryInteger") BigDecimal enumQueryInteger, @Param("enumQueryDouble") Double enumQueryDouble);
+  void testEnumParameters(@Param("enumFormStringArray") List<String> enumFormStringArray, @Param("enumFormString") String enumFormString, @Param("enumHeaderStringArray") List<String> enumHeaderStringArray, @Param("enumHeaderString") String enumHeaderString, @Param("enumQueryStringArray") List<String> enumQueryStringArray, @Param("enumQueryString") String enumQueryString, @Param("enumQueryInteger") Integer enumQueryInteger, @Param("enumQueryDouble") Double enumQueryDouble);
 }
