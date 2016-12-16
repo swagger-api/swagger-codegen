@@ -8,12 +8,14 @@
         "removeComments": true,
         "sourceMap": true,
         "noLib": false,
-        "declaration": true
+        "declaration": true,
+        "lib": ["dom", "es5", "es2015"],
+        "typeRoots": [
+            "./node_modules/@types"
+        ]
     },
     "exclude": [
-        "node_modules",
-        "typings/browser",
-        "typings/browser.d.ts"
+        "node_modules"
     ]
 }
 

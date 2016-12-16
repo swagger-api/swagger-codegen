@@ -5,7 +5,6 @@
     "repository": "GIT_USER_ID/GIT_REPO_ID",
     "main": "api.js",
     "scripts": {
-        "postinstall": "typings install",
         "clean": "rm -Rf node_modules/ typings/ *.js",
         "build": "tsc",
         "test": "npm run build && node client.js"
@@ -17,8 +16,11 @@
         "request": "^2.72.0"
     },
     "devDependencies": {
-        "typescript": "^1.8.10",
-        "typings": "^0.8.1"
+        "typescript": "^2.1.4",
+        "@types/angular": "^1.5.21",
+        "@types/node": "^6.0.52",
+        "@types/bluebird": "^3.0.36",
+        "@types/request": "^0.0.36"
     },
     "publishConfig":{
         "registry":"https://skimdb.npmjs.com/registry"
