@@ -1240,7 +1240,8 @@
           "type": "string"
         }],
         "produces": [
-          "application/json"
+          "application/vnd.ncloudtech.cloudoffice.filelist+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.filelist.hal+json;v=1;"
         ],
         "responses": {
           "200": {
@@ -1257,26 +1258,6 @@
           "fs-based": []
         }],
         "summary": "list files"
-      }
-    },
-    "/files/subscribe": {
-      "ws": {
-        "operationId": "subscribe",
-        "produces": [
-          "websocket"
-        ],
-        "responses": {
-          "200": {
-            "description": "No response was specified",
-            "schema": {
-              "type": "string"
-            }
-          }
-        },
-        "security": [{
-          "fs-based": []
-        }],
-        "summary": "subscribe"
       }
     },
     "/files/{fileId}": {
@@ -1313,7 +1294,8 @@
           "type": "string"
         }],
         "produces": [
-          "application/json"
+          "application/vnd.ncloudtech.cloudoffice.file+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.file.hal+json;v=1;"
         ],
         "responses": {
           "200": {
@@ -1360,7 +1342,8 @@
           "type": "string"
         }],
         "produces": [
-          "application/json"
+          "application/vnd.ncloudtech.cloudoffice.file+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.file.hal+json;v=1;"
         ],
         "responses": {
           "200": {
@@ -1408,7 +1391,8 @@
           "type": "string"
         }],
         "produces": [
-          "application/json"
+          "application/vnd.ncloudtech.cloudoffice.childlist+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.childlist.hal+json;v=1;"
         ],
         "responses": {
           "200": {
@@ -1500,7 +1484,8 @@
           "type": "string"
         }],
         "produces": [
-          "application/json"
+          "application/vnd.ncloudtech.cloudoffice.parentlist+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.parentlist.hal+json;v=1;"
         ],
         "responses": {
           "200": {
@@ -1530,7 +1515,8 @@
           "type": "string"
         }],
         "produces": [
-          "application/json"
+          "application/vnd.ncloudtech.cloudoffice.permissionlist+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.permissionlist.hal+json;v=1;"
         ],
         "responses": {
           "200": {
@@ -1582,7 +1568,8 @@
           }
         }],
         "produces": [
-          "application/json"
+          "application/vnd.ncloudtech.cloudoffice.permission+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.permission.hal+json;v=1;"
         ],
         "responses": {
           "200": {
@@ -1620,7 +1607,8 @@
           }
         }],
         "produces": [
-          "application/json"
+          "application/vnd.ncloudtech.cloudoffice.permissionlist+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.permissionlist.hal+json;v=1;"
         ],
         "responses": {
           "200": {
@@ -1684,7 +1672,8 @@
           "type": "string"
         }],
         "produces": [
-          "application/json"
+          "application/vnd.ncloudtech.cloudoffice.permission+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.permission.hal+json;v=1;"
         ],
         "responses": {
           "200": {
@@ -1726,7 +1715,8 @@
           }
         }],
         "produces": [
-          "application/json"
+          "application/vnd.ncloudtech.cloudoffice.permission+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.permission.hal+json;v=1;"
         ],
         "responses": {
           "200": {
@@ -1753,7 +1743,8 @@
           "type": "string"
         }],
         "produces": [
-          "application/json"
+          "application/vnd.ncloudtech.cloudoffice.propertylist+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.propertylist.hal+json;v=1;"
         ],
         "responses": {
           "200": {
@@ -1795,7 +1786,8 @@
           }
         }],
         "produces": [
-          "application/json"
+          "application/vnd.ncloudtech.cloudoffice.propertylist+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.propertylist.hal+json;v=1;"
         ],
         "responses": {
           "200": {
@@ -1838,99 +1830,6 @@
         "summary": "request access to file"
       }
     },
-    "/files/{fileId}/revisions": {
-      "get": {
-        "operationId": "getFileRevisions",
-        "parameters": [{
-          "description": "file id",
-          "in": "path",
-          "name": "fileId",
-          "required": true,
-          "type": "string"
-        }],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "No response was specified",
-            "schema": {
-              "items": {
-                "$ref": "#/definitions/RevisionResource"
-              },
-              "type": "array"
-            }
-          }
-        },
-        "security": [{
-          "fs-based": []
-        }],
-        "summary": "get file revisions"
-      }
-    },
-    "/files/{fileId}/revisions/{revId}": {
-      "get": {
-        "operationId": "getFileRevision",
-        "parameters": [{
-          "description": "file id",
-          "in": "path",
-          "name": "fileId",
-          "required": true,
-          "type": "string"
-        }, {
-          "description": "revision id",
-          "in": "path",
-          "name": "revId",
-          "required": true,
-          "type": "string"
-        }],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "No response was specified",
-            "schema": {
-              "$ref": "#/definitions/RevisionResource"
-            }
-          }
-        },
-        "security": [{
-          "fs-based": []
-        }],
-        "summary": "get file revision"
-      }
-    },
-    "/files/{fileId}/revisions/{revId}/content": {
-      "get": {
-        "operationId": "getFileRevisionContent",
-        "parameters": [{
-          "description": "file id",
-          "in": "path",
-          "name": "fileId",
-          "required": true,
-          "type": "string"
-        }, {
-          "description": "revision id",
-          "in": "path",
-          "name": "revId",
-          "required": true,
-          "type": "string"
-        }],
-        "produces": [
-          "*/*"
-        ],
-        "responses": {
-          "200": {
-            "description": "No response was specified"
-          }
-        },
-        "security": [{
-          "fs-based": []
-        }],
-        "summary": "get file revision content"
-      }
-    },
     "/files/{fileId}/trash": {
       "post": {
         "description": "Remove file or folder. If fileId equals trash folder id, purge trash.",
@@ -1943,7 +1842,8 @@
           "type": "string"
         }],
         "produces": [
-          "application/json"
+          "application/vnd.ncloudtech.cloudoffice.file+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.file.hal+json;v=1;"
         ],
         "responses": {
           "200": {
@@ -1981,7 +1881,8 @@
           "type": "string"
         }],
         "produces": [
-          "application/json"
+          "application/vnd.ncloudtech.cloudoffice.file+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.file.hal+json;v=1;"
         ],
         "responses": {
           "200": {
@@ -2088,7 +1989,8 @@
           }
         ],
         "produces": [
-          "application/json"
+          "application/vnd.ncloudtech.cloudoffice.file+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.file.hal+json;v=1;"
         ],
         "responses": {
           "200": {
