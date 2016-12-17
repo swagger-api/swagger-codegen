@@ -1,9 +1,9 @@
 package io.swagger.api;
 
-import io.swagger.model.Client;
-import org.threeten.bp.OffsetDateTime;
-import org.threeten.bp.LocalDate;
 import java.math.BigDecimal;
+import io.swagger.model.Client;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.OffsetDateTime;
 
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +46,7 @@ public interface FakeApi {
         @ApiParam(value = "None", required=true ) @RequestPart(value="_double", required=true)  Double _double,
         @ApiParam(value = "None", required=true ) @RequestPart(value="patternWithoutDelimiter", required=true)  String patternWithoutDelimiter,
         @ApiParam(value = "None", required=true ) @RequestPart(value="_byte", required=true)  byte[] _byte,
+        @ApiParam(value = "None", required = true) @RequestParam(value = "integerArrayRequired", required = true) List<Long> integerArrayRequired,
         @ApiParam(value = "None" ) @RequestPart(value="integer", required=false)  Integer integer,
         @ApiParam(value = "None" ) @RequestPart(value="int32", required=false)  Integer int32,
         @ApiParam(value = "None" ) @RequestPart(value="int64", required=false)  Long int64,
@@ -55,7 +56,8 @@ public interface FakeApi {
         @ApiParam(value = "None" ) @RequestPart(value="date", required=false)  LocalDate date,
         @ApiParam(value = "None" ) @RequestPart(value="dateTime", required=false)  OffsetDateTime dateTime,
         @ApiParam(value = "None" ) @RequestPart(value="password", required=false)  String password,
-        @ApiParam(value = "None" ) @RequestPart(value="paramCallback", required=false)  String paramCallback);
+        @ApiParam(value = "None" ) @RequestPart(value="paramCallback", required=false)  String paramCallback,
+        @ApiParam(value = "None") @RequestParam(value = "integerArrayNotRequired", required = false) List<Long> integerArrayNotRequired);
 
 
     @ApiOperation(value = "To test enum parameters", notes = "", response = Void.class, tags={ "fake", })
@@ -63,8 +65,8 @@ public interface FakeApi {
         @ApiResponse(code = 400, message = "Invalid request", response = Void.class),
         @ApiResponse(code = 404, message = "Not found", response = Void.class) })
     @RequestMapping(value = "/fake",
-        produces = { "application/json" }, 
-        consumes = { "application/json" },
+        produces = { "*/*" }, 
+        consumes = { "*/*" },
         method = RequestMethod.GET)
     ResponseEntity<Void> testEnumParameters(@ApiParam(value = "Form parameter enum test (string array)" , allowableValues="GREATER_THAN, DOLLAR") @RequestPart(value="enumFormStringArray", required=false)  List<String> enumFormStringArray,
         @ApiParam(value = "Form parameter enum test (string)" , allowableValues="_ABC, _EFG, _XYZ_", defaultValue="-efg") @RequestPart(value="enumFormString", required=false)  String enumFormString,

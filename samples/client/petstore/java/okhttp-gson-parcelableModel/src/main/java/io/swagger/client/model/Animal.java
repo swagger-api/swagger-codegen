@@ -98,6 +98,7 @@ public class Animal implements Parcelable {
     return Objects.hash(className, color);
   }
 
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();

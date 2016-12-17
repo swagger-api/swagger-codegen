@@ -192,6 +192,7 @@ class FakeApi
      * @param double $double None (required)
      * @param string $pattern_without_delimiter None (required)
      * @param string $byte None (required)
+     * @param int[] $integer_array_required None (required)
      * @param int $integer None (optional)
      * @param int $int32 None (optional)
      * @param int $int64 None (optional)
@@ -201,12 +202,14 @@ class FakeApi
      * @param \DateTime $date None (optional)
      * @param \DateTime $date_time None (optional)
      * @param string $password None (optional)
+     * @param string $callback None (optional)
+     * @param int[] $integer_array_not_required None (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @return void
      */
-    public function testEndpointParameters($number, $double, $pattern_without_delimiter, $byte, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null)
+    public function testEndpointParameters($number, $double, $pattern_without_delimiter, $byte, $integer_array_required, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null, $callback = null, $integer_array_not_required = null)
     {
-        list($response) = $this->testEndpointParametersWithHttpInfo($number, $double, $pattern_without_delimiter, $byte, $integer, $int32, $int64, $float, $string, $binary, $date, $date_time, $password);
+        list($response) = $this->testEndpointParametersWithHttpInfo($number, $double, $pattern_without_delimiter, $byte, $integer_array_required, $integer, $int32, $int64, $float, $string, $binary, $date, $date_time, $password, $callback, $integer_array_not_required);
         return $response;
     }
 
@@ -219,6 +222,7 @@ class FakeApi
      * @param double $double None (required)
      * @param string $pattern_without_delimiter None (required)
      * @param string $byte None (required)
+     * @param int[] $integer_array_required None (required)
      * @param int $integer None (optional)
      * @param int $int32 None (optional)
      * @param int $int64 None (optional)
@@ -228,10 +232,12 @@ class FakeApi
      * @param \DateTime $date None (optional)
      * @param \DateTime $date_time None (optional)
      * @param string $password None (optional)
+     * @param string $callback None (optional)
+     * @param int[] $integer_array_not_required None (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function testEndpointParametersWithHttpInfo($number, $double, $pattern_without_delimiter, $byte, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null)
+    public function testEndpointParametersWithHttpInfo($number, $double, $pattern_without_delimiter, $byte, $integer_array_required, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null, $callback = null, $integer_array_not_required = null)
     {
         // verify the required parameter 'number' is set
         if ($number === null) {
@@ -266,6 +272,10 @@ class FakeApi
         // verify the required parameter 'byte' is set
         if ($byte === null) {
             throw new \InvalidArgumentException('Missing the required parameter $byte when calling testEndpointParameters');
+        }
+        // verify the required parameter 'integer_array_required' is set
+        if ($integer_array_required === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $integer_array_required when calling testEndpointParameters');
         }
         if (!is_null($integer) && ($integer > 100.0)) {
             throw new \InvalidArgumentException('invalid value for "$integer" when calling FakeApi.testEndpointParameters, must be smaller than or equal to 100.0.');
@@ -308,6 +318,20 @@ class FakeApi
         }
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/xml; charset=utf-8', 'application/json; charset=utf-8']);
 
+        // query params
+        if (is_array($integer_array_required)) {
+            $integer_array_required = $this->apiClient->getSerializer()->serializeCollection($integer_array_required, 'csv', true);
+        }
+        if ($integer_array_required !== null) {
+            $queryParams['integerArrayRequired'] = $this->apiClient->getSerializer()->toQueryValue($integer_array_required);
+        }
+        // query params
+        if (is_array($integer_array_not_required)) {
+            $integer_array_not_required = $this->apiClient->getSerializer()->serializeCollection($integer_array_not_required, 'csv', true);
+        }
+        if ($integer_array_not_required !== null) {
+            $queryParams['integerArrayNotRequired'] = $this->apiClient->getSerializer()->toQueryValue($integer_array_not_required);
+        }
         // default format to json
         $resourcePath = str_replace("{format}", "json", $resourcePath);
 
@@ -362,6 +386,10 @@ class FakeApi
         // form params
         if ($password !== null) {
             $formParams['password'] = $this->apiClient->getSerializer()->toFormValue($password);
+        }
+        // form params
+        if ($callback !== null) {
+            $formParams['callback'] = $this->apiClient->getSerializer()->toFormValue($callback);
         }
         
         // for model (json/xml)
@@ -441,11 +469,11 @@ class FakeApi
         $queryParams = [];
         $headerParams = [];
         $formParams = [];
-        $_header_accept = $this->apiClient->selectHeaderAccept(['application/json']);
+        $_header_accept = $this->apiClient->selectHeaderAccept(['*/*']);
         if (!is_null($_header_accept)) {
             $headerParams['Accept'] = $_header_accept;
         }
-        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/json']);
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['*/*']);
 
         // query params
         if (is_array($enum_query_string_array)) {

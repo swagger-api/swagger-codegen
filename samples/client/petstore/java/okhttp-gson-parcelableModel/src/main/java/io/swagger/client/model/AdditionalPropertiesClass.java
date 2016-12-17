@@ -111,6 +111,7 @@ public class AdditionalPropertiesClass implements Parcelable {
     return Objects.hash(mapProperty, mapOfMapProperty);
   }
 
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();

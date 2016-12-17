@@ -113,6 +113,11 @@ class FakeApi extends Controller
         }
         $byte = $input['byte'];
 
+        if (!isset($input['integer_array_required'])) {
+            throw new \InvalidArgumentException('Missing the required parameter $integer_array_required when calling testEndpointParameters');
+        }
+        $integer_array_required = $input['integer_array_required'];
+
         if ($input['integer'] > 100.0) {
             throw new \InvalidArgumentException('invalid value for $integer when calling FakeApi.testEndpointParameters, must be smaller than or equal to 100.0.');
         }
@@ -154,6 +159,10 @@ class FakeApi extends Controller
             throw new \InvalidArgumentException('invalid length for $password when calling FakeApi.testEndpointParameters, must be bigger than or equal to 10.');
         }
         $password = $input['password'];
+
+        $callback = $input['callback'];
+
+        $integer_array_not_required = $input['integer_array_not_required'];
 
 
         return response('How about implementing testEndpointParameters as a POST method ?');

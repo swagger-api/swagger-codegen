@@ -52,7 +52,7 @@ No authorization required
 
 <a name="testEndpointParameters"></a>
 # **testEndpointParameters**
-> testEndpointParameters(_number, _double, patternWithoutDelimiter, _byte, opts)
+> testEndpointParameters(_number, _double, patternWithoutDelimiter, _byte, integerArrayRequired, opts)
 
 Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 
@@ -78,6 +78,8 @@ var patternWithoutDelimiter = "patternWithoutDelimiter_example"; // String | Non
 
 var _byte = "B"; // String | None
 
+var integerArrayRequired = [3.4]; // [Number] | None
+
 var opts = { 
   'integer': 56, // Number | None
   'int32': 56, // Number | None
@@ -88,9 +90,10 @@ var opts = {
   '_date': new Date("2013-10-20"), // Date | None
   'dateTime': new Date("2013-10-20T19:20:30+01:00"), // Date | None
   'password': "password_example", // String | None
-  'callback': "callback_example" // String | None
+  'callback': "callback_example", // String | None
+  'integerArrayNotRequired': [3.4] // [Number] | None
 };
-apiInstance.testEndpointParameters(_number, _double, patternWithoutDelimiter, _byte, opts).then(function() {
+apiInstance.testEndpointParameters(_number, _double, patternWithoutDelimiter, _byte, integerArrayRequired, opts).then(function() {
   console.log('API called successfully.');
 }, function(error) {
   console.error(error);
@@ -106,6 +109,7 @@ Name | Type | Description  | Notes
  **_double** | **Number**| None | 
  **patternWithoutDelimiter** | **String**| None | 
  **_byte** | **String**| None | 
+ **integerArrayRequired** | [**[Number]**](Number.md)| None | 
  **integer** | **Number**| None | [optional] 
  **int32** | **Number**| None | [optional] 
  **int64** | **Number**| None | [optional] 
@@ -116,6 +120,7 @@ Name | Type | Description  | Notes
  **dateTime** | **Date**| None | [optional] 
  **password** | **String**| None | [optional] 
  **callback** | **String**| None | [optional] 
+ **integerArrayNotRequired** | [**[Number]**](Number.md)| None | [optional] 
 
 ### Return type
 
@@ -183,6 +188,6 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Content-Type**: */*
+ - **Accept**: */*
 

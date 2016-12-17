@@ -138,6 +138,7 @@ sub test_client_model {
 # @param double $double None (required)
 # @param string $pattern_without_delimiter None (required)
 # @param string $byte None (required)
+# @param ARRAY[int] $integer_array_required None (required)
 # @param int $integer None (optional)
 # @param int $int32 None (optional)
 # @param int $int64 None (optional)
@@ -147,6 +148,8 @@ sub test_client_model {
 # @param DateTime $date None (optional)
 # @param DateTime $date_time None (optional)
 # @param string $password None (optional)
+# @param string $callback None (optional)
+# @param ARRAY[int] $integer_array_not_required None (optional)
 {
     my $params = {
     'number' => {
@@ -166,6 +169,11 @@ sub test_client_model {
     },
     'byte' => {
         data_type => 'string',
+        description => 'None',
+        required => '1',
+    },
+    'integer_array_required' => {
+        data_type => 'ARRAY[int]',
         description => 'None',
         required => '1',
     },
@@ -214,6 +222,16 @@ sub test_client_model {
         description => 'None',
         required => '0',
     },
+    'callback' => {
+        data_type => 'string',
+        description => 'None',
+        required => '0',
+    },
+    'integer_array_not_required' => {
+        data_type => 'ARRAY[int]',
+        description => 'None',
+        required => '0',
+    },
     };
     __PACKAGE__->method_documentation->{ 'test_endpoint_parameters' } = { 
     	summary => 'Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ',
@@ -246,6 +264,11 @@ sub test_endpoint_parameters {
       croak("Missing the required parameter 'byte' when calling test_endpoint_parameters");
     }
 
+    # verify the required parameter 'integer_array_required' is set
+    unless (exists $args{'integer_array_required'}) {
+      croak("Missing the required parameter 'integer_array_required' when calling test_endpoint_parameters");
+    }
+
     # parse inputs
     my $_resource_path = '/fake';
     $_resource_path =~ s/{format}/json/; # default format to json
@@ -261,6 +284,16 @@ sub test_endpoint_parameters {
         $header_params->{'Accept'} = $_header_accept;
     }
     $header_params->{'Content-Type'} = $self->{api_client}->select_header_content_type('application/xml; charset=utf-8', 'application/json; charset=utf-8');
+
+    # query params
+    if ( exists $args{'integer_array_required'}) {
+        $query_params->{'integerArrayRequired'} = $self->{api_client}->to_query_value($args{'integer_array_required'});
+    }
+
+    # query params
+    if ( exists $args{'integer_array_not_required'}) {
+        $query_params->{'integerArrayNotRequired'} = $self->{api_client}->to_query_value($args{'integer_array_not_required'});
+    }
 
     # form params
     if ( exists $args{'integer'} ) {
@@ -325,6 +358,11 @@ sub test_endpoint_parameters {
     # form params
     if ( exists $args{'password'} ) {
                 $form_params->{'password'} = $self->{api_client}->to_form_value($args{'password'});
+    }
+    
+    # form params
+    if ( exists $args{'callback'} ) {
+                $form_params->{'callback'} = $self->{api_client}->to_form_value($args{'callback'});
     }
     
     my $_body_data;
@@ -415,11 +453,11 @@ sub test_enum_parameters {
     my $form_params = {};
 
     # 'Accept' and 'Content-Type' header
-    my $_header_accept = $self->{api_client}->select_header_accept('application/json');
+    my $_header_accept = $self->{api_client}->select_header_accept('*/*');
     if ($_header_accept) {
         $header_params->{'Accept'} = $_header_accept;
     }
-    $header_params->{'Content-Type'} = $self->{api_client}->select_header_content_type('application/json');
+    $header_params->{'Content-Type'} = $self->{api_client}->select_header_content_type('*/*');
 
     # query params
     if ( exists $args{'enum_query_string_array'}) {

@@ -243,7 +243,7 @@ class ApiInvoker(formats: Formats)(implicit system: ActorSystem) extends Untrust
     request.responseForCode(response.status.intValue) match {
       case Some( (manifest: Manifest[T], state: ResponseState) ) =>
         entityUnmarshaller(manifest)(response.entity) match {
-          case Right(value) ⇒
+          case Right(value) â‡’
             state match {
               case ResponseState.Success =>
                 ApiResponse(response.status.intValue, value, response.headers.map(header => (header.name, header.value)).toMap)
@@ -253,13 +253,13 @@ class ApiInvoker(formats: Formats)(implicit system: ActorSystem) extends Untrust
                   headers = response.headers.map(header => (header.name, header.value)).toMap)
             }
 
-          case Left(MalformedContent(error, Some(cause))) ⇒
+          case Left(MalformedContent(error, Some(cause))) â‡’
             throw new ApiError(response.status.intValue, s"Unable to unmarshall content to [$manifest]", Some(response.entity.toString), cause)
 
-          case Left(MalformedContent(error, None)) ⇒
+          case Left(MalformedContent(error, None)) â‡’
             throw new ApiError(response.status.intValue, s"Unable to unmarshall content to [$manifest]", Some(response.entity.toString))
 
-          case Left(ContentExpected) ⇒
+          case Left(ContentExpected) â‡’
             throw new ApiError(response.status.intValue, s"Unable to unmarshall empty response to [$manifest]", Some(response.entity.toString))
         }
 
@@ -269,7 +269,7 @@ class ApiInvoker(formats: Formats)(implicit system: ActorSystem) extends Untrust
 
   def entityUnmarshaller[T](implicit mf: Manifest[T]): Unmarshaller[T] =
     Unmarshaller[T](MediaTypes.`application/json`) {
-      case x: HttpEntity.NonEmpty ⇒
+      case x: HttpEntity.NonEmpty â‡’
         parse(x.asString(defaultCharset = HttpCharsets.`UTF-8`))
           .noNulls
           .camelizeKeys

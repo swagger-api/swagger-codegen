@@ -7,9 +7,9 @@ import io.swagger.api.factories.FakeApiServiceFactory;
 import io.swagger.annotations.ApiParam;
 import io.swagger.jaxrs.*;
 
+import java.math.BigDecimal;
 import io.swagger.model.Client;
 import java.util.Date;
-import java.math.BigDecimal;
 
 import java.util.List;
 import io.swagger.api.NotFoundException;
@@ -59,6 +59,7 @@ public class FakeApi  {
 ,@ApiParam(value = "None", required=true)  @FormParam("double")  Double _double
 ,@ApiParam(value = "None", required=true)  @FormParam("pattern_without_delimiter")  String patternWithoutDelimiter
 ,@ApiParam(value = "None", required=true)  @FormParam("byte")  byte[] _byte
+,@ApiParam(value = "None",required=true) @QueryParam("integerArrayRequired") List<Long> integerArrayRequired
 ,@ApiParam(value = "None")  @FormParam("integer")  Integer integer
 ,@ApiParam(value = "None")  @FormParam("int32")  Integer int32
 ,@ApiParam(value = "None")  @FormParam("int64")  Long int64
@@ -69,14 +70,15 @@ public class FakeApi  {
 ,@ApiParam(value = "None")  @FormParam("dateTime")  Date dateTime
 ,@ApiParam(value = "None")  @FormParam("password")  String password
 ,@ApiParam(value = "None")  @FormParam("callback")  String paramCallback
+,@ApiParam(value = "None") @QueryParam("integerArrayNotRequired") List<Long> integerArrayNotRequired
 )
     throws NotFoundException {
-        return delegate.testEndpointParameters(number,_double,patternWithoutDelimiter,_byte,integer,int32,int64,_float,string,binary,date,dateTime,password,paramCallback);
+        return delegate.testEndpointParameters(number,_double,patternWithoutDelimiter,_byte,integerArrayRequired,integer,int32,int64,_float,string,binary,date,dateTime,password,paramCallback,integerArrayNotRequired);
     }
     @GET
     
-    @Consumes({ "application/json" })
-    @Produces({ "application/json" })
+    @Consumes({ "*/*" })
+    @Produces({ "*/*" })
     @io.swagger.annotations.ApiOperation(value = "To test enum parameters", notes = "", response = void.class, tags={ "fake", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid request", response = void.class),

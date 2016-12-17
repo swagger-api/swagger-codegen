@@ -32,8 +32,8 @@ import io.swagger.client.model.*;
 
 import java.util.*;
 
-import io.swagger.client.model.User;
 import java.util.*;
+import io.swagger.client.model.User;
 
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 

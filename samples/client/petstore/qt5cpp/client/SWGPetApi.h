@@ -27,10 +27,10 @@
 
 #include "SWGHttpRequest.h"
 
+#include "ApiResponse.h"
 #include "Pet.h"
 #include <QString>
 #include "SWGHttpRequest.h"
-#include "ApiResponse.h"
 
 #include <QObject>
 
@@ -48,13 +48,13 @@ public:
     QString basePath;
 
     void addPet(Pet body);
-    void deletePet(qint64 petId, QString* apiKey);
+    void deletePet(qint64 pet_id, QString* api_key);
     void findPetsByStatus(QList<QString*>* status);
     void findPetsByTags(QList<QString*>* tags);
-    void getPetById(qint64 petId);
+    void getPetById(qint64 pet_id);
     void updatePet(Pet body);
-    void updatePetWithForm(qint64 petId, QString* name, QString* status);
-    void uploadFile(qint64 petId, QString* additionalMetadata, SWGHttpRequestInputFileElement* file);
+    void updatePetWithForm(qint64 pet_id, QString* name, QString* status);
+    void uploadFile(qint64 pet_id, QString* additional_metadata, SWGHttpRequestInputFileElement* file);
     
 private:
     void addPetCallback (HttpRequestWorker * worker);

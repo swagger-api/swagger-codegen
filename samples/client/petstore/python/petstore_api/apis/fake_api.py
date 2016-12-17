@@ -163,7 +163,7 @@ class FakeApi(object):
                                             _request_timeout=params.get('_request_timeout'),
                                             collection_formats=collection_formats)
 
-    def test_endpoint_parameters(self, number, double, pattern_without_delimiter, byte, **kwargs):
+    def test_endpoint_parameters(self, number, double, pattern_without_delimiter, byte, integer_array_required, **kwargs):
         """
         Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
         Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
@@ -174,7 +174,7 @@ class FakeApi(object):
         >>> def callback_function(response):
         >>>     pprint(response)
         >>>
-        >>> thread = api.test_endpoint_parameters(number, double, pattern_without_delimiter, byte, callback=callback_function)
+        >>> thread = api.test_endpoint_parameters(number, double, pattern_without_delimiter, byte, integer_array_required, callback=callback_function)
 
         :param callback function: The callback function
             for asynchronous request. (optional)
@@ -182,6 +182,7 @@ class FakeApi(object):
         :param float double: None (required)
         :param str pattern_without_delimiter: None (required)
         :param str byte: None (required)
+        :param list[int] integer_array_required: None (required)
         :param int integer: None
         :param int int32: None
         :param int int64: None
@@ -192,18 +193,19 @@ class FakeApi(object):
         :param datetime date_time: None
         :param str password: None
         :param str param_callback: None
+        :param list[int] integer_array_not_required: None
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('callback'):
-            return self.test_endpoint_parameters_with_http_info(number, double, pattern_without_delimiter, byte, **kwargs)
+            return self.test_endpoint_parameters_with_http_info(number, double, pattern_without_delimiter, byte, integer_array_required, **kwargs)
         else:
-            (data) = self.test_endpoint_parameters_with_http_info(number, double, pattern_without_delimiter, byte, **kwargs)
+            (data) = self.test_endpoint_parameters_with_http_info(number, double, pattern_without_delimiter, byte, integer_array_required, **kwargs)
             return data
 
-    def test_endpoint_parameters_with_http_info(self, number, double, pattern_without_delimiter, byte, **kwargs):
+    def test_endpoint_parameters_with_http_info(self, number, double, pattern_without_delimiter, byte, integer_array_required, **kwargs):
         """
         Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
         Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
@@ -214,7 +216,7 @@ class FakeApi(object):
         >>> def callback_function(response):
         >>>     pprint(response)
         >>>
-        >>> thread = api.test_endpoint_parameters_with_http_info(number, double, pattern_without_delimiter, byte, callback=callback_function)
+        >>> thread = api.test_endpoint_parameters_with_http_info(number, double, pattern_without_delimiter, byte, integer_array_required, callback=callback_function)
 
         :param callback function: The callback function
             for asynchronous request. (optional)
@@ -222,6 +224,7 @@ class FakeApi(object):
         :param float double: None (required)
         :param str pattern_without_delimiter: None (required)
         :param str byte: None (required)
+        :param list[int] integer_array_required: None (required)
         :param int integer: None
         :param int int32: None
         :param int int64: None
@@ -232,12 +235,13 @@ class FakeApi(object):
         :param datetime date_time: None
         :param str password: None
         :param str param_callback: None
+        :param list[int] integer_array_not_required: None
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['number', 'double', 'pattern_without_delimiter', 'byte', 'integer', 'int32', 'int64', 'float', 'string', 'binary', 'date', 'date_time', 'password', 'param_callback']
+        all_params = ['number', 'double', 'pattern_without_delimiter', 'byte', 'integer_array_required', 'integer', 'int32', 'int64', 'float', 'string', 'binary', 'date', 'date_time', 'password', 'param_callback', 'integer_array_not_required']
         all_params.append('callback')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -264,6 +268,9 @@ class FakeApi(object):
         # verify the required parameter 'byte' is set
         if ('byte' not in params) or (params['byte'] is None):
             raise ValueError("Missing the required parameter `byte` when calling `test_endpoint_parameters`")
+        # verify the required parameter 'integer_array_required' is set
+        if ('integer_array_required' not in params) or (params['integer_array_required'] is None):
+            raise ValueError("Missing the required parameter `integer_array_required` when calling `test_endpoint_parameters`")
 
         if 'number' in params and params['number'] > 543.2:
             raise ValueError("Invalid value for parameter `number` when calling `test_endpoint_parameters`, must be a value less than or equal to `543.2`")
@@ -298,6 +305,12 @@ class FakeApi(object):
         path_params = {}
 
         query_params = {}
+        if 'integer_array_required' in params:
+            query_params['integerArrayRequired'] = params['integer_array_required']
+            collection_formats['integerArrayRequired'] = 'csv'
+        if 'integer_array_not_required' in params:
+            query_params['integerArrayNotRequired'] = params['integer_array_not_required']
+            collection_formats['integerArrayNotRequired'] = 'csv'
 
         header_params = {}
 

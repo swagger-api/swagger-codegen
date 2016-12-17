@@ -27,9 +27,9 @@
 
 #include "SWGHttpRequest.h"
 
-#include <QString>
-#include <QMap>
 #include "Order.h"
+#include <QMap>
+#include <QString>
 
 #include <QObject>
 
@@ -46,9 +46,9 @@ public:
     QString host;
     QString basePath;
 
-    void deleteOrder(QString* orderId);
+    void deleteOrder(QString* order_id);
     void getInventory();
-    void getOrderById(qint64 orderId);
+    void getOrderById(qint64 order_id);
     void placeOrder(Order body);
     
 private:

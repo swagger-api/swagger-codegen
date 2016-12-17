@@ -118,6 +118,7 @@ func (a FakeApi) TestClientModel(body Client) (*Client, *APIResponse, error) {
  * @param double None
  * @param patternWithoutDelimiter None
  * @param byte_ None
+ * @param integerArrayRequired None
  * @param integer None
  * @param int32_ None
  * @param int64_ None
@@ -127,9 +128,11 @@ func (a FakeApi) TestClientModel(body Client) (*Client, *APIResponse, error) {
  * @param date None
  * @param dateTime None
  * @param password None
+ * @param callback None
+ * @param integerArrayNotRequired None
  * @return void
  */
-func (a FakeApi) TestEndpointParameters(number float32, double float64, patternWithoutDelimiter string, byte_ string, integer int32, int32_ int32, int64_ int64, float float32, string_ string, binary string, date time.Time, dateTime time.Time, password string) (*APIResponse, error) {
+func (a FakeApi) TestEndpointParameters(number float32, double float64, patternWithoutDelimiter string, byte_ string, integerArrayRequired []int64, integer int32, int32_ int32, int64_ int64, float float32, string_ string, binary string, date time.Time, dateTime time.Time, password string, callback string, integerArrayNotRequired []int64) (*APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Post")
 	// create path and map variables
@@ -149,6 +152,22 @@ func (a FakeApi) TestEndpointParameters(number float32, double float64, patternW
 	// add default headers if any
 	for key := range a.Configuration.DefaultHeader {
 		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
+	}
+	var collectionFormat = "csv"
+	if collectionFormat == "multi" {
+		for _, value := range integerArrayRequired {
+			localVarQueryParams.Add("integerArrayRequired", value)
+		}
+	} else {
+		localVarQueryParams.Add("integerArrayRequired", a.Configuration.APIClient.ParameterToString(integerArrayRequired, collectionFormat))
+	}
+	var collectionFormat = "csv"
+	if collectionFormat == "multi" {
+		for _, value := range integerArrayNotRequired {
+			localVarQueryParams.Add("integerArrayNotRequired", value)
+		}
+	} else {
+		localVarQueryParams.Add("integerArrayNotRequired", a.Configuration.APIClient.ParameterToString(integerArrayNotRequired, collectionFormat))
 	}
 
 	// to determine the Content-Type header
@@ -183,6 +202,7 @@ func (a FakeApi) TestEndpointParameters(number float32, double float64, patternW
 	localVarFormParams["date"] = a.Configuration.APIClient.ParameterToString(date, "")
 	localVarFormParams["dateTime"] = a.Configuration.APIClient.ParameterToString(dateTime, "")
 	localVarFormParams["password"] = a.Configuration.APIClient.ParameterToString(password, "")
+	localVarFormParams["callback"] = a.Configuration.APIClient.ParameterToString(callback, "")
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 
 	var localVarURL, _ = url.Parse(localVarPath)
@@ -240,7 +260,7 @@ func (a FakeApi) TestEnumParameters(enumFormStringArray []string, enumFormString
 		localVarQueryParams.Add("enum_query_integer", a.Configuration.APIClient.ParameterToString(enumQueryInteger, ""))
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{ "*/*",  }
 
 	// set Content-Type header
 	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
@@ -249,7 +269,7 @@ func (a FakeApi) TestEnumParameters(enumFormStringArray []string, enumFormString
 	}
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
-		"application/json",
+		"*/*",
 		}
 
 	// set Accept header

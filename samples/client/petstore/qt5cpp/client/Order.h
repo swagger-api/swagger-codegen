@@ -23,13 +23,13 @@
  */
 
 /*
- * SWGOrder.h
+ * Order.h
  * 
  * An order for a pets from the pet store
  */
 
-#ifndef SWGOrder_H_
-#define SWGOrder_H_
+#ifndef Order_H_
+#define Order_H_
 
 #include <QJsonObject>
 
@@ -42,18 +42,18 @@
 
 namespace Swagger {
 
-class SWGOrder: public SWGObject {
+class Order: public SWGObject {
 public:
-    SWGOrder();
-    SWGOrder(QString* json);
-    virtual ~SWGOrder();
+    Order();
+    Order(QString* json);
+    virtual ~Order();
     void init();
     void cleanup();
 
     QString asJson ();
     QJsonObject* asJsonObject();
     void fromJsonObject(QJsonObject &json);
-    SWGOrder* fromJson(QString &jsonString);
+    Order* fromJson(QString &jsonString);
 
     qint64 getId();
     void setId(qint64 id);
@@ -85,4 +85,4 @@ private:
 
 } /* namespace Swagger */
 
-#endif /* SWGOrder_H_ */
+#endif /* Order_H_ */

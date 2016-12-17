@@ -24,9 +24,9 @@
 
 package io.swagger.client.api
 
-import io.swagger.client.model.Pet
 import io.swagger.client.model.ApiResponse
 import java.io.File
+import io.swagger.client.model.Pet
 import io.swagger.client.ApiInvoker
 import io.swagger.client.ApiException
 

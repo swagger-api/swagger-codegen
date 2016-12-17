@@ -54,7 +54,7 @@ No authorization required
 
 <a name="testEndpointParameters"></a>
 # **testEndpointParameters**
-> Void testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback)
+> Void testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integerArrayRequired, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback, integerArrayNotRequired)
 
 Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 
@@ -81,6 +81,7 @@ BigDecimal number = new BigDecimal(); // BigDecimal | None
 Double _double = 3.4D; // Double | None
 String patternWithoutDelimiter = "patternWithoutDelimiter_example"; // String | None
 byte[] _byte = B; // byte[] | None
+List<Long> integerArrayRequired = Arrays.asList(56L); // List<Long> | None
 Integer integer = 56; // Integer | None
 Integer int32 = 56; // Integer | None
 Long int64 = 789L; // Long | None
@@ -91,8 +92,9 @@ LocalDate date = new LocalDate(); // LocalDate | None
 OffsetDateTime dateTime = new OffsetDateTime(); // OffsetDateTime | None
 String password = "password_example"; // String | None
 String paramCallback = "paramCallback_example"; // String | None
+List<Long> integerArrayNotRequired = Arrays.asList(56L); // List<Long> | None
 try {
-    Void result = apiInstance.testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback);
+    Void result = apiInstance.testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integerArrayRequired, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback, integerArrayNotRequired);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling FakeApi#testEndpointParameters");
@@ -108,6 +110,7 @@ Name | Type | Description  | Notes
  **_double** | **Double**| None |
  **patternWithoutDelimiter** | **String**| None |
  **_byte** | **byte[]**| None |
+ **integerArrayRequired** | [**List&lt;Long&gt;**](Long.md)| None |
  **integer** | **Integer**| None | [optional]
  **int32** | **Integer**| None | [optional]
  **int64** | **Long**| None | [optional]
@@ -118,6 +121,7 @@ Name | Type | Description  | Notes
  **dateTime** | **OffsetDateTime**| None | [optional]
  **password** | **String**| None | [optional]
  **paramCallback** | **String**| None | [optional]
+ **integerArrayNotRequired** | [**List&lt;Long&gt;**](Long.md)| None | [optional]
 
 ### Return type
 
@@ -129,7 +133,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/xml; charset=utf-8, application/json; charset=utf-8
+ - **Content-Type**: application/xml; charset=utf-8application/json; charset=utf-8, 
  - **Accept**: application/xml; charset=utf-8, application/json; charset=utf-8
 
 <a name="testEnumParameters"></a>
@@ -186,6 +190,6 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Content-Type**: */*
+ - **Accept**: */*
 

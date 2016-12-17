@@ -2,10 +2,10 @@ package io.swagger.client.api;
 
 import io.swagger.client.ApiClient;
 
+import java.math.BigDecimal;
 import io.swagger.client.model.Client;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
-import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +37,7 @@ public interface FakeApi extends ApiClient.Api {
    * @param _double None (required)
    * @param patternWithoutDelimiter None (required)
    * @param _byte None (required)
+   * @param integerArrayRequired None (required)
    * @param integer None (optional)
    * @param int32 None (optional)
    * @param int64 None (optional)
@@ -47,14 +48,15 @@ public interface FakeApi extends ApiClient.Api {
    * @param dateTime None (optional)
    * @param password None (optional)
    * @param paramCallback None (optional)
+   * @param integerArrayNotRequired None (optional)
    * @return void
    */
-  @RequestLine("POST /fake")
+  @RequestLine("POST /fake?integerArrayRequired={integerArrayRequired}&integerArrayNotRequired={integerArrayNotRequired}")
   @Headers({
     "Content-Type: application/xml; charset&#x3D;utf-8",
     "Accept: application/xml; charset&#x3D;utf-8,application/json; charset&#x3D;utf-8",
   })
-  void testEndpointParameters(@Param("number") BigDecimal number, @Param("_double") Double _double, @Param("patternWithoutDelimiter") String patternWithoutDelimiter, @Param("_byte") byte[] _byte, @Param("integer") Integer integer, @Param("int32") Integer int32, @Param("int64") Long int64, @Param("_float") Float _float, @Param("string") String string, @Param("binary") byte[] binary, @Param("date") LocalDate date, @Param("dateTime") OffsetDateTime dateTime, @Param("password") String password, @Param("paramCallback") String paramCallback);
+  void testEndpointParameters(@Param("number") BigDecimal number, @Param("_double") Double _double, @Param("patternWithoutDelimiter") String patternWithoutDelimiter, @Param("_byte") byte[] _byte, @Param("integerArrayRequired") List<Long> integerArrayRequired, @Param("integer") Integer integer, @Param("int32") Integer int32, @Param("int64") Long int64, @Param("_float") Float _float, @Param("string") String string, @Param("binary") byte[] binary, @Param("date") LocalDate date, @Param("dateTime") OffsetDateTime dateTime, @Param("password") String password, @Param("paramCallback") String paramCallback, @Param("integerArrayNotRequired") List<Long> integerArrayNotRequired);
 
   /**
    * To test enum parameters

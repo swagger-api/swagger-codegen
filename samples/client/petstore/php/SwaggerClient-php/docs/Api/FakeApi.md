@@ -53,7 +53,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **testEndpointParameters**
-> testEndpointParameters($number, $double, $pattern_without_delimiter, $byte, $integer, $int32, $int64, $float, $string, $binary, $date, $date_time, $password)
+> testEndpointParameters($number, $double, $pattern_without_delimiter, $byte, $integer_array_required, $integer, $int32, $int64, $float, $string, $binary, $date, $date_time, $password, $callback, $integer_array_not_required)
 
 Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트
 
@@ -73,6 +73,7 @@ $number = 3.4; // float | None
 $double = 1.2; // double | None
 $pattern_without_delimiter = "pattern_without_delimiter_example"; // string | None
 $byte = "B"; // string | None
+$integer_array_required = array(56); // int[] | None
 $integer = 56; // int | None
 $int32 = 56; // int | None
 $int64 = 789; // int | None
@@ -82,9 +83,11 @@ $binary = "B"; // string | None
 $date = new \DateTime(); // \DateTime | None
 $date_time = new \DateTime(); // \DateTime | None
 $password = "password_example"; // string | None
+$callback = "callback_example"; // string | None
+$integer_array_not_required = array(56); // int[] | None
 
 try {
-    $api_instance->testEndpointParameters($number, $double, $pattern_without_delimiter, $byte, $integer, $int32, $int64, $float, $string, $binary, $date, $date_time, $password);
+    $api_instance->testEndpointParameters($number, $double, $pattern_without_delimiter, $byte, $integer_array_required, $integer, $int32, $int64, $float, $string, $binary, $date, $date_time, $password, $callback, $integer_array_not_required);
 } catch (Exception $e) {
     echo 'Exception when calling FakeApi->testEndpointParameters: ', $e->getMessage(), PHP_EOL;
 }
@@ -99,6 +102,7 @@ Name | Type | Description  | Notes
  **double** | **double**| None |
  **pattern_without_delimiter** | **string**| None |
  **byte** | **string**| None |
+ **integer_array_required** | [**int[]**](../Model/int.md)| None |
  **integer** | **int**| None | [optional]
  **int32** | **int**| None | [optional]
  **int64** | **int**| None | [optional]
@@ -108,6 +112,8 @@ Name | Type | Description  | Notes
  **date** | **\DateTime**| None | [optional]
  **date_time** | **\DateTime**| None | [optional]
  **password** | **string**| None | [optional]
+ **callback** | **string**| None | [optional]
+ **integer_array_not_required** | [**int[]**](../Model/int.md)| None | [optional]
 
 ### Return type
 
@@ -175,8 +181,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Content-Type**: */*
+ - **Accept**: */*
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 

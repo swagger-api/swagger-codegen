@@ -73,6 +73,7 @@ open class FakeAPI: APIBase {
      - parameter double: (form) None 
      - parameter patternWithoutDelimiter: (form) None 
      - parameter byte: (form) None 
+     - parameter integerArrayRequired: (query) None 
      - parameter integer: (form) None (optional)
      - parameter int32: (form) None (optional)
      - parameter int64: (form) None (optional)
@@ -83,10 +84,11 @@ open class FakeAPI: APIBase {
      - parameter dateTime: (form) None (optional)
      - parameter password: (form) None (optional)
      - parameter callback: (form) None (optional)
+     - parameter integerArrayNotRequired: (query) None (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func testEndpointParameters(number: Double, double: Double, patternWithoutDelimiter: String, byte: Data, integer: Int32? = nil, int32: Int32? = nil, int64: Int64? = nil, float: Float? = nil, string: String? = nil, binary: Data? = nil, date: Date? = nil, dateTime: Date? = nil, password: String? = nil, callback: String? = nil, completion: @escaping ((_ error: Error?) -> Void)) {
-        testEndpointParametersWithRequestBuilder(number: number, double: double, patternWithoutDelimiter: patternWithoutDelimiter, byte: byte, integer: integer, int32: int32, int64: int64, float: float, string: string, binary: binary, date: date, dateTime: dateTime, password: password, callback: callback).execute { (response, error) -> Void in
+    open class func testEndpointParameters(number: Double, double: Double, patternWithoutDelimiter: String, byte: Data, integerArrayRequired: [Int64], integer: Int32? = nil, int32: Int32? = nil, int64: Int64? = nil, float: Float? = nil, string: String? = nil, binary: Data? = nil, date: ISOFullDate? = nil, dateTime: Date? = nil, password: String? = nil, callback: String? = nil, integerArrayNotRequired: [Int64]? = nil, completion: @escaping ((_ error: Error?) -> Void)) {
+        testEndpointParametersWithRequestBuilder(number: number, double: double, patternWithoutDelimiter: patternWithoutDelimiter, byte: byte, integerArrayRequired: integerArrayRequired, integer: integer, int32: int32, int64: int64, float: float, string: string, binary: binary, date: date, dateTime: dateTime, password: password, callback: callback, integerArrayNotRequired: integerArrayNotRequired).execute { (response, error) -> Void in
             completion(error);
         }
     }
@@ -98,6 +100,7 @@ open class FakeAPI: APIBase {
      - parameter double: (form) None 
      - parameter patternWithoutDelimiter: (form) None 
      - parameter byte: (form) None 
+     - parameter integerArrayRequired: (query) None 
      - parameter integer: (form) None (optional)
      - parameter int32: (form) None (optional)
      - parameter int64: (form) None (optional)
@@ -108,11 +111,12 @@ open class FakeAPI: APIBase {
      - parameter dateTime: (form) None (optional)
      - parameter password: (form) None (optional)
      - parameter callback: (form) None (optional)
+     - parameter integerArrayNotRequired: (query) None (optional)
      - returns: Observable<Void>
      */
-    open class func testEndpointParameters(number: Double, double: Double, patternWithoutDelimiter: String, byte: Data, integer: Int32? = nil, int32: Int32? = nil, int64: Int64? = nil, float: Float? = nil, string: String? = nil, binary: Data? = nil, date: Date? = nil, dateTime: Date? = nil, password: String? = nil, callback: String? = nil) -> Observable<Void> {
+    open class func testEndpointParameters(number: Double, double: Double, patternWithoutDelimiter: String, byte: Data, integerArrayRequired: [Int64], integer: Int32? = nil, int32: Int32? = nil, int64: Int64? = nil, float: Float? = nil, string: String? = nil, binary: Data? = nil, date: ISOFullDate? = nil, dateTime: Date? = nil, password: String? = nil, callback: String? = nil, integerArrayNotRequired: [Int64]? = nil) -> Observable<Void> {
         return Observable.create { observer -> Disposable in
-            testEndpointParameters(number: number, double: double, patternWithoutDelimiter: patternWithoutDelimiter, byte: byte, integer: integer, int32: int32, int64: int64, float: float, string: string, binary: binary, date: date, dateTime: dateTime, password: password, callback: callback) { error in
+            testEndpointParameters(number: number, double: double, patternWithoutDelimiter: patternWithoutDelimiter, byte: byte, integerArrayRequired: integerArrayRequired, integer: integer, int32: int32, int64: int64, float: float, string: string, binary: binary, date: date, dateTime: dateTime, password: password, callback: callback, integerArrayNotRequired: integerArrayNotRequired) { error in
                 if let error = error {
                     observer.on(.error(error as Error))
                 } else {
@@ -136,6 +140,7 @@ open class FakeAPI: APIBase {
      - parameter double: (form) None 
      - parameter patternWithoutDelimiter: (form) None 
      - parameter byte: (form) None 
+     - parameter integerArrayRequired: (query) None 
      - parameter integer: (form) None (optional)
      - parameter int32: (form) None (optional)
      - parameter int64: (form) None (optional)
@@ -146,28 +151,17 @@ open class FakeAPI: APIBase {
      - parameter dateTime: (form) None (optional)
      - parameter password: (form) None (optional)
      - parameter callback: (form) None (optional)
+     - parameter integerArrayNotRequired: (query) None (optional)
 
      - returns: RequestBuilder<Void> 
      */
-    open class func testEndpointParametersWithRequestBuilder(number: Double, double: Double, patternWithoutDelimiter: String, byte: Data, integer: Int32? = nil, int32: Int32? = nil, int64: Int64? = nil, float: Float? = nil, string: String? = nil, binary: Data? = nil, date: Date? = nil, dateTime: Date? = nil, password: String? = nil, callback: String? = nil) -> RequestBuilder<Void> {
+    open class func testEndpointParametersWithRequestBuilder(number: Double, double: Double, patternWithoutDelimiter: String, byte: Data, integerArrayRequired: [Int64], integer: Int32? = nil, int32: Int32? = nil, int64: Int64? = nil, float: Float? = nil, string: String? = nil, binary: Data? = nil, date: ISOFullDate? = nil, dateTime: Date? = nil, password: String? = nil, callback: String? = nil, integerArrayNotRequired: [Int64]? = nil) -> RequestBuilder<Void> {
         let path = "/fake"
         let URLString = PetstoreClientAPI.basePath + path
 
         let nillableParameters: [String:Any?] = [
-            "integer": integer?.encodeToJSON(),
-            "int32": int32?.encodeToJSON(),
-            "int64": int64?.encodeToJSON(),
-            "number": number,
-            "float": float,
-            "double": double,
-            "string": string,
-            "pattern_without_delimiter": patternWithoutDelimiter,
-            "byte": byte,
-            "binary": binary,
-            "date": date?.encodeToJSON(),
-            "dateTime": dateTime?.encodeToJSON(),
-            "password": password,
-            "callback": callback
+            "integerArrayRequired": integerArrayRequired,
+            "integerArrayNotRequired": integerArrayNotRequired
         ]
  
         let parameters = APIHelper.rejectNil(nillableParameters)

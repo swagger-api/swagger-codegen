@@ -10,11 +10,11 @@ import java.util.List;
 
 import io.swagger.model.*;
 
+import java.math.BigDecimal;
 import io.swagger.model.Client;
 import java.util.Date;
-import java.math.BigDecimal;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-08-20T17:24:26.037+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-12-16T20:46:06.559-06:00")
 public class FakeController  {
   /** 
    * Uncomment and implement as you see fit.  These operations will map
@@ -29,7 +29,7 @@ public class FakeController  {
   */
 
   /*
-    public ResponseContext testEndpointParameters(RequestContext request , BigDecimal number, Double _double, String string, byte[] _byte, Integer integer, Integer int32, Long int64, Float _float, byte[] binary, Date date, Date dateTime, String password) {
+    public ResponseContext testEndpointParameters(RequestContext request , BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, List<Long> integerArrayRequired, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, Date date, Date dateTime, String password, String paramCallback, List<Long> integerArrayNotRequired) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */

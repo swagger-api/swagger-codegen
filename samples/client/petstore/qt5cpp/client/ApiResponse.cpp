@@ -23,7 +23,7 @@
  */
 
 
-#include "SWGApiResponse.h"
+#include "ApiResponse.h"
 
 #include "SWGHelpers.h"
 
@@ -35,28 +35,28 @@
 namespace Swagger {
 
 
-SWGApiResponse::SWGApiResponse(QString* json) {
+ApiResponse::ApiResponse(QString* json) {
     init();
     this->fromJson(*json);
 }
 
-SWGApiResponse::SWGApiResponse() {
+ApiResponse::ApiResponse() {
     init();
 }
 
-SWGApiResponse::~SWGApiResponse() {
+ApiResponse::~ApiResponse() {
     this->cleanup();
 }
 
 void
-SWGApiResponse::init() {
+ApiResponse::init() {
     code = 0;
     type = new QString("");
     message = new QString("");
 }
 
 void
-SWGApiResponse::cleanup() {
+ApiResponse::cleanup() {
     
 
     if(type != nullptr) {
@@ -68,8 +68,8 @@ SWGApiResponse::cleanup() {
     }
 }
 
-SWGApiResponse*
-SWGApiResponse::fromJson(QString &json) {
+ApiResponse*
+ApiResponse::fromJson(QString &json) {
     QByteArray array (json.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(array);
     QJsonObject jsonObject = doc.object();
@@ -78,14 +78,14 @@ SWGApiResponse::fromJson(QString &json) {
 }
 
 void
-SWGApiResponse::fromJsonObject(QJsonObject &pJson) {
+ApiResponse::fromJsonObject(QJsonObject &pJson) {
     ::Swagger::setValue(&code, pJson["code"], "qint32", "");
     ::Swagger::setValue(&type, pJson["type"], "QString", "QString");
     ::Swagger::setValue(&message, pJson["message"], "QString", "QString");
 }
 
 QString
-SWGApiResponse::asJson ()
+ApiResponse::asJson ()
 {
     QJsonObject* obj = this->asJsonObject();
     
@@ -95,7 +95,7 @@ SWGApiResponse::asJson ()
 }
 
 QJsonObject*
-SWGApiResponse::asJsonObject() {
+ApiResponse::asJsonObject() {
     QJsonObject* obj = new QJsonObject();
     
     obj->insert("code", QJsonValue(code));
@@ -108,29 +108,29 @@ SWGApiResponse::asJsonObject() {
 }
 
 qint32
-SWGApiResponse::getCode() {
+ApiResponse::getCode() {
     return code;
 }
 void
-SWGApiResponse::setCode(qint32 code) {
+ApiResponse::setCode(qint32 code) {
     this->code = code;
 }
 
 QString*
-SWGApiResponse::getType() {
+ApiResponse::getType() {
     return type;
 }
 void
-SWGApiResponse::setType(QString* type) {
+ApiResponse::setType(QString* type) {
     this->type = type;
 }
 
 QString*
-SWGApiResponse::getMessage() {
+ApiResponse::getMessage() {
     return message;
 }
 void
-SWGApiResponse::setMessage(QString* message) {
+ApiResponse::setMessage(QString* message) {
     this->message = message;
 }
 
