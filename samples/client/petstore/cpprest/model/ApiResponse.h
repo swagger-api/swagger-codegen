@@ -25,7 +25,7 @@
 /*
  * ApiResponse.h
  * 
- * 
+ * Describes the result of uploading an image resource
  */
 
 #ifndef ApiResponse_H_
@@ -42,7 +42,7 @@ namespace client {
 namespace model {
 
 /// <summary>
-/// 
+/// Describes the result of uploading an image resource
 /// </summary>
 class  ApiResponse
 	: public ModelBase

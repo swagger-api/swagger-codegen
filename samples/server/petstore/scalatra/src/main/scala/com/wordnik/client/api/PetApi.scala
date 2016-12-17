@@ -24,9 +24,9 @@
 
 package com.wordnik.client.api
 
-import com.wordnik.client.model.Pet
 import com.wordnik.client.model.ApiResponse
 import java.io.File
+import com.wordnik.client.model.Pet
 
 import java.io.File
 

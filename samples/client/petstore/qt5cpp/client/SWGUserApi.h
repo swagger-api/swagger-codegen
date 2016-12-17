@@ -27,9 +27,9 @@
 
 #include "SWGHttpRequest.h"
 
-#include "User.h"
 #include <QList>
 #include <QString>
+#include "User.h"
 
 #include <QObject>
 

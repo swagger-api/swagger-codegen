@@ -94,6 +94,7 @@ module Petstore
     # @param double None
     # @param pattern_without_delimiter None
     # @param byte None
+    # @param integer_array_required None
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :integer None
     # @option opts [Integer] :int32 None
@@ -105,9 +106,10 @@ module Petstore
     # @option opts [DateTime] :date_time None
     # @option opts [String] :password None
     # @option opts [String] :callback None
+    # @option opts [Array<Integer>] :integer_array_not_required None
     # @return [nil]
-    def test_endpoint_parameters(number, double, pattern_without_delimiter, byte, opts = {})
-      test_endpoint_parameters_with_http_info(number, double, pattern_without_delimiter, byte, opts)
+    def test_endpoint_parameters(number, double, pattern_without_delimiter, byte, integer_array_required, opts = {})
+      test_endpoint_parameters_with_http_info(number, double, pattern_without_delimiter, byte, integer_array_required, opts)
       return nil
     end
 
@@ -117,6 +119,7 @@ module Petstore
     # @param double None
     # @param pattern_without_delimiter None
     # @param byte None
+    # @param integer_array_required None
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :integer None
     # @option opts [Integer] :int32 None
@@ -128,8 +131,9 @@ module Petstore
     # @option opts [DateTime] :date_time None
     # @option opts [String] :password None
     # @option opts [String] :callback None
+    # @option opts [Array<Integer>] :integer_array_not_required None
     # @return [Array<(nil, Fixnum, Hash)>] nil, response status code and response headers
-    def test_endpoint_parameters_with_http_info(number, double, pattern_without_delimiter, byte, opts = {})
+    def test_endpoint_parameters_with_http_info(number, double, pattern_without_delimiter, byte, integer_array_required, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug "Calling API: FakeApi.test_endpoint_parameters ..."
       end
@@ -161,6 +165,8 @@ module Petstore
 
       # verify the required parameter 'byte' is set
       fail ArgumentError, "Missing the required parameter 'byte' when calling FakeApi.test_endpoint_parameters" if byte.nil?
+      # verify the required parameter 'integer_array_required' is set
+      fail ArgumentError, "Missing the required parameter 'integer_array_required' when calling FakeApi.test_endpoint_parameters" if integer_array_required.nil?
       if !opts[:'integer'].nil? && opts[:'integer'] > 100.0
         fail ArgumentError, 'invalid value for "opts[:"integer"]" when calling FakeApi.test_endpoint_parameters, must be smaller than or equal to 100.0.'
       end
@@ -198,6 +204,8 @@ module Petstore
 
       # query parameters
       query_params = {}
+      query_params[:'integerArrayRequired'] = @api_client.build_collection_param(integer_array_required, :csv)
+      query_params[:'integerArrayNotRequired'] = @api_client.build_collection_param(opts[:'integer_array_not_required'], :csv) if !opts[:'integer_array_not_required'].nil?
 
       # header parameters
       header_params = {}

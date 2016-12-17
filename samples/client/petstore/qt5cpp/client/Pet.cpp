@@ -23,7 +23,7 @@
  */
 
 
-#include "SWGPet.h"
+#include "Pet.h"
 
 #include "SWGHelpers.h"
 
@@ -35,31 +35,31 @@
 namespace Swagger {
 
 
-SWGPet::SWGPet(QString* json) {
+Pet::Pet(QString* json) {
     init();
     this->fromJson(*json);
 }
 
-SWGPet::SWGPet() {
+Pet::Pet() {
     init();
 }
 
-SWGPet::~SWGPet() {
+Pet::~Pet() {
     this->cleanup();
 }
 
 void
-SWGPet::init() {
+Pet::init() {
     id = 0L;
-    category = new SWGCategory();
+    category = new Category();
     name = new QString("");
     photo_urls = new QList<QString*>();
-    tags = new QList<SWGTag*>();
+    tags = new QList<Tag*>();
     status = new QString("");
 }
 
 void
-SWGPet::cleanup() {
+Pet::cleanup() {
     
 
     if(category != nullptr) {
@@ -79,8 +79,8 @@ SWGPet::cleanup() {
     }
 
     if(tags != nullptr) {
-        QList<SWGTag*>* arr = tags;
-        foreach(SWGTag* o, *arr) {
+        QList<Tag*>* arr = tags;
+        foreach(Tag* o, *arr) {
             delete o;
         }
         delete tags;
@@ -91,8 +91,8 @@ SWGPet::cleanup() {
     }
 }
 
-SWGPet*
-SWGPet::fromJson(QString &json) {
+Pet*
+Pet::fromJson(QString &json) {
     QByteArray array (json.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(array);
     QJsonObject jsonObject = doc.object();
@@ -101,21 +101,21 @@ SWGPet::fromJson(QString &json) {
 }
 
 void
-SWGPet::fromJsonObject(QJsonObject &pJson) {
+Pet::fromJsonObject(QJsonObject &pJson) {
     ::Swagger::setValue(&id, pJson["id"], "qint64", "");
-    ::Swagger::setValue(&category, pJson["category"], "SWGCategory", "SWGCategory");
+    ::Swagger::setValue(&category, pJson["category"], "Category", "Category");
     ::Swagger::setValue(&name, pJson["name"], "QString", "QString");
     
     ::Swagger::setValue(&photo_urls, pJson["photo_urls"], "QList", "QString");
     
     
-    ::Swagger::setValue(&tags, pJson["tags"], "QList", "SWGTag");
+    ::Swagger::setValue(&tags, pJson["tags"], "QList", "Tag");
     
     ::Swagger::setValue(&status, pJson["status"], "QString", "QString");
 }
 
 QString
-SWGPet::asJson ()
+Pet::asJson ()
 {
     QJsonObject* obj = this->asJsonObject();
     
@@ -125,12 +125,12 @@ SWGPet::asJson ()
 }
 
 QJsonObject*
-SWGPet::asJsonObject() {
+Pet::asJsonObject() {
     QJsonObject* obj = new QJsonObject();
     
     obj->insert("id", QJsonValue(id));
 
-    toJsonValue(QString("category"), category, obj, QString("SWGCategory"));
+    toJsonValue(QString("category"), category, obj, QString("Category"));
 
     toJsonValue(QString("name"), name, obj, QString("QString"));
 
@@ -139,7 +139,7 @@ SWGPet::asJsonObject() {
     obj->insert("photo_urls", photo_urlsJsonArray);
 
     QJsonArray tagsJsonArray;
-    toJsonArray((QList<void*>*)tags, &tagsJsonArray, "tags", "SWGTag");
+    toJsonArray((QList<void*>*)tags, &tagsJsonArray, "tags", "Tag");
     obj->insert("tags", tagsJsonArray);
 
     toJsonValue(QString("status"), status, obj, QString("QString"));
@@ -148,56 +148,56 @@ SWGPet::asJsonObject() {
 }
 
 qint64
-SWGPet::getId() {
+Pet::getId() {
     return id;
 }
 void
-SWGPet::setId(qint64 id) {
+Pet::setId(qint64 id) {
     this->id = id;
 }
 
-SWGCategory*
-SWGPet::getCategory() {
+Category*
+Pet::getCategory() {
     return category;
 }
 void
-SWGPet::setCategory(SWGCategory* category) {
+Pet::setCategory(Category* category) {
     this->category = category;
 }
 
 QString*
-SWGPet::getName() {
+Pet::getName() {
     return name;
 }
 void
-SWGPet::setName(QString* name) {
+Pet::setName(QString* name) {
     this->name = name;
 }
 
 QList<QString*>*
-SWGPet::getPhotoUrls() {
+Pet::getPhotoUrls() {
     return photo_urls;
 }
 void
-SWGPet::setPhotoUrls(QList<QString*>* photo_urls) {
+Pet::setPhotoUrls(QList<QString*>* photo_urls) {
     this->photo_urls = photo_urls;
 }
 
-QList<SWGTag*>*
-SWGPet::getTags() {
+QList<Tag*>*
+Pet::getTags() {
     return tags;
 }
 void
-SWGPet::setTags(QList<SWGTag*>* tags) {
+Pet::setTags(QList<Tag*>* tags) {
     this->tags = tags;
 }
 
 QString*
-SWGPet::getStatus() {
+Pet::getStatus() {
     return status;
 }
 void
-SWGPet::setStatus(QString* status) {
+Pet::setStatus(QString* status) {
     this->status = status;
 }
 

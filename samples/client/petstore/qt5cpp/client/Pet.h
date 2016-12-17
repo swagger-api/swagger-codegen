@@ -23,19 +23,19 @@
  */
 
 /*
- * SWGPet.h
+ * Pet.h
  * 
  * A pet for sale in the pet store
  */
 
-#ifndef SWGPet_H_
-#define SWGPet_H_
+#ifndef Pet_H_
+#define Pet_H_
 
 #include <QJsonObject>
 
 
-#include "SWGCategory.h"
-#include "SWGTag.h"
+#include "Category.h"
+#include "Tag.h"
 #include <QList>
 #include <QString>
 
@@ -44,24 +44,24 @@
 
 namespace Swagger {
 
-class SWGPet: public SWGObject {
+class Pet: public SWGObject {
 public:
-    SWGPet();
-    SWGPet(QString* json);
-    virtual ~SWGPet();
+    Pet();
+    Pet(QString* json);
+    virtual ~Pet();
     void init();
     void cleanup();
 
     QString asJson ();
     QJsonObject* asJsonObject();
     void fromJsonObject(QJsonObject &json);
-    SWGPet* fromJson(QString &jsonString);
+    Pet* fromJson(QString &jsonString);
 
     qint64 getId();
     void setId(qint64 id);
 
-    SWGCategory* getCategory();
-    void setCategory(SWGCategory* category);
+    Category* getCategory();
+    void setCategory(Category* category);
 
     QString* getName();
     void setName(QString* name);
@@ -69,8 +69,8 @@ public:
     QList<QString*>* getPhotoUrls();
     void setPhotoUrls(QList<QString*>* photo_urls);
 
-    QList<SWGTag*>* getTags();
-    void setTags(QList<SWGTag*>* tags);
+    QList<Tag*>* getTags();
+    void setTags(QList<Tag*>* tags);
 
     QString* getStatus();
     void setStatus(QString* status);
@@ -78,13 +78,13 @@ public:
 
 private:
     qint64 id;
-    SWGCategory* category;
+    Category* category;
     QString* name;
     QList<QString*>* photo_urls;
-    QList<SWGTag*>* tags;
+    QList<Tag*>* tags;
     QString* status;
 };
 
 } /* namespace Swagger */
 
-#endif /* SWGPet_H_ */
+#endif /* Pet_H_ */

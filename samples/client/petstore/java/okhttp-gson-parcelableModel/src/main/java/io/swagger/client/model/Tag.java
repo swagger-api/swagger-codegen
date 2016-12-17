@@ -98,6 +98,7 @@ public class Tag implements Parcelable {
     return Objects.hash(id, name);
   }
 
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();

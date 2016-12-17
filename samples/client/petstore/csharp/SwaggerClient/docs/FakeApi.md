@@ -71,7 +71,7 @@ No authorization required
 
 <a name="testendpointparameters"></a>
 # **TestEndpointParameters**
-> void TestEndpointParameters (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null)
+> void TestEndpointParameters (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, List<long?> integerArrayRequired, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null, List<long?> integerArrayNotRequired = null)
 
 Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 
@@ -101,6 +101,7 @@ namespace Example
             var _double = 1.2;  // double? | None
             var patternWithoutDelimiter = patternWithoutDelimiter_example;  // string | None
             var _byte = B;  // byte[] | None
+            var integerArrayRequired = new List<long?>(); // List<long?> | None
             var integer = 56;  // int? | None (optional) 
             var int32 = 56;  // int? | None (optional) 
             var int64 = 789;  // long? | None (optional) 
@@ -111,11 +112,12 @@ namespace Example
             var dateTime = 2013-10-20T19:20:30+01:00;  // DateTime? | None (optional) 
             var password = password_example;  // string | None (optional) 
             var callback = callback_example;  // string | None (optional) 
+            var integerArrayNotRequired = new List<long?>(); // List<long?> | None (optional) 
 
             try
             {
                 // Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
-                apiInstance.TestEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, _string, binary, date, dateTime, password, callback);
+                apiInstance.TestEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integerArrayRequired, integer, int32, int64, _float, _string, binary, date, dateTime, password, callback, integerArrayNotRequired);
             }
             catch (Exception e)
             {
@@ -134,6 +136,7 @@ Name | Type | Description  | Notes
  **_double** | **double?**| None | 
  **patternWithoutDelimiter** | **string**| None | 
  **_byte** | **byte[]**| None | 
+ **integerArrayRequired** | [**List<long?>**](long?.md)| None | 
  **integer** | **int?**| None | [optional] 
  **int32** | **int?**| None | [optional] 
  **int64** | **long?**| None | [optional] 
@@ -144,6 +147,7 @@ Name | Type | Description  | Notes
  **dateTime** | **DateTime?**| None | [optional] 
  **password** | **string**| None | [optional] 
  **callback** | **string**| None | [optional] 
+ **integerArrayNotRequired** | [**List<long?>**](long?.md)| None | [optional] 
 
 ### Return type
 
@@ -228,8 +232,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Content-Type**: */*
+ - **Accept**: */*
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -115,6 +115,7 @@
      * @param {Number} _double None
      * @param {String} patternWithoutDelimiter None
      * @param {String} _byte None
+     * @param {Array.<Number>} integerArrayRequired None
      * @param {Object} opts Optional parameters
      * @param {Number} opts.integer None
      * @param {Number} opts.int32 None
@@ -126,9 +127,10 @@
      * @param {Date} opts.dateTime None
      * @param {String} opts.password None
      * @param {String} opts.callback None
+     * @param {Array.<Number>} opts.integerArrayNotRequired None
      * @param {module:api/FakeApi~testEndpointParametersCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.testEndpointParameters = function(_number, _double, patternWithoutDelimiter, _byte, opts, callback) {
+    this.testEndpointParameters = function(_number, _double, patternWithoutDelimiter, _byte, integerArrayRequired, opts, callback) {
       opts = opts || {};
       var postBody = null;
 
@@ -152,10 +154,17 @@
         throw new Error("Missing the required parameter '_byte' when calling testEndpointParameters");
       }
 
+      // verify the required parameter 'integerArrayRequired' is set
+      if (integerArrayRequired == undefined || integerArrayRequired == null) {
+        throw new Error("Missing the required parameter 'integerArrayRequired' when calling testEndpointParameters");
+      }
+
 
       var pathParams = {
       };
       var queryParams = {
+        'integerArrayRequired': this.apiClient.buildCollectionParam(integerArrayRequired, 'csv'),
+        'integerArrayNotRequired': this.apiClient.buildCollectionParam(opts['integerArrayNotRequired'], 'csv')
       };
       var headerParams = {
       };
@@ -232,8 +241,8 @@
       };
 
       var authNames = [];
-      var contentTypes = ['application/json'];
-      var accepts = ['application/json'];
+      var contentTypes = ['*/*'];
+      var accepts = ['*/*'];
       var returnType = null;
 
       return this.apiClient.callApi(

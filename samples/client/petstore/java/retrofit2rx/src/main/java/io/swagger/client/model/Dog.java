@@ -76,6 +76,7 @@ public class Dog extends Animal {
     return Objects.hash(breed, super.hashCode());
   }
 
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();

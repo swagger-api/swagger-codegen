@@ -6,10 +6,10 @@ import retrofit.Callback;
 import retrofit.http.*;
 import retrofit.mime.*;
 
-import io.swagger.client.model.Client;
-import org.joda.time.LocalDate;
 import java.math.BigDecimal;
+import io.swagger.client.model.Client;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,6 +50,7 @@ public interface FakeApi {
    * @param _double None (required)
    * @param patternWithoutDelimiter None (required)
    * @param _byte None (required)
+   * @param integerArrayRequired None (required)
    * @param integer None (optional)
    * @param int32 None (optional)
    * @param int64 None (optional)
@@ -60,13 +61,14 @@ public interface FakeApi {
    * @param dateTime None (optional)
    * @param password None (optional)
    * @param paramCallback None (optional)
+   * @param integerArrayNotRequired None (optional)
    * @return Void
    */
   
   @retrofit.http.FormUrlEncoded
   @POST("/fake")
   Void testEndpointParameters(
-    @retrofit.http.Field("number") BigDecimal number, @retrofit.http.Field("double") Double _double, @retrofit.http.Field("pattern_without_delimiter") String patternWithoutDelimiter, @retrofit.http.Field("byte") byte[] _byte, @retrofit.http.Field("integer") Integer integer, @retrofit.http.Field("int32") Integer int32, @retrofit.http.Field("int64") Long int64, @retrofit.http.Field("float") Float _float, @retrofit.http.Field("string") String string, @retrofit.http.Field("binary") byte[] binary, @retrofit.http.Field("date") LocalDate date, @retrofit.http.Field("dateTime") DateTime dateTime, @retrofit.http.Field("password") String password, @retrofit.http.Field("callback") String paramCallback
+    @retrofit.http.Field("number") BigDecimal number, @retrofit.http.Field("double") Double _double, @retrofit.http.Field("pattern_without_delimiter") String patternWithoutDelimiter, @retrofit.http.Field("byte") byte[] _byte, @retrofit.http.Query("integerArrayRequired") CSVParams integerArrayRequired, @retrofit.http.Field("integer") Integer integer, @retrofit.http.Field("int32") Integer int32, @retrofit.http.Field("int64") Long int64, @retrofit.http.Field("float") Float _float, @retrofit.http.Field("string") String string, @retrofit.http.Field("binary") byte[] binary, @retrofit.http.Field("date") LocalDate date, @retrofit.http.Field("dateTime") DateTime dateTime, @retrofit.http.Field("password") String password, @retrofit.http.Field("callback") String paramCallback, @retrofit.http.Query("integerArrayNotRequired") CSVParams integerArrayNotRequired
   );
 
   /**
@@ -76,6 +78,7 @@ public interface FakeApi {
    * @param _double None (required)
    * @param patternWithoutDelimiter None (required)
    * @param _byte None (required)
+   * @param integerArrayRequired None (required)
    * @param integer None (optional)
    * @param int32 None (optional)
    * @param int64 None (optional)
@@ -86,6 +89,7 @@ public interface FakeApi {
    * @param dateTime None (optional)
    * @param password None (optional)
    * @param paramCallback None (optional)
+   * @param integerArrayNotRequired None (optional)
    * @param cb callback method
    * @return void
    */
@@ -93,7 +97,7 @@ public interface FakeApi {
   @retrofit.http.FormUrlEncoded
   @POST("/fake")
   void testEndpointParameters(
-    @retrofit.http.Field("number") BigDecimal number, @retrofit.http.Field("double") Double _double, @retrofit.http.Field("pattern_without_delimiter") String patternWithoutDelimiter, @retrofit.http.Field("byte") byte[] _byte, @retrofit.http.Field("integer") Integer integer, @retrofit.http.Field("int32") Integer int32, @retrofit.http.Field("int64") Long int64, @retrofit.http.Field("float") Float _float, @retrofit.http.Field("string") String string, @retrofit.http.Field("binary") byte[] binary, @retrofit.http.Field("date") LocalDate date, @retrofit.http.Field("dateTime") DateTime dateTime, @retrofit.http.Field("password") String password, @retrofit.http.Field("callback") String paramCallback, Callback<Void> cb
+    @retrofit.http.Field("number") BigDecimal number, @retrofit.http.Field("double") Double _double, @retrofit.http.Field("pattern_without_delimiter") String patternWithoutDelimiter, @retrofit.http.Field("byte") byte[] _byte, @retrofit.http.Query("integerArrayRequired") CSVParams integerArrayRequired, @retrofit.http.Field("integer") Integer integer, @retrofit.http.Field("int32") Integer int32, @retrofit.http.Field("int64") Long int64, @retrofit.http.Field("float") Float _float, @retrofit.http.Field("string") String string, @retrofit.http.Field("binary") byte[] binary, @retrofit.http.Field("date") LocalDate date, @retrofit.http.Field("dateTime") DateTime dateTime, @retrofit.http.Field("password") String password, @retrofit.http.Field("callback") String paramCallback, @retrofit.http.Query("integerArrayNotRequired") CSVParams integerArrayNotRequired, Callback<Void> cb
   );
   /**
    * To test enum parameters

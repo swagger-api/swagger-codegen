@@ -37,7 +37,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **TestEndpointParameters**
-> TestEndpointParameters($number, $double, $patternWithoutDelimiter, $byte_, $integer, $int32_, $int64_, $float, $string_, $binary, $date, $dateTime, $password)
+> TestEndpointParameters($number, $double, $patternWithoutDelimiter, $byte_, $integerArrayRequired, $integer, $int32_, $int64_, $float, $string_, $binary, $date, $dateTime, $password, $callback, $integerArrayNotRequired)
 
 Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 
@@ -52,6 +52,7 @@ Name | Type | Description  | Notes
  **double** | **float64**| None | 
  **patternWithoutDelimiter** | **string**| None | 
  **byte_** | **string**| None | 
+ **integerArrayRequired** | [**[]int64**](int64.md)| None | 
  **integer** | **int32**| None | [optional] 
  **int32_** | **int32**| None | [optional] 
  **int64_** | **int64**| None | [optional] 
@@ -61,6 +62,8 @@ Name | Type | Description  | Notes
  **date** | **time.Time**| None | [optional] 
  **dateTime** | **time.Time**| None | [optional] 
  **password** | **string**| None | [optional] 
+ **callback** | **string**| None | [optional] 
+ **integerArrayNotRequired** | [**[]int64**](int64.md)| None | [optional] 
 
 ### Return type
 
@@ -106,8 +109,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Content-Type**: */*
+ - **Accept**: */*
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

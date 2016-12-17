@@ -36,6 +36,7 @@ Gem::Specification.new do |s|
   s.summary     = "Swagger Petstore */ ' \" =_end -- \\r\\n \\n \\r Ruby Gem"
   s.description = "This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\  */ ' \" =_end --       "
   s.license     = "Apache 2.0 */ ' \" =_end -- \\r\\n \\n \\r"
+  s.required_ruby_version = ">= 1.9"
 
   s.add_runtime_dependency 'typhoeus', '~> 1.0', '>= 1.0.1'
   s.add_runtime_dependency 'json', '~> 1.8', '>= 1.8.3'

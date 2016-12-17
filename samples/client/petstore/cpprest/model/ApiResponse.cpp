@@ -55,7 +55,7 @@ web::json::value ApiResponse::toJson() const
 {
     web::json::value val = web::json::value::object();
      
-	if(m_CodeIsSet)
+    if(m_CodeIsSet)
     {
         val[U("code")] = ModelBase::toJson(m_Code);
     }
@@ -94,12 +94,12 @@ void ApiResponse::fromJson(web::json::value& val)
 void ApiResponse::toMultipart(std::shared_ptr<MultipartFormData> multipart, const utility::string_t& prefix) const
 {
     utility::string_t namePrefix = prefix;
-	if(namePrefix.size() > 0 && namePrefix[namePrefix.size() - 1] != U('.'))
-	{
-		namePrefix += U(".");
-	}
+    if(namePrefix.size() > 0 && namePrefix[namePrefix.size() - 1] != U('.'))
+    {
+        namePrefix += U(".");
+    }
 
-	if(m_CodeIsSet)
+    if(m_CodeIsSet)
     {
         multipart->add(ModelBase::toHttpContent(namePrefix + U("code"), m_Code));
     }
@@ -119,10 +119,10 @@ void ApiResponse::toMultipart(std::shared_ptr<MultipartFormData> multipart, cons
 void ApiResponse::fromMultiPart(std::shared_ptr<MultipartFormData> multipart, const utility::string_t& prefix)
 {
     utility::string_t namePrefix = prefix;
-	if(namePrefix.size() > 0 && namePrefix[namePrefix.size() - 1] != U('.'))
-	{
-		namePrefix += U(".");
-	}
+    if(namePrefix.size() > 0 && namePrefix[namePrefix.size() - 1] != U('.'))
+    {
+        namePrefix += U(".");
+    }
 
     if(multipart->hasContent(U("code")))
     {
@@ -144,11 +144,11 @@ void ApiResponse::fromMultiPart(std::shared_ptr<MultipartFormData> multipart, co
    
 int32_t ApiResponse::getCode() const
 {
-	return m_Code;
+    return m_Code;
 }
 void ApiResponse::setCode(int32_t value)
 {
-	m_Code = value;
+    m_Code = value;
     m_CodeIsSet = true;
 }
 bool ApiResponse::codeIsSet() const
@@ -161,11 +161,11 @@ void ApiResponse::unsetCode()
 }
 utility::string_t ApiResponse::getType() const
 {
-	return m_Type;
+    return m_Type;
 }
 void ApiResponse::setType(utility::string_t value)
 {
-	m_Type = value;
+    m_Type = value;
     m_TypeIsSet = true;
 }
 bool ApiResponse::typeIsSet() const
@@ -178,11 +178,11 @@ void ApiResponse::unsetType()
 }
 utility::string_t ApiResponse::getMessage() const
 {
-	return m_Message;
+    return m_Message;
 }
 void ApiResponse::setMessage(utility::string_t value)
 {
-	m_Message = value;
+    m_Message = value;
     m_MessageIsSet = true;
 }
 bool ApiResponse::messageIsSet() const

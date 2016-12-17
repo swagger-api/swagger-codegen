@@ -35,6 +35,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * MixedPropertiesAndAdditionalPropertiesClass
@@ -42,7 +43,7 @@ import java.util.Map;
 
 public class MixedPropertiesAndAdditionalPropertiesClass   {
   @JsonProperty("uuid")
-  private String uuid = null;
+  private UUID uuid = null;
 
   @JsonProperty("dateTime")
   private Date dateTime = null;
@@ -50,7 +51,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
   @JsonProperty("map")
   private Map<String, Animal> map = new HashMap<String, Animal>();
 
-  public MixedPropertiesAndAdditionalPropertiesClass uuid(String uuid) {
+  public MixedPropertiesAndAdditionalPropertiesClass uuid(UUID uuid) {
     this.uuid = uuid;
     return this;
   }
@@ -60,11 +61,11 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
    * @return uuid
   **/
   @ApiModelProperty(value = "")
-  public String getUuid() {
+  public UUID getUuid() {
     return uuid;
   }
 
-  public void setUuid(String uuid) {
+  public void setUuid(UUID uuid) {
     this.uuid = uuid;
   }
 

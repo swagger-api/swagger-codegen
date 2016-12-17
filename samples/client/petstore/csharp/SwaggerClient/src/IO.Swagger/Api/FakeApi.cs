@@ -68,6 +68,7 @@ namespace IO.Swagger.Api
         /// <param name="_double">None</param>
         /// <param name="patternWithoutDelimiter">None</param>
         /// <param name="_byte">None</param>
+        /// <param name="integerArrayRequired">None</param>
         /// <param name="integer">None (optional)</param>
         /// <param name="int32">None (optional)</param>
         /// <param name="int64">None (optional)</param>
@@ -78,8 +79,9 @@ namespace IO.Swagger.Api
         /// <param name="dateTime">None (optional)</param>
         /// <param name="password">None (optional)</param>
         /// <param name="callback">None (optional)</param>
+        /// <param name="integerArrayNotRequired">None (optional)</param>
         /// <returns></returns>
-        void TestEndpointParameters (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null);
+        void TestEndpointParameters (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, List<long?> integerArrayRequired, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null, List<long?> integerArrayNotRequired = null);
 
         /// <summary>
         /// Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
@@ -92,6 +94,7 @@ namespace IO.Swagger.Api
         /// <param name="_double">None</param>
         /// <param name="patternWithoutDelimiter">None</param>
         /// <param name="_byte">None</param>
+        /// <param name="integerArrayRequired">None</param>
         /// <param name="integer">None (optional)</param>
         /// <param name="int32">None (optional)</param>
         /// <param name="int64">None (optional)</param>
@@ -102,8 +105,9 @@ namespace IO.Swagger.Api
         /// <param name="dateTime">None (optional)</param>
         /// <param name="password">None (optional)</param>
         /// <param name="callback">None (optional)</param>
+        /// <param name="integerArrayNotRequired">None (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> TestEndpointParametersWithHttpInfo (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null);
+        ApiResponse<Object> TestEndpointParametersWithHttpInfo (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, List<long?> integerArrayRequired, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null, List<long?> integerArrayNotRequired = null);
         /// <summary>
         /// To test enum parameters
         /// </summary>
@@ -173,6 +177,7 @@ namespace IO.Swagger.Api
         /// <param name="_double">None</param>
         /// <param name="patternWithoutDelimiter">None</param>
         /// <param name="_byte">None</param>
+        /// <param name="integerArrayRequired">None</param>
         /// <param name="integer">None (optional)</param>
         /// <param name="int32">None (optional)</param>
         /// <param name="int64">None (optional)</param>
@@ -183,8 +188,9 @@ namespace IO.Swagger.Api
         /// <param name="dateTime">None (optional)</param>
         /// <param name="password">None (optional)</param>
         /// <param name="callback">None (optional)</param>
+        /// <param name="integerArrayNotRequired">None (optional)</param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task TestEndpointParametersAsync (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null);
+        System.Threading.Tasks.Task TestEndpointParametersAsync (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, List<long?> integerArrayRequired, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null, List<long?> integerArrayNotRequired = null);
 
         /// <summary>
         /// Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
@@ -197,6 +203,7 @@ namespace IO.Swagger.Api
         /// <param name="_double">None</param>
         /// <param name="patternWithoutDelimiter">None</param>
         /// <param name="_byte">None</param>
+        /// <param name="integerArrayRequired">None</param>
         /// <param name="integer">None (optional)</param>
         /// <param name="int32">None (optional)</param>
         /// <param name="int64">None (optional)</param>
@@ -207,8 +214,9 @@ namespace IO.Swagger.Api
         /// <param name="dateTime">None (optional)</param>
         /// <param name="password">None (optional)</param>
         /// <param name="callback">None (optional)</param>
+        /// <param name="integerArrayNotRequired">None (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> TestEndpointParametersAsyncWithHttpInfo (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null);
+        System.Threading.Tasks.Task<ApiResponse<Object>> TestEndpointParametersAsyncWithHttpInfo (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, List<long?> integerArrayRequired, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null, List<long?> integerArrayNotRequired = null);
         /// <summary>
         /// To test enum parameters
         /// </summary>
@@ -521,6 +529,7 @@ namespace IO.Swagger.Api
         /// <param name="_double">None</param>
         /// <param name="patternWithoutDelimiter">None</param>
         /// <param name="_byte">None</param>
+        /// <param name="integerArrayRequired">None</param>
         /// <param name="integer">None (optional)</param>
         /// <param name="int32">None (optional)</param>
         /// <param name="int64">None (optional)</param>
@@ -531,10 +540,11 @@ namespace IO.Swagger.Api
         /// <param name="dateTime">None (optional)</param>
         /// <param name="password">None (optional)</param>
         /// <param name="callback">None (optional)</param>
+        /// <param name="integerArrayNotRequired">None (optional)</param>
         /// <returns></returns>
-        public void TestEndpointParameters (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null)
+        public void TestEndpointParameters (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, List<long?> integerArrayRequired, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null, List<long?> integerArrayNotRequired = null)
         {
-             TestEndpointParametersWithHttpInfo(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, _string, binary, date, dateTime, password, callback);
+             TestEndpointParametersWithHttpInfo(number, _double, patternWithoutDelimiter, _byte, integerArrayRequired, integer, int32, int64, _float, _string, binary, date, dateTime, password, callback, integerArrayNotRequired);
         }
 
         /// <summary>
@@ -545,6 +555,7 @@ namespace IO.Swagger.Api
         /// <param name="_double">None</param>
         /// <param name="patternWithoutDelimiter">None</param>
         /// <param name="_byte">None</param>
+        /// <param name="integerArrayRequired">None</param>
         /// <param name="integer">None (optional)</param>
         /// <param name="int32">None (optional)</param>
         /// <param name="int64">None (optional)</param>
@@ -555,8 +566,9 @@ namespace IO.Swagger.Api
         /// <param name="dateTime">None (optional)</param>
         /// <param name="password">None (optional)</param>
         /// <param name="callback">None (optional)</param>
+        /// <param name="integerArrayNotRequired">None (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> TestEndpointParametersWithHttpInfo (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null)
+        public ApiResponse<Object> TestEndpointParametersWithHttpInfo (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, List<long?> integerArrayRequired, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null, List<long?> integerArrayNotRequired = null)
         {
             // verify the required parameter 'number' is set
             if (number == null)
@@ -570,6 +582,9 @@ namespace IO.Swagger.Api
             // verify the required parameter '_byte' is set
             if (_byte == null)
                 throw new ApiException(400, "Missing required parameter '_byte' when calling FakeApi->TestEndpointParameters");
+            // verify the required parameter 'integerArrayRequired' is set
+            if (integerArrayRequired == null)
+                throw new ApiException(400, "Missing required parameter 'integerArrayRequired' when calling FakeApi->TestEndpointParameters");
 
             var localVarPath = "/fake";
             var localVarPathParams = new Dictionary<String, String>();
@@ -598,6 +613,8 @@ namespace IO.Swagger.Api
             // set "format" to json by default
             // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
             localVarPathParams.Add("format", "json");
+            if (integerArrayRequired != null) localVarQueryParams.Add("integerArrayRequired", Configuration.ApiClient.ParameterToString(integerArrayRequired)); // query parameter
+            if (integerArrayNotRequired != null) localVarQueryParams.Add("integerArrayNotRequired", Configuration.ApiClient.ParameterToString(integerArrayNotRequired)); // query parameter
             if (integer != null) localVarFormParams.Add("integer", Configuration.ApiClient.ParameterToString(integer)); // form parameter
             if (int32 != null) localVarFormParams.Add("int32", Configuration.ApiClient.ParameterToString(int32)); // form parameter
             if (int64 != null) localVarFormParams.Add("int64", Configuration.ApiClient.ParameterToString(int64)); // form parameter
@@ -648,6 +665,7 @@ namespace IO.Swagger.Api
         /// <param name="_double">None</param>
         /// <param name="patternWithoutDelimiter">None</param>
         /// <param name="_byte">None</param>
+        /// <param name="integerArrayRequired">None</param>
         /// <param name="integer">None (optional)</param>
         /// <param name="int32">None (optional)</param>
         /// <param name="int64">None (optional)</param>
@@ -658,10 +676,11 @@ namespace IO.Swagger.Api
         /// <param name="dateTime">None (optional)</param>
         /// <param name="password">None (optional)</param>
         /// <param name="callback">None (optional)</param>
+        /// <param name="integerArrayNotRequired">None (optional)</param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task TestEndpointParametersAsync (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null)
+        public async System.Threading.Tasks.Task TestEndpointParametersAsync (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, List<long?> integerArrayRequired, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null, List<long?> integerArrayNotRequired = null)
         {
-             await TestEndpointParametersAsyncWithHttpInfo(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, _string, binary, date, dateTime, password, callback);
+             await TestEndpointParametersAsyncWithHttpInfo(number, _double, patternWithoutDelimiter, _byte, integerArrayRequired, integer, int32, int64, _float, _string, binary, date, dateTime, password, callback, integerArrayNotRequired);
 
         }
 
@@ -673,6 +692,7 @@ namespace IO.Swagger.Api
         /// <param name="_double">None</param>
         /// <param name="patternWithoutDelimiter">None</param>
         /// <param name="_byte">None</param>
+        /// <param name="integerArrayRequired">None</param>
         /// <param name="integer">None (optional)</param>
         /// <param name="int32">None (optional)</param>
         /// <param name="int64">None (optional)</param>
@@ -683,8 +703,9 @@ namespace IO.Swagger.Api
         /// <param name="dateTime">None (optional)</param>
         /// <param name="password">None (optional)</param>
         /// <param name="callback">None (optional)</param>
+        /// <param name="integerArrayNotRequired">None (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> TestEndpointParametersAsyncWithHttpInfo (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null)
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> TestEndpointParametersAsyncWithHttpInfo (decimal? number, double? _double, string patternWithoutDelimiter, byte[] _byte, List<long?> integerArrayRequired, int? integer = null, int? int32 = null, long? int64 = null, float? _float = null, string _string = null, byte[] binary = null, DateTime? date = null, DateTime? dateTime = null, string password = null, string callback = null, List<long?> integerArrayNotRequired = null)
         {
             // verify the required parameter 'number' is set
             if (number == null)
@@ -698,6 +719,9 @@ namespace IO.Swagger.Api
             // verify the required parameter '_byte' is set
             if (_byte == null)
                 throw new ApiException(400, "Missing required parameter '_byte' when calling FakeApi->TestEndpointParameters");
+            // verify the required parameter 'integerArrayRequired' is set
+            if (integerArrayRequired == null)
+                throw new ApiException(400, "Missing required parameter 'integerArrayRequired' when calling FakeApi->TestEndpointParameters");
 
             var localVarPath = "/fake";
             var localVarPathParams = new Dictionary<String, String>();
@@ -726,6 +750,8 @@ namespace IO.Swagger.Api
             // set "format" to json by default
             // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
             localVarPathParams.Add("format", "json");
+            if (integerArrayRequired != null) localVarQueryParams.Add("integerArrayRequired", Configuration.ApiClient.ParameterToString(integerArrayRequired)); // query parameter
+            if (integerArrayNotRequired != null) localVarQueryParams.Add("integerArrayNotRequired", Configuration.ApiClient.ParameterToString(integerArrayNotRequired)); // query parameter
             if (integer != null) localVarFormParams.Add("integer", Configuration.ApiClient.ParameterToString(integer)); // form parameter
             if (int32 != null) localVarFormParams.Add("int32", Configuration.ApiClient.ParameterToString(int32)); // form parameter
             if (int64 != null) localVarFormParams.Add("int64", Configuration.ApiClient.ParameterToString(int64)); // form parameter
@@ -811,13 +837,13 @@ namespace IO.Swagger.Api
 
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
-                "application/json"
+                "*/*"
             };
             String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
-                "application/json"
+                "*/*"
             };
             String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
@@ -900,13 +926,13 @@ namespace IO.Swagger.Api
 
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
-                "application/json"
+                "*/*"
             };
             String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
-                "application/json"
+                "*/*"
             };
             String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)

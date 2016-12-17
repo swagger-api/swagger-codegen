@@ -54,7 +54,7 @@ No authorization required
 
 <a name="testEndpointParameters"></a>
 # **testEndpointParameters**
-> testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback)
+> testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integerArrayRequired, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback, integerArrayNotRequired)
 
 Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 
@@ -81,6 +81,7 @@ BigDecimal number = new BigDecimal(); // BigDecimal | None
 Double _double = 3.4D; // Double | None
 String patternWithoutDelimiter = "patternWithoutDelimiter_example"; // String | None
 byte[] _byte = B; // byte[] | None
+List<Long> integerArrayRequired = Arrays.asList(56L); // List<Long> | None
 Integer integer = 56; // Integer | None
 Integer int32 = 56; // Integer | None
 Long int64 = 789L; // Long | None
@@ -88,11 +89,12 @@ Float _float = 3.4F; // Float | None
 String string = "string_example"; // String | None
 byte[] binary = B; // byte[] | None
 LocalDate date = new LocalDate(); // LocalDate | None
-DateTime dateTime = new DateTime(); // DateTime | None
+OffsetDateTime dateTime = new OffsetDateTime(); // OffsetDateTime | None
 String password = "password_example"; // String | None
 String paramCallback = "paramCallback_example"; // String | None
+List<Long> integerArrayNotRequired = Arrays.asList(56L); // List<Long> | None
 try {
-    apiInstance.testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback);
+    apiInstance.testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integerArrayRequired, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback, integerArrayNotRequired);
 } catch (ApiException e) {
     System.err.println("Exception when calling FakeApi#testEndpointParameters");
     e.printStackTrace();
@@ -107,6 +109,7 @@ Name | Type | Description  | Notes
  **_double** | **Double**| None |
  **patternWithoutDelimiter** | **String**| None |
  **_byte** | **byte[]**| None |
+ **integerArrayRequired** | [**List&lt;Long&gt;**](Long.md)| None |
  **integer** | **Integer**| None | [optional]
  **int32** | **Integer**| None | [optional]
  **int64** | **Long**| None | [optional]
@@ -114,9 +117,10 @@ Name | Type | Description  | Notes
  **string** | **String**| None | [optional]
  **binary** | **byte[]**| None | [optional]
  **date** | **LocalDate**| None | [optional]
- **dateTime** | **DateTime**| None | [optional]
+ **dateTime** | **OffsetDateTime**| None | [optional]
  **password** | **String**| None | [optional]
  **paramCallback** | **String**| None | [optional]
+ **integerArrayNotRequired** | [**List&lt;Long&gt;**](Long.md)| None | [optional]
 
 ### Return type
 
@@ -184,6 +188,6 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Content-Type**: */*
+ - **Accept**: */*
 

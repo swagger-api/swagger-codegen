@@ -55,7 +55,7 @@ No authorization required
 
 
 # **test_endpoint_parameters**
-> test_endpoint_parameters(number, double, pattern_without_delimiter, byte, opts)
+> test_endpoint_parameters(number, double, pattern_without_delimiter, byte, integer_array_required, opts)
 
 Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 
@@ -82,6 +82,8 @@ pattern_without_delimiter = "pattern_without_delimiter_example" # String | None
 
 byte = "B" # String | None
 
+integer_array_required = [56] # Array<Integer> | None
+
 opts = { 
   integer: 56, # Integer | None
   int32: 56, # Integer | None
@@ -92,12 +94,13 @@ opts = {
   date: Date.parse("2013-10-20"), # Date | None
   date_time: DateTime.parse("2013-10-20T19:20:30+01:00"), # DateTime | None
   password: "password_example", # String | None
-  callback: "callback_example" # String | None
+  callback: "callback_example", # String | None
+  integer_array_not_required: [56] # Array<Integer> | None
 }
 
 begin
   #Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
-  api_instance.test_endpoint_parameters(number, double, pattern_without_delimiter, byte, opts)
+  api_instance.test_endpoint_parameters(number, double, pattern_without_delimiter, byte, integer_array_required, opts)
 rescue Petstore::ApiError => e
   puts "Exception when calling FakeApi->test_endpoint_parameters: #{e}"
 end
@@ -111,6 +114,7 @@ Name | Type | Description  | Notes
  **double** | **Float**| None | 
  **pattern_without_delimiter** | **String**| None | 
  **byte** | **String**| None | 
+ **integer_array_required** | [**Array&lt;Integer&gt;**](Integer.md)| None | 
  **integer** | **Integer**| None | [optional] 
  **int32** | **Integer**| None | [optional] 
  **int64** | **Integer**| None | [optional] 
@@ -121,6 +125,7 @@ Name | Type | Description  | Notes
  **date_time** | **DateTime**| None | [optional] 
  **password** | **String**| None | [optional] 
  **callback** | **String**| None | [optional] 
+ **integer_array_not_required** | [**Array&lt;Integer&gt;**](Integer.md)| None | [optional] 
 
 ### Return type
 

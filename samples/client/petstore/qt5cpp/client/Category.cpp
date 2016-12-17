@@ -23,7 +23,7 @@
  */
 
 
-#include "SWGCategory.h"
+#include "Category.h"
 
 #include "SWGHelpers.h"
 
@@ -35,27 +35,27 @@
 namespace Swagger {
 
 
-SWGCategory::SWGCategory(QString* json) {
+Category::Category(QString* json) {
     init();
     this->fromJson(*json);
 }
 
-SWGCategory::SWGCategory() {
+Category::Category() {
     init();
 }
 
-SWGCategory::~SWGCategory() {
+Category::~Category() {
     this->cleanup();
 }
 
 void
-SWGCategory::init() {
+Category::init() {
     id = 0L;
     name = new QString("");
 }
 
 void
-SWGCategory::cleanup() {
+Category::cleanup() {
     
 
     if(name != nullptr) {
@@ -63,8 +63,8 @@ SWGCategory::cleanup() {
     }
 }
 
-SWGCategory*
-SWGCategory::fromJson(QString &json) {
+Category*
+Category::fromJson(QString &json) {
     QByteArray array (json.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(array);
     QJsonObject jsonObject = doc.object();
@@ -73,13 +73,13 @@ SWGCategory::fromJson(QString &json) {
 }
 
 void
-SWGCategory::fromJsonObject(QJsonObject &pJson) {
+Category::fromJsonObject(QJsonObject &pJson) {
     ::Swagger::setValue(&id, pJson["id"], "qint64", "");
     ::Swagger::setValue(&name, pJson["name"], "QString", "QString");
 }
 
 QString
-SWGCategory::asJson ()
+Category::asJson ()
 {
     QJsonObject* obj = this->asJsonObject();
     
@@ -89,7 +89,7 @@ SWGCategory::asJson ()
 }
 
 QJsonObject*
-SWGCategory::asJsonObject() {
+Category::asJsonObject() {
     QJsonObject* obj = new QJsonObject();
     
     obj->insert("id", QJsonValue(id));
@@ -100,20 +100,20 @@ SWGCategory::asJsonObject() {
 }
 
 qint64
-SWGCategory::getId() {
+Category::getId() {
     return id;
 }
 void
-SWGCategory::setId(qint64 id) {
+Category::setId(qint64 id) {
     this->id = id;
 }
 
 QString*
-SWGCategory::getName() {
+Category::getName() {
     return name;
 }
 void
-SWGCategory::setName(QString* name) {
+Category::setName(QString* name) {
     this->name = name;
 }
 

@@ -32,8 +32,8 @@ import io.swagger.client.model.*;
 
 import java.util.*;
 
-import io.swagger.client.model.Pet;
 import java.io.File;
+import io.swagger.client.model.Pet;
 
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 

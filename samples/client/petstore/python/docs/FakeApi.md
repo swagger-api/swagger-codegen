@@ -56,7 +56,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **test_endpoint_parameters**
-> test_endpoint_parameters(number, double, pattern_without_delimiter, byte, integer=integer, int32=int32, int64=int64, float=float, string=string, binary=binary, date=date, date_time=date_time, password=password, param_callback=param_callback)
+> test_endpoint_parameters(number, double, pattern_without_delimiter, byte, integer_array_required, integer=integer, int32=int32, int64=int64, float=float, string=string, binary=binary, date=date, date_time=date_time, password=password, param_callback=param_callback, integer_array_not_required=integer_array_not_required)
 
 Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 
@@ -80,6 +80,7 @@ number = 3.4 # float | None
 double = 1.2 # float | None
 pattern_without_delimiter = 'pattern_without_delimiter_example' # str | None
 byte = 'B' # str | None
+integer_array_required = [56] # list[int] | None
 integer = 56 # int | None (optional)
 int32 = 56 # int | None (optional)
 int64 = 789 # int | None (optional)
@@ -90,10 +91,11 @@ date = '2013-10-20' # date | None (optional)
 date_time = '2013-10-20T19:20:30+01:00' # datetime | None (optional)
 password = 'password_example' # str | None (optional)
 param_callback = 'param_callback_example' # str | None (optional)
+integer_array_not_required = [56] # list[int] | None (optional)
 
 try: 
     # Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
-    api_instance.test_endpoint_parameters(number, double, pattern_without_delimiter, byte, integer=integer, int32=int32, int64=int64, float=float, string=string, binary=binary, date=date, date_time=date_time, password=password, param_callback=param_callback)
+    api_instance.test_endpoint_parameters(number, double, pattern_without_delimiter, byte, integer_array_required, integer=integer, int32=int32, int64=int64, float=float, string=string, binary=binary, date=date, date_time=date_time, password=password, param_callback=param_callback, integer_array_not_required=integer_array_not_required)
 except ApiException as e:
     print("Exception when calling FakeApi->test_endpoint_parameters: %s\n" % e)
 ```
@@ -106,6 +108,7 @@ Name | Type | Description  | Notes
  **double** | **float**| None | 
  **pattern_without_delimiter** | **str**| None | 
  **byte** | **str**| None | 
+ **integer_array_required** | [**list[int]**](int.md)| None | 
  **integer** | **int**| None | [optional] 
  **int32** | **int**| None | [optional] 
  **int64** | **int**| None | [optional] 
@@ -116,6 +119,7 @@ Name | Type | Description  | Notes
  **date_time** | **datetime**| None | [optional] 
  **password** | **str**| None | [optional] 
  **param_callback** | **str**| None | [optional] 
+ **integer_array_not_required** | [**list[int]**](int.md)| None | [optional] 
 
 ### Return type
 

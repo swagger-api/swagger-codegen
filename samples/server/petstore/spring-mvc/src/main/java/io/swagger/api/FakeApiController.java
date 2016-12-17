@@ -1,9 +1,9 @@
 package io.swagger.api;
 
-import io.swagger.model.Client;
-import org.threeten.bp.OffsetDateTime;
-import org.threeten.bp.LocalDate;
 import java.math.BigDecimal;
+import io.swagger.model.Client;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.OffsetDateTime;
 
 import io.swagger.annotations.*;
 
@@ -33,6 +33,7 @@ public class FakeApiController implements FakeApi {
         @ApiParam(value = "None", required=true ) @RequestPart(value="_double", required=true)  Double _double,
         @ApiParam(value = "None", required=true ) @RequestPart(value="patternWithoutDelimiter", required=true)  String patternWithoutDelimiter,
         @ApiParam(value = "None", required=true ) @RequestPart(value="_byte", required=true)  byte[] _byte,
+        @ApiParam(value = "None", required = true) @RequestParam(value = "integerArrayRequired", required = true) List<Long> integerArrayRequired,
         @ApiParam(value = "None" ) @RequestPart(value="integer", required=false)  Integer integer,
         @ApiParam(value = "None" ) @RequestPart(value="int32", required=false)  Integer int32,
         @ApiParam(value = "None" ) @RequestPart(value="int64", required=false)  Long int64,
@@ -42,7 +43,8 @@ public class FakeApiController implements FakeApi {
         @ApiParam(value = "None" ) @RequestPart(value="date", required=false)  LocalDate date,
         @ApiParam(value = "None" ) @RequestPart(value="dateTime", required=false)  OffsetDateTime dateTime,
         @ApiParam(value = "None" ) @RequestPart(value="password", required=false)  String password,
-        @ApiParam(value = "None" ) @RequestPart(value="paramCallback", required=false)  String paramCallback) {
+        @ApiParam(value = "None" ) @RequestPart(value="paramCallback", required=false)  String paramCallback,
+        @ApiParam(value = "None") @RequestParam(value = "integerArrayNotRequired", required = false) List<Long> integerArrayNotRequired) {
         // do some magic!
         return new ResponseEntity<Void>(HttpStatus.OK);
     }

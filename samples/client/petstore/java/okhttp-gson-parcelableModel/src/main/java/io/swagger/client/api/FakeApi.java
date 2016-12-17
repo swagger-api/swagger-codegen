@@ -38,10 +38,10 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 
-import io.swagger.client.model.Client;
-import org.threeten.bp.OffsetDateTime;
-import org.threeten.bp.LocalDate;
 import java.math.BigDecimal;
+import io.swagger.client.model.Client;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.OffsetDateTime;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -175,7 +175,7 @@ public class FakeApi {
         return call;
     }
     /* Build call for testEndpointParameters */
-    private com.squareup.okhttp.Call testEndpointParametersCall(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, LocalDate date, OffsetDateTime dateTime, String password, String paramCallback, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call testEndpointParametersCall(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, List<Long> integerArrayRequired, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, LocalDate date, OffsetDateTime dateTime, String password, String paramCallback, List<Long> integerArrayNotRequired, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'number' is set
@@ -198,11 +198,20 @@ public class FakeApi {
             throw new ApiException("Missing the required parameter '_byte' when calling testEndpointParameters(Async)");
         }
         
+        // verify the required parameter 'integerArrayRequired' is set
+        if (integerArrayRequired == null) {
+            throw new ApiException("Missing the required parameter 'integerArrayRequired' when calling testEndpointParameters(Async)");
+        }
+        
 
         // create path and map variables
         String localVarPath = "/fake".replaceAll("\\{format\\}","json");
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        if (integerArrayRequired != null)
+        localVarQueryParams.addAll(apiClient.parameterToPairs("csv", "integerArrayRequired", integerArrayRequired));
+        if (integerArrayNotRequired != null)
+        localVarQueryParams.addAll(apiClient.parameterToPairs("csv", "integerArrayNotRequired", integerArrayNotRequired));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -271,6 +280,7 @@ public class FakeApi {
      * @param _double None (required)
      * @param patternWithoutDelimiter None (required)
      * @param _byte None (required)
+     * @param integerArrayRequired None (required)
      * @param integer None (optional)
      * @param int32 None (optional)
      * @param int64 None (optional)
@@ -281,10 +291,11 @@ public class FakeApi {
      * @param dateTime None (optional)
      * @param password None (optional)
      * @param paramCallback None (optional)
+     * @param integerArrayNotRequired None (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void testEndpointParameters(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, LocalDate date, OffsetDateTime dateTime, String password, String paramCallback) throws ApiException {
-        testEndpointParametersWithHttpInfo(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback);
+    public void testEndpointParameters(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, List<Long> integerArrayRequired, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, LocalDate date, OffsetDateTime dateTime, String password, String paramCallback, List<Long> integerArrayNotRequired) throws ApiException {
+        testEndpointParametersWithHttpInfo(number, _double, patternWithoutDelimiter, _byte, integerArrayRequired, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback, integerArrayNotRequired);
     }
 
     /**
@@ -294,6 +305,7 @@ public class FakeApi {
      * @param _double None (required)
      * @param patternWithoutDelimiter None (required)
      * @param _byte None (required)
+     * @param integerArrayRequired None (required)
      * @param integer None (optional)
      * @param int32 None (optional)
      * @param int64 None (optional)
@@ -304,11 +316,12 @@ public class FakeApi {
      * @param dateTime None (optional)
      * @param password None (optional)
      * @param paramCallback None (optional)
+     * @param integerArrayNotRequired None (optional)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> testEndpointParametersWithHttpInfo(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, LocalDate date, OffsetDateTime dateTime, String password, String paramCallback) throws ApiException {
-        com.squareup.okhttp.Call call = testEndpointParametersCall(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback, null, null);
+    public ApiResponse<Void> testEndpointParametersWithHttpInfo(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, List<Long> integerArrayRequired, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, LocalDate date, OffsetDateTime dateTime, String password, String paramCallback, List<Long> integerArrayNotRequired) throws ApiException {
+        com.squareup.okhttp.Call call = testEndpointParametersCall(number, _double, patternWithoutDelimiter, _byte, integerArrayRequired, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback, integerArrayNotRequired, null, null);
         return apiClient.execute(call);
     }
 
@@ -319,6 +332,7 @@ public class FakeApi {
      * @param _double None (required)
      * @param patternWithoutDelimiter None (required)
      * @param _byte None (required)
+     * @param integerArrayRequired None (required)
      * @param integer None (optional)
      * @param int32 None (optional)
      * @param int64 None (optional)
@@ -329,11 +343,12 @@ public class FakeApi {
      * @param dateTime None (optional)
      * @param password None (optional)
      * @param paramCallback None (optional)
+     * @param integerArrayNotRequired None (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call testEndpointParametersAsync(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, LocalDate date, OffsetDateTime dateTime, String password, String paramCallback, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call testEndpointParametersAsync(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, List<Long> integerArrayRequired, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, LocalDate date, OffsetDateTime dateTime, String password, String paramCallback, List<Long> integerArrayNotRequired, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -354,7 +369,7 @@ public class FakeApi {
             };
         }
 
-        com.squareup.okhttp.Call call = testEndpointParametersCall(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = testEndpointParametersCall(number, _double, patternWithoutDelimiter, _byte, integerArrayRequired, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback, integerArrayNotRequired, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
@@ -389,13 +404,13 @@ public class FakeApi {
         localVarFormParams.put("enum_query_double", enumQueryDouble);
 
         final String[] localVarAccepts = {
-            "application/json"
+            "*/*"
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
 
         final String[] localVarContentTypes = {
-            "application/json"
+            "*/*"
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);

@@ -3,9 +3,9 @@ package io.swagger.api.impl;
 import io.swagger.api.*;
 import io.swagger.model.*;
 
+import java.math.BigDecimal;
 import io.swagger.model.Client;
 import java.util.Date;
-import java.math.BigDecimal;
 
 import java.util.List;
 import io.swagger.api.NotFoundException;
@@ -31,6 +31,7 @@ public class FakeApiServiceImpl extends FakeApiService {
 , Double _double
 , String patternWithoutDelimiter
 , byte[] _byte
+, List<Long> integerArrayRequired
 , Integer integer
 , Integer int32
 , Long int64
@@ -41,6 +42,7 @@ public class FakeApiServiceImpl extends FakeApiService {
 , Date dateTime
 , String password
 , String paramCallback
+, List<Long> integerArrayNotRequired
  ) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();

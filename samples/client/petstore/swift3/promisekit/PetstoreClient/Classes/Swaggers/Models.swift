@@ -402,7 +402,7 @@ class Decoders {
             instance.string = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["string"] as AnyObject?)
             instance.byte = Decoders.decodeOptional(clazz: Data.self, source: sourceDictionary["byte"] as AnyObject?)
             instance.binary = Decoders.decodeOptional(clazz: Data.self, source: sourceDictionary["binary"] as AnyObject?)
-            instance.date = Decoders.decodeOptional(clazz: Date.self, source: sourceDictionary["date"] as AnyObject?)
+            instance.date = Decoders.decodeOptional(clazz: ISOFullDate.self, source: sourceDictionary["date"] as AnyObject?)
             instance.dateTime = Decoders.decodeOptional(clazz: Date.self, source: sourceDictionary["dateTime"] as AnyObject?)
             instance.uuid = Decoders.decodeOptional(clazz: UUID.self, source: sourceDictionary["uuid"] as AnyObject?)
             instance.password = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["password"] as AnyObject?)

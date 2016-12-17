@@ -59,7 +59,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **test_endpoint_parameters**
-> test_endpoint_parameters(number => $number, double => $double, pattern_without_delimiter => $pattern_without_delimiter, byte => $byte, integer => $integer, int32 => $int32, int64 => $int64, float => $float, string => $string, binary => $binary, date => $date, date_time => $date_time, password => $password)
+> test_endpoint_parameters(number => $number, double => $double, pattern_without_delimiter => $pattern_without_delimiter, byte => $byte, integer_array_required => $integer_array_required, integer => $integer, int32 => $int32, int64 => $int64, float => $float, string => $string, binary => $binary, date => $date, date_time => $date_time, password => $password, callback => $callback, integer_array_not_required => $integer_array_not_required)
 
 Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 
@@ -80,6 +80,7 @@ my $number = 3.4; # Number | None
 my $double = 1.2; # double | None
 my $pattern_without_delimiter = 'pattern_without_delimiter_example'; # string | None
 my $byte = 'B'; # string | None
+my $integer_array_required = []; # ARRAY[int] | None
 my $integer = 56; # int | None
 my $int32 = 56; # int | None
 my $int64 = 789; # int | None
@@ -89,9 +90,11 @@ my $binary = 'B'; # string | None
 my $date = DateTime->from_epoch(epoch => str2time('2013-10-20')); # DateTime | None
 my $date_time = DateTime->from_epoch(epoch => str2time('2013-10-20T19:20:30+01:00')); # DateTime | None
 my $password = 'password_example'; # string | None
+my $callback = 'callback_example'; # string | None
+my $integer_array_not_required = []; # ARRAY[int] | None
 
 eval { 
-    $api_instance->test_endpoint_parameters(number => $number, double => $double, pattern_without_delimiter => $pattern_without_delimiter, byte => $byte, integer => $integer, int32 => $int32, int64 => $int64, float => $float, string => $string, binary => $binary, date => $date, date_time => $date_time, password => $password);
+    $api_instance->test_endpoint_parameters(number => $number, double => $double, pattern_without_delimiter => $pattern_without_delimiter, byte => $byte, integer_array_required => $integer_array_required, integer => $integer, int32 => $int32, int64 => $int64, float => $float, string => $string, binary => $binary, date => $date, date_time => $date_time, password => $password, callback => $callback, integer_array_not_required => $integer_array_not_required);
 };
 if ($@) {
     warn "Exception when calling FakeApi->test_endpoint_parameters: $@\n";
@@ -106,6 +109,7 @@ Name | Type | Description  | Notes
  **double** | **double**| None | 
  **pattern_without_delimiter** | **string**| None | 
  **byte** | **string**| None | 
+ **integer_array_required** | [**ARRAY[int]**](int.md)| None | 
  **integer** | **int**| None | [optional] 
  **int32** | **int**| None | [optional] 
  **int64** | **int**| None | [optional] 
@@ -115,6 +119,8 @@ Name | Type | Description  | Notes
  **date** | **DateTime**| None | [optional] 
  **date_time** | **DateTime**| None | [optional] 
  **password** | **string**| None | [optional] 
+ **callback** | **string**| None | [optional] 
+ **integer_array_not_required** | [**ARRAY[int]**](int.md)| None | [optional] 
 
 ### Return type
 
@@ -183,8 +189,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Content-Type**: */*
+ - **Accept**: */*
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

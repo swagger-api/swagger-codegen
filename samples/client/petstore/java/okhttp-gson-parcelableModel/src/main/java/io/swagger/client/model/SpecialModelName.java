@@ -76,6 +76,7 @@ public class SpecialModelName implements Parcelable {
     return Objects.hash(specialPropertyName);
   }
 
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();

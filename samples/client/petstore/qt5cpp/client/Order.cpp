@@ -23,7 +23,7 @@
  */
 
 
-#include "SWGOrder.h"
+#include "Order.h"
 
 #include "SWGHelpers.h"
 
@@ -35,21 +35,21 @@
 namespace Swagger {
 
 
-SWGOrder::SWGOrder(QString* json) {
+Order::Order(QString* json) {
     init();
     this->fromJson(*json);
 }
 
-SWGOrder::SWGOrder() {
+Order::Order() {
     init();
 }
 
-SWGOrder::~SWGOrder() {
+Order::~Order() {
     this->cleanup();
 }
 
 void
-SWGOrder::init() {
+Order::init() {
     id = 0L;
     pet_id = 0L;
     quantity = 0;
@@ -59,7 +59,7 @@ SWGOrder::init() {
 }
 
 void
-SWGOrder::cleanup() {
+Order::cleanup() {
     
 
 
@@ -74,8 +74,8 @@ SWGOrder::cleanup() {
 
 }
 
-SWGOrder*
-SWGOrder::fromJson(QString &json) {
+Order*
+Order::fromJson(QString &json) {
     QByteArray array (json.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(array);
     QJsonObject jsonObject = doc.object();
@@ -84,7 +84,7 @@ SWGOrder::fromJson(QString &json) {
 }
 
 void
-SWGOrder::fromJsonObject(QJsonObject &pJson) {
+Order::fromJsonObject(QJsonObject &pJson) {
     ::Swagger::setValue(&id, pJson["id"], "qint64", "");
     ::Swagger::setValue(&pet_id, pJson["pet_id"], "qint64", "");
     ::Swagger::setValue(&quantity, pJson["quantity"], "qint32", "");
@@ -94,7 +94,7 @@ SWGOrder::fromJsonObject(QJsonObject &pJson) {
 }
 
 QString
-SWGOrder::asJson ()
+Order::asJson ()
 {
     QJsonObject* obj = this->asJsonObject();
     
@@ -104,7 +104,7 @@ SWGOrder::asJson ()
 }
 
 QJsonObject*
-SWGOrder::asJsonObject() {
+Order::asJsonObject() {
     QJsonObject* obj = new QJsonObject();
     
     obj->insert("id", QJsonValue(id));
@@ -123,56 +123,56 @@ SWGOrder::asJsonObject() {
 }
 
 qint64
-SWGOrder::getId() {
+Order::getId() {
     return id;
 }
 void
-SWGOrder::setId(qint64 id) {
+Order::setId(qint64 id) {
     this->id = id;
 }
 
 qint64
-SWGOrder::getPetId() {
+Order::getPetId() {
     return pet_id;
 }
 void
-SWGOrder::setPetId(qint64 pet_id) {
+Order::setPetId(qint64 pet_id) {
     this->pet_id = pet_id;
 }
 
 qint32
-SWGOrder::getQuantity() {
+Order::getQuantity() {
     return quantity;
 }
 void
-SWGOrder::setQuantity(qint32 quantity) {
+Order::setQuantity(qint32 quantity) {
     this->quantity = quantity;
 }
 
 QDateTime*
-SWGOrder::getShipDate() {
+Order::getShipDate() {
     return ship_date;
 }
 void
-SWGOrder::setShipDate(QDateTime* ship_date) {
+Order::setShipDate(QDateTime* ship_date) {
     this->ship_date = ship_date;
 }
 
 QString*
-SWGOrder::getStatus() {
+Order::getStatus() {
     return status;
 }
 void
-SWGOrder::setStatus(QString* status) {
+Order::setStatus(QString* status) {
     this->status = status;
 }
 
 bool
-SWGOrder::getComplete() {
+Order::getComplete() {
     return complete;
 }
 void
-SWGOrder::setComplete(bool complete) {
+Order::setComplete(bool complete) {
     this->complete = complete;
 }
 

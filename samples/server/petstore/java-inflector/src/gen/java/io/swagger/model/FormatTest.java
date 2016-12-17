@@ -7,12 +7,13 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.UUID;
 
 
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-08-20T17:24:26.037+08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-12-16T20:46:06.559-06:00")
 public class FormatTest   {
   @JsonProperty("integer")
   private Integer integer = null;
@@ -48,7 +49,7 @@ public class FormatTest   {
   private Date dateTime = null;
 
   @JsonProperty("uuid")
-  private String uuid = null;
+  private UUID uuid = null;
 
   @JsonProperty("password")
   private String password = null;
@@ -252,7 +253,7 @@ public class FormatTest   {
 
   /**
    **/
-  public FormatTest uuid(String uuid) {
+  public FormatTest uuid(UUID uuid) {
     this.uuid = uuid;
     return this;
   }
@@ -260,10 +261,10 @@ public class FormatTest   {
   
   @ApiModelProperty(example = "null", value = "")
   @JsonProperty("uuid")
-  public String getUuid() {
+  public UUID getUuid() {
     return uuid;
   }
-  public void setUuid(String uuid) {
+  public void setUuid(UUID uuid) {
     this.uuid = uuid;
   }
 

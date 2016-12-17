@@ -131,6 +131,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass implements Parcelable {
     return Objects.hash(uuid, dateTime, map);
   }
 
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();

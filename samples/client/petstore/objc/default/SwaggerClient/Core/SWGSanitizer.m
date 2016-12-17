@@ -24,7 +24,7 @@ NSString * SWGPercentEscapedStringFromString(NSString *string) {
         #pragma GCC diagnostic pop
         NSRange range = NSMakeRange(index, length);
 
-        // To avoid breaking up character sequences such as 👴🏻👮🏽
+        // To avoid breaking up character sequences such as ðŸ‘´ðŸ�»ðŸ‘®ðŸ�½
         range = [string rangeOfComposedCharacterSequencesForRange:range];
 
         NSString *substring = [string substringWithRange:range];

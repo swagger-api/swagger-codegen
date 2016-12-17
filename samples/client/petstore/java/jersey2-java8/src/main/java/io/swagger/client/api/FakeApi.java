@@ -7,10 +7,10 @@ import io.swagger.client.Pair;
 
 import javax.ws.rs.core.GenericType;
 
-import io.swagger.client.model.Client;
-import java.time.OffsetDateTime;
-import java.time.LocalDate;
 import java.math.BigDecimal;
+import io.swagger.client.model.Client;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -85,6 +85,7 @@ public class FakeApi {
    * @param _double None (required)
    * @param patternWithoutDelimiter None (required)
    * @param _byte None (required)
+   * @param integerArrayRequired None (required)
    * @param integer None (optional)
    * @param int32 None (optional)
    * @param int64 None (optional)
@@ -95,9 +96,10 @@ public class FakeApi {
    * @param dateTime None (optional)
    * @param password None (optional)
    * @param paramCallback None (optional)
+   * @param integerArrayNotRequired None (optional)
    * @throws ApiException if fails to make API call
    */
-  public void testEndpointParameters(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, LocalDate date, OffsetDateTime dateTime, String password, String paramCallback) throws ApiException {
+  public void testEndpointParameters(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, List<Long> integerArrayRequired, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, LocalDate date, OffsetDateTime dateTime, String password, String paramCallback, List<Long> integerArrayNotRequired) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'number' is set
@@ -120,6 +122,11 @@ public class FakeApi {
       throw new ApiException(400, "Missing the required parameter '_byte' when calling testEndpointParameters");
     }
     
+    // verify the required parameter 'integerArrayRequired' is set
+    if (integerArrayRequired == null) {
+      throw new ApiException(400, "Missing the required parameter 'integerArrayRequired' when calling testEndpointParameters");
+    }
+    
     // create path and map variables
     String localVarPath = "/fake".replaceAll("\\{format\\}","json");
 
@@ -128,6 +135,8 @@ public class FakeApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+    localVarQueryParams.addAll(apiClient.parameterToPairs("csv", "integerArrayRequired", integerArrayRequired));
+    localVarQueryParams.addAll(apiClient.parameterToPairs("csv", "integerArrayNotRequired", integerArrayNotRequired));
 
     
     if (integer != null)
@@ -215,12 +224,12 @@ if (enumQueryDouble != null)
       localVarFormParams.put("enum_query_double", enumQueryDouble);
 
     final String[] localVarAccepts = {
-      "application/json"
+      "*/*"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json"
+      "*/*"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
