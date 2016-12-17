@@ -69,6 +69,7 @@ let primitives = ["string",
 			}
 
 			if (typeof data.getAttributeTypeMap === "undefined") {// is Enum
+				let instance = instanceFunctionsMap[type];
 				return instance[data];
 			}
 
