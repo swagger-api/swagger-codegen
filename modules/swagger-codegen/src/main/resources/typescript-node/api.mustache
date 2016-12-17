@@ -12,7 +12,110 @@ let defaultBasePath = '{{basePath}}';
 // ===============================================
 
 /* tslint:disable:no-unused-variable */
+let primitives = ["string",
+                "String",
+                "boolean",
+                "Boolean",
+                "Double",
+                "Integer",
+                "Long",
+                "Float",
+                "number",
+                "any"];
+                
+ class ObjectSerializer {
+ 
+ 	public static serialize(data: any, type: string) {
+		if (data == undefined) {
+			return data;
+		} else if (primitives.indexOf(type) !== -1) {
+			return data.toString();		
+		} else if (type.lastIndexOf("Array<", 0) === 0) { // string.startsWith pre es6
+			let subType: string = type.replace("Array<", ""); // Array<Type> => Type>
+			subType = subType.substring(0, subType.length - 1); // Type> => Type
+			let transformedData = [];
+			for (let index in data) {
+				let date = data[index];
+				transformedData.push(ObjectSerializer.serialize(date, subType)); 
+			}
+			return transformedData;
+		} else if (type === "Date") {
+			return data.toString();
+		} else {
+			if (!instanceFunctionsMap[type]) {
+				console.log("Couldn't parse type " + type);
+				return data;
+			}
 
+			if (typeof data.getAttributeTypeMap === "undefined") {// is Enum
+				return instance[data];
+			}
+
+			let attributeTypes = data.getAttributeTypeMap();
+			let instance = {};
+			for (let index in attributeTypes) {
+				let attributeType = attributeTypes[index];
+				instance[attributeType.baseName] = ObjectSerializer.serialize(data[attributeType.name], attributeType.type);
+			}
+			return instance;
+		} 		
+ 	}
+ 	
+	public static deserialize(data: any, type: string) {
+		if (data == undefined) {
+			return data;
+		} else if (primitives.indexOf(type) !== -1) {
+			return data;			
+		} else if (type.lastIndexOf("Array<", 0) === 0) { // string.startsWith pre es6
+			let subType: string = type.replace("Array<", ""); // Array<Type> => Type>
+			subType = subType.substring(0, subType.length - 1); // Type> => Type
+			let transformedData = [];
+			for (let index in data) {
+				let date = data[index];
+				transformedData.push(ObjectSerializer.deserialize(date, subType));
+			}
+			return transformedData;
+		} else if (type === "Date") {
+			return new Date(data);
+		} else {
+			if (!instanceFunctionsMap[type]) {
+				console.log("Couldn't parse type " + type);
+				return data;
+			}
+			let instance = instanceFunctionsMap[type]();
+
+			if (typeof instance.getAttributeTypeMap === "undefined") {// is Enum
+				return instance[data];
+			}
+
+			let attributeTypes = instance.getAttributeTypeMap();
+			for (let index in attributeTypes) {
+				let attributeType = attributeTypes[index];
+				instance[attributeType.name] = ObjectSerializer.deserialize(data[attributeType.baseName], attributeType.type);
+			}
+			return instance;
+		}	
+	}
+}
+
+let instanceFunctionsMap = {
+	{{#models}}
+		{{#model}}
+			{{#hasEnums}}
+				{{#vars}}
+					{{#isEnum}}
+	"{{datatypeWithEnum}}": () => {{datatypeWithEnum}},
+					{{/isEnum}}		
+				{{/vars}}			
+			{{/hasEnums}}
+			{{^isEnum}}
+	"{{classname}}": () => new {{classname}}(),
+			{{/isEnum}}
+		{{/model}}
+	{{/models}}
+};
+
+ 
 {{#models}}
 {{#model}}
 {{#description}}
@@ -21,6 +124,20 @@ let defaultBasePath = '{{basePath}}';
 */
 {{/description}}
 export class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
+	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+		{{#vars}}
+		{
+			"name": "{{name}}",
+			"baseName": "{{baseName}}",
+			"type": "{{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}}"
+		}{{#hasMore}},
+		{{/hasMore}}
+		{{/vars}}
+	];
+	getAttributeTypeMap() { 
+		return {{classname}}.attributeTypeMap;
+	}
+	
 {{#vars}}
 {{#description}}
     /**
@@ -210,19 +327,24 @@ export class {{classname}} {
 {{/required}}{{/allParams}}
 {{#queryParams}}
         if ({{paramName}} !== undefined) {
-            queryParameters['{{baseName}}'] = {{paramName}};
+            queryParameters['{{baseName}}'] = ObjectSerializer.serialize({{paramName}}, "{{dataType}}");
         }
 
 {{/queryParams}}
 {{#headerParams}}
-        headerParams['{{baseName}}'] = {{paramName}};
+        headerParams['{{baseName}}'] = ObjectSerializer.serialize({{paramName}}, "{{dataType}}");
 
 {{/headerParams}}
         let useFormData = false;
 
 {{#formParams}}
         if ({{paramName}} !== undefined) {
+        	{{#isFile}}
             formParams['{{baseName}}'] = {{paramName}};
+        	{{/isFile}}
+        	{{^isFile}}
+            formParams['{{baseName}}'] = ObjectSerializer.serialize({{paramName}}, "{{dataType}}");
+            {{/isFile}}
         }
 {{#isFile}}
         useFormData = true;
@@ -237,7 +359,7 @@ export class {{classname}} {
             useQuerystring: this._useQuerystring,
             json: true,
 {{#bodyParam}}
-            body: {{paramName}},
+            body: ObjectSerializer.serialize({{paramName}}, "{{dataType}}")
 {{/bodyParam}}
         };
 
@@ -259,6 +381,9 @@ export class {{classname}} {
                 if (error) {
                     reject(error);
                 } else {
+                	{{#returnType}}
+                		body = ObjectSerializer.deserialize(body, "{{{returnType}}}");
+                	{{/returnType}}
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
