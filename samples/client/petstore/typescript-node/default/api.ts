@@ -63,14 +63,11 @@ let primitives = ["string",
 		} else if (type === "Date") {
 			return data.toString();
 		} else {
-			if (!instanceFunctionsMap[type]) {
-				console.log("Couldn't parse type " + type);
+			if (enumsMap[type]) {
 				return data;
 			}
-
-			if (typeof data.getAttributeTypeMap === "undefined") {// is Enum
-				let instance = instanceFunctionsMap[type];
-				return instance[data];
+			if (typeof data.getAttributeTypeMap === "undefined") { // in case it was NOT parsed
+				return data;
 			}
 
 			let attributeTypes = data.getAttributeTypeMap();
@@ -100,16 +97,14 @@ let primitives = ["string",
 		} else if (type === "Date") {
 			return new Date(data);
 		} else {
-			if (!instanceFunctionsMap[type]) {
-				console.log("Couldn't parse type " + type);
+			if (enumsMap[type]) {// is Enum
+				return data;
+			}
+
+			if (!instanceFunctionsMap[type]) { // dont know the type
 				return data;
 			}
 			let instance = instanceFunctionsMap[type]();
-
-			if (typeof instance.getAttributeTypeMap === "undefined") {// is Enum
-				return instance[data];
-			}
-
 			let attributeTypes = instance.getAttributeTypeMap();
 			for (let index in attributeTypes) {
 				let attributeType = attributeTypes[index];
@@ -120,17 +115,6 @@ let primitives = ["string",
 	}
 }
 
-let instanceFunctionsMap = {
-	"Category": () => new Category(),
-	"Order.StatusEnum": () => Order.StatusEnum,
-	"Order": () => new Order(),
-	"Pet.StatusEnum": () => Pet.StatusEnum,
-	"Pet": () => new Pet(),
-	"Tag": () => new Tag(),
-	"User": () => new User(),
-};
-
- 
 export class Category {
 	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
 		{
@@ -338,6 +322,19 @@ export class User {
     'userStatus': number;
 }
 
+
+let enumsMap = {
+	"Order.StatusEnum": Order.StatusEnum,
+	"Pet.StatusEnum": Pet.StatusEnum,
+}
+
+let instanceFunctionsMap = {
+	"Category": () => new Category(),
+	"Order": () => new Order(),
+	"Pet": () => new Pet(),
+	"Tag": () => new Tag(),
+	"User": () => new User(),
+};
 
 export interface Authentication {
     /**
@@ -583,7 +580,7 @@ export class PetApi {
                 if (error) {
                     reject(error);
                 } else {
-                		body = ObjectSerializer.deserialize(body, "Array<Pet>");
+                		body = ObjectSerializer.deserialize(body, "Array&lt;Pet&gt;");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -636,7 +633,7 @@ export class PetApi {
                 if (error) {
                     reject(error);
                 } else {
-                		body = ObjectSerializer.deserialize(body, "Array<Pet>");
+                		body = ObjectSerializer.deserialize(body, "Array&lt;Pet&gt;");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {

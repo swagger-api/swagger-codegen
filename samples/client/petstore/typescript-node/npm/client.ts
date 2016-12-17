@@ -42,6 +42,9 @@ petApi.addPet(pet)
     })
     .then((res) => {
         console.log('Got pet by ID: ' + JSON.stringify(res.body));
+	console.log("EnumValue: ", api.Pet.StatusEnum.Pending);
+	console.log("Typeof EnumValue:", typeof api.Pet.StatusEnum.Pending);
+	console.log("Res:", res.body.status);
         if (res.body.status != api.Pet.StatusEnum.Pending) {
             throw new Error("Unexpected pet status");
         }

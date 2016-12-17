@@ -63,14 +63,11 @@ let primitives = ["string",
 		} else if (type === "Date") {
 			return data.toString();
 		} else {
-			if (!instanceFunctionsMap[type]) {
-				console.log("Couldn't parse type " + type);
+			if (enumsMap[type]) {
 				return data;
 			}
-
-			if (typeof data.getAttributeTypeMap === "undefined") {// is Enum
-				let instance = instanceFunctionsMap[type];
-				return instance[data];
+			if (typeof data.getAttributeTypeMap === "undefined") { // in case it was NOT parsed
+				return data;
 			}
 
 			let attributeTypes = data.getAttributeTypeMap();
@@ -100,16 +97,14 @@ let primitives = ["string",
 		} else if (type === "Date") {
 			return new Date(data);
 		} else {
-			if (!instanceFunctionsMap[type]) {
-				console.log("Couldn't parse type " + type);
+			if (enumsMap[type]) {// is Enum
+				return data;
+			}
+
+			if (!instanceFunctionsMap[type]) { // dont know the type
 				return data;
 			}
 			let instance = instanceFunctionsMap[type]();
-
-			if (typeof instance.getAttributeTypeMap === "undefined") {// is Enum
-				return instance[data];
-			}
-
 			let attributeTypes = instance.getAttributeTypeMap();
 			for (let index in attributeTypes) {
 				let attributeType = attributeTypes[index];
@@ -120,11 +115,6 @@ let primitives = ["string",
 	}
 }
 
-let instanceFunctionsMap = {
-	"ModelReturn": () => new ModelReturn(),
-};
-
- 
 /**
 * Model for testing reserved words  *_/ ' \" =end -- \\r\\n \\n \\r
 */
@@ -145,6 +135,13 @@ export class ModelReturn {
     'return': number;
 }
 
+
+let enumsMap = {
+}
+
+let instanceFunctionsMap = {
+	"ModelReturn": () => new ModelReturn(),
+};
 
 export interface Authentication {
     /**

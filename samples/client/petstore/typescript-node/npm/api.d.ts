@@ -2,10 +2,30 @@ import request = require('request');
 import http = require('http');
 import Promise = require('bluebird');
 export declare class Category {
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
     'id': number;
     'name': string;
 }
 export declare class Order {
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
     'id': number;
     'petId': number;
     'quantity': number;
@@ -21,6 +41,16 @@ export declare namespace Order {
     }
 }
 export declare class Pet {
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
     'id': number;
     'category': Category;
     'name': string;
@@ -36,10 +66,30 @@ export declare namespace Pet {
     }
 }
 export declare class Tag {
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
     'id': number;
     'name': string;
 }
 export declare class User {
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
     'id': number;
     'username': string;
     'firstName': string;
