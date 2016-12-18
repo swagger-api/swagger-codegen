@@ -121,7 +121,6 @@ class PetApi(object):
         body_params = None
         if 'body' in params:
             body_params = params['body']
-
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
             select_header_accept(['application/xml', 'application/json'])
@@ -235,16 +234,11 @@ class PetApi(object):
         local_var_files = {}
 
         body_params = None
-
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
             select_header_accept(['application/xml', 'application/json'])
         if not header_params['Accept']:
             del header_params['Accept']
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.\
-            select_header_content_type([])
 
         # Authentication setting
         auth_settings = ['petstore_auth']
@@ -346,16 +340,11 @@ class PetApi(object):
         local_var_files = {}
 
         body_params = None
-
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
             select_header_accept(['application/xml', 'application/json'])
         if not header_params['Accept']:
             del header_params['Accept']
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.\
-            select_header_content_type([])
 
         # Authentication setting
         auth_settings = ['petstore_auth']
@@ -457,16 +446,11 @@ class PetApi(object):
         local_var_files = {}
 
         body_params = None
-
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
             select_header_accept(['application/xml', 'application/json'])
         if not header_params['Accept']:
             del header_params['Accept']
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.\
-            select_header_content_type([])
 
         # Authentication setting
         auth_settings = ['petstore_auth']
@@ -567,16 +551,11 @@ class PetApi(object):
         local_var_files = {}
 
         body_params = None
-
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
             select_header_accept(['application/xml', 'application/json'])
         if not header_params['Accept']:
             del header_params['Accept']
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.\
-            select_header_content_type([])
 
         # Authentication setting
         auth_settings = ['api_key']
@@ -677,7 +656,6 @@ class PetApi(object):
         body_params = None
         if 'body' in params:
             body_params = params['body']
-
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
             select_header_accept(['application/xml', 'application/json'])
@@ -795,7 +773,6 @@ class PetApi(object):
             form_params.append(('status', params['status']))
 
         body_params = None
-
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
             select_header_accept(['application/xml', 'application/json'])
@@ -913,7 +890,6 @@ class PetApi(object):
             local_var_files['file'] = params['file']
 
         body_params = None
-
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
             select_header_accept(['application/json'])

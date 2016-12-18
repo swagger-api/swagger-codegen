@@ -413,7 +413,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **pet_id** | **int**| ID of pet to update | 
  **additional_metadata** | **str**| Additional data to pass to server | [optional] 
- **file** | **file**| file to upload | [optional] 
+ **file** | **file****file**| file to upload | [optional] 
 
 ### Return type
 
