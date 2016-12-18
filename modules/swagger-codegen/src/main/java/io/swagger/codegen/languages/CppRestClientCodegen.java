@@ -389,7 +389,8 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
 
     @Override
     public String escapeUnsafeCharacters(String input) {
-        return input.replace("*/", "*_/").replace("/*", "/_*");
+        // escape nothing for CppRest
+        return input;
     }
 
 }

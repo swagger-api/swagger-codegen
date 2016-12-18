@@ -115,10 +115,6 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
     {{#produces}}responseHttpContentTypes.push_back( U("{{{mediaType}}}") );
     {{/produces}}
 
-    {{#vendorExtensions.x-codegen-response-ishttpcontent}}
-    responseHttpContentTypes.push_back( U("*/*") );
-    {{/vendorExtensions.x-codegen-response-ishttpcontent}}
-    
     headerParams[U("Accept")] = responseHttpContentType;
     
     std::unordered_set<utility::string_t> consumeHttpContentTypes;
@@ -317,7 +313,7 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
         else 
         {
             throw ApiException(500
-                , U("error calling findPetsByStatus: unsupported response type"));
+                , U("error calling {{operationId}}: unsupported response type: ") + response.first);
         }
         
         return result;
