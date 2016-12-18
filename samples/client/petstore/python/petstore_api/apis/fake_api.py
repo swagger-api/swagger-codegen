@@ -124,8 +124,6 @@ class FakeApi(object):
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
             select_header_accept(['application/json'])
-        if not header_params['Accept']:
-            del header_params['Accept']
 
         # HTTP header `Content-Type`
         header_params['Content-Type'] = self.api_client.\
@@ -320,8 +318,6 @@ class FakeApi(object):
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
             select_header_accept(['application/xml; charset=utf-8', 'application/json; charset=utf-8'])
-        if not header_params['Accept']:
-            del header_params['Accept']
 
         # HTTP header `Content-Type`
         header_params['Content-Type'] = self.api_client.\
@@ -457,8 +453,6 @@ class FakeApi(object):
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
             select_header_accept(['*/*'])
-        if not header_params['Accept']:
-            del header_params['Accept']
 
         # HTTP header `Content-Type`
         header_params['Content-Type'] = self.api_client.\

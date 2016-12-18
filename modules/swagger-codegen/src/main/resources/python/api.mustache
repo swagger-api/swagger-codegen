@@ -200,8 +200,6 @@ class {{classname}}(object):
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
             select_header_accept([{{#produces}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/produces}}])
-        if not header_params['Accept']:
-            del header_params['Accept']
 
         {{/hasProduces}}
         {{#hasConsumes}}
