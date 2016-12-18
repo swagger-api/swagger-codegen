@@ -112,7 +112,7 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
     std::map<utility::string_t, std::shared_ptr<HttpContent>> fileParams;
 
     StringVec responseHttpContentTypes;
-    {{#produces}}responseHttpContentTypes.push_back( U("{{mediaType}}") );
+    {{#produces}}responseHttpContentTypes.push_back( U("{{{mediaType}}}") );
     {{/produces}}
 
     {{#vendorExtensions.x-codegen-response-ishttpcontent}}
@@ -288,7 +288,7 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
         {{/returnType}}{{#returnType}}{{#returnContainer}}{{{returnType}}} result;
         {{/returnContainer}}{{^returnContainer}}{{{returnType}}} result({{{defaultResponse}}});{{/returnContainer}}
         
-        if(response.first == U("application/json"))
+        if(response.first.find(U("json")) != utility::string_t::npos)
         {
             web::json::value json = web::json::value::parse(response.second);
             
