@@ -269,13 +269,20 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
         }
         
         {{#vendorExtensions.x-codegen-response-ishttpcontent}}
+        if (response.status_code() == 204) // no content
+        {
+            return std::make_pair(std::move(contentType), std::vector<unsigned char>());
+        }
         return std::make_pair(std::move(contentType), response.extract_vector().get());
     })
     .then([=](std::pair<utility::string_t, std::vector<unsigned char>> response)
     {
         HttpContent result;
-        const auto stream = std::make_shared<std::stringstream>(std::string(response.second.begin(), response.second.end()));
-        result.setData(stream);
+        if (response.second.size() > 0)
+        {
+            const auto stream = std::make_shared<std::stringstream>(std::string(response.second.begin(), response.second.end()));
+            result.setData(stream);
+        }
         return result;
         {{/vendorExtensions.x-codegen-response-ishttpcontent}}
         {{^vendorExtensions.x-codegen-response-ishttpcontent}}
