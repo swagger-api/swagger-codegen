@@ -237,12 +237,7 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
     {{/authMethods}}
     
     return m_ApiClient->callApi(path, U("{{httpMethod}}"), queryParams, httpBody, headerParams, formParams, fileParams, requestHttpContentType)
-    {{#vendorExtensions.x-codegen-response-ishttpcontent}}
-    .then([=](web::http::http_response response) -> std::pair<utility::string_t, std::vector<unsigned char>>
-    {{/vendorExtensions.x-codegen-response-ishttpcontent}}
-    {{^vendorExtensions.x-codegen-response-ishttpcontent}}
-    .then([=](web::http::http_response response) -> std::pair<utility::string_t, utility::string_t>
-    {{/vendorExtensions.x-codegen-response-ishttpcontent}}
+    .then([=](web::http::http_response response)
     {
         CO_LOG_TRACE << "Response: " << response.to_string();
 
@@ -274,7 +269,7 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
         }
         
         {{#vendorExtensions.x-codegen-response-ishttpcontent}}
-        return std::make_pair(std::move(contentType), response.extract_vector());
+        return std::make_pair(std::move(contentType), response.extract_vector().get());
     })
     .then([=](std::pair<utility::string_t, std::vector<unsigned char>> response)
     {
@@ -284,11 +279,13 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
         return result;
         {{/vendorExtensions.x-codegen-response-ishttpcontent}}
         {{^vendorExtensions.x-codegen-response-ishttpcontent}}
-        return std::make_pair(std::move(contentType), response.extract_string(true));
+        return std::make_pair(std::move(contentType), response.extract_string(true).get());
     })
     .then([=](std::pair<utility::string_t, utility::string_t> response)
     {
-        {{^returnType}}return void();
+        {{^returnType}}
+        CO_UNUSED(response);
+        return void();
         {{/returnType}}{{#returnType}}{{#returnContainer}}{{{returnType}}} result;
         {{/returnContainer}}{{^returnContainer}}{{{returnType}}} result({{{defaultResponse}}});{{/returnContainer}}
         
