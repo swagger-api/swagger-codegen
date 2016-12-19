@@ -131,6 +131,11 @@ class Decoders {
         ].map { (format: String) -> DateFormatter in
             let formatter = DateFormatter()
             formatter.dateFormat = format
+            //Fix: http://stackoverflow.com/questions/23833038/a-bug-nsdateformatter-datefromstring-returns-null-only-for-this-date-string/23839955#23839955
+            if formatter.timeZone.secondsFromGMT() == 3600*8 {
+                // Change timeZone `Asia/Shanghai` to fixed `GMT+0800`
+                formatter.timeZone = TimeZone.init(secondsFromGMT: 3600*8)
+            }
             return formatter
         }
         // Decoder for Date
