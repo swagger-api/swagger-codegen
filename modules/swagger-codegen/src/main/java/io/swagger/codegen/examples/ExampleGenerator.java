@@ -3,6 +3,7 @@ package io.swagger.codegen.examples;
 import io.swagger.models.Model;
 import io.swagger.models.ModelImpl;
 import io.swagger.models.properties.ArrayProperty;
+import io.swagger.models.properties.BaseIntegerProperty;
 import io.swagger.models.properties.BooleanProperty;
 import io.swagger.models.properties.DateProperty;
 import io.swagger.models.properties.DateTimeProperty;
@@ -105,6 +106,8 @@ public class ExampleGenerator {
         } else if (property instanceof FloatProperty) {
             return 1.23f;
         } else if (property instanceof IntegerProperty) {
+            return 123;
+        } else if (property.getClass().equals(BaseIntegerProperty.class)) {
             return 123;
         } else if (property instanceof LongProperty) {
             return 123456789L;
