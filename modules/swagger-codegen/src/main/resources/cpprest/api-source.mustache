@@ -23,55 +23,53 @@ using namespace {{modelNamespace}};
 
 namespace
 {
-using StringVec = std::vector<std::string>;
-
-bool leftWildcardMatch(const std::string& contentType,
+bool leftWildcardMatch(const utility::string_t& contentType,
                        size_t slashIndex,
                        size_t wildcardLeftIndex,
-                       const std::string& pattern)
+                       const utility::string_t& pattern)
 {
     const auto contentTypeRight = contentType.substr(slashIndex + 1, contentType.length());
     const auto patternRight = pattern.substr(wildcardLeftIndex + 2, pattern.length());
 
-    return (contentTypeRight.find(patternRight) != std::string::npos);
+    return (contentTypeRight.find(patternRight) != utility::string_t::npos);
 }
 
-bool rightWildcardMatch(const std::string& contentType,
+bool rightWildcardMatch(const utility::string_t& contentType,
                         size_t slashIndex,
                         size_t wildcardRightIndex,
-                        const std::string& pattern)
+                        const utility::string_t& pattern)
 {
     const auto contentTypeLeft = contentType.substr(0, slashIndex);
     const auto patternLeft = pattern.substr(0, wildcardRightIndex);
 
-    return (contentTypeLeft.find(patternLeft) != std::string::npos);
+    return (contentTypeLeft.find(patternLeft) != utility::string_t::npos);
 }
 
-bool contentTypeMatch(const StringVec& patterns, std::string contentType)
+bool contentTypeMatch(const std::vector<utility::string_t>& patterns, utility::string_t contentType)
 {
     contentType.erase(std::remove(contentType.begin(), contentType.end(), ' '), contentType.end());
 
     const auto slashIndex = contentType.find("/");
-    if (slashIndex == std::string::npos)
+    if (slashIndex == utility::string_t::npos)
     {
         return false;
     }
 
     for (const auto& pattern : patterns)
     {
-        if (pattern == "*/*" || contentType.find(pattern) != std::string::npos)
+        if (pattern == "*/*" || contentType.find(pattern) != utility::string_t::npos)
         {
             return true;
         }
 
         const auto wildcardLeftIndex = pattern.find("*/");
-        if (wildcardLeftIndex != std::string::npos &&
+        if (wildcardLeftIndex != utility::string_t::npos &&
             leftWildcardMatch(contentType, slashIndex, wildcardLeftIndex, pattern))
         {
             return true;
         }
         const auto wildcardRightIndex = pattern.find("/*");
-        if (wildcardRightIndex != std::string::npos &&
+        if (wildcardRightIndex != utility::string_t::npos &&
             rightWildcardMatch(contentType, slashIndex, wildcardRightIndex, pattern))
         {
             return true;
@@ -112,7 +110,7 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
     std::map<utility::string_t, utility::string_t> formParams;
     std::map<utility::string_t, std::shared_ptr<HttpContent>> fileParams;
 
-    StringVec responseHttpContentTypes;
+    std::vector<utility::string_t> responseHttpContentTypes;
     {{#produces}}responseHttpContentTypes.push_back( U("{{{mediaType}}}") );
     {{/produces}}
 
