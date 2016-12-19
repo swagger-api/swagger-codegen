@@ -10,6 +10,7 @@
 
 #define _TURN_OFF_PLATFORM_STRING
 #include <boost/algorithm/string/replace.hpp>
+#include <boost/algorithm/string/join.hpp>
 #undef _TURN_OFF_PLATFORM_STRING
 
 #include "Utils/Log.h"
@@ -114,6 +115,8 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
     StringVec responseHttpContentTypes;
     {{#produces}}responseHttpContentTypes.push_back( U("{{{mediaType}}}") );
     {{/produces}}
+
+    const auto responseHttpContentType = boost::algorithm::join(responseHttpContentTypes, ",");
 
     headerParams[U("Accept")] = responseHttpContentType;
     

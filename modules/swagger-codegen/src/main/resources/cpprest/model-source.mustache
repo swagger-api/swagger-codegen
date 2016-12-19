@@ -3,6 +3,8 @@
 
 #include "{{classname}}.h"
 
+#include "Utils/Basic.h"
+
 {{#modelNamespaceDeclarations}}
 namespace {{this}} {
 {{/modelNamespaceDeclarations}}
@@ -60,6 +62,9 @@ web::json::value {{classname}}::toJson() const
 
 void {{classname}}::fromJson(web::json::value& val)
 {
+    // TODO: fix mustache code
+    CO_UNUSED(val);
+
     {{#vars}}{{#isPrimitiveType}}{{^isListContainer}}{{^required}}if(val.has_field(U("{{baseName}}")))
     {
         {{setter}}(ModelBase::{{baseType}}FromJson(val[U("{{baseName}}")]));
@@ -116,6 +121,10 @@ void {{classname}}::fromJson(web::json::value& val)
 
 void {{classname}}::toMultipart(std::shared_ptr<MultipartFormData> multipart, const utility::string_t& prefix) const
 {
+    // TODO: fix mustache code
+    CO_UNUSED(multipart);
+    CO_UNUSED(prefix);
+
     utility::string_t namePrefix = prefix;
     if(namePrefix.size() > 0 && namePrefix[namePrefix.size() - 1] != U('.'))
     {
