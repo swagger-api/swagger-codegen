@@ -2010,7 +2010,7 @@
       "get": {
         "operationId": "getInfo",
         "produces": [
-          "application/json"
+          "application/vnd.ncloudtech.cloudoffice.info+json;v=1;"
         ],
         "responses": {
           "200": {
