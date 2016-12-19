@@ -274,8 +274,9 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
     })
     .then([=](std::pair<utility::string_t, std::vector<unsigned char>> response)
     {
-        auto result = std::make_shared<HttpContent>(std::move(response.second));
-
+        HttpContent result;
+        auto stream = std::make_shared<std::stringstream>(std::string(response.second.begin(), response.second.end()));
+        result.setData(stream);
         return result;
         {{/vendorExtensions.x-codegen-response-ishttpcontent}}
         {{^vendorExtensions.x-codegen-response-ishttpcontent}}
