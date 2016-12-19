@@ -9,23 +9,8 @@ HttpContent::HttpContent()
 {
 }
 
-HttpContent::HttpContent(std::vector<uint8_t> data)
-    : m_DataVec(std::move(data))
-{
-}
-
 HttpContent::~HttpContent()
 {
-}
-
-const std::vector<uint8_t>& HttpContent::getDataVec() const
-{
-    return m_DataVec;
-}
-
-std::vector<uint8_t>&& HttpContent::moveDataVec()
-{
-    return std::move(m_DataVec);
 }
 
 utility::string_t HttpContent::getContentDisposition()
