@@ -7,6 +7,7 @@
 #include "MultipartFormData.h"
 
 #include <vector>
+#include <unordered_set>
 
 #define _TURN_OFF_PLATFORM_STRING
 #include <boost/algorithm/string/replace.hpp>
@@ -259,7 +260,7 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
         {
             contentType = response.headers()[U("Content-Type")];
 
-            if(!contentTypeMatch.find(responseHttpContentTypes, contentType))
+            if(!contentTypeMatch(responseHttpContentTypes, contentType))
             {
                 throw ApiException(500
                     , U("error calling {{operationId}}: unexpected response type: ") + contentType

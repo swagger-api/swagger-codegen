@@ -123,7 +123,6 @@ void {{classname}}::toMultipart(std::shared_ptr<MultipartFormData> multipart, co
 {
     // TODO: fix mustache code
     CO_UNUSED(multipart);
-    CO_UNUSED(prefix);
 
     utility::string_t namePrefix = prefix;
     if(namePrefix.size() > 0 && namePrefix[namePrefix.size() - 1] != U('.'))
@@ -169,6 +168,9 @@ void {{classname}}::toMultipart(std::shared_ptr<MultipartFormData> multipart, co
 
 void {{classname}}::fromMultiPart(std::shared_ptr<MultipartFormData> multipart, const utility::string_t& prefix)
 {
+    // TODO: fix mustache code
+    CO_UNUSED(multipart);
+
     utility::string_t namePrefix = prefix;
     if(namePrefix.size() > 0 && namePrefix[namePrefix.size() - 1] != U('.'))
     {
