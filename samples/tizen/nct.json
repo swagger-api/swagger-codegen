@@ -2010,8 +2010,7 @@
       "get": {
         "operationId": "getInfo",
         "produces": [
-          "application/json",
-          "*/*"
+          "application/json"
         ],
         "responses": {
           "200": {

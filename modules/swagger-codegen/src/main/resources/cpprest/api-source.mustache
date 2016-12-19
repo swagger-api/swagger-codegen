@@ -115,8 +115,8 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
     {{#produces}}responseHttpContentTypes.push_back( U("{{{mediaType}}}") );
     {{/produces}}
 
-    const auto responseHttpContentType = boost::algorithm::join(responseHttpContentTypes, ",");
-
+    auto responseHttpContentType = boost::algorithm::join(responseHttpContentTypes, ",");
+    responseHttpContentType += ", */*";
     headerParams[U("Accept")] = responseHttpContentType;
     
     std::unordered_set<utility::string_t> consumeHttpContentTypes;
