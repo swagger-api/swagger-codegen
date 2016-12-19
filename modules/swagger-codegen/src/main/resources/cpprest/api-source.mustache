@@ -164,7 +164,7 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
         {{/isListContainer}}{{^isListContainer}}json = ModelBase::toJson({{paramName}});
         {{/isListContainer}}{{/isPrimitiveType}}
         
-        httpBody = std::shared_ptr<IHttpBody>( new JsonBody( json ) );
+        httpBody = std::make_shared<JsonBody>(json);
         
         {{/bodyParam}}
     }
@@ -174,7 +174,7 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
         requestHttpContentType = U("multipart/form-data");
         
         {{#bodyParam}}
-        std::shared_ptr<MultipartFormData> multipart(new MultipartFormData);
+        auto multipart = std::make_shared<MultipartFormData>();
         {{#isPrimitiveType}} multipart->add(ModelBase::toHttpContent("{{paramName}}", {{paramName}}));
         {{/isPrimitiveType}}{{^isPrimitiveType}}{{#isListContainer}}
         {
@@ -237,7 +237,12 @@ pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/r
     {{/authMethods}}
     
     return m_ApiClient->callApi(path, U("{{httpMethod}}"), queryParams, httpBody, headerParams, formParams, fileParams, requestHttpContentType)
-    .then([=](web::http::http_response response)
+    {{#vendorExtensions.x-codegen-response-ishttpcontent}}
+    .then([=](web::http::http_response response) -> std::pair<utility::string_t, std::vector<unsigned char>>
+    {{/vendorExtensions.x-codegen-response-ishttpcontent}}
+    {{^vendorExtensions.x-codegen-response-ishttpcontent}}
+    .then([=](web::http::http_response response) -> std::pair<utility::string_t, utility::string_t>
+    {{/vendorExtensions.x-codegen-response-ishttpcontent}}
     {
         CO_LOG_TRACE << "Response: " << response.to_string();
 
