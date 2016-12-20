@@ -14,6 +14,7 @@ public class SpringCodegen extends AbstractJavaCodegen {
     public static final String CONFIG_PACKAGE = "configPackage";
     public static final String BASE_PACKAGE = "basePackage";
     public static final String INTERFACE_ONLY = "interfaceOnly";
+    public static final String DECORATOR_PATTERN = "decoratorPattern";
     public static final String SINGLE_CONTENT_TYPES = "singleContentTypes";
     public static final String JAVA_8 = "java8";
     public static final String ASYNC = "async";
@@ -26,6 +27,7 @@ public class SpringCodegen extends AbstractJavaCodegen {
     protected String configPackage = "io.swagger.configuration";
     protected String basePackage = "io.swagger";
     protected boolean interfaceOnly = false;
+    protected boolean decoratorPattern = false;
     protected boolean singleContentTypes = false;
     protected boolean java8 = false;
     protected boolean async = false;
@@ -52,6 +54,7 @@ public class SpringCodegen extends AbstractJavaCodegen {
         cliOptions.add(new CliOption(CONFIG_PACKAGE, "configuration package for generated code"));
         cliOptions.add(new CliOption(BASE_PACKAGE, "base package for generated code"));
         cliOptions.add(CliOption.newBoolean(INTERFACE_ONLY, "Whether to generate only API interface stubs without the server files."));
+        cliOptions.add(CliOption.newBoolean(DECORATOR_PATTERN, "Whether to generate the server files using the decorator pattern"));
         cliOptions.add(CliOption.newBoolean(SINGLE_CONTENT_TYPES, "Whether to select only one produces/consumes content-type by operation."));
         cliOptions.add(CliOption.newBoolean(JAVA_8, "use java8 default interface"));
         cliOptions.add(CliOption.newBoolean(ASYNC, "use async Callable controllers"));
@@ -111,6 +114,10 @@ public class SpringCodegen extends AbstractJavaCodegen {
             this.setInterfaceOnly(Boolean.valueOf(additionalProperties.get(INTERFACE_ONLY).toString()));
         }
 
+        if (additionalProperties.containsKey(DECORATOR_PATTERN)) {
+            this.setDecoratorPattern(Boolean.valueOf(additionalProperties.get(DECORATOR_PATTERN).toString()));
+        }
+
         if (additionalProperties.containsKey(SINGLE_CONTENT_TYPES)) {
             this.setSingleContentTypes(Boolean.valueOf(additionalProperties.get(SINGLE_CONTENT_TYPES).toString()));
         }
@@ -133,6 +140,10 @@ public class SpringCodegen extends AbstractJavaCodegen {
 
         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
+
+        if (this.interfaceOnly && this.decoratorPattern) {
+            throw new IllegalArgumentException("Can not generate code with `interfaceOnly` and `decoratorPattern` both true.");
+        }
 
         if (!this.interfaceOnly) {
             if (library.equals(DEFAULT_LIBRARY)) {
@@ -182,6 +193,13 @@ public class SpringCodegen extends AbstractJavaCodegen {
                 supportingFiles.add(new SupportingFile("swaggerDocumentationConfig.mustache",
                         (sourceFolder + File.separator + configPackage).replace(".", java.io.File.separator), "SwaggerDocumentationConfig.java"));
             }
+        }
+
+        additionalProperties.put("jdk8-no-decorator", Boolean.valueOf(!this.decoratorPattern && this.java8).toString());
+
+        if (this.decoratorPattern) {
+            additionalProperties.put("isDecorator", "true");
+            apiTemplateFiles.put("apiDecorator.mustache", "Decorator.java");
         }
 
         if (this.java8) {
@@ -396,6 +414,8 @@ public class SpringCodegen extends AbstractJavaCodegen {
     }
 
     public void setInterfaceOnly(boolean interfaceOnly) { this.interfaceOnly = interfaceOnly; }
+
+    public void setDecoratorPattern(boolean decoratorPattern) { this.decoratorPattern = decoratorPattern; }
 
     public void setSingleContentTypes(boolean singleContentTypes) {
         this.singleContentTypes = singleContentTypes;

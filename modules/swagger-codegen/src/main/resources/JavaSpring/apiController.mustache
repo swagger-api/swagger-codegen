@@ -27,18 +27,27 @@ import java.util.concurrent.Callable;
 @Controller
 {{#operations}}
 public class {{classname}}Controller implements {{classname}} {
-{{^jdk8}}{{#operation}}
+{{#isDecorator}}
+    private final {{classname}}Decorator decorator;
+
+    @org.springframework.beans.factory.annotation.Autowired
+    {{classname}}Controller({{classname}}Decorator decorator) {
+        this.decorator = decorator;
+    }{{/isDecorator}}
+
+{{#jdk8-no-decorator}}{{#operation}}
     public {{#async}}Callable<{{/async}}ResponseEntity<{{>returnTypes}}>{{#async}}>{{/async}} {{operationId}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},
         {{/hasMore}}{{/allParams}}) {
-        // do some magic!{{^async}}
+        // do some magic!{{^isDecorator}}{{^async}}
         return new ResponseEntity<{{>returnTypes}}>(HttpStatus.OK);{{/async}}{{#async}}
         return new Callable<ResponseEntity<{{>returnTypes}}>>() {
             @Override
             public ResponseEntity<{{>returnTypes}}> call() throws Exception {
                 return new ResponseEntity<{{>returnTypes}}>(HttpStatus.OK);
             }
-        };{{/async}}
+        };{{/async}}{{/isDecorator}}{{#isDecorator}}
+        return decorator.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});{{/isDecorator}}
     }
-{{/operation}}{{/jdk8}}
+{{/operation}}{{/jdk8-no-decorator}}
 }
 {{/operations}}
