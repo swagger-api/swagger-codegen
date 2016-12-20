@@ -19,6 +19,7 @@
 
 #include <cpprest/details/basic_types.h>
 #include <cpprest/http_client.h>
+#include <pplx/pplxcancellation_token.h>
 
 {{#apiNamespaceDeclarations}}
 namespace {{this}} {
@@ -52,6 +53,8 @@ public:
 
         return ss.str();        
     }
+
+    void cancel();
     
     pplx::task<web::http::http_response> callApi( 
         const utility::string_t& path, 
@@ -67,6 +70,7 @@ public:
 protected:
 
     std::shared_ptr<ApiConfiguration> m_Configuration;
+    pplx::cancellation_token_source m_CancelationTokenSource;
 };
 
 {{#apiNamespaceDeclarations}}

@@ -1,0 +1,2038 @@
+{
+  "basePath": "/api/v1",
+  "securityDefinitions": {
+    "fs-based": {
+      "type": "apiKey",
+      "name": "X-co-auth-token",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "Token": {
+      "description": "A session token for CO API requests.",
+      "properties": {
+        "success": {
+          "description": "Authentication status.",
+          "type": "string"
+        },
+        "token": {
+          "description": "Session token to pass in X-co-auth-token header.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "token",
+        "success"
+      ],
+      "type": "object"
+    },
+    "Login": {
+      "description": "Login parameters",
+      "properties": {
+        "login": {
+          "description": "User name.",
+          "type": "string"
+        },
+        "password": {
+          "description": "Password.",
+          "type": "string"
+        },
+        "captcha": {
+          "description": "Captcha.",
+          "type": "string"
+        },
+        "captcha_id": {
+          "description": "Captcha id.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "login",
+        "password"
+      ],
+      "type": "object"
+    },
+    "LogoutStatus": {
+      "description": "A status returned after successful logout operation.",
+      "properties": {
+        "success": {
+          "description": "Logout status.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "success"
+      ],
+      "type": "object"
+    },
+    "Profile": {
+      "description": "A user profile as cached in the session.",
+      "properties": {
+        "admin": {
+          "description": "Corporate admin flag.",
+          "type": "boolean"
+        },
+        "avatar": {
+          "description": "User avatar file ID.",
+          "type": "string"
+        },
+        "disk_total": {
+          "description": "Total disk quota.",
+          "type": "string"
+        },
+        "disk_used": {
+          "description": "Disk quota used.",
+          "type": "string"
+        },
+        "email": {
+          "description": "Email.",
+          "type": "string"
+        },
+        "first_name": {
+          "description": "User first name.",
+          "type": "string"
+        },
+        "lang": {
+          "description": "User preferred language.",
+          "type": "string"
+        },
+        "last_name": {
+          "description": "User last name.",
+          "type": "string"
+        },
+        "login": {
+          "description": "Login.",
+          "type": "string"
+        },
+        "middle_name": {
+          "description": "User middle name.",
+          "type": "string"
+        },
+        "recovery_email": {
+          "description": "Recovery email.",
+          "type": "string"
+        },
+        "user_id": {
+          "description": "User ID.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "user_id",
+        "login",
+        "email"
+      ],
+      "type": "object"
+    },
+    "Config": {
+      "description": "Configuration",
+      "properties": {
+        "ROUTING": {
+          "description": "ROUTING",
+          "properties": {
+            "AUTH_ROUTING": {
+              "description": "Auth Routing",
+              "properties": {
+                "logout": {
+                  "type": "string"
+                },
+                "landing": {
+                  "type": "string"
+                },
+                "feedback": {
+                  "type": "string"
+                },
+                "eula": {
+                  "type": "string"
+                },
+                "profile": {
+                  "type": "string"
+                },
+                "restore": {
+                  "type": "string"
+                },
+                "registration": {
+                  "type": "string"
+                },
+                "login": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "COAPI_API": {
+              "description": "COAPI api",
+              "properties": {
+                "media_upload": {
+                  "type": "string"
+                },
+                "login": {
+                  "type": "string"
+                },
+                "health": {
+                  "type": "string"
+                },
+                "parents": {
+                  "type": "string"
+                },
+                "crash_report": {
+                  "type": "string"
+                },
+                "profile": {
+                  "type": "string"
+                },
+                "info": {
+                  "type": "string"
+                },
+                "copy": {
+                  "type": "string"
+                },
+                "file": {
+                  "type": "string"
+                },
+                "document_copy": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                },
+                "import": {
+                  "type": "string"
+                },
+                "captcha": {
+                  "type": "string"
+                },
+                "export": {
+                  "type": "string"
+                },
+                "groups": {
+                  "type": "string"
+                },
+                "avatar": {
+                  "type": "string"
+                },
+                "make_dir": {
+                  "type": "string"
+                },
+                "property": {
+                  "type": "string"
+                },
+                "logout": {
+                  "type": "string"
+                },
+                "files": {
+                  "type": "string"
+                },
+                "documents": {
+                  "type": "string"
+                },
+                "contacts": {
+                  "type": "string"
+                },
+                "atmosphere": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "permissions_multiple": {
+                  "type": "string"
+                },
+                "request_access": {
+                  "type": "string"
+                },
+                "trash": {
+                  "type": "string"
+                },
+                "move": {
+                  "type": "string"
+                },
+                "upload": {
+                  "type": "string"
+                },
+                "preview": {
+                  "type": "string"
+                },
+                "permission": {
+                  "type": "string"
+                },
+                "untrash": {
+                  "type": "string"
+                },
+                "permissions": {
+                  "type": "string"
+                },
+                "media": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "AUTH_BASE_URL": {
+              "description": "Auth Base URL",
+              "type": "string"
+            },
+            "COAPI_BASE_URL": {
+              "description": "COAPI Base ULR",
+              "type": "string"
+            },
+            "FILES_BASE_URL": {
+              "description": "Files Base ULR",
+              "type": "string"
+            }
+          },
+          "required": [
+            "AUTH_API",
+            "AUTH_ROUTING",
+            "CO_API",
+            "AUTH_BASE_URL",
+            "COAPI_BASE_URL",
+            "FILES_BASE_URL"
+          ],
+          "type": "object"
+        }
+      },
+      "required": ["ROUTING"],
+      "type": "object"
+    },
+    "AccessRole": {
+      "description": "The access roles enumeration.",
+      "enum": [
+        "owner",
+        "editor",
+        "viewer"
+      ],
+      "type": "string"
+    },
+    "AddFilePermissionsRequest": {
+      "description": "REST API addFilePermissions request body",
+      "properties": {
+        "permissions": {
+          "description": "The actual list of permissions.",
+          "items": {
+            "$ref": "#/definitions/Permission"
+          },
+          "type": "array"
+        },
+        "sendEmail": {
+          "default": false,
+          "description": "Send email after set permission or not indicator",
+          "type": "boolean"
+        },
+        "userMessage": {
+          "description": "User message to add in email",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "FileListQuery": {
+      "description": "Query for file list.",
+      "properties": {
+        "limit": {
+          "description": "Limit.",
+          "type": "integer"
+        },
+        "mediaType": {
+          "description": "Media type filter.",
+          "type": "string"
+        },
+        "offset": {
+          "description": "Offset.",
+          "type": "integer"
+        },
+        "parentId": {
+          "description": "Parent of list.",
+          "type": "string"
+        },
+        "searchByContent": {
+          "description": "Search by content if true.",
+          "type": "boolean"
+        },
+        "searchInShared": {
+          "description": "Search in shared folder if true.",
+          "type": "boolean"
+        },
+        "searchQuery": {
+          "description": "Query for search by filename/content.",
+          "type": "string"
+        },
+        "sortField": {
+          "description": "Sort field.",
+          "type": "string"
+        },
+        "sortOrder": {
+          "description": "Sort order (asc/desc).",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "FileResource": {
+      "description": "The file resource.",
+      "properties": {
+        "file": {
+          "$ref": "#/definitions/FileType"
+        },
+        "links": {
+          "items": {
+            "$ref": "#/definitions/Link"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "file"
+      ],
+      "type": "object"
+    },
+    "FileType": {
+      "description": "The metadata for a file.",
+      "properties": {
+        "checksum": {
+          "description": "An MD5 checksum for the content of this file.",
+          "type": "string"
+        },
+        "createdDate": {
+          "description": "Create time for this file (formatted ISO8601 timestamp).",
+          "format": "date-time",
+          "type": "string"
+        },
+        "creator": {
+          "description": "The original creator (userId) of this file.",
+          "type": "string"
+        },
+        "description": {
+          "description": "A short description of the file.",
+          "type": "string"
+        },
+        "etag": {
+          "description": "ETag (HTTP Entity Tag) of the file.",
+          "type": "string"
+        },
+        "fileSize": {
+          "description": "The size of the file in bytes.",
+          "format": "int64",
+          "type": "string"
+        },
+        "filename": {
+          "description": "Filename.",
+          "type": "string"
+        },
+        "headRevisionId": {
+          "description": "The ID of the file's head (last) revision.",
+          "type": "string"
+        },
+        "id": {
+          "description": "The ID of the file.",
+          "type": "string"
+        },
+        "index": {
+          "description": "The id of index file.",
+          "type": "string"
+        },
+        "lastModifyingUserId": {
+          "description": "The last userId to modify this file.",
+          "type": "string"
+        },
+        "lastViewedByMeDate": {
+          "description": "Last time this file was viewed by the user (formatted RFC 3339 timestamp).",
+          "format": "date-time",
+          "type": "string"
+        },
+        "mediaType": {
+          "description": "The media type of the file.",
+          "type": "string"
+        },
+        "modifiedByMeDate": {
+          "description": "Last time this file was modified by the user (formatted RFC 3339 timestamp).",
+          "format": "date-time",
+          "type": "string"
+        },
+        "modifiedDate": {
+          "description": "Last time this file was modified by anyone (formatted RFC 3339 timestamp).",
+          "format": "date-time",
+          "type": "string"
+        },
+        "originalFile": {
+          "description": "The original file id for thumbnail.",
+          "type": "string"
+        },
+        "originalMediaType": {
+          "description": "The original media type of the file that was uploaded, imported and converted to the storage.",
+          "type": "string"
+        },
+        "ownerId": {
+          "description": "The owner (userId) of this file.",
+          "type": "string"
+        },
+        "parentId": {
+          "description": "The parent folder (parentReferenceId) which contains this file. The root has no parent",
+          "type": "string"
+        },
+        "prerender": {
+          "description": "The id of prerendered file.",
+          "type": "string"
+        },
+        "preview": {
+          "description": "The id of preview file.",
+          "type": "string"
+        },
+        "previewFailureMark": {
+          "description": "Flag to show unsuccessful preview generation.",
+          "type": "string"
+        },
+        "properties": {
+          "description": "The list of file's properties. Currently supported ids: flagged, shared, shared_withme_role",
+          "items": {
+            "$ref": "#/definitions/PropertyResource"
+          },
+          "type": "array"
+        },
+        "quotaBytesUsed": {
+          "description": "The number of quota bytes used by this file.",
+          "format": "int64",
+          "type": "string"
+        },
+        "sharedWithMeDate": {
+          "description": "Time at which this file was shared with the user (formatted RFC 3339 timestamp).",
+          "format": "date-time",
+          "type": "string"
+        },
+        "thumbnail": {
+          "description": "The id of thumbnail file.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "mediaType",
+        "createdDate",
+        "fileSize",
+        "headRevisionId",
+        "lastModifyingUserId",
+        "modifiedDate",
+        "ownerId"
+      ],
+      "type": "object"
+    },
+    "Link": {
+      "description": "The link resource.",
+      "properties": {
+        "href": {
+          "description": "Actial link reference.",
+          "type": "string"
+        },
+        "rel": {
+          "description": "Relation to the current object.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rel",
+        "href"
+      ],
+      "type": "object"
+    },
+    "MakeDirRequest": {
+      "description": "Reqeust data for directory creation.",
+      "properties": {
+        "conflictStrategy": {
+          "description": "Filenames conflict resolving strategy",
+          "enum": [
+            "overwrite",
+            "keep_both"
+          ],
+          "type": "string"
+        },
+        "filename": {
+          "description": "Filename",
+          "type": "string"
+        },
+        "parentId": {
+          "description": "Parent folder ID",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Parent": {
+      "description": "A file's parent .",
+      "properties": {
+        "filename": {
+          "description": "Filename.",
+          "type": "string"
+        },
+        "id": {
+          "description": "The ID of the parent.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "filename"
+      ],
+      "type": "object"
+    },
+    "ParentReference": {
+      "description": "A reference to a file's parent.",
+      "properties": {
+        "links": {
+          "items": {
+            "$ref": "#/definitions/Link"
+          },
+          "type": "array"
+        },
+        "parent": {
+          "$ref": "#/definitions/Parent"
+        }
+      },
+      "required": [
+        "parent"
+      ],
+      "type": "object"
+    },
+    "Permission": {
+      "description": "A permission for a file.",
+      "properties": {
+        "email": {
+          "description": "The user's email for this permission.",
+          "type": "string"
+        },
+        "etag": {
+          "description": "The ETag of the permission.",
+          "type": "string"
+        },
+        "groupName": {
+          "description": "Permission group name",
+          "type": "string"
+        },
+        "id": {
+          "description": "The ID of the permission.",
+          "type": "string"
+        },
+        "isGroup": {
+          "description": "Group permission indicator",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "The name for this permission.",
+          "type": "string"
+        },
+        "parentShareFilename": {
+          "description": "Parent share filename",
+          "type": "string"
+        },
+        "parentShareId": {
+          "description": "Shared parent folder.",
+          "type": "string"
+        },
+        "role": {
+          "$ref": "#/definitions/AccessRole",
+          "description": "The primary role for this user. Allowed values are:  \n- owner \n- viewer \n- editor"
+        },
+        "shareUserAvatarId": {
+          "description": "Share user avatar id.",
+          "type": "string"
+        },
+        "sharedUserFirstName": {
+          "description": "Share user first name.",
+          "type": "string"
+        },
+        "sharedUserLastName": {
+          "description": "Share user last name.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "role"
+      ],
+      "type": "object"
+    },
+    "PermissionResource": {
+      "description": "Permission's resource",
+      "properties": {
+        "links": {
+          "items": {
+            "$ref": "#/definitions/Link"
+          },
+          "type": "array"
+        },
+        "permission": {
+          "$ref": "#/definitions/Permission"
+        }
+      },
+      "type": "object"
+    },
+    "Property": {
+      "description": "A key-value pair with a specified visibility scope.",
+      "properties": {
+        "etag": {
+          "description": "The ETag of the property.",
+          "type": "string"
+        },
+        "id": {
+          "description": "The ID of the property.",
+          "type": "string"
+        },
+        "key": {
+          "description": "The key of this property.",
+          "type": "string"
+        },
+        "value": {
+          "description": "The value of this property.",
+          "type": "string"
+        },
+        "visibility": {
+          "description": "The visibility scope of this property.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "key"
+      ],
+      "type": "object"
+    },
+    "PropertyResource": {
+      "description": "A file's property resource.",
+      "properties": {
+        "links": {
+          "items": {
+            "$ref": "#/definitions/Link"
+          },
+          "type": "array"
+        },
+        "property": {
+          "$ref": "#/definitions/Property"
+        }
+      },
+      "required": [
+        "property"
+      ],
+      "type": "object"
+    },
+    "Revision": {
+      "description": "A revision of a file.",
+      "properties": {
+        "checksum": {
+          "description": "An MD5 checksum for the content of this revision.",
+          "type": "string"
+        },
+        "createdDate": {
+          "description": "Create time for this file (formatted ISO8601 timestamp).",
+          "format": "date-time",
+          "type": "string"
+        },
+        "etag": {
+          "description": "The ETag of the revision.",
+          "type": "string"
+        },
+        "fileId": {
+          "description": "The ID of the file of this revision.",
+          "type": "string"
+        },
+        "fileSize": {
+          "description": "The size of the revision in bytes.",
+          "format": "int64",
+          "type": "string"
+        },
+        "id": {
+          "description": "The ID of the revision.",
+          "type": "string"
+        },
+        "lastModifyingUserId": {
+          "description": "The last userId to modify this revision.",
+          "type": "string"
+        },
+        "mediaType": {
+          "description": "The media type of the revision.",
+          "type": "string"
+        },
+        "modifiedDate": {
+          "description": "Last time this revision was modified (formatted RFC 3339 timestamp).",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdDate",
+        "fileSize",
+        "id",
+        "lastModifyingUserId",
+        "mediaType",
+        "modifiedDate"
+      ],
+      "type": "object"
+    },
+    "RevisionResource": {
+      "description": "A revision resource.",
+      "properties": {
+        "links": {
+          "items": {
+            "$ref": "#/definitions/Link"
+          },
+          "type": "array"
+        },
+        "revision": {
+          "$ref": "#/definitions/Revision"
+        }
+      },
+      "required": [
+        "revision"
+      ],
+      "type": "object"
+    },
+    "ApiResource": {
+      "description": "File REST API entry point containing only links.",
+      "properties": {
+        "links": {
+          "items": {
+            "$ref": "#/definitions/Link"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ExportFormat": {
+      "properties": {
+        "source": {
+          "description": "The content type to convert from.",
+          "type": "string"
+        },
+        "targets": {
+          "description": "The possible content types to convert to.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "InfoFileResource": {
+      "description": "The metadata for a file.",
+      "properties": {
+        "checksum": {
+          "description": "An MD5 checksum for the content of this file.",
+          "type": "string"
+        },
+        "createdDate": {
+          "description": "Create time for this file (formatted ISO8601 timestamp).",
+          "format": "date-time",
+          "type": "string"
+        },
+        "description": {
+          "description": "A short description of the file.",
+          "type": "string"
+        },
+        "etag": {
+          "description": "ETag (HTTP Entity Tag) of the file.",
+          "type": "string"
+        },
+        "fileSize": {
+          "description": "The size of the file in bytes.",
+          "format": "int64",
+          "type": "string"
+        },
+        "filename": {
+          "description": "Filename",
+          "type": "string"
+        },
+        "headRevisionId": {
+          "description": "The ID of the file's head (last) revision.",
+          "type": "string"
+        },
+        "id": {
+          "description": "The ID of the file.",
+          "type": "string"
+        },
+        "lastModifyingUserId": {
+          "description": "The last userId to modify this file.",
+          "type": "string"
+        },
+        "lastViewedByMeDate": {
+          "description": "Last time this file was viewed by the user (formatted RFC 3339 timestamp).",
+          "format": "date-time",
+          "type": "string"
+        },
+        "mediaType": {
+          "description": "The media type of the file.",
+          "type": "string"
+        },
+        "modifiedByMeDate": {
+          "description": "Last time this file was modified by the user (formatted RFC 3339 timestamp).",
+          "format": "date-time",
+          "type": "string"
+        },
+        "modifiedDate": {
+          "description": "Last time this file was modified by anyone (formatted RFC 3339 timestamp).",
+          "format": "date-time",
+          "type": "string"
+        },
+        "originalMediaType": {
+          "description": "The original media type of the file that was uploaded, imported and converted to the storage.",
+          "type": "string"
+        },
+        "ownerId": {
+          "description": "The owner (userId) of this file.",
+          "type": "string"
+        },
+        "parentId": {
+          "description": "The parent folder (parentReferenceId) which contains this file. The root has no parent",
+          "type": "string"
+        },
+        "properties": {
+          "description": "The list of file's properties.",
+          "items": {
+            "$ref": "#/definitions/Property"
+          },
+          "type": "array"
+        },
+        "quotaBytesUsed": {
+          "description": "The number of quota bytes used by this file.",
+          "format": "int64",
+          "type": "string"
+        },
+        "sharedWithMeDate": {
+          "description": "Time at which this file was shared with the user (formatted RFC 3339 timestamp).",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "mediaType"
+      ],
+      "type": "object"
+    },
+    "ImportFormat": {
+      "properties": {
+        "sourceExtensions": {
+          "description": "The imported file's extensions to convert from.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "sourceMediaTypes": {
+          "description": "The imported file's content types to convert from.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "target": {
+          "description": "The content type to convert to.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Info": {
+      "description": "The generic information regarding this user account.",
+      "properties": {
+        "exportFormats": {
+          "description": "The allowable export formats.",
+          "items": {
+            "$ref": "#/definitions/ExportFormat"
+          },
+          "type": "array"
+        },
+        "importFormats": {
+          "description": "The allowable import formats.",
+          "items": {
+            "$ref": "#/definitions/ImportFormat"
+          },
+          "type": "array"
+        },
+        "internalFormats": {
+          "description": "The internal CO formats.",
+          "items": {
+            "$ref": "#/definitions/InternalFormat"
+          },
+          "type": "array"
+        },
+        "maxUploadSizes": {
+          "description": "List of max upload sizes for each file type. The most specific type takes precedence.",
+          "items": {
+            "$ref": "#/definitions/MaxUploadSize"
+          },
+          "type": "array"
+        },
+        "roles": {
+          "description": "The list of all available user roles",
+          "items": {
+            "$ref": "#/definitions/AccessRole"
+          },
+          "type": "array"
+        },
+        "roots": {
+          "description": "The list of root folders (typically Shared, Trash and Personal).",
+          "items": {
+            "$ref": "#/definitions/InfoFileResource"
+          },
+          "type": "array"
+        },
+        "versions": {
+          "$ref": "#/definitions/VersionsInfo",
+          "description": "Current build and API versions."
+        }
+      },
+      "required": [
+        "roots, roles, versions"
+      ],
+      "type": "object"
+    },
+    "InfoResource": {
+      "description": "Info resource",
+      "properties": {
+        "info": {
+          "$ref": "#/definitions/Info"
+        },
+        "links": {
+          "items": {
+            "$ref": "#/definitions/Link"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "InternalFormat": {
+      "properties": {
+        "extension": {
+          "description": "The internal format's extension",
+          "type": "string"
+        },
+        "mediaType": {
+          "description": "The internal format's media type",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Link": {
+      "description": "The link resource.",
+      "properties": {
+        "href": {
+          "description": "Actial link reference.",
+          "type": "string"
+        },
+        "rel": {
+          "description": "Relation to the current object.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rel",
+        "href"
+      ],
+      "type": "object"
+    },
+    "MaxUploadSize": {
+      "properties": {
+        "size": {
+          "description": "The max upload size for this type.",
+          "format": "int64",
+          "type": "string"
+        },
+        "type": {
+          "description": "The file type.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Property": {
+      "description": "A key-value pair with a specified visibility scope.",
+      "properties": {
+        "etag": {
+          "description": "The ETag of the property.",
+          "type": "string"
+        },
+        "id": {
+          "description": "The ID of the property.",
+          "type": "string"
+        },
+        "key": {
+          "description": "The key of this property.",
+          "type": "string"
+        },
+        "value": {
+          "description": "The value of this property.",
+          "type": "string"
+        },
+        "visibility": {
+          "description": "The visibility scope of this property.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "key"
+      ],
+      "type": "object"
+    },
+    "VersionsInfo": {
+      "properties": {
+        "appVersion": {
+          "description": "CloudOffice application version.",
+          "type": "string"
+        },
+        "collaborationApiVersion": {
+          "description": "CloudOffice Collaboration API version.",
+          "type": "string"
+        },
+        "fileApiVersion": {
+          "description": "CloudOffice File API version.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "host": "coapi-wonder.myoffice.ru",
+  "info": {
+    "title": "coapi-wonder.myoffice.ru",
+    "version": "v1"
+  },
+  "paths": {
+    "/config": {
+      "get": {
+        "description": "Server Settings.",
+        "operationId": "getServerConfig",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/Config"
+            }
+          }
+        },
+        "summary": "Get Server Settings."
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "description": "User session is removed from cache after this call.",
+        "operationId": "logoutUser",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/LogoutStatus"
+            }
+          }
+        },
+        "security": [{
+          "fs-based": []
+        }],
+        "summary": "Logout user through FS service"
+      }
+    },
+    "/login": {
+      "post": {
+        "consumes": [
+          "application/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "description": "This API requires a secure connection, passing password as a plain text.<br>Also, application/json input in body is preferable.<br>If login contains no domain, the configured one is added.<br>If server returns HTTP error 400 with code=526 then valid captcha/captcha_id params are required to proceed.",
+        "operationId": "loginUser",
+        "parameters": [{
+          "description": "FS login string",
+          "in": "body",
+          "name": "login",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/Login"
+          }
+        }],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/Token"
+            }
+          }
+        },
+        "summary": "Authenticate user through FS service"
+      }
+    },
+    "/auth/profile/picture": {
+      "get": {
+        "description": "User avatar picture (cached after successful login).",
+        "operationId": "getProfilePicture",
+        "produces": [
+          "image/*"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "type": "file"
+            }
+          }
+        },
+        "security": [{
+          "fs-based": []
+        }],
+        "summary": "Get user profile picture (avatar) from FS personal data (may be cached and/or resized)."
+      }
+    },
+    "/auth/profile": {
+      "get": {
+        "description": "User session is stored (cached) after successful login.",
+        "operationId": "getProfile",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/Profile"
+            }
+          }
+        },
+        "security": [{
+          "fs-based": []
+        }],
+        "summary": "Get user profile (login and personal data) from FS personal data (may be cached)."
+      }
+    },
+    "/files": {
+      "get": {
+        "description": "Returns the list of files. Results are filtered according to the data passed in the 'q' request parameter.",
+        "operationId": "listFiles",
+        "parameters": [{
+          "description": "Urlencoded query json object.<br/><b>parentId</b> contains parent folder id.<br/><b>mediaType</b> contains media type filter.<br/><b>sortField</b> describes field name from JSON File structure. Available values:<br/>&nbsp;&nbsp;-filename</br>&nbsp;&nbsp;-creator<br/>&nbsp;&nbsp;-ownerId<br/>&nbsp;&nbsp;-fileSize<br/>&nbsp;&nbsp;-modifiedDate<br/>&nbsp;&nbsp;-createdDate<br/>&nbsp;&nbsp;-modifiedByMeDate<br/>&nbsp;&nbsp;-sharedWithMeDate<br/>&nbsp;&nbsp;-lastViewedByMeDate.<br/><b>sortOrder</b> describes order of sorting ('asc' - ascending, 'desc' - descending)<br/><b>searchQuery</b> contains search query string<br/><b>searchByContent</b> if true - search by content, if false - search by filename<br/><b>searchInShared</b> if true search in shared folder<br/><b>offset</b> contains index of the first element<br/><b>limit</b> contains number of elements",
+          "in": "query",
+          "name": "q",
+          "required": false,
+          "type": "FileListQuery"
+        }, {
+          "default": 100,
+          "description": "maximum number of results",
+          "format": "int32",
+          "in": "query",
+          "name": "maxResults",
+          "required": false,
+          "type": "integer"
+        }, {
+          "description": "page token",
+          "in": "query",
+          "name": "pageToken",
+          "required": false,
+          "type": "string"
+        }],
+        "produces": [
+          "application/vnd.ncloudtech.cloudoffice.filelist+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.filelist.hal+json;v=1;"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/FileResource"
+              },
+              "type": "array"
+            }
+          }
+        },
+        "security": [{
+          "fs-based": []
+        }],
+        "summary": "list files"
+      }
+    },
+    "/files/{fileId}": {
+      "delete": {
+        "description": "Remove file or folder. If fileId equals trash folder id, purge trash.",
+        "operationId": "deleteFile",
+        "parameters": [{
+          "description": "file id",
+          "in": "path",
+          "name": "fileId",
+          "required": true,
+          "type": "string"
+        }],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified"
+          }
+        },
+        "security": [{
+          "fs-based": []
+        }],
+        "summary": "delete file"
+      },
+      "get": {
+        "operationId": "getFile",
+        "parameters": [{
+          "description": "file id",
+          "in": "path",
+          "name": "fileId",
+          "required": true,
+          "type": "string"
+        }],
+        "produces": [
+          "application/vnd.ncloudtech.cloudoffice.file+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.file.hal+json;v=1;"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/FileResource"
+            }
+          }
+        },
+        "security": [{
+          "fs-based": []
+        }],
+        "summary": "get file"
+      },
+      "put": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Updates file medatada<br/><br/>&nbsp;&nbsp;* No content is uploaded<br/>&nbsp;&nbsp;* In the request body, supply a File resource with the following properties as the metadata:<br/>&nbsp;&nbsp;&nbsp;&nbsp;- mediaType: if not provided, the type will be set to 'application/octet-stream' [or guessed].<br/>&nbsp;&nbsp;&nbsp;&nbsp;- parentId: if not provided, the file will be placed in the default root folder.<br/>&nbsp;&nbsp;&nbsp;&nbsp;- filename: if not provided, the filename will be set to 'Untitled'",
+        "operationId": "updateFile",
+        "parameters": [{
+          "description": "File resource with the following properties as the metadata:<br/>&nbsp;&nbsp;&nbsp;&nbsp;- mediaType: if not provided, the type will be set to 'application/octet-stream' [or guessed].<br/>&nbsp;&nbsp;&nbsp;&nbsp;- parentId: if not provided, the file will be placed in the default root folder.<br/>&nbsp;&nbsp;&nbsp;&nbsp;- filename: if not provided, the filename will be set to 'Untitled'",
+          "in": "body",
+          "name": "file",
+          "required": false,
+          "schema": {
+            "$ref": "#/definitions/FileType"
+          }
+        }, {
+          "description": "file id",
+          "in": "path",
+          "name": "fileId",
+          "required": true,
+          "type": "string"
+        }, {
+          "description": "Filenames conflict resolving strategy",
+          "enum": [
+            "overwrite",
+            "keep_both"
+          ],
+          "in": "query",
+          "name": "conflictStrategy",
+          "required": false,
+          "type": "string"
+        }],
+        "produces": [
+          "application/vnd.ncloudtech.cloudoffice.file+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.file.hal+json;v=1;"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/FileResource"
+            }
+          }
+        },
+        "security": [{
+          "fs-based": []
+        }],
+        "summary": "update file"
+      }
+    },
+    "/files/{fileId}/children": {
+      "get": {
+        "description": "Returns the list of files. Results are filtered according to the data passed in the 'q' request parameter:<br/>&nbsp;&nbsp;&nbsp;&nbsp;parentId - parent folder id,<br/>&nbsp;&nbsp;&nbsp;&nbsp;mediaType - media type filter,<br/>&nbsp;&nbsp;&nbsp;&nbsp;sortField - field name to be sorted by,<br/>&nbsp;&nbsp;&nbsp;&nbsp;sortOrder - order of the sorting 'asc' or 'desc'",
+        "operationId": "getFileChildren",
+        "parameters": [{
+          "description": "file id",
+          "in": "path",
+          "name": "fileId",
+          "required": true,
+          "type": "string"
+        }, {
+          "description": "urlencoded query object",
+          "in": "query",
+          "name": "q",
+          "required": false,
+          "type": "string"
+        }, {
+          "default": 100,
+          "description": "maximum number of results",
+          "format": "int32",
+          "in": "query",
+          "name": "maxResults",
+          "required": false,
+          "type": "integer"
+        }, {
+          "description": "page token",
+          "in": "query",
+          "name": "pageToken",
+          "required": false,
+          "type": "string"
+        }],
+        "produces": [
+          "application/vnd.ncloudtech.cloudoffice.childlist+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.childlist.hal+json;v=1;"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/FileResource"
+              },
+              "type": "array"
+            }
+          }
+        },
+        "security": [{
+          "fs-based": []
+        }],
+        "summary": "get file children"
+      }
+    },
+    "/files/{fileId}/content": {
+      "get": {
+        "operationId": "downloadFile",
+        "parameters": [{
+          "description": "file id",
+          "in": "path",
+          "name": "fileId",
+          "required": true,
+          "type": "string"
+        }, {
+          "description": "do not put file to recents",
+          "in": "path",
+          "name": "download",
+          "required": true,
+          "type": "boolean"
+        }],
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "type": "file"
+            }
+          }
+        },
+        "security": [{
+          "fs-based": []
+        }],
+        "summary": "download file content"
+      },
+      "head": {
+        "operationId": "downloadFileHead",
+        "parameters": [{
+          "description": "file id",
+          "in": "path",
+          "name": "fileId",
+          "required": true,
+          "type": "string"
+        }, {
+          "description": "do not put file to recents",
+          "in": "path",
+          "name": "download",
+          "required": true,
+          "type": "boolean"
+        }],
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified"
+          }
+        },
+        "security": [{
+          "fs-based": []
+        }],
+        "summary": "retrieve downloaded file headers, e.g. Content-Type, Content-Disposition"
+      }
+    },
+    "/files/{fileId}/parents": {
+      "get": {
+        "description": "Returns the list, that contains object's parent folders hierarhy. Root folder goes last in the list.",
+        "operationId": "getFileParents",
+        "parameters": [{
+          "description": "file id",
+          "in": "path",
+          "name": "fileId",
+          "required": true,
+          "type": "string"
+        }],
+        "produces": [
+          "application/vnd.ncloudtech.cloudoffice.parentlist+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.parentlist.hal+json;v=1;"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/ParentReference"
+              },
+              "type": "array"
+            }
+          }
+        },
+        "security": [{
+          "fs-based": []
+        }],
+        "summary": "get file parents"
+      }
+    },
+    "/files/{fileId}/permissions": {
+      "get": {
+        "operationId": "getFilePermissions",
+        "parameters": [{
+          "description": "file id",
+          "in": "path",
+          "name": "fileId",
+          "required": true,
+          "type": "string"
+        }],
+        "produces": [
+          "application/vnd.ncloudtech.cloudoffice.permissionlist+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.permissionlist.hal+json;v=1;"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/PermissionResource"
+              },
+              "type": "array"
+            }
+          }
+        },
+        "security": [{
+          "fs-based": []
+        }],
+        "summary": "list permissions for the object"
+      },
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "addFilePermission",
+        "parameters": [{
+          "description": "file id",
+          "in": "path",
+          "name": "fileId",
+          "required": true,
+          "type": "string"
+        }, {
+          "default": false,
+          "description": "link from file's metadata, if not specified, email won't be sent",
+          "in": "query",
+          "name": "sendEmail",
+          "required": false,
+          "type": "boolean"
+        }, {
+          "description": "user email message",
+          "in": "query",
+          "name": "userMessage",
+          "required": false,
+          "type": "string"
+        }, {
+          "description": "new permission",
+          "in": "body",
+          "name": "permission",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/Permission"
+          }
+        }],
+        "produces": [
+          "application/vnd.ncloudtech.cloudoffice.permission+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.permission.hal+json;v=1;"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/PermissionResource"
+            }
+          }
+        },
+        "security": [{
+          "fs-based": []
+        }],
+        "summary": "add new permission to the object"
+      }
+    },
+    "/files/{fileId}/permissions/multiple": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "addFilePermissionList",
+        "parameters": [{
+          "description": "file id",
+          "in": "path",
+          "name": "fileId",
+          "required": true,
+          "type": "string"
+        }, {
+          "description": "add file permissions request",
+          "in": "body",
+          "name": "request",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/AddFilePermissionsRequest"
+          }
+        }],
+        "produces": [
+          "application/vnd.ncloudtech.cloudoffice.permissionlist+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.permissionlist.hal+json;v=1;"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/PermissionResource"
+              },
+              "type": "array"
+            }
+          }
+        },
+        "security": [{
+          "fs-based": []
+        }],
+        "summary": "add multiple permissions to the object"
+      }
+    },
+    "/files/{fileId}/permissions/{permId}": {
+      "delete": {
+        "operationId": "deleteFilePermission",
+        "parameters": [{
+          "description": "file id",
+          "in": "path",
+          "name": "fileId",
+          "required": true,
+          "type": "string"
+        }, {
+          "description": "new permission",
+          "in": "path",
+          "name": "permId",
+          "required": true,
+          "type": "Permission"
+        }],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified"
+          }
+        },
+        "security": [{
+          "fs-based": []
+        }],
+        "summary": "delete permission to the object"
+      },
+      "get": {
+        "operationId": "getFilePermission",
+        "parameters": [{
+          "description": "file id",
+          "in": "path",
+          "name": "fileId",
+          "required": true,
+          "type": "string"
+        }, {
+          "description": "permission id (user's login)",
+          "in": "path",
+          "name": "permId",
+          "required": true,
+          "type": "string"
+        }],
+        "produces": [
+          "application/vnd.ncloudtech.cloudoffice.permission+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.permission.hal+json;v=1;"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/PermissionResource"
+            }
+          }
+        },
+        "security": [{
+          "fs-based": []
+        }],
+        "summary": "get concrete permission for the object"
+      },
+      "put": {
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "modifyFilePermission",
+        "parameters": [{
+          "description": "file id",
+          "in": "path",
+          "name": "fileId",
+          "required": true,
+          "type": "string"
+        }, {
+          "description": "permission id (user's login)",
+          "in": "path",
+          "name": "permId",
+          "required": true,
+          "type": "string"
+        }, {
+          "description": "new permission",
+          "in": "body",
+          "name": "permission",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/Permission"
+          }
+        }],
+        "produces": [
+          "application/vnd.ncloudtech.cloudoffice.permission+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.permission.hal+json;v=1;"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/PermissionResource"
+            }
+          }
+        },
+        "security": [{
+          "fs-based": []
+        }],
+        "summary": "change permission to the object"
+      }
+    },
+    "/files/{fileId}/properties": {
+      "get": {
+        "operationId": "getFileProperties",
+        "parameters": [{
+          "description": "file id",
+          "in": "path",
+          "name": "fileId",
+          "required": true,
+          "type": "string"
+        }],
+        "produces": [
+          "application/vnd.ncloudtech.cloudoffice.propertylist+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.propertylist.hal+json;v=1;"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/PropertyResource"
+              },
+              "type": "array"
+            }
+          }
+        },
+        "security": [{
+          "fs-based": []
+        }],
+        "summary": "get props for file"
+      },
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "setFileProperties",
+        "parameters": [{
+          "description": "file id",
+          "in": "path",
+          "name": "fileId",
+          "required": true,
+          "type": "string"
+        }, {
+          "description": "list of new props",
+          "in": "body",
+          "name": "props",
+          "required": true,
+          "schema": {
+            "items": {
+              "$ref": "#/definitions/Property"
+            },
+            "type": "array"
+          }
+        }],
+        "produces": [
+          "application/vnd.ncloudtech.cloudoffice.propertylist+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.propertylist.hal+json;v=1;"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/PropertyResource"
+              },
+              "type": "array"
+            }
+          }
+        },
+        "security": [{
+          "fs-based": []
+        }],
+        "summary": "set props for file"
+      }
+    },
+    "/files/{fileId}/requestAccess": {
+      "post": {
+        "operationId": "requestAccess",
+        "parameters": [{
+          "description": "file Id",
+          "in": "path",
+          "name": "fileId",
+          "required": true,
+          "type": "string"
+        }],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified"
+          }
+        },
+        "security": [{
+          "fs-based": []
+        }],
+        "summary": "request access to file"
+      }
+    },
+    "/files/{fileId}/trash": {
+      "post": {
+        "description": "Remove file or folder. If fileId equals trash folder id, purge trash.",
+        "operationId": "trashFile",
+        "parameters": [{
+          "description": "file id",
+          "in": "path",
+          "name": "fileId",
+          "required": true,
+          "type": "string"
+        }],
+        "produces": [
+          "application/vnd.ncloudtech.cloudoffice.file+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.file.hal+json;v=1;"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/FileResource"
+            }
+          }
+        },
+        "security": [{
+          "fs-based": []
+        }],
+        "summary": "trash file"
+      }
+    },
+    "/files/{fileId}/untrash": {
+      "post": {
+        "description": "Restore file or folder deleted to trash to its to original location. Method will fail if the original path does not exists or not specified in metadata",
+        "operationId": "untrashFile",
+        "parameters": [{
+          "description": "file id",
+          "in": "path",
+          "name": "fileId",
+          "required": true,
+          "type": "string"
+        }, {
+          "description": "Filenames conflict resolving strategy",
+          "enum": [
+            "overwrite",
+            "keep_both"
+          ],
+          "in": "query",
+          "name": "conflictStrategy",
+          "required": false,
+          "type": "string"
+        }],
+        "produces": [
+          "application/vnd.ncloudtech.cloudoffice.file+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.file.hal+json;v=1;"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/FileResource"
+            }
+          }
+        },
+        "security": [{
+          "fs-based": []
+        }],
+        "summary": "untrash file"
+      }
+    },
+    "/files/{fileId}/upload": {
+      "post": {
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "description": "Uploads new file revision.<br/><br/>This method creates NEW revision for the existing file.<br/><br/>Content is uploaded as a part of the multipart request.<br/><br/>This method does not change original file metadata except the modifiedDate, lastModifyingUserId and lastViewedByMeDate",
+        "operationId": "uploadNewFileRevision",
+        "parameters": [{
+          "description": "file Id",
+          "in": "path",
+          "name": "fileId",
+          "required": true,
+          "type": "string"
+        }, {
+          "description": "File to upload",
+          "in": "formData",
+          "name": "file",
+          "required": true,
+          "type": "file"
+        }, {
+          "description": "File metadata",
+          "in": "formData",
+          "name": "metadata",
+          "required": false,
+          "type": "FileType"
+        }, {
+          "description": "Convert file to internal format",
+          "in": "formData",
+          "name": "convert",
+          "required": false,
+          "type": "boolean"
+        }],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/FileResource"
+            }
+          }
+        },
+        "security": [{
+          "fs-based": []
+        }],
+        "summary": "upload file with new revision"
+      }
+    },
+    "/files/upload": {
+      "post": {
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "description": "Uploads new file content.<br/><br/>This method does not create new file revision. If the file already exists, an error is returned.<br/><br/>Content is uploaded as a part of the multipart request. Following form parameters are also supported <br/>&nbsp;&nbsp;* 'metadata' - File structure encoded as json string. Fill the parentId field to specify target folder<br/>&nbsp;&nbsp;* 'convert' - make an attempt to convert the file to the internal office format<br/>File's mediatype comes from the browser and cannot be overriden by the field in the provided metadata",
+        "operationId": "uploadNewFile",
+        "parameters": [
+          {
+            "description": "File to upload",
+            "in": "formData",
+            "name": "file",
+            "required": true,
+            "type": "file"
+          },
+          {
+            "description": "File metadata",
+            "in": "formData",
+            "name": "metadata",
+            "required": false,
+            "type": "FileType"
+          },
+          {
+            "description": "Convert file to internal format",
+            "in": "formData",
+            "name": "convert",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "Filenames conflict resolving strategy",
+            "enum": [
+              "overwrite",
+              "keep_both"
+            ],
+            "in": "query",
+            "name": "conflictStrategy",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/vnd.ncloudtech.cloudoffice.file+json;v=1;",
+          "application/vnd.ncloudtech.cloudoffice.file.hal+json;v=1;"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/FileResource"
+            }
+          }
+        },
+        "security": [{
+          "fs-based": []
+        }],
+        "summary": "upload file"
+      }
+    },
+    "/info": {
+      "get": {
+        "operationId": "getInfo",
+        "produces": [
+          "application/vnd.ncloudtech.cloudoffice.info+json;v=1;"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/InfoResource"
+            }
+          }
+        },
+        "security": [
+          {
+            "fs-based": [
+              null
+            ]
+          }
+        ],
+        "summary": "get info"
+      }
+    }
+  },
+  "schemes": [
+    "https"
+  ],
+  "swagger": "2.0"
+}

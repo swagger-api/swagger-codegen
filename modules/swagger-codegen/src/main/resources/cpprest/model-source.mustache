@@ -3,6 +3,8 @@
 
 #include "{{classname}}.h"
 
+#include "Utils/Basic.h"
+
 {{#modelNamespaceDeclarations}}
 namespace {{this}} {
 {{/modelNamespaceDeclarations}}
@@ -60,6 +62,9 @@ web::json::value {{classname}}::toJson() const
 
 void {{classname}}::fromJson(web::json::value& val)
 {
+    // TODO: fix mustache code
+    CO_UNUSED(val);
+
     {{#vars}}{{#isPrimitiveType}}{{^isListContainer}}{{^required}}if(val.has_field(U("{{baseName}}")))
     {
         {{setter}}(ModelBase::{{baseType}}FromJson(val[U("{{baseName}}")]));
@@ -110,12 +115,15 @@ void {{classname}}::fromJson(web::json::value& val)
     {{/isDateTime}}{{^isDateTime}}{{#vendorExtensions.x-codegen-file}}{{setter}}(ModelBase::fileFromJson(val[U("{{baseName}}")]));
     {{/vendorExtensions.x-codegen-file}}{{^vendorExtensions.x-codegen-file}}{{{datatype}}} new{{name}}({{{defaultValue}}});
     new{{name}}->fromJson(val[U("{{baseName}}")]);
-    {{setter}}( newItem );
+    {{setter}}( new{{name}} );
     {{/vendorExtensions.x-codegen-file}}{{/isDateTime}}{{/isString}}{{/required}}{{/isPrimitiveType}}{{/isListContainer}}{{/vars}}
 }
 
 void {{classname}}::toMultipart(std::shared_ptr<MultipartFormData> multipart, const utility::string_t& prefix) const
 {
+    // TODO: fix mustache code
+    CO_UNUSED(multipart);
+
     utility::string_t namePrefix = prefix;
     if(namePrefix.size() > 0 && namePrefix[namePrefix.size() - 1] != U('.'))
     {
@@ -160,6 +168,9 @@ void {{classname}}::toMultipart(std::shared_ptr<MultipartFormData> multipart, co
 
 void {{classname}}::fromMultiPart(std::shared_ptr<MultipartFormData> multipart, const utility::string_t& prefix)
 {
+    // TODO: fix mustache code
+    CO_UNUSED(multipart);
+
     utility::string_t namePrefix = prefix;
     if(namePrefix.size() > 0 && namePrefix[namePrefix.size() - 1] != U('.'))
     {

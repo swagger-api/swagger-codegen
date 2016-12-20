@@ -95,8 +95,6 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
         supportingFiles.add(new SupportingFile("httpcontent-source.mustache", "", "HttpContent.cpp"));
         supportingFiles.add(new SupportingFile("multipart-header.mustache", "", "MultipartFormData.h"));
         supportingFiles.add(new SupportingFile("multipart-source.mustache", "", "MultipartFormData.cpp"));
-        supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
-        supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
 
         languageSpecificPrimitives = new HashSet<String>(
                 Arrays.asList("int", "char", "bool", "long", "float", "double", "int32_t", "int64_t"));
@@ -391,7 +389,8 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
 
     @Override
     public String escapeUnsafeCharacters(String input) {
-        return input.replace("*/", "*_/").replace("/*", "/_*");
+        // escape nothing for CppRest
+        return input;
     }
 
 }

@@ -1,5 +1,6 @@
 .vscode
 *.iml
+generated/
 out/
 *.ipr
 *.iws
