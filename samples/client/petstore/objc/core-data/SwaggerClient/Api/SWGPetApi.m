@@ -72,7 +72,7 @@ NSInteger kSWGPetApiMissingParamErrorCode = 234513;
 ///
 /// Add a new pet to the store
 /// 
-/// @param body SWGPet* Pet object that needs to be added to the store (optional)
+/// @param body Pet object that needs to be added to the store (optional)
 ///
 ///  code:405 message:"Invalid input"
 -(NSNumber*) addPetWithBody: (SWGPet*) body
@@ -130,9 +130,9 @@ NSInteger kSWGPetApiMissingParamErrorCode = 234513;
 ///
 /// Deletes a pet
 /// 
-/// @param petId NSNumber* Pet id to delete 
+/// @param petId Pet id to delete 
 ///
-/// @param apiKey NSString*  (optional)
+/// @param apiKey  (optional)
 ///
 ///  code:400 message:"Invalid pet value"
 -(NSNumber*) deletePetWithPetId: (NSNumber*) petId
@@ -207,7 +207,7 @@ NSInteger kSWGPetApiMissingParamErrorCode = 234513;
 ///
 /// Finds Pets by status
 /// Multiple status values can be provided with comma separated strings
-/// @param status NSArray<NSString*>* Status values that need to be considered for filter (optional, default to available)
+/// @param status Status values that need to be considered for filter (optional, default to available)
 ///
 ///  code:200 message:"successful operation",
 ///  code:400 message:"Invalid status value"
@@ -270,7 +270,7 @@ NSInteger kSWGPetApiMissingParamErrorCode = 234513;
 ///
 /// Finds Pets by tags
 /// Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
-/// @param tags NSArray<NSString*>* Tags to filter by (optional)
+/// @param tags Tags to filter by (optional)
 ///
 ///  code:200 message:"successful operation",
 ///  code:400 message:"Invalid tag value"
@@ -333,7 +333,7 @@ NSInteger kSWGPetApiMissingParamErrorCode = 234513;
 ///
 /// Find pet by ID
 /// Returns a pet when ID < 10.  ID > 10 or nonintegers will simulate API error conditions
-/// @param petId NSNumber* ID of pet that needs to be fetched 
+/// @param petId ID of pet that needs to be fetched 
 ///
 ///  code:200 message:"successful operation",
 ///  code:400 message:"Invalid ID supplied",
@@ -407,7 +407,7 @@ NSInteger kSWGPetApiMissingParamErrorCode = 234513;
 ///
 /// Update an existing pet
 /// 
-/// @param body SWGPet* Pet object that needs to be added to the store (optional)
+/// @param body Pet object that needs to be added to the store (optional)
 ///
 ///  code:400 message:"Invalid ID supplied",
 ///  code:404 message:"Pet not found",
@@ -467,11 +467,11 @@ NSInteger kSWGPetApiMissingParamErrorCode = 234513;
 ///
 /// Updates a pet in the store with form data
 /// 
-/// @param petId NSString* ID of pet that needs to be updated 
+/// @param petId ID of pet that needs to be updated 
 ///
-/// @param name NSString* Updated name of the pet (optional)
+/// @param name Updated name of the pet (optional)
 ///
-/// @param status NSString* Updated status of the pet (optional)
+/// @param status Updated status of the pet (optional)
 ///
 ///  code:405 message:"Invalid input"
 -(NSNumber*) updatePetWithFormWithPetId: (NSString*) petId
@@ -550,11 +550,11 @@ NSInteger kSWGPetApiMissingParamErrorCode = 234513;
 ///
 /// uploads an image
 /// 
-/// @param petId NSNumber* ID of pet to update 
+/// @param petId ID of pet to update 
 ///
-/// @param additionalMetadata NSString* Additional data to pass to server (optional)
+/// @param additionalMetadata Additional data to pass to server (optional)
 ///
-/// @param file NSURL* file to upload (optional)
+/// @param file file to upload (optional)
 ///
 ///  code:0 message:"successful operation"
 -(NSNumber*) uploadFileWithPetId: (NSNumber*) petId

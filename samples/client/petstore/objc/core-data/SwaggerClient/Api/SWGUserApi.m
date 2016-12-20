@@ -72,7 +72,7 @@ NSInteger kSWGUserApiMissingParamErrorCode = 234513;
 ///
 /// Create user
 /// This can only be done by the logged in user.
-/// @param body SWGUser* Created user object (optional)
+/// @param body Created user object (optional)
 ///
 ///  code:0 message:"successful operation"
 -(NSNumber*) createUserWithBody: (SWGUser*) body
@@ -130,7 +130,7 @@ NSInteger kSWGUserApiMissingParamErrorCode = 234513;
 ///
 /// Creates list of users with given input array
 /// 
-/// @param body NSArray<SWGUser>* List of user object (optional)
+/// @param body List of user object (optional)
 ///
 ///  code:0 message:"successful operation"
 -(NSNumber*) createUsersWithArrayInputWithBody: (NSArray<SWGUser>*) body
@@ -188,7 +188,7 @@ NSInteger kSWGUserApiMissingParamErrorCode = 234513;
 ///
 /// Creates list of users with given input array
 /// 
-/// @param body NSArray<SWGUser>* List of user object (optional)
+/// @param body List of user object (optional)
 ///
 ///  code:0 message:"successful operation"
 -(NSNumber*) createUsersWithListInputWithBody: (NSArray<SWGUser>*) body
@@ -246,7 +246,7 @@ NSInteger kSWGUserApiMissingParamErrorCode = 234513;
 ///
 /// Delete user
 /// This can only be done by the logged in user.
-/// @param username NSString* The name that needs to be deleted 
+/// @param username The name that needs to be deleted 
 ///
 ///  code:400 message:"Invalid username supplied",
 ///  code:404 message:"User not found"
@@ -318,7 +318,7 @@ NSInteger kSWGUserApiMissingParamErrorCode = 234513;
 ///
 /// Get user by user name
 /// 
-/// @param username NSString* The name that needs to be fetched. Use user1 for testing.  
+/// @param username The name that needs to be fetched. Use user1 for testing.  
 ///
 ///  code:200 message:"successful operation",
 ///  code:400 message:"Invalid username supplied",
@@ -392,9 +392,9 @@ NSInteger kSWGUserApiMissingParamErrorCode = 234513;
 ///
 /// Logs user into the system
 /// 
-/// @param username NSString* The user name for login (optional)
+/// @param username The user name for login (optional)
 ///
-/// @param password NSString* The password for login in clear text (optional)
+/// @param password The password for login in clear text (optional)
 ///
 ///  code:200 message:"successful operation",
 ///  code:400 message:"Invalid username/password supplied"
@@ -515,9 +515,9 @@ NSInteger kSWGUserApiMissingParamErrorCode = 234513;
 ///
 /// Updated user
 /// This can only be done by the logged in user.
-/// @param username NSString* name that need to be deleted 
+/// @param username name that need to be deleted 
 ///
-/// @param body SWGUser* Updated user object (optional)
+/// @param body Updated user object (optional)
 ///
 ///  code:400 message:"Invalid user supplied",
 ///  code:404 message:"User not found"
