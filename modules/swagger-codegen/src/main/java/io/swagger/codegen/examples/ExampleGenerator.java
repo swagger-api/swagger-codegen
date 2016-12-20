@@ -97,7 +97,7 @@ public class ExampleGenerator {
             return "2000-01-23";
         } else if (property instanceof DateTimeProperty) {
             return "2000-01-23T04:56:07.000+00:00";
-        } else if (property instanceof DecimalProperty) {
+        }  else if (property instanceof DecimalProperty) {
             return new BigDecimal(1.3579);
         } else if (property instanceof DoubleProperty) {
             return 3.149;
@@ -107,10 +107,11 @@ public class ExampleGenerator {
             return 1.23f;
         } else if (property instanceof IntegerProperty) {
             return 123;
-        } else if (property.getClass().equals(BaseIntegerProperty.class)) {
-            return 123;
         } else if (property instanceof LongProperty) {
             return 123456789L;
+        // Properties that are not Integer or Long may still be BaseInteger
+        } else if (property instanceof BaseIntegerProperty) {
+            return 123;
         } else if (property instanceof MapProperty) {
             Map<String, Object> mp = new HashMap<String, Object>();
             if (property.getName() != null) {
