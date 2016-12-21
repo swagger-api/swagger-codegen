@@ -101,7 +101,16 @@ let primitives = ["string",
 * {{{description}}}
 */
 {{/description}}
-export class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
+export class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{	
+{{#vars}}
+{{#description}}
+    /**
+    * {{{description}}}
+    */
+{{/description}}
+    '{{name}}': {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
+{{/vars}}
+
 	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
 		{{#vars}}
 		{
@@ -112,18 +121,18 @@ export class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
 		{{/hasMore}}
 		{{/vars}}
 	];
-	getAttributeTypeMap() { 
-		return {{classname}}.attributeTypeMap;
-	}
 	
-{{#vars}}
-{{#description}}
-    /**
-    * {{{description}}}
-    */
-{{/description}}
-    '{{name}}': {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
-{{/vars}}
+	static getAttributeTypeMap() {
+		{{#parent}}
+		return super.getAttributeTypeMap().concat({{classname}}.attributeTypeMap);
+		{{/parent}}
+		{{^parent}}
+		return {{classname}}.attributeTypeMap;
+		{{/parent}}
+	}
+	getAttributeTypeMap() { 
+		return {{classname}}.getAttributeTypeMap();
+	}
 }
 
 {{#hasEnums}}

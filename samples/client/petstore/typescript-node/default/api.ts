@@ -115,7 +115,10 @@ let primitives = ["string",
 	}
 }
 
-export class Category {
+export class Category {	
+    'id': number;
+    'name': string;
+
 	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
 		{
 			"name": "id",
@@ -127,15 +130,26 @@ export class Category {
 			"baseName": "name",
 			"type": "string"
 		}	];
-	getAttributeTypeMap() { 
+	
+	static getAttributeTypeMap() {
 		return Category.attributeTypeMap;
 	}
-	
-    'id': number;
-    'name': string;
+	getAttributeTypeMap() { 
+		return Category.getAttributeTypeMap();
+	}
 }
 
-export class Order {
+export class Order {	
+    'id': number;
+    'petId': number;
+    'quantity': number;
+    'shipDate': Date;
+    /**
+    * Order Status
+    */
+    'status': Order.StatusEnum;
+    'complete': boolean;
+
 	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
 		{
 			"name": "id",
@@ -167,19 +181,13 @@ export class Order {
 			"baseName": "complete",
 			"type": "boolean"
 		}	];
-	getAttributeTypeMap() { 
+	
+	static getAttributeTypeMap() {
 		return Order.attributeTypeMap;
 	}
-	
-    'id': number;
-    'petId': number;
-    'quantity': number;
-    'shipDate': Date;
-    /**
-    * Order Status
-    */
-    'status': Order.StatusEnum;
-    'complete': boolean;
+	getAttributeTypeMap() { 
+		return Order.getAttributeTypeMap();
+	}
 }
 
 export namespace Order {
@@ -189,7 +197,17 @@ export namespace Order {
         Delivered = <any> 'delivered'
     }
 }
-export class Pet {
+export class Pet {	
+    'id': number;
+    'category': Category;
+    'name': string;
+    'photoUrls': Array<string>;
+    'tags': Array<Tag>;
+    /**
+    * pet status in the store
+    */
+    'status': Pet.StatusEnum;
+
 	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
 		{
 			"name": "id",
@@ -221,19 +239,13 @@ export class Pet {
 			"baseName": "status",
 			"type": "Pet.StatusEnum"
 		}	];
-	getAttributeTypeMap() { 
+	
+	static getAttributeTypeMap() {
 		return Pet.attributeTypeMap;
 	}
-	
-    'id': number;
-    'category': Category;
-    'name': string;
-    'photoUrls': Array<string>;
-    'tags': Array<Tag>;
-    /**
-    * pet status in the store
-    */
-    'status': Pet.StatusEnum;
+	getAttributeTypeMap() { 
+		return Pet.getAttributeTypeMap();
+	}
 }
 
 export namespace Pet {
@@ -243,7 +255,10 @@ export namespace Pet {
         Sold = <any> 'sold'
     }
 }
-export class Tag {
+export class Tag {	
+    'id': number;
+    'name': string;
+
 	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
 		{
 			"name": "id",
@@ -255,15 +270,28 @@ export class Tag {
 			"baseName": "name",
 			"type": "string"
 		}	];
-	getAttributeTypeMap() { 
+	
+	static getAttributeTypeMap() {
 		return Tag.attributeTypeMap;
 	}
-	
-    'id': number;
-    'name': string;
+	getAttributeTypeMap() { 
+		return Tag.getAttributeTypeMap();
+	}
 }
 
-export class User {
+export class User {	
+    'id': number;
+    'username': string;
+    'firstName': string;
+    'lastName': string;
+    'email': string;
+    'password': string;
+    'phone': string;
+    /**
+    * User Status
+    */
+    'userStatus': number;
+
 	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
 		{
 			"name": "id",
@@ -305,21 +333,13 @@ export class User {
 			"baseName": "userStatus",
 			"type": "number"
 		}	];
-	getAttributeTypeMap() { 
+	
+	static getAttributeTypeMap() {
 		return User.attributeTypeMap;
 	}
-	
-    'id': number;
-    'username': string;
-    'firstName': string;
-    'lastName': string;
-    'email': string;
-    'password': string;
-    'phone': string;
-    /**
-    * User Status
-    */
-    'userStatus': number;
+	getAttributeTypeMap() { 
+		return User.getAttributeTypeMap();
+	}
 }
 
 

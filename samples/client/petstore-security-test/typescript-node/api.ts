@@ -118,21 +118,25 @@ let primitives = ["string",
 /**
 * Model for testing reserved words  *_/ ' \" =end -- \\r\\n \\n \\r
 */
-export class ModelReturn {
+export class ModelReturn {	
+    /**
+    * property description  *_/ ' \" =end -- \\r\\n \\n \\r
+    */
+    'return': number;
+
 	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
 		{
 			"name": "return",
 			"baseName": "return",
 			"type": "number"
 		}	];
-	getAttributeTypeMap() { 
+	
+	static getAttributeTypeMap() {
 		return ModelReturn.attributeTypeMap;
 	}
-	
-    /**
-    * property description  *_/ ' \" =end -- \\r\\n \\n \\r
-    */
-    'return': number;
+	getAttributeTypeMap() { 
+		return ModelReturn.getAttributeTypeMap();
+	}
 }
 
 
