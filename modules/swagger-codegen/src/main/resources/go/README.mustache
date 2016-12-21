@@ -23,6 +23,22 @@ Put the package under your project folder and add the following in import:
     "./{{packageName}}"
 ```
 
+## New Client
+```
+  client, err := {{packageName}}.NewClient(*http.Client, userAgent string)
+```
+
+One client should be created that will serve as an agent for all requests. This allows http2 multiplexing and keep-alive be used to optimize connections.
+It is also good manners to provide a user-agent describing the point of use of the API.
+
+```
+  client, err := {{packageName}}.NewClient(nil, "{{packageName}} client http://mysite.com")
+  result, response, err := client.Endpoint.Operation(requiredParam, map[string]interface{} { 
+                                                                        "optionalParam1": "stringParam",
+                                                                        "optionalParam2": 1234.56
+                                                                    })
+```
+
 ## Documentation for API Endpoints
 
 All URIs are relative to *{{basePath}}*
@@ -48,18 +64,56 @@ Class | Method | HTTP request | Description
 - **Location**: {{#isKeyInQuery}}URL query string{{/isKeyInQuery}}{{#isKeyInHeader}}HTTP header{{/isKeyInHeader}}
 {{/isApiKey}}
 {{#isBasic}}- **Type**: HTTP basic authentication
+For basic authentication, a username and password are provided to each operation through a context.
+
+```
+  auth := {{packageName}}.BasicAuth{Username: "user", Password: "pass"}
+  client, err := {{packageName}}.NewClient(nil, "{{packageName}} client http://mysite.com")
+  ctx := context.WithValue(context.TODO(), {{packageName}}.ContextBasicAuth, auth)
+  result, response, err := client.Endpoint.AuthenticatedOperation(  ctx, 
+                                                                    requiredParam, 
+                                                                    map[string]interface{} { 
+                                                                       "optionalParam1": "stringParam",
+                                                                       "optionalParam2": 1234.56
+                                                                    })
+```
+
 {{/isBasic}}
 {{#isOAuth}}- **Type**: OAuth
 - **Flow**: {{{flow}}}
-- **Authorizatoin URL**: {{{authorizationUrl}}}
+- **Authorization URL**: {{{authorizationUrl}}}
 - **Scopes**: {{^scopes}}N/A{{/scopes}}
 {{#scopes}} - **{{{scope}}}**: {{{description}}}
 {{/scopes}}
+
+Example:
+```
+  auth, err = oauth2conf.TokenSource(http.Client, token) // Access and Refresh token structure
+
+  client, err := {{packageName}}.NewClient(nil, "{{packageName}} client http://mysite.com")
+  ctx := context.WithValue(context.TODO(), {{packageName}}.ContextOAuth2, auth)
+  result, response, err := client.Endpoint.AuthenticatedOperation(  ctx, 
+                                                                    requiredParam, 
+                                                                    map[string]interface{} { 
+                                                                       "optionalParam1": "stringParam",
+                                                                       "optionalParam2": 1234.56
+                                                                    })
+```
+
 {{/isOAuth}}
 
 {{/authMethods}}
 
 ## Author
-
 {{#apiInfo}}{{#apis}}{{^hasMore}}{{infoEmail}}
 {{/hasMore}}{{/apis}}{{/apiInfo}}
+
+
+## Credits
+https://github.com/go-resty/resty (MIT license) Copyright © 2015-2016 Jeevanandam M (jeeva@myjeeva.com)
+ - Uses modified setBody and detectContentType
+
+https://github.com/gregjones/httpcache (MIT license) Copyright © 2012 Greg Jones (greg.jones@gmail.com)
+  - Uses parseCacheControl and CacheExpires as a helper function
+
+

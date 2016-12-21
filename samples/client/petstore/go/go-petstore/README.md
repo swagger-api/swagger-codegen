@@ -15,6 +15,22 @@ Put the package under your project folder and add the following in import:
     "./petstore"
 ```
 
+## New Client
+```
+  client, err := petstore.NewClient(*http.Client, userAgent string)
+```
+
+One client should be created that will serve as an agent for all requests. This allows http2 multiplexing and keep-alive be used to optimize connections.
+It is also good manners to provide a user-agent describing the point of use of the API.
+
+```
+  client, err := petstore.NewClient(nil, "petstore client http://mysite.com")
+  result, response, err := client.Endpoint.Operation(requiredParam, map[string]interface{} { 
+                                                                        "optionalParam1": "stringParam",
+                                                                        "optionalParam2": 1234.56
+                                                                    })
+```
+
 ## Documentation for API Endpoints
 
 All URIs are relative to *http://petstore.swagger.io/v2*
@@ -24,6 +40,7 @@ Class | Method | HTTP request | Description
 *FakeApi* | [**TestClientModel**](docs/FakeApi.md#testclientmodel) | **Patch** /fake | To test \&quot;client\&quot; model
 *FakeApi* | [**TestEndpointParameters**](docs/FakeApi.md#testendpointparameters) | **Post** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 *FakeApi* | [**TestEnumParameters**](docs/FakeApi.md#testenumparameters) | **Get** /fake | To test enum parameters
+*Fake_classname_tags123Api* | [**TestClassname**](docs/Fake_classname_tags123Api.md#testclassname) | **Patch** /fake_classname_test | To test class name in snake case
 *PetApi* | [**AddPet**](docs/PetApi.md#addpet) | **Post** /pet | Add a new pet to the store
 *PetApi* | [**DeletePet**](docs/PetApi.md#deletepet) | **Delete** /pet/{petId} | Deletes a pet
 *PetApi* | [**FindPetsByStatus**](docs/PetApi.md#findpetsbystatus) | **Get** /pet/findByStatus | Finds Pets by status
@@ -91,18 +108,56 @@ Class | Method | HTTP request | Description
 ## http_basic_test
 
 - **Type**: HTTP basic authentication
+For basic authentication, a username and password are provided to each operation through a context.
+
+```
+  auth := petstore.BasicAuth{Username: "user", Password: "pass"}
+  client, err := petstore.NewClient(nil, "petstore client http://mysite.com")
+  ctx := context.WithValue(context.TODO(), petstore.ContextBasicAuth, auth)
+  result, response, err := client.Endpoint.AuthenticatedOperation(  ctx, 
+                                                                    requiredParam, 
+                                                                    map[string]interface{} { 
+                                                                       "optionalParam1": "stringParam",
+                                                                       "optionalParam2": 1234.56
+                                                                    })
+```
+
 
 ## petstore_auth
 
 - **Type**: OAuth
 - **Flow**: implicit
-- **Authorizatoin URL**: http://petstore.swagger.io/api/oauth/dialog
+- **Authorization URL**: http://petstore.swagger.io/api/oauth/dialog
 - **Scopes**: 
  - **write:pets**: modify pets in your account
  - **read:pets**: read your pets
 
+Example:
+```
+  auth, err = oauth2conf.TokenSource(http.Client, token) // Access and Refresh token structure
+
+  client, err := petstore.NewClient(nil, "petstore client http://mysite.com")
+  ctx := context.WithValue(context.TODO(), petstore.ContextOAuth2, auth)
+  result, response, err := client.Endpoint.AuthenticatedOperation(  ctx, 
+                                                                    requiredParam, 
+                                                                    map[string]interface{} { 
+                                                                       "optionalParam1": "stringParam",
+                                                                       "optionalParam2": 1234.56
+                                                                    })
+```
+
+
 
 ## Author
-
 apiteam@swagger.io
+
+
+
+## Credits
+https://github.com/go-resty/resty (MIT license) Copyright Â© 2015-2016 Jeevanandam M (jeeva@myjeeva.com)
+ - Uses modified setBody and detectContentType
+
+https://github.com/gregjones/httpcache (MIT license) Copyright Â© 2012 Greg Jones (greg.jones@gmail.com)
+  - Uses parseCacheControl and CacheExpires as a helper function
+
 
