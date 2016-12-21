@@ -46,7 +46,39 @@ let primitives = ["string",
                 
  class ObjectSerializer {
  
+ 	public static findCorrectType(data: any, expectedType: string) {
+		if (data == undefined) {
+			return expectedType;
+		} else if (primitives.indexOf(expectedType) !== -1) {
+			return expectedType;
+		} else if (expectedType === "Date") {
+			return expectedType;
+		} else {
+			if (enumsMap[expectedType]) {
+				return expectedType;
+			}
+			
+			if (!typeMap[expectedType]) {
+				return expectedType; // w/e we don't know the type
+			}
+			
+			// Check the discriminator
+			let realType = typeMap[expectedType].discriminator;
+			if (realType == null) {
+				return expectedType; // the type does not have a discriminator. use it.
+			} else {
+				if (data[realType]) {
+					return data[realType]; // use the type given in the discriminator
+				} else {
+					return expectedType; // discriminator was not present (or an empty string)
+				}
+			}
+		}
+		
+ 	}
+
  	public static serialize(data: any, type: string) {
+ 		// TODO: is a type change necessary in this case? i dont think so, because given that the correct type is set, we can just serialize it with the given type. no need to include other properties.
 		if (data == undefined) {
 			return data;
 		} else if (primitives.indexOf(type) !== -1) {
@@ -66,11 +98,12 @@ let primitives = ["string",
 			if (enumsMap[type]) {
 				return data;
 			}
-			if (typeof data.getAttributeTypeMap === "undefined") { // in case it was NOT parsed
+			if (!typeMap[type]) { // in case we dont know the type
 				return data;
 			}
 
-			let attributeTypes = data.getAttributeTypeMap();
+			// get the map for the correct type.
+			let attributeTypes = typeMap[type].getAttributeTypeMap();
 			let instance = {};
 			for (let index in attributeTypes) {
 				let attributeType = attributeTypes[index];
@@ -81,6 +114,8 @@ let primitives = ["string",
  	}
  	
 	public static deserialize(data: any, type: string) {
+		// polymorphism may change the actual type.
+		type = ObjectSerializer.findCorrectType(data, type);
 		if (data == undefined) {
 			return data;
 		} else if (primitives.indexOf(type) !== -1) {
@@ -101,11 +136,11 @@ let primitives = ["string",
 				return data;
 			}
 
-			if (!instanceFunctionsMap[type]) { // dont know the type
+			if (!typeMap[type]) { // dont know the type
 				return data;
 			}
-			let instance = instanceFunctionsMap[type]();
-			let attributeTypes = instance.getAttributeTypeMap();
+			let instance = new typeMap[type]();
+			let attributeTypes = typeMap[type].getAttributeTypeMap();
 			for (let index in attributeTypes) {
 				let attributeType = attributeTypes[index];
 				instance[attributeType.name] = ObjectSerializer.deserialize(data[attributeType.baseName], attributeType.type);
@@ -123,7 +158,9 @@ export class ModelReturn {
     * property description  *_/ ' \" =end -- \\r\\n \\n \\r
     */
     'return': number;
-
+	
+		static discriminator = undefined;
+	
 	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
 		{
 			"name": "return",
@@ -134,18 +171,15 @@ export class ModelReturn {
 	static getAttributeTypeMap() {
 		return ModelReturn.attributeTypeMap;
 	}
-	getAttributeTypeMap() { 
-		return ModelReturn.getAttributeTypeMap();
-	}
 }
 
 
 let enumsMap = {
 }
 
-let instanceFunctionsMap = {
-	"ModelReturn": () => new ModelReturn(),
-};
+let typeMap = {
+	"ModelReturn": ModelReturn,
+}
 
 export interface Authentication {
     /**

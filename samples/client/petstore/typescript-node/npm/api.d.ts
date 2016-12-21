@@ -2,36 +2,46 @@ import request = require('request');
 import http = require('http');
 import Promise = require('bluebird');
 export declare class Category {
-    static attributeTypeMap: Array<{
-        name: string;
-        baseName: string;
-        type: string;
-    }>;
-    getAttributeTypeMap(): {
-        name: string;
-        baseName: string;
-        type: string;
-    }[];
     'id': number;
     'name': string;
-}
-export declare class Order {
     static attributeTypeMap: Array<{
         name: string;
         baseName: string;
         type: string;
     }>;
+    static getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
     getAttributeTypeMap(): {
         name: string;
         baseName: string;
         type: string;
     }[];
+}
+export declare class Order {
     'id': number;
     'petId': number;
     'quantity': number;
     'shipDate': Date;
     'status': Order.StatusEnum;
     'complete': boolean;
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    static getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
+    getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
 }
 export declare namespace Order {
     enum StatusEnum {
@@ -41,22 +51,27 @@ export declare namespace Order {
     }
 }
 export declare class Pet {
-    static attributeTypeMap: Array<{
-        name: string;
-        baseName: string;
-        type: string;
-    }>;
-    getAttributeTypeMap(): {
-        name: string;
-        baseName: string;
-        type: string;
-    }[];
     'id': number;
     'category': Category;
     'name': string;
     'photoUrls': Array<string>;
     'tags': Array<Tag>;
     'status': Pet.StatusEnum;
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    static getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
+    getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
 }
 export declare namespace Pet {
     enum StatusEnum {
@@ -66,30 +81,25 @@ export declare namespace Pet {
     }
 }
 export declare class Tag {
-    static attributeTypeMap: Array<{
-        name: string;
-        baseName: string;
-        type: string;
-    }>;
-    getAttributeTypeMap(): {
-        name: string;
-        baseName: string;
-        type: string;
-    }[];
     'id': number;
     'name': string;
-}
-export declare class User {
     static attributeTypeMap: Array<{
         name: string;
         baseName: string;
         type: string;
     }>;
+    static getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
     getAttributeTypeMap(): {
         name: string;
         baseName: string;
         type: string;
     }[];
+}
+export declare class User {
     'id': number;
     'username': string;
     'firstName': string;
@@ -98,6 +108,21 @@ export declare class User {
     'password': string;
     'phone': string;
     'userStatus': number;
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    static getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
+    getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
 }
 export interface Authentication {
     applyToRequest(requestOptions: request.Options): void;

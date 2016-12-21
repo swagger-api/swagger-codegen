@@ -92,8 +92,11 @@ var ObjectSerializer = (function () {
 var Category = (function () {
     function Category() {
     }
-    Category.prototype.getAttributeTypeMap = function () {
+    Category.getAttributeTypeMap = function () {
         return Category.attributeTypeMap;
+    };
+    Category.prototype.getAttributeTypeMap = function () {
+        return Category.getAttributeTypeMap();
     };
     Category.attributeTypeMap = [
         {
@@ -112,8 +115,11 @@ exports.Category = Category;
 var Order = (function () {
     function Order() {
     }
-    Order.prototype.getAttributeTypeMap = function () {
+    Order.getAttributeTypeMap = function () {
         return Order.attributeTypeMap;
+    };
+    Order.prototype.getAttributeTypeMap = function () {
+        return Order.getAttributeTypeMap();
     };
     Order.attributeTypeMap = [
         {
@@ -161,8 +167,11 @@ var Order;
 var Pet = (function () {
     function Pet() {
     }
-    Pet.prototype.getAttributeTypeMap = function () {
+    Pet.getAttributeTypeMap = function () {
         return Pet.attributeTypeMap;
+    };
+    Pet.prototype.getAttributeTypeMap = function () {
+        return Pet.getAttributeTypeMap();
     };
     Pet.attributeTypeMap = [
         {
@@ -210,8 +219,11 @@ var Pet;
 var Tag = (function () {
     function Tag() {
     }
-    Tag.prototype.getAttributeTypeMap = function () {
+    Tag.getAttributeTypeMap = function () {
         return Tag.attributeTypeMap;
+    };
+    Tag.prototype.getAttributeTypeMap = function () {
+        return Tag.getAttributeTypeMap();
     };
     Tag.attributeTypeMap = [
         {
@@ -230,8 +242,11 @@ exports.Tag = Tag;
 var User = (function () {
     function User() {
     }
-    User.prototype.getAttributeTypeMap = function () {
+    User.getAttributeTypeMap = function () {
         return User.attributeTypeMap;
+    };
+    User.prototype.getAttributeTypeMap = function () {
+        return User.getAttributeTypeMap();
     };
     User.attributeTypeMap = [
         {
