@@ -84,7 +84,9 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
 
         cliOptions.add(CliOption.newBoolean(GOOGLE_CLOUD_FUNCTIONS,
             "When specified, it will generate the code which runs within Google Cloud Functions "
-                + "instead of standalone Node.JS server."));
+                + "instead of standalone Node.JS server. See "
+                + "https://cloud.google.com/functions/docs/quickstart for the details of how to "
+                + "deploy the generated code."));
         cliOptions.add(new CliOption(EXPORTED_NAME,
             "When the generated code will be deployed to Google Cloud Functions, this option can be "
                 + "used to update the name of the exported function. By default, it refers to the "
