@@ -63,12 +63,12 @@ let primitives = ["string",
 			}
 			
 			// Check the discriminator
-			let realType = typeMap[expectedType].discriminator;
-			if (realType == null) {
+			let discriminatorProperty = typeMap[expectedType].discriminator;
+			if (discriminatorProperty == null) {
 				return expectedType; // the type does not have a discriminator. use it.
 			} else {
-				if (data[realType]) {
-					return data[realType]; // use the type given in the discriminator
+				if (data[discriminatorProperty]) {
+					return data[discriminatorProperty]; // use the type given in the discriminator
 				} else {
 					return expectedType; // discriminator was not present (or an empty string)
 				}
@@ -78,7 +78,6 @@ let primitives = ["string",
  	}
 
  	public static serialize(data: any, type: string) {
- 		// TODO: is a type change necessary in this case? i dont think so, because given that the correct type is set, we can just serialize it with the given type. no need to include other properties.
 		if (data == undefined) {
 			return data;
 		} else if (primitives.indexOf(type) !== -1) {
