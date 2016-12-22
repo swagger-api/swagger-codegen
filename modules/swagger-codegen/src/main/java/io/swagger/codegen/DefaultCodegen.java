@@ -1193,7 +1193,8 @@ public class DefaultCodegen {
     }
 
     /**
-     * Output the proper model name (capitalized)
+     * Output the proper model name (capitalized).
+     * In case the name belongs to the TypeSystem it won't be renamed.
      *
      * @param name the name of the model
      * @return capitalized model name
@@ -3309,7 +3310,8 @@ public class DefaultCodegen {
             parameter.isPrimitiveType = true;
         } else if (Boolean.TRUE.equals(property.isFile)) {
             parameter.isFile = true;
-            parameter.isPrimitiveType = true;
+            // file is *not* a primitive type
+            //parameter.isPrimitiveType = true;
         } else if (Boolean.TRUE.equals(property.isDate)) {
             parameter.isDate = true;
             parameter.isPrimitiveType = true;
