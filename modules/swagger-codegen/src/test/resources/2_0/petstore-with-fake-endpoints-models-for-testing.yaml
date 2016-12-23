@@ -1134,6 +1134,23 @@ definitions:
       foo:
         type: string
         readOnly: true
+  Capitalization:
+      type: object
+      properties:
+        smallCamel:
+          type: string
+        CapitalCamel:
+          type: string
+        small_Snake:
+          type: string
+        Capital_Snake:
+          type: string
+        SCA_ETH_Flow_Points:
+          type: string
+        ATT_NAME:
+          description: >
+            Name of the pet
+          type: string
   MapTest:
     type: object
     properties:
