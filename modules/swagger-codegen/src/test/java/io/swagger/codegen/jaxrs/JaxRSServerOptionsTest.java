@@ -41,6 +41,10 @@ public class JaxRSServerOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setArtifactVersion(JaxRSServerOptionsProvider.ARTIFACT_VERSION_VALUE);
             times = 1;
+            clientCodegen.setArtifactUrl(JaxRSServerOptionsProvider.ARTIFACT_URL_VALUE);
+            times = 1;
+            clientCodegen.setArtifactDescription(JaxRSServerOptionsProvider.ARTIFACT_DESCRIPTION_VALUE);
+            times = 1;
             clientCodegen.setSourceFolder(JaxRSServerOptionsProvider.SOURCE_FOLDER_VALUE);
             times = 1;
             clientCodegen.setLocalVariablePrefix(JaxRSServerOptionsProvider.LOCAL_PREFIX_VALUE);
