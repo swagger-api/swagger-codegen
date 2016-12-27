@@ -34,6 +34,18 @@ public class CodegenConstants {
     public static final String ARTIFACT_DESCRIPTION = "artifactDescription";
     public static final String ARTIFACT_DESCRIPTION_DESC = "artifact description in generated pom.xml";
 
+    public static final String DEVELOPER_NAME = "developerName";
+    public static final String DEVELOPER_NAME_DESC = "developer name in generated pom.xml";
+
+    public static final String DEVELOPER_EMAIL = "developerEmail";
+    public static final String DEVELOPER_EMAIL_DESC = "developer email in generated pom.xml";
+
+    public static final String DEVELOPER_ORGANIZATION = "developerOrganization";
+    public static final String DEVELOPER_ORGANIZATION_DESC = "developer organization in generated pom.xml";
+
+    public static final String DEVELOPER_ORGANIZATION_URL = "developerOrganizationUrl";
+    public static final String DEVELOPER_ORGANIZATION_URL_DESC = "developer organization URL in generated pom.xml";
+
     public static final String LICENSE_NAME = "licenseName";
     public static final String LICENSE_NAME_DESC = "The name of the license";
 
