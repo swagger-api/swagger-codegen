@@ -46,7 +46,9 @@ public class JavaClientOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setArtifactVersion(JavaClientOptionsProvider.ARTIFACT_VERSION_VALUE);
             times = 1;
-            clientCodegen.setLicenseUrl(JavaClientOptionsProvider.ARTIFACT_URL_VALUE);
+            clientCodegen.setArtifactUrl(JavaClientOptionsProvider.ARTIFACT_URL_VALUE);
+            times = 1;
+            clientCodegen.setArtifactDescription(JavaClientOptionsProvider.ARTIFACT_DESCRIPTION_VALUE);
             times = 1;
             clientCodegen.setLicenseName(JavaClientOptionsProvider.LICENSE_NAME_VALUE);
             times = 1;

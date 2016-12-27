@@ -39,6 +39,9 @@ public class CodegenConstants {
     public static final String ARTIFACT_URL = "artifactUrl";
     public static final String ARTIFACT_URL_DESC = "artifact URL in generated pom.xml";
 
+    public static final String ARTIFACT_DESCRIPTION = "artifactDescription";
+    public static final String ARTIFACT_DESCRIPTION_DESC = "artifact description in generated pom.xml";
+
     public static final String LICENSE_NAME = "licenseName";
     public static final String LICENSE_NAME_DESC = "The name of the license";
 

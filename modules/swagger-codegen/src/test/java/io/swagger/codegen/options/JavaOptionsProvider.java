@@ -17,6 +17,7 @@ public class JavaOptionsProvider implements OptionsProvider {
     public static final String GROUP_ID_VALUE = "io.swagger.test";
     public static final String ARTIFACT_VERSION_VALUE = "1.0.0-SNAPSHOT";
     public static final String ARTIFACT_URL_VALUE = "https://github.com/swagger-api/swagger-codegen";
+    public static final String ARTIFACT_DESCRIPTION_VALUE = "Swagger Java Client Test";
     public static final String SOURCE_FOLDER_VALUE = "src/main/java/test";
     public static final String LOCAL_PREFIX_VALUE = "tst";
     public static final String SERIALIZABLE_MODEL_VALUE = "false";
@@ -43,6 +44,7 @@ public class JavaOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.ARTIFACT_ID, ARTIFACT_ID_VALUE)
                 .put(CodegenConstants.ARTIFACT_VERSION, ARTIFACT_VERSION_VALUE)
                 .put(CodegenConstants.ARTIFACT_URL, ARTIFACT_URL_VALUE)
+                .put(CodegenConstants.ARTIFACT_DESCRIPTION, ARTIFACT_DESCRIPTION_VALUE)
                 .put(CodegenConstants.LICENSE_NAME, LICENSE_NAME_VALUE)
                 .put(CodegenConstants.LICENSE_URL, LICENSE_URL_VALUE)
                 .put(CodegenConstants.SOURCE_FOLDER, SOURCE_FOLDER_VALUE)

@@ -52,6 +52,8 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     protected String groupId = "io.swagger";
     protected String artifactId = "swagger-java";
     protected String artifactVersion = "1.0.0";
+    protected String artifactUrl = "https://github.com/swagger-api/swagger-codegen";
+    protected String artifactDescription = "Swagger Java";
     protected String licenseName = "Unlicense";
     protected String licenseUrl = "http://unlicense.org";
     protected String projectFolder = "src" + File.separator + "main";
@@ -120,6 +122,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_ID, CodegenConstants.ARTIFACT_ID_DESC));
         cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_VERSION, CodegenConstants.ARTIFACT_VERSION_DESC));
         cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_URL, CodegenConstants.ARTIFACT_URL_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_DESCRIPTION, CodegenConstants.ARTIFACT_DESCRIPTION_DESC));
         cliOptions.add(new CliOption(CodegenConstants.LICENSE_NAME, CodegenConstants.LICENSE_NAME_DESC));
         cliOptions.add(new CliOption(CodegenConstants.LICENSE_URL, CodegenConstants.LICENSE_URL_DESC));
         cliOptions.add(new CliOption(CodegenConstants.SOURCE_FOLDER, CodegenConstants.SOURCE_FOLDER_DESC));
@@ -190,6 +193,18 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         } else {
             //not set, use to be passed to template
             additionalProperties.put(CodegenConstants.ARTIFACT_VERSION, artifactVersion);
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.ARTIFACT_URL)) {
+            this.setArtifactUrl((String) additionalProperties.get(CodegenConstants.ARTIFACT_URL));
+        } else {
+            additionalProperties.put(CodegenConstants.ARTIFACT_URL, artifactUrl);
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.ARTIFACT_DESCRIPTION)) {
+            this.setArtifactDescription((String) additionalProperties.get(CodegenConstants.ARTIFACT_DESCRIPTION));
+        } else {
+            additionalProperties.put(CodegenConstants.ARTIFACT_DESCRIPTION, artifactDescription);
         }
 
         if (additionalProperties.containsKey(CodegenConstants.LICENSE_NAME)) {
@@ -928,6 +943,14 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
     public void setArtifactVersion(String artifactVersion) {
         this.artifactVersion = artifactVersion;
+    }
+
+    public void setArtifactUrl(String artifactUrl) {
+        this.artifactUrl = artifactUrl;
+    }
+
+    public void setArtifactDescription(String artifactDescription) {
+        this.artifactDescription = artifactDescription;
     }
 
     public void setLicenseName(String licenseName) {
