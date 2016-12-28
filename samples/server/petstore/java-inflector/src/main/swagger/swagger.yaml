@@ -35,17 +35,24 @@ paths:
       tags:
       - "fake"
       summary: "To test enum parameters"
+      description: "To test enum parameters"
       operationId: "testEnumParameters"
       consumes:
-      - "application/json"
+      - "*/*"
       produces:
-      - "application/json"
+      - "*/*"
       parameters:
       - name: "enum_form_string_array"
         in: "formData"
         description: "Form parameter enum test (string array)"
         required: false
         type: "array"
+        items:
+          type: "string"
+          default: "$"
+          enum:
+          - ">"
+          - "$"
       - name: "enum_form_string"
         in: "formData"
         description: "Form parameter enum test (string)"
@@ -61,6 +68,12 @@ paths:
         description: "Header parameter enum test (string array)"
         required: false
         type: "array"
+        items:
+          type: "string"
+          default: "$"
+          enum:
+          - ">"
+          - "$"
       - name: "enum_header_string"
         in: "header"
         description: "Header parameter enum test (string)"
@@ -96,27 +109,21 @@ paths:
         in: "query"
         description: "Query parameter enum test (double)"
         required: false
-        type: "number"
+        type: "integer"
         format: "int32"
-        enum:
-        - null
-        - null
       - name: "enum_query_double"
         in: "formData"
         description: "Query parameter enum test (double)"
         required: false
         type: "number"
         format: "double"
-        enum:
-        - null
-        - null
       responses:
         400:
           description: "Invalid request"
         404:
           description: "Not found"
-      x-contentType: "application/json"
-      x-accepts: "application/json"
+      x-accepts: "*/*"
+      x-contentType: "*/*"
     post:
       tags:
       - "fake"
@@ -178,9 +185,15 @@ paths:
       - name: "string"
         in: "formData"
         description: "None"
-        required: true
+        required: false
         type: "string"
         pattern: "/[a-z]/i"
+      - name: "pattern_without_delimiter"
+        in: "formData"
+        description: "None"
+        required: true
+        type: "string"
+        pattern: "^[A-Z].*"
       - name: "byte"
         in: "formData"
         description: "None"
@@ -213,6 +226,11 @@ paths:
         maxLength: 64
         minLength: 10
         format: "password"
+      - name: "callback"
+        in: "formData"
+        description: "None"
+        required: false
+        type: "string"
       responses:
         400:
           description: "Invalid username supplied"
@@ -220,12 +238,13 @@ paths:
           description: "User not found"
       security:
       - http_basic_test: []
-      x-contentType: "application/xml; charset=utf-8"
       x-accepts: "application/xml; charset=utf-8,application/json; charset=utf-8"
+      x-contentType: "application/xml; charset=utf-8"
     patch:
       tags:
       - "fake"
       summary: "To test \"client\" model"
+      description: "To test \"client\" model"
       operationId: "testClientModel"
       consumes:
       - "application/json"
@@ -243,8 +262,8 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/Client"
-      x-contentType: "application/json"
       x-accepts: "application/json"
+      x-contentType: "application/json"
   /pet:
     post:
       tags:
@@ -272,8 +291,8 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-contentType: "application/json"
       x-accepts: "application/json"
+      x-contentType: "application/json"
     put:
       tags:
       - "pet"
@@ -304,8 +323,8 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-contentType: "application/json"
       x-accepts: "application/json"
+      x-contentType: "application/json"
   /pet/findByStatus:
     get:
       tags:
@@ -343,8 +362,8 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-contentType: "application/json"
       x-accepts: "application/json"
+      x-contentType: "application/json"
   /pet/findByTags:
     get:
       tags:
@@ -378,8 +397,8 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-contentType: "application/json"
       x-accepts: "application/json"
+      x-contentType: "application/json"
   /pet/{petId}:
     get:
       tags:
@@ -408,8 +427,8 @@ paths:
           description: "Pet not found"
       security:
       - api_key: []
-      x-contentType: "application/json"
       x-accepts: "application/json"
+      x-contentType: "application/json"
     post:
       tags:
       - "pet"
@@ -445,8 +464,8 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-contentType: "application/x-www-form-urlencoded"
       x-accepts: "application/json"
+      x-contentType: "application/x-www-form-urlencoded"
     delete:
       tags:
       - "pet"
@@ -474,8 +493,8 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-contentType: "application/json"
       x-accepts: "application/json"
+      x-contentType: "application/json"
   /pet/{petId}/uploadImage:
     post:
       tags:
@@ -513,8 +532,8 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-contentType: "multipart/form-data"
       x-accepts: "application/json"
+      x-contentType: "multipart/form-data"
   /store/inventory:
     get:
       tags:
@@ -535,8 +554,8 @@ paths:
               format: "int32"
       security:
       - api_key: []
-      x-contentType: "application/json"
       x-accepts: "application/json"
+      x-contentType: "application/json"
   /store/order:
     post:
       tags:
@@ -561,8 +580,8 @@ paths:
             $ref: "#/definitions/Order"
         400:
           description: "Invalid Order"
-      x-contentType: "application/json"
       x-accepts: "application/json"
+      x-contentType: "application/json"
   /store/order/{orderId}:
     get:
       tags:
@@ -592,8 +611,8 @@ paths:
           description: "Invalid ID supplied"
         404:
           description: "Order not found"
-      x-contentType: "application/json"
       x-accepts: "application/json"
+      x-contentType: "application/json"
     delete:
       tags:
       - "store"
@@ -616,8 +635,8 @@ paths:
           description: "Invalid ID supplied"
         404:
           description: "Order not found"
-      x-contentType: "application/json"
       x-accepts: "application/json"
+      x-contentType: "application/json"
   /user:
     post:
       tags:
@@ -638,8 +657,8 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-contentType: "application/json"
       x-accepts: "application/json"
+      x-contentType: "application/json"
   /user/createWithArray:
     post:
       tags:
@@ -662,8 +681,8 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-contentType: "application/json"
       x-accepts: "application/json"
+      x-contentType: "application/json"
   /user/createWithList:
     post:
       tags:
@@ -686,8 +705,8 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-contentType: "application/json"
       x-accepts: "application/json"
+      x-contentType: "application/json"
   /user/login:
     get:
       tags:
@@ -725,8 +744,8 @@ paths:
               description: "date in UTC when toekn expires"
         400:
           description: "Invalid username/password supplied"
-      x-contentType: "application/json"
       x-accepts: "application/json"
+      x-contentType: "application/json"
   /user/logout:
     get:
       tags:
@@ -741,8 +760,8 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-contentType: "application/json"
       x-accepts: "application/json"
+      x-contentType: "application/json"
   /user/{username}:
     get:
       tags:
@@ -768,8 +787,8 @@ paths:
           description: "Invalid username supplied"
         404:
           description: "User not found"
-      x-contentType: "application/json"
       x-accepts: "application/json"
+      x-contentType: "application/json"
     put:
       tags:
       - "user"
@@ -796,8 +815,8 @@ paths:
           description: "Invalid user supplied"
         404:
           description: "User not found"
-      x-contentType: "application/json"
       x-accepts: "application/json"
+      x-contentType: "application/json"
     delete:
       tags:
       - "user"
@@ -818,13 +837,9 @@ paths:
           description: "Invalid username supplied"
         404:
           description: "User not found"
-      x-contentType: "application/json"
       x-accepts: "application/json"
+      x-contentType: "application/json"
 securityDefinitions:
-  api_key:
-    type: "apiKey"
-    name: "api_key"
-    in: "header"
   petstore_auth:
     type: "oauth2"
     authorizationUrl: "http://petstore.swagger.io/api/oauth/dialog"
@@ -834,6 +849,10 @@ securityDefinitions:
       read:pets: "read your pets"
   http_basic_test:
     type: "basic"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
 definitions:
   Order:
     type: "object"
@@ -999,6 +1018,11 @@ definitions:
     description: "Model for testing model name starting with number"
     xml:
       name: "Name"
+  ClassModel:
+    properties:
+      _class:
+        type: "string"
+    description: "Model for testing model with \"_class\" property"
   Dog:
     allOf:
     - $ref: "#/definitions/Animal"
@@ -1112,6 +1136,8 @@ definitions:
         enum:
         - 1.1
         - -1.2
+      outerEnum:
+        $ref: "#/definitions/OuterEnum"
   AdditionalPropertiesClass:
     type: "object"
     properties:
@@ -1237,6 +1263,12 @@ definitions:
           enum:
           - "fish"
           - "crab"
+  OuterEnum:
+    type: "string"
+    enum:
+    - "placed"
+    - "approved"
+    - "delivered"
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"
