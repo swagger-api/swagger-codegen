@@ -9,9 +9,9 @@
   <url>{{artifactUrl}}</url>
   <description>{{artifactDescription}}</description>
   <scm>
-    <connection>scm:git:git@github.com:swagger-api/swagger-mustache.git</connection>
-    <developerConnection>scm:git:git@github.com:swagger-api/swagger-codegen.git</developerConnection>
-    <url>https://github.com/swagger-api/swagger-codegen</url>
+    <connection>{{scmConnection}}</connection>
+    <developerConnection>{{scmDeveloperConnection}}</developerConnection>
+    <url>{{scmUrl}}</url>
   </scm>
   <prerequisites>
     <maven>2.2.0</maven>
@@ -33,7 +33,7 @@
       <organizationUrl>{{developerOrganizationUrl}}</organizationUrl>
     </developer>
   </developers>
-  
+
   <build>
     <plugins>
       <plugin>
