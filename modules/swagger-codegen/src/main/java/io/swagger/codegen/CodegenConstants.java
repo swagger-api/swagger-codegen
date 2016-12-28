@@ -34,6 +34,15 @@ public class CodegenConstants {
     public static final String ARTIFACT_DESCRIPTION = "artifactDescription";
     public static final String ARTIFACT_DESCRIPTION_DESC = "artifact description in generated pom.xml";
 
+    public static final String SCM_CONNECTION = "scmConnection";
+    public static final String SCM_CONNECTION_DESC = "SCM connection in generated pom.xml";
+
+    public static final String SCM_DEVELOPER_CONNECTION = "scmDeveloperConnection";
+    public static final String SCM_DEVELOPER_CONNECTION_DESC = "SCM developer connection in generated pom.xml";
+
+    public static final String SCM_URL = "scmUrl";
+    public static final String SCM_URL_DESC = "SCM URL in generated pom.xml";
+
     public static final String DEVELOPER_NAME = "developerName";
     public static final String DEVELOPER_NAME_DESC = "developer name in generated pom.xml";
 

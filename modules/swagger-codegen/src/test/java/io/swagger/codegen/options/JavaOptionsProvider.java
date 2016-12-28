@@ -17,6 +17,9 @@ public class JavaOptionsProvider implements OptionsProvider {
     public static final String DEVELOPER_EMAIL_VALUE = "apiteam@swagger.io";
     public static final String DEVELOPER_ORGANIZATION_VALUE = "Swagger";
     public static final String DEVELOPER_ORGANIZATION_URL_VALUE = "http://swagger.io";
+    public static final String SCM_CONNECTION_VALUE = "scm:git:git@github.com:swagger-api/swagger-codegen.git";
+    public static final String SCM_DEVELOPER_CONNECTION_VALUE = "scm:git:git@github.com:swagger-api/swagger-codegen.git";
+    public static final String SCM_URL_VALUE = "https://github.com/swagger-api/swagger-codegen";
     public static final String SORT_PARAMS_VALUE = "false";
     public static final String GROUP_ID_VALUE = "io.swagger.test";
     public static final String ARTIFACT_VERSION_VALUE = "1.0.0-SNAPSHOT";
@@ -47,6 +50,9 @@ public class JavaOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.ARTIFACT_VERSION, ARTIFACT_VERSION_VALUE)
                 .put(CodegenConstants.ARTIFACT_URL, ARTIFACT_URL_VALUE)
                 .put(CodegenConstants.ARTIFACT_DESCRIPTION, ARTIFACT_DESCRIPTION_VALUE)
+                .put(CodegenConstants.SCM_CONNECTION, SCM_CONNECTION_VALUE)
+                .put(CodegenConstants.SCM_DEVELOPER_CONNECTION, SCM_DEVELOPER_CONNECTION_VALUE)
+                .put(CodegenConstants.SCM_URL, SCM_URL_VALUE)
                 .put(CodegenConstants.DEVELOPER_NAME, DEVELOPER_NAME_VALUE)
                 .put(CodegenConstants.DEVELOPER_EMAIL, DEVELOPER_EMAIL_VALUE)
                 .put(CodegenConstants.DEVELOPER_ORGANIZATION, DEVELOPER_ORGANIZATION_VALUE)

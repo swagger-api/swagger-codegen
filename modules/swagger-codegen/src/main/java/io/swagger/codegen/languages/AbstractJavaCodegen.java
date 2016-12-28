@@ -58,6 +58,9 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     protected String developerEmail = "apiteam@swagger.io";
     protected String developerOrganization = "Swagger";
     protected String developerOrganizationUrl = "http://swagger.io";
+    protected String scmConnection = "scm:git:git@github.com:swagger-api/swagger-codegen.git";
+    protected String scmDeveloperConnection = "scm:git:git@github.com:swagger-api/swagger-codegen.git";
+    protected String scmUrl = "https://github.com/swagger-api/swagger-codegen";
     protected String licenseName = "Unlicense";
     protected String licenseUrl = "http://unlicense.org";
     protected String projectFolder = "src" + File.separator + "main";
@@ -127,6 +130,9 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_VERSION, CodegenConstants.ARTIFACT_VERSION_DESC));
         cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_URL, CodegenConstants.ARTIFACT_URL_DESC));
         cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_DESCRIPTION, CodegenConstants.ARTIFACT_DESCRIPTION_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.SCM_CONNECTION, CodegenConstants.SCM_CONNECTION_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.SCM_DEVELOPER_CONNECTION, CodegenConstants.SCM_DEVELOPER_CONNECTION_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.SCM_URL, CodegenConstants.SCM_URL_DESC));
         cliOptions.add(new CliOption(CodegenConstants.DEVELOPER_NAME, CodegenConstants.DEVELOPER_NAME_DESC));
         cliOptions.add(new CliOption(CodegenConstants.DEVELOPER_EMAIL, CodegenConstants.DEVELOPER_EMAIL_DESC));
         cliOptions.add(new CliOption(CodegenConstants.DEVELOPER_ORGANIZATION, CodegenConstants.DEVELOPER_ORGANIZATION_DESC));
@@ -213,6 +219,24 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             this.setArtifactDescription((String) additionalProperties.get(CodegenConstants.ARTIFACT_DESCRIPTION));
         } else {
             additionalProperties.put(CodegenConstants.ARTIFACT_DESCRIPTION, artifactDescription);
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.SCM_CONNECTION)) {
+            this.setScmConnection((String) additionalProperties.get(CodegenConstants.SCM_CONNECTION));
+        } else {
+            additionalProperties.put(CodegenConstants.SCM_CONNECTION, scmConnection);
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.SCM_DEVELOPER_CONNECTION)) {
+            this.setScmDeveloperConnection((String) additionalProperties.get(CodegenConstants.SCM_DEVELOPER_CONNECTION));
+        } else {
+            additionalProperties.put(CodegenConstants.SCM_DEVELOPER_CONNECTION, scmDeveloperConnection);
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.SCM_URL)) {
+            this.setScmUrl((String) additionalProperties.get(CodegenConstants.SCM_URL));
+        } else {
+            additionalProperties.put(CodegenConstants.SCM_URL, scmUrl);
         }
 
         if (additionalProperties.containsKey(CodegenConstants.DEVELOPER_NAME)) {
@@ -976,6 +1000,18 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
     public void setArtifactDescription(String artifactDescription) {
         this.artifactDescription = artifactDescription;
+    }
+
+    public void setScmConnection(String scmConnection) {
+        this.scmConnection = scmConnection;
+    }
+
+    public void setScmDeveloperConnection(String scmDeveloperConnection) {
+        this.scmDeveloperConnection = scmDeveloperConnection;
+    }
+
+    public void setScmUrl(String scmUrl) {
+        this.scmUrl = scmUrl;
     }
 
     public void setDeveloperName(String developerName) {

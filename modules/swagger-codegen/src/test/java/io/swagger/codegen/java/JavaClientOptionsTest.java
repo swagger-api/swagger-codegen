@@ -50,6 +50,12 @@ public class JavaClientOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setArtifactDescription(JavaClientOptionsProvider.ARTIFACT_DESCRIPTION_VALUE);
             times = 1;
+            clientCodegen.setScmConnection(JavaClientOptionsProvider.SCM_CONNECTION_VALUE);
+            times = 1;
+            clientCodegen.setScmDeveloperConnection(JavaClientOptionsProvider.SCM_DEVELOPER_CONNECTION_VALUE);
+            times = 1;
+            clientCodegen.setScmUrl(JavaClientOptionsProvider.SCM_URL_VALUE);
+            times = 1;
             clientCodegen.setDeveloperName(JavaClientOptionsProvider.DEVELOPER_NAME_VALUE);
             times = 1;
             clientCodegen.setDeveloperEmail(JavaClientOptionsProvider.DEVELOPER_EMAIL_VALUE);

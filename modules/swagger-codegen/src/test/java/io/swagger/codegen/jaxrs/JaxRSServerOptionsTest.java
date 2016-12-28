@@ -45,6 +45,12 @@ public class JaxRSServerOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setArtifactDescription(JaxRSServerOptionsProvider.ARTIFACT_DESCRIPTION_VALUE);
             times = 1;
+            clientCodegen.setScmConnection(JaxRSServerOptionsProvider.SCM_CONNECTION_VALUE);
+            times = 1;
+            clientCodegen.setScmDeveloperConnection(JaxRSServerOptionsProvider.SCM_DEVELOPER_CONNECTION_VALUE);
+            times = 1;
+            clientCodegen.setScmUrl(JaxRSServerOptionsProvider.SCM_URL_VALUE);
+            times = 1;
             clientCodegen.setDeveloperName(JaxRSServerOptionsProvider.DEVELOPER_NAME_VALUE);
             times = 1;
             clientCodegen.setDeveloperEmail(JaxRSServerOptionsProvider.DEVELOPER_EMAIL_VALUE);
