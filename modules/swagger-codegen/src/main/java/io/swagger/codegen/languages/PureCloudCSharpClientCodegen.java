@@ -25,7 +25,9 @@ public class PureCloudCSharpClientCodegen extends CSharpClientCodegen {
         // Prevents collision between System.Attribute and ININ.PureCloudApi.Model.Attribute
         typeMapping.put("Attribute", "ININ.PureCloudApi.Model.Attribute");
 
-        importMapping.remove("LocalDateTime");
+        // Custom mappings for swagger type -> .NET type
+        //importMapping.remove("LocalDateTime");
+        typeMapping.put("LocalDateTime", "DateTime?");
     }
 
     @Override
