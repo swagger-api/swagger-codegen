@@ -20,6 +20,9 @@ public class PureCloudJavaClientCodegen extends JavaClientCodegen {
         // Use default templates
         embeddedTemplateDir = templateDir = "Java";
 
+        // Custom mappings for swagger type -> java type
+        importMapping.put("LocalDateTime", "org.joda.time.LocalDateTime");
+
 
         reservedWords.add("null"); // Friggin really?!
     }

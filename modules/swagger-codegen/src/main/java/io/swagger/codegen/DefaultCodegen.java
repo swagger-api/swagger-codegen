@@ -1037,6 +1037,10 @@ public class DefaultCodegen {
         String datatype = null;
         if (p instanceof StringProperty && "number".equals(p.getFormat())) {
             datatype = "BigDecimal";
+        } else if (p instanceof StringProperty && "local-date-time".equals(p.getFormat())) {
+            // Override for custom swagger format: local-date-time
+            // This is a datatype that contains a date and time, but no timezone
+            datatype = "LocalDateTime";
         } else if (p instanceof StringProperty) {
             datatype = "string";
         } else if (p instanceof ByteArrayProperty) {
