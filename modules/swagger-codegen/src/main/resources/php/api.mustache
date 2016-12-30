@@ -168,14 +168,14 @@ use \{{invokerPackage}}\ObjectSerializer;
         // parse inputs
         $resourcePath = "{{path}}";
         $httpBody = '';
-        $queryParams = [];
-        $headerParams = [];
-        $formParams = [];
-        $_header_accept = $this->apiClient->selectHeaderAccept([{{#produces}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/produces}}]);
+        $queryParams = array();
+        $headerParams = array();
+        $formParams = array();
+        $_header_accept = $this->apiClient->selectHeaderAccept(array({{#produces}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/produces}}));
         if (!is_null($_header_accept)) {
             $headerParams['Accept'] = $_header_accept;
         }
-        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType([{{#consumes}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/consumes}}]);
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array({{#consumes}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/consumes}}));
 
         {{#queryParams}}
         // query params
@@ -286,10 +286,10 @@ use \{{invokerPackage}}\ObjectSerializer;
             );
 
             {{#returnType}}
-            return [$this->apiClient->getSerializer()->deserialize($response, '{{returnType}}', $httpHeader{{#discriminator}}, '{{discriminator}}'{{/discriminator}}), $statusCode, $httpHeader];
+            return array($this->apiClient->getSerializer()->deserialize($response, '{{returnType}}', $httpHeader{{#discriminator}}, '{{discriminator}}'{{/discriminator}}), $statusCode, $httpHeader);
             {{/returnType}}
             {{^returnType}}
-            return [null, $statusCode, $httpHeader];
+            return array(null, $statusCode, $httpHeader);
             {{/returnType}}
         } catch (ApiException $e) {
             switch ($e->getCode()) {
