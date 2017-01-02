@@ -70,6 +70,20 @@ export class StoreService {
     }
 
     /**
+     * @param consumes string[] mime-types
+     * @return true: consumes contains 'multipart/form-data', false: otherwise
+     */
+    private canConsumeForm(consumes: string[]): boolean {
+        const form = 'multipart/form-data';
+        for (let consume of consumes) {
+            if (form === consume) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Delete purchase order by ID
      * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
      * @param orderId ID of the order that needs to be deleted
@@ -143,15 +157,13 @@ export class StoreService {
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+
         // verify required parameter 'orderId' is not null or undefined
         if (orderId === null || orderId === undefined) {
             throw new Error('Required parameter orderId was null or undefined when calling deleteOrder.');
         }
 
 
-        // to determine the Content-Type header
-        let consumes: string[] = [
-        ];
 
         // to determine the Accept header
         let produces: string[] = [
@@ -160,7 +172,6 @@ export class StoreService {
         ];
         
             
-
 
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
@@ -188,9 +199,7 @@ export class StoreService {
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
 
-        // to determine the Content-Type header
-        let consumes: string[] = [
-        ];
+
 
         // to determine the Accept header
         let produces: string[] = [
@@ -204,7 +213,6 @@ export class StoreService {
             headers.set('api_key', this.configuration.apiKey);
         }
             
-
 
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
@@ -231,15 +239,13 @@ export class StoreService {
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+
         // verify required parameter 'orderId' is not null or undefined
         if (orderId === null || orderId === undefined) {
             throw new Error('Required parameter orderId was null or undefined when calling getOrderById.');
         }
 
 
-        // to determine the Content-Type header
-        let consumes: string[] = [
-        ];
 
         // to determine the Accept header
         let produces: string[] = [
@@ -248,7 +254,6 @@ export class StoreService {
         ];
         
             
-
 
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
@@ -277,9 +282,7 @@ export class StoreService {
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
 
-        // to determine the Content-Type header
-        let consumes: string[] = [
-        ];
+
 
         // to determine the Accept header
         let produces: string[] = [
@@ -288,7 +291,6 @@ export class StoreService {
         ];
         
             
-
         headers.set('Content-Type', 'application/json');
 
 
