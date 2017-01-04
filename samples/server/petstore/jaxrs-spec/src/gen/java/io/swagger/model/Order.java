@@ -55,7 +55,7 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(example = "null", value = "")
   public Long getId() {
     return id;
   }
@@ -71,7 +71,7 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(example = "null", value = "")
   public Long getPetId() {
     return petId;
   }
@@ -87,7 +87,7 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(example = "null", value = "")
   public Integer getQuantity() {
     return quantity;
   }
@@ -103,7 +103,7 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(example = "null", value = "")
   public javax.xml.datatype.XMLGregorianCalendar getShipDate() {
     return shipDate;
   }
@@ -120,7 +120,7 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "Order Status")
+  @ApiModelProperty(example = "null", value = "Order Status")
   public StatusEnum getStatus() {
     return status;
   }
@@ -136,7 +136,7 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(example = "null", value = "")
   public Boolean getComplete() {
     return complete;
   }
