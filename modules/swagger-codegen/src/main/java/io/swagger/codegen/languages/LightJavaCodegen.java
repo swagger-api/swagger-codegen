@@ -76,6 +76,8 @@ public class LightJavaCodegen extends AbstractJavaCodegen {
         writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
         writeOptional(outputFolder, new SupportingFile("gitignore.mustache", "", ".gitignore"));
         writeOptional(outputFolder, new SupportingFile("dockerfile.mustache", "", "Dockerfile"));
+        writeOptional(outputFolder, new SupportingFile("eclipse.classpath.mustache", "", ".classpath"));
+        writeOptional(outputFolder, new SupportingFile("eclipse.project.mustache", "", ".project"));
 
         // keep the yaml in config folder for framework validation.
         supportingFiles.add(new SupportingFile("swagger.mustache", ("src.main.resources.config").replace(".", java.io.File.separator), "swagger.json"));
@@ -94,7 +96,7 @@ public class LightJavaCodegen extends AbstractJavaCodegen {
         supportingFiles.add(new SupportingFile("secondary.crt", ("src.main.resources.config.oauth").replace(".", java.io.File.separator), "secondary.crt"));
 
         supportingFiles.add(new SupportingFile("logback.xml", ("src.main.resources").replace(".", java.io.File.separator), "logback.xml"));
-
+        supportingFiles.add(new SupportingFile("logback.xml", ("src.test.resources").replace(".", java.io.File.separator), "logback.xml"));
     }
 
     /*
