@@ -164,13 +164,4 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen i
         this.useBeanValidation = useBeanValidation;
     }
     
-    public String toExampleValue(Property p) {
-    	String exampleValue = super.toExampleValue(p);
-    	// convert "null" to null 
-    	if ("null".equals(exampleValue)) {
-    		exampleValue = null;
-    	}
-    	return exampleValue;
-    }
-    
 }
