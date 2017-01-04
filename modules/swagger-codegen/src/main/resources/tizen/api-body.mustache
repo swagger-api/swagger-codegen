@@ -201,7 +201,8 @@ bool {{nickname}}Helper(char * accessToken,
 	string mBody = "";
 	JsonNode* node;
 	JsonArray* json_array;
-	{{#bodyParams}}
+	{{#allParams}}
+	{{#isBodyParam}}
 	{{#isContainer}}
 	//TODO: Map Container
 	{{#isListContainer}}
@@ -253,17 +254,18 @@ bool {{nickname}}Helper(char * accessToken,
 	if (isprimitive("{{baseType}}")) {
 		node = converttoJson(&{{paramName}}, "{{baseType}}", "");
 	}
-	{{^isInteger}}{{^isDate}}{{^isLong}}{{^isBoolean}}{{^isFloat}}{{^isString}}{{^isDateTime}}{{^isDouble}}
+	{{^isPrimitiveType}}{{^isInteger}}{{^isDate}}{{^isLong}}{{^isBoolean}}{{^isFloat}}{{^isString}}{{^isDateTime}}{{^isDouble}}
 	char *jsonStr =  {{paramName}}.toJson();
 	node = json_from_string(jsonStr, NULL);
 	g_free(static_cast<gpointer>(jsonStr));
-	{{/isDouble}}{{/isDateTime}}{{/isString}}{{/isFloat}}{{/isBoolean}}{{/isLong}}{{/isDate}}{{/isInteger}}
+	{{/isDouble}}{{/isDateTime}}{{/isString}}{{/isFloat}}{{/isBoolean}}{{/isLong}}{{/isDate}}{{/isInteger}}{{/isPrimitiveType}}
 
 	{{/isContainer}}
 	char *jsonStr1 =  json_to_string(node, false);
 	mBody.append(jsonStr1);
 	g_free(static_cast<gpointer>(jsonStr1));
-	{{/bodyParams}}
+	{{/isBodyParam}}
+	{{/allParams}}
 
 	string url("{{{path}}}");
 	int pos;
