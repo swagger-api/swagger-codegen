@@ -17,7 +17,7 @@
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.framework>1.1.4</version.framework>
+        <version.framework>1.1.6</version.framework>
         <version.jackson>2.8.2</version.jackson>
         <version.slf4j>1.7.21</version.slf4j>
         <version.jose4j>0.5.2</version.jose4j>
@@ -236,6 +236,41 @@
                     </arguments>
                 </configuration>
             </plugin>
+            <!-- Google error-prone compiles -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <compilerId>javac-with-errorprone</compilerId>
+                    <showWarnings>true</showWarnings>
+                    <showDeprecation>true</showDeprecation>
+                    <compilerArgs>
+                        <!-- add command line validation here -->
+                    </compilerArgs>
+                    <forceJavacCompilerUse>true</forceJavacCompilerUse>
+                    <!-- maven-compiler-plugin defaults to targeting Java 5, but our javac
+                         only supports >=6 -->
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.plexus</groupId>
+                        <artifactId>plexus-compiler-javac-errorprone</artifactId>
+                        <version>2.8</version>
+                    </dependency>
+                    <!-- override plexus-compiler-javac-errorprone's dependency on
+                         Error Prone with the latest version -->
+                    <dependency>
+                        <groupId>com.google.errorprone</groupId>
+                        <artifactId>error_prone_core</artifactId>
+                        <version>2.0.15</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <!-- end Google error-proce compiles -->
         </plugins>
     </build>
 
