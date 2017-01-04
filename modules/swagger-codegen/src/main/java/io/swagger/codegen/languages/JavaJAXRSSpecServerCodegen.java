@@ -2,11 +2,12 @@ package io.swagger.codegen.languages;
 
 import java.io.File;
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.io.FileUtils;
 
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConstants;
@@ -14,13 +15,16 @@ import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.languages.features.BeanValidationFeatures;
 import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
+import io.swagger.models.properties.Property;
 import io.swagger.util.Json;
-import org.apache.commons.io.FileUtils;
 
-public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
+public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen implements BeanValidationFeatures
 {	
+	protected boolean useBeanValidation = true;
+	
 	public JavaJAXRSSpecServerCodegen()
 	{
         super();
@@ -67,13 +71,23 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
         library.setEnum(supportedLibraries);
 
         cliOptions.add(library);
+        
+        cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
 	}
 	
 	@Override
 	public void processOpts()
 	{
 		super.processOpts();
+		
+		if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
+			this.setUseBeanValidation(convertPropertyToBoolean(USE_BEANVALIDATION));
+        }
 
+		if (useBeanValidation) {
+			writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
+		}
+		
 		supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
         
@@ -81,6 +95,7 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
                 (sourceFolder + '/' + invokerPackage).replace(".", "/"), "RestApplication.java"));
         
 	} 
+	
 
 	@Override
 	public String getName()
@@ -144,4 +159,18 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
     {
         return "Generates a Java JAXRS Server according to JAXRS 2.0 specification.";
     }
+    
+    public void setUseBeanValidation(boolean useBeanValidation) {
+        this.useBeanValidation = useBeanValidation;
+    }
+    
+    public String toExampleValue(Property p) {
+    	String exampleValue = super.toExampleValue(p);
+    	// convert "null" to null 
+    	if ("null".equals(exampleValue)) {
+    		exampleValue = null;
+    	}
+    	return exampleValue;
+    }
+    
 }

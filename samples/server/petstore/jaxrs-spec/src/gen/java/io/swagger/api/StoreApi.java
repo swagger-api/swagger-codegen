@@ -1,6 +1,7 @@
-package com.ibm.ws.petstoresample.api;
+package io.swagger.api;
 
-import com.ibm.ws.petstoresample.model.Order;
+import java.util.Map;
+import io.swagger.model.Order;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -8,15 +9,16 @@ import javax.ws.rs.core.Response;
 import io.swagger.annotations.*;
 
 import java.util.List;
+import javax.validation.constraints.*;
 
-@Path("/stores")
+@Path("/store")
 
-@Api(description = "the stores API")
+@Api(description = "the store API")
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2016-06-06T11:04:02.369-04:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2017-01-04T16:02:52.310+01:00")
 
-public class StoresApi  {
+public class StoreApi  {
 
     @DELETE
     @Path("/order/{orderId}")
@@ -26,7 +28,20 @@ public class StoresApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid ID supplied", response = void.class),
         @ApiResponse(code = 404, message = "Order not found", response = void.class) })
-    public Response deleteOrder(@PathParam("orderId") String orderId) {
+    public Response deleteOrder(@PathParam("orderId") @ApiParam("ID of the order that needs to be deleted") String orderId) {
+    	return Response.ok().entity("magic!").build();
+    }
+
+    @GET
+    @Path("/inventory")
+    
+    @Produces({ "application/json", "application/xml" })
+    @ApiOperation(value = "Returns pet inventories by status", notes = "Returns a map of status codes to quantities", response = Integer.class, responseContainer = "Map", authorizations = {
+        @Authorization(value = "api_key")
+    }, tags={ "store",  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = Integer.class, responseContainer = "Map") })
+    public Response getInventory() {
     	return Response.ok().entity("magic!").build();
     }
 
@@ -39,7 +54,7 @@ public class StoresApi  {
         @ApiResponse(code = 200, message = "successful operation", response = Order.class),
         @ApiResponse(code = 400, message = "Invalid ID supplied", response = Order.class),
         @ApiResponse(code = 404, message = "Order not found", response = Order.class) })
-    public Response getOrderById(@PathParam("orderId") String orderId) {
+    public Response getOrderById(@PathParam("orderId") @ApiParam("ID of pet that needs to be fetched") String orderId) {
     	return Response.ok().entity("magic!").build();
     }
 

@@ -1,6 +1,6 @@
-package com.ibm.ws.petstoresample.model;
+package io.swagger.model;
 
-
+import javax.validation.constraints.*;
 
 
 import io.swagger.annotations.*;
@@ -13,7 +13,38 @@ public class Order   {
   private Long petId = null;
   private Integer quantity = null;
   private javax.xml.datatype.XMLGregorianCalendar shipDate = null;
-  private String status = null;
+
+public enum StatusEnum {
+
+    PLACED(String.valueOf("placed")), APPROVED(String.valueOf("approved")), DELIVERED(String.valueOf("delivered"));
+
+
+    private String value;
+
+    StatusEnum (String v) {
+        value = v;
+    }
+
+    public String value() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
+
+    public static StatusEnum fromValue(String v) {
+        for (StatusEnum b : StatusEnum.values()) {
+            if (String.valueOf(b.value).equals(v)) {
+                return b;
+            }
+        }
+        return null;
+    }
+}
+
+  private StatusEnum status = null;
   private Boolean complete = null;
 
   /**
@@ -24,7 +55,7 @@ public class Order   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Long getId() {
     return id;
   }
@@ -40,7 +71,7 @@ public class Order   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Long getPetId() {
     return petId;
   }
@@ -56,7 +87,7 @@ public class Order   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Integer getQuantity() {
     return quantity;
   }
@@ -72,7 +103,7 @@ public class Order   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public javax.xml.datatype.XMLGregorianCalendar getShipDate() {
     return shipDate;
   }
@@ -83,17 +114,17 @@ public class Order   {
   /**
    * Order Status
    **/
-  public Order status(String status) {
+  public Order status(StatusEnum status) {
     this.status = status;
     return this;
   }
 
   
-  @ApiModelProperty(example = "null", value = "Order Status")
-  public String getStatus() {
+  @ApiModelProperty(value = "Order Status")
+  public StatusEnum getStatus() {
     return status;
   }
-  public void setStatus(String status) {
+  public void setStatus(StatusEnum status) {
     this.status = status;
   }
 
@@ -105,7 +136,7 @@ public class Order   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Boolean getComplete() {
     return complete;
   }

@@ -1,26 +1,26 @@
-package com.ibm.ws.petstoresample.model;
+package io.swagger.model;
 
-
+import javax.validation.constraints.*;
 
 
 import io.swagger.annotations.*;
 import java.util.Objects;
 
 
-public class Tag   {
+public class Category   {
   
   private Long id = null;
   private String name = null;
 
   /**
    **/
-  public Tag id(Long id) {
+  public Category id(Long id) {
     this.id = id;
     return this;
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Long getId() {
     return id;
   }
@@ -30,13 +30,13 @@ public class Tag   {
 
   /**
    **/
-  public Tag name(String name) {
+  public Category name(String name) {
     this.name = name;
     return this;
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public String getName() {
     return name;
   }
@@ -53,9 +53,9 @@ public class Tag   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Tag tag = (Tag) o;
-    return Objects.equals(id, tag.id) &&
-        Objects.equals(name, tag.name);
+    Category category = (Category) o;
+    return Objects.equals(id, category.id) &&
+        Objects.equals(name, category.name);
   }
 
   @Override
@@ -66,7 +66,7 @@ public class Tag   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Tag {\n");
+    sb.append("class Category {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");

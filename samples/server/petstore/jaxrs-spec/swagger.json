@@ -1,12 +1,12 @@
 {
   "swagger" : "2.0",
   "info" : {
-    "description" : "This is a sample server Petstore server.\n\n[Learn about Swagger](http://swagger.io) or join the IRC channel `#swagger` on irc.freenode.net.\n\nFor this sample, you can use the api key `special-key` to test the authorization filters\n",
+    "description" : "This is a sample server Petstore server.  You can find out more about Swagger at <a href=\"http://swagger.io\">http://swagger.io</a> or on irc.freenode.net, #swagger.  For this sample, you can use the api key \"special-key\" to test the authorization filters",
     "version" : "1.0.0",
     "title" : "Swagger Petstore",
     "termsOfService" : "http://helloreverb.com/terms/",
     "contact" : {
-      "name" : "apiteam@swagger.io"
+      "email" : "apiteam@wordnik.com"
     },
     "license" : {
       "name" : "Apache 2.0",
@@ -17,7 +17,7 @@
   "basePath" : "/v2",
   "schemes" : [ "http" ],
   "paths" : {
-    "/pets" : {
+    "/pet" : {
       "post" : {
         "tags" : [ "pet" ],
         "summary" : "Add a new pet to the store",
@@ -40,7 +40,7 @@
           }
         },
         "security" : [ {
-          "petstore_auth" : [ "write_pets", "read_pets" ]
+          "petstore_auth" : [ "write:pets", "read:pets" ]
         } ]
       },
       "put" : {
@@ -71,11 +71,11 @@
           }
         },
         "security" : [ {
-          "petstore_auth" : [ "write_pets", "read_pets" ]
+          "petstore_auth" : [ "write:pets", "read:pets" ]
         } ]
       }
     },
-    "/pets/findByStatus" : {
+    "/pet/findByStatus" : {
       "get" : {
         "tags" : [ "pet" ],
         "summary" : "Finds Pets by status",
@@ -89,9 +89,11 @@
           "required" : false,
           "type" : "array",
           "items" : {
-            "type" : "string"
+            "type" : "string",
+            "enum" : [ "available", "pending", "sold" ]
           },
-          "collectionFormat" : "multi"
+          "collectionFormat" : "multi",
+          "default" : "available"
         } ],
         "responses" : {
           "200" : {
@@ -101,6 +103,15 @@
               "items" : {
                 "$ref" : "#/definitions/Pet"
               }
+            },
+            "examples" : {
+              "application/json" : {
+                "name" : "Puma",
+                "type" : "Dog",
+                "color" : "Black",
+                "gender" : "Female",
+                "breed" : "Mixed"
+              }
             }
           },
           "400" : {
@@ -108,11 +119,11 @@
           }
         },
         "security" : [ {
-          "petstore_auth" : [ "write_pets", "read_pets" ]
+          "petstore_auth" : [ "write:pets", "read:pets" ]
         } ]
       }
     },
-    "/pets/findByTags" : {
+    "/pet/findByTags" : {
       "get" : {
         "tags" : [ "pet" ],
         "summary" : "Finds Pets by tags",
@@ -145,11 +156,11 @@
           }
         },
         "security" : [ {
-          "petstore_auth" : [ "write_pets", "read_pets" ]
+          "petstore_auth" : [ "write:pets", "read:pets" ]
         } ]
       }
     },
-    "/pets/{petId}" : {
+    "/pet/{petId}" : {
       "get" : {
         "tags" : [ "pet" ],
         "summary" : "Find pet by ID",
@@ -181,7 +192,7 @@
         "security" : [ {
           "api_key" : [ ]
         }, {
-          "petstore_auth" : [ "write_pets", "read_pets" ]
+          "petstore_auth" : [ "write:pets", "read:pets" ]
         } ]
       },
       "post" : {
@@ -201,13 +212,13 @@
           "name" : "name",
           "in" : "formData",
           "description" : "Updated name of the pet",
-          "required" : true,
+          "required" : false,
           "type" : "string"
         }, {
           "name" : "status",
           "in" : "formData",
           "description" : "Updated status of the pet",
-          "required" : true,
+          "required" : false,
           "type" : "string"
         } ],
         "responses" : {
@@ -216,7 +227,7 @@
           }
         },
         "security" : [ {
-          "petstore_auth" : [ "write_pets", "read_pets" ]
+          "petstore_auth" : [ "write:pets", "read:pets" ]
         } ]
       },
       "delete" : {
@@ -229,7 +240,7 @@
           "name" : "api_key",
           "in" : "header",
           "description" : "",
-          "required" : true,
+          "required" : false,
           "type" : "string"
         }, {
           "name" : "petId",
@@ -245,11 +256,74 @@
           }
         },
         "security" : [ {
-          "petstore_auth" : [ "write_pets", "read_pets" ]
+          "petstore_auth" : [ "write:pets", "read:pets" ]
         } ]
       }
     },
-    "/stores/order" : {
+    "/pet/{petId}/uploadImage" : {
+      "post" : {
+        "tags" : [ "pet" ],
+        "summary" : "uploads an image",
+        "description" : "",
+        "operationId" : "uploadFile",
+        "consumes" : [ "multipart/form-data" ],
+        "produces" : [ "application/json", "application/xml" ],
+        "parameters" : [ {
+          "name" : "petId",
+          "in" : "path",
+          "description" : "ID of pet to update",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "additionalMetadata",
+          "in" : "formData",
+          "description" : "Additional data to pass to server",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "file",
+          "in" : "formData",
+          "description" : "file to upload",
+          "required" : false,
+          "type" : "file"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        },
+        "security" : [ {
+          "petstore_auth" : [ "write:pets", "read:pets" ]
+        } ]
+      }
+    },
+    "/store/inventory" : {
+      "get" : {
+        "tags" : [ "store" ],
+        "summary" : "Returns pet inventories by status",
+        "description" : "Returns a map of status codes to quantities",
+        "operationId" : "getInventory",
+        "produces" : [ "application/json", "application/xml" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "type" : "integer",
+                "format" : "int32"
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "api_key" : [ ]
+        } ]
+      }
+    },
+    "/store/order" : {
       "post" : {
         "tags" : [ "store" ],
         "summary" : "Place an order for a pet",
@@ -278,7 +352,7 @@
         }
       }
     },
-    "/stores/order/{orderId}" : {
+    "/store/order/{orderId}" : {
       "get" : {
         "tags" : [ "store" ],
         "summary" : "Find purchase order by ID",
@@ -330,7 +404,7 @@
         }
       }
     },
-    "/users" : {
+    "/user" : {
       "post" : {
         "tags" : [ "user" ],
         "summary" : "Create user",
@@ -353,7 +427,7 @@
         }
       }
     },
-    "/users/createWithArray" : {
+    "/user/createWithArray" : {
       "post" : {
         "tags" : [ "user" ],
         "summary" : "Creates list of users with given input array",
@@ -379,7 +453,7 @@
         }
       }
     },
-    "/users/createWithList" : {
+    "/user/createWithList" : {
       "post" : {
         "tags" : [ "user" ],
         "summary" : "Creates list of users with given input array",
@@ -405,7 +479,7 @@
         }
       }
     },
-    "/users/login" : {
+    "/user/login" : {
       "get" : {
         "tags" : [ "user" ],
         "summary" : "Logs user into the system",
@@ -438,7 +512,7 @@
         }
       }
     },
-    "/users/logout" : {
+    "/user/logout" : {
       "get" : {
         "tags" : [ "user" ],
         "summary" : "Logs out current logged in user session",
@@ -453,7 +527,7 @@
         }
       }
     },
-    "/users/{username}" : {
+    "/user/{username}" : {
       "get" : {
         "tags" : [ "user" ],
         "summary" : "Get user by user name",
@@ -463,7 +537,7 @@
         "parameters" : [ {
           "name" : "username",
           "in" : "path",
-          "description" : "The name that needs to be fetched. Use user1 for testing.",
+          "description" : "The name that needs to be fetched. Use user1 for testing. ",
           "required" : true,
           "type" : "string"
         } ],
@@ -542,8 +616,8 @@
       "authorizationUrl" : "http://petstore.swagger.io/api/oauth/dialog",
       "flow" : "implicit",
       "scopes" : {
-        "write_pets" : "modify pets in your account",
-        "read_pets" : "read your pets"
+        "write:pets" : "modify pets in your account",
+        "read:pets" : "read your pets"
       }
     },
     "api_key" : {
@@ -554,7 +628,6 @@
   },
   "definitions" : {
     "User" : {
-      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -583,10 +656,12 @@
           "format" : "int32",
           "description" : "User Status"
         }
+      },
+      "xml" : {
+        "name" : "User"
       }
     },
     "Category" : {
-      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -595,10 +670,12 @@
         "name" : {
           "type" : "string"
         }
+      },
+      "xml" : {
+        "name" : "Category"
       }
     },
     "Pet" : {
-      "type" : "object",
       "required" : [ "name", "photoUrls" ],
       "properties" : {
         "id" : {
@@ -614,24 +691,35 @@
         },
         "photoUrls" : {
           "type" : "array",
+          "xml" : {
+            "name" : "photoUrl",
+            "wrapped" : true
+          },
           "items" : {
             "type" : "string"
           }
         },
         "tags" : {
           "type" : "array",
+          "xml" : {
+            "name" : "tag",
+            "wrapped" : true
+          },
           "items" : {
             "$ref" : "#/definitions/Tag"
           }
         },
         "status" : {
           "type" : "string",
-          "description" : "pet status in the store"
+          "description" : "pet status in the store",
+          "enum" : [ "available", "pending", "sold" ]
         }
+      },
+      "xml" : {
+        "name" : "Pet"
       }
     },
     "Tag" : {
-      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -640,10 +728,12 @@
         "name" : {
           "type" : "string"
         }
+      },
+      "xml" : {
+        "name" : "Tag"
       }
     },
     "Order" : {
-      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -663,11 +753,15 @@
         },
         "status" : {
           "type" : "string",
-          "description" : "Order Status"
+          "description" : "Order Status",
+          "enum" : [ "placed", "approved", "delivered" ]
         },
         "complete" : {
           "type" : "boolean"
         }
+      },
+      "xml" : {
+        "name" : "Order"
       }
     }
   }

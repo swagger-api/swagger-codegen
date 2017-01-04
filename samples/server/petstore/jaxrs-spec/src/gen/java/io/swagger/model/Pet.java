@@ -1,10 +1,10 @@
-package com.ibm.ws.petstoresample.model;
+package io.swagger.model;
 
-import com.ibm.ws.petstoresample.model.Category;
-import com.ibm.ws.petstoresample.model.Tag;
+import io.swagger.model.Category;
+import io.swagger.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
-
+import javax.validation.constraints.*;
 
 
 import io.swagger.annotations.*;
@@ -18,7 +18,38 @@ public class Pet   {
   private String name = null;
   private List<String> photoUrls = new ArrayList<String>();
   private List<Tag> tags = new ArrayList<Tag>();
-  private String status = null;
+
+public enum StatusEnum {
+
+    AVAILABLE(String.valueOf("available")), PENDING(String.valueOf("pending")), SOLD(String.valueOf("sold"));
+
+
+    private String value;
+
+    StatusEnum (String v) {
+        value = v;
+    }
+
+    public String value() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
+
+    public static StatusEnum fromValue(String v) {
+        for (StatusEnum b : StatusEnum.values()) {
+            if (String.valueOf(b.value).equals(v)) {
+                return b;
+            }
+        }
+        return null;
+    }
+}
+
+  private StatusEnum status = null;
 
   /**
    **/
@@ -28,7 +59,7 @@ public class Pet   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Long getId() {
     return id;
   }
@@ -44,7 +75,7 @@ public class Pet   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Category getCategory() {
     return category;
   }
@@ -61,6 +92,7 @@ public class Pet   {
 
   
   @ApiModelProperty(example = "doggie", required = true, value = "")
+  @NotNull
   public String getName() {
     return name;
   }
@@ -76,7 +108,8 @@ public class Pet   {
   }
 
   
-  @ApiModelProperty(example = "null", required = true, value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
   public List<String> getPhotoUrls() {
     return photoUrls;
   }
@@ -92,7 +125,7 @@ public class Pet   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public List<Tag> getTags() {
     return tags;
   }
@@ -103,17 +136,17 @@ public class Pet   {
   /**
    * pet status in the store
    **/
-  public Pet status(String status) {
+  public Pet status(StatusEnum status) {
     this.status = status;
     return this;
   }
 
   
-  @ApiModelProperty(example = "null", value = "pet status in the store")
-  public String getStatus() {
+  @ApiModelProperty(value = "pet status in the store")
+  public StatusEnum getStatus() {
     return status;
   }
-  public void setStatus(String status) {
+  public void setStatus(StatusEnum status) {
     this.status = status;
   }
 

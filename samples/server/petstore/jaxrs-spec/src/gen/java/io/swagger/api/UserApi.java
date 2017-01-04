@@ -1,7 +1,7 @@
-package com.ibm.ws.petstoresample.api;
+package io.swagger.api;
 
-import com.ibm.ws.petstoresample.model.User;
 import java.util.List;
+import io.swagger.model.User;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -9,15 +9,16 @@ import javax.ws.rs.core.Response;
 import io.swagger.annotations.*;
 
 import java.util.List;
+import javax.validation.constraints.*;
 
-@Path("/users")
+@Path("/user")
 
-@Api(description = "the users API")
+@Api(description = "the user API")
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2016-06-06T11:04:02.369-04:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2017-01-04T16:02:52.310+01:00")
 
-public class UsersApi  {
+public class UserApi  {
 
     @POST
     
@@ -60,7 +61,7 @@ public class UsersApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid username supplied", response = void.class),
         @ApiResponse(code = 404, message = "User not found", response = void.class) })
-    public Response deleteUser(@PathParam("username") String username) {
+    public Response deleteUser(@PathParam("username") @ApiParam("The name that needs to be deleted") String username) {
     	return Response.ok().entity("magic!").build();
     }
 
@@ -73,7 +74,7 @@ public class UsersApi  {
         @ApiResponse(code = 200, message = "successful operation", response = User.class),
         @ApiResponse(code = 400, message = "Invalid username supplied", response = User.class),
         @ApiResponse(code = 404, message = "User not found", response = User.class) })
-    public Response getUserByName(@PathParam("username") String username) {
+    public Response getUserByName(@PathParam("username") @ApiParam("The name that needs to be fetched. Use user1 for testing. ") String username) {
     	return Response.ok().entity("magic!").build();
     }
 
@@ -85,7 +86,7 @@ public class UsersApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = String.class),
         @ApiResponse(code = 400, message = "Invalid username/password supplied", response = String.class) })
-    public Response loginUser(@QueryParam("username") String username,@QueryParam("password") String password) {
+    public Response loginUser(@QueryParam("username")  String username,@QueryParam("password")  String password) {
     	return Response.ok().entity("magic!").build();
     }
 
@@ -108,7 +109,7 @@ public class UsersApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid user supplied", response = void.class),
         @ApiResponse(code = 404, message = "User not found", response = void.class) })
-    public Response updateUser(@PathParam("username") String username,User body) {
+    public Response updateUser(@PathParam("username") @ApiParam("name that need to be deleted") String username,User body) {
     	return Response.ok().entity("magic!").build();
     }
 }
