@@ -50,7 +50,7 @@ static gpointer __{{classname}}threadFunc(gpointer data)
 
 
 {{#operation}}
-bool {{nickname}}Processor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
+static bool {{nickname}}Processor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
 	void(* voidHandler)())
 {
 	{{#returnType}}void(* handler)({{#returnContainer}}{{#isListContainer}}{{returnType}}<{{returnBaseType}}>{{/isListContainer}}{{#isMapContainer}}{{returnType}}<string,string>{{/isMapContainer}}{{/returnContainer}}{{^returnContainer}}{{returnType}}{{/returnContainer}}, Error, void* )
@@ -134,7 +134,7 @@ bool {{nickname}}Processor(MemoryStruct_s p_chunk, long code, char* errormsg, vo
 	}
 }
 
-bool {{nickname}}Helper(char * accessToken,
+static bool {{nickname}}Helper(char * accessToken,
 	{{#allParams}}{{#isContainer}}{{{dataType}}}<{{baseType}}> {{paramName}}{{/isContainer}}{{^isContainer}}{{{dataType}}} {{paramName}}{{/isContainer}}{{#hasMore}}, {{/hasMore}}{{/allParams}}{{#hasParams}}, {{/hasParams}}
 	{{#returnType}}void(* handler)({{#returnContainer}}{{#isListContainer}}{{returnType}}<{{returnBaseType}}>{{/isListContainer}}{{#isMapContainer}}{{returnType}}<string,string>{{/isMapContainer}}{{/returnContainer}}{{^returnContainer}}{{returnType}}{{/returnContainer}}, Error, void* ){{/returnType}}
 	{{^returnType}}void(* handler)(Error, void* ) {{/returnType}}, void* userData, bool isAsync)
