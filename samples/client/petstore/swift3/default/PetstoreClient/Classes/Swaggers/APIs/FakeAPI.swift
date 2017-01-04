@@ -26,6 +26,7 @@ open class FakeAPI: APIBase {
     /**
      To test \"client\" model
      - PATCH /fake
+     - To test \"client\" model
      - examples: [{contentType=application/json, example={
   "client" : "aeiou"
 }}]
@@ -38,12 +39,17 @@ open class FakeAPI: APIBase {
         let path = "/fake"
         let URLString = PetstoreClientAPI.basePath + path
         let parameters = body.encodeToJSON() as? [String:AnyObject]
- 
+
+        let url = NSURLComponents(string: URLString)
+        url?.queryItems = [
+        ]
+        
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
+
         let requestBuilder: RequestBuilder<Client>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "PATCH", URLString: URLString, parameters: convertedParameters, isBody: true)
+        return requestBuilder.init(method: "PATCH", URLString: (url?.string ?? URLString), parameters: convertedParameters, isBody: true)
     }
 
     /**
@@ -119,9 +125,9 @@ open class FakeAPI: APIBase {
         ]
  
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
+
         let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "POST", URLString: URLString, parameters: convertedParameters, isBody: false)
@@ -182,6 +188,7 @@ open class FakeAPI: APIBase {
     /**
      To test enum parameters
      - GET /fake
+     - To test enum parameters
      
      - parameter enumFormStringArray: (form) Form parameter enum test (string array) (optional)
      - parameter enumFormString: (form) Form parameter enum test (string) (optional, default to -efg)
@@ -203,9 +210,9 @@ open class FakeAPI: APIBase {
         ]
  
         let parameters = APIHelper.rejectNil(nillableParameters)
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
+
         let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)

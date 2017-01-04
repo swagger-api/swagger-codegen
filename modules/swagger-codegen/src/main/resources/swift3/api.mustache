@@ -108,7 +108,15 @@ open class {{classname}}: APIBase {
         path = path.replacingOccurrences(of: "{{=<% %>=}}{<%paramName%>}<%={{ }}=%>", with: "\({{paramName}}{{#isEnum}}{{#isContainer}}{{{dataType}}}{{/isContainer}}{{^isContainer}}.rawValue{{/isContainer}}{{/isEnum}})", options: .literal, range: nil){{/pathParams}}
         let URLString = {{projectName}}API.basePath + path
         {{#bodyParam}}
-        let parameters = {{paramName}}{{^required}}?{{/required}}.encodeToJSON() as? [String:AnyObject]{{/bodyParam}}{{^bodyParam}}
+        let parameters = {{paramName}}{{^required}}?{{/required}}.encodeToJSON() as? [String:AnyObject]
+
+        let url = NSURLComponents(string: URLString)
+        url?.queryItems = [
+        {{#queryParams}}
+            URLQueryItem(name: "{{paramName}}", value: {{paramName}}){{#hasMore}}, {{/hasMore}}
+        {{/queryParams}}
+        ]
+        {{/bodyParam}}{{^bodyParam}}
         let nillableParameters: [String:Any?] = {{^queryParams}}{{^formParams}}[:]{{/formParams}}{{#formParams}}{{^secondaryParam}}[{{/secondaryParam}}
             {{> _param}}{{#hasMore}},{{/hasMore}}{{^hasMore}}
         ]{{/hasMore}}{{/formParams}}{{/queryParams}}{{#queryParams}}{{^secondaryParam}}[{{/secondaryParam}}
@@ -116,12 +124,12 @@ open class {{classname}}: APIBase {
         ]{{/hasMore}}{{/queryParams}}
  
         let parameters = APIHelper.rejectNil(nillableParameters){{/bodyParam}}
- 
+
         let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
+
         let requestBuilder: RequestBuilder<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}>.Type = {{projectName}}API.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "{{httpMethod}}", URLString: URLString, parameters: convertedParameters, isBody: {{^queryParams}}{{^formParams}}true{{/formParams}}{{/queryParams}}{{#queryParams}}{{^formParams}}{{^secondaryParam}}false{{/secondaryParam}}{{/formParams}}{{/queryParams}}{{#formParams}}{{^secondaryParam}}false{{/secondaryParam}}{{/formParams}})
+        return requestBuilder.init(method: "{{httpMethod}}", URLString: {{#bodyParam}}(url?.string ?? URLString){{/bodyParam}}{{^bodyParam}}URLString{{/bodyParam}}, parameters: convertedParameters, isBody: {{hasBodyParam}})
     }
 
 {{/operation}}
