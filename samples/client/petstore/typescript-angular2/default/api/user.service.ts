@@ -70,6 +70,20 @@ export class UserService {
     }
 
     /**
+     * @param consumes string[] mime-types
+     * @return true: consumes contains 'multipart/form-data', false: otherwise
+     */
+    private canConsumeForm(consumes: string[]): boolean {
+        const form = 'multipart/form-data';
+        for (let consume of consumes) {
+            if (form === consume) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Create user
      * This can only be done by the logged in user.
      * @param body Created user object
@@ -211,9 +225,7 @@ export class UserService {
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
 
-        // to determine the Content-Type header
-        let consumes: string[] = [
-        ];
+
 
         // to determine the Accept header
         let produces: string[] = [
@@ -222,7 +234,6 @@ export class UserService {
         ];
         
             
-
         headers.set('Content-Type', 'application/json');
 
 
@@ -253,9 +264,7 @@ export class UserService {
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
 
-        // to determine the Content-Type header
-        let consumes: string[] = [
-        ];
+
 
         // to determine the Accept header
         let produces: string[] = [
@@ -264,7 +273,6 @@ export class UserService {
         ];
         
             
-
         headers.set('Content-Type', 'application/json');
 
 
@@ -295,9 +303,7 @@ export class UserService {
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
 
-        // to determine the Content-Type header
-        let consumes: string[] = [
-        ];
+
 
         // to determine the Accept header
         let produces: string[] = [
@@ -306,7 +312,6 @@ export class UserService {
         ];
         
             
-
         headers.set('Content-Type', 'application/json');
 
 
@@ -335,15 +340,13 @@ export class UserService {
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+
         // verify required parameter 'username' is not null or undefined
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling deleteUser.');
         }
 
 
-        // to determine the Content-Type header
-        let consumes: string[] = [
-        ];
 
         // to determine the Accept header
         let produces: string[] = [
@@ -352,7 +355,6 @@ export class UserService {
         ];
         
             
-
 
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
@@ -379,15 +381,13 @@ export class UserService {
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+
         // verify required parameter 'username' is not null or undefined
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling getUserByName.');
         }
 
 
-        // to determine the Content-Type header
-        let consumes: string[] = [
-        ];
 
         // to determine the Accept header
         let produces: string[] = [
@@ -396,7 +396,6 @@ export class UserService {
         ];
         
             
-
 
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
@@ -424,6 +423,7 @@ export class UserService {
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+
         if (username !== undefined) {
             queryParameters.set('username', <any>username);
         }
@@ -432,9 +432,6 @@ export class UserService {
         }
 
 
-        // to determine the Content-Type header
-        let consumes: string[] = [
-        ];
 
         // to determine the Accept header
         let produces: string[] = [
@@ -443,7 +440,6 @@ export class UserService {
         ];
         
             
-
 
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
@@ -471,9 +467,7 @@ export class UserService {
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
 
-        // to determine the Content-Type header
-        let consumes: string[] = [
-        ];
+
 
         // to determine the Accept header
         let produces: string[] = [
@@ -482,7 +476,6 @@ export class UserService {
         ];
         
             
-
 
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
@@ -510,15 +503,13 @@ export class UserService {
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+
         // verify required parameter 'username' is not null or undefined
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling updateUser.');
         }
 
 
-        // to determine the Content-Type header
-        let consumes: string[] = [
-        ];
 
         // to determine the Accept header
         let produces: string[] = [
@@ -527,7 +518,6 @@ export class UserService {
         ];
         
             
-
         headers.set('Content-Type', 'application/json');
 
 
