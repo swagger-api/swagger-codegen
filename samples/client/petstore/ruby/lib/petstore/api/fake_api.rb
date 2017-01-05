@@ -119,22 +119,22 @@ module Petstore
       end
       # verify the required parameter 'number' is set
       fail ArgumentError, "Missing the required parameter 'number' when calling FakeApi.test_endpoint_parameters" if number.nil?
-      if number > 543.2
-        fail ArgumentError, 'invalid value for "number" when calling FakeApi.test_endpoint_parameters, must be smaller than or equal to 543.2.'
+      if number > 543.200000000000045474735088646411895751953125
+        fail ArgumentError, 'invalid value for "number" when calling FakeApi.test_endpoint_parameters, must be smaller than or equal to 543.200000000000045474735088646411895751953125.'
       end
 
-      if number < 32.1
-        fail ArgumentError, 'invalid value for "number" when calling FakeApi.test_endpoint_parameters, must be greater than or equal to 32.1.'
+      if number < 32.10000000000000142108547152020037174224853515625
+        fail ArgumentError, 'invalid value for "number" when calling FakeApi.test_endpoint_parameters, must be greater than or equal to 32.10000000000000142108547152020037174224853515625.'
       end
 
       # verify the required parameter 'double' is set
       fail ArgumentError, "Missing the required parameter 'double' when calling FakeApi.test_endpoint_parameters" if double.nil?
-      if double > 123.4
-        fail ArgumentError, 'invalid value for "double" when calling FakeApi.test_endpoint_parameters, must be smaller than or equal to 123.4.'
+      if double > 123.400000000000005684341886080801486968994140625
+        fail ArgumentError, 'invalid value for "double" when calling FakeApi.test_endpoint_parameters, must be smaller than or equal to 123.400000000000005684341886080801486968994140625.'
       end
 
-      if double < 67.8
-        fail ArgumentError, 'invalid value for "double" when calling FakeApi.test_endpoint_parameters, must be greater than or equal to 67.8.'
+      if double < 67.7999999999999971578290569595992565155029296875
+        fail ArgumentError, 'invalid value for "double" when calling FakeApi.test_endpoint_parameters, must be greater than or equal to 67.7999999999999971578290569595992565155029296875.'
       end
 
       # verify the required parameter 'pattern_without_delimiter' is set
@@ -161,8 +161,8 @@ module Petstore
         fail ArgumentError, 'invalid value for "opts[:"int32"]" when calling FakeApi.test_endpoint_parameters, must be greater than or equal to 20.'
       end
 
-      if !opts[:'float'].nil? && opts[:'float'] > 987.6
-        fail ArgumentError, 'invalid value for "opts[:"float"]" when calling FakeApi.test_endpoint_parameters, must be smaller than or equal to 987.6.'
+      if !opts[:'float'].nil? && opts[:'float'] > 987.6000000000000227373675443232059478759765625
+        fail ArgumentError, 'invalid value for "opts[:"float"]" when calling FakeApi.test_endpoint_parameters, must be smaller than or equal to 987.6000000000000227373675443232059478759765625.'
       end
 
       if !opts[:'string'].nil? && opts[:'string'] !~ Regexp.new(/[a-z]/i)

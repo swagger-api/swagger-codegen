@@ -60,8 +60,8 @@
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
         } ],
-        "x-accepts" : "application/json",
-        "x-contentType" : "application/json"
+        "x-contentType" : "application/json",
+        "x-accepts" : "application/json"
       },
       "put" : {
         "tags" : [ "pet" ],
@@ -93,8 +93,8 @@
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
         } ],
-        "x-accepts" : "application/json",
-        "x-contentType" : "application/json"
+        "x-contentType" : "application/json",
+        "x-accepts" : "application/json"
       }
     },
     "/pet/findByStatus" : {
@@ -134,8 +134,8 @@
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
         } ],
-        "x-accepts" : "application/json",
-        "x-contentType" : "application/json"
+        "x-contentType" : "application/json",
+        "x-accepts" : "application/json"
       }
     },
     "/pet/findByTags" : {
@@ -173,8 +173,8 @@
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
         } ],
-        "x-accepts" : "application/json",
-        "x-contentType" : "application/json"
+        "x-contentType" : "application/json",
+        "x-accepts" : "application/json"
       }
     },
     "/pet/{petId}" : {
@@ -209,8 +209,8 @@
         "security" : [ {
           "api_key" : [ ]
         } ],
-        "x-accepts" : "application/json",
-        "x-contentType" : "application/json"
+        "x-contentType" : "application/json",
+        "x-accepts" : "application/json"
       },
       "post" : {
         "tags" : [ "pet" ],
@@ -247,8 +247,8 @@
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
         } ],
-        "x-accepts" : "application/json",
-        "x-contentType" : "application/x-www-form-urlencoded"
+        "x-contentType" : "application/x-www-form-urlencoded",
+        "x-accepts" : "application/json"
       },
       "delete" : {
         "tags" : [ "pet" ],
@@ -277,8 +277,8 @@
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
         } ],
-        "x-accepts" : "application/json",
-        "x-contentType" : "application/json"
+        "x-contentType" : "application/json",
+        "x-accepts" : "application/json"
       }
     },
     "/pet/{petId}/uploadImage" : {
@@ -320,8 +320,8 @@
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
         } ],
-        "x-accepts" : "application/json",
-        "x-contentType" : "multipart/form-data"
+        "x-contentType" : "multipart/form-data",
+        "x-accepts" : "application/json"
       }
     },
     "/store/inventory" : {
@@ -347,8 +347,8 @@
         "security" : [ {
           "api_key" : [ ]
         } ],
-        "x-accepts" : "application/json",
-        "x-contentType" : "application/json"
+        "x-contentType" : "application/json",
+        "x-accepts" : "application/json"
       }
     },
     "/store/order" : {
@@ -378,8 +378,8 @@
             "description" : "Invalid Order"
           }
         },
-        "x-accepts" : "application/json",
-        "x-contentType" : "application/json"
+        "x-contentType" : "application/json",
+        "x-accepts" : "application/json"
       }
     },
     "/store/order/{orderId}" : {
@@ -395,8 +395,8 @@
           "description" : "ID of pet that needs to be fetched",
           "required" : true,
           "type" : "integer",
-          "maximum" : 5.0,
-          "minimum" : 1.0,
+          "maximum" : 5,
+          "minimum" : 1,
           "format" : "int64"
         } ],
         "responses" : {
@@ -413,8 +413,8 @@
             "description" : "Order not found"
           }
         },
-        "x-accepts" : "application/json",
-        "x-contentType" : "application/json"
+        "x-contentType" : "application/json",
+        "x-accepts" : "application/json"
       },
       "delete" : {
         "tags" : [ "store" ],
@@ -428,7 +428,7 @@
           "description" : "ID of the order that needs to be deleted",
           "required" : true,
           "type" : "string",
-          "minimum" : 1.0
+          "minimum" : 1
         } ],
         "responses" : {
           "400" : {
@@ -438,8 +438,8 @@
             "description" : "Order not found"
           }
         },
-        "x-accepts" : "application/json",
-        "x-contentType" : "application/json"
+        "x-contentType" : "application/json",
+        "x-accepts" : "application/json"
       }
     },
     "/user" : {
@@ -463,8 +463,8 @@
             "description" : "successful operation"
           }
         },
-        "x-accepts" : "application/json",
-        "x-contentType" : "application/json"
+        "x-contentType" : "application/json",
+        "x-accepts" : "application/json"
       }
     },
     "/user/createWithArray" : {
@@ -491,8 +491,8 @@
             "description" : "successful operation"
           }
         },
-        "x-accepts" : "application/json",
-        "x-contentType" : "application/json"
+        "x-contentType" : "application/json",
+        "x-accepts" : "application/json"
       }
     },
     "/user/createWithList" : {
@@ -519,8 +519,8 @@
             "description" : "successful operation"
           }
         },
-        "x-accepts" : "application/json",
-        "x-contentType" : "application/json"
+        "x-contentType" : "application/json",
+        "x-accepts" : "application/json"
       }
     },
     "/user/login" : {
@@ -566,8 +566,8 @@
             "description" : "Invalid username/password supplied"
           }
         },
-        "x-accepts" : "application/json",
-        "x-contentType" : "application/json"
+        "x-contentType" : "application/json",
+        "x-accepts" : "application/json"
       }
     },
     "/user/logout" : {
@@ -583,8 +583,8 @@
             "description" : "successful operation"
           }
         },
-        "x-accepts" : "application/json",
-        "x-contentType" : "application/json"
+        "x-contentType" : "application/json",
+        "x-accepts" : "application/json"
       }
     },
     "/user/{username}" : {
@@ -615,8 +615,8 @@
             "description" : "User not found"
           }
         },
-        "x-accepts" : "application/json",
-        "x-contentType" : "application/json"
+        "x-contentType" : "application/json",
+        "x-accepts" : "application/json"
       },
       "put" : {
         "tags" : [ "user" ],
@@ -647,8 +647,8 @@
             "description" : "User not found"
           }
         },
-        "x-accepts" : "application/json",
-        "x-contentType" : "application/json"
+        "x-contentType" : "application/json",
+        "x-accepts" : "application/json"
       },
       "delete" : {
         "tags" : [ "user" ],
@@ -671,8 +671,8 @@
             "description" : "User not found"
           }
         },
-        "x-accepts" : "application/json",
-        "x-contentType" : "application/json"
+        "x-contentType" : "application/json",
+        "x-accepts" : "application/json"
       }
     }
   },

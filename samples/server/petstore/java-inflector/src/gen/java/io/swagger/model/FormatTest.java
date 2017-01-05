@@ -12,7 +12,7 @@ import java.util.Date;
 
 
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-12-28T15:59:32.800+07:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2017-01-05T14:32:12.307+11:00")
 public class FormatTest   {
   @JsonProperty("integer")
   private Integer integer = null;

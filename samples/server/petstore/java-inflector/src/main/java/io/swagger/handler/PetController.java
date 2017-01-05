@@ -14,7 +14,7 @@ import java.io.File;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-12-28T15:59:32.800+07:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2017-01-05T14:32:12.307+11:00")
 public class PetController  {
   /** 
    * Uncomment and implement as you see fit.  These operations will map

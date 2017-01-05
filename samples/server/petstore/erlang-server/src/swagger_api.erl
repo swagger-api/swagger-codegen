@@ -271,7 +271,7 @@ request_param_info('DeleteOrder', 'orderId') ->
         source =>  binding ,
         rules => [
             {type, 'binary'},
-            {min, 1.0 },
+            {min, 1 },
             required
         ]
     };
