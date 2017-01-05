@@ -11,6 +11,15 @@ import RxSwift
 
 
 open class FakeAPI: APIBase {
+
+    public class func mapValuesToQueryItems(values: [String:Any?]) -> [URLQueryItem] {
+        return values
+            .filter { $0.1 != nil }
+            .map { (item: (_key: String, _value: Any?)) -> URLQueryItem in
+                URLQueryItem(name: item._key, value:"\(item._value!)")
+            }
+    }
+
     /**
      To test \"client\" model
      
@@ -61,8 +70,6 @@ open class FakeAPI: APIBase {
         let parameters = body.encodeToJSON() as? [String:AnyObject]
 
         let url = NSURLComponents(string: URLString)
-        url?.queryItems = [
-        ]
         
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)

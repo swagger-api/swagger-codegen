@@ -11,6 +11,15 @@ import PromiseKit
 
 
 open class StoreAPI: APIBase {
+
+    public class func mapValuesToQueryItems(values: [String:Any?]) -> [URLQueryItem] {
+        return values
+            .filter { $0.1 != nil }
+            .map { (item: (_key: String, _value: Any?)) -> URLQueryItem in
+                URLQueryItem(name: item._key, value:"\(item._value!)")
+            }
+    }
+
     /**
      Delete purchase order by ID
      
@@ -282,8 +291,6 @@ open class StoreAPI: APIBase {
         let parameters = body.encodeToJSON() as? [String:AnyObject]
 
         let url = NSURLComponents(string: URLString)
-        url?.queryItems = [
-        ]
         
 
         let convertedParameters = APIHelper.convertBoolToString(parameters)
