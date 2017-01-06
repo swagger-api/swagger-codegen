@@ -22,11 +22,11 @@ import io.swagger.models.properties.Property;
 import io.swagger.util.Json;
 
 public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen implements BeanValidationFeatures
-{	
-	protected boolean useBeanValidation = true;
-	
-	public JavaJAXRSSpecServerCodegen()
-	{
+{    
+    protected boolean useBeanValidation = true;
+    
+    public JavaJAXRSSpecServerCodegen()
+    {
         super();
         invokerPackage = "io.swagger.api";
         artifactId = "swagger-jaxrs-server";
@@ -73,35 +73,35 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen i
         cliOptions.add(library);
         
         cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
-	}
-	
-	@Override
-	public void processOpts()
-	{
-		super.processOpts();
-		
-		if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
-			this.setUseBeanValidation(convertPropertyToBoolean(USE_BEANVALIDATION));
+    }
+    
+    @Override
+    public void processOpts()
+    {
+        super.processOpts();
+        
+        if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
+            this.setUseBeanValidation(convertPropertyToBoolean(USE_BEANVALIDATION));
         }
 
-		if (useBeanValidation) {
-			writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
-		}
-		
-		supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
+        if (useBeanValidation) {
+            writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
+        }
+        
+        supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
         
         writeOptional(outputFolder, new SupportingFile("RestApplication.mustache",
                 (sourceFolder + '/' + invokerPackage).replace(".", "/"), "RestApplication.java"));
         
-	} 
-	
+    } 
+    
 
-	@Override
-	public String getName()
-	{
-		return "jaxrs-spec";
-	}
+    @Override
+    public String getName()
+    {
+        return "jaxrs-spec";
+    }
 
     @Override
     public void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co, Map<String, List<CodegenOperation>> operations) {
@@ -142,16 +142,16 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen i
         model.imports.remove("JsonProperty");
     }
     
-	@Override
+    @Override
     public void preprocessSwagger(Swagger swagger) {
-		//copy input swagger to output folder 
-    	try {
-			String swaggerJson = Json.pretty(swagger);
+        //copy input swagger to output folder 
+        try {
+            String swaggerJson = Json.pretty(swagger);
             FileUtils.writeStringToFile(new File(outputFolder + File.separator + "swagger.json"), swaggerJson);
-		} catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e.getCause());
-		}
-		super.preprocessSwagger(swagger);
+        }
+        super.preprocessSwagger(swagger);
 
     }
     @Override
