@@ -1,6 +1,7 @@
 package io.swagger.codegen.languages;
 
 import io.swagger.codegen.*;
+import io.swagger.codegen.languages.features.BeanValidationFeatures;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
@@ -8,7 +9,7 @@ import io.swagger.models.Swagger;
 import java.io.File;
 import java.util.*;
 
-public class SpringCodegen extends AbstractJavaCodegen {
+public class SpringCodegen extends AbstractJavaCodegen implements BeanValidationFeatures {
     public static final String DEFAULT_LIBRARY = "spring-boot";
     public static final String TITLE = "title";
     public static final String CONFIG_PACKAGE = "configPackage";
@@ -29,6 +30,7 @@ public class SpringCodegen extends AbstractJavaCodegen {
     protected boolean java8 = false;
     protected boolean async = false;
     protected String responseWrapper = "";
+    protected boolean useBeanValidation = true;
 
     public SpringCodegen() {
         super();
@@ -54,6 +56,7 @@ public class SpringCodegen extends AbstractJavaCodegen {
         cliOptions.add(CliOption.newBoolean(JAVA_8, "use java8 default interface"));
         cliOptions.add(CliOption.newBoolean(ASYNC, "use async Callable controllers"));
         cliOptions.add(new CliOption(RESPONSE_WRAPPER, "wrap the responses in given type (Future,Callable,CompletableFuture,ListenableFuture,DeferredResult,HystrixCommand,RxObservable,RxSingle or fully qualified type)"));
+        cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
 
         supportedLibraries.put(DEFAULT_LIBRARY, "Spring-boot Server application using the SpringFox integration.");
         supportedLibraries.put(SPRING_MVC_LIBRARY, "Spring-MVC Server application using the SpringFox integration.");
@@ -124,6 +127,14 @@ public class SpringCodegen extends AbstractJavaCodegen {
             this.setResponseWrapper((String) additionalProperties.get(RESPONSE_WRAPPER));
         }
 
+        if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
+			this.setUseBeanValidation(convertPropertyToBoolean(USE_BEANVALIDATION));
+        }
+
+		if (useBeanValidation) {
+			writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
+		}
+        
         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
 
@@ -400,6 +411,10 @@ public class SpringCodegen extends AbstractJavaCodegen {
 
     public void setResponseWrapper(String responseWrapper) { this.responseWrapper = responseWrapper; }
 
+    public void setUseBeanValidation(boolean useBeanValidation) {
+        this.useBeanValidation = useBeanValidation;
+    }
+    
     @Override
     public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
         super.postProcessModelProperty(model, property);
