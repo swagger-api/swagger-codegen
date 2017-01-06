@@ -3416,11 +3416,25 @@ public class DefaultCodegen {
     public boolean convertPropertyToBooleanAndWriteBack(String propertyKey) {
         boolean booleanValue = false;
         if (additionalProperties.containsKey(propertyKey)) {
-            booleanValue = Boolean.valueOf(additionalProperties.get(propertyKey).toString());
+            booleanValue = convertPropertyToBoolean(propertyKey);
             // write back as boolean
-            additionalProperties.put(propertyKey, booleanValue);
+            writePropertyBack(propertyKey, booleanValue);
         }
 
         return booleanValue;
     }
+    
+
+	public boolean convertPropertyToBoolean(String propertyKey) {
+        boolean booleanValue = false;
+        if (additionalProperties.containsKey(propertyKey)) {
+            booleanValue = Boolean.valueOf(additionalProperties.get(propertyKey).toString());
+        }
+
+        return booleanValue;
+    }
+	
+	public void writePropertyBack(String propertyKey, boolean value) {
+		additionalProperties.put(propertyKey, value);
+	}
 }
