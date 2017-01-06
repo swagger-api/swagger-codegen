@@ -1,11 +1,15 @@
 package io.swagger.model;
 
+import io.swagger.annotations.ApiModel;
 import javax.validation.constraints.*;
 
 
+/**
+ * An order for a pets from the pet store
+ **/
 import io.swagger.annotations.*;
 import java.util.Objects;
-
+@ApiModel(description = "An order for a pets from the pet store")
 
 public class Order   {
   
@@ -45,7 +49,7 @@ public enum StatusEnum {
 }
 
   private StatusEnum status = null;
-  private Boolean complete = null;
+  private Boolean complete = false;
 
   /**
    **/

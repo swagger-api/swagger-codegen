@@ -16,14 +16,14 @@ import javax.validation.constraints.*;
 @Api(description = "the user API")
 
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2017-01-04T16:17:15.946+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2017-01-06T14:49:24.806+01:00")
 
 public class UserApi  {
 
     @POST
     
     
-    @Produces({ "application/json", "application/xml" })
+    @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Create user", notes = "This can only be done by the logged in user.", response = void.class, tags={ "user",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = void.class) })
@@ -34,7 +34,7 @@ public class UserApi  {
     @POST
     @Path("/createWithArray")
     
-    @Produces({ "application/json", "application/xml" })
+    @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Creates list of users with given input array", notes = "", response = void.class, tags={ "user",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = void.class) })
@@ -45,7 +45,7 @@ public class UserApi  {
     @POST
     @Path("/createWithList")
     
-    @Produces({ "application/json", "application/xml" })
+    @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Creates list of users with given input array", notes = "", response = void.class, tags={ "user",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = void.class) })
@@ -56,7 +56,7 @@ public class UserApi  {
     @DELETE
     @Path("/{username}")
     
-    @Produces({ "application/json", "application/xml" })
+    @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Delete user", notes = "This can only be done by the logged in user.", response = void.class, tags={ "user",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid username supplied", response = void.class),
@@ -68,7 +68,7 @@ public class UserApi  {
     @GET
     @Path("/{username}")
     
-    @Produces({ "application/json", "application/xml" })
+    @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Get user by user name", notes = "", response = User.class, tags={ "user",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = User.class),
@@ -81,19 +81,19 @@ public class UserApi  {
     @GET
     @Path("/login")
     
-    @Produces({ "application/json", "application/xml" })
+    @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Logs user into the system", notes = "", response = String.class, tags={ "user",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = String.class),
         @ApiResponse(code = 400, message = "Invalid username/password supplied", response = String.class) })
-    public Response loginUser(@QueryParam("username")  String username,@QueryParam("password")  String password) {
+    public Response loginUser(@QueryParam("username") @NotNull  String username,@QueryParam("password") @NotNull  String password) {
     	return Response.ok().entity("magic!").build();
     }
 
     @GET
     @Path("/logout")
     
-    @Produces({ "application/json", "application/xml" })
+    @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Logs out current logged in user session", notes = "", response = void.class, tags={ "user",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = void.class) })
@@ -104,7 +104,7 @@ public class UserApi  {
     @PUT
     @Path("/{username}")
     
-    @Produces({ "application/json", "application/xml" })
+    @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Updated user", notes = "This can only be done by the logged in user.", response = void.class, tags={ "user" })
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid user supplied", response = void.class),
