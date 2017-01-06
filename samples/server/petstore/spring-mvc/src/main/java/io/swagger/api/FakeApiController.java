@@ -1,9 +1,9 @@
 package io.swagger.api;
 
-import io.swagger.model.Client;
-import org.joda.time.LocalDate;
 import java.math.BigDecimal;
-import org.joda.time.DateTime;
+import io.swagger.model.Client;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.OffsetDateTime;
 
 import io.swagger.annotations.*;
 
@@ -40,7 +40,7 @@ public class FakeApiController implements FakeApi {
         @ApiParam(value = "None" ) @RequestPart(value="string", required=false)  String string,
         @ApiParam(value = "None" ) @RequestPart(value="binary", required=false)  byte[] binary,
         @ApiParam(value = "None" ) @RequestPart(value="date", required=false)  LocalDate date,
-        @ApiParam(value = "None" ) @RequestPart(value="dateTime", required=false)  DateTime dateTime,
+        @ApiParam(value = "None" ) @RequestPart(value="dateTime", required=false)  OffsetDateTime dateTime,
         @ApiParam(value = "None" ) @RequestPart(value="password", required=false)  String password,
         @ApiParam(value = "None" ) @RequestPart(value="paramCallback", required=false)  String paramCallback) {
         // do some magic!
@@ -53,7 +53,7 @@ public class FakeApiController implements FakeApi {
         @ApiParam(value = "Header parameter enum test (string)"  , allowableValues="_ABC, _EFG, _XYZ_", defaultValue="-efg") @RequestHeader(value="enum_header_string", required=false) String enumHeaderString,
         @ApiParam(value = "Query parameter enum test (string array)", allowableValues = "GREATER_THAN, DOLLAR") @RequestParam(value = "enumQueryStringArray", required = false) List<String> enumQueryStringArray,
         @ApiParam(value = "Query parameter enum test (string)", allowableValues = "_ABC, _EFG, _XYZ_", defaultValue = "-efg") @RequestParam(value = "enumQueryString", required = false, defaultValue="-efg") String enumQueryString,
-        @ApiParam(value = "Query parameter enum test (double)") @RequestParam(value = "enumQueryInteger", required = false) BigDecimal enumQueryInteger,
+        @ApiParam(value = "Query parameter enum test (double)") @RequestParam(value = "enumQueryInteger", required = false) Integer enumQueryInteger,
         @ApiParam(value = "Query parameter enum test (double)" ) @RequestPart(value="enumQueryDouble", required=false)  Double enumQueryDouble) {
         // do some magic!
         return new ResponseEntity<Void>(HttpStatus.OK);

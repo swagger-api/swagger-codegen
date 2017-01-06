@@ -21,7 +21,7 @@
 extern NSString* kSWGUserApiErrorDomain;
 extern NSInteger kSWGUserApiMissingParamErrorCode;
 
-+(instancetype) sharedAPI;
+-(instancetype) initWithApiClient:(SWGApiClient *)apiClient NS_DESIGNATED_INITIALIZER;
 
 /// Create user
 /// This can only be done by the logged in user.

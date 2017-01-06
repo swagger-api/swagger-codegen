@@ -1,6 +1,6 @@
 # \FakeApi
 
-All URIs are relative to **
+All URIs are relative to *http://petstore.swagger.io/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -11,6 +11,8 @@ Method | HTTP request | Description
 
 # **TestClientModel**
 > Client TestClientModel($body)
+
+To test \"client\" model
 
 To test \"client\" model
 
@@ -63,9 +65,11 @@ Name | Type | Description  | Notes
  **password** | **string**| None | [optional] 
  **callback** | **string**| None | [optional] 
 
+Note: Optional parameters are passed through a map[string]interface{}
+
 ### Return type
 
-void (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -83,6 +87,8 @@ void (empty response body)
 
 To test enum parameters
 
+To test enum parameters
+
 
 ### Parameters
 
@@ -94,12 +100,14 @@ Name | Type | Description  | Notes
  **enumHeaderString** | **string**| Header parameter enum test (string) | [optional] [default to -efg]
  **enumQueryStringArray** | [**[]string**](string.md)| Query parameter enum test (string array) | [optional] 
  **enumQueryString** | **string**| Query parameter enum test (string) | [optional] [default to -efg]
- **enumQueryInteger** | **float32**| Query parameter enum test (double) | [optional] 
+ **enumQueryInteger** | **int32**| Query parameter enum test (double) | [optional] 
  **enumQueryDouble** | **float64**| Query parameter enum test (double) | [optional] 
+
+Note: Optional parameters are passed through a map[string]interface{}
 
 ### Return type
 
-void (empty response body)
+(empty response body)
 
 ### Authorization
 
