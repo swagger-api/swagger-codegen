@@ -16,14 +16,13 @@ import io.swagger.annotations.*;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 
 import java.util.List;
-
 @Path("/user")
 @RequestScoped
 
 @Api(description = "the user API")
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJAXRSCXFCDIServerCodegen", date = "2016-11-17T08:53:42.205Z")
+
 
 public class UserApi  {
 

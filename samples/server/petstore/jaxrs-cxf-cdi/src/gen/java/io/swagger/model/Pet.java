@@ -8,7 +8,6 @@ import io.swagger.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * A pet for sale in the pet store
  **/
