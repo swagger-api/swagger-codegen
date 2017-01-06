@@ -3,6 +3,7 @@ package io.swagger.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
+import javax.validation.constraints.*;
 
 /**
  * Describes the result of uploading an image resource

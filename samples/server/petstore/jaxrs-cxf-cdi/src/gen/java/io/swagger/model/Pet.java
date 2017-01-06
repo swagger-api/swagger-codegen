@@ -7,6 +7,7 @@ import io.swagger.model.Category;
 import io.swagger.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.constraints.*;
 
 /**
  * A pet for sale in the pet store
@@ -86,6 +87,7 @@ public enum Pet {
   
   @ApiModelProperty(example = "doggie", required = true, value = "")
   @JsonProperty("name")
+  @NotNull
   public String getName() {
     return name;
   }
@@ -103,6 +105,7 @@ public enum Pet {
   
   @ApiModelProperty(example = "null", required = true, value = "")
   @JsonProperty("photoUrls")
+  @NotNull
   public List<String> getPhotoUrls() {
     return photoUrls;
   }

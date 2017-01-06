@@ -16,7 +16,9 @@ import io.swagger.annotations.*;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 
 import java.util.List;
-
+{{#useBeanValidation}}
+import javax.validation.constraints.*;
+{{/useBeanValidation}}
 @Path("/{{baseName}}")
 @RequestScoped
 

@@ -17,6 +17,7 @@ import io.swagger.annotations.*;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 
 import java.util.List;
+import javax.validation.constraints.*;
 @Path("/pet")
 @RequestScoped
 
@@ -77,7 +78,7 @@ public class PetApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid status value", response = Pet.class, responseContainer = "List") })
-    public Response findPetsByStatus(@ApiParam(value = "Status values that need to be considered for filter",required=true, allowableValues="available, pending, sold")  @QueryParam("status") List<String> status) {
+    public Response findPetsByStatus( @NotNull @ApiParam(value = "Status values that need to be considered for filter",required=true, allowableValues="available, pending, sold")  @QueryParam("status") List<String> status) {
     	return delegate.findPetsByStatus(status, securityContext);
     }
 
@@ -94,7 +95,7 @@ public class PetApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid tag value", response = Pet.class, responseContainer = "List") })
-    public Response findPetsByTags(@ApiParam(value = "Tags to filter by",required=true)  @QueryParam("tags") List<String> tags) {
+    public Response findPetsByTags( @NotNull @ApiParam(value = "Tags to filter by",required=true)  @QueryParam("tags") List<String> tags) {
     	return delegate.findPetsByTags(tags, securityContext);
     }
 

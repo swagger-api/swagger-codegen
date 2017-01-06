@@ -16,6 +16,7 @@ import io.swagger.annotations.*;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 
 import java.util.List;
+import javax.validation.constraints.*;
 @Path("/store")
 @RequestScoped
 
@@ -39,7 +40,7 @@ public class StoreApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid ID supplied", response = void.class),
         @ApiResponse(code = 404, message = "Order not found", response = void.class) })
-    public Response deleteOrder(@ApiParam(value = "ID of the order that needs to be deleted",required=true) @PathParam("orderId") String orderId) {
+    public Response deleteOrder( @Min(1)@ApiParam(value = "ID of the order that needs to be deleted",required=true) @PathParam("orderId") String orderId) {
     	return delegate.deleteOrder(orderId, securityContext);
     }
 
@@ -65,7 +66,7 @@ public class StoreApi  {
         @ApiResponse(code = 200, message = "successful operation", response = Order.class),
         @ApiResponse(code = 400, message = "Invalid ID supplied", response = Order.class),
         @ApiResponse(code = 404, message = "Order not found", response = Order.class) })
-    public Response getOrderById(@ApiParam(value = "ID of pet that needs to be fetched",required=true) @PathParam("orderId") Long orderId) {
+    public Response getOrderById( @Min(1) @Max(5)@ApiParam(value = "ID of pet that needs to be fetched",required=true) @PathParam("orderId") Long orderId) {
     	return delegate.getOrderById(orderId, securityContext);
     }
 
