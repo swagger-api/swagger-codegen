@@ -7,6 +7,8 @@ import static io.swagger.codegen.CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG;
 import static io.swagger.codegen.CodegenConstants.SOURCE_FOLDER;
 import static io.swagger.codegen.CodegenConstants.USE_COLLECTION;
 import static io.swagger.codegen.CodegenConstants.USE_DATETIME_OFFSET;
+import static io.swagger.codegen.CodegenConstants.ALLOW_UNICODE_IDENTIFIERS;
+import static io.swagger.codegen.CodegenConstants.KEEP_UNDERSCORES;
 
 import java.util.Map;
 
@@ -16,6 +18,9 @@ public class NancyFXServerOptionsProvider implements OptionsProvider {
     public static final String PACKAGE_NAME_VALUE = "swagger_server_nancyfx";
     public static final String PACKAGE_VERSION_VALUE = "1.0.0-SNAPSHOT";
     public static final String SOURCE_FOLDER_VALUE = "src_nancyfx";
+    public static final String KEEP_UNDERSCORES_VALUE = "false";
+    public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
+
 
     @Override
     public String getLanguage() {
@@ -32,6 +37,9 @@ public class NancyFXServerOptionsProvider implements OptionsProvider {
                 .put(USE_DATETIME_OFFSET, "true")
                 .put(USE_COLLECTION, "false")
                 .put(RETURN_ICOLLECTION, "false")
+                .put(KEEP_UNDERSCORES, KEEP_UNDERSCORES_VALUE)
+                .put(ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
+
                 .build();
     }
 
