@@ -1124,6 +1124,7 @@ definitions:
         enum:
         - "UPPER"
         - "lower"
+        - ""
       enum_integer:
         type: "integer"
         format: "int32"

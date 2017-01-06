@@ -303,6 +303,10 @@ public class DefaultCodegen {
      * @return the sanitized variable name for enum
      */
     public String toEnumVarName(String value, String datatype) {
+        if (value.length() == 0) {
+            return "EMPTY";
+        }
+
         String var = value.replaceAll("\\W+", "_").toUpperCase();
         if (var.matches("\\d.*")) {
             return "_" + var;
@@ -1687,6 +1691,8 @@ public class DefaultCodegen {
             property.baseType = getSwaggerType(p);
             // handle inner property
             ArrayProperty ap = (ArrayProperty) p;
+            property.maxItems = ap.getMaxItems();
+            property.minItems = ap.getMinItems();
             CodegenProperty cp = fromProperty(property.name, ap.getItems());
             updatePropertyForArray(property, cp);
       	} else if (p instanceof MapProperty) {
