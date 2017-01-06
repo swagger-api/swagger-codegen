@@ -123,16 +123,9 @@ class StoreApi(object):
         local_var_files = {}
 
         body_params = None
-
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
             select_header_accept(['application/xml', 'application/json'])
-        if not header_params['Accept']:
-            del header_params['Accept']
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.\
-            select_header_content_type([])
 
         # Authentication setting
         auth_settings = []
@@ -225,16 +218,9 @@ class StoreApi(object):
         local_var_files = {}
 
         body_params = None
-
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
             select_header_accept(['application/json'])
-        if not header_params['Accept']:
-            del header_params['Accept']
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.\
-            select_header_content_type([])
 
         # Authentication setting
         auth_settings = ['api_key']
@@ -319,10 +305,10 @@ class StoreApi(object):
         if ('order_id' not in params) or (params['order_id'] is None):
             raise ValueError("Missing the required parameter `order_id` when calling `get_order_by_id`")
 
-        if 'order_id' in params and params['order_id'] > 5.0:
-            raise ValueError("Invalid value for parameter `order_id` when calling `get_order_by_id`, must be a value less than or equal to `5.0`")
-        if 'order_id' in params and params['order_id'] < 1.0:
-            raise ValueError("Invalid value for parameter `order_id` when calling `get_order_by_id`, must be a value greater than or equal to `1.0`")
+        if 'order_id' in params and params['order_id'] > 5:
+            raise ValueError("Invalid value for parameter `order_id` when calling `get_order_by_id`, must be a value less than or equal to `5`")
+        if 'order_id' in params and params['order_id'] < 1:
+            raise ValueError("Invalid value for parameter `order_id` when calling `get_order_by_id`, must be a value greater than or equal to `1`")
 
         collection_formats = {}
 
@@ -339,16 +325,9 @@ class StoreApi(object):
         local_var_files = {}
 
         body_params = None
-
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
             select_header_accept(['application/xml', 'application/json'])
-        if not header_params['Accept']:
-            del header_params['Accept']
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.\
-            select_header_content_type([])
 
         # Authentication setting
         auth_settings = []
@@ -449,16 +428,9 @@ class StoreApi(object):
         body_params = None
         if 'body' in params:
             body_params = params['body']
-
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
             select_header_accept(['application/xml', 'application/json'])
-        if not header_params['Accept']:
-            del header_params['Accept']
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.\
-            select_header_content_type([])
 
         # Authentication setting
         auth_settings = []

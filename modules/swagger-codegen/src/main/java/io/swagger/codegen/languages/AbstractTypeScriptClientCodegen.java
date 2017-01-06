@@ -26,6 +26,7 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
 
     protected String modelPropertyNaming= "camelCase";
     protected Boolean supportsES6 = true;
+    protected HashSet<String> languageGenericTypes;
 
     public AbstractTypeScriptClientCodegen() {
         super();
@@ -58,6 +59,11 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
                 "any",
                 "Error"
         ));
+
+        languageGenericTypes = new HashSet<String>(Arrays.asList(
+                "Array"
+        ));
+
         instantiationTypes.put("array", "Array");
 
         typeMapping = new HashMap<String, String>();
@@ -97,7 +103,7 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
         }
 
         if (additionalProperties.containsKey(CodegenConstants.SUPPORTS_ES6)) {
-            setSupportsES6(Boolean.valueOf((String)additionalProperties.get(CodegenConstants.SUPPORTS_ES6)));
+            setSupportsES6(Boolean.valueOf(additionalProperties.get(CodegenConstants.SUPPORTS_ES6).toString()));
             additionalProperties.put("supportsES6", getSupportsES6());
         }
     }

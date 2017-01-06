@@ -52,6 +52,8 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     protected String groupId = "io.swagger";
     protected String artifactId = "swagger-java";
     protected String artifactVersion = "1.0.0";
+    protected String licenseName = "Unlicense";
+    protected String licenseUrl = "http://unlicense.org";
     protected String projectFolder = "src" + File.separator + "main";
     protected String projectTestFolder = "src" + File.separator + "test";
     protected String sourceFolder = projectFolder + File.separator + "java";
@@ -117,6 +119,8 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         cliOptions.add(new CliOption(CodegenConstants.GROUP_ID, CodegenConstants.GROUP_ID_DESC));
         cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_ID, CodegenConstants.ARTIFACT_ID_DESC));
         cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_VERSION, CodegenConstants.ARTIFACT_VERSION_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.LICENSE_NAME, CodegenConstants.LICENSE_NAME_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.LICENSE_URL, CodegenConstants.LICENSE_URL_DESC));
         cliOptions.add(new CliOption(CodegenConstants.SOURCE_FOLDER, CodegenConstants.SOURCE_FOLDER_DESC));
         cliOptions.add(new CliOption(CodegenConstants.LOCAL_VARIABLE_PREFIX, CodegenConstants.LOCAL_VARIABLE_PREFIX_DESC));
         cliOptions.add(CliOption.newBoolean(CodegenConstants.SERIALIZABLE_MODEL, CodegenConstants.SERIALIZABLE_MODEL_DESC));
@@ -185,6 +189,18 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         } else {
             //not set, use to be passed to template
             additionalProperties.put(CodegenConstants.ARTIFACT_VERSION, artifactVersion);
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.LICENSE_NAME)) {
+            this.setLicenseName((String) additionalProperties.get(CodegenConstants.LICENSE_NAME));
+        } else {
+            additionalProperties.put(CodegenConstants.LICENSE_NAME, licenseName);
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.LICENSE_URL)) {
+            this.setLicenseUrl((String) additionalProperties.get(CodegenConstants.LICENSE_URL));
+        } else {
+            additionalProperties.put(CodegenConstants.LICENSE_URL, licenseUrl);
         }
 
         if (additionalProperties.containsKey(CodegenConstants.SOURCE_FOLDER)) {
@@ -445,10 +461,20 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         if (p instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) p;
             Property inner = ap.getItems();
+            if (inner == null) {
+                LOGGER.warn(ap.getName() + "(array property) does not have a proper inner type defined");
+                // TODO maybe better defaulting to StringProperty than returning null
+                return null;
+            }
             return getSwaggerType(p) + "<" + getTypeDeclaration(inner) + ">";
         } else if (p instanceof MapProperty) {
             MapProperty mp = (MapProperty) p;
             Property inner = mp.getAdditionalProperties();
+            if (inner == null) {
+                LOGGER.warn(mp.getName() + "(map property) does not have a proper inner type defined");
+                // TODO maybe better defaulting to StringProperty than returning null
+                return null;
+            }
             return getSwaggerType(p) + "<String, " + getTypeDeclaration(inner) + ">";
         }
         return super.getTypeDeclaration(p);
@@ -464,6 +490,9 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             } else {
                 pattern = "new ArrayList<%s>()";
             }
+            if (ap.getItems() == null) {
+                return null;
+            }
             return String.format(pattern, getTypeDeclaration(ap.getItems()));
         } else if (p instanceof MapProperty) {
             final MapProperty ap = (MapProperty) p;
@@ -472,6 +501,9 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
                 pattern = "new java.util.HashMap<String, %s>()";
             } else {
                 pattern = "new HashMap<String, %s>()";
+            }
+            if (ap.getAdditionalProperties() == null) {
+                return null;
             }
             return String.format(pattern, getTypeDeclaration(ap.getAdditionalProperties()));
         } else if (p instanceof IntegerProperty) {
@@ -587,21 +619,16 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     @Override
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
-        String type;
+
+        // don't apply renaming on types from the typeMapping
         if (typeMapping.containsKey(swaggerType)) {
-            type = typeMapping.get(swaggerType);
-            if (languageSpecificPrimitives.contains(type) || type.indexOf(".") >= 0 ||
-                type.equals("Map") || type.equals("List") ||
-                type.equals("File") || type.equals("Date")) {
-                return type;
-            }
-        } else {
-            type = swaggerType;
+            return typeMapping.get(swaggerType);
         }
-        if (null == type) {
+
+        if (null == swaggerType) {
             LOGGER.error("No Type defined for Property " + p);
         }
-        return toModelName(type);
+        return toModelName(swaggerType);
     }
 
     @Override
@@ -821,7 +848,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         op.path = sanitizePath(op.path);
         return op;
     }
-    
+
     private static CodegenModel reconcileInlineEnums(CodegenModel codegenModel, CodegenModel parentCodegenModel) {
         // This generator uses inline classes to define enums, which breaks when
         // dealing with models that have subTypes. To clean this up, we will analyze
@@ -863,7 +890,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             int count = 0, numVars = codegenProperties.size();
             for(CodegenProperty codegenProperty : codegenProperties) {
                 count += 1;
-                codegenProperty.hasMore = (count < numVars) ? true : null;
+                codegenProperty.hasMore = (count < numVars) ? true : false;
             }
             codegenModel.vars = codegenProperties;
         }
@@ -893,6 +920,14 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
     public void setArtifactVersion(String artifactVersion) {
         this.artifactVersion = artifactVersion;
+    }
+
+    public void setLicenseName(String licenseName) {
+        this.licenseName = licenseName;
+    }
+
+    public void setLicenseUrl(String licenseUrl) {
+        this.licenseUrl = licenseUrl;
     }
 
     public void setSourceFolder(String sourceFolder) {
@@ -957,7 +992,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         }
         return sb.toString();
     }
-    
+
     public void setSupportJava6(boolean value) {
         this.supportJava6 = value;
     }

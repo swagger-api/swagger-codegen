@@ -113,7 +113,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         config.processOpts();
         config.preprocessSwagger(swagger);
         config.additionalProperties().put("generatedDate", DateTime.now().toString());
-        config.additionalProperties().put("generatorClass", config.getClass().toString());
+        config.additionalProperties().put("generatorClass", config.getClass().getName());
         config.additionalProperties().put("inputSpec", config.getInputSpec());
         if (swagger.getVendorExtensions() != null) {
             config.vendorExtensions().putAll(swagger.getVendorExtensions());
@@ -474,7 +474,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 if (!of.isDirectory()) {
                     of.mkdirs();
                 }
-                String outputFilename = outputFolder + File.separator + support.destinationFilename;
+                String outputFilename = outputFolder + File.separator + support.destinationFilename.replace('/', File.separatorChar);
                 if (!config.shouldOverwrite(outputFilename)) {
                     LOGGER.info("Skipped overwriting " + outputFilename);
                     continue;
@@ -526,6 +526,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                         if (in != null) {
                             LOGGER.info("writing file " + outputFile);
                             IOUtils.copy(in, out);
+                            out.close();
                         } else {
                             LOGGER.error("can't open " + templateFile + " for input");
                         }
@@ -656,7 +657,8 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     }
 
     private File processTemplateToFile(Map<String, Object> templateData, String templateName, String outputFilename) throws IOException {
-        if(ignoreProcessor.allowsFile(new File(outputFilename.replaceAll("//", "/")))) {
+        String adjustedOutputFilename = outputFilename.replaceAll("//", "/").replace('/', File.separatorChar);
+        if(ignoreProcessor.allowsFile(new File(adjustedOutputFilename))) {
             String templateFile = getFullTemplateFile(config, templateName);
             String template = readTemplate(templateFile);
             Mustache.Compiler compiler = Mustache.compiler();
@@ -671,11 +673,11 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     .defaultValue("")
                     .compile(template);
 
-            writeToFile(outputFilename, tmpl.execute(templateData));
-            return new File(outputFilename);
+            writeToFile(adjustedOutputFilename, tmpl.execute(templateData));
+            return new File(adjustedOutputFilename);
         }
 
-        LOGGER.info("Skipped generation of " + outputFilename + " due to rule in .swagger-codegen-ignore");
+        LOGGER.info("Skipped generation of " + adjustedOutputFilename + " due to rule in .swagger-codegen-ignore");
         return null;
     }
 
@@ -870,7 +872,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
             if (os != null && os.size() > 0) {
                 CodegenOperation op = os.get(os.size() - 1);
-                op.hasMore = null;
+                op.hasMore = false;
             }
         }
         return operations;
