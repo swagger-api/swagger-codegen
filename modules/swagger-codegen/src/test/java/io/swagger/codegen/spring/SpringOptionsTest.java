@@ -66,6 +66,8 @@ public class SpringOptionsTest extends JavaClientOptionsTest {
             times = 1;
             clientCodegen.setResponseWrapper(SpringOptionsProvider.RESPONSE_WRAPPER);
             times = 1;
+            clientCodegen.setUseBeanValidation(Boolean.valueOf(SpringOptionsProvider.USE_BEANVALIDATION));
+            times = 1;
 
         }};
     }
