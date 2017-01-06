@@ -23,6 +23,11 @@ public class CodegenParameter {
     public Boolean hasValidation;
 
     /**
+     * Set to true, if type associated with <code>CodegenParameter</code> contains a discriminator.
+     */
+    public boolean hasDiscriminator;
+
+    /**
      * Determines whether this parameter is mandatory. If the parameter is in "path",
      * this property is required and its value MUST be true. Otherwise, the property
      * MAY be included and its default value is false.
@@ -138,7 +143,7 @@ public class CodegenParameter {
         output.isDateTime = this.isDateTime;
         output.isListContainer = this.isListContainer;
         output.isMapContainer = this.isMapContainer;
-
+        output.hasDiscriminator = this.hasDiscriminator;
         return output;
     }
 
@@ -263,6 +268,9 @@ public class CodegenParameter {
             return false;
         if (uniqueItems != null ? !uniqueItems.equals(that.uniqueItems) : that.uniqueItems != null)
             return false;
+        if (hasDiscriminator != that.hasDiscriminator) {
+            return false;
+        }
         return multipleOf != null ? multipleOf.equals(that.multipleOf) : that.multipleOf == null;
 
     }
@@ -325,6 +333,7 @@ public class CodegenParameter {
         result = 31 * result + (minItems != null ? minItems.hashCode() : 0);
         result = 31 * result + (uniqueItems != null ? uniqueItems.hashCode() : 0);
         result = 31 * result + (multipleOf != null ? multipleOf.hashCode() : 0);
+        result = 31 * result + (hasDiscriminator ? 13: 31);
         return result;
     }
 }

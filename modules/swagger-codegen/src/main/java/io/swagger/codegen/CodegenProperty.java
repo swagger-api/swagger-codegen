@@ -49,7 +49,12 @@ public class CodegenProperty implements Cloneable {
     public boolean isInherited;
     public String nameInCamelCase; // property name in camel case
     // enum name based on the property name, usually use as a prefix (e.g. VAR_NAME) for enum name (e.g. VAR_NAME_VALUE1)
-    public String enumName; 
+    public String enumName;
+
+    /**
+     * Set to true if type associated with <code>CodegenProperty</code> has a discriminator.
+     */
+    public boolean hasDiscriminator;
 
     @Override
     public String toString() {
@@ -114,6 +119,7 @@ public class CodegenProperty implements Cloneable {
         result = prime * result + ((isDateTime ? 13:31));
         result = prime * result + ((isMapContainer ? 13:31));
         result = prime * result + ((isListContainer  ? 13:31));
+        result = prime * result + ((hasDiscriminator ? 13:31));
         result = prime * result + Objects.hashCode(isInherited);
         result = prime * result + Objects.hashCode(nameInCamelCase);
         result = prime * result + Objects.hashCode(enumName);
@@ -272,6 +278,9 @@ public class CodegenProperty implements Cloneable {
             return false;
         }
         if (this.isMapContainer != other.isMapContainer) {
+            return false;
+        }
+        if (this.hasDiscriminator != other.hasDiscriminator) {
             return false;
         }
         if (!Objects.equals(this.isInherited, other.isInherited)) {
