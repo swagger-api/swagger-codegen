@@ -224,6 +224,11 @@ class Pet implements ArrayAccess
      */
     public function setId($id)
     {
+        if (is_null($id)) {
+            $this->container['id'] = $id;
+
+            return $this;
+        }
         $this->container['id'] = $id;
 
         return $this;
@@ -245,6 +250,11 @@ class Pet implements ArrayAccess
      */
     public function setCategory($category)
     {
+        if (is_null($category)) {
+            $this->container['category'] = $category;
+
+            return $this;
+        }
         $this->container['category'] = $category;
 
         return $this;
@@ -308,6 +318,11 @@ class Pet implements ArrayAccess
      */
     public function setTags($tags)
     {
+        if (is_null($tags)) {
+            $this->container['tags'] = $tags;
+
+            return $this;
+        }
         $this->container['tags'] = $tags;
 
         return $this;
@@ -329,6 +344,11 @@ class Pet implements ArrayAccess
      */
     public function setStatus($status)
     {
+        if (is_null($status)) {
+            $this->container['status'] = $status;
+
+            return $this;
+        }
         $allowed_values = array('available', 'pending', 'sold');
         if (!is_null($status) && (!in_array($status, $allowed_values))) {
             throw new \InvalidArgumentException("Invalid value for 'status', must be one of 'available', 'pending', 'sold'");

@@ -167,6 +167,11 @@ class HasOnlyReadOnly implements ArrayAccess
      */
     public function setBar($bar)
     {
+        if (is_null($bar)) {
+            $this->container['bar'] = $bar;
+
+            return $this;
+        }
         $this->container['bar'] = $bar;
 
         return $this;
@@ -188,6 +193,11 @@ class HasOnlyReadOnly implements ArrayAccess
      */
     public function setFoo($foo)
     {
+        if (is_null($foo)) {
+            $this->container['foo'] = $foo;
+
+            return $this;
+        }
         $this->container['foo'] = $foo;
 
         return $this;

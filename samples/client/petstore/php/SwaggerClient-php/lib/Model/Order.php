@@ -212,6 +212,11 @@ class Order implements ArrayAccess
      */
     public function setId($id)
     {
+        if (is_null($id)) {
+            $this->container['id'] = $id;
+
+            return $this;
+        }
         $this->container['id'] = $id;
 
         return $this;
@@ -233,6 +238,11 @@ class Order implements ArrayAccess
      */
     public function setPetId($pet_id)
     {
+        if (is_null($pet_id)) {
+            $this->container['pet_id'] = $pet_id;
+
+            return $this;
+        }
         $this->container['pet_id'] = $pet_id;
 
         return $this;
@@ -254,6 +264,11 @@ class Order implements ArrayAccess
      */
     public function setQuantity($quantity)
     {
+        if (is_null($quantity)) {
+            $this->container['quantity'] = $quantity;
+
+            return $this;
+        }
         $this->container['quantity'] = $quantity;
 
         return $this;
@@ -275,6 +290,11 @@ class Order implements ArrayAccess
      */
     public function setShipDate($ship_date)
     {
+        if (is_null($ship_date)) {
+            $this->container['ship_date'] = $ship_date;
+
+            return $this;
+        }
         $this->container['ship_date'] = $ship_date;
 
         return $this;
@@ -296,6 +316,11 @@ class Order implements ArrayAccess
      */
     public function setStatus($status)
     {
+        if (is_null($status)) {
+            $this->container['status'] = $status;
+
+            return $this;
+        }
         $allowed_values = array('placed', 'approved', 'delivered');
         if (!is_null($status) && (!in_array($status, $allowed_values))) {
             throw new \InvalidArgumentException("Invalid value for 'status', must be one of 'placed', 'approved', 'delivered'");
@@ -321,6 +346,11 @@ class Order implements ArrayAccess
      */
     public function setComplete($complete)
     {
+        if (is_null($complete)) {
+            $this->container['complete'] = $complete;
+
+            return $this;
+        }
         $this->container['complete'] = $complete;
 
         return $this;

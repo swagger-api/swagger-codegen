@@ -197,6 +197,11 @@ class User implements ArrayAccess
      */
     public function setId($id)
     {
+        if (is_null($id)) {
+            $this->container['id'] = $id;
+
+            return $this;
+        }
         $this->container['id'] = $id;
 
         return $this;
@@ -218,6 +223,11 @@ class User implements ArrayAccess
      */
     public function setUsername($username)
     {
+        if (is_null($username)) {
+            $this->container['username'] = $username;
+
+            return $this;
+        }
         $this->container['username'] = $username;
 
         return $this;
@@ -239,6 +249,11 @@ class User implements ArrayAccess
      */
     public function setFirstName($first_name)
     {
+        if (is_null($first_name)) {
+            $this->container['first_name'] = $first_name;
+
+            return $this;
+        }
         $this->container['first_name'] = $first_name;
 
         return $this;
@@ -260,6 +275,11 @@ class User implements ArrayAccess
      */
     public function setLastName($last_name)
     {
+        if (is_null($last_name)) {
+            $this->container['last_name'] = $last_name;
+
+            return $this;
+        }
         $this->container['last_name'] = $last_name;
 
         return $this;
@@ -281,6 +301,11 @@ class User implements ArrayAccess
      */
     public function setEmail($email)
     {
+        if (is_null($email)) {
+            $this->container['email'] = $email;
+
+            return $this;
+        }
         $this->container['email'] = $email;
 
         return $this;
@@ -302,6 +327,11 @@ class User implements ArrayAccess
      */
     public function setPassword($password)
     {
+        if (is_null($password)) {
+            $this->container['password'] = $password;
+
+            return $this;
+        }
         $this->container['password'] = $password;
 
         return $this;
@@ -323,6 +353,11 @@ class User implements ArrayAccess
      */
     public function setPhone($phone)
     {
+        if (is_null($phone)) {
+            $this->container['phone'] = $phone;
+
+            return $this;
+        }
         $this->container['phone'] = $phone;
 
         return $this;
@@ -344,6 +379,11 @@ class User implements ArrayAccess
      */
     public function setUserStatus($user_status)
     {
+        if (is_null($user_status)) {
+            $this->container['user_status'] = $user_status;
+
+            return $this;
+        }
         $this->container['user_status'] = $user_status;
 
         return $this;

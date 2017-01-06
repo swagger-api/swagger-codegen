@@ -168,6 +168,11 @@ class Model200Response implements ArrayAccess
      */
     public function setName($name)
     {
+        if (is_null($name)) {
+            $this->container['name'] = $name;
+
+            return $this;
+        }
         $this->container['name'] = $name;
 
         return $this;
@@ -189,6 +194,11 @@ class Model200Response implements ArrayAccess
      */
     public function setClass($class)
     {
+        if (is_null($class)) {
+            $this->container['class'] = $class;
+
+            return $this;
+        }
         $this->container['class'] = $class;
 
         return $this;

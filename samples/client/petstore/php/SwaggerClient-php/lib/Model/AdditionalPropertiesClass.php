@@ -167,6 +167,11 @@ class AdditionalPropertiesClass implements ArrayAccess
      */
     public function setMapProperty($map_property)
     {
+        if (is_null($map_property)) {
+            $this->container['map_property'] = $map_property;
+
+            return $this;
+        }
         $this->container['map_property'] = $map_property;
 
         return $this;
@@ -188,6 +193,11 @@ class AdditionalPropertiesClass implements ArrayAccess
      */
     public function setMapOfMapProperty($map_of_map_property)
     {
+        if (is_null($map_of_map_property)) {
+            $this->container['map_of_map_property'] = $map_of_map_property;
+
+            return $this;
+        }
         $this->container['map_of_map_property'] = $map_of_map_property;
 
         return $this;

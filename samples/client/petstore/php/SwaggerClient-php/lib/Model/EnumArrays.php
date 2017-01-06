@@ -204,6 +204,11 @@ class EnumArrays implements ArrayAccess
      */
     public function setJustSymbol($just_symbol)
     {
+        if (is_null($just_symbol)) {
+            $this->container['just_symbol'] = $just_symbol;
+
+            return $this;
+        }
         $allowed_values = array('>=', '$');
         if (!is_null($just_symbol) && (!in_array($just_symbol, $allowed_values))) {
             throw new \InvalidArgumentException("Invalid value for 'just_symbol', must be one of '>=', '$'");
@@ -229,6 +234,11 @@ class EnumArrays implements ArrayAccess
      */
     public function setArrayEnum($array_enum)
     {
+        if (is_null($array_enum)) {
+            $this->container['array_enum'] = $array_enum;
+
+            return $this;
+        }
         $allowed_values = array('fish', 'crab');
         if (!is_null($array_enum) && (array_diff($array_enum, $allowed_values))) {
             throw new \InvalidArgumentException("Invalid value for 'array_enum', must be one of 'fish', 'crab'");

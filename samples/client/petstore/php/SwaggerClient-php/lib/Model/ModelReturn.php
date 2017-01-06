@@ -163,6 +163,11 @@ class ModelReturn implements ArrayAccess
      */
     public function setReturn($return)
     {
+        if (is_null($return)) {
+            $this->container['return'] = $return;
+
+            return $this;
+        }
         $this->container['return'] = $return;
 
         return $this;
