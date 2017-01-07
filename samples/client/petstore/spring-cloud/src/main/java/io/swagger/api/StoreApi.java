@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-
+import javax.validation.constraints.*;
 
 @Api(value = "Store", description = "the Store API")
 public interface StoreApi {
@@ -28,7 +28,7 @@ public interface StoreApi {
         produces = "application/json",
         consumes = "application/json",
         method = RequestMethod.DELETE)
-    com.netflix.hystrix.HystrixCommand<ResponseEntity<Void>> deleteOrder(@ApiParam(value = "ID of the order that needs to be deleted",required=true ) @PathVariable("orderId") String orderId);
+    com.netflix.hystrix.HystrixCommand<ResponseEntity<Void>> deleteOrder( @Min(1)@ApiParam(value = "ID of the order that needs to be deleted",required=true ) @PathVariable("orderId") String orderId);
 
 
     @ApiOperation(value = "Returns pet inventories by status", notes = "Returns a map of status codes to quantities", response = Integer.class, responseContainer = "Map", authorizations = {
@@ -52,7 +52,7 @@ public interface StoreApi {
         produces = "application/json",
         consumes = "application/json",
         method = RequestMethod.GET)
-    com.netflix.hystrix.HystrixCommand<ResponseEntity<Order>> getOrderById(@ApiParam(value = "ID of pet that needs to be fetched",required=true ) @PathVariable("orderId") Long orderId);
+    com.netflix.hystrix.HystrixCommand<ResponseEntity<Order>> getOrderById( @Min(1) @Max(5)@ApiParam(value = "ID of pet that needs to be fetched",required=true ) @PathVariable("orderId") Long orderId);
 
 
     @ApiOperation(value = "Place an order for a pet", notes = "", response = Order.class, tags={ "store", })
