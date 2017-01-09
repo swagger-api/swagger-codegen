@@ -24,7 +24,7 @@ import java.util.List;
 @Api(description = "the pet API")
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJAXRSCXFCDIServerCodegen", date = "2016-11-17T08:53:42.205Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJAXRSCXFCDIServerCodegen", date = "2017-01-05T14:32:58.862+11:00")
 
 public class PetApi  {
 

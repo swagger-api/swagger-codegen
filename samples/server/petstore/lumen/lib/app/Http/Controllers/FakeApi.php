@@ -69,22 +69,22 @@ class FakeApi extends Controller
         if (!isset($input['number'])) {
             throw new \InvalidArgumentException('Missing the required parameter $number when calling testEndpointParameters');
         }
-        if ($input['number'] > 543.2) {
-            throw new \InvalidArgumentException('invalid value for $number when calling FakeApi.testEndpointParameters, must be smaller than or equal to 543.2.');
+        if ($input['number'] > 543.200000000000045474735088646411895751953125) {
+            throw new \InvalidArgumentException('invalid value for $number when calling FakeApi.testEndpointParameters, must be smaller than or equal to 543.200000000000045474735088646411895751953125.');
         }
-        if ($input['number'] < 32.1) {
-            throw new \InvalidArgumentException('invalid value for $number when calling FakeApi.testEndpointParameters, must be bigger than or equal to 32.1.');
+        if ($input['number'] < 32.10000000000000142108547152020037174224853515625) {
+            throw new \InvalidArgumentException('invalid value for $number when calling FakeApi.testEndpointParameters, must be bigger than or equal to 32.10000000000000142108547152020037174224853515625.');
         }
         $number = $input['number'];
 
         if (!isset($input['double'])) {
             throw new \InvalidArgumentException('Missing the required parameter $double when calling testEndpointParameters');
         }
-        if ($input['double'] > 123.4) {
-            throw new \InvalidArgumentException('invalid value for $double when calling FakeApi.testEndpointParameters, must be smaller than or equal to 123.4.');
+        if ($input['double'] > 123.400000000000005684341886080801486968994140625) {
+            throw new \InvalidArgumentException('invalid value for $double when calling FakeApi.testEndpointParameters, must be smaller than or equal to 123.400000000000005684341886080801486968994140625.');
         }
-        if ($input['double'] < 67.8) {
-            throw new \InvalidArgumentException('invalid value for $double when calling FakeApi.testEndpointParameters, must be bigger than or equal to 67.8.');
+        if ($input['double'] < 67.7999999999999971578290569595992565155029296875) {
+            throw new \InvalidArgumentException('invalid value for $double when calling FakeApi.testEndpointParameters, must be bigger than or equal to 67.7999999999999971578290569595992565155029296875.');
         }
         $double = $input['double'];
 
@@ -101,26 +101,26 @@ class FakeApi extends Controller
         }
         $byte = $input['byte'];
 
-        if ($input['integer'] > 100.0) {
-            throw new \InvalidArgumentException('invalid value for $integer when calling FakeApi.testEndpointParameters, must be smaller than or equal to 100.0.');
+        if ($input['integer'] > 100) {
+            throw new \InvalidArgumentException('invalid value for $integer when calling FakeApi.testEndpointParameters, must be smaller than or equal to 100.');
         }
-        if ($input['integer'] < 10.0) {
-            throw new \InvalidArgumentException('invalid value for $integer when calling FakeApi.testEndpointParameters, must be bigger than or equal to 10.0.');
+        if ($input['integer'] < 10) {
+            throw new \InvalidArgumentException('invalid value for $integer when calling FakeApi.testEndpointParameters, must be bigger than or equal to 10.');
         }
         $integer = $input['integer'];
 
-        if ($input['int32'] > 200.0) {
-            throw new \InvalidArgumentException('invalid value for $int32 when calling FakeApi.testEndpointParameters, must be smaller than or equal to 200.0.');
+        if ($input['int32'] > 200) {
+            throw new \InvalidArgumentException('invalid value for $int32 when calling FakeApi.testEndpointParameters, must be smaller than or equal to 200.');
         }
-        if ($input['int32'] < 20.0) {
-            throw new \InvalidArgumentException('invalid value for $int32 when calling FakeApi.testEndpointParameters, must be bigger than or equal to 20.0.');
+        if ($input['int32'] < 20) {
+            throw new \InvalidArgumentException('invalid value for $int32 when calling FakeApi.testEndpointParameters, must be bigger than or equal to 20.');
         }
         $int32 = $input['int32'];
 
         $int64 = $input['int64'];
 
-        if ($input['float'] > 987.6) {
-            throw new \InvalidArgumentException('invalid value for $float when calling FakeApi.testEndpointParameters, must be smaller than or equal to 987.6.');
+        if ($input['float'] > 987.6000000000000227373675443232059478759765625) {
+            throw new \InvalidArgumentException('invalid value for $float when calling FakeApi.testEndpointParameters, must be smaller than or equal to 987.6000000000000227373675443232059478759765625.');
         }
         $float = $input['float'];
 

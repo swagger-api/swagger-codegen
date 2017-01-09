@@ -247,14 +247,14 @@ class FakeApi(object):
         if ('byte' not in params) or (params['byte'] is None):
             raise ValueError("Missing the required parameter `byte` when calling `test_endpoint_parameters`")
 
-        if 'number' in params and params['number'] > 543.2:
-            raise ValueError("Invalid value for parameter `number` when calling `test_endpoint_parameters`, must be a value less than or equal to `543.2`")
-        if 'number' in params and params['number'] < 32.1:
-            raise ValueError("Invalid value for parameter `number` when calling `test_endpoint_parameters`, must be a value greater than or equal to `32.1`")
-        if 'double' in params and params['double'] > 123.4:
-            raise ValueError("Invalid value for parameter `double` when calling `test_endpoint_parameters`, must be a value less than or equal to `123.4`")
-        if 'double' in params and params['double'] < 67.8:
-            raise ValueError("Invalid value for parameter `double` when calling `test_endpoint_parameters`, must be a value greater than or equal to `67.8`")
+        if 'number' in params and params['number'] > 543.200000000000045474735088646411895751953125:
+            raise ValueError("Invalid value for parameter `number` when calling `test_endpoint_parameters`, must be a value less than or equal to `543.200000000000045474735088646411895751953125`")
+        if 'number' in params and params['number'] < 32.10000000000000142108547152020037174224853515625:
+            raise ValueError("Invalid value for parameter `number` when calling `test_endpoint_parameters`, must be a value greater than or equal to `32.10000000000000142108547152020037174224853515625`")
+        if 'double' in params and params['double'] > 123.400000000000005684341886080801486968994140625:
+            raise ValueError("Invalid value for parameter `double` when calling `test_endpoint_parameters`, must be a value less than or equal to `123.400000000000005684341886080801486968994140625`")
+        if 'double' in params and params['double'] < 67.7999999999999971578290569595992565155029296875:
+            raise ValueError("Invalid value for parameter `double` when calling `test_endpoint_parameters`, must be a value greater than or equal to `67.7999999999999971578290569595992565155029296875`")
         if 'pattern_without_delimiter' in params and not re.search('^[A-Z].*', params['pattern_without_delimiter']):
             raise ValueError("Invalid value for parameter `pattern_without_delimiter` when calling `test_endpoint_parameters`, must conform to the pattern `/^[A-Z].*/`")
         if 'integer' in params and params['integer'] > 100:
@@ -265,8 +265,8 @@ class FakeApi(object):
             raise ValueError("Invalid value for parameter `int32` when calling `test_endpoint_parameters`, must be a value less than or equal to `200`")
         if 'int32' in params and params['int32'] < 20:
             raise ValueError("Invalid value for parameter `int32` when calling `test_endpoint_parameters`, must be a value greater than or equal to `20`")
-        if 'float' in params and params['float'] > 987.6:
-            raise ValueError("Invalid value for parameter `float` when calling `test_endpoint_parameters`, must be a value less than or equal to `987.6`")
+        if 'float' in params and params['float'] > 987.6000000000000227373675443232059478759765625:
+            raise ValueError("Invalid value for parameter `float` when calling `test_endpoint_parameters`, must be a value less than or equal to `987.6000000000000227373675443232059478759765625`")
         if 'string' in params and not re.search('[a-z]', params['string'], flags=re.IGNORECASE):
             raise ValueError("Invalid value for parameter `string` when calling `test_endpoint_parameters`, must conform to the pattern `/[a-z]/i`")
         if 'password' in params and len(params['password']) > 64:

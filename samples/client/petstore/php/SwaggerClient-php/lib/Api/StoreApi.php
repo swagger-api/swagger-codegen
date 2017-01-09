@@ -118,8 +118,8 @@ class StoreApi
         if ($order_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $order_id when calling deleteOrder');
         }
-        if (($order_id < 1.0)) {
-            throw new \InvalidArgumentException('invalid value for "$order_id" when calling StoreApi.deleteOrder, must be bigger than or equal to 1.0.');
+        if (($order_id < 1)) {
+            throw new \InvalidArgumentException('invalid value for "$order_id" when calling StoreApi.deleteOrder, must be bigger than or equal to 1.');
         }
 
         // parse inputs

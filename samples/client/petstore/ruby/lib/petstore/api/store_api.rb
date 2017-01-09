@@ -40,8 +40,8 @@ module Petstore
       end
       # verify the required parameter 'order_id' is set
       fail ArgumentError, "Missing the required parameter 'order_id' when calling StoreApi.delete_order" if order_id.nil?
-      if order_id < 1.0
-        fail ArgumentError, 'invalid value for "order_id" when calling StoreApi.delete_order, must be greater than or equal to 1.0.'
+      if order_id < 1
+        fail ArgumentError, 'invalid value for "order_id" when calling StoreApi.delete_order, must be greater than or equal to 1.'
       end
 
       # resource path
