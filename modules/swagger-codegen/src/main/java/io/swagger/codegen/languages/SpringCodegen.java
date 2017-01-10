@@ -128,12 +128,12 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
         }
 
         if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
-			this.setUseBeanValidation(convertPropertyToBoolean(USE_BEANVALIDATION));
+            this.setUseBeanValidation(convertPropertyToBoolean(USE_BEANVALIDATION));
         }
 
-		if (useBeanValidation) {
-			writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
-		}
+        if (useBeanValidation) {
+            writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
+        }
         
         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));

@@ -1009,9 +1009,9 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
         return booleanValue;
     }
-	
-	public void writePropertyBack(String propertyKey, boolean value) {
-		additionalProperties.put(propertyKey, value);
-	}
+    
+    public void writePropertyBack(String propertyKey, boolean value) {
+        additionalProperties.put(propertyKey, value);
+    }
 
 }
