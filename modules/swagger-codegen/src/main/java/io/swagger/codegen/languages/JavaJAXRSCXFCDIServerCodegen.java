@@ -16,9 +16,9 @@ import java.io.File;
  * to get an instance of ServiceImpl that implements the Service interface.
  */
 public class JavaJAXRSCXFCDIServerCodegen extends JavaJAXRSSpecServerCodegen implements BeanValidationFeatures {
-	
-	protected boolean useBeanValidation = true;
-	
+    
+    protected boolean useBeanValidation = true;
+    
     /**
      * Default constructor
      */
@@ -51,12 +51,12 @@ public class JavaJAXRSCXFCDIServerCodegen extends JavaJAXRSSpecServerCodegen imp
         super.processOpts();
 
         if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
-			this.setUseBeanValidation(convertPropertyToBoolean(USE_BEANVALIDATION));
+            this.setUseBeanValidation(convertPropertyToBoolean(USE_BEANVALIDATION));
         }
 
-		if (useBeanValidation) {
-			writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
-		}
+        if (useBeanValidation) {
+            writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
+        }
         
         supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
 
