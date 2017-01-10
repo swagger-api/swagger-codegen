@@ -12,7 +12,7 @@ import java.util.*;
 
 public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen implements JbossFeature, BeanValidationFeatures {
 
-	protected boolean useBeanValidation = true;
+    protected boolean useBeanValidation = true;
     protected boolean generateJbossDeploymentDescriptor = true;
     
     public JavaResteasyServerCodegen() {
@@ -63,12 +63,12 @@ public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen im
         }
         
         if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
-			this.setUseBeanValidation(convertPropertyToBoolean(USE_BEANVALIDATION));
+            this.setUseBeanValidation(convertPropertyToBoolean(USE_BEANVALIDATION));
         }
 
-		if (useBeanValidation) {
-			writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
-		}
+        if (useBeanValidation) {
+            writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
+        }
 
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
         writeOptional(outputFolder, new SupportingFile("gradle.mustache", "", "build.gradle"));
