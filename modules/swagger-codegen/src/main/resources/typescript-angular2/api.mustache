@@ -8,7 +8,7 @@ import { Observable }                                        from 'rxjs/Observab
 import 'rxjs/add/operator/map';
 
 import * as models                                           from '../model/models';
-import { BASE_PATH }                                         from '../variables';
+import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
 /* tslint:disable:no-unused-variable member-ordering */
@@ -94,12 +94,33 @@ export class {{classname}} {
 {{/allParams}}
 {{#queryParams}}
         if ({{paramName}} !== undefined) {
+            {{#isListContainer}}
+            if({{paramName}}){
+            {{#isCollectionFormatMulti}}
+                    {{paramName}}.forEach((element) => {
+                        queryParameters.append('{{baseName}}', <any>element);
+                    })
+            {{/isCollectionFormatMulti}}
+            {{^isCollectionFormatMulti}}
+                    queryParameters.set('{{baseName}}', {{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}']));
+            {{/isCollectionFormatMulti}}
+             }
+            {{/isListContainer}}
+            {{^isListContainer}}
             queryParameters.set('{{baseName}}', <any>{{paramName}});
+            {{/isListContainer}}
         }
 {{/queryParams}}
 
 {{#headerParams}}
-        headers.set('{{baseName}}', String({{paramName}}));
+            {{#isListContainer}}
+            if({{paramName}}){
+                headers.set('{{baseName}}', {{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}']));
+             }
+            {{/isListContainer}}
+            {{^isListContainer}}
+            headers.set('{{baseName}}', String({{paramName}}));
+            {{/isListContainer}}
 {{/headerParams}}
 
         // to determine the Content-Type header
@@ -161,7 +182,21 @@ export class {{classname}} {
 
 {{#formParams}}
         if ({{paramName}} !== undefined) {
-            formParams.set('{{baseName}}', <any>{{paramName}}); 
+            {{#isListContainer}}
+            if({{paramName}}){
+            {{#isCollectionFormatMulti}}
+                    {{paramName}}.forEach((element) => {
+                        formParams.append('{{baseName}}', <any>element);
+                    })
+            {{/isCollectionFormatMulti}}
+            {{^isCollectionFormatMulti}}
+                    formParams.set('{{baseName}}', {{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}']));
+            {{/isCollectionFormatMulti}}
+             }
+            {{/isListContainer}}
+            {{^isListContainer}}
+            formParams.set('{{baseName}}', <any>{{paramName}});
+            {{/isListContainer}}
         }
 {{/formParams}}
 
