@@ -898,12 +898,6 @@ call_{{operationId}}() {
 #
 ##############################################################################
 
-# First, read any input (if available) from piped stdin as body content
-# into a temporary file
-if [[ -p /dev/stdin ]]; then
-    body_content_temp_file=$(mktemp)
-    cat - > $body_content_temp_file
-fi
 
 # Make sure Bash is at least in version 4.3
 if [[ ${BASH_VERSION:0:1} < 4 && ${BASH_VERSION:2:1} < 3 ]]; then
@@ -1040,6 +1034,10 @@ case $key in
     else
         curl_arguments+=" $key"
     fi
+    ;;
+    -)
+    body_content_temp_file=$(mktemp)
+    cat - > $body_content_temp_file
     ;;
     *=*)
     # Parse operation arguments and convert them into curl

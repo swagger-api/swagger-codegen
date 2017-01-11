@@ -5,6 +5,7 @@ export PETSTORE_CLI="petstore-cli"
 
 export PETSTORE_HOST="http://petstore.swagger.io"
 
+
 #
 # Tests for parameter handling and validation
 #
@@ -93,7 +94,7 @@ export PETSTORE_HOST="http://petstore.swagger.io"
 @test "addPet from pipe" {
     run bash \
       -c "echo '{\"id\": 37567, \"name\": \"lucky\", \"status\": \"available\"}' | \
-            bash $PETSTORE_CLI -ct json -ac xml addPet"
+            bash $PETSTORE_CLI -ct json -ac xml addPet -"
     [[ "$output" =~ "<id>37567</id>" ]]
 }
 

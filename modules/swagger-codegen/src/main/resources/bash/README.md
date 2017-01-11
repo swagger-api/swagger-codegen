@@ -161,7 +161,7 @@ $ petstore-cli --about
 $ petstore-cli addPet --help
 
 # Call REST API operation
-$ echo '{"id":891,"name":"lucky","status":"available"}' | petstore-cli --host http://petstore.swagger.io --content-type json addPet
+$ echo '{"id":891,"name":"lucky","status":"available"}' | petstore-cli --host http://petstore.swagger.io --content-type json addPet -
 
 {"id":891,"name":"lucky","photoUrls":[],"tags":[],"status":"available"}
 

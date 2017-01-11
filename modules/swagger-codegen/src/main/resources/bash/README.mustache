@@ -27,7 +27,7 @@ $ ./{{scriptName}} <operationId> -h
 {{scriptName}} -k -sS --tlsv1.2 --host https://<hostname> -u <user>:<password> --accept xml <operationId> <queryParam1>=<value1> <header_key1>:<header_value2>
 
 # Make POST request
-$ echo '<body_content>' | {{scriptName}} --host <hostname> --content-type json <operationId>
+$ echo '<body_content>' | {{scriptName}} --host <hostname> --content-type json <operationId> -
 
 # Make POST request with simple JSON content, e.g.:
 # {
@@ -35,7 +35,7 @@ $ echo '<body_content>' | {{scriptName}} --host <hostname> --content-type json <
 #   "key2": "value2",
 #   "key3": 23
 # }
-$ echo '<body_content>' | {{scriptName}} --host <hostname> --content-type json <operationId> key1==value1 key2=value2 key3:=23
+$ echo '<body_content>' | {{scriptName}} --host <hostname> --content-type json <operationId> key1==value1 key2=value2 key3:=23 -
 
 # Preview the cURL command without actually executing it
 $ {{scriptName}} --host http://<hostname>:<port> --dry-run <operationid>
