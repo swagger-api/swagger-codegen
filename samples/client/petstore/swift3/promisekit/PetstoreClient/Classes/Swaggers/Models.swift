@@ -10,8 +10,10 @@ protocol JSONEncodable {
     func encodeToJSON() -> Any
 }
 
-public enum ErrorResponse : Error {
-    case Error(Int, Data?, Error)
+public struct ErrorResponse : Error {
+    public let statusCode: Int
+    public let data: Data?
+    public let error: Error
 }
 
 open class Response<T> {
@@ -145,6 +147,15 @@ class Decoders {
             if let sourceInt = source as? Int64 {
                 // treat as a java date
                 return Date(timeIntervalSince1970: Double(sourceInt / 1000) )
+            }
+            fatalError("formatter failed to parse \(source)")
+        }
+
+        // Decoder for ISOFullDate
+        Decoders.addDecoder(clazz: ISOFullDate.self) { (source: AnyObject) -> ISOFullDate in
+            if let string = source as? String,
+               let isoDate = ISOFullDate.from(string: string) {
+                return isoDate
             }
             fatalError("formatter failed to parse \(source)")
         } 
@@ -409,7 +420,7 @@ class Decoders {
             instance.string = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["string"] as AnyObject?)
             instance.byte = Decoders.decodeOptional(clazz: Data.self, source: sourceDictionary["byte"] as AnyObject?)
             instance.binary = Decoders.decodeOptional(clazz: Data.self, source: sourceDictionary["binary"] as AnyObject?)
-            instance.date = Decoders.decodeOptional(clazz: Date.self, source: sourceDictionary["date"] as AnyObject?)
+            instance.date = Decoders.decodeOptional(clazz: ISOFullDate.self, source: sourceDictionary["date"] as AnyObject?)
             instance.dateTime = Decoders.decodeOptional(clazz: Date.self, source: sourceDictionary["dateTime"] as AnyObject?)
             instance.uuid = Decoders.decodeOptional(clazz: UUID.self, source: sourceDictionary["uuid"] as AnyObject?)
             instance.password = Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["password"] as AnyObject?)

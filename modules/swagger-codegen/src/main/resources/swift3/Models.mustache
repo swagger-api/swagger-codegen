@@ -11,7 +11,7 @@ protocol JSONEncodable {
 }
 
 public enum ErrorResponse : Error {
-    case HttpError(responseCode: Int, response: Data?, error: Error)
+    case HttpError(statusCode: Int, data: Data?, error: Error)
     case DecodeError(response: Data?, decodeError: DecodeError)
 }
 
@@ -243,6 +243,16 @@ class Decoders {
                 return .failure(.parseError(message: "Could not decode date"))
             } else {
                 return .failure(.typeMismatch(expected: "String or Int", actual: "\(source)"))
+            }
+        }
+        
+        // Decoder for ISOFullDate
+        Decoders.addDecoder(clazz: ISOFullDate.self) { (source: AnyObject) -> Decoded<ISOFullDate> in
+            if let string = source as? String,
+               let isoDate = ISOFullDate.from(string: string) {
+                return .success(isoDate)
+            } else {
+            	return .failure(.typeMismatch(expected: "ISO date", actual: "\(source)"))
             }
         } {{#models}}{{#model}}
 

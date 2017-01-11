@@ -21,7 +21,7 @@
 extern NSString* kSWGPetApiErrorDomain;
 extern NSInteger kSWGPetApiMissingParamErrorCode;
 
-+(instancetype) sharedAPI;
+-(instancetype) initWithApiClient:(SWGApiClient *)apiClient NS_DESIGNATED_INITIALIZER;
 
 /// Add a new pet to the store
 /// 

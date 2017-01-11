@@ -22,7 +22,8 @@ import io.swagger.client.model.Animal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.joda.time.DateTime;
+import java.util.UUID;
+import org.threeten.bp.OffsetDateTime;
 
 /**
  * MixedPropertiesAndAdditionalPropertiesClass
@@ -30,15 +31,15 @@ import org.joda.time.DateTime;
 
 public class MixedPropertiesAndAdditionalPropertiesClass {
   @JsonProperty("uuid")
-  private String uuid = null;
+  private UUID uuid = null;
 
   @JsonProperty("dateTime")
-  private DateTime dateTime = null;
+  private OffsetDateTime dateTime = null;
 
   @JsonProperty("map")
   private Map<String, Animal> map = new HashMap<String, Animal>();
 
-  public MixedPropertiesAndAdditionalPropertiesClass uuid(String uuid) {
+  public MixedPropertiesAndAdditionalPropertiesClass uuid(UUID uuid) {
     this.uuid = uuid;
     return this;
   }
@@ -48,15 +49,15 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
    * @return uuid
   **/
   @ApiModelProperty(example = "null", value = "")
-  public String getUuid() {
+  public UUID getUuid() {
     return uuid;
   }
 
-  public void setUuid(String uuid) {
+  public void setUuid(UUID uuid) {
     this.uuid = uuid;
   }
 
-  public MixedPropertiesAndAdditionalPropertiesClass dateTime(DateTime dateTime) {
+  public MixedPropertiesAndAdditionalPropertiesClass dateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
     return this;
   }
@@ -66,11 +67,11 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
    * @return dateTime
   **/
   @ApiModelProperty(example = "null", value = "")
-  public DateTime getDateTime() {
+  public OffsetDateTime getDateTime() {
     return dateTime;
   }
 
-  public void setDateTime(DateTime dateTime) {
+  public void setDateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
   }
 

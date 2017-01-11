@@ -166,6 +166,9 @@ public class JavaClientCodegen extends AbstractJavaCodegen
             supportingFiles.add(new SupportingFile("auth/OAuthOkHttpClient.mustache", authFolder, "OAuthOkHttpClient.java"));
             supportingFiles.add(new SupportingFile("CollectionFormats.mustache", invokerFolder, "CollectionFormats.java"));
             additionalProperties.put("gson", "true");
+            if ("retrofit2".equals(getLibrary())) {
+                supportingFiles.add(new SupportingFile("JSON.mustache", invokerFolder, "JSON.java"));
+            }
         } else if("jersey2".equals(getLibrary())) {
             supportingFiles.add(new SupportingFile("JSON.mustache", invokerFolder, "JSON.java"));
             additionalProperties.put("jackson", "true");
@@ -204,6 +207,9 @@ public class JavaClientCodegen extends AbstractJavaCodegen
 
         if (additionalProperties.containsKey("jackson") ) {
             supportingFiles.add(new SupportingFile("RFC3339DateFormat.mustache", invokerFolder, "RFC3339DateFormat.java"));
+            if ("threetenbp".equals(dateLibrary)) {
+                supportingFiles.add(new SupportingFile("CustomInstantDeserializer.mustache", invokerFolder, "CustomInstantDeserializer.java"));
+            }
         }
     }
 

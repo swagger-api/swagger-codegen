@@ -2242,16 +2242,25 @@ public class DefaultCodegen {
         p.jsonSchema = Json.pretty(param);
 
         if (System.getProperty("debugParser") != null) {
-            LOGGER.info("working on Parameter " + param);
+            LOGGER.info("working on Parameter " + param.getName());
         }
 
         // move the defaultValue for headers, forms and params
         if (param instanceof QueryParameter) {
-            p.defaultValue = ((QueryParameter) param).getDefaultValue();
+            QueryParameter qp = (QueryParameter) param;
+            if(qp.getDefaultValue() != null) {
+                p.defaultValue = qp.getDefaultValue().toString();
+            }
         } else if (param instanceof HeaderParameter) {
-            p.defaultValue = ((HeaderParameter) param).getDefaultValue();
+            HeaderParameter hp = (HeaderParameter) param;
+            if(hp.getDefaultValue() != null) {
+                p.defaultValue = hp.getDefaultValue().toString();
+            }
         } else if (param instanceof FormParameter) {
-            p.defaultValue = ((FormParameter) param).getDefaultValue();
+            FormParameter fp = (FormParameter) param;
+            if(fp.getDefaultValue() != null) {
+                p.defaultValue = fp.getDefaultValue().toString();
+            }
         }
 
         p.vendorExtensions = param.getVendorExtensions();
@@ -2262,7 +2271,7 @@ public class DefaultCodegen {
             String collectionFormat = null;
             String type = qp.getType();
             if (null == type) {
-                LOGGER.warn("Type is NULL for Serializable Parameter: " + param);
+                LOGGER.warn("Type is NULL for Serializable Parameter: " + param.getName());
             }
             if ("array".equals(type)) { // for array parameter
                 Property inner = qp.getItems();

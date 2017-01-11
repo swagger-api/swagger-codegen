@@ -11,7 +11,7 @@
 extern NSString* k{{classname}}ErrorDomain;
 extern NSInteger k{{classname}}MissingParamErrorCode;
 
-+(instancetype) sharedAPI;
+-(instancetype) initWithApiClient:({{classPrefix}}ApiClient *)apiClient NS_DESIGNATED_INITIALIZER;
 
 {{#operations}}
 {{#operation}}
