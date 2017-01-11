@@ -199,8 +199,6 @@ export class PetApi {
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-
-
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json', 
@@ -215,17 +213,14 @@ export class PetApi {
         
         // authentication (petstore_auth) required
         // oauth required
-        if (this.configuration.accessToken)
-        {
+        if (this.configuration.accessToken) {
             let accessToken = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken()
                 : this.configuration.accessToken;
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
-            
 
         headers.set('Content-Type', 'application/json');
-
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
@@ -241,7 +236,7 @@ export class PetApi {
 
         return this.http.request(path, requestOptions);
     }
-
+    
     /**
      * Deletes a pet
      * 
@@ -257,8 +252,7 @@ export class PetApi {
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling deletePet.');
         }
-
-            headers.set('api_key', String(apiKey));
+        headers.set('api_key', String(apiKey));
 
         // to determine the Content-Type header
         let consumes: string[] = [
@@ -272,16 +266,12 @@ export class PetApi {
         
         // authentication (petstore_auth) required
         // oauth required
-        if (this.configuration.accessToken)
-        {
+        if (this.configuration.accessToken) {
             let accessToken = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken()
                 : this.configuration.accessToken;
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
-            
-
-
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Delete,
@@ -296,7 +286,7 @@ export class PetApi {
 
         return this.http.request(path, requestOptions);
     }
-
+    
     /**
      * Finds Pets by status
      * Multiple status values can be provided with comma separated strings
@@ -307,14 +297,11 @@ export class PetApi {
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        if (status !== undefined) {
-            if(status){
-                    status.forEach((element) => {
-                        queryParameters.append('status', <any>element);
-                    })
-             }
+        if (status) {
+            status.forEach((element) => {
+                queryParameters.append('status', <any>element);
+            })
         }
-
 
         // to determine the Content-Type header
         let consumes: string[] = [
@@ -328,16 +315,12 @@ export class PetApi {
         
         // authentication (petstore_auth) required
         // oauth required
-        if (this.configuration.accessToken)
-        {
+        if (this.configuration.accessToken) {
             let accessToken = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken()
                 : this.configuration.accessToken;
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
-            
-
-
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
@@ -352,7 +335,7 @@ export class PetApi {
 
         return this.http.request(path, requestOptions);
     }
-
+    
     /**
      * Finds Pets by tags
      * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
@@ -363,14 +346,11 @@ export class PetApi {
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        if (tags !== undefined) {
-            if(tags){
-                    tags.forEach((element) => {
-                        queryParameters.append('tags', <any>element);
-                    })
-             }
+        if (tags) {
+            tags.forEach((element) => {
+                queryParameters.append('tags', <any>element);
+            })
         }
-
 
         // to determine the Content-Type header
         let consumes: string[] = [
@@ -384,16 +364,12 @@ export class PetApi {
         
         // authentication (petstore_auth) required
         // oauth required
-        if (this.configuration.accessToken)
-        {
+        if (this.configuration.accessToken) {
             let accessToken = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken()
                 : this.configuration.accessToken;
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
-            
-
-
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
@@ -408,7 +384,7 @@ export class PetApi {
 
         return this.http.request(path, requestOptions);
     }
-
+    
     /**
      * Find pet by ID
      * Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
@@ -423,8 +399,6 @@ export class PetApi {
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling getPetById.');
         }
-
-
         // to determine the Content-Type header
         let consumes: string[] = [
         ];
@@ -436,22 +410,18 @@ export class PetApi {
         ];
         
         // authentication (api_key) required
-        if (this.configuration.apiKey)
-        {
+        if (this.configuration.apiKey) {
             headers.set('api_key', this.configuration.apiKey);
         }
+
         // authentication (petstore_auth) required
         // oauth required
-        if (this.configuration.accessToken)
-        {
+        if (this.configuration.accessToken) {
             let accessToken = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken()
                 : this.configuration.accessToken;
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
-            
-
-
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
@@ -466,7 +436,7 @@ export class PetApi {
 
         return this.http.request(path, requestOptions);
     }
-
+    
     /**
      * Update an existing pet
      * 
@@ -477,8 +447,6 @@ export class PetApi {
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-
-
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json', 
@@ -493,17 +461,14 @@ export class PetApi {
         
         // authentication (petstore_auth) required
         // oauth required
-        if (this.configuration.accessToken)
-        {
+        if (this.configuration.accessToken) {
             let accessToken = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken()
                 : this.configuration.accessToken;
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
-            
 
         headers.set('Content-Type', 'application/json');
-
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Put,
@@ -519,7 +484,7 @@ export class PetApi {
 
         return this.http.request(path, requestOptions);
     }
-
+    
     /**
      * Updates a pet in the store with form data
      * 
@@ -538,8 +503,6 @@ export class PetApi {
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling updatePetWithForm.');
         }
-
-
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/x-www-form-urlencoded'
@@ -553,20 +516,19 @@ export class PetApi {
         
         // authentication (petstore_auth) required
         // oauth required
-        if (this.configuration.accessToken)
-        {
+        if (this.configuration.accessToken) {
             let accessToken = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken()
                 : this.configuration.accessToken;
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
-            
-        headers.set('Content-Type', 'application/x-www-form-urlencoded');
 
+        headers.set('Content-Type', 'application/x-www-form-urlencoded');
 
         if (name !== undefined) {
             formParams.set('name', <any>name);
         }
+
         if (status !== undefined) {
             formParams.set('status', <any>status);
         }
@@ -585,7 +547,7 @@ export class PetApi {
 
         return this.http.request(path, requestOptions);
     }
-
+    
     /**
      * uploads an image
      * 
@@ -604,8 +566,6 @@ export class PetApi {
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling uploadFile.');
         }
-
-
         // to determine the Content-Type header
         let consumes: string[] = [
             'multipart/form-data'
@@ -619,20 +579,19 @@ export class PetApi {
         
         // authentication (petstore_auth) required
         // oauth required
-        if (this.configuration.accessToken)
-        {
+        if (this.configuration.accessToken) {
             let accessToken = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken()
                 : this.configuration.accessToken;
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
-            
-        headers.set('Content-Type', 'application/x-www-form-urlencoded');
 
+        headers.set('Content-Type', 'application/x-www-form-urlencoded');
 
         if (additionalMetadata !== undefined) {
             formParams.set('additionalMetadata', <any>additionalMetadata);
         }
+
         if (file !== undefined) {
             formParams.set('file', <any>file);
         }
@@ -651,5 +610,5 @@ export class PetApi {
 
         return this.http.request(path, requestOptions);
     }
-
+    
 }
