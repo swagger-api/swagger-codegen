@@ -315,6 +315,18 @@
             </modules>
         </profile>
         <profile>
+            <id>bash-client</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/bash</module>
+            </modules>
+        </profile>
+        <profile>
             <id>clojure-client</id>
             <activation>
                 <property>
