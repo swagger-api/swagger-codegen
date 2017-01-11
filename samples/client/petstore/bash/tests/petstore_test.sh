@@ -81,7 +81,6 @@ export PETSTORE_HOST="http://petstore.swagger.io"
     [[ "$output" =~ "tags=TAG1,TAG2%20TEST,TAG3%3FTEST" ]]
 }
 
-
 #
 # Operations calling the service and checking result
 #
@@ -90,7 +89,6 @@ export PETSTORE_HOST="http://petstore.swagger.io"
         addPet id:=123321 name==lucky status==available
     [[ "$output" =~ "<id>123321</id>" ]]
 }
-
 
 @test "addPet from pipe" {
     run bash \
