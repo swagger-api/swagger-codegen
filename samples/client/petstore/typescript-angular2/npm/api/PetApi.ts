@@ -19,7 +19,7 @@ import { Observable }                                        from 'rxjs/Observab
 import 'rxjs/add/operator/map';
 
 import * as models                                           from '../model/models';
-import { BASE_PATH }                                         from '../variables';
+import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
 /* tslint:disable:no-unused-variable member-ordering */
@@ -258,7 +258,7 @@ export class PetApi {
             throw new Error('Required parameter petId was null or undefined when calling deletePet.');
         }
 
-        headers.set('api_key', String(apiKey));
+            headers.set('api_key', String(apiKey));
 
         // to determine the Content-Type header
         let consumes: string[] = [
@@ -308,7 +308,11 @@ export class PetApi {
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         if (status !== undefined) {
-            queryParameters.set('status', <any>status);
+            if(status){
+                    status.forEach((element) => {
+                        queryParameters.append('status', <any>element);
+                    })
+             }
         }
 
 
@@ -360,7 +364,11 @@ export class PetApi {
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         if (tags !== undefined) {
-            queryParameters.set('tags', <any>tags);
+            if(tags){
+                    tags.forEach((element) => {
+                        queryParameters.append('tags', <any>element);
+                    })
+             }
         }
 
 
@@ -427,6 +435,11 @@ export class PetApi {
             'application/xml'
         ];
         
+        // authentication (api_key) required
+        if (this.configuration.apiKey)
+        {
+            headers.set('api_key', this.configuration.apiKey);
+        }
         // authentication (petstore_auth) required
         // oauth required
         if (this.configuration.accessToken)
@@ -435,11 +448,6 @@ export class PetApi {
                 ? this.configuration.accessToken()
                 : this.configuration.accessToken;
             headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-        // authentication (api_key) required
-        if (this.configuration.apiKey)
-        {
-            headers.set('api_key', this.configuration.apiKey);
         }
             
 
@@ -557,10 +565,10 @@ export class PetApi {
 
 
         if (name !== undefined) {
-            formParams.set('name', <any>name); 
+            formParams.set('name', <any>name);
         }
         if (status !== undefined) {
-            formParams.set('status', <any>status); 
+            formParams.set('status', <any>status);
         }
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
@@ -623,10 +631,10 @@ export class PetApi {
 
 
         if (additionalMetadata !== undefined) {
-            formParams.set('additionalMetadata', <any>additionalMetadata); 
+            formParams.set('additionalMetadata', <any>additionalMetadata);
         }
         if (file !== undefined) {
-            formParams.set('file', <any>file); 
+            formParams.set('file', <any>file);
         }
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
