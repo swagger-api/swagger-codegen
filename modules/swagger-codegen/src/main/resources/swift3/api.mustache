@@ -16,15 +16,6 @@ extension {{projectName}}API {
 {{#description}}
 /** {{description}} */{{/description}}
 open class {{classname}}: APIBase {
-
-    public class func mapValuesToQueryItems(values: [String:Any?]) -> [URLQueryItem] {
-        return values
-            .filter { $0.1 != nil }
-            .map { (item: (_key: String, _value: Any?)) -> URLQueryItem in
-                URLQueryItem(name: item._key, value:"\(item._value!)")
-            }
-    }
-
 {{#operation}}
     {{#allParams}}
     {{#isEnum}}
@@ -137,7 +128,7 @@ open class {{classname}}: APIBase {
 
         let url = NSURLComponents(string: URLString)
         {{#hasQueryParams}}
-        url?.queryItems = mapValuesToQueryItems(values:[
+        url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
         {{#queryParams}}
                 "{{paramName}}": {{paramName}}{{#hasMore}}, {{/hasMore}}
         {{/queryParams}}
