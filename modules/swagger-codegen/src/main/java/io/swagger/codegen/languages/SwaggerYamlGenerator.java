@@ -14,24 +14,31 @@ import io.swagger.models.Swagger;
 import io.swagger.util.DeserializationModule;
 import io.swagger.util.Yaml;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
 public class SwaggerYamlGenerator extends DefaultCodegen implements CodegenConfig {
-    public static final String OUTPUT_NAME = "outputFile";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SwaggerYamlGenerator.class);
 
-    protected String outputFile = "swagger.yaml";
+    public static final String OUTPUT_NAME = "outputFile";
+
+    public static final String SWAGGER_FILENAME_DEFAULT_YAML = "swagger.yaml";
+
+    protected String outputFile = SWAGGER_FILENAME_DEFAULT_YAML;
+
 
     public SwaggerYamlGenerator() {
         super();
         embeddedTemplateDir = templateDir = "swagger";
         outputFolder = "generated-code/swagger";
 
-        cliOptions.add(new CliOption(OUTPUT_NAME, "output filename"));
+        cliOptions.add(new CliOption(OUTPUT_NAME,
+                "output filename")
+                .defaultValue(SWAGGER_FILENAME_DEFAULT_YAML));
 
         supportingFiles.add(new SupportingFile("README.md", "", "README.md"));
     }
@@ -51,13 +58,17 @@ public class SwaggerYamlGenerator extends DefaultCodegen implements CodegenConfi
         return "Creates a static swagger.yaml file.";
     }
 
-
     @Override
     public void processOpts() {
         super.processOpts();
-        if(additionalProperties.containsKey(OUTPUT_NAME)) {
-            this.outputFile = additionalProperties.get(OUTPUT_NAME).toString();
+
+        if (additionalProperties.containsKey(OUTPUT_NAME) && !StringUtils.isBlank((String) additionalProperties.get(OUTPUT_NAME))) {
+            setOutputFile((String) additionalProperties.get(OUTPUT_NAME));
         }
+    }
+
+    public void setOutputFile(String outputFile) {
+        this.outputFile = outputFile;
     }
 
     @Override
