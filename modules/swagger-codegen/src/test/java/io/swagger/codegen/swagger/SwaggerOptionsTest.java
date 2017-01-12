@@ -28,6 +28,8 @@ public class SwaggerOptionsTest extends AbstractOptionsTest {
         new Expectations(clientCodegen) {{
             clientCodegen.setSortParamsByRequiredFlag(Boolean.valueOf(SwaggerOptionsProvider.SORT_PARAMS_VALUE));
             times = 1;
+            clientCodegen.setOutputFile(SwaggerOptionsProvider.OUTPUT_NAME);
+            times = 1;
         }};
     }
 }
