@@ -115,7 +115,7 @@ class Decoders {
         }
     }
     
-    static func decodeOptional<T: RawRepresentable/*, U: AnyObject where T.RawValue == U*/>(clazz: T.Type, source: AnyObject?) -> Decoded<T?> {
+    static func decodeOptional<T: RawRepresentable>(clazz: T.Type, source: AnyObject?) -> Decoded<T?> {
         if let value = source as? T.RawValue {
             if let enumValue = T.init(rawValue: value) {
                 return .success(enumValue)
@@ -141,8 +141,7 @@ class Decoders {
         if let value = source as? T {
             return .success(value)
         }
-        //The last two expressions in this condition must be unnecessary, but it would be good to test this.
-        if let intermediate = source as? String, let value = Data(base64Encoded: intermediate) as? T, T.self is Data.Type, source is String {
+        if let intermediate = source as? String, let value = Data(base64Encoded: intermediate) as? T {
             return .success(value)
         }
 
@@ -304,8 +303,10 @@ class Decoders {
             {{^unwrapRequired}}
                 let instance = {{classname}}(){{#allVars}}
                 switch Decoders.decodeOptional(clazz: {{#isEnum}}{{^isListContainer}}{{classname}}.{{enumName}}.self{{/isListContainer}}{{#isListContainer}}Array<{{classname}}.{{enumName}}>.self{{/isListContainer}}{{/isEnum}}{{^isEnum}}{{{datatype}}}.self{{/isEnum}}, source: sourceDictionary["{{baseName}}"] as AnyObject?) {
+                {{#isEnum}}{{#isMapContainer}}/*{{/isMapContainer}}{{/isEnum}}
                 case let .success(value): instance.{{name}} = value
                 case let .failure(error): return .failure(error)
+                {{#isEnum}}{{#isMapContainer}}*/ default: break //TODO: handle enum map scenario{{/isMapContainer}}{{/isEnum}}
                 }
             {{/allVars}}
             {{/unwrapRequired}}
