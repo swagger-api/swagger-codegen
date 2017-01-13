@@ -42,6 +42,8 @@ use \ArrayAccess;
  */
 class Cat extends Animal implements ArrayAccess
 {
+    const DISCRIMINATOR = null;
+
     /**
       * The original name of the model.
       * @var string
@@ -224,4 +226,5 @@ class Cat extends Animal implements ArrayAccess
         return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

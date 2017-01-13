@@ -42,6 +42,8 @@ use \ArrayAccess;
  */
 class EnumTest implements ArrayAccess
 {
+    const DISCRIMINATOR = null;
+
     /**
       * The original name of the model.
       * @var string
@@ -55,7 +57,8 @@ class EnumTest implements ArrayAccess
     protected static $swaggerTypes = [
         'enum_string' => 'string',
         'enum_integer' => 'int',
-        'enum_number' => 'double'
+        'enum_number' => 'double',
+        'outer_enum' => '\Swagger\Client\Model\OuterEnum'
     ];
 
     public static function swaggerTypes()
@@ -70,7 +73,8 @@ class EnumTest implements ArrayAccess
     protected static $attributeMap = [
         'enum_string' => 'enum_string',
         'enum_integer' => 'enum_integer',
-        'enum_number' => 'enum_number'
+        'enum_number' => 'enum_number',
+        'outer_enum' => 'outerEnum'
     ];
 
 
@@ -81,7 +85,8 @@ class EnumTest implements ArrayAccess
     protected static $setters = [
         'enum_string' => 'setEnumString',
         'enum_integer' => 'setEnumInteger',
-        'enum_number' => 'setEnumNumber'
+        'enum_number' => 'setEnumNumber',
+        'outer_enum' => 'setOuterEnum'
     ];
 
 
@@ -92,7 +97,8 @@ class EnumTest implements ArrayAccess
     protected static $getters = [
         'enum_string' => 'getEnumString',
         'enum_integer' => 'getEnumInteger',
-        'enum_number' => 'getEnumNumber'
+        'enum_number' => 'getEnumNumber',
+        'outer_enum' => 'getOuterEnum'
     ];
 
     public static function attributeMap()
@@ -112,6 +118,7 @@ class EnumTest implements ArrayAccess
 
     const ENUM_STRING_UPPER = 'UPPER';
     const ENUM_STRING_LOWER = 'lower';
+    const ENUM_STRING_EMPTY = '';
     const ENUM_INTEGER_1 = 1;
     const ENUM_INTEGER_MINUS_1 = -1;
     const ENUM_NUMBER_1_DOT_1 = 1.1;
@@ -128,6 +135,7 @@ class EnumTest implements ArrayAccess
         return [
             self::ENUM_STRING_UPPER,
             self::ENUM_STRING_LOWER,
+            self::ENUM_STRING_EMPTY,
         ];
     }
     
@@ -171,6 +179,7 @@ class EnumTest implements ArrayAccess
         $this->container['enum_string'] = isset($data['enum_string']) ? $data['enum_string'] : null;
         $this->container['enum_integer'] = isset($data['enum_integer']) ? $data['enum_integer'] : null;
         $this->container['enum_number'] = isset($data['enum_number']) ? $data['enum_number'] : null;
+        $this->container['outer_enum'] = isset($data['outer_enum']) ? $data['outer_enum'] : null;
     }
 
     /**
@@ -181,7 +190,7 @@ class EnumTest implements ArrayAccess
     public function listInvalidProperties()
     {
         $invalid_properties = [];
-        $allowed_values = ["UPPER", "lower"];
+        $allowed_values = ["UPPER", "lower", ""];
         if (!in_array($this->container['enum_string'], $allowed_values)) {
             $invalid_properties[] = "invalid value for 'enum_string', must be one of #{allowed_values}.";
         }
@@ -207,7 +216,7 @@ class EnumTest implements ArrayAccess
      */
     public function valid()
     {
-        $allowed_values = ["UPPER", "lower"];
+        $allowed_values = ["UPPER", "lower", ""];
         if (!in_array($this->container['enum_string'], $allowed_values)) {
             return false;
         }
@@ -239,9 +248,9 @@ class EnumTest implements ArrayAccess
      */
     public function setEnumString($enum_string)
     {
-        $allowed_values = array('UPPER', 'lower');
+        $allowed_values = array('UPPER', 'lower', '');
         if (!is_null($enum_string) && (!in_array($enum_string, $allowed_values))) {
-            throw new \InvalidArgumentException("Invalid value for 'enum_string', must be one of 'UPPER', 'lower'");
+            throw new \InvalidArgumentException("Invalid value for 'enum_string', must be one of 'UPPER', 'lower', ''");
         }
         $this->container['enum_string'] = $enum_string;
 
@@ -294,6 +303,27 @@ class EnumTest implements ArrayAccess
             throw new \InvalidArgumentException("Invalid value for 'enum_number', must be one of '1.1', '-1.2'");
         }
         $this->container['enum_number'] = $enum_number;
+
+        return $this;
+    }
+
+    /**
+     * Gets outer_enum
+     * @return \Swagger\Client\Model\OuterEnum
+     */
+    public function getOuterEnum()
+    {
+        return $this->container['outer_enum'];
+    }
+
+    /**
+     * Sets outer_enum
+     * @param \Swagger\Client\Model\OuterEnum $outer_enum
+     * @return $this
+     */
+    public function setOuterEnum($outer_enum)
+    {
+        $this->container['outer_enum'] = $outer_enum;
 
         return $this;
     }
@@ -355,4 +385,5 @@ class EnumTest implements ArrayAccess
         return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

@@ -42,6 +42,8 @@ use \ArrayAccess;
  */
 class ArrayOfArrayOfNumberOnly implements ArrayAccess
 {
+    const DISCRIMINATOR = null;
+
     /**
       * The original name of the model.
       * @var string
@@ -222,4 +224,5 @@ class ArrayOfArrayOfNumberOnly implements ArrayAccess
         return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

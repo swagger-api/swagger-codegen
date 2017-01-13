@@ -23,6 +23,7 @@ from .array_of_number_only import ArrayOfNumberOnly
 from .array_test import ArrayTest
 from .cat import Cat
 from .category import Category
+from .class_model import ClassModel
 from .client import Client
 from .dog import Dog
 from .enum_arrays import EnumArrays
@@ -38,6 +39,7 @@ from .model_return import ModelReturn
 from .name import Name
 from .number_only import NumberOnly
 from .order import Order
+from .outer_enum import OuterEnum
 from .pet import Pet
 from .read_only_first import ReadOnlyFirst
 from .special_model_name import SpecialModelName

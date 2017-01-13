@@ -42,6 +42,8 @@ use \ArrayAccess;
  */
 class AnimalFarm implements ArrayAccess
 {
+    const DISCRIMINATOR = null;
+
     /**
       * The original name of the model.
       * @var string
@@ -200,4 +202,5 @@ class AnimalFarm implements ArrayAccess
         return json_encode(\Swagger\Client\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
+
 

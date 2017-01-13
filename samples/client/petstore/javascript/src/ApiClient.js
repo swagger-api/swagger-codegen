@@ -70,6 +70,14 @@
      * @default 60000
      */
     this.timeout = 60000;
+
+    /**
+     * If set to false an additional timestamp parameter is added to all API GET calls to
+     * prevent browser caching
+     * @type {Boolean}
+     * @default true
+     */
+    this.cache = true;
   };
 
   /**
@@ -312,7 +320,7 @@
     // Rely on SuperAgent for parsing response body.
     // See http://visionmedia.github.io/superagent/#parsing-response-bodies
     var data = response.body;
-    if (data == null) {
+    if (data == null || !Object.keys(data).length) {
       // SuperAgent does not always produce a body; use the unparsed response as a fallback
       data = response.text;
     }
@@ -356,6 +364,9 @@
     this.applyAuthToRequest(request, authNames);
 
     // set query parameters
+    if (httpMethod.toUpperCase() === 'GET' && this.cache === false) {
+        queryParams['_'] = new Date().getTime();
+    }
     request.query(this.normalizeParams(queryParams));
 
     // set header parameters

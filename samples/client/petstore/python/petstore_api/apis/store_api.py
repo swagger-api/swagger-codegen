@@ -44,7 +44,6 @@ class StoreApi(object):
         """
         Delete purchase order by ID
         For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
-
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please define a `callback` function
         to be invoked when receiving the response.
@@ -71,7 +70,6 @@ class StoreApi(object):
         """
         Delete purchase order by ID
         For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
-
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please define a `callback` function
         to be invoked when receiving the response.
@@ -125,40 +123,32 @@ class StoreApi(object):
         local_var_files = {}
 
         body_params = None
-
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
             select_header_accept(['application/xml', 'application/json'])
-        if not header_params['Accept']:
-            del header_params['Accept']
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.\
-            select_header_content_type([])
 
         # Authentication setting
         auth_settings = []
 
         return self.api_client.call_api(resource_path, 'DELETE',
-                                            path_params,
-                                            query_params,
-                                            header_params,
-                                            body=body_params,
-                                            post_params=form_params,
-                                            files=local_var_files,
-                                            response_type=None,
-                                            auth_settings=auth_settings,
-                                            callback=params.get('callback'),
-                                            _return_http_data_only=params.get('_return_http_data_only'),
-                                            _preload_content=params.get('_preload_content', True),
-                                            _request_timeout=params.get('_request_timeout'),
-                                            collection_formats=collection_formats)
+                                        path_params,
+                                        query_params,
+                                        header_params,
+                                        body=body_params,
+                                        post_params=form_params,
+                                        files=local_var_files,
+                                        response_type=None,
+                                        auth_settings=auth_settings,
+                                        callback=params.get('callback'),
+                                        _return_http_data_only=params.get('_return_http_data_only'),
+                                        _preload_content=params.get('_preload_content', True),
+                                        _request_timeout=params.get('_request_timeout'),
+                                        collection_formats=collection_formats)
 
     def get_inventory(self, **kwargs):
         """
         Returns pet inventories by status
         Returns a map of status codes to quantities
-
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please define a `callback` function
         to be invoked when receiving the response.
@@ -184,7 +174,6 @@ class StoreApi(object):
         """
         Returns pet inventories by status
         Returns a map of status codes to quantities
-
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please define a `callback` function
         to be invoked when receiving the response.
@@ -216,7 +205,6 @@ class StoreApi(object):
             params[key] = val
         del params['kwargs']
 
-
         collection_formats = {}
 
         resource_path = '/store/inventory'.replace('{format}', 'json')
@@ -230,40 +218,32 @@ class StoreApi(object):
         local_var_files = {}
 
         body_params = None
-
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
             select_header_accept(['application/json'])
-        if not header_params['Accept']:
-            del header_params['Accept']
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.\
-            select_header_content_type([])
 
         # Authentication setting
         auth_settings = ['api_key']
 
         return self.api_client.call_api(resource_path, 'GET',
-                                            path_params,
-                                            query_params,
-                                            header_params,
-                                            body=body_params,
-                                            post_params=form_params,
-                                            files=local_var_files,
-                                            response_type='dict(str, int)',
-                                            auth_settings=auth_settings,
-                                            callback=params.get('callback'),
-                                            _return_http_data_only=params.get('_return_http_data_only'),
-                                            _preload_content=params.get('_preload_content', True),
-                                            _request_timeout=params.get('_request_timeout'),
-                                            collection_formats=collection_formats)
+                                        path_params,
+                                        query_params,
+                                        header_params,
+                                        body=body_params,
+                                        post_params=form_params,
+                                        files=local_var_files,
+                                        response_type='dict(str, int)',
+                                        auth_settings=auth_settings,
+                                        callback=params.get('callback'),
+                                        _return_http_data_only=params.get('_return_http_data_only'),
+                                        _preload_content=params.get('_preload_content', True),
+                                        _request_timeout=params.get('_request_timeout'),
+                                        collection_formats=collection_formats)
 
     def get_order_by_id(self, order_id, **kwargs):
         """
         Find purchase order by ID
         For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions
-
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please define a `callback` function
         to be invoked when receiving the response.
@@ -290,7 +270,6 @@ class StoreApi(object):
         """
         Find purchase order by ID
         For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions
-
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please define a `callback` function
         to be invoked when receiving the response.
@@ -326,10 +305,10 @@ class StoreApi(object):
         if ('order_id' not in params) or (params['order_id'] is None):
             raise ValueError("Missing the required parameter `order_id` when calling `get_order_by_id`")
 
-        if 'order_id' in params and params['order_id'] > 5.0:
-            raise ValueError("Invalid value for parameter `order_id` when calling `get_order_by_id`, must be a value less than or equal to `5.0`")
-        if 'order_id' in params and params['order_id'] < 1.0:
-            raise ValueError("Invalid value for parameter `order_id` when calling `get_order_by_id`, must be a value greater than or equal to `1.0`")
+        if 'order_id' in params and params['order_id'] > 5:
+            raise ValueError("Invalid value for parameter `order_id` when calling `get_order_by_id`, must be a value less than or equal to `5`")
+        if 'order_id' in params and params['order_id'] < 1:
+            raise ValueError("Invalid value for parameter `order_id` when calling `get_order_by_id`, must be a value greater than or equal to `1`")
 
         collection_formats = {}
 
@@ -346,40 +325,32 @@ class StoreApi(object):
         local_var_files = {}
 
         body_params = None
-
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
             select_header_accept(['application/xml', 'application/json'])
-        if not header_params['Accept']:
-            del header_params['Accept']
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.\
-            select_header_content_type([])
 
         # Authentication setting
         auth_settings = []
 
         return self.api_client.call_api(resource_path, 'GET',
-                                            path_params,
-                                            query_params,
-                                            header_params,
-                                            body=body_params,
-                                            post_params=form_params,
-                                            files=local_var_files,
-                                            response_type='Order',
-                                            auth_settings=auth_settings,
-                                            callback=params.get('callback'),
-                                            _return_http_data_only=params.get('_return_http_data_only'),
-                                            _preload_content=params.get('_preload_content', True),
-                                            _request_timeout=params.get('_request_timeout'),
-                                            collection_formats=collection_formats)
+                                        path_params,
+                                        query_params,
+                                        header_params,
+                                        body=body_params,
+                                        post_params=form_params,
+                                        files=local_var_files,
+                                        response_type='Order',
+                                        auth_settings=auth_settings,
+                                        callback=params.get('callback'),
+                                        _return_http_data_only=params.get('_return_http_data_only'),
+                                        _preload_content=params.get('_preload_content', True),
+                                        _request_timeout=params.get('_request_timeout'),
+                                        collection_formats=collection_formats)
 
     def place_order(self, body, **kwargs):
         """
         Place an order for a pet
         
-
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please define a `callback` function
         to be invoked when receiving the response.
@@ -406,7 +377,6 @@ class StoreApi(object):
         """
         Place an order for a pet
         
-
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please define a `callback` function
         to be invoked when receiving the response.
@@ -458,31 +428,24 @@ class StoreApi(object):
         body_params = None
         if 'body' in params:
             body_params = params['body']
-
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
             select_header_accept(['application/xml', 'application/json'])
-        if not header_params['Accept']:
-            del header_params['Accept']
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.\
-            select_header_content_type([])
 
         # Authentication setting
         auth_settings = []
 
         return self.api_client.call_api(resource_path, 'POST',
-                                            path_params,
-                                            query_params,
-                                            header_params,
-                                            body=body_params,
-                                            post_params=form_params,
-                                            files=local_var_files,
-                                            response_type='Order',
-                                            auth_settings=auth_settings,
-                                            callback=params.get('callback'),
-                                            _return_http_data_only=params.get('_return_http_data_only'),
-                                            _preload_content=params.get('_preload_content', True),
-                                            _request_timeout=params.get('_request_timeout'),
-                                            collection_formats=collection_formats)
+                                        path_params,
+                                        query_params,
+                                        header_params,
+                                        body=body_params,
+                                        post_params=form_params,
+                                        files=local_var_files,
+                                        response_type='Order',
+                                        auth_settings=auth_settings,
+                                        callback=params.get('callback'),
+                                        _return_http_data_only=params.get('_return_http_data_only'),
+                                        _preload_content=params.get('_preload_content', True),
+                                        _request_timeout=params.get('_request_timeout'),
+                                        collection_formats=collection_formats)

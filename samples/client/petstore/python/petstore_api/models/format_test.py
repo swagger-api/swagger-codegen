@@ -76,12 +76,10 @@ class FormatTest(object):
         self._uuid = uuid
         self._password = password
 
-
     @property
     def integer(self):
         """
         Gets the integer of this FormatTest.
-
 
         :return: The integer of this FormatTest.
         :rtype: int
@@ -93,14 +91,13 @@ class FormatTest(object):
         """
         Sets the integer of this FormatTest.
 
-
         :param integer: The integer of this FormatTest.
         :type: int
         """
-        if integer is not None and integer > 100.0:
-            raise ValueError("Invalid value for `integer`, must be a value less than or equal to `100.0`")
-        if integer is not None and integer < 10.0:
-            raise ValueError("Invalid value for `integer`, must be a value greater than or equal to `10.0`")
+        if integer is not None and integer > 100:
+            raise ValueError("Invalid value for `integer`, must be a value less than or equal to `100`")
+        if integer is not None and integer < 10:
+            raise ValueError("Invalid value for `integer`, must be a value greater than or equal to `10`")
 
         self._integer = integer
 
@@ -108,7 +105,6 @@ class FormatTest(object):
     def int32(self):
         """
         Gets the int32 of this FormatTest.
-
 
         :return: The int32 of this FormatTest.
         :rtype: int
@@ -120,14 +116,13 @@ class FormatTest(object):
         """
         Sets the int32 of this FormatTest.
 
-
         :param int32: The int32 of this FormatTest.
         :type: int
         """
-        if int32 is not None and int32 > 200.0:
-            raise ValueError("Invalid value for `int32`, must be a value less than or equal to `200.0`")
-        if int32 is not None and int32 < 20.0:
-            raise ValueError("Invalid value for `int32`, must be a value greater than or equal to `20.0`")
+        if int32 is not None and int32 > 200:
+            raise ValueError("Invalid value for `int32`, must be a value less than or equal to `200`")
+        if int32 is not None and int32 < 20:
+            raise ValueError("Invalid value for `int32`, must be a value greater than or equal to `20`")
 
         self._int32 = int32
 
@@ -135,7 +130,6 @@ class FormatTest(object):
     def int64(self):
         """
         Gets the int64 of this FormatTest.
-
 
         :return: The int64 of this FormatTest.
         :rtype: int
@@ -146,7 +140,6 @@ class FormatTest(object):
     def int64(self, int64):
         """
         Sets the int64 of this FormatTest.
-
 
         :param int64: The int64 of this FormatTest.
         :type: int
@@ -159,7 +152,6 @@ class FormatTest(object):
         """
         Gets the number of this FormatTest.
 
-
         :return: The number of this FormatTest.
         :rtype: float
         """
@@ -169,7 +161,6 @@ class FormatTest(object):
     def number(self, number):
         """
         Sets the number of this FormatTest.
-
 
         :param number: The number of this FormatTest.
         :type: float
@@ -188,7 +179,6 @@ class FormatTest(object):
         """
         Gets the float of this FormatTest.
 
-
         :return: The float of this FormatTest.
         :rtype: float
         """
@@ -198,7 +188,6 @@ class FormatTest(object):
     def float(self, float):
         """
         Sets the float of this FormatTest.
-
 
         :param float: The float of this FormatTest.
         :type: float
@@ -215,7 +204,6 @@ class FormatTest(object):
         """
         Gets the double of this FormatTest.
 
-
         :return: The double of this FormatTest.
         :rtype: float
         """
@@ -225,7 +213,6 @@ class FormatTest(object):
     def double(self, double):
         """
         Sets the double of this FormatTest.
-
 
         :param double: The double of this FormatTest.
         :type: float
@@ -242,7 +229,6 @@ class FormatTest(object):
         """
         Gets the string of this FormatTest.
 
-
         :return: The string of this FormatTest.
         :rtype: str
         """
@@ -252,7 +238,6 @@ class FormatTest(object):
     def string(self, string):
         """
         Sets the string of this FormatTest.
-
 
         :param string: The string of this FormatTest.
         :type: str
@@ -267,7 +252,6 @@ class FormatTest(object):
         """
         Gets the byte of this FormatTest.
 
-
         :return: The byte of this FormatTest.
         :rtype: str
         """
@@ -277,7 +261,6 @@ class FormatTest(object):
     def byte(self, byte):
         """
         Sets the byte of this FormatTest.
-
 
         :param byte: The byte of this FormatTest.
         :type: str
@@ -292,7 +275,6 @@ class FormatTest(object):
         """
         Gets the binary of this FormatTest.
 
-
         :return: The binary of this FormatTest.
         :rtype: str
         """
@@ -302,7 +284,6 @@ class FormatTest(object):
     def binary(self, binary):
         """
         Sets the binary of this FormatTest.
-
 
         :param binary: The binary of this FormatTest.
         :type: str
@@ -315,7 +296,6 @@ class FormatTest(object):
         """
         Gets the date of this FormatTest.
 
-
         :return: The date of this FormatTest.
         :rtype: date
         """
@@ -325,7 +305,6 @@ class FormatTest(object):
     def date(self, date):
         """
         Sets the date of this FormatTest.
-
 
         :param date: The date of this FormatTest.
         :type: date
@@ -340,7 +319,6 @@ class FormatTest(object):
         """
         Gets the date_time of this FormatTest.
 
-
         :return: The date_time of this FormatTest.
         :rtype: datetime
         """
@@ -350,7 +328,6 @@ class FormatTest(object):
     def date_time(self, date_time):
         """
         Sets the date_time of this FormatTest.
-
 
         :param date_time: The date_time of this FormatTest.
         :type: datetime
@@ -363,7 +340,6 @@ class FormatTest(object):
         """
         Gets the uuid of this FormatTest.
 
-
         :return: The uuid of this FormatTest.
         :rtype: str
         """
@@ -373,7 +349,6 @@ class FormatTest(object):
     def uuid(self, uuid):
         """
         Sets the uuid of this FormatTest.
-
 
         :param uuid: The uuid of this FormatTest.
         :type: str
@@ -386,7 +361,6 @@ class FormatTest(object):
         """
         Gets the password of this FormatTest.
 
-
         :return: The password of this FormatTest.
         :rtype: str
         """
@@ -396,7 +370,6 @@ class FormatTest(object):
     def password(self, password):
         """
         Sets the password of this FormatTest.
-
 
         :param password: The password of this FormatTest.
         :type: str
