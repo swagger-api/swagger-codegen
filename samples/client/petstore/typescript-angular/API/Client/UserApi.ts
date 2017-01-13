@@ -19,7 +19,7 @@ namespace API.Client {
 
     export class UserApi {
         protected basePath = 'http://petstore.swagger.io/v2';
-        public defaultHeaders : any = {};
+        public defaultHeaders : ng.IHttpRequestConfigHeaders = {};
 
         static $inject: string[] = ['$http', '$httpParamSerializer', 'basePath'];
 
@@ -29,36 +29,26 @@ namespace API.Client {
             }
         }
 
-        private extendObj<T1,T2>(objA: T1, objB: T2) {
-            for(let key in objB){
-                if(objB.hasOwnProperty(key)){
-                    objA[key] = objB[key];
-                }
-            }
-            return <T1&T2>objA;
-        }
-
         /**
          * Create user
          * This can only be done by the logged in user.
          * @param body Created user object
          */
-        public createUser (body?: User, extraHttpRequestParams?: any ) : ng.IHttpPromise<{}> {
+        public createUser (body?: User, extraHttpRequestParams?: ng.IRequestShortcutConfig ) : ng.IHttpPromise<{}> {
             const localVarPath = this.basePath + '/user';
 
             let queryParameters: any = {};
-            let headerParams: any = this.extendObj({}, this.defaultHeaders);
-            let httpRequestParams: any = {
+            let headerParams: ng.IHttpRequestConfigHeaders = { ...this.defaultHeaders };
+            let httpRequestParams: ng.IRequestConfig = {
                 method: 'POST',
                 url: localVarPath,
-                json: true,
                 data: body,
                                 params: queryParameters,
                 headers: headerParams
             };
 
             if (extraHttpRequestParams) {
-                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+                httpRequestParams = { ...httpRequestParams, ...extraHttpRequestParams };
             }
 
             return this.$http(httpRequestParams);
@@ -68,22 +58,21 @@ namespace API.Client {
          * 
          * @param body List of user object
          */
-        public createUsersWithArrayInput (body?: Array<User>, extraHttpRequestParams?: any ) : ng.IHttpPromise<{}> {
+        public createUsersWithArrayInput (body?: Array<User>, extraHttpRequestParams?: ng.IRequestShortcutConfig ) : ng.IHttpPromise<{}> {
             const localVarPath = this.basePath + '/user/createWithArray';
 
             let queryParameters: any = {};
-            let headerParams: any = this.extendObj({}, this.defaultHeaders);
-            let httpRequestParams: any = {
+            let headerParams: ng.IHttpRequestConfigHeaders = { ...this.defaultHeaders };
+            let httpRequestParams: ng.IRequestConfig = {
                 method: 'POST',
                 url: localVarPath,
-                json: true,
                 data: body,
                                 params: queryParameters,
                 headers: headerParams
             };
 
             if (extraHttpRequestParams) {
-                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+                httpRequestParams = { ...httpRequestParams, ...extraHttpRequestParams };
             }
 
             return this.$http(httpRequestParams);
@@ -93,22 +82,21 @@ namespace API.Client {
          * 
          * @param body List of user object
          */
-        public createUsersWithListInput (body?: Array<User>, extraHttpRequestParams?: any ) : ng.IHttpPromise<{}> {
+        public createUsersWithListInput (body?: Array<User>, extraHttpRequestParams?: ng.IRequestShortcutConfig ) : ng.IHttpPromise<{}> {
             const localVarPath = this.basePath + '/user/createWithList';
 
             let queryParameters: any = {};
-            let headerParams: any = this.extendObj({}, this.defaultHeaders);
-            let httpRequestParams: any = {
+            let headerParams: ng.IHttpRequestConfigHeaders = { ...this.defaultHeaders };
+            let httpRequestParams: ng.IRequestConfig = {
                 method: 'POST',
                 url: localVarPath,
-                json: true,
                 data: body,
                                 params: queryParameters,
                 headers: headerParams
             };
 
             if (extraHttpRequestParams) {
-                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+                httpRequestParams = { ...httpRequestParams, ...extraHttpRequestParams };
             }
 
             return this.$http(httpRequestParams);
@@ -118,26 +106,25 @@ namespace API.Client {
          * This can only be done by the logged in user.
          * @param username The name that needs to be deleted
          */
-        public deleteUser (username: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<{}> {
+        public deleteUser (username: string, extraHttpRequestParams?: ng.IRequestShortcutConfig ) : ng.IHttpPromise<{}> {
             const localVarPath = this.basePath + '/user/{username}'
                 .replace('{' + 'username' + '}', String(username));
 
             let queryParameters: any = {};
-            let headerParams: any = this.extendObj({}, this.defaultHeaders);
+            let headerParams: ng.IHttpRequestConfigHeaders = { ...this.defaultHeaders };
             // verify required parameter 'username' is not null or undefined
             if (username === null || username === undefined) {
                 throw new Error('Required parameter username was null or undefined when calling deleteUser.');
             }
-            let httpRequestParams: any = {
+            let httpRequestParams: ng.IRequestConfig = {
                 method: 'DELETE',
                 url: localVarPath,
-                json: true,
                                                 params: queryParameters,
                 headers: headerParams
             };
 
             if (extraHttpRequestParams) {
-                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+                httpRequestParams = { ...httpRequestParams, ...extraHttpRequestParams };
             }
 
             return this.$http(httpRequestParams);
@@ -147,26 +134,25 @@ namespace API.Client {
          * 
          * @param username The name that needs to be fetched. Use user1 for testing. 
          */
-        public getUserByName (username: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<User> {
+        public getUserByName (username: string, extraHttpRequestParams?: ng.IRequestShortcutConfig ) : ng.IHttpPromise<User> {
             const localVarPath = this.basePath + '/user/{username}'
                 .replace('{' + 'username' + '}', String(username));
 
             let queryParameters: any = {};
-            let headerParams: any = this.extendObj({}, this.defaultHeaders);
+            let headerParams: ng.IHttpRequestConfigHeaders = { ...this.defaultHeaders };
             // verify required parameter 'username' is not null or undefined
             if (username === null || username === undefined) {
                 throw new Error('Required parameter username was null or undefined when calling getUserByName.');
             }
-            let httpRequestParams: any = {
+            let httpRequestParams: ng.IRequestConfig = {
                 method: 'GET',
                 url: localVarPath,
-                json: true,
                                                 params: queryParameters,
                 headers: headerParams
             };
 
             if (extraHttpRequestParams) {
-                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+                httpRequestParams = { ...httpRequestParams, ...extraHttpRequestParams };
             }
 
             return this.$http(httpRequestParams);
@@ -177,11 +163,11 @@ namespace API.Client {
          * @param username The user name for login
          * @param password The password for login in clear text
          */
-        public loginUser (username?: string, password?: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<string> {
+        public loginUser (username?: string, password?: string, extraHttpRequestParams?: ng.IRequestShortcutConfig ) : ng.IHttpPromise<string> {
             const localVarPath = this.basePath + '/user/login';
 
             let queryParameters: any = {};
-            let headerParams: any = this.extendObj({}, this.defaultHeaders);
+            let headerParams: ng.IHttpRequestConfigHeaders = { ...this.defaultHeaders };
             if (username !== undefined) {
                 queryParameters['username'] = username;
             }
@@ -190,16 +176,15 @@ namespace API.Client {
                 queryParameters['password'] = password;
             }
 
-            let httpRequestParams: any = {
+            let httpRequestParams: ng.IRequestConfig = {
                 method: 'GET',
                 url: localVarPath,
-                json: true,
                                                 params: queryParameters,
                 headers: headerParams
             };
 
             if (extraHttpRequestParams) {
-                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+                httpRequestParams = { ...httpRequestParams, ...extraHttpRequestParams };
             }
 
             return this.$http(httpRequestParams);
@@ -208,21 +193,20 @@ namespace API.Client {
          * Logs out current logged in user session
          * 
          */
-        public logoutUser (extraHttpRequestParams?: any ) : ng.IHttpPromise<{}> {
+        public logoutUser (extraHttpRequestParams?: ng.IRequestShortcutConfig ) : ng.IHttpPromise<{}> {
             const localVarPath = this.basePath + '/user/logout';
 
             let queryParameters: any = {};
-            let headerParams: any = this.extendObj({}, this.defaultHeaders);
-            let httpRequestParams: any = {
+            let headerParams: ng.IHttpRequestConfigHeaders = { ...this.defaultHeaders };
+            let httpRequestParams: ng.IRequestConfig = {
                 method: 'GET',
                 url: localVarPath,
-                json: true,
                                                 params: queryParameters,
                 headers: headerParams
             };
 
             if (extraHttpRequestParams) {
-                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+                httpRequestParams = { ...httpRequestParams, ...extraHttpRequestParams };
             }
 
             return this.$http(httpRequestParams);
@@ -233,27 +217,26 @@ namespace API.Client {
          * @param username name that need to be deleted
          * @param body Updated user object
          */
-        public updateUser (username: string, body?: User, extraHttpRequestParams?: any ) : ng.IHttpPromise<{}> {
+        public updateUser (username: string, body?: User, extraHttpRequestParams?: ng.IRequestShortcutConfig ) : ng.IHttpPromise<{}> {
             const localVarPath = this.basePath + '/user/{username}'
                 .replace('{' + 'username' + '}', String(username));
 
             let queryParameters: any = {};
-            let headerParams: any = this.extendObj({}, this.defaultHeaders);
+            let headerParams: ng.IHttpRequestConfigHeaders = { ...this.defaultHeaders };
             // verify required parameter 'username' is not null or undefined
             if (username === null || username === undefined) {
                 throw new Error('Required parameter username was null or undefined when calling updateUser.');
             }
-            let httpRequestParams: any = {
+            let httpRequestParams: ng.IRequestConfig = {
                 method: 'PUT',
                 url: localVarPath,
-                json: true,
                 data: body,
                                 params: queryParameters,
                 headers: headerParams
             };
 
             if (extraHttpRequestParams) {
-                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+                httpRequestParams = { ...httpRequestParams, ...extraHttpRequestParams };
             }
 
             return this.$http(httpRequestParams);

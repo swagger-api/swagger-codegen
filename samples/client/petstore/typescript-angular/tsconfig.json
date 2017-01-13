@@ -2,7 +2,11 @@
   "compilerOptions": {
     "noImplicitAny": true,
     "suppressImplicitAnyIndexErrors": true,
-    "out": "client.js"
+    "out": "client.js",
+    "lib": ["dom", "es5", "es2015"],
+    "typeRoots": [
+        "./node_modules/@types"
+    ]
   },
   "files": [
     "API/Client/Category.ts",
@@ -13,7 +17,6 @@
     "API/Client/Order.ts",
     "API/Client/PetApi.ts",
     "API/Client/Tag.ts",
-    "API/Client/UserApi.ts",
-    "typings/tsd.d.ts"
+    "API/Client/UserApi.ts"
   ]
 }

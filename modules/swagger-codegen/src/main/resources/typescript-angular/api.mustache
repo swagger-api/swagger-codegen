@@ -14,7 +14,7 @@ namespace {{package}} {
 {{/description}}
     export class {{classname}} {
         protected basePath = '{{basePath}}';
-        public defaultHeaders : any = {};
+        public defaultHeaders : ng.IHttpRequestConfigHeaders = {};
 
         static $inject: string[] = ['$http', '$httpParamSerializer', 'basePath'];
 
@@ -24,27 +24,18 @@ namespace {{package}} {
             }
         }
 
-        private extendObj<T1,T2>(objA: T1, objB: T2) {
-            for(let key in objB){
-                if(objB.hasOwnProperty(key)){
-                    objA[key] = objB[key];
-                }
-            }
-            return <T1&T2>objA;
-        }
-
 {{#operation}}
         /**
          * {{summary}}
          * {{notes}}
          {{#allParams}}* @param {{paramName}} {{description}}
          {{/allParams}}*/
-        public {{nickname}} ({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}extraHttpRequestParams?: any ) : ng.IHttpPromise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}> {
+        public {{nickname}} ({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}extraHttpRequestParams?: ng.IRequestShortcutConfig ) : ng.IHttpPromise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}> {
             const localVarPath = this.basePath + '{{path}}'{{#pathParams}}
                 .replace('{' + '{{baseName}}' + '}', String({{paramName}})){{/pathParams}};
 
             let queryParameters: any = {};
-            let headerParams: any = this.extendObj({}, this.defaultHeaders);
+            let headerParams: ng.IHttpRequestConfigHeaders = { ...this.defaultHeaders };
 {{#hasFormParams}}
             let formParams: any = {};
 
@@ -75,10 +66,9 @@ namespace {{package}} {
             formParams['{{baseName}}'] = {{paramName}};
 
 {{/formParams}}
-            let httpRequestParams: any = {
+            let httpRequestParams: ng.IRequestConfig = {
                 method: '{{httpMethod}}',
                 url: localVarPath,
-                json: {{#hasFormParams}}false{{/hasFormParams}}{{^hasFormParams}}true{{/hasFormParams}},
                 {{#bodyParam}}data: {{paramName}},
                 {{/bodyParam}}
                 {{#hasFormParams}}data: this.$httpParamSerializer(formParams),
@@ -88,7 +78,7 @@ namespace {{package}} {
             };
 
             if (extraHttpRequestParams) {
-                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+                httpRequestParams = { ...httpRequestParams, ...extraHttpRequestParams };
             }
 
             return this.$http(httpRequestParams);
