@@ -36,6 +36,7 @@ public class CSharpClientOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "true")
                 .put(CodegenConstants.GENERATE_PROPERTY_CHANGED, "true")
                 .put(CodegenConstants.NON_PUBLIC_API, "true")
+                .put(CodegenConstants.INTERFACE_PREFIX, "X")
                 .build();
     }
 

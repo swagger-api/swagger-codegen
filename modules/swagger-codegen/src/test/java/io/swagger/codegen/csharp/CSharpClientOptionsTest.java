@@ -52,6 +52,8 @@ public class CSharpClientOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setNonPublicApi(true);
             times = 1;
+            clientCodegen.setInterfacePrefix("X");
+            times = 1;
         }};
     }
 }
