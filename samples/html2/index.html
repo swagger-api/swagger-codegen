@@ -1446,7 +1446,7 @@ try {
 
 
 
-													var view = new JSONSchemaView(schema,0);
+													var view = new JSONSchemaView(schema,1);
 													var result = $('#d2e199_deletePet_petId');
 													result.empty();
 													result.append(view.render());
@@ -1486,7 +1486,7 @@ try {
 
 
 
-													var view = new JSONSchemaView(schema,0);
+													var view = new JSONSchemaView(schema,1);
 													var result = $('#d2e199_deletePet_apiKey');
 													result.empty();
 													result.append(view.render());
@@ -1738,7 +1738,7 @@ try {
 
 
 
-													var view = new JSONSchemaView(schema,0);
+													var view = new JSONSchemaView(schema,1);
 													var result = $('#d2e199_findPetsByStatus_status');
 													result.empty();
 													result.append(view.render());
@@ -2030,7 +2030,7 @@ try {
 
 
 
-													var view = new JSONSchemaView(schema,0);
+													var view = new JSONSchemaView(schema,1);
 													var result = $('#d2e199_findPetsByTags_tags');
 													result.empty();
 													result.append(view.render());
@@ -2128,7 +2128,7 @@ try {
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Pet-getPetById-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X <span style="text-transform: uppercase;">get</span> -H "api_key: [[apiKey]]"  "http://petstore.swagger.io/v2/pet/{petId}"</code></pre>
+                            <pre class="prettyprint"><code class="language-bsh">curl -X <span style="text-transform: uppercase;">get</span> -H "api_key: [[apiKey]]" "http://petstore.swagger.io/v2/pet/{petId}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Pet-getPetById-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2325,7 +2325,7 @@ try {
 
 
 
-													var view = new JSONSchemaView(schema,0);
+													var view = new JSONSchemaView(schema,1);
 													var result = $('#d2e199_getPetById_petId');
 													result.empty();
 													result.append(view.render());
@@ -2873,7 +2873,7 @@ try {
 
 
 
-													var view = new JSONSchemaView(schema,0);
+													var view = new JSONSchemaView(schema,1);
 													var result = $('#d2e199_updatePetWithForm_petId');
 													result.empty();
 													result.append(view.render());
@@ -2916,7 +2916,7 @@ try {
 
 
 
-													var view = new JSONSchemaView(schema,0);
+													var view = new JSONSchemaView(schema,1);
 													var result = $('#d2e199_updatePetWithForm_name');
 													result.empty();
 													result.append(view.render());
@@ -2949,7 +2949,7 @@ try {
 
 
 
-													var view = new JSONSchemaView(schema,0);
+													var view = new JSONSchemaView(schema,1);
 													var result = $('#d2e199_updatePetWithForm_status');
 													result.empty();
 													result.append(view.render());
@@ -3140,7 +3140,7 @@ namespace Example
             var apiInstance = new PetApi();
             var petId = 789;  // Long | ID of pet to update
             var additionalMetadata = additionalMetadata_example;  // String | Additional data to pass to server (optional) 
-            var file = /path/to/file.txt;  // File | file to upload (optional) 
+            var file = new File(); // File | file to upload (optional) 
 
             try
             {
@@ -3206,7 +3206,7 @@ try {
 
 
 
-													var view = new JSONSchemaView(schema,0);
+													var view = new JSONSchemaView(schema,1);
 													var result = $('#d2e199_uploadFile_petId');
 													result.empty();
 													result.append(view.render());
@@ -3249,7 +3249,7 @@ try {
 
 
 
-													var view = new JSONSchemaView(schema,0);
+													var view = new JSONSchemaView(schema,1);
 													var result = $('#d2e199_uploadFile_additionalMetadata');
 													result.empty();
 													result.append(view.render());
@@ -3282,7 +3282,7 @@ try {
 
 
 
-													var view = new JSONSchemaView(schema,0);
+													var view = new JSONSchemaView(schema,1);
 													var result = $('#d2e199_uploadFile_file');
 													result.empty();
 													result.append(view.render());
@@ -3531,14 +3531,14 @@ try {
   "description" : "ID of the order that needs to be deleted",
   "required" : true,
   "type" : "string",
-  "minimum" : 1.0
+  "minimum" : 1
 };
 													var schema = schemaWrapper;
 
 
 
 
-													var view = new JSONSchemaView(schema,0);
+													var view = new JSONSchemaView(schema,1);
 													var result = $('#d2e199_deleteOrder_orderId');
 													result.empty();
 													result.append(view.render());
@@ -3597,7 +3597,7 @@ try {
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Store-getInventory-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X <span style="text-transform: uppercase;">get</span> -H "api_key: [[apiKey]]"  "http://petstore.swagger.io/v2/store/inventory"</code></pre>
+                            <pre class="prettyprint"><code class="language-bsh">curl -X <span style="text-transform: uppercase;">get</span> -H "api_key: [[apiKey]]" "http://petstore.swagger.io/v2/store/inventory"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Store-getInventory-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -4005,8 +4005,8 @@ try {
   "description" : "ID of pet that needs to be fetched",
   "required" : true,
   "type" : "integer",
-  "maximum" : 5.0,
-  "minimum" : 1.0,
+  "maximum" : 5,
+  "minimum" : 1,
   "format" : "int64"
 };
 													var schema = schemaWrapper;
@@ -4014,7 +4014,7 @@ try {
 
 
 
-													var view = new JSONSchemaView(schema,0);
+													var view = new JSONSchemaView(schema,1);
 													var result = $('#d2e199_getOrderById_orderId');
 													result.empty();
 													result.append(view.render());
@@ -5235,7 +5235,7 @@ try {
 
 
 
-													var view = new JSONSchemaView(schema,0);
+													var view = new JSONSchemaView(schema,1);
 													var result = $('#d2e199_deleteUser_username');
 													result.empty();
 													result.append(view.render());
@@ -5459,7 +5459,7 @@ try {
 
 
 
-													var view = new JSONSchemaView(schema,0);
+													var view = new JSONSchemaView(schema,1);
 													var result = $('#d2e199_getUserByName_username');
 													result.empty();
 													result.append(view.render());
@@ -5737,7 +5737,7 @@ try {
 
 
 
-													var view = new JSONSchemaView(schema,0);
+													var view = new JSONSchemaView(schema,1);
 													var result = $('#d2e199_loginUser_username');
 													result.empty();
 													result.append(view.render());
@@ -5770,7 +5770,7 @@ try {
 
 
 
-													var view = new JSONSchemaView(schema,0);
+													var view = new JSONSchemaView(schema,1);
 													var result = $('#d2e199_loginUser_password');
 													result.empty();
 													result.append(view.render());
@@ -6210,7 +6210,7 @@ try {
 
 
 
-													var view = new JSONSchemaView(schema,0);
+													var view = new JSONSchemaView(schema,1);
 													var result = $('#d2e199_updateUser_username');
 													result.empty();
 													result.append(view.render());
@@ -6303,7 +6303,7 @@ try {
           </div>
           <div id="generator">
             <div class="content">
-              Generated 2016-12-16T18:07:47.864+08:00
+              Generated 2017-01-04T12:09:28.510+01:00
             </div>
           </div>
       </div>

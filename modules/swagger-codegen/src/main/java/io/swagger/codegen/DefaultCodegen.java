@@ -92,6 +92,7 @@ public class DefaultCodegen {
     protected Map<String, String> modelTestTemplateFiles = new HashMap<String, String>();
     protected Map<String, String> apiDocTemplateFiles = new HashMap<String, String>();
     protected Map<String, String> modelDocTemplateFiles = new HashMap<String, String>();
+    protected Map<String, String> reservedWordsMappings = new HashMap<String, String>();
     protected String templateDir;
     protected String embeddedTemplateDir;
     protected String commonTemplateDir = "_common";
@@ -185,12 +186,18 @@ public class DefaultCodegen {
             for (String name : allModels.keySet()) {
                 CodegenModel cm = allModels.get(name);
                 CodegenModel parent = allModels.get(cm.parent);
+                // if a discriminator exists on the parent, don't add this child to the inheritance heirarchy
+                // TODO Determine what to do if the parent discriminator name == the grandparent discriminator name
                 while (parent != null) {
                     if (parent.children == null) {
-                        parent.children = new ArrayList<CodegenModel>();
+                       parent.children = new ArrayList<CodegenModel>();
                     }
                     parent.children.add(cm);
-                    parent = allModels.get(parent.parent);
+                    if (parent.discriminator == null) {
+                        parent = allModels.get(parent.parent);
+                    } else {
+                        parent = null;
+                    }
                 }
             }
         }
@@ -303,6 +310,10 @@ public class DefaultCodegen {
      * @return the sanitized variable name for enum
      */
     public String toEnumVarName(String value, String datatype) {
+        if (value.length() == 0) {
+            return "EMPTY";
+        }
+
         String var = value.replaceAll("\\W+", "_").toUpperCase();
         if (var.matches("\\d.*")) {
             return "_" + var;
@@ -463,6 +474,10 @@ public class DefaultCodegen {
 
     public Map<String, String> modelDocTemplateFiles() {
         return modelDocTemplateFiles;
+    }
+    
+    public Map<String, String> reservedWordsMappings() {
+        return reservedWordsMappings;
     }
 
     public Map<String, String> apiTestTemplateFiles() {
@@ -1193,7 +1208,8 @@ public class DefaultCodegen {
     }
 
     /**
-     * Output the proper model name (capitalized)
+     * Output the proper model name (capitalized).
+     * In case the name belongs to the TypeSystem it won't be renamed.
      *
      * @param name the name of the model
      * @return capitalized model name
@@ -1260,6 +1276,18 @@ public class DefaultCodegen {
                 allProperties = new LinkedHashMap<String, Property>();
                 allRequired = new ArrayList<String>();
                 m.allVars = new ArrayList<CodegenProperty>();
+                int modelImplCnt = 0; // only one inline object allowed in a ComposedModel
+                for (Model innerModel: ((ComposedModel)model).getAllOf()) {
+                    if (innerModel instanceof ModelImpl) {
+                        if (m.discriminator == null) {
+                            m.discriminator = ((ModelImpl) innerModel).getDiscriminator();
+                        }
+                        if (modelImplCnt++ > 1) {
+                            LOGGER.warn("More than one inline schema specified in allOf:. Only the first one is recognized. All others are ignored.");
+                            break; // only one ModelImpl with discriminator allowed in allOf
+                        }
+                    }
+                }
             } else {
                 allProperties = null;
                 allRequired = null;
@@ -1686,6 +1714,8 @@ public class DefaultCodegen {
             property.baseType = getSwaggerType(p);
             // handle inner property
             ArrayProperty ap = (ArrayProperty) p;
+            property.maxItems = ap.getMaxItems();
+            property.minItems = ap.getMinItems();
             CodegenProperty cp = fromProperty(property.name, ap.getItems());
             updatePropertyForArray(property, cp);
       	} else if (p instanceof MapProperty) {
@@ -2183,6 +2213,7 @@ public class DefaultCodegen {
         r.schema = response.getSchema();
         r.examples = toExamples(response.getExamples());
         r.jsonSchema = Json.pretty(response);
+        r.vendorExtensions = response.getVendorExtensions();
         addHeaders(response, r.headers);
 
         if (r.schema != null) {
@@ -2241,16 +2272,25 @@ public class DefaultCodegen {
         p.jsonSchema = Json.pretty(param);
 
         if (System.getProperty("debugParser") != null) {
-            LOGGER.info("working on Parameter " + param);
+            LOGGER.info("working on Parameter " + param.getName());
         }
 
         // move the defaultValue for headers, forms and params
         if (param instanceof QueryParameter) {
-            p.defaultValue = ((QueryParameter) param).getDefaultValue();
+            QueryParameter qp = (QueryParameter) param;
+            if(qp.getDefaultValue() != null) {
+                p.defaultValue = qp.getDefaultValue().toString();
+            }
         } else if (param instanceof HeaderParameter) {
-            p.defaultValue = ((HeaderParameter) param).getDefaultValue();
+            HeaderParameter hp = (HeaderParameter) param;
+            if(hp.getDefaultValue() != null) {
+                p.defaultValue = hp.getDefaultValue().toString();
+            }
         } else if (param instanceof FormParameter) {
-            p.defaultValue = ((FormParameter) param).getDefaultValue();
+            FormParameter fp = (FormParameter) param;
+            if(fp.getDefaultValue() != null) {
+                p.defaultValue = fp.getDefaultValue().toString();
+            }
         }
 
         p.vendorExtensions = param.getVendorExtensions();
@@ -2261,7 +2301,7 @@ public class DefaultCodegen {
             String collectionFormat = null;
             String type = qp.getType();
             if (null == type) {
-                LOGGER.warn("Type is NULL for Serializable Parameter: " + param);
+                LOGGER.warn("Type is NULL for Serializable Parameter: " + param.getName());
             }
             if ("array".equals(type)) { // for array parameter
                 Property inner = qp.getItems();
@@ -3309,7 +3349,8 @@ public class DefaultCodegen {
             parameter.isPrimitiveType = true;
         } else if (Boolean.TRUE.equals(property.isFile)) {
             parameter.isFile = true;
-            parameter.isPrimitiveType = true;
+            // file is *not* a primitive type
+            //parameter.isPrimitiveType = true;
         } else if (Boolean.TRUE.equals(property.isDate)) {
             parameter.isDate = true;
             parameter.isPrimitiveType = true;
