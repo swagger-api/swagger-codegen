@@ -3045,14 +3045,23 @@ public class DefaultCodegen {
         StringBuilder f = new StringBuilder();
         for (String z : parts) {
             if (z.length() > 0) {
-                f.append(Character.toUpperCase(z.charAt(0))).append(z.substring(1));
+                if (keepUnderscores) { //keep the casing in place if keepUnderscores is set and use underscores to separate the various parts
+                    f.append(z).append("_");
+                }
+                else {
+                    f.append(Character.toUpperCase(z.charAt(0))).append(z.substring(1)); //camelize the parts
+                }
             }
+        }
+        if (keepUnderscores && f.length() > 0) {
+            f.deleteCharAt(f.length() - 1); //remove the last _
         }
         word = f.toString();
 
         m = p.matcher(word);
         while (m.find()) {
-            word = m.replaceFirst("" + Character.toUpperCase(m.group(1).charAt(0)) + m.group(1).substring(1)/*.toUpperCase()*/);
+            String rep = keepUnderscores ? m.group(1) : Character.toUpperCase(m.group(1).charAt(0)) + m.group(1).substring(1);
+            word = m.replaceFirst(rep);
             m = p.matcher(word);
         }
 
@@ -3060,7 +3069,10 @@ public class DefaultCodegen {
         p = Pattern.compile("(\\.?)(\\w)([^\\.]*)$");
         m = p.matcher(word);
         if (m.find()) {
-            String rep = m.group(1) + m.group(2).toUpperCase() + m.group(3);
+            String rep = m.group(1);
+            rep += keepUnderscores ? m.group(2) : m.group(2).toUpperCase();
+            rep += m.group(3);
+
             rep = rep.replaceAll("\\$", "\\\\\\$");
             word = m.replaceAll(rep);
         }
