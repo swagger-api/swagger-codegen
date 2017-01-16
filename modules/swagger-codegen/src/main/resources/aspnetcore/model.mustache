@@ -13,12 +13,34 @@ using Newtonsoft.Json;
 {{#model}}
 namespace {{packageName}}.Models
 {
+{{#isEnum}}{{>enumClass}}{{/isEnum}}{{^isEnum}}
     /// <summary>
     /// {{description}}
     /// </summary>
     [DataContract]
     public partial class {{classname}} : {{#parent}}{{{parent}}}, {{/parent}} IEquatable<{{classname}}>
     {
+        {{#vars}}
+        {{#isEnum}}
+        {{>enumClass}}
+        {{/isEnum}}
+        {{#items.isEnum}}
+        {{#items}}
+        {{>enumClass}}
+        {{/items}}
+        {{/items.isEnum}}
+        {{/vars}}
+        {{#vars}}
+        {{#isEnum}}
+        /// <summary>
+        /// {{^description}}Gets or Sets {{{name}}}{{/description}}{{#description}}{{{description}}}{{/description}}
+        /// </summary>{{#description}}
+        /// <value>{{{description}}}</value>{{/description}}
+        [DataMember(Name="{{baseName}}")]
+        public {{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}?{{/isContainer}}{{/isEnum}} {{name}} { get; set; }
+        {{/isEnum}}
+        {{/vars}}
+
         /// <summary>
         /// Initializes a new instance of the <see cref="{{classname}}" /> class.
         /// </summary>
@@ -49,13 +71,14 @@ namespace {{packageName}}.Models
         }
 
         {{#vars}}
+        {{^isEnum}}
         /// <summary>
-        /// {{^description}}Gets or Sets {{{name}}}{{/description}}{{#description}}{{{description}}}{{/description}}
+        /// {{^description}}Gets or Sets {{{name}}}{{/description}}{{#description}}{{description}}{{/description}}
         /// </summary>{{#description}}
-        /// <value>{{{description}}}</value>{{/description}}
+        /// <value>{{description}}</value>{{/description}}
         [DataMember(Name="{{baseName}}")]
-        public {{{datatype}}} {{name}} { get; set; }
-
+        public {{{datatype}}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
+        {{/isEnum}}
         {{/vars}}
 
         /// <summary>
@@ -153,6 +176,7 @@ namespace {{packageName}}.Models
         #endregion Operators
 
     }
+{{/isEnum}}
 {{/model}}
 {{/models}}
 }
