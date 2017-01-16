@@ -24,7 +24,7 @@ namespace {{packageName}}.Models
         /// </summary>
 {{#vars}}        /// <param name="{{name}}">{{#description}}{{description}}{{/description}}{{^description}}{{name}}{{/description}}{{#required}} (required){{/required}}{{#defaultValue}} (default to {{defaultValue}}){{/defaultValue}}.</param>
 {{/vars}}
-        public {{classname}}({{#vars}}{{{datatype}}} {{name}} = null{{#hasMore}}, {{/hasMore}}{{/vars}})
+        public {{classname}}({{#readWriteVars}}{{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}?{{/isContainer}}{{/isEnum}} {{name}} = {{#defaultValue}}{{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}default({{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}?{{/isContainer}}{{/isEnum}}){{/defaultValue}}{{^-last}}, {{/-last}}{{/readWriteVars}})
         {
             {{#vars}}{{#required}}// to ensure "{{name}}" is required (not null)
             if ({{name}} == null)
