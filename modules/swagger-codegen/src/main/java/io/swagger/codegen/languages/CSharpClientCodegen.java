@@ -48,6 +48,9 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
     protected Map<Character, String> regexModifiers;
     protected final Map<String, String> frameworks;
 
+    // By default, generated code is considered public
+    protected boolean nonPublicApi = Boolean.FALSE;
+
     public CSharpClientCodegen() {
         super();
         modelTemplateFiles.put("model.mustache", ".cs");
@@ -74,6 +77,10 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         addOption(CodegenConstants.OPTIONAL_PROJECT_GUID,
                 CodegenConstants.OPTIONAL_PROJECT_GUID_DESC,
                 null);
+
+        addOption(CodegenConstants.INTERFACE_PREFIX,
+                CodegenConstants.INTERFACE_PREFIX_DESC,
+                interfacePrefix);
 
         CliOption framework = new CliOption(
                 CodegenConstants.DOTNET_FRAMEWORK,
@@ -128,6 +135,14 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         addSwitch(CodegenConstants.GENERATE_PROPERTY_CHANGED,
                 CodegenConstants.PACKAGE_DESCRIPTION_DESC,
                 this.generatePropertyChanged);
+
+        // NOTE: This will reduce visibility of all public members in templates. Users can use InternalsVisibleTo
+        // https://msdn.microsoft.com/en-us/library/system.runtime.compilerservices.internalsvisibletoattribute(v=vs.110).aspx
+        // to expose to shared code if the generated code is not embedded into another project. Otherwise, users of codegen
+        // should rely on default public visibility.
+        addSwitch(CodegenConstants.NON_PUBLIC_API,
+                CodegenConstants.NON_PUBLIC_API_DESC,
+                this.nonPublicApi);
 
         addSwitch(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS,
                 CodegenConstants.ALLOW_UNICODE_IDENTIFIERS_DESC,
@@ -237,6 +252,10 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         if (additionalProperties.containsKey(CodegenConstants.OPTIONAL_ASSEMBLY_INFO)) {
             setOptionalAssemblyInfoFlag(Boolean.valueOf(additionalProperties
                     .get(CodegenConstants.OPTIONAL_ASSEMBLY_INFO).toString()));
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.NON_PUBLIC_API)) {
+            setNonPublicApi(Boolean.valueOf(additionalProperties.get(CodegenConstants.NON_PUBLIC_API).toString()));
         }
 
         final String testPackageName = testPackageName();
@@ -560,6 +579,14 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
 
     public void setGeneratePropertyChanged(final Boolean generatePropertyChanged){
         this.generatePropertyChanged = generatePropertyChanged;
+    }
+
+    public boolean isNonPublicApi() {
+        return nonPublicApi;
+    }
+
+    public void setNonPublicApi(final boolean nonPublicApi) {
+        this.nonPublicApi = nonPublicApi;
     }
 
     @Override

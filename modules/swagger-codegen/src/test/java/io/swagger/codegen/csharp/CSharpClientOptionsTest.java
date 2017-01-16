@@ -50,6 +50,10 @@ public class CSharpClientOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setGeneratePropertyChanged(true);
             times = 1;
+            clientCodegen.setNonPublicApi(true);
+            times = 1;
+            clientCodegen.setInterfacePrefix("X");
+            times = 1;
             clientCodegen.setKeepUnderscores(Boolean.valueOf(CSharpClientOptionsProvider.KEEP_UNDERSCORES_VALUE));
             times = 1;
             clientCodegen.setAllowUnicodeIdentifiers(Boolean.valueOf(CSharpClientOptionsProvider.ALLOW_UNICODE_IDENTIFIERS_VALUE));
