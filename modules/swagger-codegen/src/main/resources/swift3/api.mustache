@@ -130,7 +130,7 @@ open class {{classname}}: APIBase {
         {{#hasQueryParams}}
         url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
         {{#queryParams}}
-                "{{paramName}}": {{paramName}}{{#hasMore}}, {{/hasMore}}
+                "{{paramName}}": {{paramName}}{{#isEnum}}{{#isContainer}}{{{dataType}}}{{/isContainer}}{{^isContainer}}{{^required}}?{{/required}}.rawValue{{/isContainer}}{{/isEnum}}{{#hasMore}}, {{/hasMore}}
         {{/queryParams}}
         ])
         {{/hasQueryParams}}
