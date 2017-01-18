@@ -69,12 +69,11 @@ NSInteger kSWGFakeApiMissingParamErrorCode = 234513;
 #pragma mark - Api Methods
 
 ///
-/// To test code injection *_/ ' \" =end \\r\\n \\n \\r
+/// To test code injection *_/ ' \" =end -- \\r\\n \\n \\r
 /// 
-///  @param testCodeInjectEndRnNR To test code injection *_/ ' \" =end \\r\\n \\n \\r (optional)
+/// @param testCodeInjectEndRnNR To test code injection *_/ ' \" =end -- \\r\\n \\n \\r (optional)
 ///
-///  @returns void
-///
+///  code:400 message:"To test code injection *_/ ' \" =end -- \\r\\n \\n \\r"
 -(NSNumber*) testCodeInjectEndRnNRWithTestCodeInjectEndRnNR: (NSString*) testCodeInjectEndRnNR
     completionHandler: (void (^)(NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/fake"];
@@ -88,9 +87,7 @@ NSInteger kSWGFakeApiMissingParamErrorCode = 234513;
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
-    NSString *acceptHeader = [self.apiClient.sanitizer selectHeaderAccept:@[@"application/json", @"*/ '  =end 
- 
- "]];
+    NSString *acceptHeader = [self.apiClient.sanitizer selectHeaderAccept:@[@"application/json", @"*_/ '  =end --       "]];
     if(acceptHeader.length > 0) {
         headerParams[@"Accept"] = acceptHeader;
     }
@@ -99,9 +96,7 @@ NSInteger kSWGFakeApiMissingParamErrorCode = 234513;
     NSString *responseContentType = [[acceptHeader componentsSeparatedByString:@", "] firstObject] ?: @"";
 
     // request content type
-    NSString *requestContentType = [self.apiClient.sanitizer selectHeaderContentType:@[@"application/json", @"*/ '  =end 
- 
- "]];
+    NSString *requestContentType = [self.apiClient.sanitizer selectHeaderContentType:@[@"application/json", @"*_/ '  =end --       "]];
 
     // Authentication setting
     NSArray *authSettings = @[];
@@ -110,7 +105,7 @@ NSInteger kSWGFakeApiMissingParamErrorCode = 234513;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
     if (testCodeInjectEndRnNR) {
-        formParams[@"test code inject */ &#39; &quot; &#x3D;end \r\n \n \r"] = testCodeInjectEndRnNR;
+        formParams[@"test code inject */ &#39; &quot; &#x3D;end -- \r\n \n \r"] = testCodeInjectEndRnNR;
     }
 
     return [self.apiClient requestWithPath: resourcePath
@@ -132,7 +127,6 @@ NSInteger kSWGFakeApiMissingParamErrorCode = 234513;
                            }
           ];
 }
-
 
 
 @end

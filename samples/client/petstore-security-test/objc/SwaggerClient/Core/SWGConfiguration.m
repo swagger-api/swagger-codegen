@@ -27,7 +27,7 @@
     self = [super init];
     if (self) {
         self.apiClient = nil;
-        self.host = @"https://petstore.swagger.io *_/ &#39; \&quot; &#x3D;end \\r\\n \\n \\r/v2 *_/ &#39; \&quot; &#x3D;end \\r\\n \\n \\r";
+        self.host = @"https://petstore.swagger.io *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r/v2 *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r";
         self.username = @"";
         self.password = @"";
         self.accessToken= @"";
@@ -35,7 +35,7 @@
         self.mutableApiKey = [NSMutableDictionary dictionary];
         self.mutableApiKeyPrefix = [NSMutableDictionary dictionary];
         self.mutableDefaultHeaders = [NSMutableDictionary dictionary];
-        self.mutableDefaultHeaders[@"User-Agent"] = [NSString stringWithFormat:@"Swagger-Codegen/1.0.0 *_/ &#39; \&quot; &#x3D;end \\r\\n \\n \\r/objc (%@; iOS %@; Scale/%0.2f)",[[UIDevice currentDevice] model], [[UIDevice currentDevice] systemVersion], [[UIScreen mainScreen] scale]];
+        self.mutableDefaultHeaders[@"User-Agent"] = [NSString stringWithFormat:@"Swagger-Codegen/1.0.0 *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r/objc (%@; iOS %@; Scale/%0.2f)",[[UIDevice currentDevice] model], [[UIDevice currentDevice] systemVersion], [[UIScreen mainScreen] scale]];
         self.logger = [SWGLogger sharedLogger];
     }
     return self;
@@ -114,8 +114,8 @@
                    @{
                        @"type": @"api_key",
                        @"in": @"header",
-                       @"key": @"api_key  */ &#39; &quot; &#x3D;end \r\n \n \r",
-                       @"value": [self getApiKeyWithPrefix:@"api_key  */ &#39; &quot; &#x3D;end \r\n \n \r"]
+                       @"key": @"api_key  */ &#39; &quot; &#x3D;end -- \r\n \n \r",
+                       @"value": [self getApiKeyWithPrefix:@"api_key  */ &#39; &quot; &#x3D;end -- \r\n \n \r"]
                    },
                @"petstore_auth":
                    @{
