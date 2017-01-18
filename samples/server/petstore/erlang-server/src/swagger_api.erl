@@ -281,8 +281,8 @@ request_param_info('GetOrderById', 'orderId') ->
         source =>  binding ,
         rules => [
             {type, 'integer'},
-            {max, 5.0 }, 
-            {min, 1.0 },
+            {max, 5 }, 
+            {min, 1 },
             required
         ]
     };
