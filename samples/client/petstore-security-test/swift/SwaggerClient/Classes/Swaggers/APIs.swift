@@ -7,7 +7,7 @@
 import Foundation
 
 public class SwaggerClientAPI {
-    public static var basePath = "https://petstore.swagger.io *_/ &#39; \&quot; &#x3D;end \\r\\n \\n \\r/v2 *_/ &#39; \&quot; &#x3D;end \\r\\n \\n \\r"
+    public static var basePath = "https://petstore.swagger.io *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r/v2 *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r"
     public static var credential: NSURLCredential?
     public static var customHeaders: [String:String] = [:]  
     static var requestBuilderFactory: RequestBuilderFactory = AlamofireRequestBuilderFactory()
@@ -37,6 +37,9 @@ public class RequestBuilder<T> {
     let method: String
     let URLString: String
     
+    /// Optional block to obtain a reference to the request's progress instance when available.
+    public var onProgressReady: ((NSProgress) -> ())?
+
     required public init(method: String, URLString: String, parameters: [String:AnyObject]?, isBody: Bool) {
         self.method = method
         self.URLString = URLString
