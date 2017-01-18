@@ -208,7 +208,7 @@ open class FakeAPI: APIBase {
 
         let url = NSURLComponents(string: URLString)
         url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
-                "enumQueryStringArray": enumQueryStringArray[String], 
+                "enumQueryStringArray": enumQueryStringArray?.rawValue, 
                 "enumQueryString": enumQueryString?.rawValue, 
                 "enumQueryInteger": enumQueryInteger
         ])

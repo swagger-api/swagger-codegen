@@ -224,7 +224,7 @@ open class PetAPI: APIBase {
 
         let url = NSURLComponents(string: URLString)
         url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
-                "status": status[String]
+                "status": status.rawValue
         ])
 
         let requestBuilder: RequestBuilder<[Pet]>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
