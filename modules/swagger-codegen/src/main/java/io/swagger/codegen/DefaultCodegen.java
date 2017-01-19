@@ -3475,8 +3475,7 @@ public class DefaultCodegen {
      */
     public void setIgnoreFilePathOverride(final String ignoreFileOverride) {
         this.ignoreFilePathOverride = ignoreFileOverride;
-
-    
+    }
 
     public boolean convertPropertyToBoolean(String propertyKey) {
         boolean booleanValue = false;
