@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package io.swagger.codegen.options;
 
 import io.swagger.codegen.CodegenConstants;
