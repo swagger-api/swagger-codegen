@@ -359,7 +359,7 @@ public class DefaultCodegen {
     // override with any special handling of the JMustache compiler
     @SuppressWarnings("unused")
     public Compiler processCompiler(Compiler compiler) {
-    	return compiler;
+        return compiler;
     }
 
     // override with any special text escaping logic
@@ -1710,7 +1710,7 @@ public class DefaultCodegen {
 
         property.baseType = getSwaggerType(p);
 
-      	if (p instanceof ArrayProperty) {
+          if (p instanceof ArrayProperty) {
             property.isContainer = true;
             property.isListContainer = true;
             property.containerType = "array";
@@ -1721,7 +1721,7 @@ public class DefaultCodegen {
             property.minItems = ap.getMinItems();
             CodegenProperty cp = fromProperty(property.name, ap.getItems());
             updatePropertyForArray(property, cp);
-      	} else if (p instanceof MapProperty) {
+          } else if (p instanceof MapProperty) {
             property.isContainer = true;
             property.isMapContainer = true;
             property.containerType = "map";
@@ -1908,7 +1908,7 @@ public class DefaultCodegen {
      * @return Codegen Operation object
      */
     public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, Map<String, Model> definitions) {
-    	return fromOperation(path, httpMethod, operation, definitions, null);
+        return fromOperation(path, httpMethod, operation, definitions, null);
     }
 
     /**
@@ -2387,7 +2387,7 @@ public class DefaultCodegen {
 
             // validation
             // handle maximum, minimum properly for int/long by removing the trailing ".0"
-            if ("integer".equals(type)) {
+            if ("integer".equals(qp.getType())) {
                 p.maximum = qp.getMaximum() == null ? null : String.valueOf(qp.getMaximum().longValue());
                 p.minimum = qp.getMinimum() == null ? null : String.valueOf(qp.getMinimum().longValue());
             } else {
@@ -2564,7 +2564,7 @@ public class DefaultCodegen {
     @SuppressWarnings("static-method")
     public List<CodegenSecurity> fromSecurity(Map<String, SecuritySchemeDefinition> schemes) {
         if (schemes == null) {
-        	return Collections.emptyList();
+            return Collections.emptyList();
         }
 
         List<CodegenSecurity> secs = new ArrayList<CodegenSecurity>(schemes.size());
@@ -2588,8 +2588,8 @@ public class DefaultCodegen {
                 sec.isKeyInHeader = sec.isKeyInQuery = sec.isApiKey = sec.isOAuth = false;
                 sec.isBasic = true;
             } else {
-            	final OAuth2Definition oauth2Definition = (OAuth2Definition) schemeDefinition;
-            	sec.isKeyInHeader = sec.isKeyInQuery = sec.isApiKey = sec.isBasic = false;
+                final OAuth2Definition oauth2Definition = (OAuth2Definition) schemeDefinition;
+                sec.isKeyInHeader = sec.isKeyInQuery = sec.isApiKey = sec.isBasic = false;
                 sec.isOAuth = true;
                 sec.flow = oauth2Definition.getFlow();
                 if (sec.flow == null) {
@@ -3224,11 +3224,11 @@ public class DefaultCodegen {
         // encountered so far and hopefully make it easier for others to add more special
         // cases in the future.
 
-    	// better error handling when map/array type is invalid
-    	if (name == null) {
-    	    LOGGER.error("String to be sanitized is null. Default to ERROR_UNKNOWN");
-    	    return "ERROR_UNKNOWN";
-    	}
+        // better error handling when map/array type is invalid
+        if (name == null) {
+            LOGGER.error("String to be sanitized is null. Default to ERROR_UNKNOWN");
+            return "ERROR_UNKNOWN";
+        }
 
         // if the name is just '$', map it to 'value' for the time being.
         if ("$".equals(name)) {
@@ -3449,9 +3449,9 @@ public class DefaultCodegen {
     public boolean convertPropertyToBooleanAndWriteBack(String propertyKey) {
         boolean booleanValue = false;
         if (additionalProperties.containsKey(propertyKey)) {
-            booleanValue = Boolean.valueOf(additionalProperties.get(propertyKey).toString());
+            booleanValue = convertPropertyToBoolean(propertyKey);
             // write back as boolean
-            additionalProperties.put(propertyKey, booleanValue);
+            writePropertyBack(propertyKey, booleanValue);
         }
 
         return booleanValue;
@@ -3475,5 +3475,19 @@ public class DefaultCodegen {
      */
     public void setIgnoreFilePathOverride(final String ignoreFileOverride) {
         this.ignoreFilePathOverride = ignoreFileOverride;
+
+    
+
+    public boolean convertPropertyToBoolean(String propertyKey) {
+        boolean booleanValue = false;
+        if (additionalProperties.containsKey(propertyKey)) {
+            booleanValue = Boolean.valueOf(additionalProperties.get(propertyKey).toString());
+        }
+
+        return booleanValue;
+    }
+    
+    public void writePropertyBack(String propertyKey, boolean value) {
+        additionalProperties.put(propertyKey, value);
     }
 }
