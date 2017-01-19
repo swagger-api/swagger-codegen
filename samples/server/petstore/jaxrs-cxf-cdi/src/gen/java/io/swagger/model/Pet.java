@@ -2,20 +2,16 @@ package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
 import io.swagger.model.Category;
 import io.swagger.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
 
-/**
- * A pet for sale in the pet store
- **/
 
 import io.swagger.annotations.*;
 import java.util.Objects;
-@ApiModel(description = "A pet for sale in the pet store")
+
 
 public class Pet   {
   

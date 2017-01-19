@@ -2,16 +2,12 @@ package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
 import javax.validation.constraints.*;
 
-/**
- * An order for a pets from the pet store
- **/
 
 import io.swagger.annotations.*;
 import java.util.Objects;
-@ApiModel(description = "An order for a pets from the pet store")
+
 
 public class Order   {
   
@@ -37,7 +33,7 @@ public enum Order {
     }
 }
   private StatusEnum status = null;
-  private Boolean complete = false;
+  private Boolean complete = null;
 
   /**
    **/
