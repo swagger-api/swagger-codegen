@@ -499,7 +499,7 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
         return super.fromOperation(path, httpMethod, operation, definitions, swagger);
     }
 
-    private String normalizePath(String path) {
+    private static String normalizePath(String path) {
         StringBuilder builder = new StringBuilder();
 
         int cursor = 0;

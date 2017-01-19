@@ -316,14 +316,14 @@ public class AkkaScalaClientCodegen extends AbstractScalaCodegen implements Code
         }
     }
 
-    private class CapitalizeLambda extends CustomLambda {
+    private static class CapitalizeLambda extends CustomLambda {
         @Override
         public String formatFragment(String fragment) {
             return StringUtils.capitalize(fragment);
         }
     }
 
-    private class CamelizeLambda extends CustomLambda {
+    private static class CamelizeLambda extends CustomLambda {
         private final boolean capitalizeFirst;
 
         public CamelizeLambda(boolean capitalizeFirst) {
