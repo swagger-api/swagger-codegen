@@ -328,7 +328,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     }
 
     @Override
-    public String escapeReservedWord(String name) {
+    public String escapeReservedWord(String name) {           
+        if(this.reservedWordsMappings().containsKey(name)) {
+            return this.reservedWordsMappings().get(name);
+        }
         return "_" + name;
     }
 
@@ -808,6 +811,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
     @Override
     public String toEnumVarName(String value, String datatype) {
+        if (value.length() == 0) {
+            return "EMPTY";
+        }
+
         // for symbol, e.g. $, #
         if (getSymbolName(value) != null) {
             return getSymbolName(value).toUpperCase();
@@ -1002,16 +1009,16 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     }
     
     public boolean convertPropertyToBoolean(String propertyKey) {
-           boolean booleanValue = false;
-           if (additionalProperties.containsKey(propertyKey)) {
-               booleanValue = Boolean.valueOf(additionalProperties.get(propertyKey).toString());
+        boolean booleanValue = false;
+        if (additionalProperties.containsKey(propertyKey)) {
+            booleanValue = Boolean.valueOf(additionalProperties.get(propertyKey).toString());
         }
-  
-        return booleanValue;
-     }
-     
-     public void writePropertyBack(String propertyKey, boolean value) {
-         additionalProperties.put(propertyKey, value);
-     }
+
+       return booleanValue;
+    }
+    
+    public void writePropertyBack(String propertyKey, boolean value) {
+        additionalProperties.put(propertyKey, value);
+    }
 
 }
