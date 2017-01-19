@@ -12,8 +12,10 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import io.swagger.annotations.*;
+import java.io.InputStream;
 
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
+import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 
 import java.util.List;
 import javax.validation.constraints.*;

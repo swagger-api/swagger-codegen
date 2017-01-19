@@ -4,6 +4,7 @@ import io.swagger.api.*;
 import io.swagger.model.*;
 
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
+import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 
 import java.util.Map;
 import io.swagger.model.Order;
