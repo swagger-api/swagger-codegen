@@ -19,7 +19,6 @@ public class LumenServerOptionsProvider implements OptionsProvider {
     public static final String GIT_USER_ID_VALUE = "gitSwaggerPhp";
     public static final String GIT_REPO_ID_VALUE = "git-swagger-php";
     public static final String ARTIFACT_VERSION_VALUE = "1.0.0-SNAPSHOT";
-    public static final String KEEP_UNDERSCORES_VALUE = "false";
     public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
 
 
@@ -42,7 +41,6 @@ public class LumenServerOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.GIT_USER_ID, GIT_USER_ID_VALUE)
                 .put(CodegenConstants.GIT_REPO_ID, GIT_REPO_ID_VALUE)
                 .put(CodegenConstants.ARTIFACT_VERSION, ARTIFACT_VERSION_VALUE)
-                .put(CodegenConstants.KEEP_UNDERSCORES, KEEP_UNDERSCORES_VALUE)
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
                 .build();
     }

@@ -20,8 +20,6 @@ public class BashClientOptionsProvider implements OptionsProvider {
                                 = "PETSTORE_BASIC_AUTH";
     public static final String APIKEY_AUTH_ENVIRONMENT_VARIABLE_NAME 
                                 = "PETSTORE_APIKEY";
-    public static final String KEEP_UNDERSCORES_VALUE
-                                = "false";
     public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE
                                 = "false";
 
@@ -53,7 +51,6 @@ public class BashClientOptionsProvider implements OptionsProvider {
                         APIKEY_AUTH_ENVIRONMENT_VARIABLE_NAME)
                 .put(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG, "false")
                 .put(CodegenConstants.ENSURE_UNIQUE_PARAMS, "false")
-                .put(CodegenConstants.KEEP_UNDERSCORES, KEEP_UNDERSCORES_VALUE)
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
                 .build();
     

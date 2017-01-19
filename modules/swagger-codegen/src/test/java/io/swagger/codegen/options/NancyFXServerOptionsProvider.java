@@ -10,7 +10,6 @@ public class NancyFXServerOptionsProvider implements OptionsProvider {
     public static final String PACKAGE_NAME_VALUE = "swagger_server_nancyfx";
     public static final String PACKAGE_VERSION_VALUE = "1.0.0-SNAPSHOT";
     public static final String SOURCE_FOLDER_VALUE = "src_nancyfx";
-    public static final String KEEP_UNDERSCORES_VALUE = "false";
     public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
 
 
@@ -30,7 +29,6 @@ public class NancyFXServerOptionsProvider implements OptionsProvider {
                 .put(USE_COLLECTION, "false")
                 .put(RETURN_ICOLLECTION, "false")
                 .put(INTERFACE_PREFIX, "X")
-                .put(KEEP_UNDERSCORES, KEEP_UNDERSCORES_VALUE)
                 .put(ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
 
                 .build();

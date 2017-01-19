@@ -12,9 +12,6 @@ public class CodegenConstants {
 
     public static final String TEMPLATE_DIR = "templateDir";
 
-    public static final String KEEP_UNDERSCORES = "keepUnderscores";
-    public static final String KEEP_UNDERSCORES_DESC = "boolean, toggles the removal of underscores during recapitalization of names, default is false, underscores will be removed";
-
     public static final String ALLOW_UNICODE_IDENTIFIERS = "allowUnicodeIdentifiers";
     public static final String ALLOW_UNICODE_IDENTIFIERS_DESC = "boolean, toggles whether unicode identifiers are allowed in names or not, default is false";
 

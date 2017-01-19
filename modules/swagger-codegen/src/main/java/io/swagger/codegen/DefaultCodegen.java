@@ -107,7 +107,6 @@ public class DefaultCodegen {
     protected String library;
     protected Boolean sortParamsByRequiredFlag = true;
     protected Boolean ensureUniqueParams = true;
-    protected Boolean keepUnderscores = false;
     protected Boolean allowUnicodeIdentifiers = false;
     protected String gitUserId, gitRepoId, releaseNote;
     protected String httpUserAgent;
@@ -147,11 +146,6 @@ public class DefaultCodegen {
         if (additionalProperties.containsKey(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS)) {
             this.setAllowUnicodeIdentifiers(Boolean.valueOf(additionalProperties
                     .get(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS).toString()));
-        }
-
-        if (additionalProperties.containsKey(CodegenConstants.KEEP_UNDERSCORES)) {
-            this.setKeepUnderscores(Boolean.valueOf(additionalProperties
-                    .get(CodegenConstants.KEEP_UNDERSCORES).toString()));
         }
 
         if(additionalProperties.containsKey(CodegenConstants.MODEL_NAME_PREFIX)){
@@ -591,10 +585,6 @@ public class DefaultCodegen {
         this.ensureUniqueParams = ensureUniqueParams;
     }
 
-    public void setKeepUnderscores(Boolean keepUnderscores) {
-        this.keepUnderscores = keepUnderscores;
-    }
-
     public void setAllowUnicodeIdentifiers(Boolean allowUnicodeIdentifiers) {
         this.allowUnicodeIdentifiers = allowUnicodeIdentifiers;
     }
@@ -856,8 +846,6 @@ public class DefaultCodegen {
         //name formatting options
         cliOptions.add(CliOption.newBoolean(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, CodegenConstants
                 .ALLOW_UNICODE_IDENTIFIERS_DESC).defaultValue(Boolean.FALSE.toString()));
-        cliOptions.add(CliOption.newBoolean(CodegenConstants.KEEP_UNDERSCORES, CodegenConstants
-                .KEEP_UNDERSCORES_DESC).defaultValue(Boolean.FALSE.toString()));
 
         // initialize special character mapping
         initalizeSpecialCharacterMapping();
@@ -3021,7 +3009,7 @@ public class DefaultCodegen {
      * @param word string to be camelize
      * @return camelized string
      */
-    public String camelize(String word) {
+    public static String camelize(String word) {
         return camelize(word, false);
     }
 
@@ -3032,7 +3020,7 @@ public class DefaultCodegen {
      * @param lowercaseFirstLetter lower case for first letter if set to true
      * @return camelized string
      */
-    public String camelize(String word, boolean lowercaseFirstLetter) {
+    public static String camelize(String word, boolean lowercaseFirstLetter) {
         // Replace all slashes with dots (package separator)
         Pattern p = Pattern.compile("\\/(.?)");
         Matcher m = p.matcher(word);
@@ -3046,23 +3034,14 @@ public class DefaultCodegen {
         StringBuilder f = new StringBuilder();
         for (String z : parts) {
             if (z.length() > 0) {
-                if (keepUnderscores) { //keep the casing in place if keepUnderscores is set and use underscores to separate the various parts
-                    f.append(z).append("_");
-                }
-                else {
-                    f.append(Character.toUpperCase(z.charAt(0))).append(z.substring(1)); //camelize the parts
-                }
+                f.append(Character.toUpperCase(z.charAt(0))).append(z.substring(1));
             }
-        }
-        if (keepUnderscores && f.length() > 0) {
-            f.deleteCharAt(f.length() - 1); //remove the last _
         }
         word = f.toString();
 
         m = p.matcher(word);
         while (m.find()) {
-            String rep = keepUnderscores ? m.group(1) : Character.toUpperCase(m.group(1).charAt(0)) + m.group(1).substring(1);
-            word = m.replaceFirst(rep);
+            word = m.replaceFirst("" + Character.toUpperCase(m.group(1).charAt(0)) + m.group(1).substring(1)/*.toUpperCase()*/);
             m = p.matcher(word);
         }
 
@@ -3070,22 +3049,17 @@ public class DefaultCodegen {
         p = Pattern.compile("(\\.?)(\\w)([^\\.]*)$");
         m = p.matcher(word);
         if (m.find()) {
-            String rep = m.group(1);
-            rep += keepUnderscores ? m.group(2) : m.group(2).toUpperCase();
-            rep += m.group(3);
-
+            String rep = m.group(1) + m.group(2).toUpperCase() + m.group(3);
             rep = rep.replaceAll("\\$", "\\\\\\$");
             word = m.replaceAll(rep);
         }
 
         // Remove all underscores
-        if (!keepUnderscores) {
-            p = Pattern.compile("(_)(.)");
+        p = Pattern.compile("(_)(.)");
+        m = p.matcher(word);
+        while (m.find()) {
+            word = m.replaceFirst(m.group(2).toUpperCase());
             m = p.matcher(word);
-            while (m.find()) {
-                word = m.replaceFirst(m.group(2).toUpperCase());
-                m = p.matcher(word);
-            }
         }
 
         if (lowercaseFirstLetter && word.length() > 0) {

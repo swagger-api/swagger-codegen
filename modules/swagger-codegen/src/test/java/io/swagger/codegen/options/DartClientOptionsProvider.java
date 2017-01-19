@@ -15,7 +15,6 @@ public class DartClientOptionsProvider implements OptionsProvider {
     public static final String PUB_VERSION_VALUE = "1.0.0-SNAPSHOT";
     public static final String PUB_DESCRIPTION_VALUE = "Swagger API client dart";
     public static final String SOURCE_FOLDER_VALUE = "src";
-    public static final String KEEP_UNDERSCORES_VALUE = "false";
     public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
 
 
@@ -34,7 +33,6 @@ public class DartClientOptionsProvider implements OptionsProvider {
                 .put(DartClientCodegen.PUB_VERSION, PUB_VERSION_VALUE)
                 .put(DartClientCodegen.PUB_DESCRIPTION, PUB_DESCRIPTION_VALUE)
                 .put(CodegenConstants.SOURCE_FOLDER, SOURCE_FOLDER_VALUE)
-                .put(CodegenConstants.KEEP_UNDERSCORES, KEEP_UNDERSCORES_VALUE)
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
                 .build();
     }

@@ -38,21 +38,6 @@ public class CodegenTest {
         Assert.assertEquals(codegen.camelize("/foo/bar/baz.qux/corge"), "FooBarBazQuxCorge");
     }
 
-    @Test(description = "test camelize while keeping underscores")
-    public void camelizeNamesKeepUnderscoresTest() {
-        final DefaultCodegen codegen = new DefaultCodegen();
-        codegen.setKeepUnderscores(true);
-
-        Assert.assertEquals(codegen.camelize("foo"), "foo");
-        Assert.assertEquals(codegen.camelize(".foo"), "foo");
-        Assert.assertEquals(codegen.camelize(".foo.bar"), "foo_bar");
-        Assert.assertEquals(codegen.camelize("foo$bar"), "foo$bar");
-        Assert.assertEquals(codegen.camelize("foo_bar"), "foo_bar");
-        Assert.assertEquals(codegen.camelize("foo_Bar_baz"), "foo_Bar_baz");
-        Assert.assertEquals(codegen.camelize("foo/bar.baz"), "foo_bar_baz");
-        Assert.assertEquals(codegen.camelize("/foo/bar/baz.qux/corge"), "foo_bar_baz_qux_corge");
-    }
-
     @Test(description = "read a file upload param from a 2.0 spec")
     public void fileUploadParamTest() {
         final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/petstore.json");

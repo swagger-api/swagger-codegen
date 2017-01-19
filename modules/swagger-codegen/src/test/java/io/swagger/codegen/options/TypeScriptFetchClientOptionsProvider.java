@@ -13,7 +13,6 @@ public class TypeScriptFetchClientOptionsProvider implements OptionsProvider {
     public static final String MODEL_PROPERTY_NAMING_VALUE = "camelCase";
     private static final String NMP_NAME = "npmName";
     private static final String NMP_VERSION = "1.0.0";
-    public static final String KEEP_UNDERSCORES_VALUE = "false";
     public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
 
 
@@ -31,7 +30,6 @@ public class TypeScriptFetchClientOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.SUPPORTS_ES6, String.valueOf(SUPPORTS_ES6_VALUE))
                 .put(TypeScriptFetchClientCodegen.NPM_NAME, NMP_NAME)
                 .put(TypeScriptFetchClientCodegen.NPM_VERSION, NMP_VERSION)
-                .put(CodegenConstants.KEEP_UNDERSCORES, KEEP_UNDERSCORES_VALUE)
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
                 .build();
     }

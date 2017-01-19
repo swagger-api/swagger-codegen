@@ -148,10 +148,6 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
                 CodegenConstants.ALLOW_UNICODE_IDENTIFIERS_DESC,
                 this.allowUnicodeIdentifiers);
 
-        addSwitch(CodegenConstants.KEEP_UNDERSCORES,
-                CodegenConstants.KEEP_UNDERSCORES_DESC,
-                this.keepUnderscores);
-
         regexModifiers = new HashMap<Character, String>();
         regexModifiers.put('i', "IgnoreCase");
         regexModifiers.put('m', "Multiline");
