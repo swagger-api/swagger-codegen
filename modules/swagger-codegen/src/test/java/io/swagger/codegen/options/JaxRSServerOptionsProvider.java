@@ -2,6 +2,7 @@ package io.swagger.codegen.options;
 
 import com.google.common.collect.ImmutableMap;
 import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.languages.JavaCXFServerCodegen;
 import io.swagger.codegen.languages.JavaClientCodegen;
 
 import java.util.Map;
@@ -25,6 +26,7 @@ public class JaxRSServerOptionsProvider implements OptionsProvider {
     public static final String JODA_DATE_LIBRARY = "joda";
     public static final String IMPL_FOLDER_VALUE = "src/main/java/impl";
     public static final String JAXRS_DEFAULT_LIBRARY_VALUE = "jersey1";
+    public static final String USE_BEANVALIDATION = "true";
     public static final String KEEP_UNDERSCORES_VALUE = "false";
     public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
 
@@ -63,9 +65,10 @@ public class JaxRSServerOptionsProvider implements OptionsProvider {
             .put(CodegenConstants.LIBRARY, JAXRS_DEFAULT_LIBRARY_VALUE)
             .put(CodegenConstants.SERIALIZE_BIG_DECIMAL_AS_STRING, "true")
             //.put(JavaClientCodegen.DATE_LIBRARY, "joda")
+            .put("hideGenerationTimestamp", "true")
+            .put(JavaCXFServerCodegen.USE_BEANVALIDATION, USE_BEANVALIDATION)
             .put(CodegenConstants.KEEP_UNDERSCORES, KEEP_UNDERSCORES_VALUE)
-            .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
-            .put("hideGenerationTimestamp", "true");
+            .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE);
 
         return builder.build();
     }
