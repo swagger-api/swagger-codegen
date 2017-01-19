@@ -8,6 +8,9 @@ import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 import java.util.Objects;
 
+import javax.xml.bind.annotation.*;
+
+
 
 public class User   {
   

@@ -8,6 +8,9 @@ import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 import java.util.Objects;
 
+import javax.xml.bind.annotation.*;
+
+
 
 public class Order   {
   
@@ -16,22 +19,38 @@ public class Order   {
   private Integer quantity = null;
   private java.util.Date shipDate = null;
 
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlType;
+@XmlType(name="StatusEnum")
+@XmlEnum(String.class)
+public enum StatusEnum {
 
-@XmlType(name="Order")
-@XmlEnum
-public enum Order {
-    {values&#x3D;[placed, approved, delivered], enumVars&#x3D;[{name&#x3D;PLACED, value&#x3D;&quot;placed&quot;}, {name&#x3D;APPROVED, value&#x3D;&quot;approved&quot;}, {name&#x3D;DELIVERED, value&#x3D;&quot;delivered&quot;}]}, 
-    
-    public String value() {
-        return name();
+    @XmlEnumValue("placed") PLACED(String.valueOf("placed")), @XmlEnumValue("approved") APPROVED(String.valueOf("approved")), @XmlEnumValue("delivered") DELIVERED(String.valueOf("delivered"));
+
+
+    private String value;
+
+    StatusEnum (String v) {
+        value = v;
     }
 
-    public static Order fromValue(String v) {
-        return valueOf(v);
+    public String value() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
+
+    public static StatusEnum fromValue(String v) {
+        for (StatusEnum b : StatusEnum.values()) {
+            if (String.valueOf(b.value).equals(v)) {
+                return b;
+            }
+        }
+        return null;
     }
 }
+
   private StatusEnum status = null;
   private Boolean complete = null;
 

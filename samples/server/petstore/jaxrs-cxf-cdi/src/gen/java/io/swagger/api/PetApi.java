@@ -14,7 +14,6 @@ import javax.inject.Inject;
 import io.swagger.annotations.*;
 
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
-import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 
 import java.util.List;
 import javax.validation.constraints.*;

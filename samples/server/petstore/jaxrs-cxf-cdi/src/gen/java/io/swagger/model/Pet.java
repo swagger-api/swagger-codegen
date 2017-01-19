@@ -12,6 +12,9 @@ import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 import java.util.Objects;
 
+import javax.xml.bind.annotation.*;
+
+
 
 public class Pet   {
   
@@ -21,22 +24,38 @@ public class Pet   {
   private List<String> photoUrls = new ArrayList<String>();
   private List<Tag> tags = new ArrayList<Tag>();
 
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlType;
+@XmlType(name="StatusEnum")
+@XmlEnum(String.class)
+public enum StatusEnum {
 
-@XmlType(name="Pet")
-@XmlEnum
-public enum Pet {
-    {values&#x3D;[available, pending, sold], enumVars&#x3D;[{name&#x3D;AVAILABLE, value&#x3D;&quot;available&quot;}, {name&#x3D;PENDING, value&#x3D;&quot;pending&quot;}, {name&#x3D;SOLD, value&#x3D;&quot;sold&quot;}]}, 
-    
-    public String value() {
-        return name();
+    @XmlEnumValue("available") AVAILABLE(String.valueOf("available")), @XmlEnumValue("pending") PENDING(String.valueOf("pending")), @XmlEnumValue("sold") SOLD(String.valueOf("sold"));
+
+
+    private String value;
+
+    StatusEnum (String v) {
+        value = v;
     }
 
-    public static Pet fromValue(String v) {
-        return valueOf(v);
+    public String value() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
+
+    public static StatusEnum fromValue(String v) {
+        for (StatusEnum b : StatusEnum.values()) {
+            if (String.valueOf(b.value).equals(v)) {
+                return b;
+            }
+        }
+        return null;
     }
 }
+
   private StatusEnum status = null;
 
   /**
