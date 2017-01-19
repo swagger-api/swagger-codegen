@@ -183,8 +183,9 @@ public class CodegenIgnoreProcessor {
      * Allows a consumer to manually inspect all "exclusion rules". That is, patterns in the ignore file which represent
      * files and directories to be excluded, unless explicitly overridden by {@link CodegenIgnoreProcessor#getInclusionRules()} rules.
      *
+     * NOTE: Existence in this list doesn't mean a file is excluded. The rule can be overridden by {@link CodegenIgnoreProcessor#getInclusionRules()} rules.
+     *
      * @return A {@link ImmutableList#copyOf(Collection)} of rules which define exclusions by patterns in the ignore file.
-     * @apiNote Existence in this list doesn't mean a file is excluded. The rule can be overridden by {@link CodegenIgnoreProcessor#getInclusionRules()} rules.
      */
     public List<Rule> getExclusionRules() {
         return ImmutableList.copyOf(exclusionRules);

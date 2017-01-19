@@ -3462,7 +3462,7 @@ public class DefaultCodegen {
      *
      * This is originally intended for the first generation only.
      *
-     * @return
+     * @return a string of the full path to an override ignore file.
      */
     public String getIgnoreFilePathOverride() {
         return ignoreFilePathOverride;
@@ -3471,7 +3471,7 @@ public class DefaultCodegen {
     /**
      * Sets an override location for the .swagger-codegen.ignore location for the first code generation.
      *
-     * @param ignoreFileOverride
+     * @param ignoreFileOverride The full path to an ignore file
      */
     public void setIgnoreFilePathOverride(final String ignoreFileOverride) {
         this.ignoreFilePathOverride = ignoreFileOverride;
