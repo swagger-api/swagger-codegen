@@ -1129,4 +1129,9 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         additionalProperties.put(propertyKey, value);
     }
 
+    @Override
+    public String sanitizeTag(String tag) {
+        return camelize(sanitizeName(tag));
+    } 
+
 }
