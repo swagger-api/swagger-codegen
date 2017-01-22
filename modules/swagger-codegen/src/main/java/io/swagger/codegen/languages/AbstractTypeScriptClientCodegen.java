@@ -108,11 +108,10 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
         }
     }
 
-
-	@Override
-	public CodegenType getTag() {
-	    return CodegenType.CLIENT;
-	}
+    @Override
+    public CodegenType getTag() {
+        return CodegenType.CLIENT;
+    }
 
     @Override
     public String escapeReservedWord(String name) {           
@@ -122,17 +121,17 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
         return "_" + name;
     }
 
-	@Override
-	public String apiFileFolder() {
-		return outputFolder + "/" + apiPackage().replace('.', File.separatorChar);
-	}
+    @Override
+    public String apiFileFolder() {
+        return outputFolder + "/" + apiPackage().replace('.', File.separatorChar);
+    }
 
-	@Override
-	public String modelFileFolder() {
-		return outputFolder + "/" + modelPackage().replace('.', File.separatorChar);
-	}
+    @Override
+    public String modelFileFolder() {
+        return outputFolder + "/" + modelPackage().replace('.', File.separatorChar);
+    }
 
-	@Override
+    @Override
     public String toParamName(String name) {
         // replace - with _ e.g. created-at => created_at
         name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
@@ -152,13 +151,13 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
         return name;
     }
 
-	@Override
-	public String toVarName(String name) {
-		// should be the same as variable name
-		return getNameUsingModelPropertyNaming(name);
-	}
+    @Override
+    public String toVarName(String name) {
+        // should be the same as variable name
+        return getNameUsingModelPropertyNaming(name);
+    }
 
-	@Override
+    @Override
     public String toModelName(String name) {
         name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
 
