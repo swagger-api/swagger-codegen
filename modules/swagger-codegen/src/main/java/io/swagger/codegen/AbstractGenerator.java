@@ -63,6 +63,10 @@ public abstract class AbstractGenerator {
         throw new RuntimeException("can't load template " + name);
     }
 
+    private String buildLibraryFilePath(String dir, String library, String file) {
+        return dir + File.separator + "libraries" + File.separator + library + File.separator + file;
+    }
+
     /**
      * Get the template file path with template dir prepended, and use the
      * library template if exists.
@@ -78,12 +82,17 @@ public abstract class AbstractGenerator {
         } else {
             String library = config.getLibrary();
             if (library != null && !"".equals(library)) {
-                String libTemplateFile = config.embeddedTemplateDir() + File.separator +
-                    "libraries" + File.separator + library + File.separator +
-                    templateFile;
-                if (embeddedTemplateExists(libTemplateFile)) {
-                    // Fall back to the template file embedded/packaged in the JAR file...
+                //look for the file in the library subfolder of the supplied template
+                final String libTemplateFile = buildLibraryFilePath(config.templateDir(), library, templateFile);
+                if (new File(libTemplateFile).exists()) {
                     return libTemplateFile;
+                }
+
+                //next, look for the file in the embedded library subfolder
+                final String embeddedLibTemplateFile = buildLibraryFilePath(config.embeddedTemplateDir(), library, templateFile);
+                if (embeddedTemplateExists(embeddedLibTemplateFile)) {
+                    // Fall back to the template file embedded/packaged in the JAR file library folder...
+                    return embeddedLibTemplateFile;
                 }
             }
             // Fall back to the template file embedded/packaged in the JAR file...
