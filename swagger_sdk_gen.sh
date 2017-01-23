@@ -1,5 +1,5 @@
 if $Build_Codegen ; then
-    mvn3 clean package -Dmaven.test.skip=true
+    mvn3 clean package -Dmaven.test.skip=true -Dmaven.clean.failOnError=false
 fi
 curl -k "http://newapi.nightly.capillary.in/version.json" -o config.json
 echo "GENERATING SDK"
