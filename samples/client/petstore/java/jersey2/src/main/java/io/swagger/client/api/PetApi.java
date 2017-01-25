@@ -7,6 +7,7 @@ import io.swagger.client.Pair;
 
 import javax.ws.rs.core.GenericType;
 
+import io.swagger.client.model.*;
 import java.io.File;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;

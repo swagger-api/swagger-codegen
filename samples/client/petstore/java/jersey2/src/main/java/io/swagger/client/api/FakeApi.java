@@ -7,6 +7,7 @@ import io.swagger.client.Pair;
 
 import javax.ws.rs.core.GenericType;
 
+import io.swagger.client.model.*;
 import java.math.BigDecimal;
 import io.swagger.client.model.Client;
 import org.joda.time.DateTime;
