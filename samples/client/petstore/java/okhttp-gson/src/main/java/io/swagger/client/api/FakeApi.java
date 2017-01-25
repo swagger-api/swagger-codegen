@@ -27,6 +27,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.swagger.client.model.*;
 import java.math.BigDecimal;
 import io.swagger.client.model.Client;
 import org.joda.time.DateTime;
