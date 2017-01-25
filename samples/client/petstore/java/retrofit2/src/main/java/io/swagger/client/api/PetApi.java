@@ -8,6 +8,7 @@ import retrofit2.http.*;
 
 import okhttp3.RequestBody;
 
+import io.swagger.client.model.*;
 import java.io.File;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;

@@ -8,6 +8,7 @@ import retrofit2.http.*;
 
 import okhttp3.RequestBody;
 
+import io.swagger.client.model.*;
 import java.math.BigDecimal;
 import io.swagger.client.model.Client;
 import org.joda.time.DateTime;

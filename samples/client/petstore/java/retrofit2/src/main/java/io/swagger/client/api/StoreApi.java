@@ -8,6 +8,7 @@ import retrofit2.http.*;
 
 import okhttp3.RequestBody;
 
+import io.swagger.client.model.*;
 import io.swagger.client.model.Order;
 
 import java.util.ArrayList;
