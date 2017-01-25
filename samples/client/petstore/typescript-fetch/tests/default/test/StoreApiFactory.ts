@@ -15,11 +15,24 @@ before(function() {
 });
 
 describe('StoreApiFactory', function() {
-  it('should get inventory', function() {
-    return StoreApiFactory().getInventory(config).then((result) => {
-      expect(Object.keys(result)).to.not.be.empty;
+  function runSuite(description: string, requestOptions?: any): void {
+
+    describe(description, () => {
+
+      it('should get inventory', function() {
+        return StoreApiFactory().getInventory(config, requestOptions).then((result: { [key: string]: number }) => {
+          expect(Object.keys(result)).to.not.be.empty;
+        });
+      });
+
     });
+  }
+
+  runSuite('without custom request options');
+
+  runSuite('with custom request options', {
+    credentials: 'include',
+    mode: 'cors'
   });
 
 });
-

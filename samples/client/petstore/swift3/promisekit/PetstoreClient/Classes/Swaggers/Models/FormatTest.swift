@@ -18,7 +18,7 @@ open class FormatTest: JSONEncodable {
     public var string: String?
     public var byte: Data?
     public var binary: Data?
-    public var date: Date?
+    public var date: ISOFullDate?
     public var dateTime: Date?
     public var uuid: UUID?
     public var password: String?
@@ -26,7 +26,7 @@ open class FormatTest: JSONEncodable {
     public init() {}
 
     // MARK: JSONEncodable
-    func encodeToJSON() -> Any {
+    open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
         nillableDictionary["integer"] = self.integer?.encodeToJSON()
         nillableDictionary["int32"] = self.int32?.encodeToJSON()

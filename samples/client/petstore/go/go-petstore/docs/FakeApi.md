@@ -14,6 +14,8 @@ Method | HTTP request | Description
 
 To test \"client\" model
 
+To test \"client\" model
+
 
 ### Parameters
 
@@ -37,7 +39,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **TestEndpointParameters**
-> TestEndpointParameters($number, $double, $patternWithoutDelimiter, $byte_, $integer, $int32_, $int64_, $float, $string_, $binary, $date, $dateTime, $password)
+> TestEndpointParameters($number, $double, $patternWithoutDelimiter, $byte_, $integer, $int32_, $int64_, $float, $string_, $binary, $date, $dateTime, $password, $callback)
 
 Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 
@@ -61,10 +63,13 @@ Name | Type | Description  | Notes
  **date** | **time.Time**| None | [optional] 
  **dateTime** | **time.Time**| None | [optional] 
  **password** | **string**| None | [optional] 
+ **callback** | **string**| None | [optional] 
+
+Note: Optional parameters are passed through a map[string]interface{}
 
 ### Return type
 
-void (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -82,6 +87,8 @@ void (empty response body)
 
 To test enum parameters
 
+To test enum parameters
+
 
 ### Parameters
 
@@ -93,12 +100,14 @@ Name | Type | Description  | Notes
  **enumHeaderString** | **string**| Header parameter enum test (string) | [optional] [default to -efg]
  **enumQueryStringArray** | [**[]string**](string.md)| Query parameter enum test (string array) | [optional] 
  **enumQueryString** | **string**| Query parameter enum test (string) | [optional] [default to -efg]
- **enumQueryInteger** | **float32**| Query parameter enum test (double) | [optional] 
+ **enumQueryInteger** | **int32**| Query parameter enum test (double) | [optional] 
  **enumQueryDouble** | **float64**| Query parameter enum test (double) | [optional] 
+
+Note: Optional parameters are passed through a map[string]interface{}
 
 ### Return type
 
-void (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -106,8 +115,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Content-Type**: */*
+ - **Accept**: */*
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
