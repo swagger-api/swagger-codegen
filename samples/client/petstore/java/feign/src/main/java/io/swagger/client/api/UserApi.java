@@ -2,6 +2,7 @@ package io.swagger.client.api;
 
 import io.swagger.client.ApiClient;
 
+import io.swagger.client.model.*;
 import io.swagger.client.model.User;
 
 import java.util.ArrayList;
