@@ -4,17 +4,13 @@ import Promise = require('bluebird');
 export declare class Category {
     'id': number;
     'name': string;
+    static discriminator: any;
     static attributeTypeMap: Array<{
         name: string;
         baseName: string;
         type: string;
     }>;
     static getAttributeTypeMap(): {
-        name: string;
-        baseName: string;
-        type: string;
-    }[];
-    getAttributeTypeMap(): {
         name: string;
         baseName: string;
         type: string;
@@ -27,17 +23,13 @@ export declare class Order {
     'shipDate': Date;
     'status': Order.StatusEnum;
     'complete': boolean;
+    static discriminator: any;
     static attributeTypeMap: Array<{
         name: string;
         baseName: string;
         type: string;
     }>;
     static getAttributeTypeMap(): {
-        name: string;
-        baseName: string;
-        type: string;
-    }[];
-    getAttributeTypeMap(): {
         name: string;
         baseName: string;
         type: string;
@@ -57,17 +49,13 @@ export declare class Pet {
     'photoUrls': Array<string>;
     'tags': Array<Tag>;
     'status': Pet.StatusEnum;
+    static discriminator: any;
     static attributeTypeMap: Array<{
         name: string;
         baseName: string;
         type: string;
     }>;
     static getAttributeTypeMap(): {
-        name: string;
-        baseName: string;
-        type: string;
-    }[];
-    getAttributeTypeMap(): {
         name: string;
         baseName: string;
         type: string;
@@ -83,17 +71,13 @@ export declare namespace Pet {
 export declare class Tag {
     'id': number;
     'name': string;
+    static discriminator: any;
     static attributeTypeMap: Array<{
         name: string;
         baseName: string;
         type: string;
     }>;
     static getAttributeTypeMap(): {
-        name: string;
-        baseName: string;
-        type: string;
-    }[];
-    getAttributeTypeMap(): {
         name: string;
         baseName: string;
         type: string;
@@ -108,17 +92,13 @@ export declare class User {
     'password': string;
     'phone': string;
     'userStatus': number;
+    static discriminator: any;
     static attributeTypeMap: Array<{
         name: string;
         baseName: string;
         type: string;
     }>;
     static getAttributeTypeMap(): {
-        name: string;
-        baseName: string;
-        type: string;
-    }[];
-    getAttributeTypeMap(): {
         name: string;
         baseName: string;
         type: string;

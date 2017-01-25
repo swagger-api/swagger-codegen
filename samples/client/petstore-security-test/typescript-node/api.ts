@@ -34,22 +34,20 @@ let defaultBasePath = 'https://petstore.swagger.io *_/ &#39; \&quot; &#x3D;end -
 
 /* tslint:disable:no-unused-variable */
 let primitives = ["string",
-                "String",
                 "boolean",
-                "Boolean",
-                "Double",
-                "Integer",
-                "Long",
-                "Float",
+                "double",
+                "integer",
+                "long",
+                "float",
                 "number",
                 "any"];
-                
+
  class ObjectSerializer {
- 
+
  	public static findCorrectType(data: any, expectedType: string) {
 		if (data == undefined) {
 			return expectedType;
-		} else if (primitives.indexOf(expectedType) !== -1) {
+		} else if (primitives.indexOf(expectedType.toLowerCase()) !== -1) {
 			return expectedType;
 		} else if (expectedType === "Date") {
 			return expectedType;
@@ -57,11 +55,11 @@ let primitives = ["string",
 			if (enumsMap[expectedType]) {
 				return expectedType;
 			}
-			
+
 			if (!typeMap[expectedType]) {
 				return expectedType; // w/e we don't know the type
 			}
-			
+
 			// Check the discriminator
 			let discriminatorProperty = typeMap[expectedType].discriminator;
 			if (discriminatorProperty == null) {
@@ -74,21 +72,21 @@ let primitives = ["string",
 				}
 			}
 		}
-		
+
  	}
 
  	public static serialize(data: any, type: string) {
 		if (data == undefined) {
 			return data;
-		} else if (primitives.indexOf(type) !== -1) {
-			return data.toString();		
+		} else if (primitives.indexOf(type.toLowerCase()) !== -1) {
+			return data;
 		} else if (type.lastIndexOf("Array<", 0) === 0) { // string.startsWith pre es6
 			let subType: string = type.replace("Array<", ""); // Array<Type> => Type>
 			subType = subType.substring(0, subType.length - 1); // Type> => Type
 			let transformedData = [];
 			for (let index in data) {
 				let date = data[index];
-				transformedData.push(ObjectSerializer.serialize(date, subType)); 
+				transformedData.push(ObjectSerializer.serialize(date, subType));
 			}
 			return transformedData;
 		} else if (type === "Date") {
@@ -109,16 +107,16 @@ let primitives = ["string",
 				instance[attributeType.baseName] = ObjectSerializer.serialize(data[attributeType.name], attributeType.type);
 			}
 			return instance;
-		} 		
+		}
  	}
- 	
+
 	public static deserialize(data: any, type: string) {
 		// polymorphism may change the actual type.
 		type = ObjectSerializer.findCorrectType(data, type);
 		if (data == undefined) {
 			return data;
-		} else if (primitives.indexOf(type) !== -1) {
-			return data;			
+		} else if (primitives.indexOf(type.toLowerCase()) !== -1) {
+			return data;
 		} else if (type.lastIndexOf("Array<", 0) === 0) { // string.startsWith pre es6
 			let subType: string = type.replace("Array<", ""); // Array<Type> => Type>
 			subType = subType.substring(0, subType.length - 1); // Type> => Type
@@ -145,28 +143,28 @@ let primitives = ["string",
 				instance[attributeType.name] = ObjectSerializer.deserialize(data[attributeType.baseName], attributeType.type);
 			}
 			return instance;
-		}	
+		}
 	}
 }
 
 /**
 * Model for testing reserved words  *_/ ' \" =end -- \\r\\n \\n \\r
 */
-export class ModelReturn {	
+export class ModelReturn {
     /**
     * property description  *_/ ' \" =end -- \\r\\n \\n \\r
     */
     'return': number;
-	
+
 		static discriminator = undefined;
-	
+
 	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
 		{
 			"name": "return",
 			"baseName": "return",
 			"type": "number"
 		}	];
-	
+
 	static getAttributeTypeMap() {
 		return ModelReturn.attributeTypeMap;
 	}
