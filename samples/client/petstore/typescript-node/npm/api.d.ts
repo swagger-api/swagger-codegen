@@ -126,7 +126,7 @@ export declare class OAuth implements Authentication {
 export declare class VoidAuth implements Authentication {
     username: string;
     password: string;
-    applyToRequest(requestOptions: request.Options): void;
+    applyToRequest(_: request.Options): void;
 }
 export declare enum PetApiApiKeys {
     api_key = 0,

@@ -343,7 +343,7 @@ var ApiKeyAuth = (function () {
         if (this.location == "query") {
             requestOptions.qs[this.paramName] = this.apiKey;
         }
-        else if (this.location == "header") {
+        else if (this.location == "header" && requestOptions && requestOptions.headers) {
             requestOptions.headers[this.paramName] = this.apiKey;
         }
     };
@@ -354,7 +354,9 @@ var OAuth = (function () {
     function OAuth() {
     }
     OAuth.prototype.applyToRequest = function (requestOptions) {
-        requestOptions.headers["Authorization"] = "Bearer " + this.accessToken;
+        if (requestOptions && requestOptions.headers) {
+            requestOptions.headers["Authorization"] = "Bearer " + this.accessToken;
+        }
     };
     return OAuth;
 }());
@@ -362,7 +364,7 @@ exports.OAuth = OAuth;
 var VoidAuth = (function () {
     function VoidAuth() {
     }
-    VoidAuth.prototype.applyToRequest = function (requestOptions) {
+    VoidAuth.prototype.applyToRequest = function (_) {
     };
     return VoidAuth;
 }());

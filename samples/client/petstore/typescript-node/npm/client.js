@@ -4,6 +4,9 @@ var fs = require('fs');
 function deepCheck(objectA, objectB) {
     var a = objectA;
     var b = objectB;
+    var isString = (typeof a == "string" && typeof b == "string");
+    var isBool = (typeof a == "boolean" && typeof b == "boolean");
+    var isNumber = (typeof a == "number" && typeof b == "number");
     if (a instanceof Array && b instanceof Array) {
         for (var i = 0; i < a.length; i++) {
             if (!deepCheck(a[i], b[i])) {
@@ -12,7 +15,7 @@ function deepCheck(objectA, objectB) {
         }
         return true;
     }
-    else if ((typeof a == "string" && typeof b == "string") || (typeof a == "boolean" && typeof b == "boolean") || (typeof a == "number" && typeof b == "number")) {
+    else if (isString || isBool || isNumber) {
         return a === b;
     }
     else if (typeof a == "object" && typeof b == "object") {
@@ -42,8 +45,8 @@ var exitCode = 0;
 var rewire = require("rewire");
 var rewiredApi = rewire("./api");
 var objectSerializer = rewiredApi.__get__("ObjectSerializer");
-var type = "Pet";
-var serializedData = {
+console.log("Checking deserialization.");
+var serializedPet = {
     "id": pet.id,
     "category": {
         "id": 18291,
@@ -59,17 +62,16 @@ var serializedData = {
     ],
     "status": "available"
 };
-var deserializedPet = objectSerializer.deserialize(serializedData, "Pet");
-console.log(deserializedPet);
+var deserializedPet = objectSerializer.deserialize(serializedPet, "Pet");
 var petType = deserializedPet instanceof rewiredApi.Pet;
 var tagType1 = deserializedPet.tags[0] instanceof rewiredApi.Tag;
 var categoryType = deserializedPet.category instanceof rewiredApi.Category;
 var checks = {};
 for (var key in deserializedPet) {
     checks[key] = {};
-    checks[key]["isCorrect"] = deepCheck(deserializedPet[key], serializedData[key]);
+    checks[key]["isCorrect"] = deepCheck(deserializedPet[key], serializedPet[key]);
     checks[key]["is"] = deserializedPet[key];
-    checks[key]["should"] = serializedData[key];
+    checks[key]["should"] = serializedPet[key];
 }
 var correctTypes = petType && tagType1 && categoryType;
 if (!correctTypes) {
@@ -82,14 +84,22 @@ for (var key in checks) {
     var check = checks[key];
     if (!check["isCorrect"]) {
         exitCode = 1;
-        console.log("Incorrect ", key, ": ", check["isCorrect"], ";is: ", check["is"], ";should: ", check["should"]);
+        console.log(key, " incorrect ", "\nis:\n ", check["is"], "\nshould:\n ", check["should"]);
     }
 }
-var reserializedData = objectSerializer.serialize(deserializedPet, "Pet");
-if (!deepCheck(reserializedData, serializedData)) {
+console.log("Checking serialization");
+var category = new api.Category();
+category.id = 18291;
+category.name = "TS category 1";
+pet.category = category;
+pet.status = api.Pet.StatusEnum.Available;
+var reserializedData = objectSerializer.serialize(pet, "Pet");
+if (!deepCheck(reserializedData, serializedPet)) {
     exitCode = 1;
-    console.log("Reserialized Data incorrect! is: ", reserializedData, "should: ", serializedData);
+    console.log("Reserialized Data incorrect! \nis:\n ", reserializedData, "\nshould:\n ", serializedPet);
 }
+pet.category = undefined;
+pet.status = undefined;
 petApi.addPet(pet)
     .then(function (res) {
     var newPet = res.body;
