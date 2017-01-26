@@ -1,5 +1,8 @@
 package io.swagger.model;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -10,41 +13,28 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 
-public class Tag  {
+public class ArrayOfNumberOnly  {
   
   @ApiModelProperty(example = "null", value = "")
-  private Long id = null;
-  @ApiModelProperty(example = "null", value = "")
-  private String name = null;
+  private List<BigDecimal> arrayNumber = new ArrayList<BigDecimal>();
 
  /**
-   * Get id
-   * @return id
+   * Get arrayNumber
+   * @return arrayNumber
   **/
-  public Long getId() {
-    return id;
+  public List<BigDecimal> getArrayNumber() {
+    return arrayNumber;
   }
-  public void setId(Long id) {
-    this.id = id;
-  }
- /**
-   * Get name
-   * @return name
-  **/
-  public String getName() {
-    return name;
-  }
-  public void setName(String name) {
-    this.name = name;
+  public void setArrayNumber(List<BigDecimal> arrayNumber) {
+    this.arrayNumber = arrayNumber;
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Tag {\n");
+    sb.append("class ArrayOfNumberOnly {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    arrayNumber: ").append(toIndentedString(arrayNumber)).append("\n");
     sb.append("}");
     return sb.toString();
   }

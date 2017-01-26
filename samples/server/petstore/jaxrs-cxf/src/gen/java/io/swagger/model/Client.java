@@ -10,41 +10,28 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 
-public class Tag  {
+public class Client  {
   
   @ApiModelProperty(example = "null", value = "")
-  private Long id = null;
-  @ApiModelProperty(example = "null", value = "")
-  private String name = null;
+  private String client = null;
 
  /**
-   * Get id
-   * @return id
+   * Get client
+   * @return client
   **/
-  public Long getId() {
-    return id;
+  public String getClient() {
+    return client;
   }
-  public void setId(Long id) {
-    this.id = id;
-  }
- /**
-   * Get name
-   * @return name
-  **/
-  public String getName() {
-    return name;
-  }
-  public void setName(String name) {
-    this.name = name;
+  public void setClient(String client) {
+    this.client = client;
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Tag {\n");
+    sb.append("class Client {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    client: ").append(toIndentedString(client)).append("\n");
     sb.append("}");
     return sb.toString();
   }

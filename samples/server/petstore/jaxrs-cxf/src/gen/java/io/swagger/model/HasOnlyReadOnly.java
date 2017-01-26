@@ -10,54 +10,41 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 
-public class ModelApiResponse  {
+public class HasOnlyReadOnly  {
   
   @ApiModelProperty(example = "null", value = "")
-  private Integer code = null;
+  private String bar = null;
   @ApiModelProperty(example = "null", value = "")
-  private String type = null;
-  @ApiModelProperty(example = "null", value = "")
-  private String message = null;
+  private String foo = null;
 
  /**
-   * Get code
-   * @return code
+   * Get bar
+   * @return bar
   **/
-  public Integer getCode() {
-    return code;
+  public String getBar() {
+    return bar;
   }
-  public void setCode(Integer code) {
-    this.code = code;
+  public void setBar(String bar) {
+    this.bar = bar;
   }
  /**
-   * Get type
-   * @return type
+   * Get foo
+   * @return foo
   **/
-  public String getType() {
-    return type;
+  public String getFoo() {
+    return foo;
   }
-  public void setType(String type) {
-    this.type = type;
-  }
- /**
-   * Get message
-   * @return message
-  **/
-  public String getMessage() {
-    return message;
-  }
-  public void setMessage(String message) {
-    this.message = message;
+  public void setFoo(String foo) {
+    this.foo = foo;
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ModelApiResponse {\n");
+    sb.append("class HasOnlyReadOnly {\n");
     
-    sb.append("    code: ").append(toIndentedString(code)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
-    sb.append("    message: ").append(toIndentedString(message)).append("\n");
+    sb.append("    bar: ").append(toIndentedString(bar)).append("\n");
+    sb.append("    foo: ").append(toIndentedString(foo)).append("\n");
     sb.append("}");
     return sb.toString();
   }

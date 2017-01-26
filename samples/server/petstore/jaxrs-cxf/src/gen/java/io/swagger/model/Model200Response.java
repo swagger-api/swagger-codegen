@@ -1,5 +1,6 @@
 package io.swagger.model;
 
+import io.swagger.annotations.ApiModel;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -10,54 +11,42 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 
-public class ModelApiResponse  {
+@ApiModel(description="Model for testing model name starting with number")
+public class Model200Response  {
   
   @ApiModelProperty(example = "null", value = "")
-  private Integer code = null;
+  private Integer name = null;
   @ApiModelProperty(example = "null", value = "")
-  private String type = null;
-  @ApiModelProperty(example = "null", value = "")
-  private String message = null;
+  private String propertyClass = null;
 
  /**
-   * Get code
-   * @return code
+   * Get name
+   * @return name
   **/
-  public Integer getCode() {
-    return code;
+  public Integer getName() {
+    return name;
   }
-  public void setCode(Integer code) {
-    this.code = code;
+  public void setName(Integer name) {
+    this.name = name;
   }
  /**
-   * Get type
-   * @return type
+   * Get propertyClass
+   * @return propertyClass
   **/
-  public String getType() {
-    return type;
+  public String getPropertyClass() {
+    return propertyClass;
   }
-  public void setType(String type) {
-    this.type = type;
-  }
- /**
-   * Get message
-   * @return message
-  **/
-  public String getMessage() {
-    return message;
-  }
-  public void setMessage(String message) {
-    this.message = message;
+  public void setPropertyClass(String propertyClass) {
+    this.propertyClass = propertyClass;
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ModelApiResponse {\n");
+    sb.append("class Model200Response {\n");
     
-    sb.append("    code: ").append(toIndentedString(code)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
-    sb.append("    message: ").append(toIndentedString(message)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    propertyClass: ").append(toIndentedString(propertyClass)).append("\n");
     sb.append("}");
     return sb.toString();
   }

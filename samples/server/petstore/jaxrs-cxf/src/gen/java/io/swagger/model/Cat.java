@@ -1,5 +1,6 @@
 package io.swagger.model;
 
+import io.swagger.model.Animal;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -10,41 +11,28 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 
-public class Tag  {
+public class Cat extends Animal {
   
   @ApiModelProperty(example = "null", value = "")
-  private Long id = null;
-  @ApiModelProperty(example = "null", value = "")
-  private String name = null;
+  private Boolean declawed = null;
 
  /**
-   * Get id
-   * @return id
+   * Get declawed
+   * @return declawed
   **/
-  public Long getId() {
-    return id;
+  public Boolean getDeclawed() {
+    return declawed;
   }
-  public void setId(Long id) {
-    this.id = id;
-  }
- /**
-   * Get name
-   * @return name
-  **/
-  public String getName() {
-    return name;
-  }
-  public void setName(String name) {
-    this.name = name;
+  public void setDeclawed(Boolean declawed) {
+    this.declawed = declawed;
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Tag {\n");
-    
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("class Cat {\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+    sb.append("    declawed: ").append(toIndentedString(declawed)).append("\n");
     sb.append("}");
     return sb.toString();
   }
