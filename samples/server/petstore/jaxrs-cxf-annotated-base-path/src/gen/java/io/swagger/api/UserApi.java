@@ -15,7 +15,7 @@ import org.apache.cxf.jaxrs.ext.multipart.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Path("/")
+@Path("/v2")
 @Api(value = "/", description = "")
 public interface UserApi  {
 
