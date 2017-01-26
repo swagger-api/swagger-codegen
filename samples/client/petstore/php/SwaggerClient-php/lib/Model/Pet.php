@@ -34,8 +34,7 @@ use \ArrayAccess;
 /**
  * Pet Class Doc Comment
  *
- * @category    Class */
-/**
+ * @category    Class
  * @package     Swagger\Client
  * @author      Swagger Codegen team
  * @link        https://github.com/swagger-api/swagger-codegen
@@ -180,7 +179,7 @@ class Pet implements ArrayAccess
         }
         $allowed_values = ["available", "pending", "sold"];
         if (!in_array($this->container['status'], $allowed_values)) {
-            $invalid_properties[] = "invalid value for 'status', must be one of #{allowed_values}.";
+            $invalid_properties[] = "invalid value for 'status', must be one of 'available', 'pending', 'sold'.";
         }
 
         return $invalid_properties;
