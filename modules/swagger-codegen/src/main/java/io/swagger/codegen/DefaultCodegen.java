@@ -107,6 +107,7 @@ public class DefaultCodegen {
     protected String library;
     protected Boolean sortParamsByRequiredFlag = true;
     protected Boolean ensureUniqueParams = true;
+    protected Boolean allowUnicodeIdentifiers = false;
     protected String gitUserId, gitRepoId, releaseNote;
     protected String httpUserAgent;
     protected Boolean hideGenerationTimestamp = true;
@@ -114,6 +115,8 @@ public class DefaultCodegen {
     // They are translated to words like "Dollar" and prefixed with '
     // Then translated back during JSON encoding and decoding
     protected Map<String, String> specialCharReplacements = new HashMap<String, String>();
+
+    protected String ignoreFilePathOverride;
 
     public List<CliOption> cliOptions() {
         return cliOptions;
@@ -142,6 +145,11 @@ public class DefaultCodegen {
                     .get(CodegenConstants.ENSURE_UNIQUE_PARAMS).toString()));
         }
 
+        if (additionalProperties.containsKey(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS)) {
+            this.setAllowUnicodeIdentifiers(Boolean.valueOf(additionalProperties
+                    .get(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS).toString()));
+        }
+
         if(additionalProperties.containsKey(CodegenConstants.MODEL_NAME_PREFIX)){
             this.setModelNamePrefix((String) additionalProperties.get(CodegenConstants.MODEL_NAME_PREFIX));
         }
@@ -149,7 +157,6 @@ public class DefaultCodegen {
         if(additionalProperties.containsKey(CodegenConstants.MODEL_NAME_SUFFIX)){
             this.setModelNameSuffix((String) additionalProperties.get(CodegenConstants.MODEL_NAME_SUFFIX));
         }
-
     }
 
     // override with any special post-processing for all models
@@ -357,7 +364,7 @@ public class DefaultCodegen {
     // override with any special handling of the JMustache compiler
     @SuppressWarnings("unused")
     public Compiler processCompiler(Compiler compiler) {
-    	return compiler;
+        return compiler;
     }
 
     // override with any special text escaping logic
@@ -578,6 +585,10 @@ public class DefaultCodegen {
 
     public void setEnsureUniqueParams(Boolean ensureUniqueParams) {
         this.ensureUniqueParams = ensureUniqueParams;
+    }
+
+    public void setAllowUnicodeIdentifiers(Boolean allowUnicodeIdentifiers) {
+        this.allowUnicodeIdentifiers = allowUnicodeIdentifiers;
     }
 
     /**
@@ -833,6 +844,10 @@ public class DefaultCodegen {
                 CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG_DESC).defaultValue(Boolean.TRUE.toString()));
         cliOptions.add(CliOption.newBoolean(CodegenConstants.ENSURE_UNIQUE_PARAMS, CodegenConstants
                 .ENSURE_UNIQUE_PARAMS_DESC).defaultValue(Boolean.TRUE.toString()));
+
+        //name formatting options
+        cliOptions.add(CliOption.newBoolean(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, CodegenConstants
+                .ALLOW_UNICODE_IDENTIFIERS_DESC).defaultValue(Boolean.FALSE.toString()));
 
         // initialize special character mapping
         initalizeSpecialCharacterMapping();
@@ -1463,6 +1478,7 @@ public class DefaultCodegen {
         property.nameInCamelCase = camelize(property.name, false);
         property.description = escapeText(p.getDescription());
         property.unescapedDescription = p.getDescription();
+        property.title = p.getTitle();
         property.getter = "get" + getterAndSetterCapitalize(name);
         property.setter = "set" + getterAndSetterCapitalize(name);
         property.example = toExampleValue(p);
@@ -1707,7 +1723,7 @@ public class DefaultCodegen {
 
         property.baseType = getSwaggerType(p);
 
-      	if (p instanceof ArrayProperty) {
+          if (p instanceof ArrayProperty) {
             property.isContainer = true;
             property.isListContainer = true;
             property.containerType = "array";
@@ -1718,7 +1734,7 @@ public class DefaultCodegen {
             property.minItems = ap.getMinItems();
             CodegenProperty cp = fromProperty(property.name, ap.getItems());
             updatePropertyForArray(property, cp);
-      	} else if (p instanceof MapProperty) {
+          } else if (p instanceof MapProperty) {
             property.isContainer = true;
             property.isMapContainer = true;
             property.containerType = "map";
@@ -1905,7 +1921,7 @@ public class DefaultCodegen {
      * @return Codegen Operation object
      */
     public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, Map<String, Model> definitions) {
-    	return fromOperation(path, httpMethod, operation, definitions, null);
+        return fromOperation(path, httpMethod, operation, definitions, null);
     }
 
     /**
@@ -2384,7 +2400,7 @@ public class DefaultCodegen {
 
             // validation
             // handle maximum, minimum properly for int/long by removing the trailing ".0"
-            if ("integer".equals(type)) {
+            if ("integer".equals(qp.getType())) {
                 p.maximum = qp.getMaximum() == null ? null : String.valueOf(qp.getMaximum().longValue());
                 p.minimum = qp.getMinimum() == null ? null : String.valueOf(qp.getMinimum().longValue());
             } else {
@@ -2561,7 +2577,7 @@ public class DefaultCodegen {
     @SuppressWarnings("static-method")
     public List<CodegenSecurity> fromSecurity(Map<String, SecuritySchemeDefinition> schemes) {
         if (schemes == null) {
-        	return Collections.emptyList();
+            return Collections.emptyList();
         }
 
         List<CodegenSecurity> secs = new ArrayList<CodegenSecurity>(schemes.size());
@@ -2585,8 +2601,8 @@ public class DefaultCodegen {
                 sec.isKeyInHeader = sec.isKeyInQuery = sec.isApiKey = sec.isOAuth = false;
                 sec.isBasic = true;
             } else {
-            	final OAuth2Definition oauth2Definition = (OAuth2Definition) schemeDefinition;
-            	sec.isKeyInHeader = sec.isKeyInQuery = sec.isApiKey = sec.isBasic = false;
+                final OAuth2Definition oauth2Definition = (OAuth2Definition) schemeDefinition;
+                sec.isKeyInHeader = sec.isKeyInQuery = sec.isApiKey = sec.isBasic = false;
                 sec.isOAuth = true;
                 sec.flow = oauth2Definition.getFlow();
                 if (sec.flow == null) {
@@ -3221,11 +3237,11 @@ public class DefaultCodegen {
         // encountered so far and hopefully make it easier for others to add more special
         // cases in the future.
 
-    	// better error handling when map/array type is invalid
-    	if (name == null) {
-    	    LOGGER.error("String to be sanitized is null. Default to ERROR_UNKNOWN");
-    	    return "ERROR_UNKNOWN";
-    	}
+        // better error handling when map/array type is invalid
+        if (name == null) {
+            LOGGER.error("String to be sanitized is null. Default to ERROR_UNKNOWN");
+            return "ERROR_UNKNOWN";
+        }
 
         // if the name is just '$', map it to 'value' for the time being.
         if ("$".equals(name)) {
@@ -3254,7 +3270,14 @@ public class DefaultCodegen {
 
         // remove everything else other than word, number and _
         // $php_variable => php_variable
-        return name.replaceAll("[^a-zA-Z0-9_]", "");
+        if (allowUnicodeIdentifiers) { //could be converted to a single line with ?: operator
+            name = Pattern.compile("\\W", Pattern.UNICODE_CHARACTER_CLASS).matcher(name).replaceAll("");
+        }
+        else {
+            name = name.replaceAll("\\W", "");
+        }
+
+        return name;
     }
 
     /**
@@ -3446,11 +3469,44 @@ public class DefaultCodegen {
     public boolean convertPropertyToBooleanAndWriteBack(String propertyKey) {
         boolean booleanValue = false;
         if (additionalProperties.containsKey(propertyKey)) {
-            booleanValue = Boolean.valueOf(additionalProperties.get(propertyKey).toString());
+            booleanValue = convertPropertyToBoolean(propertyKey);
             // write back as boolean
-            additionalProperties.put(propertyKey, booleanValue);
+            writePropertyBack(propertyKey, booleanValue);
         }
 
         return booleanValue;
+    }
+
+    /**
+     * Provides an override location, if any is specified, for the .swagger-codegen-ignore.
+     *
+     * This is originally intended for the first generation only.
+     *
+     * @return a string of the full path to an override ignore file.
+     */
+    public String getIgnoreFilePathOverride() {
+        return ignoreFilePathOverride;
+    }
+
+    /**
+     * Sets an override location for the .swagger-codegen.ignore location for the first code generation.
+     *
+     * @param ignoreFileOverride The full path to an ignore file
+     */
+    public void setIgnoreFilePathOverride(final String ignoreFileOverride) {
+        this.ignoreFilePathOverride = ignoreFileOverride;
+    }
+
+    public boolean convertPropertyToBoolean(String propertyKey) {
+        boolean booleanValue = false;
+        if (additionalProperties.containsKey(propertyKey)) {
+            booleanValue = Boolean.valueOf(additionalProperties.get(propertyKey).toString());
+        }
+
+        return booleanValue;
+    }
+    
+    public void writePropertyBack(String propertyKey, boolean value) {
+        additionalProperties.put(propertyKey, value);
     }
 }
