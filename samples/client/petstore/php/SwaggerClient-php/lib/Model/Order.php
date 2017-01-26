@@ -34,8 +34,7 @@ use \ArrayAccess;
 /**
  * Order Class Doc Comment
  *
- * @category    Class */
-/**
+ * @category    Class
  * @package     Swagger\Client
  * @author      Swagger Codegen team
  * @link        https://github.com/swagger-api/swagger-codegen
@@ -174,7 +173,7 @@ class Order implements ArrayAccess
         $invalid_properties = [];
         $allowed_values = ["placed", "approved", "delivered"];
         if (!in_array($this->container['status'], $allowed_values)) {
-            $invalid_properties[] = "invalid value for 'status', must be one of #{allowed_values}.";
+            $invalid_properties[] = "invalid value for 'status', must be one of 'placed', 'approved', 'delivered'.";
         }
 
         return $invalid_properties;
