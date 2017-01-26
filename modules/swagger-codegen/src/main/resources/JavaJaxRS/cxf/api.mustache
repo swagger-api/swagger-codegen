@@ -18,7 +18,7 @@ import io.swagger.annotations.ApiOperation;
 import javax.validation.constraints.*;
 {{/useBeanValidation}}
 
-@Path("{{contextPath}}")
+@Path("{{^useAnnotatedBasePath}}/{{/useAnnotatedBasePath}}{{#useAnnotatedBasePath}}{{contextPath}}{{/useAnnotatedBasePath}}")
 @Api(value = "/", description = "{{description}}")
 {{#addConsumesProducesJson}}
 @Consumes(MediaType.APPLICATION_JSON)
