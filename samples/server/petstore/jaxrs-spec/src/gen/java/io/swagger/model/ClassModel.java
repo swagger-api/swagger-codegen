@@ -14,55 +14,35 @@
 package io.swagger.model;
 
 import java.util.Objects;
+import io.swagger.annotations.ApiModel;
 import javax.validation.constraints.*;
 
 /**
- * Tag
+ * Model for testing model with \&quot;_class\&quot; property
  */
+@ApiModel(description = "Model for testing model with \"_class\" property")
 
-public class Tag   {
-  @JsonProperty("id")
-  private Long id = null;
+public class ClassModel   {
+  @JsonProperty("_class")
+  private String propertyClass = null;
 
-  @JsonProperty("name")
-  private String name = null;
-
-  public Tag id(Long id) {
-    this.id = id;
+  public ClassModel propertyClass(String propertyClass) {
+    this.propertyClass = propertyClass;
     return this;
   }
 
    /**
-   * Get id
-   * @return id
+   * Get propertyClass
+   * @return propertyClass
   **/
-  @JsonProperty("id")
+  @JsonProperty("_class")
   @ApiModelProperty(example = "null", value = "")
-  public Long getId() {
-    return id;
+  public String getPropertyClass() {
+    return propertyClass;
   }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public Tag name(String name) {
-    this.name = name;
-    return this;
-  }
-
-   /**
-   * Get name
-   * @return name
-  **/
-  @JsonProperty("name")
-  @ApiModelProperty(example = "null", value = "")
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
+  public void setPropertyClass(String propertyClass) {
+    this.propertyClass = propertyClass;
   }
 
 
@@ -74,24 +54,22 @@ public class Tag   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Tag tag = (Tag) o;
-    return Objects.equals(this.id, tag.id) &&
-        Objects.equals(this.name, tag.name);
+    ClassModel classModel = (ClassModel) o;
+    return Objects.equals(this.propertyClass, classModel.propertyClass);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(propertyClass);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Tag {\n");
+    sb.append("class ClassModel {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    propertyClass: ").append(toIndentedString(propertyClass)).append("\n");
     sb.append("}");
     return sb.toString();
   }

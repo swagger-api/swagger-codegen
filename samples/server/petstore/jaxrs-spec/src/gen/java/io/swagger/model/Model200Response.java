@@ -14,39 +14,22 @@
 package io.swagger.model;
 
 import java.util.Objects;
+import io.swagger.annotations.ApiModel;
 import javax.validation.constraints.*;
 
 /**
- * Tag
+ * Model for testing model name starting with number
  */
+@ApiModel(description = "Model for testing model name starting with number")
 
-public class Tag   {
-  @JsonProperty("id")
-  private Long id = null;
-
+public class Model200Response   {
   @JsonProperty("name")
-  private String name = null;
+  private Integer name = null;
 
-  public Tag id(Long id) {
-    this.id = id;
-    return this;
-  }
+  @JsonProperty("class")
+  private String propertyClass = null;
 
-   /**
-   * Get id
-   * @return id
-  **/
-  @JsonProperty("id")
-  @ApiModelProperty(example = "null", value = "")
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public Tag name(String name) {
+  public Model200Response name(Integer name) {
     this.name = name;
     return this;
   }
@@ -57,12 +40,31 @@ public class Tag   {
   **/
   @JsonProperty("name")
   @ApiModelProperty(example = "null", value = "")
-  public String getName() {
+  public Integer getName() {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(Integer name) {
     this.name = name;
+  }
+
+  public Model200Response propertyClass(String propertyClass) {
+    this.propertyClass = propertyClass;
+    return this;
+  }
+
+   /**
+   * Get propertyClass
+   * @return propertyClass
+  **/
+  @JsonProperty("class")
+  @ApiModelProperty(example = "null", value = "")
+  public String getPropertyClass() {
+    return propertyClass;
+  }
+
+  public void setPropertyClass(String propertyClass) {
+    this.propertyClass = propertyClass;
   }
 
 
@@ -74,24 +76,24 @@ public class Tag   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Tag tag = (Tag) o;
-    return Objects.equals(this.id, tag.id) &&
-        Objects.equals(this.name, tag.name);
+    Model200Response _200Response = (Model200Response) o;
+    return Objects.equals(this.name, _200Response.name) &&
+        Objects.equals(this.propertyClass, _200Response.propertyClass);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(name, propertyClass);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Tag {\n");
+    sb.append("class Model200Response {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    propertyClass: ").append(toIndentedString(propertyClass)).append("\n");
     sb.append("}");
     return sb.toString();
   }

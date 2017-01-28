@@ -14,55 +14,41 @@
 package io.swagger.model;
 
 import java.util.Objects;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.constraints.*;
 
 /**
- * Tag
+ * ArrayOfArrayOfNumberOnly
  */
 
-public class Tag   {
-  @JsonProperty("id")
-  private Long id = null;
+public class ArrayOfArrayOfNumberOnly   {
+  @JsonProperty("ArrayArrayNumber")
+  private List<List<BigDecimal>> arrayArrayNumber = new ArrayList<List<BigDecimal>>();
 
-  @JsonProperty("name")
-  private String name = null;
+  public ArrayOfArrayOfNumberOnly arrayArrayNumber(List<List<BigDecimal>> arrayArrayNumber) {
+    this.arrayArrayNumber = arrayArrayNumber;
+    return this;
+  }
 
-  public Tag id(Long id) {
-    this.id = id;
+  public ArrayOfArrayOfNumberOnly addArrayArrayNumberItem(List<BigDecimal> arrayArrayNumberItem) {
+    this.arrayArrayNumber.add(arrayArrayNumberItem);
     return this;
   }
 
    /**
-   * Get id
-   * @return id
+   * Get arrayArrayNumber
+   * @return arrayArrayNumber
   **/
-  @JsonProperty("id")
+  @JsonProperty("ArrayArrayNumber")
   @ApiModelProperty(example = "null", value = "")
-  public Long getId() {
-    return id;
+  public List<List<BigDecimal>> getArrayArrayNumber() {
+    return arrayArrayNumber;
   }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public Tag name(String name) {
-    this.name = name;
-    return this;
-  }
-
-   /**
-   * Get name
-   * @return name
-  **/
-  @JsonProperty("name")
-  @ApiModelProperty(example = "null", value = "")
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
+  public void setArrayArrayNumber(List<List<BigDecimal>> arrayArrayNumber) {
+    this.arrayArrayNumber = arrayArrayNumber;
   }
 
 
@@ -74,24 +60,22 @@ public class Tag   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Tag tag = (Tag) o;
-    return Objects.equals(this.id, tag.id) &&
-        Objects.equals(this.name, tag.name);
+    ArrayOfArrayOfNumberOnly arrayOfArrayOfNumberOnly = (ArrayOfArrayOfNumberOnly) o;
+    return Objects.equals(this.arrayArrayNumber, arrayOfArrayOfNumberOnly.arrayArrayNumber);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(arrayArrayNumber);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Tag {\n");
+    sb.append("class ArrayOfArrayOfNumberOnly {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    arrayArrayNumber: ").append(toIndentedString(arrayArrayNumber)).append("\n");
     sb.append("}");
     return sb.toString();
   }

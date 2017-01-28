@@ -14,55 +14,35 @@
 package io.swagger.model;
 
 import java.util.Objects;
+import io.swagger.annotations.ApiModel;
 import javax.validation.constraints.*;
 
 /**
- * Tag
+ * Model for testing reserved words
  */
+@ApiModel(description = "Model for testing reserved words")
 
-public class Tag   {
-  @JsonProperty("id")
-  private Long id = null;
+public class ModelReturn   {
+  @JsonProperty("return")
+  private Integer _return = null;
 
-  @JsonProperty("name")
-  private String name = null;
-
-  public Tag id(Long id) {
-    this.id = id;
+  public ModelReturn _return(Integer _return) {
+    this._return = _return;
     return this;
   }
 
    /**
-   * Get id
-   * @return id
+   * Get _return
+   * @return _return
   **/
-  @JsonProperty("id")
+  @JsonProperty("return")
   @ApiModelProperty(example = "null", value = "")
-  public Long getId() {
-    return id;
+  public Integer getReturn() {
+    return _return;
   }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public Tag name(String name) {
-    this.name = name;
-    return this;
-  }
-
-   /**
-   * Get name
-   * @return name
-  **/
-  @JsonProperty("name")
-  @ApiModelProperty(example = "null", value = "")
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
+  public void setReturn(Integer _return) {
+    this._return = _return;
   }
 
 
@@ -74,24 +54,22 @@ public class Tag   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Tag tag = (Tag) o;
-    return Objects.equals(this.id, tag.id) &&
-        Objects.equals(this.name, tag.name);
+    ModelReturn _return = (ModelReturn) o;
+    return Objects.equals(this._return, _return._return);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(_return);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Tag {\n");
+    sb.append("class ModelReturn {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    _return: ").append(toIndentedString(_return)).append("\n");
     sb.append("}");
     return sb.toString();
   }
