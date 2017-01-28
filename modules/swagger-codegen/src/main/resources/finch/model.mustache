@@ -1,18 +1,12 @@
-package {{packageName}}
+package {{modelPackage}}
 
 import io.circe._
 import io.finch.circe._
-import io.circe.generic.semiauto
-import io.circe.generic.decoding.DerivedDecoder
-import io.circe.generic.decoding.DerivedDecoder._
-import io.circe.Decoder
+import io.circe.generic.semiauto._
+import io.circe.java8.time._
 import {{packageName}}._
-{{#imports}}//import {{import}}
+{{#imports}}import {{import}}
 {{/imports}}
-
-// TODO: properly handle custom imports
-import java.io._
-import java.util.Date
 
 {{#models}}
 {{#model}}
@@ -29,8 +23,8 @@ object {{classname}} {
     /**
      * Creates the codec for converting {{classname}} from and to JSON.
      */
-    implicit val decoder: Decoder[{{classname}}] = semiauto.deriveDecoder
-    implicit val encoder: ObjectEncoder[{{classname}}] = semiauto.deriveEncoder[{{classname}}]
+    implicit val decoder: Decoder[{{classname}}] = deriveDecoder
+    implicit val encoder: ObjectEncoder[{{classname}}] = deriveEncoder
 }
 {{/model}}
 {{/models}}

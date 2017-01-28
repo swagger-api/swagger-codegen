@@ -15,9 +15,9 @@ import java.util.List;
 import java.util.Map;
 
 public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig {
-    protected String invokerPackage = "io.swagger.client";
+    protected String invokerPackage = "io.swagger.petstore.client";
     protected String groupId = "io.swagger";
-    protected String artifactId = "swagger-client";
+    protected String artifactId = "finch-server";
     protected String artifactVersion = "1.0.0";
     protected String sourceFolder = "src/main/scala";
     protected String packageName = "io.swagger.petstore";
@@ -28,23 +28,29 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
         modelTemplateFiles.put("model.mustache", ".scala");
         apiTemplateFiles.put("api.mustache", ".scala");
         embeddedTemplateDir = templateDir = "finch";
-        // TODO organize the API scala files into proper folder
-        // e.g. io/swagger/client/api
-        apiPackage = "";
-        // TODO organize the model scala files into proper folder
-        // e.g. io/swagger/client/model
-        modelPackage = "";
 
+        apiPackage = packageName + ".apis";
+        modelPackage = packageName + ".models";
 
         setReservedWordsLowerCase(
                 Arrays.asList(
-                        "abstract", "continue", "for", "new", "switch", "assert",
-                        "default", "if", "package", "synchronized", "boolean", "do", "goto", "private",
-                        "this", "break", "double", "implements", "protected", "throw", "byte", "else",
-                        "import", "public", "throws", "case", "enum", "instanceof", "return", "transient",
-                        "catch", "extends", "int", "short", "try", "char", "final", "interface", "static",
-                        "void", "class", "finally", "long", "strictfp", "volatile", "const", "float",
-                        "native", "super", "while", "type")
+                        // Scala
+                        "abstract", "case", "catch", "class", "def",
+                        "do", "else", "extends", "false", "final",
+                        "finally", "for", "forSome", "if", "implicit",
+                        "import", "lazy", "match", "new", "null",
+                        "object", "override", "package", "private", "protected",
+                        "return", "sealed", "super", "this", "throw",
+                        "trait", "try", "true", "type", "val",
+                        "var", "while", "with", "yield",
+                        // Scala-interop languages keywords
+                        "abstract", "continue", "switch", "assert",
+                        "default", "synchronized", "goto",
+                        "break", "double", "implements", "byte",
+                        "public", "throws", "enum", "instanceof", "transient",
+                        "int", "short", "char", "interface", "static",
+                        "void", "finally", "long", "strictfp", "volatile", "const", "float",
+                        "native")
         );
 
         defaultIncludes = new HashSet<String>(
@@ -73,6 +79,8 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
         // mapped to String as a workaround
         typeMapping.put("binary", "String");
 
+        additionalProperties.put("modelPackage", modelPackage());
+        additionalProperties.put("apiPackage", apiPackage());
         additionalProperties.put("appName", "Swagger Sample");
         additionalProperties.put("appDescription", "A sample swagger server");
         additionalProperties.put("infoUrl", "http://swagger.io");
@@ -105,12 +113,15 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
         languageSpecificPrimitives = new HashSet<String>(
                 Arrays.asList(
                         "String",
-                        "boolean",
                         "Boolean",
                         "Double",
+                        "Int",
                         "Integer",
                         "Long",
                         "Float",
+                        "Any",
+                        "AnyVal",
+                        "AnyRef",
                         "Object")
         );
         instantiationTypes.put("array", "ArrayList");
@@ -122,14 +133,14 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
         importMapping.put("File", "java.io.File");
         importMapping.put("Date", "java.util.Date");
         importMapping.put("Timestamp", "java.sql.Timestamp");
-        importMapping.put("Map", "java.util.Map");
-        importMapping.put("HashMap", "java.util.HashMap");
-        importMapping.put("Array", "java.util.List");
-        importMapping.put("ArrayList", "java.util.ArrayList");
-        importMapping.put("DateTime", "org.joda.time.DateTime");
-        importMapping.put("LocalDateTime", "org.joda.time.LocalDateTime");
-        importMapping.put("LocalDate", "org.joda.time.LocalDate");
-        importMapping.put("LocalTime", "org.joda.time.LocalTime");
+        importMapping.put("Map", "scala.collection.immutable.Map");
+        importMapping.put("HashMap", "scala.collection.immutable.HashMap");
+        importMapping.put("Array", "scala.collection.immutable.Seq");
+        importMapping.put("ArrayList", "scala.collection.mutable.ArrayBuffer");
+        importMapping.put("DateTime", "java.time.LocalDateTime");
+        importMapping.put("LocalDateTime", "java.time.LocalDateTime");
+        importMapping.put("LocalDate", "java.time.LocalDate");
+        importMapping.put("LocalTime", "java.time.LocalTime");
 
         cliOptions.clear();
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "Finch package name (e.g. io.swagger.petstore).")
@@ -160,12 +171,12 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
 
     @Override
     public String apiFileFolder() {
-        return outputFolder + "/" + sourceFolder + "/" + apiPackage().replace('.', File.separatorChar);
+        return outputFolder + File.separator + sourceFolder + File.separator + apiPackage().replace('.', File.separatorChar);
     }
 
     @Override
     public String modelFileFolder() {
-        return outputFolder + "/" + sourceFolder + "/" + modelPackage().replace('.', File.separatorChar);
+        return outputFolder + File.separator + sourceFolder + File.separator + modelPackage().replace('.', File.separatorChar);
     }
 
     /**

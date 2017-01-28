@@ -1,10 +1,10 @@
-package {{packageName}}
+package {{apiPackage}}
 
-// TODO: properly handle custom imports
 import java.io._
 import java.util.Date
 import {{packageName}}._
-{{#imports}}//import {{import}}
+import {{modelPackage}}._
+{{#imports}}import {{import}}
 {{/imports}}
 import io.finch.circe._
 import io.circe.generic.semiauto._
