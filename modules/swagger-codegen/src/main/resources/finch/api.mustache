@@ -6,8 +6,8 @@ import java.util.Date
 import {{packageName}}._
 {{#imports}}//import {{import}}
 {{/imports}}
-
-import _root_.argonaut._, Argonaut._
+import io.finch.circe._
+import io.circe.generic.semiauto._
 import com.twitter.concurrent.AsyncStream
 import com.twitter.finagle.Service
 import com.twitter.finagle.Http
@@ -15,9 +15,7 @@ import com.twitter.finagle.http.{Request, Response}
 import com.twitter.finagle.http.exp.Multipart.{FileUpload, InMemoryFileUpload, OnDiskFileUpload}
 import com.twitter.util.Future
 import com.twitter.io.Buf
-import argonaut.Argonaut._
 import io.finch._, items._
-import io.finch.argonaut._
 import java.io.File
 
 object {{classname}} {

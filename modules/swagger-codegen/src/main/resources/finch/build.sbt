@@ -33,16 +33,17 @@ scalacOptions ++= Seq(
   "-Ywarn-numeric-widen",
   "-Xfuture",
   "-Xlint",
-  "-language:postfixOps",
-  "-Ywarn-unused-import"
+//  "-Ywarn-unused-import",
+  "-language:postfixOps"
 )
 
 lazy val `it-config-sbt-project` = project.in(file(".")).configs(IntegrationTest)
 
 libraryDependencies ++= Seq(
   "com.github.finagle"      %% "finch-core"                     % "0.12.0",
-  "com.github.finagle"      %% "finch-argonaut"                 % "0.12.0",
-  "io.argonaut"             %% "argonaut"                       % "6.2-RC2",
+  "com.github.finagle"      %% "finch-circe"                    % "0.12.0",
+  "io.circe"                %% "circe-generic"                  % "0.7.0",
+  "io.circe"                %% "circe-java8"                    % "0.7.0",
   "com.twitter"             %% "util-core"                      % "6.40.0",
   "com.github.finagle"      %% "finch-test"                     % "0.12.0"      % "test",
   "org.scalacheck"          %% "scalacheck"                     % "1.13.4"     % "test",

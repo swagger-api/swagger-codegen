@@ -179,9 +179,6 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
     @Override
     public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
         CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
-
-        codegenModel.vendorExtensions.put("x-varcount", codegenModel.vars.size());
-
         return codegenModel;
     }
 
@@ -230,15 +227,15 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
                 if(Boolean.TRUE.equals(p.isPrimitiveType)) {
                     p.vendorExtensions.put("x-codegen-normalized-path-type", p.dataType.toLowerCase());
                     p.vendorExtensions.put("x-codegen-normalized-input-type", p.dataType);
+                } else if(Boolean.TRUE.equals(p.isBodyParam)) {
+                    p.vendorExtensions.put("x-codegen-normalized-path-type", "jsonBody["+ p.dataType + "]");
+                    p.vendorExtensions.put("x-codegen-normalized-input-type", p.dataType);
                 } else if(Boolean.TRUE.equals(p.isContainer) || Boolean.TRUE.equals(p.isListContainer)) {
                     p.vendorExtensions.put("x-codegen-normalized-path-type", "params(\""+ p.paramName + "\")");
                     p.vendorExtensions.put("x-codegen-normalized-input-type", p.dataType.replaceAll("^[^\\[]+", "Seq"));
                 } else if(Boolean.TRUE.equals(p.isFile)) {
                     p.vendorExtensions.put("x-codegen-normalized-path-type", "fileUpload(\""+ p.paramName + "\")");
                     p.vendorExtensions.put("x-codegen-normalized-input-type", "FileUpload");
-                } else if(Boolean.TRUE.equals(p.isBodyParam)) {
-                    p.vendorExtensions.put("x-codegen-normalized-path-type", "body.as["+ p.dataType + "]");
-                    p.vendorExtensions.put("x-codegen-normalized-input-type", p.dataType);
                 } else {
                     p.vendorExtensions.put("x-codegen-normalized-path-type", p.dataType);
                     p.vendorExtensions.put("x-codegen-normalized-input-type", p.dataType);

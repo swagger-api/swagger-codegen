@@ -1,6 +1,11 @@
 package {{packageName}}
 
-import _root_.argonaut._, Argonaut._
+import io.circe._
+import io.finch.circe._
+import io.circe.generic.semiauto
+import io.circe.generic.decoding.DerivedDecoder
+import io.circe.generic.decoding.DerivedDecoder._
+import io.circe.Decoder
 import {{packageName}}._
 {{#imports}}//import {{import}}
 {{/imports}}
@@ -21,10 +26,11 @@ case class {{classname}}({{#vars}}{{name}}: {{^required}}Option[{{{datatype}}}]{
                 {{/vars}})
 
 object {{classname}} {
-  /**
-   * Creates the codec for converting {{classname}} from and to JSON.
-   */
-  implicit val {{classname}}Codec: CodecJson[{{classname}}] = casecodec{{#vendorExtensions.x-varcount}}{{vendorExtensions.x-varcount}}{{/vendorExtensions.x-varcount}}({{classname}}.apply, {{classname}}.unapply)({{#vars}}"{{baseName}}"{{^-last}}, {{/-last}}{{/vars}})
+    /**
+     * Creates the codec for converting {{classname}} from and to JSON.
+     */
+    implicit val decoder: Decoder[{{classname}}] = semiauto.deriveDecoder
+    implicit val encoder: ObjectEncoder[{{classname}}] = semiauto.deriveEncoder[{{classname}}]
 }
 {{/model}}
 {{/models}}
