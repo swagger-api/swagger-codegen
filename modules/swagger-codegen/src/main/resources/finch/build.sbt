@@ -20,17 +20,33 @@ resolvers += "Sonatype OSS Releases" at "http://oss.sonatype.org/content/reposit
 
 Defaults.itSettings
 
-scalacOptions += "-language:postfixOps"
+scalacOptions ++= Seq(
+  "-deprecation",
+  "-encoding", "UTF-8",
+  "-feature",
+  "-language:existentials",
+  "-language:higherKinds",
+  "-language:implicitConversions",
+  "-unchecked",
+  "-Yno-adapted-args",
+  "-Ywarn-dead-code",
+  "-Ywarn-numeric-widen",
+  "-Xfuture",
+  "-Xlint",
+  "-language:postfixOps",
+  "-Ywarn-unused-import"
+)
 
 lazy val `it-config-sbt-project` = project.in(file(".")).configs(IntegrationTest)
 
 libraryDependencies ++= Seq(
-  "com.github.finagle"      %% "finch-core"                     % "0.9.3",
-  "com.github.finagle"      %% "finch-argonaut"                 % "0.9.3",
-  "io.argonaut"             %% "argonaut"                       % "6.1",
-  "com.github.finagle"      %% "finch-test"                     % "0.9.3"      % "test",
-  "org.scalacheck"          %% "scalacheck"                     % "1.12.5"     % "test",
-  "org.scalatest"           %% "scalatest"                      % "2.2.5"      % "test"
+  "com.github.finagle"      %% "finch-core"                     % "0.12.0",
+  "com.github.finagle"      %% "finch-argonaut"                 % "0.12.0",
+  "io.argonaut"             %% "argonaut"                       % "6.2-RC2",
+  "com.twitter"             %% "util-core"                      % "6.40.0",
+  "com.github.finagle"      %% "finch-test"                     % "0.12.0"      % "test",
+  "org.scalacheck"          %% "scalacheck"                     % "1.13.4"     % "test",
+  "org.scalatest"           %% "scalatest"                      % "3.0.0"      % "test"
 )
 
 assemblyMergeStrategy in assembly := {

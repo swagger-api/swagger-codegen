@@ -1,13 +1,20 @@
 package {{packageName}}
 
+// TODO: properly handle custom imports
+import java.io._
+import java.util.Date
+import {{packageName}}._
 {{#imports}}//import {{import}}
 {{/imports}}
 
 import _root_.argonaut._, Argonaut._
+import com.twitter.concurrent.AsyncStream
 import com.twitter.finagle.Service
+import com.twitter.finagle.Http
 import com.twitter.finagle.http.{Request, Response}
-import com.twitter.finagle.http.exp.Multipart.FileUpload
+import com.twitter.finagle.http.exp.Multipart.{FileUpload, InMemoryFileUpload, OnDiskFileUpload}
 import com.twitter.util.Future
+import com.twitter.io.Buf
 import argonaut.Argonaut._
 import io.finch._, items._
 import io.finch.argonaut._
@@ -18,7 +25,7 @@ object {{classname}} {
     * Compiles all service endpoints.
     * @return Bundled compilation of all service endpoints.
     */
-    public def endpoints(da: DataAccessor) =
+    def endpoints(da: DataAccessor) =
     {{#operations}}
         {{#operation}}
             {{{operationId}}}(da){{^-last}} :+:{{/-last}}
@@ -32,15 +39,38 @@ object {{classname}} {
         * @return And endpoint representing a {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}Unit{{/returnType}}
         */
         private def {{operationId}}(da: DataAccessor): Endpoint[{{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}Unit{{/returnType}}] =
-            post( {{{vendorExtensions.x-scala-path}}} {{#allParams}}{{^isPathParam}}{{{dataType}}}{{^-last}} ? {{/-last}}{{/isPathParam}}{{/allParams}}) { {{#hasParams}}({{#allParams}}{{paramName}}: {{{dataType}}}{{^-last}}, {{/-last}}{{/allParams}}) => {{/hasParams}}
+        {{httpMethod}}({{{vendorExtensions.x-codegen-path}}} {{#allParams}}{{^isPathParam}} :: {{& vendorExtensions.x-codegen-normalized-path-type}}{{/isPathParam}}{{/allParams}}) { {{#hasParams}}({{#allParams}}{{paramName}}: {{{vendorExtensions.x-codegen-normalized-input-type}}}{{^-last}}, {{/-last}}{{/allParams}}) => {{/hasParams}}
             {{#returnType}}
                 Ok(da.{{baseName}}_{{operationId}}({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}))
             {{/returnType}}
             {{^returnType}}
-                NoContent(da.{{baseName}}_{{operationId}}({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}))
+                da.{{baseName}}_{{operationId}}({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}})
+                NoContent[Unit]
             {{/returnType}}
+        } handle {
+          case e: Exception => BadRequest(e)
         }
 
         {{/operation}}
     {{/operations}}
+
+    implicit private def fileUploadToFile(fileUpload: FileUpload) : File = {
+        fileUpload match {
+            case upload: InMemoryFileUpload =>
+                bytesToFile(Buf.ByteArray.Owned.extract(upload.content))
+            case upload: OnDiskFileUpload =>
+                upload.content
+            case _ => null
+        }
+    }
+
+    private def bytesToFile(input: Array[Byte]): java.io.File = {
+        val file = File.createTempFile("tmp{{classname}}", null)
+        val output = new FileOutputStream(file)
+        output.write(input)
+        file
+    }
+
+    // This assists in params(string) application (which must be Seq[A] in parameter list) when the param is used as a List[A] elsewhere.
+    implicit def seqList[A](input: Seq[A]): List[A] = input.toList
 }

@@ -1,9 +1,13 @@
 package {{packageName}}
 
-import argonaut.Argonaut._
-import argonaut.CodecJson
+import _root_.argonaut._, Argonaut._
+import {{packageName}}._
 {{#imports}}//import {{import}}
 {{/imports}}
+
+// TODO: properly handle custom imports
+import java.io._
+import java.util.Date
 
 {{#models}}
 {{#model}}
