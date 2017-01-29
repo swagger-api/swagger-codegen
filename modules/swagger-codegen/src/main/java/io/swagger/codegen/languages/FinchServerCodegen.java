@@ -73,11 +73,24 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
                         "Map")
         );
 
+        typeMapping = new HashMap<String, String>();
+        typeMapping.put("string", "String");
+        typeMapping.put("boolean", "Boolean");
         typeMapping.put("integer", "Int");
+        typeMapping.put("float", "Float");
         typeMapping.put("long", "Long");
-        //TODO binary should be mapped to byte array
-        // mapped to String as a workaround
-        typeMapping.put("binary", "String");
+        typeMapping.put("double", "Double");
+        typeMapping.put("number", "BigDecimal");
+        typeMapping.put("date-time", "LocalDateTime");
+        typeMapping.put("date", "LocalDateTime");
+        typeMapping.put("file", "File");
+        typeMapping.put("array", "Seq");
+        typeMapping.put("list", "List");
+        typeMapping.put("map", "Map");
+        typeMapping.put("object", "Object");
+        typeMapping.put("binary", "Array[Byte]");
+        typeMapping.put("Date", "LocalDateTime");
+        typeMapping.put("DateTime", "LocalDateTime");
 
         additionalProperties.put("modelPackage", modelPackage());
         additionalProperties.put("apiPackage", apiPackage());
@@ -135,8 +148,8 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
         importMapping.put("Timestamp", "java.sql.Timestamp");
         importMapping.put("Map", "scala.collection.immutable.Map");
         importMapping.put("HashMap", "scala.collection.immutable.HashMap");
-        importMapping.put("Array", "scala.collection.immutable.Seq");
-        importMapping.put("ArrayList", "scala.collection.mutable.ArrayBuffer");
+        importMapping.put("Seq", "scala.collection.immutable.Seq");
+        importMapping.put("ArrayBuffer", "scala.collection.mutable.ArrayBuffer");
         importMapping.put("DateTime", "java.time.LocalDateTime");
         importMapping.put("LocalDateTime", "java.time.LocalDateTime");
         importMapping.put("LocalDate", "java.time.LocalDate");
