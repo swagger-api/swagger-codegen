@@ -120,7 +120,7 @@ public class {{classname}}: APIBase {
         let parameters = APIHelper.rejectNil(nillableParameters){{/bodyParam}}
  
         let convertedParameters = APIHelper.convertBoolToString(parameters){{#headerParams}}{{^secondaryParam}}
-        let nillableHeaders: [String: Any?] = [{{/secondaryParam}}
+        let nillableHeaders: [String: AnyObject?] = [{{/secondaryParam}}
             {{> _param}}{{#hasMore}},{{/hasMore}}{{^hasMore}}
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders){{/hasMore}}{{/headerParams}}

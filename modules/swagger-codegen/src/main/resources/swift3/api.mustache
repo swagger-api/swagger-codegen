@@ -134,7 +134,7 @@ open class {{classname}}: APIBase {
             {{/queryParams}}
         ])
         {{/hasQueryParams}}{{#headerParams}}{{^secondaryParam}}
-        let nillableHeaders: [String: AnyObject?] = [{{/secondaryParam}}
+        let nillableHeaders: [String: Any?] = [{{/secondaryParam}}
             {{> _param}}{{#hasMore}},{{/hasMore}}{{^hasMore}}
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders){{/hasMore}}{{/headerParams}}
