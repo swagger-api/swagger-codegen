@@ -2886,6 +2886,7 @@ public class DefaultCodegen {
             Map<String, Property> allProperties, List<String> allRequired) {
 
         m.hasRequired = false;
+        m.hasOptional = false;
         if (properties != null && !properties.isEmpty()) {
             m.hasVars = true;
             m.hasEnums = false;
@@ -2923,8 +2924,11 @@ public class DefaultCodegen {
                 LOGGER.warn("null property for " + key);
             } else {
                 final CodegenProperty cp = fromProperty(key, prop);
-                cp.required = mandatory.contains(key) ? true : false;
+                cp.required = mandatory.contains(key);
+                cp.isFirstRequired = cp.required && !m.hasRequired; // true only for the first required property
                 m.hasRequired = m.hasRequired || cp.required;
+                m.hasOptional = m.hasOptional || !cp.required;
+
                 if (cp.isEnum) {
                     // FIXME: if supporting inheritance, when called a second time for allProperties it is possible for
                     // m.hasEnums to be set incorrectly if allProperties has enumerations but properties does not.

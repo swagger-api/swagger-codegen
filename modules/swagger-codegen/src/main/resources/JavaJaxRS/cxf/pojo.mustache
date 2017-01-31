@@ -30,6 +30,28 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {
   @ApiModelProperty({{#example}}example = "{{example}}", {{/example}}{{#required}}required = {{required}}, {{/required}}value = "{{{description}}}")
   private {{{datatypeWithEnum}}} {{name}} = {{{defaultValue}}};{{/vars}}
 
+  public {{classname}}() {}
+
+{{#hasVars}}
+{{#hasRequired}}
+  public {{classname}}({{#vars}}{{#required}}{{^isFirstRequired}}, {{/isFirstRequired}}{{{datatypeWithEnum}}} {{name}}{{/required}}{{/vars}}) {
+  {{#vars}}
+  {{#required}}
+    this.{{name}} = {{name}};
+  {{/required}}
+  {{/vars}}
+  }
+{{/hasRequired}}
+
+{{#hasOptional}}
+  public {{classname}}({{#vars}}{{{datatypeWithEnum}}} {{name}}{{^-last}}, {{/-last}}{{/vars}}) {
+  {{#vars}}
+    this.{{name}} = {{name}};
+  {{/vars}}
+  }
+{{/hasOptional}}
+{{/hasVars}}
+
   {{#vars}}
  /**
   {{#description}}
