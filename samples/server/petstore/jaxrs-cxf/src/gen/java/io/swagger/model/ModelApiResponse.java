@@ -20,6 +20,15 @@ public class ModelApiResponse  {
   @ApiModelProperty(value = "")
   private String message = null;
 
+  public ModelApiResponse() {}
+
+
+  public ModelApiResponse(Integer code, String type, String message) {
+    this.code = code;
+    this.type = type;
+    this.message = message;
+  }
+
  /**
    * Get code
    * @return code
