@@ -380,6 +380,7 @@ function makeDumbRequest(apiClient, opts) {
   var httpMethod = opts.httpMethod || 'GET';
   var pathParams = opts.pathParams || {};
   var queryParams = opts.queryParams || {};
+  var collectionQueryParams = opts.collectionQueryParams || {};
   var headerParams = opts.headerParams || {};
   var formParams = opts.formParams || {};
   var bodyParam = opts.bodyParam;
@@ -387,6 +388,6 @@ function makeDumbRequest(apiClient, opts) {
   var contentTypes = opts.contentTypes || [];
   var accepts = opts.accepts || [];
   var callback = opts.callback;
-  return apiClient.callApi(path, httpMethod, pathParams, queryParams,
+  return apiClient.callApi(path, httpMethod, pathParams, queryParams, collectionQueryParams,
     headerParams, formParams, bodyParam, authNames, contentTypes, accepts);
 }
