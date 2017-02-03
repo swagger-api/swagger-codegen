@@ -369,8 +369,10 @@
           // SuperAgent normally percent-encodes all reserved characters in a query parameter. However,
           // commas are used as delimiters for the 'csv' collectionFormat so they must not be encoded. We
           // must therefore construct and encode 'csv' collection query parameters manually.
-          var value = param.value.map(this.paramToString).map(encodeURIComponent).join(',');
-          request.query(encodeURIComponent(key) + "=" + value);
+          if (param.value != null) {
+            var value = param.value.map(this.paramToString).map(encodeURIComponent).join(',');
+            request.query(encodeURIComponent(key) + "=" + value);
+          }
         } else {
           // All other collection query parameters should be treated as ordinary query parameters.
           queryParams[key] = this.apiClient.buildCollectionParam(param.value, param.collectionFormat);
