@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public interface StoreApi {
   /**
    * Delete purchase order by ID
@@ -31,7 +32,7 @@ public interface StoreApi {
   /**
    * Returns pet inventories by status
    * Returns a map of status codes to quantities
-   * @return Call&lt;Map<String, Integer>&gt;
+   * @return Call&lt;Map&lt;String, Integer&gt;&gt;
    */
   
   @GET("store/inventory")

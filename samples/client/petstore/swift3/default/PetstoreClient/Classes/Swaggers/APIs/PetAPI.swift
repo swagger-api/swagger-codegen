@@ -39,22 +39,24 @@ open class PetAPI: APIBase {
         let path = "/pet"
         let URLString = PetstoreClientAPI.basePath + path
         let parameters = body.encodeToJSON() as? [String:AnyObject]
- 
-        let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
+
+        let url = NSURLComponents(string: URLString)
+
+
         let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: URLString, parameters: convertedParameters, isBody: true)
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
 
     /**
      Deletes a pet
      
      - parameter petId: (path) Pet id to delete 
+     - parameter apiKey: (header)  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deletePet(petId: Int64, completion: @escaping ((_ error: Error?) -> Void)) {
-        deletePetWithRequestBuilder(petId: petId).execute { (response, error) -> Void in
+    open class func deletePet(petId: Int64, apiKey: String? = nil, completion: @escaping ((_ error: Error?) -> Void)) {
+        deletePetWithRequestBuilder(petId: petId, apiKey: apiKey).execute { (response, error) -> Void in
             completion(error);
         }
     }
@@ -69,23 +71,26 @@ open class PetAPI: APIBase {
        - name: petstore_auth
      
      - parameter petId: (path) Pet id to delete 
+     - parameter apiKey: (header)  (optional)
 
      - returns: RequestBuilder<Void> 
      */
-    open class func deletePetWithRequestBuilder(petId: Int64) -> RequestBuilder<Void> {
+    open class func deletePetWithRequestBuilder(petId: Int64, apiKey: String? = nil) -> RequestBuilder<Void> {
         var path = "/pet/{petId}"
         path = path.replacingOccurrences(of: "{petId}", with: "\(petId)", options: .literal, range: nil)
         let URLString = PetstoreClientAPI.basePath + path
+        let parameters: [String:Any]? = nil
 
-        let nillableParameters: [String:Any?] = [:]
- 
-        let parameters = APIHelper.rejectNil(nillableParameters)
- 
-        let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
+        let url = NSURLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
+            "api_key": apiKey
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+
         let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
+        return requestBuilder.init(method: "DELETE", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
@@ -171,18 +176,17 @@ open class PetAPI: APIBase {
     open class func findPetsByStatusWithRequestBuilder(status: [String]) -> RequestBuilder<[Pet]> {
         let path = "/pet/findByStatus"
         let URLString = PetstoreClientAPI.basePath + path
+        let parameters: [String:Any]? = nil
 
-        let nillableParameters: [String:Any?] = [
+        let url = NSURLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
             "status": status
-        ]
- 
-        let parameters = APIHelper.rejectNil(nillableParameters)
- 
-        let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
+        ])
+        
+
         let requestBuilder: RequestBuilder<[Pet]>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
 
     /**
@@ -259,18 +263,17 @@ open class PetAPI: APIBase {
     open class func findPetsByTagsWithRequestBuilder(tags: [String]) -> RequestBuilder<[Pet]> {
         let path = "/pet/findByTags"
         let URLString = PetstoreClientAPI.basePath + path
+        let parameters: [String:Any]? = nil
 
-        let nillableParameters: [String:Any?] = [
+        let url = NSURLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
             "tags": tags
-        ]
- 
-        let parameters = APIHelper.rejectNil(nillableParameters)
- 
-        let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
+        ])
+        
+
         let requestBuilder: RequestBuilder<[Pet]>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
 
     /**
@@ -348,16 +351,14 @@ open class PetAPI: APIBase {
         var path = "/pet/{petId}"
         path = path.replacingOccurrences(of: "{petId}", with: "\(petId)", options: .literal, range: nil)
         let URLString = PetstoreClientAPI.basePath + path
+        let parameters: [String:Any]? = nil
 
-        let nillableParameters: [String:Any?] = [:]
- 
-        let parameters = APIHelper.rejectNil(nillableParameters)
- 
-        let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
+        let url = NSURLComponents(string: URLString)
+
+
         let requestBuilder: RequestBuilder<Pet>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
 
     /**
@@ -389,12 +390,13 @@ open class PetAPI: APIBase {
         let path = "/pet"
         let URLString = PetstoreClientAPI.basePath + path
         let parameters = body.encodeToJSON() as? [String:AnyObject]
- 
-        let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
+
+        let url = NSURLComponents(string: URLString)
+
+
         let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "PUT", URLString: URLString, parameters: convertedParameters, isBody: true)
+        return requestBuilder.init(method: "PUT", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
 
     /**
@@ -430,19 +432,20 @@ open class PetAPI: APIBase {
         var path = "/pet/{petId}"
         path = path.replacingOccurrences(of: "{petId}", with: "\(petId)", options: .literal, range: nil)
         let URLString = PetstoreClientAPI.basePath + path
-
-        let nillableParameters: [String:Any?] = [
+        let formParams: [String:Any?] = [
             "name": name,
             "status": status
         ]
- 
-        let parameters = APIHelper.rejectNil(nillableParameters)
- 
-        let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
+
+        let nonNullParameters = APIHelper.rejectNil(formParams)
+        let parameters = APIHelper.convertBoolToString(nonNullParameters)
+
+        let url = NSURLComponents(string: URLString)
+
+
         let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: URLString, parameters: convertedParameters, isBody: false)
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
 
     /**
@@ -483,19 +486,20 @@ open class PetAPI: APIBase {
         var path = "/pet/{petId}/uploadImage"
         path = path.replacingOccurrences(of: "{petId}", with: "\(petId)", options: .literal, range: nil)
         let URLString = PetstoreClientAPI.basePath + path
-
-        let nillableParameters: [String:Any?] = [
+        let formParams: [String:Any?] = [
             "additionalMetadata": additionalMetadata,
             "file": file
         ]
- 
-        let parameters = APIHelper.rejectNil(nillableParameters)
- 
-        let convertedParameters = APIHelper.convertBoolToString(parameters)
- 
+
+        let nonNullParameters = APIHelper.rejectNil(formParams)
+        let parameters = APIHelper.convertBoolToString(nonNullParameters)
+
+        let url = NSURLComponents(string: URLString)
+
+
         let requestBuilder: RequestBuilder<ApiResponse>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: URLString, parameters: convertedParameters, isBody: false)
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
 
 }

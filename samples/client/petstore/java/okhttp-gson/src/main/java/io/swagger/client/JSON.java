@@ -1,6 +1,6 @@
 /*
  * Swagger Petstore
- * This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
+ * This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
  *
  * OpenAPI spec version: 1.0.0
  * Contact: apiteam@swagger.io
@@ -170,14 +170,15 @@ class DateAdapter implements JsonSerializer<Date>, JsonDeserializer<Date> {
  */
 class DateTimeTypeAdapter extends TypeAdapter<DateTime> {
 
-    private final DateTimeFormatter formatter = ISODateTimeFormat.dateTime();
+    private final DateTimeFormatter parseFormatter = ISODateTimeFormat.dateOptionalTimeParser();
+    private final DateTimeFormatter printFormatter = ISODateTimeFormat.dateTime();
 
     @Override
     public void write(JsonWriter out, DateTime date) throws IOException {
         if (date == null) {
             out.nullValue();
         } else {
-            out.value(formatter.print(date));
+            out.value(printFormatter.print(date));
         }
     }
 
@@ -189,7 +190,7 @@ class DateTimeTypeAdapter extends TypeAdapter<DateTime> {
                 return null;
             default:
                 String date = in.nextString();
-                return formatter.parseDateTime(date);
+                return parseFormatter.parseDateTime(date);
         }
     }
 }
