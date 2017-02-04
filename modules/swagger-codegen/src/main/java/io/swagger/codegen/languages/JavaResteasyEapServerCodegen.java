@@ -1,19 +1,30 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.BooleanUtils;
+
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.CodegenResponse;
+import io.swagger.codegen.SupportingFile;
 import io.swagger.codegen.languages.features.BeanValidationFeatures;
 import io.swagger.codegen.languages.features.JbossFeature;
+import io.swagger.codegen.languages.features.SwaggerFeatures;
 import io.swagger.models.Operation;
-import org.apache.commons.lang3.BooleanUtils;
-import org.apache.commons.lang3.StringUtils;
 
-import java.io.File;
-import java.util.*;
-
-public class JavaResteasyEapServerCodegen extends AbstractJavaJAXRSServerCodegen implements JbossFeature, BeanValidationFeatures {
+public class JavaResteasyEapServerCodegen extends AbstractJavaJAXRSServerCodegen
+		implements JbossFeature, BeanValidationFeatures, SwaggerFeatures {
 
     protected boolean useBeanValidation = true;
     protected boolean generateJbossDeploymentDescriptor = true;
+	protected boolean useSwaggerFeature = false;
     
     public JavaResteasyEapServerCodegen() {
 
@@ -38,6 +49,8 @@ public class JavaResteasyEapServerCodegen extends AbstractJavaJAXRSServerCodegen
         cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
         cliOptions.add(
                 CliOption.newBoolean(GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR, "Generate Jboss Deployment Descriptor"));
+		cliOptions.add(CliOption.newBoolean(USE_SWAGGER_FEATURE, "Use dynamic Swagger generator"));
+
     }
 
     @Override
@@ -67,6 +80,14 @@ public class JavaResteasyEapServerCodegen extends AbstractJavaJAXRSServerCodegen
         if (useBeanValidation) {
             writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
         }
+
+		if (additionalProperties.containsKey(USE_SWAGGER_FEATURE)) {
+			this.setUseSwaggerFeature(convertPropertyToBoolean(USE_SWAGGER_FEATURE));
+		}
+
+		if (useSwaggerFeature) {
+			writePropertyBack(USE_SWAGGER_FEATURE, useSwaggerFeature);
+		}
 
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
         writeOptional(outputFolder, new SupportingFile("gradle.mustache", "", "build.gradle"));
@@ -209,4 +230,8 @@ public class JavaResteasyEapServerCodegen extends AbstractJavaJAXRSServerCodegen
     public void setGenerateJbossDeploymentDescriptor(boolean generateJbossDeploymentDescriptor) {
         this.generateJbossDeploymentDescriptor = generateJbossDeploymentDescriptor;
     }
+
+	public void setUseSwaggerFeature(boolean useSwaggerFeature) {
+		this.useSwaggerFeature = useSwaggerFeature;
+	}
 }
