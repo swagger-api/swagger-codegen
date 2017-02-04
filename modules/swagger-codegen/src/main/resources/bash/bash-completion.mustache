@@ -4,17 +4,17 @@
 # !
 # ! Note:
 # !
-# ! THIS SCRIPT HAS BEEN AUTOMATICALLY GENERATED USING 
-# ! swagger-codegen (https://github.com/swagger-api/swagger-codegen) 
+# ! THIS SCRIPT HAS BEEN AUTOMATICALLY GENERATED USING
+# ! swagger-codegen (https://github.com/swagger-api/swagger-codegen)
 # ! FROM SWAGGER SPECIFICATION IN JSON.
 # !
 # ! Generated on: {{generatedDate}}
-# ! 
+# !
 # !
 # ! System wide installation:
 # !
 # ! $ sudo cp {{scriptName}}.bash-completion /etc/bash-completion.d/{{scriptName}}
-# ! 
+# !
 # !
 # ! User home installation (add this line to .bash_profile):
 # !
@@ -64,7 +64,7 @@ _{{scriptName}}()
     #cword="${COMP_CWORD}"
     #prev="${COMP_WORDS[COMP_CWORD-1]}"
     #cur="${COMP_WORDS[COMP_CWORD]}"
-    
+
     # The reference of currently selected REST operation
     local operation=""
 
@@ -92,8 +92,8 @@ _{{scriptName}}()
 {{/operation}}
 {{/operations}}
 {{/apis}}
-{{/apiInfo}}   
-    
+{{/apiInfo}}
+
     # An associative array of possible values for enum parameters
     declare -A operation_parameters_enum_values
 {{#apiInfo}}
@@ -123,10 +123,10 @@ _{{scriptName}}()
 {{/operation}}
 {{/operations}}
 {{/apis}}
-{{/apiInfo}}   
+{{/apiInfo}}
 
     #
-    # Check if the _init_completion function is available, which is 
+    # Check if the _init_completion function is available, which is
     # available since bash-completion 1.4
     #
     if declare -F _init_completions >/dev/null 2>&1; then
@@ -235,7 +235,7 @@ _{{scriptName}}()
     fi
 
     #
-    # Complete the server address based on ~/.ssh/known_hosts 
+    # Complete the server address based on ~/.ssh/known_hosts
     # and ~/.ssh/config
     #
     # \todo Fix - cur matches only '//' when $prev is ':'
@@ -270,7 +270,7 @@ _{{scriptName}}()
     #
     if [[ $cur =~ ^[A-Za-z_0-9]* ]]; then
         # If operation has not been yet selected, suggest the list of operations
-        # otherwise suggest arguments of this operation as declared in the 
+        # otherwise suggest arguments of this operation as declared in the
         # Swagger specification
         if [[ -z $operation ]]; then
             COMPREPLY=( $(compgen -W '${!operations[*]}' -- ${cur}) )
