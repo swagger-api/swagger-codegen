@@ -75,6 +75,9 @@ public class JavaResteasyEapServerCodegen extends AbstractJavaJAXRSServerCodegen
         writeOptional(outputFolder, new SupportingFile("web.mustache",
                 ("src/main/webapp/WEB-INF"), "web.xml"));
 
+        supportingFiles.add(new SupportingFile("JacksonConfig.mustache",
+                (projectFolder + File.separator + "java" + '/' + invokerPackage).replace(".", "/"), "JacksonConfig.java"));
+        
         if (generateJbossDeploymentDescriptor) {
             writeOptional(outputFolder, new SupportingFile("jboss-web.mustache",
                 ("src/main/webapp/WEB-INF"), "jboss-web.xml"));
@@ -83,18 +86,6 @@ public class JavaResteasyEapServerCodegen extends AbstractJavaJAXRSServerCodegen
         writeOptional(outputFolder, new SupportingFile("RestApplication.mustache",
                 (projectFolder + File.separator + "java" + '/' + invokerPackage).replace(".", "/"), "RestApplication.java"));
 
-        // TODO integrate joda/java8 support using configuration of ObjectMapper #4512
-//        if ("joda".equals(dateLibrary)) {
-//            supportingFiles.add(new SupportingFile("JodaDateTimeProvider.mustache",
-//                    (sourceFolder + '/' + apiPackage).replace(".", "/"), "JodaDateTimeProvider.java"));
-//            supportingFiles.add(new SupportingFile("JodaLocalDateProvider.mustache",
-//                    (sourceFolder + '/' + apiPackage).replace(".", "/"), "JodaLocalDateProvider.java"));
-//        } else if (dateLibrary.startsWith("java8")) {
-//            supportingFiles.add(new SupportingFile("OffsetDateTimeProvider.mustache",
-//                    (sourceFolder + '/' + apiPackage).replace(".", "/"), "OffsetDateTimeProvider.java"));
-//            supportingFiles.add(new SupportingFile("LocalDateProvider.mustache",
-//                    (sourceFolder + '/' + apiPackage).replace(".", "/"), "LocalDateProvider.java"));
-//        }
     }
 
     @Override

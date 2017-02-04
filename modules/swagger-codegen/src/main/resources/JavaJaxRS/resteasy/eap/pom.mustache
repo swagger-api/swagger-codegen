@@ -148,6 +148,20 @@
         <scope>provided</scope>
     </dependency>
 {{/useBeanValidation}}        
+{{#joda}}      
+    <dependency>
+  		<groupId>com.fasterxml.jackson.datatype</groupId>
+  		<artifactId>jackson-datatype-joda</artifactId>
+  		<version>2.1.1</version>
+	</dependency> 
+{{/joda}}
+{{#java8}}     
+     <dependency>
+        <groupId>com.fasterxml.jackson.datatype</groupId>
+        <artifactId>jackson-datatype-jsr310</artifactId>
+        <version>2.6.3</version>
+    </dependency>
+{{/java8}}
         
     </dependencies>
     <repositories>
