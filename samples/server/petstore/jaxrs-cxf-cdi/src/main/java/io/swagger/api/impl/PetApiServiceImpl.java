@@ -6,6 +6,7 @@ import io.swagger.model.*;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 
 import java.io.File;
+import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
 
 import java.util.List;
@@ -50,7 +51,7 @@ public class PetApiServiceImpl implements PetApiService {
       return Response.ok().entity("magic!").build();
   }
       @Override
-      public Response updatePetWithForm(String petId, String name, String status, SecurityContext securityContext) {
+      public Response updatePetWithForm(Long petId, String name, String status, SecurityContext securityContext) {
       // do some magic!
       return Response.ok().entity("magic!").build();
   }

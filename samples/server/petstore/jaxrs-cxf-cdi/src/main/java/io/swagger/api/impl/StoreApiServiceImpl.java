@@ -30,7 +30,7 @@ public class StoreApiServiceImpl implements StoreApiService {
       return Response.ok().entity("magic!").build();
   }
       @Override
-      public Response getOrderById(String orderId, SecurityContext securityContext) {
+      public Response getOrderById(Long orderId, SecurityContext securityContext) {
       // do some magic!
       return Response.ok().entity("magic!").build();
   }
