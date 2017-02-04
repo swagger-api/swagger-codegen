@@ -63,11 +63,6 @@ _{{scriptName}}()
     local words
     local cword
 
-    #words="${COMP_WORDS}"
-    #cword="${COMP_CWORD}"
-    #prev="${COMP_WORDS[COMP_CWORD-1]}"
-    #cur="${COMP_WORDS[COMP_CWORD]}"
-
     # The reference of currently selected REST operation
     local operation=""
 
@@ -240,20 +235,23 @@ _{{scriptName}}()
     # Complete the server address based on ~/.ssh/known_hosts
     # and ~/.ssh/config
     #
-    # \todo Fix - cur matches only '//' when $prev is ':'
-    #
-    if [[ "$cur" == "http://" || "$cur" == "https://" ]]; then
+    local prefix=${COMP_WORDS[COMP_CWORD-2]}
+    local colon=${COMP_WORDS[COMP_CWORD-1]}
+    if [[ "$colon" == ":" && ( $prefix == "https" || $prefix == "http" ) ]]; then
         COMPREPLY=()
-        local comp_ssh_hosts=`cat ~/.ssh/known_hosts | \
-                        cut -f 1 -d ' ' | \
-                        sed -e s/,.*//g | \
-                        grep -v ^# | \
-                        uniq | \
-                        grep -v "\[" ;
-                        cat ~/.ssh/config | \
-                        grep "^Host " | \
-                        awk '{print $2}'`
-        COMPREPLY=( $(compgen -W "${comp_ssh_hosts}" -- $cur))
+        local comp_ssh_hosts=`[[ -f ~/.ssh/known_hosts ]] && \
+                              ( cat ~/.ssh/known_hosts | \
+                              grep '^[a-zA-Z0-9]' | \
+                              cut -f 1 -d ' ' | \
+                              sed -e s/,.*//g | \
+                              grep -v ^# | \
+                              uniq | \
+                              grep -v "\[" ) ;
+                              [[ -f ~/.ssh/config ]] && \
+                              ( cat ~/.ssh/config | \
+                              grep "^Host " | \
+                              awk '{print $2}' )`
+        COMPREPLY=( $( compgen -P '//' -W '${comp_ssh_hosts}' -- "${cur:2}") )
         return
     fi
 
@@ -278,6 +276,7 @@ _{{scriptName}}()
             COMPREPLY=( $(compgen -W '${!operations[*]}' -- ${cur}) )
         else
             COMPREPLY=( $(compgen -W '${operation_parameters[$operation]}' -- ${cur}) )
+            compopt -o nospace
         fi
         return
     fi
