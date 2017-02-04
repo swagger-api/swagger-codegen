@@ -60,6 +60,18 @@ public enum StatusEnum {
   @ApiModelProperty(example = "null", value = "")
   private Boolean complete = false;
 
+  public Order() {}
+
+
+  public Order(Long id, Long petId, Integer quantity, javax.xml.datatype.XMLGregorianCalendar shipDate, StatusEnum status, Boolean complete) {
+    this.id = id;
+    this.petId = petId;
+    this.quantity = quantity;
+    this.shipDate = shipDate;
+    this.status = status;
+    this.complete = complete;
+  }
+
  /**
    * Get id
    * @return id

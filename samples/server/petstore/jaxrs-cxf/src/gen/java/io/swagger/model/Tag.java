@@ -19,6 +19,14 @@ public class Tag  {
   @ApiModelProperty(example = "null", value = "")
   private String name = null;
 
+  public Tag() {}
+
+
+  public Tag(Long id, String name) {
+    this.id = id;
+    this.name = name;
+  }
+
  /**
    * Get id
    * @return id
