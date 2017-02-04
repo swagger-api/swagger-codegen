@@ -45,13 +45,16 @@ mime_type_abbreviations["bmp"]="image/bmp"
 mime_type_abbreviations["tiff"]="image/tiff"
 
 
-
-__osx_init_completion()
-{
-    COMPREPLY=()
-    _get_comp_words_by_ref cur prev words cword
-}
-
+#
+# Check if this is OSX, if so defined custom init_completion
+#
+if [[ `uname` =~ "Darwin" ]]; then
+    __osx_init_completion()
+    {
+        COMPREPLY=()
+        _get_comp_words_by_ref cur prev words cword
+    }
+fi
 
 _{{scriptName}}()
 {
@@ -126,13 +129,12 @@ _{{scriptName}}()
 {{/apiInfo}}
 
     #
-    # Check if the _init_completion function is available, which is
-    # available since bash-completion 1.4
+    # Check if this is OSX and use special __osx_init_completion function
     #
-    if declare -F _init_completions >/dev/null 2>&1; then
-        _init_completion -s || return
-    else
+    if [[ `uname` =~ "Darwin" ]]; then
         __osx_init_completion || return
+    else
+        _init_completion -s || return
     fi
 
 
