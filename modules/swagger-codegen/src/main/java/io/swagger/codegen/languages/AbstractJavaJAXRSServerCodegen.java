@@ -138,6 +138,11 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
                         if ( "0".equals(resp.code) ) {
                             resp.code = "200";
                         }
+
+                        // set vendorExtensions.x-java-is-response-void to true as dataType is set to "void"
+                        if ( resp.dataType == null ) {
+                            resp.vendorExtensions.put("x-java-is-response-void", true);
+                        }
                     }
                 }
 
