@@ -40,7 +40,7 @@ public interface StoreApi  {
         @Authorization(value = "api_key")
     }, tags={ "store",  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Integer.class, responseContainer = "Map") })
+        @ApiResponse(code = 200, message = "successful operation", response = Map.class, responseContainer = "Map") })
     public Response getInventory();
 
     @GET

@@ -38,7 +38,7 @@ public interface {{classname}}  {
         {{/hasMore}}{{/authMethods}}
     }{{/hasAuthMethods}}, tags={ {{#vendorExtensions.x-tags}}"{{tag}}"{{#hasMore}}, {{/hasMore}}{{/vendorExtensions.x-tags}} })
     @ApiResponses(value = { {{#responses}}
-        @ApiResponse(code = {{{code}}}, message = "{{{message}}}"{{^vendorExtensions.x-java-is-response-void}}, response = {{{returnType}}}.class{{/vendorExtensions.x-java-is-response-void}}{{#returnContainer}}, responseContainer = "{{{returnContainer}}}"{{/returnContainer}}){{#hasMore}},{{/hasMore}}{{/responses}} })
+        @ApiResponse(code = {{{code}}}, message = "{{{message}}}"{{^vendorExtensions.x-java-is-response-void}}, response = {{{baseType}}}.class{{/vendorExtensions.x-java-is-response-void}}{{#returnContainer}}, responseContainer = "{{{returnContainer}}}"{{/returnContainer}}){{#hasMore}},{{/hasMore}}{{/responses}} })
     public Response {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},{{/hasMore}}{{/allParams}});
 {{/operation}}
 }
