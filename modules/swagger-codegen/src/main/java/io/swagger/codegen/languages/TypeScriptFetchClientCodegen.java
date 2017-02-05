@@ -30,19 +30,8 @@ public class TypeScriptFetchClientCodegen extends AbstractTypeScriptClientCodege
         supportingFiles.add(new SupportingFile("api.mustache", "", "api.ts"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("README.md", "", "README.md"));
-        supportingFiles.add(new SupportingFile("package.json.mustache", "", "package.json"));
-        supportingFiles.add(new SupportingFile("typings.json.mustache", "", "typings.json"));
-        supportingFiles.add(new SupportingFile("tsconfig.json.mustache", "", "tsconfig.json"));
         supportingFiles.add(new SupportingFile("tslint.json.mustache", "", "tslint.json"));
         supportingFiles.add(new SupportingFile("gitignore", "", ".gitignore"));
-
-        if(additionalProperties.containsKey(CodegenConstants.NPM_NAME)) {
-            this.setNpmName(additionalProperties.get(CodegenConstants.NPM_NAME).toString());
-        }
-
-        if (additionalProperties.containsKey(CodegenConstants.NPM_VERSION)) {
-            this.setNpmVersion(additionalProperties.get(CodegenConstants.NPM_VERSION).toString());
-        }
     }
 
     @Override
@@ -53,22 +42,6 @@ public class TypeScriptFetchClientCodegen extends AbstractTypeScriptClientCodege
     @Override
     public String getHelp() {
         return "Generates a TypeScript client library using Fetch API (beta).";
-    }
-
-    public String getNpmName() {
-        return npmName;
-    }
-
-    public void setNpmName(String npmName) {
-        this.npmName = npmName;
-    }
-
-    public String getNpmVersion() {
-        return npmVersion;
-    }
-
-    public void setNpmVersion(String npmVersion) {
-        this.npmVersion = npmVersion;
     }
 
     @Override
