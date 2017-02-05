@@ -217,7 +217,11 @@ public class FormatTest   {
 
   /**
    **/
+<<<<<<< HEAD
   public FormatTest uuid(UUID uuid) {
+=======
+  public FormatTest uuid(String uuid) {
+>>>>>>> provide sample how to generate using java + compare results #4087
     this.uuid = uuid;
     return this;
   }
@@ -227,7 +231,11 @@ public class FormatTest   {
   public UUID getUuid() {
     return uuid;
   }
+<<<<<<< HEAD
   public void setUuid(UUID uuid) {
+=======
+  public void setUuid(String uuid) {
+>>>>>>> provide sample how to generate using java + compare results #4087
     this.uuid = uuid;
   }
 
