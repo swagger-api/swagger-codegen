@@ -30,10 +30,10 @@ public class TypeScriptAngular2ClientOptionsProvider implements OptionsProvider 
                 .put(CodegenConstants.ENSURE_UNIQUE_PARAMS, ENSURE_UNIQUE_PARAMS_VALUE)
                 .put(CodegenConstants.MODEL_PROPERTY_NAMING, MODEL_PROPERTY_NAMING_VALUE)
                 .put(CodegenConstants.SUPPORTS_ES6, SUPPORTS_ES6_VALUE)
-                .put(TypeScriptAngular2ClientCodegen.NPM_NAME, NMP_NAME)
-                .put(TypeScriptAngular2ClientCodegen.NPM_VERSION, NMP_VERSION)
-                .put(TypeScriptAngular2ClientCodegen.SNAPSHOT, Boolean.FALSE.toString())
-                .put(TypeScriptAngular2ClientCodegen.NPM_REPOSITORY, NPM_REPOSITORY)
+                .put(CodegenConstants.NPM_NAME, NMP_NAME)
+                .put(CodegenConstants.NPM_VERSION, NMP_VERSION)
+                .put(CodegenConstants.NPM_SNAPSHOT, Boolean.FALSE.toString())
+                .put(CodegenConstants.NPM_REPOSITORY, NPM_REPOSITORY)
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
                 .build();
     }

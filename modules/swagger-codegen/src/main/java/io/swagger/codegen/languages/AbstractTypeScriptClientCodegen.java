@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.TreeSet;
+import java.text.SimpleDateFormat;
 
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
@@ -21,12 +22,18 @@ import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.FileProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
+import io.swagger.models.properties.BooleanProperty;
 
 public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen implements CodegenConfig {
+    private static final SimpleDateFormat SNAPSHOT_SUFFIX_FORMAT = new SimpleDateFormat("yyyyMMddHHmm");
 
     protected String modelPropertyNaming= "camelCase";
     protected Boolean supportsES6 = true;
     protected HashSet<String> languageGenericTypes;
+
+    protected String npmName = null;
+    protected String npmVersion = "1.0.0";
+    protected String npmRepository = null;
 
     public AbstractTypeScriptClientCodegen() {
         super();
@@ -91,7 +98,10 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
 
         cliOptions.add(new CliOption(CodegenConstants.MODEL_PROPERTY_NAMING, CodegenConstants.MODEL_PROPERTY_NAMING_DESC).defaultValue("camelCase"));
         cliOptions.add(new CliOption(CodegenConstants.SUPPORTS_ES6, CodegenConstants.SUPPORTS_ES6_DESC).defaultValue("false"));
-
+        cliOptions.add(new CliOption(CodegenConstants.NPM_NAME, CodegenConstants.NPM_NAME_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.NPM_VERSION, CodegenConstants.NPM_VERSION_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.NPM_REPOSITORY, CodegenConstants.NPM_REPOSITORY_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.NPM_SNAPSHOT, CodegenConstants.NPM_SNAPSHOT_DESC, BooleanProperty.TYPE).defaultValue(Boolean.FALSE.toString()));
     }
 
     @Override

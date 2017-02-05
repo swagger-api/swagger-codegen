@@ -1,5 +1,6 @@
 package io.swagger.codegen.languages;
 
+import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenProperty;
@@ -12,12 +13,6 @@ import java.util.TreeSet;
 
 public class TypeScriptFetchClientCodegen extends AbstractTypeScriptClientCodegen {
 
-    public static final String NPM_NAME = "npmName";
-    public static final String NPM_VERSION = "npmVersion";
-
-    protected String npmName = null;
-    protected String npmVersion = "1.0.0";
-
     public TypeScriptFetchClientCodegen() {
         super();
 
@@ -27,8 +22,6 @@ public class TypeScriptFetchClientCodegen extends AbstractTypeScriptClientCodege
 
         outputFolder = "generated-code/typescript-fetch";
         embeddedTemplateDir = templateDir = "TypeScript-Fetch";
-        this.cliOptions.add(new CliOption(NPM_NAME, "The name under which you want to publish generated npm package"));
-        this.cliOptions.add(new CliOption(NPM_VERSION, "The version of your npm package"));
     }
 
     @Override
@@ -43,12 +36,12 @@ public class TypeScriptFetchClientCodegen extends AbstractTypeScriptClientCodege
         supportingFiles.add(new SupportingFile("tslint.json.mustache", "", "tslint.json"));
         supportingFiles.add(new SupportingFile("gitignore", "", ".gitignore"));
 
-        if(additionalProperties.containsKey(NPM_NAME)) {
-            this.setNpmName(additionalProperties.get(NPM_NAME).toString());
+        if(additionalProperties.containsKey(CodegenConstants.NPM_NAME)) {
+            this.setNpmName(additionalProperties.get(CodegenConstants.NPM_NAME).toString());
         }
 
-        if (additionalProperties.containsKey(NPM_VERSION)) {
-            this.setNpmVersion(additionalProperties.get(NPM_VERSION).toString());
+        if (additionalProperties.containsKey(CodegenConstants.NPM_VERSION)) {
+            this.setNpmVersion(additionalProperties.get(CodegenConstants.NPM_VERSION).toString());
         }
     }
 
