@@ -319,12 +319,12 @@ case $state in
       {{operationId}})
         local -a _op_arguments
         _op_arguments=(
-          {{#pathParams}}"{{baseName}}=:{{{description}}}"
-{{/pathParams}}          {{#queryParams}}{{#isBoolean}}"{{baseName}}=true:{{description}}"
-          "{{baseName}}=false:{{description}}"{{/isBoolean}}{{^isBoolean}}"{{baseName}}=:{{description}}"{{/isBoolean}}
-{{/queryParams}}          {{#headerParams}}"{{baseName}}\::{{{description}}}"
+          {{#pathParams}}"{{baseName}}=:[PATH] {{description}}"
+{{/pathParams}}          {{#queryParams}}{{#isBoolean}}"{{baseName}}=true:[QUERY] {{description}}"
+          "{{baseName}}=false:[QUERY] {{description}}"{{/isBoolean}}{{^isBoolean}}"{{baseName}}=:[QUERY] {{description}}"{{/isBoolean}}
+{{/queryParams}}          {{#headerParams}}"{{baseName}}\::[HEADER] {{description}}"
 {{/headerParams}})
-        _describe -t actions 'operations' _op_arguments && ret=0
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
         ;;
 {{/operation}}
 {{/operations}}
