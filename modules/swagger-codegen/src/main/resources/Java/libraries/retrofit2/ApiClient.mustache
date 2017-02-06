@@ -6,6 +6,7 @@ import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.HashMap;
 
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest.AuthenticationRequestBuilder;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest.TokenRequestBuilder;
@@ -32,6 +33,9 @@ import com.google.gson.JsonParseException;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.google.gson.JsonElement;
+import io.gsonfire.GsonFireBuilder;
+import io.gsonfire.TypeSelector;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
@@ -44,6 +48,7 @@ import {{invokerPackage}}.auth.OAuth;
 import {{invokerPackage}}.auth.OAuth.AccessTokenListener;
 import {{invokerPackage}}.auth.OAuthFlow;
 
+import {{modelPackage}}.*;
 
 public class ApiClient {
 
@@ -118,8 +123,28 @@ public class ApiClient {
                 .setPassword(password);
     }
 
+    public static GsonBuilder createGson() {
+        GsonFireBuilder fireBuilder = new GsonFireBuilder()
+        {{#parent}}
+            .registerTypeSelector({{classname}}.class, new TypeSelector() {
+                @Override
+                public Class getClassForElement(JsonElement readElement) {
+                    Map classByDiscriminatorValue = new HashMap();
+                    {{#children}}
+                    classByDiscriminatorValue.put("{{name}}".toUpperCase(), {{classname}}.class);
+                    {{/children}}
+                    String discriminatorField = "{{discriminator}}";
+                    String discriminatorValue = readElement.getAsJsonObject().get(discriminatorField).getAsString();
+                    return (Class) classByDiscriminatorValue.get(discriminatorValue.toUpperCase());
+                }
+            })
+        {{/parent}}
+        ;
+        return fireBuilder.createGsonBuilder();
+    }
+
     public void createDefaultAdapter() {
-        Gson gson = new GsonBuilder()
+        Gson gson = createGson()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
                 {{^java8}}
                 .registerTypeAdapter(DateTime.class, new DateTimeTypeAdapter())

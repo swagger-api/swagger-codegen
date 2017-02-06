@@ -104,6 +104,7 @@ ext {
     {{^java8}}
     jodatime_version = "2.9.3"
     {{/java8}}
+    json_fire_version = "1.8.0"
 }
 
 dependencies {
@@ -116,6 +117,7 @@ dependencies {
     {{/useRxJava}}
     compile "io.swagger:swagger-annotations:$swagger_annotations_version"
     compile "org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:$oltu_version"
+    compile ""io.gsonfire:gson-fire:$json_fire_version"
     {{^java8}}
     compile "joda-time:joda-time:$jodatime_version"
     {{/java8}}

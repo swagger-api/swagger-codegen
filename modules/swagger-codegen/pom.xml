@@ -7,7 +7,8 @@
         <relativePath>../..</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>swagger-codegen</artifactId>
+    <artifactId>swagger-codegen-zoo</artifactId>
+    <version>2.2.1.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>swagger-codegen (core library)</name>
     <build>
