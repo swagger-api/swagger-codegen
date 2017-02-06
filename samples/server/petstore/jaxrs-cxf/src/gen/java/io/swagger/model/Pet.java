@@ -1,10 +1,10 @@
 package io.swagger.model;
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.model.Category;
 import io.swagger.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.constraints.*;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -15,7 +15,6 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 
-@ApiModel(description="A pet for sale in the pet store")
 public class Pet  {
   
   @ApiModelProperty(example = "null", value = "")
@@ -33,7 +32,7 @@ public class Pet  {
 @XmlEnum(String.class)
 public enum StatusEnum {
 
-    @XmlEnumValue("available") AVAILABLE(String.valueOf("available")), @XmlEnumValue("pending") PENDING(String.valueOf("pending")), @XmlEnumValue("sold") SOLD(String.valueOf("sold"));
+@XmlEnumValue("available") AVAILABLE(String.valueOf("available")), @XmlEnumValue("pending") PENDING(String.valueOf("pending")), @XmlEnumValue("sold") SOLD(String.valueOf("sold"));
 
 
     private String value;
@@ -102,6 +101,7 @@ public enum StatusEnum {
    * Get name
    * @return name
   **/
+  @NotNull
   public String getName() {
     return name;
   }
@@ -119,6 +119,7 @@ public enum StatusEnum {
    * Get photoUrls
    * @return photoUrls
   **/
+  @NotNull
   public List<String> getPhotoUrls() {
     return photoUrls;
   }

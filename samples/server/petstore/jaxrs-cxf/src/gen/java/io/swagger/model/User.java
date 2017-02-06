@@ -1,6 +1,6 @@
 package io.swagger.model;
 
-import io.swagger.annotations.ApiModel;
+import javax.validation.constraints.*;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -11,7 +11,6 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 
-@ApiModel(description="A User who is purchasing from the pet store")
 public class User  {
   
   @ApiModelProperty(example = "null", value = "")
