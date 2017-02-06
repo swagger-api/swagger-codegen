@@ -42,6 +42,20 @@ $ {{scriptName}} --host http://<hostname>:<port> --dry-run <operationid>
 
 ```
 
+## Docker image
+You can easily create a Docker image containing a preconfigured environment
+for using the REST Bash client including working autocompletion and short
+welcome message with basic instructions, using the generated Dockerfile:
+
+```shell
+docker build -t my-rest-client .
+docker run -it my-rest-client
+```
+
+By default you will be logged into a Zsh environment which has much more
+advanced auto completion, but you can switch to Bash, where basic autocompletion
+is also available.
+
 ## Shell completion
 
 ### Bash

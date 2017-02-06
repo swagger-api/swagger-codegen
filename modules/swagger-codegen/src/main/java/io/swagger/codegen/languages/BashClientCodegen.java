@@ -250,6 +250,8 @@ public class BashClientCodegen extends DefaultCodegen implements CodegenConfig {
                "zsh-completion.mustache", "", "_"+scriptName));
       supportingFiles.add(new SupportingFile(
                "README.mustache", "", "README.md"));
+      supportingFiles.add(new SupportingFile(
+               "Dockerfile.mustache", "", "Dockerfile"));
   }
 
   public void setCurlOptions(String curlOptions) {
