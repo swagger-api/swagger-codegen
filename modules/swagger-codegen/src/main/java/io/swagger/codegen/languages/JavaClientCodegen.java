@@ -48,7 +48,6 @@ public class JavaClientCodegen extends AbstractJavaCodegen
 
         cliOptions.add(CliOption.newBoolean(USE_RX_JAVA, "Whether to use the RxJava adapter with the retrofit2 library."));
         cliOptions.add(CliOption.newBoolean(USE_RX_JAVA2, "Whether to use the RxJava2 adapter with the retrofit2 library."));
-        cliOptions.add(CliOption.newBoolean(DO_NOT_USE_RX, "If you do not use RxJava[2], Retrofit's default Call type will be generated instead.")); // setting this to false will have undefined results
         cliOptions.add(CliOption.newBoolean(PARCELABLE_MODEL, "Whether to generate models for Android that implement Parcelable with the okhttp-gson library."));
         cliOptions.add(CliOption.newBoolean(USE_PLAY24_WS, "Use Play! 2.4 Async HTTP client (Play WS API)"));
         cliOptions.add(CliOption.newBoolean(SUPPORT_JAVA6, "Whether to support Java6 with the Jersey1 library."));
@@ -90,7 +89,9 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     public void processOpts() {
         super.processOpts();
 
-        if (additionalProperties.containsKey(USE_RX_JAVA)) {
+        if (additionalProperties.containsKey(USE_RX_JAVA) && additionalProperties.containsKey(USE_RX_JAVA2)) {
+            LOGGER.warn("You specified both RxJava versions 1 and 2 but they are mutually exclusive. Defaulting to v2.");
+        } else if (additionalProperties.containsKey(USE_RX_JAVA)) {
             this.setUseRxJava(Boolean.valueOf(additionalProperties.get(USE_RX_JAVA).toString()));
         }
         if (additionalProperties.containsKey(USE_RX_JAVA2)) {
