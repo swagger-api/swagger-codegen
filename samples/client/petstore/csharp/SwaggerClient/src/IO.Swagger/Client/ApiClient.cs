@@ -47,6 +47,12 @@ namespace IO.Swagger.Client
         partial void InterceptResponse(IRestRequest request, IRestResponse response);
 
         /// <summary>
+        /// Allows for extending model processing after deserialization for <see cref="ApiClient"/> generated code.
+        /// </summary>
+        /// <param name="model">The deserialized model</param>
+        partial void InterceptDeserialization(ref object model);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ApiClient" /> class
         /// with default configuration and base path (http://petstore.swagger.io/v2).
         /// </summary>
@@ -322,7 +328,9 @@ namespace IO.Swagger.Client
             // at this point, it must be a model (json)
             try
             {
-                return JsonConvert.DeserializeObject(response.Content, type, serializerSettings);
+                object model = JsonConvert.DeserializeObject(response.Content, type, serializerSettings);
+                InterceptDeserialization(ref model);
+                return model;
             }
             catch (Exception e)
             {

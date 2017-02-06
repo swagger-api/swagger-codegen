@@ -73,6 +73,7 @@
     {{#generatePropertyChanged}}<Reference Include="PropertyChanged">
       <HintPath>..\..\packages\PropertyChanged.Fody.1.51.3\Lib\portable-net4+sl4+wp8+win8+wpa81+MonoAndroid16+MonoTouch40\PropertyChanged.dll</HintPath>
     </Reference>{{/generatePropertyChanged}}
+    {{>referenceSupplement}}
   </ItemGroup>
   <ItemGroup>
     <Compile Include="**\*.cs"/>
@@ -85,4 +86,3 @@
   <Import Project="..\..\packages\Fody.1.29.2\build\portable-net+sl+win+wpa+wp\Fody.targets" Condition="Exists('..\..\packages\Fody.1.29.2\build\portable-net+sl+win+wpa+wp\Fody.targets')" />
   {{/generatePropertyChanged}}
 </Project>
-

@@ -3112,6 +3112,10 @@ public class DefaultCodegen {
         return skipOverwrite;
     }
 
+    public String getFullTemplateFile(String templateFile){
+      return null;
+    }
+
     public void setSkipOverwrite(boolean skipOverwrite) {
         this.skipOverwrite = skipOverwrite;
     }

@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<test-run id="2" testcasecount="136" result="Passed" total="136" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.4.0.0" clr-version="4.0.30319.42000" start-time="2016-12-15 19:44:44Z" end-time="2016-12-15 19:44:44Z" duration="0.310018">
+  <command-line><![CDATA[nunit3-console  samples\client\petstore\csharp\SwaggerClientWithPropertyChanged\src\IO.Swagger.Test\bin\Debug\IO.Swagger.Test.dll]]></command-line>
+  <test-suite type="Assembly" id="1-1169" name="C:\CODE\swagger-codegen\samples\client\petstore\csharp\SwaggerClientWithPropertyChanged\src\IO.Swagger.Test\bin\Debug\IO.Swagger.Test.dll" fullname="C:\CODE\swagger-codegen\samples\client\petstore\csharp\SwaggerClientWithPropertyChanged\src\IO.Swagger.Test\bin\Debug\IO.Swagger.Test.dll" runstate="Runnable" testcasecount="136" result="Passed" duration="0.216332" total="136" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="_PID" value="17116" />
+      <property name="_APPDOMAIN" value="test-domain-" />
+    </properties>
+    <test-suite type="Namespace" id="1-1170" name="IO" fullname="IO" runstate="Runnable" testcasecount="136" result="Passed" duration="0.209338" total="136" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <test-suite type="Namespace" id="1-1171" name="Swagger" fullname="IO.Swagger" runstate="Runnable" testcasecount="136" result="Passed" duration="0.208908" total="136" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <test-suite type="Namespace" id="1-1172" name="Test" fullname="IO.Swagger.Test" runstate="Runnable" testcasecount="136" result="Passed" duration="0.208553" total="136" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <test-suite type="TestFixture" id="1-1031" name="AdditionalPropertiesClassTests" fullname="IO.Swagger.Test.AdditionalPropertiesClassTests" runstate="Runnable" testcasecount="3" result="Passed" duration="0.025663" total="3" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1032" name="AdditionalPropertiesClassInstanceTest" fullname="IO.Swagger.Test.AdditionalPropertiesClassTests.AdditionalPropertiesClassInstanceTest" runstate="Runnable" result="Passed" duration="0.012715" asserts="0" />
+            <test-case id="1-1034" name="MapOfMapPropertyTest" fullname="IO.Swagger.Test.AdditionalPropertiesClassTests.MapOfMapPropertyTest" runstate="Runnable" result="Passed" duration="0.000126" asserts="0" />
+            <test-case id="1-1033" name="MapPropertyTest" fullname="IO.Swagger.Test.AdditionalPropertiesClassTests.MapPropertyTest" runstate="Runnable" result="Passed" duration="0.000133" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1035" name="AnimalFarmTests" fullname="IO.Swagger.Test.AnimalFarmTests" runstate="Runnable" testcasecount="1" result="Passed" duration="0.000845" total="1" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1036" name="AnimalFarmInstanceTest" fullname="IO.Swagger.Test.AnimalFarmTests.AnimalFarmInstanceTest" runstate="Runnable" result="Passed" duration="0.000231" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1037" name="AnimalTests" fullname="IO.Swagger.Test.AnimalTests" runstate="Runnable" testcasecount="3" result="Passed" duration="0.002747" total="3" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1038" name="AnimalInstanceTest" fullname="IO.Swagger.Test.AnimalTests.AnimalInstanceTest" runstate="Runnable" result="Passed" duration="0.000227" asserts="0" />
+            <test-case id="1-1039" name="ClassNameTest" fullname="IO.Swagger.Test.AnimalTests.ClassNameTest" runstate="Runnable" result="Passed" duration="0.000122" asserts="0" />
+            <test-case id="1-1040" name="ColorTest" fullname="IO.Swagger.Test.AnimalTests.ColorTest" runstate="Runnable" result="Passed" duration="0.000122" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1041" name="ApiResponseTests" fullname="IO.Swagger.Test.ApiResponseTests" runstate="Runnable" testcasecount="4" result="Passed" duration="0.003350" total="4" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1042" name="ApiResponseInstanceTest" fullname="IO.Swagger.Test.ApiResponseTests.ApiResponseInstanceTest" runstate="Runnable" result="Passed" duration="0.000223" asserts="0" />
+            <test-case id="1-1043" name="CodeTest" fullname="IO.Swagger.Test.ApiResponseTests.CodeTest" runstate="Runnable" result="Passed" duration="0.000118" asserts="0" />
+            <test-case id="1-1045" name="MessageTest" fullname="IO.Swagger.Test.ApiResponseTests.MessageTest" runstate="Runnable" result="Passed" duration="0.000114" asserts="0" />
+            <test-case id="1-1044" name="TypeTest" fullname="IO.Swagger.Test.ApiResponseTests.TypeTest" runstate="Runnable" result="Passed" duration="0.000122" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1046" name="ArrayOfArrayOfNumberOnlyTests" fullname="IO.Swagger.Test.ArrayOfArrayOfNumberOnlyTests" runstate="Runnable" testcasecount="2" result="Passed" duration="0.001437" total="2" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1048" name="ArrayArrayNumberTest" fullname="IO.Swagger.Test.ArrayOfArrayOfNumberOnlyTests.ArrayArrayNumberTest" runstate="Runnable" result="Passed" duration="0.000183" asserts="0" />
+            <test-case id="1-1047" name="ArrayOfArrayOfNumberOnlyInstanceTest" fullname="IO.Swagger.Test.ArrayOfArrayOfNumberOnlyTests.ArrayOfArrayOfNumberOnlyInstanceTest" runstate="Runnable" result="Passed" duration="0.000100" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1049" name="ArrayOfNumberOnlyTests" fullname="IO.Swagger.Test.ArrayOfNumberOnlyTests" runstate="Runnable" testcasecount="2" result="Passed" duration="0.001698" total="2" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1051" name="ArrayNumberTest" fullname="IO.Swagger.Test.ArrayOfNumberOnlyTests.ArrayNumberTest" runstate="Runnable" result="Passed" duration="0.000208" asserts="0" />
+            <test-case id="1-1050" name="ArrayOfNumberOnlyInstanceTest" fullname="IO.Swagger.Test.ArrayOfNumberOnlyTests.ArrayOfNumberOnlyInstanceTest" runstate="Runnable" result="Passed" duration="0.000144" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1052" name="ArrayTestTests" fullname="IO.Swagger.Test.ArrayTestTests" runstate="Runnable" testcasecount="4" result="Passed" duration="0.003793" total="4" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1055" name="ArrayArrayOfIntegerTest" fullname="IO.Swagger.Test.ArrayTestTests.ArrayArrayOfIntegerTest" runstate="Runnable" result="Passed" duration="0.000236" asserts="0" />
+            <test-case id="1-1056" name="ArrayArrayOfModelTest" fullname="IO.Swagger.Test.ArrayTestTests.ArrayArrayOfModelTest" runstate="Runnable" result="Passed" duration="0.000102" asserts="0" />
+            <test-case id="1-1054" name="ArrayOfStringTest" fullname="IO.Swagger.Test.ArrayTestTests.ArrayOfStringTest" runstate="Runnable" result="Passed" duration="0.000118" asserts="0" />
+            <test-case id="1-1053" name="ArrayTestInstanceTest" fullname="IO.Swagger.Test.ArrayTestTests.ArrayTestInstanceTest" runstate="Runnable" result="Passed" duration="0.000144" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1057" name="CategoryTests" fullname="IO.Swagger.Test.CategoryTests" runstate="Runnable" testcasecount="3" result="Passed" duration="0.002647" total="3" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1058" name="CategoryInstanceTest" fullname="IO.Swagger.Test.CategoryTests.CategoryInstanceTest" runstate="Runnable" result="Passed" duration="0.000207" asserts="0" />
+            <test-case id="1-1059" name="IdTest" fullname="IO.Swagger.Test.CategoryTests.IdTest" runstate="Runnable" result="Passed" duration="0.000109" asserts="0" />
+            <test-case id="1-1060" name="NameTest" fullname="IO.Swagger.Test.CategoryTests.NameTest" runstate="Runnable" result="Passed" duration="0.000094" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1061" name="CatTests" fullname="IO.Swagger.Test.CatTests" runstate="Runnable" testcasecount="4" result="Passed" duration="0.003797" total="4" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1062" name="CatInstanceTest" fullname="IO.Swagger.Test.CatTests.CatInstanceTest" runstate="Runnable" result="Passed" duration="0.000189" asserts="0" />
+            <test-case id="1-1063" name="ClassNameTest" fullname="IO.Swagger.Test.CatTests.ClassNameTest" runstate="Runnable" result="Passed" duration="0.000139" asserts="0" />
+            <test-case id="1-1064" name="ColorTest" fullname="IO.Swagger.Test.CatTests.ColorTest" runstate="Runnable" result="Passed" duration="0.000129" asserts="0" />
+            <test-case id="1-1065" name="DeclawedTest" fullname="IO.Swagger.Test.CatTests.DeclawedTest" runstate="Runnable" result="Passed" duration="0.000128" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1066" name="DogTests" fullname="IO.Swagger.Test.DogTests" runstate="Runnable" testcasecount="4" result="Passed" duration="0.004810" total="4" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1070" name="BreedTest" fullname="IO.Swagger.Test.DogTests.BreedTest" runstate="Runnable" result="Passed" duration="0.000227" asserts="0" />
+            <test-case id="1-1068" name="ClassNameTest" fullname="IO.Swagger.Test.DogTests.ClassNameTest" runstate="Runnable" result="Passed" duration="0.000111" asserts="0" />
+            <test-case id="1-1069" name="ColorTest" fullname="IO.Swagger.Test.DogTests.ColorTest" runstate="Runnable" result="Passed" duration="0.000173" asserts="0" />
+            <test-case id="1-1067" name="DogInstanceTest" fullname="IO.Swagger.Test.DogTests.DogInstanceTest" runstate="Runnable" result="Passed" duration="0.000116" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1071" name="EnumArraysTests" fullname="IO.Swagger.Test.EnumArraysTests" runstate="Runnable" testcasecount="3" result="Passed" duration="0.002329" total="3" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1074" name="ArrayEnumTest" fullname="IO.Swagger.Test.EnumArraysTests.ArrayEnumTest" runstate="Runnable" result="Passed" duration="0.000244" asserts="0" />
+            <test-case id="1-1072" name="EnumArraysInstanceTest" fullname="IO.Swagger.Test.EnumArraysTests.EnumArraysInstanceTest" runstate="Runnable" result="Passed" duration="0.000116" asserts="0" />
+            <test-case id="1-1073" name="JustSymbolTest" fullname="IO.Swagger.Test.EnumArraysTests.JustSymbolTest" runstate="Runnable" result="Passed" duration="0.000109" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1075" name="EnumClassTests" fullname="IO.Swagger.Test.EnumClassTests" runstate="Runnable" testcasecount="1" result="Passed" duration="0.000664" total="1" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1076" name="EnumClassInstanceTest" fullname="IO.Swagger.Test.EnumClassTests.EnumClassInstanceTest" runstate="Runnable" result="Passed" duration="0.000167" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1077" name="EnumTestTests" fullname="IO.Swagger.Test.EnumTestTests" runstate="Runnable" testcasecount="4" result="Passed" duration="0.003054" total="4" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1080" name="EnumIntegerTest" fullname="IO.Swagger.Test.EnumTestTests.EnumIntegerTest" runstate="Runnable" result="Passed" duration="0.000179" asserts="0" />
+            <test-case id="1-1081" name="EnumNumberTest" fullname="IO.Swagger.Test.EnumTestTests.EnumNumberTest" runstate="Runnable" result="Passed" duration="0.000090" asserts="0" />
+            <test-case id="1-1079" name="EnumStringTest" fullname="IO.Swagger.Test.EnumTestTests.EnumStringTest" runstate="Runnable" result="Passed" duration="0.000087" asserts="0" />
+            <test-case id="1-1078" name="EnumTestInstanceTest" fullname="IO.Swagger.Test.EnumTestTests.EnumTestInstanceTest" runstate="Runnable" result="Passed" duration="0.000087" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1000" name="FakeApiTests" fullname="IO.Swagger.Test.FakeApiTests" runstate="Runnable" testcasecount="4" result="Passed" duration="0.035152" total="4" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1001" name="InstanceTest" fullname="IO.Swagger.Test.FakeApiTests.InstanceTest" runstate="Runnable" result="Passed" duration="0.031786" asserts="0" />
+            <test-case id="1-1002" name="TestClientModelTest" fullname="IO.Swagger.Test.FakeApiTests.TestClientModelTest" runstate="Runnable" result="Passed" duration="0.000166" asserts="0" />
+            <test-case id="1-1003" name="TestEndpointParametersTest" fullname="IO.Swagger.Test.FakeApiTests.TestEndpointParametersTest" runstate="Runnable" result="Passed" duration="0.000116" asserts="0" />
+            <test-case id="1-1004" name="TestEnumParametersTest" fullname="IO.Swagger.Test.FakeApiTests.TestEnumParametersTest" runstate="Runnable" result="Passed" duration="0.000110" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1082" name="FormatTestTests" fullname="IO.Swagger.Test.FormatTestTests" runstate="Runnable" testcasecount="14" result="Passed" duration="0.009915" total="14" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1091" name="_ByteTest" fullname="IO.Swagger.Test.FormatTestTests._ByteTest" runstate="Runnable" result="Passed" duration="0.000210" asserts="0" />
+            <test-case id="1-1089" name="_DoubleTest" fullname="IO.Swagger.Test.FormatTestTests._DoubleTest" runstate="Runnable" result="Passed" duration="0.000103" asserts="0" />
+            <test-case id="1-1088" name="_FloatTest" fullname="IO.Swagger.Test.FormatTestTests._FloatTest" runstate="Runnable" result="Passed" duration="0.000099" asserts="0" />
+            <test-case id="1-1090" name="_StringTest" fullname="IO.Swagger.Test.FormatTestTests._StringTest" runstate="Runnable" result="Passed" duration="0.000100" asserts="0" />
+            <test-case id="1-1092" name="BinaryTest" fullname="IO.Swagger.Test.FormatTestTests.BinaryTest" runstate="Runnable" result="Passed" duration="0.000098" asserts="0" />
+            <test-case id="1-1093" name="DateTest" fullname="IO.Swagger.Test.FormatTestTests.DateTest" runstate="Runnable" result="Passed" duration="0.000102" asserts="0" />
+            <test-case id="1-1094" name="DateTimeTest" fullname="IO.Swagger.Test.FormatTestTests.DateTimeTest" runstate="Runnable" result="Passed" duration="0.000099" asserts="0" />
+            <test-case id="1-1083" name="FormatTestInstanceTest" fullname="IO.Swagger.Test.FormatTestTests.FormatTestInstanceTest" runstate="Runnable" result="Passed" duration="0.000096" asserts="0" />
+            <test-case id="1-1085" name="Int32Test" fullname="IO.Swagger.Test.FormatTestTests.Int32Test" runstate="Runnable" result="Passed" duration="0.000103" asserts="0" />
+            <test-case id="1-1086" name="Int64Test" fullname="IO.Swagger.Test.FormatTestTests.Int64Test" runstate="Runnable" result="Passed" duration="0.000100" asserts="0" />
+            <test-case id="1-1084" name="IntegerTest" fullname="IO.Swagger.Test.FormatTestTests.IntegerTest" runstate="Runnable" result="Passed" duration="0.000130" asserts="0" />
+            <test-case id="1-1087" name="NumberTest" fullname="IO.Swagger.Test.FormatTestTests.NumberTest" runstate="Runnable" result="Passed" duration="0.000105" asserts="0" />
+            <test-case id="1-1096" name="PasswordTest" fullname="IO.Swagger.Test.FormatTestTests.PasswordTest" runstate="Runnable" result="Passed" duration="0.000097" asserts="0" />
+            <test-case id="1-1095" name="UuidTest" fullname="IO.Swagger.Test.FormatTestTests.UuidTest" runstate="Runnable" result="Passed" duration="0.000108" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1097" name="HasOnlyReadOnlyTests" fullname="IO.Swagger.Test.HasOnlyReadOnlyTests" runstate="Runnable" testcasecount="3" result="Passed" duration="0.001937" total="3" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1099" name="BarTest" fullname="IO.Swagger.Test.HasOnlyReadOnlyTests.BarTest" runstate="Runnable" result="Passed" duration="0.000225" asserts="0" />
+            <test-case id="1-1100" name="FooTest" fullname="IO.Swagger.Test.HasOnlyReadOnlyTests.FooTest" runstate="Runnable" result="Passed" duration="0.000107" asserts="0" />
+            <test-case id="1-1098" name="HasOnlyReadOnlyInstanceTest" fullname="IO.Swagger.Test.HasOnlyReadOnlyTests.HasOnlyReadOnlyInstanceTest" runstate="Runnable" result="Passed" duration="0.000113" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1101" name="ListTests" fullname="IO.Swagger.Test.ListTests" runstate="Runnable" testcasecount="2" result="Passed" duration="0.001358" total="2" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1103" name="_123ListTest" fullname="IO.Swagger.Test.ListTests._123ListTest" runstate="Runnable" result="Passed" duration="0.000221" asserts="0" />
+            <test-case id="1-1102" name="ListInstanceTest" fullname="IO.Swagger.Test.ListTests.ListInstanceTest" runstate="Runnable" result="Passed" duration="0.000113" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1104" name="MapTestTests" fullname="IO.Swagger.Test.MapTestTests" runstate="Runnable" testcasecount="3" result="Passed" duration="0.001976" total="3" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1106" name="MapMapOfStringTest" fullname="IO.Swagger.Test.MapTestTests.MapMapOfStringTest" runstate="Runnable" result="Passed" duration="0.000212" asserts="0" />
+            <test-case id="1-1107" name="MapOfEnumStringTest" fullname="IO.Swagger.Test.MapTestTests.MapOfEnumStringTest" runstate="Runnable" result="Passed" duration="0.000101" asserts="0" />
+            <test-case id="1-1105" name="MapTestInstanceTest" fullname="IO.Swagger.Test.MapTestTests.MapTestInstanceTest" runstate="Runnable" result="Passed" duration="0.000113" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1108" name="MixedPropertiesAndAdditionalPropertiesClassTests" fullname="IO.Swagger.Test.MixedPropertiesAndAdditionalPropertiesClassTests" runstate="Runnable" testcasecount="4" result="Passed" duration="0.002511" total="4" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1111" name="DateTimeTest" fullname="IO.Swagger.Test.MixedPropertiesAndAdditionalPropertiesClassTests.DateTimeTest" runstate="Runnable" result="Passed" duration="0.000213" asserts="0" />
+            <test-case id="1-1112" name="MapTest" fullname="IO.Swagger.Test.MixedPropertiesAndAdditionalPropertiesClassTests.MapTest" runstate="Runnable" result="Passed" duration="0.000104" asserts="0" />
+            <test-case id="1-1109" name="MixedPropertiesAndAdditionalPropertiesClassInstanceTest" fullname="IO.Swagger.Test.MixedPropertiesAndAdditionalPropertiesClassTests.MixedPropertiesAndAdditionalPropertiesClassInstanceTest" runstate="Runnable" result="Passed" duration="0.000100" asserts="0" />
+            <test-case id="1-1110" name="UuidTest" fullname="IO.Swagger.Test.MixedPropertiesAndAdditionalPropertiesClassTests.UuidTest" runstate="Runnable" result="Passed" duration="0.000105" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1113" name="Model200ResponseTests" fullname="IO.Swagger.Test.Model200ResponseTests" runstate="Runnable" testcasecount="3" result="Passed" duration="0.002064" total="3" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1116" name="_ClassTest" fullname="IO.Swagger.Test.Model200ResponseTests._ClassTest" runstate="Runnable" result="Passed" duration="0.000245" asserts="0" />
+            <test-case id="1-1114" name="Model200ResponseInstanceTest" fullname="IO.Swagger.Test.Model200ResponseTests.Model200ResponseInstanceTest" runstate="Runnable" result="Passed" duration="0.000108" asserts="0" />
+            <test-case id="1-1115" name="NameTest" fullname="IO.Swagger.Test.Model200ResponseTests.NameTest" runstate="Runnable" result="Passed" duration="0.000127" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1117" name="ModelClientTests" fullname="IO.Swagger.Test.ModelClientTests" runstate="Runnable" testcasecount="2" result="Passed" duration="0.001357" total="2" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1119" name="_ClientTest" fullname="IO.Swagger.Test.ModelClientTests._ClientTest" runstate="Runnable" result="Passed" duration="0.000230" asserts="0" />
+            <test-case id="1-1118" name="ModelClientInstanceTest" fullname="IO.Swagger.Test.ModelClientTests.ModelClientInstanceTest" runstate="Runnable" result="Passed" duration="0.000089" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1120" name="ModelReturnTests" fullname="IO.Swagger.Test.ModelReturnTests" runstate="Runnable" testcasecount="2" result="Passed" duration="0.002004" total="2" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1122" name="_ReturnTest" fullname="IO.Swagger.Test.ModelReturnTests._ReturnTest" runstate="Runnable" result="Passed" duration="0.000176" asserts="0" />
+            <test-case id="1-1121" name="ModelReturnInstanceTest" fullname="IO.Swagger.Test.ModelReturnTests.ModelReturnInstanceTest" runstate="Runnable" result="Passed" duration="0.000092" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1123" name="NameTests" fullname="IO.Swagger.Test.NameTests" runstate="Runnable" testcasecount="5" result="Passed" duration="0.003534" total="5" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1128" name="_123NumberTest" fullname="IO.Swagger.Test.NameTests._123NumberTest" runstate="Runnable" result="Passed" duration="0.000155" asserts="0" />
+            <test-case id="1-1125" name="_NameTest" fullname="IO.Swagger.Test.NameTests._NameTest" runstate="Runnable" result="Passed" duration="0.000090" asserts="0" />
+            <test-case id="1-1124" name="NameInstanceTest" fullname="IO.Swagger.Test.NameTests.NameInstanceTest" runstate="Runnable" result="Passed" duration="0.000086" asserts="0" />
+            <test-case id="1-1127" name="PropertyTest" fullname="IO.Swagger.Test.NameTests.PropertyTest" runstate="Runnable" result="Passed" duration="0.000085" asserts="0" />
+            <test-case id="1-1126" name="SnakeCaseTest" fullname="IO.Swagger.Test.NameTests.SnakeCaseTest" runstate="Runnable" result="Passed" duration="0.000098" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1129" name="NumberOnlyTests" fullname="IO.Swagger.Test.NumberOnlyTests" runstate="Runnable" testcasecount="2" result="Passed" duration="0.001409" total="2" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1131" name="JustNumberTest" fullname="IO.Swagger.Test.NumberOnlyTests.JustNumberTest" runstate="Runnable" result="Passed" duration="0.000179" asserts="0" />
+            <test-case id="1-1130" name="NumberOnlyInstanceTest" fullname="IO.Swagger.Test.NumberOnlyTests.NumberOnlyInstanceTest" runstate="Runnable" result="Passed" duration="0.000087" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1132" name="OrderTests" fullname="IO.Swagger.Test.OrderTests" runstate="Runnable" testcasecount="7" result="Passed" duration="0.005303" total="7" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1139" name="CompleteTest" fullname="IO.Swagger.Test.OrderTests.CompleteTest" runstate="Runnable" result="Passed" duration="0.000178" asserts="0" />
+            <test-case id="1-1134" name="IdTest" fullname="IO.Swagger.Test.OrderTests.IdTest" runstate="Runnable" result="Passed" duration="0.000092" asserts="0" />
+            <test-case id="1-1133" name="OrderInstanceTest" fullname="IO.Swagger.Test.OrderTests.OrderInstanceTest" runstate="Runnable" result="Passed" duration="0.000086" asserts="0" />
+            <test-case id="1-1135" name="PetIdTest" fullname="IO.Swagger.Test.OrderTests.PetIdTest" runstate="Runnable" result="Passed" duration="0.000086" asserts="0" />
+            <test-case id="1-1136" name="QuantityTest" fullname="IO.Swagger.Test.OrderTests.QuantityTest" runstate="Runnable" result="Passed" duration="0.000090" asserts="0" />
+            <test-case id="1-1137" name="ShipDateTest" fullname="IO.Swagger.Test.OrderTests.ShipDateTest" runstate="Runnable" result="Passed" duration="0.000092" asserts="0" />
+            <test-case id="1-1138" name="StatusTest" fullname="IO.Swagger.Test.OrderTests.StatusTest" runstate="Runnable" result="Passed" duration="0.000096" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1005" name="PetApiTests" fullname="IO.Swagger.Test.PetApiTests" runstate="Runnable" testcasecount="9" result="Passed" duration="0.007651" total="9" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1007" name="AddPetTest" fullname="IO.Swagger.Test.PetApiTests.AddPetTest" runstate="Runnable" result="Passed" duration="0.001240" asserts="0" />
+            <test-case id="1-1008" name="DeletePetTest" fullname="IO.Swagger.Test.PetApiTests.DeletePetTest" runstate="Runnable" result="Passed" duration="0.000075" asserts="0" />
+            <test-case id="1-1009" name="FindPetsByStatusTest" fullname="IO.Swagger.Test.PetApiTests.FindPetsByStatusTest" runstate="Runnable" result="Passed" duration="0.000085" asserts="0" />
+            <test-case id="1-1010" name="FindPetsByTagsTest" fullname="IO.Swagger.Test.PetApiTests.FindPetsByTagsTest" runstate="Runnable" result="Passed" duration="0.000087" asserts="0" />
+            <test-case id="1-1011" name="GetPetByIdTest" fullname="IO.Swagger.Test.PetApiTests.GetPetByIdTest" runstate="Runnable" result="Passed" duration="0.000086" asserts="0" />
+            <test-case id="1-1006" name="InstanceTest" fullname="IO.Swagger.Test.PetApiTests.InstanceTest" runstate="Runnable" result="Passed" duration="0.000123" asserts="0" />
+            <test-case id="1-1012" name="UpdatePetTest" fullname="IO.Swagger.Test.PetApiTests.UpdatePetTest" runstate="Runnable" result="Passed" duration="0.000095" asserts="0" />
+            <test-case id="1-1013" name="UpdatePetWithFormTest" fullname="IO.Swagger.Test.PetApiTests.UpdatePetWithFormTest" runstate="Runnable" result="Passed" duration="0.000089" asserts="0" />
+            <test-case id="1-1014" name="UploadFileTest" fullname="IO.Swagger.Test.PetApiTests.UploadFileTest" runstate="Runnable" result="Passed" duration="0.000086" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1140" name="PetTests" fullname="IO.Swagger.Test.PetTests" runstate="Runnable" testcasecount="7" result="Passed" duration="0.006720" total="7" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1143" name="CategoryTest" fullname="IO.Swagger.Test.PetTests.CategoryTest" runstate="Runnable" result="Passed" duration="0.000167" asserts="0" />
+            <test-case id="1-1142" name="IdTest" fullname="IO.Swagger.Test.PetTests.IdTest" runstate="Runnable" result="Passed" duration="0.000076" asserts="0" />
+            <test-case id="1-1144" name="NameTest" fullname="IO.Swagger.Test.PetTests.NameTest" runstate="Runnable" result="Passed" duration="0.000086" asserts="0" />
+            <test-case id="1-1141" name="PetInstanceTest" fullname="IO.Swagger.Test.PetTests.PetInstanceTest" runstate="Runnable" result="Passed" duration="0.000084" asserts="0" />
+            <test-case id="1-1145" name="PhotoUrlsTest" fullname="IO.Swagger.Test.PetTests.PhotoUrlsTest" runstate="Runnable" result="Passed" duration="0.000086" asserts="0" />
+            <test-case id="1-1147" name="StatusTest" fullname="IO.Swagger.Test.PetTests.StatusTest" runstate="Runnable" result="Passed" duration="0.000086" asserts="0" />
+            <test-case id="1-1146" name="TagsTest" fullname="IO.Swagger.Test.PetTests.TagsTest" runstate="Runnable" result="Passed" duration="0.000085" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1148" name="ReadOnlyFirstTests" fullname="IO.Swagger.Test.ReadOnlyFirstTests" runstate="Runnable" testcasecount="3" result="Passed" duration="0.002277" total="3" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1150" name="BarTest" fullname="IO.Swagger.Test.ReadOnlyFirstTests.BarTest" runstate="Runnable" result="Passed" duration="0.000192" asserts="0" />
+            <test-case id="1-1151" name="BazTest" fullname="IO.Swagger.Test.ReadOnlyFirstTests.BazTest" runstate="Runnable" result="Passed" duration="0.000090" asserts="0" />
+            <test-case id="1-1149" name="ReadOnlyFirstInstanceTest" fullname="IO.Swagger.Test.ReadOnlyFirstTests.ReadOnlyFirstInstanceTest" runstate="Runnable" result="Passed" duration="0.000087" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1152" name="SpecialModelNameTests" fullname="IO.Swagger.Test.SpecialModelNameTests" runstate="Runnable" testcasecount="2" result="Passed" duration="0.001468" total="2" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1153" name="SpecialModelNameInstanceTest" fullname="IO.Swagger.Test.SpecialModelNameTests.SpecialModelNameInstanceTest" runstate="Runnable" result="Passed" duration="0.000179" asserts="0" />
+            <test-case id="1-1154" name="SpecialPropertyNameTest" fullname="IO.Swagger.Test.SpecialModelNameTests.SpecialPropertyNameTest" runstate="Runnable" result="Passed" duration="0.000087" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1015" name="StoreApiTests" fullname="IO.Swagger.Test.StoreApiTests" runstate="Runnable" testcasecount="5" result="Passed" duration="0.004698" total="5" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1017" name="DeleteOrderTest" fullname="IO.Swagger.Test.StoreApiTests.DeleteOrderTest" runstate="Runnable" result="Passed" duration="0.001134" asserts="0" />
+            <test-case id="1-1018" name="GetInventoryTest" fullname="IO.Swagger.Test.StoreApiTests.GetInventoryTest" runstate="Runnable" result="Passed" duration="0.000091" asserts="0" />
+            <test-case id="1-1019" name="GetOrderByIdTest" fullname="IO.Swagger.Test.StoreApiTests.GetOrderByIdTest" runstate="Runnable" result="Passed" duration="0.000087" asserts="0" />
+            <test-case id="1-1016" name="InstanceTest" fullname="IO.Swagger.Test.StoreApiTests.InstanceTest" runstate="Runnable" result="Passed" duration="0.000086" asserts="0" />
+            <test-case id="1-1020" name="PlaceOrderTest" fullname="IO.Swagger.Test.StoreApiTests.PlaceOrderTest" runstate="Runnable" result="Passed" duration="0.000090" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1155" name="TagTests" fullname="IO.Swagger.Test.TagTests" runstate="Runnable" testcasecount="3" result="Passed" duration="0.002291" total="3" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1157" name="IdTest" fullname="IO.Swagger.Test.TagTests.IdTest" runstate="Runnable" result="Passed" duration="0.000184" asserts="0" />
+            <test-case id="1-1158" name="NameTest" fullname="IO.Swagger.Test.TagTests.NameTest" runstate="Runnable" result="Passed" duration="0.000087" asserts="0" />
+            <test-case id="1-1156" name="TagInstanceTest" fullname="IO.Swagger.Test.TagTests.TagInstanceTest" runstate="Runnable" result="Passed" duration="0.000084" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1021" name="UserApiTests" fullname="IO.Swagger.Test.UserApiTests" runstate="Runnable" testcasecount="9" result="Passed" duration="0.008721" total="9" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1024" name="CreateUsersWithArrayInputTest" fullname="IO.Swagger.Test.UserApiTests.CreateUsersWithArrayInputTest" runstate="Runnable" result="Passed" duration="0.001149" asserts="0" />
+            <test-case id="1-1025" name="CreateUsersWithListInputTest" fullname="IO.Swagger.Test.UserApiTests.CreateUsersWithListInputTest" runstate="Runnable" result="Passed" duration="0.000082" asserts="0" />
+            <test-case id="1-1023" name="CreateUserTest" fullname="IO.Swagger.Test.UserApiTests.CreateUserTest" runstate="Runnable" result="Passed" duration="0.000089" asserts="0" />
+            <test-case id="1-1026" name="DeleteUserTest" fullname="IO.Swagger.Test.UserApiTests.DeleteUserTest" runstate="Runnable" result="Passed" duration="0.000097" asserts="0" />
+            <test-case id="1-1027" name="GetUserByNameTest" fullname="IO.Swagger.Test.UserApiTests.GetUserByNameTest" runstate="Runnable" result="Passed" duration="0.000085" asserts="0" />
+            <test-case id="1-1022" name="InstanceTest" fullname="IO.Swagger.Test.UserApiTests.InstanceTest" runstate="Runnable" result="Passed" duration="0.000085" asserts="0" />
+            <test-case id="1-1028" name="LoginUserTest" fullname="IO.Swagger.Test.UserApiTests.LoginUserTest" runstate="Runnable" result="Passed" duration="0.000097" asserts="0" />
+            <test-case id="1-1029" name="LogoutUserTest" fullname="IO.Swagger.Test.UserApiTests.LogoutUserTest" runstate="Runnable" result="Passed" duration="0.000088" asserts="0" />
+            <test-case id="1-1030" name="UpdateUserTest" fullname="IO.Swagger.Test.UserApiTests.UpdateUserTest" runstate="Runnable" result="Passed" duration="0.000084" asserts="0" />
+          </test-suite>
+          <test-suite type="TestFixture" id="1-1159" name="UserTests" fullname="IO.Swagger.Test.UserTests" runstate="Runnable" testcasecount="9" result="Passed" duration="0.007164" total="9" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-case id="1-1165" name="EmailTest" fullname="IO.Swagger.Test.UserTests.EmailTest" runstate="Runnable" result="Passed" duration="0.000175" asserts="0" />
+            <test-case id="1-1163" name="FirstNameTest" fullname="IO.Swagger.Test.UserTests.FirstNameTest" runstate="Runnable" result="Passed" duration="0.000086" asserts="0" />
+            <test-case id="1-1161" name="IdTest" fullname="IO.Swagger.Test.UserTests.IdTest" runstate="Runnable" result="Passed" duration="0.000114" asserts="0" />
+            <test-case id="1-1164" name="LastNameTest" fullname="IO.Swagger.Test.UserTests.LastNameTest" runstate="Runnable" result="Passed" duration="0.000113" asserts="0" />
+            <test-case id="1-1166" name="PasswordTest" fullname="IO.Swagger.Test.UserTests.PasswordTest" runstate="Runnable" result="Passed" duration="0.000113" asserts="0" />
+            <test-case id="1-1167" name="PhoneTest" fullname="IO.Swagger.Test.UserTests.PhoneTest" runstate="Runnable" result="Passed" duration="0.000114" asserts="0" />
+            <test-case id="1-1160" name="UserInstanceTest" fullname="IO.Swagger.Test.UserTests.UserInstanceTest" runstate="Runnable" result="Passed" duration="0.000113" asserts="0" />
+            <test-case id="1-1162" name="UsernameTest" fullname="IO.Swagger.Test.UserTests.UsernameTest" runstate="Runnable" result="Passed" duration="0.000113" asserts="0" />
+            <test-case id="1-1168" name="UserStatusTest" fullname="IO.Swagger.Test.UserTests.UserStatusTest" runstate="Runnable" result="Passed" duration="0.000113" asserts="0" />
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

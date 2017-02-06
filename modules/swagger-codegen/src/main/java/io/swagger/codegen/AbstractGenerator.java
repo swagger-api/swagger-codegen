@@ -72,6 +72,10 @@ public abstract class AbstractGenerator {
      * @return String Full template file path
      */
     public String getFullTemplateFile(CodegenConfig config, String templateFile) {
+        String configTemplateFile = config.getFullTemplateFile(templateFile);
+        if (configTemplateFile != null) {
+            return configTemplateFile;
+        }
         String template = config.templateDir() + File.separator + templateFile;
         if (new File(template).exists()) {
             return template;
