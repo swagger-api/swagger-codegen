@@ -48,9 +48,7 @@ public class FormatTest  {
    * maximum: 100
    * @return integer
   **/
-  @Min(10)
-  @Max(100)
-  public Integer getInteger() {
+ @Min(10) @Max(100)  public Integer getInteger() {
     return integer;
   }
 
@@ -69,9 +67,7 @@ public class FormatTest  {
    * maximum: 200
    * @return int32
   **/
-  @Min(20)
-  @Max(200)
-  public Integer getInt32() {
+ @Min(20) @Max(200)  public Integer getInt32() {
     return int32;
   }
 
@@ -108,9 +104,7 @@ public class FormatTest  {
    * @return number
   **/
   @NotNull
-  @DecimalMin("32.1")
-  @DecimalMax("543.2")
-  public BigDecimal getNumber() {
+ @DecimalMin("32.1") @DecimalMax("543.2")  public BigDecimal getNumber() {
     return number;
   }
 
@@ -129,9 +123,7 @@ public class FormatTest  {
    * maximum: 987.6
    * @return _float
   **/
-  @DecimalMin("54.3")
-  @DecimalMax("987.6")
-  public Float getFloat() {
+ @DecimalMin("54.3") @DecimalMax("987.6")  public Float getFloat() {
     return _float;
   }
 
@@ -150,9 +142,7 @@ public class FormatTest  {
    * maximum: 123.4
    * @return _double
   **/
-  @DecimalMin("67.8")
-  @DecimalMax("123.4")
-  public Double getDouble() {
+ @DecimalMin("67.8") @DecimalMax("123.4")  public Double getDouble() {
     return _double;
   }
 
@@ -169,8 +159,7 @@ public class FormatTest  {
    * Get string
    * @return string
   **/
-  @Pattern(regexp="/[a-z]/i")
-  public String getString() {
+ @Pattern(regexp="/[a-z]/i")  public String getString() {
     return string;
   }
 
@@ -275,8 +264,7 @@ public class FormatTest  {
    * @return password
   **/
   @NotNull
-  @Size(min=10,max=64)
-  public String getPassword() {
+ @Size(min=10,max=64)  public String getPassword() {
     return password;
   }
 
