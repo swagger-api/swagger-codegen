@@ -1,7 +1,7 @@
-package com.ibm.ws.petstoresample.model;
+package io.swagger.model;
 
-import com.ibm.ws.petstoresample.model.Category;
-import com.ibm.ws.petstoresample.model.Tag;
+import io.swagger.model.Category;
+import io.swagger.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +18,24 @@ public class Pet   {
   private String name = null;
   private List<String> photoUrls = new ArrayList<String>();
   private List<Tag> tags = new ArrayList<Tag>();
-  private String status = null;
+
+import javax.xml.bind.annotation.XmlEnum;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlType(name="Pet")
+@XmlEnum
+public enum Pet {
+    {values&#x3D;[available, pending, sold], enumVars&#x3D;[{name&#x3D;AVAILABLE, value&#x3D;&quot;available&quot;}, {name&#x3D;PENDING, value&#x3D;&quot;pending&quot;}, {name&#x3D;SOLD, value&#x3D;&quot;sold&quot;}]}, 
+    
+    public String value() {
+        return name();
+    }
+
+    public static Pet fromValue(String v) {
+        return valueOf(v);
+    }
+}
+  private StatusEnum status = null;
 
   /**
    **/
@@ -103,17 +120,17 @@ public class Pet   {
   /**
    * pet status in the store
    **/
-  public Pet status(String status) {
+  public Pet status(StatusEnum status) {
     this.status = status;
     return this;
   }
 
   
   @ApiModelProperty(example = "null", value = "pet status in the store")
-  public String getStatus() {
+  public StatusEnum getStatus() {
     return status;
   }
-  public void setStatus(String status) {
+  public void setStatus(StatusEnum status) {
     this.status = status;
   }
 

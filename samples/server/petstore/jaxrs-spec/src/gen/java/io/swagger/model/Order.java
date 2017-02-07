@@ -1,4 +1,4 @@
-package com.ibm.ws.petstoresample.model;
+package io.swagger.model;
 
 
 
@@ -13,8 +13,25 @@ public class Order   {
   private Long petId = null;
   private Integer quantity = null;
   private javax.xml.datatype.XMLGregorianCalendar shipDate = null;
-  private String status = null;
-  private Boolean complete = null;
+
+import javax.xml.bind.annotation.XmlEnum;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlType(name="Order")
+@XmlEnum
+public enum Order {
+    {values&#x3D;[placed, approved, delivered], enumVars&#x3D;[{name&#x3D;PLACED, value&#x3D;&quot;placed&quot;}, {name&#x3D;APPROVED, value&#x3D;&quot;approved&quot;}, {name&#x3D;DELIVERED, value&#x3D;&quot;delivered&quot;}]}, 
+    
+    public String value() {
+        return name();
+    }
+
+    public static Order fromValue(String v) {
+        return valueOf(v);
+    }
+}
+  private StatusEnum status = null;
+  private Boolean complete = false;
 
   /**
    **/
@@ -83,17 +100,17 @@ public class Order   {
   /**
    * Order Status
    **/
-  public Order status(String status) {
+  public Order status(StatusEnum status) {
     this.status = status;
     return this;
   }
 
   
   @ApiModelProperty(example = "null", value = "Order Status")
-  public String getStatus() {
+  public StatusEnum getStatus() {
     return status;
   }
-  public void setStatus(String status) {
+  public void setStatus(StatusEnum status) {
     this.status = status;
   }
 

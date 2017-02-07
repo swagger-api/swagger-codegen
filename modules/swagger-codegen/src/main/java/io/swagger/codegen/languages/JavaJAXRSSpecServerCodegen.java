@@ -30,6 +30,8 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
 
         modelTemplateFiles.put("model.mustache", ".java");
         apiTemplateFiles.put("api.mustache", ".java");
+        apiTemplateFiles.put("apiServiceImpl.mustache", ".java");
+
         apiPackage = "io.swagger.api";
         modelPackage = "io.swagger.model";
 

@@ -1,0 +1,37 @@
+package {{package}}.impl;
+
+{{#imports}}import {{import}};
+{{/imports}}
+
+import {{package}}.{{classname}};
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
+
+import io.swagger.annotations.*;
+
+import java.io.InputStream;
+
+import java.util.List;
+{{#useBeanValidation}}
+import javax.validation.constraints.*;
+{{/useBeanValidation}}
+
+@Path("/{{baseName}}")
+
+@Api(description = "the {{baseName}} API")
+{{#hasConsumes}}@Consumes({ {{#consumes}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/consumes}} }){{/hasConsumes}}
+{{#hasProduces}}@Produces({ {{#produces}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/produces}} }){{/hasProduces}}
+{{>generatedAnnotation}}
+
+public class {{classname}}ServiceImpl implements {{classname}} {
+{{#operations}}
+{{#operation}}
+
+    public Response {{nickname}}({{#allParams}}{{>serviceQueryParams}}{{>servicePathParams}}{{>serviceHeaderParams}}{{>serviceBodyParams}}{{>serviceFormParams}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {
+        return Response.ok().entity("magic!").build();
+    }
+{{/operation}}
+}
+{{/operations}}
+
