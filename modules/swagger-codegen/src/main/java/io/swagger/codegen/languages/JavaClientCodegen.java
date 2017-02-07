@@ -97,9 +97,6 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         if (additionalProperties.containsKey(USE_RX_JAVA2)) {
             this.setUseRxJava2(Boolean.valueOf(additionalProperties.get(USE_RX_JAVA2).toString()));
         }
-        if (additionalProperties.containsKey(DO_NOT_USE_RX)) {
-            this.setDoNotUseRx(Boolean.valueOf(additionalProperties.get(DO_NOT_USE_RX).toString()));
-        }
         if (additionalProperties.containsKey(USE_PLAY24_WS)) {
             this.setUsePlay24WS(Boolean.valueOf(additionalProperties.get(USE_PLAY24_WS).toString()));
         }
