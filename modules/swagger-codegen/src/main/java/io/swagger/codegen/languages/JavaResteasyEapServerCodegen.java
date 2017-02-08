@@ -20,11 +20,11 @@ import io.swagger.codegen.languages.features.SwaggerFeatures;
 import io.swagger.models.Operation;
 
 public class JavaResteasyEapServerCodegen extends AbstractJavaJAXRSServerCodegen
-		implements JbossFeature, BeanValidationFeatures, SwaggerFeatures {
+        implements JbossFeature, BeanValidationFeatures, SwaggerFeatures {
 
     protected boolean useBeanValidation = true;
     protected boolean generateJbossDeploymentDescriptor = true;
-	protected boolean useSwaggerFeature = false;
+    protected boolean useSwaggerFeature = false;
     
     public JavaResteasyEapServerCodegen() {
 
@@ -48,7 +48,7 @@ public class JavaResteasyEapServerCodegen extends AbstractJavaJAXRSServerCodegen
 
         cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
         cliOptions.add(CliOption.newBoolean(GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR, "Generate Jboss Deployment Descriptor"));
-		cliOptions.add(CliOption.newBoolean(USE_SWAGGER_FEATURE, "Use dynamic Swagger generator"));
+        cliOptions.add(CliOption.newBoolean(USE_SWAGGER_FEATURE, "Use dynamic Swagger generator"));
 
     }
 
@@ -79,13 +79,13 @@ public class JavaResteasyEapServerCodegen extends AbstractJavaJAXRSServerCodegen
             writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
         }
 
-		if (additionalProperties.containsKey(USE_SWAGGER_FEATURE)) {
-			this.setUseSwaggerFeature(convertPropertyToBoolean(USE_SWAGGER_FEATURE));
-		}
+        if (additionalProperties.containsKey(USE_SWAGGER_FEATURE)) {
+            this.setUseSwaggerFeature(convertPropertyToBoolean(USE_SWAGGER_FEATURE));
+        }
 
-		if (useSwaggerFeature) {
-			writePropertyBack(USE_SWAGGER_FEATURE, useSwaggerFeature);
-		}
+        if (useSwaggerFeature) {
+            writePropertyBack(USE_SWAGGER_FEATURE, useSwaggerFeature);
+        }
 
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
         writeOptional(outputFolder, new SupportingFile("gradle.mustache", "", "build.gradle"));
@@ -225,7 +225,7 @@ public class JavaResteasyEapServerCodegen extends AbstractJavaJAXRSServerCodegen
         this.generateJbossDeploymentDescriptor = generateJbossDeploymentDescriptor;
     }
 
-	public void setUseSwaggerFeature(boolean useSwaggerFeature) {
-		this.useSwaggerFeature = useSwaggerFeature;
-	}
+    public void setUseSwaggerFeature(boolean useSwaggerFeature) {
+        this.useSwaggerFeature = useSwaggerFeature;
+    }
 }
