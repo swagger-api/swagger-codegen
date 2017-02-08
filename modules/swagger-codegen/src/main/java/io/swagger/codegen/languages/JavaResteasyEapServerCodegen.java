@@ -45,10 +45,9 @@ public class JavaResteasyEapServerCodegen extends AbstractJavaJAXRSServerCodegen
         dateLibrary = "legacy";// TODO: change to joda
 
         embeddedTemplateDir = templateDir = "JavaJaxRS" + File.separator + "resteasy" + File.separator + "eap";
-        
+
         cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
-        cliOptions.add(
-                CliOption.newBoolean(GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR, "Generate Jboss Deployment Descriptor"));
+        cliOptions.add(CliOption.newBoolean(GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR, "Generate Jboss Deployment Descriptor"));
 		cliOptions.add(CliOption.newBoolean(USE_SWAGGER_FEATURE, "Use dynamic Swagger generator"));
 
     }
@@ -68,11 +67,10 @@ public class JavaResteasyEapServerCodegen extends AbstractJavaJAXRSServerCodegen
         super.processOpts();
 
         if (additionalProperties.containsKey(GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR)) {
-            boolean generateJbossDeploymentDescriptorProp = convertPropertyToBooleanAndWriteBack(
-                    GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR);
+            boolean generateJbossDeploymentDescriptorProp = convertPropertyToBooleanAndWriteBack(GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR);
             this.setGenerateJbossDeploymentDescriptor(generateJbossDeploymentDescriptorProp);
         }
-        
+
         if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
             this.setUseBeanValidation(convertPropertyToBoolean(USE_BEANVALIDATION));
         }
@@ -93,19 +91,15 @@ public class JavaResteasyEapServerCodegen extends AbstractJavaJAXRSServerCodegen
         writeOptional(outputFolder, new SupportingFile("gradle.mustache", "", "build.gradle"));
         writeOptional(outputFolder, new SupportingFile("settingsGradle.mustache", "", "settings.gradle"));
         writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
-        writeOptional(outputFolder, new SupportingFile("web.mustache",
-                ("src/main/webapp/WEB-INF"), "web.xml"));
+        writeOptional(outputFolder, new SupportingFile("web.mustache", ("src/main/webapp/WEB-INF"), "web.xml"));
 
-        supportingFiles.add(new SupportingFile("JacksonConfig.mustache",
-                (projectFolder + File.separator + "java" + '/' + invokerPackage).replace(".", "/"), "JacksonConfig.java"));
-        
+        supportingFiles.add(new SupportingFile("JacksonConfig.mustache", (projectFolder + File.separator + "java" + '/' + invokerPackage).replace(".", "/"), "JacksonConfig.java"));
+
         if (generateJbossDeploymentDescriptor) {
-            writeOptional(outputFolder, new SupportingFile("jboss-web.mustache",
-                ("src/main/webapp/WEB-INF"), "jboss-web.xml"));
+            writeOptional(outputFolder, new SupportingFile("jboss-web.mustache", ("src/main/webapp/WEB-INF"), "jboss-web.xml"));
         }
 
-        writeOptional(outputFolder, new SupportingFile("RestApplication.mustache",
-                (projectFolder + File.separator + "java" + '/' + invokerPackage).replace(".", "/"), "RestApplication.java"));
+        writeOptional(outputFolder, new SupportingFile("RestApplication.mustache", (projectFolder + File.separator + "java" + '/' + invokerPackage).replace(".", "/"), "RestApplication.java"));
 
     }
 
@@ -125,7 +119,7 @@ public class JavaResteasyEapServerCodegen extends AbstractJavaJAXRSServerCodegen
         } else {
             if (co.path.startsWith("/" + basePath)) {
                 co.path = co.path.substring(("/" + basePath).length());
-            }
+        }
             co.subresourceOperation = !co.path.isEmpty();
         }
         List<CodegenOperation> opList = operations.get(basePath);
@@ -182,8 +176,8 @@ public class JavaResteasyEapServerCodegen extends AbstractJavaJAXRSServerCodegen
                     if (end > 0) {
                         operation.returnType = rt.substring("Set<".length(), end).trim();
                         operation.returnContainer = "Set";
-                    }
-                }
+            }
+        }
             }
         }
         return objs;
@@ -191,22 +185,22 @@ public class JavaResteasyEapServerCodegen extends AbstractJavaJAXRSServerCodegen
 
     @Override
     public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
-        //Add imports for Jackson
-        if(!BooleanUtils.toBoolean(model.isEnum)) {
+        // Add imports for Jackson
+        if (!BooleanUtils.toBoolean(model.isEnum)) {
             model.imports.add("JsonProperty");
 
-            if(BooleanUtils.toBoolean(model.hasEnums)) {
+            if (BooleanUtils.toBoolean(model.hasEnums)) {
                 model.imports.add("JsonValue");
-            }
         }
+    }
     }
 
     @Override
     public Map<String, Object> postProcessModelsEnum(Map<String, Object> objs) {
         objs = super.postProcessModelsEnum(objs);
 
-        //Add imports for Jackson
-        List<Map<String, String>> imports = (List<Map<String, String>>)objs.get("imports");
+        // Add imports for Jackson
+        List<Map<String, String>> imports = (List<Map<String, String>>) objs.get("imports");
         List<Object> models = (List<Object>) objs.get("models");
         for (Object _mo : models) {
             Map<String, Object> mo = (Map<String, Object>) _mo;
@@ -217,7 +211,7 @@ public class JavaResteasyEapServerCodegen extends AbstractJavaJAXRSServerCodegen
                 Map<String, String> item = new HashMap<String, String>();
                 item.put("import", importMapping.get("JsonValue"));
                 imports.add(item);
-            }
+        }
         }
 
         return objs;
