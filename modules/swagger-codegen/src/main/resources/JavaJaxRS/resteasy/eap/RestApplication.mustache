@@ -19,19 +19,19 @@ import {{invokerPackage}}.impl.{{classname}}ServiceImpl;
 public class RestApplication extends Application {
 
 {{#useSwaggerFeature}}
-	public RestApplication() {
-		super();
-		// Customize the dynamic contract
-		BeanConfig beanConfig = new BeanConfig();
-		beanConfig.setTitle("{{appName}}");
-		beanConfig.setVersion("{{version}}");
-		beanConfig.setSchemes(new String[] { "{{scheme}}" });
-		beanConfig.setHost("{{host}}");
-		beanConfig.setBasePath("{{basePathWithoutHost}}");
-		beanConfig.setResourcePackage("{{invokerPackage}}");
-		beanConfig.setScan(true);
+    public RestApplication() {
+        super();
+        // Customize the dynamic contract
+        BeanConfig beanConfig = new BeanConfig();
+        beanConfig.setTitle("{{appName}}");
+        beanConfig.setVersion("{{version}}");
+        beanConfig.setSchemes(new String[] { "{{scheme}}" });
+        beanConfig.setHost("{{host}}");
+        beanConfig.setBasePath("{{basePathWithoutHost}}");
+        beanConfig.setResourcePackage("{{invokerPackage}}");
+        beanConfig.setScan(true);
 
-	}
+    }
 {{/useSwaggerFeature}}
 
     public Set<Class<?>> getClasses() {
