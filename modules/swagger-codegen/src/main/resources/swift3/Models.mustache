@@ -119,7 +119,7 @@ class Decoders {
                 return .failure(.typeMismatch(expected: "A value from the enumeration \(T.self)", actual: "\(value)"))
             }
         } else {
-            return .failure(.typeMismatch(expected: "\(T.RawValue.self) matching a case from the enumeration \(T.self)", actual: String(describing: type(of: source))))
+            return .success(nil)
         }
     }
 
