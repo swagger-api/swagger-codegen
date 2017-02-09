@@ -10,13 +10,13 @@ public class CodegenResponse {
     public Boolean hasMore;
     public List<Map<String, Object>> examples;
     public String dataType, baseType, containerType;
+    public Boolean isString, isInteger, isLong, isFloat, isDouble, isByteArray, isBinary, isBoolean, isDate, isDateTime;
+    public Boolean isFile = Boolean.FALSE;
     public Boolean isDefault;
     public Boolean simpleType;
     public Boolean primitiveType;
     public Boolean isMapContainer;
     public Boolean isListContainer;
-    public Boolean isBinary = Boolean.FALSE;
-    public Boolean isFile = Boolean.FALSE;
     public Object schema;
     public String jsonSchema;
     public Map<String, Object> vendorExtensions;

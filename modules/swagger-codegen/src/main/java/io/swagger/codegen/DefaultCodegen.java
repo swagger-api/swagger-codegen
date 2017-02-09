@@ -2251,8 +2251,33 @@ public class DefaultCodegen {
                 }
             }
             r.dataType = cm.datatype;
-            r.isBinary = isDataTypeBinary(cm.datatype);
-            r.isFile = isDataTypeFile(cm.datatype);
+
+            if (Boolean.TRUE.equals(cm.isString)) {
+                r.isString = true;
+            } else if (Boolean.TRUE.equals(cm.isBoolean)) {
+                r.isBoolean = true;
+            } else if (Boolean.TRUE.equals(cm.isLong)) {
+                r.isLong = true;
+            } else if (Boolean.TRUE.equals(cm.isInteger)) {
+                r.isInteger = true;
+            } else if (Boolean.TRUE.equals(cm.isDouble)) {
+                r.isDouble = true;
+            } else if (Boolean.TRUE.equals(cm.isFloat)) {
+                r.isFloat = true;
+            } else if (Boolean.TRUE.equals(cm.isByteArray)) {
+                r.isByteArray = true;
+            } else if (Boolean.TRUE.equals(cm.isBinary)) {
+                r.isBinary = true;
+            } else if (Boolean.TRUE.equals(cm.isFile)) {
+                r.isFile = true;
+            } else if (Boolean.TRUE.equals(cm.isDate)) {
+                r.isDate = true;
+            } else if (Boolean.TRUE.equals(cm.isDateTime)) {
+                r.isDateTime = true;
+            } else {
+                LOGGER.debug("Property type is not primitive: " + cm.datatype);
+            }
+
             if (cm.isContainer) {
                 r.simpleType = false;
                 r.containerType = cm.containerType;
