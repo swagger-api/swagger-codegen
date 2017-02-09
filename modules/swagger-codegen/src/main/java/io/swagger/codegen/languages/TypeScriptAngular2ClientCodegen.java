@@ -1,28 +1,21 @@
 package io.swagger.codegen.languages;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenParameter;
 import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.SupportingFile;
 import io.swagger.models.ModelImpl;
 import io.swagger.models.properties.ArrayProperty;
-import io.swagger.models.properties.BooleanProperty;
 import io.swagger.models.properties.FileProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.ObjectProperty;
 import io.swagger.models.properties.Property;
 
 public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCodegen {
-    private static final SimpleDateFormat SNAPSHOT_SUFFIX_FORMAT = new SimpleDateFormat("yyyyMMddHHmm");
-
     public TypeScriptAngular2ClientCodegen() {
         super();
         this.outputFolder = "generated-code/typescript-angular2";

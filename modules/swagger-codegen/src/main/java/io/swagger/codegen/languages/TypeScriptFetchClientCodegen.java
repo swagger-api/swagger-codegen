@@ -1,12 +1,9 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.SupportingFile;
 
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;

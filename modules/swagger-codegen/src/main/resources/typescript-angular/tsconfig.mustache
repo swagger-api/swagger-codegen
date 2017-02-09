@@ -1,27 +1,19 @@
 {
     "compilerOptions": {
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
         "noImplicitAny": false,
         "suppressImplicitAnyIndexErrors": true,
         "target": "{{#supportsES6}}ES6{{/supportsES6}}{{^supportsES6}}ES5{{/supportsES6}}",
         "module": "commonjs",
         "moduleResolution": "node",
-        "removeComments": true,
         "sourceMap": true,
-        "outDir": "./dist",
-        "noLib": false,
-        "declaration": true
+        "outFile": "./dist/client.js",
+        "declaration": false
     },
+    "typeRoots": [
+        "./typings"
+    ],
     "exclude": [
         "node_modules",
-        "typings/main.d.ts",
-        "typings/main",
         "dist"
-    ],
-    "filesGlob": [
-        "./model/*.ts",
-        "./api/*.ts",
-        "typings/browser.d.ts"
     ]
 }
