@@ -2046,10 +2046,10 @@ public class DefaultCodegen {
                 }
                 r.isDefault = response == methodResponse;
                 op.responses.add(r);
-                if (r.isBinary && r.isDefault){
+                if (Boolean.TRUE.equals(r.isBinary) && Boolean.TRUE.equals(r.isDefault)){
                     op.isResponseBinary = Boolean.TRUE;
                 }
-                if (r.isFile && r.isDefault){
+                if (Boolean.TRUE.equals(r.isFile) && Boolean.TRUE.equals(r.isDefault)){
                     op.isResponseFile = Boolean.TRUE;
                 }
             }
