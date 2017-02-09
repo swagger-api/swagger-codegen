@@ -1,0 +1,31 @@
+{
+  "name": "@swagger/angular-typescript-petstore",
+  "version": "0.0.1-SNAPSHOT.201702090944",
+  "description": "AngularJS based TypeScript source client for @swagger/angular-typescript-petstore",
+  "author": "Swagger Codegen Contributors",
+  "keywords": [
+    "swagger-client"
+    "typescript
+  ],
+  "license": "Unlicense",
+  "main": "index.ts",
+  "typings": "index.ts",
+  "scripts": {
+    "build": "typings install && tsc --outDir dist/",
+    "postinstall": "npm run build"
+  },
+  "dependencies": {
+    "core-js": "^2.4.0"
+  },
+  "peerDependencies": {
+      "angular": "^1.4.3"
+  },
+  "devDependencies": {
+    "typescript": "^1.8.10",
+    "typings": "^1.3.2",
+    "angular": "^1.4.3"
+  },
+  "publishConfig":{
+    "registry":"https://skimdb.npmjs.com/registry"
+  }
+}

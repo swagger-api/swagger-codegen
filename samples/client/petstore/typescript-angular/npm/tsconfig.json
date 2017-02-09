@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "noImplicitAny": false,
+        "suppressImplicitAnyIndexErrors": true,
+        "target": "ES5",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "outFile": "./dist/client.js",
+        "declaration": false
+    },
+    "typeRoots": [
+        "./typings"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}
