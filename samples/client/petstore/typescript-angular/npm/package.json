@@ -1,6 +1,6 @@
 {
   "name": "@swagger/angular-typescript-petstore",
-  "version": "0.0.1-SNAPSHOT.201702092235",
+  "version": "0.0.1-SNAPSHOT.201702100458",
   "description": "AngularJS based TypeScript source client for @swagger/angular-typescript-petstore",
   "author": "Swagger Codegen Contributors",
   "keywords": [
@@ -11,7 +11,7 @@
   "main": "index.ts",
   "typings": "index.ts",
   "scripts": {
-    "build": "typings install && tsc --outDir dist/",
+    "build": "typings install && tsc",
     "postinstall": "npm run build"
   },
   "dependencies": {
