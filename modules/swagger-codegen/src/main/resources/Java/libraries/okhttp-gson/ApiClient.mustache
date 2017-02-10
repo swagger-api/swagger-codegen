@@ -1018,25 +1018,31 @@ public class ApiClient {
      * @return Type
      */
     public <T> T handleResponse(Response response, Type returnType) throws ApiException {
-        if (response.isSuccessful()) {
-            if (returnType == null || response.code() == 204) {
-                // returning null if the returnType is not defined,
-                // or the status code is 204 (No Content)
-                return null;
-            } else {
-                return deserialize(response, returnType);
-            }
-        } else {
-            String respBody = null;
-            if (response.body() != null) {
-                try {
-                    respBody = response.body().string();
-                } catch (IOException e) {
-                    throw new ApiException(response.message(), e, response.code(), response.headers().toMultimap());
-                }
-            }
-            throw new ApiException(response.message(), response.code(), response.headers().toMultimap(), respBody);
-        }
+		boolean isBodyClosed = false;
+		try {
+			if (response.isSuccessful()) {
+				if (returnType == null || response.code() == 204) {
+					// returning null if the returnType is not defined,
+					// or the status code is 204 (No Content)
+					return null;
+				} else {
+					T t = deserialize(response, returnType);
+					isBodyClosed = true;
+					return t;
+				}
+			}
+		}
+		finally {
+			// make sure the body is closed for all cases
+			if (response.body() != null && !isBodyClosed) {
+				try {
+					response.body().close();
+				} catch (IOException e) {
+					throw new ApiException(response.message(), e, response.code(), response.headers().toMultimap());
+				}
+			}
+		}
+		throw new ApiException(response.message(), response.code(), response.headers().toMultimap(), "");
     }
 
     /**
