@@ -1,11 +1,11 @@
 {
   "name": "@swagger/angular-typescript-petstore",
-  "version": "0.0.1-SNAPSHOT.201702090944",
+  "version": "0.0.1-SNAPSHOT.201702092235",
   "description": "AngularJS based TypeScript source client for @swagger/angular-typescript-petstore",
   "author": "Swagger Codegen Contributors",
   "keywords": [
-    "swagger-client"
-    "typescript
+    "swagger-client",
+    "typescript"
   ],
   "license": "Unlicense",
   "main": "index.ts",
