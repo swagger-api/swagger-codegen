@@ -1,15 +1,11 @@
 package io.swagger.model;
 
-import io.swagger.annotations.ApiModel;
 import javax.validation.constraints.*;
 
 
-/**
- * Describes the result of uploading an image resource
- **/
 import io.swagger.annotations.*;
 import java.util.Objects;
-@ApiModel(description = "Describes the result of uploading an image resource")
+
 
 public class ModelApiResponse   {
   

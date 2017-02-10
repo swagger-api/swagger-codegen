@@ -1,15 +1,11 @@
 package io.swagger.model;
 
-import io.swagger.annotations.ApiModel;
 import javax.validation.constraints.*;
 
 
-/**
- * A category for a pet
- **/
 import io.swagger.annotations.*;
 import java.util.Objects;
-@ApiModel(description = "A category for a pet")
+
 
 public class Category   {
   
