@@ -1,17 +1,27 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.*;
-import io.swagger.codegen.languages.features.BeanValidationFeatures;
-import io.swagger.models.Operation;
-import io.swagger.models.Path;
-import io.swagger.models.Swagger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenParameter;
+import io.swagger.codegen.CodegenResponse;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.languages.features.BeanValidationFeatures;
+import io.swagger.codegen.languages.features.UseGenericResponseFeatures;
+import io.swagger.models.Operation;
+import io.swagger.models.Path;
+import io.swagger.models.Swagger;
 
-public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen implements BeanValidationFeatures {
+public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen implements BeanValidationFeatures, UseGenericResponseFeatures {
     /**
      * Name of the sub-directory in "src/main/resource" where to find the
      * Mustache template for the JAX-RS Codegen.
@@ -22,6 +32,7 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
     protected String title = "Swagger Server";
 
 	protected boolean useBeanValidation = true;
+    protected boolean useGenericResponse = false;
 
     static Logger LOGGER = LoggerFactory.getLogger(AbstractJavaJAXRSServerCodegen.class);
 
@@ -45,6 +56,7 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
         cliOptions.add(new CliOption("title", "a title describing the application"));
 
 		cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
+        cliOptions.add(CliOption.newBoolean(USE_GENERIC_RESPONSE, "Use generic response"));
 
     }
 
@@ -74,6 +86,14 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
 		if (useBeanValidation) {
 			writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
 		}
+
+        if (additionalProperties.containsKey(USE_GENERIC_RESPONSE)) {
+            this.setUseGenericResponse(convertPropertyToBoolean(USE_GENERIC_RESPONSE));
+        }
+
+        if (useGenericResponse) {
+            writePropertyBack(USE_GENERIC_RESPONSE, useGenericResponse);
+        }
 
     }
 
@@ -223,5 +243,9 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
 	public void setUseBeanValidation(boolean useBeanValidation) {
 		this.useBeanValidation = useBeanValidation;
 	}
+
+    public void setUseGenericResponse(boolean useGenericResponse) {
+        this.useGenericResponse = useGenericResponse;
+    }
 
 }
