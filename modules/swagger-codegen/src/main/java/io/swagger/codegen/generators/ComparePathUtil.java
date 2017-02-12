@@ -14,33 +14,104 @@ public class ComparePathUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JaxrsSpec_Generator_Petstore.class);
 
-    public static void assertThatAllFilesAreEqual(Path expectedDirectory, Path actualDirectory)
-            throws Exception {
+    /**
+     * checks if the directory file lists and file content is equal
+     * 
+     * @param directory
+     *            the directory
+     * @param compareDirectory
+     *            the directory to compare with
+     * @param checkFileContent
+     *            also compare file content
+     * @return true if directory and compareDirectory are equal
+     * @throws IOException
+     */
+    public static boolean isEqualDirectories(Path directory, Path compareDirectory, boolean checkFileContent) throws IOException {
+        boolean isRoot = true;
+        boolean check = isEverythingInCompareDirectory(directory, compareDirectory, checkFileContent, isRoot);
+        boolean checkOpposite = check && isEverythingInCompareDirectory(directory, compareDirectory, checkFileContent, isRoot);
+        return check && checkOpposite;
+
+    }
+
+    /**
+     * checks if the directory file lists and file content is equal
+     * 
+     * @param directory
+     *            the directory
+     * @param compareDirectory
+     *            the directory to compare with
+     * @param checkFileContent
+     *            also compare file content
+     * @return true if directory and compareDirectory are equal
+     * @throws IOException
+     */
+    public static boolean isEverythingInCompareDirectory(Path directory, Path compareDirectory, boolean checkFileContent, boolean isRoot)
+            throws IOException {
 
         try {
-            try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(expectedDirectory)) {
-                for (Path expectedFilePath : directoryStream) {
+            LOGGER.info("checking directory " + directory);
 
-                    // search for expectedFile in the actualDirectory
-                    LOGGER.info("checking file " + expectedFilePath);
-
-                    Path actualFilePath = actualDirectory.resolve(expectedFilePath.getFileName());
-
-                    File expectedFile = expectedFilePath.toFile();
-                    if (expectedFile.isFile()) {
-                        if (!FileUtils.contentEquals(actualFilePath.toFile(), expectedFile)) {
-                            throw new Exception("files not equal: actual: " + actualFilePath.toFile() + ", expected: " + expectedFilePath.getFileName() + "!");
-                        };
-                      
-                    } else {
-                        LOGGER.info("going into recursion with directory " + expectedFilePath);
-                        assertThatAllFilesAreEqual(expectedFilePath, actualFilePath);
-                    }
-                }
+            File directoryFile = directory.toFile();
+            File compareFile = compareDirectory.toFile();
+            LOGGER.debug("directoryFile: " + directoryFile);
+            LOGGER.debug("compareFile: " + compareFile);
+            
+            // check, if there is the same number of files/subdirectories
+            File[] directoryFiles = null;
+            File[] compareFiles = null;
+            if (isRoot) {
+                directoryFiles = directoryFile.listFiles(new EclipseFilenameFilter());
+                compareFiles = compareFile.listFiles(new EclipseFilenameFilter());
+            } else {
+                directoryFiles = directoryFile.listFiles();
+                compareFiles = compareFile.listFiles();
             }
+            
+            if (directoryFiles.length == compareFiles.length) {
+                return compareDirectoryContents(directory, compareDirectory, checkFileContent);
+
+            } else {
+                LOGGER.info("number of files in directory are different " + directoryFiles.length + " vs compareDirectory: " + compareFiles.length);
+                return false;
+            }
+
         } catch (IOException e) {
             throw new RuntimeException("Failed to assert that all files are equal", e);
         }
+    }
+
+    public static boolean compareDirectoryContents(Path directory, Path compareDirectory, boolean checkFileContent) throws IOException {
+        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(directory)) {
+
+            for (Path directoryFilePath : directoryStream) {
+
+                // search for directoryFile in the compareDirectory
+                Path compareFilePath = compareDirectory.resolve(directoryFilePath.getFileName());
+
+                if (compareFilePath != null) {
+
+                    File directoryFile = directoryFilePath.toFile();
+                    if (directoryFile.isFile()) {
+                        LOGGER.info("checking file " + directoryFilePath);
+                        if (checkFileContent && !FileUtils.contentEquals(compareFilePath.toFile(), directoryFile)) {
+                            LOGGER.info("files not equal: compare: " + compareFilePath.toFile() + ", directory: " + directoryFilePath.getFileName() + "!");
+                            return false;
+                        }
+
+                    } else {
+                        LOGGER.info("going into recursion with directory " + directoryFilePath);
+                        return isEverythingInCompareDirectory(directoryFilePath, compareFilePath, checkFileContent, false);
+                    }
+                } else {
+                    LOGGER.info(directoryFilePath.toString() + ": compareFilepath not found");
+                    return false;
+                }
+
+            }
+        }
+
+        return true;
     }
 
 }

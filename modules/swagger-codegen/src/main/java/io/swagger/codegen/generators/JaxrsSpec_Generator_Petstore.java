@@ -34,8 +34,7 @@ public class JaxrsSpec_Generator_Petstore {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JaxrsSpec_Generator_Petstore.class);
 
-    public static boolean generate() {
-        boolean equal = false;
+    public static TemporaryFolder generate() {
         try {
             TemporaryFolder folder = new TemporaryFolder();
             folder.create();
@@ -55,30 +54,13 @@ public class JaxrsSpec_Generator_Petstore {
 
             gen.generate();
 
-            java.nio.file.Path actualPath = FileSystems.getDefault().getPath(output.getAbsolutePath());
-
-            java.nio.file.Path samplePath = FileSystems.getDefault().getPath("../../samples/server/petstore/jaxrs-spec");
-            LOGGER.info("path: " + samplePath.toFile().getAbsolutePath());
-
-            try {
-                ComparePathUtil.assertThatAllFilesAreEqual(actualPath, samplePath);
-
-                // cleanup temporary folder if everything is OK
-                folder.delete();
-
-                equal = true;
-            } catch (Exception e) {
-                LOGGER.info("generated to path " + output.getAbsolutePath());
-
-                e.printStackTrace();
-            }
+            return folder;
 
         } catch (IOException e) {
             LOGGER.info("unable to create temporary folder");
             e.printStackTrace();
+            return null;
         }
-        
-        return equal;
 
     }
 
