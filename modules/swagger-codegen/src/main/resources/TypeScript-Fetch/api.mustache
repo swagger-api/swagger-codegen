@@ -41,7 +41,7 @@ export interface {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
      * {{{description}}}
      */
 {{/description}}
-    "{{name}}"{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
+    "{{baseName}}"{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
 {{/vars}}
 }
 
@@ -93,12 +93,25 @@ export const {{classname}}FetchParamCreator = {
 
         let contentTypeHeader: Dictionary<string> = {};
 {{#hasFormParams}}
-        contentTypeHeader = { "Content-Type": "application/x-www-form-urlencoded" };
-        fetchOptions.body = querystring.stringify({
-        {{#formParams}}
-            "{{baseName}}": params["{{paramName}}"],
-        {{/formParams}}
-        });
+        let formData: Dictionary<any> = {};
+        let isMultipartData = false;
+{{#formParams}}
+        {{#isFile}}isMultipartData = true;
+        {{/isFile}}formData["{{baseName}}"] = params["{{paramName}}"];
+{{/formParams}}
+
+        if (isMultipartData) {
+            let body = new FormData();
+            for (let key in formData) {
+                body.append(key, formData[key]);
+            }
+            fetchOptions.body = body;
+            contentTypeHeader = { "Content-Type": "multipart/form-data" };
+        }
+        else {
+            fetchOptions.body = querystring.stringify(formData);
+            contentTypeHeader = { "Content-Type": "application/x-www-form-urlencoded" };
+        }
 {{/hasFormParams}}
 {{#hasBodyParam}}
         contentTypeHeader = { "Content-Type": "application/json" };{{#bodyParam}}
