@@ -522,7 +522,7 @@ public class DefaultCodegen {
         } else if (p instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) p;
             String inner = getSwaggerType(ap.getItems());
-            return instantiationTypes.get("array") + "<" + inner + ">";
+            return instantiationTypes.get("array") + "<" + toModelName(inner) + ">";
         } else {
             return null;
         }
