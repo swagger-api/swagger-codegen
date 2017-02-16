@@ -21,15 +21,9 @@ install:
   - cmd: dir/w
   - git clone https://github.com/ordercloud-api/swagger.git ./swagger-ordercloud
 build_script:
-  # build C# API client
-  - nuget restore samples\client\petstore\csharp\SwaggerClient\IO.Swagger.sln
-  - msbuild samples\client\petstore\csharp\SwaggerClient\IO.Swagger.sln /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
-  # build C# API client (with PropertyChanged)
-  - nuget restore samples\client\petstore\csharp\SwaggerClientWithPropertyChanged\IO.Swagger.sln
-  - msbuild samples\client\petstore\csharp\SwaggerClientWithPropertyChanged\IO.Swagger.sln /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
   # install swagger codegen locally
   - mvn clean install --batch-mode
-  - java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate -i https://api.ordercloud.io/v1/swagger -l javascript -o ./ordercloud-javascript-sdk -c ./swagger-ordercloud/config/javascript.json -t ./swagger-ordercloud/templates/javascript
+  - java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate -i https://api.ordercloud.io/v1/swagger -l ruby -o ./ordercloud-ruby-sdk -c ./swagger-ordercloud/config/ruby.json -t ./swagger-ordercloud/templates/ruby
 test_script:
   # test c# API client
   - nunit-console samples\client\petstore\csharp\SwaggerClient\src\IO.Swagger.Test\bin\Debug\IO.Swagger.Test.dll --result=myresults.xml;format=AppVeyor
