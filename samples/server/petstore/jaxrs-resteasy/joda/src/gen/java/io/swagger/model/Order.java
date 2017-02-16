@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.annotations.ApiModel;
 import org.joda.time.DateTime;
 
+import io.swagger.annotations.*;
 
-
-
+@ApiModel(description="An order for a pets from the pet store")
 
 public class Order   {
   
@@ -46,6 +47,7 @@ public class Order   {
   /**
    **/
   
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("id")
   public Long getId() {
     return id;
@@ -57,6 +59,7 @@ public class Order   {
   /**
    **/
   
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("petId")
   public Long getPetId() {
     return petId;
@@ -68,6 +71,7 @@ public class Order   {
   /**
    **/
   
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("quantity")
   public Integer getQuantity() {
     return quantity;
@@ -79,6 +83,7 @@ public class Order   {
   /**
    **/
   
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("shipDate")
   public DateTime getShipDate() {
     return shipDate;
@@ -91,6 +96,7 @@ public class Order   {
    * Order Status
    **/
   
+  @ApiModelProperty(example = "null", value = "Order Status")
   @JsonProperty("status")
   public StatusEnum getStatus() {
     return status;
@@ -102,6 +108,7 @@ public class Order   {
   /**
    **/
   
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("complete")
   public Boolean getComplete() {
     return complete;

@@ -4,10 +4,11 @@ import java.util.Objects;
 import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import io.swagger.annotations.ApiModel;
 
+import io.swagger.annotations.*;
 
-
-
+@ApiModel(description="A category for a pet")
 
 public class Category   {
   
@@ -17,6 +18,7 @@ public class Category   {
   /**
    **/
   
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("id")
   public Long getId() {
     return id;
@@ -28,6 +30,7 @@ public class Category   {
   /**
    **/
   
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("name")
   public String getName() {
     return name;

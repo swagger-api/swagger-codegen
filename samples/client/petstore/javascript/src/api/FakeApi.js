@@ -9,17 +9,6 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
  */
 
 (function(root, factory) {
@@ -66,6 +55,7 @@
 
     /**
      * To test \&quot;client\&quot; model
+     * To test \&quot;client\&quot; model
      * @param {module:model/Client} body client model
      * @param {module:api/FakeApi~testClientModelCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/Client}
@@ -75,7 +65,7 @@
 
       // verify the required parameter 'body' is set
       if (body == undefined || body == null) {
-        throw "Missing the required parameter 'body' when calling testClientModel";
+        throw new Error("Missing the required parameter 'body' when calling testClientModel");
       }
 
 
@@ -134,22 +124,22 @@
 
       // verify the required parameter '_number' is set
       if (_number == undefined || _number == null) {
-        throw "Missing the required parameter '_number' when calling testEndpointParameters";
+        throw new Error("Missing the required parameter '_number' when calling testEndpointParameters");
       }
 
       // verify the required parameter '_double' is set
       if (_double == undefined || _double == null) {
-        throw "Missing the required parameter '_double' when calling testEndpointParameters";
+        throw new Error("Missing the required parameter '_double' when calling testEndpointParameters");
       }
 
       // verify the required parameter 'patternWithoutDelimiter' is set
       if (patternWithoutDelimiter == undefined || patternWithoutDelimiter == null) {
-        throw "Missing the required parameter 'patternWithoutDelimiter' when calling testEndpointParameters";
+        throw new Error("Missing the required parameter 'patternWithoutDelimiter' when calling testEndpointParameters");
       }
 
       // verify the required parameter '_byte' is set
       if (_byte == undefined || _byte == null) {
-        throw "Missing the required parameter '_byte' when calling testEndpointParameters";
+        throw new Error("Missing the required parameter '_byte' when calling testEndpointParameters");
       }
 
 
@@ -198,6 +188,7 @@
 
     /**
      * To test enum parameters
+     * To test enum parameters
      * @param {Object} opts Optional parameters
      * @param {Array.<module:model/String>} opts.enumFormStringArray Form parameter enum test (string array)
      * @param {module:model/String} opts.enumFormString Form parameter enum test (string) (default to -efg)
@@ -232,8 +223,8 @@
       };
 
       var authNames = [];
-      var contentTypes = ['application/json'];
-      var accepts = ['application/json'];
+      var contentTypes = ['*/*'];
+      var accepts = ['*/*'];
       var returnType = null;
 
       return this.apiClient.callApi(

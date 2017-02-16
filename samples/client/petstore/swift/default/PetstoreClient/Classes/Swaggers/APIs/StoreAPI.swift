@@ -69,10 +69,10 @@ public class StoreAPI: APIBase {
        - name: api_key
      - examples: [{contentType=application/json, example={
   "key" : 123
-}}, {contentType=application/xml, example=not implemented io.swagger.models.properties.MapProperty@d1e580af}]
+}}, {contentType=application/xml, example=not implemented io.swagger.models.properties.MapProperty@6e901cd0}]
      - examples: [{contentType=application/json, example={
   "key" : 123
-}}, {contentType=application/xml, example=not implemented io.swagger.models.properties.MapProperty@d1e580af}]
+}}, {contentType=application/xml, example=not implemented io.swagger.models.properties.MapProperty@6e901cd0}]
 
      - returns: RequestBuilder<[String:Int32]> 
      */

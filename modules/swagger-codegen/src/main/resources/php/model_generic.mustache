@@ -1,5 +1,7 @@
 class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}implements ArrayAccess
 {
+    const DISCRIMINATOR = {{#discriminator}}'{{discriminator}}'{{/discriminator}}{{^discriminator}}null{{/discriminator}};
+
     /**
       * The original name of the model.
       * @var string
@@ -103,8 +105,8 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}imple
         {{#discriminator}}
 
         // Initialize discriminator property with the model name.
-        $discrimintor = array_search('{{discriminator}}', self::$attributeMap);
-        $this->container[$discrimintor] = static::$swaggerModelName;
+        $discriminator = array_search('{{discriminator}}', self::$attributeMap);
+        $this->container[$discriminator] = static::$swaggerModelName;
         {{/discriminator}}
     }
 
@@ -115,7 +117,13 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}imple
      */
     public function listInvalidProperties()
     {
+        {{#parent}}
+        $invalid_properties = parent::listInvalidProperties();
+        {{/parent}}
+        {{^parent}}
         $invalid_properties = [];
+        {{/parent}}
+
         {{#vars}}
         {{#required}}
         if ($this->container['{{name}}'] === null) {
@@ -126,7 +134,7 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}imple
         {{^isContainer}}
         $allowed_values = [{{#allowableValues}}{{#values}}"{{{this}}}"{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}];
         if (!in_array($this->container['{{name}}'], $allowed_values)) {
-            $invalid_properties[] = "invalid value for '{{name}}', must be one of #{allowed_values}.";
+            $invalid_properties[] = "invalid value for '{{name}}', must be one of {{#allowableValues}}{{#values}}'{{{this}}}'{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}.";
         }
 
         {{/isContainer}}
@@ -183,10 +191,16 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}imple
      * validate all the properties in the model
      * return true if all passed
      *
-     * @return bool True if all properteis are valid
+     * @return bool True if all properties are valid
      */
     public function valid()
     {
+        {{#parent}}
+        if (!parent::valid()) {
+            return false;
+        }
+        {{/parent}}
+
         {{#vars}}
         {{#required}}
         if ($this->container['{{name}}'] === null) {

@@ -19,6 +19,8 @@ Method | HTTP request | Description
 
 To test \"client\" model
 
+To test \"client\" model
+
 ### Example 
 ```perl
 use Data::Dumper;
@@ -59,7 +61,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **test_endpoint_parameters**
-> test_endpoint_parameters(number => $number, double => $double, pattern_without_delimiter => $pattern_without_delimiter, byte => $byte, integer => $integer, int32 => $int32, int64 => $int64, float => $float, string => $string, binary => $binary, date => $date, date_time => $date_time, password => $password)
+> test_endpoint_parameters(number => $number, double => $double, pattern_without_delimiter => $pattern_without_delimiter, byte => $byte, integer => $integer, int32 => $int32, int64 => $int64, float => $float, string => $string, binary => $binary, date => $date, date_time => $date_time, password => $password, callback => $callback)
 
 Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 
@@ -89,9 +91,10 @@ my $binary = 'B'; # string | None
 my $date = DateTime->from_epoch(epoch => str2time('2013-10-20')); # DateTime | None
 my $date_time = DateTime->from_epoch(epoch => str2time('2013-10-20T19:20:30+01:00')); # DateTime | None
 my $password = 'password_example'; # string | None
+my $callback = 'callback_example'; # string | None
 
 eval { 
-    $api_instance->test_endpoint_parameters(number => $number, double => $double, pattern_without_delimiter => $pattern_without_delimiter, byte => $byte, integer => $integer, int32 => $int32, int64 => $int64, float => $float, string => $string, binary => $binary, date => $date, date_time => $date_time, password => $password);
+    $api_instance->test_endpoint_parameters(number => $number, double => $double, pattern_without_delimiter => $pattern_without_delimiter, byte => $byte, integer => $integer, int32 => $int32, int64 => $int64, float => $float, string => $string, binary => $binary, date => $date, date_time => $date_time, password => $password, callback => $callback);
 };
 if ($@) {
     warn "Exception when calling FakeApi->test_endpoint_parameters: $@\n";
@@ -115,6 +118,7 @@ Name | Type | Description  | Notes
  **date** | **DateTime**| None | [optional] 
  **date_time** | **DateTime**| None | [optional] 
  **password** | **string**| None | [optional] 
+ **callback** | **string**| None | [optional] 
 
 ### Return type
 
@@ -136,6 +140,8 @@ void (empty response body)
 
 To test enum parameters
 
+To test enum parameters
+
 ### Example 
 ```perl
 use Data::Dumper;
@@ -149,7 +155,7 @@ my $enum_header_string_array = []; # ARRAY[string] | Header parameter enum test 
 my $enum_header_string = 'enum_header_string_example'; # string | Header parameter enum test (string)
 my $enum_query_string_array = []; # ARRAY[string] | Query parameter enum test (string array)
 my $enum_query_string = 'enum_query_string_example'; # string | Query parameter enum test (string)
-my $enum_query_integer = 3.4; # Number | Query parameter enum test (double)
+my $enum_query_integer = 56; # int | Query parameter enum test (double)
 my $enum_query_double = 1.2; # double | Query parameter enum test (double)
 
 eval { 
@@ -170,7 +176,7 @@ Name | Type | Description  | Notes
  **enum_header_string** | **string**| Header parameter enum test (string) | [optional] [default to -efg]
  **enum_query_string_array** | [**ARRAY[string]**](string.md)| Query parameter enum test (string array) | [optional] 
  **enum_query_string** | **string**| Query parameter enum test (string) | [optional] [default to -efg]
- **enum_query_integer** | **Number**| Query parameter enum test (double) | [optional] 
+ **enum_query_integer** | **int**| Query parameter enum test (double) | [optional] 
  **enum_query_double** | **double**| Query parameter enum test (double) | [optional] 
 
 ### Return type
@@ -183,8 +189,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Content-Type**: */*
+ - **Accept**: */*
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

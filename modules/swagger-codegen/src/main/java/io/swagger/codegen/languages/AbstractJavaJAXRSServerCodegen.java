@@ -1,6 +1,7 @@
 package io.swagger.codegen.languages;
 
 import io.swagger.codegen.*;
+import io.swagger.codegen.languages.features.BeanValidationFeatures;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
@@ -10,14 +11,18 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
-public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen {
+public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen implements BeanValidationFeatures {
     /**
      * Name of the sub-directory in "src/main/resource" where to find the
      * Mustache template for the JAX-RS Codegen.
      */
     protected static final String JAXRS_TEMPLATE_DIRECTORY_NAME = "JavaJaxRS";
     protected String implFolder = "src/main/java";
+    protected String testResourcesFolder = "src/test/resources";
     protected String title = "Swagger Server";
+
+	protected boolean useBeanValidation = true;
+
     static Logger LOGGER = LoggerFactory.getLogger(AbstractJavaJAXRSServerCodegen.class);
 
     public AbstractJavaJAXRSServerCodegen()
@@ -39,6 +44,8 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
         cliOptions.add(new CliOption(CodegenConstants.IMPL_FOLDER, CodegenConstants.IMPL_FOLDER_DESC));
         cliOptions.add(new CliOption("title", "a title describing the application"));
 
+		cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
+
     }
 
 
@@ -59,6 +66,15 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
         if (additionalProperties.containsKey(CodegenConstants.IMPL_FOLDER)) {
             implFolder = (String) additionalProperties.get(CodegenConstants.IMPL_FOLDER);
         }
+
+		if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
+			this.setUseBeanValidation(convertPropertyToBoolean(USE_BEANVALIDATION));
+		}
+
+		if (useBeanValidation) {
+			writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
+		}
+
     }
 
     @Override
@@ -139,8 +155,11 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
                         }
                     }
                 }
+
                 if ( operation.returnType == null ) {
                     operation.returnType = "void";
+                    // set vendorExtensions.x-java-is-response-void to true as returnType is set to "void"
+                    operation.vendorExtensions.put("x-java-is-response-void", true);
                 } else if ( operation.returnType.startsWith("List") ) {
                     String rt = operation.returnType;
                     int end = rt.lastIndexOf(">");
@@ -201,9 +220,8 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
         return outputFolder + "/" + output + "/" + apiPackage().replace('.', '/');
     }
 
-    @Override
-    public boolean shouldOverwrite(String filename) {
-        return super.shouldOverwrite(filename) && !filename.endsWith("ServiceImpl.java") && !filename.endsWith("ServiceFactory.java");
-    }
+	public void setUseBeanValidation(boolean useBeanValidation) {
+		this.useBeanValidation = useBeanValidation;
+	}
 
 }

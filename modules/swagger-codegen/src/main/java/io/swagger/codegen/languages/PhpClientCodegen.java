@@ -232,17 +232,25 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         if (additionalProperties.containsKey(CodegenConstants.INVOKER_PACKAGE)) {
             this.setInvokerPackage((String) additionalProperties.get(CodegenConstants.INVOKER_PACKAGE));
+
+            // Update the invokerPackage for the default apiPackage and modelPackage
+            apiPackage = invokerPackage + "\\" + apiDirName;
+            modelPackage = invokerPackage + "\\" + modelDirName;
         } else {
             additionalProperties.put(CodegenConstants.INVOKER_PACKAGE, invokerPackage);
         }
 
-        if (!additionalProperties.containsKey(CodegenConstants.MODEL_PACKAGE)) {
-            additionalProperties.put(CodegenConstants.MODEL_PACKAGE, modelPackage);
+        if (additionalProperties.containsKey(CodegenConstants.MODEL_PACKAGE)) {
+            // Update model package to contain the specified model package name and the invoker package
+            modelPackage = invokerPackage + "\\" + (String) additionalProperties.get(CodegenConstants.MODEL_PACKAGE);
         }
+        additionalProperties.put(CodegenConstants.MODEL_PACKAGE, modelPackage);
 
-        if (!additionalProperties.containsKey(CodegenConstants.API_PACKAGE)) {
-            additionalProperties.put(CodegenConstants.API_PACKAGE, apiPackage);
+        if (additionalProperties.containsKey(CodegenConstants.API_PACKAGE)) {
+            // Update model package to contain the specified model package name and the invoker package
+            apiPackage = invokerPackage + "\\" + (String) additionalProperties.get(CodegenConstants.API_PACKAGE);
         }
+        additionalProperties.put(CodegenConstants.API_PACKAGE, apiPackage);
 
         if (additionalProperties.containsKey(COMPOSER_PROJECT_NAME)) {
             this.setComposerProjectName((String) additionalProperties.get(COMPOSER_PROJECT_NAME));
@@ -304,12 +312,13 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile(".travis.yml", getPackagePath(), ".travis.yml"));
         supportingFiles.add(new SupportingFile(".php_cs", getPackagePath(), ".php_cs"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", getPackagePath(), "git_push.sh"));
-        // apache v2 license
-        supportingFiles.add(new SupportingFile("LICENSE", getPackagePath(), "LICENSE"));
     }
 
     @Override
-    public String escapeReservedWord(String name) {
+    public String escapeReservedWord(String name) {           
+        if(this.reservedWordsMappings().containsKey(name)) {
+            return this.reservedWordsMappings().get(name);
+        }
         return "_" + name;
     }
 
@@ -482,7 +491,13 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         // add prefix and/or suffic only if name does not start wth \ (e.g. \DateTime)
         if (!name.matches("^\\\\.*")) {
-            name = modelNamePrefix + name + modelNameSuffix;
+            if (!StringUtils.isEmpty(modelNamePrefix)) {
+                name = modelNamePrefix + "_" + name;
+            }
+
+            if (!StringUtils.isEmpty(modelNameSuffix)) {
+                name = name + "_" + modelNameSuffix;
+            }
         }
 
         // camelize the model name
@@ -646,6 +661,10 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String toEnumVarName(String name, String datatype) {
+        if (name.length() == 0) {
+            return "EMPTY";
+        }
+
         // number
         if ("int".equals(datatype) || "double".equals(datatype) || "float".equals(datatype)) {
             String varName = name;

@@ -8,14 +8,15 @@ import retrofit2.http.*;
 
 import okhttp3.RequestBody;
 
-import io.swagger.client.model.Pet;
 import java.io.File;
 import io.swagger.client.model.ModelApiResponse;
+import io.swagger.client.model.Pet;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 public interface PetApi {
   /**
@@ -25,6 +26,9 @@ public interface PetApi {
    * @return Call&lt;Void&gt;
    */
   
+  @Headers({
+  	"Content-Type:application/json" 
+  })
   @POST("pet")
   Call<Void> addPet(
     @retrofit2.http.Body Pet body
@@ -47,7 +51,7 @@ public interface PetApi {
    * Finds Pets by status
    * Multiple status values can be provided with comma separated strings
    * @param status Status values that need to be considered for filter (required)
-   * @return Call&lt;List<Pet>&gt;
+   * @return Call&lt;List&lt;Pet&gt;&gt;
    */
   
   @GET("pet/findByStatus")
@@ -59,7 +63,7 @@ public interface PetApi {
    * Finds Pets by tags
    * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
    * @param tags Tags to filter by (required)
-   * @return Call&lt;List<Pet>&gt;
+   * @return Call&lt;List&lt;Pet&gt;&gt;
    */
   
   @GET("pet/findByTags")
@@ -86,6 +90,9 @@ public interface PetApi {
    * @return Call&lt;Void&gt;
    */
   
+  @Headers({
+  	"Content-Type:application/json" 
+  })
   @PUT("pet")
   Call<Void> updatePet(
     @retrofit2.http.Body Pet body

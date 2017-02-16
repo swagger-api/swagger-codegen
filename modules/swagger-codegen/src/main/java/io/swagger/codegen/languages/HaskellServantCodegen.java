@@ -154,8 +154,31 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
      * @return the escaped term
      */
     @Override
-    public String escapeReservedWord(String name) {
-        return name + "_";
+    public String escapeReservedWord(String name) {           
+        if(this.reservedWordsMappings().containsKey(name)) {
+            return this.reservedWordsMappings().get(name);
+        }
+        return "_" + name;
+    }
+
+    public String firstLetterToUpper(String word) {
+        if (word.length() == 0) {
+            return word;
+        } else if (word.length() == 1) {
+            return word.substring(0, 1).toUpperCase();
+        } else {
+            return word.substring(0, 1).toUpperCase() + word.substring(1);
+        }
+    }
+
+    public String firstLetterToLower(String word) {
+        if (word.length() == 0) {
+            return word;
+        } else if (word.length() == 1) {
+            return word.substring(0, 1).toLowerCase();
+        } else {
+            return word.substring(0, 1).toLowerCase() + word.substring(1);
+        }
     }
 
     @Override
@@ -185,7 +208,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
         // The API name is made by appending the capitalized words of the title
         List<String> wordsCaps = new ArrayList<String>();
         for (String word : words) {
-            wordsCaps.add(word.substring(0, 1).toUpperCase() + word.substring(1));
+            wordsCaps.add(firstLetterToUpper(word));
         }
         String apiName = joinStrings("", wordsCaps);
 
@@ -196,7 +219,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
 
 
         additionalProperties.put("title", apiName);
-        additionalProperties.put("titleLower", apiName.substring(0, 1).toLowerCase() + apiName.substring(1));
+        additionalProperties.put("titleLower", firstLetterToLower(apiName));
         additionalProperties.put("package", cabalName);
 
         // Due to the way servant resolves types, we need a high context stack limit
@@ -366,7 +389,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
         // Query parameters appended to routes
         for (CodegenParameter param : op.queryParams) {
             String paramType = param.dataType;
-            if(param.isListContainer != null && param.isListContainer) {
+            if (param.isListContainer) {
                 paramType = makeQueryListType(paramType, param.collectionFormat);
             }
             path.add("QueryParam \"" + param.baseName + "\" " + paramType);
@@ -397,7 +420,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
             path.add("Header \"" + param.baseName + "\" " + param.dataType);
 
             String paramType = param.dataType;
-            if(param.isListContainer != null && param.isListContainer) {
+            if (param.isListContainer) {
                 paramType = makeQueryListType(paramType, param.collectionFormat);
             }
             type.add("Maybe " + paramType);

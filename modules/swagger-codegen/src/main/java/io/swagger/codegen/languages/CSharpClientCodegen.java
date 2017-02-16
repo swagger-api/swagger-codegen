@@ -1,6 +1,9 @@
 package io.swagger.codegen.languages;
 
 import com.google.common.collect.ImmutableMap;
+
+import com.sun.org.apache.bcel.internal.classfile.Code;
+
 import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.CodegenModel;
@@ -20,6 +23,8 @@ import java.util.Iterator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 public class CSharpClientCodegen extends AbstractCSharpCodegen {
     @SuppressWarnings({"unused", "hiding"})
@@ -43,13 +48,13 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
     protected Map<Character, String> regexModifiers;
     protected final Map<String, String> frameworks;
 
+    // By default, generated code is considered public
+    protected boolean nonPublicApi = Boolean.FALSE;
+
     public CSharpClientCodegen() {
         super();
         modelTemplateFiles.put("model.mustache", ".cs");
         apiTemplateFiles.put("api.mustache", ".cs");
-
-        modelTestTemplateFiles.put("model_test.mustache", ".cs");
-        apiTestTemplateFiles.put("api_test.mustache", ".cs");
 
         modelDocTemplateFiles.put("model_doc.mustache", ".md");
         apiDocTemplateFiles.put("api_doc.mustache", ".md");
@@ -72,6 +77,10 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         addOption(CodegenConstants.OPTIONAL_PROJECT_GUID,
                 CodegenConstants.OPTIONAL_PROJECT_GUID_DESC,
                 null);
+
+        addOption(CodegenConstants.INTERFACE_PREFIX,
+                CodegenConstants.INTERFACE_PREFIX_DESC,
+                interfacePrefix);
 
         CliOption framework = new CliOption(
                 CodegenConstants.DOTNET_FRAMEWORK,
@@ -127,6 +136,18 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
                 CodegenConstants.PACKAGE_DESCRIPTION_DESC,
                 this.generatePropertyChanged);
 
+        // NOTE: This will reduce visibility of all public members in templates. Users can use InternalsVisibleTo
+        // https://msdn.microsoft.com/en-us/library/system.runtime.compilerservices.internalsvisibletoattribute(v=vs.110).aspx
+        // to expose to shared code if the generated code is not embedded into another project. Otherwise, users of codegen
+        // should rely on default public visibility.
+        addSwitch(CodegenConstants.NON_PUBLIC_API,
+                CodegenConstants.NON_PUBLIC_API_DESC,
+                this.nonPublicApi);
+
+        addSwitch(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS,
+                CodegenConstants.ALLOW_UNICODE_IDENTIFIERS_DESC,
+                this.allowUnicodeIdentifiers);
+
         regexModifiers = new HashMap<Character, String>();
         regexModifiers.put('i', "IgnoreCase");
         regexModifiers.put('m', "Multiline");
@@ -146,14 +167,22 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
                     Boolean.valueOf(additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP).toString()));
         }
 
+        if(isEmpty(apiPackage)) {
+            apiPackage = "Api";
+        }
+        if(isEmpty(modelPackage)) {
+            modelPackage = "Model";
+        }
+        clientPackage = "Client";
+
         Boolean excludeTests = false;
         if(additionalProperties.containsKey(CodegenConstants.EXCLUDE_TESTS)) {
             excludeTests = Boolean.valueOf(additionalProperties.get(CodegenConstants.EXCLUDE_TESTS).toString());
         }
 
-        apiPackage = "Api";
-        modelPackage = "Model";
-        clientPackage = "Client";
+        additionalProperties.put(CodegenConstants.API_PACKAGE, apiPackage);
+
+        additionalProperties.put(CodegenConstants.MODEL_PACKAGE, modelPackage);
 
         additionalProperties.put("clientPackage", clientPackage);
 
@@ -192,6 +221,10 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
             } else {
                 setGeneratePropertyChanged(Boolean.valueOf(additionalProperties.get(CodegenConstants.GENERATE_PROPERTY_CHANGED).toString()));
             }
+
+            if(Boolean.FALSE.equals(this.generatePropertyChanged)) {
+                additionalProperties.remove(CodegenConstants.GENERATE_PROPERTY_CHANGED);
+            }
         }
 
         additionalProperties.put("targetFrameworkNuget", this.targetFrameworkNuget);
@@ -215,6 +248,10 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         if (additionalProperties.containsKey(CodegenConstants.OPTIONAL_ASSEMBLY_INFO)) {
             setOptionalAssemblyInfoFlag(Boolean.valueOf(additionalProperties
                     .get(CodegenConstants.OPTIONAL_ASSEMBLY_INFO).toString()));
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.NON_PUBLIC_API)) {
+            setNonPublicApi(Boolean.valueOf(additionalProperties.get(CodegenConstants.NON_PUBLIC_API).toString()));
         }
 
         final String testPackageName = testPackageName();
@@ -248,15 +285,20 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
 
         supportingFiles.add(new SupportingFile("compile.mustache", "", "build.bat"));
         supportingFiles.add(new SupportingFile("compile-mono.sh.mustache", "", "build.sh"));
-        // shell script to run the nunit test
-        supportingFiles.add(new SupportingFile("mono_nunit_test.mustache", "", "mono_nunit_test.sh"));
 
         // copy package.config to nuget's standard location for project-level installs
         supportingFiles.add(new SupportingFile("packages.config.mustache", packageFolder + File.separator, "packages.config"));
         // .travis.yml for travis-ci.org CI
         supportingFiles.add(new SupportingFile("travis.mustache", "", ".travis.yml"));
 
+        // Only write out test related files if excludeTests is unset or explicitly set to false (see start of this method)
         if(Boolean.FALSE.equals(excludeTests)) {
+            // shell script to run the nunit test
+            supportingFiles.add(new SupportingFile("mono_nunit_test.mustache", "", "mono_nunit_test.sh"));
+
+            modelTestTemplateFiles.put("model_test.mustache", ".cs");
+            apiTestTemplateFiles.put("api_test.mustache", ".cs");
+
             supportingFiles.add(new SupportingFile("packages_test.config.mustache", testPackageFolder + File.separator, "packages.config"));
         }
 
@@ -277,8 +319,10 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         if (optionalProjectFileFlag) {
             supportingFiles.add(new SupportingFile("Solution.mustache", "", packageName + ".sln"));
             supportingFiles.add(new SupportingFile("Project.mustache", packageFolder, packageName + ".csproj"));
+            supportingFiles.add(new SupportingFile("nuspec.mustache", packageFolder, packageName + ".nuspec"));
 
             if(Boolean.FALSE.equals(excludeTests)) {
+                // NOTE: This exists here rather than previous excludeTests block because the test project is considered an optional project file.
                 supportingFiles.add(new SupportingFile("TestProject.mustache", testPackageFolder, testPackageName + ".csproj"));
             }
         }
@@ -477,6 +521,10 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
 
     @Override
     public String toEnumVarName(String value, String datatype) {
+        if (value.length() == 0) {
+            return "Empty";
+        }
+
         // for symbol, e.g. $, #
         if (getSymbolName(value) != null) {
             return camelize(getSymbolName(value));
@@ -528,6 +576,14 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
 
     public void setGeneratePropertyChanged(final Boolean generatePropertyChanged){
         this.generatePropertyChanged = generatePropertyChanged;
+    }
+
+    public boolean isNonPublicApi() {
+        return nonPublicApi;
+    }
+
+    public void setNonPublicApi(final boolean nonPublicApi) {
+        this.nonPublicApi = nonPublicApi;
     }
 
     @Override

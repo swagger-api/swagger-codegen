@@ -5,16 +5,16 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using RestSharp;
 using {{packageName}}.Client;
-{{#hasImport}}using {{packageName}}.Model;
+{{#hasImport}}using {{packageName}}.{{modelPackage}};
 {{/hasImport}}
 
-namespace {{packageName}}.Api
+namespace {{packageName}}.{{apiPackage}}
 {
     {{#operations}}
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public interface I{{classname}} : IApiAccessor
+    {{>visibility}} interface {{interfacePrefix}}{{classname}} : IApiAccessor
     {
         #region Synchronous Operations
         {{#operation}}
@@ -73,7 +73,7 @@ namespace {{packageName}}.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public partial class {{classname}} : I{{classname}}
+    {{>visibility}} partial class {{classname}} : {{interfacePrefix}}{{classname}}
     {
         private {{packageName}}.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 

@@ -58,17 +58,27 @@ public class ApiClient {
 
     public ApiClient(String[] authNames) {
         this();
-        for(String authName : authNames) { {{#hasAuthMethods}}
+        for(String authName : authNames) {
+            {{#hasAuthMethods}}
             Interceptor auth;
-            {{#authMethods}}if (authName == "{{name}}") { {{#isBasic}}
-                auth = new HttpBasicAuth();{{/isBasic}}{{#isApiKey}}
-                auth = new ApiKeyAuth({{#isKeyInHeader}}"header"{{/isKeyInHeader}}{{^isKeyInHeader}}"query"{{/isKeyInHeader}}, "{{keyParamName}}");{{/isApiKey}}{{#isOAuth}}
-                auth = new OAuth(OAuthFlow.{{flow}}, "{{authorizationUrl}}", "{{tokenUrl}}", "{{#scopes}}{{scope}}{{#hasMore}}, {{/hasMore}}{{/scopes}}");{{/isOAuth}}
+            {{#authMethods}}if ("{{name}}".equals(authName)) {
+            {{#isBasic}}
+                auth = new HttpBasicAuth();
+            {{/isBasic}}
+            {{#isApiKey}}
+                auth = new ApiKeyAuth({{#isKeyInHeader}}"header"{{/isKeyInHeader}}{{^isKeyInHeader}}"query"{{/isKeyInHeader}}, "{{keyParamName}}");
+            {{/isApiKey}}
+            {{#isOAuth}}
+                auth = new OAuth(OAuthFlow.{{flow}}, "{{authorizationUrl}}", "{{tokenUrl}}", "{{#scopes}}{{scope}}{{#hasMore}}, {{/hasMore}}{{/scopes}}");
+            {{/isOAuth}}
             } else {{/authMethods}}{
                 throw new RuntimeException("auth name \"" + authName + "\" not found in available auth names");
             }
-            addAuthorization(authName, auth);{{/hasAuthMethods}}{{^hasAuthMethods}}
-            throw new RuntimeException("auth name \"" + authName + "\" not found in available auth names");{{/hasAuthMethods}}
+            addAuthorization(authName, auth);
+            {{/hasAuthMethods}}
+            {{^hasAuthMethods}}
+            throw new RuntimeException("auth name \"" + authName + "\" not found in available auth names");
+            {{/hasAuthMethods}}
         }
     }
 
@@ -374,14 +384,15 @@ class GsonCustomConverterFactory extends Converter.Factory
  */
 class DateTimeTypeAdapter extends TypeAdapter<DateTime> {
 
-    private final DateTimeFormatter formatter = ISODateTimeFormat.dateTime();
+    private final DateTimeFormatter parseFormatter = ISODateTimeFormat.dateOptionalTimeParser();
+    private final DateTimeFormatter printFormatter = ISODateTimeFormat.dateTime();
 
     @Override
     public void write(JsonWriter out, DateTime date) throws IOException {
         if (date == null) {
             out.nullValue();
         } else {
-            out.value(formatter.print(date));
+            out.value(printFormatter.print(date));
         }
     }
 
@@ -393,7 +404,7 @@ class DateTimeTypeAdapter extends TypeAdapter<DateTime> {
                 return null;
             default:
                 String date = in.nextString();
-                return formatter.parseDateTime(date);
+                return parseFormatter.parseDateTime(date);
         }
     }
 }

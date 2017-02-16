@@ -51,13 +51,13 @@ public class ApiClient {
 
     public ApiClient(String[] authNames) {
         this();
-        for(String authName : authNames) { 
+        for(String authName : authNames) {
             Interceptor auth;
-            if (authName == "api_key") { 
+            if ("api_key".equals(authName)) {
                 auth = new ApiKeyAuth("header", "api_key");
-            } else if (authName == "http_basic_test") { 
+            } else if ("http_basic_test".equals(authName)) {
                 auth = new HttpBasicAuth();
-            } else if (authName == "petstore_auth") { 
+            } else if ("petstore_auth".equals(authName)) {
                 auth = new OAuth(OAuthFlow.implicit, "http://petstore.swagger.io/api/oauth/dialog", "", "write:pets, read:pets");
             } else {
                 throw new RuntimeException("auth name \"" + authName + "\" not found in available auth names");
@@ -362,14 +362,15 @@ class GsonCustomConverterFactory extends Converter.Factory
  */
 class DateTimeTypeAdapter extends TypeAdapter<DateTime> {
 
-    private final DateTimeFormatter formatter = ISODateTimeFormat.dateTime();
+    private final DateTimeFormatter parseFormatter = ISODateTimeFormat.dateOptionalTimeParser();
+    private final DateTimeFormatter printFormatter = ISODateTimeFormat.dateTime();
 
     @Override
     public void write(JsonWriter out, DateTime date) throws IOException {
         if (date == null) {
             out.nullValue();
         } else {
-            out.value(formatter.print(date));
+            out.value(printFormatter.print(date));
         }
     }
 
@@ -381,7 +382,7 @@ class DateTimeTypeAdapter extends TypeAdapter<DateTime> {
                 return null;
             default:
                 String date = in.nextString();
-                return formatter.parseDateTime(date);
+                return parseFormatter.parseDateTime(date);
         }
     }
 }
