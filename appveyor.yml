@@ -23,7 +23,7 @@ install:
 build_script:
   # install swagger codegen locally
   - mvn clean install --batch-mode
-  - java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate -i https://api.ordercloud.io/v1/swagger -l ruby -o ./ordercloud-ruby-sdk -c ./swagger-ordercloud/config/ruby.json -t ./swagger-ordercloud/templates/ruby
+  - java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate -i ./swagger-ordercloud/ordercloud_swagger.json -l ruby -o ./ordercloud-ruby-sdk -c ./swagger-ordercloud/config/ruby.json -t ./swagger-ordercloud/templates/ruby
 test_script:
   # test c# API client
   - nunit-console samples\client\petstore\csharp\SwaggerClient\src\IO.Swagger.Test\bin\Debug\IO.Swagger.Test.dll --result=myresults.xml;format=AppVeyor
