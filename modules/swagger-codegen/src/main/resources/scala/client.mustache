@@ -15,12 +15,8 @@ class {{clientName}}(config: SwaggerConfig) extends Closeable {
   private[this] val client = transportClient
 
   protected def transportClient: TransportClient = new RestClient(config)
-  {{#apiInfo}}{{#apis}}
-  val {{classVarName}} = new {{classname}}(client, config)
-  {{/apis}}{{/apiInfo}}
 
   def close() {
     client.close()
   }
 }
-

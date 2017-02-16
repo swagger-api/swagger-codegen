@@ -20,6 +20,7 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
     protected String groupId = "io.swagger";
     protected String artifactId = "swagger-scala-client";
     protected String artifactVersion = "1.0.0";
+    protected String clientName = "AsyncClient";
 
     public ScalaClientCodegen() {
         super();
@@ -51,10 +52,13 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
         additionalProperties.put("asyncHttpClient", asyncHttpClient);
         additionalProperties.put("authScheme", authScheme);
         additionalProperties.put("authPreemptive", authPreemptive);
+        additionalProperties.put("clientName", clientName);
 
         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
         supportingFiles.add(new SupportingFile("apiInvoker.mustache",
                 (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), "ApiInvoker.scala"));
+        supportingFiles.add(new SupportingFile("client.mustache",
+                (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), clientName + ".scala"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
         // gradle settings
