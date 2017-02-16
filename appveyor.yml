@@ -4,6 +4,8 @@ version: '{branch}-{build}'
 os: Windows Server 2012
 hosts:
   api.ordercloud.io: 127.0.0.1
+environment:
+  Languages: csharp;php;python;ruby;swift
 install:
   - ps: |
       Add-Type -AssemblyName System.IO.Compression.FileSystem
@@ -22,16 +24,11 @@ install:
   - git clone https://github.com/ordercloud-api/swagger.git ./swagger-ordercloud
 build_script:
   # install swagger codegen locally
-  - mvn clean install --batch-mode
-  - java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate -i ./swagger-ordercloud/ordercloud_swagger.json -l ruby -o ./ordercloud-ruby-sdk -c ./swagger-ordercloud/config/ruby.json -t ./swagger-ordercloud/templates/ruby
-test_script:
-  # test c# API client
-  - nunit-console samples\client\petstore\csharp\SwaggerClient\src\IO.Swagger.Test\bin\Debug\IO.Swagger.Test.dll --result=myresults.xml;format=AppVeyor
-  # test c# API client (with PropertyChanged)
-  - nunit-console samples\client\petstore\csharp\SwaggerClientWithPropertyChanged\src\IO.Swagger.Test\bin\Debug\IO.Swagger.Test.dll --result=myresults.xml;format=AppVeyor
-
-  # generate all petstore clients
-  - .\bin\windows\run-all-petstore.cmd
+  - mvn clean install --batch-mode --quiet
+  - ps: |
+      foreach ($language in $env:Languages) {
+        java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate -i ./swagger-ordercloud/ordercloud_swagger.json -l $language -o ./ordercloud-$language-sdk -c ./swagger-ordercloud/config/$language.json -t ./swagger-ordercloud/templates/$language
+      }
 cache:
   - C:\maven\ -> pom.xml
   - C:\Users\appveyor\.m2
