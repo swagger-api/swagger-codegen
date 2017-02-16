@@ -388,10 +388,10 @@ export class UserApi {
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         if (username !== undefined) {
-            queryParameters.set('username', <any>username);
+                    queryParameters.set('username', <any>username);
         }
         if (password !== undefined) {
-            queryParameters.set('password', <any>password);
+                    queryParameters.set('password', <any>password);
         }
 
 

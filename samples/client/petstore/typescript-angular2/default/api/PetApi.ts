@@ -290,7 +290,7 @@ export class PetApi {
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         if (status !== undefined) {
-            queryParameters.set('status', <any>status);
+                    queryParameters.set('status', <any>status);
         }
 
 
@@ -335,7 +335,7 @@ export class PetApi {
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         if (tags !== undefined) {
-            queryParameters.set('tags', <any>tags);
+                    queryParameters.set('tags', <any>tags);
         }
 
 
@@ -395,16 +395,16 @@ export class PetApi {
             'application/xml'
         ];
         
-        // authentication (api_key) required
-        if (this.configuration.apiKey)
-        {
-            headers.set('api_key', this.configuration.apiKey);
-        }
         // authentication (petstore_auth) required
         // oauth required
         if (this.configuration.accessToken)
         {
             headers.set('Authorization', 'Bearer ' + this.configuration.accessToken);
+        }
+        // authentication (api_key) required
+        if (this.configuration.apiKey)
+        {
+            headers.set('api_key', this.configuration.apiKey);
         }
             
 
