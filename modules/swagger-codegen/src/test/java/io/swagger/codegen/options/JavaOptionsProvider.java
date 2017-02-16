@@ -33,6 +33,7 @@ public class JavaOptionsProvider implements OptionsProvider {
     //public static final String SUPPORT_JAVA6 = "true";
     public static final String USE_BEANVALIDATION = "false";
     public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
+    public static final String USE_GENERIC_WS_RESPONSE = "true";
 
 
     private ImmutableMap<String, String> options;

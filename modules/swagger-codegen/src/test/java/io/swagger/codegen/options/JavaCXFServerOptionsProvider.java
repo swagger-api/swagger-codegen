@@ -44,6 +44,8 @@ public class JavaCXFServerOptionsProvider extends JavaOptionsProvider {
     public static final String USE_ANNOTATED_BASE_PATH = "true";
 
     public static final String GENERATE_NON_SPRING_APPLICATION = "true";
+
+    public static final String USE_GENERIC_WS_RESPONSE = "true";
     
     @Override
     public boolean isServer() {
@@ -92,6 +94,8 @@ public class JavaCXFServerOptionsProvider extends JavaOptionsProvider {
         builder.put(JavaCXFServerCodegen.USE_ANNOTATED_BASE_PATH, USE_ANNOTATED_BASE_PATH);
 
         builder.put(JavaCXFServerCodegen.GENERATE_NON_SPRING_APPLICATION, GENERATE_NON_SPRING_APPLICATION);
+
+        builder.put(JavaCXFServerCodegen.USE_GENERIC_WS_RESPONSE, JavaOptionsProvider.USE_GENERIC_WS_RESPONSE);
 
         return builder.build();
         

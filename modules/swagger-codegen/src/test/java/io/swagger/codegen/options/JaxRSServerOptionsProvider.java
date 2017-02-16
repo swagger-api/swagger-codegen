@@ -2,7 +2,7 @@ package io.swagger.codegen.options;
 
 import com.google.common.collect.ImmutableMap;
 import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.languages.JavaCXFServerCodegen;
+import io.swagger.codegen.languages.JavaJerseyServerCodegen;
 import io.swagger.codegen.languages.JavaClientCodegen;
 
 import java.util.Map;
@@ -37,6 +37,7 @@ public class JaxRSServerOptionsProvider implements OptionsProvider {
     public static final String JAXRS_DEFAULT_LIBRARY_VALUE = "jersey1";
     public static final String USE_BEANVALIDATION = "true";
     public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
+    public static final String USE_GENERIC_WS_RESPONSE = "true";
 
 
     @Override
@@ -83,8 +84,9 @@ public class JaxRSServerOptionsProvider implements OptionsProvider {
             .put(CodegenConstants.SERIALIZE_BIG_DECIMAL_AS_STRING, "true")
             //.put(JavaClientCodegen.DATE_LIBRARY, "joda")
             .put("hideGenerationTimestamp", "true")
-            .put(JavaCXFServerCodegen.USE_BEANVALIDATION, USE_BEANVALIDATION)
-            .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE);
+            .put(JavaJerseyServerCodegen.USE_BEANVALIDATION, USE_BEANVALIDATION)
+            .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
+            .put(JavaJerseyServerCodegen.USE_GENERIC_WS_RESPONSE, USE_GENERIC_WS_RESPONSE);;
 
         return builder.build();
     }
