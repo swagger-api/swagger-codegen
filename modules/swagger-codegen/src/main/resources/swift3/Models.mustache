@@ -112,6 +112,7 @@ class Decoders {
     }
 
     static func decodeOptional<T: RawRepresentable>(clazz: T.Type, source: AnyObject?) -> Decoded<T?> {
+        guard !(source is NSNull), source != nil else { return .success(nil) }
         if let value = source as? T.RawValue {
             if let enumValue = T.init(rawValue: value) {
                 return .success(enumValue)
@@ -119,7 +120,7 @@ class Decoders {
                 return .failure(.typeMismatch(expected: "A value from the enumeration \(T.self)", actual: "\(value)"))
             }
         } else {
-            return .success(nil)
+            return .failure(.typeMismatch(expected: "\(T.RawValue.self) matching a case from the enumeration \(T.self)", actual: String(describing: type(of: source))))
         }
     }
 
