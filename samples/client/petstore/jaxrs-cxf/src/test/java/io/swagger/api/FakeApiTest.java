@@ -38,6 +38,9 @@ import org.apache.cxf.jaxrs.client.ClientConfiguration;
 import org.apache.cxf.jaxrs.client.WebClient;
 
 
+import org.apache.cxf.jaxrs.ext.multipart.*;
+import java.io.*;
+
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 import java.util.ArrayList;

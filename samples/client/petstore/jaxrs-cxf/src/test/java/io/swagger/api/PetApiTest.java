@@ -38,6 +38,9 @@ import org.apache.cxf.jaxrs.client.ClientConfiguration;
 import org.apache.cxf.jaxrs.client.WebClient;
 
 
+import org.apache.cxf.jaxrs.ext.multipart.*;
+import java.io.*;
+
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 import java.util.ArrayList;
@@ -210,7 +213,11 @@ public class PetApiTest {
     public void uploadFileTest() {
         Long petId = null;
         String additionalMetadata = null;
-        org.apache.cxf.jaxrs.ext.multipart.Attachment file = null;
+        
+        String fileFilename = "myfile.txt";
+        InputStream fileInputStream = null; // TODO: new FileInputStream("...");
+        ContentDisposition cd = new ContentDisposition("attachment;filename=" + fileFilename);
+        Attachment file = new Attachment("file", fileInputStream, cd);
         ModelApiResponse response = api.uploadFile(petId, additionalMetadata, file);
         assertNotNull(response);
         // TODO: test validations
