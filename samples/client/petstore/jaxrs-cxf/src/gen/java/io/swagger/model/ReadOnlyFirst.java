@@ -3,44 +3,36 @@ package io.swagger.model;
 
 import io.swagger.annotations.ApiModelProperty;
 
-public class Tag  {
+public class ReadOnlyFirst  {
   
   @ApiModelProperty(example = "null", value = "")
-  private Long id = null;
+  private String bar = null;
   @ApiModelProperty(example = "null", value = "")
-  private String name = null;
+  private String baz = null;
 
  /**
-   * Get id
-   * @return id
+   * Get bar
+   * @return bar
   **/
-  public Long getId() {
-    return id;
+  public String getBar() {
+    return bar;
   }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public Tag id(Long id) {
-    this.id = id;
-    return this;
-  }
 
  /**
-   * Get name
-   * @return name
+   * Get baz
+   * @return baz
   **/
-  public String getName() {
-    return name;
+  public String getBaz() {
+    return baz;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setBaz(String baz) {
+    this.baz = baz;
   }
 
-  public Tag name(String name) {
-    this.name = name;
+  public ReadOnlyFirst baz(String baz) {
+    this.baz = baz;
     return this;
   }
 
@@ -48,10 +40,10 @@ public class Tag  {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Tag {\n");
+    sb.append("class ReadOnlyFirst {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    bar: ").append(toIndentedString(bar)).append("\n");
+    sb.append("    baz: ").append(toIndentedString(baz)).append("\n");
     sb.append("}");
     return sb.toString();
   }

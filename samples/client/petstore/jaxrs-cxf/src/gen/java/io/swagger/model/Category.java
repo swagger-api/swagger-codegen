@@ -1,17 +1,8 @@
 package io.swagger.model;
 
-import io.swagger.annotations.ApiModel;
 
 import io.swagger.annotations.ApiModelProperty;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlEnumValue;
 
-@ApiModel(description="A category for a pet")
 public class Category  {
   
   @ApiModelProperty(example = "null", value = "")
@@ -26,9 +17,16 @@ public class Category  {
   public Long getId() {
     return id;
   }
+
   public void setId(Long id) {
     this.id = id;
   }
+
+  public Category id(Long id) {
+    this.id = id;
+    return this;
+  }
+
  /**
    * Get name
    * @return name
@@ -36,9 +34,16 @@ public class Category  {
   public String getName() {
     return name;
   }
+
   public void setName(String name) {
     this.name = name;
   }
+
+  public Category name(String name) {
+    this.name = name;
+    return this;
+  }
+
 
   @Override
   public String toString() {
