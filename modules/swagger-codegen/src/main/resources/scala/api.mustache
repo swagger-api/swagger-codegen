@@ -44,11 +44,8 @@ class {{classname}}(val defBasePath: String = "{{basePath}}",
 
   def addHeader(key: String, value: String) = apiInvoker.defaultHeaders += key -> value
 
-  private[this] val client = transportClient
-
-  protected def transportClient: TransportClient = new RestClient(config)
-
   val config = SwaggerConfig.forUrl(new URI(defBasePath))
+  val client = new RestClient(config)
   val helper = new {{classname}}AsyncHelper(client, config)
 
   {{#operation}}
@@ -84,12 +81,12 @@ class {{classname}}(val defBasePath: String = "{{basePath}}",
 class {{classname}}AsyncHelper(client: TransportClient, config: SwaggerConfig) extends ApiClient(client, config) {
 
 {{#operation}}
-    def {{operationId}}({{#allParams}}{{^required}}{{paramName}}: Option[{{dataType}}] = {{#defaultValue}}Some({{defaultValue}}){{/defaultValue}}{{^defaultValue}}None{{/defaultValue}}{{#hasMore}},{{/hasMore}}
+  def {{operationId}}({{#allParams}}{{^required}}{{paramName}}: Option[{{dataType}}] = {{#defaultValue}}Some({{defaultValue}}){{/defaultValue}}{{^defaultValue}}None{{/defaultValue}}{{#hasMore}},{{/hasMore}}
     {{/required}}{{#required}}{{paramName}}: {{dataType}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}}{{#hasMore}},
     {{/hasMore}}{{/required}}{{/allParams}})(implicit reader: ClientResponseReader[{{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}Unit{{/returnType}}]{{#bodyParams}}, writer: RequestWriter[{{dataType}}]{{/bodyParams}}){{#returnType}}: Future[{{returnType}}]{{/returnType}}{{^returnType}}: Future[Unit]{{/returnType}} = {
     // create path and map variables
     val path = (addFmt("{{path}}"){{#pathParams}}
-        replaceAll ("\\{" + "{{baseName}}" + "\\}",{{paramName}}.toString){{/pathParams}})
+      replaceAll ("\\{" + "{{baseName}}" + "\\}",{{paramName}}.toString){{/pathParams}})
 
     // query params
     val queryParams = new mutable.HashMap[String, String]
@@ -98,42 +95,42 @@ class {{classname}}AsyncHelper(client: TransportClient, config: SwaggerConfig) e
     {{#allParams}}
       {{#required}}
         {{^isPrimitiveType}}
-            if ({{paramName}} == null) throw new Exception("Missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}")
+    if ({{paramName}} == null) throw new Exception("Missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}")
         {{/isPrimitiveType}}
         {{#isString}}
-            if ({{paramName}} == null) throw new Exception("Missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}")
+    if ({{paramName}} == null) throw new Exception("Missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}")
 
         {{/isString}}
       {{/required}}
     {{/allParams}}
     {{#queryParams}}
       {{^required}}
-        {{paramName}} match {
-        case Some(param) => queryParams += "{{baseName}}" -> param.toString
-        case _ => queryParams
-        }
+    {{paramName}} match {
+      case Some(param) => queryParams += "{{baseName}}" -> param.toString
+      case _ => queryParams
+    }
       {{/required}}
       {{#required}}
-          queryParams += "{{baseName}}" -> {{paramName}}.toString
+    queryParams += "{{baseName}}" -> {{paramName}}.toString
       {{/required}}
     {{/queryParams}}
     {{#headerParams}}
       {{^required}}
-        {{paramName}} match {
-        case Some(param) => headerParams += "{{baseName}}" -> param.toString
-        case _ => headerParams
-        }
+    {{paramName}} match {
+      case Some(param) => headerParams += "{{baseName}}" -> param.toString
+      case _ => headerParams
+    }
       {{/required}}
       {{#required}}
-          headerParams += "{{baseName}}" -> {{paramName}}.toString
+    headerParams += "{{baseName}}" -> {{paramName}}.toString
       {{/required}}
     {{/headerParams}}
 
     val resFuture = client.submit("{{httpMethod}}", path, queryParams.toMap, headerParams.toMap, {{#bodyParam}}writer.write({{paramName}}){{/bodyParam}}{{^bodyParam}}"{{emptyBodyParam}}"{{/bodyParam}})
     resFuture flatMap { resp =>
-    process(reader.read(resp))
+      process(reader.read(resp))
     }
-    }
+  }
 
 {{/operation}}
 

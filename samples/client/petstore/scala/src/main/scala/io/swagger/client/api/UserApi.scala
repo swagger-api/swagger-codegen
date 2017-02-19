@@ -53,11 +53,8 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
   def addHeader(key: String, value: String) = apiInvoker.defaultHeaders += key -> value
 
-  private[this] val client = transportClient
-
-  protected def transportClient: TransportClient = new RestClient(config)
-
   val config = SwaggerConfig.forUrl(new URI(defBasePath))
+  val client = new RestClient(config)
   val helper = new UserApiAsyncHelper(client, config)
 
   /**
@@ -274,7 +271,7 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
 class UserApiAsyncHelper(client: TransportClient, config: SwaggerConfig) extends ApiClient(client, config) {
 
-    def createUser(body: User)(implicit reader: ClientResponseReader[Unit], writer: RequestWriter[User]): Future[Unit] = {
+  def createUser(body: User)(implicit reader: ClientResponseReader[Unit], writer: RequestWriter[User]): Future[Unit] = {
     // create path and map variables
     val path = (addFmt("/user"))
 
@@ -282,15 +279,15 @@ class UserApiAsyncHelper(client: TransportClient, config: SwaggerConfig) extends
     val queryParams = new mutable.HashMap[String, String]
     val headerParams = new mutable.HashMap[String, String]
 
-            if (body == null) throw new Exception("Missing required parameter 'body' when calling UserApi->createUser")
+    if (body == null) throw new Exception("Missing required parameter 'body' when calling UserApi->createUser")
 
     val resFuture = client.submit("POST", path, queryParams.toMap, headerParams.toMap, writer.write(body))
     resFuture flatMap { resp =>
-    process(reader.read(resp))
+      process(reader.read(resp))
     }
-    }
+  }
 
-    def createUsersWithArrayInput(body: List[User])(implicit reader: ClientResponseReader[Unit], writer: RequestWriter[List[User]]): Future[Unit] = {
+  def createUsersWithArrayInput(body: List[User])(implicit reader: ClientResponseReader[Unit], writer: RequestWriter[List[User]]): Future[Unit] = {
     // create path and map variables
     val path = (addFmt("/user/createWithArray"))
 
@@ -298,15 +295,15 @@ class UserApiAsyncHelper(client: TransportClient, config: SwaggerConfig) extends
     val queryParams = new mutable.HashMap[String, String]
     val headerParams = new mutable.HashMap[String, String]
 
-            if (body == null) throw new Exception("Missing required parameter 'body' when calling UserApi->createUsersWithArrayInput")
+    if (body == null) throw new Exception("Missing required parameter 'body' when calling UserApi->createUsersWithArrayInput")
 
     val resFuture = client.submit("POST", path, queryParams.toMap, headerParams.toMap, writer.write(body))
     resFuture flatMap { resp =>
-    process(reader.read(resp))
+      process(reader.read(resp))
     }
-    }
+  }
 
-    def createUsersWithListInput(body: List[User])(implicit reader: ClientResponseReader[Unit], writer: RequestWriter[List[User]]): Future[Unit] = {
+  def createUsersWithListInput(body: List[User])(implicit reader: ClientResponseReader[Unit], writer: RequestWriter[List[User]]): Future[Unit] = {
     // create path and map variables
     val path = (addFmt("/user/createWithList"))
 
@@ -314,51 +311,51 @@ class UserApiAsyncHelper(client: TransportClient, config: SwaggerConfig) extends
     val queryParams = new mutable.HashMap[String, String]
     val headerParams = new mutable.HashMap[String, String]
 
-            if (body == null) throw new Exception("Missing required parameter 'body' when calling UserApi->createUsersWithListInput")
+    if (body == null) throw new Exception("Missing required parameter 'body' when calling UserApi->createUsersWithListInput")
 
     val resFuture = client.submit("POST", path, queryParams.toMap, headerParams.toMap, writer.write(body))
     resFuture flatMap { resp =>
-    process(reader.read(resp))
+      process(reader.read(resp))
     }
-    }
+  }
 
-    def deleteUser(username: String)(implicit reader: ClientResponseReader[Unit]): Future[Unit] = {
+  def deleteUser(username: String)(implicit reader: ClientResponseReader[Unit]): Future[Unit] = {
     // create path and map variables
     val path = (addFmt("/user/{username}")
-        replaceAll ("\\{" + "username" + "\\}",username.toString))
+      replaceAll ("\\{" + "username" + "\\}",username.toString))
 
     // query params
     val queryParams = new mutable.HashMap[String, String]
     val headerParams = new mutable.HashMap[String, String]
 
-            if (username == null) throw new Exception("Missing required parameter 'username' when calling UserApi->deleteUser")
+    if (username == null) throw new Exception("Missing required parameter 'username' when calling UserApi->deleteUser")
 
 
     val resFuture = client.submit("DELETE", path, queryParams.toMap, headerParams.toMap, "")
     resFuture flatMap { resp =>
-    process(reader.read(resp))
+      process(reader.read(resp))
     }
-    }
+  }
 
-    def getUserByName(username: String)(implicit reader: ClientResponseReader[User]): Future[User] = {
+  def getUserByName(username: String)(implicit reader: ClientResponseReader[User]): Future[User] = {
     // create path and map variables
     val path = (addFmt("/user/{username}")
-        replaceAll ("\\{" + "username" + "\\}",username.toString))
+      replaceAll ("\\{" + "username" + "\\}",username.toString))
 
     // query params
     val queryParams = new mutable.HashMap[String, String]
     val headerParams = new mutable.HashMap[String, String]
 
-            if (username == null) throw new Exception("Missing required parameter 'username' when calling UserApi->getUserByName")
+    if (username == null) throw new Exception("Missing required parameter 'username' when calling UserApi->getUserByName")
 
 
     val resFuture = client.submit("GET", path, queryParams.toMap, headerParams.toMap, "")
     resFuture flatMap { resp =>
-    process(reader.read(resp))
+      process(reader.read(resp))
     }
-    }
+  }
 
-    def loginUser(username: String,
+  def loginUser(username: String,
     password: String)(implicit reader: ClientResponseReader[String]): Future[String] = {
     // create path and map variables
     val path = (addFmt("/user/login"))
@@ -367,20 +364,20 @@ class UserApiAsyncHelper(client: TransportClient, config: SwaggerConfig) extends
     val queryParams = new mutable.HashMap[String, String]
     val headerParams = new mutable.HashMap[String, String]
 
-            if (username == null) throw new Exception("Missing required parameter 'username' when calling UserApi->loginUser")
+    if (username == null) throw new Exception("Missing required parameter 'username' when calling UserApi->loginUser")
 
-            if (password == null) throw new Exception("Missing required parameter 'password' when calling UserApi->loginUser")
+    if (password == null) throw new Exception("Missing required parameter 'password' when calling UserApi->loginUser")
 
-          queryParams += "username" -> username.toString
-          queryParams += "password" -> password.toString
+    queryParams += "username" -> username.toString
+    queryParams += "password" -> password.toString
 
     val resFuture = client.submit("GET", path, queryParams.toMap, headerParams.toMap, "")
     resFuture flatMap { resp =>
-    process(reader.read(resp))
+      process(reader.read(resp))
     }
-    }
+  }
 
-    def logoutUser()(implicit reader: ClientResponseReader[Unit]): Future[Unit] = {
+  def logoutUser()(implicit reader: ClientResponseReader[Unit]): Future[Unit] = {
     // create path and map variables
     val path = (addFmt("/user/logout"))
 
@@ -391,29 +388,29 @@ class UserApiAsyncHelper(client: TransportClient, config: SwaggerConfig) extends
 
     val resFuture = client.submit("GET", path, queryParams.toMap, headerParams.toMap, "")
     resFuture flatMap { resp =>
-    process(reader.read(resp))
+      process(reader.read(resp))
     }
-    }
+  }
 
-    def updateUser(username: String,
+  def updateUser(username: String,
     body: User)(implicit reader: ClientResponseReader[Unit], writer: RequestWriter[User]): Future[Unit] = {
     // create path and map variables
     val path = (addFmt("/user/{username}")
-        replaceAll ("\\{" + "username" + "\\}",username.toString))
+      replaceAll ("\\{" + "username" + "\\}",username.toString))
 
     // query params
     val queryParams = new mutable.HashMap[String, String]
     val headerParams = new mutable.HashMap[String, String]
 
-            if (username == null) throw new Exception("Missing required parameter 'username' when calling UserApi->updateUser")
+    if (username == null) throw new Exception("Missing required parameter 'username' when calling UserApi->updateUser")
 
-            if (body == null) throw new Exception("Missing required parameter 'body' when calling UserApi->updateUser")
+    if (body == null) throw new Exception("Missing required parameter 'body' when calling UserApi->updateUser")
 
     val resFuture = client.submit("PUT", path, queryParams.toMap, headerParams.toMap, writer.write(body))
     resFuture flatMap { resp =>
-    process(reader.read(resp))
+      process(reader.read(resp))
     }
-    }
+  }
 
 
 }
