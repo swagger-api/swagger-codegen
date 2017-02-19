@@ -53,11 +53,8 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
   def addHeader(key: String, value: String) = apiInvoker.defaultHeaders += key -> value
 
-  private[this] val client = transportClient
-
-  protected def transportClient: TransportClient = new RestClient(config)
-
   val config = SwaggerConfig.forUrl(new URI(defBasePath))
+  val client = new RestClient(config)
   val helper = new StoreApiAsyncHelper(client, config)
 
   /**
@@ -166,25 +163,25 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
 class StoreApiAsyncHelper(client: TransportClient, config: SwaggerConfig) extends ApiClient(client, config) {
 
-    def deleteOrder(orderId: String)(implicit reader: ClientResponseReader[Unit]): Future[Unit] = {
+  def deleteOrder(orderId: String)(implicit reader: ClientResponseReader[Unit]): Future[Unit] = {
     // create path and map variables
     val path = (addFmt("/store/order/{orderId}")
-        replaceAll ("\\{" + "orderId" + "\\}",orderId.toString))
+      replaceAll ("\\{" + "orderId" + "\\}",orderId.toString))
 
     // query params
     val queryParams = new mutable.HashMap[String, String]
     val headerParams = new mutable.HashMap[String, String]
 
-            if (orderId == null) throw new Exception("Missing required parameter 'orderId' when calling StoreApi->deleteOrder")
+    if (orderId == null) throw new Exception("Missing required parameter 'orderId' when calling StoreApi->deleteOrder")
 
 
     val resFuture = client.submit("DELETE", path, queryParams.toMap, headerParams.toMap, "")
     resFuture flatMap { resp =>
-    process(reader.read(resp))
+      process(reader.read(resp))
     }
-    }
+  }
 
-    def getInventory()(implicit reader: ClientResponseReader[Map[String, Integer]]): Future[Map[String, Integer]] = {
+  def getInventory()(implicit reader: ClientResponseReader[Map[String, Integer]]): Future[Map[String, Integer]] = {
     // create path and map variables
     val path = (addFmt("/store/inventory"))
 
@@ -195,14 +192,14 @@ class StoreApiAsyncHelper(client: TransportClient, config: SwaggerConfig) extend
 
     val resFuture = client.submit("GET", path, queryParams.toMap, headerParams.toMap, "")
     resFuture flatMap { resp =>
-    process(reader.read(resp))
+      process(reader.read(resp))
     }
-    }
+  }
 
-    def getOrderById(orderId: Long)(implicit reader: ClientResponseReader[Order]): Future[Order] = {
+  def getOrderById(orderId: Long)(implicit reader: ClientResponseReader[Order]): Future[Order] = {
     // create path and map variables
     val path = (addFmt("/store/order/{orderId}")
-        replaceAll ("\\{" + "orderId" + "\\}",orderId.toString))
+      replaceAll ("\\{" + "orderId" + "\\}",orderId.toString))
 
     // query params
     val queryParams = new mutable.HashMap[String, String]
@@ -211,11 +208,11 @@ class StoreApiAsyncHelper(client: TransportClient, config: SwaggerConfig) extend
 
     val resFuture = client.submit("GET", path, queryParams.toMap, headerParams.toMap, "")
     resFuture flatMap { resp =>
-    process(reader.read(resp))
+      process(reader.read(resp))
     }
-    }
+  }
 
-    def placeOrder(body: Order)(implicit reader: ClientResponseReader[Order], writer: RequestWriter[Order]): Future[Order] = {
+  def placeOrder(body: Order)(implicit reader: ClientResponseReader[Order], writer: RequestWriter[Order]): Future[Order] = {
     // create path and map variables
     val path = (addFmt("/store/order"))
 
@@ -223,13 +220,13 @@ class StoreApiAsyncHelper(client: TransportClient, config: SwaggerConfig) extend
     val queryParams = new mutable.HashMap[String, String]
     val headerParams = new mutable.HashMap[String, String]
 
-            if (body == null) throw new Exception("Missing required parameter 'body' when calling StoreApi->placeOrder")
+    if (body == null) throw new Exception("Missing required parameter 'body' when calling StoreApi->placeOrder")
 
     val resFuture = client.submit("POST", path, queryParams.toMap, headerParams.toMap, writer.write(body))
     resFuture flatMap { resp =>
-    process(reader.read(resp))
+      process(reader.read(resp))
     }
-    }
+  }
 
 
 }
