@@ -101,7 +101,13 @@ public class ComparePathUtil {
 
                     } else {
                         LOGGER.info("going into recursion with directory " + directoryFilePath);
-                        return isEverythingInCompareDirectory(directoryFilePath, compareFilePath, checkFileContent, false);
+                        boolean result = isEverythingInCompareDirectory(directoryFilePath, compareFilePath,
+                                checkFileContent, false);
+
+                        // if not equal, then cancel compare
+                        if (!result) {
+                            return false;
+                        }
                     }
                 } else {
                     LOGGER.info(directoryFilePath.toString() + ": compareFilepath not found");
