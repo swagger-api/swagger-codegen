@@ -31,7 +31,7 @@ install:
   - git clone https://github.com/ordercloud-api/swagger.git ./swagger-ordercloud
 build_script:
   # install swagger codegen locally
-  - mvn clean install -DskipTests --quiet
+  - mvn clean install
   - ps: |
       $output = @()
       foreach ($language in $env:Languages.split(';')) {
