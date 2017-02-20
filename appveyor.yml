@@ -23,7 +23,7 @@ install:
         "Content-type" = "application/json"
       }
       $JobID = "a0bt6ix08mj3s1ic"
-      Invoke-RestMethod -Method Get -Uri "$apiUrl/buildjobs/$JobID/artifacts/SwaggerSpec" -OutFile "$env:APPVEYOR_BUILD_FOLDER/SwaggerSpec.json" -Headers @{ "Authorization" = "Bearer $env:API_KEY" }
+      Invoke-RestMethod -Method Get -Uri "$apiUrl/buildjobs/$JobID/artifacts/SwaggerSpec.json" -OutFile "$env:APPVEYOR_BUILD_FOLDER/SwaggerSpec.json" -Headers @{ "Authorization" = "Bearer $env:API_KEY" }
   - cmd: SET PATH=C:\maven\apache-maven-3.2.5\bin;%JAVA_HOME%\bin;%PATH%
   - cmd: SET MAVEN_OPTS=-XX:MaxPermSize=2g -Xmx4g
   - cmd: SET JAVA_OPTS=-XX:MaxPermSize=2g -Xmx4g
