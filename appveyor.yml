@@ -40,16 +40,6 @@ build_script:
 artifacts:
   - path: SwaggerSpec.json
     name: SwaggerSpec
-  - path: ordercloud-csharp-sdk/**/*
-    name: CSharpSDK
-  - path: ordercloud-php-sdk/**/*
-    name: PHPSDK
-  - path: ordercloud-python-sdk/**/*
-    name: PythonSDK
-  - path: ordercloud-ruby-sdk/**/*
-    name: RubySDK
-  - path: ordercloud-swift-sdk/**/*
-    name: SwiftSDK
 cache:
   - C:\maven\ -> pom.xml
   - C:\Users\appveyor\.m2
