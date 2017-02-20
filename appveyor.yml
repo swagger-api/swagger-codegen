@@ -4,6 +4,7 @@ version: 'swagger-{branch}-{build}'
 hosts:
   api.ordercloud.io: 127.0.0.1
 environment:
+  Environment: QA
   Languages: csharp;php;python;ruby;swift
   API_KEY:
     secure: YLGqOeIZhR3sUjPRboMhJKoU9U8oD/+PVXwgUA2cEjo=
@@ -49,6 +50,27 @@ artifacts:
     name: RubySDK
   - path: ordercloud-swift-sdk/**/*
     name: SwiftSDK
+deploy:
+  - provider: Environment
+    name: QA - OrderCloud CSharp SDK
+    on:
+      Environment: QA
+  - provider: Environment
+    name: QA - OrderCloud PHP SDK
+    on:
+      Environment: QA
+  - provider: Environment
+    name: QA - OrderCloud Python SDK
+    on:
+      Environment: QA
+  - provider: Environment
+    name: QA - OrderCloud Ruby SDK
+    on:
+      Environment: QA
+  - provider: Environment
+    name: QA - OrderCloud Swift SDK
+    on:
+      Environment: QA
 cache:
   - C:\maven\ -> pom.xml
   - C:\Users\appveyor\.m2
