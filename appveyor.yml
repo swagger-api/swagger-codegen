@@ -5,6 +5,8 @@ hosts:
   api.ordercloud.io: 127.0.0.1
 environment:
   Languages: csharp;php;python;ruby;swift
+  API_KEY:
+    secure: YLGqOeIZhR3sUjPRboMhJKoU9U8oD/+PVXwgUA2cEjo=
 install:
   - ps: |
       Add-Type -AssemblyName System.IO.Compression.FileSystem
@@ -15,6 +17,13 @@ install:
         )
         [System.IO.Compression.ZipFile]::ExtractToDirectory("C:\maven-bin.zip", "C:\maven")
       }
+      $apiUrl = "https://ci.appveyor.com/api"
+      $headers = @{
+        "Authorization" = "Bearer $env:API_KEY"
+        "Content-type" = "application/json"
+      }
+      $JobID = "a0bt6ix08mj3s1ic"
+      Invoke-RestMethod -Method Get -Uri "$apiUrl/buildjobs/$JobID/artifacts/SwaggerSpec" -OutFile "$env:APPVEYOR_BUILD_FOLDER/SwaggerSpec.json" -Headers @{ "Authorization" = "Bearer $env:API_KEY" }
   - cmd: SET PATH=C:\maven\apache-maven-3.2.5\bin;%JAVA_HOME%\bin;%PATH%
   - cmd: SET MAVEN_OPTS=-XX:MaxPermSize=2g -Xmx4g
   - cmd: SET JAVA_OPTS=-XX:MaxPermSize=2g -Xmx4g
@@ -25,7 +34,7 @@ build_script:
   - mvn clean install --quiet
   - ps: |
       foreach ($language in $env:Languages.split(';')) {
-        java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate -i swagger-ordercloud/ordercloud_swagger.json -l $language -o ordercloud-$language-sdk -c ('swagger-ordercloud/config/' + $language + '.json') -t swagger-ordercloud/templates/$language
+        java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate -i SwaggerSpec.json -l $language -o ordercloud-$language-sdk -c ('swagger-ordercloud/config/' + $language + '.json') -t swagger-ordercloud/templates/$language -v
       }
 cache:
   - C:\maven\ -> pom.xml
