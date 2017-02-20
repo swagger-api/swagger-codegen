@@ -30,7 +30,7 @@ install:
   - git clone https://github.com/ordercloud-api/swagger.git ./swagger-ordercloud
 build_script:
   # install swagger codegen locally
-  - mvn clean install
+  - mvn clean install -DskipTests --quiet
   - ps: |
       $output = @()
       foreach ($language in $env:Languages.split(';')) {
@@ -39,6 +39,8 @@ build_script:
 artifacts:
   - path: SwaggerSpec.json
     name: SwaggerSpec
+  - path: ordercloud-ruby-sdk/**/*
+    name: RubySDK
 cache:
   - C:\maven\ -> pom.xml
   - C:\Users\appveyor\.m2
