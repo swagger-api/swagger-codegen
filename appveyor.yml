@@ -27,7 +27,6 @@ install:
   - cmd: SET PATH=C:\maven\apache-maven-3.2.5\bin;%JAVA_HOME%\bin;%PATH%
   - cmd: SET MAVEN_OPTS=-XX:MaxPermSize=2g -Xmx4g
   - cmd: SET JAVA_OPTS=-XX:MaxPermSize=2g -Xmx4g
-  - cmd: SET M2_HOME=C:\maven\apache-maven-3.2.5
   - git clone https://github.com/ordercloud-api/swagger.git ./swagger-ordercloud
 build_script:
   # install swagger codegen locally
