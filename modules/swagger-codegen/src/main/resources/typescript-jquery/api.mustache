@@ -40,11 +40,47 @@ export namespace {{classname}} {
 {{/model}}
 {{/models}}
 
+export interface IOptions {
+    accepts?: any;
+    async?: boolean;
+    cache?: boolean;
+    complete? (jqXHR: any, textStatus: string): any;
+    contents?: { [key: string]: any; };
+    contentType?: any;
+    context?: any;
+    converters?: { [key: string]: any; };
+    crossDomain?: boolean;
+    data?: any;
+    dataFilter? (data: any, ty: any): any;
+    dataType?: string;
+    error? (jqXHR: any, textStatus: string, errorThrown: string): any;
+    global?: boolean;
+    headers?: { [key: string]: any; };
+    ifModified?: boolean;
+    isLocal?: boolean;
+    jsonp?: any;
+    jsonpCallback?: any;
+    method?: string;
+    mimeType?: string;
+    password?: string;
+    processData?: boolean;
+    scriptCharset?: string;
+    statusCode?: { [key: string]: any; };
+    success? (data: any, textStatus: string, jqXHR: any): any;
+    timeout?: number;
+    traditional?: boolean;
+    type?: string;
+    url?: string;
+    username?: string;
+    xhr?: any;
+    xhrFields?: { [key: string]: any; };
+}
+
 export interface Authentication {
     /**
     * Apply authentication settings to header and query params.
     */
-    applyToRequest(requestOptions: request.Options): void;
+    applyToRequest(requestOptions: IOptions): void;
 }
 
 export class HttpBasicAuth implements Authentication {
@@ -62,7 +98,7 @@ export class ApiKeyAuth implements Authentication {
     constructor(private location: string, private paramName: string) {
     }
 
-    applyToRequest(requestOptions: request.Options): void {
+    applyToRequest(requestOptions: IOptions): void {
         requestOptions.headers[this.paramName] = this.apiKey;
     }
 }
@@ -70,7 +106,7 @@ export class ApiKeyAuth implements Authentication {
 export class OAuth implements Authentication {
     public accessToken: string;
 
-    applyToRequest(requestOptions: request.Options): void {
+    applyToRequest(requestOptions: IOptions): void {
         requestOptions.headers["Authorization"] = "Bearer " + this.accessToken;
     }
 }
@@ -78,7 +114,7 @@ export class OAuth implements Authentication {
 export class VoidAuth implements Authentication {
     public username: string;
     public password: string;
-    applyToRequest(requestOptions: request.Options): void {
+    applyToRequest(requestOptions: IOptions): void {
         // Do nothing
     }
 }
@@ -178,7 +214,7 @@ export class {{classname}} {
      {{#allParams}}* @param {{paramName}} {{description}}
      {{/allParams}}*/
     public {{nickname}} ({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) : Promise<{ response: any /*jqXHR*/; {{#returnType}}body: {{{returnType}}}; {{/returnType}}{{^returnType}}body?: any; {{/returnType}} }> {
-        const localVarPath = this.basePath + '{{path}}'{{#pathParams}}
+        let localVarPath = this.basePath + '{{path}}'{{#pathParams}}
             .replace('{' + '{{baseName}}' + '}', String({{paramName}})){{/pathParams}};
         let queryParameters: any = {};
         let headerParams: any = this.extendObj({}, this.defaultHeaders);
