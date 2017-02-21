@@ -300,11 +300,15 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
             apiTestTemplateFiles.put("api_test.mustache", ".cs");
 
             supportingFiles.add(new SupportingFile("packages_test.config.mustache", testPackageFolder + File.separator, "packages.config"));
+
+            supportingFiles.add(new SupportingFile("ApiAuthTest.mustache", testPackageFolder + File.separator, "ApiAuthTest.cs"));
         }
 
         if(Boolean.TRUE.equals(generatePropertyChanged)) {
             supportingFiles.add(new SupportingFile("FodyWeavers.xml", packageFolder, "FodyWeavers.xml"));
         }
+
+        supportingFiles.add(new SupportingFile("ApiAuth.mustache", packageFolder, "ApiAuth.cs"));
 
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
