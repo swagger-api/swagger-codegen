@@ -273,7 +273,7 @@ export class {{classname}} {
                     (data: {{{returnType}}}, textStatus: string, jqXHR: any) =>
                         resolve({ response: jqXHR, body: data }),
                     (xhr: any, textStatus: string, errorThrown: string) =>
-                        reject({ response: jqXHR, body: errorThrown })
+                        reject({ response: xhr, body: errorThrown })
                 );
         });
 
