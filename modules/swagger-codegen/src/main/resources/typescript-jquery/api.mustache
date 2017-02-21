@@ -1,4 +1,4 @@
-declare var $: any;
+import * as $ from 'jquery';
 
 let defaultBasePath = '{{basePath}}';
 
@@ -11,18 +11,18 @@ let defaultBasePath = '{{basePath}}';
 {{#models}}
 {{#model}}
 {{#description}}
-/**
-* {{{description}}}
-*/
-{{/description}}
-export class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
-{{#vars}}
-{{#description}}
     /**
     * {{{description}}}
     */
 {{/description}}
-    '{{name}}': {{#isEnum}}{{classname}}.{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
+export class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
+{{#vars}}
+    {{#description}}
+        /**
+        * {{{description}}}
+        */
+    {{/description}}
+    '{{name}}': {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
 {{/vars}}
 }
 
@@ -30,8 +30,12 @@ export class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
 export namespace {{classname}} {
 {{#vars}}
 {{#isEnum}}
-    export enum {{datatypeWithEnum}} { {{#allowableValues}}{{#values}}
-        {{datatypeWithEnum}}_{{.}} = <any> '{{.}}'{{^-last}},{{/-last}}{{/values}}{{/allowableValues}}
+    export enum {{enumName}} {
+    {{#allowableValues}}
+        {{#enumVars}}
+            {{name}} = <any> {{{value}}}{{^-last}},{{/-last}}
+        {{/enumVars}}
+    {{/allowableValues}}
     }
 {{/isEnum}}
 {{/vars}}
@@ -199,21 +203,22 @@ export class {{classname}} {
     }
 {{/isOAuth}}
 {{/authMethods}}
-    private extendObj<T1,T2>(objA: T1, objB: T2) {
+    private extendObj<T1, T2 extends T1>(objA: T2, objB: T2): T1|T2 {
         for(let key in objB){
             if(objB.hasOwnProperty(key)){
-                objA[key] = objB[key];
+            objA[key] = objB[key];
             }
         }
-        return <T1&T2>objA;
+        return objA;
     }
+
 {{#operation}}
     /**
      * {{summary}}
      * {{notes}}
      {{#allParams}}* @param {{paramName}} {{description}}
      {{/allParams}}*/
-    public {{nickname}} ({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) : Promise<{ response: any /*jqXHR*/; {{#returnType}}body: {{{returnType}}}; {{/returnType}}{{^returnType}}body?: any; {{/returnType}} }> {
+    public {{nickname}} ({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) : JQueryPromise<{ response: JQueryXHR; {{#returnType}}body: {{{returnType}}}; {{/returnType}}{{^returnType}}body?: any; {{/returnType}} }> {
         let localVarPath = this.basePath + '{{path}}'{{#pathParams}}
             .replace('{' + '{{baseName}}' + '}', String({{paramName}})){{/pathParams}};
         let queryParameters: any = {};
@@ -268,15 +273,14 @@ export class {{classname}} {
 {{/authMethods}}
         this.authentications.default.applyToRequest(requestOptions);
 
-        return new Promise((resolve, reject) => {
-                $.ajax(requestOptions).then(
-                    (data: {{{returnType}}}, textStatus: string, jqXHR: any) =>
-                        resolve({ response: jqXHR, body: data }),
-                    (xhr: any, textStatus: string, errorThrown: string) =>
-                        reject({ response: xhr, body: errorThrown })
-                );
-        });
-
+        let dfd = $.Deferred();
+        $.ajax(requestOptions).then(
+            (data: {{{returnType}}}, textStatus: string, jqXHR: JQueryXHR) =>
+                dfd.resolve({ response: jqXHR, body: data }),
+            (xhr: JQueryXHR, textStatus: string, errorThrown: string) =>
+                dfd.reject({ response: xhr, body: errorThrown })
+        );
+        return dfd.promise();
     }
 {{/operation}}
 }
