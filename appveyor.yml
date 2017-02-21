@@ -36,7 +36,7 @@ build_script:
       $output = @()
       foreach ($language in $env:Languages.split(';')) {
         $output += (java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate -i SwaggerSpec.json -l $language -o ordercloud-$language-sdk -c ('swagger-ordercloud/config/' + $language + '.json') -t swagger-ordercloud/templates/$language) 2>&1
-        Compress-Archive -LiteralPath $env:APPVEYOR_BUILD_FOLDER\ordercloud-$language-sdk\ -DestinationPath $env:APPVEYOR_BUILD_FOLDER\ordercloud-$language-sdk
+        Compress-Archive -Path $env:APPVEYOR_BUILD_FOLDER\ordercloud-$language-sdk\* -DestinationPath $env:APPVEYOR_BUILD_FOLDER\ordercloud-$language-sdk
       }
 artifacts:
   - path: SwaggerSpec.json
