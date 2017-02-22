@@ -20,8 +20,6 @@ import io.swagger.models.properties.Property;
 import io.swagger.models.properties.RefProperty;
 import io.swagger.models.properties.StringProperty;
 
-import org.codehaus.plexus.util.StringUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -108,7 +106,7 @@ public class XmlExampleGenerator {
         for (String pName : elements.keySet()) {
             Property p = elements.get(pName);
             final String asXml = toXml(pName, p, indent + 1, selfPath);
-            if (StringUtils.isEmpty(asXml)) {
+            if (asXml == null || "".equals(asXml)) {
                 continue;
             }
             sb.append(asXml);
@@ -145,7 +143,7 @@ public class XmlExampleGenerator {
                     prefix = NEWLINE;
                 }
                 final String asXml = toXml(name, inner, indent + 1, path);
-                if (StringUtils.isNotEmpty(asXml)) {
+                if (asXml != null && !"".equals(asXml)) {
                     sb.append(prefix).append(asXml);
                 }
                 if (name != null) {
