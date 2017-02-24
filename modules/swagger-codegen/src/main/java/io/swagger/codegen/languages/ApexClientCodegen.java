@@ -64,7 +64,7 @@ public class ApexClientCodegen extends AbstractJavaCodegen {
         writeOptional(outputFolder, new SupportingFile("README.mustache", "README.md"));
 
         typeMapping.put("BigDecimal", "Double");
-        typeMapping.put("binary", "Blob");
+        typeMapping.put("binary", "String");
         typeMapping.put("ByteArray", "Blob");
         typeMapping.put("date", "Date");
         typeMapping.put("DateTime", "Datetime");
@@ -337,54 +337,88 @@ public class ApexClientCodegen extends AbstractJavaCodegen {
         }
         Object obj = p.getExample();
         String example = obj == null ? "" : obj.toString();
-        if (p instanceof StringProperty) {
+        if (p instanceof ArrayProperty) {
+            example = "new " + getTypeDeclaration(p) + "{" + toExampleValue(
+                ((ArrayProperty) p).getItems()) + "}";
+        } else if (p instanceof BooleanProperty) {
+            example = String.valueOf(!"false".equals(example));
+        } else if (p instanceof ByteArrayProperty) {
+            if (example.isEmpty()) {
+                example = "VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu";
+            }
+            ((ByteArrayProperty) p).setExample(example);
+            example = "EncodingUtil.base64Decode('" + example + "')";
+        } else if (p instanceof DateProperty) {
+            if (example.matches("^\\d{4}(-\\d{2}){2}")) {
+                example = example.substring(0, 10).replaceAll("-0?", ", ");
+            } else if (example.isEmpty()) {
+                example = "2000, 1, 23";
+            } else {
+                LOGGER.warn(String.format("The example provided for property '%s' is not a valid RFC3339 date. Defaulting to '2000-01-23'. [%s]", p
+                    .getName(), example));
+                example = "2000, 1, 23";
+            }
+            example = "Date.newInstance(" + example + ")";
+        } else if (p instanceof DateTimeProperty) {
+            if (example.matches("^\\d{4}([-T:]\\d{2}){5}.+")) {
+                example = example.substring(0, 19).replaceAll("[-T:]0?", ", ");
+            } else if (example.isEmpty()) {
+                example = "2000, 1, 23, 4, 56, 7";
+            } else {
+                LOGGER.warn(String.format("The example provided for property '%s' is not a valid RFC3339 datetime. Defaulting to '2000-01-23T04-56-07Z'. [%s]", p
+                    .getName(), example));
+                example = "2000, 1, 23, 4, 56, 7";
+            }
+            example = "Datetime.newInstanceGmt(" + example + ")";
+        } else if (p instanceof DecimalProperty) {
+            example = example.replaceAll("[^-0-9.]", "");
+            example = example.isEmpty() ? "1.3579" : example;
+        } else if (p instanceof FileProperty) {
+            if (example.isEmpty()) {
+                example = "VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu";
+                ((FileProperty) p).setExample(example);
+            }
+            example = "EncodingUtil.base64Decode(" + example + ")";
+        } else if (p instanceof EmailProperty) {
+            if (example.isEmpty()) {
+                example = "example@example.com";
+                ((EmailProperty) p).setExample(example);
+            }
+            example = "'" + example + "'";
+        } else if (p instanceof LongProperty) {
+            example = example.isEmpty() ? "123456789L" : example + "L";
+        } else if (p instanceof MapProperty) {
+            example = "new " + getTypeDeclaration(p) + "{'key'=>" + toExampleValue(
+                ((MapProperty) p).getAdditionalProperties()) + "}";
+        } else if (p instanceof ObjectProperty) {
+            example = example.isEmpty() ? "null" : example;
+        } else if (p instanceof PasswordProperty) {
+            example = example.isEmpty() ? "password123" : escapeText(example);
+            ((PasswordProperty) p).setExample(example);
+            example = "'" + example + "'";
+        } else if (p instanceof RefProperty) {
+            example = getTypeDeclaration(p) + ".getExample()";
+        } else if (p instanceof StringProperty) {
             StringProperty sp = (StringProperty) p;
             List<String> enums = sp.getEnum();
-            if (enums != null) {
-                example = example.isEmpty() ? enums.get(0) : example;
-
-                // Set example on the property for the response example generator
+            if (enums != null && example.isEmpty()) {
+                example = enums.get(0);
                 sp.setExample(example);
             } else if (example.isEmpty()) {
                 example = "aeiou";
             } else {
                 example = escapeText(example);
+                sp.setExample(example);
             }
             example = "'" + example + "'";
-        } else if (p instanceof BooleanProperty) {
-            example = String.valueOf(!"false".equals(example));
-        } else if (p instanceof DateProperty) {
-            example = example.isEmpty() ? "2000, 1, 23" : example.replaceAll("-", ", ");
-            example = "Date.newInstance(" + example + ")";
-        } else if (p instanceof DateTimeProperty) {
-            example = "Datetime.newInstanceGmt(" + (example.matches("\\d{4}([-T:]\\d{2}){5}.*")
-                ? example.substring(0, 19).replaceAll("[-T:]", ", ")
-                : "2000, 1, 23, 4, 56, 7") + ")";
-        } else if (p instanceof DecimalProperty) {
-            example = example.replaceAll("[^-0-9.]", "");
-            example = example.isEmpty() ? "3.149" : example;
-            // set example back on property for response ExampleGenerator
-            ((DecimalProperty) p).setExample(example);
-        } else if (p instanceof LongProperty) {
-            example = example.isEmpty() ? "123456789L" : example;
+        } else if (p instanceof UUIDProperty) {
+            example = example.isEmpty()
+                ? "'046b6c7f-0b8a-43b9-b35d-6489e6daee91'"
+                : "'" + escapeText(example) + "'";
         } else if (p instanceof BaseIntegerProperty) {
             example = example.matches("^-?\\d+$") ? example : "123";
-            ((BaseIntegerProperty) p).setExample(example);
-        } else if (p instanceof FileProperty) {
-            example = "Blob.valueOf('Sample text file\\nContents')";
-        } else if (p instanceof ObjectProperty) {
-            example = example.isEmpty() ? "null" : example;
-        } else if (p instanceof RefProperty) {
-            example = getTypeDeclaration(p) + ".getExample()";
-        } else if (p instanceof ArrayProperty) {
-            example = "new " + getTypeDeclaration(p) + "{" + toExampleValue(
-                ((ArrayProperty) p).getItems()) + "}";
-        } else if (p instanceof MapProperty) {
-            example = "new " + getTypeDeclaration(p) + "{'key'=>" + toExampleValue(
-                ((MapProperty) p).getAdditionalProperties()) + "}";
-        } else if (example.isEmpty()) {
-            example = "new " + getTypeDeclaration(p) + "()";
         }
+
         return example;
     }
 
