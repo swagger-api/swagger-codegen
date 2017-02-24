@@ -4,7 +4,6 @@ import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.java.JavaClientOptionsTest;
 import io.swagger.codegen.languages.SpringCodegen;
 import io.swagger.codegen.options.SpringOptionsProvider;
-
 import mockit.Expectations;
 import mockit.Tested;
 
@@ -72,7 +71,9 @@ public class SpringOptionsTest extends JavaClientOptionsTest {
             times = 1;
             clientCodegen.setUseBeanValidation(Boolean.valueOf(SpringOptionsProvider.USE_BEANVALIDATION));
             times = 1;
-
+				clientCodegen.setUseOptional(
+						Boolean.valueOf(SpringOptionsProvider.USE_OPTIONAL));
+				times = 1;
         }};
     }
 }
