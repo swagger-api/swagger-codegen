@@ -20,16 +20,6 @@ case class Pet (
   photoUrls: List[String],
   tags: Option[List[Tag]],
   /* pet status in the store */
-  status: Option[PetEnums.StatusEnum]
+  status: Option[String]
 )
 
-object PetEnums {
-
-  type StatusEnum = StatusEnum.Value
-  object StatusEnum extends Enumeration {
-    val  = Value("available")
-    val  = Value("pending")
-    val  = Value("sold")
-  }
-
-}

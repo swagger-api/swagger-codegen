@@ -20,17 +20,7 @@ case class Order (
   quantity: Option[Integer],
   shipDate: Option[DateTime],
   /* Order Status */
-  status: Option[OrderEnums.StatusEnum],
+  status: Option[String],
   complete: Option[Boolean]
 )
 
-object OrderEnums {
-
-  type StatusEnum = StatusEnum.Value
-  object StatusEnum extends Enumeration {
-    val  = Value("placed")
-    val  = Value("approved")
-    val  = Value("delivered")
-  }
-
-}
