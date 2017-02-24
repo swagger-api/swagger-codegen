@@ -9,9 +9,6 @@
   },
   "exclude": [
     "dist",
-    "node_modules",
-    "typings/browser",
-    "typings/main",
-    "typings/main.d.ts"
+    "node_modules"
   ]
 }

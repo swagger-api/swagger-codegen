@@ -249,11 +249,23 @@ export const PetApiFetchParamCreator = {
         let fetchOptions: RequestInit = assign({}, { method: "POST" }, options);
 
         let contentTypeHeader: Dictionary<string> = {};
-        contentTypeHeader = { "Content-Type": "application/x-www-form-urlencoded" };
-        fetchOptions.body = querystring.stringify({
-            "name": params["name"],
-            "status": params["status"],
-        });
+        let formData: Dictionary<any> = {};
+        let isMultipartData = false;
+        formData["name"] = params["name"];
+        formData["status"] = params["status"];
+
+        if (isMultipartData) {
+            let body = new FormData();
+            for (let key in formData) {
+                body.append(key, formData[key]);
+            }
+            fetchOptions.body = body;
+            contentTypeHeader = { "Content-Type": "multipart/form-data" };
+        }
+        else {
+            fetchOptions.body = querystring.stringify(formData);
+            contentTypeHeader = { "Content-Type": "application/x-www-form-urlencoded" };
+        }
         if (contentTypeHeader) {
             fetchOptions.headers = contentTypeHeader;
         }
@@ -280,11 +292,24 @@ export const PetApiFetchParamCreator = {
         let fetchOptions: RequestInit = assign({}, { method: "POST" }, options);
 
         let contentTypeHeader: Dictionary<string> = {};
-        contentTypeHeader = { "Content-Type": "application/x-www-form-urlencoded" };
-        fetchOptions.body = querystring.stringify({
-            "additionalMetadata": params["additionalMetadata"],
-            "file": params["file"],
-        });
+        let formData: Dictionary<any> = {};
+        let isMultipartData = false;
+        formData["additionalMetadata"] = params["additionalMetadata"];
+        isMultipartData = true;
+        formData["file"] = params["file"];
+
+        if (isMultipartData) {
+            let body = new FormData();
+            for (let key in formData) {
+                body.append(key, formData[key]);
+            }
+            fetchOptions.body = body;
+            contentTypeHeader = { "Content-Type": "multipart/form-data" };
+        }
+        else {
+            fetchOptions.body = querystring.stringify(formData);
+            contentTypeHeader = { "Content-Type": "application/x-www-form-urlencoded" };
+        }
         if (contentTypeHeader) {
             fetchOptions.headers = contentTypeHeader;
         }
