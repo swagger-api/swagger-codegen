@@ -360,13 +360,11 @@ public class ApexClientCodegen extends AbstractJavaCodegen {
             example = "Datetime.newInstanceGmt(" + (example.matches("\\d{4}([-T:]\\d{2}){5}.*")
                 ? example.substring(0, 19).replaceAll("[-T:]", ", ")
                 : "2000, 1, 23, 4, 56, 7") + ")";
-        } else if (p instanceof DoubleProperty) {
-            example = example.isEmpty() ? "3.149" : example;
         } else if (p instanceof DecimalProperty) {
             example = example.replaceAll("[^-0-9.]", "");
             example = example.isEmpty() ? "3.149" : example;
-        } else if (p instanceof FloatProperty) {
-            example = example.isEmpty() ? "1.23" : example;
+            // set example back on property for response ExampleGenerator
+            ((DecimalProperty) p).setExample(example);
         } else if (p instanceof LongProperty) {
             example = example.isEmpty() ? "123456789L" : example;
         } else if (p instanceof BaseIntegerProperty) {
