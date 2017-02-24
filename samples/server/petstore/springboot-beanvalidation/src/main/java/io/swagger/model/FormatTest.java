@@ -1,15 +1,13 @@
 package io.swagger.model;
 
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.math.BigDecimal;
-import java.util.UUID;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
-import javax.validation.constraints.*;
+
+import java.math.BigDecimal;
+import java.util.Objects;
+import java.util.UUID;
 /**
  * FormatTest
  */
