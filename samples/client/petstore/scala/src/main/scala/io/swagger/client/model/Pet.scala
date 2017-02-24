@@ -14,11 +14,22 @@ package io.swagger.client.model
 
 
 case class Pet (
-  id: Long,
-  category: Category,
+  id: Option[Long],
+  category: Option[Category],
   name: String,
   photoUrls: List[String],
-  tags: List[Tag],
+  tags: Option[List[Tag]],
   /* pet status in the store */
-  status: String
+  status: Option[PetEnums.StatusEnum]
 )
+
+object PetEnums {
+
+  type StatusEnum = StatusEnum.Value
+  object StatusEnum extends Enumeration {
+    val  = Value("available")
+    val  = Value("pending")
+    val  = Value("sold")
+  }
+
+}
