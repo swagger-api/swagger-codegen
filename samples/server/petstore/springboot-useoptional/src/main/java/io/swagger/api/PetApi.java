@@ -1,14 +1,23 @@
 package io.swagger.api;
 
+import java.io.File;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
-import org.springframework.http.HttpStatus;
+
+import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
+import javax.validation.constraints.*;
 
 @Api(value = "pet", description = "the pet API")
 public interface PetApi {
@@ -25,10 +34,7 @@ public interface PetApi {
         produces = { "application/xml", "application/json" }, 
         consumes = { "application/json", "application/xml" },
         method = RequestMethod.POST)
-    default ResponseEntity<Void> addPet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true )  @Valid @RequestBody Pet body) {
-        // do some magic!
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    }
+    ResponseEntity<Void> addPet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true ) @RequestBody Pet body);
 
 
     @ApiOperation(value = "Deletes a pet", notes = "", response = Void.class, authorizations = {
@@ -42,12 +48,9 @@ public interface PetApi {
     @RequestMapping(value = "/pet/{petId}",
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.DELETE)
-    default ResponseEntity<Void> deletePet(@ApiParam(value = "Pet id to delete",required=true ) @PathVariable("petId") Long petId,
+    ResponseEntity<Void> deletePet(@ApiParam(value = "Pet id to delete",required=true ) @PathVariable("petId") Long petId,
         @ApiParam(value = ""  ) @RequestHeader(value="api_key", required=false)
-Optional<String> apiKey) {
-        // do some magic!
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    }
+Optional<String> apiKey);
 
 
     @ApiOperation(value = "Finds Pets by status", notes = "Multiple status values can be provided with comma separated strings", response = Pet.class, responseContainer = "List", authorizations = {
@@ -62,10 +65,7 @@ Optional<String> apiKey) {
     @RequestMapping(value = "/pet/findByStatus",
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.GET)
-    default ResponseEntity<List<Pet>> findPetsByStatus( @NotNull @ApiParam(value = "Status values that need to be considered for filter", required = true, allowableValues = "AVAILABLE, PENDING, SOLD") @RequestParam(value = "status", required = true) List<String> status) {
-        // do some magic!
-        return new ResponseEntity<List<Pet>>(HttpStatus.OK);
-    }
+    ResponseEntity<List<Pet>> findPetsByStatus( @NotNull @ApiParam(value = "Status values that need to be considered for filter", required = true, allowableValues = "AVAILABLE, PENDING, SOLD") @RequestParam(value = "status", required = true) List<String> status);
 
 
     @ApiOperation(value = "Finds Pets by tags", notes = "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.", response = Pet.class, responseContainer = "List", authorizations = {
@@ -80,10 +80,7 @@ Optional<String> apiKey) {
     @RequestMapping(value = "/pet/findByTags",
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.GET)
-    default ResponseEntity<List<Pet>> findPetsByTags( @NotNull @ApiParam(value = "Tags to filter by", required = true) @RequestParam(value = "tags", required = true) List<String> tags) {
-        // do some magic!
-        return new ResponseEntity<List<Pet>>(HttpStatus.OK);
-    }
+    ResponseEntity<List<Pet>> findPetsByTags( @NotNull @ApiParam(value = "Tags to filter by", required = true) @RequestParam(value = "tags", required = true) List<String> tags);
 
 
     @ApiOperation(value = "Find pet by ID", notes = "Returns a single pet", response = Pet.class, authorizations = {
@@ -96,10 +93,7 @@ Optional<String> apiKey) {
     @RequestMapping(value = "/pet/{petId}",
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.GET)
-    default ResponseEntity<Pet> getPetById(@ApiParam(value = "ID of pet to return",required=true ) @PathVariable("petId") Long petId) {
-        // do some magic!
-        return new ResponseEntity<Pet>(HttpStatus.OK);
-    }
+    ResponseEntity<Pet> getPetById(@ApiParam(value = "ID of pet to return",required=true ) @PathVariable("petId") Long petId);
 
 
     @ApiOperation(value = "Update an existing pet", notes = "", response = Void.class, authorizations = {
@@ -116,10 +110,7 @@ Optional<String> apiKey) {
         produces = { "application/xml", "application/json" }, 
         consumes = { "application/json", "application/xml" },
         method = RequestMethod.PUT)
-    default ResponseEntity<Void> updatePet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true )  @Valid @RequestBody Pet body) {
-        // do some magic!
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    }
+    ResponseEntity<Void> updatePet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true ) @RequestBody Pet body);
 
 
     @ApiOperation(value = "Updates a pet in the store with form data", notes = "", response = Void.class, authorizations = {
@@ -134,12 +125,9 @@ Optional<String> apiKey) {
         produces = { "application/xml", "application/json" }, 
         consumes = { "application/x-www-form-urlencoded" },
         method = RequestMethod.POST)
-    default ResponseEntity<Void> updatePetWithForm(@ApiParam(value = "ID of pet that needs to be updated",required=true ) @PathVariable("petId") Long petId,
+    ResponseEntity<Void> updatePetWithForm(@ApiParam(value = "ID of pet that needs to be updated",required=true ) @PathVariable("petId") Long petId,
         @ApiParam(value = "Updated name of the pet" ) @RequestPart(value="name", required=false)  String name,
-        @ApiParam(value = "Updated status of the pet" ) @RequestPart(value="status", required=false)  String status) {
-        // do some magic!
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    }
+        @ApiParam(value = "Updated status of the pet" ) @RequestPart(value="status", required=false)  String status);
 
 
     @ApiOperation(value = "uploads an image", notes = "", response = ModelApiResponse.class, authorizations = {
@@ -154,11 +142,8 @@ Optional<String> apiKey) {
         produces = { "application/json" }, 
         consumes = { "multipart/form-data" },
         method = RequestMethod.POST)
-    default ResponseEntity<ModelApiResponse> uploadFile(@ApiParam(value = "ID of pet to update",required=true ) @PathVariable("petId") Long petId,
+    ResponseEntity<ModelApiResponse> uploadFile(@ApiParam(value = "ID of pet to update",required=true ) @PathVariable("petId") Long petId,
         @ApiParam(value = "Additional data to pass to server" ) @RequestPart(value="additionalMetadata", required=false)  String additionalMetadata,
-        @ApiParam(value = "file detail") @RequestPart("file") MultipartFile file) {
-        // do some magic!
-        return new ResponseEntity<ModelApiResponse>(HttpStatus.OK);
-    }
+        @ApiParam(value = "file detail") @RequestPart("file") MultipartFile file);
 
 }

@@ -1,13 +1,15 @@
 package io.swagger.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import java.math.BigDecimal;
 import java.util.UUID;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import javax.validation.constraints.*;
 /**
  * FormatTest
  */
@@ -44,7 +46,7 @@ public class FormatTest   {
   private LocalDate date = null;
 
   @JsonProperty("dateTime")
-  private OffsetDateTime dateTime = null;
+  private DateTime dateTime = null;
 
   @JsonProperty("uuid")
   private UUID uuid = null;
@@ -256,7 +258,7 @@ public class FormatTest   {
     this.date = date;
   }
 
-  public FormatTest dateTime(OffsetDateTime dateTime) {
+  public FormatTest dateTime(DateTime dateTime) {
     this.dateTime = dateTime;
     return this;
   }
@@ -266,11 +268,11 @@ public class FormatTest   {
    * @return dateTime
   **/
   @ApiModelProperty(value = "")
-  public OffsetDateTime getDateTime() {
+  public DateTime getDateTime() {
     return dateTime;
   }
 
-  public void setDateTime(OffsetDateTime dateTime) {
+  public void setDateTime(DateTime dateTime) {
     this.dateTime = dateTime;
   }
 

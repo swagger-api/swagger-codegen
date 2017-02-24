@@ -1,14 +1,17 @@
 package io.swagger.model;
 
+import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.Animal;
-
-import java.time.OffsetDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
+import org.joda.time.DateTime;
+import javax.validation.constraints.*;
 /**
  * MixedPropertiesAndAdditionalPropertiesClass
  */
@@ -18,7 +21,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
   private UUID uuid = null;
 
   @JsonProperty("dateTime")
-  private OffsetDateTime dateTime = null;
+  private DateTime dateTime = null;
 
   @JsonProperty("map")
   private Map<String, Animal> map = new HashMap<String, Animal>();
@@ -41,7 +44,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
     this.uuid = uuid;
   }
 
-  public MixedPropertiesAndAdditionalPropertiesClass dateTime(OffsetDateTime dateTime) {
+  public MixedPropertiesAndAdditionalPropertiesClass dateTime(DateTime dateTime) {
     this.dateTime = dateTime;
     return this;
   }
@@ -51,11 +54,11 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
    * @return dateTime
   **/
   @ApiModelProperty(value = "")
-  public OffsetDateTime getDateTime() {
+  public DateTime getDateTime() {
     return dateTime;
   }
 
-  public void setDateTime(OffsetDateTime dateTime) {
+  public void setDateTime(DateTime dateTime) {
     this.dateTime = dateTime;
   }
 
