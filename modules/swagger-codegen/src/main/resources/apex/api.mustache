@@ -25,7 +25,7 @@ public class {{classname}} {
      {{#returnType}}
      * @return {{{returnType}}}
      {{/returnType}}
-     * @throws ApiException if fails to make API call
+     * @throws Swagger.ApiException if fails to make API call
      */
     public {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}} {{operationId}}({{#hasParams}}Map<String, Object> params{{/hasParams}}) {
     {{#allParams}}
@@ -34,6 +34,10 @@ public class {{classname}} {
       {{/required}}
     {{/allParams}}
         List<Swagger.Param> query = new List<Swagger.Param>();
+    {{#hasQueryParams}}
+
+        // cast query params to verify their expected type
+    {{/hasQueryParams}}
     {{#queryParams}}
       {{#isListContainer}}
         {{#isCollectionFormatMulti}}
@@ -51,6 +55,10 @@ public class {{classname}} {
       {{/hasMore}}
     {{/queryParams}}
         List<Swagger.Param> form = new List<Swagger.Param>();
+    {{#hasFormParams}}
+
+        // cast form params to verify their expected type
+    {{/hasFormParams}}
     {{#formParams}}
       {{#isListContainer}}
         {{#isCollectionFormatMulti}}

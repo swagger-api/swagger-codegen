@@ -119,12 +119,14 @@ public class ApexClientCodegen extends AbstractJavaCodegen {
 
     @Override
     public String escapeReservedWord(String name) {
+        // Identifiers must start with a letter
         return "r" + super.escapeReservedWord(name);
     }
 
     @Override
     public String toModelName(String name) {
         String modelName = super.toModelName(name);
+
         // Max length is 40; save the last 4 for "Test"
         if (modelName.length() > 36) {
             modelName = modelName.substring(0, 36);
@@ -142,6 +144,7 @@ public class ApexClientCodegen extends AbstractJavaCodegen {
                 inner == null ? "Object" : getTypeDeclaration(inner)
             );
         } else if (p instanceof BooleanProperty) {
+            // true => "true", false => "false", null => "null"
             out = String.valueOf(((BooleanProperty) p).getDefault());
         } else if (p instanceof LongProperty) {
             Long def = ((LongProperty) p).getDefault();
@@ -160,6 +163,7 @@ public class ApexClientCodegen extends AbstractJavaCodegen {
             out = super.toDefaultValue(p);
         }
 
+        // we'll skip over null defaults in the model template to avoid redundant initialization
         return "null".equals(out) ? null : out;
     }
 
@@ -180,6 +184,7 @@ public class ApexClientCodegen extends AbstractJavaCodegen {
         } else if (Boolean.TRUE.equals(p.isString)) {
             p.example = "'" + p.example + "'";
         } else if ("".equals(p.example) || p.example == null) {
+            // Get an example object from the generated model
             p.example = p.dataType + ".getExample()";
         }
     }
@@ -192,6 +197,8 @@ public class ApexClientCodegen extends AbstractJavaCodegen {
         }
 
         Boolean hasDefaultValues = false;
+
+        // for (de)serializing properties renamed for Apex (e.g. reserved words)
         List<Map<String, String>> propertyMappings = new ArrayList<>();
         for (CodegenProperty p : cm.allVars) {
             hasDefaultValues |= p.defaultValue != null;
@@ -216,9 +223,8 @@ public class ApexClientCodegen extends AbstractJavaCodegen {
     @Override
     public void postProcessParameter(CodegenParameter parameter) {
         if (parameter.isBodyParam && parameter.isListContainer) {
-            // items of array bodyParams are being nested an extra level too deep
-            CodegenProperty items = parameter.items.items;
-            parameter.items = items;
+            // items of array bodyParams are being nested an extra level too deep for some reason
+            parameter.items = parameter.items.items;
             setParameterExampleValue(parameter);
         }
     }
@@ -233,6 +239,7 @@ public class ApexClientCodegen extends AbstractJavaCodegen {
             sanitized + ".remoteSite"
         ));
 
+        // max length for description for a Remote Site setting
         if (description != null && description.length() > 255) {
             description = description.substring(0, 255);
         }
@@ -265,6 +272,7 @@ public class ApexClientCodegen extends AbstractJavaCodegen {
         CodegenOperation op = super.fromOperation(
             path, httpMethod, operation, definitions, swagger);
         if (op.getHasExamples()) {
+            // prepare examples for Apex test classes
             Property responseProperty = findMethodResponse(operation.getResponses()).getSchema();
             String deserializedExample = toExampleValue(responseProperty);
             for (Map<String, String> example : op.examples) {
@@ -282,6 +290,7 @@ public class ApexClientCodegen extends AbstractJavaCodegen {
     }
 
     public void setClassPrefix(String classPrefix) {
+        // the best thing we can do without namespacing in Apex
         modelNamePrefix = classPrefix;
         this.classPrefix = classPrefix;
     }
