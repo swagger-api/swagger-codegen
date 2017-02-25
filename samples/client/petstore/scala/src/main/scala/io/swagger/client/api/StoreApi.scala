@@ -47,8 +47,10 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
   implicit val formats = new org.json4s.DefaultFormats {
     override def dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS+0000")
   }
-  implicit val reader = JsonFormatsReader
-  implicit val writer = JsonFormatsWriter
+  implicit val stringReader = ClientResponseReaders.StringReader
+  implicit val jsonReader = JsonFormatsReader
+  implicit val stringWriter = RequestWriters.StringWriter
+  implicit val jsonWriter = JsonFormatsWriter
 
   var basePath = defBasePath
   var apiInvoker = defApiInvoker
