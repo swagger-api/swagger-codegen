@@ -1,7 +1,8 @@
 import io.swagger.client._
 import io.swagger.client.api._
 import io.swagger.client.model._
- 
+import org.joda.time.DateTime
+
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest._
@@ -9,6 +10,7 @@ import org.scalatest._
 import scala.collection.mutable.{ ListBuffer, HashMap }
 import scala.collection.JavaConverters._
 import scala.beans.BeanProperty
+import java.util.Date
 
 @RunWith(classOf[JUnitRunner])
 class StoreApiTest extends FlatSpec with Matchers {
@@ -18,7 +20,7 @@ class StoreApiTest extends FlatSpec with Matchers {
   api.apiInvoker.defaultHeaders += "api_key" -> "special-key"
 
   it should "place and fetch an order" in {
-    val now = new org.joda.time.DateTime
+    val now = new Date()
     val order = Order(
       petId = 10,
       id = 1000,
@@ -34,15 +36,14 @@ class StoreApiTest extends FlatSpec with Matchers {
         order.id should be(1000)
         order.petId should be(10)
         order.quantity should be(101)
-        // use `getMillis` to compare across timezones
-        order.shipDate.getMillis.equals(now.getMillis) should be(true)
+        order.shipDate.getTime().equals(now.getTime()) should be(true)
       }
       case None => fail("didn't find order created")
     }
   }
 
   it should "delete an order" in {
-    val now = new org.joda.time.DateTime
+    val now = new Date()
     val order = Order(
       id = 1001,
       petId = 10,

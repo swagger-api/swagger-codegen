@@ -12,10 +12,10 @@
 
 package io.swagger.client.api
 
+import java.text.SimpleDateFormat
+
 import io.swagger.client.model.Order
-import io.swagger.client.ApiInvoker
-import io.swagger.client.ApiException
-import io.swagger.client.AsyncClient
+import io.swagger.client.{ApiInvoker, ApiException}
 
 import com.sun.jersey.multipart.FormDataMultiPart
 import com.sun.jersey.multipart.file.FileDataBodyPart
@@ -44,7 +44,9 @@ import scala.util.{Failure, Success, Try}
 class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
                         defApiInvoker: ApiInvoker = ApiInvoker) {
 
-  implicit val formats = org.json4s.DefaultFormats
+  implicit val formats = new org.json4s.DefaultFormats {
+    override def dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS+0000")
+  }
   implicit val reader = JsonFormatsReader
   implicit val writer = JsonFormatsWriter
 
