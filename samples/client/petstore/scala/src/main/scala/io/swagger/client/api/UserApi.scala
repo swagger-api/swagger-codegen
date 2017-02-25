@@ -72,12 +72,12 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
   }
 
-      /**
-      * Create user asynchronously
-      * This can only be done by the logged in user.
-         * @param body Created user object 
-         * @return Future(void)
-      */
+  /**
+   * Create user asynchronously
+   * This can only be done by the logged in user.
+   * @param body Created user object 
+   * @return Future(void)
+  */
   def createUserAsync(body: User) = {
       helper.createUser(body)
   }
@@ -98,12 +98,12 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
   }
 
-      /**
-      * Creates list of users with given input array asynchronously
-      * 
-         * @param body List of user object 
-         * @return Future(void)
-      */
+  /**
+   * Creates list of users with given input array asynchronously
+   * 
+   * @param body List of user object 
+   * @return Future(void)
+  */
   def createUsersWithArrayInputAsync(body: List[User]) = {
       helper.createUsersWithArrayInput(body)
   }
@@ -124,12 +124,12 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
   }
 
-      /**
-      * Creates list of users with given input array asynchronously
-      * 
-         * @param body List of user object 
-         * @return Future(void)
-      */
+  /**
+   * Creates list of users with given input array asynchronously
+   * 
+   * @param body List of user object 
+   * @return Future(void)
+  */
   def createUsersWithListInputAsync(body: List[User]) = {
       helper.createUsersWithListInput(body)
   }
@@ -150,12 +150,12 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
   }
 
-      /**
-      * Delete user asynchronously
-      * This can only be done by the logged in user.
-         * @param username The name that needs to be deleted 
-         * @return Future(void)
-      */
+  /**
+   * Delete user asynchronously
+   * This can only be done by the logged in user.
+   * @param username The name that needs to be deleted 
+   * @return Future(void)
+  */
   def deleteUserAsync(username: String) = {
       helper.deleteUser(username)
   }
@@ -176,12 +176,12 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
   }
 
-      /**
-      * Get user by user name asynchronously
-      * 
-         * @param username The name that needs to be fetched. Use user1 for testing.  
-         * @return Future(User)
-      */
+  /**
+   * Get user by user name asynchronously
+   * 
+   * @param username The name that needs to be fetched. Use user1 for testing.  
+   * @return Future(User)
+  */
   def getUserByNameAsync(username: String): Future[User] = {
       helper.getUserByName(username)
   }
@@ -203,13 +203,13 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
   }
 
-      /**
-      * Logs user into the system asynchronously
-      * 
-         * @param username The user name for login 
-         * @param password The password for login in clear text 
-         * @return Future(String)
-      */
+  /**
+   * Logs user into the system asynchronously
+   * 
+   * @param username The user name for login 
+   * @param password The password for login in clear text 
+   * @return Future(String)
+  */
   def loginUserAsync(username: String, password: String): Future[String] = {
       helper.loginUser(username, password)
   }
@@ -229,11 +229,11 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
   }
 
-      /**
-      * Logs out current logged in user session asynchronously
-      * 
-         * @return Future(void)
-      */
+  /**
+   * Logs out current logged in user session asynchronously
+   * 
+   * @return Future(void)
+  */
   def logoutUserAsync() = {
       helper.logoutUser()
   }
@@ -255,13 +255,13 @@ class UserApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
   }
 
-      /**
-      * Updated user asynchronously
-      * This can only be done by the logged in user.
-         * @param username name that need to be deleted 
-         * @param body Updated user object 
-         * @return Future(void)
-      */
+  /**
+   * Updated user asynchronously
+   * This can only be done by the logged in user.
+   * @param username name that need to be deleted 
+   * @param body Updated user object 
+   * @return Future(void)
+  */
   def updateUserAsync(username: String, body: User) = {
       helper.updateUser(username, body)
   }

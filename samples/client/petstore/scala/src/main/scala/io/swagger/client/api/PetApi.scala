@@ -74,12 +74,12 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
   }
 
-      /**
-      * Add a new pet to the store asynchronously
-      * 
-         * @param body Pet object that needs to be added to the store 
-         * @return Future(void)
-      */
+  /**
+   * Add a new pet to the store asynchronously
+   * 
+   * @param body Pet object that needs to be added to the store 
+   * @return Future(void)
+  */
   def addPetAsync(body: Pet) = {
       helper.addPet(body)
   }
@@ -101,13 +101,13 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
   }
 
-      /**
-      * Deletes a pet asynchronously
-      * 
-         * @param petId Pet id to delete 
-         * @param apiKey  (optional)
-         * @return Future(void)
-      */
+  /**
+   * Deletes a pet asynchronously
+   * 
+   * @param petId Pet id to delete 
+   * @param apiKey  (optional)
+   * @return Future(void)
+  */
   def deletePetAsync(petId: Long, apiKey: Option[String] = None) = {
       helper.deletePet(petId, apiKey)
   }
@@ -128,12 +128,12 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
   }
 
-      /**
-      * Finds Pets by status asynchronously
-      * Multiple status values can be provided with comma separated strings
-         * @param status Status values that need to be considered for filter 
-         * @return Future(List[Pet])
-      */
+  /**
+   * Finds Pets by status asynchronously
+   * Multiple status values can be provided with comma separated strings
+   * @param status Status values that need to be considered for filter 
+   * @return Future(List[Pet])
+  */
   def findPetsByStatusAsync(status: List[String]): Future[List[Pet]] = {
       helper.findPetsByStatus(status)
   }
@@ -154,12 +154,12 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
   }
 
-      /**
-      * Finds Pets by tags asynchronously
-      * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
-         * @param tags Tags to filter by 
-         * @return Future(List[Pet])
-      */
+  /**
+   * Finds Pets by tags asynchronously
+   * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+   * @param tags Tags to filter by 
+   * @return Future(List[Pet])
+  */
   def findPetsByTagsAsync(tags: List[String]): Future[List[Pet]] = {
       helper.findPetsByTags(tags)
   }
@@ -180,12 +180,12 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
   }
 
-      /**
-      * Find pet by ID asynchronously
-      * Returns a single pet
-         * @param petId ID of pet to return 
-         * @return Future(Pet)
-      */
+  /**
+   * Find pet by ID asynchronously
+   * Returns a single pet
+   * @param petId ID of pet to return 
+   * @return Future(Pet)
+  */
   def getPetByIdAsync(petId: Long): Future[Pet] = {
       helper.getPetById(petId)
   }
@@ -206,12 +206,12 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
   }
 
-      /**
-      * Update an existing pet asynchronously
-      * 
-         * @param body Pet object that needs to be added to the store 
-         * @return Future(void)
-      */
+  /**
+   * Update an existing pet asynchronously
+   * 
+   * @param body Pet object that needs to be added to the store 
+   * @return Future(void)
+  */
   def updatePetAsync(body: Pet) = {
       helper.updatePet(body)
   }
@@ -234,14 +234,14 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
   }
 
-      /**
-      * Updates a pet in the store with form data asynchronously
-      * 
-         * @param petId ID of pet that needs to be updated 
-         * @param name Updated name of the pet (optional)
-         * @param status Updated status of the pet (optional)
-         * @return Future(void)
-      */
+  /**
+   * Updates a pet in the store with form data asynchronously
+   * 
+   * @param petId ID of pet that needs to be updated 
+   * @param name Updated name of the pet (optional)
+   * @param status Updated status of the pet (optional)
+   * @return Future(void)
+  */
   def updatePetWithFormAsync(petId: Long, name: Option[String] = None, status: Option[String] = None) = {
       helper.updatePetWithForm(petId, name, status)
   }
@@ -264,14 +264,14 @@ class PetApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
   }
 
-      /**
-      * uploads an image asynchronously
-      * 
-         * @param petId ID of pet to update 
-         * @param additionalMetadata Additional data to pass to server (optional)
-         * @param file file to upload (optional)
-         * @return Future(ApiResponse)
-      */
+  /**
+   * uploads an image asynchronously
+   * 
+   * @param petId ID of pet to update 
+   * @param additionalMetadata Additional data to pass to server (optional)
+   * @param file file to upload (optional)
+   * @return Future(ApiResponse)
+  */
   def uploadFileAsync(petId: Long, additionalMetadata: Option[String] = None, file: Option[File] = None): Future[ApiResponse] = {
       helper.uploadFile(petId, additionalMetadata, file)
   }
