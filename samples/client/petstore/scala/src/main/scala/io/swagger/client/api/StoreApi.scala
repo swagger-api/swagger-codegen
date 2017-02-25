@@ -72,12 +72,12 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
   }
 
-      /**
-      * Delete purchase order by ID asynchronously
-      * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
-         * @param orderId ID of the order that needs to be deleted 
-         * @return Future(void)
-      */
+  /**
+   * Delete purchase order by ID asynchronously
+   * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
+   * @param orderId ID of the order that needs to be deleted 
+   * @return Future(void)
+  */
   def deleteOrderAsync(orderId: String) = {
       helper.deleteOrder(orderId)
   }
@@ -97,11 +97,11 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
   }
 
-      /**
-      * Returns pet inventories by status asynchronously
-      * Returns a map of status codes to quantities
-         * @return Future(Map[String, Integer])
-      */
+  /**
+   * Returns pet inventories by status asynchronously
+   * Returns a map of status codes to quantities
+   * @return Future(Map[String, Integer])
+  */
   def getInventoryAsync(): Future[Map[String, Integer]] = {
       helper.getInventory()
   }
@@ -122,12 +122,12 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
   }
 
-      /**
-      * Find purchase order by ID asynchronously
-      * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
-         * @param orderId ID of pet that needs to be fetched 
-         * @return Future(Order)
-      */
+  /**
+   * Find purchase order by ID asynchronously
+   * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+   * @param orderId ID of pet that needs to be fetched 
+   * @return Future(Order)
+  */
   def getOrderByIdAsync(orderId: Long): Future[Order] = {
       helper.getOrderById(orderId)
   }
@@ -148,12 +148,12 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
 
   }
 
-      /**
-      * Place an order for a pet asynchronously
-      * 
-         * @param body order placed for purchasing the pet 
-         * @return Future(Order)
-      */
+  /**
+   * Place an order for a pet asynchronously
+   * 
+   * @param body order placed for purchasing the pet 
+   * @return Future(Order)
+  */
   def placeOrderAsync(body: Order): Future[Order] = {
       helper.placeOrder(body)
   }
