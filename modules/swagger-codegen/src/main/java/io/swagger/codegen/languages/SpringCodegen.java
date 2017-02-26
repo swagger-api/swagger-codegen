@@ -35,7 +35,7 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
     protected boolean async = false;
     protected String responseWrapper = "";
     protected boolean useTags = false;
-	protected boolean useBeanValidation = true;
+    protected boolean useBeanValidation = true;
     protected boolean implicitHeaders = false;
 
     public SpringCodegen() {
