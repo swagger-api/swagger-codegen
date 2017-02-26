@@ -396,10 +396,34 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
                         operation.returnContainer = "Set";
                     }
                 }
+
+                if(implicitHeaders){
+                    removeHeadersFromAllParams(operation.allParams);
+                }
             }
         }
 
         return objs;
+    }
+
+    /**
+     * This method removes header parameters from the list of parameters and also
+     * corrects last allParams hasMore state.
+     * @param allParams list of all parameters
+     */
+    private void removeHeadersFromAllParams(List<CodegenParameter> allParams) {
+        if(allParams.isEmpty()){
+            return;
+        }
+        final ArrayList<CodegenParameter> copy = new ArrayList<>(allParams);
+        allParams.clear();
+
+        for(CodegenParameter p : copy){
+            if(!p.isHeaderParam){
+                allParams.add(p);
+            }
+        }
+        allParams.get(allParams.size()-1).hasMore =false;
     }
 
     @Override
