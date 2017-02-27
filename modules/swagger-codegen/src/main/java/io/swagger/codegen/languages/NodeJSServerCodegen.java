@@ -53,9 +53,8 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
          * as with models, add multiple entries with different extensions for multiple files per
          * class
          */
-        apiTemplateFiles.put(
-                "controller.mustache",   // the template to use
-                ".js");       // the extension for each file to write
+        apiTemplateFiles.put("controller.mustache", // the template to use
+                ".js"); // the extension for each file to write
 
         /*
          * Template Location.  This is the location which templates will be read from.  The generator
@@ -66,14 +65,11 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
         /*
          * Reserved words.  Override this with reserved words specific to your language
          */
-        setReservedWordsLowerCase(
-                Arrays.asList(
-                        "break", "case", "class", "catch", "const", "continue", "debugger",
-                        "default", "delete", "do", "else", "export", "extends", "finally",
-                        "for", "function", "if", "import", "in", "instanceof", "let", "new",
-                        "return", "super", "switch", "this", "throw", "try", "typeof", "var",
-                        "void", "while", "with", "yield")
-        );
+        setReservedWordsLowerCase(Arrays.asList("break", "case", "class", "catch", "const",
+                "continue", "debugger", "default", "delete", "do", "else", "export", "extends",
+                "finally", "for", "function", "if", "import", "in", "instanceof", "let", "new",
+                "return", "super", "switch", "this", "throw", "try", "typeof", "var", "void",
+                "while", "with", "yield"));
 
         /*
          * Additional Properties.  These values can be passed to the templates and
@@ -82,15 +78,20 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
         additionalProperties.put("apiVersion", apiVersion);
         additionalProperties.put("serverPort", serverPort);
 
-        cliOptions.add(CliOption.newBoolean(GOOGLE_CLOUD_FUNCTIONS,
-            "When specified, it will generate the code which runs within Google Cloud Functions "
-                + "instead of standalone Node.JS server. See "
-                + "https://cloud.google.com/functions/docs/quickstart for the details of how to "
-                + "deploy the generated code."));
-        cliOptions.add(new CliOption(EXPORTED_NAME,
-            "When the generated code will be deployed to Google Cloud Functions, this option can be "
-                + "used to update the name of the exported function. By default, it refers to the "
-                + "basePath. This does not affect normal standalone nodejs server code."));
+        cliOptions
+                .add(CliOption
+                        .newBoolean(
+                                GOOGLE_CLOUD_FUNCTIONS,
+                                "When specified, it will generate the code which runs within Google Cloud Functions "
+                                        + "instead of standalone Node.JS server. See "
+                                        + "https://cloud.google.com/functions/docs/quickstart for the details of how to "
+                                        + "deploy the generated code."));
+        cliOptions
+                .add(new CliOption(
+                        EXPORTED_NAME,
+                        "When the generated code will be deployed to Google Cloud Functions, this option can be "
+                                + "used to update the name of the exported function. By default, it refers to the "
+                                + "basePath. This does not affect normal standalone nodejs server code."));
     }
 
     @Override
@@ -110,8 +111,8 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     /**
-     * Configures a friendly name for the generator.  This will be used by the generator
-     * to select the library with the -l flag.
+     * Configures a friendly name for the generator. This will be used by the generator to select
+     * the library with the -l flag.
      *
      * @return the friendly name for the generator
      */
@@ -121,15 +122,15 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     /**
-     * Returns human-friendly help for the generator.  Provide the consumer with help
-     * tips, parameters here
+     * Returns human-friendly help for the generator. Provide the consumer with help tips,
+     * parameters here
      *
      * @return A string value for the help message
      */
     @Override
     public String getHelp() {
-        return "Generates a nodejs server library using the swagger-tools project.  By default, " +
-                "it will also generate service classes--which you can disable with the `-Dnoservice` environment variable.";
+        return "Generates a nodejs server library using the swagger-tools project.  By default, "
+                + "it will also generate service classes--which you can disable with the `-Dnoservice` environment variable.";
     }
 
     @Override
@@ -146,21 +147,21 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     /**
-     * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping
-     * those terms here.  This logic is only called if a variable matches the reserved words
+     * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping those terms
+     * here. This logic is only called if a variable matches the reserved words
      *
      * @return the escaped term
      */
     @Override
-    public String escapeReservedWord(String name) {           
-        if(this.reservedWordsMappings().containsKey(name)) {
+    public String escapeReservedWord(String name) {
+        if (this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
         return "_" + name;
     }
 
     /**
-     * Location to write api files.  You can use the apiPackage() as defined when the class is
+     * Location to write api files. You can use the apiPackage() as defined when the class is
      * instantiated
      */
     @Override
@@ -207,7 +208,7 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
             }
             if (operation.examples != null && !operation.examples.isEmpty()) {
                 // Leave application/json* items only
-                for (Iterator<Map<String, String>> it = operation.examples.iterator(); it.hasNext(); ) {
+                for (Iterator<Map<String, String>> it = operation.examples.iterator(); it.hasNext();) {
                     final Map<String, String> example = it.next();
                     final String contentType = example.get("contentType");
                     if (contentType == null || !contentType.startsWith("application/json")) {
@@ -258,12 +259,12 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
         super.processOpts();
 
         if (additionalProperties.containsKey(GOOGLE_CLOUD_FUNCTIONS)) {
-            setGoogleCloudFunctions(
-                Boolean.valueOf(additionalProperties.get(GOOGLE_CLOUD_FUNCTIONS).toString()));
+            setGoogleCloudFunctions(Boolean.valueOf(additionalProperties
+                    .get(GOOGLE_CLOUD_FUNCTIONS).toString()));
         }
 
         if (additionalProperties.containsKey(EXPORTED_NAME)) {
-            setExportedName((String)additionalProperties.get(EXPORTED_NAME));
+            setExportedName((String) additionalProperties.get(EXPORTED_NAME));
         }
 
         /*
@@ -272,13 +273,10 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
          * it will be processed by the template engine.  Otherwise, it will be copied
          */
         // supportingFiles.add(new SupportingFile("controller.mustache",
-        //   "controllers",
-        //   "controller.js")
+        // "controllers",
+        // "controller.js")
         // );
-        supportingFiles.add(new SupportingFile("swagger.mustache",
-                        "api",
-                        "swagger.yaml")
-        );
+        supportingFiles.add(new SupportingFile("swagger.mustache", "api", "swagger.yaml"));
         if (getGoogleCloudFunctions()) {
             writeOptional(outputFolder, new SupportingFile("index-gcf.mustache", "", "index.js"));
         } else {
@@ -287,9 +285,8 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
         writeOptional(outputFolder, new SupportingFile("package.mustache", "", "package.json"));
         writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
         if (System.getProperty("noservice") == null) {
-            apiTemplateFiles.put(
-                    "service.mustache",   // the template to use
-                    "Service.js");       // the extension for each file to write
+            apiTemplateFiles.put("service.mustache", // the template to use
+                    "Service.js"); // the extension for each file to write
         }
     }
 
@@ -310,12 +307,9 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
             if (info.getTitle() != null) {
                 // when info.title is defined, use it for projectName
                 // used in package.json
-                projectName = info.getTitle()
-                        .replaceAll("[^a-zA-Z0-9]", "-")
-                        .replaceAll("^[-]*", "")
-                        .replaceAll("[-]*$", "")
-                        .replaceAll("[-]{2,}", "-")
-                        .toLowerCase();
+                projectName =
+                        info.getTitle().replaceAll("[^a-zA-Z0-9]", "-").replaceAll("^[-]*", "")
+                                .replaceAll("[-]*$", "").replaceAll("[-]{2,}", "-").toLowerCase();
                 this.additionalProperties.put("projectName", projectName);
             }
         }
@@ -326,34 +320,36 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
             if (!host.endsWith(".cloudfunctions.net")) {
                 LOGGER.warn("Host " + host + " seems not matching with cloudfunctions.net URL.");
             }
-           if (!additionalProperties.containsKey(EXPORTED_NAME)) {
+            if (!additionalProperties.containsKey(EXPORTED_NAME)) {
                 String basePath = swagger.getBasePath();
                 if (basePath == null || basePath.equals("/")) {
                     LOGGER.warn("Cannot find the exported name properly. Using 'openapi' as the exported name");
                     basePath = "/openapi";
                 }
                 additionalProperties.put(EXPORTED_NAME, basePath.substring(1));
-           }
+            }
         }
 
         // need vendor extensions for x-swagger-router-controller
         Map<String, Path> paths = swagger.getPaths();
-        if(paths != null) {
-            for(String pathname : paths.keySet()) {
+        if (paths != null) {
+            for (String pathname : paths.keySet()) {
                 Path path = paths.get(pathname);
                 Map<HttpMethod, Operation> operationMap = path.getOperationMap();
-                if(operationMap != null) {
-                    for(HttpMethod method : operationMap.keySet()) {
+                if (operationMap != null) {
+                    for (HttpMethod method : operationMap.keySet()) {
                         Operation operation = operationMap.get(method);
                         String tag = "default";
-                        if(operation.getTags() != null && operation.getTags().size() > 0) {
+                        if (operation.getTags() != null && operation.getTags().size() > 0) {
                             tag = toApiName(operation.getTags().get(0));
                         }
-                        if(operation.getOperationId() == null) {
-                            operation.setOperationId(getOrGenerateOperationId(operation, pathname, method.toString()));
+                        if (operation.getOperationId() == null) {
+                            operation.setOperationId(getOrGenerateOperationId(operation, pathname,
+                                    method.toString()));
                         }
-                        if(operation.getVendorExtensions().get("x-swagger-router-controller") == null) {
-                            operation.getVendorExtensions().put("x-swagger-router-controller", sanitizeTag(tag));
+                        if (operation.getVendorExtensions().get("x-swagger-router-controller") == null) {
+                            operation.getVendorExtensions().put("x-swagger-router-controller",
+                                    sanitizeTag(tag));
                         }
                     }
                 }
@@ -361,20 +357,22 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
         }
     }
 
-        @Override
+    @Override
     public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
-        Swagger swagger = (Swagger)objs.get("swagger");
-        if(swagger != null) {
+        Swagger swagger = (Swagger) objs.get("swagger");
+        if (swagger != null) {
             try {
                 SimpleModule module = new SimpleModule();
                 module.addSerializer(Double.class, new JsonSerializer<Double>() {
                     @Override
                     public void serialize(Double val, JsonGenerator jgen,
-                                   SerializerProvider provider) throws IOException, JsonProcessingException {
+                            SerializerProvider provider) throws IOException,
+                            JsonProcessingException {
                         jgen.writeNumber(new BigDecimal(val));
                     }
                 });
-                objs.put("swagger-yaml", Yaml.mapper().registerModule(module).writeValueAsString(swagger));
+                objs.put("swagger-yaml",
+                        Yaml.mapper().registerModule(module).writeValueAsString(swagger));
             } catch (JsonProcessingException e) {
                 LOGGER.error(e.getMessage(), e);
             }

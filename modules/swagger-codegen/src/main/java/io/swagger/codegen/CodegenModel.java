@@ -14,7 +14,8 @@ public class CodegenModel {
     public String parent, parentSchema;
     public List<String> interfaces;
 
-    // References to parent and interface CodegenModels. Only set when code generator supports inheritance.
+    // References to parent and interface CodegenModels. Only set when code generator supports
+    // inheritance.
     public CodegenModel parentModel;
     public List<CodegenModel> interfaceModels;
     public List<CodegenModel> children;
@@ -26,10 +27,18 @@ public class CodegenModel {
     public String defaultValue;
     public String arrayModelType;
     public List<CodegenProperty> vars = new ArrayList<CodegenProperty>();
-    public List<CodegenProperty> requiredVars = new ArrayList<CodegenProperty>(); // a list of required properties
-    public List<CodegenProperty> optionalVars = new ArrayList<CodegenProperty>(); // a list of optional properties
-    public List<CodegenProperty> readOnlyVars = new ArrayList<CodegenProperty>(); // a list of read-only properties
-    public List<CodegenProperty> readWriteVars = new ArrayList<CodegenProperty>(); // a list of properties for read, write
+    public List<CodegenProperty> requiredVars = new ArrayList<CodegenProperty>(); // a list of
+                                                                                  // required
+                                                                                  // properties
+    public List<CodegenProperty> optionalVars = new ArrayList<CodegenProperty>(); // a list of
+                                                                                  // optional
+                                                                                  // properties
+    public List<CodegenProperty> readOnlyVars = new ArrayList<CodegenProperty>(); // a list of
+                                                                                  // read-only
+                                                                                  // properties
+    public List<CodegenProperty> readWriteVars = new ArrayList<CodegenProperty>(); // a list of
+                                                                                   // properties for
+                                                                                   // read, write
     public List<CodegenProperty> allVars;
     public List<CodegenProperty> parentVars = new ArrayList<>();
     public Map<String, Object> allowableValues;
@@ -39,17 +48,19 @@ public class CodegenModel {
     public Set<String> allMandatory;
 
     public Set<String> imports = new TreeSet<String>();
-    public boolean hasVars, emptyVars, hasMoreModels, hasEnums, isEnum, hasRequired, isArrayModel, hasChildren;
+    public boolean hasVars, emptyVars, hasMoreModels, hasEnums, isEnum, hasRequired, isArrayModel,
+            hasChildren;
     public boolean hasOnlyReadOnly = true; // true if all properties are read-only
     public ExternalDocs externalDocs;
 
     public Map<String, Object> vendorExtensions;
 
-    //The type of the value from additional properties. Used in map like objects.
+    // The type of the value from additional properties. Used in map like objects.
     public String additionalPropertiesType;
 
     {
-        // By default these are the same collections. Where the code generator supports inheritance, composed models
+        // By default these are the same collections. Where the code generator supports inheritance,
+        // composed models
         // store the complete closure of owned and inherited properties in allVars and allMandatory.
         allVars = vars;
         allMandatory = mandatory;
@@ -62,20 +73,24 @@ public class CodegenModel {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         CodegenModel that = (CodegenModel) o;
 
         if (parent != null ? !parent.equals(that.parent) : that.parent != null)
             return false;
-        if (parentSchema != null ? !parentSchema.equals(that.parentSchema) : that.parentSchema != null)
+        if (parentSchema != null ? !parentSchema.equals(that.parentSchema)
+                : that.parentSchema != null)
             return false;
         if (interfaces != null ? !interfaces.equals(that.interfaces) : that.interfaces != null)
             return false;
         if (parentModel != null ? !parentModel.equals(that.parentModel) : that.parentModel != null)
             return false;
-        if (interfaceModels != null ? !interfaceModels.equals(that.interfaceModels) : that.interfaceModels != null)
+        if (interfaceModels != null ? !interfaceModels.equals(that.interfaceModels)
+                : that.interfaceModels != null)
             return false;
         if (name != null ? !name.equals(that.name) : that.name != null)
             return false;
@@ -85,33 +100,42 @@ public class CodegenModel {
             return false;
         if (description != null ? !description.equals(that.description) : that.description != null)
             return false;
-        if (classVarName != null ? !classVarName.equals(that.classVarName) : that.classVarName != null)
+        if (classVarName != null ? !classVarName.equals(that.classVarName)
+                : that.classVarName != null)
             return false;
         if (modelJson != null ? !modelJson.equals(that.modelJson) : that.modelJson != null)
             return false;
         if (dataType != null ? !dataType.equals(that.dataType) : that.dataType != null)
             return false;
-        if (classFilename != null ? !classFilename.equals(that.classFilename) : that.classFilename != null)
+        if (classFilename != null ? !classFilename.equals(that.classFilename)
+                : that.classFilename != null)
             return false;
-        if (unescapedDescription != null ? !unescapedDescription.equals(that.unescapedDescription) : that.unescapedDescription != null)
+        if (unescapedDescription != null ? !unescapedDescription.equals(that.unescapedDescription)
+                : that.unescapedDescription != null)
             return false;
-        if (discriminator != null ? !discriminator.equals(that.discriminator) : that.discriminator != null)
+        if (discriminator != null ? !discriminator.equals(that.discriminator)
+                : that.discriminator != null)
             return false;
-        if (defaultValue != null ? !defaultValue.equals(that.defaultValue) : that.defaultValue != null)
+        if (defaultValue != null ? !defaultValue.equals(that.defaultValue)
+                : that.defaultValue != null)
             return false;
         if (vars != null ? !vars.equals(that.vars) : that.vars != null)
             return false;
-        if (requiredVars != null ? !requiredVars.equals(that.requiredVars) : that.requiredVars != null)
+        if (requiredVars != null ? !requiredVars.equals(that.requiredVars)
+                : that.requiredVars != null)
             return false;
-        if (optionalVars != null ? !optionalVars.equals(that.optionalVars) : that.optionalVars != null)
+        if (optionalVars != null ? !optionalVars.equals(that.optionalVars)
+                : that.optionalVars != null)
             return false;
         if (allVars != null ? !allVars.equals(that.allVars) : that.allVars != null)
             return false;
-        if (allowableValues != null ? !allowableValues.equals(that.allowableValues) : that.allowableValues != null)
+        if (allowableValues != null ? !allowableValues.equals(that.allowableValues)
+                : that.allowableValues != null)
             return false;
         if (mandatory != null ? !mandatory.equals(that.mandatory) : that.mandatory != null)
             return false;
-        if (allMandatory != null ? !allMandatory.equals(that.allMandatory) : that.allMandatory != null)
+        if (allMandatory != null ? !allMandatory.equals(that.allMandatory)
+                : that.allMandatory != null)
             return false;
         if (imports != null ? !imports.equals(that.imports) : that.imports != null)
             return false;
@@ -125,7 +149,8 @@ public class CodegenModel {
             return false;
         if (isEnum != that.isEnum)
             return false;
-        if (externalDocs != null ? !externalDocs.equals(that.externalDocs) : that.externalDocs != null)
+        if (externalDocs != null ? !externalDocs.equals(that.externalDocs)
+                : that.externalDocs != null)
             return false;
         if (!Objects.equals(hasOnlyReadOnly, that.hasOnlyReadOnly))
             return false;
@@ -133,7 +158,8 @@ public class CodegenModel {
             return false;
         if (!Objects.equals(parentVars, that.parentVars))
             return false;
-        return vendorExtensions != null ? vendorExtensions.equals(that.vendorExtensions) : that.vendorExtensions == null;
+        return vendorExtensions != null ? vendorExtensions.equals(that.vendorExtensions)
+                : that.vendorExtensions == null;
 
     }
 
@@ -163,11 +189,11 @@ public class CodegenModel {
         result = 31 * result + (mandatory != null ? mandatory.hashCode() : 0);
         result = 31 * result + (allMandatory != null ? allMandatory.hashCode() : 0);
         result = 31 * result + (imports != null ? imports.hashCode() : 0);
-        result = 31 * result + (hasVars ? 13:31);
-        result = 31 * result + (emptyVars ? 13:31);
-        result = 31 * result + (hasMoreModels ? 13:31);
-        result = 31 * result + (hasEnums ? 13:31);
-        result = 31 * result + (isEnum ? 13:31);
+        result = 31 * result + (hasVars ? 13 : 31);
+        result = 31 * result + (emptyVars ? 13 : 31);
+        result = 31 * result + (hasMoreModels ? 13 : 31);
+        result = 31 * result + (hasEnums ? 13 : 31);
+        result = 31 * result + (isEnum ? 13 : 31);
         result = 31 * result + (externalDocs != null ? externalDocs.hashCode() : 0);
         result = 31 * result + (vendorExtensions != null ? vendorExtensions.hashCode() : 0);
         result = 31 * result + Objects.hash(hasOnlyReadOnly);

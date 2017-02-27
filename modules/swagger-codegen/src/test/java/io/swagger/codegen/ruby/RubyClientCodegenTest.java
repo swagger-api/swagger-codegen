@@ -26,41 +26,44 @@ import static org.testng.Assert.*;
  */
 public class RubyClientCodegenTest {
 
-  public TemporaryFolder folder = new TemporaryFolder();
+    public TemporaryFolder folder = new TemporaryFolder();
 
-  @BeforeMethod
-  public void setUp() throws Exception {
-      folder.create();
-  }
+    @BeforeMethod
+    public void setUp() throws Exception {
+        folder.create();
+    }
 
-  @AfterMethod
-  public void tearDown() throws Exception {
-      folder.delete();
-  }
+    @AfterMethod
+    public void tearDown() throws Exception {
+        folder.delete();
+    }
 
-  @Test
-  public void testGenerateRubyClientWithHtmlEntity() throws Exception {
-      final File output = folder.getRoot();
+    @Test
+    public void testGenerateRubyClientWithHtmlEntity() throws Exception {
+        final File output = folder.getRoot();
 
-      final Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/pathWithHtmlEntity.yaml");
-      CodegenConfig codegenConfig = new RubyClientCodegen();
-      codegenConfig.setOutputDir(output.getAbsolutePath());
+        final Swagger swagger =
+                new SwaggerParser().read("src/test/resources/2_0/pathWithHtmlEntity.yaml");
+        CodegenConfig codegenConfig = new RubyClientCodegen();
+        codegenConfig.setOutputDir(output.getAbsolutePath());
 
-      ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+        ClientOptInput clientOptInput =
+                new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
 
-      DefaultGenerator generator = new DefaultGenerator();
-      List<File> files = generator.opts(clientOptInput).generate();
-      boolean apiFileGenerated = false;
-      for (File file : files) {
-        if (file.getName().equals("default_api.rb")) {
-          apiFileGenerated = true;
-          // Ruby client should set the path unescaped in the api file
-          assertTrue(FileUtils.readFileToString(file, StandardCharsets.UTF_8).contains("local_var_path = \"/foo=bar\""));
+        DefaultGenerator generator = new DefaultGenerator();
+        List<File> files = generator.opts(clientOptInput).generate();
+        boolean apiFileGenerated = false;
+        for (File file : files) {
+            if (file.getName().equals("default_api.rb")) {
+                apiFileGenerated = true;
+                // Ruby client should set the path unescaped in the api file
+                assertTrue(FileUtils.readFileToString(file, StandardCharsets.UTF_8).contains(
+                        "local_var_path = \"/foo=bar\""));
+            }
         }
-      }
-      if (!apiFileGenerated) {
-        fail("Default api file is not generated!");
-      }
-  }
+        if (!apiFileGenerated) {
+            fail("Default api file is not generated!");
+        }
+    }
 
 }

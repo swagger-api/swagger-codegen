@@ -29,7 +29,7 @@ public class GoServerCodegen extends DefaultCodegen implements CodegenConfig {
     protected int serverPort = 8080;
     protected String projectName = "swagger-server";
     protected String apiPath = "go";
-    
+
     public GoServerCodegen() {
         super();
 
@@ -49,9 +49,8 @@ public class GoServerCodegen extends DefaultCodegen implements CodegenConfig {
          * as with models, add multiple entries with different extensions for multiple files per
          * class
          */
-        apiTemplateFiles.put(
-                "controller.mustache",   // the template to use
-                ".go");       // the extension for each file to write
+        apiTemplateFiles.put("controller.mustache", // the template to use
+                ".go"); // the extension for each file to write
 
         /*
          * Template Location.  This is the location which templates will be read from.  The generator
@@ -62,39 +61,19 @@ public class GoServerCodegen extends DefaultCodegen implements CodegenConfig {
         /*
          * Reserved words.  Override this with reserved words specific to your language
          */
-        setReservedWordsLowerCase(
-            Arrays.asList(
-                "break", "default", "func", "interface", "select",
-                "case", "defer", "go", "map", "struct",
-                "chan", "else", "goto", "package", "switch",
-                "const", "fallthrough", "if", "range", "type",
-                "continue", "for", "import", "return", "var", "error", "ApiResponse")
-                // Added "error" as it's used so frequently that it may as well be a keyword
+        setReservedWordsLowerCase(Arrays.asList("break", "default", "func", "interface", "select",
+                "case", "defer", "go", "map", "struct", "chan", "else", "goto", "package",
+                "switch", "const", "fallthrough", "if", "range", "type", "continue", "for",
+                "import", "return", "var", "error", "ApiResponse")
+        // Added "error" as it's used so frequently that it may as well be a keyword
         );
 
-        defaultIncludes = new HashSet<String>(
-                Arrays.asList(
-                    "map",
-                    "array")
-                );
+        defaultIncludes = new HashSet<String>(Arrays.asList("map", "array"));
 
-        languageSpecificPrimitives = new HashSet<String>(
-            Arrays.asList(
-                "string",
-                "bool",
-                "uint",
-                "uint32",
-                "uint64",
-                "int",
-                "int32",
-                "int64",
-                "float32",
-                "float64",
-                "complex64",
-                "complex128",
-                "rune",
-                "byte")
-            );
+        languageSpecificPrimitives =
+                new HashSet<String>(Arrays.asList("string", "bool", "uint", "uint32", "uint64",
+                        "int", "int32", "int64", "float32", "float64", "complex64", "complex128",
+                        "rune", "byte"));
 
         instantiationTypes.clear();
         /*instantiationTypes.put("array", "GoArray");
@@ -124,8 +103,8 @@ public class GoServerCodegen extends DefaultCodegen implements CodegenConfig {
         importMapping.put("os", "io/ioutil");
 
         cliOptions.clear();
-        cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "Go package name (convention: lowercase).")
-                .defaultValue("swagger"));
+        cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME,
+                "Go package name (convention: lowercase).").defaultValue("swagger"));
         /*
          * Additional Properties.  These values can be passed to the templates and
          * are available in models, apis, and supporting files
@@ -138,14 +117,11 @@ public class GoServerCodegen extends DefaultCodegen implements CodegenConfig {
          * entire object tree available.  If the input file has a suffix of `.mustache
          * it will be processed by the template engine.  Otherwise, it will be copied
          */
-        supportingFiles.add(new SupportingFile("swagger.mustache",
-                        "api",
-                        "swagger.yaml")
-        );
+        supportingFiles.add(new SupportingFile("swagger.mustache", "api", "swagger.yaml"));
         supportingFiles.add(new SupportingFile("main.mustache", "", "main.go"));
         supportingFiles.add(new SupportingFile("routers.mustache", apiPath, "routers.go"));
-        supportingFiles.add(new SupportingFile("logger.mustache", apiPath, "logger.go")); 
-        supportingFiles.add(new SupportingFile("app.mustache", apiPath, "app.yaml"));        
+        supportingFiles.add(new SupportingFile("logger.mustache", apiPath, "logger.go"));
+        supportingFiles.add(new SupportingFile("app.mustache", apiPath, "app.yaml"));
         writeOptional(outputFolder, new SupportingFile("README.mustache", apiPath, "README.md"));
     }
 
@@ -166,8 +142,8 @@ public class GoServerCodegen extends DefaultCodegen implements CodegenConfig {
     }
 
     /**
-     * Configures a friendly name for the generator.  This will be used by the generator
-     * to select the library with the -l flag.
+     * Configures a friendly name for the generator. This will be used by the generator to select
+     * the library with the -l flag.
      *
      * @return the friendly name for the generator
      */
@@ -177,15 +153,15 @@ public class GoServerCodegen extends DefaultCodegen implements CodegenConfig {
     }
 
     /**
-     * Returns human-friendly help for the generator.  Provide the consumer with help
-     * tips, parameters here
+     * Returns human-friendly help for the generator. Provide the consumer with help tips,
+     * parameters here
      *
      * @return A string value for the help message
      */
     @Override
     public String getHelp() {
-        return "Generates a Go server library using the swagger-tools project.  By default, " +
-                "it will also generate service classes--which you can disable with the `-Dnoservice` environment variable.";
+        return "Generates a Go server library using the swagger-tools project.  By default, "
+                + "it will also generate service classes--which you can disable with the `-Dnoservice` environment variable.";
     }
 
     @Override
@@ -197,21 +173,21 @@ public class GoServerCodegen extends DefaultCodegen implements CodegenConfig {
     }
 
     /**
-     * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping
-     * those terms here.  This logic is only called if a variable matches the reseved words
+     * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping those terms
+     * here. This logic is only called if a variable matches the reseved words
      *
      * @return the escaped term
      */
     @Override
     public String escapeReservedWord(String name) {
-        if(this.reservedWordsMappings().containsKey(name)) {
+        if (this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
-        }        
-        return "_" + name;  // add an underscore to the name
+        }
+        return "_" + name; // add an underscore to the name
     }
 
     /**
-     * Location to write api files.  You can use the apiPackage() as defined when the class is
+     * Location to write api files. You can use the apiPackage() as defined when the class is
      * instantiated
      */
     @Override
@@ -230,7 +206,8 @@ public class GoServerCodegen extends DefaultCodegen implements CodegenConfig {
     public String toOperationId(String operationId) {
         // method name cannot use reserved keyword, e.g. return
         if (isReservedWord(operationId)) {
-            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + camelize(sanitizeName("call_" + operationId)));
+            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to "
+                    + camelize(sanitizeName("call_" + operationId)));
             operationId = "call_" + operationId;
         }
 
@@ -251,7 +228,8 @@ public class GoServerCodegen extends DefaultCodegen implements CodegenConfig {
 
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
-            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + camelize("model_" + name));
+            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to "
+                    + camelize("model_" + name));
             name = "model_" + name; // e.g. return => ModelReturn (after camelize)
         }
 
@@ -261,7 +239,8 @@ public class GoServerCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public String toApiFilename(String name) {
         // replace - with _ e.g. created-at => created_at
-        name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare
+                                          // the methods parameters as 'final'.
 
         // e.g. PetApi.go => pet_api.go
         return underscore(name);

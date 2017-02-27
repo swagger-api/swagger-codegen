@@ -29,10 +29,10 @@ import java.util.Set;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 /**
- * A class that contains all codegen configuration properties a user would want to manipulate.
- * An instance could be created by deserializing a JSON file or being populated from CLI or Maven plugin parameters.
- * It also has a convenience method for creating a ClientOptInput class which is THE object DefaultGenerator.java needs
- * to generate code.
+ * A class that contains all codegen configuration properties a user would want to manipulate. An
+ * instance could be created by deserializing a JSON file or being populated from CLI or Maven
+ * plugin parameters. It also has a convenience method for creating a ClientOptInput class which is
+ * THE object DefaultGenerator.java needs to generate code.
  */
 public class CodegenConfigurator {
 
@@ -61,14 +61,19 @@ public class CodegenConfigurator {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
     private Map<String, String> importMappings = new HashMap<String, String>();
     private Set<String> languageSpecificPrimitives = new HashSet<String>();
-    private Map<String, String>  reservedWordMappings = new HashMap<String, String>();
-    
-    private String gitUserId="GIT_USER_ID";
-    private String gitRepoId="GIT_REPO_ID";
-    private String releaseNote="Minor update";
+    private Map<String, String> reservedWordMappings = new HashMap<String, String>();
+
+    private String gitUserId = "GIT_USER_ID";
+    private String gitRepoId = "GIT_REPO_ID";
+    private String releaseNote = "Minor update";
     private String httpUserAgent;
 
-    private final Map<String, Object> dynamicProperties = new HashMap<String, Object>(); //the map that holds the JsonAnySetter/JsonAnyGetter values
+    private final Map<String, Object> dynamicProperties = new HashMap<String, Object>(); // the map
+                                                                                         // that
+                                                                                         // holds
+                                                                                         // the
+                                                                                         // JsonAnySetter/JsonAnyGetter
+                                                                                         // values
 
     public CodegenConfigurator() {
         this.setOutputDir(".");
@@ -155,7 +160,8 @@ public class CodegenConfigurator {
 
         // check to see if the folder exists
         if (!(f.exists() && f.isDirectory())) {
-            throw new IllegalArgumentException("Template directory " + templateDir + " does not exist."); 
+            throw new IllegalArgumentException("Template directory " + templateDir
+                    + " does not exist.");
         }
 
         this.templateDir = f.getAbsolutePath();
@@ -266,7 +272,7 @@ public class CodegenConfigurator {
         this.additionalProperties = additionalProperties;
         return this;
     }
-    
+
     public CodegenConfigurator addAdditionalProperty(String key, Object value) {
         this.additionalProperties.put(key, value);
         return this;
@@ -341,19 +347,19 @@ public class CodegenConfigurator {
     }
 
     public CodegenConfigurator setHttpUserAgent(String httpUserAgent) {
-        this.httpUserAgent= httpUserAgent;
+        this.httpUserAgent = httpUserAgent;
         return this;
     }
-    
-    public  Map<String, String> getReservedWordsMappings() {
+
+    public Map<String, String> getReservedWordsMappings() {
         return reservedWordMappings;
     }
-    
+
     public CodegenConfigurator setReservedWordsMappings(Map<String, String> reservedWordsMappings) {
         this.reservedWordMappings = reservedWordsMappings;
         return this;
     }
-    
+
     public CodegenConfigurator addAdditionalReservedWordMapping(String key, String value) {
         this.reservedWordMappings.put(key, value);
         return this;
@@ -367,7 +373,7 @@ public class CodegenConfigurator {
         this.ignoreFileOverride = ignoreFileOverride;
         return this;
     }
-    
+
     public ClientOptInput toClientOptInput() {
 
         Validate.notEmpty(lang, "language must be specified");
@@ -388,14 +394,15 @@ public class CodegenConfigurator {
         config.importMapping().putAll(importMappings);
         config.languageSpecificPrimitives().addAll(languageSpecificPrimitives);
         config.reservedWordsMappings().putAll(reservedWordMappings);
-        
+
         checkAndSetAdditionalProperty(apiPackage, CodegenConstants.API_PACKAGE);
         checkAndSetAdditionalProperty(modelPackage, CodegenConstants.MODEL_PACKAGE);
         checkAndSetAdditionalProperty(invokerPackage, CodegenConstants.INVOKER_PACKAGE);
         checkAndSetAdditionalProperty(groupId, CodegenConstants.GROUP_ID);
         checkAndSetAdditionalProperty(artifactId, CodegenConstants.ARTIFACT_ID);
         checkAndSetAdditionalProperty(artifactVersion, CodegenConstants.ARTIFACT_VERSION);
-        checkAndSetAdditionalProperty(templateDir, toAbsolutePathStr(templateDir), CodegenConstants.TEMPLATE_DIR);
+        checkAndSetAdditionalProperty(templateDir, toAbsolutePathStr(templateDir),
+                CodegenConstants.TEMPLATE_DIR);
         checkAndSetAdditionalProperty(modelNamePrefix, CodegenConstants.MODEL_NAME_PREFIX);
         checkAndSetAdditionalProperty(modelNameSuffix, CodegenConstants.MODEL_NAME_SUFFIX);
         checkAndSetAdditionalProperty(gitUserId, CodegenConstants.GIT_USER_ID);
@@ -411,15 +418,13 @@ public class CodegenConfigurator {
 
         config.additionalProperties().putAll(additionalProperties);
 
-        ClientOptInput input = new ClientOptInput()
-                .config(config);
+        ClientOptInput input = new ClientOptInput().config(config);
 
         final List<AuthorizationValue> authorizationValues = AuthParser.parse(auth);
 
         Swagger swagger = new SwaggerParser().read(inputSpec, authorizationValues, true);
 
-        input.opts(new ClientOpts())
-                .swagger(swagger);
+        input.opts(new ClientOpts()).swagger(swagger);
 
         return input;
     }
@@ -440,8 +445,7 @@ public class CodegenConfigurator {
             String opt = langCliOption.getOpt();
             if (dynamicProperties.containsKey(opt)) {
                 codegenConfig.additionalProperties().put(opt, dynamicProperties.get(opt));
-            }
-            else if(systemProperties.containsKey(opt)) {
+            } else if (systemProperties.containsKey(opt)) {
                 codegenConfig.additionalProperties().put(opt, systemProperties.get(opt));
             }
         }
@@ -451,11 +455,11 @@ public class CodegenConfigurator {
         if (!verbose) {
             return;
         }
-        LOGGER.info("\nVERBOSE MODE: ON. Additional debug options are injected" +
-                "\n - [debugSwagger] prints the swagger specification as interpreted by the codegen" +
-                "\n - [debugModels] prints models passed to the template engine" +
-                "\n - [debugOperations] prints operations passed to the template engine" +
-                "\n - [debugSupportingFiles] prints additional data passed to the template engine");
+        LOGGER.info("\nVERBOSE MODE: ON. Additional debug options are injected"
+                + "\n - [debugSwagger] prints the swagger specification as interpreted by the codegen"
+                + "\n - [debugModels] prints models passed to the template engine"
+                + "\n - [debugOperations] prints operations passed to the template engine"
+                + "\n - [debugSupportingFiles] prints additional data passed to the template engine");
 
         System.setProperty("debugSwagger", "");
         System.setProperty("debugModels", "");
@@ -482,7 +486,8 @@ public class CodegenConfigurator {
         checkAndSetAdditionalProperty(property, property, propertyKey);
     }
 
-    private void checkAndSetAdditionalProperty(String property, String valueToSet, String propertyKey) {
+    private void checkAndSetAdditionalProperty(String property, String valueToSet,
+            String propertyKey) {
         if (isNotEmpty(property)) {
             additionalProperties.put(propertyKey, valueToSet);
         }

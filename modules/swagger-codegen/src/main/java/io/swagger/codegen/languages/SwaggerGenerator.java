@@ -54,14 +54,14 @@ public class SwaggerGenerator extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
-    public String escapeQuotationMark(String input) { 
+    public String escapeQuotationMark(String input) {
         // just return the original string
         return input;
-    } 
+    }
 
     @Override
-    public String escapeUnsafeCharacters(String input) { 
+    public String escapeUnsafeCharacters(String input) {
         // just return the original string
         return input;
-    }  
+    }
 }

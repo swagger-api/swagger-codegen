@@ -30,7 +30,8 @@ public class AndroidClientOptionsProvider implements OptionsProvider {
     @Override
     public Map<String, String> createOptions() {
         ImmutableMap.Builder<String, String> builder = new ImmutableMap.Builder<String, String>();
-        return builder.put(CodegenConstants.MODEL_PACKAGE, MODEL_PACKAGE_VALUE)
+        return builder
+                .put(CodegenConstants.MODEL_PACKAGE, MODEL_PACKAGE_VALUE)
                 .put(CodegenConstants.API_PACKAGE, API_PACKAGE_VALUE)
                 .put(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG, SORT_PARAMS_VALUE)
                 .put(CodegenConstants.ENSURE_UNIQUE_PARAMS, ENSURE_UNIQUE_PARAMS_VALUE)
@@ -39,7 +40,8 @@ public class AndroidClientOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.ARTIFACT_ID, ARTIFACT_ID_VALUE)
                 .put(CodegenConstants.ARTIFACT_VERSION, ARTIFACT_VERSION_VALUE)
                 .put(CodegenConstants.SOURCE_FOLDER, SOURCE_FOLDER_VALUE)
-                .put(AndroidClientCodegen.USE_ANDROID_MAVEN_GRADLE_PLUGIN, ANDROID_MAVEN_GRADLE_PLUGIN_VALUE)
+                .put(AndroidClientCodegen.USE_ANDROID_MAVEN_GRADLE_PLUGIN,
+                        ANDROID_MAVEN_GRADLE_PLUGIN_VALUE)
                 .put(CodegenConstants.LIBRARY, LIBRARY_VALUE)
                 .put(CodegenConstants.SERIALIZABLE_MODEL, SERIALIZABLE_MODEL_VALUE)
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)

@@ -37,10 +37,15 @@ public class SilexServerCodegen extends DefaultCodegen implements CodegenConfig 
 
         embeddedTemplateDir = templateDir = "silex";
 
-        setReservedWordsLowerCase(
-                Arrays.asList(
-                        "__halt_compiler", "abstract", "and", "array", "as", "break", "callable", "case", "catch", "class", "clone", "const", "continue", "declare", "default", "die", "do", "echo", "else", "elseif", "empty", "enddeclare", "endfor", "endforeach", "endif", "endswitch", "endwhile", "eval", "exit", "extends", "final", "for", "foreach", "function", "global", "goto", "if", "implements", "include", "include_once", "instanceof", "insteadof", "interface", "isset", "list", "namespace", "new", "or", "print", "private", "protected", "public", "require", "require_once", "return", "static", "switch", "throw", "trait", "try", "unset", "use", "var", "while", "xor")
-        );
+        setReservedWordsLowerCase(Arrays.asList("__halt_compiler", "abstract", "and", "array",
+                "as", "break", "callable", "case", "catch", "class", "clone", "const", "continue",
+                "declare", "default", "die", "do", "echo", "else", "elseif", "empty", "enddeclare",
+                "endfor", "endforeach", "endif", "endswitch", "endwhile", "eval", "exit",
+                "extends", "final", "for", "foreach", "function", "global", "goto", "if",
+                "implements", "include", "include_once", "instanceof", "insteadof", "interface",
+                "isset", "list", "namespace", "new", "or", "print", "private", "protected",
+                "public", "require", "require_once", "return", "static", "switch", "throw",
+                "trait", "try", "unset", "use", "var", "while", "xor"));
 
         additionalProperties.put(CodegenConstants.INVOKER_PACKAGE, invokerPackage);
         additionalProperties.put(CodegenConstants.GROUP_ID, groupId);
@@ -48,19 +53,9 @@ public class SilexServerCodegen extends DefaultCodegen implements CodegenConfig 
         additionalProperties.put(CodegenConstants.ARTIFACT_VERSION, artifactVersion);
 
         // ref: http://php.net/manual/en/language.types.intro.php
-        languageSpecificPrimitives = new HashSet<String>(
-                Arrays.asList(
-                        "boolean",
-                        "int",
-                        "integer",
-                        "double",
-                        "float",
-                        "string",
-                        "object",
-                        "DateTime",
-                        "mixed",
-                        "number")
-        );
+        languageSpecificPrimitives =
+                new HashSet<String>(Arrays.asList("boolean", "int", "integer", "double", "float",
+                        "string", "object", "DateTime", "mixed", "number"));
 
         instantiationTypes.put("array", "array");
         instantiationTypes.put("map", "map");
@@ -81,14 +76,18 @@ public class SilexServerCodegen extends DefaultCodegen implements CodegenConfig 
         typeMapping.put("array", "array");
         typeMapping.put("list", "array");
         typeMapping.put("object", "object");
-        //TODO binary should be mapped to byte array
+        // TODO binary should be mapped to byte array
         // mapped to String as a workaround
         typeMapping.put("binary", "string");
 
-        supportingFiles.add(new SupportingFile("README.mustache", packagePath.replace('/', File.separatorChar), "README.md"));
-        supportingFiles.add(new SupportingFile("composer.json", packagePath.replace('/', File.separatorChar), "composer.json"));
-        supportingFiles.add(new SupportingFile("index.mustache", packagePath.replace('/', File.separatorChar), "index.php"));
-        supportingFiles.add(new SupportingFile(".htaccess", packagePath.replace('/', File.separatorChar), ".htaccess"));
+        supportingFiles.add(new SupportingFile("README.mustache", packagePath.replace('/',
+                File.separatorChar), "README.md"));
+        supportingFiles.add(new SupportingFile("composer.json", packagePath.replace('/',
+                File.separatorChar), "composer.json"));
+        supportingFiles.add(new SupportingFile("index.mustache", packagePath.replace('/',
+                File.separatorChar), "index.php"));
+        supportingFiles.add(new SupportingFile(".htaccess", packagePath.replace('/',
+                File.separatorChar), ".htaccess"));
     }
 
     @Override
@@ -107,13 +106,13 @@ public class SilexServerCodegen extends DefaultCodegen implements CodegenConfig 
     }
 
     @Override
-    public String escapeReservedWord(String name) {           
-        if(this.reservedWordsMappings().containsKey(name)) {
+    public String escapeReservedWord(String name) {
+        if (this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
         return "_" + name;
     }
-    
+
     @Override
     public String apiFileFolder() {
         return (outputFolder + "/" + apiPackage()).replace('/', File.separatorChar);
@@ -168,7 +167,8 @@ public class SilexServerCodegen extends DefaultCodegen implements CodegenConfig 
     public String toVarName(String name) {
         // return the name in underscore style
         // PhoneNumber => phone_number
-        name = underscore(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        name = underscore(name); // FIXME: a parameter should not be assigned. Also declare the
+                                 // methods parameters as 'final'.
 
         // parameter name starting with number won't compile
         // need to escape it by appending _ at the beginning

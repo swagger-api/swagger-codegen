@@ -72,49 +72,29 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         apiPackage = File.separator + "APIs";
         modelPackage = File.separator + "Models";
 
-        languageSpecificPrimitives = new HashSet<>(
-                Arrays.asList(
-                        "Int",
-                        "Int32",
-                        "Int64",
-                        "Float",
-                        "Double",
-                        "Bool",
-                        "Void",
-                        "String",
-                        "Character",
-                        "AnyObject",
-                        "Any")
-        );
-        defaultIncludes = new HashSet<>(
-                Arrays.asList(
-                        "Data",
-                        "Date",
-                        "URL", // for file
-                        "UUID",
-                        "Array",
-                        "Dictionary",
-                        "Set",
-                        "Any",
-                        "Empty",
-                        "AnyObject",
-                        "Any")
-        );
-        reservedWords = new HashSet<>(
-                Arrays.asList(
-                    // name used by swift client
-                    "ErrorResponse",
+        languageSpecificPrimitives =
+                new HashSet<>(Arrays.asList("Int", "Int32", "Int64", "Float", "Double", "Bool",
+                        "Void", "String", "Character", "AnyObject", "Any"));
+        defaultIncludes = new HashSet<>(Arrays.asList("Data", "Date", "URL", // for file
+                "UUID", "Array", "Dictionary", "Set", "Any", "Empty", "AnyObject", "Any"));
+        reservedWords =
+                new HashSet<>(Arrays.asList(
+                        // name used by swift client
+                        "ErrorResponse",
 
-                    // swift keywords
-                    "Int", "Int32", "Int64", "Int64", "Float", "Double", "Bool", "Void", "String", "Character", "AnyObject", "Any", "Error", "URL",
-                    "class", "Class", "break", "as", "associativity", "deinit", "case", "dynamicType", "convenience", "enum", "continue",
-                    "false", "dynamic", "extension", "default", "is", "didSet", "func", "do", "nil", "final", "import", "else",
-                    "self", "get", "init", "fallthrough", "Self", "infix", "internal", "for", "super", "inout", "let", "if",
-                    "true", "lazy", "operator", "in", "COLUMN", "left", "private", "return", "FILE", "mutating", "protocol",
-                    "switch", "FUNCTION", "none", "public", "where", "LINE", "nonmutating", "static", "while", "optional",
-                    "struct", "override", "subscript", "postfix", "typealias", "precedence", "var", "prefix", "Protocol",
-                    "required", "right", "set", "Type", "unowned", "weak")
-        );
+                        // swift keywords
+                        "Int", "Int32", "Int64", "Int64", "Float", "Double", "Bool", "Void",
+                        "String", "Character", "AnyObject", "Any", "Error", "URL", "class",
+                        "Class", "break", "as", "associativity", "deinit", "case", "dynamicType",
+                        "convenience", "enum", "continue", "false", "dynamic", "extension",
+                        "default", "is", "didSet", "func", "do", "nil", "final", "import", "else",
+                        "self", "get", "init", "fallthrough", "Self", "infix", "internal", "for",
+                        "super", "inout", "let", "if", "true", "lazy", "operator", "in", "COLUMN",
+                        "left", "private", "return", "FILE", "mutating", "protocol", "switch",
+                        "FUNCTION", "none", "public", "where", "LINE", "nonmutating", "static",
+                        "while", "optional", "struct", "override", "subscript", "postfix",
+                        "typealias", "precedence", "var", "prefix", "Protocol", "required",
+                        "right", "set", "Type", "unowned", "weak"));
 
         typeMapping = new HashMap<>();
         typeMapping.put("array", "Array");
@@ -143,10 +123,14 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         importMapping = new HashMap<>();
 
         cliOptions.add(new CliOption(PROJECT_NAME, "Project name in Xcode"));
-        cliOptions.add(new CliOption(RESPONSE_AS, "Optionally use libraries to manage response.  Currently " +
-                StringUtils.join(RESPONSE_LIBRARIES, ", ") + " are available."));
-        cliOptions.add(new CliOption(UNWRAP_REQUIRED, "Treat 'required' properties in response as non-optional " +
-                "(which would crash the app if api returns null as opposed to required option specified in json schema"));
+        cliOptions.add(new CliOption(RESPONSE_AS,
+                "Optionally use libraries to manage response.  Currently "
+                        + StringUtils.join(RESPONSE_LIBRARIES, ", ") + " are available."));
+        cliOptions
+                .add(new CliOption(
+                        UNWRAP_REQUIRED,
+                        "Treat 'required' properties in response as non-optional "
+                                + "(which would crash the app if api returns null as opposed to required option specified in json schema"));
         cliOptions.add(new CliOption(POD_SOURCE, "Source information used for Podspec"));
         cliOptions.add(new CliOption(CodegenConstants.POD_VERSION, "Version used for Podspec"));
         cliOptions.add(new CliOption(POD_AUTHORS, "Authors used for Podspec"));
@@ -158,9 +142,11 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         cliOptions.add(new CliOption(POD_DESCRIPTION, "Description used for Podspec"));
         cliOptions.add(new CliOption(POD_SCREENSHOTS, "Screenshots used for Podspec"));
         cliOptions.add(new CliOption(POD_DOCUMENTATION_URL, "Documentation URL used for Podspec"));
-        cliOptions.add(new CliOption(SWIFT_USE_API_NAMESPACE, "Flag to make all the API classes inner-class of {{projectName}}API"));
-        cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "hides the timestamp when files were generated")
-                .defaultValue(Boolean.TRUE.toString()));
+        cliOptions.add(new CliOption(SWIFT_USE_API_NAMESPACE,
+                "Flag to make all the API classes inner-class of {{projectName}}API"));
+        cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP,
+                "hides the timestamp when files were generated").defaultValue(Boolean.TRUE
+                .toString()));
 
     }
 
@@ -169,10 +155,13 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         super.processOpts();
         // default HIDE_GENERATION_TIMESTAMP to true
         if (!additionalProperties.containsKey(CodegenConstants.HIDE_GENERATION_TIMESTAMP)) {
-            additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, Boolean.TRUE.toString());
-        } else {
             additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP,
-                    Boolean.valueOf(additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP).toString()));
+                    Boolean.TRUE.toString());
+        } else {
+            additionalProperties.put(
+                    CodegenConstants.HIDE_GENERATION_TIMESTAMP,
+                    Boolean.valueOf(additionalProperties().get(
+                            CodegenConstants.HIDE_GENERATION_TIMESTAMP).toString()));
         }
 
         // Setup project name
@@ -185,7 +174,8 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
 
         // Setup unwrapRequired option, which makes all the properties with "required" non-optional
         if (additionalProperties.containsKey(UNWRAP_REQUIRED)) {
-            setUnwrapRequired(Boolean.parseBoolean(String.valueOf(additionalProperties.get(UNWRAP_REQUIRED))));
+            setUnwrapRequired(Boolean.parseBoolean(String.valueOf(additionalProperties
+                    .get(UNWRAP_REQUIRED))));
         }
         additionalProperties.put(UNWRAP_REQUIRED, unwrapRequired);
 
@@ -206,9 +196,12 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
             additionalProperties.put("useRxSwift", true);
         }
 
-        // Setup swiftUseApiNamespace option, which makes all the API classes inner-class of {{projectName}}API
+        // Setup swiftUseApiNamespace option, which makes all the API classes inner-class of
+        // {{projectName}}API
         if (additionalProperties.containsKey(SWIFT_USE_API_NAMESPACE)) {
-            swiftUseApiNamespace = Boolean.parseBoolean(String.valueOf(additionalProperties.get(SWIFT_USE_API_NAMESPACE)));
+            swiftUseApiNamespace =
+                    Boolean.parseBoolean(String.valueOf(additionalProperties
+                            .get(SWIFT_USE_API_NAMESPACE)));
         }
         additionalProperties.put(SWIFT_USE_API_NAMESPACE, swiftUseApiNamespace);
 
@@ -218,10 +211,12 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
 
         supportingFiles.add(new SupportingFile("Podspec.mustache", "", projectName + ".podspec"));
         supportingFiles.add(new SupportingFile("Cartfile.mustache", "", "Cartfile"));
-        supportingFiles.add(new SupportingFile("APIHelper.mustache", sourceFolder, "APIHelper.swift"));
+        supportingFiles.add(new SupportingFile("APIHelper.mustache", sourceFolder,
+                "APIHelper.swift"));
         supportingFiles.add(new SupportingFile("AlamofireImplementations.mustache", sourceFolder,
                 "AlamofireImplementations.swift"));
-        supportingFiles.add(new SupportingFile("Extensions.mustache", sourceFolder, "Extensions.swift"));
+        supportingFiles.add(new SupportingFile("Extensions.mustache", sourceFolder,
+                "Extensions.swift"));
         supportingFiles.add(new SupportingFile("Models.mustache", sourceFolder, "Models.swift"));
         supportingFiles.add(new SupportingFile("APIs.mustache", sourceFolder, "APIs.swift"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
@@ -231,25 +226,27 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     protected boolean isReservedWord(String word) {
-        return word != null && reservedWords.contains(word); //don't lowercase as super does
+        return word != null && reservedWords.contains(word); // don't lowercase as super does
     }
 
     @Override
-    public String escapeReservedWord(String name) {           
-        if(this.reservedWordsMappings().containsKey(name)) {
+    public String escapeReservedWord(String name) {
+        if (this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
-        return "_" + name;  // add an underscore to the name
+        return "_" + name; // add an underscore to the name
     }
-    
+
     @Override
     public String modelFileFolder() {
-        return outputFolder + File.separator + sourceFolder + modelPackage().replace('.', File.separatorChar);
+        return outputFolder + File.separator + sourceFolder
+                + modelPackage().replace('.', File.separatorChar);
     }
 
     @Override
     public String apiFileFolder() {
-        return outputFolder + File.separator + sourceFolder + apiPackage().replace('.', File.separatorChar);
+        return outputFolder + File.separator + sourceFolder
+                + apiPackage().replace('.', File.separatorChar);
     }
 
     @Override
@@ -292,7 +289,8 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
      */
     @Override
     public String toModelName(String name) {
-        name = sanitizeName(name);  // FIXME parameter should not be assigned. Also declare it as "final"
+        name = sanitizeName(name); // FIXME parameter should not be assigned. Also declare it as
+                                   // "final"
 
         if (!StringUtils.isEmpty(modelNameSuffix)) { // set model suffix
             name = name + "_" + modelNameSuffix;
@@ -309,14 +307,18 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
             String modelName = "Model" + name;
-            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + modelName);
+            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to "
+                    + modelName);
             return modelName;
         }
 
         // model name starts with number
         if (name.matches("^\\d.*")) {
-            String modelName = "Model" + name; // e.g. 200Response => Model200Response (after camelize)
-            LOGGER.warn(name + " (model name starts with number) cannot be used as model name. Renamed to " + modelName);
+            String modelName = "Model" + name; // e.g. 200Response => Model200Response (after
+                                               // camelize)
+            LOGGER.warn(name
+                    + " (model name starts with number) cannot be used as model name. Renamed to "
+                    + modelName);
             return modelName;
         }
 
@@ -366,7 +368,8 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
     public String toOperationId(String operationId) {
         operationId = camelize(sanitizeName(operationId), true);
 
-        // throw exception if method name is empty. This should not happen but keep the check just in case
+        // throw exception if method name is empty. This should not happen but keep the check just
+        // in case
         if (StringUtils.isEmpty(operationId)) {
             throw new RuntimeException("Empty method name (operationId) not allowed");
         }
@@ -374,7 +377,8 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         // method name cannot use reserved keyword, e.g. return
         if (isReservedWord(operationId)) {
             String newOperationId = camelize(("call_" + operationId), true);
-            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + newOperationId);
+            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to "
+                    + newOperationId);
             return newOperationId;
         }
 
@@ -431,29 +435,32 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
         CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
-        if(codegenModel.description != null) {
+        if (codegenModel.description != null) {
             codegenModel.imports.add("ApiModel");
         }
         if (allDefinitions != null) {
-          String parentSchema = codegenModel.parentSchema;
+            String parentSchema = codegenModel.parentSchema;
 
-          // multilevel inheritance: reconcile properties of all the parents
-          while (parentSchema != null) {
-            final Model parentModel = allDefinitions.get(parentSchema);
-            final CodegenModel parentCodegenModel = super.fromModel(codegenModel.parent, parentModel, allDefinitions);
-            codegenModel = Swift3Codegen.reconcileProperties(codegenModel, parentCodegenModel);
+            // multilevel inheritance: reconcile properties of all the parents
+            while (parentSchema != null) {
+                final Model parentModel = allDefinitions.get(parentSchema);
+                final CodegenModel parentCodegenModel =
+                        super.fromModel(codegenModel.parent, parentModel, allDefinitions);
+                codegenModel = Swift3Codegen.reconcileProperties(codegenModel, parentCodegenModel);
 
-            // get the next parent
-            parentSchema = parentCodegenModel.parentSchema;
-          }
+                // get the next parent
+                parentSchema = parentCodegenModel.parentSchema;
+            }
         }
 
         return codegenModel;
     }
 
     @Override
-    public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, Map<String, Model> definitions, Swagger swagger) {
-        path = normalizePath(path); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+    public CodegenOperation fromOperation(String path, String httpMethod, Operation operation,
+            Map<String, Model> definitions, Swagger swagger) {
+        path = normalizePath(path); // FIXME: a parameter should not be assigned. Also declare the
+                                    // methods parameters as 'final'.
         // issue 3914 - removed logic designed to remove any parameter of type HeaderParameter
         return super.fromOperation(path, httpMethod, operation, definitions, swagger);
     }
@@ -470,10 +477,7 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
 
             String group = matcher.group().substring(1, matcher.group().length() - 1);
             group = camelize(group, true);
-            builder
-                    .append("{")
-                    .append(group)
-                    .append("}");
+            builder.append("{").append(group).append("}");
 
             cursor = matcher.end();
             found = matcher.find();
@@ -532,8 +536,8 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         }
 
         // Check for numerical conversions
-        if ("Int".equals(datatype) || "Int32".equals(datatype) || "Int64".equals(datatype) ||
-                "Float".equals(datatype) || "Double".equals(datatype)) {
+        if ("Int".equals(datatype) || "Int32".equals(datatype) || "Int64".equals(datatype)
+                || "Float".equals(datatype) || "Double".equals(datatype)) {
             String varName = "number" + camelize(name);
             varName = varName.replaceAll("-", "minus");
             varName = varName.replaceAll("\\+", "plus");
@@ -548,7 +552,8 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         }
 
         char[] separators = {'-', '_', ' ', ':', '(', ')'};
-        return camelize(WordUtils.capitalizeFully(StringUtils.lowerCase(name), separators).replaceAll("[-_ :\\(\\)]", ""), true);
+        return camelize(WordUtils.capitalizeFully(StringUtils.lowerCase(name), separators)
+                .replaceAll("[-_ :\\(\\)]", ""), true);
     }
 
     @Override
@@ -558,11 +563,13 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         // Ensure that the enum type doesn't match a reserved word or
         // the variable name doesn't match the generated enum type or the
         // Swift compiler will generate an error
-        if (isReservedWord(property.datatypeWithEnum) || toVarName(property.name).equals(property.datatypeWithEnum)) {
+        if (isReservedWord(property.datatypeWithEnum)
+                || toVarName(property.name).equals(property.datatypeWithEnum)) {
             enumName = property.datatypeWithEnum + "Enum";
         }
 
-        // TODO: toModelName already does something for names starting with number, so this code is probably never called
+        // TODO: toModelName already does something for names starting with number, so this code is
+        // probably never called
         if (enumName.matches("\\d.*")) { // starts with number
             return "_" + enumName;
         } else {
@@ -587,11 +594,13 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         return input.replace("*/", "*_/").replace("/*", "/_*");
     }
 
-    private static CodegenModel reconcileProperties(CodegenModel codegenModel, CodegenModel parentCodegenModel) {
+    private static CodegenModel reconcileProperties(CodegenModel codegenModel,
+            CodegenModel parentCodegenModel) {
         // To support inheritance in this generator, we will analyze
         // the parent and child models, look for properties that match, and remove
         // them from the child models and leave them in the parent.
-        // Because the child models extend the parents, the properties will be available via the parent.
+        // Because the child models extend the parents, the properties will be available via the
+        // parent.
 
         // Get the properties for the parent and child models
         final List<CodegenProperty> parentModelCodegenProperties = parentCodegenModel.vars;
@@ -603,24 +612,24 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         boolean removedChildProperty = false;
 
         for (CodegenProperty parentModelCodegenProperty : parentModelCodegenProperties) {
-          // Now that we have found a prop in the parent class,
-          // and search the child class for the same prop.
-          Iterator<CodegenProperty> iterator = codegenProperties.iterator();
-          while (iterator.hasNext()) {
-              CodegenProperty codegenProperty = iterator.next();
-              if (codegenProperty.baseName == parentModelCodegenProperty.baseName) {
-                  // We found a property in the child class that is
-                  // a duplicate of the one in the parent, so remove it.
-                  iterator.remove();
-                  removedChildProperty = true;
-              }
-          }
+            // Now that we have found a prop in the parent class,
+            // and search the child class for the same prop.
+            Iterator<CodegenProperty> iterator = codegenProperties.iterator();
+            while (iterator.hasNext()) {
+                CodegenProperty codegenProperty = iterator.next();
+                if (codegenProperty.baseName == parentModelCodegenProperty.baseName) {
+                    // We found a property in the child class that is
+                    // a duplicate of the one in the parent, so remove it.
+                    iterator.remove();
+                    removedChildProperty = true;
+                }
+            }
         }
 
-        if(removedChildProperty) {
+        if (removedChildProperty) {
             // If we removed an entry from this model's vars, we need to ensure hasMore is updated
             int count = 0, numVars = codegenProperties.size();
-            for(CodegenProperty codegenProperty : codegenProperties) {
+            for (CodegenProperty codegenProperty : codegenProperties) {
                 count += 1;
                 codegenProperty.hasMore = (count < numVars) ? true : false;
             }

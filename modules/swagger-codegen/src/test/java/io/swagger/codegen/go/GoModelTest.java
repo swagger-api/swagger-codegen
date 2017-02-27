@@ -24,13 +24,11 @@ public class GoModelTest {
 
     @Test(description = "convert a simple Go model")
     public void simpleModelTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("id", new LongProperty())
-                .property("name", new StringProperty())
-                .property("createdAt", new DateTimeProperty())
-                .required("id")
-                .required("name");
+        final Model model =
+                new ModelImpl().description("a sample model").property("id", new LongProperty())
+                        .property("name", new StringProperty())
+                        .property("createdAt", new DateTimeProperty()).required("id")
+                        .required("name");
         final DefaultCodegen codegen = new GoClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -76,12 +74,10 @@ public class GoModelTest {
 
     @Test(description = "convert a model with list property")
     public void listPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("id", new LongProperty())
-                .property("urls", new ArrayProperty()
-                        .items(new StringProperty()))
-                .required("id");
+        final Model model =
+                new ModelImpl().description("a sample model").property("id", new LongProperty())
+                        .property("urls", new ArrayProperty().items(new StringProperty()))
+                        .required("id");
         final DefaultCodegen codegen = new GoClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -115,11 +111,12 @@ public class GoModelTest {
 
     @Test(description = "convert a model with a map property")
     public void mapPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("translations", new MapProperty()
-                        .additionalProperties(new StringProperty()))
-                .required("id");
+        final Model model =
+                new ModelImpl()
+                        .description("a sample model")
+                        .property("translations",
+                                new MapProperty().additionalProperties(new StringProperty()))
+                        .required("id");
         final DefaultCodegen codegen = new GoClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -141,9 +138,9 @@ public class GoModelTest {
 
     @Test(description = "convert a model with complex property")
     public void complexPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("children", new RefProperty("#/definitions/Children"));
+        final Model model =
+                new ModelImpl().description("a sample model").property("children",
+                        new RefProperty("#/definitions/Children"));
         final DefaultCodegen codegen = new GoClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -163,10 +160,9 @@ public class GoModelTest {
 
     @Test(description = "convert a model with complex list property")
     public void complexListProperty() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("children", new ArrayProperty()
-                        .items(new RefProperty("#/definitions/Children")));
+        final Model model =
+                new ModelImpl().description("a sample model").property("children",
+                        new ArrayProperty().items(new RefProperty("#/definitions/Children")));
         final DefaultCodegen codegen = new GoClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -187,10 +183,11 @@ public class GoModelTest {
 
     @Test(description = "convert a model with complex map property")
     public void complexMapProperty() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("children", new MapProperty()
-                        .additionalProperties(new RefProperty("#/definitions/Children")));
+        final Model model =
+                new ModelImpl().description("a sample model").property(
+                        "children",
+                        new MapProperty().additionalProperties(new RefProperty(
+                                "#/definitions/Children")));
         final DefaultCodegen codegen = new GoClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -214,9 +211,9 @@ public class GoModelTest {
 
     @Test(description = "convert an array model")
     public void arrayModelTest() {
-        final Model model = new ArrayModel()
-                .description("an array model")
-                .items(new RefProperty("#/definitions/Children"));
+        final Model model =
+                new ArrayModel().description("an array model").items(
+                        new RefProperty("#/definitions/Children"));
         final DefaultCodegen codegen = new GoClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -229,9 +226,9 @@ public class GoModelTest {
 
     @Test(description = "convert an map model")
     public void mapModelTest() {
-        final Model model = new ModelImpl()
-                .description("a map model")
-                .additionalProperties(new RefProperty("#/definitions/Children"));
+        final Model model =
+                new ModelImpl().description("a map model").additionalProperties(
+                        new RefProperty("#/definitions/Children"));
         final DefaultCodegen codegen = new GoClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -245,15 +242,9 @@ public class GoModelTest {
 
     @DataProvider(name = "modelNames")
     public static Object[][] primeNumbers() {
-        return new Object[][] {
-            {"sample", "Sample"},
-            {"sample_name", "SampleName"},
-            {"sample__name", "SampleName"},
-            {"/sample", "Sample"},
-            {"\\sample", "Sample"},
-            {"sample.name", "SampleName"},
-            {"_sample", "Sample"},
-        };
+        return new Object[][] { {"sample", "Sample"}, {"sample_name", "SampleName"},
+                {"sample__name", "SampleName"}, {"/sample", "Sample"}, {"\\sample", "Sample"},
+                {"sample.name", "SampleName"}, {"_sample", "Sample"},};
     }
 
     @Test(dataProvider = "modelNames", description = "avoid inner class")

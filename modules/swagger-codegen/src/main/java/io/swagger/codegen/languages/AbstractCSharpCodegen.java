@@ -32,7 +32,8 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     protected String sourceFolder = "src";
 
     // TODO: Add option for test folder output location. Nice to allow e.g. ./test instead of ./src.
-    //       This would require updating relative paths (e.g. path to main project file in test project file)
+    // This would require updating relative paths (e.g. path to main project file in test project
+    // file)
     protected String testFolder = sourceFolder;
 
     protected Set<String> collectionTypes;
@@ -49,69 +50,54 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         outputFolder = "generated-code" + File.separator + this.getName();
         embeddedTemplateDir = templateDir = this.getName();
 
-        collectionTypes = new HashSet<String>(
-                Arrays.asList(
-                        "IList", "List",
-                        "ICollection", "Collection",
-                        "IEnumerable")
-        );
+        collectionTypes =
+                new HashSet<String>(Arrays.asList("IList", "List", "ICollection", "Collection",
+                        "IEnumerable"));
 
-        mapTypes = new HashSet<String>(
-                Arrays.asList("IDictionary")
-        );
+        mapTypes = new HashSet<String>(Arrays.asList("IDictionary"));
 
-        setReservedWordsLowerCase(
-                Arrays.asList(
-                        // set "client" as a reserved word to avoid conflicts with IO.Swagger.Client
-                        // this is a workaround and can be removed if c# api client is updated to use
-                        // fully qualified name
-                        "client", "parameter",
-                        // local variable names in API methods (endpoints)
-                        "localVarPath", "localVarPathParams", "localVarQueryParams", "localVarHeaderParams", 
-                        "localVarFormParams", "localVarFileParams", "localVarStatusCode", "localVarResponse",
-                        "localVarPostBody", "localVarHttpHeaderAccepts", "localVarHttpHeaderAccept",
-                        "localVarHttpContentTypes", "localVarHttpContentType",
-                        "localVarStatusCode",
-                        // C# reserved words
-                        "abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char", "checked",
-                        "class", "const", "continue", "decimal", "default", "delegate", "do", "double", "else",
-                        "enum", "event", "explicit", "extern", "false", "finally", "fixed", "float", "for",
-                        "foreach", "goto", "if", "implicit", "in", "int", "interface", "internal", "is", "lock",
-                        "long", "namespace", "new", "null", "object", "operator", "out", "override", "params",
-                        "private", "protected", "public", "readonly", "ref", "return", "sbyte", "sealed",
-                        "short", "sizeof", "stackalloc", "static", "string", "struct", "switch", "this", "throw",
-                        "true", "try", "typeof", "uint", "ulong", "unchecked", "unsafe", "ushort", "using",
-                        "virtual", "void", "volatile", "while")
-        );
+        setReservedWordsLowerCase(Arrays.asList(
+                // set "client" as a reserved word to avoid conflicts with IO.Swagger.Client
+                // this is a workaround and can be removed if c# api client is updated to use
+                // fully qualified name
+                "client",
+                "parameter",
+                // local variable names in API methods (endpoints)
+                "localVarPath", "localVarPathParams",
+                "localVarQueryParams",
+                "localVarHeaderParams",
+                "localVarFormParams",
+                "localVarFileParams",
+                "localVarStatusCode",
+                "localVarResponse",
+                "localVarPostBody",
+                "localVarHttpHeaderAccepts",
+                "localVarHttpHeaderAccept",
+                "localVarHttpContentTypes",
+                "localVarHttpContentType",
+                "localVarStatusCode",
+                // C# reserved words
+                "abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char",
+                "checked", "class", "const", "continue", "decimal", "default", "delegate", "do",
+                "double", "else", "enum", "event", "explicit", "extern", "false", "finally",
+                "fixed", "float", "for", "foreach", "goto", "if", "implicit", "in", "int",
+                "interface", "internal", "is", "lock", "long", "namespace", "new", "null",
+                "object", "operator", "out", "override", "params", "private", "protected",
+                "public", "readonly", "ref", "return", "sbyte", "sealed", "short", "sizeof",
+                "stackalloc", "static", "string", "struct", "switch", "this", "throw", "true",
+                "try", "typeof", "uint", "ulong", "unchecked", "unsafe", "ushort", "using",
+                "virtual", "void", "volatile", "while"));
 
-        // TODO: Either include fully qualified names here or handle in DefaultCodegen via lastIndexOf(".") search
-        languageSpecificPrimitives = new HashSet<String>(
-                Arrays.asList(
-                        "String",
-                        "string",
-                        "bool?",
-                        "double?",
-                        "decimal?",
-                        "int?",
-                        "long?",
-                        "float?",
-                        "byte[]",
-                        "ICollection",
-                        "Collection",
-                        "List",
-                        "Dictionary",
-                        "DateTime?",
-                        "DateTimeOffset?",
-                        "String",
-                        "Boolean",
-                        "Double",
-                        "Int32",
-                        "Int64",
-                        "Float",
-                        "Guid?",
-                        "System.IO.Stream", // not really a primitive, we include it to avoid model import
-                        "Object")
-        );
+        // TODO: Either include fully qualified names here or handle in DefaultCodegen via
+        // lastIndexOf(".") search
+        languageSpecificPrimitives =
+                new HashSet<String>(Arrays.asList("String", "string", "bool?", "double?",
+                        "decimal?", "int?", "long?", "float?", "byte[]", "ICollection",
+                        "Collection", "List", "Dictionary", "DateTime?", "DateTimeOffset?",
+                        "String", "Boolean", "Double", "Int32", "Int64", "Float", "Guid?",
+                        "System.IO.Stream", // not really a primitive, we include it to avoid model
+                                            // import
+                        "Object"));
 
         instantiationTypes.put("array", "List");
         instantiationTypes.put("list", "List");
@@ -163,20 +149,24 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
     protected void addOption(String key, String description, String defaultValue) {
         CliOption option = new CliOption(key, description);
-        if (defaultValue != null) option.defaultValue(defaultValue);
+        if (defaultValue != null)
+            option.defaultValue(defaultValue);
         cliOptions.add(option);
     }
 
     protected void addSwitch(String key, String description, Boolean defaultValue) {
         CliOption option = CliOption.newBoolean(key, description);
-        if (defaultValue != null) option.defaultValue(defaultValue.toString());
+        if (defaultValue != null)
+            option.defaultValue(defaultValue.toString());
         cliOptions.add(option);
     }
 
     public void useDateTimeOffset(boolean flag) {
         this.useDateTimeOffsetFlag = flag;
-        if (flag) typeMapping.put("datetime", "DateTimeOffset?");
-        else typeMapping.put("datetime", "DateTime?");
+        if (flag)
+            typeMapping.put("datetime", "DateTimeOffset?");
+        else
+            typeMapping.put("datetime", "DateTime?");
     }
 
     @Override
@@ -203,71 +193,81 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         } else {
             additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
         }
-        
+
         // {{packageTitle}}
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_TITLE)) {
             setPackageTitle((String) additionalProperties.get(CodegenConstants.PACKAGE_TITLE));
         } else {
             additionalProperties.put(CodegenConstants.PACKAGE_TITLE, packageTitle);
         }
-        
+
         // {{packageProductName}}
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_PRODUCTNAME)) {
-            setPackageProductName((String) additionalProperties.get(CodegenConstants.PACKAGE_PRODUCTNAME));
+            setPackageProductName((String) additionalProperties
+                    .get(CodegenConstants.PACKAGE_PRODUCTNAME));
         } else {
             additionalProperties.put(CodegenConstants.PACKAGE_PRODUCTNAME, packageProductName);
         }
 
         // {{packageDescription}}
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_DESCRIPTION)) {
-            setPackageDescription((String) additionalProperties.get(CodegenConstants.PACKAGE_DESCRIPTION));
+            setPackageDescription((String) additionalProperties
+                    .get(CodegenConstants.PACKAGE_DESCRIPTION));
         } else {
             additionalProperties.put(CodegenConstants.PACKAGE_DESCRIPTION, packageDescription);
         }
-        
+
         // {{packageCompany}}
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_COMPANY)) {
             setPackageCompany((String) additionalProperties.get(CodegenConstants.PACKAGE_COMPANY));
         } else {
             additionalProperties.put(CodegenConstants.PACKAGE_COMPANY, packageCompany);
         }
-        
+
         // {{packageCopyright}}
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_COPYRIGHT)) {
-            setPackageCopyright((String) additionalProperties.get(CodegenConstants.PACKAGE_COPYRIGHT));
+            setPackageCopyright((String) additionalProperties
+                    .get(CodegenConstants.PACKAGE_COPYRIGHT));
         } else {
             additionalProperties.put(CodegenConstants.PACKAGE_COPYRIGHT, packageCopyright);
         }
-        
+
         // {{useDateTimeOffset}}
         if (additionalProperties.containsKey(CodegenConstants.USE_DATETIME_OFFSET)) {
-            useDateTimeOffset(Boolean.valueOf(additionalProperties.get(CodegenConstants.USE_DATETIME_OFFSET).toString()));
+            useDateTimeOffset(Boolean.valueOf(additionalProperties.get(
+                    CodegenConstants.USE_DATETIME_OFFSET).toString()));
         }
         additionalProperties.put(CodegenConstants.USE_DATETIME_OFFSET, useDateTimeOffsetFlag);
 
         if (additionalProperties.containsKey(CodegenConstants.USE_COLLECTION)) {
-            setUseCollection(Boolean.valueOf(additionalProperties.get(CodegenConstants.USE_COLLECTION).toString()));
+            setUseCollection(Boolean.valueOf(additionalProperties.get(
+                    CodegenConstants.USE_COLLECTION).toString()));
         }
 
         if (additionalProperties.containsKey(CodegenConstants.RETURN_ICOLLECTION)) {
-            setReturnICollection(Boolean.valueOf(additionalProperties.get(CodegenConstants.RETURN_ICOLLECTION).toString()));
+            setReturnICollection(Boolean.valueOf(additionalProperties.get(
+                    CodegenConstants.RETURN_ICOLLECTION).toString()));
         }
 
         if (additionalProperties.containsKey(CodegenConstants.OPTIONAL_EMIT_DEFAULT_VALUES)) {
-            setOptionalEmitDefaultValue(Boolean.valueOf(additionalProperties.get(CodegenConstants.OPTIONAL_EMIT_DEFAULT_VALUES).toString()));
+            setOptionalEmitDefaultValue(Boolean.valueOf(additionalProperties.get(
+                    CodegenConstants.OPTIONAL_EMIT_DEFAULT_VALUES).toString()));
         }
 
         if (additionalProperties.containsKey(CodegenConstants.INTERFACE_PREFIX)) {
-            String useInterfacePrefix = additionalProperties.get(CodegenConstants.INTERFACE_PREFIX).toString();
-            if("false".equals(useInterfacePrefix.toLowerCase())) {
+            String useInterfacePrefix =
+                    additionalProperties.get(CodegenConstants.INTERFACE_PREFIX).toString();
+            if ("false".equals(useInterfacePrefix.toLowerCase())) {
                 setInterfacePrefix("");
-            } else if(!"true".equals(useInterfacePrefix.toLowerCase())) {
-                // NOTE: if user passes "true" explicitly, we use the default I- prefix. The other supported case here is a custom prefix.
+            } else if (!"true".equals(useInterfacePrefix.toLowerCase())) {
+                // NOTE: if user passes "true" explicitly, we use the default I- prefix. The other
+                // supported case here is a custom prefix.
                 setInterfacePrefix(sanitizeName(useInterfacePrefix));
             }
         }
 
-        // This either updates additionalProperties with the above fixes, or sets the default if the option was not specified.
+        // This either updates additionalProperties with the above fixes, or sets the default if the
+        // option was not specified.
         additionalProperties.put(CodegenConstants.INTERFACE_PREFIX, interfacePrefix);
     }
 
@@ -312,13 +312,14 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
                         if (this.collectionTypes.contains(typeMapping)) {
                             operation.isListContainer = true;
                             operation.returnContainer = operation.returnType;
-                            if (this.returnICollection && (
-                                    typeMapping.startsWith("List") ||
-                                            typeMapping.startsWith("Collection"))) {
+                            if (this.returnICollection
+                                    && (typeMapping.startsWith("List") || typeMapping
+                                            .startsWith("Collection"))) {
                                 // NOTE: ICollection works for both List<T> and Collection<T>
                                 int genericStart = typeMapping.indexOf("<");
                                 if (genericStart > 0) {
-                                    operation.returnType = "ICollection" + typeMapping.substring(genericStart);
+                                    operation.returnType =
+                                            "ICollection" + typeMapping.substring(genericStart);
                                 }
                             }
                         } else {
@@ -341,12 +342,14 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
     @Override
     public String apiFileFolder() {
-        return outputFolder + File.separator + sourceFolder + File.separator + packageName + File.separator + apiPackage();
+        return outputFolder + File.separator + sourceFolder + File.separator + packageName
+                + File.separator + apiPackage();
     }
 
     @Override
     public String modelFileFolder() {
-        return outputFolder + File.separator + sourceFolder + File.separator + packageName + File.separator + modelPackage();
+        return outputFolder + File.separator + sourceFolder + File.separator + packageName
+                + File.separator + modelPackage();
     }
 
     @Override
@@ -357,14 +360,16 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
     @Override
     public String toOperationId(String operationId) {
-        // throw exception if method name is empty (should not occur as an auto-generated method name will be used)
+        // throw exception if method name is empty (should not occur as an auto-generated method
+        // name will be used)
         if (StringUtils.isEmpty(operationId)) {
             throw new RuntimeException("Empty method name (operationId) not allowed");
         }
 
         // method name cannot use reserved keyword, e.g. return
         if (isReservedWord(operationId)) {
-            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + camelize(sanitizeName("call_" + operationId)));
+            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to "
+                    + camelize(sanitizeName("call_" + operationId)));
             operationId = "call_" + operationId;
         }
 
@@ -416,11 +421,11 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         }
 
         return name;
-    }   
+    }
 
     @Override
-    public String escapeReservedWord(String name) {           
-        if(this.reservedWordsMappings().containsKey(name)) {
+    public String escapeReservedWord(String name) {
+        if (this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
         return "_" + name;
@@ -484,13 +489,13 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         if (p instanceof StringProperty) {
             StringProperty dp = (StringProperty) p;
             if (dp.getDefault() != null) {
-               String _default = dp.getDefault();
-               if (dp.getEnum() == null) {
-                   return "\"" + _default + "\"";
-               } else {
-                   // convert to enum var name later in postProcessModels
-                   return _default;
-               }
+                String _default = dp.getDefault();
+                if (dp.getEnum() == null) {
+                    return "\"" + _default + "\"";
+                } else {
+                    // convert to enum var name later in postProcessModels
+                    return _default;
+                }
             }
         } else if (p instanceof BooleanProperty) {
             BooleanProperty dp = (BooleanProperty) p;
@@ -570,13 +575,16 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
-            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + camelize("model_" + name));
+            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to "
+                    + camelize("model_" + name));
             name = "model_" + name; // e.g. return => ModelReturn (after camelize)
         }
 
         // model name starts with number
         if (name.matches("^\\d.*")) {
-            LOGGER.warn(name + " (model name starts with number) cannot be used as model name. Renamed to " + camelize("model_" + name));
+            LOGGER.warn(name
+                    + " (model name starts with number) cannot be used as model name. Renamed to "
+                    + camelize("model_" + name));
             name = "model_" + name; // e.g. 200Response => Model200Response (after camelize)
         }
 
@@ -612,27 +620,27 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     public void setPackageVersion(String packageVersion) {
         this.packageVersion = packageVersion;
     }
-    
-    public void setPackageTitle(String packageTitle) {
-		this.packageTitle = packageTitle;
-	}
-    
-    public void setPackageProductName(String packageProductName) {
-		this.packageProductName = packageProductName;
-	}
 
-	public void setPackageDescription(String packageDescription) {
-		this.packageDescription = packageDescription;
-	}
-	
+    public void setPackageTitle(String packageTitle) {
+        this.packageTitle = packageTitle;
+    }
+
+    public void setPackageProductName(String packageProductName) {
+        this.packageProductName = packageProductName;
+    }
+
+    public void setPackageDescription(String packageDescription) {
+        this.packageDescription = packageDescription;
+    }
+
     public void setPackageCompany(String packageCompany) {
-		this.packageCompany = packageCompany;
-	}
-    
+        this.packageCompany = packageCompany;
+    }
+
     public void setPackageCopyright(String packageCopyright) {
-		this.packageCopyright = packageCopyright;
-	}
-    
+        this.packageCopyright = packageCopyright;
+    }
+
     public void setSourceFolder(String sourceFolder) {
         this.sourceFolder = sourceFolder;
     }

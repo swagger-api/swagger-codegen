@@ -22,9 +22,10 @@ import io.swagger.models.properties.FileProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
 
-public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen implements CodegenConfig {
+public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen implements
+        CodegenConfig {
 
-    protected String modelPropertyNaming= "camelCase";
+    protected String modelPropertyNaming = "camelCase";
     protected Boolean supportsES6 = true;
     protected HashSet<String> languageGenericTypes;
 
@@ -38,31 +39,29 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
         supportsInheritance = true;
         setReservedWordsLowerCase(Arrays.asList(
                 // local variable names used in API methods (endpoints)
-                "varLocalPath", "queryParameters", "headerParams", "formParams", "useFormData", "varLocalDeferred",
+                "varLocalPath",
+                "queryParameters",
+                "headerParams",
+                "formParams",
+                "useFormData",
+                "varLocalDeferred",
                 "requestOptions",
                 // Typescript reserved words
-                "abstract", "await", "boolean", "break", "byte", "case", "catch", "char", "class", "const", "continue", "debugger", "default", "delete", "do", "double", "else", "enum", "export", "extends", "false", "final", "finally", "float", "for", "function", "goto", "if", "implements", "import", "in", "instanceof", "int", "interface", "let", "long", "native", "new", "null", "package", "private", "protected", "public", "return", "short", "static", "super", "switch", "synchronized", "this", "throw", "transient", "true", "try", "typeof", "var", "void", "volatile", "while", "with", "yield"));
+                "abstract", "await", "boolean", "break", "byte", "case", "catch", "char", "class",
+                "const", "continue", "debugger", "default", "delete", "do", "double", "else",
+                "enum", "export", "extends", "false", "final", "finally", "float", "for",
+                "function", "goto", "if", "implements", "import", "in", "instanceof", "int",
+                "interface", "let", "long", "native", "new", "null", "package", "private",
+                "protected", "public", "return", "short", "static", "super", "switch",
+                "synchronized", "this", "throw", "transient", "true", "try", "typeof", "var",
+                "void", "volatile", "while", "with", "yield"));
 
-        languageSpecificPrimitives = new HashSet<String>(Arrays.asList(
-                "string",
-                "String",
-                "boolean",
-                "Boolean",
-                "Double",
-                "Integer",
-                "Long",
-                "Float",
-                "Object",
-                "Array",
-                "Date",
-                "number",
-                "any",
-                "Error"
-        ));
+        languageSpecificPrimitives =
+                new HashSet<String>(Arrays.asList("string", "String", "boolean", "Boolean",
+                        "Double", "Integer", "Long", "Float", "Object", "Array", "Date", "number",
+                        "any", "Error"));
 
-        languageGenericTypes = new HashSet<String>(Arrays.asList(
-                "Array"
-        ));
+        languageGenericTypes = new HashSet<String>(Arrays.asList("Array"));
 
         instantiationTypes.put("array", "Array");
 
@@ -83,14 +82,16 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
         typeMapping.put("integer", "number");
         typeMapping.put("Map", "any");
         typeMapping.put("DateTime", "Date");
-        //TODO binary should be mapped to byte array
+        // TODO binary should be mapped to byte array
         // mapped to String as a workaround
         typeMapping.put("binary", "string");
         typeMapping.put("ByteArray", "string");
         typeMapping.put("UUID", "string");
 
-        cliOptions.add(new CliOption(CodegenConstants.MODEL_PROPERTY_NAMING, CodegenConstants.MODEL_PROPERTY_NAMING_DESC).defaultValue("camelCase"));
-        cliOptions.add(new CliOption(CodegenConstants.SUPPORTS_ES6, CodegenConstants.SUPPORTS_ES6_DESC).defaultValue("false"));
+        cliOptions.add(new CliOption(CodegenConstants.MODEL_PROPERTY_NAMING,
+                CodegenConstants.MODEL_PROPERTY_NAMING_DESC).defaultValue("camelCase"));
+        cliOptions.add(new CliOption(CodegenConstants.SUPPORTS_ES6,
+                CodegenConstants.SUPPORTS_ES6_DESC).defaultValue("false"));
 
     }
 
@@ -99,11 +100,13 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
         super.processOpts();
 
         if (additionalProperties.containsKey(CodegenConstants.MODEL_PROPERTY_NAMING)) {
-            setModelPropertyNaming((String) additionalProperties.get(CodegenConstants.MODEL_PROPERTY_NAMING));
+            setModelPropertyNaming((String) additionalProperties
+                    .get(CodegenConstants.MODEL_PROPERTY_NAMING));
         }
 
         if (additionalProperties.containsKey(CodegenConstants.SUPPORTS_ES6)) {
-            setSupportsES6(Boolean.valueOf(additionalProperties.get(CodegenConstants.SUPPORTS_ES6).toString()));
+            setSupportsES6(Boolean.valueOf(additionalProperties.get(CodegenConstants.SUPPORTS_ES6)
+                    .toString()));
             additionalProperties.put("supportsES6", getSupportsES6());
         }
     }
@@ -114,8 +117,8 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
     }
 
     @Override
-    public String escapeReservedWord(String name) {           
-        if(this.reservedWordsMappings().containsKey(name)) {
+    public String escapeReservedWord(String name) {
+        if (this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
         return "_" + name;
@@ -134,7 +137,8 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
     @Override
     public String toParamName(String name) {
         // replace - with _ e.g. created-at => created_at
-        name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare
+                                          // the methods parameters as 'final'.
 
         // if it's all uppper case, do nothing
         if (name.matches("^[A-Z_]*$"))
@@ -159,7 +163,8 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
 
     @Override
     public String toModelName(String name) {
-        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the
+                                   // methods parameters as 'final'.
 
         if (!StringUtils.isEmpty(modelNamePrefix)) {
             name = modelNamePrefix + "_" + name;
@@ -172,20 +177,26 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
             String modelName = camelize("model_" + name);
-            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + modelName);
+            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to "
+                    + modelName);
             return modelName;
         }
 
         // model name starts with number
         if (name.matches("^\\d.*")) {
-            String modelName = camelize("model_" + name); // e.g. 200Response => Model200Response (after camelize)
-            LOGGER.warn(name + " (model name starts with number) cannot be used as model name. Renamed to " + modelName);
+            String modelName = camelize("model_" + name); // e.g. 200Response => Model200Response
+                                                          // (after camelize)
+            LOGGER.warn(name
+                    + " (model name starts with number) cannot be used as model name. Renamed to "
+                    + modelName);
             return modelName;
         }
 
         if (languageSpecificPrimitives.contains(name)) {
             String modelName = camelize("model_" + name);
-            LOGGER.warn(name + " (model name matches existing language type) cannot be used as a model name. Renamed to " + modelName);
+            LOGGER.warn(name
+                    + " (model name matches existing language type) cannot be used as a model name. Renamed to "
+                    + modelName);
             return modelName;
         }
         // camelize the model name
@@ -208,7 +219,7 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
         } else if (p instanceof MapProperty) {
             MapProperty mp = (MapProperty) p;
             Property inner = mp.getAdditionalProperties();
-            return "{ [key: string]: "+ getTypeDeclaration(inner) + "; }";
+            return "{ [key: string]: " + getTypeDeclaration(inner) + "; }";
         } else if (p instanceof FileProperty) {
             return "any";
         }
@@ -245,13 +256,12 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
     }
 
     public void setModelPropertyNaming(String naming) {
-        if ("original".equals(naming) || "camelCase".equals(naming) ||
-            "PascalCase".equals(naming) || "snake_case".equals(naming)) {
+        if ("original".equals(naming) || "camelCase".equals(naming) || "PascalCase".equals(naming)
+                || "snake_case".equals(naming)) {
             this.modelPropertyNaming = naming;
         } else {
-            throw new IllegalArgumentException("Invalid model property naming '" +
-                                               naming + "'. Must be 'original', 'camelCase', " +
-                                               "'PascalCase' or 'snake_case'");
+            throw new IllegalArgumentException("Invalid model property naming '" + naming
+                    + "'. Must be 'original', 'camelCase', " + "'PascalCase' or 'snake_case'");
         }
     }
 
@@ -261,13 +271,17 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
 
     public String getNameUsingModelPropertyNaming(String name) {
         switch (CodegenConstants.MODEL_PROPERTY_NAMING_TYPE.valueOf(getModelPropertyNaming())) {
-            case original:    return name;
-            case camelCase:   return camelize(name, true);
-            case PascalCase:  return camelize(name);
-            case snake_case:  return underscore(name);
-            default:          throw new IllegalArgumentException("Invalid model property naming '" +
-                                                                 name + "'. Must be 'original', 'camelCase', " +
-                                                                 "'PascalCase' or 'snake_case'");
+            case original:
+                return name;
+            case camelCase:
+                return camelize(name, true);
+            case PascalCase:
+                return camelize(name);
+            case snake_case:
+                return underscore(name);
+            default:
+                throw new IllegalArgumentException("Invalid model property naming '" + name
+                        + "'. Must be 'original', 'camelCase', " + "'PascalCase' or 'snake_case'");
         }
 
     }
@@ -345,10 +359,12 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
             for (CodegenProperty var : cm.vars) {
                 // name enum with model name, e.g. StatuEnum => Pet.StatusEnum
                 if (Boolean.TRUE.equals(var.isEnum)) {
-                    var.datatypeWithEnum = var.datatypeWithEnum.replace(var.enumName, cm.classname + "." + var.enumName);
+                    var.datatypeWithEnum =
+                            var.datatypeWithEnum.replace(var.enumName, cm.classname + "."
+                                    + var.enumName);
                 }
             }
-        } 
+        }
 
         return objs;
     }

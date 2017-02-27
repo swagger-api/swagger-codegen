@@ -25,19 +25,21 @@ public class ObjcClientOptionsTest extends AbstractOptionsTest {
     @SuppressWarnings("unused")
     @Override
     protected void setExpectations() {
-        new Expectations(clientCodegen) {{
-            clientCodegen.setClassPrefix(ObjcClientOptionsProvider.CLASS_PREFIX_VALUE);
-            times = 1;
-            clientCodegen.setPodName(ObjcClientOptionsProvider.POD_NAME_VALUE);
-            times = 1;
-            clientCodegen.setPodVersion(ObjcClientOptionsProvider.POD_VERSION_VALUE);
-            times = 1;
-            clientCodegen.setAuthorName(ObjcClientOptionsProvider.AUTHOR_NAME_VALUE);
-            times = 1;
-            clientCodegen.setAuthorEmail(ObjcClientOptionsProvider.AUTHOR_EMAIL_VALUE);
-            times = 1;
-            clientCodegen.setGitRepoURL(ObjcClientOptionsProvider.GIT_REPO_URL_VALUE);
-            times = 1;
-        }};
+        new Expectations(clientCodegen) {
+            {
+                clientCodegen.setClassPrefix(ObjcClientOptionsProvider.CLASS_PREFIX_VALUE);
+                times = 1;
+                clientCodegen.setPodName(ObjcClientOptionsProvider.POD_NAME_VALUE);
+                times = 1;
+                clientCodegen.setPodVersion(ObjcClientOptionsProvider.POD_VERSION_VALUE);
+                times = 1;
+                clientCodegen.setAuthorName(ObjcClientOptionsProvider.AUTHOR_NAME_VALUE);
+                times = 1;
+                clientCodegen.setAuthorEmail(ObjcClientOptionsProvider.AUTHOR_EMAIL_VALUE);
+                times = 1;
+                clientCodegen.setGitRepoURL(ObjcClientOptionsProvider.GIT_REPO_URL_VALUE);
+                times = 1;
+            }
+        };
     }
 }

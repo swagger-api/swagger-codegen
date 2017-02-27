@@ -25,13 +25,15 @@ public class PythonClientOptionsTest extends AbstractOptionsTest {
     @SuppressWarnings("unused")
     @Override
     protected void setExpectations() {
-        new Expectations(clientCodegen) {{
-            clientCodegen.setPackageName(PythonClientOptionsProvider.PACKAGE_NAME_VALUE);
-            times = 1;
-            clientCodegen.setPackageVersion(PythonClientOptionsProvider.PACKAGE_VERSION_VALUE);
-            times = 1;
-            clientCodegen.setPackageUrl(PythonClientOptionsProvider.PACKAGE_URL_VALUE);
-            times = 1;
-        }};
+        new Expectations(clientCodegen) {
+            {
+                clientCodegen.setPackageName(PythonClientOptionsProvider.PACKAGE_NAME_VALUE);
+                times = 1;
+                clientCodegen.setPackageVersion(PythonClientOptionsProvider.PACKAGE_VERSION_VALUE);
+                times = 1;
+                clientCodegen.setPackageUrl(PythonClientOptionsProvider.PACKAGE_URL_VALUE);
+                times = 1;
+            }
+        };
     }
 }

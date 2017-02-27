@@ -22,8 +22,7 @@ public class CsharpDotNet2ClientOptionsProvider implements OptionsProvider {
         ImmutableMap.Builder<String, String> builder = new ImmutableMap.Builder<String, String>();
         return builder.put(CodegenConstants.PACKAGE_NAME, PACKAGE_NAME_VALUE)
                 .put(CodegenConstants.PACKAGE_VERSION, PACKAGE_VERSION_VALUE)
-                .put(CsharpDotNet2ClientCodegen.CLIENT_PACKAGE, CLIENT_PACKAGE_VALUE)
-                .build();
+                .put(CsharpDotNet2ClientCodegen.CLIENT_PACKAGE, CLIENT_PACKAGE_VALUE).build();
     }
 
     @Override

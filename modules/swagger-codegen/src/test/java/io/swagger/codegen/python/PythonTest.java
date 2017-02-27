@@ -33,32 +33,35 @@ public class PythonTest {
         final Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/v1beta3.json");
         final DefaultCodegen codegen = new PythonClientCodegen();
 
-        final CodegenModel simpleName = codegen.fromModel("v1beta3.Binding", swagger.getDefinitions().get("v1beta3.Binding"));
+        final CodegenModel simpleName =
+                codegen.fromModel("v1beta3.Binding", swagger.getDefinitions()
+                        .get("v1beta3.Binding"));
         Assert.assertEquals(simpleName.name, "v1beta3.Binding");
         Assert.assertEquals(simpleName.classname, "V1beta3Binding");
         Assert.assertEquals(simpleName.classVarName, "v1beta3_binding");
 
-        final CodegenModel compoundName = codegen.fromModel("v1beta3.ComponentStatus", swagger.getDefinitions().get("v1beta3.ComponentStatus"));
+        final CodegenModel compoundName =
+                codegen.fromModel("v1beta3.ComponentStatus",
+                        swagger.getDefinitions().get("v1beta3.ComponentStatus"));
         Assert.assertEquals(compoundName.name, "v1beta3.ComponentStatus");
         Assert.assertEquals(compoundName.classname, "V1beta3ComponentStatus");
         Assert.assertEquals(compoundName.classVarName, "v1beta3_component_status");
 
         final String path = "/api/v1beta3/namespaces/{namespaces}/bindings";
         final Operation operation = swagger.getPaths().get(path).getPost();
-        final CodegenOperation codegenOperation = codegen.fromOperation(path, "get", operation, swagger.getDefinitions());
+        final CodegenOperation codegenOperation =
+                codegen.fromOperation(path, "get", operation, swagger.getDefinitions());
         Assert.assertEquals(codegenOperation.returnType, "V1beta3Binding");
         Assert.assertEquals(codegenOperation.returnBaseType, "V1beta3Binding");
     }
 
     @Test(description = "convert a simple java model")
     public void simpleModelTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("id", new LongProperty())
-                .property("name", new StringProperty())
-                .property("createdAt", new DateTimeProperty())
-                .required("id")
-                .required("name");
+        final Model model =
+                new ModelImpl().description("a sample model").property("id", new LongProperty())
+                        .property("name", new StringProperty())
+                        .property("createdAt", new DateTimeProperty()).required("id")
+                        .required("name");
         final DefaultCodegen codegen = new PythonClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -102,12 +105,10 @@ public class PythonTest {
 
     @Test(description = "convert a model with list property")
     public void listPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("id", new LongProperty())
-                .property("urls", new ArrayProperty()
-                        .items(new StringProperty()))
-                .required("id");
+        final Model model =
+                new ModelImpl().description("a sample model").property("id", new LongProperty())
+                        .property("urls", new ArrayProperty().items(new StringProperty()))
+                        .required("id");
         final DefaultCodegen codegen = new PythonClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -142,11 +143,12 @@ public class PythonTest {
 
     @Test(description = "convert a model with a map property")
     public void mapPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("translations", new MapProperty()
-                        .additionalProperties(new StringProperty()))
-                .required("id");
+        final Model model =
+                new ModelImpl()
+                        .description("a sample model")
+                        .property("translations",
+                                new MapProperty().additionalProperties(new StringProperty()))
+                        .required("id");
         final DefaultCodegen codegen = new PythonClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -168,9 +170,9 @@ public class PythonTest {
 
     @Test(description = "convert a model with complex property")
     public void complexPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("children", new RefProperty("#/definitions/Children"));
+        final Model model =
+                new ModelImpl().description("a sample model").property("children",
+                        new RefProperty("#/definitions/Children"));
         final DefaultCodegen codegen = new PythonClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -190,10 +192,9 @@ public class PythonTest {
 
     @Test(description = "convert a model with complex list property")
     public void complexListPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("children", new ArrayProperty()
-                        .items(new RefProperty("#/definitions/Children")));
+        final Model model =
+                new ModelImpl().description("a sample model").property("children",
+                        new ArrayProperty().items(new RefProperty("#/definitions/Children")));
         final DefaultCodegen codegen = new PythonClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -215,10 +216,11 @@ public class PythonTest {
 
     @Test(description = "convert a model with complex map property")
     public void complexMapPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("children", new MapProperty()
-                        .additionalProperties(new RefProperty("#/definitions/Children")));
+        final Model model =
+                new ModelImpl().description("a sample model").property(
+                        "children",
+                        new MapProperty().additionalProperties(new RefProperty(
+                                "#/definitions/Children")));
         final DefaultCodegen codegen = new PythonClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -244,9 +246,9 @@ public class PythonTest {
     // should not start with 'null'. need help from the community to investigate further
     @Test(enabled = false, description = "convert an array model")
     public void arrayModelTest() {
-        final Model model = new ArrayModel()
-                .description("an array model")
-                .items(new RefProperty("#/definitions/Children"));
+        final Model model =
+                new ArrayModel().description("an array model").items(
+                        new RefProperty("#/definitions/Children"));
         final DefaultCodegen codegen = new PythonClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -262,9 +264,9 @@ public class PythonTest {
     // should not start with 'null'. need help from the community to investigate further
     @Test(enabled = false, description = "convert an map model")
     public void mapModelTest() {
-        final Model model = new ModelImpl()
-                .description("a map model")
-                .additionalProperties(new RefProperty("#/definitions/Children"));
+        final Model model =
+                new ModelImpl().description("a map model").additionalProperties(
+                        new RefProperty("#/definitions/Children"));
         final DefaultCodegen codegen = new PythonClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 

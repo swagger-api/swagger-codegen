@@ -12,7 +12,7 @@ public class Rails5ServerOptionsProvider implements OptionsProvider {
 
     @Override
     public Map<String, String> createOptions() {
-        //Rails5ServerCodegen doesn't have its own options and base options are cleared
+        // Rails5ServerCodegen doesn't have its own options and base options are cleared
         return ImmutableMap.of();
     }
 

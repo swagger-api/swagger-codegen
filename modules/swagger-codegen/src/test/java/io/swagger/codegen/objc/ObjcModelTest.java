@@ -17,39 +17,40 @@ public class ObjcModelTest {
 
     @Test(description = "convert a model with a advanced map property")
     public void advancedMapPropertyTest() {
-        final Model model = new ModelImpl()
-        .description("a sample model")
-        .property("translations", new MapProperty()
-                  .additionalProperties(new MapProperty().additionalProperties(new StringProperty())))
-        .required("id");
+        final Model model =
+                new ModelImpl()
+                        .description("a sample model")
+                        .property(
+                                "translations",
+                                new MapProperty().additionalProperties(new MapProperty()
+                                        .additionalProperties(new StringProperty())))
+                        .required("id");
         final DefaultCodegen codegen = new ObjcClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
-        
+
         Assert.assertEquals(cm.name, "sample");
         Assert.assertEquals(cm.classname, "SWGSample");
         Assert.assertEquals(cm.description, "a sample model");
         Assert.assertEquals(cm.vars.size(), 1);
-        
+
         final CodegenProperty property1 = cm.vars.get(0);
         Assert.assertEquals(property1.baseName, "translations");
-        Assert.assertEquals(property1.datatype, "NSDictionary<NSString*, NSDictionary<NSString*, NSString*>*>*");
+        Assert.assertEquals(property1.datatype,
+                "NSDictionary<NSString*, NSDictionary<NSString*, NSString*>*>*");
         Assert.assertEquals(property1.name, "translations");
         Assert.assertEquals(property1.baseType, "NSDictionary");
         Assert.assertEquals(property1.containerType, "map");
         Assert.assertFalse(property1.required);
         Assert.assertTrue(property1.isContainer);
     }
-    
+
     @Test(description = "convert a simple java model")
     public void simpleModelTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("id", new LongProperty())
-                .property("name", new StringProperty())
-                .property("createdAt", new DateTimeProperty())
-                .required("id")
-                .required("name")
-                .discriminator("test");
+        final Model model =
+                new ModelImpl().description("a sample model").property("id", new LongProperty())
+                        .property("name", new StringProperty())
+                        .property("createdAt", new DateTimeProperty()).required("id")
+                        .required("name").discriminator("test");
         final DefaultCodegen codegen = new ObjcClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -57,7 +58,7 @@ public class ObjcModelTest {
         Assert.assertEquals(cm.classname, "SWGSample");
         Assert.assertEquals(cm.description, "a sample model");
         Assert.assertEquals(cm.vars.size(), 3);
-        Assert.assertEquals(cm.discriminator,"test");
+        Assert.assertEquals(cm.discriminator, "test");
 
         final CodegenProperty property1 = cm.vars.get(0);
         Assert.assertEquals(property1.baseName, "id");
@@ -94,12 +95,10 @@ public class ObjcModelTest {
 
     @Test(description = "convert a model with list property")
     public void listPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("id", new LongProperty())
-                .property("urls", new ArrayProperty()
-                        .items(new StringProperty()))
-                .required("id");
+        final Model model =
+                new ModelImpl().description("a sample model").property("id", new LongProperty())
+                        .property("urls", new ArrayProperty().items(new StringProperty()))
+                        .required("id");
         final DefaultCodegen codegen = new ObjcClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -134,11 +133,12 @@ public class ObjcModelTest {
 
     @Test(description = "convert a model with a map property")
     public void mapPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("translations", new MapProperty()
-                        .additionalProperties(new StringProperty()))
-                .required("id");
+        final Model model =
+                new ModelImpl()
+                        .description("a sample model")
+                        .property("translations",
+                                new MapProperty().additionalProperties(new StringProperty()))
+                        .required("id");
         final DefaultCodegen codegen = new ObjcClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -158,12 +158,12 @@ public class ObjcModelTest {
         Assert.assertTrue(property1.isPrimitiveType);
     }
 
-    
+
     @Test(description = "convert a model with complex property")
     public void complexPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("children", new RefProperty("#/definitions/Children"));
+        final Model model =
+                new ModelImpl().description("a sample model").property("children",
+                        new RefProperty("#/definitions/Children"));
         final DefaultCodegen codegen = new ObjcClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -183,10 +183,9 @@ public class ObjcModelTest {
 
     @Test(description = "convert a model with complex list property")
     public void complexListPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("children", new ArrayProperty()
-                        .items(new RefProperty("#/definitions/Children")));
+        final Model model =
+                new ModelImpl().description("a sample model").property("children",
+                        new ArrayProperty().items(new RefProperty("#/definitions/Children")));
         final DefaultCodegen codegen = new ObjcClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -208,10 +207,11 @@ public class ObjcModelTest {
 
     @Test(description = "convert a model with complex map property")
     public void complexMapPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("children", new MapProperty()
-                        .additionalProperties(new RefProperty("#/definitions/Children")));
+        final Model model =
+                new ModelImpl().description("a sample model").property(
+                        "children",
+                        new MapProperty().additionalProperties(new RefProperty(
+                                "#/definitions/Children")));
         final DefaultCodegen codegen = new ObjcClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -235,9 +235,9 @@ public class ObjcModelTest {
 
     @Test(description = "convert an array model")
     public void arrayModelTest() {
-        final Model model = new ArrayModel()
-                .description("an array model")
-                .items(new RefProperty("#/definitions/Children"));
+        final Model model =
+                new ArrayModel().description("an array model").items(
+                        new RefProperty("#/definitions/Children"));
         final DefaultCodegen codegen = new ObjcClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -252,9 +252,9 @@ public class ObjcModelTest {
 
     @Test(description = "convert an map model")
     public void mapModelTest() {
-        final Model model = new ModelImpl()
-                .description("a map model")
-                .additionalProperties(new RefProperty("#/definitions/Children"));
+        final Model model =
+                new ModelImpl().description("a map model").additionalProperties(
+                        new RefProperty("#/definitions/Children"));
         final DefaultCodegen codegen = new ObjcClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -269,11 +269,13 @@ public class ObjcModelTest {
 
     @Test(description = "test udid")
     public void udidAndPasswordDataModelTest() {
-        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
+        final Swagger model =
+                new SwaggerParser()
+                        .read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
         final DefaultCodegen codegen = new ObjcClientCodegen();
         final Model definition = model.getDefinitions().get("format_test");
 
-        Property property =  definition.getProperties().get("uuid");
+        Property property = definition.getProperties().get("uuid");
         CodegenProperty prope = codegen.fromProperty("uuid", property);
         Assert.assertEquals(prope.baseType, "NSString");
 
@@ -283,30 +285,36 @@ public class ObjcModelTest {
 
     @Test(description = "test mixedProperties")
     public void mixedPropertiesDataModelTest() {
-        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
+        final Swagger model =
+                new SwaggerParser()
+                        .read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
         final DefaultCodegen codegen = new ObjcClientCodegen();
-        final Model definition = model.getDefinitions().get("MixedPropertiesAndAdditionalPropertiesClass");
+        final Model definition =
+                model.getDefinitions().get("MixedPropertiesAndAdditionalPropertiesClass");
 
-        Property property =  definition.getProperties().get("map");
+        Property property = definition.getProperties().get("map");
         CodegenProperty prope = codegen.fromProperty("map", property);
         Assert.assertEquals(prope.baseType, "NSDictionary");
     }
 
     @Test(description = "test isArrayModel")
     public void isArrayModelModelTest() {
-        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
+        final Swagger model =
+                new SwaggerParser()
+                        .read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
         final DefaultCodegen codegen = new ObjcClientCodegen();
         final Model definition = model.getDefinitions().get("AnimalFarm");
-        final CodegenModel codegenModel = codegen.fromModel("AnimalFarm",definition);
+        final CodegenModel codegenModel = codegen.fromModel("AnimalFarm", definition);
 
         Assert.assertEquals(codegenModel.isArrayModel, true);
-        Assert.assertEquals(codegenModel.arrayModelType,"SWGAnimal");
+        Assert.assertEquals(codegenModel.arrayModelType, "SWGAnimal");
     }
 
 
     @Test(description = "test binary data")
     public void binaryDataModelTest() {
-        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/binaryDataTest.json");
+        final Swagger model =
+                new SwaggerParser().read("src/test/resources/2_0/binaryDataTest.json");
         final DefaultCodegen codegen = new ObjcClientCodegen();
         final String path = "/tests/binaryResponse";
         final Operation p = model.getPaths().get(path).getPost();
@@ -328,7 +336,9 @@ public class ObjcModelTest {
         final Path animalOps = animalPaths.get("/animals");
         Assert.assertNotNull(animalOps.getPost());
 
-        final CodegenOperation animalCo = codegen.fromOperation("/animals", "POST", animalOps.getPost(), model.getDefinitions());
+        final CodegenOperation animalCo =
+                codegen.fromOperation("/animals", "POST", animalOps.getPost(),
+                        model.getDefinitions());
         Assert.assertEquals(animalCo.imports.size(), 1);
         Assert.assertTrue(animalCo.imports.contains("SWGAnimal"));
 
@@ -336,7 +346,9 @@ public class ObjcModelTest {
         final Path insectOps = insectPaths.get("/insects");
         Assert.assertNotNull(insectOps.getPost());
 
-        final CodegenOperation insectCo = codegen.fromOperation("/insects", "POST", insectOps.getPost(), model.getDefinitions());
+        final CodegenOperation insectCo =
+                codegen.fromOperation("/insects", "POST", insectOps.getPost(),
+                        model.getDefinitions());
         Assert.assertEquals(insectCo.imports.size(), 1);
         Assert.assertTrue(insectCo.imports.contains("SWGInsect"));
     }

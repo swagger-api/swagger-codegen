@@ -18,7 +18,8 @@ public class CodegenConfigLoaderTest {
     public Object[][] createCodegenConfigDataSet() throws Exception {
 
         Reflections reflections = new Reflections("io.swagger.codegen.languages");
-        final Set<Class<? extends DefaultCodegen>> subTypesOf = reflections.getSubTypesOf(DefaultCodegen.class);
+        final Set<Class<? extends DefaultCodegen>> subTypesOf =
+                reflections.getSubTypesOf(DefaultCodegen.class);
 
         List<CodegenConfig> codegenConfigList = new ArrayList<CodegenConfig>();
 
@@ -32,7 +33,7 @@ public class CodegenConfigLoaderTest {
         Object[][] result = new Object[codegenConfigList.size()][1];
 
         for (int i = 0; i < codegenConfigList.size(); i++) {
-            result[i]= new Object[]{codegenConfigList.get(i)};
+            result[i] = new Object[] {codegenConfigList.get(i)};
         }
 
         return result;
@@ -48,7 +49,8 @@ public class CodegenConfigLoaderTest {
 
     @Test(dataProvider = "codegenConfig")
     public void testLoadByFullQualifiedName(CodegenConfig codegenConfig) throws Exception {
-        final CodegenConfig loadedConfig = CodegenConfigLoader.forName(codegenConfig.getClass().getName());
+        final CodegenConfig loadedConfig =
+                CodegenConfigLoader.forName(codegenConfig.getClass().getName());
 
         assertEquals(loadedConfig.getClass(), codegenConfig.getClass());
         assertEquals(loadedConfig.getName(), codegenConfig.getName());

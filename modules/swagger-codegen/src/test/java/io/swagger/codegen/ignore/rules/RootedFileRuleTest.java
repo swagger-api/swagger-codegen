@@ -13,10 +13,9 @@ public class RootedFileRuleTest {
         // Arrange
         final String definition = "/foo";
         final String relativePath = "foo";
-        final List<Part> syntax = Arrays.asList(
-                new Part(IgnoreLineParser.Token.ROOTED_MARKER),
-                new Part(IgnoreLineParser.Token.TEXT, "foo")
-        );
+        final List<Part> syntax =
+                Arrays.asList(new Part(IgnoreLineParser.Token.ROOTED_MARKER), new Part(
+                        IgnoreLineParser.Token.TEXT, "foo"));
         Rule rule = new RootedFileRule(syntax, definition);
         Boolean actual = null;
 
@@ -32,10 +31,9 @@ public class RootedFileRuleTest {
         // Arrange
         final String definition = "/foo";
         final String relativePath = "bar";
-        final List<Part> syntax = Arrays.asList(
-                new Part(IgnoreLineParser.Token.ROOTED_MARKER),
-                new Part(IgnoreLineParser.Token.TEXT, "foo")
-        );
+        final List<Part> syntax =
+                Arrays.asList(new Part(IgnoreLineParser.Token.ROOTED_MARKER), new Part(
+                        IgnoreLineParser.Token.TEXT, "foo"));
         Rule rule = new RootedFileRule(syntax, definition);
         Boolean actual = null;
 
@@ -51,10 +49,9 @@ public class RootedFileRuleTest {
         // Arrange
         final String definition = "/foo.txt";
         final String relativePath = "foo.txt";
-        final List<Part> syntax = Arrays.asList(
-                new Part(IgnoreLineParser.Token.ROOTED_MARKER),
-                new Part(IgnoreLineParser.Token.TEXT, "foo.txt")
-        );
+        final List<Part> syntax =
+                Arrays.asList(new Part(IgnoreLineParser.Token.ROOTED_MARKER), new Part(
+                        IgnoreLineParser.Token.TEXT, "foo.txt"));
         Rule rule = new RootedFileRule(syntax, definition);
         Boolean actual = null;
 
@@ -70,10 +67,9 @@ public class RootedFileRuleTest {
         // Arrange
         final String definition = "/foo.txt";
         final String relativePath = "bar.baz";
-        final List<Part> syntax = Arrays.asList(
-                new Part(IgnoreLineParser.Token.ROOTED_MARKER),
-                new Part(IgnoreLineParser.Token.TEXT, "foo.txt")
-        );
+        final List<Part> syntax =
+                Arrays.asList(new Part(IgnoreLineParser.Token.ROOTED_MARKER), new Part(
+                        IgnoreLineParser.Token.TEXT, "foo.txt"));
         Rule rule = new RootedFileRule(syntax, definition);
         Boolean actual = null;
 
@@ -90,11 +86,10 @@ public class RootedFileRuleTest {
         final String definition = "/foo*";
         final String relativePath = "foobarbaz";
 
-        final List<Part> syntax = Arrays.asList(
-                new Part(IgnoreLineParser.Token.ROOTED_MARKER),
-                new Part(IgnoreLineParser.Token.TEXT, "foo"),
-                new Part(IgnoreLineParser.Token.MATCH_ANY)
-        );
+        final List<Part> syntax =
+                Arrays.asList(new Part(IgnoreLineParser.Token.ROOTED_MARKER), new Part(
+                        IgnoreLineParser.Token.TEXT, "foo"), new Part(
+                        IgnoreLineParser.Token.MATCH_ANY));
 
         Rule rule = new RootedFileRule(syntax, definition);
         Boolean actual = null;
@@ -111,11 +106,10 @@ public class RootedFileRuleTest {
         // Arrange
         final String definition = "/foo*";
         final String relativePath = "boobarbaz";
-        final List<Part> syntax = Arrays.asList(
-                new Part(IgnoreLineParser.Token.ROOTED_MARKER),
-                new Part(IgnoreLineParser.Token.TEXT, "foo"),
-                new Part(IgnoreLineParser.Token.MATCH_ANY)
-        );
+        final List<Part> syntax =
+                Arrays.asList(new Part(IgnoreLineParser.Token.ROOTED_MARKER), new Part(
+                        IgnoreLineParser.Token.TEXT, "foo"), new Part(
+                        IgnoreLineParser.Token.MATCH_ANY));
 
         Rule rule = new RootedFileRule(syntax, definition);
         Boolean actual = null;
@@ -133,12 +127,11 @@ public class RootedFileRuleTest {
         final String definition = "/foo*.txt";
         final String relativePath = "foobarbaz.txt";
 
-        final List<Part> syntax = Arrays.asList(
-                new Part(IgnoreLineParser.Token.ROOTED_MARKER),
-                new Part(IgnoreLineParser.Token.TEXT, "foo"),
-                new Part(IgnoreLineParser.Token.MATCH_ANY),
-                new Part(IgnoreLineParser.Token.TEXT, ".txt")
-        );
+        final List<Part> syntax =
+                Arrays.asList(new Part(IgnoreLineParser.Token.ROOTED_MARKER), new Part(
+                        IgnoreLineParser.Token.TEXT, "foo"), new Part(
+                        IgnoreLineParser.Token.MATCH_ANY), new Part(IgnoreLineParser.Token.TEXT,
+                        ".txt"));
 
         Rule rule = new RootedFileRule(syntax, definition);
         Boolean actual = null;
@@ -156,12 +149,11 @@ public class RootedFileRuleTest {
         final String definition = "/foo*qux.txt";
         final String relativePath = "foobarbaz.txt";
 
-        final List<Part> syntax = Arrays.asList(
-                new Part(IgnoreLineParser.Token.ROOTED_MARKER),
-                new Part(IgnoreLineParser.Token.TEXT, "foo"),
-                new Part(IgnoreLineParser.Token.MATCH_ANY),
-                new Part(IgnoreLineParser.Token.TEXT, "qux.txt")
-        );
+        final List<Part> syntax =
+                Arrays.asList(new Part(IgnoreLineParser.Token.ROOTED_MARKER), new Part(
+                        IgnoreLineParser.Token.TEXT, "foo"), new Part(
+                        IgnoreLineParser.Token.MATCH_ANY), new Part(IgnoreLineParser.Token.TEXT,
+                        "qux.txt"));
 
         Rule rule = new RootedFileRule(syntax, definition);
         Boolean actual = null;
@@ -178,11 +170,10 @@ public class RootedFileRuleTest {
         // Arrange
         final String definition = "/foo.*";
         final String relativePath = "foo.bak";
-        final List<Part> syntax = Arrays.asList(
-                new Part(IgnoreLineParser.Token.ROOTED_MARKER),
-                new Part(IgnoreLineParser.Token.TEXT, "foo."),
-                new Part(IgnoreLineParser.Token.MATCH_ANY)
-        );
+        final List<Part> syntax =
+                Arrays.asList(new Part(IgnoreLineParser.Token.ROOTED_MARKER), new Part(
+                        IgnoreLineParser.Token.TEXT, "foo."), new Part(
+                        IgnoreLineParser.Token.MATCH_ANY));
         Rule rule = new RootedFileRule(syntax, definition);
         Boolean actual = null;
 
@@ -198,12 +189,11 @@ public class RootedFileRuleTest {
         // Arrange
         final String definition = "/foo*.xyzzy.txt";
         final String relativePath = "foo.bar.baz.xyzzy.txt";
-        final List<Part> syntax = Arrays.asList(
-                new Part(IgnoreLineParser.Token.ROOTED_MARKER),
-                new Part(IgnoreLineParser.Token.TEXT, "foo"),
-                new Part(IgnoreLineParser.Token.MATCH_ANY),
-                new Part(IgnoreLineParser.Token.TEXT, ".xyzzy.txt")
-        );
+        final List<Part> syntax =
+                Arrays.asList(new Part(IgnoreLineParser.Token.ROOTED_MARKER), new Part(
+                        IgnoreLineParser.Token.TEXT, "foo"), new Part(
+                        IgnoreLineParser.Token.MATCH_ANY), new Part(IgnoreLineParser.Token.TEXT,
+                        ".xyzzy.txt"));
         Rule rule = new RootedFileRule(syntax, definition);
         Boolean actual = null;
 
@@ -219,12 +209,11 @@ public class RootedFileRuleTest {
         // Arrange
         final String definition = "/foo*.xyzzy.txt";
         final String relativePath = "foo.bar.baz.qux.txt";
-        final List<Part> syntax = Arrays.asList(
-                new Part(IgnoreLineParser.Token.ROOTED_MARKER),
-                new Part(IgnoreLineParser.Token.TEXT, "foo"),
-                new Part(IgnoreLineParser.Token.MATCH_ANY),
-                new Part(IgnoreLineParser.Token.TEXT, ".xyzzy.txt")
-        );
+        final List<Part> syntax =
+                Arrays.asList(new Part(IgnoreLineParser.Token.ROOTED_MARKER), new Part(
+                        IgnoreLineParser.Token.TEXT, "foo"), new Part(
+                        IgnoreLineParser.Token.MATCH_ANY), new Part(IgnoreLineParser.Token.TEXT,
+                        ".xyzzy.txt"));
         Rule rule = new RootedFileRule(syntax, definition);
         Boolean actual = null;
 
@@ -240,12 +229,11 @@ public class RootedFileRuleTest {
         // Arrange
         final String definition = "foo*.xyzzy.txt";
         final String relativePath = "foo.bar.baz.xyzzy.txt";
-        final List<Part> syntax = Arrays.asList(
-                new Part(IgnoreLineParser.Token.ROOTED_MARKER),
-                new Part(IgnoreLineParser.Token.TEXT, "foo"),
-                new Part(IgnoreLineParser.Token.MATCH_ANY),
-                new Part(IgnoreLineParser.Token.TEXT, ".xyzzy.txt")
-        );
+        final List<Part> syntax =
+                Arrays.asList(new Part(IgnoreLineParser.Token.ROOTED_MARKER), new Part(
+                        IgnoreLineParser.Token.TEXT, "foo"), new Part(
+                        IgnoreLineParser.Token.MATCH_ANY), new Part(IgnoreLineParser.Token.TEXT,
+                        ".xyzzy.txt"));
         Rule rule = new RootedFileRule(syntax, definition);
         Boolean actual = null;
 
@@ -261,18 +249,15 @@ public class RootedFileRuleTest {
         // Arrange
         final String definition = "/path/to/some/foo*.xyzzy.txt";
         final String relativePath = "foo.bar.baz.xyzzy.txt";
-        final List<Part> syntax = Arrays.asList(
-                new Part(IgnoreLineParser.Token.ROOTED_MARKER),
-                new Part(IgnoreLineParser.Token.TEXT, "path"),
-                new Part(IgnoreLineParser.Token.PATH_DELIM),
-                new Part(IgnoreLineParser.Token.TEXT, "to"),
-                new Part(IgnoreLineParser.Token.PATH_DELIM),
-                new Part(IgnoreLineParser.Token.TEXT, "some"),
-                new Part(IgnoreLineParser.Token.PATH_DELIM),
-                new Part(IgnoreLineParser.Token.TEXT, "oo"),
-                new Part(IgnoreLineParser.Token.MATCH_ANY),
-                new Part(IgnoreLineParser.Token.TEXT, ".xyzzy.txt")
-        );
+        final List<Part> syntax =
+                Arrays.asList(new Part(IgnoreLineParser.Token.ROOTED_MARKER), new Part(
+                        IgnoreLineParser.Token.TEXT, "path"), new Part(
+                        IgnoreLineParser.Token.PATH_DELIM), new Part(IgnoreLineParser.Token.TEXT,
+                        "to"), new Part(IgnoreLineParser.Token.PATH_DELIM), new Part(
+                        IgnoreLineParser.Token.TEXT, "some"), new Part(
+                        IgnoreLineParser.Token.PATH_DELIM), new Part(IgnoreLineParser.Token.TEXT,
+                        "oo"), new Part(IgnoreLineParser.Token.MATCH_ANY), new Part(
+                        IgnoreLineParser.Token.TEXT, ".xyzzy.txt"));
         Rule rule = new RootedFileRule(syntax, definition);
         Boolean actual = null;
 

@@ -30,14 +30,14 @@ public class AssertFile {
     }
 
     /**
-     * Asserts that two directories are recursively equal. If they are not, an {@link AssertionError} is thrown with the
-     * given message.<br/>
-     * There will be a textual comparison of all files under expected with all files under actual. File attributes will
-     * not be considered.<br/>
+     * Asserts that two directories are recursively equal. If they are not, an
+     * {@link AssertionError} is thrown with the given message.<br/>
+     * There will be a textual comparison of all files under expected with all files under actual.
+     * File attributes will not be considered.<br/>
      * Missing or additional files are considered an error.<br/>
      *
      * @param expected Path expected directory
-     * @param actual   Path actual directory
+     * @param actual Path actual directory
      */
     public static void assertPathEqualsRecursively(final Path expected, final Path actual) {
         Assert.assertNotNull(expected);
@@ -48,24 +48,28 @@ public class AssertFile {
             Files.walkFileTree(expected, new FileVisitor<Path>() {
 
                 @Override
-                public FileVisitResult preVisitDirectory(Path expectedDir, BasicFileAttributes attrs) throws IOException {
-                    Path relativeExpectedDir = absoluteExpected.relativize(expectedDir.toAbsolutePath());
+                public FileVisitResult preVisitDirectory(Path expectedDir, BasicFileAttributes attrs)
+                        throws IOException {
+                    Path relativeExpectedDir =
+                            absoluteExpected.relativize(expectedDir.toAbsolutePath());
                     Path actualDir = absoluteActual.resolve(relativeExpectedDir);
 
                     if (!Files.exists(actualDir)) {
                         fail(String.format("Directory '%s' is missing.", actualDir));
                     }
 
-                    assertEquals(expectedDir.toFile().list(),
-                                 actualDir.toFile().list(),
-                                 String.format("Directory content of '%s' and '%s' differ.", expectedDir, actualDir));
+                    assertEquals(expectedDir.toFile().list(), actualDir.toFile().list(), String
+                            .format("Directory content of '%s' and '%s' differ.", expectedDir,
+                                    actualDir));
 
                     return FileVisitResult.CONTINUE;
                 }
 
                 @Override
-                public FileVisitResult visitFile(Path expectedFile, BasicFileAttributes attrs) throws IOException {
-                    Path relativeExpectedFile = absoluteExpected.relativize(expectedFile.toAbsolutePath());
+                public FileVisitResult visitFile(Path expectedFile, BasicFileAttributes attrs)
+                        throws IOException {
+                    Path relativeExpectedFile =
+                            absoluteExpected.relativize(expectedFile.toAbsolutePath());
                     Path actualFile = absoluteActual.resolve(relativeExpectedFile);
 
                     if (!Files.exists(actualFile)) {
@@ -78,13 +82,15 @@ public class AssertFile {
                 }
 
                 @Override
-                public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+                public FileVisitResult visitFileFailed(Path file, IOException exc)
+                        throws IOException {
                     fail(exc.getMessage());
                     return FileVisitResult.TERMINATE;
                 }
 
                 @Override
-                public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                public FileVisitResult postVisitDirectory(Path dir, IOException exc)
+                        throws IOException {
                     return FileVisitResult.CONTINUE;
                 }
 
@@ -97,11 +103,11 @@ public class AssertFile {
 
     public static void assertFilesAreEqual(final Path expected, final Path actual) {
 
-        if(!Files.isRegularFile(expected)) {
+        if (!Files.isRegularFile(expected)) {
             fail("expected: '%s' is not a readable file");
         }
 
-        if(!Files.isRegularFile(actual)) {
+        if (!Files.isRegularFile(actual)) {
             fail("actual: '%s' is not a readable file");
         }
 
@@ -110,14 +116,16 @@ public class AssertFile {
             List<String> actualLines = Files.readAllLines(actual, Charset.defaultCharset());
             Patch diff = DiffUtils.diff(expectedLines, actualLines);
             List<Delta> deltas = diff.getDeltas();
-            if(!deltas.isEmpty()) {
+            if (!deltas.isEmpty()) {
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.append("files diff:\n");
-                stringBuilder.append("\tfile: '").append(expected.toAbsolutePath().toString()).append("' \n");
-                stringBuilder.append("\tfile: '").append(actual.toAbsolutePath().toString()).append("' \n");
+                stringBuilder.append("\tfile: '").append(expected.toAbsolutePath().toString())
+                        .append("' \n");
+                stringBuilder.append("\tfile: '").append(actual.toAbsolutePath().toString())
+                        .append("' \n");
                 stringBuilder.append("\tdiffs:\n");
 
-                for (Delta delta: deltas) {
+                for (Delta delta : deltas) {
                     stringBuilder.append(delta.toString()).append("\n");
                 }
 
@@ -129,4 +137,3 @@ public class AssertFile {
         }
     }
 }
-

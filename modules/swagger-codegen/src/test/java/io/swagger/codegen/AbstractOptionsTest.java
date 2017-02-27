@@ -30,23 +30,29 @@ public abstract class AbstractOptionsTest {
 
         getCodegenConfig().processOpts();
 
-        new FullVerifications() {{
-        }};
+        new FullVerifications() {
+            {
+            }
+        };
     }
 
-    @Test(description = "check if all options described in documentation are presented in test case")
+    @Test(
+            description = "check if all options described in documentation are presented in test case")
     public void checkOptionsHelp() {
-        final List<String> cliOptions = Lists.transform(getCodegenConfig().cliOptions(), getCliOptionTransformer());
+        final List<String> cliOptions =
+                Lists.transform(getCodegenConfig().cliOptions(), getCliOptionTransformer());
         final Set<String> testOptions = optionsProvider.createOptions().keySet();
         final Set<String> skipped = new HashSet<String>(cliOptions);
         skipped.removeAll(testOptions);
         if (!skipped.isEmpty()) {
-            Assert.fail(String.format("These options weren't checked: %s.", StringUtils.join(skipped, ", ")));
+            Assert.fail(String.format("These options weren't checked: %s.",
+                    StringUtils.join(skipped, ", ")));
         }
         final Set<String> undocumented = new HashSet<String>(testOptions);
         undocumented.removeAll(cliOptions);
         if (!undocumented.isEmpty()) {
-            Assert.fail(String.format("These options weren't documented: %s.", StringUtils.join(undocumented, ", ")));
+            Assert.fail(String.format("These options weren't documented: %s.",
+                    StringUtils.join(undocumented, ", ")));
         }
     }
 

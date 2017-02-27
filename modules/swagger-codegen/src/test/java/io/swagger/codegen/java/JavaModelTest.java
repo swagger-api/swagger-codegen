@@ -30,14 +30,11 @@ public class JavaModelTest {
 
     @Test(description = "convert a simple java model")
     public void simpleModelTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("id", new LongProperty())
-                .property("name", new StringProperty()
-                        .example("Tony"))
-                .property("createdAt", new DateTimeProperty())
-                .required("id")
-                .required("name");
+        final Model model =
+                new ModelImpl().description("a sample model").property("id", new LongProperty())
+                        .property("name", new StringProperty().example("Tony"))
+                        .property("createdAt", new DateTimeProperty()).required("id")
+                        .required("name");
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -88,12 +85,10 @@ public class JavaModelTest {
 
     @Test(description = "convert a model with list property")
     public void listPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("id", new LongProperty())
-                .property("urls", new ArrayProperty()
-                        .items(new StringProperty()))
-                .required("id");
+        final Model model =
+                new ModelImpl().description("a sample model").property("id", new LongProperty())
+                        .property("urls", new ArrayProperty().items(new StringProperty()))
+                        .required("id");
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -117,11 +112,12 @@ public class JavaModelTest {
 
     @Test(description = "convert a model with a map property")
     public void mapPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("translations", new MapProperty()
-                        .additionalProperties(new StringProperty()))
-                .required("id");
+        final Model model =
+                new ModelImpl()
+                        .description("a sample model")
+                        .property("translations",
+                                new MapProperty().additionalProperties(new StringProperty()))
+                        .required("id");
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -145,11 +141,13 @@ public class JavaModelTest {
 
     @Test(description = "convert a model with a map with complex list property")
     public void mapWithListPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("translations",
-                        new MapProperty().additionalProperties(new ArrayProperty().items(new RefProperty("Pet"))))
-                .required("id");
+        final Model model =
+                new ModelImpl()
+                        .description("a sample model")
+                        .property(
+                                "translations",
+                                new MapProperty().additionalProperties(new ArrayProperty()
+                                        .items(new RefProperty("Pet")))).required("id");
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -173,8 +171,12 @@ public class JavaModelTest {
 
     @Test(description = "convert a model with a 2D list property")
     public void list2DPropertyTest() {
-        final Model model = new ModelImpl().name("sample").property("list2D", new ArrayProperty().items(
-                new ArrayProperty().items(new RefProperty("Pet"))));
+        final Model model =
+                new ModelImpl().name("sample")
+                        .property(
+                                "list2D",
+                                new ArrayProperty().items(new ArrayProperty()
+                                        .items(new RefProperty("Pet"))));
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -195,8 +197,9 @@ public class JavaModelTest {
 
     @Test(description = "convert a model with complex properties")
     public void complexPropertiesTest() {
-        final Model model = new ModelImpl().description("a sample model")
-                .property("children", new RefProperty("#/definitions/Children"));
+        final Model model =
+                new ModelImpl().description("a sample model").property("children",
+                        new RefProperty("#/definitions/Children"));
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -219,9 +222,9 @@ public class JavaModelTest {
 
     @Test(description = "convert a model with complex list property")
     public void complexListPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("children", new ArrayProperty().items(new RefProperty("#/definitions/Children")));
+        final Model model =
+                new ModelImpl().description("a sample model").property("children",
+                        new ArrayProperty().items(new RefProperty("#/definitions/Children")));
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -246,9 +249,11 @@ public class JavaModelTest {
 
     @Test(description = "convert a model with complex map property")
     public void complexMapPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("children", new MapProperty().additionalProperties(new RefProperty("#/definitions/Children")));
+        final Model model =
+                new ModelImpl().description("a sample model").property(
+                        "children",
+                        new MapProperty().additionalProperties(new RefProperty(
+                                "#/definitions/Children")));
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -256,7 +261,8 @@ public class JavaModelTest {
         Assert.assertEquals(cm.classname, "Sample");
         Assert.assertEquals(cm.description, "a sample model");
         Assert.assertEquals(cm.vars.size(), 1);
-        Assert.assertEquals(Sets.intersection(cm.imports, Sets.newHashSet("Map", "List", "Children")).size(), 3);
+        Assert.assertEquals(
+                Sets.intersection(cm.imports, Sets.newHashSet("Map", "List", "Children")).size(), 3);
 
         final CodegenProperty property = cm.vars.get(0);
         Assert.assertEquals(property.baseName, "children");
@@ -276,9 +282,9 @@ public class JavaModelTest {
 
     @Test(description = "convert an array model")
     public void arrayModelTest() {
-        final Model model = new ArrayModel()
-                .description("an array model")
-                .items(new RefProperty("#/definitions/Children"));
+        final Model model =
+                new ArrayModel().description("an array model").items(
+                        new RefProperty("#/definitions/Children"));
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -288,14 +294,16 @@ public class JavaModelTest {
         Assert.assertEquals(cm.vars.size(), 0);
         Assert.assertEquals(cm.parent, "ArrayList<Children>");
         Assert.assertEquals(cm.imports.size(), 4);
-        Assert.assertEquals(Sets.intersection(cm.imports, Sets.newHashSet("ApiModel", "List", "ArrayList", "Children")).size(), 4);
+        Assert.assertEquals(
+                Sets.intersection(cm.imports,
+                        Sets.newHashSet("ApiModel", "List", "ArrayList", "Children")).size(), 4);
     }
 
     @Test(description = "convert an map model")
     public void mapModelTest() {
-        final Model model = new ModelImpl()
-                .description("an map model")
-                .additionalProperties(new RefProperty("#/definitions/Children"));
+        final Model model =
+                new ModelImpl().description("an map model").additionalProperties(
+                        new RefProperty("#/definitions/Children"));
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -305,15 +313,16 @@ public class JavaModelTest {
         Assert.assertEquals(cm.vars.size(), 0);
         Assert.assertEquals(cm.parent, "HashMap<String, Children>");
         Assert.assertEquals(cm.imports.size(), 4);
-        Assert.assertEquals(Sets.intersection(cm.imports, Sets.newHashSet("ApiModel", "Map", "HashMap", "Children")).size(), 4);
+        Assert.assertEquals(
+                Sets.intersection(cm.imports,
+                        Sets.newHashSet("ApiModel", "Map", "HashMap", "Children")).size(), 4);
     }
 
     @Test(description = "convert a model with upper-case property names")
     public void upperCaseNamesTest() {
-        final Model model = new ModelImpl()
-                .description("a model with upper-case property names")
-                .property("NAME", new StringProperty())
-                .required("NAME");
+        final Model model =
+                new ModelImpl().description("a model with upper-case property names")
+                        .property("NAME", new StringProperty()).required("NAME");
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -336,10 +345,9 @@ public class JavaModelTest {
 
     @Test(description = "convert a model with a 2nd char upper-case property names")
     public void secondCharUpperCaseNamesTest() {
-        final Model model = new ModelImpl()
-                .description("a model with a 2nd char upper-case property names")
-                .property("pId", new StringProperty())
-                .required("pId");
+        final Model model =
+                new ModelImpl().description("a model with a 2nd char upper-case property names")
+                        .property("pId", new StringProperty()).required("pId");
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -362,10 +370,11 @@ public class JavaModelTest {
 
     @Test(description = "convert a model starting with two upper-case letter property names")
     public void firstTwoUpperCaseLetterNamesTest() {
-        final Model model = new ModelImpl()
-                .description("a model with a property name starting with two upper-case letters")
-                .property("ATTName", new StringProperty())
-                .required("ATTName");
+        final Model model =
+                new ModelImpl()
+                        .description(
+                                "a model with a property name starting with two upper-case letters")
+                        .property("ATTName", new StringProperty()).required("ATTName");
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -388,9 +397,9 @@ public class JavaModelTest {
 
     @Test(description = "convert hyphens per issue 503")
     public void hyphensTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("created-at", new DateTimeProperty());
+        final Model model =
+                new ModelImpl().description("a sample model").property("created-at",
+                        new DateTimeProperty());
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -403,9 +412,9 @@ public class JavaModelTest {
 
     @Test(description = "convert query[password] to queryPassword")
     public void squareBracketsTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("query[password]", new StringProperty());
+        final Model model =
+                new ModelImpl().description("a sample model").property("query[password]",
+                        new StringProperty());
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -418,9 +427,9 @@ public class JavaModelTest {
 
     @Test(description = "properly escape names per 567")
     public void escapeNamesTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("created-at", new DateTimeProperty());
+        final Model model =
+                new ModelImpl().description("a sample model").property("created-at",
+                        new DateTimeProperty());
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("with.dots", model);
 
@@ -429,9 +438,9 @@ public class JavaModelTest {
 
     @Test(description = "convert a model with binary data")
     public void binaryDataTest() {
-        final Model model = new ModelImpl()
-                .description("model with binary")
-                .property("inputBinaryData", new ByteArrayProperty());
+        final Model model =
+                new ModelImpl().description("model with binary").property("inputBinaryData",
+                        new ByteArrayProperty());
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -450,9 +459,9 @@ public class JavaModelTest {
 
     @Test(description = "translate an invalid param name")
     public void invalidParamNameTest() {
-        final Model model = new ModelImpl()
-                .description("a model with a 2nd char upper-case property names")
-                .property("_", new StringProperty());
+        final Model model =
+                new ModelImpl().description("a model with a 2nd char upper-case property names")
+                        .property("_", new StringProperty());
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -474,10 +483,8 @@ public class JavaModelTest {
 
     @Test(description = "convert a parameter")
     public void convertParameterTest() {
-        final QueryParameter parameter = new QueryParameter()
-                .property(new IntegerProperty())
-                .name("limit")
-                .required(true);
+        final QueryParameter parameter =
+                new QueryParameter().property(new IntegerProperty()).name("limit").required(true);
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenParameter cm = codegen.fromParameter(parameter, null);
 
@@ -486,31 +493,35 @@ public class JavaModelTest {
 
     @Test(description = "types used by inner properties should be imported")
     public void mapWithAnListOfBigDecimalTest() {
-        final CodegenModel cm1 = new JavaClientCodegen().fromModel("sample", new ModelImpl()
-                .description("model with Map<String, List<BigDecimal>>")
-                .property("map", new MapProperty().additionalProperties(new ArrayProperty(new DecimalProperty()))));
+        final CodegenModel cm1 =
+                new JavaClientCodegen().fromModel(
+                        "sample",
+                        new ModelImpl().description("model with Map<String, List<BigDecimal>>")
+                                .property(
+                                        "map",
+                                        new MapProperty().additionalProperties(new ArrayProperty(
+                                                new DecimalProperty()))));
         Assert.assertEquals(cm1.vars.get(0).datatype, "Map<String, List<BigDecimal>>");
         Assert.assertTrue(cm1.imports.contains("BigDecimal"));
 
-        final CodegenModel cm2 = new JavaClientCodegen().fromModel("sample", new ModelImpl()
-                .description("model with Map<String, Map<String, List<BigDecimal>>>")
-                .property("map", new MapProperty().additionalProperties(new MapProperty().additionalProperties(new ArrayProperty(new DecimalProperty())))));
+        final CodegenModel cm2 =
+                new JavaClientCodegen().fromModel(
+                        "sample",
+                        new ModelImpl().description(
+                                "model with Map<String, Map<String, List<BigDecimal>>>").property(
+                                "map",
+                                new MapProperty().additionalProperties(new MapProperty()
+                                        .additionalProperties(new ArrayProperty(
+                                                new DecimalProperty())))));
         Assert.assertEquals(cm2.vars.get(0).datatype, "Map<String, Map<String, List<BigDecimal>>>");
         Assert.assertTrue(cm2.imports.contains("BigDecimal"));
     }
 
     @DataProvider(name = "modelNames")
     public static Object[][] primeNumbers() {
-        return new Object[][] {
-                {"sample", "Sample"},
-                {"sample_name", "SampleName"},
-                {"sample__name", "SampleName"},
-                {"/sample", "Sample"},
-                {"\\sample", "Sample"},
-                {"sample.name", "SampleName"},
-                {"_sample", "Sample"},
-                {"Sample", "Sample"},
-        };
+        return new Object[][] { {"sample", "Sample"}, {"sample_name", "SampleName"},
+                {"sample__name", "SampleName"}, {"/sample", "Sample"}, {"\\sample", "Sample"},
+                {"sample.name", "SampleName"}, {"_sample", "Sample"}, {"Sample", "Sample"},};
     }
 
     @Test(dataProvider = "modelNames", description = "avoid inner class")
@@ -525,18 +536,16 @@ public class JavaModelTest {
 
     @DataProvider(name = "classProperties")
     public static Object[][] classProperties() {
-        return new Object[][] {
-                {"class", "getPropertyClass", "setPropertyClass", "propertyClass"},
+        return new Object[][] { {"class", "getPropertyClass", "setPropertyClass", "propertyClass"},
                 {"_class", "getPropertyClass", "setPropertyClass", "propertyClass"},
-                {"__class", "getPropertyClass", "setPropertyClass", "propertyClass"}
-        };
+                {"__class", "getPropertyClass", "setPropertyClass", "propertyClass"}};
     }
 
     @Test(dataProvider = "classProperties", description = "handle 'class' properties")
     public void classPropertyTest(String baseName, String getter, String setter, String name) {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property(baseName, new StringProperty());
+        final Model model =
+                new ModelImpl().description("a sample model").property(baseName,
+                        new StringProperty());
         final DefaultCodegen codegen = new JavaClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 

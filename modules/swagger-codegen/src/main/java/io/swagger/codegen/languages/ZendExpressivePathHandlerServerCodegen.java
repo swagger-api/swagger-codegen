@@ -4,7 +4,6 @@ import io.swagger.codegen.*;
 import io.swagger.models.Operation;
 import org.apache.commons.lang3.StringUtils;
 
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,39 +44,50 @@ public class ZendExpressivePathHandlerServerCodegen extends AbstractPhpCodegen {
         modelDocTemplateFiles.clear();
 
         supportingFiles.add(new SupportingFile("README.md.mustache", packagePath, "README.md"));
-        supportingFiles.add(new SupportingFile("composer.json.mustache", packagePath, "composer.json"));
-        supportingFiles.add(new SupportingFile("index.php", packagePath + File.separator + "public", "index.php"));
-        supportingFiles.add(new SupportingFile("container.php", packagePath + File.separator + "application", "container.php"));
-        supportingFiles.add(new SupportingFile("config.yml", packagePath + File.separator + "application", "config.yml"));
-        supportingFiles.add(new SupportingFile("app.yml.mustache", packagePath + File.separator + "application" + File.separator + "config", "app.yml"));
-        supportingFiles.add(new SupportingFile("path_handler.yml.mustache", packagePath + File.separator + "application" + File.separator + "config", "path_handler.yml"));
-        supportingFiles.add(new SupportingFile("data_transfer.yml.mustache", packagePath + File.separator + "application" + File.separator + "config", "data_transfer.yml"));
-        supportingFiles.add(new SupportingFile("Date.php.mustache", packagePath + File.separator + srcBasePath + File.separator + "Strategy", "Date.php"));
-        supportingFiles.add(new SupportingFile("DateTime.php.mustache", packagePath + File.separator + srcBasePath + File.separator + "Strategy", "DateTime.php"));
-        supportingFiles.add(new SupportingFile("Type.php.mustache", packagePath + File.separator + srcBasePath + File.separator + "Validator", "Type.php"));
-        supportingFiles.add(new SupportingFile("ErrorMiddleware.php.mustache", packagePath + File.separator + srcBasePath, "ErrorMiddleware.php"));
+        supportingFiles.add(new SupportingFile("composer.json.mustache", packagePath,
+                "composer.json"));
+        supportingFiles.add(new SupportingFile("index.php",
+                packagePath + File.separator + "public", "index.php"));
+        supportingFiles.add(new SupportingFile("container.php", packagePath + File.separator
+                + "application", "container.php"));
+        supportingFiles.add(new SupportingFile("config.yml", packagePath + File.separator
+                + "application", "config.yml"));
+        supportingFiles.add(new SupportingFile("app.yml.mustache", packagePath + File.separator
+                + "application" + File.separator + "config", "app.yml"));
+        supportingFiles.add(new SupportingFile("path_handler.yml.mustache", packagePath
+                + File.separator + "application" + File.separator + "config", "path_handler.yml"));
+        supportingFiles.add(new SupportingFile("data_transfer.yml.mustache", packagePath
+                + File.separator + "application" + File.separator + "config", "data_transfer.yml"));
+        supportingFiles.add(new SupportingFile("Date.php.mustache", packagePath + File.separator
+                + srcBasePath + File.separator + "Strategy", "Date.php"));
+        supportingFiles.add(new SupportingFile("DateTime.php.mustache", packagePath
+                + File.separator + srcBasePath + File.separator + "Strategy", "DateTime.php"));
+        supportingFiles.add(new SupportingFile("Type.php.mustache", packagePath + File.separator
+                + srcBasePath + File.separator + "Validator", "Type.php"));
+        supportingFiles.add(new SupportingFile("ErrorMiddleware.php.mustache", packagePath
+                + File.separator + srcBasePath, "ErrorMiddleware.php"));
 
         additionalProperties.put(CodegenConstants.ARTIFACT_VERSION, "1.0.0");
     }
 
     /**
-     * Add operation to group
-     * Override of default grouping - group by resource path, not tag
+     * Add operation to group Override of default grouping - group by resource path, not tag
      *
-     * @param tag          name of the tag
+     * @param tag name of the tag
      * @param resourcePath path of the resource
-     * @param operation    Swagger Operation object
-     * @param co           Codegen Operation object
-     * @param operations   map of Codegen operations
+     * @param operation Swagger Operation object
+     * @param co Codegen Operation object
+     * @param operations map of Codegen operations
      */
     @Override
-    public void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co, Map<String, List<CodegenOperation>> operations) {
+    public void addOperationToGroup(String tag, String resourcePath, Operation operation,
+            CodegenOperation co, Map<String, List<CodegenOperation>> operations) {
         List<CodegenOperation> opList = operations.get(resourcePath);
         if (opList == null) {
             opList = new ArrayList<CodegenOperation>();
             operations.put(resourcePath, opList);
         }
-        //ignore duplicate operation ids - that means that operation has several tags
+        // ignore duplicate operation ids - that means that operation has several tags
         int counter = 0;
         for (CodegenOperation op : opList) {
             if (co.operationId.equals(op.operationId)) {
@@ -103,15 +113,15 @@ public class ZendExpressivePathHandlerServerCodegen extends AbstractPhpCodegen {
     }
 
     /**
-     * Output the API (class) name (capitalized) ending with "Api"
-     * Return DefaultApi if name is empty
+     * Output the API (class) name (capitalized) ending with "Api" Return DefaultApi if name is
+     * empty
      *
      * @param name the name of the Api
      * @return capitalized Api name ending with "Api"
      */
     @Override
     public String toApiName(String name) {
-        //Remove }
+        // Remove }
         name = name.replaceAll("[\\}]", "");
         return super.toModelName(name);
     }
@@ -147,7 +157,8 @@ public class ZendExpressivePathHandlerServerCodegen extends AbstractPhpCodegen {
                     classMethod = "handleDelete";
                     break;
                 default:
-                    throw new RuntimeException("Unknown HTTP Method " + op.httpMethod + " not allowed");
+                    throw new RuntimeException("Unknown HTTP Method " + op.httpMethod
+                            + " not allowed");
             }
             if (interfacesToImplement.length() > 0) {
                 interfacesToImplement.append(", ");
@@ -181,10 +192,11 @@ public class ZendExpressivePathHandlerServerCodegen extends AbstractPhpCodegen {
         return objs;
     }
 
-    private void insertRoute(List<Map<String, Object>> routes, String[] urlParts, int currentUrlPartIndex, String handler) {
+    private void insertRoute(List<Map<String, Object>> routes, String[] urlParts,
+            int currentUrlPartIndex, String handler) {
         if (urlParts.length > currentUrlPartIndex) {
             String urlPart = urlParts[currentUrlPartIndex];
-            //List<Map<String, Object>> subRoutes = null;
+            // List<Map<String, Object>> subRoutes = null;
             Map<String, Object> currentRoute = null;
             for (Map<String, Object> route : routes) {
                 if (urlPart.equals(route.get("name"))) {
@@ -208,7 +220,8 @@ public class ZendExpressivePathHandlerServerCodegen extends AbstractPhpCodegen {
 
                 routes.add(currentRoute);
             }
-            List<Map<String, Object>> subRoutes = (List<Map<String, Object>>) currentRoute.get("children");
+            List<Map<String, Object>> subRoutes =
+                    (List<Map<String, Object>>) currentRoute.get("children");
             insertRoute(subRoutes, urlParts, currentUrlPartIndex + 1, handler);
             currentRoute.put("hasChildren", !subRoutes.isEmpty());
         }

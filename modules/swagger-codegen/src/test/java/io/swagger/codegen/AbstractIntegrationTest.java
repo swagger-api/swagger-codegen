@@ -34,13 +34,12 @@ public abstract class AbstractIntegrationTest {
 
         ClientOpts clientOpts = new ClientOpts();
         clientOpts.setProperties(configProperties());
-        ClientOptInput opts = new ClientOptInput()
-                .config(codegenConfig)
-                .opts(clientOpts)
-                .swagger(swagger);
+        ClientOptInput opts =
+                new ClientOptInput().config(codegenConfig).opts(clientOpts).swagger(swagger);
 
         codeGen.opts(opts).generate();
 
-        assertPathEqualsRecursively(integrationTestPathsConfig.getExpectedPath(), integrationTestPathsConfig.getOutputPath());
+        assertPathEqualsRecursively(integrationTestPathsConfig.getExpectedPath(),
+                integrationTestPathsConfig.getOutputPath());
     }
 }

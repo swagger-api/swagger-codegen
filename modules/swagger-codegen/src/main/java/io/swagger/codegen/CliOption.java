@@ -80,7 +80,8 @@ public class CliOption {
     }
 
     public static CliOption newBoolean(String opt, String description) {
-        return new CliOption(opt, description, BooleanProperty.TYPE).defaultValue(Boolean.FALSE.toString());
+        return new CliOption(opt, description, BooleanProperty.TYPE).defaultValue(Boolean.FALSE
+                .toString());
     }
 
     public static CliOption newString(String opt, String description) {
@@ -90,7 +91,7 @@ public class CliOption {
     @JsonIgnore
     public String getOptionHelp() {
         StringBuilder sb = new StringBuilder(description);
-        if(defaultValue != null) {
+        if (defaultValue != null) {
             sb.append(" (Default: ").append(defaultValue).append(")");
         }
         if (enumValues != null) {

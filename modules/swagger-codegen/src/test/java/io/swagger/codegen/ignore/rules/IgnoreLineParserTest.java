@@ -9,7 +9,8 @@ import java.util.Queue;
 import static org.testng.Assert.*;
 
 public class IgnoreLineParserTest {
-    private IgnoreLineParser.Token verifyInputToSingleToken(final String input, IgnoreLineParser.Token token) throws ParserException {
+    private IgnoreLineParser.Token verifyInputToSingleToken(final String input,
+            IgnoreLineParser.Token token) throws ParserException {
         // Act
         List<Part> result = IgnoreLineParser.parse(input);
 
@@ -33,7 +34,7 @@ public class IgnoreLineParserTest {
     }
 
     @Test(expectedExceptions = ParserException.class,
-          expectedExceptionsMessageRegExp = "Negation with no negated pattern\\.")
+            expectedExceptionsMessageRegExp = "Negation with no negated pattern\\.")
     public void parseNegate() throws Exception {
         verifyInputToSingleToken("!", IgnoreLineParser.Token.NEGATE);
 
@@ -54,7 +55,7 @@ public class IgnoreLineParserTest {
         assertEquals(result.size(), 1);
         actual = result.get(0);
         assertEquals(actual.getToken(), IgnoreLineParser.Token.COMMENT);
-        assertEquals(actual.getValue(),  input);
+        assertEquals(actual.getValue(), input);
     }
 
     @Test

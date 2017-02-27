@@ -30,23 +30,15 @@ public abstract class AbstractScalaCodegen extends DefaultCodegen {
     public AbstractScalaCodegen() {
         super();
 
-        languageSpecificPrimitives.addAll(Arrays.asList(
-                        "String",
-                        "boolean",
-                        "Boolean",
-                        "Double",
-                        "Int",
-                        "Long",
-                        "Float",
-                        "Object",
-                        "Any",
-                        "List",
-                        "Seq",
-                        "Map"));
+        languageSpecificPrimitives.addAll(Arrays.asList("String", "boolean", "Boolean", "Double",
+                "Int", "Long", "Float", "Object", "Any", "List", "Seq", "Map"));
 
-        cliOptions.add(new CliOption(CodegenConstants.MODEL_PACKAGE, CodegenConstants.MODEL_PACKAGE_DESC));
-        cliOptions.add(new CliOption(CodegenConstants.API_PACKAGE, CodegenConstants.API_PACKAGE_DESC));
-        cliOptions.add(new CliOption(CodegenConstants.SOURCE_FOLDER, CodegenConstants.SOURCE_FOLDER_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.MODEL_PACKAGE,
+                CodegenConstants.MODEL_PACKAGE_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.API_PACKAGE,
+                CodegenConstants.API_PACKAGE_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.SOURCE_FOLDER,
+                CodegenConstants.SOURCE_FOLDER_DESC));
     }
 
     @Override
@@ -67,8 +59,8 @@ public abstract class AbstractScalaCodegen extends DefaultCodegen {
     }
 
     @Override
-    public String escapeReservedWord(String name) {           
-        if(this.reservedWordsMappings().containsKey(name)) {
+    public String escapeReservedWord(String name) {
+        if (this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
         return "_" + name;
@@ -76,12 +68,14 @@ public abstract class AbstractScalaCodegen extends DefaultCodegen {
 
     @Override
     public String apiFileFolder() {
-        return outputFolder + "/" + sourceFolder + "/" + apiPackage().replace('.', File.separatorChar);
+        return outputFolder + "/" + sourceFolder + "/"
+                + apiPackage().replace('.', File.separatorChar);
     }
 
     @Override
     public String modelFileFolder() {
-        return outputFolder + "/" + sourceFolder + "/" + modelPackage().replace('.', File.separatorChar);
+        return outputFolder + "/" + sourceFolder + "/"
+                + modelPackage().replace('.', File.separatorChar);
     }
 
     @Override
@@ -93,7 +87,7 @@ public abstract class AbstractScalaCodegen extends DefaultCodegen {
         } else if (p instanceof MapProperty) {
             MapProperty mp = (MapProperty) p;
             Property inner = mp.getAdditionalProperties();
-    
+
             return getSwaggerType(p) + "[String, " + getTypeDeclaration(inner) + "]";
         }
         return super.getTypeDeclaration(p);
@@ -168,7 +162,8 @@ public abstract class AbstractScalaCodegen extends DefaultCodegen {
         Iterator<Map<String, String>> iterator = imports.iterator();
         while (iterator.hasNext()) {
             String _import = iterator.next().get("import");
-            if (_import.startsWith(prefix)) iterator.remove();
+            if (_import.startsWith(prefix))
+                iterator.remove();
         }
         return objs;
     }

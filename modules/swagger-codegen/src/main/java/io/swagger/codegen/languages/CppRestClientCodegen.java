@@ -31,8 +31,8 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
     }
 
     /**
-     * Configures a friendly name for the generator. This will be used by the
-     * generator to select the library with the -l flag.
+     * Configures a friendly name for the generator. This will be used by the generator to select
+     * the library with the -l flag.
      * 
      * @return the friendly name for the generator
      */
@@ -41,8 +41,8 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
     }
 
     /**
-     * Returns human-friendly help for the generator. Provide the consumer with
-     * help tips, parameters here
+     * Returns human-friendly help for the generator. Provide the consumer with help tips,
+     * parameters here
      * 
      * @return A string value for the help message
      */
@@ -67,14 +67,17 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
         cliOptions.clear();
 
         // CLI options
-        addOption(CodegenConstants.MODEL_PACKAGE, "C++ namespace for models (convention: name.space.model).",
-                this.modelPackage);
-        addOption(CodegenConstants.API_PACKAGE, "C++ namespace for apis (convention: name.space.api).",
-                this.apiPackage);
+        addOption(CodegenConstants.MODEL_PACKAGE,
+                "C++ namespace for models (convention: name.space.model).", this.modelPackage);
+        addOption(CodegenConstants.API_PACKAGE,
+                "C++ namespace for apis (convention: name.space.api).", this.apiPackage);
         addOption(CodegenConstants.PACKAGE_VERSION, "C++ package version.", this.packageVersion);
-        addOption(DECLSPEC, "C++ preprocessor to place before the class name for handling dllexport/dllimport.",
+        addOption(
+                DECLSPEC,
+                "C++ preprocessor to place before the class name for handling dllexport/dllimport.",
                 this.declspec);
-        addOption(DEFAULT_INCLUDE,
+        addOption(
+                DEFAULT_INCLUDE,
                 "The default include statement that should be placed in all headers for including things like the declspec (convention: #include \"Commons.h\" ",
                 this.defaultInclude);
 
@@ -84,22 +87,30 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
         supportingFiles.add(new SupportingFile("modelbase-source.mustache", "", "ModelBase.cpp"));
         supportingFiles.add(new SupportingFile("apiclient-header.mustache", "", "ApiClient.h"));
         supportingFiles.add(new SupportingFile("apiclient-source.mustache", "", "ApiClient.cpp"));
-        supportingFiles.add(new SupportingFile("apiconfiguration-header.mustache", "", "ApiConfiguration.h"));
-        supportingFiles.add(new SupportingFile("apiconfiguration-source.mustache", "", "ApiConfiguration.cpp"));
-        supportingFiles.add(new SupportingFile("apiexception-header.mustache", "", "ApiException.h"));
-        supportingFiles.add(new SupportingFile("apiexception-source.mustache", "", "ApiException.cpp"));
+        supportingFiles.add(new SupportingFile("apiconfiguration-header.mustache", "",
+                "ApiConfiguration.h"));
+        supportingFiles.add(new SupportingFile("apiconfiguration-source.mustache", "",
+                "ApiConfiguration.cpp"));
+        supportingFiles
+                .add(new SupportingFile("apiexception-header.mustache", "", "ApiException.h"));
+        supportingFiles.add(new SupportingFile("apiexception-source.mustache", "",
+                "ApiException.cpp"));
         supportingFiles.add(new SupportingFile("ihttpbody-header.mustache", "", "IHttpBody.h"));
         supportingFiles.add(new SupportingFile("jsonbody-header.mustache", "", "JsonBody.h"));
         supportingFiles.add(new SupportingFile("jsonbody-source.mustache", "", "JsonBody.cpp"));
         supportingFiles.add(new SupportingFile("httpcontent-header.mustache", "", "HttpContent.h"));
-        supportingFiles.add(new SupportingFile("httpcontent-source.mustache", "", "HttpContent.cpp"));
-        supportingFiles.add(new SupportingFile("multipart-header.mustache", "", "MultipartFormData.h"));
-        supportingFiles.add(new SupportingFile("multipart-source.mustache", "", "MultipartFormData.cpp"));
+        supportingFiles
+                .add(new SupportingFile("httpcontent-source.mustache", "", "HttpContent.cpp"));
+        supportingFiles.add(new SupportingFile("multipart-header.mustache", "",
+                "MultipartFormData.h"));
+        supportingFiles.add(new SupportingFile("multipart-source.mustache", "",
+                "MultipartFormData.cpp"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
 
-        languageSpecificPrimitives = new HashSet<String>(
-                Arrays.asList("int", "char", "bool", "long", "float", "double", "int32_t", "int64_t"));
+        languageSpecificPrimitives =
+                new HashSet<String>(Arrays.asList("int", "char", "bool", "long", "float", "double",
+                        "int32_t", "int64_t"));
 
         typeMapping = new HashMap<String, String>();
         typeMapping.put("date", "utility::datetime");
@@ -152,9 +163,8 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
     }
 
     /**
-     * Escapes a reserved word as defined in the `reservedWords` array. Handle
-     * escaping those terms here. This logic is only called if a variable
-     * matches the reseved words
+     * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping those terms
+     * here. This logic is only called if a variable matches the reseved words
      * 
      * @return the escaped term
      */
@@ -164,16 +174,16 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
     }
 
     /**
-     * Location to write model files. You can use the modelPackage() as defined
-     * when the class is instantiated
+     * Location to write model files. You can use the modelPackage() as defined when the class is
+     * instantiated
      */
     public String modelFileFolder() {
         return outputFolder + "/model";
     }
 
     /**
-     * Location to write api files. You can use the apiPackage() as defined when
-     * the class is instantiated
+     * Location to write api files. You can use the apiPackage() as defined when the class is
+     * instantiated
      */
     @Override
     public String apiFileFolder() {
@@ -208,7 +218,8 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
     @Override
     public CodegenOperation fromOperation(String path, String httpMethod, Operation operation,
             Map<String, Model> definitions, Swagger swagger) {
-        CodegenOperation op = super.fromOperation(path, httpMethod, operation, definitions, swagger);
+        CodegenOperation op =
+                super.fromOperation(path, httpMethod, operation, definitions, swagger);
 
         if (operation.getResponses() != null && !operation.getResponses().isEmpty()) {
             Response methodResponse = findMethodResponse(operation.getResponses());
@@ -217,8 +228,7 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
                 if (methodResponse.getSchema() != null) {
                     CodegenProperty cm = fromProperty("response", methodResponse.getSchema());
                     op.vendorExtensions.put("x-codegen-response", cm);
-                    if(cm.datatype == "HttpContent")
-                    {
+                    if (cm.datatype == "HttpContent") {
                         op.vendorExtensions.put("x-codegen-response-ishttpcontent", true);
                     }
                 }
@@ -250,12 +260,11 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
     }
 
     /**
-     * Optional - type declaration. This is a String which is used by the
-     * templates to instantiate your types. There is typically special handling
-     * for different property types
+     * Optional - type declaration. This is a String which is used by the templates to instantiate
+     * your types. There is typically special handling for different property types
      *
-     * @return a string value used as the `dataType` field for model templates,
-     *         `returnType` for api templates
+     * @return a string value used as the `dataType` field for model templates, `returnType` for api
+     *         templates
      */
     @Override
     public String getTypeDeclaration(Property p) {
@@ -326,15 +335,16 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
         boolean isListContainer = parameter.isListContainer == Boolean.TRUE;
         boolean isString = parameter.isString == Boolean.TRUE;
 
-        if (!isPrimitiveType && !isListContainer && !isString && !parameter.dataType.startsWith("std::shared_ptr")) {
+        if (!isPrimitiveType && !isListContainer && !isString
+                && !parameter.dataType.startsWith("std::shared_ptr")) {
             parameter.dataType = "std::shared_ptr<" + parameter.dataType + ">";
         }
     }
 
     /**
-     * Optional - swagger type conversion. This is used to map swagger types in
-     * a `Property` into either language specific types via `typeMapping` or
-     * into complex models if there is not a mapping.
+     * Optional - swagger type conversion. This is used to map swagger types in a `Property` into
+     * either language specific types via `typeMapping` or into complex models if there is not a
+     * mapping.
      *
      * @return a string value of the type or complex model for this property
      * @see io.swagger.models.properties.Property

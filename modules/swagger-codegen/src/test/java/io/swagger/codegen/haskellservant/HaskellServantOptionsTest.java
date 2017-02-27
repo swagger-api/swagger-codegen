@@ -24,13 +24,16 @@ public class HaskellServantOptionsTest extends AbstractOptionsTest {
 
     @Override
     protected void setExpectations() {
-        new Expectations(clientCodegen) {{
-            clientCodegen.setModelPackage(HaskellServantOptionsProvider.MODEL_PACKAGE_VALUE);
-            times = 1;
-            clientCodegen.setApiPackage(HaskellServantOptionsProvider.API_PACKAGE_VALUE);
-            times = 1;
-            clientCodegen.setSortParamsByRequiredFlag(Boolean.valueOf(HaskellServantOptionsProvider.SORT_PARAMS_VALUE));
-            times = 1;
-        }};
+        new Expectations(clientCodegen) {
+            {
+                clientCodegen.setModelPackage(HaskellServantOptionsProvider.MODEL_PACKAGE_VALUE);
+                times = 1;
+                clientCodegen.setApiPackage(HaskellServantOptionsProvider.API_PACKAGE_VALUE);
+                times = 1;
+                clientCodegen.setSortParamsByRequiredFlag(Boolean
+                        .valueOf(HaskellServantOptionsProvider.SORT_PARAMS_VALUE));
+                times = 1;
+            }
+        };
     }
 }

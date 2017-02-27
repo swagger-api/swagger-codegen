@@ -14,7 +14,8 @@ public class DirectoryRule extends FileRule {
         StringBuilder sb = new StringBuilder();
         sb.append("glob:");
         sb.append(pattern);
-        if(!pattern.endsWith("/")) sb.append("/");
+        if (!pattern.endsWith("/"))
+            sb.append("/");
         directoryMatcher = FileSystems.getDefault().getPathMatcher(sb.toString());
         sb.append("**");
         contentsMatcher = FileSystems.getDefault().getPathMatcher(sb.toString());
@@ -22,6 +23,7 @@ public class DirectoryRule extends FileRule {
 
     @Override
     public Boolean matches(String relativePath) {
-        return contentsMatcher.matches(FileSystems.getDefault().getPath(relativePath)) || directoryMatcher.matches(FileSystems.getDefault().getPath(relativePath));
+        return contentsMatcher.matches(FileSystems.getDefault().getPath(relativePath))
+                || directoryMatcher.matches(FileSystems.getDefault().getPath(relativePath));
     }
 }

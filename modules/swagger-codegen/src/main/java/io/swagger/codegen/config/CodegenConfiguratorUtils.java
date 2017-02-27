@@ -6,31 +6,34 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.*;
 
 /**
- * Contains shared logic for applying key-value pairs and CSV strings
- * to specific settings in CodegenConfigurator.
+ * Contains shared logic for applying key-value pairs and CSV strings to specific settings in
+ * CodegenConfigurator.
  *
  * <p>
- *     This class exists to facilitate testing. These methods could be applied
- *     to CodegenConfigurator, but this complicates things when mocking CodegenConfigurator.
+ * This class exists to facilitate testing. These methods could be applied to CodegenConfigurator,
+ * but this complicates things when mocking CodegenConfigurator.
  * </p>
  */
 public final class CodegenConfiguratorUtils {
 
-    public static void applySystemPropertiesKvp(String systemProperties, CodegenConfigurator configurator) {
+    public static void applySystemPropertiesKvp(String systemProperties,
+            CodegenConfigurator configurator) {
         final Map<String, String> map = createMapFromKeyValuePairs(systemProperties);
         for (Map.Entry<String, String> entry : map.entrySet()) {
             configurator.addSystemProperty(entry.getKey(), entry.getValue());
         }
     }
 
-    public static void applyInstantiationTypesKvp(String instantiationTypes, CodegenConfigurator configurator) {
+    public static void applyInstantiationTypesKvp(String instantiationTypes,
+            CodegenConfigurator configurator) {
         final Map<String, String> map = createMapFromKeyValuePairs(instantiationTypes);
         for (Map.Entry<String, String> entry : map.entrySet()) {
             configurator.addInstantiationType(entry.getKey(), entry.getValue());
         }
     }
 
-    public static void applyImportMappingsKvp(String importMappings, CodegenConfigurator configurator) {
+    public static void applyImportMappingsKvp(String importMappings,
+            CodegenConfigurator configurator) {
         final Map<String, String> map = createMapFromKeyValuePairs(importMappings);
         for (Map.Entry<String, String> entry : map.entrySet()) {
             configurator.addImportMapping(entry.getKey().trim(), entry.getValue().trim());
@@ -44,34 +47,38 @@ public final class CodegenConfiguratorUtils {
         }
     }
 
-    public static void applyAdditionalPropertiesKvp(String additionalProperties, CodegenConfigurator configurator) {
+    public static void applyAdditionalPropertiesKvp(String additionalProperties,
+            CodegenConfigurator configurator) {
         final Map<String, String> map = createMapFromKeyValuePairs(additionalProperties);
         for (Map.Entry<String, String> entry : map.entrySet()) {
             configurator.addAdditionalProperty(entry.getKey(), entry.getValue());
         }
     }
 
-    public static void applyLanguageSpecificPrimitivesCsv(String languageSpecificPrimitives, CodegenConfigurator configurator) {
+    public static void applyLanguageSpecificPrimitivesCsv(String languageSpecificPrimitives,
+            CodegenConfigurator configurator) {
         final Set<String> set = createSetFromCsvList(languageSpecificPrimitives);
         for (String item : set) {
             configurator.addLanguageSpecificPrimitive(item);
         }
     }
 
-    public static void applyReservedWordsMappingsKvp(String reservedWordMappings, CodegenConfigurator configurator) {
+    public static void applyReservedWordsMappingsKvp(String reservedWordMappings,
+            CodegenConfigurator configurator) {
         final Map<String, String> map = createMapFromKeyValuePairs(reservedWordMappings);
         for (Map.Entry<String, String> entry : map.entrySet()) {
             configurator.addAdditionalReservedWordMapping(entry.getKey(), entry.getValue());
-        }        
+        }
     }
-        
+
     private static Set<String> createSetFromCsvList(String csvProperty) {
         final List<String> values = OptionUtils.splitCommaSeparatedList(csvProperty);
         return new HashSet<String>(values);
     }
 
     private static Map<String, String> createMapFromKeyValuePairs(String commaSeparatedKVPairs) {
-        final List<Pair<String, String>> pairs = OptionUtils.parseCommaSeparatedTuples(commaSeparatedKVPairs);
+        final List<Pair<String, String>> pairs =
+                OptionUtils.parseCommaSeparatedTuples(commaSeparatedKVPairs);
 
         Map<String, String> result = new HashMap<String, String>();
 
@@ -81,6 +88,6 @@ public final class CodegenConfiguratorUtils {
 
         return result;
     }
-    
-    
+
+
 }

@@ -27,7 +27,7 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
 
     public static final String CONTROLLER_PACKAGE = "controllerPackage";
     public static final String DEFAULT_CONTROLLER = "defaultController";
-    public static final String SUPPORT_PYTHON2= "supportPython2";
+    public static final String SUPPORT_PYTHON2 = "supportPython2";
 
     protected int serverPort = 8080;
     protected String packageName;
@@ -80,12 +80,10 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
         embeddedTemplateDir = templateDir = "flaskConnexion";
 
         // from https://docs.python.org/release/2.5.4/ref/keywords.html
-        setReservedWordsLowerCase(
-                Arrays.asList(
-                        "and", "del", "from", "not", "while", "as", "elif", "global", "or", "with",
-                        "assert", "else", "if", "pass", "yield", "break", "except", "import",
-                        "print", "class", "exec", "in", "raise", "continue", "finally", "is",
-                        "return", "def", "for", "lambda", "try"));
+        setReservedWordsLowerCase(Arrays.asList("and", "del", "from", "not", "while", "as", "elif",
+                "global", "or", "with", "assert", "else", "if", "pass", "yield", "break", "except",
+                "import", "print", "class", "exec", "in", "raise", "continue", "finally", "is",
+                "return", "def", "for", "lambda", "try"));
 
         /*
          * Additional Properties.  These values can be passed to the templates and
@@ -101,28 +99,28 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("setup.mustache", "", "setup.py"));
         supportingFiles.add(new SupportingFile("tox.mustache", "", "tox.ini"));
-        supportingFiles.add(new SupportingFile("test-requirements.mustache", "", "test-requirements.txt"));
+        supportingFiles.add(new SupportingFile("test-requirements.mustache", "",
+                "test-requirements.txt"));
         supportingFiles.add(new SupportingFile("requirements.mustache", "", "requirements.txt"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
         supportingFiles.add(new SupportingFile("travis.mustache", "", ".travis.yml"));
 
-        cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "python package name (convention: snake_case).")
-                .defaultValue("swagger_server"));
+        cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME,
+                "python package name (convention: snake_case).").defaultValue("swagger_server"));
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_VERSION, "python package version.")
                 .defaultValue("1.0.0"));
-        cliOptions.add(new CliOption(CONTROLLER_PACKAGE, "controller package").
-                defaultValue("controllers"));
-        cliOptions.add(new CliOption(DEFAULT_CONTROLLER, "default controller").
-                defaultValue("default_controller"));
-        cliOptions.add(new CliOption(SUPPORT_PYTHON2, "support python2").
-                defaultValue("false"));
+        cliOptions.add(new CliOption(CONTROLLER_PACKAGE, "controller package")
+                .defaultValue("controllers"));
+        cliOptions.add(new CliOption(DEFAULT_CONTROLLER, "default controller")
+                .defaultValue("default_controller"));
+        cliOptions.add(new CliOption(SUPPORT_PYTHON2, "support python2").defaultValue("false"));
     }
 
     @Override
     public void processOpts() {
         super.processOpts();
-        //apiTemplateFiles.clear();
+        // apiTemplateFiles.clear();
 
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_NAME)) {
             setPackageName((String) additionalProperties.get(CodegenConstants.PACKAGE_NAME));
@@ -156,11 +154,16 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
         supportingFiles.add(new SupportingFile("__main__.mustache", packageName, "__main__.py"));
         supportingFiles.add(new SupportingFile("encoder.mustache", packageName, "encoder.py"));
         supportingFiles.add(new SupportingFile("util.mustache", packageName, "util.py"));
-        supportingFiles.add(new SupportingFile("__init__.mustache", packageName + File.separatorChar + controllerPackage, "__init__.py"));
-        supportingFiles.add(new SupportingFile("__init__model.mustache", packageName + File.separatorChar + modelPackage, "__init__.py"));
-        supportingFiles.add(new SupportingFile("base_model_.mustache", packageName + File.separatorChar + modelPackage, "base_model_.py"));
-        supportingFiles.add(new SupportingFile("__init__test.mustache", packageName + File.separatorChar + testPackage, "__init__.py"));
-        supportingFiles.add(new SupportingFile("swagger.mustache", packageName + File.separatorChar + "swagger", "swagger.yaml"));
+        supportingFiles.add(new SupportingFile("__init__.mustache", packageName
+                + File.separatorChar + controllerPackage, "__init__.py"));
+        supportingFiles.add(new SupportingFile("__init__model.mustache", packageName
+                + File.separatorChar + modelPackage, "__init__.py"));
+        supportingFiles.add(new SupportingFile("base_model_.mustache", packageName
+                + File.separatorChar + modelPackage, "base_model_.py"));
+        supportingFiles.add(new SupportingFile("__init__test.mustache", packageName
+                + File.separatorChar + testPackage, "__init__.py"));
+        supportingFiles.add(new SupportingFile("swagger.mustache", packageName + File.separatorChar
+                + "swagger", "swagger.yaml"));
 
         modelPackage = packageName + "." + modelPackage;
         controllerPackage = packageName + "." + controllerPackage;
@@ -189,8 +192,8 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
     }
 
     /**
-     * Configures a friendly name for the generator.  This will be used by the generator
-     * to select the library with the -l flag.
+     * Configures a friendly name for the generator. This will be used by the generator to select
+     * the library with the -l flag.
      *
      * @return the friendly name for the generator
      */
@@ -200,15 +203,15 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
     }
 
     /**
-     * Returns human-friendly help for the generator.  Provide the consumer with help
-     * tips, parameters here
+     * Returns human-friendly help for the generator. Provide the consumer with help tips,
+     * parameters here
      *
      * @return A string value for the help message
      */
     @Override
     public String getHelp() {
-        return "Generates a Python server library using the Connexion project. By default, " +
-               "it will also generate service classes -- which you can disable with the `-Dnoservice` environment variable.";
+        return "Generates a Python server library using the Connexion project. By default, "
+                + "it will also generate service classes -- which you can disable with the `-Dnoservice` environment variable.";
     }
 
     @Override
@@ -230,21 +233,21 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
     }
 
     /**
-     * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping
-     * those terms here.  This logic is only called if a variable matches the reseved words
+     * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping those terms
+     * here. This logic is only called if a variable matches the reseved words
      *
      * @return the escaped term
      */
     @Override
-    public String escapeReservedWord(String name) {           
-        if(this.reservedWordsMappings().containsKey(name)) {
+    public String escapeReservedWord(String name) {
+        if (this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
         return "_" + name; // add an underscore to the name
     }
-    
+
     /**
-     * Location to write api files.  You can use the apiPackage() as defined when the class is
+     * Location to write api files. You can use the apiPackage() as defined when the class is
      * instantiated
      */
     @Override
@@ -286,34 +289,36 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
     public void preprocessSwagger(Swagger swagger) {
         // need vendor extensions for x-swagger-router-controller
         Map<String, Path> paths = swagger.getPaths();
-        if(paths != null) {
-            for(String pathname : paths.keySet()) {
+        if (paths != null) {
+            for (String pathname : paths.keySet()) {
                 Path path = paths.get(pathname);
                 Map<HttpMethod, Operation> operationMap = path.getOperationMap();
-                if(operationMap != null) {
-                    for(HttpMethod method : operationMap.keySet()) {
+                if (operationMap != null) {
+                    for (HttpMethod method : operationMap.keySet()) {
                         Operation operation = operationMap.get(method);
                         String tag = "default";
-                        if(operation.getTags() != null && operation.getTags().size() > 0) {
+                        if (operation.getTags() != null && operation.getTags().size() > 0) {
                             tag = operation.getTags().get(0);
                         }
                         String operationId = operation.getOperationId();
-                        if(operationId == null) {
-                            operationId = getOrGenerateOperationId(operation, pathname, method.toString());
+                        if (operationId == null) {
+                            operationId =
+                                    getOrGenerateOperationId(operation, pathname, method.toString());
                         }
                         operation.setOperationId(toOperationId(operationId));
-                        if(operation.getVendorExtensions().get("x-swagger-router-controller") == null) {
-                            operation.getVendorExtensions().put(
-                                    "x-swagger-router-controller",
-                                    controllerPackage + "." + toApiFilename(tag)
-                            );
+                        if (operation.getVendorExtensions().get("x-swagger-router-controller") == null) {
+                            operation.getVendorExtensions().put("x-swagger-router-controller",
+                                    controllerPackage + "." + toApiFilename(tag));
                         }
-                        for (Parameter param: operation.getParameters()) {
-                            // sanitize the param name but don't underscore it since it's used for request mapping
+                        for (Parameter param : operation.getParameters()) {
+                            // sanitize the param name but don't underscore it since it's used for
+                            // request mapping
                             String name = param.getName();
                             String paramName = sanitizeName(name);
                             if (!paramName.equals(name)) {
-                                LOGGER.warn(name + " cannot be used as parameter name with flask-connexion and was sanitized as " + paramName);
+                                LOGGER.warn(name
+                                        + " cannot be used as parameter name with flask-connexion and was sanitized as "
+                                        + paramName);
                             }
                             param.setName(paramName);
                         }
@@ -359,8 +364,8 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
 
     @Override
     public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
-        Swagger swagger = (Swagger)objs.get("swagger");
-        if(swagger != null) {
+        Swagger swagger = (Swagger) objs.get("swagger");
+        if (swagger != null) {
             try {
                 objs.put("swagger-yaml", Yaml.mapper().writeValueAsString(swagger));
             } catch (JsonProcessingException e) {
@@ -380,7 +385,8 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
     @Override
     public String toVarName(String name) {
         // sanitize name
-        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the
+                                   // methods parameters as 'final'.
 
         // remove dollar sign
         name = name.replaceAll("$", "");
@@ -413,19 +419,23 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
 
     @Override
     public String toModelFilename(String name) {
-        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the
+                                   // methods parameters as 'final'.
         // remove dollar sign
         name = name.replaceAll("$", "");
 
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
-            LOGGER.warn(name + " (reserved word) cannot be used as model filename. Renamed to " + underscore(dropDots("model_" + name)));
+            LOGGER.warn(name + " (reserved word) cannot be used as model filename. Renamed to "
+                    + underscore(dropDots("model_" + name)));
             name = "model_" + name; // e.g. return => ModelReturn (after camelize)
         }
 
         // model name starts with number
         if (name.matches("^\\d.*")) {
-            LOGGER.warn(name + " (model name starts with number) cannot be used as model name. Renamed to " + underscore("model_" + name));
+            LOGGER.warn(name
+                    + " (model name starts with number) cannot be used as model name. Renamed to "
+                    + underscore("model_" + name));
             name = "model_" + name; // e.g. 200Response => Model200Response (after camelize)
         }
 
@@ -444,19 +454,23 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
 
     @Override
     public String toModelName(String name) {
-        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the
+                                   // methods parameters as 'final'.
         // remove dollar sign
         name = name.replaceAll("$", "");
 
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
-            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + camelize("model_" + name));
+            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to "
+                    + camelize("model_" + name));
             name = "model_" + name; // e.g. return => ModelReturn (after camelize)
         }
 
         // model name starts with number
         if (name.matches("^\\d.*")) {
-            LOGGER.warn(name + " (model name starts with number) cannot be used as model name. Renamed to " + camelize("model_" + name));
+            LOGGER.warn(name
+                    + " (model name starts with number) cannot be used as model name. Renamed to "
+                    + camelize("model_" + name));
             name = "model_" + name; // e.g. 200Response => Model200Response (after camelize)
         }
 
@@ -475,12 +489,15 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
 
     @Override
     public String toOperationId(String operationId) {
-        operationId = super.toOperationId(operationId); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        operationId = super.toOperationId(operationId); // FIXME: a parameter should not be
+                                                        // assigned. Also declare the methods
+                                                        // parameters as 'final'.
         // Use the part after the last dot, e.g.
-        //     controllers.defaultController.addPet => addPet
+        // controllers.defaultController.addPet => addPet
         operationId = operationId.replaceAll(".*\\.", "");
-        // Need to underscore it since it has been processed via removeNonNameElementToCamelCase, e.g.
-        //     addPet => add_pet
+        // Need to underscore it since it has been processed via removeNonNameElementToCamelCase,
+        // e.g.
+        // addPet => add_pet
         return underscore(operationId);
     }
 
@@ -555,28 +572,28 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
             }
             example = "'" + escapeText(example) + "'";
         } else if ("Integer".equals(type) || "int".equals(type)) {
-            if(p.minimum != null) {
+            if (p.minimum != null) {
                 example = "" + (Integer.valueOf(p.minimum) + 1);
             }
-            if(p.maximum != null) {
+            if (p.maximum != null) {
                 example = "" + p.maximum;
             } else if (example == null) {
                 example = "56";
             }
 
         } else if ("Long".equalsIgnoreCase(type)) {
-            if(p.minimum != null) {
+            if (p.minimum != null) {
                 example = "" + (Long.valueOf(p.minimum) + 1);
             }
-            if(p.maximum != null) {
+            if (p.maximum != null) {
                 example = "" + p.maximum;
             } else if (example == null) {
                 example = "789";
             }
         } else if ("Float".equalsIgnoreCase(type) || "Double".equalsIgnoreCase(type)) {
-            if(p.minimum != null) {
+            if (p.minimum != null) {
                 example = "" + p.minimum;
-            } else if(p.maximum != null) {
+            } else if (p.maximum != null) {
                 example = "" + p.maximum;
             } else if (example == null) {
                 example = "3.4";
@@ -604,7 +621,7 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
             LOGGER.warn("Type " + type + " not handled properly in setParameterExampleValue");
         }
 
-        if(p.items != null && p.items.defaultValue != null) {
+        if (p.items != null && p.items.defaultValue != null) {
             example = p.items.defaultValue;
         }
         if (example == null) {
@@ -647,7 +664,7 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
         if (!"".equals(modelPackage())) {
             modelImport += modelPackage() + ".";
         }
-        modelImport += toModelFilename(name)+ " import " + name;
+        modelImport += toModelFilename(name) + " import " + name;
         return modelImport;
     }
 }

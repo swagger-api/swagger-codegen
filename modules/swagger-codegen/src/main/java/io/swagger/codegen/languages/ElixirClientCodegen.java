@@ -20,10 +20,7 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
 
     String supportedElixirVersion = "1.4";
     List<String> extraApplications = Arrays.asList(":logger");
-    List<String> deps = Arrays.asList(
-            "{:tesla, \"~> 0.5.0\"}",
-            "{:poison, \">= 1.0.0\"}"
-    );
+    List<String> deps = Arrays.asList("{:tesla, \"~> 0.5.0\"}", "{:poison, \">= 1.0.0\"}");
 
 
     public ElixirClientCodegen() {
@@ -33,76 +30,59 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
         outputFolder = "generated-code/elixir";
 
         /**
-         * Models.  You can write model files using the modelTemplateFiles map.
-         * if you want to create one template for file, you can do so here.
-         * for multiple files for model, just put another entry in the `modelTemplateFiles` with
-         * a different extension
+         * Models. You can write model files using the modelTemplateFiles map. if you want to create
+         * one template for file, you can do so here. for multiple files for model, just put another
+         * entry in the `modelTemplateFiles` with a different extension
          */
-        modelTemplateFiles.put(
-                "model.mustache", // the template to use
-                ".ex");       // the extension for each file to write
+        modelTemplateFiles.put("model.mustache", // the template to use
+                ".ex"); // the extension for each file to write
 
         /**
-         * Api classes.  You can write classes for each Api file with the apiTemplateFiles map.
-         * as with models, add multiple entries with different extensions for multiple files per
-         * class
+         * Api classes. You can write classes for each Api file with the apiTemplateFiles map. as
+         * with models, add multiple entries with different extensions for multiple files per class
          */
-        apiTemplateFiles.put(
-                "api.mustache",   // the template to use
-                ".ex");       // the extension for each file to write
+        apiTemplateFiles.put("api.mustache", // the template to use
+                ".ex"); // the extension for each file to write
 
         /**
-         * Template Location.  This is the location which templates will be read from.  The generator
+         * Template Location. This is the location which templates will be read from. The generator
          * will use the resource stream to attempt to read the templates.
          */
         templateDir = "elixir";
 
         /**
-         * Reserved words.  Override this with reserved words specific to your language
+         * Reserved words. Override this with reserved words specific to your language
          */
-        reservedWords = new HashSet<String>(
-                Arrays.asList(
-                        "sample1",  // replace with static values
-                        "sample2")
-        );
+        reservedWords = new HashSet<String>(Arrays.asList("sample1", // replace with static values
+                "sample2"));
 
         /**
-         * Additional Properties.  These values can be passed to the templates and
-         * are available in models, apis, and supporting files
+         * Additional Properties. These values can be passed to the templates and are available in
+         * models, apis, and supporting files
          */
         additionalProperties.put("apiVersion", apiVersion);
 
         /**
-         * Supporting Files.  You can write single files for the generator with the
-         * entire object tree available.  If the input file has a suffix of `.mustache
-         * it will be processed by the template engine.  Otherwise, it will be copied
+         * Supporting Files. You can write single files for the generator with the entire object
+         * tree available. If the input file has a suffix of `.mustache it will be processed by the
+         * template engine. Otherwise, it will be copied
          */
-        supportingFiles.add(new SupportingFile("README.md.mustache",   // the input template or file
-                "",                                                       // the destination folder, relative `outputFolder`
-                "README.md")                                          // the output file
-        );
-        supportingFiles.add(new SupportingFile("config.exs.mustache",
-                "config",
-                "config.exs")
-        );
-        supportingFiles.add(new SupportingFile("mix.exs.mustache",
-                "",
-                "mix.exs")
-        );
-        supportingFiles.add(new SupportingFile("test_helper.exs.mustache",
-                "test",
-                "test_helper.exs")
-        );
+        supportingFiles.add(new SupportingFile("README.md.mustache", // the input template or file
+                "", // the destination folder, relative `outputFolder`
+                "README.md") // the output file
+                );
+        supportingFiles.add(new SupportingFile("config.exs.mustache", "config", "config.exs"));
+        supportingFiles.add(new SupportingFile("mix.exs.mustache", "", "mix.exs"));
+        supportingFiles.add(new SupportingFile("test_helper.exs.mustache", "test",
+                "test_helper.exs"));
 
         /**
-         * Language Specific Primitives.  These types will not trigger imports by
-         * the client generator
+         * Language Specific Primitives. These types will not trigger imports by the client
+         * generator
          */
-        languageSpecificPrimitives = new HashSet<String>(
-                Arrays.asList(
-                        "Type1",      // replace these with your types
-                        "Type2")
-        );
+        languageSpecificPrimitives = new HashSet<String>(Arrays.asList("Type1", // replace these
+                                                                                // with your types
+                "Type2"));
     }
 
     /**
@@ -116,8 +96,8 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     /**
-     * Configures a friendly name for the generator.  This will be used by the generator
-     * to select the library with the -l flag.
+     * Configures a friendly name for the generator. This will be used by the generator to select
+     * the library with the -l flag.
      *
      * @return the friendly name for the generator
      */
@@ -126,8 +106,8 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     /**
-     * Returns human-friendly help for the generator.  Provide the consumer with help
-     * tips, parameters here
+     * Returns human-friendly help for the generator. Provide the consumer with help tips,
+     * parameters here
      *
      * @return A string value for the help message
      */
@@ -157,7 +137,8 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
 
     @Override
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
-        Map<String, Object> operations = (Map<String, Object>) super.postProcessOperations(objs).get("operations");
+        Map<String, Object> operations =
+                (Map<String, Object>) super.postProcessOperations(objs).get("operations");
         List<CodegenOperation> os = (List<CodegenOperation>) operations.get("operation");
         List<ExtendedCodegenOperation> newOs = new ArrayList<ExtendedCodegenOperation>();
         Pattern pattern = Pattern.compile("(.*)\\{([^\\}]+)\\}(.*)");
@@ -167,7 +148,8 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
             StringBuffer buffer = new StringBuffer();
             while (matcher.find()) {
                 String pathTemplateName = matcher.group(2);
-                matcher.appendReplacement(buffer, "$1" + "#{" + underscore(pathTemplateName) + "}" + "$3");
+                matcher.appendReplacement(buffer, "$1" + "#{" + underscore(pathTemplateName) + "}"
+                        + "$3");
                 pathTemplateNames.add(pathTemplateName);
             }
             ExtendedCodegenOperation eco = new ExtendedCodegenOperation(o);
@@ -212,31 +194,33 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     /**
-     * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping
-     * those terms here.  This logic is only called if a variable matches the reseved words
+     * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping those terms
+     * here. This logic is only called if a variable matches the reseved words
      *
      * @return the escaped term
      */
     @Override
     public String escapeReservedWord(String name) {
-        return "_" + name;  // add an underscore to the name
+        return "_" + name; // add an underscore to the name
     }
 
     /**
-     * Location to write model files.  You can use the modelPackage() as defined when the class is
+     * Location to write model files. You can use the modelPackage() as defined when the class is
      * instantiated
      */
     public String modelFileFolder() {
-        return outputFolder + "/" + sourceFolder + "/" + underscored((String) additionalProperties.get("appName")) + "/" + "model";
+        return outputFolder + "/" + sourceFolder + "/"
+                + underscored((String) additionalProperties.get("appName")) + "/" + "model";
     }
 
     /**
-     * Location to write api files.  You can use the apiPackage() as defined when the class is
+     * Location to write api files. You can use the apiPackage() as defined when the class is
      * instantiated
      */
     @Override
     public String apiFileFolder() {
-        return outputFolder + "/" + sourceFolder + "/" + underscored((String) additionalProperties.get("appName")) + "/" + "api";
+        return outputFolder + "/" + sourceFolder + "/"
+                + underscored((String) additionalProperties.get("appName")) + "/" + "api";
     }
 
     @Override
@@ -258,10 +242,11 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     /**
-     * Optional - type declaration.  This is a String which is used by the templates to instantiate your
-     * types.  There is typically special handling for different property types
+     * Optional - type declaration. This is a String which is used by the templates to instantiate
+     * your types. There is typically special handling for different property types
      *
-     * @return a string value used as the `dataType` field for model templates, `returnType` for api templates
+     * @return a string value used as the `dataType` field for model templates, `returnType` for api
+     *         templates
      */
     @Override
     public String getTypeDeclaration(Property p) {
@@ -278,8 +263,9 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     /**
-     * Optional - swagger type conversion.  This is used to map swagger types in a `Property` into
-     * either language specific types via `typeMapping` or into complex models if there is not a mapping.
+     * Optional - swagger type conversion. This is used to map swagger types in a `Property` into
+     * either language specific types via `typeMapping` or into complex models if there is not a
+     * mapping.
      *
      * @return a string value of the type or complex model for this property
      * @see io.swagger.models.properties.Property

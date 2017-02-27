@@ -32,46 +32,25 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
         apiPackage = packageName + ".apis";
         modelPackage = packageName + ".models";
 
-        setReservedWordsLowerCase(
-                Arrays.asList(
-                        // Scala
-                        "abstract", "case", "catch", "class", "def",
-                        "do", "else", "extends", "false", "final",
-                        "finally", "for", "forSome", "if", "implicit",
-                        "import", "lazy", "match", "new", "null",
-                        "object", "override", "package", "private", "protected",
-                        "return", "sealed", "super", "this", "throw",
-                        "trait", "try", "true", "type", "val",
-                        "var", "while", "with", "yield",
-                        // Scala-interop languages keywords
-                        "abstract", "continue", "switch", "assert",
-                        "default", "synchronized", "goto",
-                        "break", "double", "implements", "byte",
-                        "public", "throws", "enum", "instanceof", "transient",
-                        "int", "short", "char", "interface", "static",
-                        "void", "finally", "long", "strictfp", "volatile", "const", "float",
-                        "native")
-        );
+        setReservedWordsLowerCase(Arrays.asList(
+                // Scala
+                "abstract", "case", "catch", "class", "def", "do", "else", "extends", "false",
+                "final", "finally", "for", "forSome", "if", "implicit", "import", "lazy", "match",
+                "new", "null", "object", "override", "package", "private", "protected", "return",
+                "sealed", "super", "this", "throw", "trait", "try", "true", "type", "val", "var",
+                "while",
+                "with",
+                "yield",
+                // Scala-interop languages keywords
+                "abstract", "continue", "switch", "assert", "default", "synchronized", "goto",
+                "break", "double", "implements", "byte", "public", "throws", "enum", "instanceof",
+                "transient", "int", "short", "char", "interface", "static", "void", "finally",
+                "long", "strictfp", "volatile", "const", "float", "native"));
 
-        defaultIncludes = new HashSet<String>(
-                Arrays.asList("double",
-                        "Int",
-                        "Long",
-                        "Float",
-                        "Double",
-                        "char",
-                        "float",
-                        "String",
-                        "boolean",
-                        "Boolean",
-                        "Double",
-                        "Integer",
-                        "Long",
-                        "Float",
-                        "List",
-                        "Set",
-                        "Map")
-        );
+        defaultIncludes =
+                new HashSet<String>(Arrays.asList("double", "Int", "Long", "Float", "Double",
+                        "char", "float", "String", "boolean", "Boolean", "Double", "Integer",
+                        "Long", "Float", "List", "Set", "Map"));
 
         typeMapping = new HashMap<String, String>();
         typeMapping.put("string", "String");
@@ -114,29 +93,21 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("build.sbt", "", "build.sbt"));
         supportingFiles.add(new SupportingFile("Server.mustache", sourceFolder, "Server.scala"));
-        supportingFiles.add(new SupportingFile("DataAccessor.mustache", sourceFolder, "DataAccessor.scala"));
+        supportingFiles.add(new SupportingFile("DataAccessor.mustache", sourceFolder,
+                "DataAccessor.scala"));
 
-        supportingFiles.add(new SupportingFile("project/build.properties", "project", "build.properties"));
+        supportingFiles.add(new SupportingFile("project/build.properties", "project",
+                "build.properties"));
         supportingFiles.add(new SupportingFile("project/plugins.sbt", "project", "plugins.sbt"));
         supportingFiles.add(new SupportingFile("sbt", "", "sbt"));
 
-        supportingFiles.add(new SupportingFile("endpoint.mustache", sourceFolder, "endpoint.scala"));
+        supportingFiles
+                .add(new SupportingFile("endpoint.mustache", sourceFolder, "endpoint.scala"));
         supportingFiles.add(new SupportingFile("errors.mustache", sourceFolder, "errors.scala"));
 
-        languageSpecificPrimitives = new HashSet<String>(
-                Arrays.asList(
-                        "String",
-                        "Boolean",
-                        "Double",
-                        "Int",
-                        "Integer",
-                        "Long",
-                        "Float",
-                        "Any",
-                        "AnyVal",
-                        "AnyRef",
-                        "Object")
-        );
+        languageSpecificPrimitives =
+                new HashSet<String>(Arrays.asList("String", "Boolean", "Double", "Int", "Integer",
+                        "Long", "Float", "Any", "AnyVal", "AnyRef", "Object"));
         instantiationTypes.put("array", "ArrayList");
         instantiationTypes.put("map", "HashMap");
 
@@ -156,10 +127,12 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
         importMapping.put("LocalTime", "java.time.LocalTime");
 
         cliOptions.clear();
-        cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "Finch package name (e.g. io.swagger).")
-                .defaultValue(this.packageName));
-        cliOptions.add(new CliOption(CodegenConstants.MODEL_PACKAGE, CodegenConstants.MODEL_PACKAGE_DESC));
-        cliOptions.add(new CliOption(CodegenConstants.API_PACKAGE, CodegenConstants.API_PACKAGE_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME,
+                "Finch package name (e.g. io.swagger).").defaultValue(this.packageName));
+        cliOptions.add(new CliOption(CodegenConstants.MODEL_PACKAGE,
+                CodegenConstants.MODEL_PACKAGE_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.API_PACKAGE,
+                CodegenConstants.API_PACKAGE_DESC));
     }
 
     @Override
@@ -184,19 +157,21 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
 
     @Override
     public String apiFileFolder() {
-        return outputFolder + File.separator + sourceFolder + File.separator + apiPackage().replace('.', File.separatorChar);
+        return outputFolder + File.separator + sourceFolder + File.separator
+                + apiPackage().replace('.', File.separatorChar);
     }
 
     @Override
     public String modelFileFolder() {
-        return outputFolder + File.separator + sourceFolder + File.separator + modelPackage().replace('.', File.separatorChar);
+        return outputFolder + File.separator + sourceFolder + File.separator
+                + modelPackage().replace('.', File.separatorChar);
     }
 
     /**
      * Convert Swagger Model object to Codegen Model object
      *
-     * @param name           the name of the model
-     * @param model          Swagger Model object
+     * @param name the name of the model
+     * @param model Swagger Model object
      * @param allDefinitions a map of all Swagger models from the spec
      * @return Codegen Model object
      */
@@ -220,7 +195,7 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
             }
             // remove last /
             if (path.endsWith("/")) {
-                path = path.substring(0, path.length()-1);
+                path = path.substring(0, path.length() - 1);
             }
 
             String[] items = path.split("/", -1);
@@ -240,7 +215,7 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
                     scalaPath = scalaPath + "\"" + items[i] + "\"";
                 }
 
-                if (i != items.length -1) {
+                if (i != items.length - 1) {
                     scalaPath = scalaPath + " :: ";
                 }
             }
@@ -248,17 +223,23 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
             for (CodegenParameter p : op.allParams) {
                 // TODO: This hacky, should be converted to mappings if possible to keep it clean.
                 // This could also be done using template imports
-                if(Boolean.TRUE.equals(p.isPrimitiveType)) {
-                    p.vendorExtensions.put("x-codegen-normalized-path-type", p.dataType.toLowerCase());
+                if (Boolean.TRUE.equals(p.isPrimitiveType)) {
+                    p.vendorExtensions.put("x-codegen-normalized-path-type",
+                            p.dataType.toLowerCase());
                     p.vendorExtensions.put("x-codegen-normalized-input-type", p.dataType);
-                } else if(Boolean.TRUE.equals(p.isBodyParam)) {
-                    p.vendorExtensions.put("x-codegen-normalized-path-type", "jsonBody["+ p.dataType + "]");
+                } else if (Boolean.TRUE.equals(p.isBodyParam)) {
+                    p.vendorExtensions.put("x-codegen-normalized-path-type", "jsonBody["
+                            + p.dataType + "]");
                     p.vendorExtensions.put("x-codegen-normalized-input-type", p.dataType);
-                } else if(Boolean.TRUE.equals(p.isContainer) || Boolean.TRUE.equals(p.isListContainer)) {
-                    p.vendorExtensions.put("x-codegen-normalized-path-type", "params(\""+ p.paramName + "\")");
-                    p.vendorExtensions.put("x-codegen-normalized-input-type", p.dataType.replaceAll("^[^\\[]+", "Seq"));
-                } else if(Boolean.TRUE.equals(p.isFile)) {
-                    p.vendorExtensions.put("x-codegen-normalized-path-type", "fileUpload(\""+ p.paramName + "\")");
+                } else if (Boolean.TRUE.equals(p.isContainer)
+                        || Boolean.TRUE.equals(p.isListContainer)) {
+                    p.vendorExtensions.put("x-codegen-normalized-path-type", "params(\""
+                            + p.paramName + "\")");
+                    p.vendorExtensions.put("x-codegen-normalized-input-type",
+                            p.dataType.replaceAll("^[^\\[]+", "Seq"));
+                } else if (Boolean.TRUE.equals(p.isFile)) {
+                    p.vendorExtensions.put("x-codegen-normalized-path-type", "fileUpload(\""
+                            + p.paramName + "\")");
                     p.vendorExtensions.put("x-codegen-normalized-input-type", "FileUpload");
                 } else {
                     p.vendorExtensions.put("x-codegen-normalized-path-type", p.dataType);

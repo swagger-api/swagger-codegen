@@ -33,31 +33,39 @@ public class AllowableValuesTest {
     @DataProvider(name = PROVIDER_NAME)
     private static Object[][] resource() {
         final CodegenParameter param1 = new CodegenParameter();
-        final CodegenParameter param2 = new CodegenParameter() {{
-            allowableValues = ImmutableMap.<String, Object>of("values", ImmutableList.of("item1", "item2", "item3"));
-        }};
-        final CodegenParameter param3 = new CodegenParameter() {{
-            allowableValues = ImmutableMap.<String, Object>of("min", 1, "max", 10);
-        }};
-        final CodegenParameter param4 = new CodegenParameter() {{
-            allowableValues = ImmutableMap.<String, Object>of("min", 1);
-        }};
-        final CodegenParameter param5 = new CodegenParameter() {{
-            allowableValues = ImmutableMap.<String, Object>of("max", 10);
-        }};
+        final CodegenParameter param2 = new CodegenParameter() {
+            {
+                allowableValues =
+                        ImmutableMap.<String, Object>of("values",
+                                ImmutableList.of("item1", "item2", "item3"));
+            }
+        };
+        final CodegenParameter param3 = new CodegenParameter() {
+            {
+                allowableValues = ImmutableMap.<String, Object>of("min", 1, "max", 10);
+            }
+        };
+        final CodegenParameter param4 = new CodegenParameter() {
+            {
+                allowableValues = ImmutableMap.<String, Object>of("min", 1);
+            }
+        };
+        final CodegenParameter param5 = new CodegenParameter() {
+            {
+                allowableValues = ImmutableMap.<String, Object>of("max", 10);
+            }
+        };
 
-        return new Object[][]{
-                {param1, ""},
-                {param2, "allowableValues=\"item1, item2, item3\""},
+        return new Object[][] { {param1, ""}, {param2, "allowableValues=\"item1, item2, item3\""},
                 {param3, "allowableValues=\"range=[1, 10]\""},
                 {param4, "allowableValues=\"range=[1, infinity]\""},
-                {param5, "allowableValues=\"range=[-infinity, 10]\""},
-        };
+                {param5, "allowableValues=\"range=[-infinity, 10]\""},};
     }
 
     @Test(dataProvider = PROVIDER_NAME)
     public void annotationsTest(CodegenParameter parameter, String expected) throws IOException {
-        final Template template = Mustache.compiler().compile(loadClassResource(this.getClass(), TEMPLATE_FILE));
+        final Template template =
+                Mustache.compiler().compile(loadClassResource(this.getClass(), TEMPLATE_FILE));
 
         Assert.assertEquals(template.execute(parameter), expected);
     }

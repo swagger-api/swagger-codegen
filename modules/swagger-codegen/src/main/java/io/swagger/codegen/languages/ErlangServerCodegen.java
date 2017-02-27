@@ -42,38 +42,31 @@ public class ErlangServerCodegen extends DefaultCodegen implements CodegenConfig
         };
 
         /**
-         * Models.  You can write model files using the modelTemplateFiles map.
-         * if you want to create one template for file, you can do so here.
-         * for multiple files for model, just put another entry in the `modelTemplateFiles` with
-         * a different extension
+         * Models. You can write model files using the modelTemplateFiles map. if you want to create
+         * one template for file, you can do so here. for multiple files for model, just put another
+         * entry in the `modelTemplateFiles` with a different extension
          */
         modelTemplateFiles.clear();
 
         /**
-         * Api classes.  You can write classes for each Api file with the apiTemplateFiles map.
-         * as with models, add multiple entries with different extensions for multiple files per
-         * class
+         * Api classes. You can write classes for each Api file with the apiTemplateFiles map. as
+         * with models, add multiple entries with different extensions for multiple files per class
          */
-        apiTemplateFiles.put(
-            "handler.mustache",   // the template to use
-            ".erl");       // the extension for each file to write
+        apiTemplateFiles.put("handler.mustache", // the template to use
+                ".erl"); // the extension for each file to write
 
         /**
-         * Template Location.  This is the location which templates will be read from.  The generator
+         * Template Location. This is the location which templates will be read from. The generator
          * will use the resource stream to attempt to read the templates.
          */
         embeddedTemplateDir = templateDir = "erlang-server";
 
         /**
-         * Reserved words.  Override this with reserved words specific to your language
+         * Reserved words. Override this with reserved words specific to your language
          */
-        setReservedWordsLowerCase(
-            Arrays.asList(
-                "after","and","andalso","band","begin","bnot","bor","bsl","bsr","bxor","case",
-                "catch","cond","div","end","fun","if","let","not","of","or","orelse","receive",
-                "rem","try","when","xor"
-            )
-       );
+        setReservedWordsLowerCase(Arrays.asList("after", "and", "andalso", "band", "begin", "bnot",
+                "bor", "bsl", "bsr", "bxor", "case", "catch", "cond", "div", "end", "fun", "if",
+                "let", "not", "of", "or", "orelse", "receive", "rem", "try", "when", "xor"));
 
         instantiationTypes.clear();
 
@@ -102,29 +95,37 @@ public class ErlangServerCodegen extends DefaultCodegen implements CodegenConfig
         typeMapping.put("password", "binary");
 
         cliOptions.clear();
-        cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "Erlang package name (convention: lowercase).")
-            .defaultValue(this.packageName));
+        cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME,
+                "Erlang package name (convention: lowercase).").defaultValue(this.packageName));
         /**
-         * Additional Properties.  These values can be passed to the templates and
-         * are available in models, apis, and supporting files
+         * Additional Properties. These values can be passed to the templates and are available in
+         * models, apis, and supporting files
          */
         additionalProperties.put("apiVersion", apiVersion);
         additionalProperties.put("apiPath", apiPath);
         /**
-         * Supporting Files.  You can write single files for the generator with the
-         * entire object tree available.  If the input file has a suffix of `.mustache
-         * it will be processed by the template engine.  Otherwise, it will be copied
+         * Supporting Files. You can write single files for the generator with the entire object
+         * tree available. If the input file has a suffix of `.mustache it will be processed by the
+         * template engine. Otherwise, it will be copied
          */
-        supportingFiles.add(new SupportingFile("rebar.config.mustache","", "rebar.config"));
-        supportingFiles.add(new SupportingFile("app.src.mustache", "", "src" + File.separator + this.packageName + ".app.src"));
-        supportingFiles.add(new SupportingFile("router.mustache", "",  toSourceFilePath("router", "erl")));
-        supportingFiles.add(new SupportingFile("api.mustache", "",  toSourceFilePath("api", "erl")));
-        supportingFiles.add(new SupportingFile("server.mustache", "",  toSourceFilePath("server", "erl")));
-        supportingFiles.add(new SupportingFile("utils.mustache", "",  toSourceFilePath("utils", "erl")));
-        supportingFiles.add(new SupportingFile("auth.mustache", "",  toSourceFilePath("auth", "erl")));
-        supportingFiles.add(new SupportingFile("swagger.mustache", "", toPrivFilePath("swagger", "json")));
-        supportingFiles.add(new SupportingFile("default_logic_handler.mustache", "",  toSourceFilePath("default_logic_handler", "erl")));
-        supportingFiles.add(new SupportingFile("logic_handler.mustache", "",  toSourceFilePath("logic_handler", "erl")));
+        supportingFiles.add(new SupportingFile("rebar.config.mustache", "", "rebar.config"));
+        supportingFiles.add(new SupportingFile("app.src.mustache", "", "src" + File.separator
+                + this.packageName + ".app.src"));
+        supportingFiles.add(new SupportingFile("router.mustache", "", toSourceFilePath("router",
+                "erl")));
+        supportingFiles.add(new SupportingFile("api.mustache", "", toSourceFilePath("api", "erl")));
+        supportingFiles.add(new SupportingFile("server.mustache", "", toSourceFilePath("server",
+                "erl")));
+        supportingFiles.add(new SupportingFile("utils.mustache", "", toSourceFilePath("utils",
+                "erl")));
+        supportingFiles
+                .add(new SupportingFile("auth.mustache", "", toSourceFilePath("auth", "erl")));
+        supportingFiles.add(new SupportingFile("swagger.mustache", "", toPrivFilePath("swagger",
+                "json")));
+        supportingFiles.add(new SupportingFile("default_logic_handler.mustache", "",
+                toSourceFilePath("default_logic_handler", "erl")));
+        supportingFiles.add(new SupportingFile("logic_handler.mustache", "", toSourceFilePath(
+                "logic_handler", "erl")));
         writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
     }
 
@@ -145,8 +146,8 @@ public class ErlangServerCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     /**
-     * Configures a friendly name for the generator.  This will be used by the generator
-     * to select the library with the -l flag.
+     * Configures a friendly name for the generator. This will be used by the generator to select
+     * the library with the -l flag.
      *
      * @return the friendly name for the generator
      */
@@ -156,15 +157,15 @@ public class ErlangServerCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     /**
-     * Returns human-friendly help for the generator.  Provide the consumer with help
-     * tips, parameters here
+     * Returns human-friendly help for the generator. Provide the consumer with help tips,
+     * parameters here
      *
      * @return A string value for the help message
      */
     @Override
     public String getHelp() {
-        return "Generates an Erlang server library (beta) using the Swagger Codegen project. By default, " +
-                "it will also generate service classes, which can be disabled with the `-Dnoservice` environment variable.";
+        return "Generates an Erlang server library (beta) using the Swagger Codegen project. By default, "
+                + "it will also generate service classes, which can be disabled with the `-Dnoservice` environment variable.";
     }
 
     @Override
@@ -176,21 +177,21 @@ public class ErlangServerCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     /**
-     * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping
-     * those terms here.  This logic is only called if a variable matches the reseved words
+     * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping those terms
+     * here. This logic is only called if a variable matches the reseved words
      *
      * @return the escaped term
      */
     @Override
-    public String escapeReservedWord(String name) {           
-        if(this.reservedWordsMappings().containsKey(name)) {
+    public String escapeReservedWord(String name) {
+        if (this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
         return "_" + name;
     }
 
     /**
-     * Location to write api files.  You can use the apiPackage() as defined when the class is
+     * Location to write api files. You can use the apiPackage() as defined when the class is
      * instantiated
      */
     @Override
@@ -207,7 +208,8 @@ public class ErlangServerCodegen extends DefaultCodegen implements CodegenConfig
     public String toOperationId(String operationId) {
         // method name cannot use reserved keyword, e.g. return
         if (isReservedWord(operationId)) {
-            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + camelize(sanitizeName("call_" + operationId)));
+            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to "
+                    + camelize(sanitizeName("call_" + operationId)));
             operationId = "call_" + operationId;
         }
 
@@ -233,8 +235,8 @@ public class ErlangServerCodegen extends DefaultCodegen implements CodegenConfig
 
     @Override
     public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
-        Swagger swagger = (Swagger)objs.get("swagger");
-        if(swagger != null) {
+        Swagger swagger = (Swagger) objs.get("swagger");
+        if (swagger != null) {
             try {
                 objs.put("swagger-json", Json.mapper().writeValueAsString(swagger));
             } catch (JsonProcessingException e) {
@@ -257,7 +259,7 @@ public class ErlangServerCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     protected String toSourceFilePath(String name, String extension) {
-        return "src" + File.separator +  toModuleName(name) + "." + extension;
+        return "src" + File.separator + toModuleName(name) + "." + extension;
     }
 
     protected String toIncludeFilePath(String name, String extension) {

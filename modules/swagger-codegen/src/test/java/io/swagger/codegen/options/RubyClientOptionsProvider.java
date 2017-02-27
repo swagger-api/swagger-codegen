@@ -18,7 +18,7 @@ public class RubyClientOptionsProvider implements OptionsProvider {
     public static final String GEM_HOMEPAGE_VALUE = "homepage";
     public static final String GEM_SUMMARY_VALUE = "summary";
     public static final String GEM_DESCRIPTION_VALUE = "description";
-    public static final String GEM_AUTHOR_VALUE =  "foo";
+    public static final String GEM_AUTHOR_VALUE = "foo";
     public static final String GEM_AUTHOR_EMAIL_VALUE = "foo";
     public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
 

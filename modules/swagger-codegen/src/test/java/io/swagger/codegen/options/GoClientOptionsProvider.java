@@ -20,11 +20,9 @@ public class GoClientOptionsProvider implements OptionsProvider {
     @Override
     public Map<String, String> createOptions() {
         ImmutableMap.Builder<String, String> builder = new ImmutableMap.Builder<String, String>();
-        return builder
-                .put(CodegenConstants.PACKAGE_VERSION, PACKAGE_VERSION_VALUE)
+        return builder.put(CodegenConstants.PACKAGE_VERSION, PACKAGE_VERSION_VALUE)
                 .put(CodegenConstants.PACKAGE_NAME, PACKAGE_NAME_VALUE)
-                .put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "true")
-                .build();
+                .put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "true").build();
     }
 
     @Override

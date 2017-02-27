@@ -35,9 +35,12 @@ public class JavaScriptInheritanceTest {
         allDefinitions.put("Interface1", intf1);
         allDefinitions.put("Interface2", intf2);
 
-        final Model model = new ComposedModel().parent(new RefModel("Base"))
-                .interfaces(Arrays.asList(new RefModel("Interface1"), new RefModel("Interface2")))
-                .child(child);
+        final Model model =
+                new ComposedModel()
+                        .parent(new RefModel("Base"))
+                        .interfaces(
+                                Arrays.asList(new RefModel("Interface1"),
+                                        new RefModel("Interface2"))).child(child);
 
         final JavascriptClientCodegen codegen = new JavascriptClientCodegen();
         codegen.setUseInheritance(true);
@@ -76,9 +79,12 @@ public class JavaScriptInheritanceTest {
         allDefinitions.put("Interface1", intf1);
         allDefinitions.put("Interface2", intf2);
 
-        final Model model = new ComposedModel().parent(new RefModel("Base"))
-                .interfaces(Arrays.asList(new RefModel("Interface1"), new RefModel("Interface2")))
-                .child(child);
+        final Model model =
+                new ComposedModel()
+                        .parent(new RefModel("Base"))
+                        .interfaces(
+                                Arrays.asList(new RefModel("Interface1"),
+                                        new RefModel("Interface2"))).child(child);
 
         final JavascriptClientCodegen codegen = new JavascriptClientCodegen();
         codegen.setUseInheritance(false);

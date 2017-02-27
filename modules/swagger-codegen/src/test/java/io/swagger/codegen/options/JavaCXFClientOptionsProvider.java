@@ -11,12 +11,12 @@ public class JavaCXFClientOptionsProvider extends JavaOptionsProvider {
     public static final String USE_BEANVALIDATION = "true";
 
     public static final String USE_JAXB_ANNOTATIONS = "true";
-    
+
     public static final String USE_GZIP_FEATURE_FOR_TESTS = "true";
 
     public static final String USE_LOGGING_FEATURE_FOR_TESTS = "true";
 
-    
+
     @Override
     public boolean isServer() {
         return false;
@@ -29,19 +29,21 @@ public class JavaCXFClientOptionsProvider extends JavaOptionsProvider {
 
     @Override
     public Map<String, String> createOptions() {
-        
-         Map<String, String> parentOptions = super.createOptions();
-        
-        ImmutableMap.Builder<String, String> builder = new ImmutableMap.Builder<String, String>()
-                .putAll(parentOptions);
-        
-        builder.put(JavaCXFClientCodegen.USE_BEANVALIDATION, JavaCXFClientOptionsProvider.USE_BEANVALIDATION);
+
+        Map<String, String> parentOptions = super.createOptions();
+
+        ImmutableMap.Builder<String, String> builder =
+                new ImmutableMap.Builder<String, String>().putAll(parentOptions);
+
+        builder.put(JavaCXFClientCodegen.USE_BEANVALIDATION,
+                JavaCXFClientOptionsProvider.USE_BEANVALIDATION);
         builder.put(JavaCXFClientCodegen.USE_JAXB_ANNOTATIONS, USE_JAXB_ANNOTATIONS);
 
         builder.put(JavaCXFClientCodegen.USE_GZIP_FEATURE_FOR_TESTS, USE_GZIP_FEATURE_FOR_TESTS);
-        builder.put(JavaCXFClientCodegen.USE_LOGGING_FEATURE_FOR_TESTS, USE_LOGGING_FEATURE_FOR_TESTS);
+        builder.put(JavaCXFClientCodegen.USE_LOGGING_FEATURE_FOR_TESTS,
+                USE_LOGGING_FEATURE_FOR_TESTS);
 
         return builder.build();
-        
+
     }
 }

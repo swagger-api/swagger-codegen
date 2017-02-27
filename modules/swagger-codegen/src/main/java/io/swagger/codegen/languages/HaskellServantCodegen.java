@@ -27,8 +27,8 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
     }
 
     /**
-     * Configures a friendly name for the generator.  This will be used by the generator
-     * to select the library with the -l flag.
+     * Configures a friendly name for the generator. This will be used by the generator to select
+     * the library with the -l flag.
      *
      * @return the friendly name for the generator
      */
@@ -37,8 +37,8 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
     }
 
     /**
-     * Returns human-friendly help for the generator.  Provide the consumer with help
-     * tips, parameters here
+     * Returns human-friendly help for the generator. Provide the consumer with help tips,
+     * parameters here
      *
      * @return A string value for the help message
      */
@@ -57,71 +57,53 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
         // set the output folder here
         outputFolder = "generated-code/haskell-servant";
 
-    /*
-     * Template Location.  This is the location which templates will be read from.  The generator
-     * will use the resource stream to attempt to read the templates.
-     */
+        /*
+         * Template Location.  This is the location which templates will be read from.  The generator
+         * will use the resource stream to attempt to read the templates.
+         */
         embeddedTemplateDir = templateDir = "haskell-servant";
 
-    /*
-     * Api Package.  Optional, if needed, this can be used in templates
-     */
+        /*
+         * Api Package.  Optional, if needed, this can be used in templates
+         */
         apiPackage = "API";
 
-    /*
-     * Model Package.  Optional, if needed, this can be used in templates
-     */
+        /*
+         * Model Package.  Optional, if needed, this can be used in templates
+         */
         modelPackage = "Types";
 
-        // Haskell keywords and reserved function names, taken mostly from https://wiki.haskell.org/Keywords
-        setReservedWordsLowerCase(
-                Arrays.asList(
-                        // Keywords
-                        "as", "case", "of",
-                        "class", "data", "family",
-                        "default", "deriving",
-                        "do", "forall", "foreign", "hiding",
-                        "if", "then", "else",
-                        "import", "infix", "infixl", "infixr",
-                        "instance", "let", "in",
-                        "mdo", "module", "newtype",
-                        "proc", "qualified", "rec",
-                        "type", "where"
-                )
-        );
+        // Haskell keywords and reserved function names, taken mostly from
+        // https://wiki.haskell.org/Keywords
+        setReservedWordsLowerCase(Arrays.asList(
+                // Keywords
+                "as", "case", "of", "class", "data", "family", "default", "deriving", "do",
+                "forall", "foreign", "hiding", "if", "then", "else", "import", "infix", "infixl",
+                "infixr", "instance", "let", "in", "mdo", "module", "newtype", "proc", "qualified",
+                "rec", "type", "where"));
 
-    /*
-     * Additional Properties.  These values can be passed to the templates and
-     * are available in models, apis, and supporting files
-     */
+        /*
+         * Additional Properties.  These values can be passed to the templates and
+         * are available in models, apis, and supporting files
+         */
         additionalProperties.put("apiVersion", apiVersion);
 
-    /*
-     * Supporting Files.  You can write single files for the generator with the
-     * entire object tree available.  If the input file has a suffix of `.mustache
-     * it will be processed by the template engine.  Otherwise, it will be copied
-     */
+        /*
+         * Supporting Files.  You can write single files for the generator with the
+         * entire object tree available.  If the input file has a suffix of `.mustache
+         * it will be processed by the template engine.  Otherwise, it will be copied
+         */
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("stack.mustache", "", "stack.yaml"));
         supportingFiles.add(new SupportingFile("Setup.mustache", "", "Setup.hs"));
 
-    /*
-     * Language Specific Primitives.  These types will not trigger imports by
-     * the client generator
-     */
-        languageSpecificPrimitives = new HashSet<String>(
-                Arrays.asList(
-                        "Bool",
-                        "String",
-                        "Int",
-                        "Integer",
-                        "Float",
-                        "Char",
-                        "Double",
-                        "List",
-                        "FilePath"
-                )
-        );
+        /*
+         * Language Specific Primitives.  These types will not trigger imports by
+         * the client generator
+         */
+        languageSpecificPrimitives =
+                new HashSet<String>(Arrays.asList("Bool", "String", "Int", "Integer", "Float",
+                        "Char", "Double", "List", "FilePath"));
 
         typeMapping.clear();
         typeMapping.put("array", "List");
@@ -143,19 +125,21 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
         importMapping.clear();
         importMapping.put("Map", "qualified Data.Map as Map");
 
-        cliOptions.add(new CliOption(CodegenConstants.MODEL_PACKAGE, CodegenConstants.MODEL_PACKAGE_DESC));
-        cliOptions.add(new CliOption(CodegenConstants.API_PACKAGE, CodegenConstants.API_PACKAGE_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.MODEL_PACKAGE,
+                CodegenConstants.MODEL_PACKAGE_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.API_PACKAGE,
+                CodegenConstants.API_PACKAGE_DESC));
     }
 
     /**
-     * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping
-     * those terms here.  This logic is only called if a variable matches the reseved words
+     * Escapes a reserved word as defined in the `reservedWords` array. Handle escaping those terms
+     * here. This logic is only called if a variable matches the reseved words
      *
      * @return the escaped term
      */
     @Override
-    public String escapeReservedWord(String name) {           
-        if(this.reservedWordsMappings().containsKey(name)) {
+    public String escapeReservedWord(String name) {
+        if (this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
         return "_" + name;
@@ -187,7 +171,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
         String title = swagger.getInfo().getTitle();
 
         // Drop any API suffix
-        if(title == null) {
+        if (title == null) {
             title = "Swagger";
         } else {
             title = title.trim();
@@ -198,7 +182,8 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
 
         String[] words = title.split(" ");
 
-        // The package name is made by appending the lowercased words of the title interspersed with dashes
+        // The package name is made by appending the lowercased words of the title interspersed with
+        // dashes
         List<String> wordsLower = new ArrayList<String>();
         for (String word : words) {
             wordsLower.add(word.toLowerCase());
@@ -213,7 +198,8 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
         String apiName = joinStrings("", wordsCaps);
 
         // Set the filenames to write for the API
-        supportingFiles.add(new SupportingFile("haskell-servant-codegen.mustache", "", cabalName + ".cabal"));
+        supportingFiles.add(new SupportingFile("haskell-servant-codegen.mustache", "", cabalName
+                + ".cabal"));
         supportingFiles.add(new SupportingFile("API.mustache", "lib/" + apiName, "API.hs"));
         supportingFiles.add(new SupportingFile("Types.mustache", "lib/" + apiName, "Types.hs"));
 
@@ -227,7 +213,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
 
         List<Map<String, Object>> replacements = new ArrayList<>();
         Object[] replacementChars = specialCharReplacements.keySet().toArray();
-        for(int i = 0; i < replacementChars.length; i++) {
+        for (int i = 0; i < replacementChars.length; i++) {
             String c = (String) replacementChars[i];
             Map<String, Object> o = new HashMap<>();
             o.put("char", c);
@@ -242,10 +228,11 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
 
 
     /**
-     * Optional - type declaration.  This is a String which is used by the templates to instantiate your
-     * types.  There is typically special handling for different property types
+     * Optional - type declaration. This is a String which is used by the templates to instantiate
+     * your types. There is typically special handling for different property types
      *
-     * @return a string value used as the `dataType` field for model templates, `returnType` for api templates
+     * @return a string value used as the `dataType` field for model templates, `returnType` for api
+     *         templates
      */
     @Override
     public String getTypeDeclaration(Property p) {
@@ -262,8 +249,9 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
     }
 
     /**
-     * Optional - swagger type conversion.  This is used to map swagger types in a `Property` into
-     * either language specific types via `typeMapping` or into complex models if there is not a mapping.
+     * Optional - swagger type conversion. This is used to map swagger types in a `Property` into
+     * either language specific types via `typeMapping` or into complex models if there is not a
+     * mapping.
      *
      * @return a string value of the type or complex model for this property
      * @see io.swagger.models.properties.Property
@@ -276,9 +264,9 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
             type = typeMapping.get(swaggerType);
             if (languageSpecificPrimitives.contains(type))
                 return toModelName(type);
-        } else if(swaggerType == "object") {
+        } else if (swaggerType == "object") {
             type = "Value";
-        } else if(typeMapping.containsValue(swaggerType)) {
+        } else if (typeMapping.containsValue(swaggerType)) {
             type = swaggerType + "_";
         } else {
             type = swaggerType;
@@ -293,7 +281,8 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
             Property additionalProperties2 = ap.getAdditionalProperties();
             String type = additionalProperties2.getType();
             if (null == type) {
-                LOGGER.error("No Type defined for Additional Property " + additionalProperties2 + "\n" //
+                LOGGER.error("No Type defined for Additional Property " + additionalProperties2
+                        + "\n" //
                         + "\tIn Property: " + p);
             }
             String inner = getSwaggerType(additionalProperties2);
@@ -324,7 +313,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
 
     // Convert an HTTP path to a Servant route, including captured parameters.
     // For example, the path /api/jobs/info/{id}/last would become:
-    //      "api" :> "jobs" :> "info" :> Capture "id" IdType :> "last"
+    // "api" :> "jobs" :> "info" :> Capture "id" IdType :> "last"
     // IdType is provided by the capture params.
     private List<String> pathToServantRoute(String path, List<CodegenParameter> pathParams) {
         // Map the capture params by their names.
@@ -380,8 +369,10 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
 
 
     @Override
-    public CodegenOperation fromOperation(String resourcePath, String httpMethod, Operation operation, Map<String, Model> definitions, Swagger swagger) {
-        CodegenOperation op = super.fromOperation(resourcePath, httpMethod, operation, definitions, swagger);
+    public CodegenOperation fromOperation(String resourcePath, String httpMethod,
+            Operation operation, Map<String, Model> definitions, Swagger swagger) {
+        CodegenOperation op =
+                super.fromOperation(resourcePath, httpMethod, operation, definitions, swagger);
 
         List<String> path = pathToServantRoute(op.path, op.pathParams);
         List<String> type = pathToClientType(op.path, op.pathParams);
@@ -405,13 +396,13 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
                 path.add("ReqBody '[JSON] " + param.dataType);
                 bodyType = param.dataType;
             }
-        } else if(op.getHasFormParams()) {
+        } else if (op.getHasFormParams()) {
             // Use the FormX data type, where X is the conglomerate of all things being passed
             String formName = "Form" + camelize(op.operationId);
             bodyType = formName;
             path.add("ReqBody '[FormUrlEncoded] " + formName);
         }
-        if(bodyType != null) {
+        if (bodyType != null) {
             type.add(bodyType);
         }
 
@@ -440,7 +431,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
         op.vendorExtensions.put("x-routeType", joinStrings(" :> ", path));
         op.vendorExtensions.put("x-clientType", joinStrings(" -> ", type));
         op.vendorExtensions.put("x-formName", "Form" + camelize(op.operationId));
-        for(CodegenParameter param : op.formParams) {
+        for (CodegenParameter param : op.formParams) {
             param.vendorExtensions.put("x-formPrefix", camelize(op.operationId, true));
         }
         return op;
@@ -448,12 +439,17 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
 
     private String makeQueryListType(String type, String collectionFormat) {
         type = type.substring(1, type.length() - 1);
-        switch(collectionFormat) {
-            case "csv": return "(QueryList 'CommaSeparated (" + type + "))";
-            case "tsv": return "(QueryList 'TabSeparated (" + type + "))";
-            case "ssv": return "(QueryList 'SpaceSeparated (" + type + "))";
-            case "pipes": return "(QueryList 'PipeSeparated (" + type + "))";
-            case "multi": return "(QueryList 'MultiParamArray (" + type + "))";
+        switch (collectionFormat) {
+            case "csv":
+                return "(QueryList 'CommaSeparated (" + type + "))";
+            case "tsv":
+                return "(QueryList 'TabSeparated (" + type + "))";
+            case "ssv":
+                return "(QueryList 'SpaceSeparated (" + type + "))";
+            case "pipes":
+                return "(QueryList 'PipeSeparated (" + type + "))";
+            case "multi":
+                return "(QueryList 'MultiParamArray (" + type + "))";
             default:
                 throw new UnsupportedOperationException();
         }
@@ -484,30 +480,31 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
 
         // Clean up the class name to remove invalid characters
         model.classname = fixModelChars(model.classname);
-        if(typeMapping.containsValue(model.classname)) {
+        if (typeMapping.containsValue(model.classname)) {
             model.classname += "_";
         }
 
         // From the model name, compute the prefix for the fields.
         String prefix = camelize(model.classname, true);
-        for(CodegenProperty prop : model.vars) {
+        for (CodegenProperty prop : model.vars) {
             prop.name = prefix + camelize(fixOperatorChars(prop.name));
         }
 
         // Create newtypes for things with non-object types
         String dataOrNewtype = "data";
-        // check if it's a ModelImpl before casting 
+        // check if it's a ModelImpl before casting
         if (!(mod instanceof ModelImpl)) {
             return model;
         }
 
-        String modelType = ((ModelImpl)  mod).getType();
-        if(modelType != "object" && typeMapping.containsKey(modelType)) {
+        String modelType = ((ModelImpl) mod).getType();
+        if (modelType != "object" && typeMapping.containsKey(modelType)) {
             String newtype = typeMapping.get(modelType);
             model.vendorExtensions.put("x-customNewtype", newtype);
         }
 
-        // Provide the prefix as a vendor extension, so that it can be used in the ToJSON and FromJSON instances.
+        // Provide the prefix as a vendor extension, so that it can be used in the ToJSON and
+        // FromJSON instances.
         model.vendorExtensions.put("x-prefix", prefix);
         model.vendorExtensions.put("x-data", dataOrNewtype);
 

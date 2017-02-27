@@ -14,7 +14,8 @@ public class ClientAuthInputTest {
     public void clientAuthInputTest() {
         final ClientOptInput input = new ClientOptInput();
 
-        final String header = "api_key:special-key,api_key:hello,X-AUTHORIZATION:0e6c11d79a,Authorization:Basic 1jz0";
+        final String header =
+                "api_key:special-key,api_key:hello,X-AUTHORIZATION:0e6c11d79a,Authorization:Basic 1jz0";
         input.setAuth(header);
         final List<AuthorizationValue> authValues = input.getAuthorizationValues();
         Assert.assertEquals(authValues.size(), 4);

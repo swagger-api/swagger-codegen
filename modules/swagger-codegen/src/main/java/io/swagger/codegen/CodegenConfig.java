@@ -14,13 +14,13 @@ import com.samskivert.mustache.Mustache.Compiler;
 
 public interface CodegenConfig {
     CodegenType getTag();
-    
+
     String getName();
 
     String getHelp();
 
     Map<String, Object> additionalProperties();
-    
+
     Map<String, Object> vendorExtensions();
 
     String testPackage();
@@ -91,9 +91,11 @@ public interface CodegenConfig {
 
     CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions);
 
-    CodegenOperation fromOperation(String resourcePath, String httpMethod, Operation operation, Map<String, Model> definitions, Swagger swagger);
-    
-    CodegenOperation fromOperation(String resourcePath, String httpMethod, Operation operation, Map<String, Model> definitions);
+    CodegenOperation fromOperation(String resourcePath, String httpMethod, Operation operation,
+            Map<String, Model> definitions, Swagger swagger);
+
+    CodegenOperation fromOperation(String resourcePath, String httpMethod, Operation operation,
+            Map<String, Model> definitions);
 
     List<CodegenSecurity> fromSecurity(Map<String, SecuritySchemeDefinition> schemes);
 
@@ -118,7 +120,7 @@ public interface CodegenConfig {
     Map<String, String> modelDocTemplateFiles();
 
     Set<String> languageSpecificPrimitives();
-    
+
     Map<String, String> reservedWordsMappings();
 
     void preprocessSwagger(Swagger swagger);
@@ -136,19 +138,20 @@ public interface CodegenConfig {
     String toApiTestFilename(String name);
 
     String toModelTestFilename(String name);
-    
+
     String toApiDocFilename(String name);
 
     String toModelDocFilename(String name);
-    
+
     String toModelImport(String name);
 
     String toApiImport(String name);
 
-    void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co, Map<String, List<CodegenOperation>> operations);
+    void addOperationToGroup(String tag, String resourcePath, Operation operation,
+            CodegenOperation co, Map<String, List<CodegenOperation>> operations);
 
     Map<String, Object> postProcessAllModels(Map<String, Object> objs);
-    
+
     Map<String, Object> postProcessModels(Map<String, Object> objs);
 
     Map<String, Object> postProcessOperations(Map<String, Object> objs);

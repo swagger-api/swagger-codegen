@@ -45,7 +45,7 @@ public class SwaggerYamlGenerator extends DefaultCodegen implements CodegenConfi
     @Override
     public void processOpts() {
         super.processOpts();
-        if(additionalProperties.containsKey(OUTPUT_NAME)) {
+        if (additionalProperties.containsKey(OUTPUT_NAME)) {
             this.outputFile = additionalProperties.get(OUTPUT_NAME).toString();
         }
     }
@@ -72,6 +72,6 @@ public class SwaggerYamlGenerator extends DefaultCodegen implements CodegenConfi
     public String escapeUnsafeCharacters(String input) {
         // just return the original string
         return input;
-    }   
+    }
 
 }

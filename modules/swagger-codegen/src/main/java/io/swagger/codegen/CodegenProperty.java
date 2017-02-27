@@ -7,23 +7,29 @@ import java.util.Map;
 import java.util.Objects;
 
 public class CodegenProperty implements Cloneable {
-    public String baseName, complexType, getter, setter, description, datatype,
-          datatypeWithEnum, dataFormat, name, min, max, defaultValue, defaultValueWithParam,
-          baseType, containerType, title;
+    public String baseName, complexType, getter, setter, description, datatype, datatypeWithEnum,
+            dataFormat, name, min, max, defaultValue, defaultValueWithParam, baseType,
+            containerType, title;
 
-    /** The 'description' string without escape charcters needed by some programming languages/targets */
+    /**
+     * The 'description' string without escape charcters needed by some programming
+     * languages/targets
+     */
     public String unescapedDescription;
 
     /**
-     * maxLength validation for strings, see http://json-schema.org/latest/json-schema-validation.html#rfc.section.5.2.1
+     * maxLength validation for strings, see
+     * http://json-schema.org/latest/json-schema-validation.html#rfc.section.5.2.1
      */
     public Integer maxLength;
     /**
-     * minLength validation for strings, see http://json-schema.org/latest/json-schema-validation.html#rfc.section.5.2.2
+     * minLength validation for strings, see
+     * http://json-schema.org/latest/json-schema-validation.html#rfc.section.5.2.2
      */
     public Integer minLength;
     /**
-     * pattern validation for strings, see http://json-schema.org/latest/json-schema-validation.html#rfc.section.5.2.3
+     * pattern validation for strings, see
+     * http://json-schema.org/latest/json-schema-validation.html#rfc.section.5.2.3
      */
     public String pattern;
     /**
@@ -37,9 +43,11 @@ public class CodegenProperty implements Cloneable {
     public boolean exclusiveMinimum;
     public boolean exclusiveMaximum;
     public boolean hasMore, required, secondaryParam;
-    public boolean hasMoreNonReadOnly; // for model constructor, true if next properyt is not readonly
+    public boolean hasMoreNonReadOnly; // for model constructor, true if next properyt is not
+                                       // readonly
     public boolean isPrimitiveType, isContainer, isNotContainer;
-    public boolean isString, isInteger, isLong, isFloat, isDouble, isByteArray, isBinary, isFile, isBoolean, isDate, isDateTime;
+    public boolean isString, isInteger, isLong, isFloat, isDouble, isByteArray, isBinary, isFile,
+            isBoolean, isDate, isDateTime;
     public boolean isListContainer, isMapContainer;
     public boolean isEnum;
     public boolean isReadOnly = false;
@@ -47,10 +55,12 @@ public class CodegenProperty implements Cloneable {
     public Map<String, Object> allowableValues;
     public CodegenProperty items;
     public Map<String, Object> vendorExtensions;
-    public boolean hasValidation; // true if pattern, maximum, etc are set (only used in the mustache template)
+    public boolean hasValidation; // true if pattern, maximum, etc are set (only used in the
+                                  // mustache template)
     public boolean isInherited;
     public String nameInCamelCase; // property name in camel case
-    // enum name based on the property name, usually use as a prefix (e.g. VAR_NAME) for enum name (e.g. VAR_NAME_VALUE1)
+    // enum name based on the property name, usually use as a prefix (e.g. VAR_NAME) for enum name
+    // (e.g. VAR_NAME_VALUE1)
     public String enumName;
     public Integer maxItems;
     public Integer minItems;
@@ -63,8 +73,7 @@ public class CodegenProperty implements Cloneable {
 
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((_enum == null) ? 0 : _enum.hashCode());
@@ -77,20 +86,22 @@ public class CodegenProperty implements Cloneable {
         result = prime * result + ((datatypeWithEnum == null) ? 0 : datatypeWithEnum.hashCode());
         result = prime * result + ((dataFormat == null) ? 0 : dataFormat.hashCode());
         result = prime * result + ((defaultValue == null) ? 0 : defaultValue.hashCode());
-        result = prime * result + ((defaultValueWithParam == null) ? 0 : defaultValueWithParam.hashCode());
+        result =
+                prime * result
+                        + ((defaultValueWithParam == null) ? 0 : defaultValueWithParam.hashCode());
         result = prime * result + ((description == null) ? 0 : description.hashCode());
         result = prime * result + ((title == null) ? 0 : title.hashCode());
         result = prime * result + ((example == null) ? 0 : example.hashCode());
-        result = prime * result + (exclusiveMaximum ? 13:31);
-        result = prime * result + (exclusiveMinimum ? 13:31);
+        result = prime * result + (exclusiveMaximum ? 13 : 31);
+        result = prime * result + (exclusiveMinimum ? 13 : 31);
         result = prime * result + ((getter == null) ? 0 : getter.hashCode());
-        result = prime * result + (hasMore  ? 13:31);
-        result = prime * result + ((hasMoreNonReadOnly  ? 13:31));
-        result = prime * result + ((isContainer  ? 13:31));
+        result = prime * result + (hasMore ? 13 : 31);
+        result = prime * result + ((hasMoreNonReadOnly ? 13 : 31));
+        result = prime * result + ((isContainer ? 13 : 31));
         result = prime * result + (isEnum ? 1231 : 1237);
-        result = prime * result + ((isNotContainer ? 13:31));
-        result = prime * result + ((isPrimitiveType  ? 13:31));
-        result = prime * result + ((isReadOnly  ? 13:31));
+        result = prime * result + ((isNotContainer ? 13 : 31));
+        result = prime * result + ((isPrimitiveType ? 13 : 31));
+        result = prime * result + ((isReadOnly ? 13 : 31));
         result = prime * result + ((items == null) ? 0 : items.hashCode());
         result = prime * result + ((jsonSchema == null) ? 0 : jsonSchema.hashCode());
         result = prime * result + ((max == null) ? 0 : max.hashCode());
@@ -101,25 +112,27 @@ public class CodegenProperty implements Cloneable {
         result = prime * result + ((minimum == null) ? 0 : minimum.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((pattern == null) ? 0 : pattern.hashCode());
-        result = prime * result + ((required  ? 13:31));
-        result = prime * result + ((secondaryParam ? 13:31));
+        result = prime * result + ((required ? 13 : 31));
+        result = prime * result + ((secondaryParam ? 13 : 31));
         result = prime * result + ((setter == null) ? 0 : setter.hashCode());
-        result = prime * result + ((unescapedDescription == null) ? 0 : unescapedDescription.hashCode());
+        result =
+                prime * result
+                        + ((unescapedDescription == null) ? 0 : unescapedDescription.hashCode());
         result = prime * result + ((vendorExtensions == null) ? 0 : vendorExtensions.hashCode());
-        result = prime * result + ((hasValidation  ? 13:31));
-        result = prime * result + ((isString  ? 13:31));
-        result = prime * result + ((isInteger ? 13:31));
-        result = prime * result + ((isLong  ?13:31));
-        result = prime * result + ((isFloat ? 13:31));
-        result = prime * result + ((isDouble  ? 13:31));
-        result = prime * result + ((isByteArray  ? 13:31));
-        result = prime * result + ((isBinary  ? 13:31));
-        result = prime * result + ((isFile  ? 13:31));
-        result = prime * result + ((isBoolean  ? 13:31));
-        result = prime * result + ((isDate  ? 13:31));
-        result = prime * result + ((isDateTime ? 13:31));
-        result = prime * result + ((isMapContainer ? 13:31));
-        result = prime * result + ((isListContainer  ? 13:31));
+        result = prime * result + ((hasValidation ? 13 : 31));
+        result = prime * result + ((isString ? 13 : 31));
+        result = prime * result + ((isInteger ? 13 : 31));
+        result = prime * result + ((isLong ? 13 : 31));
+        result = prime * result + ((isFloat ? 13 : 31));
+        result = prime * result + ((isDouble ? 13 : 31));
+        result = prime * result + ((isByteArray ? 13 : 31));
+        result = prime * result + ((isBinary ? 13 : 31));
+        result = prime * result + ((isFile ? 13 : 31));
+        result = prime * result + ((isBoolean ? 13 : 31));
+        result = prime * result + ((isDate ? 13 : 31));
+        result = prime * result + ((isDateTime ? 13 : 31));
+        result = prime * result + ((isMapContainer ? 13 : 31));
+        result = prime * result + ((isListContainer ? 13 : 31));
         result = prime * result + Objects.hashCode(isInherited);
         result = prime * result + Objects.hashCode(nameInCamelCase);
         result = prime * result + Objects.hashCode(enumName);
@@ -137,10 +150,12 @@ public class CodegenProperty implements Cloneable {
             return false;
         }
         final CodegenProperty other = (CodegenProperty) obj;
-        if ((this.baseName == null) ? (other.baseName != null) : !this.baseName.equals(other.baseName)) {
+        if ((this.baseName == null) ? (other.baseName != null) : !this.baseName
+                .equals(other.baseName)) {
             return false;
         }
-        if ((this.complexType == null) ? (other.complexType != null) : !this.complexType.equals(other.complexType)) {
+        if ((this.complexType == null) ? (other.complexType != null) : !this.complexType
+                .equals(other.complexType)) {
             return false;
         }
         if ((this.getter == null) ? (other.getter != null) : !this.getter.equals(other.getter)) {
@@ -149,19 +164,23 @@ public class CodegenProperty implements Cloneable {
         if ((this.setter == null) ? (other.setter != null) : !this.setter.equals(other.setter)) {
             return false;
         }
-        if ((this.description == null) ? (other.description != null) : !this.description.equals(other.description)) {
+        if ((this.description == null) ? (other.description != null) : !this.description
+                .equals(other.description)) {
             return false;
         }
         if ((this.title == null) ? (other.title != null) : !this.title.equals(other.title)) {
             return false;
         }
-        if ((this.datatype == null) ? (other.datatype != null) : !this.datatype.equals(other.datatype)) {
+        if ((this.datatype == null) ? (other.datatype != null) : !this.datatype
+                .equals(other.datatype)) {
             return false;
         }
-        if ((this.datatypeWithEnum == null) ? (other.datatypeWithEnum != null) : !this.datatypeWithEnum.equals(other.datatypeWithEnum)) {
+        if ((this.datatypeWithEnum == null) ? (other.datatypeWithEnum != null)
+                : !this.datatypeWithEnum.equals(other.datatypeWithEnum)) {
             return false;
         }
-        if ((this.dataFormat == null) ? (other.dataFormat != null) : !this.dataFormat.equals(other.dataFormat)) {
+        if ((this.dataFormat == null) ? (other.dataFormat != null) : !this.dataFormat
+                .equals(other.dataFormat)) {
             return false;
         }
         if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
@@ -173,19 +192,24 @@ public class CodegenProperty implements Cloneable {
         if ((this.max == null) ? (other.max != null) : !this.max.equals(other.max)) {
             return false;
         }
-        if ((this.defaultValue == null) ? (other.defaultValue != null) : !this.defaultValue.equals(other.defaultValue)) {
+        if ((this.defaultValue == null) ? (other.defaultValue != null) : !this.defaultValue
+                .equals(other.defaultValue)) {
             return false;
         }
-        if ((this.baseType == null) ? (other.baseType != null) : !this.baseType.equals(other.baseType)) {
+        if ((this.baseType == null) ? (other.baseType != null) : !this.baseType
+                .equals(other.baseType)) {
             return false;
         }
-        if ((this.containerType == null) ? (other.containerType != null) : !this.containerType.equals(other.containerType)) {
+        if ((this.containerType == null) ? (other.containerType != null) : !this.containerType
+                .equals(other.containerType)) {
             return false;
         }
-        if (this.maxLength != other.maxLength && (this.maxLength == null || !this.maxLength.equals(other.maxLength))) {
+        if (this.maxLength != other.maxLength
+                && (this.maxLength == null || !this.maxLength.equals(other.maxLength))) {
             return false;
         }
-        if (this.minLength != other.minLength && (this.minLength == null || !this.minLength.equals(other.minLength))) {
+        if (this.minLength != other.minLength
+                && (this.minLength == null || !this.minLength.equals(other.minLength))) {
             return false;
         }
         if ((this.pattern == null) ? (other.pattern != null) : !this.pattern.equals(other.pattern)) {
@@ -194,13 +218,16 @@ public class CodegenProperty implements Cloneable {
         if ((this.example == null) ? (other.example != null) : !this.example.equals(other.example)) {
             return false;
         }
-        if ((this.jsonSchema == null) ? (other.jsonSchema != null) : !this.jsonSchema.equals(other.jsonSchema)) {
+        if ((this.jsonSchema == null) ? (other.jsonSchema != null) : !this.jsonSchema
+                .equals(other.jsonSchema)) {
             return false;
         }
-        if (this.minimum != other.minimum && (this.minimum == null || !this.minimum.equals(other.minimum))) {
+        if (this.minimum != other.minimum
+                && (this.minimum == null || !this.minimum.equals(other.minimum))) {
             return false;
         }
-        if (this.maximum != other.maximum && (this.maximum == null || !this.maximum.equals(other.maximum))) {
+        if (this.maximum != other.maximum
+                && (this.maximum == null || !this.maximum.equals(other.maximum))) {
             return false;
         }
         if (this.exclusiveMinimum != other.exclusiveMinimum) {
@@ -233,11 +260,15 @@ public class CodegenProperty implements Cloneable {
         if (this._enum != other._enum && (this._enum == null || !this._enum.equals(other._enum))) {
             return false;
         }
-        if (this.allowableValues != other.allowableValues && (this.allowableValues == null || !this.allowableValues.equals(other.allowableValues))) {
+        if (this.allowableValues != other.allowableValues
+                && (this.allowableValues == null || !this.allowableValues
+                        .equals(other.allowableValues))) {
             return false;
         }
 
-        if (this.vendorExtensions != other.vendorExtensions && (this.vendorExtensions == null || !this.vendorExtensions.equals(other.vendorExtensions))) {
+        if (this.vendorExtensions != other.vendorExtensions
+                && (this.vendorExtensions == null || !this.vendorExtensions
+                        .equals(other.vendorExtensions))) {
             return false;
         }
 
@@ -294,10 +325,12 @@ public class CodegenProperty implements Cloneable {
         if (!Objects.equals(this.enumName, other.enumName)) {
             return false;
         }
-        if (this.maxItems != other.maxItems && (this.maxItems == null || !this.maxItems.equals(other.maxItems))) {
+        if (this.maxItems != other.maxItems
+                && (this.maxItems == null || !this.maxItems.equals(other.maxItems))) {
             return false;
         }
-        if (this.minItems != other.minItems && (this.minItems == null || !this.minItems.equals(other.minItems))) {
+        if (this.minItems != other.minItems
+                && (this.minItems == null || !this.minItems.equals(other.minItems))) {
             return false;
         }
         return true;
@@ -306,8 +339,8 @@ public class CodegenProperty implements Cloneable {
     @Override
     public CodegenProperty clone() {
         try {
-        	CodegenProperty cp = (CodegenProperty) super.clone();
-        	if (this._enum != null) {
+            CodegenProperty cp = (CodegenProperty) super.clone();
+            if (this._enum != null) {
                 cp._enum = new ArrayList<String>(this._enum);
             }
             if (this.allowableValues != null) {
@@ -316,10 +349,10 @@ public class CodegenProperty implements Cloneable {
             if (this.items != null) {
                 cp.items = this.items;
             }
-        	if(this.vendorExtensions != null){
+            if (this.vendorExtensions != null) {
                 cp.vendorExtensions = new HashMap<String, Object>(this.vendorExtensions);
             }
-        	return cp;
+            return cp;
         } catch (CloneNotSupportedException e) {
             throw new IllegalStateException(e);
         }

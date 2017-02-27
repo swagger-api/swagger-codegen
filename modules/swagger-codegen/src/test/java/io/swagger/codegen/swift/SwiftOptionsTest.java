@@ -25,15 +25,19 @@ public class SwiftOptionsTest extends AbstractOptionsTest {
     @SuppressWarnings("unused")
     @Override
     protected void setExpectations() {
-        new Expectations(clientCodegen) {{
-            clientCodegen.setSortParamsByRequiredFlag(Boolean.valueOf(SwiftOptionsProvider.SORT_PARAMS_VALUE));
-            times = 1;
-            clientCodegen.setProjectName(SwiftOptionsProvider.PROJECT_NAME_VALUE);
-            times = 1;
-            clientCodegen.setResponseAs(SwiftOptionsProvider.RESPONSE_AS_VALUE.split(","));
-            times = 1;
-            clientCodegen.setUnwrapRequired(Boolean.valueOf(SwiftOptionsProvider.UNWRAP_REQUIRED_VALUE));
-            times = 1;
-        }};
+        new Expectations(clientCodegen) {
+            {
+                clientCodegen.setSortParamsByRequiredFlag(Boolean
+                        .valueOf(SwiftOptionsProvider.SORT_PARAMS_VALUE));
+                times = 1;
+                clientCodegen.setProjectName(SwiftOptionsProvider.PROJECT_NAME_VALUE);
+                times = 1;
+                clientCodegen.setResponseAs(SwiftOptionsProvider.RESPONSE_AS_VALUE.split(","));
+                times = 1;
+                clientCodegen.setUnwrapRequired(Boolean
+                        .valueOf(SwiftOptionsProvider.UNWRAP_REQUIRED_VALUE));
+                times = 1;
+            }
+        };
     }
 }
