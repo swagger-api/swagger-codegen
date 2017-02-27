@@ -68,10 +68,9 @@ public class JavaScriptModelEnumTest {
         subModel.setProperties(subProperties);
         subModel.name("subModel");
 
-        final ComposedModel model = new ComposedModel()
-                .parent(new RefModel(parentModel.getName()))
-                .child(subModel)
-                .interfaces(new ArrayList<RefModel>());
+        final ComposedModel model =
+                new ComposedModel().parent(new RefModel(parentModel.getName())).child(subModel)
+                        .interfaces(new ArrayList<RefModel>());
 
         final DefaultCodegen codegen = new JavascriptClientCodegen();
         final Map<String, Model> allModels = new HashMap<String, Model>();
@@ -96,11 +95,13 @@ public class JavaScriptModelEnumTest {
 
     @Test(description = "test enum array model")
     public void enumArrayModelTest() {
-        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
+        final Swagger model =
+                new SwaggerParser()
+                        .read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
         final DefaultCodegen codegen = new JavascriptClientCodegen();
         final Model definition = model.getDefinitions().get("EnumArrays");
 
-        Property property =  definition.getProperties().get("array_enum");
+        Property property = definition.getProperties().get("array_enum");
         CodegenProperty prope = codegen.fromProperty("array_enum", property);
         codegen.updateCodegenPropertyEnum(prope);
         Assert.assertEquals(prope.datatypeWithEnum, "[ArrayEnumEnum]");
@@ -108,10 +109,10 @@ public class JavaScriptModelEnumTest {
         Assert.assertTrue(prope.isEnum);
         Assert.assertEquals(prope.allowableValues.get("values"), Arrays.asList("fish", "crab"));
 
-        HashMap<String, String> fish= new HashMap<String, String>();
+        HashMap<String, String> fish = new HashMap<String, String>();
         fish.put("name", "fish");
         fish.put("value", "\"fish\"");
-        HashMap<String, String> crab= new HashMap<String, String>();
+        HashMap<String, String> crab = new HashMap<String, String>();
         crab.put("name", "crab");
         crab.put("value", "\"crab\"");
         Assert.assertEquals(prope.allowableValues.get("enumVars"), Arrays.asList(fish, crab));
@@ -120,18 +121,21 @@ public class JavaScriptModelEnumTest {
         Assert.assertEquals(prope.datatypeWithEnum, "[ArrayEnumEnum]");
         Assert.assertEquals(prope.enumName, "ArrayEnumEnum");
         Assert.assertTrue(prope.items.isEnum);
-        Assert.assertEquals(prope.items.allowableValues.get("values"), Arrays.asList("fish", "crab"));
+        Assert.assertEquals(prope.items.allowableValues.get("values"),
+                Arrays.asList("fish", "crab"));
         Assert.assertEquals(prope.items.allowableValues.get("enumVars"), Arrays.asList(fish, crab));
 
     }
 
     @Test(description = "test enum model for values (numeric, string, etc)")
     public void enumModelValueTest() {
-        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
+        final Swagger model =
+                new SwaggerParser()
+                        .read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
         final DefaultCodegen codegen = new JavascriptClientCodegen();
         final Model definition = model.getDefinitions().get("Enum_Test");
 
-        Property property =  definition.getProperties().get("enum_integer");
+        Property property = definition.getProperties().get("enum_integer");
         CodegenProperty prope = codegen.fromProperty("enum_integer", property);
         codegen.updateCodegenPropertyEnum(prope);
         Assert.assertEquals(prope.datatypeWithEnum, "EnumIntegerEnum");

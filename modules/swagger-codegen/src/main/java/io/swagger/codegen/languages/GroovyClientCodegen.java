@@ -25,16 +25,16 @@ public class GroovyClientCodegen extends AbstractJavaCodegen {
 
         // clear model and api doc template as this codegen
         // does not support auto-generated markdown doc at the moment
-        //TODO: add doc templates
+        // TODO: add doc templates
         modelDocTemplateFiles.remove("model_doc.mustache");
         apiDocTemplateFiles.remove("api_doc.mustache");
-        
+
         apiPackage = "io.swagger.api";
         modelPackage = "io.swagger.model";
         configPackage = "io.swagger.configuration";
         invokerPackage = "io.swagger.api";
         artifactId = "swagger-groovy";
-        dateLibrary = "legacy"; //TODO: add joda support to groovy
+        dateLibrary = "legacy"; // TODO: add joda support to groovy
 
         additionalProperties.put("title", title);
         additionalProperties.put(CONFIG_PACKAGE, configPackage);
@@ -68,9 +68,10 @@ public class GroovyClientCodegen extends AbstractJavaCodegen {
 
         supportingFiles.add(new SupportingFile("build.gradle.mustache", "", "build.gradle"));
         // TODO readme to be added later
-        //supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
+        // supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("ApiUtils.mustache",
-                (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiUtils.groovy"));
+                (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator),
+                "ApiUtils.groovy"));
 
     }
 

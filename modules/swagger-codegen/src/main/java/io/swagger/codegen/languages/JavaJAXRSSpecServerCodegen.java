@@ -21,11 +21,9 @@ import io.swagger.models.Swagger;
 import io.swagger.models.properties.Property;
 import io.swagger.util.Json;
 
-public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen 
-{    
-    
-    public JavaJAXRSSpecServerCodegen()
-    {
+public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen {
+
+    public JavaJAXRSSpecServerCodegen() {
         super();
         invokerPackage = "io.swagger.api";
         artifactId = "swagger-jaxrs-server";
@@ -41,59 +39,63 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
 
         // clear model and api doc template as this codegen
         // does not support auto-generated markdown doc at the moment
-        //TODO: add doc templates
+        // TODO: add doc templates
         modelDocTemplateFiles.remove("model_doc.mustache");
         apiDocTemplateFiles.remove("api_doc.mustache");
 
         additionalProperties.put("title", title);
 
         typeMapping.put("date", "LocalDate");
-        typeMapping.put("DateTime", "javax.xml.datatype.XMLGregorianCalendar"); // Map DateTime fields to Java standart class 'XMLGregorianCalendar'
+        typeMapping.put("DateTime", "javax.xml.datatype.XMLGregorianCalendar"); // Map DateTime
+                                                                                // fields to Java
+                                                                                // standart class
+                                                                                // 'XMLGregorianCalendar'
 
         importMapping.put("LocalDate", "org.joda.time.LocalDate");
 
-        super.embeddedTemplateDir = templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME + File.separator + "spec";
+        super.embeddedTemplateDir =
+                templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME + File.separator + "spec";
 
-        for ( int i = 0; i < cliOptions.size(); i++ ) {
-            if ( CodegenConstants.LIBRARY.equals(cliOptions.get(i).getOpt()) ) {
+        for (int i = 0; i < cliOptions.size(); i++) {
+            if (CodegenConstants.LIBRARY.equals(cliOptions.get(i).getOpt())) {
                 cliOptions.remove(i);
                 break;
             }
         }
-                
-        CliOption library = new CliOption(CodegenConstants.LIBRARY, "library template (sub-template) to use");
+
+        CliOption library =
+                new CliOption(CodegenConstants.LIBRARY, "library template (sub-template) to use");
         library.setDefault(DEFAULT_LIBRARY);
 
-        Map<String, String> supportedLibraries = new LinkedHashMap<String,String>();
+        Map<String, String> supportedLibraries = new LinkedHashMap<String, String>();
 
         supportedLibraries.put(DEFAULT_LIBRARY, "JAXRS");
         library.setEnum(supportedLibraries);
 
         cliOptions.add(library);
     }
-    
-    @Override
-    public void processOpts()
-    {
-        super.processOpts();
-        
-        supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
-        writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
-        
-        writeOptional(outputFolder, new SupportingFile("RestApplication.mustache",
-                (sourceFolder + '/' + invokerPackage).replace(".", "/"), "RestApplication.java"));
-        
-    } 
-    
 
     @Override
-    public String getName()
-    {
+    public void processOpts() {
+        super.processOpts();
+
+        supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
+        writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
+
+        writeOptional(outputFolder, new SupportingFile("RestApplication.mustache",
+                (sourceFolder + '/' + invokerPackage).replace(".", "/"), "RestApplication.java"));
+
+    }
+
+
+    @Override
+    public String getName() {
         return "jaxrs-spec";
     }
 
     @Override
-    public void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co, Map<String, List<CodegenOperation>> operations) {
+    public void addOperationToGroup(String tag, String resourcePath, Operation operation,
+            CodegenOperation co, Map<String, List<CodegenOperation>> operations) {
         String basePath = resourcePath;
         if (basePath.startsWith("/")) {
             basePath = basePath.substring(1);
@@ -119,7 +121,7 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
         opList.add(co);
         co.baseName = basePath;
     }
-    
+
     @Override
     public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
         super.postProcessModelProperty(model, property);
@@ -130,22 +132,23 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
         model.imports.remove("JsonValue");
         model.imports.remove("JsonProperty");
     }
-    
+
     @Override
     public void preprocessSwagger(Swagger swagger) {
-        //copy input swagger to output folder 
+        // copy input swagger to output folder
         try {
             String swaggerJson = Json.pretty(swagger);
-            FileUtils.writeStringToFile(new File(outputFolder + File.separator + "swagger.json"), swaggerJson);
+            FileUtils.writeStringToFile(new File(outputFolder + File.separator + "swagger.json"),
+                    swaggerJson);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e.getCause());
         }
         super.preprocessSwagger(swagger);
 
     }
+
     @Override
-    public String getHelp()
-    {
+    public String getHelp() {
         return "Generates a Java JAXRS Server according to JAXRS 2.0 specification.";
     }
 }

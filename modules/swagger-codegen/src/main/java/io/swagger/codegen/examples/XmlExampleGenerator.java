@@ -45,7 +45,7 @@ public class XmlExampleGenerator {
     public XmlExampleGenerator(Map<String, Model> examples) {
         this.examples = examples;
         if (examples == null) {
-            this.examples = new HashMap<String, Model>(); 
+            this.examples = new HashMap<String, Model>();
         }
     }
 
@@ -87,10 +87,11 @@ public class XmlExampleGenerator {
             }
         }
         // TODO: map objects will not enter this block
-        if(model.getProperties() != null) {
+        if (model.getProperties() != null) {
             for (String pName : model.getProperties().keySet()) {
                 Property p = model.getProperties().get(pName);
-                if (p != null && p.getXml() != null && p.getXml().getAttribute() != null && p.getXml().getAttribute()) {
+                if (p != null && p.getXml() != null && p.getXml().getAttribute() != null
+                        && p.getXml().getAttribute()) {
                     attributes.put(pName, p);
                 } else {
                     elements.put(pName, p);
@@ -134,7 +135,8 @@ public class XmlExampleGenerator {
             ArrayProperty p = (ArrayProperty) property;
             Property inner = p.getItems();
             boolean wrapped = false;
-            if (property.getXml() != null && property.getXml().getWrapped() != null && property.getXml().getWrapped()) {
+            if (property.getXml() != null && property.getXml().getWrapped() != null
+                    && property.getXml().getWrapped()) {
                 wrapped = true;
             }
             if (wrapped) {
@@ -174,14 +176,14 @@ public class XmlExampleGenerator {
     }
 
     /**
-    * Get the example string value for the given Property.
-    *
-    * If an example value was not provided in the specification, a default will be generated.
-    *
-    * @param property Property to get example string for
-    *
-    * @return Example String
-    */
+     * Get the example string value for the given Property.
+     *
+     * If an example value was not provided in the specification, a default will be generated.
+     *
+     * @param property Property to get example string for
+     *
+     * @return Example String
+     */
     protected String getExample(Property property) {
         if (property.getExample() != null) {
             return property.getExample().toString();
@@ -193,15 +195,16 @@ public class XmlExampleGenerator {
             return "true";
         } else if (property instanceof LongProperty) {
             return "123456789";
-        } else if (property instanceof DoubleProperty) { // derived from DecimalProperty so make sure this is first
+        } else if (property instanceof DoubleProperty) { // derived from DecimalProperty so make
+                                                         // sure this is first
             return "3.149";
-        }  else if (property instanceof DecimalProperty) {
+        } else if (property instanceof DecimalProperty) {
             return "1.3579";
         } else if (property instanceof PasswordProperty) {
             return "********";
         } else if (property instanceof UUIDProperty) {
             return "046b6c7f-0b8a-43b9-b35d-6489e6daee91";
-        // do these last in case the specific types above are derived from these classes
+            // do these last in case the specific types above are derived from these classes
         } else if (property instanceof StringProperty) {
             return "aeiou";
         } else if (property instanceof BaseIntegerProperty) {

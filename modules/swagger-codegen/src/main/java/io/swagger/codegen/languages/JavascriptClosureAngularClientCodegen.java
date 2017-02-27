@@ -15,22 +15,16 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
         super();
 
         supportsInheritance = false;
-        setReservedWordsLowerCase(Arrays.asList("abstract",
-            "continue", "for", "new", "switch", "assert", "default", "if",
-            "package", "synchronized", "do", "goto", "private",
-            "this", "break", "double", "implements", "protected", "throw",
-            "byte", "else", "import", "public", "throws", "case", "enum",
-            "instanceof", "return", "transient", "catch", "extends", "int",
-            "short", "try", "char", "final", "interface", "static", "void",
-            "class", "finally", "const", "super", "while"));
+        setReservedWordsLowerCase(Arrays.asList("abstract", "continue", "for", "new", "switch",
+                "assert", "default", "if", "package", "synchronized", "do", "goto", "private",
+                "this", "break", "double", "implements", "protected", "throw", "byte", "else",
+                "import", "public", "throws", "case", "enum", "instanceof", "return", "transient",
+                "catch", "extends", "int", "short", "try", "char", "final", "interface", "static",
+                "void", "class", "finally", "const", "super", "while"));
 
-        languageSpecificPrimitives = new HashSet<String>(Arrays.asList(
-            "string",
-            "boolean",
-            "number",
-            "Object",
-            "Blob",
-            "Date"));
+        languageSpecificPrimitives =
+                new HashSet<String>(Arrays.asList("string", "boolean", "number", "Object", "Blob",
+                        "Date"));
         instantiationTypes.put("array", "Array");
 
         typeMapping = new HashMap<String, String>();
@@ -56,11 +50,7 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
         typeMapping.put("DateTime", "Date");
 
         importMapping = new HashMap<String, String>();
-        defaultIncludes = new HashSet<String>(Arrays.asList(
-            "Object",
-            "Array",
-            "Blob"
-        ));
+        defaultIncludes = new HashSet<String>(Arrays.asList("Object", "Array", "Blob"));
 
         typeMapping.put("binary", "string");
 
@@ -71,8 +61,9 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
         apiPackage = "API.Client";
         modelPackage = "API.Client";
 
-        cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "hides the timestamp when files were generated")
-                .defaultValue(Boolean.TRUE.toString()));
+        cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP,
+                "hides the timestamp when files were generated").defaultValue(Boolean.TRUE
+                .toString()));
     }
 
     @Override
@@ -81,7 +72,8 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
 
         // default HIDE_GENERATION_TIMESTAMP to true
         if (!additionalProperties.containsKey(CodegenConstants.HIDE_GENERATION_TIMESTAMP)) {
-            additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, Boolean.TRUE.toString());
+            additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP,
+                    Boolean.TRUE.toString());
         }
     }
 
@@ -92,8 +84,8 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
 
     @Override
     public String getHelp() {
-        return "Generates a Javascript AngularJS client library (beta) annotated with Google Closure Compiler annotations" +
-            "(https://developers.google.com/closure/compiler/docs/js-for-compiler?hl=en)";
+        return "Generates a Javascript AngularJS client library (beta) annotated with Google Closure Compiler annotations"
+                + "(https://developers.google.com/closure/compiler/docs/js-for-compiler?hl=en)";
     }
 
     @Override
@@ -102,8 +94,8 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
     }
 
     @Override
-    public String escapeReservedWord(String name) {           
-        if(this.reservedWordsMappings().containsKey(name)) {
+    public String escapeReservedWord(String name) {
+        if (this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
         return "_" + name;
@@ -121,7 +113,7 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
     @Override
     public String toVarName(String name) {
         // sanitize name
-        name = sanitizeName(name); 
+        name = sanitizeName(name);
 
         // replace - with _ e.g. created-at => created_at
         name = name.replaceAll("-", "_");
@@ -159,7 +151,8 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
 
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
-            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + camelize("model_" + name));
+            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to "
+                    + camelize("model_" + name));
             name = "model_" + name; // e.g. return => ModelReturn (after camelize)
         }
 
@@ -183,17 +176,15 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
         } else if (p instanceof MapProperty) {
             MapProperty mp = (MapProperty) p;
             Property inner = mp.getAdditionalProperties();
-            return "Object<!string, "+ getTypeDeclaration(inner) + ">";
+            return "Object<!string, " + getTypeDeclaration(inner) + ">";
         } else if (p instanceof FileProperty) {
             return "Object";
         }
         String type = super.getTypeDeclaration(p);
-        if (type.equals("boolean") ||
-                type.equals("Date") ||
-                type.equals("number") ||
-                type.equals("string")) {
+        if (type.equals("boolean") || type.equals("Date") || type.equals("number")
+                || type.equals("string")) {
             return type;
-                }
+        }
         return apiPackage + "." + type;
     }
 
@@ -232,7 +223,8 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
     @Override
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
         if (objs.get("imports") instanceof List) {
-            List<Map<String, String>> imports = (ArrayList<Map<String, String>>)objs.get("imports");
+            List<Map<String, String>> imports =
+                    (ArrayList<Map<String, String>>) objs.get("imports");
             Collections.sort(imports, new Comparator<Map<String, String>>() {
                 public int compare(Map<String, String> o1, Map<String, String> o2) {
                     return o1.get("import").compareTo(o2.get("import"));
@@ -255,7 +247,8 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
         // method name cannot use reserved keyword, e.g. return
         if (isReservedWord(operationId)) {
             String newOperationId = camelize("call_" + operationId, true);
-            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + newOperationId);
+            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to "
+                    + newOperationId);
             return newOperationId;
         }
 

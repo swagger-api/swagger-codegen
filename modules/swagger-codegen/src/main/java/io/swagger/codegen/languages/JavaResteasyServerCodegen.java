@@ -10,10 +10,11 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.File;
 import java.util.*;
 
-public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen implements JbossFeature {
+public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen implements
+        JbossFeature {
 
     protected boolean generateJbossDeploymentDescriptor = true;
-    
+
     public JavaResteasyServerCodegen() {
 
         super();
@@ -28,7 +29,7 @@ public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen im
 
         // clear model and api doc template as AbstractJavaJAXRSServerCodegen
         // does not support auto-generated markdown doc at the moment
-        //TODO: add doc templates
+        // TODO: add doc templates
         modelDocTemplateFiles.remove("model_doc.mustache");
         apiDocTemplateFiles.remove("api_doc.mustache");
 
@@ -36,8 +37,8 @@ public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen im
 
         embeddedTemplateDir = templateDir = "JavaJaxRS" + File.separator + "resteasy";
 
-        cliOptions.add(
-                CliOption.newBoolean(GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR, "Generate Jboss Deployment Descriptor"));
+        cliOptions.add(CliOption.newBoolean(GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR,
+                "Generate Jboss Deployment Descriptor"));
     }
 
     @Override
@@ -55,14 +56,15 @@ public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen im
         super.processOpts();
 
         if (additionalProperties.containsKey(GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR)) {
-            boolean generateJbossDeploymentDescriptorProp = convertPropertyToBooleanAndWriteBack(
-                    GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR);
+            boolean generateJbossDeploymentDescriptorProp =
+                    convertPropertyToBooleanAndWriteBack(GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR);
             this.setGenerateJbossDeploymentDescriptor(generateJbossDeploymentDescriptorProp);
         }
-        
+
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
         writeOptional(outputFolder, new SupportingFile("gradle.mustache", "", "build.gradle"));
-        writeOptional(outputFolder, new SupportingFile("settingsGradle.mustache", "", "settings.gradle"));
+        writeOptional(outputFolder, new SupportingFile("settingsGradle.mustache", "",
+                "settings.gradle"));
         writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("ApiException.mustache",
                 (sourceFolder + '/' + apiPackage).replace(".", "/"), "ApiException.java"));
@@ -72,12 +74,12 @@ public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen im
                 (sourceFolder + '/' + apiPackage).replace(".", "/"), "ApiResponseMessage.java"));
         supportingFiles.add(new SupportingFile("NotFoundException.mustache",
                 (sourceFolder + '/' + apiPackage).replace(".", "/"), "NotFoundException.java"));
-        writeOptional(outputFolder, new SupportingFile("web.mustache",
-                ("src/main/webapp/WEB-INF"), "web.xml"));
+        writeOptional(outputFolder, new SupportingFile("web.mustache", ("src/main/webapp/WEB-INF"),
+                "web.xml"));
 
         if (generateJbossDeploymentDescriptor) {
             writeOptional(outputFolder, new SupportingFile("jboss-web.mustache",
-                ("src/main/webapp/WEB-INF"), "jboss-web.xml"));
+                    ("src/main/webapp/WEB-INF"), "jboss-web.xml"));
         }
 
         writeOptional(outputFolder, new SupportingFile("RestApplication.mustache",
@@ -91,19 +93,23 @@ public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen im
 
         if ("joda".equals(dateLibrary)) {
             supportingFiles.add(new SupportingFile("JodaDateTimeProvider.mustache",
-                    (sourceFolder + '/' + apiPackage).replace(".", "/"), "JodaDateTimeProvider.java"));
+                    (sourceFolder + '/' + apiPackage).replace(".", "/"),
+                    "JodaDateTimeProvider.java"));
             supportingFiles.add(new SupportingFile("JodaLocalDateProvider.mustache",
-                    (sourceFolder + '/' + apiPackage).replace(".", "/"), "JodaLocalDateProvider.java"));
+                    (sourceFolder + '/' + apiPackage).replace(".", "/"),
+                    "JodaLocalDateProvider.java"));
         } else if (dateLibrary.startsWith("java8")) {
             supportingFiles.add(new SupportingFile("OffsetDateTimeProvider.mustache",
-                    (sourceFolder + '/' + apiPackage).replace(".", "/"), "OffsetDateTimeProvider.java"));
+                    (sourceFolder + '/' + apiPackage).replace(".", "/"),
+                    "OffsetDateTimeProvider.java"));
             supportingFiles.add(new SupportingFile("LocalDateProvider.mustache",
                     (sourceFolder + '/' + apiPackage).replace(".", "/"), "LocalDateProvider.java"));
         }
     }
 
     @Override
-    public void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co, Map<String, List<CodegenOperation>> operations) {
+    public void addOperationToGroup(String tag, String resourcePath, Operation operation,
+            CodegenOperation co, Map<String, List<CodegenOperation>> operations) {
         String basePath = resourcePath;
         if (basePath.startsWith("/")) {
             basePath = basePath.substring(1);
@@ -166,7 +172,8 @@ public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen im
                     String rt = operation.returnType;
                     int end = rt.lastIndexOf(">");
                     if (end > 0) {
-                        operation.returnType = rt.substring("Map<".length(), end).split(",")[1].trim();
+                        operation.returnType =
+                                rt.substring("Map<".length(), end).split(",")[1].trim();
                         operation.returnContainer = "Map";
                     }
                 } else if (operation.returnType.startsWith("Set")) {
@@ -184,11 +191,11 @@ public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen im
 
     @Override
     public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
-        //Add imports for Jackson
-        if(!BooleanUtils.toBoolean(model.isEnum)) {
+        // Add imports for Jackson
+        if (!BooleanUtils.toBoolean(model.isEnum)) {
             model.imports.add("JsonProperty");
 
-            if(BooleanUtils.toBoolean(model.hasEnums)) {
+            if (BooleanUtils.toBoolean(model.hasEnums)) {
                 model.imports.add("JsonValue");
             }
         }
@@ -198,8 +205,8 @@ public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen im
     public Map<String, Object> postProcessModelsEnum(Map<String, Object> objs) {
         objs = super.postProcessModelsEnum(objs);
 
-        //Add imports for Jackson
-        List<Map<String, String>> imports = (List<Map<String, String>>)objs.get("imports");
+        // Add imports for Jackson
+        List<Map<String, String>> imports = (List<Map<String, String>>) objs.get("imports");
         List<Object> models = (List<Object>) objs.get("models");
         for (Object _mo : models) {
             Map<String, Object> mo = (Map<String, Object>) _mo;
@@ -215,7 +222,7 @@ public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen im
 
         return objs;
     }
-    
+
     public void setGenerateJbossDeploymentDescriptor(boolean generateJbossDeploymentDescriptor) {
         this.generateJbossDeploymentDescriptor = generateJbossDeploymentDescriptor;
     }

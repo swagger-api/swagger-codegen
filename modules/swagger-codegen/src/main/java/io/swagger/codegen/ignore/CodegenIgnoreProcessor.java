@@ -12,7 +12,8 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Presents a processing utility for parsing and evaluating files containing common ignore patterns. (.swagger-codegen-ignore)
+ * Presents a processing utility for parsing and evaluating files containing common ignore patterns.
+ * (.swagger-codegen-ignore)
  */
 public class CodegenIgnoreProcessor {
 
@@ -26,7 +27,8 @@ public class CodegenIgnoreProcessor {
     /**
      * Loads the default ignore file (.swagger-codegen-ignore) from the specified path.
      *
-     * @param baseDirectory The base directory of the files to be processed. This contains the ignore file.
+     * @param baseDirectory The base directory of the files to be processed. This contains the
+     *        ignore file.
      */
     public CodegenIgnoreProcessor(final String baseDirectory) {
         this(baseDirectory, ".swagger-codegen-ignore");
@@ -35,8 +37,9 @@ public class CodegenIgnoreProcessor {
     /**
      * Loads the specified ignore file by name ([ignoreFile]) from the specified path.
      *
-     * @param baseDirectory The base directory of the files to be processed. This contains the ignore file.
-     * @param ignoreFile    The file containing ignore patterns.
+     * @param baseDirectory The base directory of the files to be processed. This contains the
+     *        ignore file.
+     * @param ignoreFile The file containing ignore patterns.
      */
     @SuppressWarnings("WeakerAccess")
     public CodegenIgnoreProcessor(final String baseDirectory, final String ignoreFile) {
@@ -50,7 +53,8 @@ public class CodegenIgnoreProcessor {
     }
 
     /**
-     * Constructs an instance of {@link CodegenIgnoreProcessor} from an ignore file defined by {@code targetIgnoreFile}.
+     * Constructs an instance of {@link CodegenIgnoreProcessor} from an ignore file defined by
+     * {@code targetIgnoreFile}.
      *
      * @param targetIgnoreFile The ignore file location.
      */
@@ -64,7 +68,8 @@ public class CodegenIgnoreProcessor {
                 loadCodegenRules(targetIgnoreFile);
                 this.ignoreFile = targetIgnoreFile;
             } catch (IOException e) {
-                LOGGER.error(String.format("Could not process %s.", targetIgnoreFile.getName()), e.getMessage());
+                LOGGER.error(String.format("Could not process %s.", targetIgnoreFile.getName()),
+                        e.getMessage());
             }
         } else {
             // log info message
@@ -76,18 +81,20 @@ public class CodegenIgnoreProcessor {
         try (BufferedReader reader = new BufferedReader(new FileReader(codegenIgnore))) {
             String line;
 
-            // NOTE: Comments that start with a : (e.g. //:) are pulled from git documentation for .gitignore
-            // see: https://github.com/git/git/blob/90f7b16b3adc78d4bbabbd426fb69aa78c714f71/Documentation/gitignore.txt
+            // NOTE: Comments that start with a : (e.g. //:) are pulled from git documentation for
+            // .gitignore
+            // see:
+            // https://github.com/git/git/blob/90f7b16b3adc78d4bbabbd426fb69aa78c714f71/Documentation/gitignore.txt
             while ((line = reader.readLine()) != null) {
-                if(
-                    //: A blank line matches no files, so it can serve as a separator for readability.
-                    line.length() == 0
-                ) continue;
+                if (
+                // : A blank line matches no files, so it can serve as a separator for readability.
+                line.length() == 0)
+                    continue;
 
                 Rule rule = Rule.create(line);
 
                 // rule could be null here if it's a COMMENT, for example
-                if(rule != null) {
+                if (rule != null) {
                     if (Boolean.TRUE.equals(rule.getNegated())) {
                         inclusionRules.add(rule);
                     } else {
@@ -99,19 +106,23 @@ public class CodegenIgnoreProcessor {
     }
 
     /**
-     * Determines whether or not a file defined by {@code toEvaluate} is allowed,
-     * under the exclusion rules from the ignore file being processed.
+     * Determines whether or not a file defined by {@code toEvaluate} is allowed, under the
+     * exclusion rules from the ignore file being processed.
      *
      * @param targetFile The file to check against exclusion rules from the ignore file.
-     * @return {@code false} if file matches any pattern in the ignore file (disallowed), otherwise {@code true} (allowed).
+     * @return {@code false} if file matches any pattern in the ignore file (disallowed), otherwise
+     *         {@code true} (allowed).
      */
     public boolean allowsFile(final File targetFile) {
-        if(this.ignoreFile == null) return true;
+        if (this.ignoreFile == null)
+            return true;
 
-        File file = new File(this.ignoreFile.getParentFile().toURI().relativize(targetFile.toURI()).getPath());
+        File file =
+                new File(this.ignoreFile.getParentFile().toURI().relativize(targetFile.toURI())
+                        .getPath());
         Boolean directoryExcluded = false;
         Boolean exclude = false;
-        if(exclusionRules.size() == 0 && inclusionRules.size() == 0) {
+        if (exclusionRules.size() == 0 && inclusionRules.size() == 0) {
             return true;
         }
 
@@ -120,12 +131,13 @@ public class CodegenIgnoreProcessor {
             Rule current = exclusionRules.get(i);
             Rule.Operation op = current.evaluate(file.getPath());
 
-            switch (op){
+            switch (op) {
                 case EXCLUDE:
                     exclude = true;
 
-                    // Include rule can't override rules that exclude a file by some parent directory.
-                    if(current instanceof DirectoryRule) {
+                    // Include rule can't override rules that exclude a file by some parent
+                    // directory.
+                    if (current instanceof DirectoryRule) {
                         directoryExcluded = true;
                     }
                     break;
@@ -140,7 +152,7 @@ public class CodegenIgnoreProcessor {
             }
         }
 
-        if(exclude) {
+        if (exclude) {
             // Only need to process inclusion rules if we've been excluded
             for (int i = 0; exclude && i < inclusionRules.size(); i++) {
                 Rule current = inclusionRules.get(i);
@@ -148,8 +160,8 @@ public class CodegenIgnoreProcessor {
 
                 // At this point exclude=true means the file should be ignored.
                 // op == INCLUDE means we have to flip that flag.
-                if(op.equals(Rule.Operation.INCLUDE)) {
-                    if(current instanceof DirectoryRule && directoryExcluded) {
+                if (op.equals(Rule.Operation.INCLUDE)) {
+                    if (current instanceof DirectoryRule && directoryExcluded) {
                         // e.g
                         // baz/
                         // !foo/bar/baz/
@@ -171,21 +183,26 @@ public class CodegenIgnoreProcessor {
     }
 
     /**
-     * Allows a consumer to manually inspect explicit "inclusion rules". That is, patterns in the ignore file which have been negated.
+     * Allows a consumer to manually inspect explicit "inclusion rules". That is, patterns in the
+     * ignore file which have been negated.
      *
-     * @return A {@link ImmutableList#copyOf(Collection)} of rules which possibly negate exclusion rules in the ignore file.
+     * @return A {@link ImmutableList#copyOf(Collection)} of rules which possibly negate exclusion
+     *         rules in the ignore file.
      */
     public List<Rule> getInclusionRules() {
         return ImmutableList.copyOf(inclusionRules);
     }
 
     /**
-     * Allows a consumer to manually inspect all "exclusion rules". That is, patterns in the ignore file which represent
-     * files and directories to be excluded, unless explicitly overridden by {@link CodegenIgnoreProcessor#getInclusionRules()} rules.
+     * Allows a consumer to manually inspect all "exclusion rules". That is, patterns in the ignore
+     * file which represent files and directories to be excluded, unless explicitly overridden by
+     * {@link CodegenIgnoreProcessor#getInclusionRules()} rules.
      *
-     * NOTE: Existence in this list doesn't mean a file is excluded. The rule can be overridden by {@link CodegenIgnoreProcessor#getInclusionRules()} rules.
+     * NOTE: Existence in this list doesn't mean a file is excluded. The rule can be overridden by
+     * {@link CodegenIgnoreProcessor#getInclusionRules()} rules.
      *
-     * @return A {@link ImmutableList#copyOf(Collection)} of rules which define exclusions by patterns in the ignore file.
+     * @return A {@link ImmutableList#copyOf(Collection)} of rules which define exclusions by
+     *         patterns in the ignore file.
      */
     public List<Rule> getExclusionRules() {
         return ImmutableList.copyOf(exclusionRules);

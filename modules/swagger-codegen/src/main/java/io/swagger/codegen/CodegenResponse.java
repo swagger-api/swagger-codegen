@@ -11,7 +11,8 @@ public class CodegenResponse {
     public List<Map<String, Object>> examples;
     public String dataType, baseType, containerType;
     public boolean hasHeaders;
-    public boolean isString, isInteger, isLong, isFloat, isDouble, isByteArray, isBoolean, isDate, isDateTime;
+    public boolean isString, isInteger, isLong, isFloat, isDouble, isByteArray, isBoolean, isDate,
+            isDateTime;
     public boolean isDefault;
     public boolean simpleType;
     public boolean primitiveType;
@@ -30,8 +31,10 @@ public class CodegenResponse {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         CodegenResponse that = (CodegenResponse) o;
 
@@ -49,7 +52,8 @@ public class CodegenResponse {
             return false;
         if (baseType != null ? !baseType.equals(that.baseType) : that.baseType != null)
             return false;
-        if (containerType != null ? !containerType.equals(that.containerType) : that.containerType != null)
+        if (containerType != null ? !containerType.equals(that.containerType)
+                : that.containerType != null)
             return false;
         if (isDefault != that.isDefault)
             return false;
@@ -67,7 +71,8 @@ public class CodegenResponse {
             return false;
         if (schema != null ? !schema.equals(that.schema) : that.schema != null)
             return false;
-        if (vendorExtensions != null ? !vendorExtensions.equals(that.vendorExtensions) : that.vendorExtensions != null)
+        if (vendorExtensions != null ? !vendorExtensions.equals(that.vendorExtensions)
+                : that.vendorExtensions != null)
             return false;
         return jsonSchema != null ? jsonSchema.equals(that.jsonSchema) : that.jsonSchema == null;
 
@@ -78,18 +83,18 @@ public class CodegenResponse {
         int result = headers.hashCode();
         result = 31 * result + (code != null ? code.hashCode() : 0);
         result = 31 * result + (message != null ? message.hashCode() : 0);
-        result = 31 * result + (hasMore ? 13:31);
+        result = 31 * result + (hasMore ? 13 : 31);
         result = 31 * result + (examples != null ? examples.hashCode() : 0);
         result = 31 * result + (dataType != null ? dataType.hashCode() : 0);
         result = 31 * result + (baseType != null ? baseType.hashCode() : 0);
         result = 31 * result + (containerType != null ? containerType.hashCode() : 0);
-        result = 31 * result + (isDefault ? 13:31);
-        result = 31 * result + (simpleType ? 13:31);
-        result = 31 * result + (primitiveType ? 13:31);
-        result = 31 * result + (isMapContainer ? 13:31);
-        result = 31 * result + (isListContainer ? 13:31);
-        result = 31 * result + (isBinary ? 13:31);
-        result = 31 * result + (isFile ? 13:31);
+        result = 31 * result + (isDefault ? 13 : 31);
+        result = 31 * result + (simpleType ? 13 : 31);
+        result = 31 * result + (primitiveType ? 13 : 31);
+        result = 31 * result + (isMapContainer ? 13 : 31);
+        result = 31 * result + (isListContainer ? 13 : 31);
+        result = 31 * result + (isBinary ? 13 : 31);
+        result = 31 * result + (isFile ? 13 : 31);
         result = 31 * result + (schema != null ? schema.hashCode() : 0);
         result = 31 * result + (jsonSchema != null ? jsonSchema.hashCode() : 0);
         result = 31 * result + (vendorExtensions != null ? vendorExtensions.hashCode() : 0);

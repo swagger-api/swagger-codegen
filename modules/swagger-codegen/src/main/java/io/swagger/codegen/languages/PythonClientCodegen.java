@@ -31,7 +31,7 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
 
     protected Map<Character, String> regexModifiers;
 
-	private String testFolder;
+    private String testFolder;
 
     public PythonClientCodegen() {
         super();
@@ -89,18 +89,21 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         typeMapping.put("UUID", "str");
 
         // from https://docs.python.org/release/2.5.4/ref/keywords.html
-        setReservedWordsLowerCase(
-                Arrays.asList(
-                    // local variable name used in API methods (endpoints)
-                    "all_params", "resource_path", "path_params", "query_params",
-                    "header_params", "form_params", "local_var_files", "body_params",  "auth_settings",
-                    // @property
-                    "property",
-                    // python reserved words
-                    "and", "del", "from", "not", "while", "as", "elif", "global", "or", "with",
-                    "assert", "else", "if", "pass", "yield", "break", "except", "import",
-                    "print", "class", "exec", "in", "raise", "continue", "finally", "is",
-                    "return", "def", "for", "lambda", "try", "self"));
+        setReservedWordsLowerCase(Arrays.asList(
+                // local variable name used in API methods (endpoints)
+                "all_params", "resource_path", "path_params", "query_params",
+                "header_params",
+                "form_params",
+                "local_var_files",
+                "body_params",
+                "auth_settings",
+                // @property
+                "property",
+                // python reserved words
+                "and", "del", "from", "not", "while", "as", "elif", "global", "or", "with",
+                "assert", "else", "if", "pass", "yield", "break", "except", "import", "print",
+                "class", "exec", "in", "raise", "continue", "finally", "is", "return", "def",
+                "for", "lambda", "try", "self"));
 
         regexModifiers = new HashMap<Character, String>();
         regexModifiers.put('i', "IGNORECASE");
@@ -111,15 +114,17 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         regexModifiers.put('x', "VERBOSE");
 
         cliOptions.clear();
-        cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "python package name (convention: snake_case).")
-                .defaultValue("swagger_client"));
+        cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME,
+                "python package name (convention: snake_case).").defaultValue("swagger_client"));
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_VERSION, "python package version.")
                 .defaultValue("1.0.0"));
         cliOptions.add(new CliOption(PACKAGE_URL, "python package URL."));
         cliOptions.add(CliOption.newBoolean(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG,
-                CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG_DESC).defaultValue(Boolean.TRUE.toString()));
-        cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "hides the timestamp when files were generated")
-                .defaultValue(Boolean.TRUE.toString()));
+                CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG_DESC).defaultValue(
+                Boolean.TRUE.toString()));
+        cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP,
+                "hides the timestamp when files were generated").defaultValue(Boolean.TRUE
+                .toString()));
     }
 
     @Override
@@ -127,30 +132,33 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         super.processOpts();
         Boolean excludeTests = false;
 
-        if(additionalProperties.containsKey(CodegenConstants.EXCLUDE_TESTS)) {
-            excludeTests = Boolean.valueOf(additionalProperties.get(CodegenConstants.EXCLUDE_TESTS).toString());
+        if (additionalProperties.containsKey(CodegenConstants.EXCLUDE_TESTS)) {
+            excludeTests =
+                    Boolean.valueOf(additionalProperties.get(CodegenConstants.EXCLUDE_TESTS)
+                            .toString());
         }
 
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_NAME)) {
             setPackageName((String) additionalProperties.get(CodegenConstants.PACKAGE_NAME));
-        }
-        else {
+        } else {
             setPackageName("swagger_client");
         }
 
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_VERSION)) {
             setPackageVersion((String) additionalProperties.get(CodegenConstants.PACKAGE_VERSION));
-        }
-        else {
+        } else {
             setPackageVersion("1.0.0");
         }
 
         // default HIDE_GENERATION_TIMESTAMP to true
         if (!additionalProperties.containsKey(CodegenConstants.HIDE_GENERATION_TIMESTAMP)) {
-            additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, Boolean.TRUE.toString());
-        } else {
             additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP,
-                    Boolean.valueOf(additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP).toString()));
+                    Boolean.TRUE.toString());
+        } else {
+            additionalProperties.put(
+                    CodegenConstants.HIDE_GENERATION_TIMESTAMP,
+                    Boolean.valueOf(additionalProperties().get(
+                            CodegenConstants.HIDE_GENERATION_TIMESTAMP).toString()));
         }
 
         additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
@@ -173,18 +181,24 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
 
         supportingFiles.add(new SupportingFile("setup.mustache", "", "setup.py"));
         supportingFiles.add(new SupportingFile("tox.mustache", "", "tox.ini"));
-        supportingFiles.add(new SupportingFile("test-requirements.mustache", "", "test-requirements.txt"));
+        supportingFiles.add(new SupportingFile("test-requirements.mustache", "",
+                "test-requirements.txt"));
         supportingFiles.add(new SupportingFile("requirements.mustache", "", "requirements.txt"));
 
-        supportingFiles.add(new SupportingFile("api_client.mustache", swaggerFolder, "api_client.py"));
+        supportingFiles.add(new SupportingFile("api_client.mustache", swaggerFolder,
+                "api_client.py"));
         supportingFiles.add(new SupportingFile("rest.mustache", swaggerFolder, "rest.py"));
-        supportingFiles.add(new SupportingFile("configuration.mustache", swaggerFolder, "configuration.py"));
-        supportingFiles.add(new SupportingFile("__init__package.mustache", swaggerFolder, "__init__.py"));
-        supportingFiles.add(new SupportingFile("__init__model.mustache", modelPackage, "__init__.py"));
+        supportingFiles.add(new SupportingFile("configuration.mustache", swaggerFolder,
+                "configuration.py"));
+        supportingFiles.add(new SupportingFile("__init__package.mustache", swaggerFolder,
+                "__init__.py"));
+        supportingFiles.add(new SupportingFile("__init__model.mustache", modelPackage,
+                "__init__.py"));
         supportingFiles.add(new SupportingFile("__init__api.mustache", apiPackage, "__init__.py"));
 
-        if(Boolean.FALSE.equals(excludeTests)) {
-            supportingFiles.add(new SupportingFile("__init__test.mustache", testFolder, "__init__.py"));
+        if (Boolean.FALSE.equals(excludeTests)) {
+            supportingFiles.add(new SupportingFile("__init__test.mustache", testFolder,
+                    "__init__.py"));
         }
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
@@ -196,7 +210,7 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     @Override
-    public void postProcessParameter(CodegenParameter parameter){
+    public void postProcessParameter(CodegenParameter parameter) {
         postProcessPattern(parameter.pattern, parameter.vendorExtensions);
     }
 
@@ -210,21 +224,21 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
      * does not support this in as natural a way so it needs to convert it. See
      * https://docs.python.org/2/howto/regex.html#compilation-flags for details.
      */
-    public void postProcessPattern(String pattern, Map<String, Object> vendorExtensions){
-        if(pattern != null) {
+    public void postProcessPattern(String pattern, Map<String, Object> vendorExtensions) {
+        if (pattern != null) {
             int i = pattern.lastIndexOf('/');
 
-            //Must follow Perl /pattern/modifiers convention
-            if(pattern.charAt(0) != '/' || i < 2) {
+            // Must follow Perl /pattern/modifiers convention
+            if (pattern.charAt(0) != '/' || i < 2) {
                 throw new IllegalArgumentException("Pattern must follow the Perl "
-                        + "/pattern/modifiers convention. "+pattern+" is not valid.");
+                        + "/pattern/modifiers convention. " + pattern + " is not valid.");
             }
 
             String regex = pattern.substring(1, i).replace("'", "\\'");
             List<String> modifiers = new ArrayList<String>();
 
-            for(char c : pattern.substring(i).toCharArray()) {
-                if(regexModifiers.containsKey(c)) {
+            for (char c : pattern.substring(i).toCharArray()) {
+                if (regexModifiers.containsKey(c)) {
                     String modifier = regexModifiers.get(c);
                     modifiers.add(modifier);
                 }
@@ -251,8 +265,8 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     @Override
-    public String escapeReservedWord(String name) {           
-        if(this.reservedWordsMappings().containsKey(name)) {
+    public String escapeReservedWord(String name) {
+        if (this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
         return "_" + name;
@@ -291,12 +305,12 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
 
     @Override
     public String apiTestFileFolder() {
-    	return outputFolder + File.separatorChar + testFolder;
+        return outputFolder + File.separatorChar + testFolder;
     }
 
     @Override
     public String modelTestFileFolder() {
-    	return outputFolder + File.separatorChar + testFolder;
+        return outputFolder + File.separatorChar + testFolder;
     }
 
     @Override
@@ -332,7 +346,8 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
     @Override
     public String toVarName(String name) {
         // sanitize name
-        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the
+                                   // methods parameters as 'final'.
 
         // remove dollar sign
         name = name.replaceAll("$", "");
@@ -370,19 +385,23 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
 
     @Override
     public String toModelName(String name) {
-        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the
+                                   // methods parameters as 'final'.
         // remove dollar sign
         name = name.replaceAll("$", "");
 
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
-            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + camelize("model_" + name));
+            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to "
+                    + camelize("model_" + name));
             name = "model_" + name; // e.g. return => ModelReturn (after camelize)
         }
 
         // model name starts with number
         if (name.matches("^\\d.*")) {
-            LOGGER.warn(name + " (model name starts with number) cannot be used as model name. Renamed to " + camelize("model_" + name));
+            LOGGER.warn(name
+                    + " (model name starts with number) cannot be used as model name. Renamed to "
+                    + camelize("model_" + name));
             name = "model_" + name; // e.g. 200Response => Model200Response (after camelize)
         }
 
@@ -401,19 +420,23 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
 
     @Override
     public String toModelFilename(String name) {
-        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the
+                                   // methods parameters as 'final'.
         // remove dollar sign
         name = name.replaceAll("$", "");
 
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
-            LOGGER.warn(name + " (reserved word) cannot be used as model filename. Renamed to " + underscore(dropDots("model_" + name)));
+            LOGGER.warn(name + " (reserved word) cannot be used as model filename. Renamed to "
+                    + underscore(dropDots("model_" + name)));
             name = "model_" + name; // e.g. return => ModelReturn (after camelize)
         }
 
         // model name starts with number
         if (name.matches("^\\d.*")) {
-            LOGGER.warn(name + " (model name starts with number) cannot be used as model name. Renamed to " + underscore("model_" + name));
+            LOGGER.warn(name
+                    + " (model name starts with number) cannot be used as model name. Renamed to "
+                    + underscore("model_" + name));
             name = "model_" + name; // e.g. 200Response => Model200Response (after camelize)
         }
 
@@ -432,7 +455,7 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
 
     @Override
     public String toModelTestFilename(String name) {
-    	return "test_" + toModelFilename(name);
+        return "test_" + toModelFilename(name);
     };
 
     @Override
@@ -446,7 +469,7 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
 
     @Override
     public String toApiTestFilename(String name) {
-    	return "test_" + toApiFilename(name);
+        return "test_" + toApiFilename(name);
     }
 
     @Override
@@ -468,14 +491,16 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
 
     @Override
     public String toOperationId(String operationId) {
-        // throw exception if method name is empty (should not occur as an auto-generated method name will be used)
+        // throw exception if method name is empty (should not occur as an auto-generated method
+        // name will be used)
         if (StringUtils.isEmpty(operationId)) {
             throw new RuntimeException("Empty method name (operationId) not allowed");
         }
 
         // method name cannot use reserved keyword, e.g. return
         if (isReservedWord(operationId)) {
-            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + underscore(sanitizeName("call_" + operationId)));
+            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to "
+                    + underscore(sanitizeName("call_" + operationId)));
             operationId = "call_" + operationId;
         }
 
@@ -497,8 +522,8 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
     /**
      * Generate Python package name from String `packageName`
      *
-     * (PEP 0008) Python packages should also have short, all-lowercase names,
-     * although the use of underscores is discouraged.
+     * (PEP 0008) Python packages should also have short, all-lowercase names, although the use of
+     * underscores is discouraged.
      *
      * @param packageName Package name
      * @return Python package name that conforms to PEP 0008

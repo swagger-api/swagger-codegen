@@ -26,8 +26,7 @@ public class StaticHtmlOptionsProvider implements OptionsProvider {
         ImmutableMap.Builder<String, String> builder = new ImmutableMap.Builder<String, String>();
         return builder.put(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG, SORT_PARAMS_VALUE)
                 .put(CodegenConstants.ENSURE_UNIQUE_PARAMS, ENSURE_UNIQUE_PARAMS_VALUE)
-                .put("appName", "Swagger Sample")
-                .put("appDescription", "A sample swagger server")
+                .put("appName", "Swagger Sample").put("appDescription", "A sample swagger server")
                 .put("infoUrl", "https://helloreverb.com")
                 .put("infoEmail", "hello@helloreverb.com")
                 .put("licenseInfo", "All rights reserved")

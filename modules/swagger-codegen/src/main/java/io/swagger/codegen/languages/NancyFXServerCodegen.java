@@ -58,13 +58,12 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
         outputFolder = "generated-code" + File.separator + getName();
         apiTemplateFiles.put("api.mustache", ".cs");
 
-        // Early versions use no prefix for interfaces. Defaulting to I- common practice would break existing users.
+        // Early versions use no prefix for interfaces. Defaulting to I- common practice would break
+        // existing users.
         setInterfacePrefix("");
 
         // contextually reserved words
-        setReservedWordsLowerCase(
-            asList("var", "async", "await", "dynamic", "yield")
-        );
+        setReservedWordsLowerCase(asList("var", "async", "await", "dynamic", "yield"));
 
         cliOptions.clear();
 
@@ -75,13 +74,16 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
         addOption(INTERFACE_PREFIX, INTERFACE_PREFIX_DESC, interfacePrefix);
 
         // CLI Switches
-        addSwitch(SORT_PARAMS_BY_REQUIRED_FLAG, SORT_PARAMS_BY_REQUIRED_FLAG_DESC, sortParamsByRequiredFlag);
+        addSwitch(SORT_PARAMS_BY_REQUIRED_FLAG, SORT_PARAMS_BY_REQUIRED_FLAG_DESC,
+                sortParamsByRequiredFlag);
         addSwitch(OPTIONAL_PROJECT_FILE, OPTIONAL_PROJECT_FILE_DESC, optionalProjectFileFlag);
         addSwitch(USE_DATETIME_OFFSET, USE_DATETIME_OFFSET_DESC, useDateTimeOffsetFlag);
         addSwitch(USE_COLLECTION, USE_COLLECTION_DESC, useCollection);
         addSwitch(RETURN_ICOLLECTION, RETURN_ICOLLECTION_DESC, returnICollection);
-        addSwitch(IMMUTABLE_OPTION, "Enabled by default. If disabled generates model classes with setters", true);
-        addSwitch(USE_BASE_PATH, "Enabled by default. If disabled, module paths will not mirror api base path", true);
+        addSwitch(IMMUTABLE_OPTION,
+                "Enabled by default. If disabled generates model classes with setters", true);
+        addSwitch(USE_BASE_PATH,
+                "Enabled by default. If disabled, module paths will not mirror api base path", true);
         typeMapping.putAll(nodaTimeTypesMappings());
         languageSpecificPrimitives.addAll(nodaTimePrimitiveTypes());
 
@@ -107,16 +109,21 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
     public void processOpts() {
         super.processOpts();
 
-        apiPackage = isNullOrEmpty(packageName) ? API_NAMESPACE : packageName +  "." + API_NAMESPACE;
-        modelPackage = isNullOrEmpty(packageName) ? MODEL_NAMESPACE : packageName + "." + MODEL_NAMESPACE;
+        apiPackage = isNullOrEmpty(packageName) ? API_NAMESPACE : packageName + "." + API_NAMESPACE;
+        modelPackage =
+                isNullOrEmpty(packageName) ? MODEL_NAMESPACE : packageName + "." + MODEL_NAMESPACE;
 
-        supportingFiles.add(new SupportingFile("parameters.mustache", sourceFile("Utils"), "Parameters.cs"));
-        supportingFiles.add(new SupportingFile("packages.config.mustache", sourceFolder(), "packages.config"));
-        supportingFiles.add(new SupportingFile("nuspec.mustache", sourceFolder(), packageName + ".nuspec"));
+        supportingFiles.add(new SupportingFile("parameters.mustache", sourceFile("Utils"),
+                "Parameters.cs"));
+        supportingFiles.add(new SupportingFile("packages.config.mustache", sourceFolder(),
+                "packages.config"));
+        supportingFiles.add(new SupportingFile("nuspec.mustache", sourceFolder(), packageName
+                + ".nuspec"));
 
         if (optionalProjectFileFlag) {
             supportingFiles.add(new SupportingFile("Solution.mustache", "", packageName + ".sln"));
-            supportingFiles.add(new SupportingFile("Project.mustache", sourceFolder(), packageName + ".csproj"));
+            supportingFiles.add(new SupportingFile("Project.mustache", sourceFolder(), packageName
+                    + ".csproj"));
         }
         additionalProperties.put("packageGuid", packageGuid);
 
@@ -140,18 +147,23 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
         for (final Entry<String, String> entry : ImmutableSet.copyOf(importMapping.entrySet())) {
             final String model = entry.getKey();
             final String[] namespaceInfo = entry.getValue().split("\\s");
-            final String[] namespace = (namespaceInfo.length > 0 ? namespaceInfo[0].trim() : "").split(":");
+            final String[] namespace =
+                    (namespaceInfo.length > 0 ? namespaceInfo[0].trim() : "").split(":");
             final String namespaceName = namespace.length > 0 ? namespace[0].trim() : null;
             final String modelClass = namespace.length > 1 ? namespace[1].trim() : null;
             final String assembly = namespaceInfo.length > 1 ? namespaceInfo[1].trim() : null;
-            final String assemblyVersion = namespaceInfo.length > 2 ? namespaceInfo[2].trim() : null;
-            final String assemblyFramework = namespaceInfo.length > 3 ? namespaceInfo[3].trim() : "net45";
+            final String assemblyVersion =
+                    namespaceInfo.length > 2 ? namespaceInfo[2].trim() : null;
+            final String assemblyFramework =
+                    namespaceInfo.length > 3 ? namespaceInfo[3].trim() : "net45";
 
             if (isNullOrEmpty(model) || isNullOrEmpty(namespaceName)) {
-                log.warn(String.format("Could not import: '%s' - invalid namespace: '%s'", model, entry.getValue()));
+                log.warn(String.format("Could not import: '%s' - invalid namespace: '%s'", model,
+                        entry.getValue()));
                 importMapping.remove(model);
             } else {
-                log.info(String.format("Importing: '%s' from '%s' namespace.", model, namespaceName));
+                log.info(String
+                        .format("Importing: '%s' from '%s' namespace.", model, namespaceName));
                 importMapping.put(model, namespaceName);
             }
             if (!isNullOrEmpty(modelClass)) {
@@ -209,7 +221,7 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
 
     @Override
     public Map<String, Object> postProcessAllModels(final Map<String, Object> models) {
-        final Map<String, Object> processed =  super.postProcessAllModels(models);
+        final Map<String, Object> processed = super.postProcessAllModels(models);
         postProcessParentModels(models);
         return processed;
     }
@@ -247,7 +259,8 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
         return null;
     }
 
-    private void processParentPropertiesInChildModel(final CodegenModel parent, final CodegenModel child) {
+    private void processParentPropertiesInChildModel(final CodegenModel parent,
+            final CodegenModel child) {
         final Map<String, CodegenProperty> childPropertiesByName = new HashMap<>(child.vars.size());
         for (final CodegenProperty property : child.vars) {
             childPropertiesByName.put(property.name, property);
@@ -256,7 +269,7 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
         for (final CodegenProperty property : parent.vars) {
             final CodegenProperty duplicatedByParent = childPropertiesByName.get(property.name);
             if (duplicatedByParent != null) {
-                log.info(String.format("Property: '%s' in '%s' model is inherited from '%s'" ,
+                log.info(String.format("Property: '%s' in '%s' model is inherited from '%s'",
                         property.name, child.classname, parent.classname));
                 duplicatedByParent.isInherited = true;
                 final CodegenProperty parentVar = duplicatedByParent.clone();
@@ -287,11 +300,9 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
             return "Empty";
         }
 
-        final String enumName = camelize(
-                sanitizeName(name)
-                .replaceFirst("^_", "")
-                .replaceFirst("_$", "")
-                .replaceAll("-", "_"));
+        final String enumName =
+                camelize(sanitizeName(name).replaceFirst("^_", "").replaceFirst("_$", "")
+                        .replaceAll("-", "_"));
         final String result;
         if (enumName.matches("\\d.*")) {
             result = "_" + enumName;
@@ -324,8 +335,9 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
         final String result;
         if (modelNameMapping.containsValue(name)) {
             final String modelName = modelNameMapping.inverse().get(name);
-            result = importMapping.containsKey(modelName) ?
-                importMapping.get(modelName) : super.toModelImport(name);
+            result =
+                    importMapping.containsKey(modelName) ? importMapping.get(modelName) : super
+                            .toModelImport(name);
         } else if (importMapping.containsKey(name)) {
             result = importMapping.get(name);
         } else {
@@ -339,14 +351,15 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
     public String toModelName(final String name) {
         final String modelName = super.toModelName(name);
         final String mappedModelName = modelNameMapping.get(modelName);
-        return isNullOrEmpty(mappedModelName) ? modelName: mappedModelName;
+        return isNullOrEmpty(mappedModelName) ? modelName : mappedModelName;
     }
 
     @Override
     public void preprocessSwagger(final Swagger swagger) {
         additionalProperties.put("packageContext", sanitizeName(swagger.getBasePath()));
         final Object basePathOption = additionalProperties.get(USE_BASE_PATH);
-        additionalProperties.put("baseContext", basePathOption == null ? swagger.getBasePath() : "/");
+        additionalProperties.put("baseContext", basePathOption == null ? swagger.getBasePath()
+                : "/");
     }
 
     @Override
@@ -374,16 +387,15 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
         return new Predicate<Property>() {
             @Override
             public boolean apply(Property property) {
-                return property instanceof StringProperty && "time".equalsIgnoreCase(property.getFormat());
+                return property instanceof StringProperty
+                        && "time".equalsIgnoreCase(property.getFormat());
             }
         };
     }
 
     private static Map<String, String> nodaTimeTypesMappings() {
-        return ImmutableMap.of(
-                "time", "LocalTime?",
-                "date", "ZonedDateTime?",
-                "datetime", "ZonedDateTime?");
+        return ImmutableMap.of("time", "LocalTime?", "date", "ZonedDateTime?", "datetime",
+                "ZonedDateTime?");
     }
 
     private static Set<String> nodaTimePrimitiveTypes() {
@@ -395,7 +407,7 @@ public class NancyFXServerCodegen extends AbstractCSharpCodegen {
         private final String framework;
 
         private DependencyInfo(final String version, final String framework) {
-            this.version =  version;
+            this.version = version;
             this.framework = framework;
         }
     }

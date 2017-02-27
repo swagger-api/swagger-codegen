@@ -12,11 +12,11 @@ import java.io.File;
 import java.util.*;
 import java.util.regex.Pattern;
 
-public class JavaClientCodegen extends AbstractJavaCodegen
-        implements BeanValidationFeatures, PerformBeanValidationFeatures {
+public class JavaClientCodegen extends AbstractJavaCodegen implements BeanValidationFeatures,
+        PerformBeanValidationFeatures {
     static final String MEDIA_TYPE = "mediaType";
 
-	@SuppressWarnings("hiding")
+    @SuppressWarnings("hiding")
     private static final Logger LOGGER = LoggerFactory.getLogger(JavaClientCodegen.class);
 
     public static final String USE_RX_JAVA = "useRxJava";
@@ -42,21 +42,39 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         apiPackage = "io.swagger.client.api";
         modelPackage = "io.swagger.client.model";
 
-        cliOptions.add(CliOption.newBoolean(USE_RX_JAVA, "Whether to use the RxJava adapter with the retrofit2 library."));
-        cliOptions.add(CliOption.newBoolean(PARCELABLE_MODEL, "Whether to generate models for Android that implement Parcelable with the okhttp-gson library."));
-        cliOptions.add(CliOption.newBoolean(USE_PLAY24_WS, "Use Play! 2.4 Async HTTP client (Play WS API)"));
-        cliOptions.add(CliOption.newBoolean(SUPPORT_JAVA6, "Whether to support Java6 with the Jersey1 library."));
-        cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
+        cliOptions.add(CliOption.newBoolean(USE_RX_JAVA,
+                "Whether to use the RxJava adapter with the retrofit2 library."));
+        cliOptions
+                .add(CliOption
+                        .newBoolean(PARCELABLE_MODEL,
+                                "Whether to generate models for Android that implement Parcelable with the okhttp-gson library."));
+        cliOptions.add(CliOption.newBoolean(USE_PLAY24_WS,
+                "Use Play! 2.4 Async HTTP client (Play WS API)"));
+        cliOptions.add(CliOption.newBoolean(SUPPORT_JAVA6,
+                "Whether to support Java6 with the Jersey1 library."));
+        cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION,
+                "Use BeanValidation API annotations"));
         cliOptions.add(CliOption.newBoolean(PERFORM_BEANVALIDATION, "Perform BeanValidation"));
 
-        supportedLibraries.put("jersey1", "HTTP client: Jersey client 1.19.1. JSON processing: Jackson 2.7.0. Enable Java6 support using '-DsupportJava6=true'.");
-        supportedLibraries.put("feign", "HTTP client: Netflix Feign 8.16.0. JSON processing: Jackson 2.7.0");
-        supportedLibraries.put("jersey2", "HTTP client: Jersey client 2.22.2. JSON processing: Jackson 2.7.0");
-        supportedLibraries.put("okhttp-gson", "HTTP client: OkHttp 2.7.5. JSON processing: Gson 2.6.2. Enable Parcelable modles on Android using '-DparcelableModel=true'");
-        supportedLibraries.put(RETROFIT_1, "HTTP client: OkHttp 2.7.5. JSON processing: Gson 2.3.1 (Retrofit 1.9.0). IMPORTANT NOTE: retrofit1.x is no longer actively maintained so please upgrade to 'retrofit2' instead.");
-        supportedLibraries.put(RETROFIT_2, "HTTP client: OkHttp 3.2.0. JSON processing: Gson 2.6.1 (Retrofit 2.0.2). Enable the RxJava adapter using '-DuseRxJava=true'. (RxJava 1.1.3)");
+        supportedLibraries
+                .put("jersey1",
+                        "HTTP client: Jersey client 1.19.1. JSON processing: Jackson 2.7.0. Enable Java6 support using '-DsupportJava6=true'.");
+        supportedLibraries.put("feign",
+                "HTTP client: Netflix Feign 8.16.0. JSON processing: Jackson 2.7.0");
+        supportedLibraries.put("jersey2",
+                "HTTP client: Jersey client 2.22.2. JSON processing: Jackson 2.7.0");
+        supportedLibraries
+                .put("okhttp-gson",
+                        "HTTP client: OkHttp 2.7.5. JSON processing: Gson 2.6.2. Enable Parcelable modles on Android using '-DparcelableModel=true'");
+        supportedLibraries
+                .put(RETROFIT_1,
+                        "HTTP client: OkHttp 2.7.5. JSON processing: Gson 2.3.1 (Retrofit 1.9.0). IMPORTANT NOTE: retrofit1.x is no longer actively maintained so please upgrade to 'retrofit2' instead.");
+        supportedLibraries
+                .put(RETROFIT_2,
+                        "HTTP client: OkHttp 3.2.0. JSON processing: Gson 2.6.1 (Retrofit 2.0.2). Enable the RxJava adapter using '-DuseRxJava=true'. (RxJava 1.1.3)");
 
-        CliOption libraryOption = new CliOption(CodegenConstants.LIBRARY, "library template (sub-template) to use");
+        CliOption libraryOption =
+                new CliOption(CodegenConstants.LIBRARY, "library template (sub-template) to use");
         libraryOption.setEnum(supportedLibraries);
         // set okhttp-gson as the default
         libraryOption.setDefault("okhttp-gson");
@@ -93,7 +111,8 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         additionalProperties.put(USE_PLAY24_WS, usePlay24WS);
 
         if (additionalProperties.containsKey(PARCELABLE_MODEL)) {
-            this.setParcelableModel(Boolean.valueOf(additionalProperties.get(PARCELABLE_MODEL).toString()));
+            this.setParcelableModel(Boolean.valueOf(additionalProperties.get(PARCELABLE_MODEL)
+                    .toString()));
         }
         // put the boolean value back to PARCELABLE_MODEL in additionalProperties
         additionalProperties.put(PARCELABLE_MODEL, parcelableModel);
@@ -109,67 +128,85 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         final String invokerFolder = (sourceFolder + '/' + invokerPackage).replace(".", "/");
         final String authFolder = (sourceFolder + '/' + invokerPackage + ".auth").replace(".", "/");
 
-        //Common files
+        // Common files
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
         writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
         writeOptional(outputFolder, new SupportingFile("build.gradle.mustache", "", "build.gradle"));
         writeOptional(outputFolder, new SupportingFile("build.sbt.mustache", "", "build.sbt"));
-        writeOptional(outputFolder, new SupportingFile("settings.gradle.mustache", "", "settings.gradle"));
-        writeOptional(outputFolder, new SupportingFile("gradle.properties.mustache", "", "gradle.properties"));
-        writeOptional(outputFolder, new SupportingFile("manifest.mustache", projectFolder, "AndroidManifest.xml"));
+        writeOptional(outputFolder, new SupportingFile("settings.gradle.mustache", "",
+                "settings.gradle"));
+        writeOptional(outputFolder, new SupportingFile("gradle.properties.mustache", "",
+                "gradle.properties"));
+        writeOptional(outputFolder, new SupportingFile("manifest.mustache", projectFolder,
+                "AndroidManifest.xml"));
         supportingFiles.add(new SupportingFile("travis.mustache", "", ".travis.yml"));
-        supportingFiles.add(new SupportingFile("ApiClient.mustache", invokerFolder, "ApiClient.java"));
-        supportingFiles.add(new SupportingFile("StringUtil.mustache", invokerFolder, "StringUtil.java"));
-        supportingFiles.add(new SupportingFile("auth/HttpBasicAuth.mustache", authFolder, "HttpBasicAuth.java"));
-        supportingFiles.add(new SupportingFile("auth/ApiKeyAuth.mustache", authFolder, "ApiKeyAuth.java"));
+        supportingFiles.add(new SupportingFile("ApiClient.mustache", invokerFolder,
+                "ApiClient.java"));
+        supportingFiles.add(new SupportingFile("StringUtil.mustache", invokerFolder,
+                "StringUtil.java"));
+        supportingFiles.add(new SupportingFile("auth/HttpBasicAuth.mustache", authFolder,
+                "HttpBasicAuth.java"));
+        supportingFiles.add(new SupportingFile("auth/ApiKeyAuth.mustache", authFolder,
+                "ApiKeyAuth.java"));
         supportingFiles.add(new SupportingFile("auth/OAuth.mustache", authFolder, "OAuth.java"));
-        supportingFiles.add(new SupportingFile("auth/OAuthFlow.mustache", authFolder, "OAuthFlow.java"));
-        supportingFiles.add(new SupportingFile( "gradlew.mustache", "", "gradlew") );
-        supportingFiles.add(new SupportingFile( "gradlew.bat.mustache", "", "gradlew.bat") );
-        supportingFiles.add(new SupportingFile( "gradle-wrapper.properties.mustache",
-                gradleWrapperPackage.replace( ".", File.separator ), "gradle-wrapper.properties") );
-        supportingFiles.add(new SupportingFile( "gradle-wrapper.jar",
-                gradleWrapperPackage.replace( ".", File.separator ), "gradle-wrapper.jar") );
+        supportingFiles.add(new SupportingFile("auth/OAuthFlow.mustache", authFolder,
+                "OAuthFlow.java"));
+        supportingFiles.add(new SupportingFile("gradlew.mustache", "", "gradlew"));
+        supportingFiles.add(new SupportingFile("gradlew.bat.mustache", "", "gradlew.bat"));
+        supportingFiles.add(new SupportingFile("gradle-wrapper.properties.mustache",
+                gradleWrapperPackage.replace(".", File.separator), "gradle-wrapper.properties"));
+        supportingFiles.add(new SupportingFile("gradle-wrapper.jar", gradleWrapperPackage.replace(
+                ".", File.separator), "gradle-wrapper.jar"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
 
         if (performBeanValidation) {
-            supportingFiles.add(new SupportingFile("BeanValidationException.mustache", invokerFolder,
-                    "BeanValidationException.java"));
+            supportingFiles.add(new SupportingFile("BeanValidationException.mustache",
+                    invokerFolder, "BeanValidationException.java"));
         }
 
-        //TODO: add doc to retrofit1 and feign
-        if ( "feign".equals(getLibrary()) || "retrofit".equals(getLibrary()) ){
+        // TODO: add doc to retrofit1 and feign
+        if ("feign".equals(getLibrary()) || "retrofit".equals(getLibrary())) {
             modelDocTemplateFiles.remove("model_doc.mustache");
             apiDocTemplateFiles.remove("api_doc.mustache");
         }
 
         if (!("feign".equals(getLibrary()) || usesAnyRetrofitLibrary())) {
-            supportingFiles.add(new SupportingFile("apiException.mustache", invokerFolder, "ApiException.java"));
-            supportingFiles.add(new SupportingFile("Configuration.mustache", invokerFolder, "Configuration.java"));
+            supportingFiles.add(new SupportingFile("apiException.mustache", invokerFolder,
+                    "ApiException.java"));
+            supportingFiles.add(new SupportingFile("Configuration.mustache", invokerFolder,
+                    "Configuration.java"));
             supportingFiles.add(new SupportingFile("Pair.mustache", invokerFolder, "Pair.java"));
-            supportingFiles.add(new SupportingFile("auth/Authentication.mustache", authFolder, "Authentication.java"));
+            supportingFiles.add(new SupportingFile("auth/Authentication.mustache", authFolder,
+                    "Authentication.java"));
         }
 
         if ("feign".equals(getLibrary())) {
             additionalProperties.put("jackson", "true");
-            supportingFiles.add(new SupportingFile("ParamExpander.mustache", invokerFolder, "ParamExpander.java"));
+            supportingFiles.add(new SupportingFile("ParamExpander.mustache", invokerFolder,
+                    "ParamExpander.java"));
         } else if ("okhttp-gson".equals(getLibrary()) || StringUtils.isEmpty(getLibrary())) {
             // the "okhttp-gson" library template requires "ApiCallback.mustache" for async call
-            supportingFiles.add(new SupportingFile("ApiCallback.mustache", invokerFolder, "ApiCallback.java"));
-            supportingFiles.add(new SupportingFile("ApiResponse.mustache", invokerFolder, "ApiResponse.java"));
+            supportingFiles.add(new SupportingFile("ApiCallback.mustache", invokerFolder,
+                    "ApiCallback.java"));
+            supportingFiles.add(new SupportingFile("ApiResponse.mustache", invokerFolder,
+                    "ApiResponse.java"));
             supportingFiles.add(new SupportingFile("JSON.mustache", invokerFolder, "JSON.java"));
-            supportingFiles.add(new SupportingFile("ProgressRequestBody.mustache", invokerFolder, "ProgressRequestBody.java"));
-            supportingFiles.add(new SupportingFile("ProgressResponseBody.mustache", invokerFolder, "ProgressResponseBody.java"));
+            supportingFiles.add(new SupportingFile("ProgressRequestBody.mustache", invokerFolder,
+                    "ProgressRequestBody.java"));
+            supportingFiles.add(new SupportingFile("ProgressResponseBody.mustache", invokerFolder,
+                    "ProgressResponseBody.java"));
             additionalProperties.put("gson", "true");
         } else if (usesAnyRetrofitLibrary()) {
-            supportingFiles.add(new SupportingFile("auth/OAuthOkHttpClient.mustache", authFolder, "OAuthOkHttpClient.java"));
-            supportingFiles.add(new SupportingFile("CollectionFormats.mustache", invokerFolder, "CollectionFormats.java"));
+            supportingFiles.add(new SupportingFile("auth/OAuthOkHttpClient.mustache", authFolder,
+                    "OAuthOkHttpClient.java"));
+            supportingFiles.add(new SupportingFile("CollectionFormats.mustache", invokerFolder,
+                    "CollectionFormats.java"));
             additionalProperties.put("gson", "true");
-        } else if("jersey2".equals(getLibrary())) {
+        } else if ("jersey2".equals(getLibrary())) {
             supportingFiles.add(new SupportingFile("JSON.mustache", invokerFolder, "JSON.java"));
             additionalProperties.put("jackson", "true");
-        } else if("jersey1".equals(getLibrary())) {
+        } else if ("jersey1".equals(getLibrary())) {
             additionalProperties.put("jackson", "true");
         } else {
             LOGGER.error("Unknown library option (-l/--library): " + getLibrary());
@@ -186,24 +223,28 @@ public class JavaClientCodegen extends AbstractJavaCodegen
             }
 
             // auth
-            supportingFiles.add(new SupportingFile("play24/auth/ApiKeyAuth.mustache", authFolder, "ApiKeyAuth.java"));
-            supportingFiles.add(new SupportingFile("auth/Authentication.mustache", authFolder, "Authentication.java"));
+            supportingFiles.add(new SupportingFile("play24/auth/ApiKeyAuth.mustache", authFolder,
+                    "ApiKeyAuth.java"));
+            supportingFiles.add(new SupportingFile("auth/Authentication.mustache", authFolder,
+                    "Authentication.java"));
             supportingFiles.add(new SupportingFile("Pair.mustache", invokerFolder, "Pair.java"));
 
             // api client
-            supportingFiles.add(new SupportingFile("play24/ApiClient.mustache", invokerFolder, "ApiClient.java"));
+            supportingFiles.add(new SupportingFile("play24/ApiClient.mustache", invokerFolder,
+                    "ApiClient.java"));
 
             // adapters
-            supportingFiles
-                    .add(new SupportingFile("play24/Play24CallFactory.mustache", invokerFolder, "Play24CallFactory.java"));
-            supportingFiles.add(new SupportingFile("play24/Play24CallAdapterFactory.mustache", invokerFolder,
-                    "Play24CallAdapterFactory.java"));
+            supportingFiles.add(new SupportingFile("play24/Play24CallFactory.mustache",
+                    invokerFolder, "Play24CallFactory.java"));
+            supportingFiles.add(new SupportingFile("play24/Play24CallAdapterFactory.mustache",
+                    invokerFolder, "Play24CallAdapterFactory.java"));
             additionalProperties.put("jackson", "true");
             additionalProperties.remove("gson");
         }
 
-        if (additionalProperties.containsKey("jackson") ) {
-            supportingFiles.add(new SupportingFile("RFC3339DateFormat.mustache", invokerFolder, "RFC3339DateFormat.java"));
+        if (additionalProperties.containsKey("jackson")) {
+            supportingFiles.add(new SupportingFile("RFC3339DateFormat.mustache", invokerFolder,
+                    "RFC3339DateFormat.java"));
         }
     }
 
@@ -218,24 +259,25 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     @Override
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
         super.postProcessOperations(objs);
-        if(usesAnyRetrofitLibrary()) {
+        if (usesAnyRetrofitLibrary()) {
             Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
             if (operations != null) {
                 List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
                 for (CodegenOperation operation : ops) {
                     if (operation.hasConsumes == Boolean.TRUE) {
 
-                        if ( isMultipartType(operation.consumes) ) { 
+                        if (isMultipartType(operation.consumes)) {
                             operation.isMultipart = Boolean.TRUE;
-                        }	
-                        else {
-                            operation.prioritizedContentTypes = prioritizeContentTypes(operation.consumes);
+                        } else {
+                            operation.prioritizedContentTypes =
+                                    prioritizeContentTypes(operation.consumes);
                         }
                     }
                     if (operation.returnType == null) {
                         operation.returnType = "Void";
                     }
-                    if (usesRetrofit2Library() && StringUtils.isNotEmpty(operation.path) && operation.path.startsWith("/"))
+                    if (usesRetrofit2Library() && StringUtils.isNotEmpty(operation.path)
+                            && operation.path.startsWith("/"))
                         operation.path = operation.path.substring(1);
                 }
             }
@@ -244,43 +286,41 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     }
 
     /**
-     *  Prioritizes consumes mime-type list by moving json-vendor and json mime-types up front, but 
-     *  otherwise preserves original consumes definition order. 
-     *  [application/vnd...+json,... application/json, ..as is..]  
-     *  
+     * Prioritizes consumes mime-type list by moving json-vendor and json mime-types up front, but
+     * otherwise preserves original consumes definition order. [application/vnd...+json,...
+     * application/json, ..as is..]
+     * 
      * @param consumes consumes mime-type list
-     * @return 
+     * @return
      */
     static List<Map<String, String>> prioritizeContentTypes(List<Map<String, String>> consumes) {
-        if ( consumes.size() <= 1 )
+        if (consumes.size() <= 1)
             return consumes;
-        
+
         List<Map<String, String>> prioritizedContentTypes = new ArrayList<>(consumes.size());
-        
+
         List<Map<String, String>> jsonVendorMimeTypes = new ArrayList<>(consumes.size());
         List<Map<String, String>> jsonMimeTypes = new ArrayList<>(consumes.size());
-        
-        for ( Map<String, String> consume : consumes) {
-            if ( isJsonVendorMimeType(consume.get(MEDIA_TYPE))) {
+
+        for (Map<String, String> consume : consumes) {
+            if (isJsonVendorMimeType(consume.get(MEDIA_TYPE))) {
                 jsonVendorMimeTypes.add(consume);
-            }
-            else if ( isJsonMimeType(consume.get(MEDIA_TYPE))) {
+            } else if (isJsonMimeType(consume.get(MEDIA_TYPE))) {
                 jsonMimeTypes.add(consume);
-            }
-            else
+            } else
                 prioritizedContentTypes.add(consume);
-            
+
             consume.put("hasMore", "true");
         }
-        
+
         prioritizedContentTypes.addAll(0, jsonMimeTypes);
         prioritizedContentTypes.addAll(0, jsonVendorMimeTypes);
-        
-        prioritizedContentTypes.get(prioritizedContentTypes.size()-1).put("hasMore", null);
-        
+
+        prioritizedContentTypes.get(prioritizedContentTypes.size() - 1).put("hasMore", null);
+
         return prioritizedContentTypes;
     }
-    
+
     private static boolean isMultipartType(List<Map<String, String>> consumes) {
         Map<String, String> firstType = consumes.get(0);
         if (firstType != null) {
@@ -294,18 +334,18 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     @Override
     public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
         super.postProcessModelProperty(model, property);
-        if(!BooleanUtils.toBoolean(model.isEnum)) {
-            //final String lib = getLibrary();
-            //Needed imports for Jackson based libraries
-            if(additionalProperties.containsKey("jackson")) {
+        if (!BooleanUtils.toBoolean(model.isEnum)) {
+            // final String lib = getLibrary();
+            // Needed imports for Jackson based libraries
+            if (additionalProperties.containsKey("jackson")) {
                 model.imports.add("JsonProperty");
             }
-            if(additionalProperties.containsKey("gson")) {
+            if (additionalProperties.containsKey("gson")) {
                 model.imports.add("SerializedName");
             }
         } else { // enum class
-            //Needed imports for Jackson's JsonCreator
-            if(additionalProperties.containsKey("jackson")) {
+            // Needed imports for Jackson's JsonCreator
+            if (additionalProperties.containsKey("jackson")) {
                 model.imports.add("JsonCreator");
             }
         }
@@ -314,9 +354,9 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     @Override
     public Map<String, Object> postProcessModelsEnum(Map<String, Object> objs) {
         objs = super.postProcessModelsEnum(objs);
-        //Needed import for Gson based libraries
+        // Needed import for Gson based libraries
         if (additionalProperties.containsKey("gson")) {
-            List<Map<String, String>> imports = (List<Map<String, String>>)objs.get("imports");
+            List<Map<String, String>> imports = (List<Map<String, String>>) objs.get("imports");
             List<Object> models = (List<Object>) objs.get("models");
             for (Object _mo : models) {
                 Map<String, Object> mo = (Map<String, Object>) _mo;
@@ -354,25 +394,22 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         this.performBeanValidation = performBeanValidation;
     }
 
-    final private static Pattern JSON_MIME_PATTERN = Pattern.compile("(?i)application\\/json(;.*)?");
-    final private static Pattern JSON_VENDOR_MIME_PATTERN = Pattern.compile("(?i)application\\/vnd.(.*)+json(;.*)?"); 
+    final private static Pattern JSON_MIME_PATTERN = Pattern
+            .compile("(?i)application\\/json(;.*)?");
+    final private static Pattern JSON_VENDOR_MIME_PATTERN = Pattern
+            .compile("(?i)application\\/vnd.(.*)+json(;.*)?");
 
     /**
-     * Check if the given MIME is a JSON MIME.
-     * JSON MIME examples:
-     *   application/json
-     *   application/json; charset=UTF8
-     *   APPLICATION/JSON
+     * Check if the given MIME is a JSON MIME. JSON MIME examples: application/json
+     * application/json; charset=UTF8 APPLICATION/JSON
      */
     static boolean isJsonMimeType(String mime) {
-        return mime != null && ( JSON_MIME_PATTERN.matcher(mime).matches());
+        return mime != null && (JSON_MIME_PATTERN.matcher(mime).matches());
     }
 
     /**
-     * Check if the given MIME is a JSON Vendor MIME.
-     * JSON MIME examples:
-     *   application/vnd.mycompany+json
-     *   application/vnd.mycompany.resourceA.version1+json
+     * Check if the given MIME is a JSON Vendor MIME. JSON MIME examples:
+     * application/vnd.mycompany+json application/vnd.mycompany.resourceA.version1+json
      */
     static boolean isJsonVendorMimeType(String mime) {
         return mime != null && JSON_VENDOR_MIME_PATTERN.matcher(mime).matches();

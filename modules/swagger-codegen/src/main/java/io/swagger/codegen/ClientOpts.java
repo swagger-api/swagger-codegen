@@ -57,8 +57,10 @@ public class ClientOpts {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         ClientOpts that = (ClientOpts) o;
 
@@ -70,7 +72,8 @@ public class ClientOpts {
             return false;
         if (properties != null ? !properties.equals(that.properties) : that.properties != null)
             return false;
-        return outputDirectory != null ? outputDirectory.equals(that.outputDirectory) : that.outputDirectory == null;
+        return outputDirectory != null ? outputDirectory.equals(that.outputDirectory)
+                : that.outputDirectory == null;
 
     }
 

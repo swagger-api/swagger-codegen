@@ -28,19 +28,20 @@ public class AsyncScalaClientCodegen extends AbstractScalaCodegen implements Cod
         apiPackage = "io.swagger.client.api";
         modelPackage = "io.swagger.client.model";
 
-        setReservedWordsLowerCase(
-                Arrays.asList(
-                    // local variable names used in API methods (endpoints)
-                    "config", "path", "contentTypes", "contentType", "queryParams", "headerParams",
-                    "formParams", "postBody", "resFuture", "client", "reader",
+        setReservedWordsLowerCase(Arrays.asList(
+                // local variable names used in API methods (endpoints)
+                "config", "path", "contentTypes", "contentType", "queryParams", "headerParams",
+                "formParams", "postBody",
+                "resFuture",
+                "client",
+                "reader",
 
-                    // scala reserved words
-                    "abstract", "case", "catch", "class", "def", "do", "else", "extends",
-                    "false", "final", "finally", "for", "forSome", "if", "implicit",
-                    "import", "lazy", "match", "new", "null", "object", "override", "package",
-                    "private", "protected", "return", "sealed", "super", "this", "throw",
-                    "trait", "try", "true", "type", "val", "var", "while", "with", "yield")
-        );
+                // scala reserved words
+                "abstract", "case", "catch", "class", "def", "do", "else", "extends", "false",
+                "final", "finally", "for", "forSome", "if", "implicit", "import", "lazy", "match",
+                "new", "null", "object", "override", "package", "private", "protected", "return",
+                "sealed", "super", "this", "throw", "trait", "try", "true", "type", "val", "var",
+                "while", "with", "yield"));
 
         additionalProperties.put(CodegenConstants.INVOKER_PACKAGE, invokerPackage);
         additionalProperties.put(CodegenConstants.GROUP_ID, groupId);
@@ -53,7 +54,8 @@ public class AsyncScalaClientCodegen extends AbstractScalaCodegen implements Cod
 
         supportingFiles.add(new SupportingFile("sbt.mustache", "", "build.sbt"));
         supportingFiles.add(new SupportingFile("client.mustache",
-                (sourceFolder + File.separator + invokerPackage).replace(".", java.io.File.separator), clientName + ".scala"));
+                (sourceFolder + File.separator + invokerPackage).replace(".",
+                        java.io.File.separator), clientName + ".scala"));
 
         importMapping.remove("List");
         importMapping.remove("Set");

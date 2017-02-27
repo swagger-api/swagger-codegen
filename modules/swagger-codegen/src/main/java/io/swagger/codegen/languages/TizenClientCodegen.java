@@ -43,24 +43,16 @@ public class TizenClientCodegen extends DefaultCodegen implements CodegenConfig 
         embeddedTemplateDir = templateDir = "tizen";
         modelPackage = "";
 
-        defaultIncludes = new HashSet<String>(
-                Arrays.asList(
-                        "bool",
-                        "int",
-                        "long")
-        );
+        defaultIncludes = new HashSet<String>(Arrays.asList("bool", "int", "long"));
         languageSpecificPrimitives = new HashSet<String>();
 
         additionalProperties().put("prefix", PREFIX);
 
         setReservedWordsLowerCase(
-                // VERIFY
-                Arrays.asList(
-                        "void", "char", "short", "int", "void", "char", "short", "int",
-                        "long", "float", "double", "signed", "unsigned", "id", "const",
-                        "volatile", "in", "out", "inout", "bycopy", "byref", "oneway",
-                        "self", "super"
-                ));
+        // VERIFY
+        Arrays.asList("void", "char", "short", "int", "void", "char", "short", "int", "long",
+                "float", "double", "signed", "unsigned", "id", "const", "volatile", "in", "out",
+                "inout", "bycopy", "byref", "oneway", "self", "super"));
 
         super.typeMapping = new HashMap<String, String>();
 
@@ -76,7 +68,7 @@ public class TizenClientCodegen extends DefaultCodegen implements CodegenConfig 
         typeMapping.put("map", "HashMap");
         typeMapping.put("number", "Long");
         typeMapping.put("object", PREFIX + "Object");
-        //TODO binary should be mapped to byte array
+        // TODO binary should be mapped to byte array
         // mapped to String as a workaround
         typeMapping.put("binary", "String");
 
@@ -96,21 +88,24 @@ public class TizenClientCodegen extends DefaultCodegen implements CodegenConfig 
         namespaces.put("JsonNumber", "Tizen::Web::Json");
         namespaces.put("JsonString", "Tizen::Web::Json");
 
-        foundationClasses = new HashSet<String>(
-                Arrays.asList(
-                        "String",
-                        "Integer",
-                        "Float")
-        );
+        foundationClasses = new HashSet<String>(Arrays.asList("String", "Integer", "Float"));
         supportingFiles.clear();
-        supportingFiles.add(new SupportingFile("modelFactory.mustache", sourceFolder, PREFIX + "ModelFactory.h"));
-        supportingFiles.add(new SupportingFile("helpers-header.mustache", sourceFolder, PREFIX + "Helpers.h"));
-        supportingFiles.add(new SupportingFile("helpers-body.mustache", sourceFolder, PREFIX + "Helpers.cpp"));
-        supportingFiles.add(new SupportingFile("apiclient-header.mustache", sourceFolder, PREFIX + "ApiClient.h"));
-        supportingFiles.add(new SupportingFile("apiclient-body.mustache", sourceFolder, PREFIX + "ApiClient.cpp"));
-        supportingFiles.add(new SupportingFile("object.mustache", sourceFolder, PREFIX + "Object.h"));
-        supportingFiles.add(new SupportingFile("error-header.mustache", sourceFolder, PREFIX + "Error.h"));
-        supportingFiles.add(new SupportingFile("error-body.mustache", sourceFolder, PREFIX + "Error.cpp"));
+        supportingFiles.add(new SupportingFile("modelFactory.mustache", sourceFolder, PREFIX
+                + "ModelFactory.h"));
+        supportingFiles.add(new SupportingFile("helpers-header.mustache", sourceFolder, PREFIX
+                + "Helpers.h"));
+        supportingFiles.add(new SupportingFile("helpers-body.mustache", sourceFolder, PREFIX
+                + "Helpers.cpp"));
+        supportingFiles.add(new SupportingFile("apiclient-header.mustache", sourceFolder, PREFIX
+                + "ApiClient.h"));
+        supportingFiles.add(new SupportingFile("apiclient-body.mustache", sourceFolder, PREFIX
+                + "ApiClient.cpp"));
+        supportingFiles
+                .add(new SupportingFile("object.mustache", sourceFolder, PREFIX + "Object.h"));
+        supportingFiles.add(new SupportingFile("error-header.mustache", sourceFolder, PREFIX
+                + "Error.h"));
+        supportingFiles.add(new SupportingFile("error-body.mustache", sourceFolder, PREFIX
+                + "Error.cpp"));
     }
 
     @Override
@@ -166,7 +161,8 @@ public class TizenClientCodegen extends DefaultCodegen implements CodegenConfig 
     @Override
     public String getTypeDeclaration(Property p) {
         String swaggerType = getSwaggerType(p);
-        if (languageSpecificPrimitives.contains(swaggerType) && !foundationClasses.contains(swaggerType)) {
+        if (languageSpecificPrimitives.contains(swaggerType)
+                && !foundationClasses.contains(swaggerType)) {
             return toModelName(swaggerType);
         } else {
             return swaggerType + "*";
@@ -175,12 +171,9 @@ public class TizenClientCodegen extends DefaultCodegen implements CodegenConfig 
 
     @Override
     public String toModelName(String type) {
-        if (typeMapping.keySet().contains(type) ||
-                typeMapping.values().contains(type) ||
-                foundationClasses.contains(type) ||
-                importMapping.values().contains(type) ||
-                defaultIncludes.contains(type) ||
-                languageSpecificPrimitives.contains(type)) {
+        if (typeMapping.keySet().contains(type) || typeMapping.values().contains(type)
+                || foundationClasses.contains(type) || importMapping.values().contains(type)
+                || defaultIncludes.contains(type) || languageSpecificPrimitives.contains(type)) {
             return type;
         } else {
             return PREFIX + Character.toUpperCase(type.charAt(0)) + type.substring(1);
@@ -261,8 +254,8 @@ public class TizenClientCodegen extends DefaultCodegen implements CodegenConfig 
     }
 
     @Override
-    public String escapeReservedWord(String name) {           
-        if(this.reservedWordsMappings().containsKey(name)) {
+    public String escapeReservedWord(String name) {
+        if (this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
         return "_" + name;
@@ -277,7 +270,8 @@ public class TizenClientCodegen extends DefaultCodegen implements CodegenConfig 
 
         // method name cannot use reserved keyword, e.g. return$
         if (isReservedWord(operationId)) {
-            throw new RuntimeException(operationId + " (reserved word) cannot be used as method name");
+            throw new RuntimeException(operationId
+                    + " (reserved word) cannot be used as method name");
         }
 
         // add_pet_by_id => addPetById

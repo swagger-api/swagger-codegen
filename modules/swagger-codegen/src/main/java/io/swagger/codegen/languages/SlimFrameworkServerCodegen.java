@@ -36,7 +36,7 @@ public class SlimFrameworkServerCodegen extends DefaultCodegen implements Codege
 
         invokerPackage = camelize("SwaggerServer");
 
-        //String packagePath = "SwaggerServer";
+        // String packagePath = "SwaggerServer";
 
         modelPackage = packagePath + "\\Models";
         apiPackage = packagePath;
@@ -48,10 +48,15 @@ public class SlimFrameworkServerCodegen extends DefaultCodegen implements Codege
 
         embeddedTemplateDir = templateDir = "slim";
 
-        setReservedWordsLowerCase(
-                Arrays.asList(
-                        "__halt_compiler", "abstract", "and", "array", "as", "break", "callable", "case", "catch", "class", "clone", "const", "continue", "declare", "default", "die", "do", "echo", "else", "elseif", "empty", "enddeclare", "endfor", "endforeach", "endif", "endswitch", "endwhile", "eval", "exit", "extends", "final", "for", "foreach", "function", "global", "goto", "if", "implements", "include", "include_once", "instanceof", "insteadof", "interface", "isset", "list", "namespace", "new", "or", "print", "private", "protected", "public", "require", "require_once", "return", "static", "switch", "throw", "trait", "try", "unset", "use", "var", "while", "xor")
-        );
+        setReservedWordsLowerCase(Arrays.asList("__halt_compiler", "abstract", "and", "array",
+                "as", "break", "callable", "case", "catch", "class", "clone", "const", "continue",
+                "declare", "default", "die", "do", "echo", "else", "elseif", "empty", "enddeclare",
+                "endfor", "endforeach", "endif", "endswitch", "endwhile", "eval", "exit",
+                "extends", "final", "for", "foreach", "function", "global", "goto", "if",
+                "implements", "include", "include_once", "instanceof", "insteadof", "interface",
+                "isset", "list", "namespace", "new", "or", "print", "private", "protected",
+                "public", "require", "require_once", "return", "static", "switch", "throw",
+                "trait", "try", "unset", "use", "var", "while", "xor"));
 
         additionalProperties.put(CodegenConstants.INVOKER_PACKAGE, invokerPackage);
         additionalProperties.put(CodegenConstants.GROUP_ID, groupId);
@@ -59,19 +64,9 @@ public class SlimFrameworkServerCodegen extends DefaultCodegen implements Codege
         additionalProperties.put(CodegenConstants.ARTIFACT_VERSION, artifactVersion);
 
         // ref: http://php.net/manual/en/language.types.intro.php
-        languageSpecificPrimitives = new HashSet<String>(
-                Arrays.asList(
-                        "boolean",
-                        "int",
-                        "integer",
-                        "double",
-                        "float",
-                        "string",
-                        "object",
-                        "DateTime",
-                        "mixed",
-                        "number")
-        );
+        languageSpecificPrimitives =
+                new HashSet<String>(Arrays.asList("boolean", "int", "integer", "double", "float",
+                        "string", "object", "DateTime", "mixed", "number"));
 
         instantiationTypes.put("array", "array");
         instantiationTypes.put("map", "map");
@@ -92,14 +87,18 @@ public class SlimFrameworkServerCodegen extends DefaultCodegen implements Codege
         typeMapping.put("array", "array");
         typeMapping.put("list", "array");
         typeMapping.put("object", "object");
-        //TODO binary should be mapped to byte array
+        // TODO binary should be mapped to byte array
         // mapped to String as a workaround
         typeMapping.put("binary", "string");
 
-        supportingFiles.add(new SupportingFile("README.mustache", packagePath.replace('/', File.separatorChar), "README.md"));
-        supportingFiles.add(new SupportingFile("composer.json", packagePath.replace('/', File.separatorChar), "composer.json"));
-        supportingFiles.add(new SupportingFile("index.mustache", packagePath.replace('/', File.separatorChar), "index.php"));
-        supportingFiles.add(new SupportingFile(".htaccess", packagePath.replace('/', File.separatorChar), ".htaccess"));
+        supportingFiles.add(new SupportingFile("README.mustache", packagePath.replace('/',
+                File.separatorChar), "README.md"));
+        supportingFiles.add(new SupportingFile("composer.json", packagePath.replace('/',
+                File.separatorChar), "composer.json"));
+        supportingFiles.add(new SupportingFile("index.mustache", packagePath.replace('/',
+                File.separatorChar), "index.php"));
+        supportingFiles.add(new SupportingFile(".htaccess", packagePath.replace('/',
+                File.separatorChar), ".htaccess"));
     }
 
     @Override
@@ -118,8 +117,8 @@ public class SlimFrameworkServerCodegen extends DefaultCodegen implements Codege
     }
 
     @Override
-    public String escapeReservedWord(String name) {           
-        if(this.reservedWordsMappings().containsKey(name)) {
+    public String escapeReservedWord(String name) {
+        if (this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
         return "_" + name;
@@ -147,8 +146,8 @@ public class SlimFrameworkServerCodegen extends DefaultCodegen implements Codege
             return getSwaggerType(p) + "[string," + getTypeDeclaration(inner) + "]";
         } else if (p instanceof RefProperty) {
             String type = super.getTypeDeclaration(p);
-            return (!languageSpecificPrimitives.contains(type))
-                    ? "\\" + modelPackage + "\\" + type : type;
+            return (!languageSpecificPrimitives.contains(type)) ? "\\" + modelPackage + "\\" + type
+                    : type;
         }
         return super.getTypeDeclaration(p);
     }
@@ -192,16 +191,17 @@ public class SlimFrameworkServerCodegen extends DefaultCodegen implements Codege
 
     @Override
     public String toVarName(String name) {
-        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the
+                                   // methods parameters as 'final'.
 
         if ("camelCase".equals(variableNamingConvention)) {
             // return the name in camelCase style
             // phone_number => phoneNumber
-            name =  camelize(name, true);
+            name = camelize(name, true);
         } else { // default to snake case
             // return the name in underscore style
             // PhoneNumber => phone_number
-            name =  underscore(name);
+            name = underscore(name);
         }
 
         // parameter name starting with number won't compile
@@ -238,9 +238,18 @@ public class SlimFrameworkServerCodegen extends DefaultCodegen implements Codege
     }
 
     public String toPackagePath(String packageName, String basePath) {
-        packageName = packageName.replace(invokerPackage, ""); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        packageName = packageName.replace(invokerPackage, ""); // FIXME: a parameter should not be
+                                                               // assigned. Also declare the methods
+                                                               // parameters as 'final'.
         if (basePath != null && basePath.length() > 0) {
-            basePath = basePath.replaceAll("[\\\\/]?$", "") + File.separatorChar; // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+            basePath = basePath.replaceAll("[\\\\/]?$", "") + File.separatorChar; // FIXME: a
+                                                                                  // parameter
+                                                                                  // should not be
+                                                                                  // assigned. Also
+                                                                                  // declare the
+                                                                                  // methods
+                                                                                  // parameters as
+                                                                                  // 'final'.
         }
 
         String regFirstPathSeparator;
@@ -258,12 +267,12 @@ public class SlimFrameworkServerCodegen extends DefaultCodegen implements Codege
         }
 
         return (getPackagePath() + File.separatorChar + basePath
-                    // Replace period, backslash, forward slash with file separator in package name
-                    + packageName.replaceAll("[\\.\\\\/]", Matcher.quoteReplacement(File.separator))
-                    // Trim prefix file separators from package path
-                    .replaceAll(regFirstPathSeparator, ""))
-                    // Trim trailing file separators from the overall path
-                    .replaceAll(regLastPathSeparator+ "$", "");
+        // Replace period, backslash, forward slash with file separator in package name
+        + packageName.replaceAll("[\\.\\\\/]", Matcher.quoteReplacement(File.separator))
+        // Trim prefix file separators from package path
+                .replaceAll(regFirstPathSeparator, ""))
+        // Trim trailing file separators from the overall path
+                .replaceAll(regLastPathSeparator + "$", "");
     }
 
     public String getPackagePath() {

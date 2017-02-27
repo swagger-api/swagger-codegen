@@ -13,12 +13,11 @@ public class CodegenOperation {
     public final List<CodegenProperty> responseHeaders = new ArrayList<CodegenProperty>();
     public boolean hasAuthMethods, hasConsumes, hasProduces, hasParams, hasOptionalParams,
             returnTypeIsPrimitive, returnSimpleType, subresourceOperation, isMapContainer,
-            isListContainer, isMultipart, hasMore = true,
-            isResponseBinary = false, isResponseFile = false, hasReference = false,
-            isRestfulIndex, isRestfulShow, isRestfulCreate, isRestfulUpdate, isRestfulDestroy,
-            isRestful;
-    public String path, operationId, returnType, httpMethod, returnBaseType,
-            returnContainer, summary, unescapedNotes, notes, baseName, defaultResponse, discriminator;
+            isListContainer, isMultipart, hasMore = true, isResponseBinary = false,
+            isResponseFile = false, hasReference = false, isRestfulIndex, isRestfulShow,
+            isRestfulCreate, isRestfulUpdate, isRestfulDestroy, isRestful;
+    public String path, operationId, returnType, httpMethod, returnBaseType, returnContainer,
+            summary, unescapedNotes, notes, baseName, defaultResponse, discriminator;
     public List<Map<String, String>> consumes, produces, prioritizedContentTypes;
     public CodegenParameter bodyParam;
     public List<CodegenParameter> allParams = new ArrayList<CodegenParameter>();
@@ -45,7 +44,7 @@ public class CodegenOperation {
     private static boolean nonempty(List<?> params) {
         return params != null && params.size() > 0;
     }
-    
+
     /**
      * Check if there's at least one body parameter
      *
@@ -151,7 +150,8 @@ public class CodegenOperation {
      * @return true if Restful-style, false otherwise
      */
     public boolean isRestful() {
-        return isRestfulIndex() || isRestfulShow() || isRestfulCreate() || isRestfulUpdate() || isRestfulDestroy();
+        return isRestfulIndex() || isRestfulShow() || isRestfulCreate() || isRestfulUpdate()
+                || isRestfulDestroy();
     }
 
     /**
@@ -169,7 +169,8 @@ public class CodegenOperation {
      * @return true if path act as member
      */
     private boolean isMemberPath() {
-        if (pathParams.size() != 1) return false;
+        if (pathParams.size() != 1)
+            return false;
 
         String id = pathParams.get(0).baseName;
         return ("/{" + id + "}").equals(pathWithoutBaseName());
@@ -182,12 +183,15 @@ public class CodegenOperation {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         CodegenOperation that = (CodegenOperation) o;
 
-        if (responseHeaders != null ? !responseHeaders.equals(that.responseHeaders) : that.responseHeaders != null)
+        if (responseHeaders != null ? !responseHeaders.equals(that.responseHeaders)
+                : that.responseHeaders != null)
             return false;
         if (hasAuthMethods != that.hasAuthMethods)
             return false;
@@ -227,21 +231,26 @@ public class CodegenOperation {
             return false;
         if (httpMethod != null ? !httpMethod.equals(that.httpMethod) : that.httpMethod != null)
             return false;
-        if (returnBaseType != null ? !returnBaseType.equals(that.returnBaseType) : that.returnBaseType != null)
+        if (returnBaseType != null ? !returnBaseType.equals(that.returnBaseType)
+                : that.returnBaseType != null)
             return false;
-        if (returnContainer != null ? !returnContainer.equals(that.returnContainer) : that.returnContainer != null)
+        if (returnContainer != null ? !returnContainer.equals(that.returnContainer)
+                : that.returnContainer != null)
             return false;
         if (summary != null ? !summary.equals(that.summary) : that.summary != null)
             return false;
-        if (unescapedNotes != null ? !unescapedNotes.equals(that.unescapedNotes) : that.unescapedNotes != null)
+        if (unescapedNotes != null ? !unescapedNotes.equals(that.unescapedNotes)
+                : that.unescapedNotes != null)
             return false;
         if (notes != null ? !notes.equals(that.notes) : that.notes != null)
             return false;
         if (baseName != null ? !baseName.equals(that.baseName) : that.baseName != null)
             return false;
-        if (defaultResponse != null ? !defaultResponse.equals(that.defaultResponse) : that.defaultResponse != null)
+        if (defaultResponse != null ? !defaultResponse.equals(that.defaultResponse)
+                : that.defaultResponse != null)
             return false;
-        if (discriminator != null ? !discriminator.equals(that.discriminator) : that.discriminator != null)
+        if (discriminator != null ? !discriminator.equals(that.discriminator)
+                : that.discriminator != null)
             return false;
         if (consumes != null ? !consumes.equals(that.consumes) : that.consumes != null)
             return false;
@@ -257,7 +266,8 @@ public class CodegenOperation {
             return false;
         if (queryParams != null ? !queryParams.equals(that.queryParams) : that.queryParams != null)
             return false;
-        if (headerParams != null ? !headerParams.equals(that.headerParams) : that.headerParams != null)
+        if (headerParams != null ? !headerParams.equals(that.headerParams)
+                : that.headerParams != null)
             return false;
         if (formParams != null ? !formParams.equals(that.formParams) : that.formParams != null)
             return false;
@@ -271,36 +281,40 @@ public class CodegenOperation {
             return false;
         if (examples != null ? !examples.equals(that.examples) : that.examples != null)
             return false;
-        if (externalDocs != null ? !externalDocs.equals(that.externalDocs) : that.externalDocs != null)
+        if (externalDocs != null ? !externalDocs.equals(that.externalDocs)
+                : that.externalDocs != null)
             return false;
-        if (vendorExtensions != null ? !vendorExtensions.equals(that.vendorExtensions) : that.vendorExtensions != null)
+        if (vendorExtensions != null ? !vendorExtensions.equals(that.vendorExtensions)
+                : that.vendorExtensions != null)
             return false;
         if (nickname != null ? !nickname.equals(that.nickname) : that.nickname != null)
             return false;
-        if ( prioritizedContentTypes != null ? !prioritizedContentTypes.equals(that.prioritizedContentTypes) : that.prioritizedContentTypes != null )
+        if (prioritizedContentTypes != null ? !prioritizedContentTypes
+                .equals(that.prioritizedContentTypes) : that.prioritizedContentTypes != null)
             return false;
-        return operationIdLowerCase != null ? operationIdLowerCase.equals(that.operationIdLowerCase) : that.operationIdLowerCase == null;
+        return operationIdLowerCase != null ? operationIdLowerCase
+                .equals(that.operationIdLowerCase) : that.operationIdLowerCase == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = responseHeaders.hashCode();
-        result = 31 * result + (hasAuthMethods ? 13:31);
-        result = 31 * result + (hasConsumes ? 13:31);
-        result = 31 * result + (hasProduces ? 13:31);
-        result = 31 * result + (hasParams ? 13:31);
-        result = 31 * result + (hasOptionalParams ? 13:31);
-        result = 31 * result + (returnTypeIsPrimitive ? 13:31);
-        result = 31 * result + (returnSimpleType ? 13:31);
-        result = 31 * result + (subresourceOperation ? 13:31);
-        result = 31 * result + (isMapContainer ? 13:31);
-        result = 31 * result + (isListContainer ? 13:31);
-        result = 31 * result + (isMultipart ? 13:31);
-        result = 31 * result + (hasMore ? 13:31);
-        result = 31 * result + (isResponseBinary ? 13:31);
-        result = 31 * result + (isResponseFile ? 13:31);
-        result = 31 * result + (hasReference ? 13:31);
+        result = 31 * result + (hasAuthMethods ? 13 : 31);
+        result = 31 * result + (hasConsumes ? 13 : 31);
+        result = 31 * result + (hasProduces ? 13 : 31);
+        result = 31 * result + (hasParams ? 13 : 31);
+        result = 31 * result + (hasOptionalParams ? 13 : 31);
+        result = 31 * result + (returnTypeIsPrimitive ? 13 : 31);
+        result = 31 * result + (returnSimpleType ? 13 : 31);
+        result = 31 * result + (subresourceOperation ? 13 : 31);
+        result = 31 * result + (isMapContainer ? 13 : 31);
+        result = 31 * result + (isListContainer ? 13 : 31);
+        result = 31 * result + (isMultipart ? 13 : 31);
+        result = 31 * result + (hasMore ? 13 : 31);
+        result = 31 * result + (isResponseBinary ? 13 : 31);
+        result = 31 * result + (isResponseFile ? 13 : 31);
+        result = 31 * result + (hasReference ? 13 : 31);
         result = 31 * result + (path != null ? path.hashCode() : 0);
         result = 31 * result + (operationId != null ? operationId.hashCode() : 0);
         result = 31 * result + (returnType != null ? returnType.hashCode() : 0);
@@ -330,7 +344,10 @@ public class CodegenOperation {
         result = 31 * result + (externalDocs != null ? externalDocs.hashCode() : 0);
         result = 31 * result + (vendorExtensions != null ? vendorExtensions.hashCode() : 0);
         result = 31 * result + (nickname != null ? nickname.hashCode() : 0);
-        result = 31 * result + (prioritizedContentTypes != null ? prioritizedContentTypes.hashCode() : 0);
+        result =
+                31
+                        * result
+                        + (prioritizedContentTypes != null ? prioritizedContentTypes.hashCode() : 0);
         result = 31 * result + (operationIdLowerCase != null ? operationIdLowerCase.hashCode() : 0);
         return result;
     }

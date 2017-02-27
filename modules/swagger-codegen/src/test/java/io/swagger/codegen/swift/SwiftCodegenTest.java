@@ -56,7 +56,8 @@ public class SwiftCodegenTest {
 
     @Test(description = "returns NSData when response format is binary")
     public void binaryDataTest() {
-        final Swagger model = new SwaggerParser().read("src/test/resources/2_0/binaryDataTest.json");
+        final Swagger model =
+                new SwaggerParser().read("src/test/resources/2_0/binaryDataTest.json");
         final DefaultCodegen codegen = new SwiftCodegen();
         final String path = "/tests/binaryResponse";
         final Operation p = model.getPaths().get(path).getPost();
@@ -76,7 +77,8 @@ public class SwiftCodegenTest {
         swiftCodegen.processOpts();
 
         // Then
-        final String podAuthors = (String) swiftCodegen.additionalProperties().get(SwiftCodegen.POD_AUTHORS);
+        final String podAuthors =
+                (String) swiftCodegen.additionalProperties().get(SwiftCodegen.POD_AUTHORS);
         Assert.assertEquals(podAuthors, SwiftCodegen.DEFAULT_POD_AUTHORS);
     }
 
@@ -90,7 +92,8 @@ public class SwiftCodegenTest {
         swiftCodegen.processOpts();
 
         // Then
-        final String podAuthors = (String) swiftCodegen.additionalProperties().get(SwiftCodegen.POD_AUTHORS);
+        final String podAuthors =
+                (String) swiftCodegen.additionalProperties().get(SwiftCodegen.POD_AUTHORS);
         Assert.assertEquals(podAuthors, swaggerDevs);
     }
 

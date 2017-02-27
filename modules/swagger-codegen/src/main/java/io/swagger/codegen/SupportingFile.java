@@ -28,16 +28,20 @@ public class SupportingFile {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         SupportingFile that = (SupportingFile) o;
 
-        if (templateFile != null ? !templateFile.equals(that.templateFile) : that.templateFile != null)
+        if (templateFile != null ? !templateFile.equals(that.templateFile)
+                : that.templateFile != null)
             return false;
         if (folder != null ? !folder.equals(that.folder) : that.folder != null)
             return false;
-        return destinationFilename != null ? destinationFilename.equals(that.destinationFilename) : that.destinationFilename == null;
+        return destinationFilename != null ? destinationFilename.equals(that.destinationFilename)
+                : that.destinationFilename == null;
 
     }
 
@@ -49,5 +53,3 @@ public class SupportingFile {
         return result;
     }
 }
-
-

@@ -25,28 +25,31 @@ public class RubyClientOptionsTest extends AbstractOptionsTest {
     @SuppressWarnings("unused")
     @Override
     protected void setExpectations() {
-        new Expectations(clientCodegen) {{
-            clientCodegen.setGemName(RubyClientOptionsProvider.GEM_NAME_VALUE);
-            times = 1;
-            clientCodegen.setModuleName(RubyClientOptionsProvider.MODULE_NAME_VALUE);
-            times = 1;
-            clientCodegen.setGemVersion(RubyClientOptionsProvider.GEM_VERSION_VALUE);
-            times = 1;
-            clientCodegen.setGemLicense(RubyClientOptionsProvider.GEM_LICENSE_VALUE);
-            times = 1;
-            clientCodegen.setGemRequiredRubyVersion(RubyClientOptionsProvider.GEM_REQUIRED_RUBY_VERSION_VALUE);
-            times = 1;
-            clientCodegen.setGemHomepage(RubyClientOptionsProvider.GEM_HOMEPAGE_VALUE);
-            times = 1;
-            clientCodegen.setGemDescription(RubyClientOptionsProvider.GEM_DESCRIPTION_VALUE);
-            times = 1;
-            clientCodegen.setGemSummary(RubyClientOptionsProvider.GEM_SUMMARY_VALUE);
-            times = 1;
-            clientCodegen.setGemAuthor(RubyClientOptionsProvider.GEM_AUTHOR_VALUE);
-            times = 1;
-            clientCodegen.setGemAuthorEmail(RubyClientOptionsProvider.GEM_AUTHOR_EMAIL_VALUE);
-            times = 1;
+        new Expectations(clientCodegen) {
+            {
+                clientCodegen.setGemName(RubyClientOptionsProvider.GEM_NAME_VALUE);
+                times = 1;
+                clientCodegen.setModuleName(RubyClientOptionsProvider.MODULE_NAME_VALUE);
+                times = 1;
+                clientCodegen.setGemVersion(RubyClientOptionsProvider.GEM_VERSION_VALUE);
+                times = 1;
+                clientCodegen.setGemLicense(RubyClientOptionsProvider.GEM_LICENSE_VALUE);
+                times = 1;
+                clientCodegen
+                        .setGemRequiredRubyVersion(RubyClientOptionsProvider.GEM_REQUIRED_RUBY_VERSION_VALUE);
+                times = 1;
+                clientCodegen.setGemHomepage(RubyClientOptionsProvider.GEM_HOMEPAGE_VALUE);
+                times = 1;
+                clientCodegen.setGemDescription(RubyClientOptionsProvider.GEM_DESCRIPTION_VALUE);
+                times = 1;
+                clientCodegen.setGemSummary(RubyClientOptionsProvider.GEM_SUMMARY_VALUE);
+                times = 1;
+                clientCodegen.setGemAuthor(RubyClientOptionsProvider.GEM_AUTHOR_VALUE);
+                times = 1;
+                clientCodegen.setGemAuthorEmail(RubyClientOptionsProvider.GEM_AUTHOR_EMAIL_VALUE);
+                times = 1;
 
-        }};
+            }
+        };
     }
 }

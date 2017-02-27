@@ -23,13 +23,11 @@ public class TypeScriptAngular2ModelTest {
 
     @Test(description = "convert a simple TypeScript Angular2 model")
     public void simpleModelTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("id", new LongProperty())
-                .property("name", new StringProperty())
-                .property("createdAt", new DateTimeProperty())
-                .required("id")
-                .required("name");
+        final Model model =
+                new ModelImpl().description("a sample model").property("id", new LongProperty())
+                        .property("name", new StringProperty())
+                        .property("createdAt", new DateTimeProperty()).required("id")
+                        .required("name");
         final DefaultCodegen codegen = new TypeScriptAngular2ClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -71,11 +69,10 @@ public class TypeScriptAngular2ModelTest {
 
     @Test(description = "convert a model with list property")
     public void listPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("id", new LongProperty())
-                .property("urls", new ArrayProperty().items(new StringProperty()))
-                .required("id");
+        final Model model =
+                new ModelImpl().description("a sample model").property("id", new LongProperty())
+                        .property("urls", new ArrayProperty().items(new StringProperty()))
+                        .required("id");
         final DefaultCodegen codegen = new TypeScriptAngular2ClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -106,9 +103,9 @@ public class TypeScriptAngular2ModelTest {
 
     @Test(description = "convert a model with complex property")
     public void complexPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("children", new RefProperty("#/definitions/Children"));
+        final Model model =
+                new ModelImpl().description("a sample model").property("children",
+                        new RefProperty("#/definitions/Children"));
         final DefaultCodegen codegen = new TypeScriptAngular2ClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -129,10 +126,9 @@ public class TypeScriptAngular2ModelTest {
 
     @Test(description = "convert a model with complex list property")
     public void complexListPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("children", new ArrayProperty()
-                        .items(new RefProperty("#/definitions/Children")));
+        final Model model =
+                new ModelImpl().description("a sample model").property("children",
+                        new ArrayProperty().items(new RefProperty("#/definitions/Children")));
         final DefaultCodegen codegen = new TypeScriptAngular2ClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -153,9 +149,9 @@ public class TypeScriptAngular2ModelTest {
 
     @Test(description = "convert an array model")
     public void arrayModelTest() {
-        final Model model = new ArrayModel()
-                .description("an array model")
-                .items(new RefProperty("#/definitions/Children"));
+        final Model model =
+                new ArrayModel().description("an array model").items(
+                        new RefProperty("#/definitions/Children"));
         final DefaultCodegen codegen = new TypeScriptAngular2ClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -167,9 +163,9 @@ public class TypeScriptAngular2ModelTest {
 
     @Test(description = "convert a map model")
     public void mapModelTest() {
-        final Model model = new ModelImpl()
-                .description("a map model")
-                .additionalProperties(new RefProperty("#/definitions/Children"));
+        final Model model =
+                new ModelImpl().description("a map model").additionalProperties(
+                        new RefProperty("#/definitions/Children"));
         final DefaultCodegen codegen = new TypeScriptAngular2ClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -179,6 +175,7 @@ public class TypeScriptAngular2ModelTest {
         Assert.assertEquals(cm.vars.size(), 0);
         Assert.assertEquals(cm.imports.size(), 1);
         Assert.assertEquals(cm.additionalPropertiesType, "models.Children");
-        Assert.assertEquals(Sets.intersection(cm.imports, Sets.newHashSet("models.Children")).size(), 1);
+        Assert.assertEquals(Sets.intersection(cm.imports, Sets.newHashSet("models.Children"))
+                .size(), 1);
     }
 }

@@ -18,6 +18,7 @@ public class JavaInflectorServerCodegen extends AbstractJavaCodegen {
 
     protected String title = "Swagger Inflector";
     protected String implFolder = "src/main/java";
+
     public JavaInflectorServerCodegen() {
         super();
 
@@ -26,17 +27,19 @@ public class JavaInflectorServerCodegen extends AbstractJavaCodegen {
         embeddedTemplateDir = templateDir = "JavaInflector";
         invokerPackage = "io.swagger.handler";
         artifactId = "swagger-inflector-server";
-        dateLibrary = "legacy"; //TODO: add joda support
+        dateLibrary = "legacy"; // TODO: add joda support
 
         // clear model and api doc template as this codegen
         // does not support auto-generated markdown doc at the moment
-        //TODO: add doc templates
+        // TODO: add doc templates
         modelDocTemplateFiles.remove("model_doc.mustache");
         apiDocTemplateFiles.remove("api_doc.mustache");
 
 
-        apiPackage = System.getProperty("swagger.codegen.inflector.apipackage", "io.swagger.handler");
-        modelPackage = System.getProperty("swagger.codegen.inflector.modelpackage", "io.swagger.model");
+        apiPackage =
+                System.getProperty("swagger.codegen.inflector.apipackage", "io.swagger.handler");
+        modelPackage =
+                System.getProperty("swagger.codegen.inflector.modelpackage", "io.swagger.model");
 
         additionalProperties.put("title", title);
         // java inflector uses the jackson lib
@@ -64,18 +67,18 @@ public class JavaInflectorServerCodegen extends AbstractJavaCodegen {
 
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
         writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
-        writeOptional(outputFolder, new SupportingFile("web.mustache", "src/main/webapp/WEB-INF", "web.xml"));
+        writeOptional(outputFolder, new SupportingFile("web.mustache", "src/main/webapp/WEB-INF",
+                "web.xml"));
         writeOptional(outputFolder, new SupportingFile("inflector.mustache", "", "inflector.yaml"));
-        supportingFiles.add(new SupportingFile("swagger.mustache",
-                        "src/main/swagger",
-                        "swagger.yaml")
-        );
+        supportingFiles.add(new SupportingFile("swagger.mustache", "src/main/swagger",
+                "swagger.yaml"));
         supportingFiles.add(new SupportingFile("StringUtil.mustache",
                 (sourceFolder + '/' + invokerPackage).replace(".", "/"), "StringUtil.java"));
     }
 
     @Override
-    public void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co, Map<String, List<CodegenOperation>> operations) {
+    public void addOperationToGroup(String tag, String resourcePath, Operation operation,
+            CodegenOperation co, Map<String, List<CodegenOperation>> operations) {
         String basePath = resourcePath;
         if (basePath.startsWith("/")) {
             basePath = basePath.substring(1);
@@ -141,11 +144,11 @@ public class JavaInflectorServerCodegen extends AbstractJavaCodegen {
     public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
         super.postProcessModelProperty(model, property);
 
-        //Add imports for Jackson
-        if(!BooleanUtils.toBoolean(model.isEnum)) {
+        // Add imports for Jackson
+        if (!BooleanUtils.toBoolean(model.isEnum)) {
             model.imports.add("JsonProperty");
 
-            if(BooleanUtils.toBoolean(model.hasEnums)) {
+            if (BooleanUtils.toBoolean(model.hasEnums)) {
                 model.imports.add("JsonValue");
             }
         }
@@ -155,8 +158,8 @@ public class JavaInflectorServerCodegen extends AbstractJavaCodegen {
     public Map<String, Object> postProcessModelsEnum(Map<String, Object> objs) {
         objs = super.postProcessModelsEnum(objs);
 
-        //Add imports for Jackson
-        List<Map<String, String>> imports = (List<Map<String, String>>)objs.get("imports");
+        // Add imports for Jackson
+        List<Map<String, String>> imports = (List<Map<String, String>>) objs.get("imports");
         List<Object> models = (List<Object>) objs.get("models");
         for (Object _mo : models) {
             Map<String, Object> mo = (Map<String, Object>) _mo;
@@ -176,7 +179,7 @@ public class JavaInflectorServerCodegen extends AbstractJavaCodegen {
     public String apiFilename(String templateName, String tag) {
         String result = super.apiFilename(templateName, tag);
 
-        if ( templateName.endsWith("api.mustache") ) {
+        if (templateName.endsWith("api.mustache")) {
             int ix = result.indexOf(sourceFolder);
             String beg = result.substring(0, ix);
             String end = result.substring(ix + sourceFolder.length());
@@ -188,8 +191,8 @@ public class JavaInflectorServerCodegen extends AbstractJavaCodegen {
 
     @Override
     public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
-        Swagger swagger = (Swagger)objs.get("swagger");
-        if(swagger != null) {
+        Swagger swagger = (Swagger) objs.get("swagger");
+        if (swagger != null) {
             try {
                 objs.put("swagger-yaml", Yaml.mapper().writeValueAsString(swagger));
             } catch (JsonProcessingException e) {
@@ -204,7 +207,9 @@ public class JavaInflectorServerCodegen extends AbstractJavaCodegen {
         if (name.length() == 0) {
             return "DefaultController";
         }
-        name = name.replaceAll("[^a-zA-Z0-9]+", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
-        return camelize(name)+ "Controller";
+        name = name.replaceAll("[^a-zA-Z0-9]+", "_"); // FIXME: a parameter should not be assigned.
+                                                      // Also declare the methods parameters as
+                                                      // 'final'.
+        return camelize(name) + "Controller";
     }
 }

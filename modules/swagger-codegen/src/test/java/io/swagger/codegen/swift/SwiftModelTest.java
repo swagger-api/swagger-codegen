@@ -13,17 +13,14 @@ public class SwiftModelTest {
 
     @Test(description = "convert a simple java model")
     public void simpleModelTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("id", new LongProperty())
-                .property("name", new StringProperty())
-                .property("createdAt", new DateTimeProperty())
-                .property("binary", new BinaryProperty())
-                .property("byte", new ByteArrayProperty())
-                .property("uuid", new UUIDProperty())
-                .required("id")
-                .required("name")
-                .discriminator("test");
+        final Model model =
+                new ModelImpl().description("a sample model").property("id", new LongProperty())
+                        .property("name", new StringProperty())
+                        .property("createdAt", new DateTimeProperty())
+                        .property("binary", new BinaryProperty())
+                        .property("byte", new ByteArrayProperty())
+                        .property("uuid", new UUIDProperty()).required("id").required("name")
+                        .discriminator("test");
         final DefaultCodegen codegen = new SwiftCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -31,7 +28,7 @@ public class SwiftModelTest {
         Assert.assertEquals(cm.classname, "Sample");
         Assert.assertEquals(cm.description, "a sample model");
         Assert.assertEquals(cm.vars.size(), 6);
-        Assert.assertEquals(cm.discriminator,"test");
+        Assert.assertEquals(cm.discriminator, "test");
 
         final CodegenProperty property1 = cm.vars.get(0);
         Assert.assertEquals(property1.baseName, "id");

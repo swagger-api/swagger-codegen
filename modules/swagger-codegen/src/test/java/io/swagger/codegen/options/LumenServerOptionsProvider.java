@@ -30,8 +30,10 @@ public class LumenServerOptionsProvider implements OptionsProvider {
     @Override
     public Map<String, String> createOptions() {
         ImmutableMap.Builder<String, String> builder = new ImmutableMap.Builder<String, String>();
-        return builder.put(CodegenConstants.MODEL_PACKAGE, MODEL_PACKAGE_VALUE)
-                .put(AbstractPhpCodegen.VARIABLE_NAMING_CONVENTION, VARIABLE_NAMING_CONVENTION_VALUE)
+        return builder
+                .put(CodegenConstants.MODEL_PACKAGE, MODEL_PACKAGE_VALUE)
+                .put(AbstractPhpCodegen.VARIABLE_NAMING_CONVENTION,
+                        VARIABLE_NAMING_CONVENTION_VALUE)
                 .put(AbstractPhpCodegen.PACKAGE_PATH, PACKAGE_PATH_VALUE)
                 .put(AbstractPhpCodegen.SRC_BASE_PATH, SRC_BASE_PATH_VALUE)
                 .put(CodegenConstants.API_PACKAGE, API_PACKAGE_VALUE)

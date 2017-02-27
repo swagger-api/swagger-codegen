@@ -44,27 +44,16 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
         modelDocTemplateFiles.put("object_doc.mustache", ".md");
         apiDocTemplateFiles.put("api_doc.mustache", ".md");
 
-        setReservedWordsLowerCase(
-                Arrays.asList(
-                        "abstract", "as", "assert", "async", "async*", "await",
-                        "break", "case", "catch", "class", "const", "continue",
-                        "default", "deferred", "do", "dynamic", "else", "enum",
-                        "export", "external", "extends", "factory", "false", "final",
-                        "finally", "for", "get", "if", "implements", "import", "in",
-                        "is", "library", "new", "null", "operator", "part", "rethrow",
-                        "return", "set", "static", "super", "switch", "sync*", "this",
-                        "throw", "true", "try", "typedef", "var", "void", "while",
-                        "with", "yield", "yield*" )
-        );
+        setReservedWordsLowerCase(Arrays.asList("abstract", "as", "assert", "async", "async*",
+                "await", "break", "case", "catch", "class", "const", "continue", "default",
+                "deferred", "do", "dynamic", "else", "enum", "export", "external", "extends",
+                "factory", "false", "final", "finally", "for", "get", "if", "implements", "import",
+                "in", "is", "library", "new", "null", "operator", "part", "rethrow", "return",
+                "set", "static", "super", "switch", "sync*", "this", "throw", "true", "try",
+                "typedef", "var", "void", "while", "with", "yield", "yield*"));
 
-        languageSpecificPrimitives = new HashSet<String>(
-                Arrays.asList(
-                        "String",
-                        "bool",
-                        "int",
-                        "num",
-                        "double")
-        );
+        languageSpecificPrimitives =
+                new HashSet<String>(Arrays.asList("String", "bool", "int", "num", "double"));
         instantiationTypes.put("array", "List");
         instantiationTypes.put("map", "Map");
 
@@ -86,7 +75,7 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("Date", "DateTime");
         typeMapping.put("date", "DateTime");
         typeMapping.put("File", "MultipartFile");
-        //TODO binary should be mapped to byte array
+        // TODO binary should be mapped to byte array
         // mapped to String as a workaround
         typeMapping.put("binary", "String");
 
@@ -94,7 +83,8 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
         cliOptions.add(new CliOption(PUB_NAME, "Name in generated pubspec"));
         cliOptions.add(new CliOption(PUB_VERSION, "Version in generated pubspec"));
         cliOptions.add(new CliOption(PUB_DESCRIPTION, "Description in generated pubspec"));
-        cliOptions.add(new CliOption(CodegenConstants.SOURCE_FOLDER, "source folder for generated code"));
+        cliOptions.add(new CliOption(CodegenConstants.SOURCE_FOLDER,
+                "source folder for generated code"));
     }
 
     @Override
@@ -117,31 +107,32 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
         super.processOpts();
 
         if (additionalProperties.containsKey(BROWSER_CLIENT)) {
-            this.setBrowserClient(Boolean.parseBoolean((String) additionalProperties.get(BROWSER_CLIENT)));
+            this.setBrowserClient(Boolean.parseBoolean((String) additionalProperties
+                    .get(BROWSER_CLIENT)));
             additionalProperties.put(BROWSER_CLIENT, browserClient);
         } else {
-            //not set, use to be passed to template
+            // not set, use to be passed to template
             additionalProperties.put(BROWSER_CLIENT, browserClient);
         }
 
         if (additionalProperties.containsKey(PUB_NAME)) {
             this.setPubName((String) additionalProperties.get(PUB_NAME));
         } else {
-            //not set, use to be passed to template
+            // not set, use to be passed to template
             additionalProperties.put(PUB_NAME, pubName);
         }
 
         if (additionalProperties.containsKey(PUB_VERSION)) {
             this.setPubVersion((String) additionalProperties.get(PUB_VERSION));
         } else {
-            //not set, use to be passed to template
+            // not set, use to be passed to template
             additionalProperties.put(PUB_VERSION, pubVersion);
         }
 
         if (additionalProperties.containsKey(PUB_DESCRIPTION)) {
             this.setPubDescription((String) additionalProperties.get(PUB_DESCRIPTION));
         } else {
-            //not set, use to be passed to template
+            // not set, use to be passed to template
             additionalProperties.put(PUB_DESCRIPTION, pubDescription);
         }
 
@@ -155,16 +146,23 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         final String libFolder = sourceFolder + File.separator + "lib";
         supportingFiles.add(new SupportingFile("pubspec.mustache", "", "pubspec.yaml"));
-        supportingFiles.add(new SupportingFile("analysis_options.mustache", "", ".analysis_options"));
-        supportingFiles.add(new SupportingFile("api_client.mustache", libFolder, "api_client.dart"));
-        supportingFiles.add(new SupportingFile("api_exception.mustache", libFolder, "api_exception.dart"));
-        supportingFiles.add(new SupportingFile("api_helper.mustache", libFolder, "api_helper.dart"));
+        supportingFiles
+                .add(new SupportingFile("analysis_options.mustache", "", ".analysis_options"));
+        supportingFiles
+                .add(new SupportingFile("api_client.mustache", libFolder, "api_client.dart"));
+        supportingFiles.add(new SupportingFile("api_exception.mustache", libFolder,
+                "api_exception.dart"));
+        supportingFiles
+                .add(new SupportingFile("api_helper.mustache", libFolder, "api_helper.dart"));
         supportingFiles.add(new SupportingFile("apilib.mustache", libFolder, "api.dart"));
 
         final String authFolder = sourceFolder + File.separator + "lib" + File.separator + "auth";
-        supportingFiles.add(new SupportingFile("auth/authentication.mustache", authFolder, "authentication.dart"));
-        supportingFiles.add(new SupportingFile("auth/http_basic_auth.mustache", authFolder, "http_basic_auth.dart"));
-        supportingFiles.add(new SupportingFile("auth/api_key_auth.mustache", authFolder, "api_key_auth.dart"));
+        supportingFiles.add(new SupportingFile("auth/authentication.mustache", authFolder,
+                "authentication.dart"));
+        supportingFiles.add(new SupportingFile("auth/http_basic_auth.mustache", authFolder,
+                "http_basic_auth.dart"));
+        supportingFiles.add(new SupportingFile("auth/api_key_auth.mustache", authFolder,
+                "api_key_auth.dart"));
         supportingFiles.add(new SupportingFile("auth/oauth.mustache", authFolder, "oauth.dart"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
@@ -174,8 +172,8 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
 
 
     @Override
-    public String escapeReservedWord(String name) {           
-        if(this.reservedWordsMappings().containsKey(name)) {
+    public String escapeReservedWord(String name) {
+        if (this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
         return "_" + name;
@@ -183,12 +181,14 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String apiFileFolder() {
-        return outputFolder + "/" + sourceFolder + "/" + apiPackage().replace('.', File.separatorChar);
+        return outputFolder + "/" + sourceFolder + "/"
+                + apiPackage().replace('.', File.separatorChar);
     }
 
     @Override
     public String modelFileFolder() {
-        return outputFolder + "/" + sourceFolder + "/" + modelPackage().replace('.', File.separatorChar);
+        return outputFolder + "/" + sourceFolder + "/"
+                + modelPackage().replace('.', File.separatorChar);
     }
 
     @Override
@@ -204,7 +204,8 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public String toVarName(String name) {
         // replace - with _ e.g. created-at => created_at
-        name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare
+                                          // the methods parameters as 'final'.
 
         // if it's all uppper case, do nothing
         if (name.matches("^[A-Z_]*$")) {
@@ -233,7 +234,8 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
     public String toModelName(String name) {
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
-            LOGGER.warn(name + " (reserved word) cannot be used as model filename. Renamed to " + camelize("model_" + name));
+            LOGGER.warn(name + " (reserved word) cannot be used as model filename. Renamed to "
+                    + camelize("model_" + name));
             name = "model_" + name; // e.g. return => ModelReturn (after camelize)
         }
 
@@ -297,7 +299,8 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
         // method name cannot use reserved keyword, e.g. return
         if (isReservedWord(operationId)) {
             String newOperationId = camelize("call_" + operationId, true);
-            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + newOperationId);
+            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to "
+                    + newOperationId);
             return newOperationId;
         }
 

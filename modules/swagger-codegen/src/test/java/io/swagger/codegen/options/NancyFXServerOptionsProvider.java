@@ -23,12 +23,9 @@ public class NancyFXServerOptionsProvider implements OptionsProvider {
         final ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
         return builder.put(PACKAGE_NAME, PACKAGE_NAME_VALUE)
                 .put(PACKAGE_VERSION, PACKAGE_VERSION_VALUE)
-                .put(SOURCE_FOLDER, SOURCE_FOLDER_VALUE)
-                .put(SORT_PARAMS_BY_REQUIRED_FLAG, "true")
-                .put(USE_DATETIME_OFFSET, "true")
-                .put(USE_COLLECTION, "false")
-                .put(RETURN_ICOLLECTION, "false")
-                .put(INTERFACE_PREFIX, "X")
+                .put(SOURCE_FOLDER, SOURCE_FOLDER_VALUE).put(SORT_PARAMS_BY_REQUIRED_FLAG, "true")
+                .put(USE_DATETIME_OFFSET, "true").put(USE_COLLECTION, "false")
+                .put(RETURN_ICOLLECTION, "false").put(INTERFACE_PREFIX, "X")
                 .put(ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
 
                 .build();

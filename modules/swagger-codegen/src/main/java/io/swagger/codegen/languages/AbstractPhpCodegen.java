@@ -31,7 +31,8 @@ public abstract class AbstractPhpCodegen extends DefaultCodegen implements Codeg
     public static final String VARIABLE_NAMING_CONVENTION = "variableNamingConvention";
     public static final String PACKAGE_PATH = "packagePath";
     public static final String SRC_BASE_PATH = "srcBasePath";
-    // composerVendorName/composerProjectName has be replaced by gitUserId/gitRepoId. prepare to remove these.
+    // composerVendorName/composerProjectName has be replaced by gitUserId/gitRepoId. prepare to
+    // remove these.
     // public static final String COMPOSER_VENDOR_NAME = "composerVendorName";
     // public static final String COMPOSER_PROJECT_NAME = "composerProjectName";
     // protected String composerVendorName = null;
@@ -44,7 +45,7 @@ public abstract class AbstractPhpCodegen extends DefaultCodegen implements Codeg
     protected String docsBasePath = "docs";
     protected String apiDirName = "Api";
     protected String modelDirName = "Model";
-    protected String variableNamingConvention= "snake_case";
+    protected String variableNamingConvention = "snake_case";
     protected String apiDocPath = docsBasePath + "/" + apiDirName;
     protected String modelDocPath = docsBasePath + "/" + modelDirName;
 
@@ -60,33 +61,30 @@ public abstract class AbstractPhpCodegen extends DefaultCodegen implements Codeg
         apiPackage = invokerPackage + "\\" + apiDirName;
         modelPackage = invokerPackage + "\\" + modelDirName;
 
-        setReservedWordsLowerCase(
-                Arrays.asList(
-                    // local variables used in api methods (endpoints)
-                    "resourcePath", "httpBody", "queryParams", "headerParams",
-                    "formParams", "_header_accept", "_tempBody",
+        setReservedWordsLowerCase(Arrays.asList(
+                // local variables used in api methods (endpoints)
+                "resourcePath",
+                "httpBody",
+                "queryParams",
+                "headerParams",
+                "formParams",
+                "_header_accept",
+                "_tempBody",
 
-                    // PHP reserved words
-                    "__halt_compiler", "abstract", "and", "array", "as", "break", "callable", "case", "catch", "class", "clone", "const", "continue", "declare", "default", "die", "do", "echo", "else", "elseif", "empty", "enddeclare", "endfor", "endforeach", "endif", "endswitch", "endwhile", "eval", "exit", "extends", "final", "for", "foreach", "function", "global", "goto", "if", "implements", "include", "include_once", "instanceof", "insteadof", "interface", "isset", "list", "namespace", "new", "or", "print", "private", "protected", "public", "require", "require_once", "return", "static", "switch", "throw", "trait", "try", "unset", "use", "var", "while", "xor")
-        );
+                // PHP reserved words
+                "__halt_compiler", "abstract", "and", "array", "as", "break", "callable", "case",
+                "catch", "class", "clone", "const", "continue", "declare", "default", "die", "do",
+                "echo", "else", "elseif", "empty", "enddeclare", "endfor", "endforeach", "endif",
+                "endswitch", "endwhile", "eval", "exit", "extends", "final", "for", "foreach",
+                "function", "global", "goto", "if", "implements", "include", "include_once",
+                "instanceof", "insteadof", "interface", "isset", "list", "namespace", "new", "or",
+                "print", "private", "protected", "public", "require", "require_once", "return",
+                "static", "switch", "throw", "trait", "try", "unset", "use", "var", "while", "xor"));
 
         // ref: http://php.net/manual/en/language.types.intro.php
-        languageSpecificPrimitives = new HashSet<String>(
-                Arrays.asList(
-                        "bool",
-                        "boolean",
-                        "int",
-                        "integer",
-                        "double",
-                        "float",
-                        "string",
-                        "object",
-                        "DateTime",
-                        "mixed",
-                        "number",
-                        "void",
-                        "byte")
-        );
+        languageSpecificPrimitives =
+                new HashSet<String>(Arrays.asList("bool", "boolean", "int", "integer", "double",
+                        "float", "string", "object", "DateTime", "mixed", "number", "void", "byte"));
 
         instantiationTypes.put("array", "array");
         instantiationTypes.put("map", "map");
@@ -117,18 +115,28 @@ public abstract class AbstractPhpCodegen extends DefaultCodegen implements Codeg
         typeMapping.put("ByteArray", "string");
         typeMapping.put("UUID", "string");
 
-        cliOptions.add(new CliOption(CodegenConstants.MODEL_PACKAGE, CodegenConstants.MODEL_PACKAGE_DESC));
-        cliOptions.add(new CliOption(CodegenConstants.API_PACKAGE, CodegenConstants.API_PACKAGE_DESC));
-        cliOptions.add(new CliOption(VARIABLE_NAMING_CONVENTION, "naming convention of variable name, e.g. camelCase.")
-                .defaultValue("snake_case"));
-        cliOptions.add(new CliOption(CodegenConstants.INVOKER_PACKAGE, "The main namespace to use for all classes. e.g. Yay\\Pets"));
-        cliOptions.add(new CliOption(PACKAGE_PATH, "The main package name for classes. e.g. GeneratedPetstore"));
-        cliOptions.add(new CliOption(SRC_BASE_PATH, "The directory under packagePath to serve as source root."));
-        // cliOptions.add(new CliOption(COMPOSER_VENDOR_NAME, "The vendor name used in the composer package name. The template uses {{composerVendorName}}/{{composerProjectName}} for the composer package name. e.g. yaypets. IMPORTANT NOTE (2016/03): composerVendorName will be deprecated and replaced by gitUserId in the next swagger-codegen release"));
-        cliOptions.add(new CliOption(CodegenConstants.GIT_USER_ID, CodegenConstants.GIT_USER_ID_DESC));
-        // cliOptions.add(new CliOption(COMPOSER_PROJECT_NAME, "The project name used in the composer package name. The template uses {{composerVendorName}}/{{composerProjectName}} for the composer package name. e.g. petstore-client. IMPORTANT NOTE (2016/03): composerProjectName will be deprecated and replaced by gitRepoId in the next swagger-codegen release"));
-        cliOptions.add(new CliOption(CodegenConstants.GIT_REPO_ID, CodegenConstants.GIT_REPO_ID_DESC));
-        cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_VERSION, "The version to use in the composer package version field. e.g. 1.2.3"));
+        cliOptions.add(new CliOption(CodegenConstants.MODEL_PACKAGE,
+                CodegenConstants.MODEL_PACKAGE_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.API_PACKAGE,
+                CodegenConstants.API_PACKAGE_DESC));
+        cliOptions.add(new CliOption(VARIABLE_NAMING_CONVENTION,
+                "naming convention of variable name, e.g. camelCase.").defaultValue("snake_case"));
+        cliOptions.add(new CliOption(CodegenConstants.INVOKER_PACKAGE,
+                "The main namespace to use for all classes. e.g. Yay\\Pets"));
+        cliOptions.add(new CliOption(PACKAGE_PATH,
+                "The main package name for classes. e.g. GeneratedPetstore"));
+        cliOptions.add(new CliOption(SRC_BASE_PATH,
+                "The directory under packagePath to serve as source root."));
+        // cliOptions.add(new CliOption(COMPOSER_VENDOR_NAME,
+        // "The vendor name used in the composer package name. The template uses {{composerVendorName}}/{{composerProjectName}} for the composer package name. e.g. yaypets. IMPORTANT NOTE (2016/03): composerVendorName will be deprecated and replaced by gitUserId in the next swagger-codegen release"));
+        cliOptions.add(new CliOption(CodegenConstants.GIT_USER_ID,
+                CodegenConstants.GIT_USER_ID_DESC));
+        // cliOptions.add(new CliOption(COMPOSER_PROJECT_NAME,
+        // "The project name used in the composer package name. The template uses {{composerVendorName}}/{{composerProjectName}} for the composer package name. e.g. petstore-client. IMPORTANT NOTE (2016/03): composerProjectName will be deprecated and replaced by gitRepoId in the next swagger-codegen release"));
+        cliOptions.add(new CliOption(CodegenConstants.GIT_REPO_ID,
+                CodegenConstants.GIT_REPO_ID_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_VERSION,
+                "The version to use in the composer package version field. e.g. 1.2.3"));
     }
 
     @Override
@@ -148,7 +156,8 @@ public abstract class AbstractPhpCodegen extends DefaultCodegen implements Codeg
         }
 
         if (additionalProperties.containsKey(CodegenConstants.INVOKER_PACKAGE)) {
-            this.setInvokerPackage((String) additionalProperties.get(CodegenConstants.INVOKER_PACKAGE));
+            this.setInvokerPackage((String) additionalProperties
+                    .get(CodegenConstants.INVOKER_PACKAGE));
         } else {
             additionalProperties.put(CodegenConstants.INVOKER_PACKAGE, invokerPackage);
         }
@@ -162,9 +171,9 @@ public abstract class AbstractPhpCodegen extends DefaultCodegen implements Codeg
         }
 
         // if (additionalProperties.containsKey(COMPOSER_PROJECT_NAME)) {
-        //     this.setComposerProjectName((String) additionalProperties.get(COMPOSER_PROJECT_NAME));
+        // this.setComposerProjectName((String) additionalProperties.get(COMPOSER_PROJECT_NAME));
         // } else {
-        //     additionalProperties.put(COMPOSER_PROJECT_NAME, composerProjectName);
+        // additionalProperties.put(COMPOSER_PROJECT_NAME, composerProjectName);
         // }
 
         if (additionalProperties.containsKey(CodegenConstants.GIT_USER_ID)) {
@@ -174,9 +183,9 @@ public abstract class AbstractPhpCodegen extends DefaultCodegen implements Codeg
         }
 
         // if (additionalProperties.containsKey(COMPOSER_VENDOR_NAME)) {
-        //     this.setComposerVendorName((String) additionalProperties.get(COMPOSER_VENDOR_NAME));
+        // this.setComposerVendorName((String) additionalProperties.get(COMPOSER_VENDOR_NAME));
         // } else {
-        //     additionalProperties.put(COMPOSER_VENDOR_NAME, composerVendorName);
+        // additionalProperties.put(COMPOSER_VENDOR_NAME, composerVendorName);
         // }
 
         if (additionalProperties.containsKey(CodegenConstants.GIT_REPO_ID)) {
@@ -186,13 +195,15 @@ public abstract class AbstractPhpCodegen extends DefaultCodegen implements Codeg
         }
 
         if (additionalProperties.containsKey(CodegenConstants.ARTIFACT_VERSION)) {
-            this.setArtifactVersion((String) additionalProperties.get(CodegenConstants.ARTIFACT_VERSION));
+            this.setArtifactVersion((String) additionalProperties
+                    .get(CodegenConstants.ARTIFACT_VERSION));
         } else {
             additionalProperties.put(CodegenConstants.ARTIFACT_VERSION, artifactVersion);
         }
 
         if (additionalProperties.containsKey(VARIABLE_NAMING_CONVENTION)) {
-            this.setParameterNamingConvention((String) additionalProperties.get(VARIABLE_NAMING_CONVENTION));
+            this.setParameterNamingConvention((String) additionalProperties
+                    .get(VARIABLE_NAMING_CONVENTION));
         }
 
         additionalProperties.put("escapedInvokerPackage", invokerPackage.replace("\\", "\\\\"));
@@ -223,9 +234,18 @@ public abstract class AbstractPhpCodegen extends DefaultCodegen implements Codeg
     }
 
     public String toSrcPath(String packageName, String basePath) {
-        packageName = packageName.replace(invokerPackage, ""); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        packageName = packageName.replace(invokerPackage, ""); // FIXME: a parameter should not be
+                                                               // assigned. Also declare the methods
+                                                               // parameters as 'final'.
         if (basePath != null && basePath.length() > 0) {
-            basePath = basePath.replaceAll("[\\\\/]?$", "") + File.separatorChar; // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+            basePath = basePath.replaceAll("[\\\\/]?$", "") + File.separatorChar; // FIXME: a
+                                                                                  // parameter
+                                                                                  // should not be
+                                                                                  // assigned. Also
+                                                                                  // declare the
+                                                                                  // methods
+                                                                                  // parameters as
+                                                                                  // 'final'.
         }
 
         String regFirstPathSeparator;
@@ -243,17 +263,17 @@ public abstract class AbstractPhpCodegen extends DefaultCodegen implements Codeg
         }
 
         return (basePath
-                // Replace period, backslash, forward slash with file separator in package name
-                + packageName.replaceAll("[\\.\\\\/]", Matcher.quoteReplacement(File.separator))
-                // Trim prefix file separators from package path
+        // Replace period, backslash, forward slash with file separator in package name
+        + packageName.replaceAll("[\\.\\\\/]", Matcher.quoteReplacement(File.separator))
+        // Trim prefix file separators from package path
                 .replaceAll(regFirstPathSeparator, ""))
-                // Trim trailing file separators from the overall path
-                .replaceAll(regLastPathSeparator+ "$", "");
+        // Trim trailing file separators from the overall path
+                .replaceAll(regLastPathSeparator + "$", "");
     }
 
-   @Override
-    public String escapeReservedWord(String name) {           
-        if(this.reservedWordsMappings().containsKey(name)) {
+    @Override
+    public String escapeReservedWord(String name) {
+        if (this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
         return "_" + name;
@@ -311,8 +331,8 @@ public abstract class AbstractPhpCodegen extends DefaultCodegen implements Codeg
             return getSwaggerType(p) + "[string," + getTypeDeclaration(inner) + "]";
         } else if (p instanceof RefProperty) {
             String type = super.getTypeDeclaration(p);
-            return (!languageSpecificPrimitives.contains(type))
-                    ? "\\" + modelPackage + "\\" + type : type;
+            return (!languageSpecificPrimitives.contains(type)) ? "\\" + modelPackage + "\\" + type
+                    : type;
         }
         return super.getTypeDeclaration(p);
     }
@@ -366,26 +386,27 @@ public abstract class AbstractPhpCodegen extends DefaultCodegen implements Codeg
     }
 
     // public void setComposerVendorName(String composerVendorName) {
-    //     this.composerVendorName = composerVendorName;
+    // this.composerVendorName = composerVendorName;
     // }
 
     // public void setComposerProjectName(String composerProjectName) {
-    //     this.composerProjectName = composerProjectName;
+    // this.composerProjectName = composerProjectName;
     // }
 
     @Override
     public String toVarName(String name) {
         // sanitize name
-        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        name = sanitizeName(name); // FIXME: a parameter should not be assigned. Also declare the
+                                   // methods parameters as 'final'.
 
         if ("camelCase".equals(variableNamingConvention)) {
-          // return the name in camelCase style
-          // phone_number => phoneNumber
-          name =  camelize(name, true);
+            // return the name in camelCase style
+            // phone_number => phoneNumber
+            name = camelize(name, true);
         } else { // default to snake case
-          // return the name in underscore style
-          // PhoneNumber => phone_number
-          name =  underscore(name);
+            // return the name in underscore style
+            // PhoneNumber => phone_number
+            name = underscore(name);
         }
 
         // parameter name starting with number won't compile
@@ -409,20 +430,25 @@ public abstract class AbstractPhpCodegen extends DefaultCodegen implements Codeg
         name = name.replaceAll("\\]", "");
 
         // Note: backslash ("\\") is allowed for e.g. "\\DateTime"
-        name = name.replaceAll("[^\\w\\\\]+", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        name = name.replaceAll("[^\\w\\\\]+", "_"); // FIXME: a parameter should not be assigned.
+                                                    // Also declare the methods parameters as
+                                                    // 'final'.
 
         // remove dollar sign
         name = name.replaceAll("$", "");
 
         // model name cannot use reserved keyword
         if (isReservedWord(name)) {
-            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + camelize("model_" + name));
+            LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to "
+                    + camelize("model_" + name));
             name = "model_" + name; // e.g. return => ModelReturn (after camelize)
         }
 
         // model name starts with number
         if (name.matches("^\\d.*")) {
-            LOGGER.warn(name + " (model name starts with number) cannot be used as model name. Renamed to " + camelize("model_" + name));
+            LOGGER.warn(name
+                    + " (model name starts with number) cannot be used as model name. Renamed to "
+                    + camelize("model_" + name));
             name = "model_" + name; // e.g. 200Response => Model200Response (after camelize)
         }
 
@@ -457,7 +483,8 @@ public abstract class AbstractPhpCodegen extends DefaultCodegen implements Codeg
 
         // method name cannot use reserved keyword, e.g. return
         if (isReservedWord(operationId)) {
-            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + camelize(sanitizeName("call_" + operationId), true));
+            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to "
+                    + camelize(sanitizeName("call_" + operationId), true));
             operationId = "call_" + operationId;
         }
 

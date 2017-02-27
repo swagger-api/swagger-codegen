@@ -21,8 +21,8 @@ import java.util.Map;
 import java.util.ServiceLoader;
 
 /**
- * @deprecated use instead {@link io.swagger.codegen.DefaultGenerator}
- * or cli interface from https://github.com/swagger-api/swagger-codegen/pull/547
+ * @deprecated use instead {@link io.swagger.codegen.DefaultGenerator} or cli interface from
+ *             https://github.com/swagger-api/swagger-codegen/pull/547
  */
 @Deprecated
 public class MetaGenerator extends AbstractGenerator {
@@ -47,9 +47,9 @@ public class MetaGenerator extends AbstractGenerator {
 
     static void usage(Options options) {
         HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("MetaGenerator. Generator for creating a new template set " +
-                "and configuration for Codegen.  The output will be based on the language you " +
-                "specify, and includes default templates to include.", options);
+        formatter.printHelp("MetaGenerator. Generator for creating a new template set "
+                + "and configuration for Codegen.  The output will be based on the language you "
+                + "specify, and includes default templates to include.", options);
     }
 
     public static CodegenConfig getConfig(String name) {
@@ -67,10 +67,13 @@ public class MetaGenerator extends AbstractGenerator {
 
         Options options = new Options();
         options.addOption("h", "help", false, "shows this message");
-        options.addOption("l", "lang", false, "client language to generate.\nAvailable languages include:\n\t[" + configString + "]");
+        options.addOption("l", "lang", false,
+                "client language to generate.\nAvailable languages include:\n\t[" + configString
+                        + "]");
         options.addOption("o", "output", true, "where to write the generated files");
         options.addOption("n", "name", true, "the human-readable name of the generator");
-        options.addOption("p", "package", true, "the package to put the main class into (defaults to io.swagger.codegen");
+        options.addOption("p", "package", true,
+                "the package to put the main class into (defaults to io.swagger.codegen");
 
         CommandLine cmd = null;
         try {
@@ -83,7 +86,7 @@ public class MetaGenerator extends AbstractGenerator {
             if (cmd.hasOption("n")) {
                 name = cmd.getOptionValue("n");
             } else {
-                System.out.println("name is required"); //FIXME replace by LOGGER
+                System.out.println("name is required"); // FIXME replace by LOGGER
                 usage(options);
                 return;
             }
@@ -108,11 +111,14 @@ public class MetaGenerator extends AbstractGenerator {
         if (!outputFolderLocation.exists()) {
             outputFolderLocation.mkdirs();
         }
-        File sourceFolder = new File(outputFolder + File.separator + "src/main/java/" + targetPackage.replace('.', File.separatorChar));
+        File sourceFolder =
+                new File(outputFolder + File.separator + "src/main/java/"
+                        + targetPackage.replace('.', File.separatorChar));
         if (!sourceFolder.exists()) {
             sourceFolder.mkdirs();
         }
-        File resourcesFolder = new File(outputFolder + File.separator + "src/main/resources/META-INF/services");
+        File resourcesFolder =
+                new File(outputFolder + File.separator + "src/main/resources/META-INF/services");
         if (!resourcesFolder.exists()) {
             resourcesFolder.mkdirs();
         }
@@ -121,14 +127,17 @@ public class MetaGenerator extends AbstractGenerator {
 
         List<SupportingFile> supportingFiles = new ArrayList<SupportingFile>();
         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
-        supportingFiles.add(new SupportingFile("generatorClass.mustache",
-                "src/main/java/" + File.separator + targetPackage.replace('.', File.separatorChar),
-                mainClass + ".java"));
+        supportingFiles.add(new SupportingFile("generatorClass.mustache", "src/main/java/"
+                + File.separator + targetPackage.replace('.', File.separatorChar), mainClass
+                + ".java"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
-        supportingFiles.add(new SupportingFile("api.template", "src/main/resources" + File.separator + name, "api.mustache"));
-        supportingFiles.add(new SupportingFile("model.template", "src/main/resources" + File.separator + name, "model.mustache"));
+        supportingFiles.add(new SupportingFile("api.template", "src/main/resources"
+                + File.separator + name, "api.mustache"));
+        supportingFiles.add(new SupportingFile("model.template", "src/main/resources"
+                + File.separator + name, "model.mustache"));
 
-        supportingFiles.add(new SupportingFile("services.mustache", "src/main/resources/META-INF/services", "io.swagger.codegen.CodegenConfig"));
+        supportingFiles.add(new SupportingFile("services.mustache",
+                "src/main/resources/META-INF/services", "io.swagger.codegen.CodegenConfig"));
 
         List<File> files = new ArrayList<File>();
 
@@ -148,24 +157,25 @@ public class MetaGenerator extends AbstractGenerator {
                 if (!of.isDirectory()) {
                     of.mkdirs();
                 }
-                String outputFilename = destinationFolder + File.separator + support.destinationFilename;
+                String outputFilename =
+                        destinationFolder + File.separator + support.destinationFilename;
 
                 if (support.templateFile.endsWith("mustache")) {
-                    String template = readTemplate(templateDir + File.separator + support.templateFile);
-                    Template tmpl = Mustache.compiler()
-                            .withLoader(new Mustache.TemplateLoader() {
-                                @Override
-                                public Reader getTemplate(String name) {
-                                    return getTemplateReader(templateDir + File.separator + name + ".mustache");
-                                }
-                            })
-                            .defaultValue("")
-                            .compile(template);
+                    String template =
+                            readTemplate(templateDir + File.separator + support.templateFile);
+                    Template tmpl = Mustache.compiler().withLoader(new Mustache.TemplateLoader() {
+                        @Override
+                        public Reader getTemplate(String name) {
+                            return getTemplateReader(templateDir + File.separator + name
+                                    + ".mustache");
+                        }
+                    }).defaultValue("").compile(template);
 
                     writeToFile(outputFilename, tmpl.execute(data));
                     files.add(new File(outputFilename));
                 } else {
-                    String template = readTemplate(templateDir + File.separator + support.templateFile);
+                    String template =
+                            readTemplate(templateDir + File.separator + support.templateFile);
                     FileUtils.writeStringToFile(new File(outputFilename), template);
                     LOGGER.info("copying file to " + outputFilename);
                     files.add(new File(outputFilename));

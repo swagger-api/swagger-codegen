@@ -25,7 +25,9 @@ public class SinatraServerOptionsTest extends AbstractOptionsTest {
     @SuppressWarnings("unused")
     @Override
     protected void setExpectations() {
-        new Expectations(clientCodegen) {{
-        }};
+        new Expectations(clientCodegen) {
+            {
+            }
+        };
     }
 }

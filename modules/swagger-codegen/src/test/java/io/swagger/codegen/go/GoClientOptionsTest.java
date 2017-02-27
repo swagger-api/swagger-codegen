@@ -25,11 +25,13 @@ public class GoClientOptionsTest extends AbstractOptionsTest {
     @SuppressWarnings("unused")
     @Override
     protected void setExpectations() {
-        new Expectations(clientCodegen) {{
-            clientCodegen.setPackageVersion(GoClientOptionsProvider.PACKAGE_VERSION_VALUE);
-            times = 1;
-            clientCodegen.setPackageName(GoClientOptionsProvider.PACKAGE_NAME_VALUE);
-            times = 1;
-        }};
+        new Expectations(clientCodegen) {
+            {
+                clientCodegen.setPackageVersion(GoClientOptionsProvider.PACKAGE_VERSION_VALUE);
+                times = 1;
+                clientCodegen.setPackageName(GoClientOptionsProvider.PACKAGE_NAME_VALUE);
+                times = 1;
+            }
+        };
     }
 }

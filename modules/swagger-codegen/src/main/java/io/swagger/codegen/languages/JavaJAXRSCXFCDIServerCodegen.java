@@ -9,16 +9,16 @@ import io.swagger.codegen.languages.features.BeanValidationFeatures;
 import java.io.File;
 
 /**
- * Generates a Java JAXRS Server according to JAXRS 2.0 specification, assuming an
- * Apache CXF runtime and a Java EE runtime with CDI enabled.
- * Similar to the original JAXRS generator, this creates API and Service classes
- * in /src/gen/java and a sample ServiceImpl in /src/main/java. The API uses CDI
- * to get an instance of ServiceImpl that implements the Service interface.
+ * Generates a Java JAXRS Server according to JAXRS 2.0 specification, assuming an Apache CXF
+ * runtime and a Java EE runtime with CDI enabled. Similar to the original JAXRS generator, this
+ * creates API and Service classes in /src/gen/java and a sample ServiceImpl in /src/main/java. The
+ * API uses CDI to get an instance of ServiceImpl that implements the Service interface.
  */
-public class JavaJAXRSCXFCDIServerCodegen extends JavaJAXRSSpecServerCodegen implements BeanValidationFeatures {
-    
+public class JavaJAXRSCXFCDIServerCodegen extends JavaJAXRSSpecServerCodegen implements
+        BeanValidationFeatures {
+
     protected boolean useBeanValidation = true;
-    
+
     /**
      * Default constructor
      */
@@ -35,10 +35,11 @@ public class JavaJAXRSCXFCDIServerCodegen extends JavaJAXRSSpecServerCodegen imp
         typeMapping.put("DateTime", "java.util.Date");
 
         // Updated template directory
-        embeddedTemplateDir = templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME
-                + File.separator + "cxf-cdi";
-        
-        cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
+        embeddedTemplateDir =
+                templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME + File.separator + "cxf-cdi";
+
+        cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION,
+                "Use BeanValidation API annotations"));
     }
 
     @Override
@@ -57,7 +58,7 @@ public class JavaJAXRSCXFCDIServerCodegen extends JavaJAXRSSpecServerCodegen imp
         if (useBeanValidation) {
             writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
         }
-        
+
         supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
 
         // writeOptional means these files are only written if they don't already exist
@@ -70,8 +71,8 @@ public class JavaJAXRSCXFCDIServerCodegen extends JavaJAXRSSpecServerCodegen imp
                 (implFolder + '/' + invokerPackage).replace(".", "/"), "RestApplication.java"));
 
         // Make CDI work in containers with implicit archive scanning disabled
-        writeOptional(outputFolder, new SupportingFile("beans.mustache",
-                "src/main/webapp/WEB-INF", "beans.xml"));
+        writeOptional(outputFolder, new SupportingFile("beans.mustache", "src/main/webapp/WEB-INF",
+                "beans.xml"));
     }
 
     @Override

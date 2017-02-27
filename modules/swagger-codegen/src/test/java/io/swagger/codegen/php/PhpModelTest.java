@@ -32,13 +32,11 @@ public class PhpModelTest {
 
     @Test(description = "convert a simple php model")
     public void simpleModelTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("id", new LongProperty())
-                .property("name", new StringProperty())
-                .property("createdAt", new DateTimeProperty())
-                .required("id")
-                .required("name");
+        final Model model =
+                new ModelImpl().description("a sample model").property("id", new LongProperty())
+                        .property("name", new StringProperty())
+                        .property("createdAt", new DateTimeProperty()).required("id")
+                        .required("name");
         final DefaultCodegen codegen = new PhpClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -47,7 +45,7 @@ public class PhpModelTest {
         Assert.assertEquals(cm.description, "a sample model");
         Assert.assertEquals(cm.vars.size(), 3);
         // {{imports}} is not used in template
-        //Assert.assertEquals(cm.imports.size(), 1);
+        // Assert.assertEquals(cm.imports.size(), 1);
 
         final CodegenProperty property1 = cm.vars.get(0);
         Assert.assertEquals(property1.baseName, "id");
@@ -85,12 +83,10 @@ public class PhpModelTest {
 
     @Test(description = "convert a model with list property")
     public void listPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("id", new LongProperty())
-                .property("urls", new ArrayProperty()
-                        .items(new StringProperty()))
-                .required("id");
+        final Model model =
+                new ModelImpl().description("a sample model").property("id", new LongProperty())
+                        .property("urls", new ArrayProperty().items(new StringProperty()))
+                        .required("id");
         final DefaultCodegen codegen = new PhpClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -124,11 +120,12 @@ public class PhpModelTest {
 
     @Test(description = "convert a model with a map property")
     public void mapPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("translations", new MapProperty()
-                        .additionalProperties(new StringProperty()))
-                .required("id");
+        final Model model =
+                new ModelImpl()
+                        .description("a sample model")
+                        .property("translations",
+                                new MapProperty().additionalProperties(new StringProperty()))
+                        .required("id");
         final DefaultCodegen codegen = new PhpClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -150,9 +147,9 @@ public class PhpModelTest {
 
     @Test(description = "convert a model with complex property")
     public void complexPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("children", new RefProperty("#/definitions/Children"));
+        final Model model =
+                new ModelImpl().description("a sample model").property("children",
+                        new RefProperty("#/definitions/Children"));
         final DefaultCodegen codegen = new PhpClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -172,10 +169,9 @@ public class PhpModelTest {
 
     @Test(description = "convert a model with complex list property")
     public void complexListProperty() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("children", new ArrayProperty()
-                        .items(new RefProperty("#/definitions/Children")));
+        final Model model =
+                new ModelImpl().description("a sample model").property("children",
+                        new ArrayProperty().items(new RefProperty("#/definitions/Children")));
         final DefaultCodegen codegen = new PhpClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -196,10 +192,11 @@ public class PhpModelTest {
 
     @Test(description = "convert a model with complex map property")
     public void complexMapProperty() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("children", new MapProperty()
-                        .additionalProperties(new RefProperty("#/definitions/Children")));
+        final Model model =
+                new ModelImpl().description("a sample model").property(
+                        "children",
+                        new MapProperty().additionalProperties(new RefProperty(
+                                "#/definitions/Children")));
         final DefaultCodegen codegen = new PhpClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -208,7 +205,8 @@ public class PhpModelTest {
         Assert.assertEquals(cm.description, "a sample model");
         Assert.assertEquals(cm.vars.size(), 1);
         // {{imports}} is not used in template
-        //Assert.assertEquals(Sets.intersection(cm.imports, Sets.newHashSet("Children")).size(), 1);
+        // Assert.assertEquals(Sets.intersection(cm.imports, Sets.newHashSet("Children")).size(),
+        // 1);
 
         final CodegenProperty property1 = cm.vars.get(0);
         Assert.assertEquals(property1.baseName, "children");
@@ -224,9 +222,9 @@ public class PhpModelTest {
 
     @Test(description = "convert an array model")
     public void arrayModelTest() {
-        final Model model = new ArrayModel()
-                .description("an array model")
-                .items(new RefProperty("#/definitions/Children"));
+        final Model model =
+                new ArrayModel().description("an array model").items(
+                        new RefProperty("#/definitions/Children"));
         final DefaultCodegen codegen = new PhpClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -239,9 +237,9 @@ public class PhpModelTest {
 
     @Test(description = "convert an map model")
     public void mapModelTest() {
-        final Model model = new ModelImpl()
-                .description("a map model")
-                .additionalProperties(new RefProperty("#/definitions/Children"));
+        final Model model =
+                new ModelImpl().description("a map model").additionalProperties(
+                        new RefProperty("#/definitions/Children"));
         final DefaultCodegen codegen = new PhpClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -250,21 +248,16 @@ public class PhpModelTest {
         Assert.assertEquals(cm.description, "a map model");
         Assert.assertEquals(cm.vars.size(), 0);
         // {{imports}} is not used in template
-        //Assert.assertEquals(cm.imports.size(), 2);
-        //Assert.assertEquals(Sets.intersection(cm.imports, Sets.newHashSet("Children")).size(), 1);
+        // Assert.assertEquals(cm.imports.size(), 2);
+        // Assert.assertEquals(Sets.intersection(cm.imports, Sets.newHashSet("Children")).size(),
+        // 1);
     }
 
     @DataProvider(name = "modelNames")
     public static Object[][] primeNumbers() {
-        return new Object[][] {
-            {"sample", "Sample"},
-            {"sample_name", "SampleName"},
-            {"sample__name", "SampleName"},
-            {"/sample", "Sample"},
-            {"\\sample", "\\Sample"},
-            {"sample.name", "SampleName"},
-            {"_sample", "Sample"},
-        };
+        return new Object[][] { {"sample", "Sample"}, {"sample_name", "SampleName"},
+                {"sample__name", "SampleName"}, {"/sample", "Sample"}, {"\\sample", "\\Sample"},
+                {"sample.name", "SampleName"}, {"_sample", "Sample"},};
     }
 
     @Test(dataProvider = "modelNames", description = "avoid inner class")
@@ -279,11 +272,13 @@ public class PhpModelTest {
 
     @Test(description = "test enum array model")
     public void enumArrayMdoelTest() {
-        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
+        final Swagger model =
+                new SwaggerParser()
+                        .read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
         final DefaultCodegen codegen = new PhpClientCodegen();
         final Model definition = model.getDefinitions().get("EnumArrays");
 
-        Property property =  definition.getProperties().get("array_enum");
+        Property property = definition.getProperties().get("array_enum");
         CodegenProperty prope = codegen.fromProperty("array_enum", property);
         codegen.updateCodegenPropertyEnum(prope);
         Assert.assertEquals(prope.datatypeWithEnum, "ARRAY_ENUM[]");
@@ -291,10 +286,10 @@ public class PhpModelTest {
         Assert.assertTrue(prope.isEnum);
         Assert.assertEquals(prope.allowableValues.get("values"), Arrays.asList("fish", "crab"));
 
-        HashMap<String, String> fish= new HashMap<String, String>();
+        HashMap<String, String> fish = new HashMap<String, String>();
         fish.put("name", "FISH");
         fish.put("value", "\'fish\'");
-        HashMap<String, String> crab= new HashMap<String, String>();
+        HashMap<String, String> crab = new HashMap<String, String>();
         crab.put("name", "CRAB");
         crab.put("value", "\'crab\'");
         Assert.assertEquals(prope.allowableValues.get("enumVars"), Arrays.asList(fish, crab));
@@ -303,18 +298,21 @@ public class PhpModelTest {
         Assert.assertEquals(prope.datatypeWithEnum, "ARRAY_ENUM[]");
         Assert.assertEquals(prope.enumName, "ARRAY_ENUM");
         Assert.assertTrue(prope.items.isEnum);
-        Assert.assertEquals(prope.items.allowableValues.get("values"), Arrays.asList("fish", "crab"));
+        Assert.assertEquals(prope.items.allowableValues.get("values"),
+                Arrays.asList("fish", "crab"));
         Assert.assertEquals(prope.items.allowableValues.get("enumVars"), Arrays.asList(fish, crab));
 
     }
 
     @Test(description = "test enum model for values (numeric, string, etc)")
     public void enumMdoelValueTest() {
-        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
+        final Swagger model =
+                new SwaggerParser()
+                        .read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
         final DefaultCodegen codegen = new PhpClientCodegen();
         final Model definition = model.getDefinitions().get("Enum_Test");
 
-        Property property =  definition.getProperties().get("enum_integer");
+        Property property = definition.getProperties().get("enum_integer");
         CodegenProperty prope = codegen.fromProperty("enum_integer", property);
         codegen.updateCodegenPropertyEnum(prope);
         Assert.assertEquals(prope.datatypeWithEnum, "ENUM_INTEGER");
@@ -333,7 +331,6 @@ public class PhpModelTest {
         Assert.assertEquals(prope.allowableValues.get("enumVars"), Arrays.asList(one, minusOne));
 
     }
-
 
 
 

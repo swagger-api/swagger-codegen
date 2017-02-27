@@ -28,10 +28,13 @@ public class StaticDocCodegen extends DefaultCodegen implements CodegenConfig {
         apiTemplateFiles.put("operation.mustache", ".html");
         embeddedTemplateDir = templateDir = "swagger-static";
 
-        cliOptions.add(new CliOption(CodegenConstants.INVOKER_PACKAGE, CodegenConstants.INVOKER_PACKAGE_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.INVOKER_PACKAGE,
+                CodegenConstants.INVOKER_PACKAGE_DESC));
         cliOptions.add(new CliOption(CodegenConstants.GROUP_ID, CodegenConstants.GROUP_ID_DESC));
-        cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_ID, CodegenConstants.ARTIFACT_ID_DESC));
-        cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_VERSION, CodegenConstants.ARTIFACT_VERSION_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_ID,
+                CodegenConstants.ARTIFACT_ID_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_VERSION,
+                CodegenConstants.ARTIFACT_VERSION_DESC));
 
         additionalProperties.put(CodegenConstants.INVOKER_PACKAGE, invokerPackage);
         additionalProperties.put(CodegenConstants.GROUP_ID, groupId);
@@ -40,22 +43,21 @@ public class StaticDocCodegen extends DefaultCodegen implements CodegenConfig {
 
         supportingFiles.add(new SupportingFile("package.mustache", "", "package.json"));
         supportingFiles.add(new SupportingFile("main.mustache", "", "main.js"));
-        supportingFiles.add(new SupportingFile("assets/css/bootstrap-responsive.css",
-                outputFolder + "/assets/css", "bootstrap-responsive.css"));
-        supportingFiles.add(new SupportingFile("assets/css/bootstrap.css",
-                outputFolder + "/assets/css", "bootstrap.css"));
+        supportingFiles.add(new SupportingFile("assets/css/bootstrap-responsive.css", outputFolder
+                + "/assets/css", "bootstrap-responsive.css"));
+        supportingFiles.add(new SupportingFile("assets/css/bootstrap.css", outputFolder
+                + "/assets/css", "bootstrap.css"));
         supportingFiles.add(new SupportingFile("assets/css/style.css",
                 outputFolder + "/assets/css", "style.css"));
-        supportingFiles.add(new SupportingFile("assets/images/logo.png",
-                outputFolder + "/assets/images", "logo.png"));
-        supportingFiles.add(new SupportingFile("assets/js/bootstrap.js",
-                outputFolder + "/assets/js", "bootstrap.js"));
-        supportingFiles.add(new SupportingFile("assets/js/jquery-1.8.3.min.js",
-                outputFolder + "/assets/js", "jquery-1.8.3.min.js"));
-        supportingFiles.add(new SupportingFile("assets/js/main.js",
-                outputFolder + "/assets/js", "main.js"));
-        supportingFiles.add(new SupportingFile("index.mustache",
-                outputFolder, "index.html"));
+        supportingFiles.add(new SupportingFile("assets/images/logo.png", outputFolder
+                + "/assets/images", "logo.png"));
+        supportingFiles.add(new SupportingFile("assets/js/bootstrap.js", outputFolder
+                + "/assets/js", "bootstrap.js"));
+        supportingFiles.add(new SupportingFile("assets/js/jquery-1.8.3.min.js", outputFolder
+                + "/assets/js", "jquery-1.8.3.min.js"));
+        supportingFiles.add(new SupportingFile("assets/js/main.js", outputFolder + "/assets/js",
+                "main.js"));
+        supportingFiles.add(new SupportingFile("index.mustache", outputFolder, "index.html"));
 
         instantiationTypes.put("array", "ArrayList");
         instantiationTypes.put("map", "HashMap");
@@ -77,8 +79,8 @@ public class StaticDocCodegen extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
-    public String escapeReservedWord(String name) {           
-        if(this.reservedWordsMappings().containsKey(name)) {
+    public String escapeReservedWord(String name) {
+        if (this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
         return "_" + name;
@@ -104,5 +106,5 @@ public class StaticDocCodegen extends DefaultCodegen implements CodegenConfig {
     public String escapeUnsafeCharacters(String input) {
         // just return the original string
         return input;
-    }   
+    }
 }

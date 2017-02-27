@@ -24,8 +24,10 @@ public class ElixirClientOptionsTest extends AbstractOptionsTest {
     @SuppressWarnings("unused")
     @Override
     protected void setExpectations() {
-        new Expectations(clientCodegen) {{
-            // TODO
-        }};
+        new Expectations(clientCodegen) {
+            {
+                // TODO
+            }
+        };
     }
 }

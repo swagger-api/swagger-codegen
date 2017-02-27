@@ -23,13 +23,15 @@ public class BooleanOptionsTest {
         final Reflections reflections = new Reflections(packageName);
         final List<Object[]> codegenList = new ArrayList<Object[]>();
 
-        for (Class<? extends DefaultCodegen> codegen : reflections.getSubTypesOf(DefaultCodegen.class)) {
+        for (Class<? extends DefaultCodegen> codegen : reflections
+                .getSubTypesOf(DefaultCodegen.class)) {
             if (!Modifier.isAbstract(codegen.getModifiers())) {
                 codegenList.add((new Object[] {codegen.newInstance()}));
             }
         }
         if (codegenList.size() == 0) {
-            Assert.fail(String.format("No classes for testing have been found in the package %s", packageName));
+            Assert.fail(String.format("No classes for testing have been found in the package %s",
+                    packageName));
         }
 
         return codegenList.iterator();
@@ -40,8 +42,8 @@ public class BooleanOptionsTest {
         for (CliOption option : codegen.cliOptions()) {
             if (option.getType().equals(BooleanProperty.TYPE)) {
                 Assert.assertNotNull(option.getDefault());
-                Assert.assertTrue(option.getDefault().equals(Boolean.TRUE.toString()) ||
-                        option.getDefault().equals(Boolean.FALSE.toString()));
+                Assert.assertTrue(option.getDefault().equals(Boolean.TRUE.toString())
+                        || option.getDefault().equals(Boolean.FALSE.toString()));
             }
         }
     }

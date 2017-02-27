@@ -39,18 +39,26 @@ public class ClojureClientCodegen extends DefaultCodegen implements CodegenConfi
         apiTemplateFiles.put("api.mustache", ".clj");
         embeddedTemplateDir = templateDir = "clojure";
 
-        cliOptions.add(new CliOption(PROJECT_NAME,
-                "name of the project (Default: generated from info.title or \"swagger-clj-client\")"));
-        cliOptions.add(new CliOption(PROJECT_DESCRIPTION,
-                "description of the project (Default: using info.description or \"Client library of <projectNname>\")"));
+        cliOptions
+                .add(new CliOption(PROJECT_NAME,
+                        "name of the project (Default: generated from info.title or \"swagger-clj-client\")"));
+        cliOptions
+                .add(new CliOption(
+                        PROJECT_DESCRIPTION,
+                        "description of the project (Default: using info.description or \"Client library of <projectNname>\")"));
         cliOptions.add(new CliOption(PROJECT_VERSION,
                 "version of the project (Default: using info.version or \"1.0.0\")"));
-        cliOptions.add(new CliOption(PROJECT_URL,
-                "URL of the project (Default: using info.contact.url or not included in project.clj)"));
-        cliOptions.add(new CliOption(PROJECT_LICENSE_NAME,
-                "name of the license the project uses (Default: using info.license.name or not included in project.clj)"));
-        cliOptions.add(new CliOption(PROJECT_LICENSE_URL,
-                "URL of the license the project uses (Default: using info.license.url or not included in project.clj)"));
+        cliOptions
+                .add(new CliOption(PROJECT_URL,
+                        "URL of the project (Default: using info.contact.url or not included in project.clj)"));
+        cliOptions
+                .add(new CliOption(
+                        PROJECT_LICENSE_NAME,
+                        "name of the license the project uses (Default: using info.license.name or not included in project.clj)"));
+        cliOptions
+                .add(new CliOption(
+                        PROJECT_LICENSE_URL,
+                        "URL of the license the project uses (Default: using info.license.url or not included in project.clj)"));
         cliOptions.add(new CliOption(BASE_NAMESPACE,
                 "the base/top namespace (Default: generated from projectName)"));
     }
@@ -89,7 +97,7 @@ public class ClojureClientCodegen extends DefaultCodegen implements CodegenConfi
 
         if (swagger.getInfo() != null) {
             Info info = swagger.getInfo();
-            if (projectName == null &&  info.getTitle() != null) {
+            if (projectName == null && info.getTitle() != null) {
                 // when projectName is not specified, generate it from info.title
                 projectName = dashize(info.getTitle());
             }
@@ -140,7 +148,8 @@ public class ClojureClientCodegen extends DefaultCodegen implements CodegenConfi
         additionalProperties.put(BASE_NAMESPACE, baseNamespace);
         additionalProperties.put(CodegenConstants.API_PACKAGE, apiPackage);
 
-        final String baseNamespaceFolder = sourceFolder + File.separator + namespaceToFolder(baseNamespace);
+        final String baseNamespaceFolder =
+                sourceFolder + File.separator + namespaceToFolder(baseNamespace);
         supportingFiles.add(new SupportingFile("project.mustache", "", "project.clj"));
         supportingFiles.add(new SupportingFile("core.mustache", baseNamespaceFolder, "core.clj"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
@@ -154,7 +163,8 @@ public class ClojureClientCodegen extends DefaultCodegen implements CodegenConfi
 
     @Override
     public String apiFileFolder() {
-        return outputFolder + File.separator + sourceFolder + File.separator + namespaceToFolder(apiPackage);
+        return outputFolder + File.separator + sourceFolder + File.separator
+                + namespaceToFolder(apiPackage);
     }
 
     @Override
@@ -184,7 +194,9 @@ public class ClojureClientCodegen extends DefaultCodegen implements CodegenConfi
 
     @Override
     public String toVarName(String name) {
-        name = name.replaceAll("[^a-zA-Z0-9_-]+", ""); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        name = name.replaceAll("[^a-zA-Z0-9_-]+", ""); // FIXME: a parameter should not be assigned.
+                                                       // Also declare the methods parameters as
+                                                       // 'final'.
         name = dashize(name);
         return name;
     }

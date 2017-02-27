@@ -13,8 +13,9 @@ public class SwiftOptionsProvider implements OptionsProvider {
     public static final String PROJECT_NAME_VALUE = "Swagger";
     public static final String RESPONSE_AS_VALUE = "test";
     public static final String UNWRAP_REQUIRED_VALUE = "true";
-    public static final String POD_SOURCE_VALUE = "{ :git => 'git@github.com:swagger-api/swagger-mustache.git'," +
-            " :tag => 'v1.0.0-SNAPSHOT' }";
+    public static final String POD_SOURCE_VALUE =
+            "{ :git => 'git@github.com:swagger-api/swagger-mustache.git',"
+                    + " :tag => 'v1.0.0-SNAPSHOT' }";
     public static final String POD_VERSION_VALUE = "v1.0.0-SNAPSHOT";
     public static final String POD_AUTHORS_VALUE = "podAuthors";
     public static final String POD_SOCIAL_MEDIA_URL_VALUE = "podSocialMediaURL";

@@ -43,14 +43,11 @@ public class SinatraServerCodegen extends DefaultCodegen implements CodegenConfi
         typeMapping.clear();
         languageSpecificPrimitives.clear();
 
-        setReservedWordsLowerCase(
-                Arrays.asList(
-                        "__FILE__", "and", "def", "end", "in", "or", "self", "unless", "__LINE__",
-                        "begin", "defined?", "ensure", "module", "redo", "super", "until", "BEGIN",
-                        "break", "do", "false", "next", "rescue", "then", "when", "END", "case",
-                        "else", "for", "nil", "retry", "true", "while", "alias", "class", "elsif",
-                        "if", "not", "return", "undef", "yield")
-        );
+        setReservedWordsLowerCase(Arrays.asList("__FILE__", "and", "def", "end", "in", "or",
+                "self", "unless", "__LINE__", "begin", "defined?", "ensure", "module", "redo",
+                "super", "until", "BEGIN", "break", "do", "false", "next", "rescue", "then",
+                "when", "END", "case", "else", "for", "nil", "retry", "true", "while", "alias",
+                "class", "elsif", "if", "not", "return", "undef", "yield"));
 
         languageSpecificPrimitives.add("int");
         languageSpecificPrimitives.add("array");
@@ -64,7 +61,7 @@ public class SinatraServerCodegen extends DefaultCodegen implements CodegenConfi
         typeMapping.put("String", "string");
         typeMapping.put("List", "array");
         typeMapping.put("map", "map");
-        //TODO binary should be mapped to byte array
+        // TODO binary should be mapped to byte array
         // mapped to String as a workaround
         typeMapping.put("binary", "string");
 
@@ -77,7 +74,7 @@ public class SinatraServerCodegen extends DefaultCodegen implements CodegenConfi
         super.processOpts();
 
         // use constant model/api package (folder path)
-        //setModelPackage("models");
+        // setModelPackage("models");
         setApiPackage("api");
 
         supportingFiles.add(new SupportingFile("my_app.mustache", "", "my_app.rb"));
@@ -85,7 +82,7 @@ public class SinatraServerCodegen extends DefaultCodegen implements CodegenConfi
         supportingFiles.add(new SupportingFile("config.ru", "", "config.ru"));
         supportingFiles.add(new SupportingFile("Gemfile", "", "Gemfile"));
         supportingFiles.add(new SupportingFile("README.md", "", "README.md"));
-        supportingFiles.add(new SupportingFile("swagger.mustache","","swagger.yaml"));
+        supportingFiles.add(new SupportingFile("swagger.mustache", "", "swagger.yaml"));
     }
 
     @Override
@@ -104,8 +101,8 @@ public class SinatraServerCodegen extends DefaultCodegen implements CodegenConfi
     }
 
     @Override
-    public String escapeReservedWord(String name) {           
-        if(this.reservedWordsMappings().containsKey(name)) {
+    public String escapeReservedWord(String name) {
+        if (this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
         return "_" + name;
@@ -156,7 +153,8 @@ public class SinatraServerCodegen extends DefaultCodegen implements CodegenConfi
     @Override
     public String toVarName(String name) {
         // replace - with _ e.g. created-at => created_at
-        name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare
+                                          // the methods parameters as 'final'.
 
         // if it's all uppper case, convert to lower case
         if (name.matches("^[A-Z_]*$")) {
@@ -185,7 +183,8 @@ public class SinatraServerCodegen extends DefaultCodegen implements CodegenConfi
     public String toModelName(String name) {
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
-            LOGGER.warn(name + " (reserved word) cannot be used as model filename. Renamed to " + camelize("model_" + name));
+            LOGGER.warn(name + " (reserved word) cannot be used as model filename. Renamed to "
+                    + camelize("model_" + name));
             name = "model_" + name; // e.g. return => ModelReturn (after camelize)
         }
 
@@ -198,7 +197,8 @@ public class SinatraServerCodegen extends DefaultCodegen implements CodegenConfi
     public String toModelFilename(String name) {
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
-            LOGGER.warn(name + " (reserved word) cannot be used as model filename. Renamed to " + underscore("model_" + name));
+            LOGGER.warn(name + " (reserved word) cannot be used as model filename. Renamed to "
+                    + underscore("model_" + name));
             name = "model_" + name; // e.g. return => ModelReturn (after camelize)
         }
 
@@ -210,7 +210,8 @@ public class SinatraServerCodegen extends DefaultCodegen implements CodegenConfi
     @Override
     public String toApiFilename(String name) {
         // replace - with _ e.g. created-at => created_at
-        name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare
+                                          // the methods parameters as 'final'.
 
         // e.g. PhoneNumberApi.rb => phone_number_api.rb
         return underscore(name) + "_api";
@@ -230,7 +231,8 @@ public class SinatraServerCodegen extends DefaultCodegen implements CodegenConfi
         // method name cannot use reserved keyword, e.g. return
         if (isReservedWord(operationId)) {
             String newOperationId = underscore("call_" + operationId);
-            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + newOperationId);
+            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to "
+                    + newOperationId);
             return newOperationId;
         }
 
@@ -239,8 +241,8 @@ public class SinatraServerCodegen extends DefaultCodegen implements CodegenConfi
 
     @Override
     public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
-        Swagger swagger = (Swagger)objs.get("swagger");
-        if(swagger != null) {
+        Swagger swagger = (Swagger) objs.get("swagger");
+        if (swagger != null) {
             try {
                 objs.put("swagger-yaml", Yaml.mapper().writeValueAsString(swagger));
             } catch (JsonProcessingException e) {

@@ -23,8 +23,7 @@ public class FlashClienOptionsProvider implements OptionsProvider {
         return builder.put(CodegenConstants.PACKAGE_NAME, PACKAGE_NAME_VALUE)
                 .put(CodegenConstants.PACKAGE_VERSION, PACKAGE_VERSION_VALUE)
                 .put(CodegenConstants.INVOKER_PACKAGE, INVOKER_PACKAGE_VALUE)
-                .put(CodegenConstants.SOURCE_FOLDER, SOURCE_FOLDER_VALUE)
-                .build();
+                .put(CodegenConstants.SOURCE_FOLDER, SOURCE_FOLDER_VALUE).build();
     }
 
     @Override

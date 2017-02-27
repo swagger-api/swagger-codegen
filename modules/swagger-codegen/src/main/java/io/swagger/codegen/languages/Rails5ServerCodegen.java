@@ -26,7 +26,8 @@ import org.slf4j.LoggerFactory;
 public class Rails5ServerCodegen extends DefaultCodegen implements CodegenConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Rails5ServerCodegen.class);
-    private static final SimpleDateFormat MIGRATE_FILE_NAME_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
+    private static final SimpleDateFormat MIGRATE_FILE_NAME_FORMAT = new SimpleDateFormat(
+            "yyyyMMddHHmmss");
 
     protected String gemName;
     protected String moduleName;
@@ -72,14 +73,11 @@ public class Rails5ServerCodegen extends DefaultCodegen implements CodegenConfig
         typeMapping.clear();
         languageSpecificPrimitives.clear();
 
-        setReservedWordsLowerCase(
-                Arrays.asList(
-                        "__FILE__", "and", "def", "end", "in", "or", "self", "unless", "__LINE__",
-                        "begin", "defined?", "ensure", "module", "redo", "super", "until", "BEGIN",
-                        "break", "do", "false", "next", "rescue", "then", "when", "END", "case",
-                        "else", "for", "nil", "retry", "true", "while", "alias", "class", "elsif",
-                        "if", "not", "return", "undef", "yield")
-        );
+        setReservedWordsLowerCase(Arrays.asList("__FILE__", "and", "def", "end", "in", "or",
+                "self", "unless", "__LINE__", "begin", "defined?", "ensure", "module", "redo",
+                "super", "until", "BEGIN", "break", "do", "false", "next", "rescue", "then",
+                "when", "END", "case", "else", "for", "nil", "retry", "true", "while", "alias",
+                "class", "elsif", "if", "not", "return", "undef", "yield"));
 
         typeMapping.put("string", "string");
         typeMapping.put("char", "string");
@@ -106,7 +104,7 @@ public class Rails5ServerCodegen extends DefaultCodegen implements CodegenConfig
         super.processOpts();
 
         // use constant model/api package (folder path)
-        //setModelPackage("models");
+        // setModelPackage("models");
         setApiPackage("app/controllers");
 
         supportingFiles.add(new SupportingFile("Gemfile", "", "Gemfile"));
@@ -114,30 +112,48 @@ public class Rails5ServerCodegen extends DefaultCodegen implements CodegenConfig
         supportingFiles.add(new SupportingFile("Rakefile", "", "Rakefile"));
         supportingFiles.add(new SupportingFile("config.ru", "", "config.ru"));
         supportingFiles.add(new SupportingFile("channel.rb", applicationCableFolder, "channel.rb"));
-        supportingFiles.add(new SupportingFile("connection.rb", applicationCableFolder, "connection.rb"));
-        supportingFiles.add(new SupportingFile("application_controller.rb", controllersFolder, "application_controller.rb"));
-        supportingFiles.add(new SupportingFile("application_job.rb", jobsFolder, "application_job.rb"));
-        supportingFiles.add(new SupportingFile("application_mailer.rb", mailersFolder, "application_mailer.rb"));
-        supportingFiles.add(new SupportingFile("application_record.rb", modelsFolder, "application_record.rb"));
-        supportingFiles.add(new SupportingFile("mailer.html.erb", layoutsFolder, "mailer.html.erb"));
-        supportingFiles.add(new SupportingFile("mailer.text.erb", layoutsFolder, "mailer.text.erb"));
+        supportingFiles.add(new SupportingFile("connection.rb", applicationCableFolder,
+                "connection.rb"));
+        supportingFiles.add(new SupportingFile("application_controller.rb", controllersFolder,
+                "application_controller.rb"));
+        supportingFiles.add(new SupportingFile("application_job.rb", jobsFolder,
+                "application_job.rb"));
+        supportingFiles.add(new SupportingFile("application_mailer.rb", mailersFolder,
+                "application_mailer.rb"));
+        supportingFiles.add(new SupportingFile("application_record.rb", modelsFolder,
+                "application_record.rb"));
+        supportingFiles
+                .add(new SupportingFile("mailer.html.erb", layoutsFolder, "mailer.html.erb"));
+        supportingFiles
+                .add(new SupportingFile("mailer.text.erb", layoutsFolder, "mailer.text.erb"));
         supportingFiles.add(new SupportingFile("bundle", binFolder, "bundle"));
         supportingFiles.add(new SupportingFile("rails", binFolder, "rails"));
         supportingFiles.add(new SupportingFile("rake", binFolder, "rake"));
         supportingFiles.add(new SupportingFile("setup", binFolder, "setup"));
         supportingFiles.add(new SupportingFile("update", binFolder, "update"));
-        supportingFiles.add(new SupportingFile("development.rb", environmentsFolder, "development.rb"));
-        supportingFiles.add(new SupportingFile("production.rb", environmentsFolder, "production.rb"));
-        supportingFiles.add(new SupportingFile("active_record_belongs_to_required_by_default.rb", initializersFolder, "active_record_belongs_to_required_by_default.rb"));
-        supportingFiles.add(new SupportingFile("application_controller_renderer.rb", initializersFolder, "application_controller_renderer.rb"));
-        supportingFiles.add(new SupportingFile("backtrace_silencers.rb", initializersFolder, "backtrace_silencers.rb"));
-        supportingFiles.add(new SupportingFile("callback_terminator.rb", initializersFolder, "callback_terminator.rb"));
+        supportingFiles.add(new SupportingFile("development.rb", environmentsFolder,
+                "development.rb"));
+        supportingFiles
+                .add(new SupportingFile("production.rb", environmentsFolder, "production.rb"));
+        supportingFiles.add(new SupportingFile("active_record_belongs_to_required_by_default.rb",
+                initializersFolder, "active_record_belongs_to_required_by_default.rb"));
+        supportingFiles.add(new SupportingFile("application_controller_renderer.rb",
+                initializersFolder, "application_controller_renderer.rb"));
+        supportingFiles.add(new SupportingFile("backtrace_silencers.rb", initializersFolder,
+                "backtrace_silencers.rb"));
+        supportingFiles.add(new SupportingFile("callback_terminator.rb", initializersFolder,
+                "callback_terminator.rb"));
         supportingFiles.add(new SupportingFile("cors.rb", initializersFolder, "cors.rb"));
-        supportingFiles.add(new SupportingFile("filter_parameter_logging.rb", initializersFolder, "filter_parameter_logging.rb"));
-        supportingFiles.add(new SupportingFile("inflections.rb", initializersFolder, "inflections.rb"));
-        supportingFiles.add(new SupportingFile("mime_types.rb", initializersFolder, "mime_types.rb"));
-        supportingFiles.add(new SupportingFile("ssl_options.rb", initializersFolder, "ssl_options.rb"));
-        supportingFiles.add(new SupportingFile("to_time_preserves_timezone.rb", initializersFolder, "to_time_preserves_timezone.rb"));
+        supportingFiles.add(new SupportingFile("filter_parameter_logging.rb", initializersFolder,
+                "filter_parameter_logging.rb"));
+        supportingFiles.add(new SupportingFile("inflections.rb", initializersFolder,
+                "inflections.rb"));
+        supportingFiles
+                .add(new SupportingFile("mime_types.rb", initializersFolder, "mime_types.rb"));
+        supportingFiles.add(new SupportingFile("ssl_options.rb", initializersFolder,
+                "ssl_options.rb"));
+        supportingFiles.add(new SupportingFile("to_time_preserves_timezone.rb", initializersFolder,
+                "to_time_preserves_timezone.rb"));
         supportingFiles.add(new SupportingFile("en.yml", localesFolder, "en.yml"));
         supportingFiles.add(new SupportingFile("application.rb", configFolder, "application.rb"));
         supportingFiles.add(new SupportingFile("boot.rb", configFolder, "boot.rb"));
@@ -149,7 +165,8 @@ public class Rails5ServerCodegen extends DefaultCodegen implements CodegenConfig
         supportingFiles.add(new SupportingFile("secrets.yml", configFolder, "secrets.yml"));
         supportingFiles.add(new SupportingFile("spring.rb", configFolder, "spring.rb"));
         supportingFiles.add(new SupportingFile(".keep", migrateFolder, ".keep"));
-        supportingFiles.add(new SupportingFile("migrate.mustache", migrateFolder, "0_init_tables.rb"));
+        supportingFiles.add(new SupportingFile("migrate.mustache", migrateFolder,
+                "0_init_tables.rb"));
         supportingFiles.add(new SupportingFile("schema.rb", dbFolder, "schema.rb"));
         supportingFiles.add(new SupportingFile("seeds.rb", dbFolder, "seeds.rb"));
         supportingFiles.add(new SupportingFile(".keep", tasksFolder, ".keep"));
@@ -157,8 +174,10 @@ public class Rails5ServerCodegen extends DefaultCodegen implements CodegenConfig
         supportingFiles.add(new SupportingFile("404.html", publicFolder, "404.html"));
         supportingFiles.add(new SupportingFile("422.html", publicFolder, "422.html"));
         supportingFiles.add(new SupportingFile("500.html", publicFolder, "500.html"));
-        supportingFiles.add(new SupportingFile("apple-touch-icon-precomposed.png", publicFolder, "apple-touch-icon-precomposed.png"));
-        supportingFiles.add(new SupportingFile("apple-touch-icon.png", publicFolder, "apple-touch-icon.png"));
+        supportingFiles.add(new SupportingFile("apple-touch-icon-precomposed.png", publicFolder,
+                "apple-touch-icon-precomposed.png"));
+        supportingFiles.add(new SupportingFile("apple-touch-icon.png", publicFolder,
+                "apple-touch-icon.png"));
         supportingFiles.add(new SupportingFile("favicon.ico", publicFolder, "favicon.ico"));
         supportingFiles.add(new SupportingFile("robots.txt", publicFolder, "robots.txt"));
         supportingFiles.add(new SupportingFile("robots.txt", publicFolder, "robots.txt"));
@@ -186,8 +205,8 @@ public class Rails5ServerCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     @Override
-    public String escapeReservedWord(String name) {           
-        if(this.reservedWordsMappings().containsKey(name)) {
+    public String escapeReservedWord(String name) {
+        if (this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
         return "_" + name;
@@ -220,7 +239,8 @@ public class Rails5ServerCodegen extends DefaultCodegen implements CodegenConfig
     @Override
     public String toVarName(String name) {
         // replace - with _ e.g. created-at => created_at
-        name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare
+                                          // the methods parameters as 'final'.
 
         // if it's all uppper case, convert to lower case
         if (name.matches("^[A-Z_]*$")) {
@@ -282,7 +302,8 @@ public class Rails5ServerCodegen extends DefaultCodegen implements CodegenConfig
     @Override
     public String toApiFilename(String name) {
         // replace - with _ e.g. created-at => created_at
-        name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
+        name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare
+                                          // the methods parameters as 'final'.
 
         // e.g. DefaultController => defaults_controller.rb
         return underscore(name) + "s_controller";
@@ -301,7 +322,8 @@ public class Rails5ServerCodegen extends DefaultCodegen implements CodegenConfig
     public String toOperationId(String operationId) {
         // method name cannot use reserved keyword, e.g. return
         if (isReservedWord(operationId)) {
-            throw new RuntimeException(operationId + " (reserved word) cannot be used as method name");
+            throw new RuntimeException(operationId
+                    + " (reserved word) cannot be used as method name");
         }
 
         return underscore(operationId);
@@ -309,8 +331,8 @@ public class Rails5ServerCodegen extends DefaultCodegen implements CodegenConfig
 
     @Override
     public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
-        Swagger swagger = (Swagger)objs.get("swagger");
-        if(swagger != null) {
+        Swagger swagger = (Swagger) objs.get("swagger");
+        if (swagger != null) {
             try {
                 objs.put("swagger-yaml", Yaml.mapper().writeValueAsString(swagger));
             } catch (JsonProcessingException e) {

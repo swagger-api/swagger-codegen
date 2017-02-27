@@ -22,8 +22,10 @@ public class CodegenSecurity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         CodegenSecurity that = (CodegenSecurity) o;
 
@@ -39,15 +41,19 @@ public class CodegenSecurity {
             return false;
         if (isApiKey != null ? !isApiKey.equals(that.isApiKey) : that.isApiKey != null)
             return false;
-        if (keyParamName != null ? !keyParamName.equals(that.keyParamName) : that.keyParamName != null)
+        if (keyParamName != null ? !keyParamName.equals(that.keyParamName)
+                : that.keyParamName != null)
             return false;
-        if (isKeyInQuery != null ? !isKeyInQuery.equals(that.isKeyInQuery) : that.isKeyInQuery != null)
+        if (isKeyInQuery != null ? !isKeyInQuery.equals(that.isKeyInQuery)
+                : that.isKeyInQuery != null)
             return false;
-        if (isKeyInHeader != null ? !isKeyInHeader.equals(that.isKeyInHeader) : that.isKeyInHeader != null)
+        if (isKeyInHeader != null ? !isKeyInHeader.equals(that.isKeyInHeader)
+                : that.isKeyInHeader != null)
             return false;
         if (flow != null ? !flow.equals(that.flow) : that.flow != null)
             return false;
-        if (authorizationUrl != null ? !authorizationUrl.equals(that.authorizationUrl) : that.authorizationUrl != null)
+        if (authorizationUrl != null ? !authorizationUrl.equals(that.authorizationUrl)
+                : that.authorizationUrl != null)
             return false;
         if (tokenUrl != null ? !tokenUrl.equals(that.tokenUrl) : that.tokenUrl != null)
             return false;
@@ -55,7 +61,8 @@ public class CodegenSecurity {
             return false;
         if (isPassword != null ? !isPassword.equals(that.isPassword) : that.isPassword != null)
             return false;
-        if (isApplication != null ? !isApplication.equals(that.isApplication) : that.isApplication != null)
+        if (isApplication != null ? !isApplication.equals(that.isApplication)
+                : that.isApplication != null)
             return false;
         if (isImplicit != null ? !isImplicit.equals(that.isImplicit) : that.isImplicit != null)
             return false;

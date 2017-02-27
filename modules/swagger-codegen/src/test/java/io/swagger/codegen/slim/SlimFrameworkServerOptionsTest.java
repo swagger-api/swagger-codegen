@@ -25,9 +25,12 @@ public class SlimFrameworkServerOptionsTest extends AbstractOptionsTest {
     @SuppressWarnings("unused")
     @Override
     protected void setExpectations() {
-        new Expectations(clientCodegen) {{
-            clientCodegen.setSortParamsByRequiredFlag(Boolean.valueOf(SlimFrameworkServerOptionsProvider.SORT_PARAMS_VALUE));
-            times = 1;
-        }};
+        new Expectations(clientCodegen) {
+            {
+                clientCodegen.setSortParamsByRequiredFlag(Boolean
+                        .valueOf(SlimFrameworkServerOptionsProvider.SORT_PARAMS_VALUE));
+                times = 1;
+            }
+        };
     }
 }

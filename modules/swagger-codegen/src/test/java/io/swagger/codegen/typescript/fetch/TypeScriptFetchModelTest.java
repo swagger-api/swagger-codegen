@@ -29,13 +29,11 @@ public class TypeScriptFetchModelTest {
 
     @Test(description = "convert a simple TypeScript Angular model")
     public void simpleModelTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("id", new LongProperty())
-                .property("name", new StringProperty())
-                .property("createdAt", new DateTimeProperty())
-                .required("id")
-                .required("name");
+        final Model model =
+                new ModelImpl().description("a sample model").property("id", new LongProperty())
+                        .property("name", new StringProperty())
+                        .property("createdAt", new DateTimeProperty()).required("id")
+                        .required("name");
         final DefaultCodegen codegen = new TypeScriptFetchClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -77,11 +75,10 @@ public class TypeScriptFetchModelTest {
 
     @Test(description = "convert a model with list property")
     public void listPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("id", new LongProperty())
-                .property("urls", new ArrayProperty().items(new StringProperty()))
-                .required("id");
+        final Model model =
+                new ModelImpl().description("a sample model").property("id", new LongProperty())
+                        .property("urls", new ArrayProperty().items(new StringProperty()))
+                        .required("id");
         final DefaultCodegen codegen = new TypeScriptFetchClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -112,9 +109,9 @@ public class TypeScriptFetchModelTest {
 
     @Test(description = "convert a model with complex property")
     public void complexPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("children", new RefProperty("#/definitions/Children"));
+        final Model model =
+                new ModelImpl().description("a sample model").property("children",
+                        new RefProperty("#/definitions/Children"));
         final DefaultCodegen codegen = new TypeScriptFetchClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -135,10 +132,9 @@ public class TypeScriptFetchModelTest {
 
     @Test(description = "convert a model with complex list property")
     public void complexListPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("children", new ArrayProperty()
-                        .items(new RefProperty("#/definitions/Children")));
+        final Model model =
+                new ModelImpl().description("a sample model").property("children",
+                        new ArrayProperty().items(new RefProperty("#/definitions/Children")));
         final DefaultCodegen codegen = new TypeScriptFetchClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -159,9 +155,9 @@ public class TypeScriptFetchModelTest {
 
     @Test(description = "convert an array model")
     public void arrayModelTest() {
-        final Model model = new ArrayModel()
-                .description("an array model")
-                .items(new RefProperty("#/definitions/Children"));
+        final Model model =
+                new ArrayModel().description("an array model").items(
+                        new RefProperty("#/definitions/Children"));
         final DefaultCodegen codegen = new TypeScriptFetchClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -173,9 +169,9 @@ public class TypeScriptFetchModelTest {
 
     @Test(description = "convert a map model")
     public void mapModelTest() {
-        final Model model = new ModelImpl()
-                .description("a map model")
-                .additionalProperties(new RefProperty("#/definitions/Children"));
+        final Model model =
+                new ModelImpl().description("a map model").additionalProperties(
+                        new RefProperty("#/definitions/Children"));
         final DefaultCodegen codegen = new TypeScriptFetchClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -189,11 +185,13 @@ public class TypeScriptFetchModelTest {
 
     @Test(description = "test enum array model")
     public void enumArrayMdoelTest() {
-        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
+        final Swagger model =
+                new SwaggerParser()
+                        .read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
         final DefaultCodegen codegen = new TypeScriptFetchClientCodegen();
         final Model definition = model.getDefinitions().get("EnumArrays");
 
-        Property property =  definition.getProperties().get("array_enum");
+        Property property = definition.getProperties().get("array_enum");
         CodegenProperty prope = codegen.fromProperty("array_enum", property);
         codegen.updateCodegenPropertyEnum(prope);
         Assert.assertEquals(prope.datatypeWithEnum, "Array<ArrayEnumEnum>");
@@ -201,10 +199,10 @@ public class TypeScriptFetchModelTest {
         Assert.assertTrue(prope.isEnum);
         Assert.assertEquals(prope.allowableValues.get("values"), Arrays.asList("fish", "crab"));
 
-        HashMap<String, String> fish= new HashMap<String, String>();
+        HashMap<String, String> fish = new HashMap<String, String>();
         fish.put("name", "Fish");
         fish.put("value", "'fish'");
-        HashMap<String, String> crab= new HashMap<String, String>();
+        HashMap<String, String> crab = new HashMap<String, String>();
         crab.put("name", "Crab");
         crab.put("value", "'crab'");
         Assert.assertEquals(prope.allowableValues.get("enumVars"), Arrays.asList(fish, crab));
@@ -213,21 +211,24 @@ public class TypeScriptFetchModelTest {
         Assert.assertEquals(prope.datatypeWithEnum, "Array<ArrayEnumEnum>");
         Assert.assertEquals(prope.enumName, "ArrayEnumEnum");
         Assert.assertTrue(prope.items.isEnum);
-        Assert.assertEquals(prope.items.allowableValues.get("values"), Arrays.asList("fish", "crab"));
+        Assert.assertEquals(prope.items.allowableValues.get("values"),
+                Arrays.asList("fish", "crab"));
         Assert.assertEquals(prope.items.allowableValues.get("enumVars"), Arrays.asList(fish, crab));
 
-        //IMPORTANT: these are not final enum values, which may be further updated
-        //by postProcessModels
+        // IMPORTANT: these are not final enum values, which may be further updated
+        // by postProcessModels
 
     }
 
     @Test(description = "test enum model for values (numeric, string, etc)")
     public void enumMdoelValueTest() {
-        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
+        final Swagger model =
+                new SwaggerParser()
+                        .read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
         final DefaultCodegen codegen = new TypeScriptFetchClientCodegen();
         final Model definition = model.getDefinitions().get("Enum_Test");
 
-        Property property =  definition.getProperties().get("enum_integer");
+        Property property = definition.getProperties().get("enum_integer");
         CodegenProperty prope = codegen.fromProperty("enum_integer", property);
         codegen.updateCodegenPropertyEnum(prope);
         Assert.assertEquals(prope.datatypeWithEnum, "EnumIntegerEnum");
@@ -245,8 +246,8 @@ public class TypeScriptFetchModelTest {
         minusOne.put("value", "-1");
         Assert.assertEquals(prope.allowableValues.get("enumVars"), Arrays.asList(one, minusOne));
 
-       //IMPORTANT: these are not final enum values, which may be further updated
-       //by postProcessModels
+        // IMPORTANT: these are not final enum values, which may be further updated
+        // by postProcessModels
 
     }
 

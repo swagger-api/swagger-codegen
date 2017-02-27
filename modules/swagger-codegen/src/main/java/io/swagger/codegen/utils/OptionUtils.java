@@ -19,22 +19,23 @@ public class OptionUtils {
         for (String tuple : tuples) {
             int ix = tuple.indexOf('=');
             if (ix > 0 && ix < tuple.length() - 1) {
-                final Pair<String, String> pair = Pair.of(tuple.substring(0, ix), tuple.substring(ix + 1));
+                final Pair<String, String> pair =
+                        Pair.of(tuple.substring(0, ix), tuple.substring(ix + 1));
                 results.add(pair);
             }
         }
-        //Strings.isNullOrEmpty(input)
+        // Strings.isNullOrEmpty(input)
         return results;
     }
-   
+
     public static List<String> splitCommaSeparatedList(String input) {
 
         List<String> results = new ArrayList<String>();
 
-        if(input != null && !input.isEmpty()) {
+        if (input != null && !input.isEmpty()) {
             for (String value : input.split(",")) {
-                if(isNotEmpty(value))
-                results.add(value);
+                if (isNotEmpty(value))
+                    results.add(value);
             }
         }
 

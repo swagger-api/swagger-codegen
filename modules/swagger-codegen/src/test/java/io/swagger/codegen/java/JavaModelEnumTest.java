@@ -67,10 +67,9 @@ public class JavaModelEnumTest {
         subModel.setProperties(subProperties);
         subModel.name("subModel");
 
-        final ComposedModel model = new ComposedModel()
-                .parent(new RefModel(parentModel.getName()))
-                .child(subModel)
-                .interfaces(new ArrayList<RefModel>());
+        final ComposedModel model =
+                new ComposedModel().parent(new RefModel(parentModel.getName())).child(subModel)
+                        .interfaces(new ArrayList<RefModel>());
 
         final DefaultCodegen codegen = new JavaClientCodegen();
         final Map<String, Model> allModels = new HashMap<String, Model>();

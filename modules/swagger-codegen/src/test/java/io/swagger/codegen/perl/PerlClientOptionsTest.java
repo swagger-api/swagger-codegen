@@ -25,11 +25,13 @@ public class PerlClientOptionsTest extends AbstractOptionsTest {
     @SuppressWarnings("unused")
     @Override
     protected void setExpectations() {
-        new Expectations(clientCodegen) {{
-            clientCodegen.setModuleName(PerlClientOptionsProvider.MODULE_NAME_VALUE);
-            times = 1;
-            clientCodegen.setModuleVersion(PerlClientOptionsProvider.MODULE_VERSION_VALUE);
-            times = 1;
-        }};
+        new Expectations(clientCodegen) {
+            {
+                clientCodegen.setModuleName(PerlClientOptionsProvider.MODULE_NAME_VALUE);
+                times = 1;
+                clientCodegen.setModuleVersion(PerlClientOptionsProvider.MODULE_VERSION_VALUE);
+                times = 1;
+            }
+        };
     }
 }

@@ -30,14 +30,11 @@ import io.swagger.models.properties.StringProperty;
 public class JavaScriptModelTest {
     @Test(description = "convert a simple java model")
     public void simpleModelTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("id", new LongProperty())
-                .property("name", new StringProperty()
-                        .example("Tony"))
-                .property("createdAt", new DateTimeProperty())
-                .required("id")
-                .required("name");
+        final Model model =
+                new ModelImpl().description("a sample model").property("id", new LongProperty())
+                        .property("name", new StringProperty().example("Tony"))
+                        .property("createdAt", new DateTimeProperty()).required("id")
+                        .required("name");
         final DefaultCodegen codegen = new JavascriptClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -88,12 +85,10 @@ public class JavaScriptModelTest {
 
     @Test(description = "convert a model with list property")
     public void listPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("id", new LongProperty())
-                .property("urls", new ArrayProperty()
-                        .items(new StringProperty()))
-                .required("id");
+        final Model model =
+                new ModelImpl().description("a sample model").property("id", new LongProperty())
+                        .property("urls", new ArrayProperty().items(new StringProperty()))
+                        .required("id");
         final DefaultCodegen codegen = new JavascriptClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -108,7 +103,8 @@ public class JavaScriptModelTest {
         Assert.assertEquals(property.setter, "setUrls");
         Assert.assertEquals(property.datatype, "[String]");
         Assert.assertEquals(property.name, "urls");
-        // FIXME: should an array property have an empty array as its default value? What if the property is required?
+        // FIXME: should an array property have an empty array as its default value? What if the
+        // property is required?
         Assert.assertEquals(property.defaultValue, /*"[]"*/null);
         Assert.assertEquals(property.baseType, "Array");
         Assert.assertEquals(property.containerType, "array");
@@ -118,11 +114,12 @@ public class JavaScriptModelTest {
 
     @Test(description = "convert a model with a map property")
     public void mapPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("translations", new MapProperty()
-                        .additionalProperties(new StringProperty()))
-                .required("id");
+        final Model model =
+                new ModelImpl()
+                        .description("a sample model")
+                        .property("translations",
+                                new MapProperty().additionalProperties(new StringProperty()))
+                        .required("id");
         final DefaultCodegen codegen = new JavascriptClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -137,7 +134,8 @@ public class JavaScriptModelTest {
         Assert.assertEquals(property.setter, "setTranslations");
         Assert.assertEquals(property.datatype, "{String: String}");
         Assert.assertEquals(property.name, "translations");
-        // FIXME: should a map property have an empty object as its default value? What if the property is required?
+        // FIXME: should a map property have an empty object as its default value? What if the
+        // property is required?
         Assert.assertEquals(property.defaultValue, /*"{}"*/null);
         Assert.assertEquals(property.baseType, "Object");
         Assert.assertEquals(property.containerType, "map");
@@ -147,11 +145,13 @@ public class JavaScriptModelTest {
 
     @Test(description = "convert a model with a map with complex list property")
     public void mapWithListPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("translations",
-                        new MapProperty().additionalProperties(new ArrayProperty().items(new RefProperty("Pet"))))
-                .required("id");
+        final Model model =
+                new ModelImpl()
+                        .description("a sample model")
+                        .property(
+                                "translations",
+                                new MapProperty().additionalProperties(new ArrayProperty()
+                                        .items(new RefProperty("Pet")))).required("id");
         final DefaultCodegen codegen = new JavascriptClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -166,7 +166,8 @@ public class JavaScriptModelTest {
         Assert.assertEquals(property.setter, "setTranslations");
         Assert.assertEquals(property.datatype, "{String: [Pet]}");
         Assert.assertEquals(property.name, "translations");
-        // FIXME: should a map property have an empty object as its default value? What if the property is required?
+        // FIXME: should a map property have an empty object as its default value? What if the
+        // property is required?
         Assert.assertEquals(property.defaultValue, /*"{}"*/null);
         Assert.assertEquals(property.baseType, "Object");
         Assert.assertEquals(property.containerType, "map");
@@ -176,8 +177,12 @@ public class JavaScriptModelTest {
 
     @Test(description = "convert a model with a 2D list property")
     public void list2DPropertyTest() {
-        final Model model = new ModelImpl().name("sample").property("list2D", new ArrayProperty().items(
-                new ArrayProperty().items(new RefProperty("Pet"))));
+        final Model model =
+                new ModelImpl().name("sample")
+                        .property(
+                                "list2D",
+                                new ArrayProperty().items(new ArrayProperty()
+                                        .items(new RefProperty("Pet"))));
         final DefaultCodegen codegen = new JavascriptClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -189,7 +194,8 @@ public class JavaScriptModelTest {
         Assert.assertEquals(property.setter, "setList2D");
         Assert.assertEquals(property.datatype, "[[Pet]]");
         Assert.assertEquals(property.name, "list2D");
-        // FIXME: should an array property have an empty array as its default value? What if the property is required?
+        // FIXME: should an array property have an empty array as its default value? What if the
+        // property is required?
         Assert.assertEquals(property.defaultValue, /*"[]"*/null);
         Assert.assertEquals(property.baseType, "Array");
         Assert.assertEquals(property.containerType, "array");
@@ -199,8 +205,9 @@ public class JavaScriptModelTest {
 
     @Test(description = "convert a model with complex properties")
     public void complexPropertiesTest() {
-        final Model model = new ModelImpl().description("a sample model")
-                .property("children", new RefProperty("#/definitions/Children"));
+        final Model model =
+                new ModelImpl().description("a sample model").property("children",
+                        new RefProperty("#/definitions/Children"));
         final DefaultCodegen codegen = new JavascriptClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -223,9 +230,9 @@ public class JavaScriptModelTest {
 
     @Test(description = "convert a model with complex list property")
     public void complexListPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("children", new ArrayProperty().items(new RefProperty("#/definitions/Children")));
+        final Model model =
+                new ModelImpl().description("a sample model").property("children",
+                        new ArrayProperty().items(new RefProperty("#/definitions/Children")));
         final DefaultCodegen codegen = new JavascriptClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -239,10 +246,11 @@ public class JavaScriptModelTest {
         Assert.assertEquals(property.complexType, "Children");
         Assert.assertEquals(property.getter, "getChildren");
         Assert.assertEquals(property.setter, "setChildren");
-        // FIXME: what should datatype be for a JavaScript array? 
-//        Assert.assertEquals(property.datatype, "Array<Children>");
+        // FIXME: what should datatype be for a JavaScript array?
+        // Assert.assertEquals(property.datatype, "Array<Children>");
         Assert.assertEquals(property.name, "children");
-        // FIXME: should an array property have an empty array as its default value? What if the property is required?
+        // FIXME: should an array property have an empty array as its default value? What if the
+        // property is required?
         Assert.assertEquals(property.defaultValue, /*"[]"*/null);
         Assert.assertEquals(property.baseType, "Array");
         Assert.assertEquals(property.containerType, "array");
@@ -252,9 +260,11 @@ public class JavaScriptModelTest {
 
     @Test(description = "convert a model with complex map property")
     public void complexMapPropertyTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("children", new MapProperty().additionalProperties(new RefProperty("#/definitions/Children")));
+        final Model model =
+                new ModelImpl().description("a sample model").property(
+                        "children",
+                        new MapProperty().additionalProperties(new RefProperty(
+                                "#/definitions/Children")));
         final DefaultCodegen codegen = new JavascriptClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -272,8 +282,9 @@ public class JavaScriptModelTest {
         // TODO: create a functional test to see whether map properties actually work.
         Assert.assertEquals(property.datatype, /*"Object<String, Children>"*/"{String: Children}");
         Assert.assertEquals(property.name, "children");
-        // FIXME: should a map property have an empty object as its default value? What if the property is required?
-        Assert.assertEquals(property.defaultValue, /*"{}"*/ null);
+        // FIXME: should a map property have an empty object as its default value? What if the
+        // property is required?
+        Assert.assertEquals(property.defaultValue, /*"{}"*/null);
         Assert.assertEquals(property.baseType, "Object");
         Assert.assertEquals(property.containerType, "map");
         Assert.assertFalse(property.required);
@@ -283,9 +294,9 @@ public class JavaScriptModelTest {
 
     @Test(description = "convert an array model")
     public void arrayModelTest() {
-        final Model model = new ArrayModel()
-                .description("an array model")
-                .items(new RefProperty("#/definitions/Children"));
+        final Model model =
+                new ArrayModel().description("an array model").items(
+                        new RefProperty("#/definitions/Children"));
         final DefaultCodegen codegen = new JavascriptClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -300,9 +311,9 @@ public class JavaScriptModelTest {
 
     @Test(description = "convert a map model")
     public void mapModelTest() {
-        final Model model = new ModelImpl()
-                .description("an map model")
-                .additionalProperties(new RefProperty("#/definitions/Children"));
+        final Model model =
+                new ModelImpl().description("an map model").additionalProperties(
+                        new RefProperty("#/definitions/Children"));
         final DefaultCodegen codegen = new JavascriptClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -317,10 +328,9 @@ public class JavaScriptModelTest {
 
     @Test(description = "convert a model with uppercase property names")
     public void upperCaseNamesTest() {
-        final Model model = new ModelImpl()
-                .description("a model with uppercase property names")
-                .property("NAME", new StringProperty())
-                .required("NAME");
+        final Model model =
+                new ModelImpl().description("a model with uppercase property names")
+                        .property("NAME", new StringProperty()).required("NAME");
         final DefaultCodegen codegen = new JavascriptClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -343,10 +353,9 @@ public class JavaScriptModelTest {
 
     @Test(description = "convert a model with a 2nd char uppercase property names")
     public void secondCharUpperCaseNamesTest() {
-        final Model model = new ModelImpl()
-                .description("a model with a 2nd char uppercase property names")
-                .property("pId", new StringProperty())
-                .required("pId");
+        final Model model =
+                new ModelImpl().description("a model with a 2nd char uppercase property names")
+                        .property("pId", new StringProperty()).required("pId");
         final DefaultCodegen codegen = new JavascriptClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -369,9 +378,9 @@ public class JavaScriptModelTest {
 
     @Test(description = "convert hyphens per issue 503")
     public void hyphensTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("created-at", new DateTimeProperty());
+        final Model model =
+                new ModelImpl().description("a sample model").property("created-at",
+                        new DateTimeProperty());
         final DefaultCodegen codegen = new JavascriptClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -384,9 +393,9 @@ public class JavaScriptModelTest {
 
     @Test(description = "convert query[password] to queryPassword")
     public void squareBracketsTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("query[password]", new StringProperty());
+        final Model model =
+                new ModelImpl().description("a sample model").property("query[password]",
+                        new StringProperty());
         final DefaultCodegen codegen = new JavascriptClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -399,9 +408,9 @@ public class JavaScriptModelTest {
 
     @Test(description = "properly escape names per 567")
     public void escapeNamesTest() {
-        final Model model = new ModelImpl()
-                .description("a sample model")
-                .property("created-at", new DateTimeProperty());
+        final Model model =
+                new ModelImpl().description("a sample model").property("created-at",
+                        new DateTimeProperty());
         final DefaultCodegen codegen = new JavascriptClientCodegen();
         final CodegenModel cm = codegen.fromModel("with.dots", model);
 
@@ -410,9 +419,9 @@ public class JavaScriptModelTest {
 
     @Test(description = "convert a model with binary data")
     public void binaryDataTest() {
-        final Model model = new ModelImpl()
-                .description("model with binary")
-                .property("inputBinaryData", new ByteArrayProperty());
+        final Model model =
+                new ModelImpl().description("model with binary").property("inputBinaryData",
+                        new ByteArrayProperty());
         final DefaultCodegen codegen = new JavascriptClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -431,9 +440,9 @@ public class JavaScriptModelTest {
 
     @Test(description = "translate an invalid param name")
     public void invalidParamNameTest() {
-        final Model model = new ModelImpl()
-                .description("a model with a 2nd char uppercase property name")
-                .property("_", new StringProperty());
+        final Model model =
+                new ModelImpl().description("a model with a 2nd char uppercase property name")
+                        .property("_", new StringProperty());
         final DefaultCodegen codegen = new JavascriptClientCodegen();
         final CodegenModel cm = codegen.fromModel("sample", model);
 
@@ -455,10 +464,8 @@ public class JavaScriptModelTest {
 
     @Test(description = "convert a parameter")
     public void convertParameterTest() {
-        final QueryParameter parameter = new QueryParameter()
-                .property(new IntegerProperty())
-                .name("limit")
-                .required(true);
+        final QueryParameter parameter =
+                new QueryParameter().property(new IntegerProperty()).name("limit").required(true);
         final DefaultCodegen codegen = new JavascriptClientCodegen();
         final CodegenParameter cm = codegen.fromParameter(parameter, null);
 
@@ -467,16 +474,9 @@ public class JavaScriptModelTest {
 
     @DataProvider(name = "modelNames")
     public static Object[][] primeNumbers() {
-        return new Object[][] {
-                {"sample", "Sample"},
-                {"sample_name", "SampleName"},
-                {"sample__name", "SampleName"},
-                {"/sample", "Sample"},
-                {"\\sample", "Sample"},
-                {"sample.name", "SampleName"},
-                {"_sample", "Sample"},
-                {"Sample", "Sample"},
-        };
+        return new Object[][] { {"sample", "Sample"}, {"sample_name", "SampleName"},
+                {"sample__name", "SampleName"}, {"/sample", "Sample"}, {"\\sample", "Sample"},
+                {"sample.name", "SampleName"}, {"_sample", "Sample"}, {"Sample", "Sample"},};
     }
 
     @Test(dataProvider = "modelNames", description = "avoid inner class")

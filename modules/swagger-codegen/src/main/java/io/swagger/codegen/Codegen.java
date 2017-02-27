@@ -20,8 +20,8 @@ import io.swagger.models.Swagger;
 import io.swagger.parser.SwaggerParser;
 
 /**
- * @deprecated use instead {@link io.swagger.codegen.DefaultGenerator}
- * or cli interface from https://github.com/swagger-api/swagger-codegen/pull/547
+ * @deprecated use instead {@link io.swagger.codegen.DefaultGenerator} or cli interface from
+ *             https://github.com/swagger-api/swagger-codegen/pull/547
  */
 @Deprecated
 public class Codegen extends DefaultGenerator {
@@ -30,23 +30,30 @@ public class Codegen extends DefaultGenerator {
 
     static Map<String, CodegenConfig> configs = new HashMap<String, CodegenConfig>();
     static String configString;
-    static String debugInfoOptions = "\nThe following additional debug options are available for all codegen targets:" +
-            "\n -DdebugSwagger prints the swagger specification as interpreted by the codegen" +
-            "\n -DdebugModels prints models passed to the template engine" +
-            "\n -DdebugOperations prints operations passed to the template engine" +
-            "\n -DdebugSupportingFiles prints additional data passed to the template engine";
+    static String debugInfoOptions =
+            "\nThe following additional debug options are available for all codegen targets:"
+                    + "\n -DdebugSwagger prints the swagger specification as interpreted by the codegen"
+                    + "\n -DdebugModels prints models passed to the template engine"
+                    + "\n -DdebugOperations prints operations passed to the template engine"
+                    + "\n -DdebugSupportingFiles prints additional data passed to the template engine";
 
     @SuppressWarnings("deprecation")
     public static void main(String[] args) {
 
         Options options = new Options();
         options.addOption("h", "help", false, "shows this message");
-        options.addOption("l", "lang", true, "client language to generate.\nAvailable languages include:\n\t[" + configString + "]");
+        options.addOption("l", "lang", true,
+                "client language to generate.\nAvailable languages include:\n\t[" + configString
+                        + "]");
         options.addOption("o", "output", true, "where to write the generated files");
         options.addOption("i", "input-spec", true, "location of the swagger spec, as URL or file");
         options.addOption("t", "template-dir", true, "folder containing the template files");
         options.addOption("d", "debug-info", false, "prints additional info for debugging");
-        options.addOption("a", "auth", true, "adds authorization headers when fetching the swagger definitions remotely. Pass in a URL-encoded string of name:header with a comma separating multiple values");
+        options.addOption(
+                "a",
+                "auth",
+                true,
+                "adds authorization headers when fetching the swagger definitions remotely. Pass in a URL-encoded string of name:header with a comma separating multiple values");
         options.addOption("c", "config", true, "location of the configuration file");
 
         ClientOptInput clientOptInput = new ClientOptInput();
@@ -89,7 +96,9 @@ public class Codegen extends DefaultGenerator {
                 return;
             }
             if (cmd.hasOption("i")) {
-                swagger = new SwaggerParser().read(cmd.getOptionValue("i"), clientOptInput.getAuthorizationValues(), true);
+                swagger =
+                        new SwaggerParser().read(cmd.getOptionValue("i"),
+                                clientOptInput.getAuthorizationValues(), true);
             }
             if (cmd.hasOption("c")) {
                 String configFile = cmd.getOptionValue("c");
@@ -98,22 +107,22 @@ public class Codegen extends DefaultGenerator {
                 if (null != genConfig && null != config) {
                     for (CliOption langCliOption : config.cliOptions()) {
                         if (genConfig.hasOption(langCliOption.getOpt())) {
-                            config.additionalProperties().put(langCliOption.getOpt(), genConfig.getOption(langCliOption.getOpt()));
+                            config.additionalProperties().put(langCliOption.getOpt(),
+                                    genConfig.getOption(langCliOption.getOpt()));
                         }
                     }
                 }
             }
             if (cmd.hasOption("t")) {
-                clientOpts.getProperties().put(CodegenConstants.TEMPLATE_DIR, String.valueOf(cmd.getOptionValue("t")));
+                clientOpts.getProperties().put(CodegenConstants.TEMPLATE_DIR,
+                        String.valueOf(cmd.getOptionValue("t")));
             }
         } catch (Exception e) {
             usage(options);
             return;
         }
         try {
-            clientOptInput
-                    .opts(clientOpts)
-                    .swagger(swagger);
+            clientOptInput.opts(clientOpts).swagger(swagger);
             new Codegen().opts(clientOptInput).generate();
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);

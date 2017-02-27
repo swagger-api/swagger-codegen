@@ -10,7 +10,7 @@ public class SpringOptionsProvider extends JavaOptionsProvider {
     public static final String TITLE = "swagger";
     public static final String CONFIG_PACKAGE_VALUE = "configPackage";
     public static final String BASE_PACKAGE_VALUE = "basePackage";
-    public static final String LIBRARY_VALUE = "spring-mvc"; //FIXME hidding value from super class
+    public static final String LIBRARY_VALUE = "spring-mvc"; // FIXME hidding value from super class
     public static final String INTERFACE_ONLY = "true";
     public static final String DELEGATE_PATTERN = "true";
     public static final String SINGLE_CONTENT_TYPES = "true";

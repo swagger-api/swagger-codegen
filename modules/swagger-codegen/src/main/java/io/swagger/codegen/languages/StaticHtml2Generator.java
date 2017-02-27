@@ -36,19 +36,27 @@ public class StaticHtml2Generator extends DefaultCodegen implements CodegenConfi
 
         cliOptions.add(new CliOption("appName", "short name of the application"));
         cliOptions.add(new CliOption("appDescription", "description of the application"));
-        cliOptions.add(new CliOption("infoUrl", "a URL where users can get more information about the application"));
-        cliOptions.add(new CliOption("infoEmail", "an email address to contact for inquiries about the application"));
+        cliOptions.add(new CliOption("infoUrl",
+                "a URL where users can get more information about the application"));
+        cliOptions.add(new CliOption("infoEmail",
+                "an email address to contact for inquiries about the application"));
         cliOptions.add(new CliOption("licenseInfo", "a short description of the license"));
         cliOptions.add(new CliOption("licenseUrl", "a URL pointing to the full license"));
-        cliOptions.add(new CliOption(CodegenConstants.INVOKER_PACKAGE, CodegenConstants.INVOKER_PACKAGE_DESC));
-        cliOptions.add(new CliOption(CodegenConstants.PHP_INVOKER_PACKAGE, CodegenConstants.PHP_INVOKER_PACKAGE_DESC));
-        cliOptions.add(new CliOption(CodegenConstants.PERL_MODULE_NAME, CodegenConstants.PERL_MODULE_NAME_DESC));
-        cliOptions.add(new CliOption(CodegenConstants.PYTHON_PACKAGE_NAME, CodegenConstants.PYTHON_PACKAGE_NAME_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.INVOKER_PACKAGE,
+                CodegenConstants.INVOKER_PACKAGE_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.PHP_INVOKER_PACKAGE,
+                CodegenConstants.PHP_INVOKER_PACKAGE_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.PERL_MODULE_NAME,
+                CodegenConstants.PERL_MODULE_NAME_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.PYTHON_PACKAGE_NAME,
+                CodegenConstants.PYTHON_PACKAGE_NAME_DESC));
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "C# package name"));
         cliOptions.add(new CliOption(CodegenConstants.GROUP_ID, CodegenConstants.GROUP_ID_DESC));
-        cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_ID, CodegenConstants.ARTIFACT_ID_DESC));
-        cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_VERSION, CodegenConstants.ARTIFACT_VERSION_DESC));
-        
+        cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_ID,
+                CodegenConstants.ARTIFACT_ID_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_VERSION,
+                CodegenConstants.ARTIFACT_VERSION_DESC));
+
         additionalProperties.put("appName", "Swagger Sample");
         additionalProperties.put("appDescription", "A sample swagger server");
         additionalProperties.put("infoUrl", "https://helloreverb.com");
@@ -142,19 +150,21 @@ public class StaticHtml2Generator extends DefaultCodegen implements CodegenConfi
     }
 
     @Override
-    public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, Map<String, Model> definitions, Swagger swagger) {
-        CodegenOperation op = super.fromOperation(path, httpMethod, operation, definitions, swagger);
+    public CodegenOperation fromOperation(String path, String httpMethod, Operation operation,
+            Map<String, Model> definitions, Swagger swagger) {
+        CodegenOperation op =
+                super.fromOperation(path, httpMethod, operation, definitions, swagger);
         if (op.returnType != null) {
             op.returnType = normalizeType(op.returnType);
         }
 
-        //path is an unescaped variable in the mustache template api.mustache line 82 '<&path>'
+        // path is an unescaped variable in the mustache template api.mustache line 82 '<&path>'
         op.path = sanitizePath(op.path);
 
         // Set vendor-extension to be used in template:
-        //     x-codegen-hasMoreRequired
-        //     x-codegen-hasMoreOptional
-        //     x-codegen-hasRequiredParams
+        // x-codegen-hasMoreRequired
+        // x-codegen-hasMoreOptional
+        // x-codegen-hasRequiredParams
         CodegenParameter lastRequired = null;
         CodegenParameter lastOptional = null;
         for (CodegenParameter p : op.allParams) {
@@ -181,7 +191,7 @@ public class StaticHtml2Generator extends DefaultCodegen implements CodegenConfi
 
 
     private String sanitizePath(String p) {
-        //prefer replace a ', instead of a fuLL URL encode for readability
+        // prefer replace a ', instead of a fuLL URL encode for readability
         return p.replaceAll("'", "%27");
     }
 
@@ -205,5 +215,5 @@ public class StaticHtml2Generator extends DefaultCodegen implements CodegenConfi
     public String escapeUnsafeCharacters(String input) {
         // just return the original string
         return input;
-    }   
+    }
 }

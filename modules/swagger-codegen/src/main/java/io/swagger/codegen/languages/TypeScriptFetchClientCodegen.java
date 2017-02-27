@@ -27,7 +27,8 @@ public class TypeScriptFetchClientCodegen extends AbstractTypeScriptClientCodege
 
         outputFolder = "generated-code/typescript-fetch";
         embeddedTemplateDir = templateDir = "TypeScript-Fetch";
-        this.cliOptions.add(new CliOption(NPM_NAME, "The name under which you want to publish generated npm package"));
+        this.cliOptions.add(new CliOption(NPM_NAME,
+                "The name under which you want to publish generated npm package"));
         this.cliOptions.add(new CliOption(NPM_VERSION, "The version of your npm package"));
     }
 
@@ -43,7 +44,7 @@ public class TypeScriptFetchClientCodegen extends AbstractTypeScriptClientCodege
         supportingFiles.add(new SupportingFile("tslint.json.mustache", "", "tslint.json"));
         supportingFiles.add(new SupportingFile("gitignore", "", ".gitignore"));
 
-        if(additionalProperties.containsKey(NPM_NAME)) {
+        if (additionalProperties.containsKey(NPM_NAME)) {
             this.setNpmName(additionalProperties.get(NPM_NAME).toString());
         }
 
@@ -89,7 +90,8 @@ public class TypeScriptFetchClientCodegen extends AbstractTypeScriptClientCodege
             for (CodegenProperty var : cm.vars) {
                 // name enum with model name, e.g. StatuEnum => PetStatusEnum
                 if (Boolean.TRUE.equals(var.isEnum)) {
-                    var.datatypeWithEnum = var.datatypeWithEnum.replace(var.enumName, cm.classname + var.enumName);
+                    var.datatypeWithEnum =
+                            var.datatypeWithEnum.replace(var.enumName, cm.classname + var.enumName);
                     var.enumName = cm.classname + var.enumName;
                 }
             }

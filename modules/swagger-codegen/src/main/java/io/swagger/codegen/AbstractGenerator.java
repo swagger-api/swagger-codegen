@@ -28,8 +28,8 @@ public abstract class AbstractGenerator {
             File parent = new File(output.getParent());
             parent.mkdirs();
         }
-        Writer out = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(output), "UTF-8"));
+        Writer out =
+                new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output), "UTF-8"));
 
         out.write(contents);
         out.close();
@@ -52,7 +52,8 @@ public abstract class AbstractGenerator {
 
     public Reader getTemplateReader(String name) {
         try {
-            InputStream is = this.getClass().getClassLoader().getResourceAsStream(getCPResourcePath(name));
+            InputStream is =
+                    this.getClass().getClassLoader().getResourceAsStream(getCPResourcePath(name));
             if (is == null) {
                 is = new FileInputStream(new File(name)); // May throw but never return a null value
             }
@@ -64,8 +65,8 @@ public abstract class AbstractGenerator {
     }
 
     /**
-     * Get the template file path with template dir prepended, and use the
-     * library template if exists.
+     * Get the template file path with template dir prepended, and use the library template if
+     * exists.
      *
      * @param config Codegen config
      * @param templateFile Template file
@@ -78,9 +79,9 @@ public abstract class AbstractGenerator {
         } else {
             String library = config.getLibrary();
             if (library != null && !"".equals(library)) {
-                String libTemplateFile = config.embeddedTemplateDir() + File.separator +
-                    "libraries" + File.separator + library + File.separator +
-                    templateFile;
+                String libTemplateFile =
+                        config.embeddedTemplateDir() + File.separator + "libraries"
+                                + File.separator + library + File.separator + templateFile;
                 if (embeddedTemplateExists(libTemplateFile)) {
                     // Fall back to the template file embedded/packaged in the JAR file...
                     return libTemplateFile;
@@ -93,7 +94,9 @@ public abstract class AbstractGenerator {
 
     public String readResourceContents(String resourceFilePath) {
         StringBuilder sb = new StringBuilder();
-        Scanner scanner = new Scanner(this.getClass().getResourceAsStream(getCPResourcePath(resourceFilePath)), "UTF-8");
+        Scanner scanner =
+                new Scanner(this.getClass()
+                        .getResourceAsStream(getCPResourcePath(resourceFilePath)), "UTF-8");
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             sb.append(line).append('\n');

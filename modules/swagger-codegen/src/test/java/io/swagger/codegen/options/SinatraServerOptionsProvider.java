@@ -12,7 +12,7 @@ public class SinatraServerOptionsProvider implements OptionsProvider {
 
     @Override
     public Map<String, String> createOptions() {
-        //SinatraServerCodegen doesn't have its own options and base options are cleared
+        // SinatraServerCodegen doesn't have its own options and base options are cleared
         return ImmutableMap.of();
     }
 

@@ -27,7 +27,8 @@ public class DefaultGeneratorTest {
 
     private static final String TEST_SKIP_OVERWRITE = "testSkipOverwrite";
     private static final String POM_FILE = "pom.xml";
-    private static final String MODEL_ORDER_FILE = "/src/main/java/io/swagger/client/model/Order.java";
+    private static final String MODEL_ORDER_FILE =
+            "/src/main/java/io/swagger/client/model/Order.java";
 
     public TemporaryFolder folder = new TemporaryFolder();
 
@@ -46,7 +47,8 @@ public class DefaultGeneratorTest {
         final Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/petstore.json");
         CodegenConfig codegenConfig = new JavaClientCodegen();
 
-        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+        ClientOptInput clientOptInput =
+                new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
 
         DefaultGenerator gen = new DefaultGenerator();
         gen.opts(clientOptInput);
@@ -73,7 +75,8 @@ public class DefaultGeneratorTest {
         assertEquals(apiKey.type, "apiKey");
 
         // security of "updatePetWithForm": petstore_auth
-        CodegenOperation updatePetWithForm = findCodegenOperationByOperationId(paths, "updatePetWithForm");
+        CodegenOperation updatePetWithForm =
+                findCodegenOperationByOperationId(paths, "updatePetWithForm");
         assertEquals(updatePetWithForm.authMethods.size(), 1);
         petstoreAuth = updatePetWithForm.authMethods.iterator().next();
         assertEquals(petstoreAuth.name, "petstore_auth");
@@ -86,10 +89,12 @@ public class DefaultGeneratorTest {
 
     @Test
     public void testSecurityWithGlobal() throws Exception {
-        final Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/globalSecurity.json");
+        final Swagger swagger =
+                new SwaggerParser().read("src/test/resources/2_0/globalSecurity.json");
         CodegenConfig codegenConfig = new JavaClientCodegen();
 
-        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+        ClientOptInput clientOptInput =
+                new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
 
         DefaultGenerator gen = new DefaultGenerator();
         gen.opts(clientOptInput);
@@ -114,7 +119,8 @@ public class DefaultGeneratorTest {
         assertEquals(apiKey.type, "apiKey");
 
         // security of "updatePetWithForm": petstore_auth
-        CodegenOperation updatePetWithForm = findCodegenOperationByOperationId(paths, "updatePetWithForm");
+        CodegenOperation updatePetWithForm =
+                findCodegenOperationByOperationId(paths, "updatePetWithForm");
         assertEquals(updatePetWithForm.authMethods.size(), 1);
         petstoreAuth = updatePetWithForm.authMethods.iterator().next();
         assertEquals(petstoreAuth.name, "petstore_auth");
@@ -166,56 +172,63 @@ public class DefaultGeneratorTest {
         codegenConfig.setLibrary("jersey1");
         codegenConfig.setOutputDir(output.getAbsolutePath());
 
-        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+        ClientOptInput clientOptInput =
+                new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
 
-        //generate content first time without skipOverwrite flag, so all generated files should be recorded
+        // generate content first time without skipOverwrite flag, so all generated files should be
+        // recorded
         new DefaultGenerator().opts(clientOptInput).generate();
         final File order = new File(output, MODEL_ORDER_FILE);
         assertTrue(order.exists());
 
-        //change content of one file
+        // change content of one file
         changeContent(order);
 
-        //generate content second time without skipOverwrite flag, so changed file should be rewritten
+        // generate content second time without skipOverwrite flag, so changed file should be
+        // rewritten
         new DefaultGenerator().opts(clientOptInput).generate();
 
-        assertTrue(!TEST_SKIP_OVERWRITE.equals(FileUtils.readFileToString(order, StandardCharsets.UTF_8)));
+        assertTrue(!TEST_SKIP_OVERWRITE.equals(FileUtils.readFileToString(order,
+                StandardCharsets.UTF_8)));
 
-        //change content again
+        // change content again
         changeContent(order);
-        //delete file
+        // delete file
         final File pom = new File(output, POM_FILE);
         if (pom.exists() && !pom.delete()) {
             fail("it doesn't delete");
         }
 
-        //generate content third time with skipOverwrite flag, so changed file should not be rewritten
-        //and deleted file should be recorded
+        // generate content third time with skipOverwrite flag, so changed file should not be
+        // rewritten
+        // and deleted file should be recorded
         codegenConfig.setSkipOverwrite(true);
         new DefaultGenerator().opts(clientOptInput).generate();
         assertEquals(FileUtils.readFileToString(order, StandardCharsets.UTF_8), TEST_SKIP_OVERWRITE);
         // Disabling this check, it's not valid with the DefaultCodegen.writeOptional(...) arg
-//        assertTrue(pom.exists());
+        // assertTrue(pom.exists());
     }
 
     @Test
     public void testGenerateUniqueOperationIds() {
         final File output = folder.getRoot();
 
-        final Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/duplicateOperationIds.yaml");
+        final Swagger swagger =
+                new SwaggerParser().read("src/test/resources/2_0/duplicateOperationIds.yaml");
         CodegenConfig codegenConfig = new JavaClientCodegen();
         codegenConfig.setOutputDir(output.getAbsolutePath());
 
-        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+        ClientOptInput clientOptInput =
+                new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
 
         DefaultGenerator generator = new DefaultGenerator();
         generator.opts(clientOptInput);
 
         Map<String, List<CodegenOperation>> paths = generator.processPaths(swagger.getPaths());
         Set<String> opIds = new HashSet<String>();
-        for(String path : paths.keySet()) {
+        for (String path : paths.keySet()) {
             List<CodegenOperation> ops = paths.get(path);
-            for(CodegenOperation op : ops) {
+            for (CodegenOperation op : ops) {
                 assertFalse(opIds.contains(op.operationId));
                 opIds.add(op.operationId);
             }
@@ -228,7 +241,8 @@ public class DefaultGeneratorTest {
         out.close();
     }
 
-    private static CodegenOperation findCodegenOperationByOperationId(Map<String, List<CodegenOperation>> paths, String operationId) {
+    private static CodegenOperation findCodegenOperationByOperationId(
+            Map<String, List<CodegenOperation>> paths, String operationId) {
         for (List<CodegenOperation> ops : paths.values()) {
             for (CodegenOperation co : ops) {
                 if (operationId.equals(co.operationId)) {

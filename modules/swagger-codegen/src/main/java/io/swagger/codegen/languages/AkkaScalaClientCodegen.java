@@ -54,10 +54,10 @@ public class AkkaScalaClientCodegen extends AbstractScalaCodegen implements Code
     protected boolean renderJavadoc = true;
     protected boolean removeOAuthSecurities = true;
     /**
-     * If set to true, only the default response (the one with le lowest 2XX code) will be considered as a success, and all
-     * others as ApiErrors.
-     * If set to false, all responses defined in the model will be considered as a success upon reception. Only http errors,
-     * unmarshalling problems and any other RuntimeException will be considered as ApiErrors.
+     * If set to true, only the default response (the one with le lowest 2XX code) will be
+     * considered as a success, and all others as ApiErrors. If set to false, all responses defined
+     * in the model will be considered as a success upon reception. Only http errors, unmarshalling
+     * problems and any other RuntimeException will be considered as ApiErrors.
      */
     protected boolean onlyOneSuccess = true;
 
@@ -74,14 +74,11 @@ public class AkkaScalaClientCodegen extends AbstractScalaCodegen implements Code
         modelPackage = mainPackage + ".model";
         invokerPackage = mainPackage + ".core";
 
-        setReservedWordsLowerCase(
-                Arrays.asList(
-                        "abstract", "case", "catch", "class", "def", "do", "else", "extends",
-                        "false", "final", "finally", "for", "forSome", "if", "implicit",
-                        "import", "lazy", "match", "new", "null", "object", "override", "package",
-                        "private", "protected", "return", "sealed", "super", "this", "throw",
-                        "trait", "try", "true", "type", "val", "var", "while", "with", "yield")
-        );
+        setReservedWordsLowerCase(Arrays.asList("abstract", "case", "catch", "class", "def", "do",
+                "else", "extends", "false", "final", "finally", "for", "forSome", "if", "implicit",
+                "import", "lazy", "match", "new", "null", "object", "override", "package",
+                "private", "protected", "return", "sealed", "super", "this", "throw", "trait",
+                "try", "true", "type", "val", "var", "while", "with", "yield"));
 
         additionalProperties.put(CodegenConstants.INVOKER_PACKAGE, invokerPackage);
         additionalProperties.put(CodegenConstants.GROUP_ID, groupId);
@@ -99,14 +96,22 @@ public class AkkaScalaClientCodegen extends AbstractScalaCodegen implements Code
         additionalProperties.put("onlyOneSuccess", onlyOneSuccess);
 
         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
-        supportingFiles.add(new SupportingFile("reference.mustache", resourcesFolder, "reference.conf"));
-        final String invokerFolder = (sourceFolder + File.separator + invokerPackage).replace(".", File.separator);
-        supportingFiles.add(new SupportingFile("apiRequest.mustache", invokerFolder, "ApiRequest.scala"));
-        supportingFiles.add(new SupportingFile("apiInvoker.mustache", invokerFolder, "ApiInvoker.scala"));
-        supportingFiles.add(new SupportingFile("requests.mustache", invokerFolder, "requests.scala"));
-        supportingFiles.add(new SupportingFile("apiSettings.mustache", invokerFolder, "ApiSettings.scala"));
-        final String apiFolder = (sourceFolder + File.separator + apiPackage).replace(".", File.separator);
-        supportingFiles.add(new SupportingFile("enumsSerializers.mustache", apiFolder, "EnumsSerializers.scala"));
+        supportingFiles.add(new SupportingFile("reference.mustache", resourcesFolder,
+                "reference.conf"));
+        final String invokerFolder =
+                (sourceFolder + File.separator + invokerPackage).replace(".", File.separator);
+        supportingFiles.add(new SupportingFile("apiRequest.mustache", invokerFolder,
+                "ApiRequest.scala"));
+        supportingFiles.add(new SupportingFile("apiInvoker.mustache", invokerFolder,
+                "ApiInvoker.scala"));
+        supportingFiles
+                .add(new SupportingFile("requests.mustache", invokerFolder, "requests.scala"));
+        supportingFiles.add(new SupportingFile("apiSettings.mustache", invokerFolder,
+                "ApiSettings.scala"));
+        final String apiFolder =
+                (sourceFolder + File.separator + apiPackage).replace(".", File.separator);
+        supportingFiles.add(new SupportingFile("enumsSerializers.mustache", apiFolder,
+                "EnumsSerializers.scala"));
 
         importMapping.remove("Seq");
         importMapping.remove("List");
@@ -154,9 +159,9 @@ public class AkkaScalaClientCodegen extends AbstractScalaCodegen implements Code
 
     @Override
     public String escapeReservedWord(String name) {
-        if(this.reservedWordsMappings().containsKey(name)) {
+        if (this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
-        }        
+        }
         return "`" + name + "`";
     }
 
@@ -165,7 +170,8 @@ public class AkkaScalaClientCodegen extends AbstractScalaCodegen implements Code
         if (registerNonStandardStatusCodes) {
             try {
                 @SuppressWarnings("unchecked")
-                Map<String, ArrayList<CodegenOperation>> opsMap = (Map<String, ArrayList<CodegenOperation>>) objs.get("operations");
+                Map<String, ArrayList<CodegenOperation>> opsMap =
+                        (Map<String, ArrayList<CodegenOperation>>) objs.get("operations");
                 HashSet<Integer> unknownCodes = new HashSet<Integer>();
                 for (CodegenOperation operation : opsMap.get("operation")) {
                     for (CodegenResponse response : operation.responses) {

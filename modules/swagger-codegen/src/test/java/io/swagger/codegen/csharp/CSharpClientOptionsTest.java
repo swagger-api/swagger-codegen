@@ -25,38 +25,41 @@ public class CSharpClientOptionsTest extends AbstractOptionsTest {
     @SuppressWarnings("unused")
     @Override
     protected void setExpectations() {
-        new Expectations(clientCodegen) {{
-            clientCodegen.setPackageName(CSharpClientOptionsProvider.PACKAGE_NAME_VALUE);
-            times = 1;
-            clientCodegen.setOptionalMethodArgumentFlag(true);
-            times = 1;
-            clientCodegen.setPackageVersion(CSharpClientOptionsProvider.PACKAGE_VERSION_VALUE);
-            times = 1;
-            clientCodegen.setOptionalAssemblyInfoFlag(true);
-            times = 1;
-            clientCodegen.setSourceFolder(CSharpClientOptionsProvider.SOURCE_FOLDER_VALUE);
-            times = 1;
-            clientCodegen.useDateTimeOffset(true);
-            times = 1;
-            clientCodegen.setOptionalProjectFileFlag(true);
-            times = 1;
-            clientCodegen.setPackageGuid(CSharpClientOptionsProvider.PACKAGE_GUID_VALUE);
-            times = 1;
-            clientCodegen.setUseCollection(false);
-            times = 1;
-            clientCodegen.setReturnICollection(false);
-            times = 1;
-            clientCodegen.setOptionalEmitDefaultValue(true);
-            times = 1;
-            clientCodegen.setGeneratePropertyChanged(true);
-            times = 1;
-            clientCodegen.setNonPublicApi(true);
-            times = 1;
-            clientCodegen.setInterfacePrefix("X");
-            times = 1;
-            clientCodegen.setAllowUnicodeIdentifiers(Boolean.valueOf(CSharpClientOptionsProvider.ALLOW_UNICODE_IDENTIFIERS_VALUE));
-            times = 1;
+        new Expectations(clientCodegen) {
+            {
+                clientCodegen.setPackageName(CSharpClientOptionsProvider.PACKAGE_NAME_VALUE);
+                times = 1;
+                clientCodegen.setOptionalMethodArgumentFlag(true);
+                times = 1;
+                clientCodegen.setPackageVersion(CSharpClientOptionsProvider.PACKAGE_VERSION_VALUE);
+                times = 1;
+                clientCodegen.setOptionalAssemblyInfoFlag(true);
+                times = 1;
+                clientCodegen.setSourceFolder(CSharpClientOptionsProvider.SOURCE_FOLDER_VALUE);
+                times = 1;
+                clientCodegen.useDateTimeOffset(true);
+                times = 1;
+                clientCodegen.setOptionalProjectFileFlag(true);
+                times = 1;
+                clientCodegen.setPackageGuid(CSharpClientOptionsProvider.PACKAGE_GUID_VALUE);
+                times = 1;
+                clientCodegen.setUseCollection(false);
+                times = 1;
+                clientCodegen.setReturnICollection(false);
+                times = 1;
+                clientCodegen.setOptionalEmitDefaultValue(true);
+                times = 1;
+                clientCodegen.setGeneratePropertyChanged(true);
+                times = 1;
+                clientCodegen.setNonPublicApi(true);
+                times = 1;
+                clientCodegen.setInterfacePrefix("X");
+                times = 1;
+                clientCodegen.setAllowUnicodeIdentifiers(Boolean
+                        .valueOf(CSharpClientOptionsProvider.ALLOW_UNICODE_IDENTIFIERS_VALUE));
+                times = 1;
 
-        }};
+            }
+        };
     }
 }

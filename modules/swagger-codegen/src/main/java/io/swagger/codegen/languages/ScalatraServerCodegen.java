@@ -28,40 +28,22 @@ public class ScalatraServerCodegen extends AbstractScalaCodegen implements Codeg
         apiPackage = "com.wordnik.client.api";
         modelPackage = "com.wordnik.client.model";
 
-        setReservedWordsLowerCase(
-                Arrays.asList(
-                        "abstract", "continue", "for", "new", "switch", "assert",
-                        "default", "if", "package", "synchronized", "boolean", "do", "goto", "private",
-                        "this", "break", "double", "implements", "protected", "throw", "byte", "else",
-                        "import", "public", "throws", "case", "enum", "instanceof", "return", "transient",
-                        "catch", "extends", "int", "short", "try", "char", "final", "interface", "static",
-                        "void", "class", "finally", "long", "strictfp", "volatile", "const", "float",
-                        "native", "super", "while", "type")
-        );
+        setReservedWordsLowerCase(Arrays.asList("abstract", "continue", "for", "new", "switch",
+                "assert", "default", "if", "package", "synchronized", "boolean", "do", "goto",
+                "private", "this", "break", "double", "implements", "protected", "throw", "byte",
+                "else", "import", "public", "throws", "case", "enum", "instanceof", "return",
+                "transient", "catch", "extends", "int", "short", "try", "char", "final",
+                "interface", "static", "void", "class", "finally", "long", "strictfp", "volatile",
+                "const", "float", "native", "super", "while", "type"));
 
-        defaultIncludes = new HashSet<String>(
-                Arrays.asList("double",
-                        "Int",
-                        "Long",
-                        "Float",
-                        "Double",
-                        "char",
-                        "float",
-                        "String",
-                        "boolean",
-                        "Boolean",
-                        "Double",
-                        "Integer",
-                        "Long",
-                        "Float",
-                        "List",
-                        "Set",
-                        "Map")
-        );
+        defaultIncludes =
+                new HashSet<String>(Arrays.asList("double", "Int", "Long", "Float", "Double",
+                        "char", "float", "String", "boolean", "Boolean", "Double", "Integer",
+                        "Long", "Float", "List", "Set", "Map"));
 
         typeMapping.put("integer", "Int");
         typeMapping.put("long", "Long");
-        //TODO binary should be mapped to byte array
+        // TODO binary should be mapped to byte array
         // mapped to String as a workaround
         typeMapping.put("binary", "String");
 
@@ -79,10 +61,14 @@ public class ScalatraServerCodegen extends AbstractScalaCodegen implements Codeg
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("build.sbt", "", "build.sbt"));
         supportingFiles.add(new SupportingFile("web.xml", "/src/main/webapp/WEB-INF", "web.xml"));
-        supportingFiles.add(new SupportingFile("JettyMain.mustache", sourceFolder, "JettyMain.scala"));
-        supportingFiles.add(new SupportingFile("Bootstrap.mustache", sourceFolder, "ScalatraBootstrap.scala"));
-        supportingFiles.add(new SupportingFile("ServletApp.mustache", sourceFolder, "ServletApp.scala"));
-        supportingFiles.add(new SupportingFile("project/build.properties", "project", "build.properties"));
+        supportingFiles.add(new SupportingFile("JettyMain.mustache", sourceFolder,
+                "JettyMain.scala"));
+        supportingFiles.add(new SupportingFile("Bootstrap.mustache", sourceFolder,
+                "ScalatraBootstrap.scala"));
+        supportingFiles.add(new SupportingFile("ServletApp.mustache", sourceFolder,
+                "ServletApp.scala"));
+        supportingFiles.add(new SupportingFile("project/build.properties", "project",
+                "build.properties"));
         supportingFiles.add(new SupportingFile("project/plugins.sbt", "project", "plugins.sbt"));
         supportingFiles.add(new SupportingFile("sbt", "", "sbt"));
 
@@ -127,7 +113,7 @@ public class ScalatraServerCodegen extends AbstractScalaCodegen implements Codeg
         for (CodegenOperation op : operationList) {
             // force http method to lower case
             op.httpMethod = op.httpMethod.toLowerCase();
- 
+
             String[] items = op.path.split("/", -1);
             String scalaPath = "";
             int pathParamIndex = 0;
@@ -140,7 +126,7 @@ public class ScalatraServerCodegen extends AbstractScalaCodegen implements Codeg
                     scalaPath = scalaPath + items[i];
                 }
 
-                if (i != items.length -1) {
+                if (i != items.length - 1) {
                     scalaPath = scalaPath + "/";
                 }
             }
