@@ -17,7 +17,7 @@ public class JavaResteasyEapServerOptionsProvider extends JavaOptionsProvider {
     
     public static final String USE_BEANVALIDATION = "true";
     
-	public static final String USE_SWAGGER_FEATURE = "true";
+     public static final String USE_SWAGGER_FEATURE = "true";
 
     @Override
     public boolean isServer() {
@@ -26,7 +26,7 @@ public class JavaResteasyEapServerOptionsProvider extends JavaOptionsProvider {
 
     @Override
     public String getLanguage() {
-		return "jaxrs-resteasy-eap";
+          return "jaxrs-resteasy-eap";
     }
 
     @Override
@@ -42,7 +42,7 @@ public class JavaResteasyEapServerOptionsProvider extends JavaOptionsProvider {
         
         builder.put(JavaCXFServerCodegen.GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR, GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR);
         builder.put(JavaResteasyServerCodegen.USE_BEANVALIDATION, USE_BEANVALIDATION);
-		builder.put(JavaResteasyEapServerCodegen.USE_SWAGGER_FEATURE, USE_SWAGGER_FEATURE);
+          builder.put(JavaResteasyEapServerCodegen.USE_SWAGGER_FEATURE, USE_SWAGGER_FEATURE);
 
         return builder.build();
         
