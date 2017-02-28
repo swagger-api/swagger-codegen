@@ -62,9 +62,11 @@ public class JavaResteasyEapServerOptionsTest extends AbstractOptionsTest {
 						Boolean.valueOf(JavaResteasyEapServerOptionsProvider.GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR));
 				times = 1;
 
-				clientCodegen
-						.setUseBeanValidation(Boolean.valueOf(JavaResteasyEapServerOptionsProvider.USE_BEANVALIDATION));
-                times = 1;
+				// no invocation as it is already defined as true in
+				// JavaResteasyEapServerCodegen
+				// clientCodegen
+				// .setUseBeanValidation(Boolean.valueOf(JavaResteasyEapServerOptionsProvider.USE_BEANVALIDATION));
+				// times = 1;
 				clientCodegen
 				        .setUseSwaggerFeature(
 				                Boolean.valueOf(JavaResteasyEapServerOptionsProvider.USE_SWAGGER_FEATURE));
