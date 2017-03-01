@@ -269,6 +269,11 @@ class ObjectSerializer
             }
 
             return $deserialized;
+        } elseif (method_exists($class, 'getAllowableEnumValues')) {
+            if (!in_array($data, $class::getAllowableEnumValues())) {
+                throw new \InvalidArgumentException('invalid value provided');
+            }
+            return $data;
         } else {
             // If a discriminator is defined and points to a valid subclass, use it.
             $discriminator = $class::DISCRIMINATOR;
