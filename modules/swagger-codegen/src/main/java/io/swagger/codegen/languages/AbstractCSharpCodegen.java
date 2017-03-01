@@ -67,7 +67,7 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
                         // fully qualified name
                         "client", "parameter",
                         // local variable names in API methods (endpoints)
-                        "localVarPath", "localVarPathParams", "localVarQueryParams", "localVarHeaderParams", 
+                        "localVarPath", "localVarPathParams", "localVarQueryParams", "localVarHeaderParams",
                         "localVarFormParams", "localVarFileParams", "localVarStatusCode", "localVarResponse",
                         "localVarPostBody", "localVarHttpHeaderAccepts", "localVarHttpHeaderAccept",
                         "localVarHttpContentTypes", "localVarHttpContentType",
@@ -203,14 +203,14 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         } else {
             additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
         }
-        
+
         // {{packageTitle}}
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_TITLE)) {
             setPackageTitle((String) additionalProperties.get(CodegenConstants.PACKAGE_TITLE));
         } else {
             additionalProperties.put(CodegenConstants.PACKAGE_TITLE, packageTitle);
         }
-        
+
         // {{packageProductName}}
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_PRODUCTNAME)) {
             setPackageProductName((String) additionalProperties.get(CodegenConstants.PACKAGE_PRODUCTNAME));
@@ -224,21 +224,21 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         } else {
             additionalProperties.put(CodegenConstants.PACKAGE_DESCRIPTION, packageDescription);
         }
-        
+
         // {{packageCompany}}
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_COMPANY)) {
             setPackageCompany((String) additionalProperties.get(CodegenConstants.PACKAGE_COMPANY));
         } else {
             additionalProperties.put(CodegenConstants.PACKAGE_COMPANY, packageCompany);
         }
-        
+
         // {{packageCopyright}}
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_COPYRIGHT)) {
             setPackageCopyright((String) additionalProperties.get(CodegenConstants.PACKAGE_COPYRIGHT));
         } else {
             additionalProperties.put(CodegenConstants.PACKAGE_COPYRIGHT, packageCopyright);
         }
-        
+
         // {{useDateTimeOffset}}
         if (additionalProperties.containsKey(CodegenConstants.USE_DATETIME_OFFSET)) {
             useDateTimeOffset(Boolean.valueOf(additionalProperties.get(CodegenConstants.USE_DATETIME_OFFSET).toString()));
@@ -341,7 +341,7 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
     @Override
     public String apiFileFolder() {
-        return outputFolder + File.separator + sourceFolder + File.separator + packageName + File.separator + apiPackage();
+        return outputFolder + File.separator + sourceFolder + File.separator + packageName;
     }
 
     @Override
@@ -612,11 +612,11 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     public void setPackageVersion(String packageVersion) {
         this.packageVersion = packageVersion;
     }
-    
+
     public void setPackageTitle(String packageTitle) {
 		this.packageTitle = packageTitle;
 	}
-    
+
     public void setPackageProductName(String packageProductName) {
 		this.packageProductName = packageProductName;
 	}
@@ -624,15 +624,15 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 	public void setPackageDescription(String packageDescription) {
 		this.packageDescription = packageDescription;
 	}
-	
+
     public void setPackageCompany(String packageCompany) {
 		this.packageCompany = packageCompany;
 	}
-    
+
     public void setPackageCopyright(String packageCopyright) {
 		this.packageCopyright = packageCopyright;
 	}
-    
+
     public void setSourceFolder(String sourceFolder) {
         this.sourceFolder = sourceFolder;
     }

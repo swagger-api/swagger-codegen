@@ -13,6 +13,7 @@ using System.Net;
 using System.Text;
 using Newtonsoft.Json;
 using RestSharp;
+using System.Configuration;
 
 namespace {{packageName}}.Client
 {
@@ -21,6 +22,15 @@ namespace {{packageName}}.Client
     /// </summary>
     {{>visibility}} partial class ApiClient
     {
+        /// <summary>
+        /// Read and return the host from the configuration file
+        /// </summary>
+        /// <returns></returns>
+        private static string GetHost()
+        {
+          return ConfigurationManager.AppSettings["{{packageName}}.Api.Host"];
+        }
+
         private JsonSerializerSettings serializerSettings = new JsonSerializerSettings
         {
             ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
@@ -41,17 +51,17 @@ namespace {{packageName}}.Client
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiClient" /> class
-        /// with default configuration and base path ({{{basePath}}}).
+        /// with default configuration and base path ({{{basePathWithoutHost}}}).
         /// </summary>
         public ApiClient()
         {
             Configuration = Configuration.Default;
-            RestClient = new RestClient("{{{basePath}}}");
+            RestClient = new RestClient(String.Format("{0}{{{basePathWithoutHost}}}", GetHost()));
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiClient" /> class
-        /// with default base path ({{{basePath}}}).
+        /// with default base path ({{{basePathWithoutHost}}}).
         /// </summary>
         /// <param name="config">An instance of Configuration.</param>
         public ApiClient(Configuration config = null)
@@ -61,7 +71,7 @@ namespace {{packageName}}.Client
             else
                 Configuration = config;
 
-            RestClient = new RestClient("{{{basePath}}}");
+            RestClient = new RestClient(String.Format("{0}{{{basePathWithoutHost}}}", GetHost()));
         }
 
         /// <summary>
@@ -69,7 +79,7 @@ namespace {{packageName}}.Client
         /// with default configuration.
         /// </summary>
         /// <param name="basePath">The base path.</param>
-        public ApiClient(String basePath = "{{{basePath}}}")
+        public ApiClient(String basePath = "{{{basePathWithoutHost}}}")
         {
            if (String.IsNullOrEmpty(basePath))
                 throw new ArgumentException("basePath cannot be empty");

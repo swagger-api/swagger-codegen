@@ -76,6 +76,9 @@ public class Codegen extends DefaultGenerator {
             if (cmd.hasOption("o")) {
                 clientOptInput.getConfig().setOutputDir(cmd.getOptionValue("o"));
             }
+            if (cmd.hasOption("i")) {
+                swagger = new SwaggerParser().read(cmd.getOptionValue("i"), clientOptInput.getAuthorizationValues(), true);
+            }
             if (cmd.hasOption("h")) {
                 if (cmd.hasOption("l")) {
                     config = getConfig(String.valueOf(cmd.getOptionValue("l")));
@@ -87,9 +90,6 @@ public class Codegen extends DefaultGenerator {
                 }
                 usage(options);
                 return;
-            }
-            if (cmd.hasOption("i")) {
-                swagger = new SwaggerParser().read(cmd.getOptionValue("i"), clientOptInput.getAuthorizationValues(), true);
             }
             if (cmd.hasOption("c")) {
                 String configFile = cmd.getOptionValue("c");
