@@ -8,48 +8,31 @@ import io.swagger.annotations.ApiModelProperty;
 
 
 
+/**
+ * Model for testing model with \&quot;_class\&quot; property
+ **/
 
+@ApiModel(description = "Model for testing model with \"_class\" property")
 
-
-public class Category   {
-  @JsonProperty("id")
-  private Long id = null;
-
-  @JsonProperty("name")
-  private String name = null;
+public class ClassModel   {
+  @JsonProperty("_class")
+  private String propertyClass = null;
 
   /**
    **/
-  public Category id(Long id) {
-    this.id = id;
+  public ClassModel propertyClass(String propertyClass) {
+    this.propertyClass = propertyClass;
     return this;
   }
 
   
   @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("id")
-  public Long getId() {
-    return id;
+  @JsonProperty("_class")
+  public String getPropertyClass() {
+    return propertyClass;
   }
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  /**
-   **/
-  public Category name(String name) {
-    this.name = name;
-    return this;
-  }
-
-  
-  @ApiModelProperty(example = "null", value = "")
-  @JsonProperty("name")
-  public String getName() {
-    return name;
-  }
-  public void setName(String name) {
-    this.name = name;
+  public void setPropertyClass(String propertyClass) {
+    this.propertyClass = propertyClass;
   }
 
 
@@ -61,23 +44,21 @@ public class Category   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Category category = (Category) o;
-    return Objects.equals(id, category.id) &&
-        Objects.equals(name, category.name);
+    ClassModel classModel = (ClassModel) o;
+    return Objects.equals(propertyClass, classModel.propertyClass);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(propertyClass);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Category {\n");
+    sb.append("class ClassModel {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    propertyClass: ").append(toIndentedString(propertyClass)).append("\n");
     sb.append("}");
     return sb.toString();
   }
