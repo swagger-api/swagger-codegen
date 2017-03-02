@@ -49,7 +49,7 @@ class OuterEnum {
      * Gets allowable values of the enum
      * @return string[]
      */
-    public function getAllowableEnumValues()
+    public static function getAllowableEnumValues()
     {
         return [
             self::PLACED,
@@ -58,4 +58,5 @@ class OuterEnum {
         ];
     }
 }
+
 
