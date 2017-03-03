@@ -35,7 +35,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class ExampleGenerator {
-    private static final Logger log = LoggerFactory.getLogger(ExampleGenerator.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExampleGenerator.class);
 
     // TODO: move constants to more appropriate location
     private static final String MIME_TYPE_JSON = "application/json";
@@ -95,28 +95,28 @@ public class ExampleGenerator {
     }
 
     private Object resolvePropertyToExample(String mediaType, Property property, Set<String> processedModels) {
-        log.debug("Resolving example for property {}...", property);
+        logger.debug("Resolving example for property {}...", property);
         if (property.getExample() != null) {
-            log.debug("Example set in swagger spec, returning example: '{}'", property.getExample().toString());
+            logger.debug("Example set in swagger spec, returning example: '{}'", property.getExample().toString());
             return property.getExample();
         } else if (property instanceof StringProperty) {
-            log.debug("String property");
+            logger.debug("String property");
             String defaultValue = ((StringProperty) property).getDefault();
             if (defaultValue != null && !defaultValue.isEmpty()) {
-                log.debug("Default value found: '{}'", defaultValue);
+                logger.debug("Default value found: '{}'", defaultValue);
                 return defaultValue;
             }
             List<String> enumValues = ((StringProperty) property).getEnum();
             if (enumValues != null && !enumValues.isEmpty()) {
-                log.debug("Enum value found: '{}'", enumValues.get(0));
+                logger.debug("Enum value found: '{}'", enumValues.get(0));
                 return enumValues.get(0);
             }
             String format = property.getFormat();
             if (format != null && (URI.getName().equals(format) || URL.getName().equals(format))) {
-                log.debug("URI or URL format, without default or enum, generating random one.");
+                logger.debug("URI or URL format, without default or enum, generating random one.");
                 return "http://example.com/aeiou";
             }
-            log.debug("No values found, using default string 'aeiou' as example");
+            logger.debug("No values found, using default string 'aeiou' as example");
             return "aeiou";
         } else if (property instanceof BooleanProperty) {
             Boolean defaultValue = ((BooleanProperty) property).getDefault();
@@ -171,12 +171,12 @@ public class ExampleGenerator {
             return "{}";
         } else if (property instanceof RefProperty) {
             String simpleName = ((RefProperty) property).getSimpleRef();
-            log.debug("Ref property, simple name: {}", simpleName);
+            logger.debug("Ref property, simple name: {}", simpleName);
             Model model = examples.get(simpleName);
             if (model != null) {
                 return resolveModelToExample(simpleName, mediaType, model, processedModels);
             }
-            log.warn("Ref property with empty model.");
+            logger.warn("Ref property with empty model.");
         } else if (property instanceof UUIDProperty) {
             return "046b6c7f-0b8a-43b9-b35d-6489e6daee91"; 
         }
@@ -206,13 +206,13 @@ public class ExampleGenerator {
             ModelImpl impl = (ModelImpl) model;
             Map<String, Object> values = new HashMap<>();
 
-            log.debug("Resolving model '{}' to example", name);
+            logger.debug("Resolving model '{}' to example", name);
 
             if (impl.getExample() != null) {
-                log.debug("Using example from spec: {}", impl.getExample());
+                logger.debug("Using example from spec: {}", impl.getExample());
                 return impl.getExample();
             } else if (impl.getProperties() != null) {
-                log.debug("Creating example from model values");
+                logger.debug("Creating example from model values");
                 for (String propertyName : impl.getProperties().keySet()) {
                     Property property = impl.getProperties().get(propertyName);
                     values.put(propertyName, resolvePropertyToExample(mediaType, property, processedModels));
