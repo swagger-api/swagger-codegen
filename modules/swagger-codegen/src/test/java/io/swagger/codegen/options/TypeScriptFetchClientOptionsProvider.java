@@ -13,6 +13,7 @@ public class TypeScriptFetchClientOptionsProvider implements OptionsProvider {
     public static final String MODEL_PROPERTY_NAMING_VALUE = "camelCase";
     private static final String NMP_NAME = "npmName";
     private static final String NMP_VERSION = "1.0.0";
+    private static final String NPM_REPOSITORY = "https://registry.npmjs.org";
     public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
 
 
@@ -28,8 +29,10 @@ public class TypeScriptFetchClientOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.ENSURE_UNIQUE_PARAMS, ENSURE_UNIQUE_PARAMS_VALUE)
                 .put(CodegenConstants.MODEL_PROPERTY_NAMING, MODEL_PROPERTY_NAMING_VALUE)
                 .put(CodegenConstants.SUPPORTS_ES6, String.valueOf(SUPPORTS_ES6_VALUE))
-                .put(TypeScriptFetchClientCodegen.NPM_NAME, NMP_NAME)
-                .put(TypeScriptFetchClientCodegen.NPM_VERSION, NMP_VERSION)
+                .put(CodegenConstants.NPM_NAME, NMP_NAME)
+                .put(CodegenConstants.NPM_VERSION, NMP_VERSION)
+                .put(CodegenConstants.NPM_SNAPSHOT, Boolean.FALSE.toString())
+                .put(CodegenConstants.NPM_REPOSITORY, NPM_REPOSITORY)
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
                 .build();
     }

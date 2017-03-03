@@ -96,6 +96,15 @@ public class CodegenConstants {
     public static final String ENSURE_UNIQUE_PARAMS = "ensureUniqueParams";
     public static final String ENSURE_UNIQUE_PARAMS_DESC = "Whether to ensure parameter names are unique in an operation (rename parameters that are not).";
 
+    public static final String NPM_NAME = "npmName";
+    public static final String NPM_NAME_DESC = "The name under which you want to publish generated npm package";
+    public static final String NPM_VERSION = "npmVersion";
+    public static final String NPM_VERSION_DESC = "The version of your npm package";
+    public static final String NPM_REPOSITORY = "npmRepository";
+    public static final String NPM_REPOSITORY_DESC = "Use this property to set an url your private npmRepo in the package.json";
+    public static final String NPM_SNAPSHOT = "snapshot";
+    public static final String NPM_SNAPSHOT_DESC = "When setting this property to true the NPM version will be suffixed with -SNAPSHOT.yyyyMMddHHmm";
+
     public static final String PACKAGE_NAME = "packageName";
     public static final String PACKAGE_VERSION = "packageVersion";
 

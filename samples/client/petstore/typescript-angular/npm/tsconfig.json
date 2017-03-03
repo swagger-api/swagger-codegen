@@ -1,27 +1,19 @@
 {
     "compilerOptions": {
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
         "noImplicitAny": false,
         "suppressImplicitAnyIndexErrors": true,
         "target": "ES5",
         "module": "commonjs",
         "moduleResolution": "node",
-        "removeComments": true,
         "sourceMap": true,
         "outDir": "./dist",
-        "noLib": false,
-        "declaration": true
+        "declaration": false
     },
+    "typeRoots": [
+        "./typings"
+    ],
     "exclude": [
         "node_modules",
-        "typings/main.d.ts",
-        "typings/main",
         "dist"
-    ],
-    "filesGlob": [
-        "./model/*.ts",
-        "./api/*.ts",
-        "typings/browser.d.ts"
     ]
 }

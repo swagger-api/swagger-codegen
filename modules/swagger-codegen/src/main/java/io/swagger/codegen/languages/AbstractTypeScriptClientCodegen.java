@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.TreeSet;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
@@ -17,16 +19,23 @@ import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.SupportingFile;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.FileProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
+import io.swagger.models.properties.BooleanProperty;
 
 public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen implements CodegenConfig {
+    private static final SimpleDateFormat SNAPSHOT_SUFFIX_FORMAT = new SimpleDateFormat("yyyyMMddHHmm");
 
     protected String modelPropertyNaming= "camelCase";
     protected Boolean supportsES6 = true;
     protected HashSet<String> languageGenericTypes;
+
+    protected String npmName = null;
+    protected String npmVersion = "1.0.0";
+    protected String npmRepository = null;
 
     public AbstractTypeScriptClientCodegen() {
         super();
@@ -91,7 +100,10 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
 
         cliOptions.add(new CliOption(CodegenConstants.MODEL_PROPERTY_NAMING, CodegenConstants.MODEL_PROPERTY_NAMING_DESC).defaultValue("camelCase"));
         cliOptions.add(new CliOption(CodegenConstants.SUPPORTS_ES6, CodegenConstants.SUPPORTS_ES6_DESC).defaultValue("false"));
-
+        cliOptions.add(new CliOption(CodegenConstants.NPM_NAME, CodegenConstants.NPM_NAME_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.NPM_VERSION, CodegenConstants.NPM_VERSION_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.NPM_REPOSITORY, CodegenConstants.NPM_REPOSITORY_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.NPM_SNAPSHOT, CodegenConstants.NPM_SNAPSHOT_DESC, BooleanProperty.TYPE).defaultValue(Boolean.FALSE.toString()));
     }
 
     @Override
@@ -106,6 +118,58 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
             setSupportsES6(Boolean.valueOf(additionalProperties.get(CodegenConstants.SUPPORTS_ES6).toString()));
             additionalProperties.put("supportsES6", getSupportsES6());
         }
+
+        if(additionalProperties.containsKey(CodegenConstants.NPM_NAME)) {
+            addNpmPackageGeneration();
+        }
+    }
+
+    private void addNpmPackageGeneration() {
+        if(additionalProperties.containsKey(CodegenConstants.NPM_NAME)) {
+            this.setNpmName(additionalProperties.get(CodegenConstants.NPM_NAME).toString());
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.NPM_VERSION)) {
+            this.setNpmVersion(additionalProperties.get(CodegenConstants.NPM_VERSION).toString());
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.NPM_SNAPSHOT) && Boolean.valueOf(additionalProperties.get(CodegenConstants.NPM_SNAPSHOT).toString())) {
+            this.setNpmVersion(npmVersion + "-SNAPSHOT." + SNAPSHOT_SUFFIX_FORMAT.format(new Date()));
+        }
+        additionalProperties.put(CodegenConstants.NPM_VERSION, npmVersion);
+
+        if (additionalProperties.containsKey(CodegenConstants.NPM_REPOSITORY)) {
+            this.setNpmRepository(additionalProperties.get(CodegenConstants.NPM_REPOSITORY).toString());
+        }
+
+        supportingFiles.add(new SupportingFile("package.mustache", getPackageRootDirectory(), "package.json"));
+        supportingFiles.add(new SupportingFile("typings.mustache", getPackageRootDirectory(), "typings.json"));
+        supportingFiles.add(new SupportingFile("tsconfig.mustache", getPackageRootDirectory(), "tsconfig.json"));
+    }
+
+    private String getPackageRootDirectory() {
+        String indexPackage = modelPackage.substring(0, Math.max(0, modelPackage.lastIndexOf('.')));
+        return indexPackage.replace('.', File.separatorChar);
+    }
+
+     public void setNpmName(String npmName) {
+        this.npmName = npmName;
+    }
+
+    public void setNpmVersion(String npmVersion) {
+        this.npmVersion = npmVersion;
+    }
+
+    public void setNpmRepository(String npmRepository) {
+        this.npmRepository = npmRepository;
+    }
+
+    public String getNpmVersion() {
+        return npmVersion;
+    }
+
+    public String getNpmRepository() {
+        return npmRepository;
     }
 
     @Override
