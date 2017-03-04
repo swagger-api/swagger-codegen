@@ -1,6 +1,6 @@
 'use strict';
 
-require('../utils/writer.js');
+var utils = require('../utils/writer.js');
 {{#operations}}
 var {{classname}} = require('../{{implFolder}}/{{classname}}Service');
 {{#operation}}
@@ -11,10 +11,10 @@ module.exports.{{nickname}} = function {{nickname}} (req, res, next) {
     {{/allParams}}
     {{classname}}.{{nickname}}({{#allParams}}{{paramName}}{{#hasMore}},{{/hasMore}}{{/allParams}})
         .then(function (response) {
-            writeJson(res, response);
+            utils.writeJson(res, response);
         })
         .catch(function (response) {
-            writeJson(res, response);
+            utils.writeJson(res, response);
         });
 };
 {{/operation}}
