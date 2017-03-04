@@ -28,6 +28,7 @@ public class FormatTest  {
   private Long int64 = null;
 
   @ApiModelProperty(required = true, value = "")
+  @Valid
   private BigDecimal number = null;
 
   @ApiModelProperty(value = "")
@@ -46,12 +47,15 @@ public class FormatTest  {
   private byte[] binary = null;
 
   @ApiModelProperty(required = true, value = "")
+  @Valid
   private LocalDate date = null;
 
   @ApiModelProperty(value = "")
+  @Valid
   private Date dateTime = null;
 
   @ApiModelProperty(value = "")
+  @Valid
   private UUID uuid = null;
 
   @ApiModelProperty(required = true, value = "")

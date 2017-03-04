@@ -25,6 +25,7 @@ public class Order  {
   private Integer quantity = null;
 
   @ApiModelProperty(value = "")
+  @Valid
   private Date shipDate = null;
 
 

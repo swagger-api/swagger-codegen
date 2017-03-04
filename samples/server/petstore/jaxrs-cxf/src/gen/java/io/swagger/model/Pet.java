@@ -22,6 +22,7 @@ public class Pet  {
   private Long id = null;
 
   @ApiModelProperty(value = "")
+  @Valid
   private Category category = null;
 
   @ApiModelProperty(example = "doggie", required = true, value = "")

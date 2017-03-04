@@ -21,9 +21,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class MixedPropertiesAndAdditionalPropertiesClass  {
   
   @ApiModelProperty(value = "")
+  @Valid
   private UUID uuid = null;
 
   @ApiModelProperty(value = "")
+  @Valid
   private Date dateTime = null;
 
   @ApiModelProperty(value = "")
