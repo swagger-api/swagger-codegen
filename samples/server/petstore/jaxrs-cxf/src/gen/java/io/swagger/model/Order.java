@@ -20,6 +20,7 @@ public class Order  {
   @ApiModelProperty(example = "null", value = "")
   private Integer quantity = null;
   @ApiModelProperty(example = "null", value = "")
+  @Valid
   private javax.xml.datatype.XMLGregorianCalendar shipDate = null;
 
 @XmlType(name="StatusEnum")

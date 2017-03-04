@@ -120,6 +120,7 @@ public enum EnumNumberEnum {
   @ApiModelProperty(example = "null", value = "")
   private EnumNumberEnum enumNumber = null;
   @ApiModelProperty(example = "null", value = "")
+  @Valid
   private OuterEnum outerEnum = null;
 
  /**

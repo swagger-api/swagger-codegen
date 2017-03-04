@@ -19,8 +19,10 @@ import javax.xml.bind.annotation.XmlEnumValue;
 public class MixedPropertiesAndAdditionalPropertiesClass  {
   
   @ApiModelProperty(example = "null", value = "")
+  @Valid
   private UUID uuid = null;
   @ApiModelProperty(example = "null", value = "")
+  @Valid
   private javax.xml.datatype.XMLGregorianCalendar dateTime = null;
   @ApiModelProperty(example = "null", value = "")
   private Map<String, Animal> map = new HashMap<String, Animal>();

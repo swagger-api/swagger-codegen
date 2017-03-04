@@ -23,6 +23,7 @@ public class FormatTest  {
   @ApiModelProperty(example = "null", value = "")
   private Long int64 = null;
   @ApiModelProperty(example = "null", required = true, value = "")
+  @Valid
   private BigDecimal number = null;
   @ApiModelProperty(example = "null", value = "")
   private Float _float = null;
@@ -35,10 +36,13 @@ public class FormatTest  {
   @ApiModelProperty(example = "null", value = "")
   private byte[] binary = null;
   @ApiModelProperty(example = "null", required = true, value = "")
+  @Valid
   private LocalDate date = null;
   @ApiModelProperty(example = "null", value = "")
+  @Valid
   private javax.xml.datatype.XMLGregorianCalendar dateTime = null;
   @ApiModelProperty(example = "null", value = "")
+  @Valid
   private UUID uuid = null;
   @ApiModelProperty(example = "null", required = true, value = "")
   private String password = null;
