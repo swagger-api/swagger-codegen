@@ -202,6 +202,7 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
         }*/
 
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
+        supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
 
         if (optionalAssemblyInfoFlag) {
