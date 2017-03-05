@@ -2,6 +2,7 @@ package io.swagger.model;
 
 import io.swagger.model.OuterEnum;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
