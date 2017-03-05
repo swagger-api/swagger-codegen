@@ -24,7 +24,6 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
     protected String targetFramework = NETS11;
     protected String targetFrameworkNuget = "netstandard1.1";
     protected boolean supportsAsync = Boolean.TRUE;
-    protected Map<Character, String> regexModifiers;
     protected final Map<String,String> frameworks;
 
     // By default, generated code is considered public
@@ -61,15 +60,9 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
         addOption(CodegenConstants.OPTIONAL_PROJECT_GUID, CodegenConstants.OPTIONAL_PROJECT_GUID_DESC, null);
         addOption(CodegenConstants.INTERFACE_PREFIX, CodegenConstants.INTERFACE_PREFIX_DESC, interfacePrefix);
 
-        CliOption framework = new CliOption(CodegenConstants.DOTNET_FRAMEWORK, CodegenConstants.DOTNET_FRAMEWORK_DESC);
-
         frameworks = new ImmutableMap.Builder<String,String>()
                 .put(NETS11, ".NET Standard 1.1 compatible")
                 .build();
-
-        framework.defaultValue(this.targetFramework);
-        framework.setEnum(frameworks);
-        cliOptions.add(framework);
 
         addSwitch(CodegenConstants.HIDE_GENERATION_TIMESTAMP,
                 CodegenConstants.HIDE_GENERATION_TIMESTAMP_DESC,
@@ -114,12 +107,6 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
         addSwitch(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS,
                 CodegenConstants.ALLOW_UNICODE_IDENTIFIERS_DESC,
                 this.allowUnicodeIdentifiers);
-
-        regexModifiers = new HashMap<Character, String>();
-        regexModifiers.put('i', "IgnoreCase");
-        regexModifiers.put('m', "Multiline");
-        regexModifiers.put('s', "Singleline");
-        regexModifiers.put('x', "IgnorePatternWhitespace");
     }
 
     @Override
@@ -299,18 +286,6 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
     }
 
     @Override
-    public void postProcessParameter(CodegenParameter parameter) {
-        postProcessPattern(parameter.pattern, parameter.vendorExtensions);
-        super.postProcessParameter(parameter);
-    }
-
-    @Override
-    public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
-        postProcessPattern(property.pattern, property.vendorExtensions);
-        super.postProcessModelProperty(model, property);
-    }
-
-    @Override
     public String toModelDocFilename(String name) {
         return toModelFilename(name);
     }
@@ -381,36 +356,6 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
         }
 
         return codegenModel;
-    }
-
-    public void postProcessPattern(String pattern, Map<String, Object> vendorExtensions) {
-        if(pattern != null) {
-            int i = pattern.lastIndexOf('/');
-
-            //Must follow Perl /pattern/modifiers convention
-            if(pattern.charAt(0) != '/' || i < 2) {
-                throw new IllegalArgumentException("Pattern must follow the Perl "
-                        + "/pattern/modifiers convention. "+pattern+" is not valid.");
-            }
-
-            String regex = pattern.substring(1, i).replace("'", "\'");
-            List<String> modifiers = new ArrayList<String>();
-
-            // perl requires an explicit modifier to be culture specific and .NET is the reverse.
-            modifiers.add("CultureInvariant");
-
-            for(char c : pattern.substring(i).toCharArray()) {
-                if(regexModifiers.containsKey(c)) {
-                    String modifier = regexModifiers.get(c);
-                    modifiers.add(modifier);
-                } else if (c == 'l') {
-                    modifiers.remove("CultureInvariant");
-                }
-            }
-
-            vendorExtensions.put("x-regex", regex);
-            vendorExtensions.put("x-modifiers", modifiers);
-        }
     }
 
     public void setTargetFramework(String dotnetFramework) {
