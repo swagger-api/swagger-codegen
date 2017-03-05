@@ -14,6 +14,7 @@ import org.apache.cxf.jaxrs.ext.multipart.*;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.jaxrs.PATCH;
 import javax.validation.constraints.*;
 
@@ -25,7 +26,7 @@ public interface StoreApi  {
     @Path("/store/order/{orderId}")
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Delete purchase order by ID", tags={ "store",  })
-    public void deleteOrder(@PathParam("orderId") String orderId);
+    public void deleteOrder(@ApiParam(value = "ID of the order that needs to be deleted", required=true) @PathParam("orderId") String orderId);
 
     @GET
     @Path("/store/inventory")
@@ -37,12 +38,12 @@ public interface StoreApi  {
     @Path("/store/order/{orderId}")
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Find purchase order by ID", tags={ "store",  })
-    public Order getOrderById(@PathParam("orderId") Long orderId);
+    public Order getOrderById(@ApiParam(value = "ID of pet that needs to be fetched", required=true) @PathParam("orderId") Long orderId);
 
     @POST
     @Path("/store/order")
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Place an order for a pet", tags={ "store" })
-    public Order placeOrder(Order body);
+    public Order placeOrder(@ApiParam(value = "order placed for purchasing the pet", required=true) Order body);
 }
 
