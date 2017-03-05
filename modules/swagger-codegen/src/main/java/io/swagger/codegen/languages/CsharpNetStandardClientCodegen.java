@@ -21,7 +21,6 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
     protected String modelDocPath = "docs/";
 
     protected String targetFrameworkNuget = "netstandard1.3";
-    protected boolean supportsAsync = Boolean.TRUE;
 
     // By default, generated code is considered public
     protected boolean nonPublicApi = Boolean.FALSE;
@@ -191,6 +190,7 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
         // copy package.config to nuget's standard location for project-level installs
         supportingFiles.add(new SupportingFile("project.json.mustache", packageFolder + File.separator, "project.json"));
 
+        //Todo implement test generation
         /*if(Boolean.FALSE.equals(excludeTests)) {
             // shell script to run the nunit test
             supportingFiles.add(new SupportingFile("mono_nunit_test.mustache", "", "mono_nunit_test.sh"));
@@ -348,10 +348,6 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
 
     public void setTargetFrameworkNuget(String targetFrameworkNuget) {
         this.targetFrameworkNuget = targetFrameworkNuget;
-    }
-
-    public void setSupportsAsync(Boolean supportsAsync){
-        this.supportsAsync = supportsAsync;
     }
 
     public boolean isNonPublicApi() {
