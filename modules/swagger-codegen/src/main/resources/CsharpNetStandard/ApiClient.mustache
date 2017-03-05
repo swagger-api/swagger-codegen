@@ -5,9 +5,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.IO;
-{{^supportsUWP}}
-using System.Web;
-{{/supportsUWP}}
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -196,7 +193,7 @@ namespace {{packageName}}.Client
         /// <param name="contentType">Content type.</param>
         /// <returns>The Task instance.</returns>
         public async System.Threading.Tasks.Task<Object> CallApiAsync(
-            String path, RestSharp.Method method, Dictionary<String, String> queryParams, Object postBody,
+            String path, Method method, Dictionary<String, String> queryParams, Object postBody,
             Dictionary<String, String> headerParams, Dictionary<String, String> formParams,
             Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams,
             String contentType)
@@ -476,20 +473,5 @@ namespace {{packageName}}.Client
                 return filename;
             }
         }
-        {{#supportsUWP}}
-        /// <summary>
-        /// Convert stream to byte array
-        /// </summary>
-        /// <param name="stream">IO stream</param>
-        /// <returns>Byte array</returns>
-        public static byte[] ToByteArray(Stream stream)
-        {
-            stream.Position = 0;
-            byte[] buffer = new byte[stream.Length];
-            for (int totalBytesCopied = 0; totalBytesCopied < stream.Length;)
-                totalBytesCopied += stream.Read(buffer, totalBytesCopied, Convert.ToInt32(stream.Length) - totalBytesCopied);
-            return buffer;
-        }
-        {{/supportsUWP}}
     }
 }

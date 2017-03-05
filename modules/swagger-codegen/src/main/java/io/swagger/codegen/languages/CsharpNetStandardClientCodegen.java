@@ -13,7 +13,6 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
     private static final Logger LOGGER = LoggerFactory.getLogger(CsharpNetStandardClientCodegen.class);
-    private static final String NETS11 = "v5.0";
 
     protected String packageGuid = "{" + java.util.UUID.randomUUID().toString().toUpperCase() + "}";
     protected String clientPackage = "IO.Swagger.Client";
@@ -21,10 +20,8 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
 
-    protected String targetFramework = NETS11;
-    protected String targetFrameworkNuget = "netstandard1.1";
+    protected String targetFrameworkNuget = "netstandard1.3";
     protected boolean supportsAsync = Boolean.TRUE;
-    protected final Map<String,String> frameworks;
 
     // By default, generated code is considered public
     protected boolean nonPublicApi = Boolean.FALSE;
@@ -59,10 +56,6 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
         addOption(CodegenConstants.SOURCE_FOLDER, CodegenConstants.SOURCE_FOLDER_DESC, sourceFolder);
         addOption(CodegenConstants.OPTIONAL_PROJECT_GUID, CodegenConstants.OPTIONAL_PROJECT_GUID_DESC, null);
         addOption(CodegenConstants.INTERFACE_PREFIX, CodegenConstants.INTERFACE_PREFIX_DESC, interfacePrefix);
-
-        frameworks = new ImmutableMap.Builder<String,String>()
-                .put(NETS11, ".NET Standard 1.1 compatible")
-                .build();
 
         addSwitch(CodegenConstants.HIDE_GENERATION_TIMESTAMP,
                 CodegenConstants.HIDE_GENERATION_TIMESTAMP_DESC,
@@ -128,29 +121,16 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
         }
         clientPackage = "Client";
 
-        Boolean excludeTests = false;
+        Boolean excludeTests = true;
         if(additionalProperties.containsKey(CodegenConstants.EXCLUDE_TESTS)) {
             excludeTests = Boolean.valueOf(additionalProperties.get(CodegenConstants.EXCLUDE_TESTS).toString());
         }
 
+        additionalProperties.put(CodegenConstants.EXCLUDE_TESTS, excludeTests);
         additionalProperties.put(CodegenConstants.API_PACKAGE, apiPackage);
         additionalProperties.put(CodegenConstants.MODEL_PACKAGE, modelPackage);
         additionalProperties.put("clientPackage", clientPackage);
         additionalProperties.put("emitDefaultValue", optionalEmitDefaultValue);
-
-        if (additionalProperties.containsKey(CodegenConstants.DOTNET_FRAMEWORK)) {
-            setTargetFramework((String) additionalProperties.get(CodegenConstants.DOTNET_FRAMEWORK));
-        } else {
-            // Ensure default is set.
-            setTargetFramework(NETS11);
-            additionalProperties.put("targetFramework", this.targetFramework);
-        }
-
-        if (NETS11.equals(this.targetFramework)) {
-            setTargetFrameworkNuget("netstandard1.1");
-            setSupportsAsync(Boolean.TRUE);
-            additionalProperties.put("supportsAsync", this.supportsAsync);
-        }
 
         additionalProperties.put("targetFrameworkNuget", this.targetFrameworkNuget);
 
@@ -356,15 +336,6 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
         }
 
         return codegenModel;
-    }
-
-    public void setTargetFramework(String dotnetFramework) {
-        if(!frameworks.containsKey(dotnetFramework)){
-            LOGGER.warn("Invalid .NET framework version, defaulting to " + this.targetFramework);
-        } else {
-            this.targetFramework = dotnetFramework;
-        }
-        LOGGER.info("Generating code for .NET Framework " + this.targetFramework);
     }
 
     public void setPackageName(String packageName) {
