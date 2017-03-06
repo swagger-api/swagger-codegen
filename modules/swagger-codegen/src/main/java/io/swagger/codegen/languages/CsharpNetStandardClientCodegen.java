@@ -13,6 +13,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
@@ -110,6 +111,12 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
         addSwitch(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS,
                 CodegenConstants.ALLOW_UNICODE_IDENTIFIERS_DESC,
                 this.allowUnicodeIdentifiers);
+
+        regexModifiers = new HashMap<Character, String>();
+        regexModifiers.put('i', "IgnoreCase");
+        regexModifiers.put('m', "Multiline");
+        regexModifiers.put('s', "Singleline");
+        regexModifiers.put('x', "IgnorePatternWhitespace");
     }
 
     @Override
