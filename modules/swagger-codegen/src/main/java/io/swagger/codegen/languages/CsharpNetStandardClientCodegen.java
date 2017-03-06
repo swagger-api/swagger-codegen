@@ -32,7 +32,7 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
 
     @Override
     public String getName() {
-        return "CsharpNetStandard";
+        return "csharp-netstandard";
     }
 
     @Override
