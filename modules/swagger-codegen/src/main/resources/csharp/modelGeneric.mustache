@@ -188,7 +188,7 @@ this.{{name}} = {{name}};
         }
 
 {{/generatePropertyChanged}}
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         { {{#vars}}{{#hasValidation}}{{#maxLength}}
             // {{{name}}} ({{{datatype}}}) maxLength
             if(this.{{{name}}} != null && this.{{{name}}}.Length > {{maxLength}})
