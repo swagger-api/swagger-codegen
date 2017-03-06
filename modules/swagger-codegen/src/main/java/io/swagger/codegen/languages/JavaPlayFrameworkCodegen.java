@@ -44,8 +44,6 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
         additionalProperties.put(CONFIG_PACKAGE, configPackage);
         additionalProperties.put(BASE_PACKAGE, basePackage);
 
-        //TODO: Validate this?
-        // play framework uses the jackson lib, why have a parameter for this?
         additionalProperties.put("jackson", "true");
 
         cliOptions.add(new CliOption(TITLE, "server title name or client service name"));
@@ -65,7 +63,7 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
 
     @Override
     public String getName() {
-        return "javaPlayFramework";
+        return "java-play-framework";
     }
 
     @Override
