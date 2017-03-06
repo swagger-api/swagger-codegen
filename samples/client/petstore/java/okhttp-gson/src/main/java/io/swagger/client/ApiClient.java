@@ -936,8 +936,7 @@ public class ApiClient {
         }
 
         if (collectionQueryParams != null && !collectionQueryParams.isEmpty()) {
-            // support (constant) query string in `path`, e.g. "/posts?draft=1"
-            String prefix = path.contains("?") ? "&" : "?";
+            String prefix = url.toString().contains("?") ? "&" : "?";
             for (Pair param : collectionQueryParams) {
                 if (param.getValue() != null) {
                     if (prefix != null) {
