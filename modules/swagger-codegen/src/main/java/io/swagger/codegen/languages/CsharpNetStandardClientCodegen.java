@@ -1,44 +1,35 @@
 package io.swagger.codegen.languages;
 
-import com.google.common.collect.ImmutableMap;
-import io.swagger.codegen.*;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.CodegenParameter;
+import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.CodegenOperation;
 import io.swagger.models.Model;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Iterator;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CsharpNetStandardClientCodegen.class);
+    @SuppressWarnings({"unused", "hiding"})
 
     protected String packageGuid = "{" + java.util.UUID.randomUUID().toString().toUpperCase() + "}";
     protected String clientPackage = "IO.Swagger.Client";
-    protected String localVariablePrefix = "";
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
 
     protected String targetFrameworkNuget = "netstandard1.3";
+    protected Map<Character, String> regexModifiers;
 
     // By default, generated code is considered public
     protected boolean nonPublicApi = Boolean.FALSE;
-
-    @Override
-    public CodegenType getTag() {
-        return CodegenType.CLIENT;
-    }
-
-    @Override
-    public String getName() {
-        return "csharp-netstandard";
-    }
-
-    @Override
-    public String getHelp() {
-        return "Generates C# .NET Standard class library";
-    }
 
     public CsharpNetStandardClientCodegen(){
         super();
@@ -50,12 +41,28 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
 
         cliOptions.clear();
 
-        addOption(CodegenConstants.PACKAGE_NAME,"C# packagen name (convention: Title.Case)",this.packageName);
-        addOption(CodegenConstants.PACKAGE_VERSION,"C# package version.", this.packageVersion);
-        addOption(CodegenConstants.SOURCE_FOLDER, CodegenConstants.SOURCE_FOLDER_DESC, sourceFolder);
-        addOption(CodegenConstants.OPTIONAL_PROJECT_GUID, CodegenConstants.OPTIONAL_PROJECT_GUID_DESC, null);
-        addOption(CodegenConstants.INTERFACE_PREFIX, CodegenConstants.INTERFACE_PREFIX_DESC, interfacePrefix);
+        // CLI options
+        addOption(CodegenConstants.PACKAGE_NAME,
+                "C# package name (convention: Title.Case).",
+                this.packageName);
 
+        addOption(CodegenConstants.PACKAGE_VERSION,
+                "C# package version.",
+                this.packageVersion);
+
+        addOption(CodegenConstants.SOURCE_FOLDER,
+                CodegenConstants.SOURCE_FOLDER_DESC,
+                sourceFolder);
+
+        addOption(CodegenConstants.OPTIONAL_PROJECT_GUID,
+                CodegenConstants.OPTIONAL_PROJECT_GUID_DESC,
+                null);
+
+        addOption(CodegenConstants.INTERFACE_PREFIX,
+                CodegenConstants.INTERFACE_PREFIX_DESC,
+                interfacePrefix);
+
+        // CLI Switches
         addSwitch(CodegenConstants.HIDE_GENERATION_TIMESTAMP,
                 CodegenConstants.HIDE_GENERATION_TIMESTAMP_DESC,
                 this.hideGenerationTimestamp);
@@ -92,6 +99,10 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
                 CodegenConstants.OPTIONAL_EMIT_DEFAULT_VALUES_DESC,
                 this.optionalEmitDefaultValue);
 
+        // NOTE: This will reduce visibility of all public members in templates. Users can use InternalsVisibleTo
+        // https://msdn.microsoft.com/en-us/library/system.runtime.compilerservices.internalsvisibletoattribute(v=vs.110).aspx
+        // to expose to shared code if the generated code is not embedded into another project. Otherwise, users of codegen
+        // should rely on default public visibility.
         addSwitch(CodegenConstants.NON_PUBLIC_API,
                 CodegenConstants.NON_PUBLIC_API_DESC,
                 this.nonPublicApi);
@@ -105,6 +116,7 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
     public void processOpts(){
         super.processOpts();
 
+        // default HIDE_GENERATION_TIMESTAMP to true
         if (!additionalProperties.containsKey(CodegenConstants.HIDE_GENERATION_TIMESTAMP)) {
             additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, Boolean.TRUE.toString());
         } else {
@@ -125,10 +137,12 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
             excludeTests = Boolean.valueOf(additionalProperties.get(CodegenConstants.EXCLUDE_TESTS).toString());
         }
 
-        additionalProperties.put(CodegenConstants.EXCLUDE_TESTS, excludeTests);
         additionalProperties.put(CodegenConstants.API_PACKAGE, apiPackage);
+
         additionalProperties.put(CodegenConstants.MODEL_PACKAGE, modelPackage);
+
         additionalProperties.put("clientPackage", clientPackage);
+
         additionalProperties.put("emitDefaultValue", optionalEmitDefaultValue);
 
         additionalProperties.put("targetFrameworkNuget", this.targetFrameworkNuget);
@@ -167,7 +181,7 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
 
         //Compute the relative path to the bin directory where the external assemblies live
         //This is necessary to properly generate the project file
-        int packageDepth = packageFolder.length() - packageFolder.replace(File.separator, "").length();
+        int packageDepth = packageFolder.length() - packageFolder.replace(java.io.File.separator, "").length();
         String binRelativePath = "..\\";
         for (int i = 0; i < packageDepth; i = i + 1)
             binRelativePath += "..\\";
@@ -190,7 +204,8 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
         // copy package.config to nuget's standard location for project-level installs
         supportingFiles.add(new SupportingFile("project.json.mustache", packageFolder + File.separator, "project.json"));
 
-        //Todo implement test generation
+        //Todo implement unit test generation
+        // Only write out test related files if excludeTests is unset or explicitly set to false (see start of this method)
         /*if(Boolean.FALSE.equals(excludeTests)) {
             // shell script to run the nunit test
             supportingFiles.add(new SupportingFile("mono_nunit_test.mustache", "", "mono_nunit_test.sh"));
@@ -220,6 +235,7 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
 
         additionalProperties.put("apiDocPath", apiDocPath);
         additionalProperties.put("modelDocPath", modelDocPath);
+        additionalProperties.put(CodegenConstants.EXCLUDE_TESTS, excludeTests);
     }
 
     @Override
@@ -250,6 +266,25 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
     }
 
     @Override
+    public CodegenType getTag() {
+        return CodegenType.CLIENT;
+    }
+
+    @Override
+    public String getName() {
+        return "csharp-netstandard";
+    }
+
+    @Override
+    public String getHelp() {
+        return "Generates C# .NET Standard class library";
+    }
+
+    public void setOptionalAssemblyInfoFlag(boolean flag) {
+        this.optionalAssemblyInfoFlag = flag;
+    }
+
+    @Override
     public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
         CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
         if (allDefinitions != null && codegenModel != null && codegenModel.parent != null && codegenModel.hasEnums) {
@@ -261,34 +296,67 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
         return codegenModel;
     }
 
+    public void setOptionalProjectFileFlag(boolean flag) {
+        this.optionalProjectFileFlag = flag;
+    }
+
+    public void setPackageGuid(String packageGuid) {
+        this.packageGuid = packageGuid;
+    }
+
     @Override
     public Map<String, Object> postProcessModels(Map<String, Object> objMap) {
-        return super.postProcessModels(objMap);
+    	return super.postProcessModels(objMap);
     }
 
     @Override
-    public String toModelDocFilename(String name) {
-        return toModelFilename(name);
+    public void postProcessParameter(CodegenParameter parameter) {
+        postProcessPattern(parameter.pattern, parameter.vendorExtensions);
+        super.postProcessParameter(parameter);
     }
 
     @Override
-    public String apiDocFileFolder() {
-        return (outputFolder + "/" + apiDocPath).replace('/', File.separatorChar);
+    public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
+        postProcessPattern(property.pattern, property.vendorExtensions);
+        super.postProcessModelProperty(model, property);
     }
 
-    @Override
-    public String modelDocFileFolder() {
-        return (outputFolder + "/" + modelDocPath).replace('/', File.separatorChar);
-    }
 
-    @Override
-    public String apiTestFileFolder() {
-        return outputFolder + File.separator + testFolder + File.separator + testPackageName() + File.separator + apiPackage();
-    }
+    /*
+    * The swagger pattern spec follows the Perl convention and style of modifiers. .NET
+    * does not support this syntax directly so we need to convert the pattern to a .NET compatible
+    * format and apply modifiers in a compatible way.
+    * See https://msdn.microsoft.com/en-us/library/yd1hzczs(v=vs.110).aspx for .NET options.
+    * See https://github.com/swagger-api/swagger-codegen/pull/2794 for Python's initial implementation from which this is copied.
+    */
+    public void postProcessPattern(String pattern, Map<String, Object> vendorExtensions) {
+        if(pattern != null) {
+            int i = pattern.lastIndexOf('/');
 
-    @Override
-    public String modelTestFileFolder() {
-        return outputFolder + File.separator + testFolder + File.separator + testPackageName() + File.separator + modelPackage();
+            //Must follow Perl /pattern/modifiers convention
+            if(pattern.charAt(0) != '/' || i < 2) {
+                throw new IllegalArgumentException("Pattern must follow the Perl "
+                        + "/pattern/modifiers convention. "+pattern+" is not valid.");
+            }
+
+            String regex = pattern.substring(1, i).replace("'", "\'");
+            List<String> modifiers = new ArrayList<String>();
+
+            // perl requires an explicit modifier to be culture specific and .NET is the reverse.
+            modifiers.add("CultureInvariant");
+
+            for(char c : pattern.substring(i).toCharArray()) {
+                if(regexModifiers.containsKey(c)) {
+                    String modifier = regexModifiers.get(c);
+                    modifiers.add(modifier);
+                } else if (c == 'l') {
+                    modifiers.remove("CultureInvariant");
+                }
+            }
+
+            vendorExtensions.put("x-regex", regex);
+            vendorExtensions.put("x-modifiers", modifiers);
+        }
     }
 
     private CodegenModel reconcileInlineEnums(CodegenModel codegenModel, CodegenModel parentCodegenModel) {
@@ -339,6 +407,51 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
         return codegenModel;
     }
 
+    @Override
+    public String toEnumValue(String value, String datatype) {
+        if ("int?".equalsIgnoreCase(datatype) || "long?".equalsIgnoreCase(datatype) ||
+            "double?".equalsIgnoreCase(datatype) || "float?".equalsIgnoreCase(datatype)) {
+            return value;
+        } else {
+            return "\"" + escapeText(value) + "\"";
+        }
+    }
+
+    @Override
+    public String toEnumVarName(String value, String datatype) {
+        if (value.length() == 0) {
+            return "Empty";
+        }
+
+        // for symbol, e.g. $, #
+        if (getSymbolName(value) != null) {
+            return camelize(getSymbolName(value));
+        }
+
+        // number
+        if ("int?".equals(datatype) || "long?".equals(datatype) ||
+            "double?".equals(datatype) || "float?".equals(datatype)) {
+            String varName = "NUMBER_" + value;
+            varName = varName.replaceAll("-", "MINUS_");
+            varName = varName.replaceAll("\\+", "PLUS_");
+            varName = varName.replaceAll("\\.", "_DOT_");
+            return varName;
+        }
+
+        // string
+        String var = value.replaceAll("_", " ");
+        //var = WordUtils.capitalizeFully(var);
+        var = camelize(var);
+        var = var.replaceAll("\\W+", "");
+
+        if (var.matches("\\d.*")) {
+            return "_" + var;
+        } else {
+            return var;
+        }
+    }
+
+
     public void setPackageName(String packageName) {
         this.packageName = packageName;
     }
@@ -359,15 +472,28 @@ public class CsharpNetStandardClientCodegen extends AbstractCSharpCodegen {
         this.nonPublicApi = nonPublicApi;
     }
 
-    public void setOptionalProjectFileFlag(boolean flag) {
-        this.optionalProjectFileFlag = flag;
+    @Override
+    public String toModelDocFilename(String name) {
+        return toModelFilename(name);
     }
 
-    public void setOptionalAssemblyInfoFlag(boolean flag) {
-        this.optionalAssemblyInfoFlag = flag;
+    @Override
+    public String apiDocFileFolder() {
+        return (outputFolder + "/" + apiDocPath).replace('/', File.separatorChar);
     }
 
-    public void setPackageGuid(String packageGuid) {
-        this.packageGuid = packageGuid;
+    @Override
+    public String modelDocFileFolder() {
+        return (outputFolder + "/" + modelDocPath).replace('/', File.separatorChar);
+    }
+
+    @Override
+    public String apiTestFileFolder() {
+        return outputFolder + File.separator + testFolder + File.separator + testPackageName() + File.separator + apiPackage();
+    }
+
+    @Override
+    public String modelTestFileFolder() {
+        return outputFolder + File.separator + testFolder + File.separator + testPackageName() + File.separator + modelPackage();
     }
 }
