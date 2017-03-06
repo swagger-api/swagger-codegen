@@ -1,0 +1,23 @@
+package {{package}};
+
+{{#imports}}import {{import}};
+{{/imports}}
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+{{#useBeanValidation}}
+import javax.validation.constraints.*;
+{{/useBeanValidation}}
+{{>generatedAnnotation}}
+{{#operations}}
+public class {{classname}}ControllerImp {
+{{#operation}}
+    {{>returnTypes}} {{operationId}}({{#allParams}}{{>pathParamsNoDoc}}{{>queryParamsNoDoc}}{{>bodyParamsNoDoc}}{{>formParamsNoDoc}}{{>headerParamsNoDoc}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {
+        //Do your magic!!!
+        {{#returnType}}return new {{>returnTypesNoVoidNoAbstract}}();{{/returnType}}
+    }
+
+{{/operation}}
+}
+{{/operations}}
