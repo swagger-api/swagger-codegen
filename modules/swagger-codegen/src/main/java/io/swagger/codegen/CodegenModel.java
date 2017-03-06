@@ -33,7 +33,8 @@ public class CodegenModel {
     public Set<String> allMandatory;
 
     public Set<String> imports = new TreeSet<String>();
-    public Boolean hasVars, emptyVars, hasMoreModels, hasEnums, isEnum, hasRequired;
+    public Boolean hasVars, emptyVars, hasMoreModels, hasEnums, isEnum, hasRequired, isPagedResource;
+    public String pagedResourceType;
     public ExternalDocs externalDocs;
 
     public Map<String, Object> vendorExtensions;
@@ -116,6 +117,10 @@ public class CodegenModel {
             return false;
         if (isEnum != null ? !isEnum.equals(that.isEnum) : that.isEnum != null)
             return false;
+        if (isPagedResource != null ? !isPagedResource.equals(that.isPagedResource) : that.isPagedResource != null)
+            return false;
+        if (pagedResourceType != null ? !pagedResourceType.equals(that.pagedResourceType) : that.pagedResourceType != null)
+            return false;
         if (externalDocs != null ? !externalDocs.equals(that.externalDocs) : that.externalDocs != null)
             return false;
         return vendorExtensions != null ? vendorExtensions.equals(that.vendorExtensions) : that.vendorExtensions == null;
@@ -152,6 +157,8 @@ public class CodegenModel {
         result = 31 * result + (hasMoreModels != null ? hasMoreModels.hashCode() : 0);
         result = 31 * result + (hasEnums != null ? hasEnums.hashCode() : 0);
         result = 31 * result + (isEnum != null ? isEnum.hashCode() : 0);
+        result = 31 * result + (isPagedResource != null ? isPagedResource.hashCode() : 0);
+        result = 31 * result + (pagedResourceType != null ? pagedResourceType.hashCode() : 0);
         result = 31 * result + (externalDocs != null ? externalDocs.hashCode() : 0);
         result = 31 * result + (vendorExtensions != null ? vendorExtensions.hashCode() : 0);
         return result;

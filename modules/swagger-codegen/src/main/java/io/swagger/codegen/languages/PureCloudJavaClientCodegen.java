@@ -1,9 +1,12 @@
 package io.swagger.codegen.languages;
 
+import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenProperty;
+import io.swagger.models.Model;
 import io.swagger.models.Operation;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.SystemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,10 +25,12 @@ public class PureCloudJavaClientCodegen extends JavaClientCodegen {
 
         // Custom mappings for swagger type -> java type
         importMapping.put("LocalDateTime", "org.joda.time.LocalDateTime");
+        importMapping.put("IPagedResource", "com.mypurecloud.sdk.IPagedResource");
 
-
-        reservedWords.add("null"); // Friggin really?!
+        // Add special reserved words
+        reservedWords.add("null");
     }
+
 
 
     @Override
@@ -94,5 +99,34 @@ public class PureCloudJavaClientCodegen extends JavaClientCodegen {
 
         }
         return objs;
+    }
+
+    @Override
+    public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
+        CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
+
+        codegenModel.isPagedResource = true;
+
+        for (String s : Arrays.asList("pageSize","pageNumber","total","selfUri","firstUri","previousUri","nextUri","lastUri","pageCount", "entities")) {
+            if (!codegenModel.allVars.stream().anyMatch(var -> var.name.equals(s))) {
+                codegenModel.isPagedResource = false;
+                break;
+            }
+        }
+
+        if (codegenModel.isPagedResource) {
+            // Get reference to entities property
+            Optional<CodegenProperty> entitiesProperty = codegenModel.allVars.stream().filter(var -> var.name.equals("entities")).findFirst();
+            if (!entitiesProperty.isPresent()) {
+                codegenModel.isPagedResource = false;
+                return codegenModel;
+            }
+            
+            System.out.println(codegenModel.classname + " implements IPagedResource");
+            codegenModel.pagedResourceType = entitiesProperty.get().complexType;
+            codegenModel.imports.add("IPagedResource");
+        }
+
+        return codegenModel;
     }
 }
