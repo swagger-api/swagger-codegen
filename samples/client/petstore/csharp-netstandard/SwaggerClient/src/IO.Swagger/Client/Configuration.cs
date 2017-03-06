@@ -65,7 +65,7 @@ namespace IO.Swagger.Client
 
             TempFolderPath = tempFolderPath;
             DateTimeFormat = dateTimeFormat;
-            Timeout = timeout;
+            Timeout = TimeSpan.FromMilliseconds(timeout);
         }
 
         /// <summary>
@@ -103,14 +103,14 @@ namespace IO.Swagger.Client
         /// Gets or sets the HTTP timeout (milliseconds) of ApiClient. Default to 100000 milliseconds.
         /// </summary>
         /// <value>Timeout.</value>
-        public int Timeout
+        public TimeSpan? Timeout
         {
-            get { return ApiClient.RestClient.Timeout.Value.Milliseconds; }
+            get { return ApiClient.RestClient.Timeout; }
 
             set
             {
                 if (ApiClient != null)
-                    ApiClient.RestClient.Timeout = TimeSpan.FromMilliseconds(value);
+                    ApiClient.RestClient.Timeout = value;
             }
         }
 

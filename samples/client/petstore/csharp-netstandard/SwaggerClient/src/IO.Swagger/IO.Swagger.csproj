@@ -12,7 +12,7 @@ Contact: apiteam@swagger.io
         <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProjectGuid>{A564AE03-FA09-4012-990B-1E782848C002}</ProjectGuid>
+        <ProjectGuid>{17C645E2-9ED7-4BC1-A057-F73EC4206930}</ProjectGuid>
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
         <RootNamespace>IO.Swagger</RootNamespace>
