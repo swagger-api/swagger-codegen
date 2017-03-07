@@ -50,6 +50,7 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
         languageSpecificPrimitives.add("datetime");
         languageSpecificPrimitives.add("date");
         languageSpecificPrimitives.add("file");
+        languageSpecificPrimitives.add("object");
 
         typeMapping.clear();
         typeMapping.put("integer", "int");
