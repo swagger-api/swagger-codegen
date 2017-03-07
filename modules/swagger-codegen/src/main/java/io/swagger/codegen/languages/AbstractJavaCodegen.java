@@ -120,7 +120,6 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         instantiationTypes.put("map", "HashMap");
         typeMapping.put("date", "Date");
         typeMapping.put("file", "File");
-        typeMapping.put("UUID", "String");
 
         cliOptions.add(new CliOption(CodegenConstants.MODEL_PACKAGE, CodegenConstants.MODEL_PACKAGE_DESC));
         cliOptions.add(new CliOption(CodegenConstants.API_PACKAGE, CodegenConstants.API_PACKAGE_DESC));
@@ -358,6 +357,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         }
 
         if("joda".equals(dateLibrary)) {
+            additionalProperties.put("joda", "true");
             typeMapping.put("date", "LocalDate");
             typeMapping.put("DateTime", "DateTime");
 
@@ -400,7 +400,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     }
 
     @Override
-    public String escapeReservedWord(String name) {           
+    public String escapeReservedWord(String name) {
         if(this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
@@ -1126,7 +1126,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     public String toRegularExpression(String pattern) {
         return escapeText(pattern);
     }
-    
+
     public boolean convertPropertyToBoolean(String propertyKey) {
         boolean booleanValue = false;
         if (additionalProperties.containsKey(propertyKey)) {
@@ -1135,7 +1135,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
        return booleanValue;
     }
-    
+
     public void writePropertyBack(String propertyKey, boolean value) {
         additionalProperties.put(propertyKey, value);
     }
@@ -1143,6 +1143,6 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     @Override
     public String sanitizeTag(String tag) {
         return camelize(sanitizeName(tag));
-    } 
+    }
 
 }
