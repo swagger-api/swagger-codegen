@@ -10,7 +10,7 @@
 # !
 # ! Based on: https://github.com/Valodim/zsh-curl-completion/blob/master/_curl
 # !
-# ! Generated on: 2017-02-06T21:48:13.013+01:00
+# ! Generated on: 2017-02-22T08:48:10.130+01:00
 # !
 # !
 # ! Installation:
@@ -299,9 +299,9 @@ case $state in
     _values "Operations" \
             "testClientModel[To test \"client\" model]" \
             "testEndpointParameters[Fake endpoint for testing various parameters
-假端點
-偽のエンドポイント
-가짜 엔드 포인트]" \
+�?�端點
+�?��?�エンド�?イント
+가짜 엔드 �?��?�트]" \
             "testEnumParameters[To test enum parameters]"             "addPet[Add a new pet to the store]" \
             "deletePet[Deletes a pet]" \
             "findPetsByStatus[Finds Pets by status]" \

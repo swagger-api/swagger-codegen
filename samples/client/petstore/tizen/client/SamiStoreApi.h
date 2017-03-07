@@ -7,6 +7,7 @@
 
 using Tizen::Base::String;
 using Tizen::Base::Integer;
+using Tizen::Base::Long;
 #include "SamiOrder.h"
 using Tizen::Base::Long;
 
