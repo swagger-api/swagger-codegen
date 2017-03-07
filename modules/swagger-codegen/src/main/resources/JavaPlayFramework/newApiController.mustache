@@ -46,7 +46,7 @@ public class {{classname}}Controller extends Controller {
     @ApiResponse(code = {{{code}}}, message = "{{{message}}}"{{#returnType}}, response = {{{returnType}}}.class{{/returnType}}){{#hasMore}}, {{/hasMore}}{{/responses}} })
     {{#hasParams}}
     @ApiImplicitParams({
-        {{#allParams}}{{^isPathParam}}@ApiImplicitParam(name = "{{paramName}}", value = "{{{description}}}"{{#required}}, required = true{{/required}}{{#defaultValue}}, defaultValue = "{{{defaultValue}}}"{{/defaultValue}}, dataType = "{{{dataTypeForImplicitParam}}}", paramType = "{{>paramType}}"){{#hasMore}},
+        {{#allParams}}{{^isPathParam}}@ApiImplicitParam(name = "{{baseName}}", value = "{{{description}}}"{{#required}}, required = true{{/required}}{{#defaultValue}}, defaultValue = "{{{defaultValue}}}"{{/defaultValue}}, dataType = "{{{dataTypeForImplicitParam}}}", paramType = "{{>paramType}}"){{#hasMore}},
         {{/hasMore}}{{/isPathParam}}{{/allParams}}
     })
     {{/hasParams}}
@@ -74,7 +74,7 @@ public class {{classname}}Controller extends Controller {
         //TODO: Maybe implement this in the future if we can support collection in the body params: see bug in swagger-play: https://github.com/swagger-api/swagger-play/issues/130
         //TODO: Tt seems it is not detected that it's a list based on the collectionFormat field?
         //WIP when both bugs will be fixed
-        //List<Pair> {{paramName}}Pair = SwaggerUtils.parameterToPairs("{{collectionFormat}}", "{{paramName}}", request().getQueryString("{{paramName}}"));
+        //List<Pair> {{paramName}}Pair = SwaggerUtils.parameterToPairs("{{collectionFormat}}", "{{paramName}}", request().getQueryString("{{baseName}}"));
         {{{dataType}}} {{paramName}} = new Array{{{dataType}}}();
         //for (Pair pair : {{paramName}}Pair) {
         //    {{paramName}}.add({{>conversionBegin}}pair.getValue(){{>conversionEnd}});
@@ -95,7 +95,7 @@ public class {{classname}}Controller extends Controller {
         {{/queryParams}}
         {{#formParams}}
         {{^notFile}}
-        Http.MultipartFormData.FilePart {{paramName}} = request().body().asMultipartFormData().getFile("{{paramName}}");
+        Http.MultipartFormData.FilePart {{paramName}} = request().body().asMultipartFormData().getFile("{{baseName}}");
         {{#required}}if (({{paramName}} == null || ((File) {{paramName}}.getFile()).length() == 0)) {
             throw new RuntimeException("File cannot be empty");
         }
@@ -106,14 +106,14 @@ public class {{classname}}Controller extends Controller {
         //TODO: Maybe implement this in the future if we can support collection in the body params: see bug in swagger-play: https://github.com/swagger-api/swagger-play/issues/130
         //TODO: Tt seems it is not detected that it's a list based on the collectionFormat field?
         //WIP when both bugs will be fixed
-        //List<Pair> {{paramName}}Pair = SwaggerUtils.parameterToPairs("{{collectionFormat}}", "{{paramName}}", ((String[]) request().body().asMultipartFormData().asFormUrlEncoded().get("{{paramName}}"))[0]);
+        //List<Pair> {{paramName}}Pair = SwaggerUtils.parameterToPairs("{{collectionFormat}}", "{{paramName}}", ((String[]) request().body().asMultipartFormData().asFormUrlEncoded().get("{{baseName}}"))[0]);
         {{{dataType}}} {{paramName}} = new Array{{{dataType}}}();
         //for (Pair pair : {{paramName}}Pair) {
         //    {{paramName}}.add({{>conversionBegin}}pair.getValue(){{>conversionEnd}});
         //}
         {{/collectionFormat}}
         {{^collectionFormat}}
-        String value{{paramName}} = ((String[]) request().body().asMultipartFormData().asFormUrlEncoded().get("{{paramName}}"))[0];
+        String value{{paramName}} = ((String[]) request().body().asMultipartFormData().asFormUrlEncoded().get("{{baseName}}"))[0];
         {{{dataType}}} {{paramName}};
         {{^required}}
         if (value{{paramName}} != null) {
