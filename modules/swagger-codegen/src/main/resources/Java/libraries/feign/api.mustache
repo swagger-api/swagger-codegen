@@ -37,7 +37,16 @@ public interface {{classname}} extends ApiClient.Api {
     "{{baseName}}: {{=<% %>=}}{<%paramName%>}<%={{ }}=%>"{{#hasMore}},
     {{/hasMore}}{{/headerParams}}
   })
-  {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{nickname}}({{#allParams}}{{^isBodyParam}}{{^legacyDates}}@Param("{{paramName}}") {{/legacyDates}}{{#legacyDates}}@Param(value="{{paramName}}", expander=ParamExpander.class) {{/legacyDates}}{{/isBodyParam}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+  {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{nickname}}(final @QueryMap Map<String, Object> queryMap);
+
+  public class {{nickname}}Builder extends HashMap<String, Object> {
+    {{#allParams}}
+      public {{nickname}}Builder {{paramName}}(final {{{dataType}}} value) {
+        put("{{paramName}}", value);
+        return this;
+      }
+    {{/allParams}}
+  }
   {{/operation}}
 {{/operations}}
 }
