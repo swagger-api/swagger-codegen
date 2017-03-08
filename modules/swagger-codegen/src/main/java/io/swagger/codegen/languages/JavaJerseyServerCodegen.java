@@ -90,10 +90,10 @@ public class JavaJerseyServerCodegen extends AbstractJavaJAXRSServerCodegen {
             implFolder = (String) additionalProperties.get(CodegenConstants.IMPL_FOLDER);
         }
 
-        if ("joda".equals(dateLibrary)) {
+        if ("joda".equals(dateLibrary) && LIBRARY_JERSEY1.equalsIgnoreCase(library)) {
             supportingFiles.add(new SupportingFile("JodaDateTimeProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "JodaDateTimeProvider.java"));
             supportingFiles.add(new SupportingFile("JodaLocalDateProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "JodaLocalDateProvider.java"));
-        } else if ( dateLibrary.startsWith("java8") ) {
+        } else if (dateLibrary.startsWith("java8") && LIBRARY_JERSEY1.equalsIgnoreCase(library)) {
             supportingFiles.add(new SupportingFile("OffsetDateTimeProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "OffsetDateTimeProvider.java"));
             supportingFiles.add(new SupportingFile("LocalDateProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "LocalDateProvider.java"));
         }
