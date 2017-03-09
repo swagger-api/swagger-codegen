@@ -24,7 +24,7 @@ import io.swagger.codegen.languages.features.UseGenericResponseFeatures;
 import io.swagger.models.Operation;
 
 public class JavaCXFClientCodegen extends AbstractJavaCodegen
-        implements BeanValidationFeatures, UseGenericResponseFeatures, JaxbFeatures, GzipTestFeatures, LoggingTestFeatures 
+        implements BeanValidationFeatures, UseGenericResponseFeatures, JaxbFeatures, GzipTestFeatures, LoggingTestFeatures {
 
 private static final Logger LOGGER = LoggerFactory.getLogger(JavaCXFClientCodegen.class);
 

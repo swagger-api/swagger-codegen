@@ -21,7 +21,7 @@ import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
 
-public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen implements BeanValidationFeatures, UseGenericResponseFeatures {
+public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen implements BeanValidationFeatures {
     /**
      * Name of the sub-directory in "src/main/resource" where to find the
      * Mustache template for the JAX-RS Codegen.
@@ -32,7 +32,6 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
     protected String title = "Swagger Server";
 
 	protected boolean useBeanValidation = true;
-    protected boolean useGenericResponse = false;
 
     static Logger LOGGER = LoggerFactory.getLogger(AbstractJavaJAXRSServerCodegen.class);
 
@@ -56,8 +55,7 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
         cliOptions.add(new CliOption("title", "a title describing the application"));
 
 		cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
-        cliOptions.add(CliOption.newBoolean(USE_GENERIC_RESPONSE, "Use generic response"));
-
+       
     }
 
 
@@ -86,14 +84,6 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
 		if (useBeanValidation) {
 			writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
 		}
-
-        if (additionalProperties.containsKey(USE_GENERIC_RESPONSE)) {
-            this.setUseGenericResponse(convertPropertyToBoolean(USE_GENERIC_RESPONSE));
-        }
-
-        if (useGenericResponse) {
-            writePropertyBack(USE_GENERIC_RESPONSE, useGenericResponse);
-        }
 
     }
 
@@ -244,8 +234,5 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
 		this.useBeanValidation = useBeanValidation;
 	}
 
-    public void setUseGenericResponse(boolean useGenericResponse) {
-        this.useGenericResponse = useGenericResponse;
-    }
 
 }
