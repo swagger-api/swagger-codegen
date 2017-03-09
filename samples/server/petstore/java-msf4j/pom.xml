@@ -8,7 +8,7 @@
   <groupId>io.swagger</groupId>
   <artifactId>swagger-msf4j-server</artifactId>
   <packaging>jar</packaging>
-  <name>swagger-jaxrs-server</name>
+  <name>swagger-msf4j-server</name>
   <version>1.0.0</version>
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
