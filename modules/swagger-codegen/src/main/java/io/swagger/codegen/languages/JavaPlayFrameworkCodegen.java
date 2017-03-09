@@ -200,7 +200,7 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
                 //This can be removed safely after the bug has been fixed
                 for (CodegenParameter param : operation.allParams) {
                     if (!param.isPathParam ) {
-                        if (!param.isPrimitiveType) {
+                        if (!param.isPrimitiveType && !param.isListContainer && !param.isMapContainer) {
                             param.dataTypeForImplicitParam = String.format("%s.%s", modelPackage, param.dataType);
                         } else {
                             param.dataTypeForImplicitParam = param.dataType;

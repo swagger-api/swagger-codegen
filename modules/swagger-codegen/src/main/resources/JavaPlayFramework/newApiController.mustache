@@ -11,9 +11,10 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.io.IOException;
 import swagger.SwaggerUtils;
 import javafx.util.Pair;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 {{#useBeanValidation}}
 import javax.validation.constraints.*;
@@ -50,7 +51,7 @@ public class {{classname}}Controller extends Controller {
         {{/hasMore}}{{/isPathParam}}{{/allParams}}
     })
     {{/hasParams}}
-    public Result {{operationId}}({{#pathParams}}{{>pathParams}}{{#hasMore}},{{/hasMore}}{{/pathParams}}) {{#bodyParams}}throws JsonProcessingException{{/bodyParams}} {
+    public Result {{operationId}}({{#pathParams}}{{>pathParams}}{{#hasMore}},{{/hasMore}}{{/pathParams}}) {{#bodyParams}}throws IOException{{/bodyParams}} {
         {{#bodyParams}}
         {{#collectionFormat}}
         //TODO: Maybe implement this in the future if we can support collection in the body params: see bug in swagger-play: https://github.com/swagger-api/swagger-play/issues/130
@@ -61,8 +62,8 @@ public class {{classname}}Controller extends Controller {
         {{{dataType}}} {{paramName}};
         {{^required}}
         if (node{{paramName}} != null) {
-            {{paramName}} = mapper.treeToValue(node{{paramName}}, {{{dataType}}}.class);{{/required}}
-        {{#required}}{{paramName}} = mapper.treeToValue(node{{paramName}}, {{{dataType}}}.class);{{/required}}
+            {{paramName}} = mapper.readValue(node{{paramName}}.toString(), {{#isMapContainer}}new TypeReference<Map<{{{dataType}}}>>(){}{{/isMapContainer}}{{#isListContainer}}new TypeReference<List<{{{dataType}}}>>(){}{{/isListContainer}}{{^isListContainer}}{{^isMapContainer}}{{{dataType}}}.class{{/isMapContainer}}{{/isListContainer}});{{/required}}
+        {{#required}}{{paramName}} = mapper.readValue(node{{paramName}}.toString(), {{{dataType}}}.class);{{/required}}
         {{^required}}
         } else {
             {{paramName}} = null;
