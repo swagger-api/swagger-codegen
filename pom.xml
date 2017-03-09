@@ -757,6 +757,12 @@
             <modules>
                 <!-- run ruby test first which has a random delay script to
                      avoid issues with running 2 CI jobs in parallel.       -->
+                <module>samples/server/petstore/jaxrs-cxf</module>
+                <module>samples/server/petstore/jaxrs-cxf-annotated-base-path</module>
+                <module>samples/server/petstore/jaxrs-cxf-cdi</module>
+                <module>samples/server/petstore/jaxrs-cxf-non-spring-app</module>
+                <module>samples/server/petstore/java-msf4j</module>
+
                 <!-- clients -->
                 <module>samples/client/petstore/ruby</module>
                 <module>samples/client/petstore/android/volley</module>
