@@ -259,7 +259,6 @@ export const PetApiFetchParamCreator = {
                 body.append(key, formData[key]);
             }
             fetchOptions.body = body;
-            contentTypeHeader = { "Content-Type": "multipart/form-data" };
         }
         else {
             fetchOptions.body = querystring.stringify(formData);
@@ -303,7 +302,6 @@ export const PetApiFetchParamCreator = {
                 body.append(key, formData[key]);
             }
             fetchOptions.body = body;
-            contentTypeHeader = { "Content-Type": "multipart/form-data" };
         }
         else {
             fetchOptions.body = querystring.stringify(formData);
