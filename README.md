@@ -164,7 +164,7 @@ cd /vagrant
 
  - https://hub.docker.com/r/swaggerapi/swagger-generator/ (official web service)
  - https://hub.docker.com/r/swaggerapi/swagger-codegen-cli/ (official CLI)
-=======
+
 
 ##### Swagger Generator Docker Image
 
@@ -222,7 +222,7 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
 ```
 (if you're on Windows, replace the last command with `java -jar modules\swagger-codegen-cli\target\swagger-codegen-cli.jar generate -i http://petstore.swagger.io/v2/swagger.json -l php -o c:\temp\php_api_client`)
 
-You can also download the JAR (latest release) directly from [maven.org](http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.2.1/swagger-codegen-cli-2.2.1.jar )
+You can also download the JAR (latest release) directly from [maven.org](http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.2.2/swagger-codegen-cli-2.2.2.jar)
 
 To get a list of **general** options available, please run `java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar help generate`
 
@@ -858,6 +858,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [goTransverse](http://www.gotransverse.com/api)
 - [GraphHopper](https://graphhopper.com/)
 - [Gravitate Solutions](http://gravitatesolutions.com/)
+- [HashData](http://www.hashdata.cn/)
 - [Hewlett Packard Enterprise](https://hpe.com)
 - [High Technologies Center](http://htc-cs.com)
 - [IMS Health](http://www.imshealth.com/en/solution-areas/technology-and-applications)
