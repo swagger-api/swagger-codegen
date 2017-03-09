@@ -458,6 +458,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         } else {
             this.targetFramework = dotnetFramework;
         }
+        System.out.println("Generating code for .NET Framework " + this.targetFramework);
         LOGGER.info("Generating code for .NET Framework " + this.targetFramework);
     }
 
