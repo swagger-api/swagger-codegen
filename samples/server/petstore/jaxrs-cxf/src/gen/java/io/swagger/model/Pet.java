@@ -4,6 +4,7 @@ import io.swagger.model.Category;
 import io.swagger.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.constraints.*;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -100,6 +101,7 @@ public enum StatusEnum {
    * Get name
    * @return name
   **/
+  @NotNull
   public String getName() {
     return name;
   }
@@ -117,6 +119,7 @@ public enum StatusEnum {
    * Get photoUrls
    * @return photoUrls
   **/
+  @NotNull
   public List<String> getPhotoUrls() {
     return photoUrls;
   }
@@ -194,7 +197,7 @@ public enum StatusEnum {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private static String toIndentedString(Object o) {
+  private static String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

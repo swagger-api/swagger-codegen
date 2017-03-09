@@ -1,5 +1,6 @@
 package io.swagger.model;
 
+import javax.validation.constraints.*;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -22,9 +23,16 @@ public class SpecialModelName  {
   public Long getSpecialPropertyName() {
     return specialPropertyName;
   }
+
   public void setSpecialPropertyName(Long specialPropertyName) {
     this.specialPropertyName = specialPropertyName;
   }
+
+  public SpecialModelName specialPropertyName(Long specialPropertyName) {
+    this.specialPropertyName = specialPropertyName;
+    return this;
+  }
+
 
   @Override
   public String toString() {
@@ -40,7 +48,7 @@ public class SpecialModelName  {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private static String toIndentedString(Object o) {
+  private static String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

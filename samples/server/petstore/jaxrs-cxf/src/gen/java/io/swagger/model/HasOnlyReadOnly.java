@@ -1,5 +1,6 @@
 package io.swagger.model;
 
+import javax.validation.constraints.*;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -24,9 +25,8 @@ public class HasOnlyReadOnly  {
   public String getBar() {
     return bar;
   }
-  public void setBar(String bar) {
-    this.bar = bar;
-  }
+
+
  /**
    * Get foo
    * @return foo
@@ -34,9 +34,8 @@ public class HasOnlyReadOnly  {
   public String getFoo() {
     return foo;
   }
-  public void setFoo(String foo) {
-    this.foo = foo;
-  }
+
+
 
   @Override
   public String toString() {
@@ -53,7 +52,7 @@ public class HasOnlyReadOnly  {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private static String toIndentedString(Object o) {
+  private static String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

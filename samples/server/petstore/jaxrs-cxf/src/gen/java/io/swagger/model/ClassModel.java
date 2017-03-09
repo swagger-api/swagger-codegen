@@ -1,6 +1,7 @@
 package io.swagger.model;
 
 import io.swagger.annotations.ApiModel;
+import javax.validation.constraints.*;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -24,9 +25,16 @@ public class ClassModel  {
   public String getPropertyClass() {
     return propertyClass;
   }
+
   public void setPropertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
   }
+
+  public ClassModel propertyClass(String propertyClass) {
+    this.propertyClass = propertyClass;
+    return this;
+  }
+
 
   @Override
   public String toString() {
@@ -42,7 +50,7 @@ public class ClassModel  {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private static String toIndentedString(Object o) {
+  private static String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

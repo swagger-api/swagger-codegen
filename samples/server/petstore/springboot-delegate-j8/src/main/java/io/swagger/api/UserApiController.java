@@ -17,14 +17,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-
+import javax.validation.constraints.*;
 
 @Controller
 public class UserApiController implements UserApi {
     private final UserApiDelegate delegate;
 
     @org.springframework.beans.factory.annotation.Autowired
-    UserApiController(UserApiDelegate delegate) {
+    public UserApiController(UserApiDelegate delegate) {
         this.delegate = delegate;
     }
 
@@ -54,8 +54,8 @@ public class UserApiController implements UserApi {
         return delegate.getUserByName(username);
     }
 
-    public ResponseEntity<String> loginUser(@ApiParam(value = "The user name for login", required = true) @RequestParam(value = "username", required = true) String username,
-        @ApiParam(value = "The password for login in clear text", required = true) @RequestParam(value = "password", required = true) String password) {
+    public ResponseEntity<String> loginUser( @NotNull @ApiParam(value = "The user name for login", required = true) @RequestParam(value = "username", required = true) String username,
+         @NotNull @ApiParam(value = "The password for login in clear text", required = true) @RequestParam(value = "password", required = true) String password) {
         // do some magic!
         return delegate.loginUser(username, password);
     }

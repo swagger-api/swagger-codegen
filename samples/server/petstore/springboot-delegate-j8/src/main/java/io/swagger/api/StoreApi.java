@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-
+import javax.validation.constraints.*;
 
 @Api(value = "store", description = "the store API")
 public interface StoreApi {
@@ -25,6 +25,7 @@ public interface StoreApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid ID supplied", response = Void.class),
         @ApiResponse(code = 404, message = "Order not found", response = Void.class) })
+    
     @RequestMapping(value = "/store/order/{orderId}",
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.DELETE)
@@ -39,6 +40,7 @@ public interface StoreApi {
     }, tags={ "store", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Integer.class) })
+    
     @RequestMapping(value = "/store/inventory",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
@@ -53,10 +55,11 @@ public interface StoreApi {
         @ApiResponse(code = 200, message = "successful operation", response = Order.class),
         @ApiResponse(code = 400, message = "Invalid ID supplied", response = Order.class),
         @ApiResponse(code = 404, message = "Order not found", response = Order.class) })
+    
     @RequestMapping(value = "/store/order/{orderId}",
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.GET)
-    default ResponseEntity<Order> getOrderById(@ApiParam(value = "ID of pet that needs to be fetched",required=true ) @PathVariable("orderId") Long orderId) {
+    default ResponseEntity<Order> getOrderById( @Min(1) @Max(5)@ApiParam(value = "ID of pet that needs to be fetched",required=true ) @PathVariable("orderId") Long orderId) {
         // do some magic!
         return new ResponseEntity<Order>(HttpStatus.OK);
     }
@@ -66,6 +69,7 @@ public interface StoreApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Order.class),
         @ApiResponse(code = 400, message = "Invalid Order", response = Order.class) })
+    
     @RequestMapping(value = "/store/order",
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.POST)

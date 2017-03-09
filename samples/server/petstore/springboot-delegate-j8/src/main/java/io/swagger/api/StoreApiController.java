@@ -17,14 +17,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-
+import javax.validation.constraints.*;
 
 @Controller
 public class StoreApiController implements StoreApi {
     private final StoreApiDelegate delegate;
 
     @org.springframework.beans.factory.annotation.Autowired
-    StoreApiController(StoreApiDelegate delegate) {
+    public StoreApiController(StoreApiDelegate delegate) {
         this.delegate = delegate;
     }
 
@@ -39,7 +39,7 @@ public class StoreApiController implements StoreApi {
         return delegate.getInventory();
     }
 
-    public ResponseEntity<Order> getOrderById(@ApiParam(value = "ID of pet that needs to be fetched",required=true ) @PathVariable("orderId") Long orderId) {
+    public ResponseEntity<Order> getOrderById( @Min(1) @Max(5)@ApiParam(value = "ID of pet that needs to be fetched",required=true ) @PathVariable("orderId") Long orderId) {
         // do some magic!
         return delegate.getOrderById(orderId);
     }

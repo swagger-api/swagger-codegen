@@ -3,6 +3,7 @@ package io.swagger.model;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.constraints.*;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -25,9 +26,21 @@ public class ArrayOfArrayOfNumberOnly  {
   public List<List<BigDecimal>> getArrayArrayNumber() {
     return arrayArrayNumber;
   }
+
   public void setArrayArrayNumber(List<List<BigDecimal>> arrayArrayNumber) {
     this.arrayArrayNumber = arrayArrayNumber;
   }
+
+  public ArrayOfArrayOfNumberOnly arrayArrayNumber(List<List<BigDecimal>> arrayArrayNumber) {
+    this.arrayArrayNumber = arrayArrayNumber;
+    return this;
+  }
+
+  public ArrayOfArrayOfNumberOnly addArrayArrayNumberItem(List<BigDecimal> arrayArrayNumberItem) {
+    this.arrayArrayNumber.add(arrayArrayNumberItem);
+    return this;
+  }
+
 
   @Override
   public String toString() {
@@ -43,7 +56,7 @@ public class ArrayOfArrayOfNumberOnly  {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private static String toIndentedString(Object o) {
+  private static String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

@@ -15,6 +15,7 @@ import org.apache.cxf.jaxrs.ext.multipart.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.jaxrs.PATCH;
+import javax.validation.constraints.*;
 
 @Path("/")
 @Api(value = "/", description = "")
@@ -36,7 +37,7 @@ public interface StoreApi  {
     @Path("/store/order/{orderId}")
     @Produces({ "application/xml", "application/json" })
     @ApiOperation(value = "Find purchase order by ID", tags={ "store",  })
-    public Order getOrderById(@PathParam("orderId") Long orderId);
+    public Order getOrderById(@PathParam("orderId") @Min(1) @Max(5) Long orderId);
 
     @POST
     @Path("/store/order")
