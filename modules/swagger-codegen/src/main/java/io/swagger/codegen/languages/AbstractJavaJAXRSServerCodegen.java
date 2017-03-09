@@ -44,7 +44,7 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
         cliOptions.add(new CliOption(CodegenConstants.IMPL_FOLDER, CodegenConstants.IMPL_FOLDER_DESC));
         cliOptions.add(new CliOption("title", "a title describing the application"));
 
-          cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
+        cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
 
     }
 
@@ -67,13 +67,13 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
             implFolder = (String) additionalProperties.get(CodegenConstants.IMPL_FOLDER);
         }
 
-          if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
-               this.setUseBeanValidation(convertPropertyToBoolean(USE_BEANVALIDATION));
-          }
+        if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
+            this.setUseBeanValidation(convertPropertyToBoolean(USE_BEANVALIDATION));
+        }
 
-          if (useBeanValidation) {
-               writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
-          }
+        if (useBeanValidation) {
+            writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
+        }
 
     }
 
@@ -226,8 +226,8 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
         return outputFolder + "/" + output + "/" + apiPackage().replace('.', '/');
     }
 
-     public void setUseBeanValidation(boolean useBeanValidation) {
-          this.useBeanValidation = useBeanValidation;
-     }
+    public void setUseBeanValidation(boolean useBeanValidation) {
+        this.useBeanValidation = useBeanValidation;
+    }
 
 }
