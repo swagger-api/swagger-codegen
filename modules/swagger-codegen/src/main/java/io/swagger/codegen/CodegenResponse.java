@@ -12,7 +12,10 @@ public class CodegenResponse {
     public String dataType, baseType, containerType;
     public boolean hasHeaders;
     public boolean isString, isInteger, isLong, isFloat, isDouble, isByteArray, isBoolean, isDate, isDateTime;
+    /** is this is the first '2xx': response or the 'default': response? */
     public boolean isDefault;
+    /** Is the key for this response "default": instead of a numeric HTTP response code such as "200":? */
+    public boolean isDefaultCode;
     public boolean simpleType;
     public boolean primitiveType;
     public boolean isMapContainer;
@@ -53,6 +56,8 @@ public class CodegenResponse {
             return false;
         if (isDefault != that.isDefault)
             return false;
+        if (isDefaultCode != that.isDefaultCode)
+            return false;
         if (simpleType != that.simpleType)
             return false;
         if (primitiveType != that.primitiveType)
@@ -84,6 +89,7 @@ public class CodegenResponse {
         result = 31 * result + (baseType != null ? baseType.hashCode() : 0);
         result = 31 * result + (containerType != null ? containerType.hashCode() : 0);
         result = 31 * result + (isDefault ? 13:31);
+        result = 31 * result + (isDefaultCode ? 13:31);
         result = 31 * result + (simpleType ? 13:31);
         result = 31 * result + (primitiveType ? 13:31);
         result = 31 * result + (isMapContainer ? 13:31);
