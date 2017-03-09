@@ -29,7 +29,7 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 public class CSharpClientCodegen extends AbstractCSharpCodegen {
     @SuppressWarnings({"unused", "hiding"})
     private static final Logger LOGGER = LoggerFactory.getLogger(CSharpClientCodegen.class);
-    private static final String NET45 = "v4.5";
+    private static final String NET45 = "v3.5";
     private static final String NET35 = "v3.5";
     private static final String UWP = "uwp";
     private static final String DATA_TYPE_WITH_ENUM_EXTENSION = "plainDatatypeWithEnum";
