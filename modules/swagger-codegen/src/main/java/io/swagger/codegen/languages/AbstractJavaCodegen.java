@@ -817,6 +817,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
               itr.remove();
             }
         }
+
         return objs;
     }
 
