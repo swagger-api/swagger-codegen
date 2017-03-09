@@ -458,6 +458,10 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
     }
 
     public void setTargetFramework(String dotnetFramework) {
+        System.out.println("stout9: Trying with framework " + dotnetFramework);
+        for (String key : frameworks.keySet()) {
+            System.out.println(key + " : " + frameworks.get(key));
+        }
         if(!frameworks.containsKey(dotnetFramework)){
             LOGGER.warn("Invalid .NET framework version, defaulting to " + this.targetFramework);
         } else {
