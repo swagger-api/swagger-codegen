@@ -123,6 +123,30 @@ public class JavaCXFClientCodegen extends AbstractJavaCodegen
         co.subresourceOperation = !co.path.isEmpty();
     }
     
+    
+    @Override
+    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
+    	super.postProcessOperations(objs);
+    	
+	    @SuppressWarnings("unchecked")
+	    Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
+	    if (operations != null) {
+	
+	        @SuppressWarnings("unchecked")
+	        List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
+	        for (CodegenOperation operation : ops) {
+	
+	            if (operation.returnType == null) {
+	                operation.returnType = "void";
+	                // set vendorExtensions.x-java-is-response-void to true as returnType is set to "void"
+	                operation.vendorExtensions.put("x-java-is-response-void", true);
+	            }
+	        }
+	    }
+	    
+	    return objs;
+    }
+    
     @Override
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
     	super.postProcessOperations(objs);
