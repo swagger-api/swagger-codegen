@@ -189,14 +189,17 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         additionalProperties.put("emitDefaultValue", optionalEmitDefaultValue);
 
         if (additionalProperties.containsKey(CodegenConstants.DOTNET_FRAMEWORK)) {
+             System.out.println("stout1: " + (String) additionalProperties.get(CodegenConstants.DOTNET_FRAMEWORK));
             setTargetFramework((String) additionalProperties.get(CodegenConstants.DOTNET_FRAMEWORK));
         } else {
             // Ensure default is set.
+            System.out.println("stout2);
             setTargetFramework(NET45);
             additionalProperties.put("targetFramework", this.targetFramework);
         }
 
         if (NET35.equals(this.targetFramework)) {
+            System.out.println("stout3);
             setTargetFrameworkNuget("net35");
             setSupportsAsync(Boolean.FALSE);
             if(additionalProperties.containsKey("supportsAsync")){
@@ -210,6 +213,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
             additionalProperties.put("supportsUWP", this.supportsAsync);
 
         } else {
+            System.out.println("stout4);
             setTargetFrameworkNuget("net45");
             setSupportsAsync(Boolean.TRUE);
             additionalProperties.put("supportsAsync", this.supportsAsync);
@@ -217,6 +221,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
 
         if(additionalProperties.containsKey(CodegenConstants.GENERATE_PROPERTY_CHANGED)) {
             if(NET35.equals(targetFramework)) {
+                System.out.println("stout5);
                 LOGGER.warn(CodegenConstants.GENERATE_PROPERTY_CHANGED + " is only supported by generated code for .NET 4+.");
             } else {
                 setGeneratePropertyChanged(Boolean.valueOf(additionalProperties.get(CodegenConstants.GENERATE_PROPERTY_CHANGED).toString()));
@@ -458,7 +463,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         } else {
             this.targetFramework = dotnetFramework;
         }
-        System.out.println("Generating code for .NET Framework " + this.targetFramework);
+        System.out.println("Generating the code for .NET Framework " + this.targetFramework);
         LOGGER.info("Generating code for .NET Framework " + this.targetFramework);
     }
 
