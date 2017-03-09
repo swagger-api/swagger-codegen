@@ -21,7 +21,7 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
     protected String testResourcesFolder = "src/test/resources";
     protected String title = "Swagger Server";
 
-     protected boolean useBeanValidation = true;
+    protected boolean useBeanValidation = true;
 
     static Logger LOGGER = LoggerFactory.getLogger(AbstractJavaJAXRSServerCodegen.class);
 
