@@ -14,7 +14,7 @@ import petstore_api
 from petstore_api import Configuration
 from petstore_api.rest import ApiException
 
-from util import id_gen
+from .util import id_gen
 
 import json
 
