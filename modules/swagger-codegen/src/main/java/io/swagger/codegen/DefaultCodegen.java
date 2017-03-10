@@ -3535,4 +3535,14 @@ public class DefaultCodegen {
     public void writePropertyBack(String propertyKey, boolean value) {
         additionalProperties.put(propertyKey, value);
     }
+
+   
+   /** 
+    * The default Mustache escaper escapes HTML markup. Override to change this behavior 
+    * (i.e. return {@link Escapers#NONE}
+    */
+   public Escaper escaper() {
+       return Escapers.simple();
+   }
+
 }
