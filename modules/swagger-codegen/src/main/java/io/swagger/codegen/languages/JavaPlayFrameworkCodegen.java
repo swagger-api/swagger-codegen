@@ -22,7 +22,6 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
     protected String basePackage = "io.swagger";
     protected boolean controllerOnly = false;
     protected boolean singleContentTypes = false;
-    protected String responseWrapper = "";
     protected boolean useTags = false;
     protected boolean useInterfaces = true;
     protected boolean useBeanValidation = true;

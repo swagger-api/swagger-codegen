@@ -11,7 +11,7 @@ public class JavaPlayFrameworkOptionsProvider extends JavaOptionsProvider {
     public static final String BASE_PACKAGE_VALUE = "basePackage";
     public static final String CONTROLLER_ONLY = "true";
     public static final String SINGLE_CONTENT_TYPES = "true";
-    public static final String USE_TAGS = "useTags";
+    public static final String USE_TAGS = "true";
     public static final String USE_BEANVALIDATION = "true";
     public static final String USE_INTERFACES = "true";
 
