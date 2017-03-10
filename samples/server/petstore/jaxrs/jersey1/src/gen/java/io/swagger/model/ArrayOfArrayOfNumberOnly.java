@@ -28,9 +28,14 @@ import javax.validation.constraints.*;
  */
 
 public class ArrayOfArrayOfNumberOnly   {
+
+    /*Constructor*/
+    public  ArrayOfArrayOfNumberOnly(){
+    }
+
   @JsonProperty("ArrayArrayNumber")
   private List<List<BigDecimal>> arrayArrayNumber = new ArrayList<List<BigDecimal>>();
-
+  
   public ArrayOfArrayOfNumberOnly arrayArrayNumber(List<List<BigDecimal>> arrayArrayNumber) {
     this.arrayArrayNumber = arrayArrayNumber;
     return this;

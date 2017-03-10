@@ -26,9 +26,14 @@ import javax.validation.constraints.*;
 @ApiModel(description = "Model for testing model with \"_class\" property")
 
 public class ClassModel   {
+
+    /*Constructor*/
+    public  ClassModel(){
+    }
+
   @JsonProperty("_class")
   private String propertyClass = null;
-
+  
   public ClassModel propertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
     return this;

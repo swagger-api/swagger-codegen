@@ -27,6 +27,11 @@ import javax.validation.constraints.*;
  */
 
 public class EnumTest   {
+
+    /*Constructor*/
+    public  EnumTest(){
+    }
+
   /**
    * Gets or Sets enumString
    */
@@ -62,7 +67,7 @@ public class EnumTest   {
 
   @JsonProperty("enum_string")
   private EnumStringEnum enumString = null;
-
+  
   /**
    * Gets or Sets enumInteger
    */
@@ -96,7 +101,7 @@ public class EnumTest   {
 
   @JsonProperty("enum_integer")
   private EnumIntegerEnum enumInteger = null;
-
+  
   /**
    * Gets or Sets enumNumber
    */
@@ -130,10 +135,10 @@ public class EnumTest   {
 
   @JsonProperty("enum_number")
   private EnumNumberEnum enumNumber = null;
-
+  
   @JsonProperty("outerEnum")
   private OuterEnum outerEnum = null;
-
+  
   public EnumTest enumString(EnumStringEnum enumString) {
     this.enumString = enumString;
     return this;
