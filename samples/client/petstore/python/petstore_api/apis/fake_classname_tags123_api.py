@@ -32,13 +32,9 @@ class FakeClassnameTags123Api(object):
     """
 
     def __init__(self, api_client=None):
-        config = Configuration()
-        if api_client:
-            self.api_client = api_client
-        else:
-            if not config.api_client:
-                config.api_client = ApiClient()
-            self.api_client = config.api_client
+        if api_client is None:
+            api_client = ApiClient()
+        self.api_client = api_client
 
     def test_classname(self, body, **kwargs):
         """

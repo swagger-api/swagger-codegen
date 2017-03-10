@@ -57,5 +57,3 @@ from .apis.user_api import UserApi
 from .api_client import ApiClient
 
 from .configuration import Configuration
-
-configuration = Configuration()
