@@ -1,4 +1,4 @@
-package io.swagger.codegen.generators;
+package io.swagger.codegen.generators.util;
 
 import java.io.File;
 import java.io.IOException;

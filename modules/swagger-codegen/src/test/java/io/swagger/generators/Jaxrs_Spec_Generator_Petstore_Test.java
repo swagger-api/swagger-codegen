@@ -14,8 +14,8 @@ import org.junit.rules.TemporaryFolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.swagger.codegen.generators.ComparePathUtil;
 import io.swagger.codegen.generators.JaxrsSpec_Generator_Petstore;
+import io.swagger.codegen.generators.util.ComparePathUtil;
 
 public class Jaxrs_Spec_Generator_Petstore_Test {
 
