@@ -26,7 +26,7 @@ public class JavaCXF_Generator_Petstore_Test {
 
     @Before
     public void setup() {
-        folder = JavaCXFServer_Generator_Petstore.generate();
+        folder = JavaCXFServer_Generator_Petstore.generateToTemporaryFolder();
         assertNotNull(folder);
     }
 

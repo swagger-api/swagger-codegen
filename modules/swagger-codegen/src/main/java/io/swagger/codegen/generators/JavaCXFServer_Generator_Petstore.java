@@ -31,26 +31,43 @@ public class JavaCXFServer_Generator_Petstore {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JavaCXFServer_Generator_Petstore.class);
 
-    public static TemporaryFolder generate() {
+    /**
+     * by default generate to samples folder
+     * @param args
+     */
+    public static void main(String[] args) {
+    	File targetFolder = new File("../../samples/server/petstore/jaxrs-cxf");
+    	generateToFolder(targetFolder);
+    }
+    
+    public static void generateToFolder(File output) {
+    	final Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
+
+        CodegenConfig codegenConfig = new JavaCXFServerCodegen();
+        codegenConfig.additionalProperties().put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, true);
+
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        DefaultGenerator gen = new DefaultGenerator();
+        gen.opts(clientOptInput);
+
+        gen.generate();
+
+    }
+    
+    /**
+     * for unittests generate to temporary folder
+     * @return
+     */
+    public static TemporaryFolder generateToTemporaryFolder() {
         try {
             TemporaryFolder folder = new TemporaryFolder();
             folder.create();
             File output = folder.getRoot();
-
-            final Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
-
-            CodegenConfig codegenConfig = new JavaCXFServerCodegen();
-            codegenConfig.additionalProperties().put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, true);
-
-            codegenConfig.setOutputDir(output.getAbsolutePath());
-
-            ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
-
-            DefaultGenerator gen = new DefaultGenerator();
-            gen.opts(clientOptInput);
-
-            gen.generate();
-
+            generateToFolder(output);
+            
             return folder;
 
         } catch (IOException e) {
@@ -60,5 +77,6 @@ public class JavaCXFServer_Generator_Petstore {
         }
 
     }
+    
 
 }
