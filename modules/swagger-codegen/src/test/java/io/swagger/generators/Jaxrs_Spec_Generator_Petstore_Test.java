@@ -9,6 +9,7 @@ import java.nio.file.FileSystems;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.slf4j.Logger;
@@ -30,6 +31,7 @@ public class Jaxrs_Spec_Generator_Petstore_Test {
     }
 
     @Test
+    @Ignore
     public void test() {
         File output = folder.getRoot();
         java.nio.file.Path actualPath = FileSystems.getDefault().getPath(output.getAbsolutePath());
