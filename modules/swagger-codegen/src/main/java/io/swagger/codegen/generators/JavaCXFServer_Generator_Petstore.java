@@ -1,0 +1,64 @@
+package io.swagger.codegen.generators;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+
+import org.junit.rules.TemporaryFolder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import io.swagger.codegen.ClientOptInput;
+import io.swagger.codegen.ClientOpts;
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.DefaultGenerator;
+import io.swagger.codegen.languages.JavaCXFServerCodegen;
+import io.swagger.codegen.languages.JavaJAXRSSpecServerCodegen;
+import io.swagger.models.Swagger;
+import io.swagger.parser.SwaggerParser;
+
+/**
+ * commandline of jaxrs-cxf-petstore-server.sh
+ * 
+ * # if you've executed sbt assembly previously it will use that instead. 
+ * export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -DloggerPath=conf/log4j.properties"
+ * ags="$@ generate -t modules/swagger-codegen/src/main/resources/JavaJaxRS/cxf -i modules/swagger-codegen/src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml -l jaxrs-cxf -o samples/server/petstore/jaxrs-cxf -DhideGenerationTimestamp=true"
+ *
+ * 
+ */
+public class JavaCXFServer_Generator_Petstore {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(JavaCXFServer_Generator_Petstore.class);
+
+    public static TemporaryFolder generate() {
+        try {
+            TemporaryFolder folder = new TemporaryFolder();
+            folder.create();
+            File output = folder.getRoot();
+
+            final Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
+
+            CodegenConfig codegenConfig = new JavaCXFServerCodegen();
+            codegenConfig.additionalProperties().put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, true);
+
+            codegenConfig.setOutputDir(output.getAbsolutePath());
+
+            ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+            DefaultGenerator gen = new DefaultGenerator();
+            gen.opts(clientOptInput);
+
+            gen.generate();
+
+            return folder;
+
+        } catch (IOException e) {
+            LOGGER.info("unable to create temporary folder");
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+}

@@ -1,6 +1,7 @@
 package io.swagger.model;
 
 import io.swagger.model.Animal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass  {
   @ApiModelProperty(example = "null", value = "")
   private UUID uuid = null;
   @ApiModelProperty(example = "null", value = "")
-  private javax.xml.datatype.XMLGregorianCalendar dateTime = null;
+  private Date dateTime = null;
   @ApiModelProperty(example = "null", value = "")
   private Map<String, Animal> map = new HashMap<String, Animal>();
 
@@ -46,15 +47,15 @@ public class MixedPropertiesAndAdditionalPropertiesClass  {
    * Get dateTime
    * @return dateTime
   **/
-  public javax.xml.datatype.XMLGregorianCalendar getDateTime() {
+  public Date getDateTime() {
     return dateTime;
   }
 
-  public void setDateTime(javax.xml.datatype.XMLGregorianCalendar dateTime) {
+  public void setDateTime(Date dateTime) {
     this.dateTime = dateTime;
   }
 
-  public MixedPropertiesAndAdditionalPropertiesClass dateTime(javax.xml.datatype.XMLGregorianCalendar dateTime) {
+  public MixedPropertiesAndAdditionalPropertiesClass dateTime(Date dateTime) {
     this.dateTime = dateTime;
     return this;
   }

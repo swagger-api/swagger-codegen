@@ -1,5 +1,6 @@
 package io.swagger.model;
 
+import java.util.Date;
 import javax.validation.constraints.*;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -20,7 +21,7 @@ public class Order  {
   @ApiModelProperty(example = "null", value = "")
   private Integer quantity = null;
   @ApiModelProperty(example = "null", value = "")
-  private javax.xml.datatype.XMLGregorianCalendar shipDate = null;
+  private Date shipDate = null;
 
 @XmlType(name="StatusEnum")
 @XmlEnum(String.class)
@@ -114,15 +115,15 @@ public enum StatusEnum {
    * Get shipDate
    * @return shipDate
   **/
-  public javax.xml.datatype.XMLGregorianCalendar getShipDate() {
+  public Date getShipDate() {
     return shipDate;
   }
 
-  public void setShipDate(javax.xml.datatype.XMLGregorianCalendar shipDate) {
+  public void setShipDate(Date shipDate) {
     this.shipDate = shipDate;
   }
 
-  public Order shipDate(javax.xml.datatype.XMLGregorianCalendar shipDate) {
+  public Order shipDate(Date shipDate) {
     this.shipDate = shipDate;
     return this;
   }
