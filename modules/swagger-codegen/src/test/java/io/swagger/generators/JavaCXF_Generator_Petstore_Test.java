@@ -48,7 +48,7 @@ public class JavaCXF_Generator_Petstore_Test {
     @After
     public void teardown() {
         // cleanup temporary folder if everything is OK
-        //folder.delete();
+        folder.delete();
     }
 
 }
