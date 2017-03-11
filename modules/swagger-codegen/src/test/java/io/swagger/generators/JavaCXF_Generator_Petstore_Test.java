@@ -1,19 +1,21 @@
 package io.swagger.generators;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.nio.file.FileSystems;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.swagger.codegen.generators.JavaCXFServer_Generator_Petstore;
-import io.swagger.codegen.generators.JaxrsSpec_Generator_Petstore;
 import io.swagger.codegen.generators.util.ComparePathUtil;
 
 public class JavaCXF_Generator_Petstore_Test {
@@ -29,6 +31,7 @@ public class JavaCXF_Generator_Petstore_Test {
     }
 
     @Test
+    @Ignore
     public void test() {
         File output = folder.getRoot();
         java.nio.file.Path actualPath = FileSystems.getDefault().getPath(output.getAbsolutePath());
