@@ -25,7 +25,7 @@ public class Jaxrs_Spec_Generator_Petstore_Test {
 
     @Before
     public void setup() {
-        folder = JaxrsSpec_Generator_Petstore.generate();
+        folder = JaxrsSpec_Generator_Petstore.generateToTemporaryFolder();
         assertNotNull(folder);
     }
 

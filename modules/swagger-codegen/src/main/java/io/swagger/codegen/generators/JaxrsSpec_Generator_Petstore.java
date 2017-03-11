@@ -2,7 +2,6 @@ package io.swagger.codegen.generators;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystems;
 
 import org.junit.rules.TemporaryFolder;
 import org.slf4j.Logger;
@@ -34,26 +33,43 @@ public class JaxrsSpec_Generator_Petstore {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JaxrsSpec_Generator_Petstore.class);
 
-    public static TemporaryFolder generate() {
+    /**
+     * by default generate to samples folder
+     * @param args
+     */
+    public static void main(String[] args) {
+    	File targetFolder = new File("../../samples/server/petstore/jaxrs-spec");
+    	generateToFolder(targetFolder);
+    }
+    
+    public static void generateToFolder(File output) {
+    	final Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
+
+        CodegenConfig codegenConfig = new JavaJAXRSSpecServerCodegen();
+        codegenConfig.additionalProperties().put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, true);
+
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        DefaultGenerator gen = new DefaultGenerator();
+        gen.opts(clientOptInput);
+
+        gen.generate();
+
+    }
+    
+    /**
+     * for unittests generate to temporary folder
+     * @return
+     */
+    public static TemporaryFolder generateToTemporaryFolder() {
         try {
             TemporaryFolder folder = new TemporaryFolder();
             folder.create();
             File output = folder.getRoot();
-
-            final Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
-
-            CodegenConfig codegenConfig = new JavaJAXRSSpecServerCodegen();
-            codegenConfig.additionalProperties().put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, true);
-
-            codegenConfig.setOutputDir(output.getAbsolutePath());
-
-            ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
-
-            DefaultGenerator gen = new DefaultGenerator();
-            gen.opts(clientOptInput);
-
-            gen.generate();
-
+            generateToFolder(output);
+            
             return folder;
 
         } catch (IOException e) {
