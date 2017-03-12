@@ -78,6 +78,22 @@
      * @default true
      */
     this.cache = true;
+
+    /**
+     * If set to true, the client will save the cookies from each server
+     * response, and return them in the next request.
+     * @default false
+     */
+    this.enableCookies = false;
+
+    /*
+     * Used to save and return cookies in a node.js (non-browser) setting,
+     * if this.enableCookies is set to true.
+     */
+    if (typeof window === 'undefined') {
+      this.agent = new superagent.agent();
+    }
+
   };
 
   /**
@@ -408,6 +424,16 @@
       request.accept(accept);
     }
 
+    // Attach previously saved cookies, if enabled
+    if (this.enableCookies){
+      if (typeof window === 'undefined') {
+        this.agent.attachCookies(request);
+      }
+      else {
+        request.withCredentials();
+      }
+    }
+
 
     request.end(function(error, response) {
       if (callback) {
@@ -415,6 +441,9 @@
         if (!error) {
           try {
             data = _this.deserialize(response, returnType);
+            if (_this.enableCookies && typeof window === 'undefined'){
+              _this.agent.saveCookies(response);
+            }
           } catch (err) {
             error = err;
           }
@@ -442,9 +471,12 @@
    * or the constructor function for a complex type. Pass an array containing the type name to return an array of that type. To
    * return an object, pass an object with one property whose name is the key type and whose value is the corresponding value type:
    * all properties on <code>data<code> will be converted to this type.
-   * @returns An instance of the specified type.
+   * @returns An instance of the specified type or null or undefined if data is null or undefined.
    */
   exports.convertToType = function(data, type) {
+    if (data === null || data === undefined)
+      return data
+
     switch (type) {
       case 'Boolean':
         return Boolean(data);

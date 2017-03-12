@@ -117,7 +117,7 @@ public class PetApiTest {
     @Test
     public void findPetsByStatusTest() {
         List<String> status = null;
-	//List<Pet> response = api.findPetsByStatus(status);
+        //List<Pet> response = api.findPetsByStatus(status);
         //assertNotNull(response);
         // TODO: test validations
         
@@ -135,7 +135,7 @@ public class PetApiTest {
     @Test
     public void findPetsByTagsTest() {
         List<String> tags = null;
-	//List<Pet> response = api.findPetsByTags(tags);
+        //List<Pet> response = api.findPetsByTags(tags);
         //assertNotNull(response);
         // TODO: test validations
         

@@ -41,7 +41,7 @@ module Petstore
       # verify the required parameter 'body' is set
       fail ArgumentError, "Missing the required parameter 'body' when calling FakeApi.test_client_model" if body.nil?
       # resource path
-      local_var_path = "/fake".sub('{format}','json')
+      local_var_path = "/fake"
 
       # query parameters
       query_params = {}
@@ -145,20 +145,20 @@ module Petstore
 
       # verify the required parameter 'byte' is set
       fail ArgumentError, "Missing the required parameter 'byte' when calling FakeApi.test_endpoint_parameters" if byte.nil?
-      if !opts[:'integer'].nil? && opts[:'integer'] > 100.0
-        fail ArgumentError, 'invalid value for "opts[:"integer"]" when calling FakeApi.test_endpoint_parameters, must be smaller than or equal to 100.0.'
+      if !opts[:'integer'].nil? && opts[:'integer'] > 100
+        fail ArgumentError, 'invalid value for "opts[:"integer"]" when calling FakeApi.test_endpoint_parameters, must be smaller than or equal to 100.'
       end
 
-      if !opts[:'integer'].nil? && opts[:'integer'] < 10.0
-        fail ArgumentError, 'invalid value for "opts[:"integer"]" when calling FakeApi.test_endpoint_parameters, must be greater than or equal to 10.0.'
+      if !opts[:'integer'].nil? && opts[:'integer'] < 10
+        fail ArgumentError, 'invalid value for "opts[:"integer"]" when calling FakeApi.test_endpoint_parameters, must be greater than or equal to 10.'
       end
 
-      if !opts[:'int32'].nil? && opts[:'int32'] > 200.0
-        fail ArgumentError, 'invalid value for "opts[:"int32"]" when calling FakeApi.test_endpoint_parameters, must be smaller than or equal to 200.0.'
+      if !opts[:'int32'].nil? && opts[:'int32'] > 200
+        fail ArgumentError, 'invalid value for "opts[:"int32"]" when calling FakeApi.test_endpoint_parameters, must be smaller than or equal to 200.'
       end
 
-      if !opts[:'int32'].nil? && opts[:'int32'] < 20.0
-        fail ArgumentError, 'invalid value for "opts[:"int32"]" when calling FakeApi.test_endpoint_parameters, must be greater than or equal to 20.0.'
+      if !opts[:'int32'].nil? && opts[:'int32'] < 20
+        fail ArgumentError, 'invalid value for "opts[:"int32"]" when calling FakeApi.test_endpoint_parameters, must be greater than or equal to 20.'
       end
 
       if !opts[:'float'].nil? && opts[:'float'] > 987.6
@@ -178,7 +178,7 @@ module Petstore
       end
 
       # resource path
-      local_var_path = "/fake".sub('{format}','json')
+      local_var_path = "/fake"
 
       # query parameters
       query_params = {}
@@ -274,7 +274,7 @@ module Petstore
         fail ArgumentError, 'invalid value for "enum_query_string", must be one of _abc, -efg, (xyz)'
       end
       # resource path
-      local_var_path = "/fake".sub('{format}','json')
+      local_var_path = "/fake"
 
       # query parameters
       query_params = {}
