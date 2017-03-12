@@ -3,6 +3,7 @@ package io.swagger.client.api;
 import io.swagger.client.CollectionFormats.*;
 
 
+
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -32,7 +33,7 @@ public interface StoreApi {
   /**
    * Returns pet inventories by status
    * Returns a map of status codes to quantities
-   * @return Call&lt;Map<String, Integer>&gt;
+   * @return Call&lt;Map&lt;String, Integer&gt;&gt;
    */
   
   @GET("store/inventory")

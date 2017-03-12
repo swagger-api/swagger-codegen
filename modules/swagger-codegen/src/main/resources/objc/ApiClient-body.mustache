@@ -75,11 +75,12 @@ static NSString * {{classPrefix}}__fileNameForResponse(NSURLResponse *response) 
         _downloadTaskResponseTypes = @[@"NSURL*", @"NSURL"];
 
         AFHTTPRequestSerializer* afhttpRequestSerializer = [AFHTTPRequestSerializer serializer];
-        SWGJSONRequestSerializer * swgjsonRequestSerializer = [SWGJSONRequestSerializer serializer];
-        _requestSerializerForContentType = @{kSWGApplicationJSONType : swgjsonRequestSerializer,
+        {{classPrefix}}JSONRequestSerializer * swgjsonRequestSerializer = [{{classPrefix}}JSONRequestSerializer serializer];
+        _requestSerializerForContentType = @{k{{classPrefix}}ApplicationJSONType : swgjsonRequestSerializer,
             @"application/x-www-form-urlencoded": afhttpRequestSerializer,
             @"multipart/form-data": afhttpRequestSerializer
         };
+        self.securityPolicy = [self createSecurityPolicy];
         self.responseSerializer = [AFHTTPResponseSerializer serializer];
     }
     return self;
@@ -134,7 +135,7 @@ static NSString * {{classPrefix}}__fileNameForResponse(NSURLResponse *response) 
 
         completionBlock(file, nil);
     }];
-    
+
     return task;
 }
 
@@ -221,7 +222,7 @@ static NSString * {{classPrefix}}__fileNameForResponse(NSURLResponse *response) 
 
     [self postProcessRequest:request];
 
-    
+
     NSURLSessionTask *task = nil;
 
     if ([self.downloadTaskResponseTypes containsObject:responseType]) {
@@ -240,9 +241,9 @@ static NSString * {{classPrefix}}__fileNameForResponse(NSURLResponse *response) 
             completionBlock(response, error);
         }];
     }
-    
+
     [task resume];
-    
+
     return task;
 }
 
@@ -329,7 +330,7 @@ static NSString * {{classPrefix}}__fileNameForResponse(NSURLResponse *response) 
 
     NSMutableDictionary *headersWithAuth = [NSMutableDictionary dictionaryWithDictionary:*headers];
     NSMutableDictionary *querysWithAuth = [NSMutableDictionary dictionaryWithDictionary:*querys];
-    
+
     id<{{classPrefix}}Configuration> config = self.configuration;
     for (NSString *auth in authSettings) {
         NSDictionary *authSetting = config.authSettings[auth];

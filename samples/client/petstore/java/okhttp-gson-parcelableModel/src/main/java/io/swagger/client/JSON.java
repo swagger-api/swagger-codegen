@@ -117,26 +117,37 @@ public class JSON {
      */
     public static class OffsetDateTimeTypeAdapter extends TypeAdapter<OffsetDateTime> {
 
+        private DateTimeFormatter parseFormatter = ISODateTimeFormat.dateOptionalTimeParser();
+        private DateTimeFormatter printFormatter = ISODateTimeFormat.dateTime();
         private DateTimeFormatter formatter;
 
         public OffsetDateTimeTypeAdapter() {
-            this(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+            this(ISODateTimeFormat.dateTime(), ISODateTimeFormat.dateOptionalTimeParser());
         }
 
         public OffsetDateTimeTypeAdapter(DateTimeFormatter formatter) {
-            this.formatter = formatter;
+            this.parseFormatter = formatter;
+            this.printFormatter = formatter;
+        }
+        
+        public OffsetDateTimeTypeAdapter(DateTimeFormatter printFormatter, dateTimeFormatter parseFormatter) {
+            this.parseFormatter = printFormatter;
+            this.printFormatter = parseFormatter;
         }
 
-        public void setFormat(DateTimeFormatter dateFormat) {
+        public void setParseFormat(DateTimeFormatter dateFormat) {
+            this.formatter = dateFormat;
+        }
+        public void setPrintFormat(DateTimeFormatter dateFormat) {
             this.formatter = dateFormat;
         }
 
         @Override
-        public void write(JsonWriter out, OffsetDateTime date) throws IOException {
+        public void write(JsonWriter out, DateTime date) throws IOException {
             if (date == null) {
                 out.nullValue();
             } else {
-                out.value(formatter.format(date));
+                out.value(printFormatter.print(date));
             }
         }
 
@@ -151,7 +162,7 @@ public class JSON {
                     if (date.endsWith("+0000")) {
                         date = date.substring(0, date.length()-5) + "Z";
                     }
-                    return OffsetDateTime.parse(date, formatter);
+                    return OffsetDateTime.parse(date, parseFormatter);
             }
         }
     }
