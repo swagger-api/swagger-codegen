@@ -40,7 +40,6 @@ public interface PetApi  {
     @ApiOperation(value = "Deletes a pet", tags={ "pet",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid pet value") })
-    public void deletePet(@PathParam("petId") Long petId, @HeaderParam("api_key") String apiKey);
     public void deletePet(@ApiParam(value = "Pet id to delete", required=true) @PathParam("petId") Long petId, @HeaderParam("api_key") String apiKey);
 
     @GET
