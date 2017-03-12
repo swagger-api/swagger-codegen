@@ -96,7 +96,7 @@ public class StoreApiTest {
      */
     @Test
     public void getInventoryTest() {
-	//Map<String, Integer> response = api.getInventory();
+        //Map<String, Integer> response = api.getInventory();
         //assertNotNull(response);
         // TODO: test validations
         

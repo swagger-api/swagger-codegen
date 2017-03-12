@@ -81,7 +81,7 @@ public class FakeApiTest {
     @Test
     public void testClientModelTest() {
         Client body = null;
-	//Client response = api.testClientModel(body);
+        //Client response = api.testClientModel(body);
         //assertNotNull(response);
         // TODO: test validations
         
@@ -112,7 +112,7 @@ public class FakeApiTest {
         Date dateTime = null;
         String password = null;
         String paramCallback = null;
-	//api.testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback);
+        //api.testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback);
         
         // TODO: test validations
         
@@ -137,7 +137,7 @@ public class FakeApiTest {
         String enumQueryString = null;
         Integer enumQueryInteger = null;
         Double enumQueryDouble = null;
-	//api.testEnumParameters(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble);
+        //api.testEnumParameters(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble);
         
         // TODO: test validations
         
