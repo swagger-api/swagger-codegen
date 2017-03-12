@@ -1,22 +1,8 @@
 package io.swagger.codegen.generators;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.FileSystems;
 
-import org.junit.rules.TemporaryFolder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import io.swagger.codegen.ClientOptInput;
-import io.swagger.codegen.ClientOpts;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.DefaultGenerator;
 import io.swagger.codegen.languages.JavaCXFServerCodegen;
-import io.swagger.codegen.languages.JavaJAXRSSpecServerCodegen;
-import io.swagger.models.Swagger;
-import io.swagger.parser.SwaggerParser;
 
 /**
  * commandline of jaxrs-cxf-petstore-server.sh
@@ -27,55 +13,20 @@ import io.swagger.parser.SwaggerParser;
  *
  * 
  */
-public class JavaCXFServer_Generator_Petstore {
+public class JavaCXFServer_Generator_Petstore extends AbstractGenerator {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JavaCXFServer_Generator_Petstore.class);
-
-    /**
-     * by default generate to samples folder
-     * @param args
-     */
-    public static void main(String[] args) {
-    	File targetFolder = new File("../../samples/server/petstore/jaxrs-cxf");
-    	generateToFolder(targetFolder);
-    }
-    
-    public static void generateToFolder(File output) {
-    	final Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
-
-        CodegenConfig codegenConfig = new JavaCXFServerCodegen();
-        codegenConfig.additionalProperties().put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, true);
-
-        codegenConfig.setOutputDir(output.getAbsolutePath());
-
-        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
-
-        DefaultGenerator gen = new DefaultGenerator();
-        gen.opts(clientOptInput);
-
-        gen.generate();
-
-    }
-    
-    /**
-     * for unittests generate to temporary folder
-     * @return
-     */
-    public static TemporaryFolder generateToTemporaryFolder() {
-        try {
-            TemporaryFolder folder = new TemporaryFolder();
-            folder.create();
-            File output = folder.getRoot();
-            generateToFolder(output);
-            
-            return folder;
-
-        } catch (IOException e) {
-            LOGGER.info("unable to create temporary folder");
-            e.printStackTrace();
-            return null;
-        }
-
+	public JavaCXFServer_Generator_Petstore() {
+		super();
+		this.codegenConfig = new JavaCXFServerCodegen();
+		this.samplesFolder = "../../samples/server/petstore/jaxrs-cxf";
+		this.contractPath = "src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml";
+				
+	}
+	
+   public static void main(String[] args) {
+    	JavaCXFServer_Generator_Petstore generator = new JavaCXFServer_Generator_Petstore();
+    	File targetFolder = new File(generator.samplesFolder);
+    	generator.generateToFolder(targetFolder);
     }
     
 
