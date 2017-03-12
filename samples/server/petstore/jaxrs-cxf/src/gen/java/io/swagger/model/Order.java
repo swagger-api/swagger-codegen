@@ -14,13 +14,13 @@ import javax.xml.bind.annotation.XmlEnumValue;
 
 public class Order  {
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   private Long id = null;
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   private Long petId = null;
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   private Integer quantity = null;
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   private Date shipDate = null;
 
 @XmlType(name="StatusEnum")
@@ -55,9 +55,9 @@ public enum StatusEnum {
     }
 }
 
-  @ApiModelProperty(example = "null", value = "Order Status")
+  @ApiModelProperty(value = "Order Status")
   private StatusEnum status = null;
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   private Boolean complete = false;
 
  /**

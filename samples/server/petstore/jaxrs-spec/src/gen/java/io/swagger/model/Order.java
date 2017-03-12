@@ -56,7 +56,7 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Long getId() {
     return id;
   }
@@ -72,7 +72,7 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Long getPetId() {
     return petId;
   }
@@ -88,7 +88,7 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Integer getQuantity() {
     return quantity;
   }
@@ -104,7 +104,7 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Date getShipDate() {
     return shipDate;
   }
@@ -121,7 +121,7 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(example = "null", value = "Order Status")
+  @ApiModelProperty(value = "Order Status")
   public StatusEnum getStatus() {
     return status;
   }
@@ -137,7 +137,7 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Boolean getComplete() {
     return complete;
   }

@@ -54,7 +54,7 @@ public enum InnerEnum {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Map<String, Map<String, String>> getMapMapOfString() {
     return mapMapOfString;
   }
@@ -70,7 +70,7 @@ public enum InnerEnum {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Map<String, InnerEnum> getMapOfEnumString() {
     return mapOfEnumString;
   }

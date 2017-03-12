@@ -19,11 +19,11 @@ import javax.xml.bind.annotation.XmlEnumValue;
 
 public class MixedPropertiesAndAdditionalPropertiesClass  {
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   private UUID uuid = null;
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   private Date dateTime = null;
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   private Map<String, Animal> map = new HashMap<String, Animal>();
 
  /**

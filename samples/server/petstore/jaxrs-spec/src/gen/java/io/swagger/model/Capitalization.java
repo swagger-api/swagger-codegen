@@ -24,7 +24,7 @@ public class Capitalization   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public String getSmallCamel() {
     return smallCamel;
   }
@@ -40,7 +40,7 @@ public class Capitalization   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public String getCapitalCamel() {
     return capitalCamel;
   }
@@ -56,7 +56,7 @@ public class Capitalization   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public String getSmallSnake() {
     return smallSnake;
   }
@@ -72,7 +72,7 @@ public class Capitalization   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public String getCapitalSnake() {
     return capitalSnake;
   }
@@ -88,7 +88,7 @@ public class Capitalization   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public String getScAETHFlowPoints() {
     return scAETHFlowPoints;
   }
@@ -105,7 +105,7 @@ public class Capitalization   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "Name of the pet ")
+  @ApiModelProperty(value = "Name of the pet ")
   public String getATTNAME() {
     return ATT_NAME;
   }
