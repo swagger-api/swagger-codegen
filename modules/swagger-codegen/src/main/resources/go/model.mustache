@@ -9,7 +9,7 @@ import ({{/imports}}{{#imports}}
 type {{classname}} struct {
 {{#vars}}{{#description}}
 	// {{{description}}}{{/description}}
-	{{name}} {{{datatype}}} `json:"{{baseName}},omitempty"`
+	{{name}} {{^isPrimitiveType}}{{^isContainer}}{{^isDate}}{{^isDateTime}}*{{/isDateTime}}{{/isDate}}{{/isContainer}}{{/isPrimitiveType}}{{{datatype}}} `json:"{{baseName}}{{^required}},omitempty{{/required}}"`
 {{/vars}}
 }
 {{/model}}{{/models}}
