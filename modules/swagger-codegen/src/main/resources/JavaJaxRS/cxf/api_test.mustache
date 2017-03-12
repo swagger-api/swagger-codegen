@@ -111,7 +111,7 @@ public class {{classname}}Test {
         Attachment file = new Attachment("{{paramName}}", {{paramName}}InputStream, cd);{{/isFile}}
         {{/allParams}}
         {{^vendorExtensions.x-java-is-response-void}}{{>returnTypes}} response = {{/vendorExtensions.x-java-is-response-void}}api.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
-        {{^vendorExtensions.x-java-is-response-void}}assertNotNull(response);{{/vendorExtensions.x-java-is-response-void}}
+        {{^vendorExtensions.x-java-is-response-void}}//assertNotNull(response);{{/vendorExtensions.x-java-is-response-void}}
         // TODO: test validations
         
         
