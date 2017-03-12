@@ -9,7 +9,7 @@ import io.swagger.codegen.languages.JavaJAXRSSpecServerCodegen;
 import io.swagger.codegen.languages.JavaResteasyServerCodegen;
 
 /**
- * commandline of jaxrs-resteasy-petstore-server.sh.sh
+ * commandline of jaxrs-resteasy-petstore-server.sh
  * 
  */
 public class JaxrsResteasy_Generator_Petstore_Default extends AbstractGenerator {
