@@ -765,7 +765,6 @@
                 <module>samples/client/petstore/java/feign</module>
                 <module>samples/client/petstore/java/jersey1</module>
                 <module>samples/client/petstore/java/jersey2</module>
-                <module>samples/client/petstore/java/okhttp-gson</module>
                 <module>samples/client/petstore/java/retrofit</module>
                 <module>samples/client/petstore/java/retrofit2</module>
                 <module>samples/client/petstore/java/retrofit2rx</module>
@@ -796,6 +795,7 @@
                 <module>samples/server/petstore/jaxrs-cxf-cdi</module>
                 <module>samples/server/petstore/jaxrs-cxf-non-spring-app</module>
                 <module>samples/client/petstore/clojure</module>
+                <module>samples/client/petstore/java/okhttp-gson</module>
 
                 <!--<module>samples/server/petstore/java-msf4j</module> note: JDK8 only -->
             </modules>
