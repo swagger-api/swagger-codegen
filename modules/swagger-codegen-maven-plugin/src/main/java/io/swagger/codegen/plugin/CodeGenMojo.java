@@ -186,6 +186,9 @@ public class CodeGenMojo extends AbstractMojo {
     @Parameter(name = "generateModels", required = false)
     private Boolean generateModels = true;
 
+    /**
+     * A comma separated list of models to generate.  All models is the default.
+     */
     @Parameter(name = "modelsToGenerate", required = false)
     private String modelsToGenerate = "";
 
@@ -195,6 +198,12 @@ public class CodeGenMojo extends AbstractMojo {
     @Parameter(name = "generateSupportingFiles", required = false)
     private Boolean generateSupportingFiles = true;
 
+    /**
+     * A comma separated list of models to generate.  All models is the default.
+     */
+    @Parameter(name = "supportingFilesToGenerate", required = false)
+    private String supportingFilesToGenerate = "";
+    
     /**
      * Generate the model tests
      */
@@ -330,7 +339,7 @@ public class CodeGenMojo extends AbstractMojo {
         }
 
         if (null != generateSupportingFiles && generateSupportingFiles) {
-            System.setProperty("supportingFiles", "");
+            System.setProperty("supportingFiles", supportingFilesToGenerate);
         }
         
         System.setProperty("modelTests", generateModelTests.toString());
