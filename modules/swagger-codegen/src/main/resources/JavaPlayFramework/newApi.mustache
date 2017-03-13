@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
 {{#operations}}
 public class {{classname}}ControllerImp {
 {{#operation}}
-    {{>returnTypes}} {{operationId}}({{#allParams}}{{>pathParamsNoDoc}}{{>queryParamsNoDoc}}{{>bodyParamsNoDoc}}{{>formParamsNoDoc}}{{>headerParamsNoDoc}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {
+    {{>returnTypes}} {{operationId}}({{#allParams}}{{>pathParams}}{{>queryParams}}{{>bodyParams}}{{>formParams}}{{>headerParams}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {
         //Do your magic!!!
         {{#returnType}}return new {{>returnTypesNoVoidNoAbstract}}();{{/returnType}}
     }

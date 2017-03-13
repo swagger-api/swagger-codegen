@@ -10,7 +10,7 @@ import java.util.HashMap;
 import javax.validation.constraints.*;
 
 public class StoreApiControllerImp {
-    void deleteOrder( String orderId) {
+    void deleteOrder(String orderId) {
         //Do your magic!!!
         
     }
@@ -20,7 +20,7 @@ public class StoreApiControllerImp {
         return new HashMap<String, Integer>();
     }
 
-    Order getOrderById( String orderId) {
+    Order getOrderById(String orderId) {
         //Do your magic!!!
         return new Order();
     }

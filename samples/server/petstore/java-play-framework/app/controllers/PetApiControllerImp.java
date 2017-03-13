@@ -15,7 +15,7 @@ public class PetApiControllerImp {
         
     }
 
-    void deletePet( Long petId, String apiKey) {
+    void deletePet(Long petId, String apiKey) {
         //Do your magic!!!
         
     }
@@ -30,7 +30,7 @@ public class PetApiControllerImp {
         return new ArrayList<Pet>();
     }
 
-    Pet getPetById( Long petId) {
+    Pet getPetById(Long petId) {
         //Do your magic!!!
         return new Pet();
     }
@@ -40,12 +40,12 @@ public class PetApiControllerImp {
         
     }
 
-    void updatePetWithForm( String petId, String name, String status) {
+    void updatePetWithForm(String petId, String name, String status) {
         //Do your magic!!!
         
     }
 
-    void uploadFile( Long petId, String additionalMetadata, Http.MultipartFormData.FilePart file) {
+    void uploadFile(Long petId, String additionalMetadata, Http.MultipartFormData.FilePart file) {
         //Do your magic!!!
         
     }

@@ -25,12 +25,12 @@ public class UserApiControllerImp {
         
     }
 
-    void deleteUser( String username) {
+    void deleteUser(String username) {
         //Do your magic!!!
         
     }
 
-    User getUserByName( String username) {
+    User getUserByName(String username) {
         //Do your magic!!!
         return new User();
     }
@@ -45,7 +45,7 @@ public class UserApiControllerImp {
         
     }
 
-    void updateUser( String username, User body) {
+    void updateUser(String username, User body) {
         //Do your magic!!!
         
     }
