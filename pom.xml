@@ -761,7 +761,6 @@
                 <module>samples/client/petstore/ruby</module>
                 <module>samples/client/petstore/android/volley</module>
                 <module>samples/client/petstore/bash</module>
-                <module>samples/client/petstore/clojure</module>
                 <module>samples/client/petstore/go</module>
                 <module>samples/client/petstore/java/feign</module>
                 <module>samples/client/petstore/java/jersey1</module>
@@ -796,6 +795,7 @@
                 <module>samples/server/petstore/jaxrs-cxf-annotated-base-path</module>
                 <module>samples/server/petstore/jaxrs-cxf-cdi</module>
                 <module>samples/server/petstore/jaxrs-cxf-non-spring-app</module>
+                <module>samples/client/petstore/clojure</module>
 
                 <!--<module>samples/server/petstore/java-msf4j</module> note: JDK8 only -->
             </modules>
