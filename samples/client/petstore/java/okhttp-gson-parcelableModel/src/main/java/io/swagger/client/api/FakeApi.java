@@ -86,8 +86,10 @@ public class FakeApi {
         final String[] localVarContentTypes = {
             "application/json"
         };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
+        if (!localVarHeaderParams.containsKey("Content-Type")) {
+            final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
 
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
@@ -252,8 +254,10 @@ public class FakeApi {
         final String[] localVarContentTypes = {
             "application/xml; charset=utf-8", "application/json; charset=utf-8"
         };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
+        if (!localVarHeaderParams.containsKey("Content-Type")) {
+            final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
 
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
@@ -450,8 +454,10 @@ public class FakeApi {
         final String[] localVarContentTypes = {
             "*/*"
         };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
+        if (!localVarHeaderParams.containsKey("Content-Type")) {
+            final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
 
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
