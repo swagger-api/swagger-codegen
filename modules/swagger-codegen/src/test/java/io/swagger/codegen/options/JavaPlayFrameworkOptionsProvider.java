@@ -9,15 +9,13 @@ public class JavaPlayFrameworkOptionsProvider extends JavaOptionsProvider {
     public static final String TITLE = "swagger";
     public static final String CONFIG_PACKAGE_VALUE = "configPackage";
     public static final String BASE_PACKAGE_VALUE = "basePackage";
-    public static final String CONTROLLER_ONLY = "true";
-    public static final String SINGLE_CONTENT_TYPES = "true";
-    public static final String USE_TAGS = "true";
+    public static final String CONTROLLER_ONLY = "false";
     public static final String USE_BEANVALIDATION = "true";
     public static final String USE_INTERFACES = "true";
 
     @Override
     public String getLanguage() {
-        return "javaPlayFramework";
+        return "java-play-framework";
     }
 
     @Override
@@ -27,8 +25,6 @@ public class JavaPlayFrameworkOptionsProvider extends JavaOptionsProvider {
         options.put(JavaPlayFrameworkCodegen.CONFIG_PACKAGE, CONFIG_PACKAGE_VALUE);
         options.put(JavaPlayFrameworkCodegen.BASE_PACKAGE, BASE_PACKAGE_VALUE);
         options.put(JavaPlayFrameworkCodegen.CONTROLLER_ONLY, CONTROLLER_ONLY);
-        options.put(JavaPlayFrameworkCodegen.SINGLE_CONTENT_TYPES, SINGLE_CONTENT_TYPES);
-        options.put(JavaPlayFrameworkCodegen.USE_TAGS, USE_TAGS);
         options.put(JavaPlayFrameworkCodegen.USE_BEANVALIDATION, USE_BEANVALIDATION);
         options.put(JavaPlayFrameworkCodegen.USE_INTERFACES, USE_INTERFACES);
 

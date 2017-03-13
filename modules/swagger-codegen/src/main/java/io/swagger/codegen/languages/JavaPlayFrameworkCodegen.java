@@ -13,16 +13,12 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
     public static final String CONFIG_PACKAGE = "configPackage";
     public static final String BASE_PACKAGE = "basePackage";
     public static final String CONTROLLER_ONLY = "controllerOnly";
-    public static final String SINGLE_CONTENT_TYPES = "singleContentTypes";
-    public static final String USE_TAGS = "useTags";
     public static final String USE_INTERFACES = "useInterfaces";
 
     protected String title = "swagger-petstore";
     protected String configPackage = "io.swagger.configuration";
     protected String basePackage = "io.swagger";
     protected boolean controllerOnly = false;
-    protected boolean singleContentTypes = false;
-    protected boolean useTags = false;
     protected boolean useInterfaces = true;
     protected boolean useBeanValidation = true;
 
@@ -49,11 +45,11 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
         cliOptions.add(new CliOption(TITLE, "server title name or client service name"));
         cliOptions.add(new CliOption(CONFIG_PACKAGE, "configuration package for generated code"));
         cliOptions.add(new CliOption(BASE_PACKAGE, "base package for generated code"));
-        cliOptions.add(CliOption.newBoolean(CONTROLLER_ONLY, "Whether to generate only API interface stubs without the server files."));
-        cliOptions.add(CliOption.newBoolean(SINGLE_CONTENT_TYPES, "Whether to select only one produces/consumes content-type by operation."));
-        cliOptions.add(CliOption.newBoolean(USE_TAGS, "use tags for creating interface and controller classnames"));
-        cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
-        cliOptions.add(CliOption.newBoolean(USE_INTERFACES, "Makes the controllerImp implements an interface to facilitate automatic completion when updating from version x to y of your spec"));
+
+        //Custom options for this generator
+        cliOptions.add(createBooleanCliWithDefault(CONTROLLER_ONLY, "Whether to generate only API interface stubs without the server files.", controllerOnly));
+        cliOptions.add(createBooleanCliWithDefault(USE_BEANVALIDATION, "Use BeanValidation API annotations", useBeanValidation));
+        cliOptions.add(createBooleanCliWithDefault(USE_INTERFACES, "Makes the controllerImp implements an interface to facilitate automatic completion when updating from version x to y of your spec", useInterfaces));
     }
 
     @Override
@@ -94,15 +90,7 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
         }
 
         if (additionalProperties.containsKey(CONTROLLER_ONLY)) {
-            this.setControllerOnly(Boolean.valueOf(additionalProperties.get(CONTROLLER_ONLY).toString()));
-        }
-
-        if (additionalProperties.containsKey(SINGLE_CONTENT_TYPES)) {
-            this.setSingleContentTypes(Boolean.valueOf(additionalProperties.get(SINGLE_CONTENT_TYPES).toString()));
-        }
-
-        if (additionalProperties.containsKey(USE_TAGS)) {
-            this.setUseTags(Boolean.valueOf(additionalProperties.get(USE_TAGS).toString()));
+            this.setControllerOnly(convertPropertyToBoolean(CONTROLLER_ONLY));
         }
 
         if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
@@ -110,7 +98,8 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
         }
 
         if (additionalProperties.containsKey(USE_INTERFACES)) {
-            this.setUseInterfaces(Boolean.valueOf(additionalProperties.get(USE_INTERFACES).toString()));
+            this.setUseInterfaces(convertPropertyToBoolean(USE_INTERFACES));
+            writePropertyBack(USE_INTERFACES, useInterfaces);
         }
 
         if (useBeanValidation) {
@@ -169,16 +158,12 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
 
     public void setControllerOnly(boolean controllerOnly) { this.controllerOnly = controllerOnly; }
 
-    public void setSingleContentTypes(boolean singleContentTypes) {
-        this.singleContentTypes = singleContentTypes;
-    }
-
-    public void setUseTags(boolean useTags) {
-        this.useTags = useTags;
-    }
-
     public void setUseInterfaces(boolean useInterfaces) {
         this.useInterfaces = useInterfaces;
+    }
+
+    public void setUseBeanValidation(boolean useBeanValidation) {
+        this.useBeanValidation = useBeanValidation;
     }
 
     @Override
@@ -236,7 +221,9 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
         return objs;
     }
 
-    public void setUseBeanValidation(boolean useBeanValidation) {
-        this.useBeanValidation = useBeanValidation;
+    private CliOption createBooleanCliWithDefault(String optionName, String description, boolean defaultValue) {
+        CliOption defaultOption = CliOption.newBoolean(optionName, description);
+        defaultOption.setDefault(Boolean.toString(defaultValue));
+        return defaultOption;
     }
 }
