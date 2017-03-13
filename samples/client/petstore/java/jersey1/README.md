@@ -71,22 +71,12 @@ public class FakeApiExample {
     public static void main(String[] args) {
         
         FakeApi apiInstance = new FakeApi();
-        BigDecimal number = new BigDecimal(); // BigDecimal | None
-        Double _double = 3.4D; // Double | None
-        String string = "string_example"; // String | None
-        byte[] _byte = B; // byte[] | None
-        Integer integer = 56; // Integer | None
-        Integer int32 = 56; // Integer | None
-        Long int64 = 789L; // Long | None
-        Float _float = 3.4F; // Float | None
-        byte[] binary = B; // byte[] | None
-        LocalDate date = new LocalDate(); // LocalDate | None
-        DateTime dateTime = new DateTime(); // DateTime | None
-        String password = "password_example"; // String | None
+        Client body = new Client(); // Client | client model
         try {
-            apiInstance.testEndpointParameters(number, _double, string, _byte, integer, int32, int64, _float, binary, date, dateTime, password);
+            Client result = apiInstance.testClientModel(body);
+            System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling FakeApi#testEndpointParameters");
+            System.err.println("Exception when calling FakeApi#testClientModel");
             e.printStackTrace();
         }
     }
@@ -100,8 +90,10 @@ All URIs are relative to *http://petstore.swagger.io/v2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*FakeApi* | [**testClientModel**](docs/FakeApi.md#testClientModel) | **PATCH** /fake | To test \&quot;client\&quot; model
 *FakeApi* | [**testEndpointParameters**](docs/FakeApi.md#testEndpointParameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
-*FakeApi* | [**testEnumQueryParameters**](docs/FakeApi.md#testEnumQueryParameters) | **GET** /fake | To test enum query parameters
+*FakeApi* | [**testEnumParameters**](docs/FakeApi.md#testEnumParameters) | **GET** /fake | To test enum parameters
+*FakeClassnameTags123Api* | [**testClassname**](docs/FakeClassnameTags123Api.md#testClassname) | **PATCH** /fake_classname_test | To test class name in snake case
 *PetApi* | [**addPet**](docs/PetApi.md#addPet) | **POST** /pet | Add a new pet to the store
 *PetApi* | [**deletePet**](docs/PetApi.md#deletePet) | **DELETE** /pet/{petId} | Deletes a pet
 *PetApi* | [**findPetsByStatus**](docs/PetApi.md#findPetsByStatus) | **GET** /pet/findByStatus | Finds Pets by status
@@ -132,9 +124,13 @@ Class | Method | HTTP request | Description
  - [ArrayOfArrayOfNumberOnly](docs/ArrayOfArrayOfNumberOnly.md)
  - [ArrayOfNumberOnly](docs/ArrayOfNumberOnly.md)
  - [ArrayTest](docs/ArrayTest.md)
+ - [Capitalization](docs/Capitalization.md)
  - [Cat](docs/Cat.md)
  - [Category](docs/Category.md)
+ - [ClassModel](docs/ClassModel.md)
+ - [Client](docs/Client.md)
  - [Dog](docs/Dog.md)
+ - [EnumArrays](docs/EnumArrays.md)
  - [EnumClass](docs/EnumClass.md)
  - [EnumTest](docs/EnumTest.md)
  - [FormatTest](docs/FormatTest.md)
@@ -147,6 +143,7 @@ Class | Method | HTTP request | Description
  - [Name](docs/Name.md)
  - [NumberOnly](docs/NumberOnly.md)
  - [Order](docs/Order.md)
+ - [OuterEnum](docs/OuterEnum.md)
  - [Pet](docs/Pet.md)
  - [ReadOnlyFirst](docs/ReadOnlyFirst.md)
  - [SpecialModelName](docs/SpecialModelName.md)
@@ -163,6 +160,10 @@ Authentication schemes defined for the API:
 - **API key parameter name**: api_key
 - **Location**: HTTP header
 
+### http_basic_test
+
+- **Type**: HTTP basic authentication
+
 ### petstore_auth
 
 - **Type**: OAuth
@@ -175,7 +176,7 @@ Authentication schemes defined for the API:
 
 ## Recommendation
 
-It's recommended to create an instance of `ApiClient` per thread in a multithreaded environment to avoid any potential issue.
+It's recommended to create an instance of `ApiClient` per thread in a multithreaded environment to avoid any potential issues.
 
 ## Author
 
