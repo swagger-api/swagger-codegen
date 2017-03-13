@@ -2,8 +2,10 @@
   "private": true,
   "dependencies": {
     "@types/chai": "^3.4.35",
+    "@types/core-js": "0.9.35",
     "@types/mocha": "^2.2.40",
-    "chai": "^3.5.0"
+    "chai": "^3.5.0",
+    "core-js": "2.4.1"
   },
   "devDependencies": {
     "browserify": "14.1.0",

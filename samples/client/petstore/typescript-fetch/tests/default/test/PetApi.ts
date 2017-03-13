@@ -10,6 +10,13 @@ describe('PetApi', () => {
       let api: PetApi;
       const fixture: Pet = createTestFixture();
 
+      const parameterInspector = (...args: any[]) => {
+        return Promise.resolve({
+          status: 200,
+          arguments: args
+        });
+      };
+
       beforeEach(() => {
         api = new PetApi();
       });
@@ -33,6 +40,18 @@ describe('PetApi', () => {
               return expect(result.name).to.deep.equal('newname');
             });
           });
+        });
+      });
+
+      it('should update Pet using url-encoded form', () => {
+        return new PetApi(parameterInspector).updatePetWithForm({ petId: fixture.id.toString(), name: "Snoopy" }).then(({arguments: [url, init]}) => {
+          return expect(init.headers['Content-Type']).to.equal('application/x-www-form-urlencoded');
+        });
+      });
+
+      it('should not set a content-type header when uploading a file', () => {
+        return new PetApi(parameterInspector).uploadFile({ petId: fixture.id, file: new File(['snoopy'], 'Snoopy.png')}).then(({arguments: [url, init]}) => {
+          return expect(init.headers['Content-Type']).to.be.undefined;
         });
       });
 
