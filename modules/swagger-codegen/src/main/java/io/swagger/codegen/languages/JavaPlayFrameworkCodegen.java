@@ -1,7 +1,11 @@
 package io.swagger.codegen.languages;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.codegen.*;
 import io.swagger.codegen.languages.features.BeanValidationFeatures;
+import io.swagger.models.Model;
+import io.swagger.models.Swagger;
+import io.swagger.util.Json;
 
 import java.io.File;
 import java.util.List;
@@ -117,10 +121,15 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
             writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
         }
 
+        //We don't use annotation anymore
+        importMapping.remove("ApiModelProperty");
+        importMapping.remove("ApiModel");
+
         //Root folder
         supportingFiles.add(new SupportingFile("README.mustache", "", "README"));
         supportingFiles.add(new SupportingFile("LICENSE.mustache", "", "LICENSE"));
         supportingFiles.add(new SupportingFile("build.mustache", "", "build.sbt"));
+        supportingFiles.add(new SupportingFile("swagger.mustache", "public", "swagger.json"));
 
         //Project folder
         supportingFiles.add(new SupportingFile("buildproperties.mustache", "project", "build.properties"));
@@ -161,6 +170,24 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
             default:
                 break;
         }
+    }
+
+    @Override
+    public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
+        super.postProcessModelProperty(model, property);
+
+        //We don't use annotation anymore
+        model.imports.remove("ApiModelProperty");
+        model.imports.remove("ApiModel");
+    }
+
+    @Override
+    public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
+        CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
+        if(codegenModel.description != null) {
+            codegenModel.imports.remove("ApiModel");
+        }
+        return codegenModel;
     }
 
     public void setTitle(String title) {
@@ -244,5 +271,19 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
 
     public void setUseBeanValidation(boolean useBeanValidation) {
         this.useBeanValidation = useBeanValidation;
+    }
+
+    @Override
+    public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
+        Swagger swagger = (Swagger)objs.get("swagger");
+        System.out.println("swagger" + swagger.toString());
+        if(swagger != null) {
+            try {
+                objs.put("swagger-json", Json.pretty().writeValueAsString(swagger));
+            } catch (JsonProcessingException e) {
+                LOGGER.error(e.getMessage(), e);
+            }
+        }
+        return super.postProcessSupportingFileData(objs);
     }
 }

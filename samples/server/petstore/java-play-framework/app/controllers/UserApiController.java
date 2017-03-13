@@ -1,0 +1,131 @@
+package controllers;
+
+import java.util.List;
+import apimodels.User;
+
+import play.mvc.Controller;
+import play.mvc.Result;
+import play.mvc.Http;
+import java.util.List;
+import java.util.ArrayList;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.google.inject.Inject;
+import java.io.IOException;
+import swagger.SwaggerUtils;
+import javafx.util.Pair;
+import com.fasterxml.jackson.core.type.TypeReference;
+
+import javax.validation.constraints.*;
+
+
+public class UserApiController extends Controller {
+
+    private UserApiControllerImp imp;
+    private ObjectMapper mapper;
+
+    @Inject
+    private UserApiController(UserApiControllerImp imp) {
+        this.imp = imp;
+        mapper = new ObjectMapper();
+    }
+
+
+    public Result createUser() throws IOException {
+        JsonNode nodebody = request().body().asJson();
+        User body;
+        if (nodebody != null) {
+            body = mapper.readValue(nodebody.toString(), User.class);
+        
+        } else {
+            body = null;
+        }
+        imp.createUser(body);
+        
+        return ok();
+    }
+
+    public Result createUsersWithArrayInput() throws IOException {
+        JsonNode nodebody = request().body().asJson();
+        List<User> body;
+        if (nodebody != null) {
+            body = mapper.readValue(nodebody.toString(), new TypeReference<List<List<User>>>(){});
+        
+        } else {
+            body = null;
+        }
+        imp.createUsersWithArrayInput(body);
+        
+        return ok();
+    }
+
+    public Result createUsersWithListInput() throws IOException {
+        JsonNode nodebody = request().body().asJson();
+        List<User> body;
+        if (nodebody != null) {
+            body = mapper.readValue(nodebody.toString(), new TypeReference<List<List<User>>>(){});
+        
+        } else {
+            body = null;
+        }
+        imp.createUsersWithListInput(body);
+        
+        return ok();
+    }
+
+    public Result deleteUser(String username)  {
+        imp.deleteUser(username);
+        
+        return ok();
+    }
+
+    public Result getUserByName(String username)  {
+        User obj = imp.getUserByName(username);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+    }
+
+    public Result loginUser()  {
+        String valueusername = request().getQueryString("username");
+        String username;
+        if (valueusername != null) {
+            username = (String)valueusername;
+        
+        } else {
+            username = "";
+        }
+        String valuepassword = request().getQueryString("password");
+        String password;
+        if (valuepassword != null) {
+            password = (String)valuepassword;
+        
+        } else {
+            password = "";
+        }
+        String obj = imp.loginUser(username, password);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+    }
+
+    public Result logoutUser()  {
+        imp.logoutUser();
+        
+        return ok();
+    }
+
+    public Result updateUser(String username) throws IOException {
+        JsonNode nodebody = request().body().asJson();
+        User body;
+        if (nodebody != null) {
+            body = mapper.readValue(nodebody.toString(), User.class);
+        
+        } else {
+            body = null;
+        }
+        imp.updateUser(username, body);
+        
+        return ok();
+    }
+}

@@ -1,0 +1,149 @@
+package controllers;
+
+import java.io.File;
+import apimodels.Pet;
+
+import play.mvc.Controller;
+import play.mvc.Result;
+import play.mvc.Http;
+import java.util.List;
+import java.util.ArrayList;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.google.inject.Inject;
+import java.io.IOException;
+import swagger.SwaggerUtils;
+import javafx.util.Pair;
+import com.fasterxml.jackson.core.type.TypeReference;
+
+import javax.validation.constraints.*;
+
+
+public class PetApiController extends Controller {
+
+    private PetApiControllerImp imp;
+    private ObjectMapper mapper;
+
+    @Inject
+    private PetApiController(PetApiControllerImp imp) {
+        this.imp = imp;
+        mapper = new ObjectMapper();
+    }
+
+
+    public Result addPet() throws IOException {
+        JsonNode nodebody = request().body().asJson();
+        Pet body;
+        if (nodebody != null) {
+            body = mapper.readValue(nodebody.toString(), Pet.class);
+        
+        } else {
+            body = null;
+        }
+        imp.addPet(body);
+        
+        return ok();
+    }
+
+    public Result deletePet(Long petId)  {
+        String valueapiKey = request().getHeader("api_key");
+        String apiKey;
+        if (valueapiKey != null) {
+            apiKey = (String)valueapiKey;
+        
+        } else {
+            apiKey = "";
+        }
+        imp.deletePet(petId, apiKey);
+        
+        return ok();
+    }
+
+    public Result findPetsByStatus()  {
+        //TODO: Maybe implement this in the future if we can support collection in the body params: see bug in swagger-play: https://github.com/swagger-api/swagger-play/issues/130
+        //TODO: Tt seems it is not detected that it's a list based on the collectionFormat field?
+        //WIP when both bugs will be fixed
+        //List<Pair> statusPair = SwaggerUtils.parameterToPairs("multi", "status", request().getQueryString("status"));
+        List<String> status = new ArrayList<String>();
+        //for (Pair pair : statusPair) {
+        //    status.add(pair.getValue());
+        //}
+        List<Pet> obj = imp.findPetsByStatus(status);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+    }
+
+    public Result findPetsByTags()  {
+        //TODO: Maybe implement this in the future if we can support collection in the body params: see bug in swagger-play: https://github.com/swagger-api/swagger-play/issues/130
+        //TODO: Tt seems it is not detected that it's a list based on the collectionFormat field?
+        //WIP when both bugs will be fixed
+        //List<Pair> tagsPair = SwaggerUtils.parameterToPairs("multi", "tags", request().getQueryString("tags"));
+        List<String> tags = new ArrayList<String>();
+        //for (Pair pair : tagsPair) {
+        //    tags.add(pair.getValue());
+        //}
+        List<Pet> obj = imp.findPetsByTags(tags);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+    }
+
+    public Result getPetById(Long petId)  {
+        Pet obj = imp.getPetById(petId);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
+        
+    }
+
+    public Result updatePet() throws IOException {
+        JsonNode nodebody = request().body().asJson();
+        Pet body;
+        if (nodebody != null) {
+            body = mapper.readValue(nodebody.toString(), Pet.class);
+        
+        } else {
+            body = null;
+        }
+        imp.updatePet(body);
+        
+        return ok();
+    }
+
+    public Result updatePetWithForm(String petId)  {
+        String valuename = ((String[]) request().body().asMultipartFormData().asFormUrlEncoded().get("name"))[0];
+        String name;
+        if (valuename != null) {
+            name = (String)valuename;
+        
+        } else {
+            name = "";
+        }
+        String valuestatus = ((String[]) request().body().asMultipartFormData().asFormUrlEncoded().get("status"))[0];
+        String status;
+        if (valuestatus != null) {
+            status = (String)valuestatus;
+        
+        } else {
+            status = "";
+        }
+        imp.updatePetWithForm(petId, name, status);
+        
+        return ok();
+    }
+
+    public Result uploadFile(Long petId)  {
+        String valueadditionalMetadata = ((String[]) request().body().asMultipartFormData().asFormUrlEncoded().get("additionalMetadata"))[0];
+        String additionalMetadata;
+        if (valueadditionalMetadata != null) {
+            additionalMetadata = (String)valueadditionalMetadata;
+        
+        } else {
+            additionalMetadata = "";
+        }
+        Http.MultipartFormData.FilePart file = request().body().asMultipartFormData().getFile("file");
+                imp.uploadFile(petId, additionalMetadata, file);
+        
+        return ok();
+    }
+}
