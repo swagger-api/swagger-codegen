@@ -1,14 +1,15 @@
 {
   "private": true,
   "dependencies": {
+    "@types/chai": "^3.4.35",
+    "@types/mocha": "^2.2.40",
     "chai": "^3.5.0"
   },
   "devDependencies": {
-    "browserify": "^13.0.1",
+    "browserify": "14.1.0",
     "ts-loader": "^0.8.2",
-    "tsify": "^0.16.0",
-    "typescript": "^1.8.10",
-    "typings": "^1.0.4",
+    "tsify": "3.0.1",
+    "typescript": "^2.0.7",
     "webpack": "^1.13.0"
   },
   "scripts": {
