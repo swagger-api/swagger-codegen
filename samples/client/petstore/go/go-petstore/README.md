@@ -84,26 +84,45 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Authorization
 
-
 ## api_key
-
 - **Type**: API key 
-- **API key parameter name**: api_key
-- **Location**: HTTP header
+!!! NOT IMPLEMENTED !!!
 
 ## http_basic_test
-
 - **Type**: HTTP basic authentication
 
+Example
+```
+	auth := context.WithValue(oauth2.NoContext, sw.ContextBasicAuth, sw.BasicAuth{
+		UserName: "username",
+		Password: "password",
+	})
+    r, err := client.Service.Operation(auth, args)
+```
 ## petstore_auth
-
 - **Type**: OAuth
 - **Flow**: implicit
-- **Authorizatoin URL**: http://petstore.swagger.io/api/oauth/dialog
+- **Authorization URL**: http://petstore.swagger.io/api/oauth/dialog
 - **Scopes**: 
  - **write:pets**: modify pets in your account
  - **read:pets**: read your pets
 
+Example
+```
+	auth := context.WithValue(oauth2.NoContext, sw.ContextAccessToken, "ACCESSTOKENSTRING")
+    r, err := client.Service.Operation(auth, args)
+```
+
+Or via OAuth2 module to automaticly refresh tokens and perform user authentication.
+```
+	import 	"golang.org/x/oauth2"
+
+    / .. Perform OAuth2 round trip request and obtain a token .. //
+
+    tokenSource := oauth2cfg.TokenSource(createContext(httpClient), &token)
+	auth := context.WithValue(oauth2.NoContext, sw.ContextOAuth2, tokenSource)
+    r, err := client.Service.Operation(auth, args)
+```
 
 ## Author
 
