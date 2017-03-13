@@ -1,7 +1,7 @@
 package main
 
 import (
-	"context"
+	"golang.org/x/net/context"
 	"net/http"
 	"net/http/httputil"
 	"strings"

@@ -14,7 +14,7 @@ import (
 	"net/url"
 	"net/http"
 	"strings"
-	"context"
+	"golang.org/x/net/context"
 	"encoding/json"
 	"fmt"
 )
