@@ -20,7 +20,7 @@ exports.getInventory = function(args, res, next) {
    **/
   var examples = {};
   examples['application/json'] = {
-  "key" : 0
+  "key" : 5
 };
   if (Object.keys(examples).length > 0) {
     res.setHeader('Content-Type', 'application/json');
@@ -40,9 +40,9 @@ exports.getOrderById = function(args, res, next) {
    **/
   var examples = {};
   examples['application/json'] = {
-  "petId" : 2,
-  "quantity" : 9,
-  "id" : 5,
+  "petId" : 1,
+  "quantity" : 4,
+  "id" : 4,
   "shipDate" : "2000-01-23T04:56:07.000+00:00",
   "complete" : false,
   "status" : "placed"
@@ -65,8 +65,8 @@ exports.placeOrder = function(args, res, next) {
    **/
   var examples = {};
   examples['application/json'] = {
-  "petId" : 5,
-  "quantity" : 5,
+  "petId" : 2,
+  "quantity" : 3,
   "id" : 1,
   "shipDate" : "2000-01-23T04:56:07.000+00:00",
   "complete" : false,
