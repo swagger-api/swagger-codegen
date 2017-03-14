@@ -1,1 +1,1 @@
-{{#isQueryParam}}@QueryParam("{{baseName}}"){{#useBeanValidation}}{{>beanValidationQueryParams}}{{/useBeanValidation}} {{{dataType}}} {{paramName}}{{/isQueryParam}}
+{{#isQueryParam}}@QueryParam("{{baseName}}"){{#useBeanValidation}}{{>beanValidationQueryParams}}{{/useBeanValidation}} {{#datatypeWithEnum}}{{{datatypeWithEnum}}}{{/datatypeWithEnum}}{{^datatypeWithEnum}}{{{dataType}}}{{/datatypeWithEnum}} {{paramName}}{{/isQueryParam}}

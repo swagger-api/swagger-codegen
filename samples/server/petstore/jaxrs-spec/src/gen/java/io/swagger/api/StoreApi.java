@@ -19,6 +19,8 @@ import javax.validation.constraints.*;
 
 
 public class StoreApi  {
+    
+
 
     @DELETE
     @Path("/order/{orderId}")
@@ -31,6 +33,8 @@ public class StoreApi  {
     public Response deleteOrder(@PathParam("orderId") @ApiParam("ID of the order that needs to be deleted") String orderId) {
     	return Response.ok().entity("magic!").build();
     }
+    
+
 
     @GET
     @Path("/inventory")
@@ -44,6 +48,8 @@ public class StoreApi  {
     public Response getInventory() {
     	return Response.ok().entity("magic!").build();
     }
+    
+
 
     @GET
     @Path("/order/{orderId}")
@@ -57,6 +63,8 @@ public class StoreApi  {
     public Response getOrderById(@PathParam("orderId") @Min(1) @Max(5) @ApiParam("ID of pet that needs to be fetched") Long orderId) {
     	return Response.ok().entity("magic!").build();
     }
+    
+
 
     @POST
     @Path("/order")

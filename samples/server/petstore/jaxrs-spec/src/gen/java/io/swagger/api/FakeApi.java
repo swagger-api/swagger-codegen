@@ -2,6 +2,7 @@ package io.swagger.api;
 
 import java.math.BigDecimal;
 import io.swagger.model.Client;
+import java.util.Date;
 import org.joda.time.LocalDate;
 
 import javax.ws.rs.*;
@@ -20,6 +21,8 @@ import javax.validation.constraints.*;
 
 
 public class FakeApi  {
+    
+
 
     @PATCH
     
@@ -31,6 +34,8 @@ public class FakeApi  {
     public Response testClientModel(Client body) {
     	return Response.ok().entity("magic!").build();
     }
+    
+
 
     @POST
     
@@ -42,9 +47,113 @@ public class FakeApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid username supplied", response = void.class),
         @ApiResponse(code = 404, message = "User not found", response = void.class) })
-    public Response testEndpointParameters(@FormParam(value = "number")  BigDecimal number,@FormParam(value = "_double")  Double _double,@FormParam(value = "patternWithoutDelimiter")  String patternWithoutDelimiter,@FormParam(value = "_byte")  byte[] _byte,@FormParam(value = "integer")  Integer integer,@FormParam(value = "int32")  Integer int32,@FormParam(value = "int64")  Long int64,@FormParam(value = "_float")  Float _float,@FormParam(value = "string")  String string,@FormParam(value = "binary")  byte[] binary,@FormParam(value = "date")  LocalDate date,@FormParam(value = "dateTime")  javax.xml.datatype.XMLGregorianCalendar dateTime,@FormParam(value = "password")  String password,@FormParam(value = "paramCallback")  String paramCallback) {
+    public Response testEndpointParameters(@FormParam(value = "number")  BigDecimal number,@FormParam(value = "double")  Double _double,@FormParam(value = "pattern_without_delimiter")  String patternWithoutDelimiter,@FormParam(value = "byte")  byte[] _byte,@FormParam(value = "integer")  Integer integer,@FormParam(value = "int32")  Integer int32,@FormParam(value = "int64")  Long int64,@FormParam(value = "float")  Float _float,@FormParam(value = "string")  String string,@FormParam(value = "binary")  byte[] binary,@FormParam(value = "date")  LocalDate date,@FormParam(value = "dateTime")  Date dateTime,@FormParam(value = "password")  String password,@FormParam(value = "callback")  String paramCallback) {
     	return Response.ok().entity("magic!").build();
     }
+    
+    public enum List&lt;EnumQueryStringArrayEnum&gt; {
+
+        GREATER_THAN(List&lt;String&gt;.valueOf(">")), DOLLAR(List&lt;String&gt;.valueOf("$"));
+
+
+        private List&lt;String&gt; value;
+
+        List&lt;EnumQueryStringArrayEnum&gt; (List&lt;String&gt; v) {
+            value = v;
+        }
+
+        public String value() {
+            return value;
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(value);
+        }
+
+        public static List&lt;EnumQueryStringArrayEnum&gt; fromValue(String v) {
+            for (List<EnumQueryStringArrayEnum> b : List<EnumQueryStringArrayEnum>.values()) {
+                if (String.valueOf(b.value).equals(v)) {
+                    return b;
+                }
+            }
+            return null;
+        }
+
+        public static List&lt;EnumQueryStringArrayEnum&gt; fromString(String v) {
+            return fromValue(v);
+        }
+    }
+
+    public enum EnumQueryStringEnum {
+
+        _ABC(String.valueOf("_abc")), _EFG(String.valueOf("-efg")), _XYZ_(String.valueOf("(xyz)"));
+
+
+        private String value;
+
+        EnumQueryStringEnum (String v) {
+            value = v;
+        }
+
+        public String value() {
+            return value;
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(value);
+        }
+
+        public static EnumQueryStringEnum fromValue(String v) {
+            for (EnumQueryStringEnum b : EnumQueryStringEnum.values()) {
+                if (String.valueOf(b.value).equals(v)) {
+                    return b;
+                }
+            }
+            return null;
+        }
+
+        public static EnumQueryStringEnum fromString(String v) {
+            return fromValue(v);
+        }
+    }
+
+    public enum EnumQueryIntegerEnum {
+
+        NUMBER_1(Integer.valueOf(1)), NUMBER_MINUS_2(Integer.valueOf(-2));
+
+
+        private Integer value;
+
+        EnumQueryIntegerEnum (Integer v) {
+            value = v;
+        }
+
+        public String value() {
+            return value;
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(value);
+        }
+
+        public static EnumQueryIntegerEnum fromValue(String v) {
+            for (EnumQueryIntegerEnum b : EnumQueryIntegerEnum.values()) {
+                if (String.valueOf(b.value).equals(v)) {
+                    return b;
+                }
+            }
+            return null;
+        }
+
+        public static EnumQueryIntegerEnum fromString(String v) {
+            return fromValue(v);
+        }
+    }
+
+
 
     @GET
     
@@ -54,7 +163,7 @@ public class FakeApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid request", response = void.class),
         @ApiResponse(code = 404, message = "Not found", response = void.class) })
-    public Response testEnumParameters(@FormParam(value = "enumFormStringArray")  List<String> enumFormStringArray,@FormParam(value = "enumFormString")  String enumFormString,@HeaderParam("enum_header_string_array") List<String> enumHeaderStringArray,@HeaderParam("enum_header_string") String enumHeaderString,@QueryParam("enum_query_string_array")  List<String> enumQueryStringArray,@QueryParam("enum_query_string")  String enumQueryString,@QueryParam("enum_query_integer")  Integer enumQueryInteger,@FormParam(value = "enumQueryDouble")  Double enumQueryDouble) {
+    public Response testEnumParameters(@FormParam(value = "enum_form_string_array")  List<String> enumFormStringArray,@FormParam(value = "enum_form_string")  String enumFormString,@HeaderParam("enum_header_string_array") List<String> enumHeaderStringArray,@HeaderParam("enum_header_string") String enumHeaderString,@QueryParam("enum_query_string_array")  List<EnumQueryStringArrayEnum> enumQueryStringArray,@QueryParam("enum_query_string")  EnumQueryStringEnum enumQueryString,@QueryParam("enum_query_integer")  EnumQueryIntegerEnum enumQueryInteger,@FormParam(value = "enum_query_double")  Double enumQueryDouble) {
     	return Response.ok().entity("magic!").build();
     }
 }

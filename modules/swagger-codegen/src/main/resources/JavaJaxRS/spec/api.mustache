@@ -23,6 +23,9 @@ import javax.validation.constraints.*;
 public class {{classname}}  {
 {{#operations}}
 {{#operation}}
+    {{#queryParams}}{{#datatypeWithEnum}}
+{{>enumClass}}{{/datatypeWithEnum}}{{/queryParams}}
+
 
     @{{httpMethod}}
     {{#subresourceOperation}}@Path("{{path}}"){{/subresourceOperation}}

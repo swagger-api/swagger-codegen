@@ -1,5 +1,6 @@
 package io.swagger.model;
 
+import java.util.Date;
 import javax.validation.constraints.*;
 
 
@@ -12,37 +13,41 @@ public class Order   {
   private Long id = null;
   private Long petId = null;
   private Integer quantity = null;
-  private javax.xml.datatype.XMLGregorianCalendar shipDate = null;
+  private Date shipDate = null;
 
-public enum StatusEnum {
+    public enum StatusEnum {
 
-    PLACED(String.valueOf("placed")), APPROVED(String.valueOf("approved")), DELIVERED(String.valueOf("delivered"));
+        PLACED(String.valueOf("placed")), APPROVED(String.valueOf("approved")), DELIVERED(String.valueOf("delivered"));
 
 
-    private String value;
+        private String value;
 
-    StatusEnum (String v) {
-        value = v;
-    }
-
-    public String value() {
-        return value;
-    }
-
-    @Override
-    public String toString() {
-        return String.valueOf(value);
-    }
-
-    public static StatusEnum fromValue(String v) {
-        for (StatusEnum b : StatusEnum.values()) {
-            if (String.valueOf(b.value).equals(v)) {
-                return b;
-            }
+        StatusEnum (String v) {
+            value = v;
         }
-        return null;
+
+        public String value() {
+            return value;
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(value);
+        }
+
+        public static StatusEnum fromValue(String v) {
+            for (StatusEnum b : StatusEnum.values()) {
+                if (String.valueOf(b.value).equals(v)) {
+                    return b;
+                }
+            }
+            return null;
+        }
+
+        public static StatusEnum fromString(String v) {
+            return fromValue(v);
+        }
     }
-}
 
   private StatusEnum status = null;
   private Boolean complete = false;
@@ -55,7 +60,7 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Long getId() {
     return id;
   }
@@ -71,7 +76,7 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Long getPetId() {
     return petId;
   }
@@ -87,7 +92,7 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Integer getQuantity() {
     return quantity;
   }
@@ -97,17 +102,17 @@ public enum StatusEnum {
 
   /**
    **/
-  public Order shipDate(javax.xml.datatype.XMLGregorianCalendar shipDate) {
+  public Order shipDate(Date shipDate) {
     this.shipDate = shipDate;
     return this;
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
-  public javax.xml.datatype.XMLGregorianCalendar getShipDate() {
+  @ApiModelProperty(value = "")
+  public Date getShipDate() {
     return shipDate;
   }
-  public void setShipDate(javax.xml.datatype.XMLGregorianCalendar shipDate) {
+  public void setShipDate(Date shipDate) {
     this.shipDate = shipDate;
   }
 
@@ -120,7 +125,7 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(example = "null", value = "Order Status")
+  @ApiModelProperty(value = "Order Status")
   public StatusEnum getStatus() {
     return status;
   }
@@ -136,7 +141,7 @@ public enum StatusEnum {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Boolean getComplete() {
     return complete;
   }
@@ -146,7 +151,7 @@ public enum StatusEnum {
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -186,7 +191,7 @@ public enum StatusEnum {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
