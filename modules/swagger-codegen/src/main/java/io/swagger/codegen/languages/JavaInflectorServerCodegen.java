@@ -34,9 +34,16 @@ public class JavaInflectorServerCodegen extends AbstractJavaCodegen {
         modelDocTemplateFiles.remove("model_doc.mustache");
         apiDocTemplateFiles.remove("api_doc.mustache");
 
+        if(System.getProperty("swagger.codegen.inflector.apipackage") != null) {
+            LOGGER.warn("System property 'swagger.codegen.inflector.apipackage' is not supported anymore, use the standard apiPackage parameter.");
+        }
 
-        apiPackage = System.getProperty("swagger.codegen.inflector.apipackage", "io.swagger.handler");
-        modelPackage = System.getProperty("swagger.codegen.inflector.modelpackage", "io.swagger.model");
+        if(System.getProperty("swagger.codegen.inflector.modelpackage") != null) {
+            LOGGER.warn("System property 'swagger.codegen.inflector.modelpackage' is not supported anymore, please use the standard modelPackage parameter.");
+        }
+
+        apiPackage = "io.swagger.handler";
+        modelPackage = "io.swagger.model";
 
         additionalProperties.put("title", title);
         // java inflector uses the jackson lib
