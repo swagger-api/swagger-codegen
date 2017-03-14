@@ -14,35 +14,39 @@ public class MapTest   {
   
   private Map<String, Map<String, String>> mapMapOfString = new HashMap<String, Map<String, String>>();
 
-public enum InnerEnum {
+    public enum InnerEnum {
 
-    UPPER(String.valueOf("UPPER")), LOWER(String.valueOf("lower"));
+        UPPER(String.valueOf("UPPER")), LOWER(String.valueOf("lower"));
 
 
-    private String value;
+        private String value;
 
-    InnerEnum (String v) {
-        value = v;
-    }
-
-    public String value() {
-        return value;
-    }
-
-    @Override
-    public String toString() {
-        return String.valueOf(value);
-    }
-
-    public static InnerEnum fromValue(String v) {
-        for (InnerEnum b : InnerEnum.values()) {
-            if (String.valueOf(b.value).equals(v)) {
-                return b;
-            }
+        InnerEnum (String v) {
+            value = v;
         }
-        return null;
+
+        public String value() {
+            return toString();
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(value);
+        }
+
+        public static InnerEnum fromValue(String v) {
+            for (InnerEnum b : InnerEnum.values()) {
+                if (String.valueOf(b.value).equals(v)) {
+                    return b;
+                }
+            }
+            return null;
+        }
+
+        public static InnerEnum fromString(String v) {
+            return fromValue(v);
+        }
     }
-}
 
   private Map<String, InnerEnum> mapOfEnumString = new HashMap<String, InnerEnum>();
 

@@ -12,67 +12,75 @@ import java.util.Objects;
 public class EnumArrays   {
   
 
-public enum JustSymbolEnum {
+    public enum JustSymbolEnum {
 
-    GREATER_THAN_OR_EQUAL_TO(String.valueOf(">=")), DOLLAR(String.valueOf("$"));
+        GREATER_THAN_OR_EQUAL_TO(String.valueOf(">=")), DOLLAR(String.valueOf("$"));
 
 
-    private String value;
+        private String value;
 
-    JustSymbolEnum (String v) {
-        value = v;
-    }
-
-    public String value() {
-        return value;
-    }
-
-    @Override
-    public String toString() {
-        return String.valueOf(value);
-    }
-
-    public static JustSymbolEnum fromValue(String v) {
-        for (JustSymbolEnum b : JustSymbolEnum.values()) {
-            if (String.valueOf(b.value).equals(v)) {
-                return b;
-            }
+        JustSymbolEnum (String v) {
+            value = v;
         }
-        return null;
+
+        public String value() {
+            return toString();
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(value);
+        }
+
+        public static JustSymbolEnum fromValue(String v) {
+            for (JustSymbolEnum b : JustSymbolEnum.values()) {
+                if (String.valueOf(b.value).equals(v)) {
+                    return b;
+                }
+            }
+            return null;
+        }
+
+        public static JustSymbolEnum fromString(String v) {
+            return fromValue(v);
+        }
     }
-}
 
   private JustSymbolEnum justSymbol = null;
 
-public enum ArrayEnumEnum {
+    public enum ArrayEnumEnum {
 
-    FISH(String.valueOf("fish")), CRAB(String.valueOf("crab"));
+        FISH(String.valueOf("fish")), CRAB(String.valueOf("crab"));
 
 
-    private String value;
+        private String value;
 
-    ArrayEnumEnum (String v) {
-        value = v;
-    }
-
-    public String value() {
-        return value;
-    }
-
-    @Override
-    public String toString() {
-        return String.valueOf(value);
-    }
-
-    public static ArrayEnumEnum fromValue(String v) {
-        for (ArrayEnumEnum b : ArrayEnumEnum.values()) {
-            if (String.valueOf(b.value).equals(v)) {
-                return b;
-            }
+        ArrayEnumEnum (String v) {
+            value = v;
         }
-        return null;
+
+        public String value() {
+            return toString();
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(value);
+        }
+
+        public static ArrayEnumEnum fromValue(String v) {
+            for (ArrayEnumEnum b : ArrayEnumEnum.values()) {
+                if (String.valueOf(b.value).equals(v)) {
+                    return b;
+                }
+            }
+            return null;
+        }
+
+        public static ArrayEnumEnum fromString(String v) {
+            return fromValue(v);
+        }
     }
-}
 
   private List<ArrayEnumEnum> arrayEnum = new ArrayList<ArrayEnumEnum>();
 
