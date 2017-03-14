@@ -516,6 +516,10 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
             return "empty";
         }
 
+        if (name.matches("\\d.*")) { // starts with number
+            name = "number" + name;
+        }
+        
         // for symbol, e.g. $, #
         if (getSymbolName(name) != null) {
             return camelize(WordUtils.capitalizeFully(getSymbolName(name).toUpperCase()), true);
