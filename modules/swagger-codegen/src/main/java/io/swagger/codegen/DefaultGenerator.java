@@ -10,6 +10,7 @@ import io.swagger.models.parameters.Parameter;
 import io.swagger.util.Json;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.SystemUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -416,6 +417,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                         }
                     }
 
+                    // Process templates for APIs
                     for (String templateName : config.apiTemplateFiles().keySet()) {
                         String filename = config.apiFilename(templateName, tag);
                         if (!config.shouldOverwrite(filename) && new File(filename).exists()) {
@@ -427,6 +429,50 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                         if(written != null) {
                             files.add(written);
                         }
+                    }
+
+                    // Process templates for operations
+                    for (String templateName : config.operationTemplateFiles().keySet()) {
+                        Map<String, Object> api = ((Map<String, Object>)operation.get("operations"));
+                        System.out.println("API: " + api.get("classname"));
+
+                        for (CodegenOperation apiOperation : (List<CodegenOperation>)api.get("operation")) {
+                            // Initialize data object for template
+                            Map<String, Object> operationData = new HashMap<>();
+                            operationData.put("package", operation.get("package"));
+                            operationData.put("imports", operation.get("imports"));
+                            operationData.put("invokerPackage", operation.get("invokerPackage"));
+                            operationData.put("modelPackage", operation.get("modelPackage"));
+                            operationData.put("operation", apiOperation);
+                            operationData.put("classname", config.toModelName(apiOperation.operationId + "Request"));
+
+                            // Determine filename
+                            String filename = config.operationFilename(templateName, operationData.get("classname").toString());
+                            if (!config.shouldOverwrite(filename) && new File(filename).exists()) {
+                                LOGGER.info("Skipped overwriting " + filename);
+                                continue;
+                            }
+
+                            // Write file
+                            File written = processTemplateToFile(operationData, templateName, filename);
+                            if(written != null) {
+                                files.add(written);
+                            }
+                        }
+
+                        /*
+                        Map<String, Object> operations = (Map<String, Object>)((Map<String, Object>)operation.get("operations")).get("operation");
+
+                        String filename = config.apiFilename(templateName, tag + "RequestBuilder");
+                        if (!config.shouldOverwrite(filename) && new File(filename).exists()) {
+                            LOGGER.info("Skipped overwriting " + filename);
+                            continue;
+                        }
+                        File written = processTemplateToFile(operations, templateName, filename);
+                        if(written != null) {
+                            files.add(written);
+                        }
+                        */
                     }
 
                     if(generateApiTests) {

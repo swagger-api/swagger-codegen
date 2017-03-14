@@ -30,6 +30,8 @@ public class PureCloudJavaClientCodegenSdkV1 extends JavaClientCodegen {
 
         // Add special reserved words
         reservedWords.add("null");
+
+        operationTemplateFiles.put("requestBuilder.mustache", ".java");
     }
 
 

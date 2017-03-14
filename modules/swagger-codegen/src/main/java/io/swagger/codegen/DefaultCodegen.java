@@ -87,6 +87,7 @@ public class DefaultCodegen {
     protected String modelNamePrefix = "", modelNameSuffix = "";
     protected String testPackage = "";
     protected Map<String, String> apiTemplateFiles = new HashMap<String, String>();
+    protected Map<String, String> operationTemplateFiles = new HashMap<String, String>();
     protected Map<String, String> modelTemplateFiles = new HashMap<String, String>();
     protected Map<String, String> apiTestTemplateFiles = new HashMap<String, String>();
     protected Map<String, String> modelTestTemplateFiles = new HashMap<String, String>();
@@ -474,6 +475,10 @@ public class DefaultCodegen {
 
     public Map<String, String> apiTemplateFiles() {
         return apiTemplateFiles;
+    }
+
+    public Map<String, String> operationTemplateFiles() {
+        return operationTemplateFiles;
     }
 
     public Map<String, String> modelTemplateFiles() {
@@ -2718,6 +2723,11 @@ public class DefaultCodegen {
     public String apiFilename(String templateName, String tag) {
         String suffix = apiTemplateFiles().get(templateName);
         return apiFileFolder() + '/' + toApiFilename(tag) + suffix;
+    }
+
+    public String operationFilename(String templateName, String tag) {
+        String suffix = operationTemplateFiles().get(templateName);
+        return apiFileFolder() + "/../operationBuilders/" + initialCaps(tag) + suffix;
     }
 
     /**
