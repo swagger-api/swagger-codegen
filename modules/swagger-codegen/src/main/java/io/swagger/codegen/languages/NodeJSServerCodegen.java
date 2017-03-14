@@ -22,7 +22,9 @@ import java.util.Map.Entry;
 
 public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(NodeJSServerCodegen.class);
+    public static final String NOSERVICE = "noservice";
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(NodeJSServerCodegen.class);
 
     public static final String GOOGLE_CLOUD_FUNCTIONS = "googleCloudFunctions";
     public static final String EXPORTED_NAME = "exportedName";
@@ -91,6 +93,8 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
             "When the generated code will be deployed to Google Cloud Functions, this option can be "
                 + "used to update the name of the exported function. By default, it refers to the "
                 + "basePath. This does not affect normal standalone nodejs server code."));
+        cliOptions.add(new CliOption(NOSERVICE,
+        		"If this option is given, no service.js file will be generated."));
     }
 
     @Override
@@ -286,7 +290,8 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
         }
         writeOptional(outputFolder, new SupportingFile("package.mustache", "", "package.json"));
         writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
-        if (System.getProperty("noservice") == null) {
+
+        if(!additionalProperties.containsKey(NOSERVICE)) {
             apiTemplateFiles.put(
                     "service.mustache",   // the template to use
                     "Service.js");       // the extension for each file to write
