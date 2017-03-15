@@ -24,8 +24,19 @@ public interface {{classname}} extends ApiClient.Api {
    * {{summary}}
    * {{notes}}
 {{#allParams}}
+{{^isQueryParam}}
     * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+{{/isQueryParam}}
 {{/allParams}}
+{{#hasQueryParams}}
+   * @param queryParams Map of query parameters as name-value pairs (required)
+   *   <p>The following elements may be specified in the query map:</p>
+   *   <ul>
+{{#queryParams}}
+   *   <li>{{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}</li>
+{{/queryParams}}
+   *   </ul>
+{{/hasQueryParams}}
 {{#returnType}}
    * @return {{returnType}}
 {{/returnType}}
@@ -37,16 +48,21 @@ public interface {{classname}} extends ApiClient.Api {
     "{{baseName}}: {{=<% %>=}}{<%paramName%>}<%={{ }}=%>"{{#hasMore}},
     {{/hasMore}}{{/headerParams}}
   })
-  {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{nickname}}(final @QueryMap Map<String, Object> queryMap);
+{{^hasQueryParams}}
+  {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{nickname}}({{#allParams}}{{^isBodyParam}}{{^legacyDates}}@Param("{{paramName}}") {{/legacyDates}}{{#legacyDates}}@Param(value="{{paramName}}", expander=ParamExpander.class) {{/legacyDates}}{{/isBodyParam}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+{{/hasQueryParams}}
+{{#hasQueryParams}}
+  {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{nickname}}({{#allParams}}{{^isQueryParam}}{{^isBodyParam}}{{^legacyDates}}@Param("{{paramName}}") {{/legacyDates}}{{#legacyDates}}@Param(value="{{paramName}}", expander=ParamExpander.class) {{/legacyDates}}{{/isBodyParam}}{{{dataType}}} {{paramName}}, {{/isQueryParam}}{{/allParams}}@QueryMap {{nickname}}QueryParams queryParams);
 
-  public class {{nickname}}Builder extends HashMap<String, Object> {
-    {{#allParams}}
-      public {{nickname}}Builder {{paramName}}(final {{{dataType}}} value) {
+  public static class {{nickname}}QueryParams extends HashMap<String, Object> {
+    {{#queryParams}}
+      public {{nickname}}QueryParams {{paramName}}(final {{{dataType}}} value) {
         put("{{paramName}}", value);
         return this;
       }
-    {{/allParams}}
+    {{/queryParams}}
   }
+{{/hasQueryParams}}
   {{/operation}}
 {{/operations}}
 }
