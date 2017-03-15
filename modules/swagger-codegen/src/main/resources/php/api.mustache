@@ -259,7 +259,7 @@ use {{invokerPackage}}\ObjectSerializer;
             return [
                 ObjectSerializer::deserialize($content, '{{returnType}}', []),
                 $response->getStatusCode(),
-                []
+                $response->getHeaders()
             ];
             {{/returnType}}
             {{^returnType}}

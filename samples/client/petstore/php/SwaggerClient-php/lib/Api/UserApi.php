@@ -513,7 +513,7 @@ class UserApi
             return [
                 ObjectSerializer::deserialize($content, '\Swagger\Client\Model\User', []),
                 $response->getStatusCode(),
-                []
+                $response->getHeaders()
             ];
         } catch (Exception $exception) {
             throw new ApiException($exception->getMessage(), null, $exception);
@@ -625,7 +625,7 @@ class UserApi
             return [
                 ObjectSerializer::deserialize($content, 'string', []),
                 $response->getStatusCode(),
-                []
+                $response->getHeaders()
             ];
         } catch (Exception $exception) {
             throw new ApiException($exception->getMessage(), null, $exception);

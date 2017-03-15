@@ -139,7 +139,7 @@ class FakeApi
             return [
                 ObjectSerializer::deserialize($content, '\Swagger\Client\Model\Client', []),
                 $response->getStatusCode(),
-                []
+                $response->getHeaders()
             ];
         } catch (Exception $exception) {
             throw new ApiException($exception->getMessage(), null, $exception);

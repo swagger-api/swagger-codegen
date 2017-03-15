@@ -233,7 +233,7 @@ class StoreApi
             return [
                 ObjectSerializer::deserialize($content, 'map[string,int]', []),
                 $response->getStatusCode(),
-                []
+                $response->getHeaders()
             ];
         } catch (Exception $exception) {
             throw new ApiException($exception->getMessage(), null, $exception);
@@ -349,7 +349,7 @@ class StoreApi
             return [
                 ObjectSerializer::deserialize($content, '\Swagger\Client\Model\Order', []),
                 $response->getStatusCode(),
-                []
+                $response->getHeaders()
             ];
         } catch (Exception $exception) {
             throw new ApiException($exception->getMessage(), null, $exception);
@@ -452,7 +452,7 @@ class StoreApi
             return [
                 ObjectSerializer::deserialize($content, '\Swagger\Client\Model\Order', []),
                 $response->getStatusCode(),
-                []
+                $response->getHeaders()
             ];
         } catch (Exception $exception) {
             throw new ApiException($exception->getMessage(), null, $exception);

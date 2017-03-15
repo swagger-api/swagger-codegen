@@ -346,7 +346,7 @@ class PetApi
             return [
                 ObjectSerializer::deserialize($content, '\Swagger\Client\Model\Pet[]', []),
                 $response->getStatusCode(),
-                []
+                $response->getHeaders()
             ];
         } catch (Exception $exception) {
             throw new ApiException($exception->getMessage(), null, $exception);
@@ -455,7 +455,7 @@ class PetApi
             return [
                 ObjectSerializer::deserialize($content, '\Swagger\Client\Model\Pet[]', []),
                 $response->getStatusCode(),
-                []
+                $response->getHeaders()
             ];
         } catch (Exception $exception) {
             throw new ApiException($exception->getMessage(), null, $exception);
@@ -562,7 +562,7 @@ class PetApi
             return [
                 ObjectSerializer::deserialize($content, '\Swagger\Client\Model\Pet', []),
                 $response->getStatusCode(),
-                []
+                $response->getHeaders()
             ];
         } catch (Exception $exception) {
             throw new ApiException($exception->getMessage(), null, $exception);
@@ -901,7 +901,7 @@ class PetApi
             return [
                 ObjectSerializer::deserialize($content, '\Swagger\Client\Model\ApiResponse', []),
                 $response->getStatusCode(),
-                []
+                $response->getHeaders()
             ];
         } catch (Exception $exception) {
             throw new ApiException($exception->getMessage(), null, $exception);
