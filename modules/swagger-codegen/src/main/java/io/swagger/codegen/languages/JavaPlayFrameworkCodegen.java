@@ -18,6 +18,7 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
     public static final String BASE_PACKAGE = "basePackage";
     public static final String CONTROLLER_ONLY = "controllerOnly";
     public static final String USE_INTERFACES = "useInterfaces";
+    public static final String HANDLE_EXCEPTIONS = "handleExceptions";
 
     protected String title = "swagger-petstore";
     protected String configPackage = "io.swagger.configuration";
@@ -25,6 +26,7 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
     protected boolean controllerOnly = false;
     protected boolean useInterfaces = true;
     protected boolean useBeanValidation = true;
+    protected boolean handleExceptions = true;
 
     public JavaPlayFrameworkCodegen() {
         super();
@@ -54,6 +56,7 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
         cliOptions.add(createBooleanCliWithDefault(CONTROLLER_ONLY, "Whether to generate only API interface stubs without the server files.", controllerOnly));
         cliOptions.add(createBooleanCliWithDefault(USE_BEANVALIDATION, "Use BeanValidation API annotations", useBeanValidation));
         cliOptions.add(createBooleanCliWithDefault(USE_INTERFACES, "Makes the controllerImp implements an interface to facilitate automatic completion when updating from version x to y of your spec", useInterfaces));
+        cliOptions.add(createBooleanCliWithDefault(HANDLE_EXCEPTIONS, "Add a wrapper to each controller to handle exceptions that pop in the controller", handleExceptions));
     }
 
     @Override
@@ -106,6 +109,11 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
             writePropertyBack(USE_INTERFACES, useInterfaces);
         }
 
+        if (additionalProperties.containsKey(HANDLE_EXCEPTIONS)) {
+            this.setHandleExceptions(convertPropertyToBoolean(HANDLE_EXCEPTIONS));
+            writePropertyBack(HANDLE_EXCEPTIONS, handleExceptions);
+        }
+
         if (useBeanValidation) {
             writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
         }
@@ -131,6 +139,9 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
 
         //App/Utils folder
         supportingFiles.add(new SupportingFile("swaggerUtils.mustache", "app/swagger", "SwaggerUtils.java"));
+        if (this.handleExceptions) {
+            supportingFiles.add(new SupportingFile("apiCall.mustache", "app/swagger", "ApiCall.java"));
+        }
 
         //App/Controllers
         supportingFiles.add(new SupportingFile("apiDocController.mustache", "app/controllers", "ApiDocController.java"));
@@ -191,6 +202,10 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
 
     public void setUseBeanValidation(boolean useBeanValidation) {
         this.useBeanValidation = useBeanValidation;
+    }
+
+    public void setHandleExceptions(boolean handleExceptions) {
+        this.handleExceptions = handleExceptions;
     }
 
     @Override

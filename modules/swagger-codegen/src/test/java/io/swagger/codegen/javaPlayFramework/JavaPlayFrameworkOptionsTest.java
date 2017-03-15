@@ -59,6 +59,8 @@ public class JavaPlayFrameworkOptionsTest extends JavaClientOptionsTest {
             times = 1;
             clientCodegen.setUseInterfaces(Boolean.valueOf(JavaPlayFrameworkOptionsProvider.USE_INTERFACES));
             times = 1;
+            clientCodegen.setHandleExceptions(Boolean.valueOf(JavaPlayFrameworkOptionsProvider.HANDLE_EXCEPTIONS));
+            times = 1;
         }};
     }
 }

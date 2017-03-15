@@ -13,12 +13,15 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
 import java.io.IOException;
 import swagger.SwaggerUtils;
-import javafx.util.Pair;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 {{#useBeanValidation}}
 import javax.validation.constraints.*;
 {{/useBeanValidation}}
+
+{{#handleExceptions}}
+import swagger.SwaggerUtils.ApiAction;
+{{/handleExceptions}}
 
 {{>generatedAnnotation}}
 {{#operations}}
@@ -35,6 +38,7 @@ public class {{classname}}Controller extends Controller {
 
 {{#operation}}
 
+    {{#handleExceptions}}@ApiAction{{/handleExceptions}}
     public Result {{operationId}}({{#pathParams}}{{>pathParams}}{{#hasMore}},{{/hasMore}}{{/pathParams}}) {{#bodyParams}}throws IOException{{/bodyParams}} {
         {{#bodyParams}}
         {{#collectionFormat}}

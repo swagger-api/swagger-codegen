@@ -12,6 +12,7 @@ public class JavaPlayFrameworkOptionsProvider extends JavaOptionsProvider {
     public static final String CONTROLLER_ONLY = "false";
     public static final String USE_BEANVALIDATION = "true";
     public static final String USE_INTERFACES = "true";
+    public static final String HANDLE_EXCEPTIONS = "true";
 
     @Override
     public String getLanguage() {
@@ -27,6 +28,7 @@ public class JavaPlayFrameworkOptionsProvider extends JavaOptionsProvider {
         options.put(JavaPlayFrameworkCodegen.CONTROLLER_ONLY, CONTROLLER_ONLY);
         options.put(JavaPlayFrameworkCodegen.USE_BEANVALIDATION, USE_BEANVALIDATION);
         options.put(JavaPlayFrameworkCodegen.USE_INTERFACES, USE_INTERFACES);
+        options.put(JavaPlayFrameworkCodegen.HANDLE_EXCEPTIONS, HANDLE_EXCEPTIONS);
 
         return options;
     }
