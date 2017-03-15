@@ -1,4 +1,4 @@
-package com.ibm.ws.petstoresample.model;
+package io.swagger.model;
 
 
 

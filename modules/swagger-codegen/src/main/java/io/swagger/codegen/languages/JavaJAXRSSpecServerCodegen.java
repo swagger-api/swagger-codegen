@@ -20,9 +20,8 @@ import io.swagger.util.Json;
 import org.apache.commons.io.FileUtils;
 
 public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
-{	
-	public JavaJAXRSSpecServerCodegen()
-	{
+{
+    public JavaJAXRSSpecServerCodegen() {
         super();
         invokerPackage = "io.swagger.api";
         artifactId = "swagger-jaxrs-server";
@@ -30,6 +29,8 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
 
         modelTemplateFiles.put("model.mustache", ".java");
         apiTemplateFiles.put("api.mustache", ".java");
+        apiTemplateFiles.put("apiServiceImpl.mustache", ".java");
+
         apiPackage = "io.swagger.api";
         modelPackage = "io.swagger.model";
 
@@ -67,26 +68,24 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
         library.setEnum(supportedLibraries);
 
         cliOptions.add(library);
-	}
-	
-	@Override
-	public void processOpts()
-	{
-		super.processOpts();
+    }
 
-		supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
+    @Override
+    public void processOpts() {
+        super.processOpts();
+
+        supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
         
         writeOptional(outputFolder, new SupportingFile("RestApplication.mustache",
                 (sourceFolder + '/' + invokerPackage).replace(".", "/"), "RestApplication.java"));
         
-	} 
+    }
 
-	@Override
-	public String getName()
-	{
-		return "jaxrs-spec";
-	}
+    @Override
+    public String getName() {
+        return "jaxrs-spec";
+    }
 
     @Override
     public void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co, Map<String, List<CodegenOperation>> operations) {
@@ -127,16 +126,16 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
         model.imports.remove("JsonProperty");
     }
     
-	@Override
+    @Override
     public void preprocessSwagger(Swagger swagger) {
-		//copy input swagger to output folder 
-    	try {
-			String swaggerJson = Json.pretty(swagger);
+        // copy input swagger to output folder
+        try {
+            String swaggerJson = Json.pretty(swagger);
             FileUtils.writeStringToFile(new File(outputFolder + File.separator + "swagger.json"), swaggerJson);
-		} catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e.getCause());
-		}
-		super.preprocessSwagger(swagger);
+        }
+        super.preprocessSwagger(swagger);
 
     }
     @Override

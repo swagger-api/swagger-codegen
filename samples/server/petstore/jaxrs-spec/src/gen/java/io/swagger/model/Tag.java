@@ -1,4 +1,4 @@
-package com.ibm.ws.petstoresample.model;
+package io.swagger.model;
 
 
 
@@ -7,14 +7,14 @@ import io.swagger.annotations.*;
 import java.util.Objects;
 
 
-public class Category   {
+public class Tag   {
   
   private Long id = null;
   private String name = null;
 
   /**
    **/
-  public Category id(Long id) {
+  public Tag id(Long id) {
     this.id = id;
     return this;
   }
@@ -30,7 +30,7 @@ public class Category   {
 
   /**
    **/
-  public Category name(String name) {
+  public Tag name(String name) {
     this.name = name;
     return this;
   }
@@ -53,9 +53,9 @@ public class Category   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Category category = (Category) o;
-    return Objects.equals(id, category.id) &&
-        Objects.equals(name, category.name);
+    Tag tag = (Tag) o;
+    return Objects.equals(id, tag.id) &&
+        Objects.equals(name, tag.name);
   }
 
   @Override
@@ -66,7 +66,7 @@ public class Category   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Category {\n");
+    sb.append("class Tag {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
