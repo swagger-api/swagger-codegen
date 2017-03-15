@@ -29,6 +29,7 @@
 namespace Swagger\Client\Api;
 
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Uri;
 use Http\Client\Exception;
 use Http\Client\HttpClient;
 use Swagger\Client\ApiException;
@@ -100,6 +101,7 @@ class PetApi
 
         $resourcePath = substr('/pet', 1);
         $formParams = [];
+        $queryParams = [];
         $httpBody= '';
 
         $headers = $this->headerSelector->selectHeaders(
@@ -108,9 +110,7 @@ class PetApi
         );
 
 
-/**
 
-    */
 
         // body params
         $_tempBody = null;
@@ -131,10 +131,12 @@ class PetApi
         }
 */
 
+        $query = http_build_query($queryParams);
+
         try {
             $request = new Request(
                 'POST',
-                $resourcePath,
+                Uri::composeComponents('', '', $resourcePath, $query, ''),
                 $headers,
                 $httpBody
             );
@@ -200,6 +202,7 @@ class PetApi
 
         $resourcePath = substr('/pet/{petId}', 1);
         $formParams = [];
+        $queryParams = [];
         $httpBody= '';
 
         $headers = $this->headerSelector->selectHeaders(
@@ -213,8 +216,8 @@ class PetApi
         if ($api_key !== null) {
             $headerParams['api_key'] = $this->apiClient->getSerializer()->toHeaderValue($api_key);
         }
+*/
 
-    */
         // path params
         if ($pet_id !== null) {
             $resourcePath = str_replace('{' . 'petId' . '}', $this->serializer->toPathValue($pet_id), $resourcePath);
@@ -234,10 +237,12 @@ class PetApi
         }
 */
 
+        $query = http_build_query($queryParams);
+
         try {
             $request = new Request(
                 'DELETE',
-                $resourcePath,
+                Uri::composeComponents('', '', $resourcePath, $query, ''),
                 $headers,
                 $httpBody
             );
@@ -301,6 +306,7 @@ class PetApi
 
         $resourcePath = substr('/pet/findByStatus', 1);
         $formParams = [];
+        $queryParams = [];
         $httpBody= '';
 
         $headers = $this->headerSelector->selectHeaders(
@@ -309,16 +315,14 @@ class PetApi
         );
 
 
-/**
         // query params
         if (is_array($status)) {
-            $status = $this->apiClient->getSerializer()->serializeCollection($status, 'csv', true);
+            $status = $this->serializer->serializeCollection($status, 'csv', true);
         }
         if ($status !== null) {
-            $queryParams['status'] = $this->apiClient->getSerializer()->toQueryValue($status);
+            $queryParams['status'] = $this->serializer->toQueryValue($status);
         }
 
-    */
 
         
         // for model (json/xml)
@@ -334,10 +338,12 @@ class PetApi
         }
 */
 
+        $query = http_build_query($queryParams);
+
         try {
             $request = new Request(
                 'GET',
-                $resourcePath,
+                Uri::composeComponents('', '', $resourcePath, $query, ''),
                 $headers,
                 $httpBody
             );
@@ -410,6 +416,7 @@ class PetApi
 
         $resourcePath = substr('/pet/findByTags', 1);
         $formParams = [];
+        $queryParams = [];
         $httpBody= '';
 
         $headers = $this->headerSelector->selectHeaders(
@@ -418,16 +425,14 @@ class PetApi
         );
 
 
-/**
         // query params
         if (is_array($tags)) {
-            $tags = $this->apiClient->getSerializer()->serializeCollection($tags, 'csv', true);
+            $tags = $this->serializer->serializeCollection($tags, 'csv', true);
         }
         if ($tags !== null) {
-            $queryParams['tags'] = $this->apiClient->getSerializer()->toQueryValue($tags);
+            $queryParams['tags'] = $this->serializer->toQueryValue($tags);
         }
 
-    */
 
         
         // for model (json/xml)
@@ -443,10 +448,12 @@ class PetApi
         }
 */
 
+        $query = http_build_query($queryParams);
+
         try {
             $request = new Request(
                 'GET',
-                $resourcePath,
+                Uri::composeComponents('', '', $resourcePath, $query, ''),
                 $headers,
                 $httpBody
             );
@@ -519,6 +526,7 @@ class PetApi
 
         $resourcePath = substr('/pet/{petId}', 1);
         $formParams = [];
+        $queryParams = [];
         $httpBody= '';
 
         $headers = $this->headerSelector->selectHeaders(
@@ -527,9 +535,7 @@ class PetApi
         );
 
 
-/**
 
-    */
         // path params
         if ($pet_id !== null) {
             $resourcePath = str_replace('{' . 'petId' . '}', $this->serializer->toPathValue($pet_id), $resourcePath);
@@ -550,10 +556,12 @@ class PetApi
         }
 */
 
+        $query = http_build_query($queryParams);
+
         try {
             $request = new Request(
                 'GET',
-                $resourcePath,
+                Uri::composeComponents('', '', $resourcePath, $query, ''),
                 $headers,
                 $httpBody
             );
@@ -626,6 +634,7 @@ class PetApi
 
         $resourcePath = substr('/pet', 1);
         $formParams = [];
+        $queryParams = [];
         $httpBody= '';
 
         $headers = $this->headerSelector->selectHeaders(
@@ -634,9 +643,7 @@ class PetApi
         );
 
 
-/**
 
-    */
 
         // body params
         $_tempBody = null;
@@ -657,10 +664,12 @@ class PetApi
         }
 */
 
+        $query = http_build_query($queryParams);
+
         try {
             $request = new Request(
                 'PUT',
-                $resourcePath,
+                Uri::composeComponents('', '', $resourcePath, $query, ''),
                 $headers,
                 $httpBody
             );
@@ -728,6 +737,7 @@ class PetApi
 
         $resourcePath = substr('/pet/{petId}', 1);
         $formParams = [];
+        $queryParams = [];
         $httpBody= '';
 
         $headers = $this->headerSelector->selectHeaders(
@@ -736,9 +746,7 @@ class PetApi
         );
 
 
-/**
 
-    */
         // path params
         if ($pet_id !== null) {
             $resourcePath = str_replace('{' . 'petId' . '}', $this->serializer->toPathValue($pet_id), $resourcePath);
@@ -770,10 +778,12 @@ class PetApi
         }
 */
 
+        $query = http_build_query($queryParams);
+
         try {
             $request = new Request(
                 'POST',
-                $resourcePath,
+                Uri::composeComponents('', '', $resourcePath, $query, ''),
                 $headers,
                 $httpBody
             );
@@ -841,6 +851,7 @@ class PetApi
 
         $resourcePath = substr('/pet/{petId}/uploadImage', 1);
         $formParams = [];
+        $queryParams = [];
         $httpBody= '';
 
         $headers = $this->headerSelector->selectHeaders(
@@ -849,9 +860,7 @@ class PetApi
         );
 
 
-/**
 
-    */
         // path params
         if ($pet_id !== null) {
             $resourcePath = str_replace('{' . 'petId' . '}', $this->serializer->toPathValue($pet_id), $resourcePath);
@@ -889,10 +898,12 @@ class PetApi
         }
 */
 
+        $query = http_build_query($queryParams);
+
         try {
             $request = new Request(
                 'POST',
-                $resourcePath,
+                Uri::composeComponents('', '', $resourcePath, $query, ''),
                 $headers,
                 $httpBody
             );

@@ -19,6 +19,7 @@
 namespace {{apiPackage}};
 
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Uri;
 use Http\Client\Exception;
 use Http\Client\HttpClient;
 use {{invokerPackage}}\ApiException;
@@ -145,6 +146,7 @@ use {{invokerPackage}}\ObjectSerializer;
 
         $resourcePath = substr('{{{path}}}', 1);
         $formParams = [];
+        $queryParams = [];
         $httpBody= '';
 
         $headers = $this->headerSelector->selectHeaders(
@@ -153,19 +155,19 @@ use {{invokerPackage}}\ObjectSerializer;
         );
 
 
-/**
         {{#queryParams}}
         // query params
         {{#collectionFormat}}
         if (is_array(${{paramName}})) {
-            ${{paramName}} = $this->apiClient->getSerializer()->serializeCollection(${{paramName}}, '{{collectionFormat}}', true);
+            ${{paramName}} = $this->serializer->serializeCollection(${{paramName}}, '{{collectionFormat}}', true);
         }
         {{/collectionFormat}}
         if (${{paramName}} !== null) {
-            $queryParams['{{baseName}}'] = $this->apiClient->getSerializer()->toQueryValue(${{paramName}});
+            $queryParams['{{baseName}}'] = $this->serializer->toQueryValue(${{paramName}});
         }
         {{/queryParams}}
         {{#headerParams}}
+/**
         // header params
         {{#collectionFormat}}
         if (is_array(${{paramName}})) {
@@ -175,9 +177,9 @@ use {{invokerPackage}}\ObjectSerializer;
         if (${{paramName}} !== null) {
             $headerParams['{{baseName}}'] = $this->apiClient->getSerializer()->toHeaderValue(${{paramName}});
         }
+*/
         {{/headerParams}}
 
-    */
         {{#pathParams}}
         // path params
         {{#collectionFormat}}
@@ -246,10 +248,12 @@ use {{invokerPackage}}\ObjectSerializer;
         {{/authMethods}}
 */
 
+        $query = http_build_query($queryParams);
+
         try {
             $request = new Request(
                 '{{httpMethod}}',
-                $resourcePath,
+                Uri::composeComponents('', '', $resourcePath, $query, ''),
                 $headers,
                 $httpBody
             );

@@ -29,6 +29,7 @@
 namespace Swagger\Client\Api;
 
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Uri;
 use Http\Client\Exception;
 use Http\Client\HttpClient;
 use Swagger\Client\ApiException;
@@ -103,6 +104,7 @@ class StoreApi
         $queryParams = [];
         $headerParams = [];
         $formParams = [];
+        $queryParams = [];
         $httpBody= '';
 
         $headers = $this->headerSelector->selectHeaders(
@@ -111,9 +113,7 @@ class StoreApi
         );
 
 
-/**
 
-    */
         // path params
         if ($order_id !== null) {
             $resourcePath = str_replace(
@@ -133,10 +133,12 @@ class StoreApi
 /**
 */
 
+        $query = http_build_query($queryParams);
+
         try {
             $request = new Request(
                 'DELETE',
-                $resourcePath,
+                Uri::composeComponents('', '', $resourcePath, $query, ''),
                 $headers,
                 $httpBody
             );
@@ -194,6 +196,7 @@ class StoreApi
 
         $resourcePath = substr('/store/inventory', 1);
         $formParams = [];
+        $queryParams = [];
         $httpBody= '';
 
         $headers = $this->headerSelector->selectHeaders(
@@ -202,9 +205,7 @@ class StoreApi
         );
 
 
-/**
 
-    */
 
         
         // for model (json/xml)
@@ -221,10 +222,12 @@ class StoreApi
         }
 */
 
+        $query = http_build_query($queryParams);
+
         try {
             $request = new Request(
                 'GET',
-                $resourcePath,
+                Uri::composeComponents('', '', $resourcePath, $query, ''),
                 $headers,
                 $httpBody
             );
@@ -307,6 +310,7 @@ class StoreApi
         $queryParams = [];
         $headerParams = [];
         $formParams = [];
+        $queryParams = [];
         $httpBody= '';
 
         $headers = $this->headerSelector->selectHeaders(
@@ -315,9 +319,7 @@ class StoreApi
         );
 
 
-/**
 
-    */
         // path params
         if ($order_id !== null) {
             $resourcePath = str_replace(
@@ -337,10 +339,12 @@ class StoreApi
 /**
 */
 
+        $query = http_build_query($queryParams);
+
         try {
             $request = new Request(
                 'GET',
-                $resourcePath,
+                Uri::composeComponents('', '', $resourcePath, $query, ''),
                 $headers,
                 $httpBody
             );
@@ -413,6 +417,7 @@ class StoreApi
 
         $resourcePath = substr('/store/order', 1);
         $formParams = [];
+        $queryParams = [];
         $httpBody= '';
 
         $headers = $this->headerSelector->selectHeaders(
@@ -421,9 +426,7 @@ class StoreApi
         );
 
 
-/**
 
-    */
 
         // body params
         $_tempBody = null;
@@ -440,10 +443,12 @@ class StoreApi
 /**
 */
 
+        $query = http_build_query($queryParams);
+
         try {
             $request = new Request(
                 'POST',
-                $resourcePath,
+                Uri::composeComponents('', '', $resourcePath, $query, ''),
                 $headers,
                 $httpBody
             );

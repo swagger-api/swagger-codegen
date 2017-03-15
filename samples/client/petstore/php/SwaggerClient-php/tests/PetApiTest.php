@@ -131,21 +131,17 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
     // test getPetByStatus and verify by the "id" of the response
     public function testFindPetByStatus()
     {
-        // initialize the API client
-        $config = (new Configuration())->setHost('http://petstore.swagger.io/v2');
-        $api_client = new ApiClient($config);
-        $pet_api = new Api\PetApi($api_client);
-        // return Pet (model)
-        $response = $pet_api->findPetsByStatus("available");
+        $response = $this->api->findPetsByStatus(['available']);
         $this->assertGreaterThan(0, count($response)); // at least one object returned
-        $this->assertSame(get_class($response[0]), "Swagger\\Client\\Model\\Pet"); // verify the object is Pet
+
+        $this->assertSame(get_class($response[0]), Pet::class); // verify the object is Pet
         // loop through result to ensure status is "available"
         foreach ($response as $_pet) {
-            $this->assertSame($_pet['status'], "available");
+            $this->assertSame($_pet['status'], 'available');
         }
         // test invalid status
-        $response = $pet_api->findPetsByStatus("unknown_and_incorrect_status");
-        $this->assertSame(count($response), 0); // confirm no object returned
+        $response = $this->api->findPetsByStatus('unknown_and_incorrect_status');
+        $this->assertCount(0, $response); // confirm no object returned
     }
 
     // test getPetsByTags and verify by the "id" of the response

@@ -29,6 +29,7 @@
 namespace Swagger\Client\Api;
 
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Uri;
 use Http\Client\Exception;
 use Http\Client\HttpClient;
 use Swagger\Client\ApiException;
@@ -100,6 +101,7 @@ class FakeApi
 
         $resourcePath = substr('/fake', 1);
         $formParams = [];
+        $queryParams = [];
         $httpBody= '';
 
         $headers = $this->headerSelector->selectHeaders(
@@ -108,9 +110,7 @@ class FakeApi
         );
 
 
-/**
 
-    */
 
         // body params
         $_tempBody = null;
@@ -127,10 +127,12 @@ class FakeApi
 /**
 */
 
+        $query = http_build_query($queryParams);
+
         try {
             $request = new Request(
                 'PATCH',
-                $resourcePath,
+                Uri::composeComponents('', '', $resourcePath, $query, ''),
                 $headers,
                 $httpBody
             );
@@ -288,6 +290,7 @@ class FakeApi
 
         $resourcePath = substr('/fake', 1);
         $formParams = [];
+        $queryParams = [];
         $httpBody= '';
 
         $headers = $this->headerSelector->selectHeaders(
@@ -296,9 +299,7 @@ class FakeApi
         );
 
 
-/**
 
-    */
 
         // form params
         if ($integer !== null) {
@@ -398,10 +399,12 @@ class FakeApi
         }
 */
 
+        $query = http_build_query($queryParams);
+
         try {
             $request = new Request(
                 'POST',
-                $resourcePath,
+                Uri::composeComponents('', '', $resourcePath, $query, ''),
                 $headers,
                 $httpBody
             );
@@ -475,6 +478,7 @@ class FakeApi
 
         $resourcePath = substr('/fake', 1);
         $formParams = [];
+        $queryParams = [];
         $httpBody= '';
 
         $headers = $this->headerSelector->selectHeaders(
@@ -483,22 +487,22 @@ class FakeApi
         );
 
 
-/**
         // query params
         if (is_array($enum_query_string_array)) {
-            $enum_query_string_array = $this->apiClient->getSerializer()->serializeCollection($enum_query_string_array, 'csv', true);
+            $enum_query_string_array = $this->serializer->serializeCollection($enum_query_string_array, 'csv', true);
         }
         if ($enum_query_string_array !== null) {
-            $queryParams['enum_query_string_array'] = $this->apiClient->getSerializer()->toQueryValue($enum_query_string_array);
+            $queryParams['enum_query_string_array'] = $this->serializer->toQueryValue($enum_query_string_array);
         }
         // query params
         if ($enum_query_string !== null) {
-            $queryParams['enum_query_string'] = $this->apiClient->getSerializer()->toQueryValue($enum_query_string);
+            $queryParams['enum_query_string'] = $this->serializer->toQueryValue($enum_query_string);
         }
         // query params
         if ($enum_query_integer !== null) {
-            $queryParams['enum_query_integer'] = $this->apiClient->getSerializer()->toQueryValue($enum_query_integer);
+            $queryParams['enum_query_integer'] = $this->serializer->toQueryValue($enum_query_integer);
         }
+/**
         // header params
         if (is_array($enum_header_string_array)) {
             $enum_header_string_array = $this->apiClient->getSerializer()->serializeCollection($enum_header_string_array, 'csv');
@@ -506,12 +510,14 @@ class FakeApi
         if ($enum_header_string_array !== null) {
             $headerParams['enum_header_string_array'] = $this->apiClient->getSerializer()->toHeaderValue($enum_header_string_array);
         }
+*/
+/**
         // header params
         if ($enum_header_string !== null) {
             $headerParams['enum_header_string'] = $this->apiClient->getSerializer()->toHeaderValue($enum_header_string);
         }
+*/
 
-    */
 
         // form params
         if ($enum_form_string_array !== null) {
@@ -541,10 +547,12 @@ class FakeApi
 /**
 */
 
+        $query = http_build_query($queryParams);
+
         try {
             $request = new Request(
                 'GET',
-                $resourcePath,
+                Uri::composeComponents('', '', $resourcePath, $query, ''),
                 $headers,
                 $httpBody
             );

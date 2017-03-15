@@ -29,6 +29,7 @@
 namespace Swagger\Client\Api;
 
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Uri;
 use Http\Client\Exception;
 use Http\Client\HttpClient;
 use Swagger\Client\ApiException;
@@ -100,6 +101,7 @@ class UserApi
 
         $resourcePath = substr('/user', 1);
         $formParams = [];
+        $queryParams = [];
         $httpBody= '';
 
         $headers = $this->headerSelector->selectHeaders(
@@ -108,9 +110,7 @@ class UserApi
         );
 
 
-/**
 
-    */
 
         // body params
         $_tempBody = null;
@@ -127,10 +127,12 @@ class UserApi
 /**
 */
 
+        $query = http_build_query($queryParams);
+
         try {
             $request = new Request(
                 'POST',
-                $resourcePath,
+                Uri::composeComponents('', '', $resourcePath, $query, ''),
                 $headers,
                 $httpBody
             );
@@ -194,6 +196,7 @@ class UserApi
 
         $resourcePath = substr('/user/createWithArray', 1);
         $formParams = [];
+        $queryParams = [];
         $httpBody= '';
 
         $headers = $this->headerSelector->selectHeaders(
@@ -202,9 +205,7 @@ class UserApi
         );
 
 
-/**
 
-    */
 
         // body params
         $_tempBody = null;
@@ -221,10 +222,12 @@ class UserApi
 /**
 */
 
+        $query = http_build_query($queryParams);
+
         try {
             $request = new Request(
                 'POST',
-                $resourcePath,
+                Uri::composeComponents('', '', $resourcePath, $query, ''),
                 $headers,
                 $httpBody
             );
@@ -288,6 +291,7 @@ class UserApi
 
         $resourcePath = substr('/user/createWithList', 1);
         $formParams = [];
+        $queryParams = [];
         $httpBody= '';
 
         $headers = $this->headerSelector->selectHeaders(
@@ -296,9 +300,7 @@ class UserApi
         );
 
 
-/**
 
-    */
 
         // body params
         $_tempBody = null;
@@ -315,10 +317,12 @@ class UserApi
 /**
 */
 
+        $query = http_build_query($queryParams);
+
         try {
             $request = new Request(
                 'POST',
-                $resourcePath,
+                Uri::composeComponents('', '', $resourcePath, $query, ''),
                 $headers,
                 $httpBody
             );
@@ -382,6 +386,7 @@ class UserApi
 
         $resourcePath = substr('/user/{username}', 1);
         $formParams = [];
+        $queryParams = [];
         $httpBody= '';
 
         $headers = $this->headerSelector->selectHeaders(
@@ -390,9 +395,7 @@ class UserApi
         );
 
 
-/**
 
-    */
         // path params
         if ($username !== null) {
             $resourcePath = str_replace('{' . 'username' . '}', $this->serializer->toPathValue($username), $resourcePath);
@@ -408,10 +411,12 @@ class UserApi
 /**
 */
 
+        $query = http_build_query($queryParams);
+
         try {
             $request = new Request(
                 'DELETE',
-                $resourcePath,
+                Uri::composeComponents('', '', $resourcePath, $query, ''),
                 $headers,
                 $httpBody
             );
@@ -475,6 +480,7 @@ class UserApi
 
         $resourcePath = substr('/user/{username}', 1);
         $formParams = [];
+        $queryParams = [];
         $httpBody= '';
 
         $headers = $this->headerSelector->selectHeaders(
@@ -483,9 +489,7 @@ class UserApi
         );
 
 
-/**
 
-    */
         // path params
         if ($username !== null) {
             $resourcePath = str_replace('{' . 'username' . '}', $this->serializer->toPathValue($username), $resourcePath);
@@ -501,10 +505,12 @@ class UserApi
 /**
 */
 
+        $query = http_build_query($queryParams);
+
         try {
             $request = new Request(
                 'GET',
-                $resourcePath,
+                Uri::composeComponents('', '', $resourcePath, $query, ''),
                 $headers,
                 $httpBody
             );
@@ -583,6 +589,7 @@ class UserApi
 
         $resourcePath = substr('/user/login', 1);
         $formParams = [];
+        $queryParams = [];
         $httpBody= '';
 
         $headers = $this->headerSelector->selectHeaders(
@@ -591,17 +598,15 @@ class UserApi
         );
 
 
-/**
         // query params
         if ($username !== null) {
-            $queryParams['username'] = $this->apiClient->getSerializer()->toQueryValue($username);
+            $queryParams['username'] = $this->serializer->toQueryValue($username);
         }
         // query params
         if ($password !== null) {
-            $queryParams['password'] = $this->apiClient->getSerializer()->toQueryValue($password);
+            $queryParams['password'] = $this->serializer->toQueryValue($password);
         }
 
-    */
 
         
         // for model (json/xml)
@@ -613,10 +618,12 @@ class UserApi
 /**
 */
 
+        $query = http_build_query($queryParams);
+
         try {
             $request = new Request(
                 'GET',
-                $resourcePath,
+                Uri::composeComponents('', '', $resourcePath, $query, ''),
                 $headers,
                 $httpBody
             );
@@ -683,6 +690,7 @@ class UserApi
 
         $resourcePath = substr('/user/logout', 1);
         $formParams = [];
+        $queryParams = [];
         $httpBody= '';
 
         $headers = $this->headerSelector->selectHeaders(
@@ -691,9 +699,7 @@ class UserApi
         );
 
 
-/**
 
-    */
 
         
         // for model (json/xml)
@@ -705,10 +711,12 @@ class UserApi
 /**
 */
 
+        $query = http_build_query($queryParams);
+
         try {
             $request = new Request(
                 'GET',
-                $resourcePath,
+                Uri::composeComponents('', '', $resourcePath, $query, ''),
                 $headers,
                 $httpBody
             );
@@ -778,6 +786,7 @@ class UserApi
 
         $resourcePath = substr('/user/{username}', 1);
         $formParams = [];
+        $queryParams = [];
         $httpBody= '';
 
         $headers = $this->headerSelector->selectHeaders(
@@ -786,9 +795,7 @@ class UserApi
         );
 
 
-/**
 
-    */
         // path params
         if ($username !== null) {
             $resourcePath = str_replace('{' . 'username' . '}', $this->serializer->toPathValue($username), $resourcePath);
@@ -809,10 +816,12 @@ class UserApi
 /**
 */
 
+        $query = http_build_query($queryParams);
+
         try {
             $request = new Request(
                 'PUT',
-                $resourcePath,
+                Uri::composeComponents('', '', $resourcePath, $query, ''),
                 $headers,
                 $httpBody
             );
