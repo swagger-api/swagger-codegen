@@ -10,7 +10,7 @@ import java.util.HashMap;
 {{#operations}}
 public interface {{classname}}ControllerImpInterface {
 {{#operation}}
-    {{>returnTypes}} {{operationId}}({{#allParams}}{{>pathParamsNoDoc}}{{>queryParamsNoDoc}}{{>bodyParamsNoDoc}}{{>formParamsNoDoc}}{{>headerParamsNoDoc}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+    {{>returnTypes}} {{operationId}}({{#allParams}}{{>pathParams}}{{>queryParams}}{{>bodyParams}}{{>formParams}}{{>headerParams}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
 
 {{/operation}}
 }
