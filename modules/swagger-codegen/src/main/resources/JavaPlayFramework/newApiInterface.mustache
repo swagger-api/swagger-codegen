@@ -1,0 +1,17 @@
+package {{package}};
+
+{{#imports}}import {{import}};
+{{/imports}}
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+{{#operations}}
+public interface {{classname}}ControllerImpInterface {
+{{#operation}}
+    {{>returnTypes}} {{operationId}}({{#allParams}}{{>pathParamsNoDoc}}{{>queryParamsNoDoc}}{{>bodyParamsNoDoc}}{{>formParamsNoDoc}}{{>headerParamsNoDoc}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+
+{{/operation}}
+}
+{{/operations}}
