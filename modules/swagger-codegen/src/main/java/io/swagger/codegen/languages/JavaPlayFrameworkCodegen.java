@@ -91,20 +91,22 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
 
         if (additionalProperties.containsKey(CONTROLLER_ONLY)) {
             this.setControllerOnly(convertPropertyToBoolean(CONTROLLER_ONLY));
+        } else {
+            writePropertyBack(CONTROLLER_ONLY, controllerOnly);
         }
 
         if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
             this.setUseBeanValidation(convertPropertyToBoolean(USE_BEANVALIDATION));
+        } else {
+            writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
         }
 
         if (additionalProperties.containsKey(USE_INTERFACES)) {
             this.setUseInterfaces(convertPropertyToBoolean(USE_INTERFACES));
+        } else {
             writePropertyBack(USE_INTERFACES, useInterfaces);
         }
 
-        if (useBeanValidation) {
-            writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
-        }
 
         //Root folder
         supportingFiles.add(new SupportingFile("README.mustache", "", "README"));
