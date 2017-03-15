@@ -65,9 +65,9 @@ public class Swift3CodegenTest {
 
     @Test
     public void testStartingWithNumber() throws Exception {
-        Assert.assertEquals(swiftCodegen.toEnumVarName("123EntryName", null), "_123EntryName");
-        Assert.assertEquals(swiftCodegen.toEnumVarName("123Entry_name", null), "_123EntryName");
-        Assert.assertEquals(swiftCodegen.toEnumVarName("123EntryName123", null), "_123EntryName123");
+        Assert.assertEquals(swiftCodegen.toEnumVarName("123EntryName", null), "_123entryName");
+        Assert.assertEquals(swiftCodegen.toEnumVarName("123Entry_name", null), "_123entryName");
+        Assert.assertEquals(swiftCodegen.toEnumVarName("123EntryName123", null), "_123entryName123");
     }
 
     @Test(description = "returns NSData when response format is binary")

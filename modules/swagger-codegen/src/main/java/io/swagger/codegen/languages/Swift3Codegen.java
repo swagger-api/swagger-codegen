@@ -522,7 +522,7 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
             String startingNumbers = startWithNumberMatcher.group(0);
             String nameWithoutStartingNumbers = name.substring(startingNumbers.length());
 
-            return "_" + startingNumbers + camelize(nameWithoutStartingNumbers);
+            return "_" + startingNumbers + camelize(nameWithoutStartingNumbers, true);
         }
 
         // for symbol, e.g. $, #
