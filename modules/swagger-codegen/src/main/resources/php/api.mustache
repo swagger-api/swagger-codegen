@@ -70,11 +70,12 @@ use {{invokerPackage}}\ObjectSerializer;
      * @param {{dataType}} ${{paramName}} {{description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
 {{/allParams}}
      * @throws \{{invokerPackage}}\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}
      */
     public function {{operationId}}({{#allParams}}${{paramName}}{{^required}} = null{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
     {
-        list($response) = $this->{{operationId}}WithHttpInfo({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        {{#returnType}}list($response) = {{/returnType}}$this->{{operationId}}WithHttpInfo({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
         {{#returnType}}return $response;{{/returnType}}
     }
 
@@ -91,7 +92,7 @@ use {{invokerPackage}}\ObjectSerializer;
      * @param {{dataType}} ${{paramName}} {{description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
 {{/allParams}}
      * @throws \{{invokerPackage}}\ApiException on non-2xx response
-     * @throws \InvalidArgumentException when invalid arguments provided
+     * @throws \InvalidArgumentException
      * @return array of {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}null{{/returnType}}, HTTP status code, HTTP response headers (array of strings)
      */
     public function {{operationId}}WithHttpInfo({{#allParams}}${{paramName}}{{^required}} = null{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
@@ -182,9 +183,11 @@ use {{invokerPackage}}\ObjectSerializer;
         {{#pathParams}}
         // path params
         {{#collectionFormat}}
+            /**
         if (is_array(${{paramName}})) {
             ${{paramName}} = $this->apiClient->getSerializer()->serializeCollection(${{paramName}}, '{{collectionFormat}}');
         }
+            */
         {{/collectionFormat}}
         if (${{paramName}} !== null) {
             $resourcePath = str_replace('{' . '{{baseName}}' . '}', $this->serializer->toPathValue(${{paramName}}), $resourcePath);
@@ -206,7 +209,7 @@ use {{invokerPackage}}\ObjectSerializer;
             {{/isFile}}
         */
             {{^isFile}}
-            $formParams['{{baseName}}'] = $this->apiClient->getSerializer()->toFormValue(${{paramName}});
+            $formParams['{{baseName}}'] = $this->serializer->toFormValue(${{paramName}});
             {{/isFile}}
         }
         {{/formParams}}

@@ -73,6 +73,7 @@ class FakeApi
      *
      * @param \Swagger\Client\Model\Client $body client model (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\Client
      */
     public function testClientModel($body)
@@ -88,7 +89,7 @@ class FakeApi
      *
      * @param \Swagger\Client\Model\Client $body client model (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException when invalid arguments provided
+     * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\Client, HTTP status code, HTTP response headers (array of strings)
      */
     public function testClientModelWithHttpInfo($body)
@@ -190,11 +191,12 @@ class FakeApi
      * @param string $password None (optional)
      * @param string $callback None (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return void
      */
     public function testEndpointParameters($number, $double, $pattern_without_delimiter, $byte, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null, $callback = null)
     {
-        list($response) = $this->testEndpointParametersWithHttpInfo($number, $double, $pattern_without_delimiter, $byte, $integer, $int32, $int64, $float, $string, $binary, $date, $date_time, $password, $callback);
+        $this->testEndpointParametersWithHttpInfo($number, $double, $pattern_without_delimiter, $byte, $integer, $int32, $int64, $float, $string, $binary, $date, $date_time, $password, $callback);
         
     }
 
@@ -218,7 +220,7 @@ class FakeApi
      * @param string $password None (optional)
      * @param string $callback None (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException when invalid arguments provided
+     * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function testEndpointParametersWithHttpInfo($number, $double, $pattern_without_delimiter, $byte, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null, $callback = null)
@@ -304,85 +306,85 @@ class FakeApi
         if ($integer !== null) {
         /**
         */
-            $formParams['integer'] = $this->apiClient->getSerializer()->toFormValue($integer);
+            $formParams['integer'] = $this->serializer->toFormValue($integer);
         }
         // form params
         if ($int32 !== null) {
         /**
         */
-            $formParams['int32'] = $this->apiClient->getSerializer()->toFormValue($int32);
+            $formParams['int32'] = $this->serializer->toFormValue($int32);
         }
         // form params
         if ($int64 !== null) {
         /**
         */
-            $formParams['int64'] = $this->apiClient->getSerializer()->toFormValue($int64);
+            $formParams['int64'] = $this->serializer->toFormValue($int64);
         }
         // form params
         if ($number !== null) {
         /**
         */
-            $formParams['number'] = $this->apiClient->getSerializer()->toFormValue($number);
+            $formParams['number'] = $this->serializer->toFormValue($number);
         }
         // form params
         if ($float !== null) {
         /**
         */
-            $formParams['float'] = $this->apiClient->getSerializer()->toFormValue($float);
+            $formParams['float'] = $this->serializer->toFormValue($float);
         }
         // form params
         if ($double !== null) {
         /**
         */
-            $formParams['double'] = $this->apiClient->getSerializer()->toFormValue($double);
+            $formParams['double'] = $this->serializer->toFormValue($double);
         }
         // form params
         if ($string !== null) {
         /**
         */
-            $formParams['string'] = $this->apiClient->getSerializer()->toFormValue($string);
+            $formParams['string'] = $this->serializer->toFormValue($string);
         }
         // form params
         if ($pattern_without_delimiter !== null) {
         /**
         */
-            $formParams['pattern_without_delimiter'] = $this->apiClient->getSerializer()->toFormValue($pattern_without_delimiter);
+            $formParams['pattern_without_delimiter'] = $this->serializer->toFormValue($pattern_without_delimiter);
         }
         // form params
         if ($byte !== null) {
         /**
         */
-            $formParams['byte'] = $this->apiClient->getSerializer()->toFormValue($byte);
+            $formParams['byte'] = $this->serializer->toFormValue($byte);
         }
         // form params
         if ($binary !== null) {
         /**
         */
-            $formParams['binary'] = $this->apiClient->getSerializer()->toFormValue($binary);
+            $formParams['binary'] = $this->serializer->toFormValue($binary);
         }
         // form params
         if ($date !== null) {
         /**
         */
-            $formParams['date'] = $this->apiClient->getSerializer()->toFormValue($date);
+            $formParams['date'] = $this->serializer->toFormValue($date);
         }
         // form params
         if ($date_time !== null) {
         /**
         */
-            $formParams['dateTime'] = $this->apiClient->getSerializer()->toFormValue($date_time);
+            $formParams['dateTime'] = $this->serializer->toFormValue($date_time);
         }
         // form params
         if ($password !== null) {
         /**
         */
-            $formParams['password'] = $this->apiClient->getSerializer()->toFormValue($password);
+            $formParams['password'] = $this->serializer->toFormValue($password);
         }
         // form params
         if ($callback !== null) {
         /**
         */
-            $formParams['callback'] = $this->apiClient->getSerializer()->toFormValue($callback);
+            $formParams['callback'] = $this->serializer->toFormValue($callback);
         }
         
         // for model (json/xml)
@@ -447,11 +449,12 @@ class FakeApi
      * @param int $enum_query_integer Query parameter enum test (double) (optional)
      * @param double $enum_query_double Query parameter enum test (double) (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return void
      */
     public function testEnumParameters($enum_form_string_array = null, $enum_form_string = null, $enum_header_string_array = null, $enum_header_string = null, $enum_query_string_array = null, $enum_query_string = null, $enum_query_integer = null, $enum_query_double = null)
     {
-        list($response) = $this->testEnumParametersWithHttpInfo($enum_form_string_array, $enum_form_string, $enum_header_string_array, $enum_header_string, $enum_query_string_array, $enum_query_string, $enum_query_integer, $enum_query_double);
+        $this->testEnumParametersWithHttpInfo($enum_form_string_array, $enum_form_string, $enum_header_string_array, $enum_header_string, $enum_query_string_array, $enum_query_string, $enum_query_integer, $enum_query_double);
         
     }
 
@@ -469,7 +472,7 @@ class FakeApi
      * @param int $enum_query_integer Query parameter enum test (double) (optional)
      * @param double $enum_query_double Query parameter enum test (double) (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException when invalid arguments provided
+     * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function testEnumParametersWithHttpInfo($enum_form_string_array = null, $enum_form_string = null, $enum_header_string_array = null, $enum_header_string = null, $enum_query_string_array = null, $enum_query_string = null, $enum_query_integer = null, $enum_query_double = null)
@@ -522,19 +525,19 @@ class FakeApi
         if ($enum_form_string_array !== null) {
         /**
         */
-            $formParams['enum_form_string_array'] = $this->apiClient->getSerializer()->toFormValue($enum_form_string_array);
+            $formParams['enum_form_string_array'] = $this->serializer->toFormValue($enum_form_string_array);
         }
         // form params
         if ($enum_form_string !== null) {
         /**
         */
-            $formParams['enum_form_string'] = $this->apiClient->getSerializer()->toFormValue($enum_form_string);
+            $formParams['enum_form_string'] = $this->serializer->toFormValue($enum_form_string);
         }
         // form params
         if ($enum_query_double !== null) {
         /**
         */
-            $formParams['enum_query_double'] = $this->apiClient->getSerializer()->toFormValue($enum_query_double);
+            $formParams['enum_query_double'] = $this->serializer->toFormValue($enum_query_double);
         }
         
         // for model (json/xml)

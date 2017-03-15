@@ -73,11 +73,12 @@ class UserApi
      *
      * @param \Swagger\Client\Model\User $body Created user object (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return void
      */
     public function createUser($body)
     {
-        list($response) = $this->createUserWithHttpInfo($body);
+        $this->createUserWithHttpInfo($body);
         
     }
 
@@ -88,7 +89,7 @@ class UserApi
      *
      * @param \Swagger\Client\Model\User $body Created user object (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException when invalid arguments provided
+     * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function createUserWithHttpInfo($body)
@@ -168,11 +169,12 @@ class UserApi
      *
      * @param \Swagger\Client\Model\User[] $body List of user object (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return void
      */
     public function createUsersWithArrayInput($body)
     {
-        list($response) = $this->createUsersWithArrayInputWithHttpInfo($body);
+        $this->createUsersWithArrayInputWithHttpInfo($body);
         
     }
 
@@ -183,7 +185,7 @@ class UserApi
      *
      * @param \Swagger\Client\Model\User[] $body List of user object (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException when invalid arguments provided
+     * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function createUsersWithArrayInputWithHttpInfo($body)
@@ -263,11 +265,12 @@ class UserApi
      *
      * @param \Swagger\Client\Model\User[] $body List of user object (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return void
      */
     public function createUsersWithListInput($body)
     {
-        list($response) = $this->createUsersWithListInputWithHttpInfo($body);
+        $this->createUsersWithListInputWithHttpInfo($body);
         
     }
 
@@ -278,7 +281,7 @@ class UserApi
      *
      * @param \Swagger\Client\Model\User[] $body List of user object (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException when invalid arguments provided
+     * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function createUsersWithListInputWithHttpInfo($body)
@@ -358,11 +361,12 @@ class UserApi
      *
      * @param string $username The name that needs to be deleted (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return void
      */
     public function deleteUser($username)
     {
-        list($response) = $this->deleteUserWithHttpInfo($username);
+        $this->deleteUserWithHttpInfo($username);
         
     }
 
@@ -373,7 +377,7 @@ class UserApi
      *
      * @param string $username The name that needs to be deleted (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException when invalid arguments provided
+     * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteUserWithHttpInfo($username)
@@ -452,6 +456,7 @@ class UserApi
      *
      * @param string $username The name that needs to be fetched. Use user1 for testing. (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\User
      */
     public function getUserByName($username)
@@ -467,7 +472,7 @@ class UserApi
      *
      * @param string $username The name that needs to be fetched. Use user1 for testing. (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException when invalid arguments provided
+     * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\User, HTTP status code, HTTP response headers (array of strings)
      */
     public function getUserByNameWithHttpInfo($username)
@@ -556,6 +561,7 @@ class UserApi
      * @param string $username The user name for login (required)
      * @param string $password The password for login in clear text (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return string
      */
     public function loginUser($username, $password)
@@ -572,7 +578,7 @@ class UserApi
      * @param string $username The user name for login (required)
      * @param string $password The password for login in clear text (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException when invalid arguments provided
+     * @throws \InvalidArgumentException
      * @return array of string, HTTP status code, HTTP response headers (array of strings)
      */
     public function loginUserWithHttpInfo($username, $password)
@@ -667,11 +673,12 @@ class UserApi
      * Logs out current logged in user session
      *
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return void
      */
     public function logoutUser()
     {
-        list($response) = $this->logoutUserWithHttpInfo();
+        $this->logoutUserWithHttpInfo();
         
     }
 
@@ -681,7 +688,7 @@ class UserApi
      * Logs out current logged in user session
      *
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException when invalid arguments provided
+     * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function logoutUserWithHttpInfo()
@@ -753,11 +760,12 @@ class UserApi
      * @param string $username name that need to be deleted (required)
      * @param \Swagger\Client\Model\User $body Updated user object (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return void
      */
     public function updateUser($username, $body)
     {
-        list($response) = $this->updateUserWithHttpInfo($username, $body);
+        $this->updateUserWithHttpInfo($username, $body);
         
     }
 
@@ -769,7 +777,7 @@ class UserApi
      * @param string $username name that need to be deleted (required)
      * @param \Swagger\Client\Model\User $body Updated user object (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException when invalid arguments provided
+     * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateUserWithHttpInfo($username, $body)

@@ -73,11 +73,12 @@ class PetApi
      *
      * @param \Swagger\Client\Model\Pet $body Pet object that needs to be added to the store (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return void
      */
     public function addPet($body)
     {
-        list($response) = $this->addPetWithHttpInfo($body);
+        $this->addPetWithHttpInfo($body);
         
     }
 
@@ -88,7 +89,7 @@ class PetApi
      *
      * @param \Swagger\Client\Model\Pet $body Pet object that needs to be added to the store (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException when invalid arguments provided
+     * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function addPetWithHttpInfo($body)
@@ -173,11 +174,12 @@ class PetApi
      * @param int $pet_id Pet id to delete (required)
      * @param string $api_key  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return void
      */
     public function deletePet($pet_id, $api_key = null)
     {
-        list($response) = $this->deletePetWithHttpInfo($pet_id, $api_key);
+        $this->deletePetWithHttpInfo($pet_id, $api_key);
         
     }
 
@@ -189,7 +191,7 @@ class PetApi
      * @param int $pet_id Pet id to delete (required)
      * @param string $api_key  (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException when invalid arguments provided
+     * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function deletePetWithHttpInfo($pet_id, $api_key = null)
@@ -278,6 +280,7 @@ class PetApi
      *
      * @param string[] $status Status values that need to be considered for filter (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\Pet[]
      */
     public function findPetsByStatus($status)
@@ -293,7 +296,7 @@ class PetApi
      *
      * @param string[] $status Status values that need to be considered for filter (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException when invalid arguments provided
+     * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\Pet[], HTTP status code, HTTP response headers (array of strings)
      */
     public function findPetsByStatusWithHttpInfo($status)
@@ -388,6 +391,7 @@ class PetApi
      *
      * @param string[] $tags Tags to filter by (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\Pet[]
      */
     public function findPetsByTags($tags)
@@ -403,7 +407,7 @@ class PetApi
      *
      * @param string[] $tags Tags to filter by (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException when invalid arguments provided
+     * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\Pet[], HTTP status code, HTTP response headers (array of strings)
      */
     public function findPetsByTagsWithHttpInfo($tags)
@@ -498,6 +502,7 @@ class PetApi
      *
      * @param int $pet_id ID of pet to return (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\Pet
      */
     public function getPetById($pet_id)
@@ -513,7 +518,7 @@ class PetApi
      *
      * @param int $pet_id ID of pet to return (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException when invalid arguments provided
+     * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\Pet, HTTP status code, HTTP response headers (array of strings)
      */
     public function getPetByIdWithHttpInfo($pet_id)
@@ -606,11 +611,12 @@ class PetApi
      *
      * @param \Swagger\Client\Model\Pet $body Pet object that needs to be added to the store (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return void
      */
     public function updatePet($body)
     {
-        list($response) = $this->updatePetWithHttpInfo($body);
+        $this->updatePetWithHttpInfo($body);
         
     }
 
@@ -621,7 +627,7 @@ class PetApi
      *
      * @param \Swagger\Client\Model\Pet $body Pet object that needs to be added to the store (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException when invalid arguments provided
+     * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function updatePetWithHttpInfo($body)
@@ -707,11 +713,12 @@ class PetApi
      * @param string $name Updated name of the pet (optional)
      * @param string $status Updated status of the pet (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return void
      */
     public function updatePetWithForm($pet_id, $name = null, $status = null)
     {
-        list($response) = $this->updatePetWithFormWithHttpInfo($pet_id, $name, $status);
+        $this->updatePetWithFormWithHttpInfo($pet_id, $name, $status);
         
     }
 
@@ -724,7 +731,7 @@ class PetApi
      * @param string $name Updated name of the pet (optional)
      * @param string $status Updated status of the pet (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException when invalid arguments provided
+     * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function updatePetWithFormWithHttpInfo($pet_id, $name = null, $status = null)
@@ -755,13 +762,13 @@ class PetApi
         if ($name !== null) {
         /**
         */
-            $formParams['name'] = $this->apiClient->getSerializer()->toFormValue($name);
+            $formParams['name'] = $this->serializer->toFormValue($name);
         }
         // form params
         if ($status !== null) {
         /**
         */
-            $formParams['status'] = $this->apiClient->getSerializer()->toFormValue($status);
+            $formParams['status'] = $this->serializer->toFormValue($status);
         }
         
         // for model (json/xml)
@@ -821,6 +828,7 @@ class PetApi
      * @param string $additional_metadata Additional data to pass to server (optional)
      * @param \SplFileObject $file file to upload (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\ApiResponse
      */
     public function uploadFile($pet_id, $additional_metadata = null, $file = null)
@@ -838,7 +846,7 @@ class PetApi
      * @param string $additional_metadata Additional data to pass to server (optional)
      * @param \SplFileObject $file file to upload (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException when invalid arguments provided
+     * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\ApiResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function uploadFileWithHttpInfo($pet_id, $additional_metadata = null, $file = null)
@@ -869,7 +877,7 @@ class PetApi
         if ($additional_metadata !== null) {
         /**
         */
-            $formParams['additionalMetadata'] = $this->apiClient->getSerializer()->toFormValue($additional_metadata);
+            $formParams['additionalMetadata'] = $this->serializer->toFormValue($additional_metadata);
         }
         // form params
         if ($file !== null) {

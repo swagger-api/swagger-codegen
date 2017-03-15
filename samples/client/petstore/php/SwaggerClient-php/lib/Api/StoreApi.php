@@ -73,11 +73,12 @@ class StoreApi
      *
      * @param string $order_id ID of the order that needs to be deleted (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return void
      */
     public function deleteOrder($order_id)
     {
-        list($response) = $this->deleteOrderWithHttpInfo($order_id);
+        $this->deleteOrderWithHttpInfo($order_id);
         
     }
 
@@ -88,7 +89,7 @@ class StoreApi
      *
      * @param string $order_id ID of the order that needs to be deleted (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException when invalid arguments provided
+     * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteOrderWithHttpInfo($order_id)
@@ -173,6 +174,7 @@ class StoreApi
      * Returns pet inventories by status
      *
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return map[string,int]
      */
     public function getInventory()
@@ -187,7 +189,7 @@ class StoreApi
      * Returns pet inventories by status
      *
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException when invalid arguments provided
+     * @throws \InvalidArgumentException
      * @return array of map[string,int], HTTP status code, HTTP response headers (array of strings)
      */
     public function getInventoryWithHttpInfo()
@@ -272,6 +274,7 @@ class StoreApi
      *
      * @param int $order_id ID of pet that needs to be fetched (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\Order
      */
     public function getOrderById($order_id)
@@ -287,7 +290,7 @@ class StoreApi
      *
      * @param int $order_id ID of pet that needs to be fetched (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException when invalid arguments provided
+     * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\Order, HTTP status code, HTTP response headers (array of strings)
      */
     public function getOrderByIdWithHttpInfo($order_id)
@@ -389,6 +392,7 @@ class StoreApi
      *
      * @param \Swagger\Client\Model\Order $body order placed for purchasing the pet (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return \Swagger\Client\Model\Order
      */
     public function placeOrder($body)
@@ -404,7 +408,7 @@ class StoreApi
      *
      * @param \Swagger\Client\Model\Order $body order placed for purchasing the pet (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException when invalid arguments provided
+     * @throws \InvalidArgumentException
      * @return array of \Swagger\Client\Model\Order, HTTP status code, HTTP response headers (array of strings)
      */
     public function placeOrderWithHttpInfo($body)
