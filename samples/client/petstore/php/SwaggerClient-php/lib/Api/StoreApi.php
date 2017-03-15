@@ -28,10 +28,13 @@
 
 namespace Swagger\Client\Api;
 
-use \Swagger\Client\ApiClient;
-use \Swagger\Client\ApiException;
-use \Swagger\Client\Configuration;
-use \Swagger\Client\ObjectSerializer;
+use GuzzleHttp\Psr7\Request;
+use Http\Client\Exception;
+use Http\Client\HttpClient;
+use Swagger\Client\ApiException;
+use Swagger\Client\HeaderSelector;
+use Swagger\Client\Model\Pet;
+use Swagger\Client\ObjectSerializer;
 
 /**
  * StoreApi Class Doc Comment
@@ -44,47 +47,23 @@ use \Swagger\Client\ObjectSerializer;
 class StoreApi
 {
     /**
-     * API Client
-     *
-     * @var \Swagger\Client\ApiClient instance of the ApiClient
+     * @var HttpClient
      */
-    protected $apiClient;
+    protected $client;
 
     /**
-     * Constructor
-     *
-     * @param \Swagger\Client\ApiClient|null $apiClient The api client to use
+     * @var ObjectSerializer
      */
-    public function __construct(\Swagger\Client\ApiClient $apiClient = null)
-    {
-        if ($apiClient === null) {
-            $apiClient = new ApiClient();
-        }
-
-        $this->apiClient = $apiClient;
-    }
+    protected $serializer;
 
     /**
-     * Get API client
-     *
-     * @return \Swagger\Client\ApiClient get the API client
+     * @param HttpClient $client
      */
-    public function getApiClient()
+    public function __construct(HttpClient $client, HeaderSelector $selector = null)
     {
-        return $this->apiClient;
-    }
-
-    /**
-     * Set the API client
-     *
-     * @param \Swagger\Client\ApiClient $apiClient set the API client
-     *
-     * @return StoreApi
-     */
-    public function setApiClient(\Swagger\Client\ApiClient $apiClient)
-    {
-        $this->apiClient = $apiClient;
-        return $this;
+        $this->client = $client;
+        $this->serializer = new ObjectSerializer();
+        $this->headerSelector = $selector ?: new HeaderSelector();
     }
 
     /**
@@ -99,7 +78,7 @@ class StoreApi
     public function deleteOrder($order_id)
     {
         list($response) = $this->deleteOrderWithHttpInfo($order_id);
-        return $response;
+        
     }
 
     /**
@@ -109,6 +88,7 @@ class StoreApi
      *
      * @param string $order_id ID of the order that needs to be deleted (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException when invalid arguments provided
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteOrderWithHttpInfo($order_id)
@@ -123,12 +103,17 @@ class StoreApi
         $queryParams = [];
         $headerParams = [];
         $formParams = [];
-        $_header_accept = $this->apiClient->selectHeaderAccept(['application/xml', 'application/json']);
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType([]);
+        $httpBody= '';
 
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/xml', 'application/json'],
+            []
+        );
+
+
+/**
+
+    */
         // path params
         if ($order_id !== null) {
             $resourcePath = str_replace(
@@ -137,6 +122,7 @@ class StoreApi
                 $resourcePath
             );
         }
+
         
         // for model (json/xml)
         if (isset($_tempBody)) {
@@ -144,7 +130,22 @@ class StoreApi
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        // make the API Call
+/**
+*/
+
+        try {
+            $request = new Request(
+                'DELETE',
+                $resourcePath,
+                $headers,
+                $httpBody
+            );
+            $response = $this->client->sendRequest($request);
+            return [null, $response->getStatusCode(), []];
+        } catch (Exception $exception) {
+            throw new ApiException($exception->getMessage(), null, $exception);
+        }
+/**
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath,
@@ -163,8 +164,8 @@ class StoreApi
 
             throw $e;
         }
+*/
     }
-
     /**
      * Operation getInventory
      *
@@ -185,21 +186,25 @@ class StoreApi
      * Returns pet inventories by status
      *
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException when invalid arguments provided
      * @return array of map[string,int], HTTP status code, HTTP response headers (array of strings)
      */
     public function getInventoryWithHttpInfo()
     {
-        // parse inputs
-        $resourcePath = "/store/inventory";
-        $httpBody = '';
-        $queryParams = [];
-        $headerParams = [];
+
+        $resourcePath = substr('/store/inventory', 1);
         $formParams = [];
-        $_header_accept = $this->apiClient->selectHeaderAccept(['application/json']);
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType([]);
+        $httpBody= '';
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json'],
+            []
+        );
+
+
+/**
+
+    */
 
         
         // for model (json/xml)
@@ -208,12 +213,32 @@ class StoreApi
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
+/**
         // this endpoint requires API key authentication
         $apiKey = $this->apiClient->getApiKeyWithPrefix('api_key');
         if (strlen($apiKey) !== 0) {
             $headerParams['api_key'] = $apiKey;
         }
-        // make the API Call
+*/
+
+        try {
+            $request = new Request(
+                'GET',
+                $resourcePath,
+                $headers,
+                $httpBody
+            );
+            $response = $this->client->sendRequest($request);
+            $content = json_decode($response->getBody()->getContents());
+            return [
+                ObjectSerializer::deserialize($content, 'map[string,int]', []),
+                $response->getStatusCode(),
+                []
+            ];
+        } catch (Exception $exception) {
+            throw new ApiException($exception->getMessage(), null, $exception);
+        }
+/**
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath,
@@ -236,8 +261,8 @@ class StoreApi
 
             throw $e;
         }
+*/
     }
-
     /**
      * Operation getOrderById
      *
@@ -260,6 +285,7 @@ class StoreApi
      *
      * @param int $order_id ID of pet that needs to be fetched (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException when invalid arguments provided
      * @return array of \Swagger\Client\Model\Order, HTTP status code, HTTP response headers (array of strings)
      */
     public function getOrderByIdWithHttpInfo($order_id)
@@ -268,10 +294,10 @@ class StoreApi
         if ($order_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $order_id when calling getOrderById');
         }
-        if (($order_id > 5)) {
+        if ($order_id > 5) {
             throw new \InvalidArgumentException('invalid value for "$order_id" when calling StoreApi.getOrderById, must be smaller than or equal to 5.');
         }
-        if (($order_id < 1)) {
+        if ($order_id < 1) {
             throw new \InvalidArgumentException('invalid value for "$order_id" when calling StoreApi.getOrderById, must be bigger than or equal to 1.');
         }
 
@@ -281,12 +307,17 @@ class StoreApi
         $queryParams = [];
         $headerParams = [];
         $formParams = [];
-        $_header_accept = $this->apiClient->selectHeaderAccept(['application/xml', 'application/json']);
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType([]);
+        $httpBody= '';
 
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/xml', 'application/json'],
+            []
+        );
+
+
+/**
+
+    */
         // path params
         if ($order_id !== null) {
             $resourcePath = str_replace(
@@ -295,6 +326,7 @@ class StoreApi
                 $resourcePath
             );
         }
+
         
         // for model (json/xml)
         if (isset($_tempBody)) {
@@ -302,7 +334,27 @@ class StoreApi
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        // make the API Call
+/**
+*/
+
+        try {
+            $request = new Request(
+                'GET',
+                $resourcePath,
+                $headers,
+                $httpBody
+            );
+            $response = $this->client->sendRequest($request);
+            $content = json_decode($response->getBody()->getContents());
+            return [
+                ObjectSerializer::deserialize($content, '\Swagger\Client\Model\Order', []),
+                $response->getStatusCode(),
+                []
+            ];
+        } catch (Exception $exception) {
+            throw new ApiException($exception->getMessage(), null, $exception);
+        }
+/**
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath,
@@ -325,8 +377,8 @@ class StoreApi
 
             throw $e;
         }
+*/
     }
-
     /**
      * Operation placeOrder
      *
@@ -349,6 +401,7 @@ class StoreApi
      *
      * @param \Swagger\Client\Model\Order $body order placed for purchasing the pet (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException when invalid arguments provided
      * @return array of \Swagger\Client\Model\Order, HTTP status code, HTTP response headers (array of strings)
      */
     public function placeOrderWithHttpInfo($body)
@@ -357,17 +410,20 @@ class StoreApi
         if ($body === null) {
             throw new \InvalidArgumentException('Missing the required parameter $body when calling placeOrder');
         }
-        // parse inputs
-        $resourcePath = "/store/order";
-        $httpBody = '';
-        $queryParams = [];
-        $headerParams = [];
+
+        $resourcePath = substr('/store/order', 1);
         $formParams = [];
-        $_header_accept = $this->apiClient->selectHeaderAccept(['application/xml', 'application/json']);
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType([]);
+        $httpBody= '';
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/xml', 'application/json'],
+            []
+        );
+
+
+/**
+
+    */
 
         // body params
         $_tempBody = null;
@@ -381,7 +437,27 @@ class StoreApi
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        // make the API Call
+/**
+*/
+
+        try {
+            $request = new Request(
+                'POST',
+                $resourcePath,
+                $headers,
+                $httpBody
+            );
+            $response = $this->client->sendRequest($request);
+            $content = json_decode($response->getBody()->getContents());
+            return [
+                ObjectSerializer::deserialize($content, '\Swagger\Client\Model\Order', []),
+                $response->getStatusCode(),
+                []
+            ];
+        } catch (Exception $exception) {
+            throw new ApiException($exception->getMessage(), null, $exception);
+        }
+/**
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath,
@@ -404,5 +480,6 @@ class StoreApi
 
             throw $e;
         }
+*/
     }
 }

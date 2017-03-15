@@ -28,10 +28,13 @@
 
 namespace Swagger\Client\Api;
 
-use \Swagger\Client\ApiClient;
-use \Swagger\Client\ApiException;
-use \Swagger\Client\Configuration;
-use \Swagger\Client\ObjectSerializer;
+use GuzzleHttp\Psr7\Request;
+use Http\Client\Exception;
+use Http\Client\HttpClient;
+use Swagger\Client\ApiException;
+use Swagger\Client\HeaderSelector;
+use Swagger\Client\Model\Pet;
+use Swagger\Client\ObjectSerializer;
 
 /**
  * FakeApi Class Doc Comment
@@ -44,47 +47,23 @@ use \Swagger\Client\ObjectSerializer;
 class FakeApi
 {
     /**
-     * API Client
-     *
-     * @var \Swagger\Client\ApiClient instance of the ApiClient
+     * @var HttpClient
      */
-    protected $apiClient;
+    protected $client;
 
     /**
-     * Constructor
-     *
-     * @param \Swagger\Client\ApiClient|null $apiClient The api client to use
+     * @var ObjectSerializer
      */
-    public function __construct(\Swagger\Client\ApiClient $apiClient = null)
-    {
-        if ($apiClient === null) {
-            $apiClient = new ApiClient();
-        }
-
-        $this->apiClient = $apiClient;
-    }
+    protected $serializer;
 
     /**
-     * Get API client
-     *
-     * @return \Swagger\Client\ApiClient get the API client
+     * @param HttpClient $client
      */
-    public function getApiClient()
+    public function __construct(HttpClient $client, HeaderSelector $selector = null)
     {
-        return $this->apiClient;
-    }
-
-    /**
-     * Set the API client
-     *
-     * @param \Swagger\Client\ApiClient $apiClient set the API client
-     *
-     * @return FakeApi
-     */
-    public function setApiClient(\Swagger\Client\ApiClient $apiClient)
-    {
-        $this->apiClient = $apiClient;
-        return $this;
+        $this->client = $client;
+        $this->serializer = new ObjectSerializer();
+        $this->headerSelector = $selector ?: new HeaderSelector();
     }
 
     /**
@@ -109,6 +88,7 @@ class FakeApi
      *
      * @param \Swagger\Client\Model\Client $body client model (required)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException when invalid arguments provided
      * @return array of \Swagger\Client\Model\Client, HTTP status code, HTTP response headers (array of strings)
      */
     public function testClientModelWithHttpInfo($body)
@@ -117,17 +97,20 @@ class FakeApi
         if ($body === null) {
             throw new \InvalidArgumentException('Missing the required parameter $body when calling testClientModel');
         }
-        // parse inputs
-        $resourcePath = "/fake";
-        $httpBody = '';
-        $queryParams = [];
-        $headerParams = [];
+
+        $resourcePath = substr('/fake', 1);
         $formParams = [];
-        $_header_accept = $this->apiClient->selectHeaderAccept(['application/json']);
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/json']);
+        $httpBody= '';
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json'],
+            ['application/json']
+        );
+
+
+/**
+
+    */
 
         // body params
         $_tempBody = null;
@@ -141,7 +124,27 @@ class FakeApi
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        // make the API Call
+/**
+*/
+
+        try {
+            $request = new Request(
+                'PATCH',
+                $resourcePath,
+                $headers,
+                $httpBody
+            );
+            $response = $this->client->sendRequest($request);
+            $content = json_decode($response->getBody()->getContents());
+            return [
+                ObjectSerializer::deserialize($content, '\Swagger\Client\Model\Client', []),
+                $response->getStatusCode(),
+                []
+            ];
+        } catch (Exception $exception) {
+            throw new ApiException($exception->getMessage(), null, $exception);
+        }
+/**
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath,
@@ -164,8 +167,8 @@ class FakeApi
 
             throw $e;
         }
+*/
     }
-
     /**
      * Operation testEndpointParameters
      *
@@ -191,7 +194,7 @@ class FakeApi
     public function testEndpointParameters($number, $double, $pattern_without_delimiter, $byte, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null, $callback = null)
     {
         list($response) = $this->testEndpointParametersWithHttpInfo($number, $double, $pattern_without_delimiter, $byte, $integer, $int32, $int64, $float, $string, $binary, $date, $date_time, $password, $callback);
-        return $response;
+        
     }
 
     /**
@@ -214,6 +217,7 @@ class FakeApi
      * @param string $password None (optional)
      * @param string $callback None (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException when invalid arguments provided
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function testEndpointParametersWithHttpInfo($number, $double, $pattern_without_delimiter, $byte, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null, $callback = null)
@@ -222,10 +226,10 @@ class FakeApi
         if ($number === null) {
             throw new \InvalidArgumentException('Missing the required parameter $number when calling testEndpointParameters');
         }
-        if (($number > 543.2)) {
+        if ($number > 543.2) {
             throw new \InvalidArgumentException('invalid value for "$number" when calling FakeApi.testEndpointParameters, must be smaller than or equal to 543.2.');
         }
-        if (($number < 32.1)) {
+        if ($number < 32.1) {
             throw new \InvalidArgumentException('invalid value for "$number" when calling FakeApi.testEndpointParameters, must be bigger than or equal to 32.1.');
         }
 
@@ -233,10 +237,10 @@ class FakeApi
         if ($double === null) {
             throw new \InvalidArgumentException('Missing the required parameter $double when calling testEndpointParameters');
         }
-        if (($double > 123.4)) {
+        if ($double > 123.4) {
             throw new \InvalidArgumentException('invalid value for "$double" when calling FakeApi.testEndpointParameters, must be smaller than or equal to 123.4.');
         }
-        if (($double < 67.8)) {
+        if ($double < 67.8) {
             throw new \InvalidArgumentException('invalid value for "$double" when calling FakeApi.testEndpointParameters, must be bigger than or equal to 67.8.');
         }
 
@@ -244,7 +248,7 @@ class FakeApi
         if ($pattern_without_delimiter === null) {
             throw new \InvalidArgumentException('Missing the required parameter $pattern_without_delimiter when calling testEndpointParameters');
         }
-        if (!preg_match("/^[A-Z].*_/", $pattern_without_delimiter)) {
+        if (!preg_match("/^[A-Z].*_/", $pattern_without_delimiter) {
             throw new \InvalidArgumentException("invalid value for \"pattern_without_delimiter\" when calling FakeApi.testEndpointParameters, must conform to the pattern /^[A-Z].*_/.");
         }
 
@@ -252,101 +256,132 @@ class FakeApi
         if ($byte === null) {
             throw new \InvalidArgumentException('Missing the required parameter $byte when calling testEndpointParameters');
         }
-        if (!is_null($integer) && ($integer > 100)) {
+        if ($integer !== null && $integer > 100) {
             throw new \InvalidArgumentException('invalid value for "$integer" when calling FakeApi.testEndpointParameters, must be smaller than or equal to 100.');
         }
-        if (!is_null($integer) && ($integer < 10)) {
+        if ($integer !== null && $integer < 10) {
             throw new \InvalidArgumentException('invalid value for "$integer" when calling FakeApi.testEndpointParameters, must be bigger than or equal to 10.');
         }
 
-        if (!is_null($int32) && ($int32 > 200)) {
+        if ($int32 !== null && $int32 > 200) {
             throw new \InvalidArgumentException('invalid value for "$int32" when calling FakeApi.testEndpointParameters, must be smaller than or equal to 200.');
         }
-        if (!is_null($int32) && ($int32 < 20)) {
+        if ($int32 !== null && $int32 < 20) {
             throw new \InvalidArgumentException('invalid value for "$int32" when calling FakeApi.testEndpointParameters, must be bigger than or equal to 20.');
         }
 
-        if (!is_null($float) && ($float > 987.6)) {
+        if ($float !== null && $float > 987.6) {
             throw new \InvalidArgumentException('invalid value for "$float" when calling FakeApi.testEndpointParameters, must be smaller than or equal to 987.6.');
         }
 
-        if (!is_null($string) && !preg_match("/[a-z]/i", $string)) {
+        if ($string !== null && !preg_match("/[a-z]/i", $string) {
             throw new \InvalidArgumentException("invalid value for \"string\" when calling FakeApi.testEndpointParameters, must conform to the pattern /[a-z]/i.");
         }
 
-        if (!is_null($password) && (strlen($password) > 64)) {
+        if ($password !== null && strlen($password) > 64) {
             throw new \InvalidArgumentException('invalid length for "$password" when calling FakeApi.testEndpointParameters, must be smaller than or equal to 64.');
         }
-        if (!is_null($password) && (strlen($password) < 10)) {
+        if ($password !== null && strlen($password) < 10) {
             throw new \InvalidArgumentException('invalid length for "$password" when calling FakeApi.testEndpointParameters, must be bigger than or equal to 10.');
         }
 
-        // parse inputs
-        $resourcePath = "/fake";
-        $httpBody = '';
-        $queryParams = [];
-        $headerParams = [];
+
+        $resourcePath = substr('/fake', 1);
         $formParams = [];
-        $_header_accept = $this->apiClient->selectHeaderAccept(['application/xml; charset=utf-8', 'application/json; charset=utf-8']);
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/xml; charset=utf-8', 'application/json; charset=utf-8']);
+        $httpBody= '';
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/xml; charset=utf-8', 'application/json; charset=utf-8'],
+            ['application/xml; charset=utf-8', 'application/json; charset=utf-8']
+        );
+
+
+/**
+
+    */
 
         // form params
         if ($integer !== null) {
+        /**
+        */
             $formParams['integer'] = $this->apiClient->getSerializer()->toFormValue($integer);
         }
         // form params
         if ($int32 !== null) {
+        /**
+        */
             $formParams['int32'] = $this->apiClient->getSerializer()->toFormValue($int32);
         }
         // form params
         if ($int64 !== null) {
+        /**
+        */
             $formParams['int64'] = $this->apiClient->getSerializer()->toFormValue($int64);
         }
         // form params
         if ($number !== null) {
+        /**
+        */
             $formParams['number'] = $this->apiClient->getSerializer()->toFormValue($number);
         }
         // form params
         if ($float !== null) {
+        /**
+        */
             $formParams['float'] = $this->apiClient->getSerializer()->toFormValue($float);
         }
         // form params
         if ($double !== null) {
+        /**
+        */
             $formParams['double'] = $this->apiClient->getSerializer()->toFormValue($double);
         }
         // form params
         if ($string !== null) {
+        /**
+        */
             $formParams['string'] = $this->apiClient->getSerializer()->toFormValue($string);
         }
         // form params
         if ($pattern_without_delimiter !== null) {
+        /**
+        */
             $formParams['pattern_without_delimiter'] = $this->apiClient->getSerializer()->toFormValue($pattern_without_delimiter);
         }
         // form params
         if ($byte !== null) {
+        /**
+        */
             $formParams['byte'] = $this->apiClient->getSerializer()->toFormValue($byte);
         }
         // form params
         if ($binary !== null) {
+        /**
+        */
             $formParams['binary'] = $this->apiClient->getSerializer()->toFormValue($binary);
         }
         // form params
         if ($date !== null) {
+        /**
+        */
             $formParams['date'] = $this->apiClient->getSerializer()->toFormValue($date);
         }
         // form params
         if ($date_time !== null) {
+        /**
+        */
             $formParams['dateTime'] = $this->apiClient->getSerializer()->toFormValue($date_time);
         }
         // form params
         if ($password !== null) {
+        /**
+        */
             $formParams['password'] = $this->apiClient->getSerializer()->toFormValue($password);
         }
         // form params
         if ($callback !== null) {
+        /**
+        */
             $formParams['callback'] = $this->apiClient->getSerializer()->toFormValue($callback);
         }
         
@@ -356,11 +391,26 @@ class FakeApi
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
+/**
         // this endpoint requires HTTP basic authentication
         if (strlen($this->apiClient->getConfig()->getUsername()) !== 0 or strlen($this->apiClient->getConfig()->getPassword()) !== 0) {
             $headerParams['Authorization'] = 'Basic ' . base64_encode($this->apiClient->getConfig()->getUsername() . ":" . $this->apiClient->getConfig()->getPassword());
         }
-        // make the API Call
+*/
+
+        try {
+            $request = new Request(
+                'POST',
+                $resourcePath,
+                $headers,
+                $httpBody
+            );
+            $response = $this->client->sendRequest($request);
+            return [null, $response->getStatusCode(), []];
+        } catch (Exception $exception) {
+            throw new ApiException($exception->getMessage(), null, $exception);
+        }
+/**
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath,
@@ -379,8 +429,8 @@ class FakeApi
 
             throw $e;
         }
+*/
     }
-
     /**
      * Operation testEnumParameters
      *
@@ -400,7 +450,7 @@ class FakeApi
     public function testEnumParameters($enum_form_string_array = null, $enum_form_string = null, $enum_header_string_array = null, $enum_header_string = null, $enum_query_string_array = null, $enum_query_string = null, $enum_query_integer = null, $enum_query_double = null)
     {
         list($response) = $this->testEnumParametersWithHttpInfo($enum_form_string_array, $enum_form_string, $enum_header_string_array, $enum_header_string, $enum_query_string_array, $enum_query_string, $enum_query_integer, $enum_query_double);
-        return $response;
+        
     }
 
     /**
@@ -417,22 +467,23 @@ class FakeApi
      * @param int $enum_query_integer Query parameter enum test (double) (optional)
      * @param double $enum_query_double Query parameter enum test (double) (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException when invalid arguments provided
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function testEnumParametersWithHttpInfo($enum_form_string_array = null, $enum_form_string = null, $enum_header_string_array = null, $enum_header_string = null, $enum_query_string_array = null, $enum_query_string = null, $enum_query_integer = null, $enum_query_double = null)
     {
-        // parse inputs
-        $resourcePath = "/fake";
-        $httpBody = '';
-        $queryParams = [];
-        $headerParams = [];
-        $formParams = [];
-        $_header_accept = $this->apiClient->selectHeaderAccept(['*/*']);
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['*/*']);
 
+        $resourcePath = substr('/fake', 1);
+        $formParams = [];
+        $httpBody= '';
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['*/*'],
+            ['*/*']
+        );
+
+
+/**
         // query params
         if (is_array($enum_query_string_array)) {
             $enum_query_string_array = $this->apiClient->getSerializer()->serializeCollection($enum_query_string_array, 'csv', true);
@@ -459,16 +510,25 @@ class FakeApi
         if ($enum_header_string !== null) {
             $headerParams['enum_header_string'] = $this->apiClient->getSerializer()->toHeaderValue($enum_header_string);
         }
+
+    */
+
         // form params
         if ($enum_form_string_array !== null) {
+        /**
+        */
             $formParams['enum_form_string_array'] = $this->apiClient->getSerializer()->toFormValue($enum_form_string_array);
         }
         // form params
         if ($enum_form_string !== null) {
+        /**
+        */
             $formParams['enum_form_string'] = $this->apiClient->getSerializer()->toFormValue($enum_form_string);
         }
         // form params
         if ($enum_query_double !== null) {
+        /**
+        */
             $formParams['enum_query_double'] = $this->apiClient->getSerializer()->toFormValue($enum_query_double);
         }
         
@@ -478,7 +538,22 @@ class FakeApi
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
-        // make the API Call
+/**
+*/
+
+        try {
+            $request = new Request(
+                'GET',
+                $resourcePath,
+                $headers,
+                $httpBody
+            );
+            $response = $this->client->sendRequest($request);
+            return [null, $response->getStatusCode(), []];
+        } catch (Exception $exception) {
+            throw new ApiException($exception->getMessage(), null, $exception);
+        }
+/**
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath,
@@ -497,5 +572,6 @@ class FakeApi
 
             throw $e;
         }
+*/
     }
 }

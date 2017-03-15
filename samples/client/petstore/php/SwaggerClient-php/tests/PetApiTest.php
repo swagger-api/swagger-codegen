@@ -2,10 +2,17 @@
 
 namespace Swagger\Client;
 
+use Http\Adapter\Guzzle6\Client;
+use Swagger\Client\Api\PetApi;
+use Swagger\Client\Model\Pet;
+
 class PetApiTest extends \PHPUnit_Framework_TestCase
 {
 
     // add a new pet (id 10005) to ensure the pet object is available for all the tests
+    /** @var  PetApi */
+    private $api;
+
     public static function setUpBeforeClass()
     {
         // increase memory limit to avoid fatal error due to findPetByStatus
@@ -23,7 +30,7 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
 
         // enable debugging
         //Configuration::$debug = true;
-  
+
         // skip initializing the API client as it should be automatic
         //$api_client = new ApiClient('http://petstore.swagger.io/v2');
         // new pet
@@ -31,7 +38,7 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $new_pet = new Model\Pet;
         $new_pet->setId($new_pet_id);
         $new_pet->setName("PHP Unit Test");
-        $new_pet->setPhotoUrls(array("http://test_php_unit_test.com"));
+        $new_pet->setPhotoUrls(["http://test_php_unit_test.com"]);
         // new tag
         $tag= new Model\Tag;
         $tag->setId($new_pet_id); // use the same id as pet
@@ -40,137 +47,87 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $category = new Model\Category;
         $category->setId($new_pet_id); // use the same id as pet
         $category->setName("test php category");
-  
+
         $new_pet->setTags(array($tag));
         $new_pet->setCategory($category);
-  
-        $pet_api = new Api\PetApi();
+
+        $petApi = new Api\PetApi(new Client(new \GuzzleHttp\Client([
+            'base_uri' => 'http://petstore.swagger.io/v2/'
+        ])));
         // add a new pet (model)
-        $add_response = $pet_api->addPet($new_pet);
+        list(, $status) = $petApi->addPetWithHttpInfo($new_pet);
+        \PHPUnit_Framework_Assert::assertEquals(200, $status);
     }
-  
-    // test static functions defined in ApiClient
-    public function testApiClient()
+
+    public function setUp()
     {
-        // test selectHeaderAccept
-        $api_client = new ApiClient();
-        $this->assertSame('application/json', $api_client->selectHeaderAccept(array(
-            'application/xml',
-            'application/json'
-        )));
-        $this->assertSame(null, $api_client->selectHeaderAccept(array()));
-        $this->assertSame('application/yaml,application/xml', $api_client->selectHeaderAccept(array(
-            'application/yaml',
-            'application/xml'
-        )));
-       
-        // test selectHeaderContentType
-        $this->assertSame('application/json', $api_client->selectHeaderContentType(array(
-            'application/xml',
-            'application/json'
-        )));
-        $this->assertSame('application/json', $api_client->selectHeaderContentType(array()));
-        $this->assertSame('application/yaml,application/xml', $api_client->selectHeaderContentType(array(
-            'application/yaml',
-            'application/xml'
-        )));
-  
-        // test addDefaultHeader and getDefaultHeader
-        $api_client->getConfig()->addDefaultHeader('test1', 'value1');
-        $api_client->getConfig()->addDefaultHeader('test2', 200);
-        $defaultHeader = $api_client->getConfig()->getDefaultHeaders();
-        $this->assertSame('value1', $defaultHeader['test1']);
-        $this->assertSame(200, $defaultHeader['test2']);
-  
-        // test deleteDefaultHeader
-        $api_client->getConfig()->deleteDefaultHeader('test2');
-        $defaultHeader = $api_client->getConfig()->getDefaultHeaders();
-        $this->assertFalse(isset($defaultHeader['test2']));
-  
-        $pet_api2 = new Api\PetApi();
-        $config3 = new Configuration();
-        $apiClient3 = new ApiClient($config3);
-        $apiClient3->getConfig()->setUserAgent('api client 3');
-        $config4 = new Configuration();
-        $apiClient4 = new ApiClient($config4);
-        $apiClient4->getConfig()->setUserAgent('api client 4');
-        $pet_api3 = new Api\PetApi($apiClient3);
-  
-        // 2 different api clients are not the same
-        $this->assertNotEquals($apiClient3, $apiClient4);
-        // customied pet api not using the old pet api's api client
-        $this->assertNotEquals($pet_api2->getApiClient(), $pet_api3->getApiClient());
-  
-        // test access token
-        $api_client->getConfig()->setAccessToken("testing_only");
-        $this->assertSame('testing_only', $api_client->getConfig()->getAccessToken());
+        $this->api = new Api\PetApi(
+            new Client(
+                new \GuzzleHttp\Client(['base_uri' => 'http://petstore.swagger.io/v2/'])
+            )
+        );
     }
-  
-    // test getPetById with a Pet object (id 10005)
+
     public function testGetPetById()
     {
-        // initialize the API client without host
-        $pet_id = 10005;  // ID of pet that needs to be fetched
-        $pet_api = new Api\PetApi();
-        $pet_api->getApiClient()->getConfig()->setApiKey('api_key', '111222333444555');
-        // return Pet (model)
-        $response = $pet_api->getPetById($pet_id);
-        $this->assertSame($response->getId(), $pet_id);
-        $this->assertSame($response->getName(), 'PHP Unit Test');
-        $this->assertSame($response->getPhotoUrls()[0], 'http://test_php_unit_test.com');
-        $this->assertSame($response->getCategory()->getId(), $pet_id);
-        $this->assertSame($response->getCategory()->getName(), 'test php category');
-        $this->assertSame($response->getTags()[0]->getId(), $pet_id);
-        $this->assertSame($response->getTags()[0]->getName(), 'test php tag');
+        $petId = 10005;
+
+        $pet = $this->api->getPetById($petId);
+        $this->assertSame($pet->getId(), $petId);
+        $this->assertSame($pet->getName(), 'PHP Unit Test');
+        $this->assertSame($pet->getPhotoUrls()[0], 'http://test_php_unit_test.com');
+        $this->assertSame($pet->getCategory()->getId(), $petId);
+        $this->assertSame($pet->getCategory()->getName(), 'test php category');
+        $this->assertSame($pet->getTags()[0]->getId(), $petId);
+        $this->assertSame($pet->getTags()[0]->getName(), 'test php tag');
     }
 
     /**
      * comment out as we've removed invalid endpoints from the spec, we'll introduce something
      * similar in the future when we've time to update the petstore server
      *
-    // test getPetById with a Pet object (id 10005)
-    public function testGetPetByIdInObject()
-    {
-        // initialize the API client without host
-        $pet_id = 10005;  // ID of pet that needs to be fetched
-        $pet_api = new Api\PetApi();
-        $pet_api->getApiClient()->getConfig()->setApiKey('api_key', '111222333444555');
-        // return Pet (inline model)
-        $response = $pet_api->getPetByIdInObject($pet_id);
-        $this->assertInstanceOf('Swagger\Client\Model\InlineResponse200', $response);
-        $this->assertSame($response->getId(), $pet_id);
-        $this->assertSame($response->getName(), 'PHP Unit Test');
-        $this->assertSame($response->getPhotoUrls()[0], 'http://test_php_unit_test.com');
-
-        // category is type "object"
-        $this->assertInternalType('array', $response->getCategory());
-        $this->assertSame($response->getCategory()['id'], $pet_id);
-        $this->assertSame($response->getCategory()['name'], 'test php category');
-
-        $this->assertSame($response->getTags()[0]->getId(), $pet_id);
-        $this->assertSame($response->getTags()[0]->getName(), 'test php tag');
-    }
+     * // test getPetById with a Pet object (id 10005)
+     * public function testGetPetByIdInObject()
+     * {
+     * // initialize the API client without host
+     * $pet_id = 10005;  // ID of pet that needs to be fetched
+     * $pet_api = new Api\PetApi();
+     * $pet_api->getApiClient()->getConfig()->setApiKey('api_key', '111222333444555');
+     * // return Pet (inline model)
+     * $response = $pet_api->getPetByIdInObject($pet_id);
+     * $this->assertInstanceOf('Swagger\Client\Model\InlineResponse200', $response);
+     * $this->assertSame($response->getId(), $pet_id);
+     * $this->assertSame($response->getName(), 'PHP Unit Test');
+     * $this->assertSame($response->getPhotoUrls()[0], 'http://test_php_unit_test.com');
+     *
+     * // category is type "object"
+     * $this->assertInternalType('array', $response->getCategory());
+     * $this->assertSame($response->getCategory()['id'], $pet_id);
+     * $this->assertSame($response->getCategory()['name'], 'test php category');
+     *
+     * $this->assertSame($response->getTags()[0]->getId(), $pet_id);
+     * $this->assertSame($response->getTags()[0]->getName(), 'test php tag');
+     * }
      */
-  
+
     // test getPetByIdWithHttpInfo with a Pet object (id 10005)
     public function testGetPetByIdWithHttpInfo()
     {
         // initialize the API client without host
-        $pet_id = 10005;  // ID of pet that needs to be fetched
-        $pet_api = new Api\PetApi();
-        $pet_api->getApiClient()->getConfig()->setApiKey('api_key', '111222333444555');
-        // return Pet (model)
-        list($response, $status_code, $response_headers) = $pet_api->getPetByIdWithHttpInfo($pet_id);
-        $this->assertSame($response->getId(), $pet_id);
-        $this->assertSame($response->getName(), 'PHP Unit Test');
-        $this->assertSame($response->getCategory()->getId(), $pet_id);
-        $this->assertSame($response->getCategory()->getName(), 'test php category');
-        $this->assertSame($response->getTags()[0]->getId(), $pet_id);
-        $this->assertSame($response->getTags()[0]->getName(), 'test php tag');
+        $petId = 10005;  // ID of pet that needs to be fetched
+
+        /** @var $pet Pet */
+        list($pet, $status_code, $response_headers) = $this->api->getPetByIdWithHttpInfo($petId);
+        $this->assertSame($pet->getId(), $petId);
+        $this->assertSame($pet->getName(), 'PHP Unit Test');
+        $this->assertSame($pet->getCategory()->getId(), $petId);
+        $this->assertSame($pet->getCategory()->getName(), 'test php category');
+        $this->assertSame($pet->getTags()[0]->getId(), $petId);
+        $this->assertSame($pet->getTags()[0]->getName(), 'test php tag');
         $this->assertSame($status_code, 200);
-        $this->assertSame($response_headers['Content-Type'], 'application/json');
+        $this->assertSame($response_headers['Content-Type'], ['application/json']);
     }
-  
+
     // test getPetByStatus and verify by the "id" of the response
     public function testFindPetByStatus()
     {
@@ -190,7 +147,7 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $response = $pet_api->findPetsByStatus("unknown_and_incorrect_status");
         $this->assertSame(count($response), 0); // confirm no object returned
     }
-  
+
     // test getPetsByTags and verify by the "id" of the response
     public function testFindPetsByTags()
     {
@@ -234,7 +191,7 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($response->getStatus(), 'pending');
         $this->assertSame($response->getName(), 'updatePet');
     }
-  
+
     // test updatePetWithFormWithHttpInfo and verify by the "name" of the response
     public function testUpdatePetWithFormWithHttpInfo()
     {
@@ -256,7 +213,7 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($response->getId(), $pet_id);
         $this->assertSame($response->getName(), 'update pet with form with http info');
     }
-  
+
     // test updatePetWithForm and verify by the "name" and "status" of the response
     public function testUpdatePetWithForm()
     {
@@ -336,7 +293,7 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($response->getName(), 'PHP Unit Test 3');
     }
      */
-  
+
     // test upload file
     public function testUploadFile()
     {
@@ -351,7 +308,7 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Swagger\Client\Model\ApiResponse', $response);
 
     }
-  
+
     // test get inventory
     public function testGetInventory()
     {
@@ -362,7 +319,7 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $store_api = new Api\StoreApi($api_client);
         // get inventory
         $get_response = $store_api->getInventory();
-  
+
         $this->assertInternalType("int", $get_response['sold']);
         $this->assertInternalType("int", $get_response['pending']);
     }
@@ -484,12 +441,12 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
     public function testHostOverride()
     {
         $orig_default = Configuration::getDefaultConfiguration();
-        $new_default  = new Configuration();
-        
+        $new_default = new Configuration();
+
         $new_default->setHost("http://localhost/whatever");
         Configuration::setDefaultConfiguration($new_default);
 
-        $pet_api  = new Api\PetApi();
+        $pet_api = new Api\PetApi();
         $pet_host = $pet_api->getApiClient()->getConfig()->getHost();
         $this->assertSame($pet_host, $new_default->getHost());
 
