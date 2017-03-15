@@ -71,9 +71,9 @@ exports.getUserByName = function(username) {
   "firstName" : "aeiou",
   "lastName" : "aeiou",
   "password" : "aeiou",
-  "userStatus" : 123,
+  "userStatus" : 8,
   "phone" : "aeiou",
-  "id" : 123456789,
+  "id" : 5,
   "email" : "aeiou",
   "username" : "aeiou"
 };

@@ -25,7 +25,7 @@ exports.getInventory = function() {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {
-  "key" : 123
+  "key" : 1
 };
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
@@ -47,12 +47,12 @@ exports.getOrderById = function(orderId) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {
-  "petId" : 123456789,
-  "quantity" : 123,
-  "id" : 123456789,
+  "petId" : 8,
+  "quantity" : 8,
+  "id" : 5,
   "shipDate" : "2000-01-23T04:56:07.000+00:00",
-  "complete" : true,
-  "status" : "aeiou"
+  "complete" : false,
+  "status" : "placed"
 };
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
@@ -74,12 +74,12 @@ exports.placeOrder = function(body) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {
-  "petId" : 123456789,
-  "quantity" : 123,
-  "id" : 123456789,
+  "petId" : 7,
+  "quantity" : 0,
+  "id" : 1,
   "shipDate" : "2000-01-23T04:56:07.000+00:00",
-  "complete" : true,
-  "status" : "aeiou"
+  "complete" : false,
+  "status" : "placed"
 };
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
