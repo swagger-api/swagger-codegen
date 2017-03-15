@@ -34,7 +34,6 @@ use Http\Client\Exception;
 use Http\Client\HttpClient;
 use Swagger\Client\ApiException;
 use Swagger\Client\HeaderSelector;
-use Swagger\Client\Model\Pet;
 use Swagger\Client\ObjectSerializer;
 
 /**
