@@ -23,6 +23,7 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.client.filter.GZIPContentEncodingFilter;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.api.client.WebResource.Builder;
 
@@ -109,6 +110,7 @@ public class ApiClient {
    * Build the Client used to make HTTP requests with the latest settings,
    * i.e. objectMapper and debugging.
    * TODO: better to use the Builder Pattern?
+   * @return API client
    */
   public ApiClient rebuildHttpClient() {
     // Add the JSON serialization support to Jersey
@@ -116,6 +118,7 @@ public class ApiClient {
     DefaultClientConfig conf = new DefaultClientConfig();
     conf.getSingletons().add(jsonProvider);
     Client client = Client.create(conf);
+    client.addFilter(new GZIPContentEncodingFilter(false));
     if (debugging) {
       client.addFilter(new LoggingFilter());
     }
@@ -129,6 +132,7 @@ public class ApiClient {
    * Note: If you make changes to the object mapper, remember to set it back via
    * <code>setObjectMapper</code> in order to trigger HTTP client rebuilding.
    * </p>
+   * @return Object mapper
    */
   public ObjectMapper getObjectMapper() {
     return objectMapper;
@@ -161,6 +165,7 @@ public class ApiClient {
 
   /**
    * Gets the status code of the previous request
+   * @return Status code
    */
   public int getStatusCode() {
     return statusCode;
@@ -168,6 +173,7 @@ public class ApiClient {
 
   /**
    * Gets the response headers of the previous request
+   * @return Response headers
    */
   public Map<String, List<String>> getResponseHeaders() {
     return responseHeaders;
@@ -175,6 +181,7 @@ public class ApiClient {
 
   /**
    * Get authentications (key: authentication name, value: authentication).
+   * @return Map of authentication
    */
   public Map<String, Authentication> getAuthentications() {
     return authentications;
@@ -192,6 +199,7 @@ public class ApiClient {
 
   /**
    * Helper method to set username for the first HTTP basic authentication.
+   * @param username Username
    */
   public void setUsername(String username) {
     for (Authentication auth : authentications.values()) {
@@ -205,6 +213,7 @@ public class ApiClient {
 
   /**
    * Helper method to set password for the first HTTP basic authentication.
+   * @param password Password
    */
   public void setPassword(String password) {
     for (Authentication auth : authentications.values()) {
@@ -218,6 +227,7 @@ public class ApiClient {
 
   /**
    * Helper method to set API key value for the first API key authentication.
+   * @param apiKey API key
    */
   public void setApiKey(String apiKey) {
     for (Authentication auth : authentications.values()) {
@@ -231,6 +241,7 @@ public class ApiClient {
 
   /**
    * Helper method to set API key prefix for the first API key authentication.
+   * @param apiKeyPrefix API key prefix
    */
   public void setApiKeyPrefix(String apiKeyPrefix) {
     for (Authentication auth : authentications.values()) {
@@ -244,6 +255,7 @@ public class ApiClient {
 
   /**
    * Helper method to set access token for the first OAuth2 authentication.
+   * @param accessToken Access token
    */
   public void setAccessToken(String accessToken) {
     for (Authentication auth : authentications.values()) {
@@ -257,6 +269,8 @@ public class ApiClient {
 
   /**
    * Set the User-Agent header's value (by adding to the default header map).
+   * @param userAgent User agent
+   * @return API client
    */
   public ApiClient setUserAgent(String userAgent) {
     addDefaultHeader("User-Agent", userAgent);
@@ -268,6 +282,7 @@ public class ApiClient {
    *
    * @param key The header's key
    * @param value The header's value
+   * @return API client
    */
   public ApiClient addDefaultHeader(String key, String value) {
     defaultHeaderMap.put(key, value);
@@ -276,6 +291,7 @@ public class ApiClient {
 
   /**
    * Check that whether debugging is enabled for this API client.
+   * @return True if debugging is on
    */
   public boolean isDebugging() {
     return debugging;
@@ -285,6 +301,7 @@ public class ApiClient {
    * Enable/disable debugging for this API client.
    *
    * @param debugging To enable (true) or disable (false) debugging
+   * @return API client
    */
   public ApiClient setDebugging(boolean debugging) {
     this.debugging = debugging;
@@ -295,6 +312,7 @@ public class ApiClient {
 
   /**
    * Connect timeout (in milliseconds).
+   * @return Connection timeout
    */
   public int getConnectTimeout() {
     return connectionTimeout;
@@ -304,6 +322,8 @@ public class ApiClient {
    * Set the connect timeout (in milliseconds).
    * A value of 0 means no timeout, otherwise values must be between 1 and
    * {@link Integer#MAX_VALUE}.
+   * @param connectionTimeout Connection timeout in milliseconds
+   * @return API client
    */
    public ApiClient setConnectTimeout(int connectionTimeout) {
      this.connectionTimeout = connectionTimeout;
@@ -313,6 +333,7 @@ public class ApiClient {
 
   /**
    * Get the date format used to parse/format date parameters.
+   * @return Date format
    */
   public DateFormat getDateFormat() {
     return dateFormat;
@@ -320,6 +341,8 @@ public class ApiClient {
 
   /**
    * Set the date format used to parse/format date parameters.
+   * @param dateFormat Date format
+   * @return API client
    */
   public ApiClient setDateFormat(DateFormat dateFormat) {
     this.dateFormat = dateFormat;
@@ -332,6 +355,8 @@ public class ApiClient {
 
   /**
    * Parse the given string into Date object.
+   * @param str String
+   * @return Date
    */
   public Date parseDate(String str) {
     try {
@@ -343,6 +368,8 @@ public class ApiClient {
 
   /**
    * Format the given Date object into string.
+   * @param date Date
+   * @return Date in string format
    */
   public String formatDate(Date date) {
     return dateFormat.format(date);
@@ -350,6 +377,8 @@ public class ApiClient {
 
   /**
    * Format the given parameter object into string.
+   * @param param Object
+   * @return Object in string format
    */
   public String parameterToString(Object param) {
     if (param == null) {
@@ -371,8 +400,12 @@ public class ApiClient {
   }
 
   /*
-    Format to {@code Pair} objects.
-  */
+   * Format to {@code Pair} objects.
+   * @param collectionFormat Collection format
+   * @param name Name
+   * @param value Value
+   * @return List of pair
+   */
   public List<Pair> parameterToPairs(String collectionFormat, String name, Object value){
     List<Pair> params = new ArrayList<Pair>();
 
@@ -432,6 +465,8 @@ public class ApiClient {
    *   application/json
    *   application/json; charset=UTF8
    *   APPLICATION/JSON
+   * @param mime MIME
+   * @return True if MIME type is boolean
    */
   public boolean isJsonMime(String mime) {
     return mime != null && mime.matches("(?i)application\\/json(;.*)?");
@@ -481,6 +516,8 @@ public class ApiClient {
 
   /**
    * Escape the given string to be used as URL query value.
+   * @param str String
+   * @return Escaped string
    */
   public String escapeString(String str) {
     try {
@@ -493,6 +530,11 @@ public class ApiClient {
   /**
    * Serialize the given Java object into string according the given
    * Content-Type (only JSON is supported for now).
+   * @param obj Object
+   * @param contentType Content type
+   * @param formParams Form parameters
+   * @return Object
+   * @throws ApiException API exception
    */
   public Object serialize(Object obj, String contentType, Map<String, Object> formParams) throws ApiException {
     if (contentType.startsWith("multipart/form-data")) {
@@ -598,6 +640,7 @@ public class ApiClient {
   /**
    * Invoke API by sending HTTP request with the given options.
    *
+   * @param <T> Type
    * @param path The sub-path of the HTTP URL
    * @param method The request method, one of "GET", "POST", "PUT", and "DELETE"
    * @param queryParams The query parameters
@@ -607,7 +650,9 @@ public class ApiClient {
    * @param accept The request's Accept header
    * @param contentType The request's Content-Type header
    * @param authNames The authentications to apply
+   * @param returnType Return type
    * @return The response body in type of string
+   * @throws ApiException API exception
    */
    public <T> T invokeAPI(String path, String method, List<Pair> queryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String accept, String contentType, String[] authNames, GenericType<T> returnType) throws ApiException {
 
@@ -646,6 +691,8 @@ public class ApiClient {
    * Update query and header parameters based on authentication settings.
    *
    * @param authNames The authentications to apply
+   * @param queryParams Query parameters
+   * @param headerParams Header parameters
    */
   private void updateParamsForAuth(String[] authNames, List<Pair> queryParams, Map<String, String> headerParams) {
     for (String authName : authNames) {
@@ -657,6 +704,8 @@ public class ApiClient {
 
   /**
    * Encode the given form parameters as request body.
+   * @param formParams Form parameters
+   * @return HTTP form encoded parameters
    */
   private String getXWWWFormUrlencodedParams(Map<String, Object> formParams) {
     StringBuilder formParamBuilder = new StringBuilder();

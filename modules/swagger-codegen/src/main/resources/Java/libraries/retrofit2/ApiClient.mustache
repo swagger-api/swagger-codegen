@@ -19,6 +19,9 @@ import retrofit2.Retrofit;
 {{#useRxJava}}
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 {{/useRxJava}}
+{{#useRxJava2}}
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+{{/useRxJava2}}
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import {{invokerPackage}}.auth.HttpBasicAuth;
@@ -51,17 +54,27 @@ public class ApiClient {
 
     public ApiClient(String[] authNames) {
         this();
-        for(String authName : authNames) { {{#hasAuthMethods}}
+        for(String authName : authNames) {
+            {{#hasAuthMethods}}
             Interceptor auth;
-            {{#authMethods}}if (authName.equals("{{name}}")) { {{#isBasic}}
-                auth = new HttpBasicAuth();{{/isBasic}}{{#isApiKey}}
-                auth = new ApiKeyAuth({{#isKeyInHeader}}"header"{{/isKeyInHeader}}{{^isKeyInHeader}}"query"{{/isKeyInHeader}}, "{{keyParamName}}");{{/isApiKey}}{{#isOAuth}}
-                auth = new OAuth(OAuthFlow.{{flow}}, "{{authorizationUrl}}", "{{tokenUrl}}", "{{#scopes}}{{scope}}{{#hasMore}}, {{/hasMore}}{{/scopes}}");{{/isOAuth}}
+            {{#authMethods}}if ("{{name}}".equals(authName)) {
+            {{#isBasic}}
+                auth = new HttpBasicAuth();
+            {{/isBasic}}
+            {{#isApiKey}}
+                auth = new ApiKeyAuth({{#isKeyInHeader}}"header"{{/isKeyInHeader}}{{^isKeyInHeader}}"query"{{/isKeyInHeader}}, "{{keyParamName}}");
+            {{/isApiKey}}
+            {{#isOAuth}}
+                auth = new OAuth(OAuthFlow.{{flow}}, "{{authorizationUrl}}", "{{tokenUrl}}", "{{#scopes}}{{scope}}{{#hasMore}}, {{/hasMore}}{{/scopes}}");
+            {{/isOAuth}}
             } else {{/authMethods}}{
                 throw new RuntimeException("auth name \"" + authName + "\" not found in available auth names");
             }
-            addAuthorization(authName, auth);{{/hasAuthMethods}}{{^hasAuthMethods}}
-            throw new RuntimeException("auth name \"" + authName + "\" not found in available auth names");{{/hasAuthMethods}}
+            addAuthorization(authName, auth);
+            {{/hasAuthMethods}}
+            {{^hasAuthMethods}}
+            throw new RuntimeException("auth name \"" + authName + "\" not found in available auth names");
+            {{/hasAuthMethods}}
         }
     }
 
@@ -125,6 +138,9 @@ public class ApiClient {
                 {{#useRxJava}}
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 {{/useRxJava}}
+                {{#useRxJava2}}
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                {{/useRxJava2}}
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonCustomConverterFactory.create(json.getGson()));
     }
@@ -400,4 +416,3 @@ class GsonCustomConverterFactory extends Converter.Factory
             return gsonConverterFactory.requestBodyConverter(type, parameterAnnotations, methodAnnotations, retrofit);
     }
 }
-

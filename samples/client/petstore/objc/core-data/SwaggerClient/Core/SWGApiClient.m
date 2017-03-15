@@ -80,6 +80,7 @@ static NSString * SWG__fileNameForResponse(NSURLResponse *response) {
             @"application/x-www-form-urlencoded": afhttpRequestSerializer,
             @"multipart/form-data": afhttpRequestSerializer
         };
+        self.securityPolicy = [self createSecurityPolicy];
         self.responseSerializer = [AFHTTPResponseSerializer serializer];
     }
     return self;
@@ -134,7 +135,7 @@ static NSString * SWG__fileNameForResponse(NSURLResponse *response) {
 
         completionBlock(file, nil);
     }];
-    
+
     return task;
 }
 
@@ -221,7 +222,7 @@ static NSString * SWG__fileNameForResponse(NSURLResponse *response) {
 
     [self postProcessRequest:request];
 
-    
+
     NSURLSessionTask *task = nil;
 
     if ([self.downloadTaskResponseTypes containsObject:responseType]) {
@@ -240,9 +241,9 @@ static NSString * SWG__fileNameForResponse(NSURLResponse *response) {
             completionBlock(response, error);
         }];
     }
-    
+
     [task resume];
-    
+
     return task;
 }
 
@@ -329,7 +330,7 @@ static NSString * SWG__fileNameForResponse(NSURLResponse *response) {
 
     NSMutableDictionary *headersWithAuth = [NSMutableDictionary dictionaryWithDictionary:*headers];
     NSMutableDictionary *querysWithAuth = [NSMutableDictionary dictionaryWithDictionary:*querys];
-    
+
     id<SWGConfiguration> config = self.configuration;
     for (NSString *auth in authSettings) {
         NSDictionary *authSetting = config.authSettings[auth];

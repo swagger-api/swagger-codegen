@@ -55,6 +55,7 @@ Class | Method | HTTP request | Description
  - [ArrayOfArrayOfNumberOnly](docs/ArrayOfArrayOfNumberOnly.md)
  - [ArrayOfNumberOnly](docs/ArrayOfNumberOnly.md)
  - [ArrayTest](docs/ArrayTest.md)
+ - [Capitalization](docs/Capitalization.md)
  - [Cat](docs/Cat.md)
  - [Category](docs/Category.md)
  - [ClassModel](docs/ClassModel.md)
@@ -99,7 +100,7 @@ Class | Method | HTTP request | Description
 
 - **Type**: OAuth
 - **Flow**: implicit
-- **Authorizatoin URL**: http://petstore.swagger.io/api/oauth/dialog
+- **Authorization URL**: http://petstore.swagger.io/api/oauth/dialog
 - **Scopes**: 
  - **write:pets**: modify pets in your account
  - **read:pets**: read your pets

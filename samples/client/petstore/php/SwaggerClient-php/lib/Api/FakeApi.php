@@ -59,7 +59,6 @@ class FakeApi
     {
         if ($apiClient === null) {
             $apiClient = new ApiClient();
-            $apiClient->getConfig()->setHost('http://petstore.swagger.io/v2');
         }
 
         $this->apiClient = $apiClient;
@@ -129,9 +128,6 @@ class FakeApi
             $headerParams['Accept'] = $_header_accept;
         }
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/json']);
-
-        // default format to json
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
 
         // body params
         $_tempBody = null;
@@ -296,9 +292,6 @@ class FakeApi
             $headerParams['Accept'] = $_header_accept;
         }
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/xml; charset=utf-8', 'application/json; charset=utf-8']);
-
-        // default format to json
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
 
         // form params
         if ($integer !== null) {
@@ -466,9 +459,6 @@ class FakeApi
         if ($enum_header_string !== null) {
             $headerParams['enum_header_string'] = $this->apiClient->getSerializer()->toHeaderValue($enum_header_string);
         }
-        // default format to json
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-
         // form params
         if ($enum_form_string_array !== null) {
             $formParams['enum_form_string_array'] = $this->apiClient->getSerializer()->toFormValue($enum_form_string_array);

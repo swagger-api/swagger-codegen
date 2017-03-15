@@ -3,8 +3,8 @@ package io.swagger.client.api;
 import io.swagger.client.ApiClient;
 import java.math.BigDecimal;
 import io.swagger.client.model.Client;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.OffsetDateTime;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,7 +29,7 @@ public class FakeApiTest {
     /**
      * To test \&quot;client\&quot; model
      *
-     * 
+     * To test \&quot;client\&quot; model
      */
     @Test
     public void testClientModelTest() {
@@ -57,7 +57,7 @@ public class FakeApiTest {
         String string = null;
         byte[] binary = null;
         LocalDate date = null;
-        DateTime dateTime = null;
+        OffsetDateTime dateTime = null;
         String password = null;
         String paramCallback = null;
         // Void response = api.testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback);
@@ -68,7 +68,7 @@ public class FakeApiTest {
     /**
      * To test enum parameters
      *
-     * 
+     * To test enum parameters
      */
     @Test
     public void testEnumParametersTest() {
@@ -78,7 +78,7 @@ public class FakeApiTest {
         String enumHeaderString = null;
         List<String> enumQueryStringArray = null;
         String enumQueryString = null;
-        BigDecimal enumQueryInteger = null;
+        Integer enumQueryInteger = null;
         Double enumQueryDouble = null;
         // Void response = api.testEnumParameters(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble);
 

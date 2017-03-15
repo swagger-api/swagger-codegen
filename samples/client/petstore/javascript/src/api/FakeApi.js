@@ -64,7 +64,7 @@
       var postBody = body;
 
       // verify the required parameter 'body' is set
-      if (body == undefined || body == null) {
+      if (body === undefined || body === null) {
         throw new Error("Missing the required parameter 'body' when calling testClientModel");
       }
 
@@ -125,22 +125,22 @@
       var postBody = null;
 
       // verify the required parameter '_number' is set
-      if (_number == undefined || _number == null) {
+      if (_number === undefined || _number === null) {
         throw new Error("Missing the required parameter '_number' when calling testEndpointParameters");
       }
 
       // verify the required parameter '_double' is set
-      if (_double == undefined || _double == null) {
+      if (_double === undefined || _double === null) {
         throw new Error("Missing the required parameter '_double' when calling testEndpointParameters");
       }
 
       // verify the required parameter 'patternWithoutDelimiter' is set
-      if (patternWithoutDelimiter == undefined || patternWithoutDelimiter == null) {
+      if (patternWithoutDelimiter === undefined || patternWithoutDelimiter === null) {
         throw new Error("Missing the required parameter 'patternWithoutDelimiter' when calling testEndpointParameters");
       }
 
       // verify the required parameter '_byte' is set
-      if (_byte == undefined || _byte == null) {
+      if (_byte === undefined || _byte === null) {
         throw new Error("Missing the required parameter '_byte' when calling testEndpointParameters");
       }
 
@@ -200,8 +200,8 @@
      * @param {module:model/String} opts.enumHeaderString Header parameter enum test (string) (default to -efg)
      * @param {Array.<module:model/String>} opts.enumQueryStringArray Query parameter enum test (string array)
      * @param {module:model/String} opts.enumQueryString Query parameter enum test (string) (default to -efg)
-     * @param {Number} opts.enumQueryInteger Query parameter enum test (double)
-     * @param {Number} opts.enumQueryDouble Query parameter enum test (double)
+     * @param {module:model/Number} opts.enumQueryInteger Query parameter enum test (double)
+     * @param {module:model/Number} opts.enumQueryDouble Query parameter enum test (double)
      * @param {module:api/FakeApi~testEnumParametersCallback} callback The callback function, accepting three arguments: error, data, response
      */
     this.testEnumParameters = function(opts, callback) {
