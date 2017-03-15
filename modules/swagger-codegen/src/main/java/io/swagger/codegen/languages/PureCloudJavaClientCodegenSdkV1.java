@@ -26,7 +26,7 @@ public class PureCloudJavaClientCodegenSdkV1 extends JavaClientCodegen {
 
         // Custom mappings for swagger type -> java type
         importMapping.put("LocalDateTime", "org.joda.time.LocalDateTime");
-        importMapping.put("IPagedResource", "com.mypurecloud.sdk.v2.IPagedResource");
+        importMapping.put("PagedResource", "com.mypurecloud.sdk.v2.PagedResource");
 
         // Add special reserved words
         reservedWords.add("null");
@@ -128,9 +128,9 @@ public class PureCloudJavaClientCodegenSdkV1 extends JavaClientCodegen {
                 return codegenModel;
             }
 
-            System.out.println(codegenModel.classname + " implements IPagedResource");
+            System.out.println(codegenModel.classname + " implements PagedResource");
             codegenModel.pagedResourceType = entitiesProperty.get().complexType;
-            codegenModel.imports.add("IPagedResource");
+            codegenModel.imports.add("PagedResource");
         }
 
         return codegenModel;
