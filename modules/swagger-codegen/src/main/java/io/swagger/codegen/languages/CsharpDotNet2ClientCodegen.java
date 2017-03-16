@@ -244,7 +244,10 @@ public class CsharpDotNet2ClientCodegen extends DefaultCodegen implements Codege
         }
 
         name = sanitizeName(name);
-
+        
+        //knetik change
+        name = "model_" + name;
+      
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
             LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + camelize("model_" + name));
