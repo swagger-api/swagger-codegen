@@ -68,11 +68,14 @@ instance ToFormUrlEncoded {{vendorExtensions.x-formName}} where
     ]{{/hasFormParams}}{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
 
 -- For the form data code generation.
-lookupEither :: FromHttpApiData b => Text -> [(Text, Text)] -> Either Text b
+lookupEither :: FromHttpApiData b => Text -> [(Text, Text)] -> Either String b
 lookupEither key assocs =
   case lookup key assocs of
-    Nothing -> Left $ "Could not find parameter " <> key <> " in form data"
-    Just value -> parseQueryParam value
+    Nothing -> Left $ "Could not find parameter " <> (T.unpack key) <> " in form data"
+    Just value ->
+      case parseQueryParam value of
+        Left result -> Left $ T.unpack result
+        Right result -> Right $ result
 
 {{#apiInfo}}
 -- | Servant type-level API, generated from the Swagger spec for {{title}}.
