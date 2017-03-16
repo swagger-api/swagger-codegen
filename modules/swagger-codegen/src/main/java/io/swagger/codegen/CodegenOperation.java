@@ -37,6 +37,22 @@ public class CodegenOperation {
     public String nickname; // legacy support
     public String operationIdLowerCase; // for mardown documentation
 
+
+    /**
+     * Returns a list of only the required params from allParams
+     *
+     * @return the list of required params
+     */
+    public List<CodegenParameter> getRequiredParams() {
+        List<CodegenParameter> params = new ArrayList<>();
+        for (CodegenParameter p : allParams) {
+            System.out.println("p=" + p);
+            System.out.println("p.required=" + p.required);
+            if (p.required != null && p.required) params.add(p);
+        }
+        return params;
+    }
+
     /**
      * Check if there's at least one parameter
      *
