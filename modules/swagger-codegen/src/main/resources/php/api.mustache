@@ -75,8 +75,8 @@ use {{invokerPackage}}\ObjectSerializer;
      */
     public function {{operationId}}({{#allParams}}${{paramName}}{{^required}} = null{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
     {
-        {{#returnType}}list($response) = {{/returnType}}$this->{{operationId}}WithHttpInfo({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
-        {{#returnType}}return $response;{{/returnType}}
+        {{#returnType}}list($response) = {{/returnType}}$this->{{operationId}}WithHttpInfo({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});{{#returnType}}
+        return $response;{{/returnType}}
     }
 
     /**
@@ -224,7 +224,7 @@ use {{invokerPackage}}\ObjectSerializer;
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
+            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
         }
 /**
         {{#authMethods}}
@@ -249,8 +249,7 @@ use {{invokerPackage}}\ObjectSerializer;
         {{/isOAuth}}
         {{/authMethods}}
 */
-
-        $query = http_build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(

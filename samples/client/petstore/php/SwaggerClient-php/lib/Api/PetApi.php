@@ -79,7 +79,6 @@ class PetApi
     public function addPet($body)
     {
         $this->addPetWithHttpInfo($body);
-        
     }
 
     /**
@@ -122,7 +121,7 @@ class PetApi
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
+            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
         }
 /**
         // this endpoint requires OAuth (access token)
@@ -130,8 +129,7 @@ class PetApi
             $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
         }
 */
-
-        $query = http_build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(
@@ -180,7 +178,6 @@ class PetApi
     public function deletePet($pet_id, $api_key = null)
     {
         $this->deletePetWithHttpInfo($pet_id, $api_key);
-        
     }
 
     /**
@@ -229,7 +226,7 @@ class PetApi
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
+            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
         }
 /**
         // this endpoint requires OAuth (access token)
@@ -237,8 +234,7 @@ class PetApi
             $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
         }
 */
-
-        $query = http_build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(
@@ -331,7 +327,7 @@ class PetApi
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
+            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
         }
 /**
         // this endpoint requires OAuth (access token)
@@ -339,8 +335,7 @@ class PetApi
             $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
         }
 */
-
-        $query = http_build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(
@@ -442,7 +437,7 @@ class PetApi
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
+            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
         }
 /**
         // this endpoint requires OAuth (access token)
@@ -450,8 +445,7 @@ class PetApi
             $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
         }
 */
-
-        $query = http_build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(
@@ -550,7 +544,7 @@ class PetApi
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
+            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
         }
 /**
         // this endpoint requires API key authentication
@@ -559,8 +553,7 @@ class PetApi
             $headerParams['api_key'] = $apiKey;
         }
 */
-
-        $query = http_build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(
@@ -617,7 +610,6 @@ class PetApi
     public function updatePet($body)
     {
         $this->updatePetWithHttpInfo($body);
-        
     }
 
     /**
@@ -660,7 +652,7 @@ class PetApi
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
+            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
         }
 /**
         // this endpoint requires OAuth (access token)
@@ -668,8 +660,7 @@ class PetApi
             $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
         }
 */
-
-        $query = http_build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(
@@ -719,7 +710,6 @@ class PetApi
     public function updatePetWithForm($pet_id, $name = null, $status = null)
     {
         $this->updatePetWithFormWithHttpInfo($pet_id, $name, $status);
-        
     }
 
     /**
@@ -775,7 +765,7 @@ class PetApi
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
+            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
         }
 /**
         // this endpoint requires OAuth (access token)
@@ -783,8 +773,7 @@ class PetApi
             $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
         }
 */
-
-        $query = http_build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(
@@ -896,7 +885,7 @@ class PetApi
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
+            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
         }
 /**
         // this endpoint requires OAuth (access token)
@@ -904,8 +893,7 @@ class PetApi
             $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
         }
 */
-
-        $query = http_build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(

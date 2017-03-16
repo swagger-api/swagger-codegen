@@ -79,7 +79,6 @@ class UserApi
     public function createUser($body)
     {
         $this->createUserWithHttpInfo($body);
-        
     }
 
     /**
@@ -122,12 +121,11 @@ class UserApi
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
+            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
         }
 /**
 */
-
-        $query = http_build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(
@@ -175,7 +173,6 @@ class UserApi
     public function createUsersWithArrayInput($body)
     {
         $this->createUsersWithArrayInputWithHttpInfo($body);
-        
     }
 
     /**
@@ -218,12 +215,11 @@ class UserApi
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
+            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
         }
 /**
 */
-
-        $query = http_build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(
@@ -271,7 +267,6 @@ class UserApi
     public function createUsersWithListInput($body)
     {
         $this->createUsersWithListInputWithHttpInfo($body);
-        
     }
 
     /**
@@ -314,12 +309,11 @@ class UserApi
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
+            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
         }
 /**
 */
-
-        $query = http_build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(
@@ -367,7 +361,6 @@ class UserApi
     public function deleteUser($username)
     {
         $this->deleteUserWithHttpInfo($username);
-        
     }
 
     /**
@@ -409,12 +402,11 @@ class UserApi
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
+            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
         }
 /**
 */
-
-        $query = http_build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(
@@ -504,12 +496,11 @@ class UserApi
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
+            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
         }
 /**
 */
-
-        $query = http_build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(
@@ -618,12 +609,11 @@ class UserApi
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
+            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
         }
 /**
 */
-
-        $query = http_build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(
@@ -679,7 +669,6 @@ class UserApi
     public function logoutUser()
     {
         $this->logoutUserWithHttpInfo();
-        
     }
 
     /**
@@ -712,12 +701,11 @@ class UserApi
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
+            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
         }
 /**
 */
-
-        $query = http_build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(
@@ -766,7 +754,6 @@ class UserApi
     public function updateUser($username, $body)
     {
         $this->updateUserWithHttpInfo($username, $body);
-        
     }
 
     /**
@@ -818,12 +805,11 @@ class UserApi
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
+            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
         }
 /**
 */
-
-        $query = http_build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(

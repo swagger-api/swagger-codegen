@@ -186,7 +186,7 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         // return nothing (void)
         $this->assertNull($update_response);
         $this->assertSame($status_code, 200);
-        $this->assertSame($http_headers['Content-Type'], 'application/json');
+        $this->assertSame($http_headers['Content-Type'], ['application/json']);
         $response = $this->api->getPetById($petId);
         $this->assertSame($response->getId(), $petId);
         $this->assertSame($response->getName(), 'update pet with form with http info');
@@ -195,16 +195,12 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
     // test updatePetWithForm and verify by the "name" and "status" of the response
     public function testUpdatePetWithForm()
     {
-        // initialize the API client
-        $config = (new Configuration())->setHost('http://petstore.swagger.io/v2');
-        $api_client = new ApiClient($config);
         $pet_id = 10001;  // ID of pet that needs to be fetched
-        $pet_api = new Api\PetApi($api_client);
-        // update Pet (form)
-        $update_response = $pet_api->updatePetWithForm($pet_id, 'update pet with form', 'sold');
+        $result = $this->api->updatePetWithForm($pet_id, 'update pet with form', 'sold');
         // return nothing (void)
-        $this->assertSame($update_response, null);
-        $response = $pet_api->getPetById($pet_id);
+        $this->assertNull($result);
+
+        $response = $this->api->getPetById($pet_id);
         $this->assertSame($response->getId(), $pet_id);
         $this->assertSame($response->getName(), 'update pet with form');
         $this->assertSame($response->getStatus(), 'sold');
@@ -213,20 +209,18 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
     // test addPet and verify by the "id" and "name" of the response
     public function testAddPet()
     {
-        // initialize the API client
-        $config = (new Configuration())->setHost('http://petstore.swagger.io/v2');
-        $api_client = new ApiClient($config);
         $new_pet_id = 10005;
-        $new_pet = new Model\Pet;
-        $new_pet->setId($new_pet_id);
-        $new_pet->setName("PHP Unit Test 2");
-        $pet_api = new Api\PetApi($api_client);
+        $newPet = new Model\Pet;
+        $newPet->setId($new_pet_id);
+        $newPet->setName("PHP Unit Test 2");
+
         // add a new pet (model)
-        $add_response = $pet_api->addPet($new_pet);
+        $add_response = $this->api->addPet($newPet);
         // return nothing (void)
-        $this->assertSame($add_response, null);
+        $this->assertNull($add_response);
+
         // verify added Pet
-        $response = $pet_api->getPetById($new_pet_id);
+        $response = $this->api->getPetById($new_pet_id);
         $this->assertSame($response->getId(), $new_pet_id);
         $this->assertSame($response->getName(), 'PHP Unit Test 2');
     }
