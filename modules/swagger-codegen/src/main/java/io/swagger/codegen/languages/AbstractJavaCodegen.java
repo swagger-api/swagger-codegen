@@ -14,6 +14,7 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.base.Strings;
+import com.samskivert.mustache.Mustache;
 
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
@@ -704,6 +705,11 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         p.example = example;
     }
 
+    @Override
+    public Mustache.Compiler processCompiler(Mustache.Compiler compiler) {
+    	return compiler.escapeHTML(false);
+    }
+    
     @Override
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
