@@ -49,8 +49,6 @@ import Servant.Client (Scheme(Http), ServantError, client)
 import Servant.Common.BaseUrl (BaseUrl(..))
 import Web.HttpApiData
 
-instance ReflectMethod 'OPTIONS where
-  reflectMethod _ = methodOptions
 
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}{{#hasFormParams}}
 data {{vendorExtensions.x-formName}} = {{vendorExtensions.x-formName}}
