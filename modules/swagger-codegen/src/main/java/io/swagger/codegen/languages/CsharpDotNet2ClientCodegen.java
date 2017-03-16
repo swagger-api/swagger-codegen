@@ -103,6 +103,25 @@ public class CsharpDotNet2ClientCodegen extends DefaultCodegen implements Codege
         cliOptions.add(new CliOption(CLIENT_PACKAGE, "C# client package name (convention: Camel.Case).")
                 .defaultValue("IO.Swagger.Client"));
     }
+    
+    @Override
+    public Map<String, Object> postProcessModels(Map<String, Object> objs) {
+        List<Object> models = (List<Object>) objs.get("models");
+        for (Object _mo : models) {
+            Map<String, Object> mo = (Map<String, Object>) _mo;
+            CodegenModel cm = (CodegenModel) mo.get("model");
+            for (CodegenProperty var : cm.vars) {
+                // check to see if model name is same as the property name
+                // which will result in compilation error
+                // if found, prepend with _ to workaround the limitation
+                if (var.name.equalsIgnoreCase(cm.name)) {
+                    var.name = "_" + var.name;
+                }
+            }
+        }
+        // process enum in models
+        return postProcessModelsEnum(objs);
+    }
 
     @Override
     public void processOpts() {
