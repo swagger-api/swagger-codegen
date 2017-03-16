@@ -46,8 +46,6 @@ public class CodegenOperation {
     public List<CodegenParameter> getRequiredParams() {
         List<CodegenParameter> params = new ArrayList<>();
         for (CodegenParameter p : allParams) {
-            System.out.println("p=" + p);
-            System.out.println("p.required=" + p.required);
             if (p.required != null && p.required) params.add(p);
         }
         return params;
