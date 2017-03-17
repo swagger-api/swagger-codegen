@@ -41,7 +41,7 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $new_pet->setName("PHP Unit Test");
         $new_pet->setPhotoUrls(["http://test_php_unit_test.com"]);
         // new tag
-        $tag= new Model\Tag;
+        $tag = new Model\Tag;
         $tag->setId($new_pet_id); // use the same id as pet
         $tag->setName("test php tag");
         // new category
@@ -63,9 +63,9 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->api = new Api\PetApi(
-            new Client(
-                new \GuzzleHttp\Client(['base_uri' => 'http://petstore.swagger.io/v2/'])
-            )
+            Client::createWithConfig([
+                'base_uri' => 'http://petstore.swagger.io/v2/'
+            ])
         );
     }
 
