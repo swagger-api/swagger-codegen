@@ -2,8 +2,6 @@
 
 namespace Swagger\Client;
 
-use Guzzle\Http\Message\Request;
-use GuzzleHttp\Psr7\MultipartStream;
 use Http\Adapter\Guzzle6\Client;
 use Swagger\Client\Api\PetApi;
 use Swagger\Client\Model\ApiResponse;

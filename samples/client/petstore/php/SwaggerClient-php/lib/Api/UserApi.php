@@ -152,7 +152,7 @@ class UserApi
                 $httpBody
             );
             $response = $this->client->sendRequest($request);
-            return [null, $response->getStatusCode(), []];
+            return [null, $response->getStatusCode(), $response->getHeaders()];
         } catch (Exception $exception) {
             throw new ApiException($exception->getMessage(), null, $exception);
         }
@@ -262,7 +262,7 @@ class UserApi
                 $httpBody
             );
             $response = $this->client->sendRequest($request);
-            return [null, $response->getStatusCode(), []];
+            return [null, $response->getStatusCode(), $response->getHeaders()];
         } catch (Exception $exception) {
             throw new ApiException($exception->getMessage(), null, $exception);
         }
@@ -372,7 +372,7 @@ class UserApi
                 $httpBody
             );
             $response = $this->client->sendRequest($request);
-            return [null, $response->getStatusCode(), []];
+            return [null, $response->getStatusCode(), $response->getHeaders()];
         } catch (Exception $exception) {
             throw new ApiException($exception->getMessage(), null, $exception);
         }
@@ -481,7 +481,7 @@ class UserApi
                 $httpBody
             );
             $response = $this->client->sendRequest($request);
-            return [null, $response->getStatusCode(), []];
+            return [null, $response->getStatusCode(), $response->getHeaders()];
         } catch (Exception $exception) {
             throw new ApiException($exception->getMessage(), null, $exception);
         }
@@ -828,7 +828,7 @@ class UserApi
                 $httpBody
             );
             $response = $this->client->sendRequest($request);
-            return [null, $response->getStatusCode(), []];
+            return [null, $response->getStatusCode(), $response->getHeaders()];
         } catch (Exception $exception) {
             throw new ApiException($exception->getMessage(), null, $exception);
         }
@@ -948,7 +948,7 @@ class UserApi
                 $httpBody
             );
             $response = $this->client->sendRequest($request);
-            return [null, $response->getStatusCode(), []];
+            return [null, $response->getStatusCode(), $response->getHeaders()];
         } catch (Exception $exception) {
             throw new ApiException($exception->getMessage(), null, $exception);
         }

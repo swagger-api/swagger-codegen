@@ -278,7 +278,7 @@ use {{invokerPackage}}\ObjectSerializer;
             ];
             {{/returnType}}
             {{^returnType}}
-            return [null, $response->getStatusCode(), []];
+            return [null, $response->getStatusCode(), $response->getHeaders()];
             {{/returnType}}
         } catch (Exception $exception) {
             throw new ApiException($exception->getMessage(), null, $exception);
