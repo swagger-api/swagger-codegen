@@ -45,7 +45,11 @@ public interface PetApi extends ApiClient.Api {
   /**
    * Finds Pets by status
    * Multiple status values can be provided with comma separated strings
-    * @param status Status values that need to be considered for filter (required)
+    * @param queryParams Map of query parameters as name-value pairs
+    *   <p>The following elements may be specified in the query map:</p>
+    *   <ul>
+    *   <li>status Status values that need to be considered for filter (required)</li>
+    *   </ul>
    * @return List&lt;Pet&gt;
    */
   @RequestLine("GET /pet/findByStatus?status={status}")
@@ -53,12 +57,23 @@ public interface PetApi extends ApiClient.Api {
     "Content-Type: application/json",
     "Accept: application/json",
   })
-  List<Pet> findPetsByStatus(@Param("status") List<String> status);
+  List<Pet> findPetsByStatus(@QueryMap findPetsByStatusQueryParams queryParams);
+
+  public static class findPetsByStatusQueryParams extends HashMap<String, Object> {
+      public findPetsByStatusQueryParams status(final List<String> value) {
+        put("status", value);
+        return this;
+      }
+  }
 
   /**
    * Finds Pets by tags
    * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
-    * @param tags Tags to filter by (required)
+    * @param queryParams Map of query parameters as name-value pairs
+    *   <p>The following elements may be specified in the query map:</p>
+    *   <ul>
+    *   <li>tags Tags to filter by (required)</li>
+    *   </ul>
    * @return List&lt;Pet&gt;
    */
   @RequestLine("GET /pet/findByTags?tags={tags}")
@@ -66,7 +81,14 @@ public interface PetApi extends ApiClient.Api {
     "Content-Type: application/json",
     "Accept: application/json",
   })
-  List<Pet> findPetsByTags(@Param("tags") List<String> tags);
+  List<Pet> findPetsByTags(@QueryMap findPetsByTagsQueryParams queryParams);
+
+  public static class findPetsByTagsQueryParams extends HashMap<String, Object> {
+      public findPetsByTagsQueryParams tags(final List<String> value) {
+        put("tags", value);
+        return this;
+      }
+  }
 
   /**
    * Find pet by ID

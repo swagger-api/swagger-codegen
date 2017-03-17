@@ -62,10 +62,14 @@ public interface FakeApi extends ApiClient.Api {
     * @param enumFormString Form parameter enum test (string) (optional, default to -efg)
     * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
     * @param enumHeaderString Header parameter enum test (string) (optional, default to -efg)
-    * @param enumQueryStringArray Query parameter enum test (string array) (optional)
-    * @param enumQueryString Query parameter enum test (string) (optional, default to -efg)
-    * @param enumQueryInteger Query parameter enum test (double) (optional)
     * @param enumQueryDouble Query parameter enum test (double) (optional)
+    * @param queryParams Map of query parameters as name-value pairs
+    *   <p>The following elements may be specified in the query map:</p>
+    *   <ul>
+    *   <li>enumQueryStringArray Query parameter enum test (string array) (optional)</li>
+    *   <li>enumQueryString Query parameter enum test (string) (optional, default to -efg)</li>
+    *   <li>enumQueryInteger Query parameter enum test (double) (optional)</li>
+    *   </ul>
    */
   @RequestLine("GET /fake?enum_query_string_array={enumQueryStringArray}&enum_query_string={enumQueryString}&enum_query_integer={enumQueryInteger}")
   @Headers({
@@ -75,5 +79,20 @@ public interface FakeApi extends ApiClient.Api {
     
     "enum_header_string: {enumHeaderString}"
   })
-  void testEnumParameters(@Param("enumFormStringArray") List<String> enumFormStringArray, @Param("enumFormString") String enumFormString, @Param("enumHeaderStringArray") List<String> enumHeaderStringArray, @Param("enumHeaderString") String enumHeaderString, @Param("enumQueryStringArray") List<String> enumQueryStringArray, @Param("enumQueryString") String enumQueryString, @Param("enumQueryInteger") Integer enumQueryInteger, @Param("enumQueryDouble") Double enumQueryDouble);
+  void testEnumParameters(@Param("enumFormStringArray") List<String> enumFormStringArray, @Param("enumFormString") String enumFormString, @Param("enumHeaderStringArray") List<String> enumHeaderStringArray, @Param("enumHeaderString") String enumHeaderString, @Param("enumQueryDouble") Double enumQueryDouble, @QueryMap testEnumParametersQueryParams queryParams);
+
+  public static class testEnumParametersQueryParams extends HashMap<String, Object> {
+      public testEnumParametersQueryParams enumQueryStringArray(final List<String> value) {
+        put("enumQueryStringArray", value);
+        return this;
+      }
+      public testEnumParametersQueryParams enumQueryString(final String value) {
+        put("enumQueryString", value);
+        return this;
+      }
+      public testEnumParametersQueryParams enumQueryInteger(final Integer value) {
+        put("enumQueryInteger", value);
+        return this;
+      }
+  }
 }

@@ -78,8 +78,12 @@ public interface UserApi extends ApiClient.Api {
   /**
    * Logs user into the system
    * 
-    * @param username The user name for login (required)
-    * @param password The password for login in clear text (required)
+    * @param queryParams Map of query parameters as name-value pairs
+    *   <p>The following elements may be specified in the query map:</p>
+    *   <ul>
+    *   <li>username The user name for login (required)</li>
+    *   <li>password The password for login in clear text (required)</li>
+    *   </ul>
    * @return String
    */
   @RequestLine("GET /user/login?username={username}&password={password}")
@@ -87,7 +91,18 @@ public interface UserApi extends ApiClient.Api {
     "Content-Type: application/json",
     "Accept: application/json",
   })
-  String loginUser(@Param("username") String username, @Param("password") String password);
+  String loginUser(@QueryMap loginUserQueryParams queryParams);
+
+  public static class loginUserQueryParams extends HashMap<String, Object> {
+      public loginUserQueryParams username(final String value) {
+        put("username", value);
+        return this;
+      }
+      public loginUserQueryParams password(final String value) {
+        put("password", value);
+        return this;
+      }
+  }
 
   /**
    * Logs out current logged in user session
