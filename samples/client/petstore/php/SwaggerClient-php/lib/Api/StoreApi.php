@@ -28,6 +28,7 @@
 
 namespace Swagger\Client\Api;
 
+use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
 use Http\Client\Exception;
@@ -104,13 +105,8 @@ class StoreApi
         $headerParams = [];
         $formParams = [];
         $queryParams = [];
-        $httpBody= '';
-
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/xml', 'application/json'],
-            []
-        );
-
+        $httpBody = '';
+        $multipart = false;
 
 
         // path params
@@ -126,12 +122,33 @@ class StoreApi
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
         } elseif (count($formParams) > 0) {
-            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
         }
 /**
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/xml', 'application/json'],
+            []
+        );
+        if ($httpBody instanceof MultipartStream) {
+            unset($headers['Content-Type']);
+        }
 
         try {
             $request = new Request(
@@ -196,13 +213,8 @@ class StoreApi
         $resourcePath = substr('/store/inventory', 1);
         $formParams = [];
         $queryParams = [];
-        $httpBody= '';
-
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            []
-        );
-
+        $httpBody = '';
+        $multipart = false;
 
 
 
@@ -210,8 +222,21 @@ class StoreApi
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
         } elseif (count($formParams) > 0) {
-            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
         }
 /**
         // this endpoint requires API key authentication
@@ -221,6 +246,14 @@ class StoreApi
         }
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json'],
+            []
+        );
+        if ($httpBody instanceof MultipartStream) {
+            unset($headers['Content-Type']);
+        }
 
         try {
             $request = new Request(
@@ -310,13 +343,8 @@ class StoreApi
         $headerParams = [];
         $formParams = [];
         $queryParams = [];
-        $httpBody= '';
-
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/xml', 'application/json'],
-            []
-        );
-
+        $httpBody = '';
+        $multipart = false;
 
 
         // path params
@@ -332,12 +360,33 @@ class StoreApi
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
         } elseif (count($formParams) > 0) {
-            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
         }
 /**
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/xml', 'application/json'],
+            []
+        );
+        if ($httpBody instanceof MultipartStream) {
+            unset($headers['Content-Type']);
+        }
 
         try {
             $request = new Request(
@@ -417,13 +466,8 @@ class StoreApi
         $resourcePath = substr('/store/order', 1);
         $formParams = [];
         $queryParams = [];
-        $httpBody= '';
-
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/xml', 'application/json'],
-            []
-        );
-
+        $httpBody = '';
+        $multipart = false;
 
 
 
@@ -436,12 +480,33 @@ class StoreApi
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
         } elseif (count($formParams) > 0) {
-            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
         }
 /**
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/xml', 'application/json'],
+            []
+        );
+        if ($httpBody instanceof MultipartStream) {
+            unset($headers['Content-Type']);
+        }
 
         try {
             $request = new Request(

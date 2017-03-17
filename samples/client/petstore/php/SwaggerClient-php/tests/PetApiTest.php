@@ -2,8 +2,11 @@
 
 namespace Swagger\Client;
 
+use Guzzle\Http\Message\Request;
+use GuzzleHttp\Psr7\MultipartStream;
 use Http\Adapter\Guzzle6\Client;
 use Swagger\Client\Api\PetApi;
+use Swagger\Client\Model\ApiResponse;
 use Swagger\Client\Model\Pet;
 
 class PetApiTest extends \PHPUnit_Framework_TestCase
@@ -269,15 +272,11 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
     // test upload file
     public function testUploadFile()
     {
-        // initialize the API client
-        $config = (new Configuration())->setHost('http://petstore.swagger.io/v2');
-        $api_client = new ApiClient($config);
-        $pet_api = new Api\PetApi($api_client);
         // upload file
         $pet_id = 10001;
-        $response = $pet_api->uploadFile($pet_id, "test meta", "./composer.json");
+        $response = $this->api->uploadFile($pet_id, 'test meta', __DIR__ . '/../composer.json');
         // return ApiResponse
-        $this->assertInstanceOf('Swagger\Client\Model\ApiResponse', $response);
+        $this->assertInstanceOf(ApiResponse::class, $response);
 
     }
 

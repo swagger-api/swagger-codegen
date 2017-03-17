@@ -28,6 +28,7 @@
 
 namespace Swagger\Client\Api;
 
+use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
 use Http\Client\Exception;
@@ -102,13 +103,8 @@ class FakeApi
         $resourcePath = substr('/fake', 1);
         $formParams = [];
         $queryParams = [];
-        $httpBody= '';
-
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
-
+        $httpBody = '';
+        $multipart = false;
 
 
 
@@ -121,12 +117,33 @@ class FakeApi
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
         } elseif (count($formParams) > 0) {
-            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
         }
 /**
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json'],
+            ['application/json']
+        );
+        if ($httpBody instanceof MultipartStream) {
+            unset($headers['Content-Type']);
+        }
 
         try {
             $request = new Request(
@@ -290,106 +307,86 @@ class FakeApi
         $resourcePath = substr('/fake', 1);
         $formParams = [];
         $queryParams = [];
-        $httpBody= '';
-
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/xml; charset=utf-8', 'application/json; charset=utf-8'],
-            ['application/xml; charset=utf-8', 'application/json; charset=utf-8']
-        );
-
+        $httpBody = '';
+        $multipart = false;
 
 
 
         // form params
         if ($integer !== null) {
-        /**
-        */
             $formParams['integer'] = $this->serializer->toFormValue($integer);
         }
         // form params
         if ($int32 !== null) {
-        /**
-        */
             $formParams['int32'] = $this->serializer->toFormValue($int32);
         }
         // form params
         if ($int64 !== null) {
-        /**
-        */
             $formParams['int64'] = $this->serializer->toFormValue($int64);
         }
         // form params
         if ($number !== null) {
-        /**
-        */
             $formParams['number'] = $this->serializer->toFormValue($number);
         }
         // form params
         if ($float !== null) {
-        /**
-        */
             $formParams['float'] = $this->serializer->toFormValue($float);
         }
         // form params
         if ($double !== null) {
-        /**
-        */
             $formParams['double'] = $this->serializer->toFormValue($double);
         }
         // form params
         if ($string !== null) {
-        /**
-        */
             $formParams['string'] = $this->serializer->toFormValue($string);
         }
         // form params
         if ($pattern_without_delimiter !== null) {
-        /**
-        */
             $formParams['pattern_without_delimiter'] = $this->serializer->toFormValue($pattern_without_delimiter);
         }
         // form params
         if ($byte !== null) {
-        /**
-        */
             $formParams['byte'] = $this->serializer->toFormValue($byte);
         }
         // form params
         if ($binary !== null) {
-        /**
-        */
             $formParams['binary'] = $this->serializer->toFormValue($binary);
         }
         // form params
         if ($date !== null) {
-        /**
-        */
             $formParams['date'] = $this->serializer->toFormValue($date);
         }
         // form params
         if ($date_time !== null) {
-        /**
-        */
             $formParams['dateTime'] = $this->serializer->toFormValue($date_time);
         }
         // form params
         if ($password !== null) {
-        /**
-        */
             $formParams['password'] = $this->serializer->toFormValue($password);
         }
         // form params
         if ($callback !== null) {
-        /**
-        */
             $formParams['callback'] = $this->serializer->toFormValue($callback);
         }
         
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
         } elseif (count($formParams) > 0) {
-            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
         }
 /**
         // this endpoint requires HTTP basic authentication
@@ -398,6 +395,14 @@ class FakeApi
         }
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/xml; charset=utf-8', 'application/json; charset=utf-8'],
+            ['application/xml; charset=utf-8', 'application/json; charset=utf-8']
+        );
+        if ($httpBody instanceof MultipartStream) {
+            unset($headers['Content-Type']);
+        }
 
         try {
             $request = new Request(
@@ -477,13 +482,8 @@ class FakeApi
         $resourcePath = substr('/fake', 1);
         $formParams = [];
         $queryParams = [];
-        $httpBody= '';
-
-        $headers = $this->headerSelector->selectHeaders(
-            ['*/*'],
-            ['*/*']
-        );
-
+        $httpBody = '';
+        $multipart = false;
 
         // query params
         if (is_array($enum_query_string_array)) {
@@ -519,32 +519,47 @@ class FakeApi
 
         // form params
         if ($enum_form_string_array !== null) {
-        /**
-        */
             $formParams['enum_form_string_array'] = $this->serializer->toFormValue($enum_form_string_array);
         }
         // form params
         if ($enum_form_string !== null) {
-        /**
-        */
             $formParams['enum_form_string'] = $this->serializer->toFormValue($enum_form_string);
         }
         // form params
         if ($enum_query_double !== null) {
-        /**
-        */
             $formParams['enum_query_double'] = $this->serializer->toFormValue($enum_query_double);
         }
         
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
         } elseif (count($formParams) > 0) {
-            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
         }
 /**
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['*/*'],
+            ['*/*']
+        );
+        if ($httpBody instanceof MultipartStream) {
+            unset($headers['Content-Type']);
+        }
 
         try {
             $request = new Request(

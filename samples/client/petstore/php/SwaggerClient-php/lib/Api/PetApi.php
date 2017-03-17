@@ -28,6 +28,7 @@
 
 namespace Swagger\Client\Api;
 
+use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
 use Http\Client\Exception;
@@ -101,13 +102,8 @@ class PetApi
         $resourcePath = substr('/pet', 1);
         $formParams = [];
         $queryParams = [];
-        $httpBody= '';
-
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/xml', 'application/json'],
-            ['application/json', 'application/xml']
-        );
-
+        $httpBody = '';
+        $multipart = false;
 
 
 
@@ -120,8 +116,21 @@ class PetApi
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
         } elseif (count($formParams) > 0) {
-            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
         }
 /**
         // this endpoint requires OAuth (access token)
@@ -130,6 +139,14 @@ class PetApi
         }
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/xml', 'application/json'],
+            ['application/json', 'application/xml']
+        );
+        if ($httpBody instanceof MultipartStream) {
+            unset($headers['Content-Type']);
+        }
 
         try {
             $request = new Request(
@@ -201,13 +218,8 @@ class PetApi
         $resourcePath = substr('/pet/{petId}', 1);
         $formParams = [];
         $queryParams = [];
-        $httpBody= '';
-
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/xml', 'application/json'],
-            []
-        );
-
+        $httpBody = '';
+        $multipart = false;
 
 /**
         // header params
@@ -225,8 +237,21 @@ class PetApi
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
         } elseif (count($formParams) > 0) {
-            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
         }
 /**
         // this endpoint requires OAuth (access token)
@@ -235,6 +260,14 @@ class PetApi
         }
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/xml', 'application/json'],
+            []
+        );
+        if ($httpBody instanceof MultipartStream) {
+            unset($headers['Content-Type']);
+        }
 
         try {
             $request = new Request(
@@ -305,13 +338,8 @@ class PetApi
         $resourcePath = substr('/pet/findByStatus', 1);
         $formParams = [];
         $queryParams = [];
-        $httpBody= '';
-
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/xml', 'application/json'],
-            []
-        );
-
+        $httpBody = '';
+        $multipart = false;
 
         // query params
         if (is_array($status)) {
@@ -326,8 +354,21 @@ class PetApi
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
         } elseif (count($formParams) > 0) {
-            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
         }
 /**
         // this endpoint requires OAuth (access token)
@@ -336,6 +377,14 @@ class PetApi
         }
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/xml', 'application/json'],
+            []
+        );
+        if ($httpBody instanceof MultipartStream) {
+            unset($headers['Content-Type']);
+        }
 
         try {
             $request = new Request(
@@ -415,13 +464,8 @@ class PetApi
         $resourcePath = substr('/pet/findByTags', 1);
         $formParams = [];
         $queryParams = [];
-        $httpBody= '';
-
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/xml', 'application/json'],
-            []
-        );
-
+        $httpBody = '';
+        $multipart = false;
 
         // query params
         if (is_array($tags)) {
@@ -436,8 +480,21 @@ class PetApi
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
         } elseif (count($formParams) > 0) {
-            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
         }
 /**
         // this endpoint requires OAuth (access token)
@@ -446,6 +503,14 @@ class PetApi
         }
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/xml', 'application/json'],
+            []
+        );
+        if ($httpBody instanceof MultipartStream) {
+            unset($headers['Content-Type']);
+        }
 
         try {
             $request = new Request(
@@ -525,13 +590,8 @@ class PetApi
         $resourcePath = substr('/pet/{petId}', 1);
         $formParams = [];
         $queryParams = [];
-        $httpBody= '';
-
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/xml', 'application/json'],
-            []
-        );
-
+        $httpBody = '';
+        $multipart = false;
 
 
         // path params
@@ -543,8 +603,21 @@ class PetApi
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
         } elseif (count($formParams) > 0) {
-            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
         }
 /**
         // this endpoint requires API key authentication
@@ -554,6 +627,14 @@ class PetApi
         }
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/xml', 'application/json'],
+            []
+        );
+        if ($httpBody instanceof MultipartStream) {
+            unset($headers['Content-Type']);
+        }
 
         try {
             $request = new Request(
@@ -632,13 +713,8 @@ class PetApi
         $resourcePath = substr('/pet', 1);
         $formParams = [];
         $queryParams = [];
-        $httpBody= '';
-
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/xml', 'application/json'],
-            ['application/json', 'application/xml']
-        );
-
+        $httpBody = '';
+        $multipart = false;
 
 
 
@@ -651,8 +727,21 @@ class PetApi
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
         } elseif (count($formParams) > 0) {
-            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
         }
 /**
         // this endpoint requires OAuth (access token)
@@ -661,6 +750,14 @@ class PetApi
         }
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/xml', 'application/json'],
+            ['application/json', 'application/xml']
+        );
+        if ($httpBody instanceof MultipartStream) {
+            unset($headers['Content-Type']);
+        }
 
         try {
             $request = new Request(
@@ -734,13 +831,8 @@ class PetApi
         $resourcePath = substr('/pet/{petId}', 1);
         $formParams = [];
         $queryParams = [];
-        $httpBody= '';
-
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/xml', 'application/json'],
-            ['application/x-www-form-urlencoded']
-        );
-
+        $httpBody = '';
+        $multipart = false;
 
 
         // path params
@@ -750,22 +842,31 @@ class PetApi
 
         // form params
         if ($name !== null) {
-        /**
-        */
             $formParams['name'] = $this->serializer->toFormValue($name);
         }
         // form params
         if ($status !== null) {
-        /**
-        */
             $formParams['status'] = $this->serializer->toFormValue($status);
         }
         
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
         } elseif (count($formParams) > 0) {
-            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
         }
 /**
         // this endpoint requires OAuth (access token)
@@ -774,6 +875,14 @@ class PetApi
         }
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/xml', 'application/json'],
+            ['application/x-www-form-urlencoded']
+        );
+        if ($httpBody instanceof MultipartStream) {
+            unset($headers['Content-Type']);
+        }
 
         try {
             $request = new Request(
@@ -848,13 +957,8 @@ class PetApi
         $resourcePath = substr('/pet/{petId}/uploadImage', 1);
         $formParams = [];
         $queryParams = [];
-        $httpBody= '';
-
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['multipart/form-data']
-        );
-
+        $httpBody = '';
+        $multipart = false;
 
 
         // path params
@@ -864,28 +968,32 @@ class PetApi
 
         // form params
         if ($additional_metadata !== null) {
-        /**
-        */
             $formParams['additionalMetadata'] = $this->serializer->toFormValue($additional_metadata);
         }
         // form params
         if ($file !== null) {
-        /**
-            // PHP 5.5 introduced a CurlFile object that deprecates the old @filename syntax
-            // See: https://wiki.php.net/rfc/curl-file-upload
-            if (function_exists('curl_file_create')) {
-                $formParams['file'] = curl_file_create($this->apiClient->getSerializer()->toFormValue($file));
-            } else {
-                $formParams['file'] = '@' . $this->apiClient->getSerializer()->toFormValue($file);
-            }
-        */
+            $multipart = true;
+            $formParams['file'] = \GuzzleHttp\Psr7\try_fopen($this->serializer->toFormValue($file), 'rb');
         }
         
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
         } elseif (count($formParams) > 0) {
-            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
         }
 /**
         // this endpoint requires OAuth (access token)
@@ -894,6 +1002,14 @@ class PetApi
         }
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json'],
+            ['multipart/form-data']
+        );
+        if ($httpBody instanceof MultipartStream) {
+            unset($headers['Content-Type']);
+        }
 
         try {
             $request = new Request(

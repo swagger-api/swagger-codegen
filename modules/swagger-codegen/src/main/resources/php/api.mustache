@@ -18,6 +18,7 @@
 
 namespace {{apiPackage}};
 
+use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
 use Http\Client\Exception;
@@ -147,13 +148,8 @@ use {{invokerPackage}}\ObjectSerializer;
         $resourcePath = substr('{{{path}}}', 1);
         $formParams = [];
         $queryParams = [];
-        $httpBody= '';
-
-        $headers = $this->headerSelector->selectHeaders(
-            [{{#produces}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/produces}}],
-            [{{#consumes}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/consumes}}]
-        );
-
+        $httpBody = '';
+        $multipart = false;
 
         {{#queryParams}}
         // query params
@@ -197,17 +193,10 @@ use {{invokerPackage}}\ObjectSerializer;
         {{#formParams}}
         // form params
         if (${{paramName}} !== null) {
-        /**
             {{#isFile}}
-            // PHP 5.5 introduced a CurlFile object that deprecates the old @filename syntax
-            // See: https://wiki.php.net/rfc/curl-file-upload
-            if (function_exists('curl_file_create')) {
-                $formParams['{{baseName}}'] = curl_file_create($this->apiClient->getSerializer()->toFormValue(${{paramName}}));
-            } else {
-                $formParams['{{baseName}}'] = '@' . $this->apiClient->getSerializer()->toFormValue(${{paramName}});
-            }
+            $multipart = true;
+            $formParams['file'] = \GuzzleHttp\Psr7\try_fopen($this->serializer->toFormValue($file), 'rb');
             {{/isFile}}
-        */
             {{^isFile}}
             $formParams['{{baseName}}'] = $this->serializer->toFormValue(${{paramName}});
             {{/isFile}}
@@ -223,8 +212,21 @@ use {{invokerPackage}}\ObjectSerializer;
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
         } elseif (count($formParams) > 0) {
-            $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
         }
 /**
         {{#authMethods}}
@@ -250,6 +252,14 @@ use {{invokerPackage}}\ObjectSerializer;
         {{/authMethods}}
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+
+        $headers = $this->headerSelector->selectHeaders(
+            [{{#produces}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/produces}}],
+            [{{#consumes}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/consumes}}]
+        );
+        if ($httpBody instanceof MultipartStream) {
+            unset($headers['Content-Type']);
+        }
 
         try {
             $request = new Request(
