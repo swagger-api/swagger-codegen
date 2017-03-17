@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"testing"
-	"time"
 
 	sw "./go-petstore"
 	"github.com/stretchr/testify/assert"
@@ -15,6 +14,7 @@ var client *sw.APIClient
 func TestMain(m *testing.M) {
 	cfg := sw.NewConfiguration()
 	cfg.AddDefaultHeader("testheader", "testvalue")
+
 	client = sw.NewAPIClient(cfg)
 	retCode := m.Run()
 	os.Exit(retCode)
@@ -161,9 +161,15 @@ func TestDeletePet(t *testing.T) {
 func TestConcurrency(t *testing.T) {
 	errc := make(chan error)
 
-	newPets := []sw.Pet{sw.Pet{Id: 912345, Name: "gopherFred", PhotoUrls: []string{"http://1.com", "http://2.com"}, Status: "pending"},
+	newPets := []sw.Pet{
+		sw.Pet{Id: 912345, Name: "gopherFred", PhotoUrls: []string{"http://1.com", "http://2.com"}, Status: "pending"},
 		sw.Pet{Id: 912346, Name: "gopherDan", PhotoUrls: []string{"http://1.com", "http://2.com"}, Status: "active"},
-		sw.Pet{Id: 912347, Name: "gopherRick", PhotoUrls: []string{"http://1.com", "http://2.com"}, Status: "mia"}}
+		sw.Pet{Id: 912347, Name: "gopherRick", PhotoUrls: []string{"http://1.com", "http://2.com"}, Status: "mia"},
+		sw.Pet{Id: 912348, Name: "gopherJohn", PhotoUrls: []string{"http://1.com", "http://2.com"}, Status: "active"},
+		sw.Pet{Id: 912349, Name: "gopherAlf", PhotoUrls: []string{"http://1.com", "http://2.com"}, Status: "pending"},
+		sw.Pet{Id: 912350, Name: "gopherRob", PhotoUrls: []string{"http://1.com", "http://2.com"}, Status: "pending"},
+		sw.Pet{Id: 912351, Name: "gopherIan", PhotoUrls: []string{"http://1.com", "http://2.com"}, Status: "active"},
+	}
 
 	/***
 	 *** Add the pets.
@@ -178,67 +184,53 @@ func TestConcurrency(t *testing.T) {
 		}(pet)
 	}
 	waitOnFunctions(t, errc, len(newPets))
-	time.Sleep(time.Second * 2)
 
 	/***
 	 *** Verify they are correct.
 	 ***/
-	go func() {
-		isPetCorrect(t, 912345, "gopherFred", "pending")
-		errc <- nil
-	}()
-	go func() {
-		isPetCorrect(t, 912346, "gopherDan", "active")
-		errc <- nil
-	}()
-	go func() {
-		isPetCorrect(t, 912347, "gopherRick", "mia")
-		errc <- nil
-	}()
+	for _, pet := range newPets {
+		go func(pet sw.Pet) {
+			isPetCorrect(t, pet.Id, pet.Name, pet.Status)
+			errc <- nil
+		}(pet)
+	}
 
 	waitOnFunctions(t, errc, len(newPets))
 
 	/***
 	 *** Update all to active with the name gopherDan
 	 ***/
-	for i := 912345; i <= 912347; i++ {
-		go func(id int) {
+	for _, pet := range newPets {
+		go func(id int64) {
 			r, err := client.PetApi.UpdatePet(nil, sw.Pet{Id: (int64)(id), Name: "gopherDan", PhotoUrls: []string{"http://1.com", "http://2.com"}, Status: "active"})
 			if r.StatusCode != 200 {
 				t.Log(r)
 			}
 			errc <- err
-		}(i)
+		}(pet.Id)
 	}
 	waitOnFunctions(t, errc, len(newPets))
-	time.Sleep(time.Second * 2)
 
 	/***
 	 *** Verify they are correct.
 	 ***/
-	go func() {
-		isPetCorrect(t, 912345, "gopherDan", "active")
-		errc <- nil
-	}()
-	go func() {
-		isPetCorrect(t, 912346, "gopherDan", "active")
-		errc <- nil
-	}()
-	go func() {
-		isPetCorrect(t, 912347, "gopherDan", "active")
-		errc <- nil
-	}()
+	for _, pet := range newPets {
+		go func(pet sw.Pet) {
+			isPetCorrect(t, pet.Id, "gopherDan", "active")
+			errc <- nil
+		}(pet)
+	}
 
 	waitOnFunctions(t, errc, len(newPets))
 
 	/***
 	 *** Delete them all.
 	 ***/
-	for i := 912345; i <= 912347; i++ {
-		go func(id int) {
+	for _, pet := range newPets {
+		go func(id int64) {
 			deletePet(t, (int64)(id))
 			errc <- nil
-		}(i)
+		}(pet.Id)
 	}
 	waitOnFunctions(t, errc, len(newPets))
 }
