@@ -33,10 +33,24 @@ public class {{classname}}Test {
      */
     @Test
     public void {{operationId}}Test() {
+        {{^hasQueryParams}}
         {{#allParams}}
         {{{dataType}}} {{paramName}} = null;
         {{/allParams}}
         // {{#returnType}}{{{returnType}}} response = {{/returnType}}api.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        {{/hasQueryParams}}
+        {{#hasQueryParams}}
+            {{#allParams}}
+                {{^isQueryParam}}
+        {{{dataType}}} {{paramName}} = null;
+                {{/isQueryParam}}
+            {{/allParams}}
+        {{classname}}.{{nickname}}QueryParams queryParams = new {{classname}}.{{nickname}}QueryParams()
+            {{#queryParams}}
+            .{{paramName}}(null){{^hasMore}};{{/hasMore}}
+            {{/queryParams}}
+        // {{#returnType}}{{{returnType}}} response = {{/returnType}}api.{{operationId}}({{#allParams}}{{^isQueryParam}}{{paramName}}, {{/isQueryParam}}{{/allParams}}queryParams);
+        {{/hasQueryParams}}
 
         // TODO: test validations
     }
