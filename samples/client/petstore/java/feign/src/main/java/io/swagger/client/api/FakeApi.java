@@ -79,18 +79,18 @@ public interface FakeApi extends ApiClient.Api {
     
     "enum_header_string: {enumHeaderString}"
   })
-  void testEnumParameters(@Param("enumFormStringArray") List<String> enumFormStringArray, @Param("enumFormString") String enumFormString, @Param("enumHeaderStringArray") List<String> enumHeaderStringArray, @Param("enumHeaderString") String enumHeaderString, @Param("enumQueryDouble") Double enumQueryDouble, @QueryMap testEnumParametersQueryParams queryParams);
+  void testEnumParameters(@Param("enumFormStringArray") List<String> enumFormStringArray, @Param("enumFormString") String enumFormString, @Param("enumHeaderStringArray") List<String> enumHeaderStringArray, @Param("enumHeaderString") String enumHeaderString, @Param("enumQueryDouble") Double enumQueryDouble, @QueryMap TestEnumParametersQueryParams queryParams);
 
-  public static class testEnumParametersQueryParams extends HashMap<String, Object> {
-      public testEnumParametersQueryParams enumQueryStringArray(final List<String> value) {
+  public static class TestEnumParametersQueryParams extends HashMap<String, Object> {
+      public TestEnumParametersQueryParams enumQueryStringArray(final List<String> value) {
         put("enumQueryStringArray", value);
         return this;
       }
-      public testEnumParametersQueryParams enumQueryString(final String value) {
+      public TestEnumParametersQueryParams enumQueryString(final String value) {
         put("enumQueryString", value);
         return this;
       }
-      public testEnumParametersQueryParams enumQueryInteger(final Integer value) {
+      public TestEnumParametersQueryParams enumQueryInteger(final Integer value) {
         put("enumQueryInteger", value);
         return this;
       }

@@ -91,14 +91,14 @@ public interface UserApi extends ApiClient.Api {
     "Content-Type: application/json",
     "Accept: application/json",
   })
-  String loginUser(@QueryMap loginUserQueryParams queryParams);
+  String loginUser(@QueryMap LoginUserQueryParams queryParams);
 
-  public static class loginUserQueryParams extends HashMap<String, Object> {
-      public loginUserQueryParams username(final String value) {
+  public static class LoginUserQueryParams extends HashMap<String, Object> {
+      public LoginUserQueryParams username(final String value) {
         put("username", value);
         return this;
       }
-      public loginUserQueryParams password(final String value) {
+      public LoginUserQueryParams password(final String value) {
         put("password", value);
         return this;
       }

@@ -57,10 +57,10 @@ public interface PetApi extends ApiClient.Api {
     "Content-Type: application/json",
     "Accept: application/json",
   })
-  List<Pet> findPetsByStatus(@QueryMap findPetsByStatusQueryParams queryParams);
+  List<Pet> findPetsByStatus(@QueryMap FindPetsByStatusQueryParams queryParams);
 
-  public static class findPetsByStatusQueryParams extends HashMap<String, Object> {
-      public findPetsByStatusQueryParams status(final List<String> value) {
+  public static class FindPetsByStatusQueryParams extends HashMap<String, Object> {
+      public FindPetsByStatusQueryParams status(final List<String> value) {
         put("status", value);
         return this;
       }
@@ -81,10 +81,10 @@ public interface PetApi extends ApiClient.Api {
     "Content-Type: application/json",
     "Accept: application/json",
   })
-  List<Pet> findPetsByTags(@QueryMap findPetsByTagsQueryParams queryParams);
+  List<Pet> findPetsByTags(@QueryMap FindPetsByTagsQueryParams queryParams);
 
-  public static class findPetsByTagsQueryParams extends HashMap<String, Object> {
-      public findPetsByTagsQueryParams tags(final List<String> value) {
+  public static class FindPetsByTagsQueryParams extends HashMap<String, Object> {
+      public FindPetsByTagsQueryParams tags(final List<String> value) {
         put("tags", value);
         return this;
       }

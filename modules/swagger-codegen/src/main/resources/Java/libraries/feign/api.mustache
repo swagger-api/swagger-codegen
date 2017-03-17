@@ -52,11 +52,11 @@ public interface {{classname}} extends ApiClient.Api {
   {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{nickname}}({{#allParams}}{{^isBodyParam}}{{^legacyDates}}@Param("{{paramName}}") {{/legacyDates}}{{#legacyDates}}@Param(value="{{paramName}}", expander=ParamExpander.class) {{/legacyDates}}{{/isBodyParam}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
 {{/hasQueryParams}}
 {{#hasQueryParams}}
-  {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{nickname}}({{#allParams}}{{^isQueryParam}}{{^isBodyParam}}{{^legacyDates}}@Param("{{paramName}}") {{/legacyDates}}{{#legacyDates}}@Param(value="{{paramName}}", expander=ParamExpander.class) {{/legacyDates}}{{/isBodyParam}}{{{dataType}}} {{paramName}}, {{/isQueryParam}}{{/allParams}}@QueryMap {{nickname}}QueryParams queryParams);
+  {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{nickname}}({{#allParams}}{{^isQueryParam}}{{^isBodyParam}}{{^legacyDates}}@Param("{{paramName}}") {{/legacyDates}}{{#legacyDates}}@Param(value="{{paramName}}", expander=ParamExpander.class) {{/legacyDates}}{{/isBodyParam}}{{{dataType}}} {{paramName}}, {{/isQueryParam}}{{/allParams}}@QueryMap {{operationIdCamelCase}}QueryParams queryParams);
 
-  public static class {{nickname}}QueryParams extends HashMap<String, Object> {
+  public static class {{operationIdCamelCase}}QueryParams extends HashMap<String, Object> {
     {{#queryParams}}
-      public {{nickname}}QueryParams {{paramName}}(final {{{dataType}}} value) {
+      public {{operationIdCamelCase}}QueryParams {{paramName}}(final {{{dataType}}} value) {
         put("{{paramName}}", value);
         return this;
       }

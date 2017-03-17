@@ -64,7 +64,7 @@ public class UserApiTest {
         User user = createUser();
         api.createUser(user);
 
-        UserApi.loginUserQueryParams queryParams = new UserApi.loginUserQueryParams()
+        UserApi.LoginUserQueryParams queryParams = new UserApi.LoginUserQueryParams()
                 .username(user.getUsername())
                 .password(user.getPassword());
         String token = api.loginUser(queryParams);

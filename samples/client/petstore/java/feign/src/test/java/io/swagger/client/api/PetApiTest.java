@@ -71,7 +71,7 @@ public class PetApiTest {
 
         api.updatePet(pet);
 
-        PetApi.findPetsByStatusQueryParams queryParams = new PetApi.findPetsByStatusQueryParams()
+        PetApi.FindPetsByStatusQueryParams queryParams = new PetApi.FindPetsByStatusQueryParams()
                 .status(Arrays.asList(new String[]{"available"}));
         List<Pet> pets = api.findPetsByStatus(queryParams);
         assertNotNull(pets);
@@ -101,7 +101,7 @@ public class PetApiTest {
 
         api.updatePet(pet);
 
-        PetApi.findPetsByTagsQueryParams queryParams = new PetApi.findPetsByTagsQueryParams()
+        PetApi.FindPetsByTagsQueryParams queryParams = new PetApi.FindPetsByTagsQueryParams()
                 .tags(Arrays.asList(new String[]{"friendly"}));
         List<Pet> pets = api.findPetsByTags(queryParams);
         assertNotNull(pets);
