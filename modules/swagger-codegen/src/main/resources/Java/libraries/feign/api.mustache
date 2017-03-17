@@ -29,13 +29,13 @@ public interface {{classname}} extends ApiClient.Api {
 {{/isQueryParam}}
 {{/allParams}}
 {{#hasQueryParams}}
-   * @param queryParams Map of query parameters as name-value pairs (required)
-   *   <p>The following elements may be specified in the query map:</p>
-   *   <ul>
+    * @param queryParams Map of query parameters as name-value pairs
+    *   <p>The following elements may be specified in the query map:</p>
+    *   <ul>
 {{#queryParams}}
-   *   <li>{{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}</li>
+    *   <li>{{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}</li>
 {{/queryParams}}
-   *   </ul>
+    *   </ul>
 {{/hasQueryParams}}
 {{#returnType}}
    * @return {{returnType}}
