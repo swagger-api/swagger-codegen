@@ -278,21 +278,6 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    // test get inventory
-    public function testGetInventory()
-    {
-        // initialize the API client
-        $config = new Configuration();
-        $config->setHost('http://petstore.swagger.io/v2');
-        $api_client = new APIClient($config);
-        $store_api = new Api\StoreApi($api_client);
-        // get inventory
-        $get_response = $store_api->getInventory();
-
-        $this->assertInternalType("int", $get_response['sold']);
-        $this->assertInternalType("int", $get_response['pending']);
-    }
-
     /*
      * comment out as we've removed invalid endpoints from the spec, we'll introduce something
      * similar in the future when we've time to update the petstore server
