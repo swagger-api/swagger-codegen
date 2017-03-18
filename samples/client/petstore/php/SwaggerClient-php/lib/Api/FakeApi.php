@@ -105,6 +105,7 @@ class FakeApi
         $queryParams = [];
         $httpBody = '';
         $multipart = false;
+        $returnType = '\Swagger\Client\Model\Client';
 
 
 
@@ -153,7 +154,10 @@ class FakeApi
                 $httpBody
             );
             $response = $this->client->sendRequest($request);
-            $content = json_decode($response->getBody()->getContents());
+            $content = $response->getBody()->getContents();
+            if ($returnType !== 'string') { //TODO return type file
+                $content = json_decode($content);
+            }
             return [
                 ObjectSerializer::deserialize($content, '\Swagger\Client\Model\Client', []),
                 $response->getStatusCode(),
@@ -309,6 +313,7 @@ class FakeApi
         $queryParams = [];
         $httpBody = '';
         $multipart = false;
+        $returnType = '';
 
 
 
@@ -484,6 +489,7 @@ class FakeApi
         $queryParams = [];
         $httpBody = '';
         $multipart = false;
+        $returnType = '';
 
         // query params
         if (is_array($enum_query_string_array)) {

@@ -104,6 +104,7 @@ class UserApi
         $queryParams = [];
         $httpBody = '';
         $multipart = false;
+        $returnType = '';
 
 
 
@@ -214,6 +215,7 @@ class UserApi
         $queryParams = [];
         $httpBody = '';
         $multipart = false;
+        $returnType = '';
 
 
 
@@ -324,6 +326,7 @@ class UserApi
         $queryParams = [];
         $httpBody = '';
         $multipart = false;
+        $returnType = '';
 
 
 
@@ -434,6 +437,7 @@ class UserApi
         $queryParams = [];
         $httpBody = '';
         $multipart = false;
+        $returnType = '';
 
 
         // path params
@@ -544,6 +548,7 @@ class UserApi
         $queryParams = [];
         $httpBody = '';
         $multipart = false;
+        $returnType = '\Swagger\Client\Model\User';
 
 
         // path params
@@ -591,7 +596,10 @@ class UserApi
                 $httpBody
             );
             $response = $this->client->sendRequest($request);
-            $content = json_decode($response->getBody()->getContents());
+            $content = $response->getBody()->getContents();
+            if ($returnType !== 'string') { //TODO return type file
+                $content = json_decode($content);
+            }
             return [
                 ObjectSerializer::deserialize($content, '\Swagger\Client\Model\User', []),
                 $response->getStatusCode(),
@@ -669,6 +677,7 @@ class UserApi
         $queryParams = [];
         $httpBody = '';
         $multipart = false;
+        $returnType = 'string';
 
         // query params
         if ($username !== null) {
@@ -720,7 +729,10 @@ class UserApi
                 $httpBody
             );
             $response = $this->client->sendRequest($request);
-            $content = json_decode($response->getBody()->getContents());
+            $content = $response->getBody()->getContents();
+            if ($returnType !== 'string') { //TODO return type file
+                $content = json_decode($content);
+            }
             return [
                 ObjectSerializer::deserialize($content, 'string', []),
                 $response->getStatusCode(),
@@ -785,6 +797,7 @@ class UserApi
         $queryParams = [];
         $httpBody = '';
         $multipart = false;
+        $returnType = '';
 
 
 
@@ -896,6 +909,7 @@ class UserApi
         $queryParams = [];
         $httpBody = '';
         $multipart = false;
+        $returnType = '';
 
 
         // path params

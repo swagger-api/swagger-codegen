@@ -107,6 +107,7 @@ class StoreApi
         $queryParams = [];
         $httpBody = '';
         $multipart = false;
+        $returnType = '';
 
 
         // path params
@@ -215,6 +216,7 @@ class StoreApi
         $queryParams = [];
         $httpBody = '';
         $multipart = false;
+        $returnType = 'map[string,int]';
 
 
 
@@ -263,7 +265,10 @@ class StoreApi
                 $httpBody
             );
             $response = $this->client->sendRequest($request);
-            $content = json_decode($response->getBody()->getContents());
+            $content = $response->getBody()->getContents();
+            if ($returnType !== 'string') { //TODO return type file
+                $content = json_decode($content);
+            }
             return [
                 ObjectSerializer::deserialize($content, 'map[string,int]', []),
                 $response->getStatusCode(),
@@ -345,6 +350,7 @@ class StoreApi
         $queryParams = [];
         $httpBody = '';
         $multipart = false;
+        $returnType = '\Swagger\Client\Model\Order';
 
 
         // path params
@@ -396,7 +402,10 @@ class StoreApi
                 $httpBody
             );
             $response = $this->client->sendRequest($request);
-            $content = json_decode($response->getBody()->getContents());
+            $content = $response->getBody()->getContents();
+            if ($returnType !== 'string') { //TODO return type file
+                $content = json_decode($content);
+            }
             return [
                 ObjectSerializer::deserialize($content, '\Swagger\Client\Model\Order', []),
                 $response->getStatusCode(),
@@ -468,6 +477,7 @@ class StoreApi
         $queryParams = [];
         $httpBody = '';
         $multipart = false;
+        $returnType = '\Swagger\Client\Model\Order';
 
 
 
@@ -516,7 +526,10 @@ class StoreApi
                 $httpBody
             );
             $response = $this->client->sendRequest($request);
-            $content = json_decode($response->getBody()->getContents());
+            $content = $response->getBody()->getContents();
+            if ($returnType !== 'string') { //TODO return type file
+                $content = json_decode($content);
+            }
             return [
                 ObjectSerializer::deserialize($content, '\Swagger\Client\Model\Order', []),
                 $response->getStatusCode(),

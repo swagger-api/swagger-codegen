@@ -150,6 +150,7 @@ use {{invokerPackage}}\ObjectSerializer;
         $queryParams = [];
         $httpBody = '';
         $multipart = false;
+        $returnType = '{{returnType}}';
 
         {{#queryParams}}
         // query params
@@ -270,7 +271,10 @@ use {{invokerPackage}}\ObjectSerializer;
             );
             $response = $this->client->sendRequest($request);
             {{#returnType}}
-            $content = json_decode($response->getBody()->getContents());
+            $content = $response->getBody()->getContents();
+            if ($returnType !== 'string') { //TODO return type file
+                $content = json_decode($content);
+            }
             return [
                 ObjectSerializer::deserialize($content, '{{returnType}}', []),
                 $response->getStatusCode(),

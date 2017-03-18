@@ -104,6 +104,7 @@ class PetApi
         $queryParams = [];
         $httpBody = '';
         $multipart = false;
+        $returnType = '';
 
 
 
@@ -220,6 +221,7 @@ class PetApi
         $queryParams = [];
         $httpBody = '';
         $multipart = false;
+        $returnType = '';
 
 /**
         // header params
@@ -340,6 +342,7 @@ class PetApi
         $queryParams = [];
         $httpBody = '';
         $multipart = false;
+        $returnType = '\Swagger\Client\Model\Pet[]';
 
         // query params
         if (is_array($status)) {
@@ -394,7 +397,10 @@ class PetApi
                 $httpBody
             );
             $response = $this->client->sendRequest($request);
-            $content = json_decode($response->getBody()->getContents());
+            $content = $response->getBody()->getContents();
+            if ($returnType !== 'string') { //TODO return type file
+                $content = json_decode($content);
+            }
             return [
                 ObjectSerializer::deserialize($content, '\Swagger\Client\Model\Pet[]', []),
                 $response->getStatusCode(),
@@ -466,6 +472,7 @@ class PetApi
         $queryParams = [];
         $httpBody = '';
         $multipart = false;
+        $returnType = '\Swagger\Client\Model\Pet[]';
 
         // query params
         if (is_array($tags)) {
@@ -520,7 +527,10 @@ class PetApi
                 $httpBody
             );
             $response = $this->client->sendRequest($request);
-            $content = json_decode($response->getBody()->getContents());
+            $content = $response->getBody()->getContents();
+            if ($returnType !== 'string') { //TODO return type file
+                $content = json_decode($content);
+            }
             return [
                 ObjectSerializer::deserialize($content, '\Swagger\Client\Model\Pet[]', []),
                 $response->getStatusCode(),
@@ -592,6 +602,7 @@ class PetApi
         $queryParams = [];
         $httpBody = '';
         $multipart = false;
+        $returnType = '\Swagger\Client\Model\Pet';
 
 
         // path params
@@ -644,7 +655,10 @@ class PetApi
                 $httpBody
             );
             $response = $this->client->sendRequest($request);
-            $content = json_decode($response->getBody()->getContents());
+            $content = $response->getBody()->getContents();
+            if ($returnType !== 'string') { //TODO return type file
+                $content = json_decode($content);
+            }
             return [
                 ObjectSerializer::deserialize($content, '\Swagger\Client\Model\Pet', []),
                 $response->getStatusCode(),
@@ -715,6 +729,7 @@ class PetApi
         $queryParams = [];
         $httpBody = '';
         $multipart = false;
+        $returnType = '';
 
 
 
@@ -833,6 +848,7 @@ class PetApi
         $queryParams = [];
         $httpBody = '';
         $multipart = false;
+        $returnType = '';
 
 
         // path params
@@ -959,6 +975,7 @@ class PetApi
         $queryParams = [];
         $httpBody = '';
         $multipart = false;
+        $returnType = '\Swagger\Client\Model\ApiResponse';
 
 
         // path params
@@ -1019,7 +1036,10 @@ class PetApi
                 $httpBody
             );
             $response = $this->client->sendRequest($request);
-            $content = json_decode($response->getBody()->getContents());
+            $content = $response->getBody()->getContents();
+            if ($returnType !== 'string') { //TODO return type file
+                $content = json_decode($content);
+            }
             return [
                 ObjectSerializer::deserialize($content, '\Swagger\Client\Model\ApiResponse', []),
                 $response->getStatusCode(),

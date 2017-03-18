@@ -2,10 +2,15 @@
 
 namespace Swagger\Client;
 
+use Http\Adapter\Guzzle6\Client;
+use Swagger\Client\Api\UserApi;
+
 class UserApiTest extends \PHPUnit_Framework_TestCase
 {
 
-    // add a new pet (id 10005) to ensure the pet object is available for all the tests
+    /** @var UserApi*/
+    private $api;
+
     public static function setUpBeforeClass()
     {
         // for error reporting (need to run with php5.3 to get no warning)
@@ -13,15 +18,21 @@ class UserApiTest extends \PHPUnit_Framework_TestCase
         //error_reporting(~0);
     }
 
+    public function setUp()
+    {
+        $this->api = new Api\UserApi(
+            Client::createWithConfig([
+                'base_uri' => 'http://petstore.swagger.io/v2/'
+            ])
+        );
+    }
+
     // test login user
     public function testLoginUser()
     {
         // initialize the API client
-        $config = (new Configuration())->setHost('http://petstore.swagger.io/v2');
-        $api_client = new ApiClient($config);
-        $user_api = new Api\UserApi($api_client);
         // login
-        $response = $user_api->loginUser("xxxxx", "yyyyyyyy");
+        $response = $this->api->loginUser("xxxxx", "yyyyyyyy");
         
         $this->assertInternalType("string", $response);
         $this->assertRegExp(
