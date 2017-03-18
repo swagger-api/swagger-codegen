@@ -66,9 +66,9 @@ public interface FakeApi extends ApiClient.Api {
     * @param queryParams Map of query parameters as name-value pairs
     *   <p>The following elements may be specified in the query map:</p>
     *   <ul>
-    *   <li>enumQueryStringArray Query parameter enum test (string array) (optional)</li>
-    *   <li>enumQueryString Query parameter enum test (string) (optional, default to -efg)</li>
-    *   <li>enumQueryInteger Query parameter enum test (double) (optional)</li>
+    *   <li>enumQueryStringArray - Query parameter enum test (string array) (optional)</li>
+    *   <li>enumQueryString - Query parameter enum test (string) (optional, default to -efg)</li>
+    *   <li>enumQueryInteger - Query parameter enum test (double) (optional)</li>
     *   </ul>
    */
   @RequestLine("GET /fake?enum_query_string_array={enumQueryStringArray}&enum_query_string={enumQueryString}&enum_query_integer={enumQueryInteger}")

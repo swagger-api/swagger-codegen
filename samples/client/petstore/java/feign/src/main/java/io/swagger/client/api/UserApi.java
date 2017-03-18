@@ -81,8 +81,8 @@ public interface UserApi extends ApiClient.Api {
     * @param queryParams Map of query parameters as name-value pairs
     *   <p>The following elements may be specified in the query map:</p>
     *   <ul>
-    *   <li>username The user name for login (required)</li>
-    *   <li>password The password for login in clear text (required)</li>
+    *   <li>username - The user name for login (required)</li>
+    *   <li>password - The password for login in clear text (required)</li>
     *   </ul>
    * @return String
    */

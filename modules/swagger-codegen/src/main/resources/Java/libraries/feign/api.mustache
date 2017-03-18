@@ -33,7 +33,7 @@ public interface {{classname}} extends ApiClient.Api {
     *   <p>The following elements may be specified in the query map:</p>
     *   <ul>
 {{#queryParams}}
-    *   <li>{{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}</li>
+    *   <li>{{paramName}} - {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}</li>
 {{/queryParams}}
     *   </ul>
 {{/hasQueryParams}}

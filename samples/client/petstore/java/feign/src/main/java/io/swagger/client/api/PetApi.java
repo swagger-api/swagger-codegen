@@ -48,7 +48,7 @@ public interface PetApi extends ApiClient.Api {
     * @param queryParams Map of query parameters as name-value pairs
     *   <p>The following elements may be specified in the query map:</p>
     *   <ul>
-    *   <li>status Status values that need to be considered for filter (required)</li>
+    *   <li>status - Status values that need to be considered for filter (required)</li>
     *   </ul>
    * @return List&lt;Pet&gt;
    */
@@ -72,7 +72,7 @@ public interface PetApi extends ApiClient.Api {
     * @param queryParams Map of query parameters as name-value pairs
     *   <p>The following elements may be specified in the query map:</p>
     *   <ul>
-    *   <li>tags Tags to filter by (required)</li>
+    *   <li>tags - Tags to filter by (required)</li>
     *   </ul>
    * @return List&lt;Pet&gt;
    */
