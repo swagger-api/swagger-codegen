@@ -349,7 +349,7 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         if (p instanceof MapProperty) {
             MapProperty ap = (MapProperty) p;
             String inner = getSwaggerType(ap.getAdditionalProperties());
-            return "[String:" + inner + "]";
+            return inner;
         } else if (p instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) p;
             String inner = getSwaggerType(ap.getItems());
