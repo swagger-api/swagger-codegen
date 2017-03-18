@@ -35,28 +35,28 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         // skip initializing the API client as it should be automatic
         //$api_client = new ApiClient('http://petstore.swagger.io/v2');
         // new pet
-        $new_pet_id = 10005;
-        $new_pet = new Model\Pet;
-        $new_pet->setId($new_pet_id);
-        $new_pet->setName("PHP Unit Test");
-        $new_pet->setPhotoUrls(["http://test_php_unit_test.com"]);
+        $newPetId = 10005;
+        $newPet = new Model\Pet;
+        $newPet->setId($newPetId);
+        $newPet->setName("PHP Unit Test");
+        $newPet->setPhotoUrls(["http://test_php_unit_test.com"]);
         // new tag
         $tag = new Model\Tag;
-        $tag->setId($new_pet_id); // use the same id as pet
+        $tag->setId($newPetId); // use the same id as pet
         $tag->setName("test php tag");
         // new category
         $category = new Model\Category;
-        $category->setId($new_pet_id); // use the same id as pet
+        $category->setId($newPetId); // use the same id as pet
         $category->setName("test php category");
 
-        $new_pet->setTags(array($tag));
-        $new_pet->setCategory($category);
+        $newPet->setTags(array($tag));
+        $newPet->setCategory($category);
 
         $petApi = new Api\PetApi(new Client(new \GuzzleHttp\Client([
             'base_uri' => 'http://petstore.swagger.io/v2/'
         ])));
         // add a new pet (model)
-        list(, $status) = $petApi->addPetWithHttpInfo($new_pet);
+        list(, $status) = $petApi->addPetWithHttpInfo($newPet);
         \PHPUnit_Framework_Assert::assertEquals(200, $status);
     }
 
