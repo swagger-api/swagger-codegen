@@ -254,12 +254,15 @@ use {{invokerPackage}}\ObjectSerializer;
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
-        $headers = $this->headerSelector->selectHeaders(
-            [{{#produces}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/produces}}],
-            [{{#consumes}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/consumes}}]
-        );
         if ($httpBody instanceof MultipartStream) {
-            unset($headers['Content-Type']);
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                [{{#produces}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/produces}}]
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [{{#produces}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/produces}}],
+                [{{#consumes}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/consumes}}]
+            );
         }
 
         try {

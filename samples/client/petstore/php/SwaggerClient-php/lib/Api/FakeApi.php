@@ -138,12 +138,15 @@ class FakeApi
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['application/json']
-        );
         if ($httpBody instanceof MultipartStream) {
-            unset($headers['Content-Type']);
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
         }
 
         try {
@@ -401,12 +404,15 @@ class FakeApi
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/xml; charset=utf-8', 'application/json; charset=utf-8'],
-            ['application/xml; charset=utf-8', 'application/json; charset=utf-8']
-        );
         if ($httpBody instanceof MultipartStream) {
-            unset($headers['Content-Type']);
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/xml; charset=utf-8', 'application/json; charset=utf-8']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/xml; charset=utf-8', 'application/json; charset=utf-8'],
+                ['application/xml; charset=utf-8', 'application/json; charset=utf-8']
+            );
         }
 
         try {
@@ -559,12 +565,15 @@ class FakeApi
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
-        $headers = $this->headerSelector->selectHeaders(
-            ['*/*'],
-            ['*/*']
-        );
         if ($httpBody instanceof MultipartStream) {
-            unset($headers['Content-Type']);
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['*/*']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['*/*'],
+                ['*/*']
+            );
         }
 
         try {

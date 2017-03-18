@@ -6,7 +6,6 @@ class HeaderSelectorTest extends \PHPUnit_Framework_TestCase
 {
     public function testSelectingHeaders()
     {
-        // test selectHeaderAccept
         $selector = new HeaderSelector();
         $headers = $selector->selectHeaders([
             'application/xml',
@@ -15,7 +14,7 @@ class HeaderSelectorTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('application/json', $headers['Accept']);
 
         $headers = $selector->selectHeaders([], []);
-        $this->assertFalse(isset($headers['Accept']));
+        $this->assertArrayNotHasKey('Accept', $headers);
 
         $header = $selector->selectHeaders([
             'application/yaml',
@@ -37,5 +36,21 @@ class HeaderSelectorTest extends \PHPUnit_Framework_TestCase
             'application/xml'
         ]);
         $this->assertSame('application/yaml,application/xml', $headers['Content-Type']);
+    }
+
+    public function testSelectingHeadersForMultipartBody()
+    {
+        // test selectHeaderAccept
+        $selector = new HeaderSelector();
+        $headers = $selector->selectHeadersForMultipart([
+            'application/xml',
+            'application/json'
+        ]);
+        $this->assertSame('application/json', $headers['Accept']);
+        $this->assertArrayNotHasKey('Content-Type', $headers);
+
+        $headers = $selector->selectHeadersForMultipart([]);
+        $this->assertArrayNotHasKey('Accept', $headers);
+        $this->assertArrayNotHasKey('Content-Type', $headers);
     }
 }

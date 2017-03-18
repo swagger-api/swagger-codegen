@@ -141,12 +141,15 @@ class PetApi
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/xml', 'application/json'],
-            ['application/json', 'application/xml']
-        );
         if ($httpBody instanceof MultipartStream) {
-            unset($headers['Content-Type']);
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/xml', 'application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/xml', 'application/json'],
+                ['application/json', 'application/xml']
+            );
         }
 
         try {
@@ -263,12 +266,15 @@ class PetApi
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/xml', 'application/json'],
-            []
-        );
         if ($httpBody instanceof MultipartStream) {
-            unset($headers['Content-Type']);
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/xml', 'application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/xml', 'application/json'],
+                []
+            );
         }
 
         try {
@@ -381,12 +387,15 @@ class PetApi
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/xml', 'application/json'],
-            []
-        );
         if ($httpBody instanceof MultipartStream) {
-            unset($headers['Content-Type']);
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/xml', 'application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/xml', 'application/json'],
+                []
+            );
         }
 
         try {
@@ -511,12 +520,15 @@ class PetApi
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/xml', 'application/json'],
-            []
-        );
         if ($httpBody instanceof MultipartStream) {
-            unset($headers['Content-Type']);
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/xml', 'application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/xml', 'application/json'],
+                []
+            );
         }
 
         try {
@@ -639,12 +651,15 @@ class PetApi
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/xml', 'application/json'],
-            []
-        );
         if ($httpBody instanceof MultipartStream) {
-            unset($headers['Content-Type']);
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/xml', 'application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/xml', 'application/json'],
+                []
+            );
         }
 
         try {
@@ -766,12 +781,15 @@ class PetApi
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/xml', 'application/json'],
-            ['application/json', 'application/xml']
-        );
         if ($httpBody instanceof MultipartStream) {
-            unset($headers['Content-Type']);
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/xml', 'application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/xml', 'application/json'],
+                ['application/json', 'application/xml']
+            );
         }
 
         try {
@@ -892,12 +910,15 @@ class PetApi
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/xml', 'application/json'],
-            ['application/x-www-form-urlencoded']
-        );
         if ($httpBody instanceof MultipartStream) {
-            unset($headers['Content-Type']);
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/xml', 'application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/xml', 'application/json'],
+                ['application/x-www-form-urlencoded']
+            );
         }
 
         try {
@@ -1020,12 +1041,15 @@ class PetApi
 */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json'],
-            ['multipart/form-data']
-        );
         if ($httpBody instanceof MultipartStream) {
-            unset($headers['Content-Type']);
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['multipart/form-data']
+            );
         }
 
         try {
