@@ -301,8 +301,6 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
         // make test path available in mustache template
         additionalProperties.put("testBasePath", testBasePath);
 
-        supportingFiles.add(new SupportingFile("configuration.mustache", toPackagePath(invokerPackage, srcBasePath), "Configuration.php"));
-        supportingFiles.add(new SupportingFile("ApiClient.mustache", toPackagePath(invokerPackage, srcBasePath), "ApiClient.php"));
         supportingFiles.add(new SupportingFile("ApiException.mustache", toPackagePath(invokerPackage, srcBasePath), "ApiException.php"));
         supportingFiles.add(new SupportingFile("ObjectSerializer.mustache", toPackagePath(invokerPackage, srcBasePath), "ObjectSerializer.php"));
         supportingFiles.add(new SupportingFile("composer.mustache", getPackagePath(), "composer.json"));
