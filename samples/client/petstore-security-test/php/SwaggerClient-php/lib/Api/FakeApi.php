@@ -28,10 +28,14 @@
 
 namespace Swagger\Client\Api;
 
-use \Swagger\Client\ApiClient;
-use \Swagger\Client\ApiException;
-use \Swagger\Client\Configuration;
-use \Swagger\Client\ObjectSerializer;
+use GuzzleHttp\Psr7\MultipartStream;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Uri;
+use Http\Client\Exception;
+use Http\Client\HttpClient;
+use Swagger\Client\ApiException;
+use Swagger\Client\HeaderSelector;
+use Swagger\Client\ObjectSerializer;
 
 /**
  * FakeApi Class Doc Comment
@@ -44,47 +48,25 @@ use \Swagger\Client\ObjectSerializer;
 class FakeApi
 {
     /**
-     * API Client
-     *
-     * @var \Swagger\Client\ApiClient instance of the ApiClient
+     * @var HttpClient
      */
-    protected $apiClient;
+    protected $client;
 
     /**
-     * Constructor
-     *
-     * @param \Swagger\Client\ApiClient|null $apiClient The api client to use
+     * @var ObjectSerializer
      */
-    public function __construct(\Swagger\Client\ApiClient $apiClient = null)
-    {
-        if ($apiClient === null) {
-            $apiClient = new ApiClient();
-        }
-
-        $this->apiClient = $apiClient;
-    }
+    protected $serializer;
 
     /**
-     * Get API client
-     *
-     * @return \Swagger\Client\ApiClient get the API client
+     * @param HttpClient $client
+     * @param HeaderSelector $selector
+     * @param ObjectSerializer $serializer
      */
-    public function getApiClient()
+    public function __construct(HttpClient $client, HeaderSelector $selector = null, ObjectSerializer $serializer = null)
     {
-        return $this->apiClient;
-    }
-
-    /**
-     * Set the API client
-     *
-     * @param \Swagger\Client\ApiClient $apiClient set the API client
-     *
-     * @return FakeApi
-     */
-    public function setApiClient(\Swagger\Client\ApiClient $apiClient)
-    {
-        $this->apiClient = $apiClient;
-        return $this;
+        $this->client = $client;
+        $this->serializer = $serializer ?: new ObjectSerializer();
+        $this->headerSelector = $selector ?: new HeaderSelector();
     }
 
     /**
@@ -94,12 +76,12 @@ class FakeApi
      *
      * @param string $test_code_inject____end____rn_n_r To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return void
      */
     public function testCodeInjectEndRnNR($test_code_inject____end____rn_n_r = null)
     {
-        list($response) = $this->testCodeInjectEndRnNRWithHttpInfo($test_code_inject____end____rn_n_r);
-        return $response;
+        $this->testCodeInjectEndRnNRWithHttpInfo($test_code_inject____end____rn_n_r);
     }
 
     /**
@@ -109,37 +91,73 @@ class FakeApi
      *
      * @param string $test_code_inject____end____rn_n_r To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function testCodeInjectEndRnNRWithHttpInfo($test_code_inject____end____rn_n_r = null)
     {
-        // parse inputs
-        $resourcePath = "/fake";
-        $httpBody = '';
-        $queryParams = [];
-        $headerParams = [];
-        $formParams = [];
-        $_header_accept = $this->apiClient->selectHeaderAccept(['application/json', '*_/  \" =end --']);
-        if (!is_null($_header_accept)) {
-            $headerParams['Accept'] = $_header_accept;
-        }
-        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/json', '*_/  \" =end --']);
 
-        // default format to json
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
+        $resourcePath = substr('/fake', 1);
+        $formParams = [];
+        $queryParams = [];
+        $httpBody = '';
+        $multipart = false;
+        $returnType = '';
+
+
 
         // form params
         if ($test_code_inject____end____rn_n_r !== null) {
-            $formParams['test code inject */ &#39; &quot; &#x3D;end -- \r\n \n \r'] = $this->apiClient->getSerializer()->toFormValue($test_code_inject____end____rn_n_r);
+            $formParams['test code inject */ &#39; &quot; &#x3D;end -- \r\n \n \r'] = $this->serializer->toFormValue($test_code_inject____end____rn_n_r);
         }
         
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
         } elseif (count($formParams) > 0) {
-            $httpBody = $formParams; // for HTTP post (form)
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
         }
-        // make the API Call
+/**
+*/
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+
+        if ($httpBody instanceof MultipartStream) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json', '*_/  \" =end --']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json', '*_/  \" =end --'],
+                ['application/json', '*_/  \" =end --']
+            );
+        }
+
+        try {
+            $request = new Request(
+                'PUT',
+                Uri::composeComponents('', '', $resourcePath, $query, ''),
+                $headers,
+                $httpBody
+            );
+            $response = $this->client->sendRequest($request);
+            return [null, $response->getStatusCode(), $response->getHeaders()];
+        } catch (Exception $exception) {
+            throw new ApiException($exception->getMessage(), null, $exception);
+        }
+/**
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath,
@@ -158,5 +176,6 @@ class FakeApi
 
             throw $e;
         }
+*/
     }
 }

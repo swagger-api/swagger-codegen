@@ -59,11 +59,13 @@ class PetApi
 
     /**
      * @param HttpClient $client
+     * @param HeaderSelector $selector
+     * @param ObjectSerializer $serializer
      */
-    public function __construct(HttpClient $client, HeaderSelector $selector = null)
+    public function __construct(HttpClient $client, HeaderSelector $selector = null, ObjectSerializer $serializer = null)
     {
         $this->client = $client;
-        $this->serializer = new ObjectSerializer();
+        $this->serializer = $serializer ?: new ObjectSerializer();
         $this->headerSelector = $selector ?: new HeaderSelector();
     }
 
