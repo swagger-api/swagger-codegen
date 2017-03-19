@@ -19,6 +19,8 @@ import javax.validation.constraints.*;
 
 
 public class UserApi  {
+    
+
 
     @POST
     
@@ -30,6 +32,8 @@ public class UserApi  {
     public Response createUser(User body) {
     	return Response.ok().entity("magic!").build();
     }
+    
+
 
     @POST
     @Path("/createWithArray")
@@ -41,6 +45,8 @@ public class UserApi  {
     public Response createUsersWithArrayInput(List<User> body) {
     	return Response.ok().entity("magic!").build();
     }
+    
+
 
     @POST
     @Path("/createWithList")
@@ -52,6 +58,8 @@ public class UserApi  {
     public Response createUsersWithListInput(List<User> body) {
     	return Response.ok().entity("magic!").build();
     }
+    
+
 
     @DELETE
     @Path("/{username}")
@@ -64,6 +72,8 @@ public class UserApi  {
     public Response deleteUser(@PathParam("username") @ApiParam("The name that needs to be deleted") String username) {
     	return Response.ok().entity("magic!").build();
     }
+    
+
 
     @GET
     @Path("/{username}")
@@ -77,6 +87,8 @@ public class UserApi  {
     public Response getUserByName(@PathParam("username") @ApiParam("The name that needs to be fetched. Use user1 for testing. ") String username) {
     	return Response.ok().entity("magic!").build();
     }
+    
+
 
     @GET
     @Path("/login")
@@ -89,6 +101,8 @@ public class UserApi  {
     public Response loginUser(@QueryParam("username") @NotNull  String username,@QueryParam("password") @NotNull  String password) {
     	return Response.ok().entity("magic!").build();
     }
+    
+
 
     @GET
     @Path("/logout")
@@ -100,6 +114,8 @@ public class UserApi  {
     public Response logoutUser() {
     	return Response.ok().entity("magic!").build();
     }
+    
+
 
     @PUT
     @Path("/{username}")
