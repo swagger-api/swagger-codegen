@@ -33,10 +33,10 @@ class StoreApiTest extends FlatSpec with Matchers {
 
     api.getOrderById(1000) match {
       case Some(order) => {
-        order.id should be(1000)
-        order.petId should be(10)
-        order.quantity should be(101)
-        order.shipDate.getTime().equals(now.getTime()) should be(true)
+        order.id.get should be(1000)
+        order.petId.get should be(10)
+        order.quantity.get should be(101)
+        order.shipDate.get.getTime().equals(now.getTime()) should be(true)
       }
       case None => fail("didn't find order created")
     }
@@ -60,6 +60,7 @@ class StoreApiTest extends FlatSpec with Matchers {
     }
 
     api.deleteOrder("1001")
+    val x = api.getOrderById(1001)
     api.getOrderById(1001) match {
       case Some(order) => fail("order should have been deleted")
       case None =>
