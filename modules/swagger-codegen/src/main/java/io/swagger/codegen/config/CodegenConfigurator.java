@@ -412,14 +412,14 @@ public class CodegenConfigurator implements Serializable {
 
         config.additionalProperties().putAll(additionalProperties);
 
-        ClientOptInput input = new ClientOptInput()
-                .config(config);
-
         final List<AuthorizationValue> authorizationValues = AuthParser.parse(auth);
 
         Swagger swagger = new SwaggerParser().read(inputSpec, authorizationValues, true);
 
-        input.opts(new ClientOpts())
+        ClientOptInput input = new ClientOptInput()
+                .config(config)
+                .opts(new ClientOpts())
+                .systemProperties(systemProperties)
                 .swagger(swagger);
 
         return input;

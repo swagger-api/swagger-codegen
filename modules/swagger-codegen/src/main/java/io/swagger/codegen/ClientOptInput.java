@@ -5,13 +5,16 @@ import io.swagger.codegen.auth.AuthParser;
 import io.swagger.models.Swagger;
 import io.swagger.models.auth.AuthorizationValue;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class ClientOptInput {
     private CodegenConfig config;
     private ClientOpts opts;
     private Swagger swagger;
     private List<AuthorizationValue> auths;
+    private Map<String,String> systemProperties;
 
     public ClientOptInput swagger(Swagger swagger) {
         this.setSwagger(swagger);
@@ -25,6 +28,11 @@ public class ClientOptInput {
 
     public ClientOptInput config(CodegenConfig codegenConfig) {
         this.setConfig(codegenConfig);
+        return this;
+    }
+
+    public ClientOptInput systemProperties(Map<String,String> properties) {
+        this.setSystemProperties(properties);
         return this;
     }
 
@@ -63,6 +71,18 @@ public class ClientOptInput {
 
     public void setOpts(ClientOpts opts) {
         this.opts = opts;
+    }
+
+    public Map<String, String> getSystemProperties() {
+        if(systemProperties == null) {
+            return Collections.emptyMap();
+        } else {
+            return systemProperties;
+        }
+    }
+
+    public void setSystemProperties(Map<String, String> systemProperties) {
+        this.systemProperties = systemProperties;
     }
 
     @ApiModelProperty(dataType = "Object")
