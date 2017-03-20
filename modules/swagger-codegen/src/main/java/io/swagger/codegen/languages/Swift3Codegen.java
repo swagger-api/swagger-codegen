@@ -279,6 +279,11 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
+    public boolean isDataTypeFile(String dataType) {
+        return dataType != null && dataType.equals("URL");
+    }
+
+    @Override
     public boolean isDataTypeBinary(final String dataType) {
         return dataType != null && dataType.equals("Data");
     }
@@ -514,6 +519,15 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
     public String toEnumVarName(String name, String datatype) {
         if (name.length() == 0) {
             return "empty";
+        }
+
+        Pattern startWithNumberPattern = Pattern.compile("^\\d+");
+        Matcher startWithNumberMatcher = startWithNumberPattern.matcher(name);
+        if (startWithNumberMatcher.find()) {
+            String startingNumbers = startWithNumberMatcher.group(0);
+            String nameWithoutStartingNumbers = name.substring(startingNumbers.length());
+
+            return "_" + startingNumbers + camelize(nameWithoutStartingNumbers, true);
         }
 
         // for symbol, e.g. $, #
