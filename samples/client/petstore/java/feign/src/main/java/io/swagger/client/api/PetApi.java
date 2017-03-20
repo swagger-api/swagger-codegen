@@ -54,6 +54,7 @@ public interface PetApi extends ApiClient.Api {
     "Accept: application/json",
   })
   List<Pet> findPetsByStatus(@Param("status") List<String> status);
+
   /**
    * Finds Pets by status
    * Multiple status values can be provided with comma separated strings
@@ -99,6 +100,7 @@ public interface PetApi extends ApiClient.Api {
     "Accept: application/json",
   })
   List<Pet> findPetsByTags(@Param("tags") List<String> tags);
+
   /**
    * Finds Pets by tags
    * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.

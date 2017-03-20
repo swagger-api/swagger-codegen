@@ -88,6 +88,7 @@ public interface UserApi extends ApiClient.Api {
     "Accept: application/json",
   })
   String loginUser(@Param("username") String username, @Param("password") String password);
+
   /**
    * Logs user into the system
    * 

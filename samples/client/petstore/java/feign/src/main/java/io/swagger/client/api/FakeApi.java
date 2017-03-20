@@ -76,6 +76,7 @@ public interface FakeApi extends ApiClient.Api {
     "enum_header_string: {enumHeaderString}"
   })
   void testEnumParameters(@Param("enumFormStringArray") List<String> enumFormStringArray, @Param("enumFormString") String enumFormString, @Param("enumHeaderStringArray") List<String> enumHeaderStringArray, @Param("enumHeaderString") String enumHeaderString, @Param("enumQueryStringArray") List<String> enumQueryStringArray, @Param("enumQueryString") String enumQueryString, @Param("enumQueryInteger") Integer enumQueryInteger, @Param("enumQueryDouble") Double enumQueryDouble);
+
   /**
    * To test enum parameters
    * To test enum parameters
