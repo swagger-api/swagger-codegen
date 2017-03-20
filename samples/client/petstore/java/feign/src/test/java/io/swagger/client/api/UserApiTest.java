@@ -64,10 +64,13 @@ public class UserApiTest {
         User user = createUser();
         api.createUser(user);
 
+        String token = api.loginUser(user.getUsername(), user.getPassword());
+        assertTrue(token.startsWith("logged in user session:"));
+
         UserApi.LoginUserQueryParams queryParams = new UserApi.LoginUserQueryParams()
                 .username(user.getUsername())
                 .password(user.getPassword());
-        String token = api.loginUser(queryParams);
+        token = api.loginUser(queryParams);
         assertTrue(token.startsWith("logged in user session:"));
     }
 

@@ -71,12 +71,25 @@ public class PetApiTest {
 
         api.updatePet(pet);
 
-        PetApi.FindPetsByStatusQueryParams queryParams = new PetApi.FindPetsByStatusQueryParams()
-                .status(Arrays.asList(new String[]{"available"}));
-        List<Pet> pets = api.findPetsByStatus(queryParams);
+        List<Pet> pets = api.findPetsByStatus(Arrays.asList(new String[]{"available"}));
         assertNotNull(pets);
 
         boolean found = false;
+        for (Pet fetched : pets) {
+            if (fetched.getId().equals(pet.getId())) {
+                found = true;
+                break;
+            }
+        }
+
+        assertTrue(found);
+
+        PetApi.FindPetsByStatusQueryParams queryParams = new PetApi.FindPetsByStatusQueryParams()
+                .status(Arrays.asList(new String[]{"available"}));
+        pets = api.findPetsByStatus(queryParams);
+        assertNotNull(pets);
+
+        found = false;
         for (Pet fetched : pets) {
             if (fetched.getId().equals(pet.getId())) {
                 found = true;
@@ -101,12 +114,24 @@ public class PetApiTest {
 
         api.updatePet(pet);
 
-        PetApi.FindPetsByTagsQueryParams queryParams = new PetApi.FindPetsByTagsQueryParams()
-                .tags(Arrays.asList(new String[]{"friendly"}));
-        List<Pet> pets = api.findPetsByTags(queryParams);
+        List<Pet> pets = api.findPetsByTags(Arrays.asList(new String[]{"friendly"}));
         assertNotNull(pets);
 
         boolean found = false;
+        for (Pet fetched : pets) {
+            if (fetched.getId().equals(pet.getId())) {
+                found = true;
+                break;
+            }
+        }
+        assertTrue(found);
+
+        PetApi.FindPetsByTagsQueryParams queryParams = new PetApi.FindPetsByTagsQueryParams()
+                .tags(Arrays.asList(new String[]{"friendly"}));
+        pets = api.findPetsByTags(queryParams);
+        assertNotNull(pets);
+
+        found = false;
         for (Pet fetched : pets) {
             if (fetched.getId().equals(pet.getId())) {
                 found = true;
