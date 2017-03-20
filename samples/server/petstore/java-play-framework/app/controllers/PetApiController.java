@@ -13,10 +13,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
 import java.io.IOException;
 import swagger.SwaggerUtils;
-import javafx.util.Pair;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import javax.validation.constraints.*;
+
+import swagger.SwaggerUtils.ApiAction;
 
 
 public class PetApiController extends Controller {
@@ -31,6 +32,7 @@ public class PetApiController extends Controller {
     }
 
 
+    @ApiAction
     public Result addPet() throws IOException {
         JsonNode nodebody = request().body().asJson();
         Pet body;
@@ -45,6 +47,7 @@ public class PetApiController extends Controller {
         return ok();
     }
 
+    @ApiAction
     public Result deletePet(Long petId)  {
         String valueapiKey = request().getHeader("api_key");
         String apiKey;
@@ -59,6 +62,7 @@ public class PetApiController extends Controller {
         return ok();
     }
 
+    @ApiAction
     public Result findPetsByStatus()  {
         //TODO: Maybe implement this in the future if we can support collection in the body params: see bug in swagger-play: https://github.com/swagger-api/swagger-play/issues/130
         //TODO: Tt seems it is not detected that it's a list based on the collectionFormat field?
@@ -74,6 +78,7 @@ public class PetApiController extends Controller {
         
     }
 
+    @ApiAction
     public Result findPetsByTags()  {
         //TODO: Maybe implement this in the future if we can support collection in the body params: see bug in swagger-play: https://github.com/swagger-api/swagger-play/issues/130
         //TODO: Tt seems it is not detected that it's a list based on the collectionFormat field?
@@ -89,6 +94,7 @@ public class PetApiController extends Controller {
         
     }
 
+    @ApiAction
     public Result getPetById(Long petId)  {
         Pet obj = imp.getPetById(petId);
         JsonNode result = mapper.valueToTree(obj);
@@ -96,6 +102,7 @@ public class PetApiController extends Controller {
         
     }
 
+    @ApiAction
     public Result updatePet() throws IOException {
         JsonNode nodebody = request().body().asJson();
         Pet body;
@@ -110,6 +117,7 @@ public class PetApiController extends Controller {
         return ok();
     }
 
+    @ApiAction
     public Result updatePetWithForm(String petId)  {
         String valuename = ((String[]) request().body().asMultipartFormData().asFormUrlEncoded().get("name"))[0];
         String name;
@@ -132,6 +140,7 @@ public class PetApiController extends Controller {
         return ok();
     }
 
+    @ApiAction
     public Result uploadFile(Long petId)  {
         String valueadditionalMetadata = ((String[]) request().body().asMultipartFormData().asFormUrlEncoded().get("additionalMetadata"))[0];
         String additionalMetadata;

@@ -13,10 +13,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
 import java.io.IOException;
 import swagger.SwaggerUtils;
-import javafx.util.Pair;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import javax.validation.constraints.*;
+
+import swagger.SwaggerUtils.ApiAction;
 
 
 public class UserApiController extends Controller {
@@ -31,6 +32,7 @@ public class UserApiController extends Controller {
     }
 
 
+    @ApiAction
     public Result createUser() throws IOException {
         JsonNode nodebody = request().body().asJson();
         User body;
@@ -45,6 +47,7 @@ public class UserApiController extends Controller {
         return ok();
     }
 
+    @ApiAction
     public Result createUsersWithArrayInput() throws IOException {
         JsonNode nodebody = request().body().asJson();
         List<User> body;
@@ -59,6 +62,7 @@ public class UserApiController extends Controller {
         return ok();
     }
 
+    @ApiAction
     public Result createUsersWithListInput() throws IOException {
         JsonNode nodebody = request().body().asJson();
         List<User> body;
@@ -73,12 +77,14 @@ public class UserApiController extends Controller {
         return ok();
     }
 
+    @ApiAction
     public Result deleteUser(String username)  {
         imp.deleteUser(username);
         
         return ok();
     }
 
+    @ApiAction
     public Result getUserByName(String username)  {
         User obj = imp.getUserByName(username);
         JsonNode result = mapper.valueToTree(obj);
@@ -86,6 +92,7 @@ public class UserApiController extends Controller {
         
     }
 
+    @ApiAction
     public Result loginUser()  {
         String valueusername = request().getQueryString("username");
         String username;
@@ -109,12 +116,14 @@ public class UserApiController extends Controller {
         
     }
 
+    @ApiAction
     public Result logoutUser()  {
         imp.logoutUser();
         
         return ok();
     }
 
+    @ApiAction
     public Result updateUser(String username) throws IOException {
         JsonNode nodebody = request().body().asJson();
         User body;

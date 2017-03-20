@@ -13,10 +13,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
 import java.io.IOException;
 import swagger.SwaggerUtils;
-import javafx.util.Pair;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import javax.validation.constraints.*;
+
+import swagger.SwaggerUtils.ApiAction;
 
 
 public class StoreApiController extends Controller {
@@ -31,12 +32,14 @@ public class StoreApiController extends Controller {
     }
 
 
+    @ApiAction
     public Result deleteOrder(String orderId)  {
         imp.deleteOrder(orderId);
         
         return ok();
     }
 
+    @ApiAction
     public Result getInventory()  {
         Map<String, Integer> obj = imp.getInventory();
         JsonNode result = mapper.valueToTree(obj);
@@ -44,6 +47,7 @@ public class StoreApiController extends Controller {
         
     }
 
+    @ApiAction
     public Result getOrderById(String orderId)  {
         Order obj = imp.getOrderById(orderId);
         JsonNode result = mapper.valueToTree(obj);
@@ -51,6 +55,7 @@ public class StoreApiController extends Controller {
         
     }
 
+    @ApiAction
     public Result placeOrder() throws IOException {
         JsonNode nodebody = request().body().asJson();
         Order body;
