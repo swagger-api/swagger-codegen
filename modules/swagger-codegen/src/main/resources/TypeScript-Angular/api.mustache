@@ -17,7 +17,7 @@ import { LogService, Logger } from 'lib/log/log.module';
 import { ErrorModel } from '../api';
 import { ApiResult } from '../api-result';
 import { ApiError } from '../api-error';
-import { ApiResultService } from '../api-result.service';
+import { ApiHelperService } from '../api-helper.service';
 
 {{#operations}}
 {{#description}}
@@ -33,7 +33,7 @@ export class {{classname}} {
 
   constructor(
       private http: Http,
-      private apiResultService: ApiResultService,
+      private apiHelperService: ApiHelperService,
       private logService: LogService) {
      this.logger = logService.getLogger('{{classname}}');
    }
@@ -45,9 +45,12 @@ export class {{classname}} {
    {{#allParams}}* @param {{paramName}} {{description}}
    {{/allParams}}*/
   public {{nickname}} ({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}{{^-last}}, {{/-last}}{{/allParams}}): Promise<ApiResult<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}> | ApiError> {
-    const path = '{{basePathWithoutHost}}' + '{{path}}'{{#pathParams}}
-          .replace('{' + '{{baseName}}' + '}', {{paramName}} + ''){{/pathParams}};
-    const apiUrl = path;
+    const path =
+      '{{basePathWithoutHost}}' +
+      '{{path}}'{{#pathParams}}
+      .replace('{' + '{{baseName}}' + '}', {{paramName}} + ''){{/pathParams}};
+
+    const apiUrl = this.apiHelperService.getApiRoot() + path;
 
     let search = new URLSearchParams();
     let headers = new Headers(this.defaultHeaders);
@@ -81,8 +84,8 @@ export class {{classname}} {
 
     this.logger.debug('Executing {{httpMethod}} request to ' + apiUrl);
     return this
-      .apiResultService
-      .create<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}>(
+      .apiHelperService
+      .createResult<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}>(
         this.http.request(apiUrl, requestOptions).toPromise()
       );
   }
