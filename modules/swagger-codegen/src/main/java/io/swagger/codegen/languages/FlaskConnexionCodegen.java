@@ -107,6 +107,8 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
         supportingFiles.add(new SupportingFile("travis.mustache", "", ".travis.yml"));
+        supportingFiles.add(new SupportingFile("Dockerfile.mustache", "", "Dockerfile"));
+        supportingFiles.add(new SupportingFile("dockerignore.mustache", "", ".dockerignore"));
 
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "python package name (convention: snake_case).")
                 .defaultValue("swagger_server"));
@@ -620,11 +622,26 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
 
     @Override
     public String toModelImport(String name) {
-        String modelImport = "from ";
-        if (!"".equals(modelPackage())) {
-            modelImport += modelPackage() + ".";
+        String modelImport;
+        if (StringUtils.startsWithAny(name,"import", "from")) {
+            modelImport = name;
+        } else {
+            modelImport = "from ";
+            if (!"".equals(modelPackage())) {
+                modelImport += modelPackage() + ".";
+            }
+            modelImport += toModelFilename(name)+ " import " + name;
         }
-        modelImport += toModelFilename(name)+ " import " + name;
         return modelImport;
     }
+
+    @Override
+    public void postProcessModelProperty(CodegenModel model, CodegenProperty property){
+        if (StringUtils.isNotEmpty(property.pattern)) {
+            addImport(model, "import re");
+        }
+    }
+
+
+
 }
