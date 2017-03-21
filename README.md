@@ -17,7 +17,7 @@
 ## Overview
 This is the swagger codegen project, which allows generation of API client libraries (SDK generation), server stubs and documentation automatically given an [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification). Currently, the following languages/frameworks are supported:
 
-- **API clients**: **ActionScript**, **Bash**, **C#** (.net 2.0, 4.0 or later), **C++** (cpprest, Qt5, Tizen), **Clojure**, **Dart**, **Elixir**, **Go**, **Groovy**, **Haskell**, **Java** (Jersey1.x, Jersey2.x, OkHttp, Retrofit1.x, Retrofit2.x, Feign), **Node.js** (ES5, ES6, AngularJS with Google Closure Compiler annotations) **Objective-C**, **Perl**, **PHP**, **Python**, **Ruby**, **Scala**, **Swift** (2.x, 3.x), **Typescript** (Angular1.x, Angular2.x, Fetch, Node)
+- **API clients**: **ActionScript**, **Bash**, **C#** (.net 2.0, 4.0 or later), **C++** (cpprest, Qt5, Tizen), **Clojure**, **Dart**, **Elixir**, **Go**, **Groovy**, **Haskell**, **Java** (Jersey1.x, Jersey2.x, OkHttp, Retrofit1.x, Retrofit2.x, Feign), **Node.js** (ES5, ES6, AngularJS with Google Closure Compiler annotations) **Objective-C**, **Perl**, **PHP**, **Python**, **Ruby**, **Scala**, **Swift** (2.x, 3.x), **Typescript** (Angular1.x, Angular2.x, Fetch, jQuery, Node)
 - **Server stubs**: **C#** (ASP.NET Core, NancyFx), **Erlang**, **Go**, **Haskell**, **Java** (MSF4J, Spring, Undertow, JAX-RS: CDI, CXF, Inflector, RestEasy), **PHP** (Lumen, Slim, Silex, [Zend Expressive](https://github.com/zendframework/zend-expressive)), **Python** (Flask), **NodeJS**, **Ruby** (Sinatra, Rails5), **Scala** ([Finch](https://github.com/finagle/finch), Scalatra)
 - **API documentation generators**: **HTML**, **Confluence Wiki** 
 - **Others**: **JMeter**
@@ -78,10 +78,10 @@ Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 
 
 ### Prerequisites
-If you're looking for the latest stable version, you can grab it directly from Sonatype.org (Java 7 runtime at a minimum):
+If you're looking for the latest stable version, you can grab it directly from Maven.org (Java 7 runtime at a minimum):
 
 ```
-wget https://oss.sonatype.org/content/repositories/releases/io/swagger/swagger-codegen-cli/2.2.2/swagger-codegen-cli-2.2.2.jar -O swagger-codegen-cli.jar
+wget http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.2.2/swagger-codegen-cli-2.2.2.jar -O swagger-codegen-cli.jar
 
 java -jar swagger-codegen-cli.jar help
 ```
@@ -191,7 +191,7 @@ docker stop $CID && docker rm $CID
 
 In the example above, `result.zip` will contain the generated client.
 
-##### Swagger Codegen Docker Image
+##### Swagger Codegen CLI Docker Image
 
 The Swagger Codegen image acts as a standalone executable. It can be used as an alternative to installing via homebrew, or for developers who are unable to install Java or upgrade the installed version.
 
@@ -200,7 +200,7 @@ To generate code with this image, you'll need to mount a local location as a vol
 Example:
 
 ```
-docker run --rm -v ${PWD}:/local swagger-api/swagger-codegen generate \
+docker run --rm -v ${PWD}:/local swaggerapi/swagger-codegen-cli generate \
     -i http://petstore.swagger.io/v2/swagger.json \
     -l go \
     -o /local/out/go
@@ -838,7 +838,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [carpolo](http://www.carpolo.co/)
 - [CloudBoost](https://www.CloudBoost.io/)
 - [Conplement](http://www.conplement.de/)
-- [Cummins] (http://www.cummins.com/)
+- [Cummins](http://www.cummins.com/)
 - [Cupix](http://www.cupix.com)
 - [DBBest Technologies](https://www.dbbest.com)
 - [DecentFoX](http://decentfox.com/)
@@ -889,6 +889,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Plexxi](http://www.plexxi.com)
 - [Pixoneye](http://www.pixoneye.com/)
 - [PostAffiliatePro](https://www.postaffiliatepro.com/)
+- [PracticeBird](https://www.practicebird.com/)
 - [Prill Tecnologia](http://www.prill.com.br)
 - [QAdept](http://qadept.com/)
 - [QuantiModo](https://quantimo.do/)
@@ -1001,6 +1002,7 @@ Here is a list of template creators:
    * TypeScript (Angular1):  @mhardorf
    * TypeScript (Fetch): @leonyu
    * TypeScript (Angular2): @roni-frantchi
+   * TypeScript (jQuery): @bherila 
  * Server Stubs
    * C# ASP.NET5: @jimschubert
    * C# NancyFX: @mstefaniuk

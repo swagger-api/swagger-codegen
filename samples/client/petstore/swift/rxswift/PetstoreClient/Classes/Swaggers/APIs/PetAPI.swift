@@ -244,14 +244,14 @@ public class PetAPI: APIBase {
      - examples: [{contentType=application/json, example=[ {
   "photoUrls" : [ "aeiou" ],
   "name" : "doggie",
-  "id" : 5,
+  "id" : 0,
   "category" : {
     "name" : "aeiou",
-    "id" : 8
+    "id" : 6
   },
   "tags" : [ {
     "name" : "aeiou",
-    "id" : 7
+    "id" : 1
   } ],
   "status" : "available"
 } ]}, {contentType=application/xml, example=<Pet>
@@ -267,14 +267,14 @@ public class PetAPI: APIBase {
      - examples: [{contentType=application/json, example=[ {
   "photoUrls" : [ "aeiou" ],
   "name" : "doggie",
-  "id" : 5,
+  "id" : 0,
   "category" : {
     "name" : "aeiou",
-    "id" : 8
+    "id" : 6
   },
   "tags" : [ {
     "name" : "aeiou",
-    "id" : 7
+    "id" : 1
   } ],
   "status" : "available"
 } ]}, {contentType=application/xml, example=<Pet>
@@ -354,14 +354,14 @@ public class PetAPI: APIBase {
      - examples: [{contentType=application/json, example={
   "photoUrls" : [ "aeiou" ],
   "name" : "doggie",
-  "id" : 6,
+  "id" : 0,
   "category" : {
     "name" : "aeiou",
-    "id" : 2
+    "id" : 6
   },
   "tags" : [ {
     "name" : "aeiou",
-    "id" : 2
+    "id" : 1
   } ],
   "status" : "available"
 }}, {contentType=application/xml, example=<Pet>
@@ -377,14 +377,14 @@ public class PetAPI: APIBase {
      - examples: [{contentType=application/json, example={
   "photoUrls" : [ "aeiou" ],
   "name" : "doggie",
-  "id" : 6,
+  "id" : 0,
   "category" : {
     "name" : "aeiou",
-    "id" : 2
+    "id" : 6
   },
   "tags" : [ {
     "name" : "aeiou",
-    "id" : 2
+    "id" : 1
   } ],
   "status" : "available"
 }}, {contentType=application/xml, example=<Pet>

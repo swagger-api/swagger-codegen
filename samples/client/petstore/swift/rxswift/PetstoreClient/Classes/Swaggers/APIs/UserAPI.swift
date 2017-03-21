@@ -267,9 +267,9 @@ public class UserAPI: APIBase {
   "firstName" : "aeiou",
   "lastName" : "aeiou",
   "password" : "aeiou",
-  "userStatus" : 8,
+  "userStatus" : 6,
   "phone" : "aeiou",
-  "id" : 4,
+  "id" : 0,
   "email" : "aeiou",
   "username" : "aeiou"
 }}, {contentType=application/xml, example=<User>
@@ -286,9 +286,9 @@ public class UserAPI: APIBase {
   "firstName" : "aeiou",
   "lastName" : "aeiou",
   "password" : "aeiou",
-  "userStatus" : 8,
+  "userStatus" : 6,
   "phone" : "aeiou",
-  "id" : 4,
+  "id" : 0,
   "email" : "aeiou",
   "username" : "aeiou"
 }}, {contentType=application/xml, example=<User>

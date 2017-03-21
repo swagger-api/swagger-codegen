@@ -102,10 +102,10 @@ public class StoreAPI: APIBase {
        - type: apiKey api_key 
        - name: api_key
      - examples: [{contentType=application/json, example={
-  "key" : 4
+  "key" : 0
 }}, {contentType=application/xml, example=}]
      - examples: [{contentType=application/json, example={
-  "key" : 4
+  "key" : 0
 }}, {contentType=application/xml, example=}]
 
      - returns: RequestBuilder<[String:Int32]> 
@@ -160,9 +160,9 @@ public class StoreAPI: APIBase {
      - GET /store/order/{orderId}
      - For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions
      - examples: [{contentType=application/json, example={
-  "petId" : 5,
-  "quantity" : 8,
-  "id" : 7,
+  "petId" : 6,
+  "quantity" : 1,
+  "id" : 0,
   "shipDate" : "2000-01-23T04:56:07.000+00:00",
   "complete" : true,
   "status" : "placed"
@@ -175,9 +175,9 @@ public class StoreAPI: APIBase {
   <complete>true</complete>
 </Order>}]
      - examples: [{contentType=application/json, example={
-  "petId" : 5,
-  "quantity" : 8,
-  "id" : 7,
+  "petId" : 6,
+  "quantity" : 1,
+  "id" : 0,
   "shipDate" : "2000-01-23T04:56:07.000+00:00",
   "complete" : true,
   "status" : "placed"
@@ -245,9 +245,9 @@ public class StoreAPI: APIBase {
      - POST /store/order
      - 
      - examples: [{contentType=application/json, example={
-  "petId" : 3,
+  "petId" : 6,
   "quantity" : 1,
-  "id" : 2,
+  "id" : 0,
   "shipDate" : "2000-01-23T04:56:07.000+00:00",
   "complete" : true,
   "status" : "placed"
@@ -260,9 +260,9 @@ public class StoreAPI: APIBase {
   <complete>true</complete>
 </Order>}]
      - examples: [{contentType=application/json, example={
-  "petId" : 3,
+  "petId" : 6,
   "quantity" : 1,
-  "id" : 2,
+  "id" : 0,
   "shipDate" : "2000-01-23T04:56:07.000+00:00",
   "complete" : true,
   "status" : "placed"
