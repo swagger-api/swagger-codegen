@@ -185,7 +185,7 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
 
         // Setup unwrapRequired option, which makes all the properties with "required" non-optional
         if (additionalProperties.containsKey(UNWRAP_REQUIRED)) {
-            setUnwrapRequired(Boolean.parseBoolean(String.valueOf(additionalProperties.get(UNWRAP_REQUIRED))));
+            setUnwrapRequired(convertPropertyToBooleanAndWriteBack(UNWRAP_REQUIRED));
         }
         additionalProperties.put(UNWRAP_REQUIRED, unwrapRequired);
 
@@ -208,9 +208,8 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
 
         // Setup swiftUseApiNamespace option, which makes all the API classes inner-class of {{projectName}}API
         if (additionalProperties.containsKey(SWIFT_USE_API_NAMESPACE)) {
-            swiftUseApiNamespace = Boolean.parseBoolean(String.valueOf(additionalProperties.get(SWIFT_USE_API_NAMESPACE)));
+            setSwiftUseApiNamespace(convertPropertyToBooleanAndWriteBack(SWIFT_USE_API_NAMESPACE));
         }
-        additionalProperties.put(SWIFT_USE_API_NAMESPACE, swiftUseApiNamespace);
 
         if (!additionalProperties.containsKey(POD_AUTHORS)) {
             additionalProperties.put(POD_AUTHORS, DEFAULT_POD_AUTHORS);
@@ -277,6 +276,11 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         } else
             type = swaggerType;
         return toModelName(type);
+    }
+
+    @Override
+    public boolean isDataTypeFile(String dataType) {
+        return dataType != null && dataType.equals("URL");
     }
 
     @Override
@@ -497,6 +501,10 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         this.responseAs = responseAs;
     }
 
+    public void setSwiftUseApiNamespace(boolean swiftUseApiNamespace) {
+        this.swiftUseApiNamespace = swiftUseApiNamespace;
+    }
+
     @Override
     public String toEnumValue(String value, String datatype) {
         return String.valueOf(value);
@@ -511,6 +519,15 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
     public String toEnumVarName(String name, String datatype) {
         if (name.length() == 0) {
             return "empty";
+        }
+
+        Pattern startWithNumberPattern = Pattern.compile("^\\d+");
+        Matcher startWithNumberMatcher = startWithNumberPattern.matcher(name);
+        if (startWithNumberMatcher.find()) {
+            String startingNumbers = startWithNumberMatcher.group(0);
+            String nameWithoutStartingNumbers = name.substring(startingNumbers.length());
+
+            return "_" + startingNumbers + camelize(nameWithoutStartingNumbers, true);
         }
 
         // for symbol, e.g. $, #
