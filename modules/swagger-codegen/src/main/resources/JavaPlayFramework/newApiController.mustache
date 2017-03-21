@@ -51,7 +51,7 @@ public class {{classname}}Controller extends Controller {
         {{^required}}
         if (node{{paramName}} != null) {
             {{paramName}} = mapper.readValue(node{{paramName}}.toString(), {{#isMapContainer}}new TypeReference<Map<{{{dataType}}}>>(){}{{/isMapContainer}}{{#isListContainer}}new TypeReference<List<{{{dataType}}}>>(){}{{/isListContainer}}{{^isListContainer}}{{^isMapContainer}}{{{dataType}}}.class{{/isMapContainer}}{{/isListContainer}});{{/required}}
-        {{#required}}{{paramName}} = mapper.readValue(node{{paramName}}.toString(), {{{dataType}}}.class);{{/required}}
+        {{#required}}{{paramName}} = mapper.readValue(node{{paramName}}.toString(), {{#isMapContainer}}new TypeReference<Map<{{{dataType}}}>>(){}{{/isMapContainer}}{{#isListContainer}}new TypeReference<List<{{{dataType}}}>>(){}{{/isListContainer}}{{^isListContainer}}{{^isMapContainer}}{{{dataType}}}.class{{/isMapContainer}}{{/isListContainer}});{{/required}}
         {{^required}}
         } else {
             {{paramName}} = null;
