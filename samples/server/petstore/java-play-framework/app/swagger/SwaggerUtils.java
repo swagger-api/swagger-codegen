@@ -14,13 +14,11 @@ import java.util.Map;
 
 public class SwaggerUtils {
 
-{{#handleExceptions}}
     @With(ApiCall.class)
     @Target({ ElementType.TYPE, ElementType.METHOD })
     @Retention(RetentionPolicy.RUNTIME)
     public @interface ApiAction {
     }
-{{/handleExceptions}}
 
     public static Map<String, String> parameterToPairs(String collectionFormat, String name, Object value){
         Map<String, String> params = new HashMap<>();
