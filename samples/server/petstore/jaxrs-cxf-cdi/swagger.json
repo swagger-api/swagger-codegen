@@ -375,8 +375,8 @@
           "description" : "ID of pet that needs to be fetched",
           "required" : true,
           "type" : "integer",
-          "maximum" : 5,
-          "minimum" : 1,
+          "maximum" : 5.0,
+          "minimum" : 1.0,
           "format" : "int64"
         } ],
         "responses" : {
