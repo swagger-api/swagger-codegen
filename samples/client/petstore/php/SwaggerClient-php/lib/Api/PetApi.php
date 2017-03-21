@@ -166,8 +166,6 @@ class PetApi
                 ['application/json', 'application/xml']
             );
         }
-        /**
-        */
         // this endpoint requires OAuth (access token)
         if ($this->authConfig->getAccessToken() !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->authConfig->getAccessToken();
@@ -291,8 +289,6 @@ class PetApi
                 []
             );
         }
-        /**
-        */
         // this endpoint requires OAuth (access token)
         if ($this->authConfig->getAccessToken() !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->authConfig->getAccessToken();
@@ -412,8 +408,6 @@ class PetApi
                 []
             );
         }
-        /**
-        */
         // this endpoint requires OAuth (access token)
         if ($this->authConfig->getAccessToken() !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->authConfig->getAccessToken();
@@ -545,8 +539,6 @@ class PetApi
                 []
             );
         }
-        /**
-        */
         // this endpoint requires OAuth (access token)
         if ($this->authConfig->getAccessToken() !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->authConfig->getAccessToken();
@@ -680,8 +672,6 @@ class PetApi
         if ($apiKey !== null) {
             $headers['api_key'] = $apiKey;
         }
-        /**
-        */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
@@ -806,8 +796,6 @@ class PetApi
                 ['application/json', 'application/xml']
             );
         }
-        /**
-        */
         // this endpoint requires OAuth (access token)
         if ($this->authConfig->getAccessToken() !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->authConfig->getAccessToken();
@@ -935,8 +923,6 @@ class PetApi
                 ['application/x-www-form-urlencoded']
             );
         }
-        /**
-        */
         // this endpoint requires OAuth (access token)
         if ($this->authConfig->getAccessToken() !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->authConfig->getAccessToken();
@@ -1066,8 +1052,6 @@ class PetApi
                 ['multipart/form-data']
             );
         }
-        /**
-        */
         // this endpoint requires OAuth (access token)
         if ($this->authConfig->getAccessToken() !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->authConfig->getAccessToken();

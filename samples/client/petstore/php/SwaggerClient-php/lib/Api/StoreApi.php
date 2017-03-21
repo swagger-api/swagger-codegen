@@ -279,8 +279,6 @@ class StoreApi
         if ($apiKey !== null) {
             $headers['api_key'] = $apiKey;
         }
-        /**
-        */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {

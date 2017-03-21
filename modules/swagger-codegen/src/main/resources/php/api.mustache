@@ -149,7 +149,7 @@ use {{invokerPackage}}\ObjectSerializer;
         }
         {{/minimum}}
         {{#pattern}}
-        if ({{^required}}${{paramName}} !== null && {{/required}}!preg_match("{{{pattern}}}", ${{paramName}}) {
+        if ({{^required}}${{paramName}} !== null && {{/required}}!preg_match("{{{pattern}}}", ${{paramName}})) {
             throw new \InvalidArgumentException("invalid value for \"{{paramName}}\" when calling {{classname}}.{{operationId}}, must conform to the pattern {{{pattern}}}.");
         }
         {{/pattern}}
@@ -270,14 +270,12 @@ use {{invokerPackage}}\ObjectSerializer;
             {{#isKeyInHeader}}$headers['{{keyParamName}}'] = $apiKey;{{/isKeyInHeader}}{{#isKeyInQuery}}$queryParams['{{keyParamName}}'] = $apiKey;{{/isKeyInQuery}}
         }
         {{/isApiKey}}
-        /**
         {{#isBasic}}
         // this endpoint requires HTTP basic authentication
-        if (strlen($this->apiClient->getConfig()->getUsername()) !== 0 or strlen($this->apiClient->getConfig()->getPassword()) !== 0) {
-            $headerParams['Authorization'] = 'Basic ' . base64_encode($this->apiClient->getConfig()->getUsername() . ":" . $this->apiClient->getConfig()->getPassword());
+        if ($this->authConfig->getUsername() !== null || $this->authConfig->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->authConfig->getUsername() . ":" . $this->authConfig->getPassword());
         }
         {{/isBasic}}
-        */
         {{#isOAuth}}
         // this endpoint requires OAuth (access token)
         if ($this->authConfig->getAccessToken() !== null) {

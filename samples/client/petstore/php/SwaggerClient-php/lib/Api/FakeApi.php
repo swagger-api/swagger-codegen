@@ -293,7 +293,7 @@ class FakeApi
         if ($pattern_without_delimiter === null) {
             throw new \InvalidArgumentException('Missing the required parameter $pattern_without_delimiter when calling testEndpointParameters');
         }
-        if (!preg_match("/^[A-Z].*_/", $pattern_without_delimiter) {
+        if (!preg_match("/^[A-Z].*_/", $pattern_without_delimiter)) {
             throw new \InvalidArgumentException("invalid value for \"pattern_without_delimiter\" when calling FakeApi.testEndpointParameters, must conform to the pattern /^[A-Z].*_/.");
         }
 
@@ -319,7 +319,7 @@ class FakeApi
             throw new \InvalidArgumentException('invalid value for "$float" when calling FakeApi.testEndpointParameters, must be smaller than or equal to 987.6.');
         }
 
-        if ($string !== null && !preg_match("/[a-z]/i", $string) {
+        if ($string !== null && !preg_match("/[a-z]/i", $string)) {
             throw new \InvalidArgumentException("invalid value for \"string\" when calling FakeApi.testEndpointParameters, must conform to the pattern /[a-z]/i.");
         }
 
@@ -427,12 +427,10 @@ class FakeApi
                 ['application/xml; charset=utf-8', 'application/json; charset=utf-8']
             );
         }
-        /**
         // this endpoint requires HTTP basic authentication
-        if (strlen($this->apiClient->getConfig()->getUsername()) !== 0 or strlen($this->apiClient->getConfig()->getPassword()) !== 0) {
-            $headerParams['Authorization'] = 'Basic ' . base64_encode($this->apiClient->getConfig()->getUsername() . ":" . $this->apiClient->getConfig()->getPassword());
+        if ($this->authConfig->getUsername() !== null || $this->authConfig->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->authConfig->getUsername() . ":" . $this->authConfig->getPassword());
         }
-        */
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
