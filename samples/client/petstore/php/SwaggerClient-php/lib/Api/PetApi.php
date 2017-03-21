@@ -34,6 +34,7 @@ use GuzzleHttp\Psr7\Uri;
 use Http\Client\Exception;
 use Http\Client\HttpClient;
 use Swagger\Client\ApiException;
+use Swagger\Client\AuthConfig;
 use Swagger\Client\HeaderSelector;
 use Swagger\Client\ObjectSerializer;
 
@@ -58,15 +59,34 @@ class PetApi
     protected $serializer;
 
     /**
+     * @var AuthConfig
+     */
+    protected $authConfig;
+
+    /**
      * @param HttpClient $client
      * @param HeaderSelector $selector
      * @param ObjectSerializer $serializer
+     * @param AuthConfig $authConfig
      */
-    public function __construct(HttpClient $client, HeaderSelector $selector = null, ObjectSerializer $serializer = null)
-    {
+    public function __construct(
+        HttpClient $client,
+        AuthConfig $authConfig = null,
+        HeaderSelector $selector = null,
+        ObjectSerializer $serializer = null
+    ) {
         $this->client = $client;
         $this->serializer = $serializer ?: new ObjectSerializer();
         $this->headerSelector = $selector ?: new HeaderSelector();
+        $this->authConfig = $authConfig ?: new AuthConfig();
+    }
+
+    /**
+     * @return AuthConfig
+     */
+    public function getAuthConfig()
+    {
+        return $this->authConfig;
     }
 
     /**
@@ -135,13 +155,6 @@ class PetApi
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
         }
-/**
-        // this endpoint requires OAuth (access token)
-        if (strlen($this->apiClient->getConfig()->getAccessToken()) !== 0) {
-            $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
-        }
-*/
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         if ($httpBody instanceof MultipartStream) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
@@ -153,6 +166,13 @@ class PetApi
                 ['application/json', 'application/xml']
             );
         }
+        /**
+        // this endpoint requires OAuth (access token)
+        if (strlen($this->apiClient->getConfig()->getAccessToken()) !== 0) {
+            $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
+        }
+        */
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(
@@ -260,13 +280,6 @@ class PetApi
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
         }
-/**
-        // this endpoint requires OAuth (access token)
-        if (strlen($this->apiClient->getConfig()->getAccessToken()) !== 0) {
-            $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
-        }
-*/
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         if ($httpBody instanceof MultipartStream) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
@@ -278,6 +291,13 @@ class PetApi
                 []
             );
         }
+        /**
+        // this endpoint requires OAuth (access token)
+        if (strlen($this->apiClient->getConfig()->getAccessToken()) !== 0) {
+            $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
+        }
+        */
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(
@@ -381,13 +401,6 @@ class PetApi
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
         }
-/**
-        // this endpoint requires OAuth (access token)
-        if (strlen($this->apiClient->getConfig()->getAccessToken()) !== 0) {
-            $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
-        }
-*/
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         if ($httpBody instanceof MultipartStream) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
@@ -399,6 +412,13 @@ class PetApi
                 []
             );
         }
+        /**
+        // this endpoint requires OAuth (access token)
+        if (strlen($this->apiClient->getConfig()->getAccessToken()) !== 0) {
+            $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
+        }
+        */
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(
@@ -514,13 +534,6 @@ class PetApi
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
         }
-/**
-        // this endpoint requires OAuth (access token)
-        if (strlen($this->apiClient->getConfig()->getAccessToken()) !== 0) {
-            $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
-        }
-*/
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         if ($httpBody instanceof MultipartStream) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
@@ -532,6 +545,13 @@ class PetApi
                 []
             );
         }
+        /**
+        // this endpoint requires OAuth (access token)
+        if (strlen($this->apiClient->getConfig()->getAccessToken()) !== 0) {
+            $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
+        }
+        */
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(
@@ -644,14 +664,6 @@ class PetApi
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
         }
-/**
-        // this endpoint requires API key authentication
-        $apiKey = $this->apiClient->getApiKeyWithPrefix('api_key');
-        if (strlen($apiKey) !== 0) {
-            $headerParams['api_key'] = $apiKey;
-        }
-*/
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         if ($httpBody instanceof MultipartStream) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
@@ -663,6 +675,14 @@ class PetApi
                 []
             );
         }
+        // this endpoint requires API key authentication
+        $apiKey = $this->authConfig->getApiKeyWithPrefix('api_key');
+        if ($apiKey !== null) {
+            $headers['api_key'] = $apiKey;
+        }
+        /**
+        */
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(
@@ -775,13 +795,6 @@ class PetApi
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
         }
-/**
-        // this endpoint requires OAuth (access token)
-        if (strlen($this->apiClient->getConfig()->getAccessToken()) !== 0) {
-            $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
-        }
-*/
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         if ($httpBody instanceof MultipartStream) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
@@ -793,6 +806,13 @@ class PetApi
                 ['application/json', 'application/xml']
             );
         }
+        /**
+        // this endpoint requires OAuth (access token)
+        if (strlen($this->apiClient->getConfig()->getAccessToken()) !== 0) {
+            $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
+        }
+        */
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(
@@ -904,13 +924,6 @@ class PetApi
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
         }
-/**
-        // this endpoint requires OAuth (access token)
-        if (strlen($this->apiClient->getConfig()->getAccessToken()) !== 0) {
-            $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
-        }
-*/
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         if ($httpBody instanceof MultipartStream) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
@@ -922,6 +935,13 @@ class PetApi
                 ['application/x-www-form-urlencoded']
             );
         }
+        /**
+        // this endpoint requires OAuth (access token)
+        if (strlen($this->apiClient->getConfig()->getAccessToken()) !== 0) {
+            $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
+        }
+        */
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(
@@ -1035,13 +1055,6 @@ class PetApi
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
         }
-/**
-        // this endpoint requires OAuth (access token)
-        if (strlen($this->apiClient->getConfig()->getAccessToken()) !== 0) {
-            $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
-        }
-*/
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         if ($httpBody instanceof MultipartStream) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
@@ -1053,6 +1066,13 @@ class PetApi
                 ['multipart/form-data']
             );
         }
+        /**
+        // this endpoint requires OAuth (access token)
+        if (strlen($this->apiClient->getConfig()->getAccessToken()) !== 0) {
+            $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
+        }
+        */
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(

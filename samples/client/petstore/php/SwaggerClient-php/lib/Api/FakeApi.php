@@ -34,6 +34,7 @@ use GuzzleHttp\Psr7\Uri;
 use Http\Client\Exception;
 use Http\Client\HttpClient;
 use Swagger\Client\ApiException;
+use Swagger\Client\AuthConfig;
 use Swagger\Client\HeaderSelector;
 use Swagger\Client\ObjectSerializer;
 
@@ -58,15 +59,34 @@ class FakeApi
     protected $serializer;
 
     /**
+     * @var AuthConfig
+     */
+    protected $authConfig;
+
+    /**
      * @param HttpClient $client
      * @param HeaderSelector $selector
      * @param ObjectSerializer $serializer
+     * @param AuthConfig $authConfig
      */
-    public function __construct(HttpClient $client, HeaderSelector $selector = null, ObjectSerializer $serializer = null)
-    {
+    public function __construct(
+        HttpClient $client,
+        AuthConfig $authConfig = null,
+        HeaderSelector $selector = null,
+        ObjectSerializer $serializer = null
+    ) {
         $this->client = $client;
         $this->serializer = $serializer ?: new ObjectSerializer();
         $this->headerSelector = $selector ?: new HeaderSelector();
+        $this->authConfig = $authConfig ?: new AuthConfig();
+    }
+
+    /**
+     * @return AuthConfig
+     */
+    public function getAuthConfig()
+    {
+        return $this->authConfig;
     }
 
     /**
@@ -136,9 +156,6 @@ class FakeApi
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
         }
-/**
-*/
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         if ($httpBody instanceof MultipartStream) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
@@ -150,6 +167,7 @@ class FakeApi
                 ['application/json']
             );
         }
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(
@@ -398,13 +416,6 @@ class FakeApi
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
         }
-/**
-        // this endpoint requires HTTP basic authentication
-        if (strlen($this->apiClient->getConfig()->getUsername()) !== 0 or strlen($this->apiClient->getConfig()->getPassword()) !== 0) {
-            $headerParams['Authorization'] = 'Basic ' . base64_encode($this->apiClient->getConfig()->getUsername() . ":" . $this->apiClient->getConfig()->getPassword());
-        }
-*/
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         if ($httpBody instanceof MultipartStream) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
@@ -416,6 +427,13 @@ class FakeApi
                 ['application/xml; charset=utf-8', 'application/json; charset=utf-8']
             );
         }
+        /**
+        // this endpoint requires HTTP basic authentication
+        if (strlen($this->apiClient->getConfig()->getUsername()) !== 0 or strlen($this->apiClient->getConfig()->getPassword()) !== 0) {
+            $headerParams['Authorization'] = 'Basic ' . base64_encode($this->apiClient->getConfig()->getUsername() . ":" . $this->apiClient->getConfig()->getPassword());
+        }
+        */
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(
@@ -563,9 +581,6 @@ class FakeApi
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
         }
-/**
-*/
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         if ($httpBody instanceof MultipartStream) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
@@ -577,6 +592,7 @@ class FakeApi
                 ['*/*']
             );
         }
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
             $request = new Request(

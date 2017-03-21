@@ -7,6 +7,8 @@ use Swagger\Client\Api\PetApi;
 use Swagger\Client\Model\ApiResponse;
 use Swagger\Client\Model\Pet;
 
+require_once __DIR__ . '/FakeHttpClient.php';
+
 class PetApiTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -389,5 +391,21 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         // indices (let's try a random order)
         $this->assertSame('red', $dog->getColor());
         $this->assertSame('red', $animal->getColor());
+    }
+
+    // test addPet and verify by the "id" and "name" of the response
+    public function testCustomApiKeyHeader()
+    {
+        $authConfig = new AuthConfig();
+        $authConfig->setApiKey('api_key', '123qwe');
+
+        $fakeHttpClient = new FakeHttpClient();
+        $api = new PetApi($fakeHttpClient, $authConfig);
+        $api->getPetById(123);
+
+        $headers = $fakeHttpClient->getLastRequest()->getHeaders();
+
+        $this->assertArrayHasKey('api_key', $headers);
+        $this->assertEquals(['123qwe'], $headers['api_key']);
     }
 }
