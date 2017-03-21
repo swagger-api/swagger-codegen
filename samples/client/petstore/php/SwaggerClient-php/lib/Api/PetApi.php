@@ -167,11 +167,11 @@ class PetApi
             );
         }
         /**
-        // this endpoint requires OAuth (access token)
-        if (strlen($this->apiClient->getConfig()->getAccessToken()) !== 0) {
-            $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
-        }
         */
+        // this endpoint requires OAuth (access token)
+        if ($this->authConfig->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->authConfig->getAccessToken();
+        }
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
@@ -292,11 +292,11 @@ class PetApi
             );
         }
         /**
-        // this endpoint requires OAuth (access token)
-        if (strlen($this->apiClient->getConfig()->getAccessToken()) !== 0) {
-            $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
-        }
         */
+        // this endpoint requires OAuth (access token)
+        if ($this->authConfig->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->authConfig->getAccessToken();
+        }
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
@@ -413,11 +413,11 @@ class PetApi
             );
         }
         /**
-        // this endpoint requires OAuth (access token)
-        if (strlen($this->apiClient->getConfig()->getAccessToken()) !== 0) {
-            $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
-        }
         */
+        // this endpoint requires OAuth (access token)
+        if ($this->authConfig->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->authConfig->getAccessToken();
+        }
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
@@ -546,11 +546,11 @@ class PetApi
             );
         }
         /**
-        // this endpoint requires OAuth (access token)
-        if (strlen($this->apiClient->getConfig()->getAccessToken()) !== 0) {
-            $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
-        }
         */
+        // this endpoint requires OAuth (access token)
+        if ($this->authConfig->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->authConfig->getAccessToken();
+        }
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
@@ -807,11 +807,11 @@ class PetApi
             );
         }
         /**
-        // this endpoint requires OAuth (access token)
-        if (strlen($this->apiClient->getConfig()->getAccessToken()) !== 0) {
-            $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
-        }
         */
+        // this endpoint requires OAuth (access token)
+        if ($this->authConfig->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->authConfig->getAccessToken();
+        }
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
@@ -936,11 +936,11 @@ class PetApi
             );
         }
         /**
-        // this endpoint requires OAuth (access token)
-        if (strlen($this->apiClient->getConfig()->getAccessToken()) !== 0) {
-            $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
-        }
         */
+        // this endpoint requires OAuth (access token)
+        if ($this->authConfig->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->authConfig->getAccessToken();
+        }
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {
@@ -1067,11 +1067,11 @@ class PetApi
             );
         }
         /**
-        // this endpoint requires OAuth (access token)
-        if (strlen($this->apiClient->getConfig()->getAccessToken()) !== 0) {
-            $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
-        }
         */
+        // this endpoint requires OAuth (access token)
+        if ($this->authConfig->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->authConfig->getAccessToken();
+        }
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
 
         try {

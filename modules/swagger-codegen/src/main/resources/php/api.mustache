@@ -277,13 +277,13 @@ use {{invokerPackage}}\ObjectSerializer;
             $headerParams['Authorization'] = 'Basic ' . base64_encode($this->apiClient->getConfig()->getUsername() . ":" . $this->apiClient->getConfig()->getPassword());
         }
         {{/isBasic}}
+        */
         {{#isOAuth}}
         // this endpoint requires OAuth (access token)
-        if (strlen($this->apiClient->getConfig()->getAccessToken()) !== 0) {
-            $headerParams['Authorization'] = 'Bearer ' . $this->apiClient->getConfig()->getAccessToken();
+        if ($this->authConfig->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->authConfig->getAccessToken();
         }
         {{/isOAuth}}
-        */
         {{/authMethods}}
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
 

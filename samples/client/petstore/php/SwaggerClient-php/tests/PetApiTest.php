@@ -408,4 +408,19 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('api_key', $headers);
         $this->assertEquals(['123qwe'], $headers['api_key']);
     }
+
+    public function testApiToken()
+    {
+        $authConfig = new AuthConfig();
+        $authConfig->setAccessToken('asd123');
+
+        $fakeHttpClient = new FakeHttpClient();
+        $api = new PetApi($fakeHttpClient, $authConfig);
+        $api->addPet(new Pet());
+
+        $headers = $fakeHttpClient->getLastRequest()->getHeaders();
+
+        $this->assertArrayHasKey('Authorization', $headers);
+        $this->assertEquals(['Bearer asd123'], $headers['Authorization']);
+    }
 }
