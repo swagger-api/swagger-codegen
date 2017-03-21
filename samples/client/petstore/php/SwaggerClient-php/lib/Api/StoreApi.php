@@ -127,6 +127,7 @@ class StoreApi
         $headerParams = [];
         $formParams = [];
         $queryParams = [];
+        $headerParams = [];
         $httpBody = '';
         $multipart = false;
         $returnType = '';
@@ -163,7 +164,7 @@ class StoreApi
         }
 
         if ($httpBody instanceof MultipartStream) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
+            $headers= $this->headerSelector->selectHeadersForMultipart(
                 ['application/xml', 'application/json']
             );
         } else {
@@ -172,7 +173,10 @@ class StoreApi
                 []
             );
         }
+
+
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $headers = array_merge($headerParams, $headers);
 
         try {
             $request = new Request(
@@ -237,6 +241,7 @@ class StoreApi
         $resourcePath = substr('/store/inventory', 1);
         $formParams = [];
         $queryParams = [];
+        $headerParams = [];
         $httpBody = '';
         $multipart = false;
         $returnType = 'map[string,int]';
@@ -265,7 +270,7 @@ class StoreApi
         }
 
         if ($httpBody instanceof MultipartStream) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
+            $headers= $this->headerSelector->selectHeadersForMultipart(
                 ['application/json']
             );
         } else {
@@ -274,12 +279,15 @@ class StoreApi
                 []
             );
         }
+
         // this endpoint requires API key authentication
         $apiKey = $this->authConfig->getApiKeyWithPrefix('api_key');
         if ($apiKey !== null) {
             $headers['api_key'] = $apiKey;
         }
+
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $headers = array_merge($headerParams, $headers);
 
         try {
             $request = new Request(
@@ -372,6 +380,7 @@ class StoreApi
         $headerParams = [];
         $formParams = [];
         $queryParams = [];
+        $headerParams = [];
         $httpBody = '';
         $multipart = false;
         $returnType = '\Swagger\Client\Model\Order';
@@ -408,7 +417,7 @@ class StoreApi
         }
 
         if ($httpBody instanceof MultipartStream) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
+            $headers= $this->headerSelector->selectHeadersForMultipart(
                 ['application/xml', 'application/json']
             );
         } else {
@@ -417,7 +426,10 @@ class StoreApi
                 []
             );
         }
+
+
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $headers = array_merge($headerParams, $headers);
 
         try {
             $request = new Request(
@@ -500,6 +512,7 @@ class StoreApi
         $resourcePath = substr('/store/order', 1);
         $formParams = [];
         $queryParams = [];
+        $headerParams = [];
         $httpBody = '';
         $multipart = false;
         $returnType = '\Swagger\Client\Model\Order';
@@ -533,7 +546,7 @@ class StoreApi
         }
 
         if ($httpBody instanceof MultipartStream) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
+            $headers= $this->headerSelector->selectHeadersForMultipart(
                 ['application/xml', 'application/json']
             );
         } else {
@@ -542,7 +555,10 @@ class StoreApi
                 []
             );
         }
+
+
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $headers = array_merge($headerParams, $headers);
 
         try {
             $request = new Request(

@@ -125,6 +125,7 @@ class FakeApi
         $resourcePath = substr('/fake', 1);
         $formParams = [];
         $queryParams = [];
+        $headerParams = [];
         $httpBody = '';
         $multipart = false;
         $returnType = '\Swagger\Client\Model\Client';
@@ -158,7 +159,7 @@ class FakeApi
         }
 
         if ($httpBody instanceof MultipartStream) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
+            $headers= $this->headerSelector->selectHeadersForMultipart(
                 ['application/json']
             );
         } else {
@@ -167,7 +168,10 @@ class FakeApi
                 ['application/json']
             );
         }
+
+
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $headers = array_merge($headerParams, $headers);
 
         try {
             $request = new Request(
@@ -334,6 +338,7 @@ class FakeApi
         $resourcePath = substr('/fake', 1);
         $formParams = [];
         $queryParams = [];
+        $headerParams = [];
         $httpBody = '';
         $multipart = false;
         $returnType = '';
@@ -418,7 +423,7 @@ class FakeApi
         }
 
         if ($httpBody instanceof MultipartStream) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
+            $headers= $this->headerSelector->selectHeadersForMultipart(
                 ['application/xml; charset=utf-8', 'application/json; charset=utf-8']
             );
         } else {
@@ -427,11 +432,14 @@ class FakeApi
                 ['application/xml; charset=utf-8', 'application/json; charset=utf-8']
             );
         }
+
         // this endpoint requires HTTP basic authentication
         if ($this->authConfig->getUsername() !== null || $this->authConfig->getPassword() !== null) {
             $headers['Authorization'] = 'Basic ' . base64_encode($this->authConfig->getUsername() . ":" . $this->authConfig->getPassword());
         }
+
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $headers = array_merge($headerParams, $headers);
 
         try {
             $request = new Request(
@@ -511,6 +519,7 @@ class FakeApi
         $resourcePath = substr('/fake', 1);
         $formParams = [];
         $queryParams = [];
+        $headerParams = [];
         $httpBody = '';
         $multipart = false;
         $returnType = '';
@@ -530,21 +539,17 @@ class FakeApi
         if ($enum_query_integer !== null) {
             $queryParams['enum_query_integer'] = $this->serializer->toQueryValue($enum_query_integer);
         }
-/**
         // header params
         if (is_array($enum_header_string_array)) {
-            $enum_header_string_array = $this->apiClient->getSerializer()->serializeCollection($enum_header_string_array, 'csv');
+            $enum_header_string_array = $this->serializer->serializeCollection($enum_header_string_array, 'csv');
         }
         if ($enum_header_string_array !== null) {
-            $headerParams['enum_header_string_array'] = $this->apiClient->getSerializer()->toHeaderValue($enum_header_string_array);
+            $headerParams['enum_header_string_array'] = $this->serializer->toHeaderValue($enum_header_string_array);
         }
-*/
-/**
         // header params
         if ($enum_header_string !== null) {
-            $headerParams['enum_header_string'] = $this->apiClient->getSerializer()->toHeaderValue($enum_header_string);
+            $headerParams['enum_header_string'] = $this->serializer->toHeaderValue($enum_header_string);
         }
-*/
 
 
         // form params
@@ -581,7 +586,7 @@ class FakeApi
         }
 
         if ($httpBody instanceof MultipartStream) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
+            $headers= $this->headerSelector->selectHeadersForMultipart(
                 ['*/*']
             );
         } else {
@@ -590,7 +595,10 @@ class FakeApi
                 ['*/*']
             );
         }
+
+
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $headers = array_merge($headerParams, $headers);
 
         try {
             $request = new Request(

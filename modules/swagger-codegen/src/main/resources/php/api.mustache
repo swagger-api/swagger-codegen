@@ -170,6 +170,7 @@ use {{invokerPackage}}\ObjectSerializer;
         $resourcePath = substr('{{{path}}}', 1);
         $formParams = [];
         $queryParams = [];
+        $headerParams = [];
         $httpBody = '';
         $multipart = false;
         $returnType = '{{returnType}}';
@@ -186,17 +187,15 @@ use {{invokerPackage}}\ObjectSerializer;
         }
         {{/queryParams}}
         {{#headerParams}}
-/**
         // header params
         {{#collectionFormat}}
         if (is_array(${{paramName}})) {
-            ${{paramName}} = $this->apiClient->getSerializer()->serializeCollection(${{paramName}}, '{{collectionFormat}}');
+            ${{paramName}} = $this->serializer->serializeCollection(${{paramName}}, '{{collectionFormat}}');
         }
         {{/collectionFormat}}
         if (${{paramName}} !== null) {
-            $headerParams['{{baseName}}'] = $this->apiClient->getSerializer()->toHeaderValue(${{paramName}});
+            $headerParams['{{baseName}}'] = $this->serializer->toHeaderValue(${{paramName}});
         }
-*/
         {{/headerParams}}
 
         {{#pathParams}}
@@ -253,7 +252,7 @@ use {{invokerPackage}}\ObjectSerializer;
         }
 
         if ($httpBody instanceof MultipartStream) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
+            $headers= $this->headerSelector->selectHeadersForMultipart(
                 [{{#produces}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/produces}}]
             );
         } else {
@@ -262,6 +261,7 @@ use {{invokerPackage}}\ObjectSerializer;
                 [{{#consumes}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/consumes}}]
             );
         }
+
         {{#authMethods}}
         {{#isApiKey}}
         // this endpoint requires API key authentication
@@ -283,7 +283,9 @@ use {{invokerPackage}}\ObjectSerializer;
         }
         {{/isOAuth}}
         {{/authMethods}}
+
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $headers = array_merge($headerParams, $headers);
 
         try {
             $request = new Request(

@@ -124,6 +124,7 @@ class UserApi
         $resourcePath = substr('/user', 1);
         $formParams = [];
         $queryParams = [];
+        $headerParams = [];
         $httpBody = '';
         $multipart = false;
         $returnType = '';
@@ -157,7 +158,7 @@ class UserApi
         }
 
         if ($httpBody instanceof MultipartStream) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
+            $headers= $this->headerSelector->selectHeadersForMultipart(
                 ['application/xml', 'application/json']
             );
         } else {
@@ -166,7 +167,10 @@ class UserApi
                 []
             );
         }
+
+
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $headers = array_merge($headerParams, $headers);
 
         try {
             $request = new Request(
@@ -236,6 +240,7 @@ class UserApi
         $resourcePath = substr('/user/createWithArray', 1);
         $formParams = [];
         $queryParams = [];
+        $headerParams = [];
         $httpBody = '';
         $multipart = false;
         $returnType = '';
@@ -269,7 +274,7 @@ class UserApi
         }
 
         if ($httpBody instanceof MultipartStream) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
+            $headers= $this->headerSelector->selectHeadersForMultipart(
                 ['application/xml', 'application/json']
             );
         } else {
@@ -278,7 +283,10 @@ class UserApi
                 []
             );
         }
+
+
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $headers = array_merge($headerParams, $headers);
 
         try {
             $request = new Request(
@@ -348,6 +356,7 @@ class UserApi
         $resourcePath = substr('/user/createWithList', 1);
         $formParams = [];
         $queryParams = [];
+        $headerParams = [];
         $httpBody = '';
         $multipart = false;
         $returnType = '';
@@ -381,7 +390,7 @@ class UserApi
         }
 
         if ($httpBody instanceof MultipartStream) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
+            $headers= $this->headerSelector->selectHeadersForMultipart(
                 ['application/xml', 'application/json']
             );
         } else {
@@ -390,7 +399,10 @@ class UserApi
                 []
             );
         }
+
+
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $headers = array_merge($headerParams, $headers);
 
         try {
             $request = new Request(
@@ -460,6 +472,7 @@ class UserApi
         $resourcePath = substr('/user/{username}', 1);
         $formParams = [];
         $queryParams = [];
+        $headerParams = [];
         $httpBody = '';
         $multipart = false;
         $returnType = '';
@@ -492,7 +505,7 @@ class UserApi
         }
 
         if ($httpBody instanceof MultipartStream) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
+            $headers= $this->headerSelector->selectHeadersForMultipart(
                 ['application/xml', 'application/json']
             );
         } else {
@@ -501,7 +514,10 @@ class UserApi
                 []
             );
         }
+
+
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $headers = array_merge($headerParams, $headers);
 
         try {
             $request = new Request(
@@ -572,6 +588,7 @@ class UserApi
         $resourcePath = substr('/user/{username}', 1);
         $formParams = [];
         $queryParams = [];
+        $headerParams = [];
         $httpBody = '';
         $multipart = false;
         $returnType = '\Swagger\Client\Model\User';
@@ -604,7 +621,7 @@ class UserApi
         }
 
         if ($httpBody instanceof MultipartStream) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
+            $headers= $this->headerSelector->selectHeadersForMultipart(
                 ['application/xml', 'application/json']
             );
         } else {
@@ -613,7 +630,10 @@ class UserApi
                 []
             );
         }
+
+
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $headers = array_merge($headerParams, $headers);
 
         try {
             $request = new Request(
@@ -702,6 +722,7 @@ class UserApi
         $resourcePath = substr('/user/login', 1);
         $formParams = [];
         $queryParams = [];
+        $headerParams = [];
         $httpBody = '';
         $multipart = false;
         $returnType = 'string';
@@ -738,7 +759,7 @@ class UserApi
         }
 
         if ($httpBody instanceof MultipartStream) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
+            $headers= $this->headerSelector->selectHeadersForMultipart(
                 ['application/xml', 'application/json']
             );
         } else {
@@ -747,7 +768,10 @@ class UserApi
                 []
             );
         }
+
+
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $headers = array_merge($headerParams, $headers);
 
         try {
             $request = new Request(
@@ -823,6 +847,7 @@ class UserApi
         $resourcePath = substr('/user/logout', 1);
         $formParams = [];
         $queryParams = [];
+        $headerParams = [];
         $httpBody = '';
         $multipart = false;
         $returnType = '';
@@ -851,7 +876,7 @@ class UserApi
         }
 
         if ($httpBody instanceof MultipartStream) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
+            $headers= $this->headerSelector->selectHeadersForMultipart(
                 ['application/xml', 'application/json']
             );
         } else {
@@ -860,7 +885,10 @@ class UserApi
                 []
             );
         }
+
+
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $headers = array_merge($headerParams, $headers);
 
         try {
             $request = new Request(
@@ -936,6 +964,7 @@ class UserApi
         $resourcePath = substr('/user/{username}', 1);
         $formParams = [];
         $queryParams = [];
+        $headerParams = [];
         $httpBody = '';
         $multipart = false;
         $returnType = '';
@@ -973,7 +1002,7 @@ class UserApi
         }
 
         if ($httpBody instanceof MultipartStream) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
+            $headers= $this->headerSelector->selectHeadersForMultipart(
                 ['application/xml', 'application/json']
             );
         } else {
@@ -982,7 +1011,10 @@ class UserApi
                 []
             );
         }
+
+
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $headers = array_merge($headerParams, $headers);
 
         try {
             $request = new Request(

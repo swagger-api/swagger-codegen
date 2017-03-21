@@ -124,6 +124,7 @@ class PetApi
         $resourcePath = substr('/pet', 1);
         $formParams = [];
         $queryParams = [];
+        $headerParams = [];
         $httpBody = '';
         $multipart = false;
         $returnType = '';
@@ -157,7 +158,7 @@ class PetApi
         }
 
         if ($httpBody instanceof MultipartStream) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
+            $headers= $this->headerSelector->selectHeadersForMultipart(
                 ['application/xml', 'application/json']
             );
         } else {
@@ -166,11 +167,14 @@ class PetApi
                 ['application/json', 'application/xml']
             );
         }
+
         // this endpoint requires OAuth (access token)
         if ($this->authConfig->getAccessToken() !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->authConfig->getAccessToken();
         }
+
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $headers = array_merge($headerParams, $headers);
 
         try {
             $request = new Request(
@@ -242,16 +246,15 @@ class PetApi
         $resourcePath = substr('/pet/{petId}', 1);
         $formParams = [];
         $queryParams = [];
+        $headerParams = [];
         $httpBody = '';
         $multipart = false;
         $returnType = '';
 
-/**
         // header params
         if ($api_key !== null) {
-            $headerParams['api_key'] = $this->apiClient->getSerializer()->toHeaderValue($api_key);
+            $headerParams['api_key'] = $this->serializer->toHeaderValue($api_key);
         }
-*/
 
         // path params
         if ($pet_id !== null) {
@@ -280,7 +283,7 @@ class PetApi
         }
 
         if ($httpBody instanceof MultipartStream) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
+            $headers= $this->headerSelector->selectHeadersForMultipart(
                 ['application/xml', 'application/json']
             );
         } else {
@@ -289,11 +292,14 @@ class PetApi
                 []
             );
         }
+
         // this endpoint requires OAuth (access token)
         if ($this->authConfig->getAccessToken() !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->authConfig->getAccessToken();
         }
+
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $headers = array_merge($headerParams, $headers);
 
         try {
             $request = new Request(
@@ -364,6 +370,7 @@ class PetApi
         $resourcePath = substr('/pet/findByStatus', 1);
         $formParams = [];
         $queryParams = [];
+        $headerParams = [];
         $httpBody = '';
         $multipart = false;
         $returnType = '\Swagger\Client\Model\Pet[]';
@@ -399,7 +406,7 @@ class PetApi
         }
 
         if ($httpBody instanceof MultipartStream) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
+            $headers= $this->headerSelector->selectHeadersForMultipart(
                 ['application/xml', 'application/json']
             );
         } else {
@@ -408,11 +415,14 @@ class PetApi
                 []
             );
         }
+
         // this endpoint requires OAuth (access token)
         if ($this->authConfig->getAccessToken() !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->authConfig->getAccessToken();
         }
+
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $headers = array_merge($headerParams, $headers);
 
         try {
             $request = new Request(
@@ -495,6 +505,7 @@ class PetApi
         $resourcePath = substr('/pet/findByTags', 1);
         $formParams = [];
         $queryParams = [];
+        $headerParams = [];
         $httpBody = '';
         $multipart = false;
         $returnType = '\Swagger\Client\Model\Pet[]';
@@ -530,7 +541,7 @@ class PetApi
         }
 
         if ($httpBody instanceof MultipartStream) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
+            $headers= $this->headerSelector->selectHeadersForMultipart(
                 ['application/xml', 'application/json']
             );
         } else {
@@ -539,11 +550,14 @@ class PetApi
                 []
             );
         }
+
         // this endpoint requires OAuth (access token)
         if ($this->authConfig->getAccessToken() !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->authConfig->getAccessToken();
         }
+
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $headers = array_merge($headerParams, $headers);
 
         try {
             $request = new Request(
@@ -626,6 +640,7 @@ class PetApi
         $resourcePath = substr('/pet/{petId}', 1);
         $formParams = [];
         $queryParams = [];
+        $headerParams = [];
         $httpBody = '';
         $multipart = false;
         $returnType = '\Swagger\Client\Model\Pet';
@@ -658,7 +673,7 @@ class PetApi
         }
 
         if ($httpBody instanceof MultipartStream) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
+            $headers= $this->headerSelector->selectHeadersForMultipart(
                 ['application/xml', 'application/json']
             );
         } else {
@@ -667,12 +682,15 @@ class PetApi
                 []
             );
         }
+
         // this endpoint requires API key authentication
         $apiKey = $this->authConfig->getApiKeyWithPrefix('api_key');
         if ($apiKey !== null) {
             $headers['api_key'] = $apiKey;
         }
+
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $headers = array_merge($headerParams, $headers);
 
         try {
             $request = new Request(
@@ -754,6 +772,7 @@ class PetApi
         $resourcePath = substr('/pet', 1);
         $formParams = [];
         $queryParams = [];
+        $headerParams = [];
         $httpBody = '';
         $multipart = false;
         $returnType = '';
@@ -787,7 +806,7 @@ class PetApi
         }
 
         if ($httpBody instanceof MultipartStream) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
+            $headers= $this->headerSelector->selectHeadersForMultipart(
                 ['application/xml', 'application/json']
             );
         } else {
@@ -796,11 +815,14 @@ class PetApi
                 ['application/json', 'application/xml']
             );
         }
+
         // this endpoint requires OAuth (access token)
         if ($this->authConfig->getAccessToken() !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->authConfig->getAccessToken();
         }
+
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $headers = array_merge($headerParams, $headers);
 
         try {
             $request = new Request(
@@ -874,6 +896,7 @@ class PetApi
         $resourcePath = substr('/pet/{petId}', 1);
         $formParams = [];
         $queryParams = [];
+        $headerParams = [];
         $httpBody = '';
         $multipart = false;
         $returnType = '';
@@ -914,7 +937,7 @@ class PetApi
         }
 
         if ($httpBody instanceof MultipartStream) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
+            $headers= $this->headerSelector->selectHeadersForMultipart(
                 ['application/xml', 'application/json']
             );
         } else {
@@ -923,11 +946,14 @@ class PetApi
                 ['application/x-www-form-urlencoded']
             );
         }
+
         // this endpoint requires OAuth (access token)
         if ($this->authConfig->getAccessToken() !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->authConfig->getAccessToken();
         }
+
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $headers = array_merge($headerParams, $headers);
 
         try {
             $request = new Request(
@@ -1002,6 +1028,7 @@ class PetApi
         $resourcePath = substr('/pet/{petId}/uploadImage', 1);
         $formParams = [];
         $queryParams = [];
+        $headerParams = [];
         $httpBody = '';
         $multipart = false;
         $returnType = '\Swagger\Client\Model\ApiResponse';
@@ -1043,7 +1070,7 @@ class PetApi
         }
 
         if ($httpBody instanceof MultipartStream) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
+            $headers= $this->headerSelector->selectHeadersForMultipart(
                 ['application/json']
             );
         } else {
@@ -1052,11 +1079,14 @@ class PetApi
                 ['multipart/form-data']
             );
         }
+
         // this endpoint requires OAuth (access token)
         if ($this->authConfig->getAccessToken() !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->authConfig->getAccessToken();
         }
+
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $headers = array_merge($headerParams, $headers);
 
         try {
             $request = new Request(

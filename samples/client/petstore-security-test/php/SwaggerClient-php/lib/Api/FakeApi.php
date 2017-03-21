@@ -120,6 +120,7 @@ class FakeApi
         $resourcePath = substr('/fake', 1);
         $formParams = [];
         $queryParams = [];
+        $headerParams = [];
         $httpBody = '';
         $multipart = false;
         $returnType = '';
@@ -152,7 +153,7 @@ class FakeApi
         }
 
         if ($httpBody instanceof MultipartStream) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
+            $headers= $this->headerSelector->selectHeadersForMultipart(
                 ['application/json', '*_/  \" =end --']
             );
         } else {
@@ -161,7 +162,10 @@ class FakeApi
                 ['application/json', '*_/  \" =end --']
             );
         }
+
+
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $headers = array_merge($headerParams, $headers);
 
         try {
             $request = new Request(
