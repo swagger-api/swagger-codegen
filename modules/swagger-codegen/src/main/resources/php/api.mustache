@@ -201,11 +201,9 @@ use {{invokerPackage}}\ObjectSerializer;
         {{#pathParams}}
         // path params
         {{#collectionFormat}}
-            /**
         if (is_array(${{paramName}})) {
-            ${{paramName}} = $this->apiClient->getSerializer()->serializeCollection(${{paramName}}, '{{collectionFormat}}');
+            ${{paramName}} = $this->serializer->serializeCollection(${{paramName}}, '{{collectionFormat}}');
         }
-            */
         {{/collectionFormat}}
         if (${{paramName}} !== null) {
             $resourcePath = str_replace('{' . '{{baseName}}' . '}', $this->serializer->toPathValue(${{paramName}}), $resourcePath);

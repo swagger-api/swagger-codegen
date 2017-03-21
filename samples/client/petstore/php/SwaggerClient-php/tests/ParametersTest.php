@@ -3,26 +3,29 @@
 namespace Swagger\Client;
 
 use Swagger\Client\Api\FakeApi;
+use Swagger\Client\Api\UserApi;
 
 require_once __DIR__ . '/FakeHttpClient.php';
 
-class FakeApiTest extends \PHPUnit_Framework_TestCase
+class ParametersTest extends \PHPUnit_Framework_TestCase
 {
-
     /** @var  FakeHttpClient */
     private $fakeHttpClient;
     /** @var  FakeApi */
-    private $api;
+    private $fakeApi;
+    /** @var  UserApi */
+    private $userApi;
 
     public function setUp()
     {
         $this->fakeHttpClient = new FakeHttpClient();
-        $this->api = new Api\FakeApi($this->fakeHttpClient);
+        $this->fakeApi = new Api\FakeApi($this->fakeHttpClient);
+        $this->userApi = new Api\UserApi($this->fakeHttpClient);
     }
 
     public function testHeaderParam()
     {
-        $this->api->testEnumParameters([], [], [], 'something');
+        $this->fakeApi->testEnumParameters([], [], [], 'something');
 
         $request = $this->fakeHttpClient->getLastRequest();
         $headers = $request->getHeaders();
@@ -33,7 +36,7 @@ class FakeApiTest extends \PHPUnit_Framework_TestCase
 
     public function testHeaderParamCollection()
     {
-        $this->api->testEnumParameters([], [], ['string1', 'string2']);
+        $this->fakeApi->testEnumParameters([], [], ['string1', 'string2']);
 
         $request = $this->fakeHttpClient->getLastRequest();
         $headers = $request->getHeaders();
@@ -41,4 +44,12 @@ class FakeApiTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('enum_header_string_array', $headers);
         $this->assertEquals(['string1,string2'], $headers['enum_header_string_array']);
     }
+
+//    missing example for collection path param in config
+//    public function testPathParamCollection()
+//    {
+//        $this->userApi->getUserByNameWithHttpInfo(['aa', 'bb']);
+//        $request = $this->fakeHttpClient->getLastRequest();
+//        $this->assertEquals('user/aa,bb', urldecode($request->getUri()->getPath()));
+//    }
 }
