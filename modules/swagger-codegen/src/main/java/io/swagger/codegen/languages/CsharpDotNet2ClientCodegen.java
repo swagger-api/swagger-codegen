@@ -63,6 +63,7 @@ public class CsharpDotNet2ClientCodegen extends DefaultCodegen implements Codege
                         "long?",
                         "float?",
                         "byte[]",
+                        "Set",
                         "List",
                         "Dictionary",
                         "DateTime?",
