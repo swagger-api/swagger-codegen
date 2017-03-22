@@ -25,9 +25,14 @@ import javax.validation.constraints.*;
  */
 
 public class Client   {
+
+    /*Constructor*/
+    public  Client(){
+    }
+
   @JsonProperty("client")
   private String client = null;
-
+  
   public Client client(String client) {
     this.client = client;
     return this;

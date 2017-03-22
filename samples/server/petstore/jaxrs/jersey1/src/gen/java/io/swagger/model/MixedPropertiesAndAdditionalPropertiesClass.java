@@ -31,15 +31,20 @@ import javax.validation.constraints.*;
  */
 
 public class MixedPropertiesAndAdditionalPropertiesClass   {
+
+    /*Constructor*/
+    public  MixedPropertiesAndAdditionalPropertiesClass(){
+    }
+
   @JsonProperty("uuid")
   private UUID uuid = null;
-
+  
   @JsonProperty("dateTime")
   private Date dateTime = null;
-
+  
   @JsonProperty("map")
   private Map<String, Animal> map = new HashMap<String, Animal>();
-
+  
   public MixedPropertiesAndAdditionalPropertiesClass uuid(UUID uuid) {
     this.uuid = uuid;
     return this;

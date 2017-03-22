@@ -7,6 +7,10 @@ import io.swagger.api.impl.StoreApiServiceImpl;
 public class StoreApiServiceFactory {
     private final static StoreApiService service = new StoreApiServiceImpl();
 
+    private StoreApiServiceFactory(){
+    // private constructor because singleton
+    }
+
     public static StoreApiService getStoreApi() {
         return service;
     }

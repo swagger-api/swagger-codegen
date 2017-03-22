@@ -26,12 +26,17 @@ import javax.validation.constraints.*;
 @ApiModel(description = "Model for testing model name starting with number")
 
 public class Model200Response   {
+
+    /*Constructor*/
+    public  Model200Response(){
+    }
+
   @JsonProperty("name")
   private Integer name = null;
-
+  
   @JsonProperty("class")
   private String propertyClass = null;
-
+  
   public Model200Response name(Integer name) {
     this.name = name;
     return this;

@@ -30,21 +30,26 @@ import javax.validation.constraints.*;
  */
 
 public class Pet   {
+
+    /*Constructor*/
+    public  Pet(){
+    }
+
   @JsonProperty("id")
   private Long id = null;
-
+  
   @JsonProperty("category")
   private Category category = null;
-
+  
   @JsonProperty("name")
   private String name = null;
-
+  
   @JsonProperty("photoUrls")
   private List<String> photoUrls = new ArrayList<String>();
-
+  
   @JsonProperty("tags")
   private List<Tag> tags = new ArrayList<Tag>();
-
+  
   /**
    * pet status in the store
    */
@@ -80,7 +85,7 @@ public class Pet   {
 
   @JsonProperty("status")
   private StatusEnum status = null;
-
+  
   public Pet id(Long id) {
     this.id = id;
     return this;

@@ -25,6 +25,11 @@ import javax.validation.constraints.*;
 
 public class AnimalFarm extends ArrayList<Animal>  {
 
+    /*Constructor*/
+    public  AnimalFarm(){
+    }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {

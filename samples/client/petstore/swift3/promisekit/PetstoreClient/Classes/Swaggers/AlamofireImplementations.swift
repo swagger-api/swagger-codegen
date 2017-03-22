@@ -88,7 +88,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 switch encodingResult {
                 case .success(let upload, _, _):
                     if let onProgressReady = self.onProgressReady {
-                        onProgressReady(upload.uploadProgress)
+                        onProgressReady(upload.progress)
                     }
                     self.processRequest(request: upload, managerId, completion)
                 case .failure(let encodingError):

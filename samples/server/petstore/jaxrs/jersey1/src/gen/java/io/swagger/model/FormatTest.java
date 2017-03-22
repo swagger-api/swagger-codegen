@@ -28,45 +28,50 @@ import javax.validation.constraints.*;
  */
 
 public class FormatTest   {
+
+    /*Constructor*/
+    public  FormatTest(){
+    }
+
   @JsonProperty("integer")
   private Integer integer = null;
-
+  
   @JsonProperty("int32")
   private Integer int32 = null;
-
+  
   @JsonProperty("int64")
   private Long int64 = null;
-
+  
   @JsonProperty("number")
   private BigDecimal number = null;
-
+  
   @JsonProperty("float")
   private Float _float = null;
-
+  
   @JsonProperty("double")
   private Double _double = null;
-
+  
   @JsonProperty("string")
   private String string = null;
-
+  
   @JsonProperty("byte")
   private byte[] _byte = null;
-
+  
   @JsonProperty("binary")
   private byte[] binary = null;
-
+  
   @JsonProperty("date")
   private Date date = null;
-
+  
   @JsonProperty("dateTime")
   private Date dateTime = null;
-
+  
   @JsonProperty("uuid")
   private UUID uuid = null;
-
+  
   @JsonProperty("password")
   private String password = null;
-
+  
   public FormatTest integer(Integer integer) {
     this.integer = integer;
     return this;
