@@ -13,7 +13,7 @@ import java.util.*;
 @Mixin(ApiUtils)
 {{#operations}}
 class {{classname}} {
-    String basePath = "{{basePath}}"
+    String basePath = "{{{basePath}}}"
     String versionPath = "/api/v1"
 
     {{#operation}}

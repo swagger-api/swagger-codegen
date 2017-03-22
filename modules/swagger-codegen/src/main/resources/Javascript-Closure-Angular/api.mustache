@@ -38,7 +38,7 @@ goog.require('{{import}}');
   /** @private {!string} */
   this.basePath_ = $injector.has('{{classname}}BasePath') ?
                    /** @type {!string} */ ($injector.get('{{classname}}BasePath')) :
-                   '{{basePath}}';
+                   '{{{basePath}}}';
 
   /** @private {!Object<string, string>} */
   this.defaultHeaders_ = $injector.has('{{classname}}DefaultHeaders') ?

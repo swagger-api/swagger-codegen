@@ -10,7 +10,7 @@ import * as models from '../model/models';
  */
 {{/description}}
 export class {{classname}} {
-    protected basePath = '{{basePath}}';
+    protected basePath = '{{{basePath}}}';
     public defaultHeaders : any = {};
 
     static $inject: string[] = ['$http', '$httpParamSerializer', 'basePath'];

@@ -17,7 +17,7 @@ import java.util.Date
 import scala.collection.mutable.HashMap
 
 {{#operations}}
-class {{classname}}(val defBasePath: String = "{{basePath}}",
+class {{classname}}(val defBasePath: String = "{{{basePath}}}",
                         defApiInvoker: ApiInvoker = ApiInvoker) {
   var basePath = defBasePath
   var apiInvoker = defApiInvoker
