@@ -12,7 +12,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
 {
     public function testCustomApiKeyHeader()
     {
-        $authConfig = new AuthConfig();
+        $authConfig = new Configuration();
         $authConfig->setApiKey('api_key', '123qwe');
 
         $fakeHttpClient = new FakeHttpClient();
@@ -27,7 +27,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
 
     public function testApiToken()
     {
-        $authConfig = new AuthConfig();
+        $authConfig = new Configuration();
         $authConfig->setAccessToken('asd123');
 
         $fakeHttpClient = new FakeHttpClient();
@@ -45,7 +45,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
         $username = 'user';
         $password = 'password';
 
-        $authConfig = new AuthConfig();
+        $authConfig = new Configuration();
         $authConfig->setUsername($username);
         $authConfig->setPassword($password);
 

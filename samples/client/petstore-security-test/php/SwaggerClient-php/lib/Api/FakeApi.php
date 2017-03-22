@@ -31,10 +31,10 @@ namespace Swagger\Client\Api;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
-use Http\Client\Exception;
+use Http\Client\Exception\NetworkException;
 use Http\Client\HttpClient;
 use Swagger\Client\ApiException;
-use Swagger\Client\AuthConfig;
+use Swagger\Client\Configuration;
 use Swagger\Client\HeaderSelector;
 use Swagger\Client\ObjectSerializer;
 
@@ -59,34 +59,34 @@ class FakeApi
     protected $serializer;
 
     /**
-     * @var AuthConfig
+     * @var Configuration
      */
-    protected $authConfig;
+    protected $config;
 
     /**
      * @param HttpClient $client
      * @param HeaderSelector $selector
      * @param ObjectSerializer $serializer
-     * @param AuthConfig $authConfig
+     * @param Configuration $config
      */
     public function __construct(
         HttpClient $client,
-        AuthConfig $authConfig = null,
+        Configuration $config = null,
         HeaderSelector $selector = null,
         ObjectSerializer $serializer = null
     ) {
         $this->client = $client;
         $this->serializer = $serializer ?: new ObjectSerializer();
         $this->headerSelector = $selector ?: new HeaderSelector();
-        $this->authConfig = $authConfig ?: new AuthConfig();
+        $this->config = $config ?: new Configuration();
     }
 
     /**
-     * @return AuthConfig
+     * @return Config
      */
-    public function getAuthConfig()
+    public function getConfig()
     {
-        return $this->authConfig;
+        return $this->config;
     }
 
     /**
@@ -117,7 +117,7 @@ class FakeApi
     public function testCodeInjectEndRnNRWithHttpInfo($test_code_inject____end____rn_n_r = null)
     {
 
-        $resourcePath = substr('/fake', 1);
+        $resourcePath = '/fake';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -166,19 +166,24 @@ class FakeApi
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $headers = array_merge($headerParams, $headers);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
 
+        $request = new Request(
+            'PUT',
+            $url,
+            $headers,
+            $httpBody
+        );
         try {
-            $request = new Request(
-                'PUT',
-                Uri::composeComponents('', '', $resourcePath, $query, ''),
-                $headers,
-                $httpBody
-            );
             $response = $this->client->sendRequest($request);
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        } catch (Exception $exception) {
-            throw new ApiException($exception->getMessage(), null, $exception);
+        } catch (NetworkException $e) {
+            throw new ApiException($e->getMessage(), null, $e);
         }
+
+        if ($response->getStatusCode() >= 400) {
+            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
+        }
+        return [null, $response->getStatusCode(), $response->getHeaders()];
 /**
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(

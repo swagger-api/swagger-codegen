@@ -41,7 +41,7 @@ class Configuration
     /**
      * @var string
      */
-    protected $host;
+    protected $host = 'http://petstore.swagger.io/v2';
 
     /**
      * Associate array to store API key(s)

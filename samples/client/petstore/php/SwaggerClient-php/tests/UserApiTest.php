@@ -21,9 +21,7 @@ class UserApiTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->api = new Api\UserApi(
-            Client::createWithConfig([
-                'base_uri' => 'http://petstore.swagger.io/v2/'
-            ])
+            new Client()
         );
     }
 
@@ -32,11 +30,11 @@ class UserApiTest extends \PHPUnit_Framework_TestCase
     {
         // initialize the API client
         // login
-        $response = $this->api->loginUser("xxxxx", "yyyyyyyy");
+        $response = $this->api->loginUser('xxxxx', 'yyyyyyyy');
         
-        $this->assertInternalType("string", $response);
+        $this->assertInternalType('string', $response);
         $this->assertRegExp(
-            "/^logged in user session/",
+            '/^logged in user session/',
             $response,
             "response string starts with 'logged in user session'"
         );

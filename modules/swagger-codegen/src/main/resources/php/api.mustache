@@ -21,10 +21,10 @@ namespace {{apiPackage}};
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
-use Http\Client\Exception;
+use Http\Client\Exception\NetworkException;
 use Http\Client\HttpClient;
 use {{invokerPackage}}\ApiException;
-use {{invokerPackage}}\AuthConfig;
+use {{invokerPackage}}\Configuration;
 use {{invokerPackage}}\HeaderSelector;
 use {{invokerPackage}}\ObjectSerializer;
 
@@ -49,34 +49,34 @@ use {{invokerPackage}}\ObjectSerializer;
     protected $serializer;
 
     /**
-     * @var AuthConfig
+     * @var Configuration
      */
-    protected $authConfig;
+    protected $config;
 
     /**
      * @param HttpClient $client
      * @param HeaderSelector $selector
      * @param ObjectSerializer $serializer
-     * @param AuthConfig $authConfig
+     * @param Configuration $config
      */
     public function __construct(
         HttpClient $client,
-        AuthConfig $authConfig = null,
+        Configuration $config = null,
         HeaderSelector $selector = null,
         ObjectSerializer $serializer = null
     ) {
         $this->client = $client;
         $this->serializer = $serializer ?: new ObjectSerializer();
         $this->headerSelector = $selector ?: new HeaderSelector();
-        $this->authConfig = $authConfig ?: new AuthConfig();
+        $this->config = $config ?: new Configuration();
     }
 
     /**
-     * @return AuthConfig
+     * @return Config
      */
-    public function getAuthConfig()
+    public function getConfig()
     {
-        return $this->authConfig;
+        return $this->config;
     }
 
 {{#operation}}
@@ -167,7 +167,7 @@ use {{invokerPackage}}\ObjectSerializer;
         {{/hasValidation}}
         {{/allParams}}
 
-        $resourcePath = substr('{{{path}}}', 1);
+        $resourcePath = '{{{path}}}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -263,53 +263,58 @@ use {{invokerPackage}}\ObjectSerializer;
         {{#authMethods}}
         {{#isApiKey}}
         // this endpoint requires API key authentication
-        $apiKey = $this->authConfig->getApiKeyWithPrefix('{{keyParamName}}');
+        $apiKey = $this->config->getApiKeyWithPrefix('{{keyParamName}}');
         if ($apiKey !== null) {
             {{#isKeyInHeader}}$headers['{{keyParamName}}'] = $apiKey;{{/isKeyInHeader}}{{#isKeyInQuery}}$queryParams['{{keyParamName}}'] = $apiKey;{{/isKeyInQuery}}
         }
         {{/isApiKey}}
         {{#isBasic}}
         // this endpoint requires HTTP basic authentication
-        if ($this->authConfig->getUsername() !== null || $this->authConfig->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->authConfig->getUsername() . ":" . $this->authConfig->getPassword());
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
         }
         {{/isBasic}}
         {{#isOAuth}}
         // this endpoint requires OAuth (access token)
-        if ($this->authConfig->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->authConfig->getAccessToken();
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
         }
         {{/isOAuth}}
         {{/authMethods}}
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $headers = array_merge($headerParams, $headers);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
 
+        $request = new Request(
+            '{{httpMethod}}',
+            $url,
+            $headers,
+            $httpBody
+        );
         try {
-            $request = new Request(
-                '{{httpMethod}}',
-                Uri::composeComponents('', '', $resourcePath, $query, ''),
-                $headers,
-                $httpBody
-            );
             $response = $this->client->sendRequest($request);
-            {{#returnType}}
-            $content = $response->getBody()->getContents();
-            if ($returnType !== 'string') { //TODO return type file
-                $content = json_decode($content);
-            }
-            return [
-                ObjectSerializer::deserialize($content, '{{returnType}}', []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-            {{/returnType}}
-            {{^returnType}}
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-            {{/returnType}}
-        } catch (Exception $exception) {
-            throw new ApiException($exception->getMessage(), null, $exception);
+        } catch (NetworkException $e) {
+            throw new ApiException($e->getMessage(), null, $e);
         }
+
+        if ($response->getStatusCode() >= 400) {
+            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
+        }
+        {{#returnType}}
+        $content = $response->getBody()->getContents();
+        if ($returnType !== 'string') { //TODO return type file
+            $content = json_decode($content);
+        }
+        return [
+            ObjectSerializer::deserialize($content, '{{returnType}}', []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
+        {{/returnType}}
+        {{^returnType}}
+        return [null, $response->getStatusCode(), $response->getHeaders()];
+        {{/returnType}}
 /**
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(

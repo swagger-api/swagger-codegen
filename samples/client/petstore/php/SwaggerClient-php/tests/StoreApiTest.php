@@ -13,9 +13,7 @@ class StoreApiTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->api = new Api\StoreApi(
-            Client::createWithConfig([
-                'base_uri' => 'http://petstore.swagger.io/v2/'
-            ])
+            new Client()
         );
     }
 

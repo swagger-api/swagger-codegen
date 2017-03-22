@@ -53,9 +53,9 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $newPet->setTags(array($tag));
         $newPet->setCategory($category);
 
-        $petApi = new Api\PetApi(new Client(new \GuzzleHttp\Client([
-            'base_uri' => 'http://petstore.swagger.io/v2/'
-        ])));
+        $config = new Configuration();
+        $petApi = new Api\PetApi(new Client(), $config);
+
         // add a new pet (model)
         list(, $status) = $petApi->addPetWithHttpInfo($newPet);
         \PHPUnit_Framework_Assert::assertEquals(200, $status);
@@ -64,9 +64,7 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->api = new Api\PetApi(
-            Client::createWithConfig([
-                'base_uri' => 'http://petstore.swagger.io/v2/'
-            ])
+            new Client()
         );
     }
 

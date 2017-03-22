@@ -31,10 +31,10 @@ namespace Swagger\Client\Api;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
-use Http\Client\Exception;
+use Http\Client\Exception\NetworkException;
 use Http\Client\HttpClient;
 use Swagger\Client\ApiException;
-use Swagger\Client\AuthConfig;
+use Swagger\Client\Configuration;
 use Swagger\Client\HeaderSelector;
 use Swagger\Client\ObjectSerializer;
 
@@ -59,34 +59,34 @@ class FakeApi
     protected $serializer;
 
     /**
-     * @var AuthConfig
+     * @var Configuration
      */
-    protected $authConfig;
+    protected $config;
 
     /**
      * @param HttpClient $client
      * @param HeaderSelector $selector
      * @param ObjectSerializer $serializer
-     * @param AuthConfig $authConfig
+     * @param Configuration $config
      */
     public function __construct(
         HttpClient $client,
-        AuthConfig $authConfig = null,
+        Configuration $config = null,
         HeaderSelector $selector = null,
         ObjectSerializer $serializer = null
     ) {
         $this->client = $client;
         $this->serializer = $serializer ?: new ObjectSerializer();
         $this->headerSelector = $selector ?: new HeaderSelector();
-        $this->authConfig = $authConfig ?: new AuthConfig();
+        $this->config = $config ?: new Configuration();
     }
 
     /**
-     * @return AuthConfig
+     * @return Config
      */
-    public function getAuthConfig()
+    public function getConfig()
     {
-        return $this->authConfig;
+        return $this->config;
     }
 
     /**
@@ -122,7 +122,7 @@ class FakeApi
             throw new \InvalidArgumentException('Missing the required parameter $body when calling testClientModel');
         }
 
-        $resourcePath = substr('/fake', 1);
+        $resourcePath = '/fake';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -172,27 +172,32 @@ class FakeApi
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $headers = array_merge($headerParams, $headers);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
 
+        $request = new Request(
+            'PATCH',
+            $url,
+            $headers,
+            $httpBody
+        );
         try {
-            $request = new Request(
-                'PATCH',
-                Uri::composeComponents('', '', $resourcePath, $query, ''),
-                $headers,
-                $httpBody
-            );
             $response = $this->client->sendRequest($request);
-            $content = $response->getBody()->getContents();
-            if ($returnType !== 'string') { //TODO return type file
-                $content = json_decode($content);
-            }
-            return [
-                ObjectSerializer::deserialize($content, '\Swagger\Client\Model\Client', []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        } catch (Exception $exception) {
-            throw new ApiException($exception->getMessage(), null, $exception);
+        } catch (NetworkException $e) {
+            throw new ApiException($e->getMessage(), null, $e);
         }
+
+        if ($response->getStatusCode() >= 400) {
+            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
+        }
+        $content = $response->getBody()->getContents();
+        if ($returnType !== 'string') { //TODO return type file
+            $content = json_decode($content);
+        }
+        return [
+            ObjectSerializer::deserialize($content, '\Swagger\Client\Model\Client', []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
 /**
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -335,7 +340,7 @@ class FakeApi
         }
 
 
-        $resourcePath = substr('/fake', 1);
+        $resourcePath = '/fake';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -434,25 +439,30 @@ class FakeApi
         }
 
         // this endpoint requires HTTP basic authentication
-        if ($this->authConfig->getUsername() !== null || $this->authConfig->getPassword() !== null) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->authConfig->getUsername() . ":" . $this->authConfig->getPassword());
+        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
         }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $headers = array_merge($headerParams, $headers);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
 
+        $request = new Request(
+            'POST',
+            $url,
+            $headers,
+            $httpBody
+        );
         try {
-            $request = new Request(
-                'POST',
-                Uri::composeComponents('', '', $resourcePath, $query, ''),
-                $headers,
-                $httpBody
-            );
             $response = $this->client->sendRequest($request);
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        } catch (Exception $exception) {
-            throw new ApiException($exception->getMessage(), null, $exception);
+        } catch (NetworkException $e) {
+            throw new ApiException($e->getMessage(), null, $e);
         }
+
+        if ($response->getStatusCode() >= 400) {
+            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
+        }
+        return [null, $response->getStatusCode(), $response->getHeaders()];
 /**
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -516,7 +526,7 @@ class FakeApi
     public function testEnumParametersWithHttpInfo($enum_form_string_array = null, $enum_form_string = null, $enum_header_string_array = null, $enum_header_string = null, $enum_query_string_array = null, $enum_query_string = null, $enum_query_integer = null, $enum_query_double = null)
     {
 
-        $resourcePath = substr('/fake', 1);
+        $resourcePath = '/fake';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -599,19 +609,24 @@ class FakeApi
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $headers = array_merge($headerParams, $headers);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
 
+        $request = new Request(
+            'GET',
+            $url,
+            $headers,
+            $httpBody
+        );
         try {
-            $request = new Request(
-                'GET',
-                Uri::composeComponents('', '', $resourcePath, $query, ''),
-                $headers,
-                $httpBody
-            );
             $response = $this->client->sendRequest($request);
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        } catch (Exception $exception) {
-            throw new ApiException($exception->getMessage(), null, $exception);
+        } catch (NetworkException $e) {
+            throw new ApiException($e->getMessage(), null, $e);
         }
+
+        if ($response->getStatusCode() >= 400) {
+            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
+        }
+        return [null, $response->getStatusCode(), $response->getHeaders()];
 /**
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(

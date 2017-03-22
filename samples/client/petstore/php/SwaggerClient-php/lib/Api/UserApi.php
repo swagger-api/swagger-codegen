@@ -31,10 +31,10 @@ namespace Swagger\Client\Api;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
-use Http\Client\Exception;
+use Http\Client\Exception\NetworkException;
 use Http\Client\HttpClient;
 use Swagger\Client\ApiException;
-use Swagger\Client\AuthConfig;
+use Swagger\Client\Configuration;
 use Swagger\Client\HeaderSelector;
 use Swagger\Client\ObjectSerializer;
 
@@ -59,34 +59,34 @@ class UserApi
     protected $serializer;
 
     /**
-     * @var AuthConfig
+     * @var Configuration
      */
-    protected $authConfig;
+    protected $config;
 
     /**
      * @param HttpClient $client
      * @param HeaderSelector $selector
      * @param ObjectSerializer $serializer
-     * @param AuthConfig $authConfig
+     * @param Configuration $config
      */
     public function __construct(
         HttpClient $client,
-        AuthConfig $authConfig = null,
+        Configuration $config = null,
         HeaderSelector $selector = null,
         ObjectSerializer $serializer = null
     ) {
         $this->client = $client;
         $this->serializer = $serializer ?: new ObjectSerializer();
         $this->headerSelector = $selector ?: new HeaderSelector();
-        $this->authConfig = $authConfig ?: new AuthConfig();
+        $this->config = $config ?: new Configuration();
     }
 
     /**
-     * @return AuthConfig
+     * @return Config
      */
-    public function getAuthConfig()
+    public function getConfig()
     {
-        return $this->authConfig;
+        return $this->config;
     }
 
     /**
@@ -121,7 +121,7 @@ class UserApi
             throw new \InvalidArgumentException('Missing the required parameter $body when calling createUser');
         }
 
-        $resourcePath = substr('/user', 1);
+        $resourcePath = '/user';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -171,19 +171,24 @@ class UserApi
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $headers = array_merge($headerParams, $headers);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
 
+        $request = new Request(
+            'POST',
+            $url,
+            $headers,
+            $httpBody
+        );
         try {
-            $request = new Request(
-                'POST',
-                Uri::composeComponents('', '', $resourcePath, $query, ''),
-                $headers,
-                $httpBody
-            );
             $response = $this->client->sendRequest($request);
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        } catch (Exception $exception) {
-            throw new ApiException($exception->getMessage(), null, $exception);
+        } catch (NetworkException $e) {
+            throw new ApiException($e->getMessage(), null, $e);
         }
+
+        if ($response->getStatusCode() >= 400) {
+            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
+        }
+        return [null, $response->getStatusCode(), $response->getHeaders()];
 /**
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -237,7 +242,7 @@ class UserApi
             throw new \InvalidArgumentException('Missing the required parameter $body when calling createUsersWithArrayInput');
         }
 
-        $resourcePath = substr('/user/createWithArray', 1);
+        $resourcePath = '/user/createWithArray';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -287,19 +292,24 @@ class UserApi
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $headers = array_merge($headerParams, $headers);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
 
+        $request = new Request(
+            'POST',
+            $url,
+            $headers,
+            $httpBody
+        );
         try {
-            $request = new Request(
-                'POST',
-                Uri::composeComponents('', '', $resourcePath, $query, ''),
-                $headers,
-                $httpBody
-            );
             $response = $this->client->sendRequest($request);
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        } catch (Exception $exception) {
-            throw new ApiException($exception->getMessage(), null, $exception);
+        } catch (NetworkException $e) {
+            throw new ApiException($e->getMessage(), null, $e);
         }
+
+        if ($response->getStatusCode() >= 400) {
+            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
+        }
+        return [null, $response->getStatusCode(), $response->getHeaders()];
 /**
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -353,7 +363,7 @@ class UserApi
             throw new \InvalidArgumentException('Missing the required parameter $body when calling createUsersWithListInput');
         }
 
-        $resourcePath = substr('/user/createWithList', 1);
+        $resourcePath = '/user/createWithList';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -403,19 +413,24 @@ class UserApi
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $headers = array_merge($headerParams, $headers);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
 
+        $request = new Request(
+            'POST',
+            $url,
+            $headers,
+            $httpBody
+        );
         try {
-            $request = new Request(
-                'POST',
-                Uri::composeComponents('', '', $resourcePath, $query, ''),
-                $headers,
-                $httpBody
-            );
             $response = $this->client->sendRequest($request);
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        } catch (Exception $exception) {
-            throw new ApiException($exception->getMessage(), null, $exception);
+        } catch (NetworkException $e) {
+            throw new ApiException($e->getMessage(), null, $e);
         }
+
+        if ($response->getStatusCode() >= 400) {
+            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
+        }
+        return [null, $response->getStatusCode(), $response->getHeaders()];
 /**
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -469,7 +484,7 @@ class UserApi
             throw new \InvalidArgumentException('Missing the required parameter $username when calling deleteUser');
         }
 
-        $resourcePath = substr('/user/{username}', 1);
+        $resourcePath = '/user/{username}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -518,19 +533,24 @@ class UserApi
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $headers = array_merge($headerParams, $headers);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
 
+        $request = new Request(
+            'DELETE',
+            $url,
+            $headers,
+            $httpBody
+        );
         try {
-            $request = new Request(
-                'DELETE',
-                Uri::composeComponents('', '', $resourcePath, $query, ''),
-                $headers,
-                $httpBody
-            );
             $response = $this->client->sendRequest($request);
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        } catch (Exception $exception) {
-            throw new ApiException($exception->getMessage(), null, $exception);
+        } catch (NetworkException $e) {
+            throw new ApiException($e->getMessage(), null, $e);
         }
+
+        if ($response->getStatusCode() >= 400) {
+            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
+        }
+        return [null, $response->getStatusCode(), $response->getHeaders()];
 /**
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -585,7 +605,7 @@ class UserApi
             throw new \InvalidArgumentException('Missing the required parameter $username when calling getUserByName');
         }
 
-        $resourcePath = substr('/user/{username}', 1);
+        $resourcePath = '/user/{username}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -634,27 +654,32 @@ class UserApi
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $headers = array_merge($headerParams, $headers);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
 
+        $request = new Request(
+            'GET',
+            $url,
+            $headers,
+            $httpBody
+        );
         try {
-            $request = new Request(
-                'GET',
-                Uri::composeComponents('', '', $resourcePath, $query, ''),
-                $headers,
-                $httpBody
-            );
             $response = $this->client->sendRequest($request);
-            $content = $response->getBody()->getContents();
-            if ($returnType !== 'string') { //TODO return type file
-                $content = json_decode($content);
-            }
-            return [
-                ObjectSerializer::deserialize($content, '\Swagger\Client\Model\User', []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        } catch (Exception $exception) {
-            throw new ApiException($exception->getMessage(), null, $exception);
+        } catch (NetworkException $e) {
+            throw new ApiException($e->getMessage(), null, $e);
         }
+
+        if ($response->getStatusCode() >= 400) {
+            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
+        }
+        $content = $response->getBody()->getContents();
+        if ($returnType !== 'string') { //TODO return type file
+            $content = json_decode($content);
+        }
+        return [
+            ObjectSerializer::deserialize($content, '\Swagger\Client\Model\User', []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
 /**
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -719,7 +744,7 @@ class UserApi
             throw new \InvalidArgumentException('Missing the required parameter $password when calling loginUser');
         }
 
-        $resourcePath = substr('/user/login', 1);
+        $resourcePath = '/user/login';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -772,27 +797,32 @@ class UserApi
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $headers = array_merge($headerParams, $headers);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
 
+        $request = new Request(
+            'GET',
+            $url,
+            $headers,
+            $httpBody
+        );
         try {
-            $request = new Request(
-                'GET',
-                Uri::composeComponents('', '', $resourcePath, $query, ''),
-                $headers,
-                $httpBody
-            );
             $response = $this->client->sendRequest($request);
-            $content = $response->getBody()->getContents();
-            if ($returnType !== 'string') { //TODO return type file
-                $content = json_decode($content);
-            }
-            return [
-                ObjectSerializer::deserialize($content, 'string', []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-        } catch (Exception $exception) {
-            throw new ApiException($exception->getMessage(), null, $exception);
+        } catch (NetworkException $e) {
+            throw new ApiException($e->getMessage(), null, $e);
         }
+
+        if ($response->getStatusCode() >= 400) {
+            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
+        }
+        $content = $response->getBody()->getContents();
+        if ($returnType !== 'string') { //TODO return type file
+            $content = json_decode($content);
+        }
+        return [
+            ObjectSerializer::deserialize($content, 'string', []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
 /**
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -844,7 +874,7 @@ class UserApi
     public function logoutUserWithHttpInfo()
     {
 
-        $resourcePath = substr('/user/logout', 1);
+        $resourcePath = '/user/logout';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -889,19 +919,24 @@ class UserApi
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $headers = array_merge($headerParams, $headers);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
 
+        $request = new Request(
+            'GET',
+            $url,
+            $headers,
+            $httpBody
+        );
         try {
-            $request = new Request(
-                'GET',
-                Uri::composeComponents('', '', $resourcePath, $query, ''),
-                $headers,
-                $httpBody
-            );
             $response = $this->client->sendRequest($request);
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        } catch (Exception $exception) {
-            throw new ApiException($exception->getMessage(), null, $exception);
+        } catch (NetworkException $e) {
+            throw new ApiException($e->getMessage(), null, $e);
         }
+
+        if ($response->getStatusCode() >= 400) {
+            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
+        }
+        return [null, $response->getStatusCode(), $response->getHeaders()];
 /**
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -961,7 +996,7 @@ class UserApi
             throw new \InvalidArgumentException('Missing the required parameter $body when calling updateUser');
         }
 
-        $resourcePath = substr('/user/{username}', 1);
+        $resourcePath = '/user/{username}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -1015,19 +1050,24 @@ class UserApi
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $headers = array_merge($headerParams, $headers);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
 
+        $request = new Request(
+            'PUT',
+            $url,
+            $headers,
+            $httpBody
+        );
         try {
-            $request = new Request(
-                'PUT',
-                Uri::composeComponents('', '', $resourcePath, $query, ''),
-                $headers,
-                $httpBody
-            );
             $response = $this->client->sendRequest($request);
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        } catch (Exception $exception) {
-            throw new ApiException($exception->getMessage(), null, $exception);
+        } catch (NetworkException $e) {
+            throw new ApiException($e->getMessage(), null, $e);
         }
+
+        if ($response->getStatusCode() >= 400) {
+            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
+        }
+        return [null, $response->getStatusCode(), $response->getHeaders()];
 /**
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
