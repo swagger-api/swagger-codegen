@@ -246,12 +246,16 @@ public class CsharpDotNet2ClientCodegen extends DefaultCodegen implements Codege
         name = sanitizeName(name);
         
         //knetik change
+        System.out.println("KNETIK Models: " + name);
+        name = "model_" + name;
+        /*
         if(name.equals("Set") {
             //do nothing
         } else {
             System.out.println("KNETIK Models: " + name);
             name = "model_" + name;
         }
+        */
       
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
