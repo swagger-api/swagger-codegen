@@ -189,10 +189,17 @@ class FakeApi
         if ($response->getStatusCode() >= 400) {
             throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
         }
-        $content = $response->getBody()->getContents();
-        if ($returnType !== 'string') { //TODO return type file
-            $content = json_decode($content);
+
+        $responseBody = $response->getBody();
+        if ($returnType === '\SplFileObject') {
+            $content = $responseBody; //stream goes to serializer
+        } else {
+            $content = $responseBody->getContents();
+            if ($returnType !== 'string' ) {
+                $content = json_decode($content);
+            }
         }
+
         return [
             ObjectSerializer::deserialize($content, '\Swagger\Client\Model\Client', []),
             $response->getStatusCode(),
@@ -462,6 +469,7 @@ class FakeApi
         if ($response->getStatusCode() >= 400) {
             throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
         }
+
         return [null, $response->getStatusCode(), $response->getHeaders()];
 /**
         try {
@@ -626,6 +634,7 @@ class FakeApi
         if ($response->getStatusCode() >= 400) {
             throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
         }
+
         return [null, $response->getStatusCode(), $response->getHeaders()];
 /**
         try {

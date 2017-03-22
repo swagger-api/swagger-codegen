@@ -389,4 +389,22 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('red', $dog->getColor());
         $this->assertSame('red', $animal->getColor());
     }
+
+//    Disabled as currently we don't have any endpoint that would return file
+//    For testing I just replaced url and return type in Api method.
+//    public function testDownloadingLargeFile()
+//    {
+//        $petId = 10005;
+//        $config = new Configuration();
+//        $config->setHost('https://getcomposer.org');
+//        $api = new PetApi(new Client(), $config);
+//        $result = $api->getPetById($petId);
+//        $this->assertInstanceOf(\SplFileObject::class, $result);
+//        var_dump([
+//            'peak mem (MiB)' => memory_get_peak_usage(true)/1024/1024,
+//            'file size (MiB)' => $result->getSize()/1024/1024,
+//            'path' => sys_get_temp_dir() . '/' . $result->getFilename()
+//        ]);
+//    }
+
 }

@@ -251,6 +251,8 @@ class ObjectSerializer
             settype($data, $class);
             return $data;
         } elseif ($class === '\SplFileObject') {
+            /** @var \Psr\Http\Message\StreamInterface $data */
+
             // determine file name
             if (array_key_exists('Content-Disposition', $httpHeaders) &&
                 preg_match('/inline; filename=[\'"]?([^\'"\s]+)[\'"]?$/i', $httpHeaders['Content-Disposition'], $match)) {
@@ -258,13 +260,14 @@ class ObjectSerializer
             } else {
                 $filename = tempnam(Configuration::getDefaultConfiguration()->getTempFolderPath(), '');
             }
-            $deserialized = new \SplFileObject($filename, "w");
-            $byte_written = $deserialized->fwrite($data);
-            if (Configuration::getDefaultConfiguration()->getDebug()) {
-                error_log("[DEBUG] Written $byte_written byte to $filename. Please move the file to a proper folder or delete the temp file after processing.".PHP_EOL, 3, Configuration::getDefaultConfiguration()->getDebugFile());
-            }
 
-            return $deserialized;
+            $file = fopen($filename, 'w');
+            while ($chunk = $data->read(200)) {
+                fwrite($file, $chunk);
+            }
+            fclose($file);
+
+            return new \SplFileObject($filename, 'r');
         } elseif (method_exists($class, 'getAllowableEnumValues')) {
             if (!in_array($data, $class::getAllowableEnumValues())) {
                 $imploded = implode("', '", $class::getAllowableEnumValues());

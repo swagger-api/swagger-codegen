@@ -25,7 +25,7 @@ class UserApiTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    // test login user
+    // test login use
     public function testLoginUser()
     {
         // initialize the API client

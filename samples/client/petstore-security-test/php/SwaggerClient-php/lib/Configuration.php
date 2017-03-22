@@ -30,6 +30,7 @@ namespace Swagger\Client;
 
 /**
  * Configuration Class Doc Comment
+ * PHP version 5
  *
  * @category Class
  * @package  Swagger\Client
@@ -38,10 +39,7 @@ namespace Swagger\Client;
  */
 class Configuration
 {
-    /**
-     * @var string
-     */
-    protected $host = 'https://petstore.swagger.io *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r/v2 *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r';
+    private static $defaultConfiguration;
 
     /**
      * Associate array to store API key(s)
@@ -79,33 +77,60 @@ class Configuration
     protected $password = '';
 
     /**
-     * Sets the host
+     * The default header(s)
      *
-     * @param string $host Host
-     *
-     * @return $this
+     * @var array
      */
-    public function setHost($host)
-    {
-        $this->host = $host;
-        return $this;
-    }
+    protected $defaultHeaders = [];
 
     /**
-     * Gets the host
+     * The host
      *
-     * @return string Host
+     * @var string
      */
-    public function getHost()
+    protected $host = 'https://petstore.swagger.io *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r/v2 *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r';
+
+    /**
+     * User agent of the HTTP request, set to "PHP-Swagger" by default
+     *
+     * @var string
+     */
+    protected $userAgent = 'Swagger-Codegen/1.0.0/php';
+
+    /**
+     * Debug switch (default set to false)
+     *
+     * @var bool
+     */
+    protected $debug = false;
+
+    /**
+     * Debug file location (log to STDOUT by default)
+     *
+     * @var string
+     */
+    protected $debugFile = 'php://output';
+
+    /**
+     * Debug file location (log to STDOUT by default)
+     *
+     * @var string
+     */
+    protected $tempFolderPath;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
     {
-        return $this->host;
+        $this->tempFolderPath = sys_get_temp_dir();
     }
 
     /**
      * Sets API key
      *
      * @param string $apiKeyIdentifier API key identifier (authentication scheme)
-     * @param string $key API key or token
+     * @param string $key              API key or token
      *
      * @return $this
      */
@@ -131,7 +156,7 @@ class Configuration
      * Sets the prefix for API key (e.g. Bearer)
      *
      * @param string $apiKeyIdentifier API key identifier (authentication scheme)
-     * @param string $prefix API key prefix, e.g. Bearer
+     * @param string $prefix           API key prefix, e.g. Bearer
      *
      * @return $this
      */
@@ -223,6 +248,210 @@ class Configuration
     }
 
     /**
+     * Adds a default header
+     *
+     * @param string $headerName  header name (e.g. Token)
+     * @param string $headerValue header value (e.g. 1z8wp3)
+     *
+     * @throws \InvalidArgumentException
+     * @return $this
+     */
+    public function addDefaultHeader($headerName, $headerValue)
+    {
+        if (!is_string($headerName)) {
+            throw new \InvalidArgumentException('Header name must be a string.');
+        }
+
+        $this->defaultHeaders[$headerName] =  $headerValue;
+        return $this;
+    }
+
+    /**
+     * Gets the default header
+     *
+     * @return array An array of default header(s)
+     */
+    public function getDefaultHeaders()
+    {
+        return $this->defaultHeaders;
+    }
+
+    /**
+     * Deletes a default header
+     *
+     * @param string $headerName the header to delete
+     *
+     * @return $this
+     */
+    public function deleteDefaultHeader($headerName)
+    {
+        unset($this->defaultHeaders[$headerName]);
+        return $this;
+    }
+
+    /**
+     * Sets the host
+     *
+     * @param string $host Host
+     *
+     * @return $this
+     */
+    public function setHost($host)
+    {
+        $this->host = $host;
+        return $this;
+    }
+
+    /**
+     * Gets the host
+     *
+     * @return string Host
+     */
+    public function getHost()
+    {
+        return $this->host;
+    }
+
+    /**
+     * Sets the user agent of the api client
+     *
+     * @param string $userAgent the user agent of the api client
+     *
+     * @throws \InvalidArgumentException
+     * @return $this
+     */
+    public function setUserAgent($userAgent)
+    {
+        if (!is_string($userAgent)) {
+            throw new \InvalidArgumentException('User-agent must be a string.');
+        }
+
+        $this->userAgent = $userAgent;
+        return $this;
+    }
+
+    /**
+     * Gets the user agent of the api client
+     *
+     * @return string user agent
+     */
+    public function getUserAgent()
+    {
+        return $this->userAgent;
+    }
+
+    /**
+     * Sets debug flag
+     *
+     * @param bool $debug Debug flag
+     *
+     * @return $this
+     */
+    public function setDebug($debug)
+    {
+        $this->debug = $debug;
+        return $this;
+    }
+
+    /**
+     * Gets the debug flag
+     *
+     * @return bool
+     */
+    public function getDebug()
+    {
+        return $this->debug;
+    }
+
+    /**
+     * Sets the debug file
+     *
+     * @param string $debugFile Debug file
+     *
+     * @return $this
+     */
+    public function setDebugFile($debugFile)
+    {
+        $this->debugFile = $debugFile;
+        return $this;
+    }
+
+    /**
+     * Gets the debug file
+     *
+     * @return string
+     */
+    public function getDebugFile()
+    {
+        return $this->debugFile;
+    }
+
+    /**
+     * Sets the temp folder path
+     *
+     * @param string $tempFolderPath Temp folder path
+     *
+     * @return $this
+     */
+    public function setTempFolderPath($tempFolderPath)
+    {
+        $this->tempFolderPath = $tempFolderPath;
+        return $this;
+    }
+
+    /**
+     * Gets the temp folder path
+     *
+     * @return string Temp folder path
+     */
+    public function getTempFolderPath()
+    {
+        return $this->tempFolderPath;
+    }
+
+    /**
+     * Gets the default configuration instance
+     *
+     * @return Configuration
+     */
+    public static function getDefaultConfiguration()
+    {
+        if (self::$defaultConfiguration === null) {
+            self::$defaultConfiguration = new Configuration();
+        }
+
+        return self::$defaultConfiguration;
+    }
+
+    /**
+     * Sets the detault configuration instance
+     *
+     * @param Configuration $config An instance of the Configuration Object
+     *
+     * @return void
+     */
+    public static function setDefaultConfiguration(Configuration $config)
+    {
+        self::$defaultConfiguration = $config;
+    }
+
+    /**
+     * Gets the essential information for debugging
+     *
+     * @return string The report for debugging
+     */
+    public static function toDebugReport()
+    {
+        $report  = 'PHP SDK (Swagger\Client) Debug Report:' . PHP_EOL;
+        $report .= '    OS: ' . php_uname() . PHP_EOL;
+        $report .= '    PHP Version: ' . PHP_VERSION . PHP_EOL;
+        $report .= '    OpenAPI Spec Version: 1.0.0 *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r' . PHP_EOL;
+        $report .= '    Temp Folder Path: ' . self::getDefaultConfiguration()->getTempFolderPath() . PHP_EOL;
+
+        return $report;
+    }
+
+    /**
      * Get API key (with prefix if set)
      *
      * @param  string $apiKeyIdentifier name of apikey
@@ -247,4 +476,3 @@ class Configuration
         return $keyWithPrefix;
     }
 }
-

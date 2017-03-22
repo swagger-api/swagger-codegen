@@ -183,6 +183,7 @@ class FakeApi
         if ($response->getStatusCode() >= 400) {
             throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
         }
+
         return [null, $response->getStatusCode(), $response->getHeaders()];
 /**
         try {
