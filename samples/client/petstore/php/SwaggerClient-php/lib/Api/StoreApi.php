@@ -169,8 +169,12 @@ class StoreApi
 
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $headers = array_merge($headerParams, $headers);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+        $headers = array_merge(
+            $this->config->getDefaultHeaders(),
+            $headerParams,
+            $headers
+        );
 
         $request = new Request(
             'DELETE',
@@ -286,8 +290,12 @@ class StoreApi
         }
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $headers = array_merge($headerParams, $headers);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+        $headers = array_merge(
+            $this->config->getDefaultHeaders(),
+            $headerParams,
+            $headers
+        );
 
         $request = new Request(
             'GET',
@@ -433,8 +441,12 @@ class StoreApi
 
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $headers = array_merge($headerParams, $headers);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+        $headers = array_merge(
+            $this->config->getDefaultHeaders(),
+            $headerParams,
+            $headers
+        );
 
         $request = new Request(
             'GET',
@@ -574,8 +586,12 @@ class StoreApi
 
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $headers = array_merge($headerParams, $headers);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+        $headers = array_merge(
+            $this->config->getDefaultHeaders(),
+            $headerParams,
+            $headers
+        );
 
         $request = new Request(
             'POST',
