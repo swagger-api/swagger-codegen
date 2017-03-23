@@ -2,7 +2,9 @@ package io.swagger.client.api;
 
 import io.swagger.client.ApiClient;
 import java.math.BigDecimal;
-import java.util.Date;
+import io.swagger.client.model.Client;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,6 +27,19 @@ public class FakeApiTest {
 
     
     /**
+     * To test \&quot;client\&quot; model
+     *
+     * To test \&quot;client\&quot; model
+     */
+    @Test
+    public void testClientModelTest() {
+        Client body = null;
+        // Client response = api.testClientModel(body);
+
+        // TODO: test validations
+    }
+    
+    /**
      * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
      *
      * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
@@ -33,17 +48,39 @@ public class FakeApiTest {
     public void testEndpointParametersTest() {
         BigDecimal number = null;
         Double _double = null;
-        String string = null;
+        String patternWithoutDelimiter = null;
         byte[] _byte = null;
         Integer integer = null;
         Integer int32 = null;
         Long int64 = null;
         Float _float = null;
+        String string = null;
         byte[] binary = null;
-        Date date = null;
-        Date dateTime = null;
+        LocalDate date = null;
+        DateTime dateTime = null;
         String password = null;
-        // Void response = api.testEndpointParameters(number, _double, string, _byte, integer, int32, int64, _float, binary, date, dateTime, password);
+        String paramCallback = null;
+        // Void response = api.testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * To test enum parameters
+     *
+     * To test enum parameters
+     */
+    @Test
+    public void testEnumParametersTest() {
+        List<String> enumFormStringArray = null;
+        String enumFormString = null;
+        List<String> enumHeaderStringArray = null;
+        String enumHeaderString = null;
+        List<String> enumQueryStringArray = null;
+        String enumQueryString = null;
+        Integer enumQueryInteger = null;
+        Double enumQueryDouble = null;
+        // Void response = api.testEnumParameters(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble);
 
         // TODO: test validations
     }

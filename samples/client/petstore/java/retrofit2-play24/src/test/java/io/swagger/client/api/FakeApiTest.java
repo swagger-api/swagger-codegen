@@ -29,7 +29,7 @@ public class FakeApiTest {
     /**
      * To test \&quot;client\&quot; model
      *
-     * 
+     * To test \&quot;client\&quot; model
      */
     @Test
     public void testClientModelTest() {
@@ -68,7 +68,7 @@ public class FakeApiTest {
     /**
      * To test enum parameters
      *
-     * 
+     * To test enum parameters
      */
     @Test
     public void testEnumParametersTest() {
@@ -78,7 +78,7 @@ public class FakeApiTest {
         String enumHeaderString = null;
         List<String> enumQueryStringArray = null;
         String enumQueryString = null;
-        BigDecimal enumQueryInteger = null;
+        Integer enumQueryInteger = null;
         Double enumQueryDouble = null;
         // Void response = api.testEnumParameters(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble);
 
