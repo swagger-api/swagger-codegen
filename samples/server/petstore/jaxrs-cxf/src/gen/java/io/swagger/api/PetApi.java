@@ -15,6 +15,7 @@ import org.apache.cxf.jaxrs.ext.multipart.*;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.jaxrs.PATCH;
@@ -31,7 +32,7 @@ public interface PetApi  {
     @ApiOperation(value = "Add a new pet to the store", tags={ "pet",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 405, message = "Invalid input") })
-    public void addPet(Pet body);
+    public void addPet(@ApiParam(value = "Pet object that needs to be added to the store", required=true) Pet body);
 
     @DELETE
     @Path("/pet/{petId}")
@@ -39,7 +40,7 @@ public interface PetApi  {
     @ApiOperation(value = "Deletes a pet", tags={ "pet",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid pet value") })
-    public void deletePet(@PathParam("petId") Long petId, @HeaderParam("api_key") String apiKey);
+    public void deletePet(@ApiParam(value = "Pet id to delete", required=true) @PathParam("petId") Long petId, @HeaderParam("api_key") String apiKey);
 
     @GET
     @Path("/pet/findByStatus")
@@ -48,7 +49,7 @@ public interface PetApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid status value") })
-    public List<Pet> findPetsByStatus(@QueryParam("status") @NotNull List<String> status);
+    public List<Pet> findPetsByStatus(@ApiParam(value = "Status values that need to be considered for filter", required=true, allowableValues="available, pending, sold") @QueryParam("status") @NotNull  List<String> status);
 
     @GET
     @Path("/pet/findByTags")
@@ -57,7 +58,7 @@ public interface PetApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid tag value") })
-    public List<Pet> findPetsByTags(@QueryParam("tags") @NotNull List<String> tags);
+    public List<Pet> findPetsByTags(@ApiParam(value = "Tags to filter by", required=true) @QueryParam("tags") @NotNull  List<String> tags);
 
     @GET
     @Path("/pet/{petId}")
@@ -67,7 +68,7 @@ public interface PetApi  {
         @ApiResponse(code = 200, message = "successful operation", response = Pet.class),
         @ApiResponse(code = 400, message = "Invalid ID supplied"),
         @ApiResponse(code = 404, message = "Pet not found") })
-    public Pet getPetById(@PathParam("petId") Long petId);
+    public Pet getPetById(@ApiParam(value = "ID of pet to return", required=true) @PathParam("petId") Long petId);
 
     @PUT
     @Path("/pet")
@@ -78,7 +79,7 @@ public interface PetApi  {
         @ApiResponse(code = 400, message = "Invalid ID supplied"),
         @ApiResponse(code = 404, message = "Pet not found"),
         @ApiResponse(code = 405, message = "Validation exception") })
-    public void updatePet(Pet body);
+    public void updatePet(@ApiParam(value = "Pet object that needs to be added to the store", required=true) Pet body);
 
     @POST
     @Path("/pet/{petId}")
@@ -87,7 +88,7 @@ public interface PetApi  {
     @ApiOperation(value = "Updates a pet in the store with form data", tags={ "pet",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 405, message = "Invalid input") })
-    public void updatePetWithForm(@PathParam("petId") Long petId, @Multipart(value = "name", required = false)  String name, @Multipart(value = "status", required = false)  String status);
+    public void updatePetWithForm(@ApiParam(value = "ID of pet that needs to be updated", required=true) @PathParam("petId") Long petId, @ApiParam(value = "Updated name of the pet") @Multipart(value = "name", required = false)  String name, @ApiParam(value = "Updated status of the pet") @Multipart(value = "status", required = false)  String status);
 
     @POST
     @Path("/pet/{petId}/uploadImage")
@@ -96,6 +97,6 @@ public interface PetApi  {
     @ApiOperation(value = "uploads an image", tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = ModelApiResponse.class) })
-    public ModelApiResponse uploadFile(@PathParam("petId") Long petId, @Multipart(value = "additionalMetadata", required = false)  String additionalMetadata,  @Multipart(value = "file" , required = false) Attachment fileDetail);
+    public ModelApiResponse uploadFile(@ApiParam(value = "ID of pet to update", required=true) @PathParam("petId") Long petId, @ApiParam(value = "Additional data to pass to server") @Multipart(value = "additionalMetadata", required = false)  String additionalMetadata, @ApiParam(value = "file to upload")  @Multipart(value = "file" , required = false) Attachment fileDetail);
 }
 

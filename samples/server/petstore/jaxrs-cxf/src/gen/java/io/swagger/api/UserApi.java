@@ -14,6 +14,7 @@ import org.apache.cxf.jaxrs.ext.multipart.*;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.jaxrs.PATCH;
@@ -29,7 +30,7 @@ public interface UserApi  {
     @ApiOperation(value = "Create user", tags={ "user",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation") })
-    public void createUser(User body);
+    public void createUser(@ApiParam(value = "Created user object", required=true) User body);
 
     @POST
     @Path("/user/createWithArray")
@@ -37,7 +38,7 @@ public interface UserApi  {
     @ApiOperation(value = "Creates list of users with given input array", tags={ "user",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation") })
-    public void createUsersWithArrayInput(List<User> body);
+    public void createUsersWithArrayInput(@ApiParam(value = "List of user object", required=true) List<User> body);
 
     @POST
     @Path("/user/createWithList")
@@ -45,7 +46,7 @@ public interface UserApi  {
     @ApiOperation(value = "Creates list of users with given input array", tags={ "user",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation") })
-    public void createUsersWithListInput(List<User> body);
+    public void createUsersWithListInput(@ApiParam(value = "List of user object", required=true) List<User> body);
 
     @DELETE
     @Path("/user/{username}")
@@ -54,7 +55,7 @@ public interface UserApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid username supplied"),
         @ApiResponse(code = 404, message = "User not found") })
-    public void deleteUser(@PathParam("username") String username);
+    public void deleteUser(@ApiParam(value = "The name that needs to be deleted", required=true) @PathParam("username") String username);
 
     @GET
     @Path("/user/{username}")
@@ -64,7 +65,7 @@ public interface UserApi  {
         @ApiResponse(code = 200, message = "successful operation", response = User.class),
         @ApiResponse(code = 400, message = "Invalid username supplied"),
         @ApiResponse(code = 404, message = "User not found") })
-    public User getUserByName(@PathParam("username") String username);
+    public User getUserByName(@ApiParam(value = "The name that needs to be fetched. Use user1 for testing. ", required=true) @PathParam("username") String username);
 
     @GET
     @Path("/user/login")
@@ -73,7 +74,7 @@ public interface UserApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = String.class),
         @ApiResponse(code = 400, message = "Invalid username/password supplied") })
-    public String loginUser(@QueryParam("username") @NotNull String username, @QueryParam("password") @NotNull String password);
+    public String loginUser(@ApiParam(value = "The user name for login", required=true) @QueryParam("username") @NotNull  String username, @ApiParam(value = "The password for login in clear text", required=true) @QueryParam("password") @NotNull  String password);
 
     @GET
     @Path("/user/logout")
@@ -90,6 +91,6 @@ public interface UserApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid user supplied"),
         @ApiResponse(code = 404, message = "User not found") })
-    public void updateUser(@PathParam("username") String username, User body);
+    public void updateUser(@ApiParam(value = "name that need to be deleted", required=true) @PathParam("username") String username, @ApiParam(value = "Updated user object", required=true) User body);
 }
 
