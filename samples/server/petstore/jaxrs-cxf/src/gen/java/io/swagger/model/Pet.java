@@ -5,6 +5,7 @@ import io.swagger.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlElement;
@@ -20,6 +21,7 @@ public class Pet  {
   @ApiModelProperty(example = "null", value = "")
   private Long id = null;
   @ApiModelProperty(example = "null", value = "")
+  @Valid
   private Category category = null;
   @ApiModelProperty(example = "doggie", required = true, value = "")
   private String name = null;
