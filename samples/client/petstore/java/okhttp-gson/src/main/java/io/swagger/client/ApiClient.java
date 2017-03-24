@@ -728,8 +728,8 @@ public class ApiClient {
      *   application/json; charset=UTF8
      *   APPLICATION/JSON
      *   application/vnd.company+json
-     * @param mime MIME
-     * @return True if MIME type is boolean
+     * @param mime MIME (Multipurpose Internet Mail Extensions)
+     * @return True if the given MIME is JSON, false otherwise.
      */
     public boolean isJsonMime(String mime) {
       String jsonMime = "(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$";
