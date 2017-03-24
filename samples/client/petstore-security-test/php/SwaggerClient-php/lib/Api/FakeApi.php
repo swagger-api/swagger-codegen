@@ -30,7 +30,6 @@ namespace Swagger\Client\Api;
 
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Uri;
 use Http\Client\Exception\NetworkException;
 use Http\Client\HttpClient;
 use Swagger\Client\ApiException;
@@ -54,11 +53,6 @@ class FakeApi
     protected $client;
 
     /**
-     * @var ObjectSerializer
-     */
-    protected $serializer;
-
-    /**
      * @var Configuration
      */
     protected $config;
@@ -66,23 +60,20 @@ class FakeApi
     /**
      * @param HttpClient $client
      * @param HeaderSelector $selector
-     * @param ObjectSerializer $serializer
      * @param Configuration $config
      */
     public function __construct(
         HttpClient $client,
         Configuration $config = null,
-        HeaderSelector $selector = null,
-        ObjectSerializer $serializer = null
+        HeaderSelector $selector = null
     ) {
         $this->client = $client;
-        $this->serializer = $serializer ?: new ObjectSerializer();
         $this->headerSelector = $selector ?: new HeaderSelector();
         $this->config = $config ?: new Configuration();
     }
 
     /**
-     * @return Config
+     * @return Configuration
      */
     public function getConfig()
     {
@@ -129,7 +120,7 @@ class FakeApi
 
         // form params
         if ($test_code_inject____end____rn_n_r !== null) {
-            $formParams['test code inject */ &#39; &quot; &#x3D;end -- \r\n \n \r'] = $this->serializer->toFormValue($test_code_inject____end____rn_n_r);
+            $formParams['test code inject */ &#39; &quot; &#x3D;end -- \r\n \n \r'] = ObjectSerializer::toFormValue($test_code_inject____end____rn_n_r);
         }
         
         // for model (json/xml)

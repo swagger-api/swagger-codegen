@@ -20,7 +20,6 @@ namespace {{apiPackage}};
 
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Uri;
 use Http\Client\Exception\NetworkException;
 use Http\Client\HttpClient;
 use {{invokerPackage}}\ApiException;
@@ -44,11 +43,6 @@ use {{invokerPackage}}\ObjectSerializer;
     protected $client;
 
     /**
-     * @var ObjectSerializer
-     */
-    protected $serializer;
-
-    /**
      * @var Configuration
      */
     protected $config;
@@ -56,23 +50,20 @@ use {{invokerPackage}}\ObjectSerializer;
     /**
      * @param HttpClient $client
      * @param HeaderSelector $selector
-     * @param ObjectSerializer $serializer
      * @param Configuration $config
      */
     public function __construct(
         HttpClient $client,
         Configuration $config = null,
-        HeaderSelector $selector = null,
-        ObjectSerializer $serializer = null
+        HeaderSelector $selector = null
     ) {
         $this->client = $client;
-        $this->serializer = $serializer ?: new ObjectSerializer();
         $this->headerSelector = $selector ?: new HeaderSelector();
         $this->config = $config ?: new Configuration();
     }
 
     /**
-     * @return Config
+     * @return Configuration
      */
     public function getConfig()
     {
@@ -179,22 +170,22 @@ use {{invokerPackage}}\ObjectSerializer;
         // query params
         {{#collectionFormat}}
         if (is_array(${{paramName}})) {
-            ${{paramName}} = $this->serializer->serializeCollection(${{paramName}}, '{{collectionFormat}}', true);
+            ${{paramName}} = ObjectSerializer::serializeCollection(${{paramName}}, '{{collectionFormat}}', true);
         }
         {{/collectionFormat}}
         if (${{paramName}} !== null) {
-            $queryParams['{{baseName}}'] = $this->serializer->toQueryValue(${{paramName}});
+            $queryParams['{{baseName}}'] = ObjectSerializer::toQueryValue(${{paramName}});
         }
         {{/queryParams}}
         {{#headerParams}}
         // header params
         {{#collectionFormat}}
         if (is_array(${{paramName}})) {
-            ${{paramName}} = $this->serializer->serializeCollection(${{paramName}}, '{{collectionFormat}}');
+            ${{paramName}} = ObjectSerializer::serializeCollection(${{paramName}}, '{{collectionFormat}}');
         }
         {{/collectionFormat}}
         if (${{paramName}} !== null) {
-            $headerParams['{{baseName}}'] = $this->serializer->toHeaderValue(${{paramName}});
+            $headerParams['{{baseName}}'] = ObjectSerializer::toHeaderValue(${{paramName}});
         }
         {{/headerParams}}
 
@@ -202,11 +193,11 @@ use {{invokerPackage}}\ObjectSerializer;
         // path params
         {{#collectionFormat}}
         if (is_array(${{paramName}})) {
-            ${{paramName}} = $this->serializer->serializeCollection(${{paramName}}, '{{collectionFormat}}');
+            ${{paramName}} = ObjectSerializer::serializeCollection(${{paramName}}, '{{collectionFormat}}');
         }
         {{/collectionFormat}}
         if (${{paramName}} !== null) {
-            $resourcePath = str_replace('{' . '{{baseName}}' . '}', $this->serializer->toPathValue(${{paramName}}), $resourcePath);
+            $resourcePath = str_replace('{' . '{{baseName}}' . '}', ObjectSerializer::toPathValue(${{paramName}}), $resourcePath);
         }
         {{/pathParams}}
 
@@ -215,10 +206,10 @@ use {{invokerPackage}}\ObjectSerializer;
         if (${{paramName}} !== null) {
             {{#isFile}}
             $multipart = true;
-            $formParams['file'] = \GuzzleHttp\Psr7\try_fopen($this->serializer->toFormValue($file), 'rb');
+            $formParams['file'] = \GuzzleHttp\Psr7\try_fopen(ObjectSerializer::toFormValue($file), 'rb');
             {{/isFile}}
             {{^isFile}}
-            $formParams['{{baseName}}'] = $this->serializer->toFormValue(${{paramName}});
+            $formParams['{{baseName}}'] = ObjectSerializer::toFormValue(${{paramName}});
             {{/isFile}}
         }
         {{/formParams}}

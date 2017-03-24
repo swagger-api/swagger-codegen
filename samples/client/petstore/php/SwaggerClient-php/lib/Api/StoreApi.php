@@ -30,7 +30,6 @@ namespace Swagger\Client\Api;
 
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Uri;
 use Http\Client\Exception\NetworkException;
 use Http\Client\HttpClient;
 use Swagger\Client\ApiException;
@@ -54,11 +53,6 @@ class StoreApi
     protected $client;
 
     /**
-     * @var ObjectSerializer
-     */
-    protected $serializer;
-
-    /**
      * @var Configuration
      */
     protected $config;
@@ -66,23 +60,20 @@ class StoreApi
     /**
      * @param HttpClient $client
      * @param HeaderSelector $selector
-     * @param ObjectSerializer $serializer
      * @param Configuration $config
      */
     public function __construct(
         HttpClient $client,
         Configuration $config = null,
-        HeaderSelector $selector = null,
-        ObjectSerializer $serializer = null
+        HeaderSelector $selector = null
     ) {
         $this->client = $client;
-        $this->serializer = $serializer ?: new ObjectSerializer();
         $this->headerSelector = $selector ?: new HeaderSelector();
         $this->config = $config ?: new Configuration();
     }
 
     /**
-     * @return Config
+     * @return Configuration
      */
     public function getConfig()
     {
@@ -132,7 +123,7 @@ class StoreApi
 
         // path params
         if ($order_id !== null) {
-            $resourcePath = str_replace('{' . 'order_id' . '}', $this->serializer->toPathValue($order_id), $resourcePath);
+            $resourcePath = str_replace('{' . 'order_id' . '}', ObjectSerializer::toPathValue($order_id), $resourcePath);
         }
 
         
@@ -394,7 +385,7 @@ class StoreApi
 
         // path params
         if ($order_id !== null) {
-            $resourcePath = str_replace('{' . 'order_id' . '}', $this->serializer->toPathValue($order_id), $resourcePath);
+            $resourcePath = str_replace('{' . 'order_id' . '}', ObjectSerializer::toPathValue($order_id), $resourcePath);
         }
 
         

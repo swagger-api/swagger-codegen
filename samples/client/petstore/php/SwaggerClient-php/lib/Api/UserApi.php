@@ -30,7 +30,6 @@ namespace Swagger\Client\Api;
 
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Uri;
 use Http\Client\Exception\NetworkException;
 use Http\Client\HttpClient;
 use Swagger\Client\ApiException;
@@ -54,11 +53,6 @@ class UserApi
     protected $client;
 
     /**
-     * @var ObjectSerializer
-     */
-    protected $serializer;
-
-    /**
      * @var Configuration
      */
     protected $config;
@@ -66,23 +60,20 @@ class UserApi
     /**
      * @param HttpClient $client
      * @param HeaderSelector $selector
-     * @param ObjectSerializer $serializer
      * @param Configuration $config
      */
     public function __construct(
         HttpClient $client,
         Configuration $config = null,
-        HeaderSelector $selector = null,
-        ObjectSerializer $serializer = null
+        HeaderSelector $selector = null
     ) {
         $this->client = $client;
-        $this->serializer = $serializer ?: new ObjectSerializer();
         $this->headerSelector = $selector ?: new HeaderSelector();
         $this->config = $config ?: new Configuration();
     }
 
     /**
-     * @return Config
+     * @return Configuration
      */
     public function getConfig()
     {
@@ -495,7 +486,7 @@ class UserApi
 
         // path params
         if ($username !== null) {
-            $resourcePath = str_replace('{' . 'username' . '}', $this->serializer->toPathValue($username), $resourcePath);
+            $resourcePath = str_replace('{' . 'username' . '}', ObjectSerializer::toPathValue($username), $resourcePath);
         }
 
         
@@ -616,7 +607,7 @@ class UserApi
 
         // path params
         if ($username !== null) {
-            $resourcePath = str_replace('{' . 'username' . '}', $this->serializer->toPathValue($username), $resourcePath);
+            $resourcePath = str_replace('{' . 'username' . '}', ObjectSerializer::toPathValue($username), $resourcePath);
         }
 
         
@@ -760,11 +751,11 @@ class UserApi
 
         // query params
         if ($username !== null) {
-            $queryParams['username'] = $this->serializer->toQueryValue($username);
+            $queryParams['username'] = ObjectSerializer::toQueryValue($username);
         }
         // query params
         if ($password !== null) {
-            $queryParams['password'] = $this->serializer->toQueryValue($password);
+            $queryParams['password'] = ObjectSerializer::toQueryValue($password);
         }
 
 
@@ -1019,7 +1010,7 @@ class UserApi
 
         // path params
         if ($username !== null) {
-            $resourcePath = str_replace('{' . 'username' . '}', $this->serializer->toPathValue($username), $resourcePath);
+            $resourcePath = str_replace('{' . 'username' . '}', ObjectSerializer::toPathValue($username), $resourcePath);
         }
 
         // body params

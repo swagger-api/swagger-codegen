@@ -30,7 +30,6 @@ namespace Swagger\Client\Api;
 
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Uri;
 use Http\Client\Exception\NetworkException;
 use Http\Client\HttpClient;
 use Swagger\Client\ApiException;
@@ -54,11 +53,6 @@ class FakeApi
     protected $client;
 
     /**
-     * @var ObjectSerializer
-     */
-    protected $serializer;
-
-    /**
      * @var Configuration
      */
     protected $config;
@@ -66,23 +60,20 @@ class FakeApi
     /**
      * @param HttpClient $client
      * @param HeaderSelector $selector
-     * @param ObjectSerializer $serializer
      * @param Configuration $config
      */
     public function __construct(
         HttpClient $client,
         Configuration $config = null,
-        HeaderSelector $selector = null,
-        ObjectSerializer $serializer = null
+        HeaderSelector $selector = null
     ) {
         $this->client = $client;
-        $this->serializer = $serializer ?: new ObjectSerializer();
         $this->headerSelector = $selector ?: new HeaderSelector();
         $this->config = $config ?: new Configuration();
     }
 
     /**
-     * @return Config
+     * @return Configuration
      */
     public function getConfig()
     {
@@ -358,59 +349,59 @@ class FakeApi
 
         // form params
         if ($integer !== null) {
-            $formParams['integer'] = $this->serializer->toFormValue($integer);
+            $formParams['integer'] = ObjectSerializer::toFormValue($integer);
         }
         // form params
         if ($int32 !== null) {
-            $formParams['int32'] = $this->serializer->toFormValue($int32);
+            $formParams['int32'] = ObjectSerializer::toFormValue($int32);
         }
         // form params
         if ($int64 !== null) {
-            $formParams['int64'] = $this->serializer->toFormValue($int64);
+            $formParams['int64'] = ObjectSerializer::toFormValue($int64);
         }
         // form params
         if ($number !== null) {
-            $formParams['number'] = $this->serializer->toFormValue($number);
+            $formParams['number'] = ObjectSerializer::toFormValue($number);
         }
         // form params
         if ($float !== null) {
-            $formParams['float'] = $this->serializer->toFormValue($float);
+            $formParams['float'] = ObjectSerializer::toFormValue($float);
         }
         // form params
         if ($double !== null) {
-            $formParams['double'] = $this->serializer->toFormValue($double);
+            $formParams['double'] = ObjectSerializer::toFormValue($double);
         }
         // form params
         if ($string !== null) {
-            $formParams['string'] = $this->serializer->toFormValue($string);
+            $formParams['string'] = ObjectSerializer::toFormValue($string);
         }
         // form params
         if ($pattern_without_delimiter !== null) {
-            $formParams['pattern_without_delimiter'] = $this->serializer->toFormValue($pattern_without_delimiter);
+            $formParams['pattern_without_delimiter'] = ObjectSerializer::toFormValue($pattern_without_delimiter);
         }
         // form params
         if ($byte !== null) {
-            $formParams['byte'] = $this->serializer->toFormValue($byte);
+            $formParams['byte'] = ObjectSerializer::toFormValue($byte);
         }
         // form params
         if ($binary !== null) {
-            $formParams['binary'] = $this->serializer->toFormValue($binary);
+            $formParams['binary'] = ObjectSerializer::toFormValue($binary);
         }
         // form params
         if ($date !== null) {
-            $formParams['date'] = $this->serializer->toFormValue($date);
+            $formParams['date'] = ObjectSerializer::toFormValue($date);
         }
         // form params
         if ($date_time !== null) {
-            $formParams['dateTime'] = $this->serializer->toFormValue($date_time);
+            $formParams['dateTime'] = ObjectSerializer::toFormValue($date_time);
         }
         // form params
         if ($password !== null) {
-            $formParams['password'] = $this->serializer->toFormValue($password);
+            $formParams['password'] = ObjectSerializer::toFormValue($password);
         }
         // form params
         if ($callback !== null) {
-            $formParams['callback'] = $this->serializer->toFormValue($callback);
+            $formParams['callback'] = ObjectSerializer::toFormValue($callback);
         }
         
         // for model (json/xml)
@@ -542,43 +533,43 @@ class FakeApi
 
         // query params
         if (is_array($enum_query_string_array)) {
-            $enum_query_string_array = $this->serializer->serializeCollection($enum_query_string_array, 'csv', true);
+            $enum_query_string_array = ObjectSerializer::serializeCollection($enum_query_string_array, 'csv', true);
         }
         if ($enum_query_string_array !== null) {
-            $queryParams['enum_query_string_array'] = $this->serializer->toQueryValue($enum_query_string_array);
+            $queryParams['enum_query_string_array'] = ObjectSerializer::toQueryValue($enum_query_string_array);
         }
         // query params
         if ($enum_query_string !== null) {
-            $queryParams['enum_query_string'] = $this->serializer->toQueryValue($enum_query_string);
+            $queryParams['enum_query_string'] = ObjectSerializer::toQueryValue($enum_query_string);
         }
         // query params
         if ($enum_query_integer !== null) {
-            $queryParams['enum_query_integer'] = $this->serializer->toQueryValue($enum_query_integer);
+            $queryParams['enum_query_integer'] = ObjectSerializer::toQueryValue($enum_query_integer);
         }
         // header params
         if (is_array($enum_header_string_array)) {
-            $enum_header_string_array = $this->serializer->serializeCollection($enum_header_string_array, 'csv');
+            $enum_header_string_array = ObjectSerializer::serializeCollection($enum_header_string_array, 'csv');
         }
         if ($enum_header_string_array !== null) {
-            $headerParams['enum_header_string_array'] = $this->serializer->toHeaderValue($enum_header_string_array);
+            $headerParams['enum_header_string_array'] = ObjectSerializer::toHeaderValue($enum_header_string_array);
         }
         // header params
         if ($enum_header_string !== null) {
-            $headerParams['enum_header_string'] = $this->serializer->toHeaderValue($enum_header_string);
+            $headerParams['enum_header_string'] = ObjectSerializer::toHeaderValue($enum_header_string);
         }
 
 
         // form params
         if ($enum_form_string_array !== null) {
-            $formParams['enum_form_string_array'] = $this->serializer->toFormValue($enum_form_string_array);
+            $formParams['enum_form_string_array'] = ObjectSerializer::toFormValue($enum_form_string_array);
         }
         // form params
         if ($enum_form_string !== null) {
-            $formParams['enum_form_string'] = $this->serializer->toFormValue($enum_form_string);
+            $formParams['enum_form_string'] = ObjectSerializer::toFormValue($enum_form_string);
         }
         // form params
         if ($enum_query_double !== null) {
-            $formParams['enum_query_double'] = $this->serializer->toFormValue($enum_query_double);
+            $formParams['enum_query_double'] = ObjectSerializer::toFormValue($enum_query_double);
         }
         
         // for model (json/xml)

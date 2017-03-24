@@ -30,7 +30,6 @@ namespace Swagger\Client\Api;
 
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Uri;
 use Http\Client\Exception\NetworkException;
 use Http\Client\HttpClient;
 use Swagger\Client\ApiException;
@@ -54,11 +53,6 @@ class PetApi
     protected $client;
 
     /**
-     * @var ObjectSerializer
-     */
-    protected $serializer;
-
-    /**
      * @var Configuration
      */
     protected $config;
@@ -66,23 +60,20 @@ class PetApi
     /**
      * @param HttpClient $client
      * @param HeaderSelector $selector
-     * @param ObjectSerializer $serializer
      * @param Configuration $config
      */
     public function __construct(
         HttpClient $client,
         Configuration $config = null,
-        HeaderSelector $selector = null,
-        ObjectSerializer $serializer = null
+        HeaderSelector $selector = null
     ) {
         $this->client = $client;
-        $this->serializer = $serializer ?: new ObjectSerializer();
         $this->headerSelector = $selector ?: new HeaderSelector();
         $this->config = $config ?: new Configuration();
     }
 
     /**
-     * @return Config
+     * @return Configuration
      */
     public function getConfig()
     {
@@ -258,12 +249,12 @@ class PetApi
 
         // header params
         if ($api_key !== null) {
-            $headerParams['api_key'] = $this->serializer->toHeaderValue($api_key);
+            $headerParams['api_key'] = ObjectSerializer::toHeaderValue($api_key);
         }
 
         // path params
         if ($pet_id !== null) {
-            $resourcePath = str_replace('{' . 'petId' . '}', $this->serializer->toPathValue($pet_id), $resourcePath);
+            $resourcePath = str_replace('{' . 'petId' . '}', ObjectSerializer::toPathValue($pet_id), $resourcePath);
         }
 
         
@@ -387,10 +378,10 @@ class PetApi
 
         // query params
         if (is_array($status)) {
-            $status = $this->serializer->serializeCollection($status, 'csv', true);
+            $status = ObjectSerializer::serializeCollection($status, 'csv', true);
         }
         if ($status !== null) {
-            $queryParams['status'] = $this->serializer->toQueryValue($status);
+            $queryParams['status'] = ObjectSerializer::toQueryValue($status);
         }
 
 
@@ -533,10 +524,10 @@ class PetApi
 
         // query params
         if (is_array($tags)) {
-            $tags = $this->serializer->serializeCollection($tags, 'csv', true);
+            $tags = ObjectSerializer::serializeCollection($tags, 'csv', true);
         }
         if ($tags !== null) {
-            $queryParams['tags'] = $this->serializer->toQueryValue($tags);
+            $queryParams['tags'] = ObjectSerializer::toQueryValue($tags);
         }
 
 
@@ -680,7 +671,7 @@ class PetApi
 
         // path params
         if ($pet_id !== null) {
-            $resourcePath = str_replace('{' . 'petId' . '}', $this->serializer->toPathValue($pet_id), $resourcePath);
+            $resourcePath = str_replace('{' . 'petId' . '}', ObjectSerializer::toPathValue($pet_id), $resourcePath);
         }
 
         
@@ -952,16 +943,16 @@ class PetApi
 
         // path params
         if ($pet_id !== null) {
-            $resourcePath = str_replace('{' . 'petId' . '}', $this->serializer->toPathValue($pet_id), $resourcePath);
+            $resourcePath = str_replace('{' . 'petId' . '}', ObjectSerializer::toPathValue($pet_id), $resourcePath);
         }
 
         // form params
         if ($name !== null) {
-            $formParams['name'] = $this->serializer->toFormValue($name);
+            $formParams['name'] = ObjectSerializer::toFormValue($name);
         }
         // form params
         if ($status !== null) {
-            $formParams['status'] = $this->serializer->toFormValue($status);
+            $formParams['status'] = ObjectSerializer::toFormValue($status);
         }
         
         // for model (json/xml)
@@ -1089,17 +1080,17 @@ class PetApi
 
         // path params
         if ($pet_id !== null) {
-            $resourcePath = str_replace('{' . 'petId' . '}', $this->serializer->toPathValue($pet_id), $resourcePath);
+            $resourcePath = str_replace('{' . 'petId' . '}', ObjectSerializer::toPathValue($pet_id), $resourcePath);
         }
 
         // form params
         if ($additional_metadata !== null) {
-            $formParams['additionalMetadata'] = $this->serializer->toFormValue($additional_metadata);
+            $formParams['additionalMetadata'] = ObjectSerializer::toFormValue($additional_metadata);
         }
         // form params
         if ($file !== null) {
             $multipart = true;
-            $formParams['file'] = \GuzzleHttp\Psr7\try_fopen($this->serializer->toFormValue($file), 'rb');
+            $formParams['file'] = \GuzzleHttp\Psr7\try_fopen(ObjectSerializer::toFormValue($file), 'rb');
         }
         
         // for model (json/xml)
