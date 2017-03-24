@@ -296,74 +296,59 @@ use {{invokerPackage}}\ObjectSerializer;
             $headers,
             $httpBody
         );
+
         try {
-            $response = $this->client->sendRequest($request);
-        } catch (NetworkException $e) {
-            throw new ApiException($e->getMessage(), null, $e);
-        }
-
-        if ($response->getStatusCode() >= 400) {
-            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
-        }
-
-        {{#returnType}}
-        $responseBody = $response->getBody();
-        if ($returnType === '\SplFileObject') {
-            $content = $responseBody; //stream goes to serializer
-        } else {
-            $content = $responseBody->getContents();
-            if ($returnType !== 'string' ) {
-                $content = json_decode($content);
+            try {
+                $response = $this->client->sendRequest($request);
+            } catch (NetworkException $e) {
+                throw new ApiException($e->getMessage(), 0);
             }
-        }
 
-        return [
-            ObjectSerializer::deserialize($content, '{{returnType}}', []),
-            $response->getStatusCode(),
-            $response->getHeaders()
-        ];
-        {{/returnType}}
-        {{^returnType}}
-        return [null, $response->getStatusCode(), $response->getHeaders()];
-        {{/returnType}}
-/**
-        try {
-            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath,
-                '{{httpMethod}}',
-                $queryParams,
-                $httpBody,
-                $headerParams,
-                {{#returnType}}
-                '{{returnType}}',
-                {{/returnType}}
-                {{^returnType}}
-                null,
-                {{/returnType}}
-                '{{{path}}}'
-            );
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ($url)",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
 
             {{#returnType}}
-            return [$this->apiClient->getSerializer()->deserialize($response, '{{returnType}}', $httpHeader), $statusCode, $httpHeader];
-            {{/returnType}}
-            {{^returnType}}
-            return [null, $statusCode, $httpHeader];
-            {{/returnType}}
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-            {{#responses}}
-              {{#dataType}}
-                {{^isWildcard}}case {{code}}:{{/isWildcard}}{{#isWildcard}}default:{{/isWildcard}}
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '{{dataType}}', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-              {{/dataType}}
-            {{/responses}}
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
             }
 
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+            {{/returnType}}
+            {{^returnType}}
+            return [null, $statusCode, $response->getHeaders()];
+            {{/returnType}}
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+        {{#responses}}
+            {{#dataType}}
+                {{^isWildcard}}case {{code}}:{{/isWildcard}}{{#isWildcard}}default:{{/isWildcard}}
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '{{dataType}}', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            {{/dataType}}
+        {{/responses}}
+            }
             throw $e;
         }
-*/
     }
     {{/operation}}
 }

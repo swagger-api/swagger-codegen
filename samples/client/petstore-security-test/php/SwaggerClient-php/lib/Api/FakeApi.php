@@ -178,36 +178,31 @@ class FakeApi
             $headers,
             $httpBody
         );
+
         try {
-            $response = $this->client->sendRequest($request);
-        } catch (NetworkException $e) {
-            throw new ApiException($e->getMessage(), null, $e);
-        }
+            try {
+                $response = $this->client->sendRequest($request);
+            } catch (NetworkException $e) {
+                throw new ApiException($e->getMessage(), 0);
+            }
 
-        if ($response->getStatusCode() >= 400) {
-            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
-        }
+            $statusCode = $response->getStatusCode();
 
-        return [null, $response->getStatusCode(), $response->getHeaders()];
-/**
-        try {
-            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath,
-                'PUT',
-                $queryParams,
-                $httpBody,
-                $headerParams,
-                null,
-                '/fake'
-            );
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ($url)",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
 
-            return [null, $statusCode, $httpHeader];
+            return [null, $statusCode, $response->getHeaders()];
+
         } catch (ApiException $e) {
             switch ($e->getCode()) {
             }
-
             throw $e;
         }
-*/
     }
 }

@@ -187,37 +187,32 @@ class PetApi
             $headers,
             $httpBody
         );
+
         try {
-            $response = $this->client->sendRequest($request);
-        } catch (NetworkException $e) {
-            throw new ApiException($e->getMessage(), null, $e);
-        }
+            try {
+                $response = $this->client->sendRequest($request);
+            } catch (NetworkException $e) {
+                throw new ApiException($e->getMessage(), 0);
+            }
 
-        if ($response->getStatusCode() >= 400) {
-            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
-        }
+            $statusCode = $response->getStatusCode();
 
-        return [null, $response->getStatusCode(), $response->getHeaders()];
-/**
-        try {
-            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath,
-                'POST',
-                $queryParams,
-                $httpBody,
-                $headerParams,
-                null,
-                '/pet'
-            );
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ($url)",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
 
-            return [null, $statusCode, $httpHeader];
+            return [null, $statusCode, $response->getHeaders()];
+
         } catch (ApiException $e) {
             switch ($e->getCode()) {
             }
-
             throw $e;
         }
-*/
     }
     /**
      * Operation deletePet
@@ -322,37 +317,32 @@ class PetApi
             $headers,
             $httpBody
         );
+
         try {
-            $response = $this->client->sendRequest($request);
-        } catch (NetworkException $e) {
-            throw new ApiException($e->getMessage(), null, $e);
-        }
+            try {
+                $response = $this->client->sendRequest($request);
+            } catch (NetworkException $e) {
+                throw new ApiException($e->getMessage(), 0);
+            }
 
-        if ($response->getStatusCode() >= 400) {
-            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
-        }
+            $statusCode = $response->getStatusCode();
 
-        return [null, $response->getStatusCode(), $response->getHeaders()];
-/**
-        try {
-            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath,
-                'DELETE',
-                $queryParams,
-                $httpBody,
-                $headerParams,
-                null,
-                '/pet/{petId}'
-            );
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ($url)",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
 
-            return [null, $statusCode, $httpHeader];
+            return [null, $statusCode, $response->getHeaders()];
+
         } catch (ApiException $e) {
             switch ($e->getCode()) {
             }
-
             throw $e;
         }
-*/
     }
     /**
      * Operation findPetsByStatus
@@ -455,55 +445,50 @@ class PetApi
             $headers,
             $httpBody
         );
+
         try {
-            $response = $this->client->sendRequest($request);
-        } catch (NetworkException $e) {
-            throw new ApiException($e->getMessage(), null, $e);
-        }
-
-        if ($response->getStatusCode() >= 400) {
-            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
-        }
-
-        $responseBody = $response->getBody();
-        if ($returnType === '\SplFileObject') {
-            $content = $responseBody; //stream goes to serializer
-        } else {
-            $content = $responseBody->getContents();
-            if ($returnType !== 'string' ) {
-                $content = json_decode($content);
+            try {
+                $response = $this->client->sendRequest($request);
+            } catch (NetworkException $e) {
+                throw new ApiException($e->getMessage(), 0);
             }
-        }
 
-        return [
-            ObjectSerializer::deserialize($content, '\Swagger\Client\Model\Pet[]', []),
-            $response->getStatusCode(),
-            $response->getHeaders()
-        ];
-/**
-        try {
-            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath,
-                'GET',
-                $queryParams,
-                $httpBody,
-                $headerParams,
-                '\Swagger\Client\Model\Pet[]',
-                '/pet/findByStatus'
-            );
+            $statusCode = $response->getStatusCode();
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Model\Pet[]', $httpHeader), $statusCode, $httpHeader];
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ($url)",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Model\Pet[]', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Pet[]', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
-
             throw $e;
         }
-*/
     }
     /**
      * Operation findPetsByTags
@@ -606,55 +591,50 @@ class PetApi
             $headers,
             $httpBody
         );
+
         try {
-            $response = $this->client->sendRequest($request);
-        } catch (NetworkException $e) {
-            throw new ApiException($e->getMessage(), null, $e);
-        }
-
-        if ($response->getStatusCode() >= 400) {
-            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
-        }
-
-        $responseBody = $response->getBody();
-        if ($returnType === '\SplFileObject') {
-            $content = $responseBody; //stream goes to serializer
-        } else {
-            $content = $responseBody->getContents();
-            if ($returnType !== 'string' ) {
-                $content = json_decode($content);
+            try {
+                $response = $this->client->sendRequest($request);
+            } catch (NetworkException $e) {
+                throw new ApiException($e->getMessage(), 0);
             }
-        }
 
-        return [
-            ObjectSerializer::deserialize($content, '\Swagger\Client\Model\Pet[]', []),
-            $response->getStatusCode(),
-            $response->getHeaders()
-        ];
-/**
-        try {
-            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath,
-                'GET',
-                $queryParams,
-                $httpBody,
-                $headerParams,
-                '\Swagger\Client\Model\Pet[]',
-                '/pet/findByTags'
-            );
+            $statusCode = $response->getStatusCode();
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Model\Pet[]', $httpHeader), $statusCode, $httpHeader];
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ($url)",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Model\Pet[]', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Pet[]', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
-
             throw $e;
         }
-*/
     }
     /**
      * Operation getPetById
@@ -755,55 +735,50 @@ class PetApi
             $headers,
             $httpBody
         );
+
         try {
-            $response = $this->client->sendRequest($request);
-        } catch (NetworkException $e) {
-            throw new ApiException($e->getMessage(), null, $e);
-        }
-
-        if ($response->getStatusCode() >= 400) {
-            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
-        }
-
-        $responseBody = $response->getBody();
-        if ($returnType === '\SplFileObject') {
-            $content = $responseBody; //stream goes to serializer
-        } else {
-            $content = $responseBody->getContents();
-            if ($returnType !== 'string' ) {
-                $content = json_decode($content);
+            try {
+                $response = $this->client->sendRequest($request);
+            } catch (NetworkException $e) {
+                throw new ApiException($e->getMessage(), 0);
             }
-        }
 
-        return [
-            ObjectSerializer::deserialize($content, '\Swagger\Client\Model\Pet', []),
-            $response->getStatusCode(),
-            $response->getHeaders()
-        ];
-/**
-        try {
-            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath,
-                'GET',
-                $queryParams,
-                $httpBody,
-                $headerParams,
-                '\Swagger\Client\Model\Pet',
-                '/pet/{petId}'
-            );
+            $statusCode = $response->getStatusCode();
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Model\Pet', $httpHeader), $statusCode, $httpHeader];
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ($url)",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Model\Pet', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Pet', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
-
             throw $e;
         }
-*/
     }
     /**
      * Operation updatePet
@@ -903,37 +878,32 @@ class PetApi
             $headers,
             $httpBody
         );
+
         try {
-            $response = $this->client->sendRequest($request);
-        } catch (NetworkException $e) {
-            throw new ApiException($e->getMessage(), null, $e);
-        }
+            try {
+                $response = $this->client->sendRequest($request);
+            } catch (NetworkException $e) {
+                throw new ApiException($e->getMessage(), 0);
+            }
 
-        if ($response->getStatusCode() >= 400) {
-            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
-        }
+            $statusCode = $response->getStatusCode();
 
-        return [null, $response->getStatusCode(), $response->getHeaders()];
-/**
-        try {
-            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath,
-                'PUT',
-                $queryParams,
-                $httpBody,
-                $headerParams,
-                null,
-                '/pet'
-            );
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ($url)",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
 
-            return [null, $statusCode, $httpHeader];
+            return [null, $statusCode, $response->getHeaders()];
+
         } catch (ApiException $e) {
             switch ($e->getCode()) {
             }
-
             throw $e;
         }
-*/
     }
     /**
      * Operation updatePetWithForm
@@ -1044,37 +1014,32 @@ class PetApi
             $headers,
             $httpBody
         );
+
         try {
-            $response = $this->client->sendRequest($request);
-        } catch (NetworkException $e) {
-            throw new ApiException($e->getMessage(), null, $e);
-        }
+            try {
+                $response = $this->client->sendRequest($request);
+            } catch (NetworkException $e) {
+                throw new ApiException($e->getMessage(), 0);
+            }
 
-        if ($response->getStatusCode() >= 400) {
-            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
-        }
+            $statusCode = $response->getStatusCode();
 
-        return [null, $response->getStatusCode(), $response->getHeaders()];
-/**
-        try {
-            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath,
-                'POST',
-                $queryParams,
-                $httpBody,
-                $headerParams,
-                null,
-                '/pet/{petId}'
-            );
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ($url)",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
 
-            return [null, $statusCode, $httpHeader];
+            return [null, $statusCode, $response->getHeaders()];
+
         } catch (ApiException $e) {
             switch ($e->getCode()) {
             }
-
             throw $e;
         }
-*/
     }
     /**
      * Operation uploadFile
@@ -1187,54 +1152,49 @@ class PetApi
             $headers,
             $httpBody
         );
+
         try {
-            $response = $this->client->sendRequest($request);
-        } catch (NetworkException $e) {
-            throw new ApiException($e->getMessage(), null, $e);
-        }
-
-        if ($response->getStatusCode() >= 400) {
-            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
-        }
-
-        $responseBody = $response->getBody();
-        if ($returnType === '\SplFileObject') {
-            $content = $responseBody; //stream goes to serializer
-        } else {
-            $content = $responseBody->getContents();
-            if ($returnType !== 'string' ) {
-                $content = json_decode($content);
+            try {
+                $response = $this->client->sendRequest($request);
+            } catch (NetworkException $e) {
+                throw new ApiException($e->getMessage(), 0);
             }
-        }
 
-        return [
-            ObjectSerializer::deserialize($content, '\Swagger\Client\Model\ApiResponse', []),
-            $response->getStatusCode(),
-            $response->getHeaders()
-        ];
-/**
-        try {
-            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath,
-                'POST',
-                $queryParams,
-                $httpBody,
-                $headerParams,
-                '\Swagger\Client\Model\ApiResponse',
-                '/pet/{petId}/uploadImage'
-            );
+            $statusCode = $response->getStatusCode();
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Model\ApiResponse', $httpHeader), $statusCode, $httpHeader];
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ($url)",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Model\ApiResponse', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\ApiResponse', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
-
             throw $e;
         }
-*/
     }
 }

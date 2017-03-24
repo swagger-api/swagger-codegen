@@ -183,37 +183,32 @@ class UserApi
             $headers,
             $httpBody
         );
+
         try {
-            $response = $this->client->sendRequest($request);
-        } catch (NetworkException $e) {
-            throw new ApiException($e->getMessage(), null, $e);
-        }
+            try {
+                $response = $this->client->sendRequest($request);
+            } catch (NetworkException $e) {
+                throw new ApiException($e->getMessage(), 0);
+            }
 
-        if ($response->getStatusCode() >= 400) {
-            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
-        }
+            $statusCode = $response->getStatusCode();
 
-        return [null, $response->getStatusCode(), $response->getHeaders()];
-/**
-        try {
-            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath,
-                'POST',
-                $queryParams,
-                $httpBody,
-                $headerParams,
-                null,
-                '/user'
-            );
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ($url)",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
 
-            return [null, $statusCode, $httpHeader];
+            return [null, $statusCode, $response->getHeaders()];
+
         } catch (ApiException $e) {
             switch ($e->getCode()) {
             }
-
             throw $e;
         }
-*/
     }
     /**
      * Operation createUsersWithArrayInput
@@ -309,37 +304,32 @@ class UserApi
             $headers,
             $httpBody
         );
+
         try {
-            $response = $this->client->sendRequest($request);
-        } catch (NetworkException $e) {
-            throw new ApiException($e->getMessage(), null, $e);
-        }
+            try {
+                $response = $this->client->sendRequest($request);
+            } catch (NetworkException $e) {
+                throw new ApiException($e->getMessage(), 0);
+            }
 
-        if ($response->getStatusCode() >= 400) {
-            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
-        }
+            $statusCode = $response->getStatusCode();
 
-        return [null, $response->getStatusCode(), $response->getHeaders()];
-/**
-        try {
-            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath,
-                'POST',
-                $queryParams,
-                $httpBody,
-                $headerParams,
-                null,
-                '/user/createWithArray'
-            );
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ($url)",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
 
-            return [null, $statusCode, $httpHeader];
+            return [null, $statusCode, $response->getHeaders()];
+
         } catch (ApiException $e) {
             switch ($e->getCode()) {
             }
-
             throw $e;
         }
-*/
     }
     /**
      * Operation createUsersWithListInput
@@ -435,37 +425,32 @@ class UserApi
             $headers,
             $httpBody
         );
+
         try {
-            $response = $this->client->sendRequest($request);
-        } catch (NetworkException $e) {
-            throw new ApiException($e->getMessage(), null, $e);
-        }
+            try {
+                $response = $this->client->sendRequest($request);
+            } catch (NetworkException $e) {
+                throw new ApiException($e->getMessage(), 0);
+            }
 
-        if ($response->getStatusCode() >= 400) {
-            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
-        }
+            $statusCode = $response->getStatusCode();
 
-        return [null, $response->getStatusCode(), $response->getHeaders()];
-/**
-        try {
-            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath,
-                'POST',
-                $queryParams,
-                $httpBody,
-                $headerParams,
-                null,
-                '/user/createWithList'
-            );
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ($url)",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
 
-            return [null, $statusCode, $httpHeader];
+            return [null, $statusCode, $response->getHeaders()];
+
         } catch (ApiException $e) {
             switch ($e->getCode()) {
             }
-
             throw $e;
         }
-*/
     }
     /**
      * Operation deleteUser
@@ -560,37 +545,32 @@ class UserApi
             $headers,
             $httpBody
         );
+
         try {
-            $response = $this->client->sendRequest($request);
-        } catch (NetworkException $e) {
-            throw new ApiException($e->getMessage(), null, $e);
-        }
+            try {
+                $response = $this->client->sendRequest($request);
+            } catch (NetworkException $e) {
+                throw new ApiException($e->getMessage(), 0);
+            }
 
-        if ($response->getStatusCode() >= 400) {
-            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
-        }
+            $statusCode = $response->getStatusCode();
 
-        return [null, $response->getStatusCode(), $response->getHeaders()];
-/**
-        try {
-            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath,
-                'DELETE',
-                $queryParams,
-                $httpBody,
-                $headerParams,
-                null,
-                '/user/{username}'
-            );
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ($url)",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
 
-            return [null, $statusCode, $httpHeader];
+            return [null, $statusCode, $response->getHeaders()];
+
         } catch (ApiException $e) {
             switch ($e->getCode()) {
             }
-
             throw $e;
         }
-*/
     }
     /**
      * Operation getUserByName
@@ -686,55 +666,50 @@ class UserApi
             $headers,
             $httpBody
         );
+
         try {
-            $response = $this->client->sendRequest($request);
-        } catch (NetworkException $e) {
-            throw new ApiException($e->getMessage(), null, $e);
-        }
-
-        if ($response->getStatusCode() >= 400) {
-            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
-        }
-
-        $responseBody = $response->getBody();
-        if ($returnType === '\SplFileObject') {
-            $content = $responseBody; //stream goes to serializer
-        } else {
-            $content = $responseBody->getContents();
-            if ($returnType !== 'string' ) {
-                $content = json_decode($content);
+            try {
+                $response = $this->client->sendRequest($request);
+            } catch (NetworkException $e) {
+                throw new ApiException($e->getMessage(), 0);
             }
-        }
 
-        return [
-            ObjectSerializer::deserialize($content, '\Swagger\Client\Model\User', []),
-            $response->getStatusCode(),
-            $response->getHeaders()
-        ];
-/**
-        try {
-            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath,
-                'GET',
-                $queryParams,
-                $httpBody,
-                $headerParams,
-                '\Swagger\Client\Model\User',
-                '/user/{username}'
-            );
+            $statusCode = $response->getStatusCode();
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Model\User', $httpHeader), $statusCode, $httpHeader];
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ($url)",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Model\User', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\User', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
-
             throw $e;
         }
-*/
     }
     /**
      * Operation loginUser
@@ -840,55 +815,50 @@ class UserApi
             $headers,
             $httpBody
         );
+
         try {
-            $response = $this->client->sendRequest($request);
-        } catch (NetworkException $e) {
-            throw new ApiException($e->getMessage(), null, $e);
-        }
-
-        if ($response->getStatusCode() >= 400) {
-            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
-        }
-
-        $responseBody = $response->getBody();
-        if ($returnType === '\SplFileObject') {
-            $content = $responseBody; //stream goes to serializer
-        } else {
-            $content = $responseBody->getContents();
-            if ($returnType !== 'string' ) {
-                $content = json_decode($content);
+            try {
+                $response = $this->client->sendRequest($request);
+            } catch (NetworkException $e) {
+                throw new ApiException($e->getMessage(), 0);
             }
-        }
 
-        return [
-            ObjectSerializer::deserialize($content, 'string', []),
-            $response->getStatusCode(),
-            $response->getHeaders()
-        ];
-/**
-        try {
-            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath,
-                'GET',
-                $queryParams,
-                $httpBody,
-                $headerParams,
-                'string',
-                '/user/login'
-            );
+            $statusCode = $response->getStatusCode();
 
-            return [$this->apiClient->getSerializer()->deserialize($response, 'string', $httpHeader), $statusCode, $httpHeader];
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ($url)",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), 'string', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), 'string', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
-
             throw $e;
         }
-*/
     }
     /**
      * Operation logoutUser
@@ -973,37 +943,32 @@ class UserApi
             $headers,
             $httpBody
         );
+
         try {
-            $response = $this->client->sendRequest($request);
-        } catch (NetworkException $e) {
-            throw new ApiException($e->getMessage(), null, $e);
-        }
+            try {
+                $response = $this->client->sendRequest($request);
+            } catch (NetworkException $e) {
+                throw new ApiException($e->getMessage(), 0);
+            }
 
-        if ($response->getStatusCode() >= 400) {
-            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
-        }
+            $statusCode = $response->getStatusCode();
 
-        return [null, $response->getStatusCode(), $response->getHeaders()];
-/**
-        try {
-            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath,
-                'GET',
-                $queryParams,
-                $httpBody,
-                $headerParams,
-                null,
-                '/user/logout'
-            );
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ($url)",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
 
-            return [null, $statusCode, $httpHeader];
+            return [null, $statusCode, $response->getHeaders()];
+
         } catch (ApiException $e) {
             switch ($e->getCode()) {
             }
-
             throw $e;
         }
-*/
     }
     /**
      * Operation updateUser
@@ -1109,36 +1074,31 @@ class UserApi
             $headers,
             $httpBody
         );
+
         try {
-            $response = $this->client->sendRequest($request);
-        } catch (NetworkException $e) {
-            throw new ApiException($e->getMessage(), null, $e);
-        }
+            try {
+                $response = $this->client->sendRequest($request);
+            } catch (NetworkException $e) {
+                throw new ApiException($e->getMessage(), 0);
+            }
 
-        if ($response->getStatusCode() >= 400) {
-            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
-        }
+            $statusCode = $response->getStatusCode();
 
-        return [null, $response->getStatusCode(), $response->getHeaders()];
-/**
-        try {
-            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath,
-                'PUT',
-                $queryParams,
-                $httpBody,
-                $headerParams,
-                null,
-                '/user/{username}'
-            );
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ($url)",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
 
-            return [null, $statusCode, $httpHeader];
+            return [null, $statusCode, $response->getHeaders()];
+
         } catch (ApiException $e) {
             switch ($e->getCode()) {
             }
-
             throw $e;
         }
-*/
     }
 }

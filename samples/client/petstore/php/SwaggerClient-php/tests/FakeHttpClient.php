@@ -11,6 +11,8 @@ class FakeHttpClient implements HttpClient
 {
     /** @var  RequestInterface|null */
     private $request;
+    /** @var  ResponseInterface|null */
+    private $response;
 
     /**
      * Sends a PSR-7 request.
@@ -25,7 +27,7 @@ class FakeHttpClient implements HttpClient
     public function sendRequest(RequestInterface $request)
     {
         $this->request = $request;
-        return new Response(200);
+        return $this->response ?: new Response(200);
     }
 
     /**
@@ -34,5 +36,13 @@ class FakeHttpClient implements HttpClient
     public function getLastRequest()
     {
         return $this->request;
+    }
+
+    /**
+     * @param null|ResponseInterface $response
+     */
+    public function setResponse(ResponseInterface $response = null)
+    {
+        $this->response = $response;
     }
 }

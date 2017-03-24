@@ -182,37 +182,32 @@ class StoreApi
             $headers,
             $httpBody
         );
+
         try {
-            $response = $this->client->sendRequest($request);
-        } catch (NetworkException $e) {
-            throw new ApiException($e->getMessage(), null, $e);
-        }
+            try {
+                $response = $this->client->sendRequest($request);
+            } catch (NetworkException $e) {
+                throw new ApiException($e->getMessage(), 0);
+            }
 
-        if ($response->getStatusCode() >= 400) {
-            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
-        }
+            $statusCode = $response->getStatusCode();
 
-        return [null, $response->getStatusCode(), $response->getHeaders()];
-/**
-        try {
-            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath,
-                'DELETE',
-                $queryParams,
-                $httpBody,
-                $headerParams,
-                null,
-                '/store/order/{order_id}'
-            );
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ($url)",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
 
-            return [null, $statusCode, $httpHeader];
+            return [null, $statusCode, $response->getHeaders()];
+
         } catch (ApiException $e) {
             switch ($e->getCode()) {
             }
-
             throw $e;
         }
-*/
     }
     /**
      * Operation getInventory
@@ -303,55 +298,50 @@ class StoreApi
             $headers,
             $httpBody
         );
+
         try {
-            $response = $this->client->sendRequest($request);
-        } catch (NetworkException $e) {
-            throw new ApiException($e->getMessage(), null, $e);
-        }
-
-        if ($response->getStatusCode() >= 400) {
-            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
-        }
-
-        $responseBody = $response->getBody();
-        if ($returnType === '\SplFileObject') {
-            $content = $responseBody; //stream goes to serializer
-        } else {
-            $content = $responseBody->getContents();
-            if ($returnType !== 'string' ) {
-                $content = json_decode($content);
+            try {
+                $response = $this->client->sendRequest($request);
+            } catch (NetworkException $e) {
+                throw new ApiException($e->getMessage(), 0);
             }
-        }
 
-        return [
-            ObjectSerializer::deserialize($content, 'map[string,int]', []),
-            $response->getStatusCode(),
-            $response->getHeaders()
-        ];
-/**
-        try {
-            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath,
-                'GET',
-                $queryParams,
-                $httpBody,
-                $headerParams,
-                'map[string,int]',
-                '/store/inventory'
-            );
+            $statusCode = $response->getStatusCode();
 
-            return [$this->apiClient->getSerializer()->deserialize($response, 'map[string,int]', $httpHeader), $statusCode, $httpHeader];
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ($url)",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), 'map[string,int]', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), 'map[string,int]', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
-
             throw $e;
         }
-*/
     }
     /**
      * Operation getOrderById
@@ -454,55 +444,50 @@ class StoreApi
             $headers,
             $httpBody
         );
+
         try {
-            $response = $this->client->sendRequest($request);
-        } catch (NetworkException $e) {
-            throw new ApiException($e->getMessage(), null, $e);
-        }
-
-        if ($response->getStatusCode() >= 400) {
-            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
-        }
-
-        $responseBody = $response->getBody();
-        if ($returnType === '\SplFileObject') {
-            $content = $responseBody; //stream goes to serializer
-        } else {
-            $content = $responseBody->getContents();
-            if ($returnType !== 'string' ) {
-                $content = json_decode($content);
+            try {
+                $response = $this->client->sendRequest($request);
+            } catch (NetworkException $e) {
+                throw new ApiException($e->getMessage(), 0);
             }
-        }
 
-        return [
-            ObjectSerializer::deserialize($content, '\Swagger\Client\Model\Order', []),
-            $response->getStatusCode(),
-            $response->getHeaders()
-        ];
-/**
-        try {
-            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath,
-                'GET',
-                $queryParams,
-                $httpBody,
-                $headerParams,
-                '\Swagger\Client\Model\Order',
-                '/store/order/{order_id}'
-            );
+            $statusCode = $response->getStatusCode();
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Model\Order', $httpHeader), $statusCode, $httpHeader];
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ($url)",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Model\Order', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Order', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
-
             throw $e;
         }
-*/
     }
     /**
      * Operation placeOrder
@@ -599,54 +584,49 @@ class StoreApi
             $headers,
             $httpBody
         );
+
         try {
-            $response = $this->client->sendRequest($request);
-        } catch (NetworkException $e) {
-            throw new ApiException($e->getMessage(), null, $e);
-        }
-
-        if ($response->getStatusCode() >= 400) {
-            throw new ApiException("[{$response->getStatusCode()}] Error connecting to the API ($url)", $response->getStatusCode());
-        }
-
-        $responseBody = $response->getBody();
-        if ($returnType === '\SplFileObject') {
-            $content = $responseBody; //stream goes to serializer
-        } else {
-            $content = $responseBody->getContents();
-            if ($returnType !== 'string' ) {
-                $content = json_decode($content);
+            try {
+                $response = $this->client->sendRequest($request);
+            } catch (NetworkException $e) {
+                throw new ApiException($e->getMessage(), 0);
             }
-        }
 
-        return [
-            ObjectSerializer::deserialize($content, '\Swagger\Client\Model\Order', []),
-            $response->getStatusCode(),
-            $response->getHeaders()
-        ];
-/**
-        try {
-            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
-                $resourcePath,
-                'POST',
-                $queryParams,
-                $httpBody,
-                $headerParams,
-                '\Swagger\Client\Model\Order',
-                '/store/order'
-            );
+            $statusCode = $response->getStatusCode();
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Model\Order', $httpHeader), $statusCode, $httpHeader];
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ($url)",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\Model\Order', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\Order', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
-
             throw $e;
         }
-*/
     }
 }
