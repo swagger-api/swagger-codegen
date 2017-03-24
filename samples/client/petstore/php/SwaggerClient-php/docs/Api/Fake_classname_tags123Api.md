@@ -17,7 +17,7 @@ To test class name in snake case
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-$api_instance = new Swagger\Client\Api\Fake_classname_tags123Api();
+$api_instance = new Swagger\Client\Api\Fake_classname_tags123Api(new \Http\Adapter\Guzzle6\Client());
 $body = new \Swagger\Client\Model\Client(); // \Swagger\Client\Model\Client | client model
 
 try {
