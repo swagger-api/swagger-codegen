@@ -1381,10 +1381,25 @@ public class DefaultCodegen {
                 m.allowableValues = new HashMap<String, Object>();
                 m.allowableValues.put("values", impl.getEnum());
             }
+
+            addVars(m, impl.getProperties(), impl.getRequired());
+
             if (impl.getAdditionalProperties() != null) {
+                final Property additionalProperties = impl.getAdditionalProperties();
+                if(additionalProperties instanceof RefProperty){
+                    RefProperty refProperty = ((RefProperty)additionalProperties);
+                    m.dataType = getSwaggerType(refProperty);
+                    final String modelName = refProperty.getSimpleRef();
+                    if(allDefinitions != null) {
+                        final Model child = allDefinitions.get(modelName);
+                        if (child != null && child instanceof ModelImpl) {
+                            final ModelImpl additionalPropertiesModel = (ModelImpl) child;
+                            addVars(m, additionalPropertiesModel.getProperties(), additionalPropertiesModel.getRequired());
+                        }
+                    }
+                }
                 addAdditionPropertiesToCodeGenModel(m, impl);
             }
-            addVars(m, impl.getProperties(), impl.getRequired());
         }
 
         if (m.vars != null) {
@@ -2122,7 +2137,7 @@ public class DefaultCodegen {
 
         if (parameters != null) {
             for (Parameter param : parameters) {
-                CodegenParameter p = fromParameter(param, imports);
+                CodegenParameter p = fromParameter(param, imports, definitions);
                 // rename parameters to make sure all of them have unique names
                 if (ensureUniqueParams) {
                     while (true) {
@@ -2308,6 +2323,17 @@ public class DefaultCodegen {
      * @return Codegen Parameter object
      */
     public CodegenParameter fromParameter(Parameter param, Set<String> imports) {
+        return fromParameter(param, imports, null);
+    }
+
+    /**
+     * Convert Swagger Parameter object to Codegen Parameter object, passing along all model definitions
+     *
+     * @param param Swagger parameter object
+     * @param imports set of imports for library/package/module
+     * @return Codegen Parameter object
+     */
+    private CodegenParameter fromParameter(Parameter param, Set<String> imports, Map<String, Model> modelDefinitions) {
         CodegenParameter p = CodegenModelFactory.newInstance(CodegenModelType.PARAMETER);
         p.baseName = param.getName();
         p.description = escapeText(param.getDescription());
@@ -2466,7 +2492,7 @@ public class DefaultCodegen {
 
             if (model instanceof ModelImpl) {
                 ModelImpl impl = (ModelImpl) model;
-                CodegenModel cm = fromModel(bp.getName(), impl);
+                CodegenModel cm = fromModel(bp.getName(), impl, modelDefinitions);
                 if (!cm.emptyVars) {
                     p.dataType = getTypeDeclaration(cm.classname);
                     imports.add(p.dataType);
@@ -2919,9 +2945,9 @@ public class DefaultCodegen {
 
         m.hasRequired = false;
         if (properties != null && !properties.isEmpty()) {
+            m.emptyVars = false;
             m.hasVars = true;
             m.hasEnums = false;
-
 
             Set<String> mandatory = required == null ? Collections.<String> emptySet()
                     : new TreeSet<String>(required);
