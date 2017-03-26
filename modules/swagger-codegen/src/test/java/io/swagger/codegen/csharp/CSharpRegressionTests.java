@@ -55,6 +55,6 @@ public class CSharpRegressionTests {
         assertTrue(cp.isBodyParam, "Failed to expose isBodyParam");
         assertEquals(cp.paramName, "resourceParameters");
         assertNotEquals(cp.dataType, "Object", "Regression of issue 5132 found, see https://github.com/swagger-api/swagger-codegen/issues/5132.");
-        assertEquals(cp.dataType, "ResourceParameters", "Possible regression of issue 5132 found, see https://github.com/swagger-api/swagger-codegen/issues/5132."););
+        assertEquals(cp.dataType, "ResourceParameters", "Possible regression of issue 5132 found, see https://github.com/swagger-api/swagger-codegen/issues/5132.");
     }
 }
