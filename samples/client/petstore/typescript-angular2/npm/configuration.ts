@@ -1,5 +1,5 @@
 export class Configuration {
-    apiKey: string;
+    apiKeys: {[ key: string ]: string};
     username: string;
     password: string;
     accessToken: string | (() => string);
