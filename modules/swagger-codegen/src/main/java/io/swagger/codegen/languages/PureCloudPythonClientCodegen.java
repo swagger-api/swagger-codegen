@@ -9,7 +9,7 @@ import java.io.File;
 
 public class PureCloudPythonClientCodegen extends PythonClientCodegen {
 
-    protected Logger LOGGER = LoggerFactory.getLogger(PureCloudCSharpClientCodegen.class);
+    protected Logger LOGGER = LoggerFactory.getLogger(PureCloudPythonClientCodegen.class);
 
     public PureCloudPythonClientCodegen() {
         super();
