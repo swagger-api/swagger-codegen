@@ -98,7 +98,7 @@ public class UserApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = String.class),
         @ApiResponse(code = 400, message = "Invalid username/password supplied", response = String.class) })
-    public Response loginUser(@QueryParam("username") @NotNull  String username,@QueryParam("password") @NotNull  String password) {
+    public Response loginUser(@ApiParam(value = "The user name for login",required=true) @QueryParam("username") @NotNull  String username,@ApiParam(value = "The password for login in clear text",required=true) @QueryParam("password") @NotNull  String password) {
         return Response.ok().entity("magic!").build();
     }
     

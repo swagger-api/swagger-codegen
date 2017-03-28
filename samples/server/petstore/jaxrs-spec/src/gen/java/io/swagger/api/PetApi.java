@@ -106,7 +106,7 @@ public class PetApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid status value", response = Pet.class, responseContainer = "List") })
-    public Response findPetsByStatus(@QueryParam("status") @NotNull  List<StatusEnum> status) {
+    public Response findPetsByStatus(@ApiParam(value = "Status values that need to be considered for filter",required=true, allowableValues="available, pending, sold") @QueryParam("status") @NotNull  List<StatusEnum> status) {
         return Response.ok().entity("magic!").build();
     }
     
@@ -125,7 +125,7 @@ public class PetApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid tag value", response = Pet.class, responseContainer = "List") })
-    public Response findPetsByTags(@QueryParam("tags") @NotNull  List<String> tags) {
+    public Response findPetsByTags(@ApiParam(value = "Tags to filter by",required=true) @QueryParam("tags") @NotNull  List<String> tags) {
         return Response.ok().entity("magic!").build();
     }
     
