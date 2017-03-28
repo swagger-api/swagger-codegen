@@ -439,7 +439,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                         for (CodegenOperation apiOperation : (List<CodegenOperation>)api.get("operation")) {
                             // Initialize data object for template
                             Map<String, Object> operationData = new HashMap<>();
-                            operationData.put("package", operation.get("package") + ".requestBuilder");
+                            operationData.put("package", operation.get("package") + ".request");
                             operationData.put("imports", operation.get("imports"));
                             operationData.put("invokerPackage", operation.get("invokerPackage"));
                             operationData.put("modelPackage", operation.get("modelPackage"));
