@@ -40,7 +40,6 @@ public class PureCloudPythonClientCodegen extends PythonClientCodegen {
         if (operation.getVendorExtensions().containsKey(OPERATION_ID_PROPERTY_NAME)) {
             String operationId = operation.getVendorExtensions().get(OPERATION_ID_PROPERTY_NAME).toString();
             if (!StringUtils.isBlank(operationId)) {
-                System.out.println("Using operation ID property " + OPERATION_ID_PROPERTY_NAME + " (" + operationId +  ") for path " + path);
                 return operationId;
             }
         }
