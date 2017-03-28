@@ -73,6 +73,13 @@ public class CodegenParameter {
 	 * See http://json-schema.org/latest/json-schema-validation.html#anchor14
 	 */
     public Number multipleOf;
+
+    /**
+     * Returns the title case of the parameter name
+     */
+    public String getParamTitle() {
+        return DefaultCodegen.camelize(paramName, false);
+    }
     
     public CodegenParameter copy() {
         CodegenParameter output = new CodegenParameter();
