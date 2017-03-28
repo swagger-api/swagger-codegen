@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.util.*;
 
 public class PureCloudDotNetClientCodegen extends CSharpClientCodegen {
+    private static String OPERATION_ID_PROPERTY_NAME = "x-purecloud-method-name";
 
     protected Logger LOGGER = LoggerFactory.getLogger(PureCloudDotNetClientCodegen.class);
 
@@ -38,7 +39,7 @@ public class PureCloudDotNetClientCodegen extends CSharpClientCodegen {
 
     @Override
     /**
-     * Get the value of x-inin-method-name, or use default C# behavior if blank.
+     * Get the operation ID or use default behavior if blank.
      *
      * @param operation the operation object
      * @param path the path of the operation
@@ -46,9 +47,12 @@ public class PureCloudDotNetClientCodegen extends CSharpClientCodegen {
      * @return the (generated) operationId
      */
     protected String getOrGenerateOperationId(Operation operation, String path, String httpMethod) {
-        if (operation.getVendorExtensions().containsKey("x-purecloud-method-name")) {
-            String ininMethodName = operation.getVendorExtensions().get("x-purecloud-method-name").toString();
-            if (!StringUtils.isBlank(ininMethodName)) return ininMethodName;
+        if (operation.getVendorExtensions().containsKey(OPERATION_ID_PROPERTY_NAME)) {
+            String operationId = operation.getVendorExtensions().get(OPERATION_ID_PROPERTY_NAME).toString();
+            if (!StringUtils.isBlank(operationId)) {
+                System.out.println("Using operation ID property " + OPERATION_ID_PROPERTY_NAME + " (" + operationId +  ") for path " + path);
+                return operationId;
+            }
         }
 
         return super.getOrGenerateOperationId(operation, path, httpMethod);

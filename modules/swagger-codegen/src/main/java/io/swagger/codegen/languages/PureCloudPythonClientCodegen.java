@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 
 public class PureCloudPythonClientCodegen extends PythonClientCodegen {
+    private static String OPERATION_ID_PROPERTY_NAME = "x-purecloud-method-name";
 
     protected Logger LOGGER = LoggerFactory.getLogger(PureCloudPythonClientCodegen.class);
 
@@ -27,18 +28,8 @@ public class PureCloudPythonClientCodegen extends PythonClientCodegen {
     }
 
     @Override
-    public void processOpts() {
-        super.processOpts();
-    }
-
-    @Override
-    public String escapeReservedWord(String name) {
-        return "pc" + capitalizeFirstLetter(name);
-    }
-
-    @Override
     /**
-     * Get the value of x-inin-method-name, or use default C# behavior if blank.
+     * Get the operation ID or use default behavior if blank.
      *
      * @param operation the operation object
      * @param path the path of the operation
@@ -46,12 +37,25 @@ public class PureCloudPythonClientCodegen extends PythonClientCodegen {
      * @return the (generated) operationId
      */
     protected String getOrGenerateOperationId(Operation operation, String path, String httpMethod) {
-        if (operation.getVendorExtensions().containsKey("x-inin-method-name")) {
-            String ininMethodName = operation.getVendorExtensions().get("x-inin-method-name").toString();
-            if (!StringUtils.isBlank(ininMethodName)) return ininMethodName;
+        if (operation.getVendorExtensions().containsKey(OPERATION_ID_PROPERTY_NAME)) {
+            String operationId = operation.getVendorExtensions().get(OPERATION_ID_PROPERTY_NAME).toString();
+            if (!StringUtils.isBlank(operationId)) {
+                System.out.println("Using operation ID property " + OPERATION_ID_PROPERTY_NAME + " (" + operationId +  ") for path " + path);
+                return operationId;
+            }
         }
 
         return super.getOrGenerateOperationId(operation, path, httpMethod);
+    }
+
+    @Override
+    public void processOpts() {
+        super.processOpts();
+    }
+
+    @Override
+    public String escapeReservedWord(String name) {
+        return "pc" + capitalizeFirstLetter(name);
     }
 
     private String capitalizeFirstLetter(String s) {

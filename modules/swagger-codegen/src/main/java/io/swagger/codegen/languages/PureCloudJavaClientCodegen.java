@@ -1,12 +1,10 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.models.Model;
 import io.swagger.models.Operation;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.SystemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +12,7 @@ import java.util.*;
 
 
 public class PureCloudJavaClientCodegen extends JavaClientCodegen {
+    private static String OPERATION_ID_PROPERTY_NAME = "x-purecloud-method-name";
 
     protected Logger LOGGER = LoggerFactory.getLogger(PureCloudJavaClientCodegen.class);
 
@@ -25,10 +24,12 @@ public class PureCloudJavaClientCodegen extends JavaClientCodegen {
 
         // Custom mappings for swagger type -> java type
         importMapping.put("LocalDateTime", "org.joda.time.LocalDateTime");
-        importMapping.put("IPagedResource", "com.mypurecloud.sdk.IPagedResource");
+        importMapping.put("PagedResource", "com.mypurecloud.sdk.v2.PagedResource");
 
         // Add special reserved words
         reservedWords.add("null");
+
+        operationTemplateFiles.put("requestBuilder.mustache", ".java");
     }
 
 
@@ -38,7 +39,7 @@ public class PureCloudJavaClientCodegen extends JavaClientCodegen {
 
     @Override
     /**
-     * Get the value of x-inin-method-name, or use default C# behavior if blank.
+     * Get the operation ID or use default behavior if blank.
      *
      * @param operation the operation object
      * @param path the path of the operation
@@ -46,9 +47,12 @@ public class PureCloudJavaClientCodegen extends JavaClientCodegen {
      * @return the (generated) operationId
      */
     protected String getOrGenerateOperationId(Operation operation, String path, String httpMethod) {
-        if (operation.getVendorExtensions().containsKey("x-inin-method-name")) {
-            String ininMethodName = operation.getVendorExtensions().get("x-inin-method-name").toString();
-            if (!StringUtils.isBlank(ininMethodName)) return ininMethodName;
+        if (operation.getVendorExtensions().containsKey(OPERATION_ID_PROPERTY_NAME)) {
+            String operationId = operation.getVendorExtensions().get(OPERATION_ID_PROPERTY_NAME).toString();
+            if (!StringUtils.isBlank(operationId)) {
+                System.out.println("Using operation ID property " + OPERATION_ID_PROPERTY_NAME + " (" + operationId +  ") for path " + path);
+                return operationId;
+            }
         }
 
         return super.getOrGenerateOperationId(operation, path, httpMethod);
@@ -121,10 +125,10 @@ public class PureCloudJavaClientCodegen extends JavaClientCodegen {
                 codegenModel.isPagedResource = false;
                 return codegenModel;
             }
-            
-            System.out.println(codegenModel.classname + " implements IPagedResource");
+
+            System.out.println(codegenModel.classname + " implements PagedResource");
             codegenModel.pagedResourceType = entitiesProperty.get().complexType;
-            codegenModel.imports.add("IPagedResource");
+            codegenModel.imports.add("PagedResource");
         }
 
         return codegenModel;
