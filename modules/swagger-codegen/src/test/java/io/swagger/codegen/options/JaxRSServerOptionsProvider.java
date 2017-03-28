@@ -37,6 +37,8 @@ public class JaxRSServerOptionsProvider implements OptionsProvider {
     public static final String JAXRS_DEFAULT_LIBRARY_VALUE = "jersey1";
     public static final String USE_BEANVALIDATION = "true";
     public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
+    public static final String USE_TAGS = "useTags";
+    public static final String USE_TAGS_DEFAULT = "false";
 
 
     @Override
@@ -84,7 +86,8 @@ public class JaxRSServerOptionsProvider implements OptionsProvider {
             //.put(JavaClientCodegen.DATE_LIBRARY, "joda")
             .put("hideGenerationTimestamp", "true")
             .put(JavaCXFServerCodegen.USE_BEANVALIDATION, USE_BEANVALIDATION)
-            .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE);
+            .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
+            .put(USE_TAGS, USE_TAGS_DEFAULT);
 
         return builder.build();
     }
