@@ -34,6 +34,8 @@ namespace {{packageName}}.Models
         {{^isEnum}}
         public {{{datatype}}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
         {{/isEnum}}
+        {{#hasMore}}
+        {{/hasMore}}
         {{/vars}}
 
         /// <summary>
@@ -69,8 +71,7 @@ namespace {{packageName}}.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
-            return Equals(({{classname}})obj);
+            return obj.GetType() == GetType() && Equals(({{classname}})obj);
         }
 
         /// <summary>
@@ -80,20 +81,19 @@ namespace {{packageName}}.Models
         /// <returns>Boolean</returns>
         public bool Equals({{classname}} other)
         {
-
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
             return {{#vars}}{{#isNotContainer}}
                 (
-                    this.{{name}} == other.{{name}} ||
-                    this.{{name}} != null &&
-                    this.{{name}}.Equals(other.{{name}})
+                    {{name}} == other.{{name}} ||
+                    {{name}} != null &&
+                    {{name}}.Equals(other.{{name}})
                 ){{#hasMore}} && {{/hasMore}}{{/isNotContainer}}{{^isNotContainer}}
                 (
-                    this.{{name}} == other.{{name}} ||
-                    this.{{name}} != null &&
-                    this.{{name}}.SequenceEqual(other.{{name}})
+                    {{name}} == other.{{name}} ||
+                    {{name}} != null &&
+                    {{name}}.SequenceEqual(other.{{name}})
                 ){{#hasMore}} && {{/hasMore}}{{/isNotContainer}}{{/vars}}{{^vars}}false{{/vars}};
         }
 
@@ -106,11 +106,11 @@ namespace {{packageName}}.Models
             // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hash = 41;
+                var hash = 41;
                 // Suitable nullity checks etc, of course :)
                 {{#vars}}
-                    if (this.{{name}} != null)
-                    hash = hash * 59 + this.{{name}}.GetHashCode();
+                    if ({{name}} != null)
+                    hash = hash * 59 + {{name}}.GetHashCode();
                 {{/vars}}
                 return hash;
             }
@@ -129,7 +129,6 @@ namespace {{packageName}}.Models
         }
 
         #endregion Operators
-
     }
 {{/isEnum}}
 {{/model}}

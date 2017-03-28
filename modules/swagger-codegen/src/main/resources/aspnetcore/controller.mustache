@@ -21,7 +21,6 @@ namespace {{packageName}}.Controllers
     [Description("{{description}}")]{{/description}}
     public class {{classname}}Controller : Controller
     { {{#operation}}
-
         /// <summary>
         /// {{#summary}}{{summary}}{{/summary}}
         /// </summary>
@@ -40,7 +39,7 @@ namespace {{packageName}}.Controllers
             return new ObjectResult(example);{{/returnType}}{{^returnType}}
             throw new NotImplementedException();{{/returnType}}
         }
-{{/operation}}
+        {{/operation}}
     }
 {{/operations}}
 }
