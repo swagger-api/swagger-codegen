@@ -41,35 +41,6 @@ namespace {{packageName}}.Models
         {{/isEnum}}
         {{/vars}}
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="{{classname}}" /> class.
-        /// </summary>
-{{#vars}}        /// <param name="{{name}}">{{#description}}{{description}}{{/description}}{{^description}}{{name}}{{/description}}{{#required}} (required){{/required}}{{#defaultValue}} (default to {{defaultValue}}){{/defaultValue}}.</param>
-{{/vars}}
-        public {{classname}}({{#readWriteVars}}{{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}?{{/isContainer}}{{/isEnum}} {{name}} = {{#defaultValue}}{{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}default({{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}?{{/isContainer}}{{/isEnum}}){{/defaultValue}}{{^-last}}, {{/-last}}{{/readWriteVars}})
-        {
-            {{#vars}}{{#required}}// to ensure "{{name}}" is required (not null)
-            if ({{name}} == null)
-            {
-                throw new InvalidDataException("{{name}} is a required property for {{classname}} and cannot be null");
-            }
-            else
-            {
-                this.{{name}} = {{name}};
-            }
-            {{/required}}{{/vars}}{{#vars}}{{^required}}{{#defaultValue}}// use default value if no "{{name}}" provided
-            if ({{name}} == null)
-            {
-                this.{{name}} = {{{defaultValue}}};
-            }
-            else
-            {
-                this.{{name}} = {{name}};
-            }
-            {{/defaultValue}}{{^defaultValue}}this.{{name}} = {{name}};
-            {{/defaultValue}}{{/required}}{{/vars}}
-        }
-
         {{#vars}}
         {{^isEnum}}
         /// <summary>
