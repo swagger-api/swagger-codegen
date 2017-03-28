@@ -6,48 +6,32 @@ using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 {{#models}}
 {{#model}}
 namespace {{packageName}}.Models
-{
-{{#isEnum}}{{>enumClass}}{{/isEnum}}{{^isEnum}}
+{ {{#isEnum}}{{>enumClass}}{{/isEnum}}{{^isEnum}}
     /// <summary>
     /// {{description}}
     /// </summary>
     [DataContract]
-    public partial class {{classname}} : {{#parent}}{{{parent}}}, {{/parent}} IEquatable<{{classname}}>
-    {
-        {{#vars}}
-        {{#isEnum}}
-        {{>enumClass}}
-        {{/isEnum}}
-        {{#items.isEnum}}
-        {{#items}}
-        {{>enumClass}}
-        {{/items}}
-        {{/items.isEnum}}
-        {{/vars}}
-        {{#vars}}
-        {{#isEnum}}
+    public partial class {{classname}} : {{#parent}}{{{parent}}}, {{/parent}}IEquatable<{{classname}}>
+    { {{#vars}}{{#isEnum}}{{>enumClass}}{{/isEnum}}{{#items.isEnum}}{{#items}}{{>enumClass}}{{/items}}{{/items.isEnum}}
         /// <summary>
         /// {{^description}}Gets or Sets {{{name}}}{{/description}}{{#description}}{{{description}}}{{/description}}
         /// </summary>{{#description}}
         /// <value>{{{description}}}</value>{{/description}}
+        {{#required}}
+        [Required]
+        {{/required}}
         [DataMember(Name="{{baseName}}")]
+        {{#isEnum}}
         public {{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}?{{/isContainer}}{{/isEnum}} {{name}} { get; set; }
         {{/isEnum}}
-        {{/vars}}
-
-        {{#vars}}
         {{^isEnum}}
-        /// <summary>
-        /// {{^description}}Gets or Sets {{{name}}}{{/description}}{{#description}}{{description}}{{/description}}
-        /// </summary>{{#description}}
-        /// <value>{{description}}</value>{{/description}}
-        [DataMember(Name="{{baseName}}")]
         public {{{datatype}}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
         {{/isEnum}}
         {{/vars}}
