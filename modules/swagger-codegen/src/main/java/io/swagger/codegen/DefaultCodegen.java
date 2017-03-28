@@ -2727,7 +2727,7 @@ public class DefaultCodegen {
 
     public String operationFilename(String templateName, String tag) {
         String suffix = operationTemplateFiles().get(templateName);
-        return apiFileFolder() + "/../requestBuilder/" + initialCaps(tag) + suffix;
+        return apiFileFolder() + "/../api/request/" + initialCaps(tag) + suffix;
     }
 
     /**

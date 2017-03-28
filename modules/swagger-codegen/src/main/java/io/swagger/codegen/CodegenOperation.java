@@ -52,6 +52,24 @@ public class CodegenOperation {
     }
 
     /**
+     * Returns whether or not the operation has any required parameters
+     */
+    public boolean getHasRequiredParams() {
+        List<CodegenParameter> params = getRequiredParams();
+        return (params != null && !params.isEmpty());
+    }
+
+    /**
+     * Returns the title case of the operation ID for generating request objects
+     */
+    public String getRequestClassname() {
+        if (operationId == null || operationId.isEmpty()) {
+            return null;
+        }
+        return DefaultCodegen.camelize(operationId + "Request", false);
+    }
+
+    /**
      * Check if there's at least one parameter
      *
      * @return true if parameter exists, false otherwise
