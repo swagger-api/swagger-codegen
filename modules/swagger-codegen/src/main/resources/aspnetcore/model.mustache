@@ -117,6 +117,7 @@ namespace {{packageName}}.Models
         }
 
         #region Operators
+        #pragma warning disable 1591
 
         public static bool operator ==({{classname}} left, {{classname}} right)
         {
@@ -128,6 +129,7 @@ namespace {{packageName}}.Models
             return !Equals(left, right);
         }
 
+        #pragma warning restore 1591
         #endregion Operators
     }
 {{/isEnum}}
