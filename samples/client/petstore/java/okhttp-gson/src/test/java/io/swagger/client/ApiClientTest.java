@@ -92,6 +92,8 @@ public class ApiClientTest {
         assertTrue(apiClient.isJsonMime("application/json; charset=UTF8"));
         assertTrue(apiClient.isJsonMime("APPLICATION/JSON"));
 
+        assertTrue(apiClient.isJsonMime("application/problem+json"));
+        assertTrue(apiClient.isJsonMime("APPLICATION/PROBLEM+JSON"));
         assertTrue(apiClient.isJsonMime("application/json\t"));
         assertTrue(apiClient.isJsonMime("example/foo+bar+json"));
         assertTrue(apiClient.isJsonMime("example/foo+json;x;y"));
