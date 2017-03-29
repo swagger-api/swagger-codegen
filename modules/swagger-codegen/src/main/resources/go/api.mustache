@@ -39,7 +39,7 @@ func (a *{{{classname}}}Service) {{{nickname}}}({{#hasAuthMethods}}ctx context.C
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "{{path}}"{{#pathParams}}
+	localVarPath := a.client.cfg.BasePath + "{{{path}}}"{{#pathParams}}
 	localVarPath = strings.Replace(localVarPath, "{"+"{{baseName}}"+"}", fmt.Sprintf("%v", {{paramName}}), -1){{/pathParams}}
 
 	localVarHeaderParams := make(map[string]string)
