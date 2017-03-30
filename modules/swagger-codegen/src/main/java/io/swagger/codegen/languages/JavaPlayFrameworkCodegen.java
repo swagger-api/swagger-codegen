@@ -188,6 +188,7 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
         typeMapping.put("DateTime", "OffsetDateTime");
         importMapping.put("LocalDate", "java.time.LocalDate");
         importMapping.put("OffsetDateTime", "java.time.OffsetDateTime");
+        importMapping.put("FileInputStream", "java.io.FileInputStream");
     }
 
     @Override
@@ -289,6 +290,11 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
                             operation.returnType = rt.substring("Set<".length(), end).trim();
                             operation.returnContainer = "Set";
                         }
+                    } else if (operation.returnType.equals("File")) {
+                        operation.returnType = "FileInputStream";
+                        operation.imports.remove("File");
+                        operation.imports.add("FileInputStream");
+
                     }
                 }
             }

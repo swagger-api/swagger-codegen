@@ -140,8 +140,8 @@ public class {{classname}}Controller extends Controller {
         {{/collectionFormat}}
         {{/headerParams}}
         {{#returnType}}{{>returnTypesNoVoid}} obj = {{/returnType}}imp.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
-        {{#returnType}}JsonNode result = mapper.valueToTree(obj);
-        return ok(result);{{/returnType}}
+        {{#returnType}}{{^isResponseFile}}JsonNode result = mapper.valueToTree(obj);
+        return ok(result);{{/isResponseFile}}{{#isResponseFile}}return ok(obj);{{/isResponseFile}}{{/returnType}}
         {{^returnType}}return ok();{{/returnType}}
     }
 {{/operation}}
