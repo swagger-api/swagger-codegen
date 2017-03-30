@@ -2,7 +2,7 @@
 
 namespace Swagger\Client;
 
-use Http\Adapter\Guzzle6\Client;
+use GuzzleHttp\Client;
 
 class ExceptionTest extends \PHPUnit_Framework_TestCase
 {
@@ -10,7 +10,7 @@ class ExceptionTest extends \PHPUnit_Framework_TestCase
     {
         $this->expectException(ApiException::class);
         $this->expectExceptionCode(404);
-        $this->expectExceptionMessage('[404] Error connecting to the API (http://petstore.swagger.io/INVALID_URL/store/inventory)');
+        $this->expectExceptionMessage('http://petstore.swagger.io/INVALID_URL/store/inventory');
 
         $config = new Configuration();
         $config->setHost('http://petstore.swagger.io/INVALID_URL');

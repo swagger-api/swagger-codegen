@@ -88,7 +88,7 @@ class Configuration
      *
      * @var string
      */
-    protected $host = 'http://petstore.swagger.io/v2';
+    protected $host = 'http://petstore.swagger.io:80/v2';
 
     /**
      * User agent of the HTTP request, set to "PHP-Swagger" by default

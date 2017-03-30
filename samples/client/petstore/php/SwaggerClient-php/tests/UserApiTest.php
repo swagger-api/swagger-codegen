@@ -2,7 +2,7 @@
 
 namespace Swagger\Client;
 
-use Http\Adapter\Guzzle6\Client;
+use GuzzleHttp\Client;
 use Swagger\Client\Api\UserApi;
 
 class UserApiTest extends \PHPUnit_Framework_TestCase

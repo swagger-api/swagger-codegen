@@ -2,8 +2,7 @@
 
 namespace Swagger\Client;
 
-use Http\Adapter\Guzzle6\Client;
-use Swagger\Client\Api\FakeApi;
+use GuzzleHttp\Client;
 use Swagger\Client\Api\PetApi;
 use Swagger\Client\Model\ApiResponse;
 use Swagger\Client\Model\Pet;

@@ -28,10 +28,11 @@
 
 namespace Swagger\Client\Api;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
-use Http\Client\Exception\NetworkException;
-use Http\Client\HttpClient;
 use Swagger\Client\ApiException;
 use Swagger\Client\Configuration;
 use Swagger\Client\HeaderSelector;
@@ -48,7 +49,7 @@ use Swagger\Client\ObjectSerializer;
 class StoreApi
 {
     /**
-     * @var HttpClient
+     * @var ClientInterface
      */
     protected $client;
 
@@ -58,18 +59,18 @@ class StoreApi
     protected $config;
 
     /**
-     * @param HttpClient $client
-     * @param HeaderSelector $selector
+     * @param ClientInterface $client
      * @param Configuration $config
+     * @param HeaderSelector $selector
      */
     public function __construct(
-        HttpClient $client,
+        ClientInterface $client = null,
         Configuration $config = null,
         HeaderSelector $selector = null
     ) {
-        $this->client = $client;
-        $this->headerSelector = $selector ?: new HeaderSelector();
+        $this->client = $client ?: new Client();
         $this->config = $config ?: new Configuration();
+        $this->headerSelector = $selector ?: new HeaderSelector();
     }
 
     /**
@@ -175,10 +176,15 @@ class StoreApi
         );
 
         try {
+
             try {
-                $response = $this->client->sendRequest($request);
-            } catch (NetworkException $e) {
-                throw new ApiException($e->getMessage(), 0);
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
             }
 
             $statusCode = $response->getStatusCode();
@@ -291,10 +297,15 @@ class StoreApi
         );
 
         try {
+
             try {
-                $response = $this->client->sendRequest($request);
-            } catch (NetworkException $e) {
-                throw new ApiException($e->getMessage(), 0);
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
             }
 
             $statusCode = $response->getStatusCode();
@@ -437,10 +448,15 @@ class StoreApi
         );
 
         try {
+
             try {
-                $response = $this->client->sendRequest($request);
-            } catch (NetworkException $e) {
-                throw new ApiException($e->getMessage(), 0);
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
             }
 
             $statusCode = $response->getStatusCode();
@@ -577,10 +593,15 @@ class StoreApi
         );
 
         try {
+
             try {
-                $response = $this->client->sendRequest($request);
-            } catch (NetworkException $e) {
-                throw new ApiException($e->getMessage(), 0);
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
             }
 
             $statusCode = $response->getStatusCode();
