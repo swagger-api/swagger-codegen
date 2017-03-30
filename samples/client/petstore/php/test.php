@@ -21,7 +21,7 @@ try {
     //$api_client->getConfig()->addDefaultHeader("test1", "value1");
     //$pet_api = new Swagger\Client\PetAPI($api_client);
     $config = new \Swagger\Client\Configuration();
-    $petApi = new Swagger\Client\Api\PetApi(new \Http\Adapter\Guzzle6\Client(), $config);
+    $petApi = new Swagger\Client\Api\PetApi(null, $config);
     $config->setTempFolderPath('/var/tmp/php/');
     // test default header
     //$pet_api->getApiClient()->addDefaultHeader("TEST_API_KEY", "09182sdkanafndsl903");
@@ -47,7 +47,7 @@ try {
     $newPet->setTags(array($tag));
     $newPet->setCategory($category);
 
-    $petApi = new Swagger\Client\Api\PetApi(new \Http\Adapter\Guzzle6\Client(), $config);
+    $petApi = new Swagger\Client\Api\PetApi(null, $config);
     // add a new pet (model)
     $add_response = $petApi->addPet($newPet);
 
