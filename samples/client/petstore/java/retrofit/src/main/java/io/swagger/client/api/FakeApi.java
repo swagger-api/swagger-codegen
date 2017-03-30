@@ -6,6 +6,7 @@ import retrofit.Callback;
 import retrofit.http.*;
 import retrofit.mime.*;
 
+import io.swagger.client.model.*;
 import java.math.BigDecimal;
 import io.swagger.client.model.Client;
 import org.joda.time.DateTime;

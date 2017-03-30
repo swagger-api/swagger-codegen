@@ -7,6 +7,7 @@ import io.swagger.client.Pair;
 
 import javax.ws.rs.core.GenericType;
 
+import io.swagger.client.model.*;
 import io.swagger.client.model.User;
 
 import java.util.ArrayList;

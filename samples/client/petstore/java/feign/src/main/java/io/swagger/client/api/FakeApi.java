@@ -2,6 +2,7 @@ package io.swagger.client.api;
 
 import io.swagger.client.ApiClient;
 
+import io.swagger.client.model.*;
 import java.math.BigDecimal;
 import io.swagger.client.model.Client;
 import org.joda.time.DateTime;

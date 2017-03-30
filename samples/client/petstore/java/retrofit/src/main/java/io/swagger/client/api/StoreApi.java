@@ -6,6 +6,7 @@ import retrofit.Callback;
 import retrofit.http.*;
 import retrofit.mime.*;
 
+import io.swagger.client.model.*;
 import io.swagger.client.model.Order;
 
 import java.util.ArrayList;

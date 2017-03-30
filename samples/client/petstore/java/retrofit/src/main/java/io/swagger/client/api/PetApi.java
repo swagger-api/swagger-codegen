@@ -6,6 +6,7 @@ import retrofit.Callback;
 import retrofit.http.*;
 import retrofit.mime.*;
 
+import io.swagger.client.model.*;
 import java.io.File;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
