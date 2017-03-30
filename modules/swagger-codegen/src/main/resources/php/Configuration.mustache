@@ -67,13 +67,6 @@ class Configuration
     protected $password = '';
 
     /**
-     * The default header(s)
-     *
-     * @var array
-     */
-    protected $defaultHeaders = [];
-
-    /**
      * The host
      *
      * @var string
@@ -235,48 +228,6 @@ class Configuration
     public function getPassword()
     {
         return $this->password;
-    }
-
-    /**
-     * Adds a default header
-     *
-     * @param string $headerName  header name (e.g. Token)
-     * @param string $headerValue header value (e.g. 1z8wp3)
-     *
-     * @throws \InvalidArgumentException
-     * @return $this
-     */
-    public function addDefaultHeader($headerName, $headerValue)
-    {
-        if (!is_string($headerName)) {
-            throw new \InvalidArgumentException('Header name must be a string.');
-        }
-
-        $this->defaultHeaders[$headerName] =  $headerValue;
-        return $this;
-    }
-
-    /**
-     * Gets the default header
-     *
-     * @return array An array of default header(s)
-     */
-    public function getDefaultHeaders()
-    {
-        return $this->defaultHeaders;
-    }
-
-    /**
-     * Deletes a default header
-     *
-     * @param string $headerName the header to delete
-     *
-     * @return $this
-     */
-    public function deleteDefaultHeader($headerName)
-    {
-        unset($this->defaultHeaders[$headerName]);
-        return $this;
     }
 
     /**

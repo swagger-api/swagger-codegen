@@ -164,8 +164,14 @@ class Fake_classname_tags123Api
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
         $headers = array_merge(
-            $this->config->getDefaultHeaders(),
+            $defaultHeaders,
             $headerParams,
             $headers
         );
