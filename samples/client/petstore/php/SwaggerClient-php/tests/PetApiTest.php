@@ -2,7 +2,6 @@
 
 namespace Swagger\Client;
 
-use GuzzleHttp\Client;
 use Swagger\Client\Api\PetApi;
 use Swagger\Client\Model\ApiResponse;
 use Swagger\Client\Model\Pet;
@@ -10,30 +9,19 @@ use Swagger\Client\Model\Pet;
 class PetApiTest extends \PHPUnit_Framework_TestCase
 {
 
-    // add a new pet (id 10005) to ensure the pet object is available for all the tests
     /** @var  PetApi */
     private $api;
 
+    // add a new pet (id 10005) to ensure the pet object is available for all the tests
     public static function setUpBeforeClass()
     {
         // increase memory limit to avoid fatal error due to findPetByStatus
         // returning a lot of data
         ini_set('memory_limit', '256M');
 
-        // for error reporting (need to run with php5.3 to get no warning)
-        //ini_set('display_errors', 1);
-        //error_reporting(~0);
-        // when running with php5.5, comment out below to skip the warning about
-        // using @ to handle file upload
-        //ini_set('display_startup_errors',1);
-        //ini_set('display_errors',1);
-        //error_reporting(-1);
-
         // enable debugging
         //Configuration::$debug = true;
 
-        // skip initializing the API client as it should be automatic
-        //$api_client = new ApiClient('http://petstore.swagger.io/v2');
         // new pet
         $newPetId = 10005;
         $newPet = new Model\Pet;
@@ -53,7 +41,7 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $newPet->setCategory($category);
 
         $config = new Configuration();
-        $petApi = new Api\PetApi(new Client(), $config);
+        $petApi = new Api\PetApi(null, $config);
 
         // add a new pet (model)
         list(, $status) = $petApi->addPetWithHttpInfo($newPet);
@@ -62,9 +50,7 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->api = new Api\PetApi(
-            new Client()
-        );
+        $this->api = new Api\PetApi();
     }
 
     public function testGetPetById()

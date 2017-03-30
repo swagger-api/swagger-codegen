@@ -2,7 +2,6 @@
 
 namespace Swagger\Client;
 
-use GuzzleHttp\Client;
 use Swagger\Client\Api\StoreApi;
 
 class StoreApiTest extends \PHPUnit_Framework_TestCase
@@ -12,9 +11,7 @@ class StoreApiTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->api = new Api\StoreApi(
-            new Client()
-        );
+        $this->api = new Api\StoreApi();
     }
 
     public function testGetInventory()
