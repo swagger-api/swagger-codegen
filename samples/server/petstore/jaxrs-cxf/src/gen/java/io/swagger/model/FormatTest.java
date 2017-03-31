@@ -1,6 +1,8 @@
 package io.swagger.model;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.UUID;
 import org.joda.time.LocalDate;
 import javax.validation.constraints.*;
 
@@ -15,31 +17,31 @@ import javax.xml.bind.annotation.XmlEnumValue;
 
 public class FormatTest  {
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   private Integer integer = null;
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   private Integer int32 = null;
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   private Long int64 = null;
-  @ApiModelProperty(example = "null", required = true, value = "")
+  @ApiModelProperty(required = true, value = "")
   private BigDecimal number = null;
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   private Float _float = null;
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   private Double _double = null;
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   private String string = null;
-  @ApiModelProperty(example = "null", required = true, value = "")
+  @ApiModelProperty(required = true, value = "")
   private byte[] _byte = null;
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   private byte[] binary = null;
-  @ApiModelProperty(example = "null", required = true, value = "")
+  @ApiModelProperty(required = true, value = "")
   private LocalDate date = null;
-  @ApiModelProperty(example = "null", value = "")
-  private javax.xml.datatype.XMLGregorianCalendar dateTime = null;
-  @ApiModelProperty(example = "null", value = "")
-  private String uuid = null;
-  @ApiModelProperty(example = "null", required = true, value = "")
+  @ApiModelProperty(value = "")
+  private Date dateTime = null;
+  @ApiModelProperty(value = "")
+  private UUID uuid = null;
+  @ApiModelProperty(required = true, value = "")
   private String password = null;
 
  /**
@@ -48,9 +50,7 @@ public class FormatTest  {
    * maximum: 100
    * @return integer
   **/
-  @Min(10)
-  @Max(100)
-  public Integer getInteger() {
+ @Min(10) @Max(100)  public Integer getInteger() {
     return integer;
   }
 
@@ -69,9 +69,7 @@ public class FormatTest  {
    * maximum: 200
    * @return int32
   **/
-  @Min(20)
-  @Max(200)
-  public Integer getInt32() {
+ @Min(20) @Max(200)  public Integer getInt32() {
     return int32;
   }
 
@@ -108,9 +106,7 @@ public class FormatTest  {
    * @return number
   **/
   @NotNull
-  @DecimalMin("32.1")
-  @DecimalMax("543.2")
-  public BigDecimal getNumber() {
+ @DecimalMin("32.1") @DecimalMax("543.2")  public BigDecimal getNumber() {
     return number;
   }
 
@@ -129,9 +125,7 @@ public class FormatTest  {
    * maximum: 987.6
    * @return _float
   **/
-  @DecimalMin("54.3")
-  @DecimalMax("987.6")
-  public Float getFloat() {
+ @DecimalMin("54.3") @DecimalMax("987.6")  public Float getFloat() {
     return _float;
   }
 
@@ -150,9 +144,7 @@ public class FormatTest  {
    * maximum: 123.4
    * @return _double
   **/
-  @DecimalMin("67.8")
-  @DecimalMax("123.4")
-  public Double getDouble() {
+ @DecimalMin("67.8") @DecimalMax("123.4")  public Double getDouble() {
     return _double;
   }
 
@@ -169,8 +161,7 @@ public class FormatTest  {
    * Get string
    * @return string
   **/
-  @Pattern(regexp="/[a-z]/i")
-  public String getString() {
+ @Pattern(regexp="/[a-z]/i")  public String getString() {
     return string;
   }
 
@@ -240,15 +231,15 @@ public class FormatTest  {
    * Get dateTime
    * @return dateTime
   **/
-  public javax.xml.datatype.XMLGregorianCalendar getDateTime() {
+  public Date getDateTime() {
     return dateTime;
   }
 
-  public void setDateTime(javax.xml.datatype.XMLGregorianCalendar dateTime) {
+  public void setDateTime(Date dateTime) {
     this.dateTime = dateTime;
   }
 
-  public FormatTest dateTime(javax.xml.datatype.XMLGregorianCalendar dateTime) {
+  public FormatTest dateTime(Date dateTime) {
     this.dateTime = dateTime;
     return this;
   }
@@ -257,15 +248,15 @@ public class FormatTest  {
    * Get uuid
    * @return uuid
   **/
-  public String getUuid() {
+  public UUID getUuid() {
     return uuid;
   }
 
-  public void setUuid(String uuid) {
+  public void setUuid(UUID uuid) {
     this.uuid = uuid;
   }
 
-  public FormatTest uuid(String uuid) {
+  public FormatTest uuid(UUID uuid) {
     this.uuid = uuid;
     return this;
   }
@@ -275,8 +266,7 @@ public class FormatTest  {
    * @return password
   **/
   @NotNull
-  @Size(min=10,max=64)
-  public String getPassword() {
+ @Size(min=10,max=64)  public String getPassword() {
     return password;
   }
 
@@ -316,7 +306,7 @@ public class FormatTest  {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private static String toIndentedString(Object o) {
+  private static String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

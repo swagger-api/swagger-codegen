@@ -25,7 +25,7 @@ public class ApiClient {
   public interface Api {}
 
   protected ObjectMapper objectMapper;
-  private String basePath = "http://petstore.swagger.io/v2";
+  private String basePath = "http://petstore.swagger.io:80/v2";
   private Map<String, RequestInterceptor> apiAuthorizations;
   private Feign.Builder feignBuilder;
 
@@ -40,13 +40,13 @@ public class ApiClient {
 
   public ApiClient(String[] authNames) {
     this();
-    for(String authName : authNames) { 
+    for(String authName : authNames) {
       RequestInterceptor auth;
-      if (authName == "api_key") { 
+      if ("api_key".equals(authName)) {
         auth = new ApiKeyAuth("header", "api_key");
-      } else if (authName == "http_basic_test") { 
+      } else if ("http_basic_test".equals(authName)) {
         auth = new HttpBasicAuth();
-      } else if (authName == "petstore_auth") { 
+      } else if ("petstore_auth".equals(authName)) {
         auth = new OAuth(OAuthFlow.implicit, "http://petstore.swagger.io/api/oauth/dialog", "", "write:pets, read:pets");
       } else {
         throw new RuntimeException("auth name \"" + authName + "\" not found in available auth names");

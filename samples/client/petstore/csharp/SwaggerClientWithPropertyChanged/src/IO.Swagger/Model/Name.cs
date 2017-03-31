@@ -42,7 +42,7 @@ namespace IO.Swagger.Model
         /// </summary>
         /// <param name="_Name">_Name (required).</param>
         /// <param name="Property">Property.</param>
-        public Name(int? _Name = null, string Property = null)
+        public Name(int? _Name = default(int?), string Property = default(string))
         {
             // to ensure "_Name" is required (not null)
             if (_Name == null)
@@ -169,8 +169,15 @@ namespace IO.Swagger.Model
             }
         }
 
+        /// <summary>
+        /// Property changed event handler
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Trigger when a property changed
+        /// </summary>
+        /// <param name="propertyName">Property Name</param>
         public virtual void OnPropertyChanged(string propertyName)
         {
             // NOTE: property changed is handled via "code weaving" using Fody.
@@ -182,7 +189,12 @@ namespace IO.Swagger.Model
             }
         }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         { 
             yield break;
         }

@@ -42,7 +42,7 @@ namespace IO.Swagger.Model
         /// </summary>
         /// <param name="ClassName">ClassName (required).</param>
         /// <param name="Color">Color (default to &quot;red&quot;).</param>
-        public Animal(string ClassName = null, string Color = null)
+        public Animal(string ClassName = default(string), string Color = "red")
         {
             // to ensure "ClassName" is required (not null)
             if (ClassName == null)
@@ -151,8 +151,15 @@ namespace IO.Swagger.Model
             }
         }
 
+        /// <summary>
+        /// Property changed event handler
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Trigger when a property changed
+        /// </summary>
+        /// <param name="propertyName">Property Name</param>
         public virtual void OnPropertyChanged(string propertyName)
         {
             // NOTE: property changed is handled via "code weaving" using Fody.
@@ -164,7 +171,12 @@ namespace IO.Swagger.Model
             }
         }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         { 
             yield break;
         }

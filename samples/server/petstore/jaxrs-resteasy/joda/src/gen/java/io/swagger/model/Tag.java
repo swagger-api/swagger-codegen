@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
-
+import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 
 @ApiModel(description="A tag for a pet")
@@ -18,7 +18,7 @@ public class Tag   {
   /**
    **/
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("id")
   public Long getId() {
     return id;
@@ -30,7 +30,7 @@ public class Tag   {
   /**
    **/
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("name")
   public String getName() {
     return name;
@@ -41,7 +41,7 @@ public class Tag   {
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -73,7 +73,7 @@ public class Tag   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
