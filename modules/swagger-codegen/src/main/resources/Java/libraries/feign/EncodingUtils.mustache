@@ -30,7 +30,7 @@ public final class EncodingUtils {
    *                   not be changed.
    * @param collectionFormat The Swagger collection format (eg, "csv", "tsv",
    *                         "pipes"). See the
-   *                         <a http="http://swagger.io/specification/#parameter-object-44">
+   *                         <a href="http://swagger.io/specification/#parameter-object-44">
    *                         Swagger Spec</a> for more details.
    * @return An object that will be correctly formatted by Feign.
    */
