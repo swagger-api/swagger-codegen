@@ -37,6 +37,9 @@ import org.apache.cxf.jaxrs.client.ClientConfiguration;
 import org.apache.cxf.jaxrs.client.WebClient;
 
 
+import org.apache.cxf.jaxrs.ext.multipart.*;
+import java.io.*;
+
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 import java.util.ArrayList;
@@ -79,7 +82,7 @@ public class StoreApiTest {
     @Test
     public void deleteOrderTest() {
         String orderId = null;
-        //api.deleteOrder(orderId);
+        api.deleteOrder(orderId);
         
         // TODO: test validations
         
@@ -96,8 +99,8 @@ public class StoreApiTest {
      */
     @Test
     public void getInventoryTest() {
-        //Map<String, Integer> response = api.getInventory();
-        //assertNotNull(response);
+        Map<String, Integer> response = api.getInventory();
+        assertNotNull(response);
         // TODO: test validations
         
         
@@ -114,8 +117,8 @@ public class StoreApiTest {
     @Test
     public void getOrderByIdTest() {
         Long orderId = null;
-        //Order response = api.getOrderById(orderId);
-        //assertNotNull(response);
+        Order response = api.getOrderById(orderId);
+        assertNotNull(response);
         // TODO: test validations
         
         
@@ -132,8 +135,8 @@ public class StoreApiTest {
     @Test
     public void placeOrderTest() {
         Order body = null;
-        //Order response = api.placeOrder(body);
-        //assertNotNull(response);
+        Order response = api.placeOrder(body);
+        assertNotNull(response);
         // TODO: test validations
         
         
