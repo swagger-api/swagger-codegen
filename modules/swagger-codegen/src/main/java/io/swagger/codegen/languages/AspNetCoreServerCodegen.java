@@ -14,7 +14,7 @@ import static java.util.UUID.randomUUID;
 
 public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
 
-    private final String packageGuid = "{" + randomUUID().toString().toUpperCase() + "}";
+    private String packageGuid = "{" + randomUUID().toString().toUpperCase() + "}";
 
     @SuppressWarnings("hiding")
     protected Logger LOGGER = LoggerFactory.getLogger(AspNetCoreServerCodegen.class);
@@ -43,6 +43,10 @@ public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
         addOption(CodegenConstants.PACKAGE_VERSION,
                 "C# package version.",
                 this.packageVersion);
+
+        addOption(CodegenConstants.OPTIONAL_PROJECT_GUID,
+                CodegenConstants.OPTIONAL_PROJECT_GUID_DESC,
+                null);
 
         addOption(CodegenConstants.SOURCE_FOLDER,
                 CodegenConstants.SOURCE_FOLDER_DESC,
@@ -85,7 +89,12 @@ public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
     public void processOpts() {
         super.processOpts();
 
+        if (additionalProperties.containsKey(CodegenConstants.OPTIONAL_PROJECT_GUID)) {
+            setPackageGuid((String) additionalProperties.get(CodegenConstants.OPTIONAL_PROJECT_GUID));
+        }
         additionalProperties.put("packageGuid", packageGuid);
+        
+        additionalProperties.put("dockerTag", this.packageName.toLowerCase());
 
         apiPackage = packageName + ".Controllers";
         modelPackage = packageName + ".Models";
@@ -105,6 +114,7 @@ public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
         supportingFiles.add(new SupportingFile("project.json.mustache", packageFolder, "project.json"));
         supportingFiles.add(new SupportingFile("Startup.mustache", packageFolder, "Startup.cs"));
         supportingFiles.add(new SupportingFile("Program.mustache", packageFolder, "Program.cs"));
+        supportingFiles.add(new SupportingFile("validateModel.mustache", packageFolder + File.separator + "Attributes", "ValidateModelStateAttribute.cs"));
         supportingFiles.add(new SupportingFile("web.config", packageFolder, "web.config"));
 
         supportingFiles.add(new SupportingFile("Project.xproj.mustache", packageFolder, this.packageName + ".xproj"));
@@ -129,6 +139,10 @@ public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
         }
     }
 
+    public void setPackageGuid(String packageGuid) {
+        this.packageGuid = packageGuid;
+    }
+    
     @Override
     public String apiFileFolder() {
         return outputFolder + File.separator + sourceFolder + File.separator + packageName + File.separator + "Controllers";

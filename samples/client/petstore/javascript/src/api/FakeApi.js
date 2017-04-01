@@ -73,6 +73,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
       };
       var formParams = {
@@ -85,7 +87,7 @@
 
       return this.apiClient.callApi(
         '/fake', 'PATCH',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
     }
@@ -104,14 +106,14 @@
      * @param {Number} _number None
      * @param {Number} _double None
      * @param {String} patternWithoutDelimiter None
-     * @param {String} _byte None
+     * @param {Blob} _byte None
      * @param {Object} opts Optional parameters
      * @param {Number} opts.integer None
      * @param {Number} opts.int32 None
      * @param {Number} opts.int64 None
      * @param {Number} opts._float None
      * @param {String} opts._string None
-     * @param {String} opts.binary None
+     * @param {Blob} opts.binary None
      * @param {Date} opts._date None
      * @param {Date} opts.dateTime None
      * @param {String} opts.password None
@@ -147,6 +149,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
       };
       var formParams = {
@@ -173,7 +177,7 @@
 
       return this.apiClient.callApi(
         '/fake', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
     }
@@ -196,8 +200,8 @@
      * @param {module:model/String} opts.enumHeaderString Header parameter enum test (string) (default to -efg)
      * @param {Array.<module:model/String>} opts.enumQueryStringArray Query parameter enum test (string array)
      * @param {module:model/String} opts.enumQueryString Query parameter enum test (string) (default to -efg)
-     * @param {Number} opts.enumQueryInteger Query parameter enum test (double)
-     * @param {Number} opts.enumQueryDouble Query parameter enum test (double)
+     * @param {module:model/Number} opts.enumQueryInteger Query parameter enum test (double)
+     * @param {module:model/Number} opts.enumQueryDouble Query parameter enum test (double)
      * @param {module:api/FakeApi~testEnumParametersCallback} callback The callback function, accepting three arguments: error, data, response
      */
     this.testEnumParameters = function(opts, callback) {
@@ -208,9 +212,14 @@
       var pathParams = {
       };
       var queryParams = {
-        'enum_query_string_array': this.apiClient.buildCollectionParam(opts['enumQueryStringArray'], 'csv'),
         'enum_query_string': opts['enumQueryString'],
-        'enum_query_integer': opts['enumQueryInteger']
+        'enum_query_integer': opts['enumQueryInteger'],
+      };
+      var collectionQueryParams = {
+        'enum_query_string_array': {
+          value: opts['enumQueryStringArray'],
+          collectionFormat: 'csv'
+        },
       };
       var headerParams = {
         'enum_header_string_array': opts['enumHeaderStringArray'],
@@ -229,7 +238,7 @@
 
       return this.apiClient.callApi(
         '/fake', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
     }

@@ -65,6 +65,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
       };
       var formParams = {
@@ -77,7 +79,7 @@
 
       return this.apiClient.callApi(
         '/pet', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }
@@ -119,6 +121,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
         'api_key': opts['apiKey']
       };
@@ -132,7 +136,7 @@
 
       return this.apiClient.callApi(
         '/pet/{petId}', 'DELETE',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }
@@ -171,7 +175,12 @@
       var pathParams = {
       };
       var queryParams = {
-        'status': this.apiClient.buildCollectionParam(status, 'csv')
+      };
+      var collectionQueryParams = {
+        'status': {
+          value: status,
+          collectionFormat: 'csv'
+        },
       };
       var headerParams = {
       };
@@ -185,7 +194,7 @@
 
       return this.apiClient.callApi(
         '/pet/findByStatus', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }
@@ -222,7 +231,12 @@
       var pathParams = {
       };
       var queryParams = {
-        'tags': this.apiClient.buildCollectionParam(tags, 'csv')
+      };
+      var collectionQueryParams = {
+        'tags': {
+          value: tags,
+          collectionFormat: 'csv'
+        },
       };
       var headerParams = {
       };
@@ -236,7 +250,7 @@
 
       return this.apiClient.callApi(
         '/pet/findByTags', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }
@@ -275,6 +289,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
       };
       var formParams = {
@@ -287,7 +303,7 @@
 
       return this.apiClient.callApi(
         '/pet/{petId}', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }
@@ -325,6 +341,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
       };
       var formParams = {
@@ -337,7 +355,7 @@
 
       return this.apiClient.callApi(
         '/pet', 'PUT',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }
@@ -380,6 +398,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
       };
       var formParams = {
@@ -394,7 +414,7 @@
 
       return this.apiClient.callApi(
         '/pet/{petId}', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }
@@ -440,6 +460,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
       };
       var formParams = {
@@ -454,7 +476,7 @@
 
       return this.apiClient.callApi(
         '/pet/{petId}/uploadImage', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }

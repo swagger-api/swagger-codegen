@@ -1,6 +1,6 @@
 # \FakeApi
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -65,9 +65,11 @@ Name | Type | Description  | Notes
  **password** | **string**| None | [optional] 
  **callback** | **string**| None | [optional] 
 
+Note: Optional parameters are passed through a map[string]interface{}
+
 ### Return type
 
-void (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -101,9 +103,11 @@ Name | Type | Description  | Notes
  **enumQueryInteger** | **int32**| Query parameter enum test (double) | [optional] 
  **enumQueryDouble** | **float64**| Query parameter enum test (double) | [optional] 
 
+Note: Optional parameters are passed through a map[string]interface{}
+
 ### Return type
 
-void (empty response body)
+(empty response body)
 
 ### Authorization
 

@@ -1,6 +1,6 @@
 # \UserApi
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -30,7 +30,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -59,7 +59,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -88,7 +88,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -117,7 +117,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -202,7 +202,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-void (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -232,7 +232,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+(empty response body)
 
 ### Authorization
 

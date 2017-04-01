@@ -32,7 +32,7 @@ import scala.concurrent.duration._
 import scala.util.{Failure, Success, Try}
 
 {{#operations}}
-class {{classname}}(val defBasePath: String = "{{basePath}}",
+class {{classname}}(val defBasePath: String = "{{{basePath}}}",
                         defApiInvoker: ApiInvoker = ApiInvoker) {
 
   implicit val formats = new org.json4s.DefaultFormats {
@@ -67,7 +67,6 @@ class {{classname}}(val defBasePath: String = "{{basePath}}",
       case Success(i) => Some(await.get)
       case Failure(t) => None
     }
-
   }
 
   /**

@@ -17,9 +17,9 @@ open class StoreAPI: APIBase {
      - parameter orderId: (path) ID of the order that needs to be deleted 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deleteOrder(orderId: String, completion: @escaping ((_ error: Error?) -> Void)) {
+    open class func deleteOrder(orderId: String, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
         deleteOrderWithRequestBuilder(orderId: orderId).execute { (response, error) -> Void in
-            completion(error);
+            completion(error)
         }
     }
 
@@ -54,7 +54,7 @@ open class StoreAPI: APIBase {
      */
     open class func deleteOrderWithRequestBuilder(orderId: String) -> RequestBuilder<Void> {
         var path = "/store/order/{orderId}"
-        path = path.replacingOccurrences(of: "{orderId}", with: "\(orderId)", options: .literal, range: nil)
+        path = path.replacingOccurrences(of: "{order_id}", with: "\(orderId)", options: .literal, range: nil)
         let URLString = PetstoreClientAPI.basePath + path
         let parameters: [String:Any]? = nil
 
@@ -71,9 +71,9 @@ open class StoreAPI: APIBase {
      
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getInventory(completion: @escaping ((_ data: [String:Int32]?,_ error: Error?) -> Void)) {
+    open class func getInventory(completion: @escaping ((_ data: [String:Int32]?, _ error: ErrorResponse?) -> Void)) {
         getInventoryWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -104,7 +104,7 @@ open class StoreAPI: APIBase {
        - type: apiKey api_key 
        - name: api_key
      - examples: [{contentType=application/json, example={
-  "key" : 9
+  "key" : 0
 }}]
 
      - returns: RequestBuilder<[String:Int32]> 
@@ -128,9 +128,9 @@ open class StoreAPI: APIBase {
      - parameter orderId: (path) ID of pet that needs to be fetched 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getOrderById(orderId: Int64, completion: @escaping ((_ data: Order?,_ error: Error?) -> Void)) {
+    open class func getOrderById(orderId: Int64, completion: @escaping ((_ data: Order?, _ error: ErrorResponse?) -> Void)) {
         getOrderByIdWithRequestBuilder(orderId: orderId).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -166,9 +166,9 @@ open class StoreAPI: APIBase {
   <status>aeiou</status>
   <complete>true</complete>
 </Order>}, {contentType=application/json, example={
-  "petId" : 0,
-  "quantity" : 0,
-  "id" : 2,
+  "petId" : 6,
+  "quantity" : 1,
+  "id" : 0,
   "shipDate" : "2000-01-23T04:56:07.000+00:00",
   "complete" : false,
   "status" : "placed"
@@ -181,9 +181,9 @@ open class StoreAPI: APIBase {
   <status>aeiou</status>
   <complete>true</complete>
 </Order>}, {contentType=application/json, example={
-  "petId" : 0,
-  "quantity" : 0,
-  "id" : 2,
+  "petId" : 6,
+  "quantity" : 1,
+  "id" : 0,
   "shipDate" : "2000-01-23T04:56:07.000+00:00",
   "complete" : false,
   "status" : "placed"
@@ -195,7 +195,7 @@ open class StoreAPI: APIBase {
      */
     open class func getOrderByIdWithRequestBuilder(orderId: Int64) -> RequestBuilder<Order> {
         var path = "/store/order/{orderId}"
-        path = path.replacingOccurrences(of: "{orderId}", with: "\(orderId)", options: .literal, range: nil)
+        path = path.replacingOccurrences(of: "{order_id}", with: "\(orderId)", options: .literal, range: nil)
         let URLString = PetstoreClientAPI.basePath + path
         let parameters: [String:Any]? = nil
 
@@ -213,9 +213,9 @@ open class StoreAPI: APIBase {
      - parameter body: (body) order placed for purchasing the pet 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func placeOrder(body: Order, completion: @escaping ((_ data: Order?,_ error: Error?) -> Void)) {
+    open class func placeOrder(body: Order, completion: @escaping ((_ data: Order?, _ error: ErrorResponse?) -> Void)) {
         placeOrderWithRequestBuilder(body: body).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -251,8 +251,8 @@ open class StoreAPI: APIBase {
   <status>aeiou</status>
   <complete>true</complete>
 </Order>}, {contentType=application/json, example={
-  "petId" : 4,
-  "quantity" : 3,
+  "petId" : 6,
+  "quantity" : 1,
   "id" : 0,
   "shipDate" : "2000-01-23T04:56:07.000+00:00",
   "complete" : false,
@@ -266,8 +266,8 @@ open class StoreAPI: APIBase {
   <status>aeiou</status>
   <complete>true</complete>
 </Order>}, {contentType=application/json, example={
-  "petId" : 4,
-  "quantity" : 3,
+  "petId" : 6,
+  "quantity" : 1,
   "id" : 0,
   "shipDate" : "2000-01-23T04:56:07.000+00:00",
   "complete" : false,
