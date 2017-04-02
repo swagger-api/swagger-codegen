@@ -4,7 +4,8 @@
 RESULT=`find modules/swagger-codegen/src/ -name "*.java" | xargs grep "\t"`
 
 if [ "$RESULT" != "" ]; then
-    echo "Generators (Java files) contain tab '\\t'. Please remove it and try again."
+    echo "Java files contain tab '\\t'. Please remove it and try again."
+    echo $RESULT
     exit 1;
 fi
 
