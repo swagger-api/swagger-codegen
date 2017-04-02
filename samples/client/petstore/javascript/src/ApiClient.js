@@ -44,9 +44,9 @@
     /**
      * The base URL against which to resolve every API call's (relative) path.
      * @type {String}
-     * @default http://petstore.swagger.io/v2
+     * @default http://petstore.swagger.io:80/v2
      */
-    this.basePath = 'http://petstore.swagger.io/v2'.replace(/\/+$/, '');
+    this.basePath = 'http://petstore.swagger.io:80/v2'.replace(/\/+$/, '');
 
     /**
      * The authentication methods to be included for all API calls.
@@ -424,6 +424,10 @@
       request.accept(accept);
     }
 
+    if (returnType === 'Blob') {
+      request.responseType('blob');
+    }
+
     // Attach previously saved cookies, if enabled
     if (this.enableCookies){
       if (typeof window === 'undefined') {
@@ -488,6 +492,8 @@
         return String(data);
       case 'Date':
         return this.parseDate(String(data));
+      case 'Blob':
+      	return data;
       default:
         if (type === Object) {
           // generic object, return directly

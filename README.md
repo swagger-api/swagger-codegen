@@ -17,7 +17,7 @@
 ## Overview
 This is the swagger codegen project, which allows generation of API client libraries (SDK generation), server stubs and documentation automatically given an [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification). Currently, the following languages/frameworks are supported:
 
-- **API clients**: **ActionScript**, **Bash**, **C#** (.net 2.0, 4.0 or later), **C++** (cpprest, Qt5, Tizen), **Clojure**, **Dart**, **Elixir**, **Go**, **Groovy**, **Haskell**, **Java** (Jersey1.x, Jersey2.x, OkHttp, Retrofit1.x, Retrofit2.x, Feign), **Node.js** (ES5, ES6, AngularJS with Google Closure Compiler annotations) **Objective-C**, **Perl**, **PHP**, **Python**, **Ruby**, **Scala**, **Swift** (2.x, 3.x), **Typescript** (Angular1.x, Angular2.x, Fetch, Node)
+- **API clients**: **ActionScript**, **Bash**, **C#** (.net 2.0, 4.0 or later), **C++** (cpprest, Qt5, Tizen), **Clojure**, **Dart**, **Elixir**, **Go**, **Groovy**, **Haskell**, **Java** (Jersey1.x, Jersey2.x, OkHttp, Retrofit1.x, Retrofit2.x, Feign), **Node.js** (ES5, ES6, AngularJS with Google Closure Compiler annotations) **Objective-C**, **Perl**, **PHP**, **Python**, **Ruby**, **Scala**, **Swift** (2.x, 3.x), **Typescript** (Angular1.x, Angular2.x, Fetch, jQuery, Node)
 - **Server stubs**: **C#** (ASP.NET Core, NancyFx), **Erlang**, **Go**, **Haskell**, **Java** (MSF4J, Spring, Undertow, JAX-RS: CDI, CXF, Inflector, RestEasy), **PHP** (Lumen, Slim, Silex, [Zend Expressive](https://github.com/zendframework/zend-expressive)), **Python** (Flask), **NodeJS**, **Ruby** (Sinatra, Rails5), **Scala** ([Finch](https://github.com/finagle/finch), Scalatra)
 - **API documentation generators**: **HTML**, **Confluence Wiki** 
 - **Others**: **JMeter**
@@ -200,7 +200,7 @@ To generate code with this image, you'll need to mount a local location as a vol
 Example:
 
 ```
-docker run --rm -v ${PWD}:/local swagger-api/swagger-codegen-cli generate \
+docker run --rm -v ${PWD}:/local swaggerapi/swagger-codegen-cli generate \
     -i http://petstore.swagger.io/v2/swagger.json \
     -l go \
     -o /local/out/go
@@ -588,7 +588,7 @@ and `config.json` contains the following as an example:
 ```
 
 Supported config options can be different per language. Running `config-help -l {lang}` will show available options.  
-**These options are applied via configuration file (e.g. config.json) or by passing them with `-D{optionName}={optionValue}**. (If `-D{optionName}` does not work, please open a [ticket](https://github.com/swagger-api/swagger-codegen/issues/new) and we'll look into it)
+**These options are applied via configuration file (e.g. config.json) or by passing them with `-D{optionName}={optionValue}`**. (If `-D{optionName}` does not work, please open a [ticket](https://github.com/swagger-api/swagger-codegen/issues/new) and we'll look into it)
 
 ```
 java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar config-help -l java
@@ -838,10 +838,11 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [carpolo](http://www.carpolo.co/)
 - [CloudBoost](https://www.CloudBoost.io/)
 - [Conplement](http://www.conplement.de/)
-- [Cummins] (http://www.cummins.com/)
+- [Cummins](http://www.cummins.com/)
 - [Cupix](http://www.cupix.com)
 - [DBBest Technologies](https://www.dbbest.com)
 - [DecentFoX](http://decentfox.com/)
+- [DocRaptor](https://docraptor.com)
 - [DocuSign](https://www.docusign.com)
 - [Ergon](http://www.ergon.ch/)
 - [EMC](https://www.emc.com/)
@@ -861,6 +862,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [HashData](http://www.hashdata.cn/)
 - [Hewlett Packard Enterprise](https://hpe.com)
 - [High Technologies Center](http://htc-cs.com)
+- [IBM](https://www.ibm.com)
 - [IMS Health](http://www.imshealth.com/en/solution-areas/technology-and-applications)
 - [Intent HQ](http://www.intenthq.com)
 - [Interactive Intelligence](http://developer.mypurecloud.com/)
@@ -874,6 +876,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Leica Geosystems AG](http://leica-geosystems.com)
 - [LiveAgent](https://www.ladesk.com/)
 - [LXL Tech](http://lxltech.com)
+- [Lyft](https://www.lyft.com/developers)
 - [MailMojo](https://mailmojo.no/)
 - [Mindera](http://mindera.com/)
 - [Mporium](http://mporium.com/)
@@ -889,6 +892,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Plexxi](http://www.plexxi.com)
 - [Pixoneye](http://www.pixoneye.com/)
 - [PostAffiliatePro](https://www.postaffiliatepro.com/)
+- [PracticeBird](https://www.practicebird.com/)
 - [Prill Tecnologia](http://www.prill.com.br)
 - [QAdept](http://qadept.com/)
 - [QuantiModo](https://quantimo.do/)
@@ -1001,6 +1005,7 @@ Here is a list of template creators:
    * TypeScript (Angular1):  @mhardorf
    * TypeScript (Fetch): @leonyu
    * TypeScript (Angular2): @roni-frantchi
+   * TypeScript (jQuery): @bherila 
  * Server Stubs
    * C# ASP.NET5: @jimschubert
    * C# NancyFX: @mstefaniuk

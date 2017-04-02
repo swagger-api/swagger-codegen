@@ -2480,6 +2480,9 @@ public class DefaultCodegen {
                         p.isPrimitiveType = cp.isPrimitiveType;
                         p.isBinary = isDataTypeBinary(cp.datatype);
                         p.isFile = isDataTypeFile(cp.datatype);
+                        if (cp.complexType != null) {
+                            imports.add(cp.complexType);
+                        }
                     }
 
                     // set boolean flag (e.g. isString)
@@ -2824,6 +2827,7 @@ public class DefaultCodegen {
         }
         co.operationId = uniqueName;
         co.operationIdLowerCase = uniqueName.toLowerCase();
+        co.operationIdCamelCase = DefaultCodegen.camelize(uniqueName);
         opList.add(co);
         co.baseName = tag;
     }
