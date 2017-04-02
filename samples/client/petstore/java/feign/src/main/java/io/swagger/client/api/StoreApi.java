@@ -20,7 +20,7 @@ public interface StoreApi extends ApiClient.Api {
    * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
     * @param orderId ID of the order that needs to be deleted (required)
    */
-  @RequestLine("DELETE /store/order/{orderId}")
+  @RequestLine("DELETE /store/order/{order_id}")
   @Headers({
     "Content-Type: application/json",
     "Accept: application/json",
@@ -45,7 +45,7 @@ public interface StoreApi extends ApiClient.Api {
     * @param orderId ID of pet that needs to be fetched (required)
    * @return Order
    */
-  @RequestLine("GET /store/order/{orderId}")
+  @RequestLine("GET /store/order/{order_id}")
   @Headers({
     "Content-Type: application/json",
     "Accept: application/json",
