@@ -8,42 +8,6 @@ let defaultBasePath = '{{{basePath}}}';
 
 /* tslint:disable:no-unused-variable */
 
-{{#models}}
-{{#model}}
-{{#description}}
-    /**
-    * {{{description}}}
-    */
-{{/description}}
-export class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
-{{#vars}}
-    {{#description}}
-        /**
-        * {{{description}}}
-        */
-    {{/description}}
-    '{{name}}': {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
-{{/vars}}
-}
-
-{{#hasEnums}}
-export namespace {{classname}} {
-{{#vars}}
-{{#isEnum}}
-    export enum {{enumName}} {
-    {{#allowableValues}}
-        {{#enumVars}}
-            {{name}} = <any> {{{value}}}{{^-last}},{{/-last}}
-        {{/enumVars}}
-    {{/allowableValues}}
-    }
-{{/isEnum}}
-{{/vars}}
-}
-{{/hasEnums}}
-{{/model}}
-{{/models}}
-
 export interface Authentication {
     /**
     * Apply authentication settings to header and query params.

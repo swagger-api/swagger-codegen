@@ -1,5 +1,9 @@
 package io.swagger.codegen.languages;
 
+import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.CodegenParameter;
+import io.swagger.models.ModelImpl;
+import io.swagger.models.properties.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,7 +13,6 @@ import java.util.Date;
 
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.SupportingFile;
-import io.swagger.models.properties.BooleanProperty;
 
 public class TypeScriptJqueryClientCodegen extends AbstractTypeScriptClientCodegen {
     private static final Logger LOGGER = LoggerFactory.getLogger(TypeScriptNodeClientCodegen.class);
@@ -26,6 +29,13 @@ public class TypeScriptJqueryClientCodegen extends AbstractTypeScriptClientCodeg
 
     public TypeScriptJqueryClientCodegen() {
         super();
+
+        modelTemplateFiles.put("model.mustache", ".ts");
+        apiTemplateFiles.put("api.mustache", ".ts");
+        typeMapping.put("Date","Date");
+        apiPackage = "api";
+        modelPackage = "model";
+
         outputFolder = "generated-code/typescript-jquery";
         embeddedTemplateDir = templateDir = "typescript-jquery";
 
@@ -35,17 +45,76 @@ public class TypeScriptJqueryClientCodegen extends AbstractTypeScriptClientCodeg
         this.cliOptions.add(new CliOption(SNAPSHOT, "When setting this property to true the version will be suffixed with -SNAPSHOT.yyyyMMddHHmm", BooleanProperty.TYPE).defaultValue(Boolean.FALSE.toString()));
     }
 
-
     @Override
     public void processOpts() {
         super.processOpts();
-        supportingFiles.add(new SupportingFile("api.mustache", null, "api.ts"));
+
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
 
         LOGGER.warn("check additionals: " + additionalProperties.get(NPM_NAME));
         if(additionalProperties.containsKey(NPM_NAME)) {
             addNpmPackageGeneration();
         }
+    }
+
+    @Override
+    public String getTypeDeclaration(Property p) {
+        Property inner;
+        if(p instanceof ArrayProperty) {
+            ArrayProperty mp1 = (ArrayProperty)p;
+            inner = mp1.getItems();
+            return this.getSwaggerType(p) + "<" + this.getTypeDeclaration(inner) + ">";
+        } else if(p instanceof MapProperty) {
+            MapProperty mp = (MapProperty)p;
+            inner = mp.getAdditionalProperties();
+            return "{ [key: string]: " + this.getTypeDeclaration(inner) + "; }";
+        } else if(p instanceof FileProperty || p instanceof ObjectProperty) {
+            return "any";
+        } else {
+            return super.getTypeDeclaration(p);
+        }
+    }
+
+    @Override
+    public String getSwaggerType(Property p) {
+        String swaggerType = super.getSwaggerType(p);
+        if(isLanguagePrimitive(swaggerType) || isLanguageGenericType(swaggerType)) {
+            return swaggerType;
+        }
+        return addModelPrefix(swaggerType);
+    }
+
+    private String addModelPrefix(String swaggerType) {
+        String type = null;
+        if (typeMapping.containsKey(swaggerType)) {
+            type = typeMapping.get(swaggerType);
+        } else {
+            type = swaggerType;
+        }
+
+        if (!isLanguagePrimitive(type) && !isLanguageGenericType(type)) {
+            type = "models." + swaggerType;
+        }
+        return type;
+    }
+
+    private boolean isLanguagePrimitive(String type) {
+        return languageSpecificPrimitives.contains(type);
+    }
+
+    private boolean isLanguageGenericType(String type) {
+        for (String genericType: languageGenericTypes) {
+            if (type.startsWith(genericType + "<"))  {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void postProcessParameter(CodegenParameter parameter) {
+        super.postProcessParameter(parameter);
+        parameter.dataType = addModelPrefix(parameter.dataType);
     }
 
     private void addNpmPackageGeneration() {
@@ -75,6 +144,12 @@ public class TypeScriptJqueryClientCodegen extends AbstractTypeScriptClientCodeg
     private String getPackageRootDirectory() {
         String indexPackage = modelPackage.substring(0, Math.max(0, modelPackage.lastIndexOf('.')));
         return indexPackage.replace('.', File.separatorChar);
+    }
+
+    @Override
+    protected void addAdditionPropertiesToCodeGenModel(CodegenModel codegenModel, ModelImpl swaggerModel) {
+        codegenModel.additionalPropertiesType = getSwaggerType(swaggerModel.getAdditionalProperties());
+        addImport(codegenModel, codegenModel.additionalPropertiesType);
     }
 
     @Override
