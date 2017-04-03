@@ -1,12 +1,13 @@
 package controllers;
 
-import java.io.File;
+import java.io.InputStream;
 import apimodels.Pet;
 
 import play.mvc.Http;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.io.FileInputStream;
 import javax.validation.constraints.*;
 
 public class PetApiControllerImp implements PetApiControllerImpInterface {
