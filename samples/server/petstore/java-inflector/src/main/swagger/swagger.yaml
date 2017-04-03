@@ -12,7 +12,7 @@ info:
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "petstore.swagger.io"
+host: "petstore.swagger.io:80"
 basePath: "/v2"
 tags:
 - name: "pet"
@@ -348,7 +348,7 @@ paths:
           description: "Invalid Order"
       x-contentType: "application/json"
       x-accepts: "application/json"
-  /store/order/{orderId}:
+  /store/order/{order_id}:
     get:
       tags:
       - "store"
@@ -360,7 +360,7 @@ paths:
       - "application/xml"
       - "application/json"
       parameters:
-      - name: "orderId"
+      - name: "order_id"
         in: "path"
         description: "ID of pet that needs to be fetched"
         required: true
@@ -390,7 +390,7 @@ paths:
       - "application/xml"
       - "application/json"
       parameters:
-      - name: "orderId"
+      - name: "order_id"
         in: "path"
         description: "ID of the order that needs to be deleted"
         required: true
