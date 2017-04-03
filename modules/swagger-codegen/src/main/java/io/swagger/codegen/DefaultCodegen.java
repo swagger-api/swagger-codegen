@@ -811,6 +811,7 @@ public class DefaultCodegen {
         typeMapping.put("ByteArray", "byte[]");
         typeMapping.put("binary", "byte[]");
         typeMapping.put("file", "File");
+        typeMapping.put("UUID", "UUID");
 
 
         instantiationTypes = new HashMap<String, String>();
@@ -1481,7 +1482,10 @@ public class DefaultCodegen {
         property.title = p.getTitle();
         property.getter = "get" + getterAndSetterCapitalize(name);
         property.setter = "set" + getterAndSetterCapitalize(name);
-        property.example = toExampleValue(p);
+        String example = toExampleValue(p);
+        if(!"null".equals(example)) {
+            property.example = example;
+        }
         property.defaultValue = toDefaultValue(p);
         property.defaultValueWithParam = toDefaultValueWithParam(name, p);
         property.jsonSchema = Json.pretty(p);
@@ -2476,6 +2480,9 @@ public class DefaultCodegen {
                         p.isPrimitiveType = cp.isPrimitiveType;
                         p.isBinary = isDataTypeBinary(cp.datatype);
                         p.isFile = isDataTypeFile(cp.datatype);
+                        if (cp.complexType != null) {
+                            imports.add(cp.complexType);
+                        }
                     }
 
                     // set boolean flag (e.g. isString)
@@ -2820,6 +2827,7 @@ public class DefaultCodegen {
         }
         co.operationId = uniqueName;
         co.operationIdLowerCase = uniqueName.toLowerCase();
+        co.operationIdCamelCase = DefaultCodegen.camelize(uniqueName);
         opList.add(co);
         co.baseName = tag;
     }

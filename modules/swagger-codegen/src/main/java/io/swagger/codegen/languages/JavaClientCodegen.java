@@ -19,7 +19,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
 {
     static final String MEDIA_TYPE = "mediaType";
 
-	@SuppressWarnings("hiding")
+    @SuppressWarnings("hiding")
     private static final Logger LOGGER = LoggerFactory.getLogger(JavaClientCodegen.class);
 
     public static final String USE_RX_JAVA = "useRxJava";
@@ -60,7 +60,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         cliOptions.add(CliOption.newBoolean(USE_GZIP_FEATURE, "Send gzip-encoded requests"));
 
         supportedLibraries.put("jersey1", "HTTP client: Jersey client 1.19.1. JSON processing: Jackson 2.7.0. Enable Java6 support using '-DsupportJava6=true'. Enable gzip request encoding using '-DuseGzipFeature=true'.");
-        supportedLibraries.put("feign", "HTTP client: Netflix Feign 8.16.0. JSON processing: Jackson 2.7.0");
+        supportedLibraries.put("feign", "HTTP client: OpenFeign 9.4.0. JSON processing: Jackson 2.8.7");
         supportedLibraries.put("jersey2", "HTTP client: Jersey client 2.22.2. JSON processing: Jackson 2.7.0");
         supportedLibraries.put("okhttp-gson", "HTTP client: OkHttp 2.7.5. JSON processing: Gson 2.6.2. Enable Parcelable modles on Android using '-DparcelableModel=true'. Enable gzip request encoding using '-DuseGzipFeature=true'.");
         supportedLibraries.put(RETROFIT_1, "HTTP client: OkHttp 2.7.5. JSON processing: Gson 2.3.1 (Retrofit 1.9.0). IMPORTANT NOTE: retrofit1.x is no longer actively maintained so please upgrade to 'retrofit2' instead.");
@@ -102,9 +102,9 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         if (additionalProperties.containsKey(USE_RX_JAVA2)) {
             this.setUseRxJava2(Boolean.valueOf(additionalProperties.get(USE_RX_JAVA2).toString()));
         }
-	if (!useRxJava && !useRxJava2) {
-	    additionalProperties.put(DO_NOT_USE_RX, true);
-	}
+        if (!useRxJava && !useRxJava2) {
+            additionalProperties.put(DO_NOT_USE_RX, true);
+        }
         if (additionalProperties.containsKey(USE_PLAY24_WS)) {
             this.setUsePlay24WS(Boolean.valueOf(additionalProperties.get(USE_PLAY24_WS).toString()));
         }
@@ -176,6 +176,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         if ("feign".equals(getLibrary())) {
             additionalProperties.put("jackson", "true");
             supportingFiles.add(new SupportingFile("ParamExpander.mustache", invokerFolder, "ParamExpander.java"));
+            supportingFiles.add(new SupportingFile("EncodingUtils.mustache", invokerFolder, "EncodingUtils.java"));
         } else if ("okhttp-gson".equals(getLibrary()) || StringUtils.isEmpty(getLibrary())) {
             // the "okhttp-gson" library template requires "ApiCallback.mustache" for async call
             supportingFiles.add(new SupportingFile("ApiCallback.mustache", invokerFolder, "ApiCallback.java"));
@@ -241,16 +242,16 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     @Override
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
         super.postProcessOperations(objs);
-        if(usesAnyRetrofitLibrary()) {
+        if (usesAnyRetrofitLibrary()) {
             Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
             if (operations != null) {
                 List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
                 for (CodegenOperation operation : ops) {
                     if (operation.hasConsumes == Boolean.TRUE) {
 
-                        if ( isMultipartType(operation.consumes) ) { 
+                        if (isMultipartType(operation.consumes)) {
                             operation.isMultipart = Boolean.TRUE;
-                        }	
+                        }
                         else {
                             operation.prioritizedContentTypes = prioritizeContentTypes(operation.consumes);
                         }
@@ -263,6 +264,27 @@ public class JavaClientCodegen extends AbstractJavaCodegen
                 }
             }
         }
+
+        // camelize path variables for Feign client
+        if ("feign".equals(getLibrary())) {
+            Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
+            List<CodegenOperation> operationList = (List<CodegenOperation>) operations.get("operation");
+            for (CodegenOperation op : operationList) {
+                String path = new String(op.path);
+                String[] items = path.split("/", -1);
+                String opsPath = "";
+                int pathParamIndex = 0;
+
+                for (int i = 0; i < items.length; ++i) {
+                    if (items[i].matches("^\\{(.*)\\}$")) { // wrap in {}
+                        // camelize path variable
+                        items[i] = "{" + camelize(items[i].substring(1, items[i].length()-1), true) + "}";
+                    }
+                }
+                op.path = StringUtils.join(items, "/");
+            }
+        }
+
         return objs;
     }
 
