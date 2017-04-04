@@ -84,7 +84,7 @@ public class {{classname}}Controller extends Controller {
         {{/queryParams}}
         {{#formParams}}
         {{^notFile}}
-        Http.MultipartFormData.FilePart {{paramName}} = request().body().asMultipartFormData().getFile("{{baseName}}");
+        {{{dataType}}} {{paramName}} = request().body().asMultipartFormData().getFile("{{baseName}}");
         {{#required}}if (({{paramName}} == null || ((File) {{paramName}}.getFile()).length() == 0)) {
             throw new RuntimeException("File cannot be empty");
         }
