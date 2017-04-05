@@ -21,6 +21,7 @@ import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyImportMapp
 import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyInstantiationTypesKvp;
 import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyLanguageSpecificPrimitivesCsv;
 import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyTypeMappingsKvp;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyReservedWordsMappingsKvp;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 import java.io.File;
@@ -162,10 +163,72 @@ public class CodeGenMojo extends AbstractMojo {
     private String modelNameSuffix;
 
     /**
+     * Sets an optional ignoreFileOverride path
+     */
+    @Parameter(name = "ignoreFileOverride", required = false)
+    private String ignoreFileOverride;
+
+    /**
      * A map of language-specific parameters as passed with the -c option to the command line
      */
     @Parameter(name = "configOptions")
     private Map<?, ?> configOptions;
+
+    /**
+     * Generate the apis
+     */
+    @Parameter(name = "generateApis", required = false)
+    private Boolean generateApis = true;
+
+    /**
+     * Generate the models
+     */
+    @Parameter(name = "generateModels", required = false)
+    private Boolean generateModels = true;
+
+    /**
+     * A comma separated list of models to generate.  All models is the default.
+     */
+    @Parameter(name = "modelsToGenerate", required = false)
+    private String modelsToGenerate = "";
+
+    /**
+     * Generate the supporting files
+     */
+    @Parameter(name = "generateSupportingFiles", required = false)
+    private Boolean generateSupportingFiles = true;
+
+    /**
+     * A comma separated list of models to generate.  All models is the default.
+     */
+    @Parameter(name = "supportingFilesToGenerate", required = false)
+    private String supportingFilesToGenerate = "";
+    
+    /**
+     * Generate the model tests
+     */
+    @Parameter(name = "generateModelTests", required = false)
+    private Boolean generateModelTests = true;
+
+    /**
+     * Generate the model documentation
+     */
+    @Parameter(name = "generateModelDocumentation", required = false)
+    private Boolean generateModelDocumentation = true;
+
+    /**
+     * Generate the api tests
+     */
+    @Parameter(name = "generateApiTests", required = false)
+    private Boolean generateApiTests = true;
+
+    /**
+     * Generate the api documentation
+     */
+    @Parameter(name = "generateApiDocumentation", required = false)
+    private Boolean generateApiDocumentation = true;
+
+
 
     /**
      * Add the output directory to the project as a source root, so that the
@@ -213,6 +276,10 @@ public class CodeGenMojo extends AbstractMojo {
 
         if(isNotEmpty(gitRepoId)) {
             configurator.setGitRepoId(gitRepoId);
+        }
+
+        if(isNotEmpty(ignoreFileOverride)) {
+            configurator.setIgnoreFileOverride(ignoreFileOverride);
         }
 
         configurator.setLang(language);
@@ -263,6 +330,30 @@ public class CodeGenMojo extends AbstractMojo {
             configurator.setTemplateDir(templateDirectory.getAbsolutePath());
         }
 
+        // Set generation options
+        if (null != generateApis && generateApis) {
+            System.setProperty("apis", "");
+        } else {
+            System.clearProperty("apis");
+        }
+
+        if (null != generateModels && generateModels) {
+            System.setProperty("models", modelsToGenerate);
+        } else {
+            System.clearProperty("models");
+        }
+
+        if (null != generateSupportingFiles && generateSupportingFiles) {
+            System.setProperty("supportingFiles", supportingFilesToGenerate);
+        } else {
+            System.clearProperty("supportingFiles");
+        }
+        
+        System.setProperty("modelTests", generateModelTests.toString());
+        System.setProperty("modelDocs", generateModelDocumentation.toString());
+        System.setProperty("apiTests", generateApiTests.toString());
+        System.setProperty("apiDocs", generateApiDocumentation.toString());
+
         if (configOptions != null) {
 
             if(configOptions.containsKey("instantiation-types")) {
@@ -283,6 +374,10 @@ public class CodeGenMojo extends AbstractMojo {
 
             if(configOptions.containsKey("additional-properties")) {
                 applyAdditionalPropertiesKvp(configOptions.get("additional-properties").toString(), configurator);
+            }
+            
+            if(configOptions.containsKey("reserved-words-mappings")) {
+                applyReservedWordsMappingsKvp(configOptions.get("reserved-words-mappings").toString(), configurator);
             }
         }
 
@@ -330,7 +425,7 @@ public class CodeGenMojo extends AbstractMojo {
         }
 
         if (addCompileSourceRoot) {
-            final Object sourceFolderObject = configOptions.get(CodegenConstants.SOURCE_FOLDER);
+            final Object sourceFolderObject = configOptions == null ? null : configOptions.get(CodegenConstants.SOURCE_FOLDER);
             final String sourceFolder =  sourceFolderObject == null ? "src/main/java" : sourceFolderObject.toString();
 
             String sourceJavaFolder = output.toString() + "/" + sourceFolder;

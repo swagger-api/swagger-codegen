@@ -15,53 +15,18 @@ using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{
+{ 
     /// <summary>
     /// A pet for sale in the pet store
     /// </summary>
     [DataContract]
-    public partial class Pet :  IEquatable<Pet>
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Pet" /> class.
-        /// </summary>
-        /// <param name="Id">Id.</param>
-        /// <param name="Category">Category.</param>
-        /// <param name="Name">Name (required).</param>
-        /// <param name="PhotoUrls">PhotoUrls (required).</param>
-        /// <param name="Tags">Tags.</param>
-        /// <param name="Status">pet status in the store.</param>
-        public Pet(long? Id = null, Category Category = null, string Name = null, List<string> PhotoUrls = null, List<Tag> Tags = null, string Status = null)
-        {
-            // to ensure "Name" is required (not null)
-            if (Name == null)
-            {
-                throw new InvalidDataException("Name is a required property for Pet and cannot be null");
-            }
-            else
-            {
-                this.Name = Name;
-            }
-            // to ensure "PhotoUrls" is required (not null)
-            if (PhotoUrls == null)
-            {
-                throw new InvalidDataException("PhotoUrls is a required property for Pet and cannot be null");
-            }
-            else
-            {
-                this.PhotoUrls = PhotoUrls;
-            }
-            this.Id = Id;
-            this.Category = Category;
-            this.Tags = Tags;
-            this.Status = Status;
-            
-        }
-
+    public partial class Pet : IEquatable<Pet>
+    { 
         /// <summary>
         /// Gets or Sets Id
         /// </summary>
@@ -77,12 +42,14 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets Name
         /// </summary>
+        [Required]
         [DataMember(Name="name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or Sets PhotoUrls
         /// </summary>
+        [Required]
         [DataMember(Name="photoUrls")]
         public List<string> PhotoUrls { get; set; }
 
@@ -91,14 +58,37 @@ namespace IO.Swagger.Models
         /// </summary>
         [DataMember(Name="tags")]
         public List<Tag> Tags { get; set; }
+        /// <summary>
+        /// pet status in the store
+        /// </summary>
+        /// <value>pet status in the store</value>
+        public enum StatusEnum
+        { 
+            /// <summary>
+            /// Enum AvailableEnum for "available"
+            /// </summary>
+            [EnumMember(Value = "available")]
+            AvailableEnum,
+            
+            /// <summary>
+            /// Enum PendingEnum for "pending"
+            /// </summary>
+            [EnumMember(Value = "pending")]
+            PendingEnum,
+            
+            /// <summary>
+            /// Enum SoldEnum for "sold"
+            /// </summary>
+            [EnumMember(Value = "sold")]
+            SoldEnum
+        }
 
         /// <summary>
         /// pet status in the store
         /// </summary>
         /// <value>pet status in the store</value>
         [DataMember(Name="status")]
-        public string Status { get; set; }
-
+        public StatusEnum? Status { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -136,8 +126,7 @@ namespace IO.Swagger.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
-            return Equals((Pet)obj);
+            return obj.GetType() == GetType() && Equals((Pet)obj);
         }
 
         /// <summary>
@@ -147,40 +136,39 @@ namespace IO.Swagger.Models
         /// <returns>Boolean</returns>
         public bool Equals(Pet other)
         {
-
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
             return 
                 (
-                    this.Id == other.Id ||
-                    this.Id != null &&
-                    this.Id.Equals(other.Id)
+                    Id == other.Id ||
+                    Id != null &&
+                    Id.Equals(other.Id)
                 ) && 
                 (
-                    this.Category == other.Category ||
-                    this.Category != null &&
-                    this.Category.Equals(other.Category)
+                    Category == other.Category ||
+                    Category != null &&
+                    Category.Equals(other.Category)
                 ) && 
                 (
-                    this.Name == other.Name ||
-                    this.Name != null &&
-                    this.Name.Equals(other.Name)
+                    Name == other.Name ||
+                    Name != null &&
+                    Name.Equals(other.Name)
                 ) && 
                 (
-                    this.PhotoUrls == other.PhotoUrls ||
-                    this.PhotoUrls != null &&
-                    this.PhotoUrls.SequenceEqual(other.PhotoUrls)
+                    PhotoUrls == other.PhotoUrls ||
+                    PhotoUrls != null &&
+                    PhotoUrls.SequenceEqual(other.PhotoUrls)
                 ) && 
                 (
-                    this.Tags == other.Tags ||
-                    this.Tags != null &&
-                    this.Tags.SequenceEqual(other.Tags)
+                    Tags == other.Tags ||
+                    Tags != null &&
+                    Tags.SequenceEqual(other.Tags)
                 ) && 
                 (
-                    this.Status == other.Status ||
-                    this.Status != null &&
-                    this.Status.Equals(other.Status)
+                    Status == other.Status ||
+                    Status != null &&
+                    Status.Equals(other.Status)
                 );
         }
 
@@ -193,25 +181,26 @@ namespace IO.Swagger.Models
             // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hash = 41;
+                var hash = 41;
                 // Suitable nullity checks etc, of course :)
-                    if (this.Id != null)
-                    hash = hash * 59 + this.Id.GetHashCode();
-                    if (this.Category != null)
-                    hash = hash * 59 + this.Category.GetHashCode();
-                    if (this.Name != null)
-                    hash = hash * 59 + this.Name.GetHashCode();
-                    if (this.PhotoUrls != null)
-                    hash = hash * 59 + this.PhotoUrls.GetHashCode();
-                    if (this.Tags != null)
-                    hash = hash * 59 + this.Tags.GetHashCode();
-                    if (this.Status != null)
-                    hash = hash * 59 + this.Status.GetHashCode();
+                    if (Id != null)
+                    hash = hash * 59 + Id.GetHashCode();
+                    if (Category != null)
+                    hash = hash * 59 + Category.GetHashCode();
+                    if (Name != null)
+                    hash = hash * 59 + Name.GetHashCode();
+                    if (PhotoUrls != null)
+                    hash = hash * 59 + PhotoUrls.GetHashCode();
+                    if (Tags != null)
+                    hash = hash * 59 + Tags.GetHashCode();
+                    if (Status != null)
+                    hash = hash * 59 + Status.GetHashCode();
                 return hash;
             }
         }
 
         #region Operators
+        #pragma warning disable 1591
 
         public static bool operator ==(Pet left, Pet right)
         {
@@ -223,7 +212,7 @@ namespace IO.Swagger.Models
             return !Equals(left, right);
         }
 
+        #pragma warning restore 1591
         #endregion Operators
-
     }
 }

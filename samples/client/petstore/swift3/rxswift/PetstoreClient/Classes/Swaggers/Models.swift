@@ -46,10 +46,8 @@ public extension Decoded {
         switch self {
         case let .success(value):
             return value
-            break
         case .failure:
             return nil
-            break
         }
     }
 }
@@ -71,7 +69,7 @@ class Decoders {
     }
 
     static func decode<T>(clazz: T.Type, discriminator: String, source: AnyObject) -> Decoded<T> {
-        let key = discriminator;
+        let key = discriminator
         if let decoder = decoders[key], let value = decoder(source) as? Decoded<T> {
             return value
         } else {
@@ -88,7 +86,6 @@ class Decoders {
                     values.append(value)
                 case let .failure(error):
                     return .failure(error)
-                    break
                 }
             }
             return .success(values)
@@ -104,7 +101,6 @@ class Decoders {
                 switch Decoders.decode(clazz: T.self, source: value) {
                 case let .success(value):
                     dictionary[key] = value
-                    break
                 case let .failure(error):
                     return .failure(error)
                 }
@@ -114,8 +110,9 @@ class Decoders {
             return .failure(.typeMismatch(expected: String(describing: clazz), actual: String(describing: source)))
         }
     }
-    
+
     static func decodeOptional<T: RawRepresentable>(clazz: T.Type, source: AnyObject?) -> Decoded<T?> {
+        guard !(source is NSNull), source != nil else { return .success(nil) }
         if let value = source as? T.RawValue {
             if let enumValue = T.init(rawValue: value) {
                 return .success(enumValue)
@@ -126,7 +123,7 @@ class Decoders {
             return .failure(.typeMismatch(expected: "\(T.RawValue.self) matching a case from the enumeration \(T.self)", actual: String(describing: type(of: source))))
         }
     }
-        
+
     static func decode<T>(clazz: T.Type, source: AnyObject) -> Decoded<T> {
         initialize()
         if let value = source.int32Value as? T, source is NSNumber, T.self is Int32.Type {
@@ -141,8 +138,7 @@ class Decoders {
         if let value = source as? T {
             return .success(value)
         }
-        //The last two expressions in this condition must be unnecessary, but it would be good to test this.
-        if let intermediate = source as? String, let value = Data(base64Encoded: intermediate) as? T, T.self is Data.Type, source is String {
+        if let intermediate = source as? String, let value = Data(base64Encoded: intermediate) as? T {
             return .success(value)
         }
 
@@ -158,7 +154,7 @@ class Decoders {
     static func toOptional<T>(decoded: Decoded<T>) -> Decoded<T?> {
         return .success(decoded.value)
     }
-    
+
     static func decodeOptional<T>(clazz: T.Type, source: AnyObject?) -> Decoded<T?> {
         if let source = source, !(source is NSNull) {
             switch Decoders.decode(clazz: clazz, source: source) {
@@ -199,7 +195,7 @@ class Decoders {
             return .success(nil)
         }
     }
-    
+
     static func decodeOptional<T: RawRepresentable, U: AnyObject where T.RawValue == U>(clazz: T, source: AnyObject) -> Decoded<T?> {
         if let value = source as? U {
             if let enumValue = T.init(rawValue: value) {
@@ -245,7 +241,7 @@ class Decoders {
                 return .failure(.typeMismatch(expected: "String or Int", actual: "\(source)"))
             }
         }
-        
+
         // Decoder for ISOFullDate
         Decoders.addDecoder(clazz: ISOFullDate.self) { (source: AnyObject) -> Decoded<ISOFullDate> in
             if let string = source as? String,
@@ -433,6 +429,63 @@ class Decoders {
                 return .success(instance)
             } else {
                 return .failure(.typeMismatch(expected: "ArrayTest", actual: "\(source)"))
+            }
+        }
+
+
+        // Decoder for [Capitalization]
+        Decoders.addDecoder(clazz: [Capitalization].self) { (source: AnyObject) -> Decoded<[Capitalization]> in
+            return Decoders.decode(clazz: [Capitalization].self, source: source)
+        }
+        // Decoder for Capitalization
+        Decoders.addDecoder(clazz: Capitalization.self) { (source: AnyObject) -> Decoded<Capitalization> in
+            if let sourceDictionary = source as? [AnyHashable: Any] {
+
+                let instance = Capitalization()
+                switch Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["smallCamel"] as AnyObject?) {
+                
+                case let .success(value): instance.smallCamel = value
+                case let .failure(error): return .failure(error)
+                
+                }
+
+                switch Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["CapitalCamel"] as AnyObject?) {
+                
+                case let .success(value): instance.capitalCamel = value
+                case let .failure(error): return .failure(error)
+                
+                }
+
+                switch Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["small_Snake"] as AnyObject?) {
+                
+                case let .success(value): instance.smallSnake = value
+                case let .failure(error): return .failure(error)
+                
+                }
+
+                switch Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["Capital_Snake"] as AnyObject?) {
+                
+                case let .success(value): instance.capitalSnake = value
+                case let .failure(error): return .failure(error)
+                
+                }
+
+                switch Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["SCA_ETH_Flow_Points"] as AnyObject?) {
+                
+                case let .success(value): instance.sCAETHFlowPoints = value
+                case let .failure(error): return .failure(error)
+                
+                }
+
+                switch Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["ATT_NAME"] as AnyObject?) {
+                
+                case let .success(value): instance.ATT_NAME = value
+                case let .failure(error): return .failure(error)
+                
+                }
+                return .success(instance)
+            } else {
+                return .failure(.typeMismatch(expected: "Capitalization", actual: "\(source)"))
             }
         }
 

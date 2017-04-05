@@ -20,7 +20,6 @@ import re
 # python 2 and python 3 compatibility library
 from six import iteritems
 
-from ..configuration import Configuration
 from ..api_client import ApiClient
 
 
@@ -32,13 +31,9 @@ class FakeApi(object):
     """
 
     def __init__(self, api_client=None):
-        config = Configuration()
-        if api_client:
-            self.api_client = api_client
-        else:
-            if not config.api_client:
-                config.api_client = ApiClient()
-            self.api_client = config.api_client
+        if api_client is None:
+            api_client = ApiClient()
+        self.api_client = api_client
 
     def test_client_model(self, body, **kwargs):
         """
@@ -108,7 +103,6 @@ class FakeApi(object):
 
         collection_formats = {}
 
-        resource_path = '/fake'.replace('{format}', 'json')
         path_params = {}
 
         query_params = {}
@@ -132,7 +126,7 @@ class FakeApi(object):
         # Authentication setting
         auth_settings = []
 
-        return self.api_client.call_api(resource_path, 'PATCH',
+        return self.api_client.call_api('/fake', 'PATCH',
                                         path_params,
                                         query_params,
                                         header_params,
@@ -276,7 +270,6 @@ class FakeApi(object):
 
         collection_formats = {}
 
-        resource_path = '/fake'.replace('{format}', 'json')
         path_params = {}
 
         query_params = {}
@@ -326,7 +319,7 @@ class FakeApi(object):
         # Authentication setting
         auth_settings = ['http_basic_test']
 
-        return self.api_client.call_api(resource_path, 'POST',
+        return self.api_client.call_api('/fake', 'POST',
                                         path_params,
                                         query_params,
                                         header_params,
@@ -420,7 +413,6 @@ class FakeApi(object):
 
         collection_formats = {}
 
-        resource_path = '/fake'.replace('{format}', 'json')
         path_params = {}
 
         query_params = {}
@@ -461,7 +453,7 @@ class FakeApi(object):
         # Authentication setting
         auth_settings = []
 
-        return self.api_client.call_api(resource_path, 'GET',
+        return self.api_client.call_api('/fake', 'GET',
                                         path_params,
                                         query_params,
                                         header_params,
