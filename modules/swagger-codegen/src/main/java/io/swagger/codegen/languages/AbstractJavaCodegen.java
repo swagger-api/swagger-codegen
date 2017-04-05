@@ -570,6 +570,9 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
     @Override
     public String toDefaultValue(Property p) {
+        if (!p.getRequired()) {
+            return "null";
+        }
         if (p instanceof ArrayProperty) {
             final ArrayProperty ap = (ArrayProperty) p;
             final String pattern;

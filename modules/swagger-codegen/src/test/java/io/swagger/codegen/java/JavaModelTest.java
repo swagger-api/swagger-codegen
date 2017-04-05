@@ -108,10 +108,38 @@ public class JavaModelTest {
         Assert.assertEquals(property.setter, "setUrls");
         Assert.assertEquals(property.datatype, "List<String>");
         Assert.assertEquals(property.name, "urls");
-        Assert.assertEquals(property.defaultValue, "new ArrayList<String>()");
+        Assert.assertEquals(property.defaultValue, "null");
         Assert.assertEquals(property.baseType, "List");
         Assert.assertEquals(property.containerType, "array");
         Assert.assertFalse(property.required);
+        Assert.assertTrue(property.isContainer);
+    }
+
+    @Test(description = "convert a model with required list property")
+    public void requiredListPropertyTest() {
+        final Model model = new ModelImpl()
+                .description("a sample model")
+                .property("urls", new ArrayProperty()
+                        .items(new StringProperty()))
+                .required("urls");
+        final DefaultCodegen codegen = new JavaClientCodegen();
+        final CodegenModel cm = codegen.fromModel("sample", model);
+
+        Assert.assertEquals(cm.name, "sample");
+        Assert.assertEquals(cm.classname, "Sample");
+        Assert.assertEquals(cm.description, "a sample model");
+        Assert.assertEquals(cm.vars.size(), 1);
+
+        final CodegenProperty property = cm.vars.get(0);
+        Assert.assertEquals(property.baseName, "urls");
+        Assert.assertEquals(property.getter, "getUrls");
+        Assert.assertEquals(property.setter, "setUrls");
+        Assert.assertEquals(property.datatype, "List<String>");
+        Assert.assertEquals(property.name, "urls");
+        Assert.assertEquals(property.defaultValue, "new ArrayList<String>()");
+        Assert.assertEquals(property.baseType, "List");
+        Assert.assertEquals(property.containerType, "array");
+        Assert.assertTrue(property.required);
         Assert.assertTrue(property.isContainer);
     }
 
@@ -136,7 +164,7 @@ public class JavaModelTest {
         Assert.assertEquals(property.setter, "setTranslations");
         Assert.assertEquals(property.datatype, "Map<String, String>");
         Assert.assertEquals(property.name, "translations");
-        Assert.assertEquals(property.defaultValue, "new HashMap<String, String>()");
+        Assert.assertEquals(property.defaultValue, "null");
         Assert.assertEquals(property.baseType, "Map");
         Assert.assertEquals(property.containerType, "map");
         Assert.assertFalse(property.required);
@@ -164,7 +192,7 @@ public class JavaModelTest {
         Assert.assertEquals(property.setter, "setTranslations");
         Assert.assertEquals(property.datatype, "Map<String, List<Pet>>");
         Assert.assertEquals(property.name, "translations");
-        Assert.assertEquals(property.defaultValue, "new HashMap<String, List<Pet>>()");
+        Assert.assertEquals(property.defaultValue, "null");
         Assert.assertEquals(property.baseType, "Map");
         Assert.assertEquals(property.containerType, "map");
         Assert.assertFalse(property.required);
@@ -186,7 +214,7 @@ public class JavaModelTest {
         Assert.assertEquals(property.setter, "setList2D");
         Assert.assertEquals(property.datatype, "List<List<Pet>>");
         Assert.assertEquals(property.name, "list2D");
-        Assert.assertEquals(property.defaultValue, "new ArrayList<List<Pet>>()");
+        Assert.assertEquals(property.defaultValue, "null");
         Assert.assertEquals(property.baseType, "List");
         Assert.assertEquals(property.containerType, "array");
         Assert.assertFalse(property.required);
@@ -237,7 +265,7 @@ public class JavaModelTest {
         Assert.assertEquals(property.setter, "setChildren");
         Assert.assertEquals(property.datatype, "List<Children>");
         Assert.assertEquals(property.name, "children");
-        Assert.assertEquals(property.defaultValue, "new ArrayList<Children>()");
+        Assert.assertEquals(property.defaultValue, "null");
         Assert.assertEquals(property.baseType, "List");
         Assert.assertEquals(property.containerType, "array");
         Assert.assertFalse(property.required);
@@ -265,7 +293,7 @@ public class JavaModelTest {
         Assert.assertEquals(property.setter, "setChildren");
         Assert.assertEquals(property.datatype, "Map<String, Children>");
         Assert.assertEquals(property.name, "children");
-        Assert.assertEquals(property.defaultValue, "new HashMap<String, Children>()");
+        Assert.assertEquals(property.defaultValue, "null");
         Assert.assertEquals(property.baseType, "Map");
         Assert.assertEquals(property.containerType, "map");
         Assert.assertFalse(property.required);
