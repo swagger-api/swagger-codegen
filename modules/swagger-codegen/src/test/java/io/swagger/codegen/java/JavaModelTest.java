@@ -115,6 +115,23 @@ public class JavaModelTest {
         Assert.assertTrue(property.isContainer);
     }
 
+    @Test(description = "convert a model when modelDefaultNull=true")
+    public void modelDefaultNullParamTest() {
+        final Model model = new ModelImpl()
+                .description("a sample model")
+                .property("urls", new ArrayProperty()
+                        .items(new StringProperty()));
+        final JavaClientCodegen codegen = new JavaClientCodegen();
+        codegen.setModelDefaultNull(true);
+        final CodegenModel cm = codegen.fromModel("sample", model);
+
+        Assert.assertEquals(cm.vars.size(), 1);
+
+        final CodegenProperty property = cm.vars.get(0);
+        Assert.assertEquals(property.datatype, "List<String>");
+        Assert.assertEquals(property.defaultValue, "null");
+    }
+
     @Test(description = "convert a model with a map property")
     public void mapPropertyTest() {
         final Model model = new ModelImpl()
