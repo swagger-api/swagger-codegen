@@ -381,9 +381,12 @@ public class CodeGenMojo extends AbstractMojo {
             }
         }
 
+        Map<String, String> originalEnvironmentVariables = new HashMap<>();
+
         if (environmentVariables != null) {
 
             for(String key : environmentVariables.keySet()) {
+                originalEnvironmentVariables.put(key, System.getProperty(key));
                 String value = environmentVariables.get(key);
                 if(value == null) {
                     // don't put null values
@@ -430,6 +433,14 @@ public class CodeGenMojo extends AbstractMojo {
 
             String sourceJavaFolder = output.toString() + "/" + sourceFolder;
             project.addCompileSourceRoot(sourceJavaFolder);
+        }
+
+        for(Map.Entry<String, String> entry : originalEnvironmentVariables.entrySet()) {
+            if(entry.getValue() == null) {
+                System.clearProperty(entry.getKey());
+            } else {
+                System.setProperty(entry.getKey(), entry.getValue());
+            }
         }
     }
 }
