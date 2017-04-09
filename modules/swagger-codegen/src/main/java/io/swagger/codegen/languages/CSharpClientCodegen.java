@@ -303,6 +303,9 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
                 clientPackageDir, "ApiResponse.cs"));
         supportingFiles.add(new SupportingFile("ExceptionFactory.mustache",
                 clientPackageDir, "ExceptionFactory.cs"));
+        supportingFiles.add(new SupportingFile("Logger.mustache",
+                clientPackageDir, "Logger.cs"));
+
         if(Boolean.FALSE.equals(this.netStandard)) {
             supportingFiles.add(new SupportingFile("compile.mustache", "", "build.bat"));
             supportingFiles.add(new SupportingFile("compile-mono.sh.mustache", "", "build.sh"));
