@@ -178,6 +178,7 @@ Name | Type | Description  | Notes
  **enumQueryInteger** | **Integer**| Query parameter enum test (double) | [optional] [enum: 1, -2]
  **enumQueryDouble** | **Double**| Query parameter enum test (double) | [optional] [enum: 1.1, -1.2]
 
+
 ### Return type
 
 null (empty response body)

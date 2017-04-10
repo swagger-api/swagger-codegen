@@ -25,12 +25,17 @@ import javax.validation.constraints.*;
  */
 
 public class HasOnlyReadOnly   {
+
+    /*Constructor*/
+    public  HasOnlyReadOnly(){
+    }
+
   @JsonProperty("bar")
   private String bar = null;
-
+  
   @JsonProperty("foo")
   private String foo = null;
-
+  
    /**
    * Get bar
    * @return bar

@@ -27,12 +27,17 @@ import javax.validation.constraints.*;
  */
 
 public class Animal   {
+
+    /*Constructor*/
+    public  Animal(){
+    }
+
   @JsonProperty("className")
   private String className = null;
-
+  
   @JsonProperty("color")
   private String color = "red";
-
+  
   public Animal className(String className) {
     this.className = className;
     return this;

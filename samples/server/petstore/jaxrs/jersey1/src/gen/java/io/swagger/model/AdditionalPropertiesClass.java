@@ -28,12 +28,17 @@ import javax.validation.constraints.*;
  */
 
 public class AdditionalPropertiesClass   {
+
+    /*Constructor*/
+    public  AdditionalPropertiesClass(){
+    }
+
   @JsonProperty("map_property")
   private Map<String, String> mapProperty = new HashMap<String, String>();
-
+  
   @JsonProperty("map_of_map_property")
   private Map<String, Map<String, String>> mapOfMapProperty = new HashMap<String, Map<String, String>>();
-
+  
   public AdditionalPropertiesClass mapProperty(Map<String, String> mapProperty) {
     this.mapProperty = mapProperty;
     return this;

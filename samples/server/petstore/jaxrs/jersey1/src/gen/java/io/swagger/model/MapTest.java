@@ -29,9 +29,14 @@ import javax.validation.constraints.*;
  */
 
 public class MapTest   {
+
+    /*Constructor*/
+    public  MapTest(){
+    }
+
   @JsonProperty("map_map_of_string")
   private Map<String, Map<String, String>> mapMapOfString = new HashMap<String, Map<String, String>>();
-
+  
   /**
    * Gets or Sets inner
    */
@@ -65,7 +70,7 @@ public class MapTest   {
 
   @JsonProperty("map_of_enum_string")
   private Map<String, InnerEnum> mapOfEnumString = new HashMap<String, InnerEnum>();
-
+  
   public MapTest mapMapOfString(Map<String, Map<String, String>> mapMapOfString) {
     this.mapMapOfString = mapMapOfString;
     return this;

@@ -4,6 +4,11 @@
 @ApiModel(description = "{{{description}}}"){{/description}}
 {{>generatedAnnotation}}
 public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {{#serializableModel}}implements Serializable{{/serializableModel}} {
+
+    /*Constructor*/
+    public  {{classname}}(){
+    }
+
   {{#vars}}
     {{#isEnum}}
     {{^isContainer}}
@@ -24,7 +29,7 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {{#seriali
   @SerializedName("{{baseName}}")
   {{/gson}}
   private {{{datatypeWithEnum}}} {{name}} = {{{defaultValue}}};
-
+  
   {{/vars}}
   {{#vars}}
   {{^isReadOnly}}

@@ -28,6 +28,11 @@ import javax.validation.constraints.*;
  */
 
 public class EnumArrays   {
+
+    /*Constructor*/
+    public  EnumArrays(){
+    }
+
   /**
    * Gets or Sets justSymbol
    */
@@ -61,7 +66,7 @@ public class EnumArrays   {
 
   @JsonProperty("just_symbol")
   private JustSymbolEnum justSymbol = null;
-
+  
   /**
    * Gets or Sets arrayEnum
    */
@@ -95,7 +100,7 @@ public class EnumArrays   {
 
   @JsonProperty("array_enum")
   private List<ArrayEnumEnum> arrayEnum = new ArrayList<ArrayEnumEnum>();
-
+  
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
     return this;

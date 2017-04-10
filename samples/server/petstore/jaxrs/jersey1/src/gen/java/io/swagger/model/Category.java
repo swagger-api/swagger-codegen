@@ -25,12 +25,17 @@ import javax.validation.constraints.*;
  */
 
 public class Category   {
+
+    /*Constructor*/
+    public  Category(){
+    }
+
   @JsonProperty("id")
   private Long id = null;
-
+  
   @JsonProperty("name")
   private String name = null;
-
+  
   public Category id(Long id) {
     this.id = id;
     return this;

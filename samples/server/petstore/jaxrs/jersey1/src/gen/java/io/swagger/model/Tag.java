@@ -25,12 +25,17 @@ import javax.validation.constraints.*;
  */
 
 public class Tag   {
+
+    /*Constructor*/
+    public  Tag(){
+    }
+
   @JsonProperty("id")
   private Long id = null;
-
+  
   @JsonProperty("name")
   private String name = null;
-
+  
   public Tag id(Long id) {
     this.id = id;
     return this;
