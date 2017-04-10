@@ -435,6 +435,8 @@ public class CodeGenMojo extends AbstractMojo {
             project.addCompileSourceRoot(sourceJavaFolder);
         }
 
+        // Reset all environment variables to their original value. This prevents unexpected behaviour
+        // when running the plugin multiple consecutive times with different configurations.
         for(Map.Entry<String, String> entry : originalEnvironmentVariables.entrySet()) {
             if(entry.getValue() == null) {
                 System.clearProperty(entry.getKey());
