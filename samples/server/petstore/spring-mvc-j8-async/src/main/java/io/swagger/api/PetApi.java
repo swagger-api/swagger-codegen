@@ -73,7 +73,7 @@ public interface PetApi {
     @RequestMapping(value = "/pet/findByStatus",
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.GET)
-    default CompletableFuture<ResponseEntity<List<Pet>>> findPetsByStatus( @NotNull @ApiParam(value = "Status values that need to be considered for filter", required = true, allowableValues = "AVAILABLE, PENDING, SOLD") @RequestParam(value = "status", required = true) List<String> status) {
+    default CompletableFuture<ResponseEntity<List<Pet>>> findPetsByStatus( @NotNull @ApiParam(value = "Status values that need to be considered for filter", required = true, allowableValues = { "available", "pending", "sold" }) @RequestParam(value = "status", required = true) List<String> status) {
         // do some magic!
         return CompletableFuture.completedFuture(new ResponseEntity<List<Pet>>(HttpStatus.OK));
     }
