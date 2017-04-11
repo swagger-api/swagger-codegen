@@ -20,6 +20,9 @@ import java.util.*;
 import org.apache.commons.lang3.StringUtils;
 
 public class DefaultGenerator extends AbstractGenerator implements Generator {
+
+    private static final String ENV_NAME_HANDLEBARS = "handlebars";
+
     protected final Logger LOGGER = LoggerFactory.getLogger(DefaultGenerator.class);
     protected CodegenConfig config;
     protected ClientOptInput opts;
@@ -31,6 +34,8 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     private Boolean generateApiTests = null;
     private Boolean generateApiDocumentation = null;
     private Boolean generateModelTests = null;
+    private boolean useHandlebars = false;
+    private HandlebarsTemplateRenderer handlebarsTemplateRenderer = null;
     private Boolean generateModelDocumentation = null;
     private String basePath;
     private String basePathWithoutHost;
@@ -137,6 +142,10 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         basePath = config.escapeText(getHost());
         basePathWithoutHost = config.escapeText(swagger.getBasePath());
 
+        if (System.getProperty(ENV_NAME_HANDLEBARS) != null) {
+            useHandlebars = true;
+            handlebarsTemplateRenderer = new HandlebarsTemplateRenderer(config);
+        }
     }
 
     private void configureSwaggerInfo() {
@@ -675,11 +684,15 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     private File processTemplateToFile(Map<String, Object> templateData, String templateName, String outputFilename) throws IOException {
         String adjustedOutputFilename = outputFilename.replaceAll("//", "/").replace('/', File.separatorChar);
         if(ignoreProcessor.allowsFile(new File(adjustedOutputFilename))) {
-            String templateFile = getFullTemplateFile(config, templateName);
-            String template = readTemplate(templateFile);
-            Mustache.Compiler compiler = Mustache.compiler();
-            compiler = config.processCompiler(compiler);
-            Template tmpl = compiler
+            String renderedTemplate;
+            if (useHandlebars) {
+                renderedTemplate = handlebarsTemplateRenderer.renderHandlebarTemplate(templateName, templateData);
+            } else {
+                String templateFile = getFullTemplateFile(config, templateName);
+                String template = readTemplate(templateFile);
+                Mustache.Compiler compiler = Mustache.compiler();
+                compiler = config.processCompiler(compiler);
+                Template tmpl = compiler
                     .withLoader(new Mustache.TemplateLoader() {
                         @Override
                         public Reader getTemplate(String name) {
@@ -688,8 +701,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     })
                     .defaultValue("")
                     .compile(template);
-
-            writeToFile(adjustedOutputFilename, tmpl.execute(templateData));
+                renderedTemplate = tmpl.execute(templateData);
+            }
+            writeToFile(adjustedOutputFilename, renderedTemplate);
             return new File(adjustedOutputFilename);
         }
 
