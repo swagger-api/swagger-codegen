@@ -73,7 +73,7 @@ public class EnumArrays {
   }
 
   @SerializedName("array_enum")
-  private List<ArrayEnumEnum> arrayEnum;
+  private List<ArrayEnumEnum> arrayEnum = null;
 
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;

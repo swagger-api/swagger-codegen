@@ -27,7 +27,7 @@ import java.util.Map;
 
 public class MapTest {
   @SerializedName("map_map_of_string")
-  private Map<String, Map<String, String>> mapMapOfString;
+  private Map<String, Map<String, String>> mapMapOfString = null;
 
   /**
    * Gets or Sets inner
@@ -52,7 +52,7 @@ public class MapTest {
   }
 
   @SerializedName("map_of_enum_string")
-  private Map<String, InnerEnum> mapOfEnumString;
+  private Map<String, InnerEnum> mapOfEnumString = null;
 
   public MapTest mapMapOfString(Map<String, Map<String, String>> mapMapOfString) {
     this.mapMapOfString = mapMapOfString;
