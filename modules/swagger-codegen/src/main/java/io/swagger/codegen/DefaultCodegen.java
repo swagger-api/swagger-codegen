@@ -1827,7 +1827,7 @@ public class DefaultCodegen {
             currentProperty = currentProperty.items;
         }
 
-        return currentProperty.isEnum;
+        return currentProperty == null ? false : currentProperty.isEnum;
     }
 
     protected Map<String, Object> getInnerEnumAllowableValues(CodegenProperty property) {
@@ -1837,7 +1837,7 @@ public class DefaultCodegen {
             currentProperty = currentProperty.items;
         }
 
-        return currentProperty.allowableValues;
+        return currentProperty == null ? new HashMap<String, Object>() : currentProperty.allowableValues;
     }
 
 
@@ -1851,16 +1851,18 @@ public class DefaultCodegen {
                     || Boolean.TRUE.equals(baseItem.isListContainer))) {
             baseItem = baseItem.items;
         }
-        // set both datatype and datetypeWithEnum as only the inner type is enum
-        property.datatypeWithEnum = property.datatypeWithEnum.replace(baseItem.baseType, toEnumName(baseItem));
+        if (baseItem != null) {
+            // set both datatype and datetypeWithEnum as only the inner type is enum
+            property.datatypeWithEnum = property.datatypeWithEnum.replace(baseItem.baseType, toEnumName(baseItem));
 
-        // naming the enum with respect to the language enum naming convention
-        // e.g. remove [], {} from array/map of enum
-        property.enumName = toEnumName(property);
+            // naming the enum with respect to the language enum naming convention
+            // e.g. remove [], {} from array/map of enum
+            property.enumName = toEnumName(property);
 
-        // set default value for variable with inner enum
-        if (property.defaultValue != null) {
-            property.defaultValue = property.defaultValue.replace(baseItem.baseType, toEnumName(baseItem));
+            // set default value for variable with inner enum
+            if (property.defaultValue != null) {
+                property.defaultValue = property.defaultValue.replace(baseItem.baseType, toEnumName(baseItem));
+            }
         }
     }
 
@@ -1874,16 +1876,19 @@ public class DefaultCodegen {
                     || Boolean.TRUE.equals(baseItem.isListContainer))) {
             baseItem = baseItem.items;
         }
-        // set both datatype and datetypeWithEnum as only the inner type is enum
-        property.datatypeWithEnum = property.datatypeWithEnum.replace(", " + baseItem.baseType, ", " + toEnumName(baseItem));
 
-        // naming the enum with respect to the language enum naming convention
-        // e.g. remove [], {} from array/map of enum
-        property.enumName = toEnumName(property);
+        if (baseItem != null) {
+            // set both datatype and datetypeWithEnum as only the inner type is enum
+            property.datatypeWithEnum = property.datatypeWithEnum.replace(", " + baseItem.baseType, ", " + toEnumName(baseItem));
 
-        // set default value for variable with inner enum
-        if (property.defaultValue != null) {
-            property.defaultValue = property.defaultValue.replace(", " + property.items.baseType, ", " + toEnumName(property.items));
+            // naming the enum with respect to the language enum naming convention
+            // e.g. remove [], {} from array/map of enum
+            property.enumName = toEnumName(property);
+
+            // set default value for variable with inner enum
+            if (property.defaultValue != null) {
+                property.defaultValue = property.defaultValue.replace(", " + property.items.baseType, ", " + toEnumName(property.items));
+            }
         }
     }
 
