@@ -68,8 +68,8 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
         modelTemplateFiles.put("model.mustache", ".js");
         apiTemplateFiles.put("api.mustache", ".js");
         embeddedTemplateDir = templateDir = "Javascript-Closure-Angular";
-        apiPackage = "API.Client";
-        modelPackage = "API.Client";
+        apiPackage = "OrderCloud";
+        modelPackage = "OrderCloud.Models";
 
         cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "hides the timestamp when files were generated")
                 .defaultValue(Boolean.TRUE.toString()));
@@ -145,6 +145,19 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
     public String toParamName(String name) {
         // should be the same as variable name
         return toVarName(name);
+    }
+
+    @Override
+    public String toApiName(String name) {
+        if (name.equals("Me") || name.equals("MessageSenders"))
+            return name;
+        else if (name.endsWith("y")) {
+            return name.substring(0, name.length() - 1) + "ies";
+        }
+        else if (name.endsWith("s")) {
+            return name + "es";
+        }
+        return name + "s";
     }
 
     @Override
@@ -250,7 +263,7 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
             throw new RuntimeException("Empty method/operation name (operationId) not allowed");
         }
 
-        operationId = camelize(sanitizeName(operationId), true);
+        operationId = operationId = sanitizeName(operationId.substring(0, 1).toUpperCase() + operationId.substring(1));
 
         // method name cannot use reserved keyword, e.g. return
         if (isReservedWord(operationId)) {

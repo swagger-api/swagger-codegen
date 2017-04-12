@@ -308,7 +308,8 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
             supportingFiles.add(new SupportingFile("FodyWeavers.xml", packageFolder, "FodyWeavers.xml"));
         }
 
-        supportingFiles.add(new SupportingFile("ApiAuth.mustache", packageFolder + File.separator + apiPackage + File.separator, "ApiAuth.cs"));
+        supportingFiles.add(new SupportingFile("ApiAuth.mustache", packageFolder + File.separator + apiPackage + File.separator, "AuthApi.cs"));
+        supportingFiles.add(new SupportingFile("OrderCloudClient.mustache", packageFolder + File.separator + clientPackage + File.separator, "OrderCloudClient.cs"));
 
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
@@ -511,6 +512,19 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         }
 
         return codegenModel;
+    }
+
+    @Override
+    public String toApiVarName(String name) {
+        if (name.equals("Me") || name.equals("MessageSenders"))
+            return name;
+        else if (name.endsWith("y")) {
+            return name.substring(0, name.length() - 1) + "ies";
+        }
+        else if (name.endsWith("s")) {
+            return name + "es";
+        }
+        return name + "s";
     }
 
     @Override

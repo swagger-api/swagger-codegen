@@ -95,7 +95,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
                 Arrays.asList(
                         "abstract", "arguments", "boolean", "break", "byte",
                         "case", "catch", "char", "class", "const",
-                        "continue", "debugger", "default", "delete", "do",
+                        "continue", "debugger", "default", "do",
                         "double", "else", "enum", "eval", "export",
                         "extends", "false", "final", "finally", "float",
                         "for", "function", "goto", "if", "implements",
@@ -304,8 +304,10 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         additionalProperties.put("modelDocPath", modelDocPath);
 
         supportingFiles.add(new SupportingFile("package.mustache", "", "package.json"));
+        supportingFiles.add(new SupportingFile("bower.mustache", "", "bower.json"));
         supportingFiles.add(new SupportingFile("index.mustache", createPath(sourceFolder, invokerPackage), "index.js"));
         supportingFiles.add(new SupportingFile("ApiClient.mustache", createPath(sourceFolder, invokerPackage), "ApiClient.js"));
+        supportingFiles.add(new SupportingFile("auth.mustache", createPath(sourceFolder, apiPackage), "Auth.js"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("mocha.opts", "", "mocha.opts"));
@@ -440,6 +442,19 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     @Override
     public String toModelTestFilename(String name) {
         return toModelName(name) + ".spec";
+    }
+
+    @Override
+    public String toApiName(String name) {
+        if (name.equals("Me") || name.equals("MessageSenders"))
+            return name;
+        else if (name.endsWith("y")) {
+            return name.substring(0, name.length() - 1) + "ies";
+        }
+        else if (name.endsWith("s")) {
+            return name + "es";
+        }
+        return name + "s";
     }
 
     @Override
@@ -681,7 +696,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
             throw new RuntimeException("Empty method/operation name (operationId) not allowed");
         }
 
-        operationId = camelize(sanitizeName(operationId), true);
+        operationId = operationId = sanitizeName(operationId.substring(0, 1).toUpperCase() + operationId.substring(1));
 
         // method name cannot use reserved keyword, e.g. return
         if (isReservedWord(operationId)) {
