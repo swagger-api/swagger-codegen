@@ -422,39 +422,3 @@ func strlen(s string) (int) {
 	return utf8.RuneCountInString(s)
 }
 
-// Custom date type for Swagger date.
-type SwaggerDateType struct {
-	time.Time
-}
-
-const swaggerDateTypeLayout = "2006-01-02"
-
-func (c *SwaggerDateType) UnmarshalJSON(b []byte) (err error) {
-	c.Time, err = c.parseTime(string(b))
-	return
-}
-
-func (c *SwaggerDateType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) (err error) {
-	var t string
-	d.DecodeElement(&t, &start)
-	c.Time, err = c.parseTime(t)
-	return
-}
-
-func (c *SwaggerDateType) UnmarshalXMLAttr(a xml.Attr) (err error) {
-	c.Time, err = c.parseTime(a.Value)
-	return err
-}
-
-func (c *SwaggerDateType) parseTime(t string) (r time.Time, err error) {
-	t = strings.Replace(t, `"`, "", -1)
-	r, err = time.Parse(swaggerDateTypeLayout, t)
-	if err != nil {
-		r, err = time.Parse(time.RFC3339, t)
-		if err != nil {
-			r, err = time.Parse(time.RFC3339Nano, t)
-		}
-	}
-	return r, err
-}
-

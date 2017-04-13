@@ -34,7 +34,7 @@ type FormatTest struct {
 
 	Binary string `json:"binary,omitempty"`
 
-	Date SwaggerDateType `json:"date,omitempty"`
+	Date string `json:"date,omitempty"`
 
 	DateTime time.Time `json:"dateTime,omitempty"`
 

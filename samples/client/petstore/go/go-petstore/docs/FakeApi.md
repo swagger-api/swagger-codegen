@@ -68,7 +68,7 @@ Name | Type | Description  | Notes
  **float** | **float32**| None | 
  **string_** | **string**| None | 
  **binary** | **string**| None | 
- **date** | **SwaggerDateType**| None | 
+ **date** | **string**| None | 
  **dateTime** | **time.Time**| None | 
  **password** | **string**| None | 
  **callback** | **string**| None | 

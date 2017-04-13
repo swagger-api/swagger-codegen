@@ -97,7 +97,7 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("boolean", "bool");
         typeMapping.put("string", "string");
         typeMapping.put("UUID", "string");
-        typeMapping.put("date", "SwaggerDateType");
+        typeMapping.put("date", "string");
         typeMapping.put("DateTime", "time.Time");
         typeMapping.put("password", "string");
         typeMapping.put("File", "*os.File");
