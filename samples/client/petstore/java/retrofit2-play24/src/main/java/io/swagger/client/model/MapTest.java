@@ -29,7 +29,7 @@ import javax.validation.constraints.*;
 
 public class MapTest {
   @JsonProperty("map_map_of_string")
-  private Map<String, Map<String, String>> mapMapOfString = new HashMap<String, Map<String, String>>();
+  private Map<String, Map<String, String>> mapMapOfString = null;
 
   /**
    * Gets or Sets inner
@@ -62,7 +62,7 @@ public class MapTest {
   }
 
   @JsonProperty("map_of_enum_string")
-  private Map<String, InnerEnum> mapOfEnumString = new HashMap<String, InnerEnum>();
+  private Map<String, InnerEnum> mapOfEnumString = null;
 
   public MapTest mapMapOfString(Map<String, Map<String, String>> mapMapOfString) {
     this.mapMapOfString = mapMapOfString;
@@ -70,6 +70,9 @@ public class MapTest {
   }
 
   public MapTest putMapMapOfStringItem(String key, Map<String, String> mapMapOfStringItem) {
+    if (this.mapMapOfString == null) {
+      this.mapMapOfString = new HashMap<String, Map<String, String>>();
+    }
     this.mapMapOfString.put(key, mapMapOfStringItem);
     return this;
   }
@@ -93,6 +96,9 @@ public class MapTest {
   }
 
   public MapTest putMapOfEnumStringItem(String key, InnerEnum mapOfEnumStringItem) {
+    if (this.mapOfEnumString == null) {
+      this.mapOfEnumString = new HashMap<String, InnerEnum>();
+    }
     this.mapOfEnumString.put(key, mapOfEnumStringItem);
     return this;
   }
