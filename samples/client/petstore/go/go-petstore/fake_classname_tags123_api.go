@@ -47,7 +47,6 @@ func (a *Fake_classname_tags123ApiService) TestClassname(body Client) (Client,  
 	localVarFormParams := url.Values{}
 
 
-
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
 
@@ -68,12 +67,11 @@ func (a *Fake_classname_tags123ApiService) TestClassname(body Client) (Client,  
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// body params
-	 localVarPostBody = &body
-
-	 r, err := a.client.prepareRequest(nil, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	 if err != nil {
-		  return successPayload, nil, err
-	 }
+	localVarPostBody = &body
+	r, err := a.client.prepareRequest(nil, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return successPayload, nil, err
+	}
 
 	 localVarHttpResponse, err := a.client.callAPI(r)
 	 if err != nil || localVarHttpResponse == nil {

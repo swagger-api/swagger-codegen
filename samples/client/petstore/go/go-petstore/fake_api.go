@@ -49,7 +49,6 @@ func (a *FakeApiService) TestClientModel(body Client) (Client,  *http.Response, 
 	localVarFormParams := url.Values{}
 
 
-
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
 
@@ -70,12 +69,11 @@ func (a *FakeApiService) TestClientModel(body Client) (Client,  *http.Response, 
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// body params
-	 localVarPostBody = &body
-
-	 r, err := a.client.prepareRequest(nil, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	 if err != nil {
-		  return successPayload, nil, err
-	 }
+	localVarPostBody = &body
+	r, err := a.client.prepareRequest(nil, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return successPayload, nil, err
+	}
 
 	 localVarHttpResponse, err := a.client.callAPI(r)
 	 if err != nil || localVarHttpResponse == nil {
@@ -171,7 +169,6 @@ func (a *FakeApiService) TestEndpointParameters(ctx context.Context, number floa
 		return nil, err
 	}
 
-
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/xml; charset=utf-8", "application/json; charset=utf-8",  }
 
@@ -226,11 +223,10 @@ func (a *FakeApiService) TestEndpointParameters(ctx context.Context, number floa
 	if localVarTempParam, localVarOk := localVarOptionals["callback"].(string); localVarOk {
 		localVarFormParams.Add("callback", parameterToString(localVarTempParam, ""))
 	}
-
-	 r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	 if err != nil {
-		  return nil, err
-	 }
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
 
 	 localVarHttpResponse, err := a.client.callAPI(r)
 	 if err != nil || localVarHttpResponse == nil {
@@ -297,7 +293,6 @@ func (a *FakeApiService) TestEnumParameters(localVarOptionals map[string]interfa
 	if localVarTempParam, localVarOk := localVarOptionals["enumQueryInteger"].(int32); localVarOk {
 		localVarQueryParams.Add("enum_query_integer", parameterToString(localVarTempParam, ""))
 	}
-
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "*/*",  }
 
@@ -332,11 +327,10 @@ func (a *FakeApiService) TestEnumParameters(localVarOptionals map[string]interfa
 	if localVarTempParam, localVarOk := localVarOptionals["enumQueryDouble"].(float64); localVarOk {
 		localVarFormParams.Add("enum_query_double", parameterToString(localVarTempParam, ""))
 	}
-
-	 r, err := a.client.prepareRequest(nil, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	 if err != nil {
-		  return nil, err
-	 }
+	r, err := a.client.prepareRequest(nil, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
 
 	 localVarHttpResponse, err := a.client.callAPI(r)
 	 if err != nil || localVarHttpResponse == nil {

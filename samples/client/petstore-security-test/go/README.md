@@ -33,8 +33,15 @@ Class | Method | HTTP request | Description
 
 ## api_key
 - **Type**: API key 
-!!! NOT IMPLEMENTED !!!
 
+Example
+```
+	auth := context.WithValue(context.TODO(), sw.ContextAPIKey, sw.APIKey{
+		Key: "APIKEY",
+		Prefix: "Bearer", // Omit if not necessary.
+	})
+    r, err := client.Service.Operation(auth, args)
+```
 ## petstore_auth
 - **Type**: OAuth
 - **Flow**: implicit
@@ -45,7 +52,7 @@ Class | Method | HTTP request | Description
 
 Example
 ```
-	auth := context.WithValue(oauth2.NoContext, sw.ContextAccessToken, "ACCESSTOKENSTRING")
+	auth := context.WithValue(context.TODO(), sw.ContextAccessToken, "ACCESSTOKENSTRING")
     r, err := client.Service.Operation(auth, args)
 ```
 

@@ -1,12 +1,13 @@
 package main
 
 import (
-	"golang.org/x/net/context"
 	"net/http"
 	"net/http/httputil"
 	"strings"
 	"testing"
 	"time"
+
+	"golang.org/x/net/context"
 
 	"golang.org/x/oauth2"
 
@@ -68,7 +69,7 @@ func TestOAuth2(t *testing.T) {
 
 func TestBasicAuth(t *testing.T) {
 
-	auth := context.WithValue(oauth2.NoContext, sw.ContextBasicAuth, sw.BasicAuth{
+	auth := context.WithValue(context.TODO(), sw.ContextBasicAuth, sw.BasicAuth{
 		UserName: "fakeUser",
 		Password: "f4k3p455",
 	})
@@ -102,7 +103,7 @@ func TestBasicAuth(t *testing.T) {
 }
 
 func TestAccessToken(t *testing.T) {
-	auth := context.WithValue(oauth2.NoContext, sw.ContextAccessToken, "TESTFAKEACCESSTOKENISFAKE")
+	auth := context.WithValue(context.TODO(), sw.ContextAccessToken, "TESTFAKEACCESSTOKENISFAKE")
 
 	newPet := (sw.Pet{Id: 12992, Name: "gopher",
 		PhotoUrls: []string{"http://1.com", "http://2.com"}, Status: "pending", Tags: []sw.Tag{sw.Tag{Id: 1, Name: "tag2"}}})
@@ -129,6 +130,80 @@ func TestAccessToken(t *testing.T) {
 	reqb, err := httputil.DumpRequest(r.Request, true)
 	if !strings.Contains((string)(reqb), "Authorization: Bearer TESTFAKEACCESSTOKENISFAKE") {
 		t.Errorf("AccessToken Authentication is missing")
+	}
+}
+
+func TestAPIKeyNoPrefix(t *testing.T) {
+	auth := context.WithValue(context.TODO(), sw.ContextAPIKey, sw.APIKey{Key: "TEST123"})
+
+	newPet := (sw.Pet{Id: 12992, Name: "gopher",
+		PhotoUrls: []string{"http://1.com", "http://2.com"}, Status: "pending", Tags: []sw.Tag{sw.Tag{Id: 1, Name: "tag2"}}})
+
+	r, err := client.PetApi.AddPet(nil, newPet)
+
+	if err != nil {
+		t.Errorf("Error while adding pet")
+		t.Log(err)
+	}
+	if r.StatusCode != 200 {
+		t.Log(r)
+	}
+
+	_, r, err = client.PetApi.GetPetById(auth, 12992)
+	if err != nil {
+		t.Errorf("Error while deleting pet by id")
+		t.Log(err)
+	}
+
+	reqb, err := httputil.DumpRequest(r.Request, true)
+	if !strings.Contains((string)(reqb), "Api_key: TEST123") {
+		t.Errorf("APIKey Authentication is missing")
+	}
+
+	r, err = client.PetApi.DeletePet(auth, 12992, nil)
+	if err != nil {
+		t.Errorf("Error while deleting pet by id")
+		t.Log(err)
+	}
+	if r.StatusCode != 200 {
+		t.Log(r)
+	}
+}
+
+func TestAPIKeyWithPrefix(t *testing.T) {
+	auth := context.WithValue(context.TODO(), sw.ContextAPIKey, sw.APIKey{Key: "TEST123", Prefix: "Bearer"})
+
+	newPet := (sw.Pet{Id: 12992, Name: "gopher",
+		PhotoUrls: []string{"http://1.com", "http://2.com"}, Status: "pending", Tags: []sw.Tag{sw.Tag{Id: 1, Name: "tag2"}}})
+
+	r, err := client.PetApi.AddPet(nil, newPet)
+
+	if err != nil {
+		t.Errorf("Error while adding pet")
+		t.Log(err)
+	}
+	if r.StatusCode != 200 {
+		t.Log(r)
+	}
+
+	_, r, err = client.PetApi.GetPetById(auth, 12992)
+	if err != nil {
+		t.Errorf("Error while deleting pet by id")
+		t.Log(err)
+	}
+
+	reqb, err := httputil.DumpRequest(r.Request, true)
+	if !strings.Contains((string)(reqb), "Api_key: Bearer TEST123") {
+		t.Errorf("APIKey Authentication is missing")
+	}
+
+	r, err = client.PetApi.DeletePet(auth, 12992, nil)
+	if err != nil {
+		t.Errorf("Error while deleting pet by id")
+		t.Log(err)
+	}
+	if r.StatusCode != 200 {
+		t.Log(r)
 	}
 }
 

@@ -8,18 +8,17 @@ import (
 const ContextOAuth2 		int = 1
 const ContextBasicAuth 		int = 2
 const ContextAccessToken 	int = 3
-//const ContextAPIKeys 		int = 4 // [TODO]
+const ContextAPIKey 		int = 4 
 
 type BasicAuth struct {
 	UserName      string            `json:"userName,omitempty"`
 	Password      string            `json:"password,omitempty"`	
 }
 
-// [TODO] This was not implemented prior.
-/*type APIKeys struct {
-	Keys 	map[string]string
-	Prefix	map[string]string
-}*/
+type APIKey struct {
+	Key 	string
+	Prefix	string
+}
 
 type Configuration struct {
 	BasePath      string            	`json:"basePath,omitempty"`

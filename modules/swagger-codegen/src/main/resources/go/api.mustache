@@ -112,7 +112,6 @@ func (a *{{{classname}}}Service) {{{nickname}}}({{#hasAuthMethods}}ctx context.C
 	{{/required}}
 	{{/queryParams}}
 	{{/hasQueryParams}}
-
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ {{#consumes}}"{{{mediaType}}}", {{/consumes}} }
 
@@ -177,7 +176,7 @@ func (a *{{{classname}}}Service) {{{nickname}}}({{#hasAuthMethods}}ctx context.C
 {{#hasBodyParam}}
 {{#bodyParams}}	// body params
 {{#required}}
-	 localVarPostBody = &{{paramName}}
+	localVarPostBody = &{{paramName}}
 {{/required}}
 {{^required}}
 	if localVarTempParam, localVarOk := localVarOptionals["{{paramName}}"].({{dataType}}); localVarOk {
@@ -186,11 +185,26 @@ func (a *{{{classname}}}Service) {{{nickname}}}({{#hasAuthMethods}}ctx context.C
 {{/required}}
 {{/bodyParams}}
 {{/hasBodyParam}}
-
-	 r, err := a.client.prepareRequest({{#hasAuthMethods}}ctx, {{/hasAuthMethods}}{{^hasAuthMethods}}nil, {{/hasAuthMethods}}localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	 if err != nil {
-		  return {{#returnType}}successPayload, {{/returnType}}nil, err
-	 }
+{{#authMethods}}
+{{#isApiKey}}
+	if ctx != nil {
+		// API Key Authentication
+		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
+			var key string
+			if auth.Prefix != "" {
+				key = auth.Prefix + " " + auth.Key
+			} else {
+				key = auth.Key
+			}
+			{{#isKeyInHeader}}localVarHeaderParams["{{keyParamName}}"] = key{{/isKeyInHeader}}{{#isKeyInQuery}}localVarQueryParams['{{keyParamName}}'] = key{{/isKeyInQuery}}
+		}
+	}
+{{/isApiKey}}
+{{/authMethods}}
+	r, err := a.client.prepareRequest({{#hasAuthMethods}}ctx, {{/hasAuthMethods}}{{^hasAuthMethods}}nil, {{/hasAuthMethods}}localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return {{#returnType}}successPayload, {{/returnType}}nil, err
+	}
 
 	 localVarHttpResponse, err := a.client.callAPI(r)
 	 if err != nil || localVarHttpResponse == nil {

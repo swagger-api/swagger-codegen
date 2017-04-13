@@ -49,7 +49,6 @@ func (a *FakeApiService) TestCodeInjectEndRnNR(localVarOptionals map[string]inte
 		return nil, err
 	}
 
-
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json", "*_/ '  =end --       ",  }
 
@@ -73,11 +72,10 @@ func (a *FakeApiService) TestCodeInjectEndRnNR(localVarOptionals map[string]inte
 	if localVarTempParam, localVarOk := localVarOptionals["testCodeInjectEndRnNR"].(string); localVarOk {
 		localVarFormParams.Add("test code inject */ &#39; &quot; &#x3D;end -- \r\n \n \r", parameterToString(localVarTempParam, ""))
 	}
-
-	 r, err := a.client.prepareRequest(nil, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	 if err != nil {
-		  return nil, err
-	 }
+	r, err := a.client.prepareRequest(nil, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
 
 	 localVarHttpResponse, err := a.client.callAPI(r)
 	 if err != nil || localVarHttpResponse == nil {

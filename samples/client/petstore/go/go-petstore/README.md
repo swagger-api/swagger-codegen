@@ -86,14 +86,21 @@ Class | Method | HTTP request | Description
 
 ## api_key
 - **Type**: API key 
-!!! NOT IMPLEMENTED !!!
 
+Example
+```
+	auth := context.WithValue(context.TODO(), sw.ContextAPIKey, sw.APIKey{
+		Key: "APIKEY",
+		Prefix: "Bearer", // Omit if not necessary.
+	})
+    r, err := client.Service.Operation(auth, args)
+```
 ## http_basic_test
 - **Type**: HTTP basic authentication
 
 Example
 ```
-	auth := context.WithValue(oauth2.NoContext, sw.ContextBasicAuth, sw.BasicAuth{
+	auth := context.WithValue(context.TODO(), sw.ContextBasicAuth, sw.BasicAuth{
 		UserName: "username",
 		Password: "password",
 	})
@@ -109,7 +116,7 @@ Example
 
 Example
 ```
-	auth := context.WithValue(oauth2.NoContext, sw.ContextAccessToken, "ACCESSTOKENSTRING")
+	auth := context.WithValue(context.TODO(), sw.ContextAccessToken, "ACCESSTOKENSTRING")
     r, err := client.Service.Operation(auth, args)
 ```
 
