@@ -381,6 +381,10 @@ public class CodeGenMojo extends AbstractMojo {
                 applyInstantiationTypesKvp(configOptions.get("instantiation-types").toString(), configurator);
             }
 
+            if(importMappings == null && configOptions.containsKey("import-mappings")) {
+                applyImportMappingsKvp(configOptions.get("import-mappings").toString(), configurator);
+            }
+
             if(configOptions.containsKey("type-mappings")) {
                 applyTypeMappingsKvp(configOptions.get("type-mappings").toString(), configurator);
             }
@@ -398,7 +402,7 @@ public class CodeGenMojo extends AbstractMojo {
             }
         }
 
-        if (importMappings != null) {
+        if (importMappings != null && !configOptions.containsKey("import-mappings")) {
             String importMappingsAsString = importMappings.toString();
             applyImportMappingsKvp(importMappingsAsString.substring(0, importMappingsAsString.length() - 1), configurator);
         }
