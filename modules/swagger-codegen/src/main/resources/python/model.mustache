@@ -37,6 +37,9 @@ class {{classname}}(object):
         self._{{name}} = None
 {{/vars}}
 
+        # TODO: let required properties as mandatory parameter in constructor.
+        #       - to check if required property is None (e.g. by calling setter)
+        #       - ApiClient.__deserialize_model has to be adapted as well
 {{#vars}}
         if {{name}} is not None:
           self.{{name}} = {{name}}
