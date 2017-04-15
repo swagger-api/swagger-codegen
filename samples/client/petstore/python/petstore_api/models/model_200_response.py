@@ -40,8 +40,13 @@ class Model200Response(object):
             '_class': 'class'
         }
 
-        self._name = name
-        self.__class = _class
+        self._name = None
+        self.__class = None
+
+        if name is not None:
+          self.name = name
+        if _class is not None:
+          self._class = _class
 
     @property
     def name(self):

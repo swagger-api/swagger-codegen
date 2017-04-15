@@ -38,7 +38,10 @@ class ClassModel(object):
             '_class': '_class'
         }
 
-        self.__class = _class
+        self.__class = None
+
+        if _class is not None:
+          self._class = _class
 
     @property
     def _class(self):

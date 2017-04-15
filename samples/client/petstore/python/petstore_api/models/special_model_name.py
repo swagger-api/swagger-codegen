@@ -38,7 +38,10 @@ class SpecialModelName(object):
             'special_property_name': '$special[property.name]'
         }
 
-        self._special_property_name = special_property_name
+        self._special_property_name = None
+
+        if special_property_name is not None:
+          self.special_property_name = special_property_name
 
     @property
     def special_property_name(self):

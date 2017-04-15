@@ -48,12 +48,25 @@ class Pet(object):
             'status': 'status'
         }
 
-        self._id = id
-        self._category = category
-        self._name = name
-        self._photo_urls = photo_urls
-        self._tags = tags
-        self._status = status
+        self._id = None
+        self._category = None
+        self._name = None
+        self._photo_urls = None
+        self._tags = None
+        self._status = None
+
+        if id is not None:
+          self.id = id
+        if category is not None:
+          self.category = category
+        if name is not None:
+          self.name = name
+        if photo_urls is not None:
+          self.photo_urls = photo_urls
+        if tags is not None:
+          self.tags = tags
+        if status is not None:
+          self.status = status
 
     @property
     def id(self):

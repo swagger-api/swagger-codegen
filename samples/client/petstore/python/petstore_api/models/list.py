@@ -38,7 +38,10 @@ class List(object):
             '_123_list': '123-list'
         }
 
-        self.__123_list = _123_list
+        self.__123_list = None
+
+        if _123_list is not None:
+          self._123_list = _123_list
 
     @property
     def _123_list(self):

@@ -40,8 +40,13 @@ class HasOnlyReadOnly(object):
             'foo': 'foo'
         }
 
-        self._bar = bar
-        self._foo = foo
+        self._bar = None
+        self._foo = None
+
+        if bar is not None:
+          self.bar = bar
+        if foo is not None:
+          self.foo = foo
 
     @property
     def bar(self):

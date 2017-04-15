@@ -40,8 +40,13 @@ class Animal(object):
             'color': 'color'
         }
 
-        self._class_name = class_name
-        self._color = color
+        self._class_name = None
+        self._color = None
+
+        if class_name is not None:
+          self.class_name = class_name
+        if color is not None:
+          self.color = color
 
     @property
     def class_name(self):

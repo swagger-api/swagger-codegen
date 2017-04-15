@@ -38,7 +38,10 @@ class ModelReturn(object):
             '_return': 'return'
         }
 
-        self.__return = _return
+        self.__return = None
+
+        if _return is not None:
+          self._return = _return
 
     @property
     def _return(self):

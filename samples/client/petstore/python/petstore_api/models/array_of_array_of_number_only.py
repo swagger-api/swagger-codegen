@@ -38,7 +38,10 @@ class ArrayOfArrayOfNumberOnly(object):
             'array_array_number': 'ArrayArrayNumber'
         }
 
-        self._array_array_number = array_array_number
+        self._array_array_number = None
+
+        if array_array_number is not None:
+          self.array_array_number = array_array_number
 
     @property
     def array_array_number(self):

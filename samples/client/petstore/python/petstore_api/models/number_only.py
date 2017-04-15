@@ -38,7 +38,10 @@ class NumberOnly(object):
             'just_number': 'JustNumber'
         }
 
-        self._just_number = just_number
+        self._just_number = None
+
+        if just_number is not None:
+          self.just_number = just_number
 
     @property
     def just_number(self):

@@ -38,7 +38,10 @@ class Client(object):
             'client': 'client'
         }
 
-        self._client = client
+        self._client = None
+
+        if client is not None:
+          self.client = client
 
     @property
     def client(self):

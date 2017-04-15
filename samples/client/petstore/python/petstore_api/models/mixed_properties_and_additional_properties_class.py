@@ -42,9 +42,16 @@ class MixedPropertiesAndAdditionalPropertiesClass(object):
             'map': 'map'
         }
 
-        self._uuid = uuid
-        self._date_time = date_time
-        self._map = map
+        self._uuid = None
+        self._date_time = None
+        self._map = None
+
+        if uuid is not None:
+          self.uuid = uuid
+        if date_time is not None:
+          self.date_time = date_time
+        if map is not None:
+          self.map = map
 
     @property
     def uuid(self):

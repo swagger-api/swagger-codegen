@@ -40,8 +40,13 @@ class ReadOnlyFirst(object):
             'baz': 'baz'
         }
 
-        self._bar = bar
-        self._baz = baz
+        self._bar = None
+        self._baz = None
+
+        if bar is not None:
+          self.bar = bar
+        if baz is not None:
+          self.baz = baz
 
     @property
     def bar(self):

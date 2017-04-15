@@ -42,9 +42,16 @@ class ApiResponse(object):
             'message': 'message'
         }
 
-        self._code = code
-        self._type = type
-        self._message = message
+        self._code = None
+        self._type = None
+        self._message = None
+
+        if code is not None:
+          self.code = code
+        if type is not None:
+          self.type = type
+        if message is not None:
+          self.message = message
 
     @property
     def code(self):

@@ -42,9 +42,16 @@ class Cat(object):
             'declawed': 'declawed'
         }
 
-        self._class_name = class_name
-        self._color = color
-        self._declawed = declawed
+        self._class_name = None
+        self._color = None
+        self._declawed = None
+
+        if class_name is not None:
+          self.class_name = class_name
+        if color is not None:
+          self.color = color
+        if declawed is not None:
+          self.declawed = declawed
 
     @property
     def class_name(self):

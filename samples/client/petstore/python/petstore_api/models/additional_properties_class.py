@@ -40,8 +40,13 @@ class AdditionalPropertiesClass(object):
             'map_of_map_property': 'map_of_map_property'
         }
 
-        self._map_property = map_property
-        self._map_of_map_property = map_of_map_property
+        self._map_property = None
+        self._map_of_map_property = None
+
+        if map_property is not None:
+          self.map_property = map_property
+        if map_of_map_property is not None:
+          self.map_of_map_property = map_of_map_property
 
     @property
     def map_property(self):

@@ -48,12 +48,25 @@ class Order(object):
             'complete': 'complete'
         }
 
-        self._id = id
-        self._pet_id = pet_id
-        self._quantity = quantity
-        self._ship_date = ship_date
-        self._status = status
-        self._complete = complete
+        self._id = None
+        self._pet_id = None
+        self._quantity = None
+        self._ship_date = None
+        self._status = None
+        self._complete = None
+
+        if id is not None:
+          self.id = id
+        if pet_id is not None:
+          self.pet_id = pet_id
+        if quantity is not None:
+          self.quantity = quantity
+        if ship_date is not None:
+          self.ship_date = ship_date
+        if status is not None:
+          self.status = status
+        if complete is not None:
+          self.complete = complete
 
     @property
     def id(self):
