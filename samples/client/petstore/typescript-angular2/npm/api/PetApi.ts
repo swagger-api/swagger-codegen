@@ -406,8 +406,8 @@ export class PetApi {
         }
 
         // authentication (api_key) required
-        if (this.configuration.apiKey) {
-            headers.set('api_key', this.configuration.apiKey);
+        if (this.configuration.apiKeys["api_key"]) {
+            headers.set('api_key', this.configuration.apiKeys["api_key"]);
         }
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
