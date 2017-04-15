@@ -34,7 +34,12 @@ class {{classname}}(object):
         }
 
 {{#vars}}
-        self._{{name}} = {{name}}
+        self._{{name}} = None
+{{/vars}}
+
+{{#vars}}
+        if {{name}} is not None:
+          self.{{name}} = {{name}}
 {{/vars}}
 
 {{#vars}}
@@ -62,9 +67,13 @@ class {{classname}}(object):
         :param {{name}}: The {{name}} of this {{classname}}.
         :type: {{datatype}}
         """
+{{#required}}
+        if {{name}} is None:
+            raise ValueError("Invalid value for `{{name}}`, must not be `None`")
+{{/required}}
 {{#isEnum}}
-        allowed_values = [{{#allowableValues}}{{#values}}"{{{this}}}"{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}]
 {{#isContainer}}
+        allowed_values = [{{#allowableValues}}{{#values}}{{#items.isString}}"{{/items.isString}}{{{this}}}{{#items.isString}}"{{/items.isString}}{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}]
 {{#isListContainer}}
         if not set({{{name}}}).issubset(set(allowed_values)):
             raise ValueError(
@@ -83,6 +92,7 @@ class {{classname}}(object):
 {{/isMapContainer}}
 {{/isContainer}}
 {{^isContainer}}
+        allowed_values = [{{#allowableValues}}{{#values}}{{#isString}}"{{/isString}}{{{this}}}{{#isString}}"{{/isString}}{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}]
         if {{{name}}} not in allowed_values:
             raise ValueError(
                 "Invalid value for `{{{name}}}` ({0}), must be one of {1}"
@@ -91,10 +101,6 @@ class {{classname}}(object):
 {{/isContainer}}
 {{/isEnum}}
 {{^isEnum}}
-{{#required}}
-        if {{name}} is None:
-            raise ValueError("Invalid value for `{{name}}`, must not be `None`")
-{{/required}}
 {{#hasValidation}}
 {{#maxLength}}
         if {{name}} is not None and len({{name}}) > {{maxLength}}:
