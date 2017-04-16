@@ -55,6 +55,9 @@ class Capitalization(object):
         self._sca_eth_flow_points = None
         self._att_name = None
 
+        # TODO: let required properties as mandatory parameter in the constructor.
+        #       - to check if required property is not None (e.g. by calling setter)
+        #       - ApiClient.__deserialize_model has to be adapted as well
         if small_camel is not None:
           self.small_camel = small_camel
         if capital_camel is not None:

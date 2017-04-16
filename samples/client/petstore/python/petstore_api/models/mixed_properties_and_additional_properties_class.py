@@ -46,6 +46,9 @@ class MixedPropertiesAndAdditionalPropertiesClass(object):
         self._date_time = None
         self._map = None
 
+        # TODO: let required properties as mandatory parameter in the constructor.
+        #       - to check if required property is not None (e.g. by calling setter)
+        #       - ApiClient.__deserialize_model has to be adapted as well
         if uuid is not None:
           self.uuid = uuid
         if date_time is not None:

@@ -43,6 +43,9 @@ class HasOnlyReadOnly(object):
         self._bar = None
         self._foo = None
 
+        # TODO: let required properties as mandatory parameter in the constructor.
+        #       - to check if required property is not None (e.g. by calling setter)
+        #       - ApiClient.__deserialize_model has to be adapted as well
         if bar is not None:
           self.bar = bar
         if foo is not None:

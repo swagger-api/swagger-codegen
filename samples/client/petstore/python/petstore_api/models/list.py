@@ -40,6 +40,9 @@ class List(object):
 
         self.__123_list = None
 
+        # TODO: let required properties as mandatory parameter in the constructor.
+        #       - to check if required property is not None (e.g. by calling setter)
+        #       - ApiClient.__deserialize_model has to be adapted as well
         if _123_list is not None:
           self._123_list = _123_list
 

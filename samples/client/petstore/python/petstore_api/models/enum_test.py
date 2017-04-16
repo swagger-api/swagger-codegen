@@ -49,6 +49,9 @@ class EnumTest(object):
         self._enum_number = None
         self._outer_enum = None
 
+        # TODO: let required properties as mandatory parameter in the constructor.
+        #       - to check if required property is not None (e.g. by calling setter)
+        #       - ApiClient.__deserialize_model has to be adapted as well
         if enum_string is not None:
           self.enum_string = enum_string
         if enum_integer is not None:

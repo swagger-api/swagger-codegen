@@ -46,6 +46,9 @@ class Dog(object):
         self._color = None
         self._breed = None
 
+        # TODO: let required properties as mandatory parameter in the constructor.
+        #       - to check if required property is not None (e.g. by calling setter)
+        #       - ApiClient.__deserialize_model has to be adapted as well
         if class_name is not None:
           self.class_name = class_name
         if color is not None:

@@ -40,6 +40,9 @@ class ClassModel(object):
 
         self.__class = None
 
+        # TODO: let required properties as mandatory parameter in the constructor.
+        #       - to check if required property is not None (e.g. by calling setter)
+        #       - ApiClient.__deserialize_model has to be adapted as well
         if _class is not None:
           self._class = _class
 

@@ -40,6 +40,9 @@ class ArrayOfArrayOfNumberOnly(object):
 
         self._array_array_number = None
 
+        # TODO: let required properties as mandatory parameter in the constructor.
+        #       - to check if required property is not None (e.g. by calling setter)
+        #       - ApiClient.__deserialize_model has to be adapted as well
         if array_array_number is not None:
           self.array_array_number = array_array_number
 

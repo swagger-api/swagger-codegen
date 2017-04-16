@@ -43,6 +43,9 @@ class Tag(object):
         self._id = None
         self._name = None
 
+        # TODO: let required properties as mandatory parameter in the constructor.
+        #       - to check if required property is not None (e.g. by calling setter)
+        #       - ApiClient.__deserialize_model has to be adapted as well
         if id is not None:
           self.id = id
         if name is not None:

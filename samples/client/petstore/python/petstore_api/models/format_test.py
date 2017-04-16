@@ -76,6 +76,9 @@ class FormatTest(object):
         self._uuid = None
         self._password = None
 
+        # TODO: let required properties as mandatory parameter in the constructor.
+        #       - to check if required property is not None (e.g. by calling setter)
+        #       - ApiClient.__deserialize_model has to be adapted as well
         if integer is not None:
           self.integer = integer
         if int32 is not None:
