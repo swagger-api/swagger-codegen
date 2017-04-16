@@ -220,7 +220,7 @@ namespace {{packageName}}.{{apiPackage}}
             {{#required}}
             // verify the required parameter '{{paramName}}' is set
             if ({{paramName}} == null)
-                throw new ApiException(400, "Missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}");
+            throw new ApiException(400, $"Missing required parameter '{nameof({{paramName}})}' when calling {nameof({{classname}})}->{nameof({{operationId}})}");
             {{/required}}
             {{/allParams}}
 
@@ -313,7 +313,7 @@ namespace {{packageName}}.{{apiPackage}}
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("{{operationId}}", localVarResponse);
+                Exception exception = ExceptionFactory(nameof({{operationId}}), localVarResponse);
                 if (exception != null){
 
                     log.Error(exception, "API Exception");
@@ -355,7 +355,7 @@ namespace {{packageName}}.{{apiPackage}}
             {{#required}}
             // verify the required parameter '{{paramName}}' is set
             if ({{paramName}} == null)
-                throw new ApiException(400, "Missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}");
+            throw new ApiException(400, $"Missing required parameter '{nameof({{paramName}})}' when calling {nameof({{classname}})}->{nameof({{operationId}})}");
             {{/required}}
             {{/allParams}}
 
@@ -449,7 +449,7 @@ namespace {{packageName}}.{{apiPackage}}
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("{{operationId}}", localVarResponse);
+                Exception exception = ExceptionFactory(nameof({{operationId}}), localVarResponse);
                 if (exception != null) throw exception;
             }
 

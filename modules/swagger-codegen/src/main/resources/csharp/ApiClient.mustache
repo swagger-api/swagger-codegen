@@ -22,19 +22,16 @@ using RestSharp.Portable.HttpClient;
 using RestSharp;
 {{/netStandard}}
 
-namespace {{packageName}}.Client
-{
+namespace {{packageName}}.Client {
     /// <summary>
     /// API client is mainly responsible for making the HTTP call to the API backend.
     /// </summary>
-    {{>visibility}} partial class ApiClient
-    {
+    {{>visibility}} partial class ApiClient {
 
         private static Logger log = new Logger(nameof(ApiClient));
         private const string SERVER_DEFAULT_ADDRESS = "{{basePath}}";
 
-        private JsonSerializerSettings serializerSettings = new JsonSerializerSettings
-        {
+        private JsonSerializerSettings serializerSettings = new JsonSerializerSettings {
             ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
         };
 
@@ -55,8 +52,7 @@ namespace {{packageName}}.Client
         /// Initializes a new instance of the <see cref="ApiClient" /> class
         /// with default configuration and base path (<see cref="SERVER_DEFAULT_ADDRESS"/>).
         /// </summary>
-        public ApiClient()
-        {
+        public ApiClient() {
             log.Trace("start");
             Configuration = Configuration.Default;
             RestClient = new RestClient(SERVER_DEFAULT_ADDRESS);
@@ -71,8 +67,7 @@ namespace {{packageName}}.Client
         /// with default base path (<see cref="SERVER_DEFAULT_ADDRESS"/>).
         /// </summary>
         /// <param name="config">An instance of Configuration.</param>
-        public ApiClient(Configuration config = null)
-        {
+        public ApiClient(Configuration config = null) {
             log.Trace("start");
             if (config == null){
                 Configuration = Configuration.Default;
@@ -91,12 +86,11 @@ namespace {{packageName}}.Client
         /// with default configuration.
         /// </summary>
         /// <param name="basePath">The base path.</param>
-        public ApiClient(string basePath = SERVER_DEFAULT_ADDRESS)
-        {
+        public ApiClient(string basePath = SERVER_DEFAULT_ADDRESS) {
             log.Trace("start");
             if(string.IsNullOrEmpty(basePath)) {
                 throw new ArgumentException("basePath cannot be empty");
-            }
+            } 
 
             RestClient = new RestClient(basePath);
             {{#netStandard}}
@@ -150,8 +144,7 @@ namespace {{packageName}}.Client
                 request.AddParameter(param.Key, param.Value);
 
             // add file parameter, if any
-            foreach(var param in fileParams)
-            {
+            foreach(var param in fileParams) {
                 {{#netStandard}}
                 request.AddFile(param.Value);
                 {{/netStandard}}
@@ -187,12 +180,16 @@ namespace {{packageName}}.Client
         /// <param name="pathParams">Path parameters.</param>
         /// <param name="contentType">Content Type of the request</param>
         /// <returns>Object</returns>
-        public Object CallApi(
-            String path, {{^netStandard}}RestSharp.{{/netStandard}}Method method, Dictionary<String, String> queryParams, Object postBody,
-            Dictionary<String, String> headerParams, Dictionary<String, String> formParams,
-            Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams,
-            String contentType)
-        {
+        public object CallApi(
+            string path,
+            {{^netStandard}}RestSharp.{{/netStandard}}Method method,
+            Dictionary<string, string> queryParams,
+            object postBody,
+            Dictionary<string, string> headerParams,
+            Dictionary<string, string> formParams,
+            Dictionary<string, FileParameter> fileParams,
+            Dictionary<string, string> pathParams,
+            string contentType) {
             log.Trace("start");
             var request = PrepareRequest(
                 path, method, queryParams, postBody, headerParams, formParams, fileParams,
@@ -236,12 +233,16 @@ namespace {{packageName}}.Client
         /// <param name="pathParams">Path parameters.</param>
         /// <param name="contentType">Content type.</param>
         /// <returns>The Task instance.</returns>
-        public async System.Threading.Tasks.Task<Object> CallApiAsync(
-            String path, {{^netStandard}}RestSharp.{{/netStandard}}Method method, Dictionary<String, String> queryParams, Object postBody,
-            Dictionary<String, String> headerParams, Dictionary<String, String> formParams,
-            Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams,
-            String contentType)
-        {
+        public async System.Threading.Tasks.Task<object> CallApiAsync(
+            string path,
+            {{^netStandard}}RestSharp.{{/netStandard}}Method method,
+            Dictionary<string, string> queryParams,
+            object postBody,
+            Dictionary<string, string> headerParams,
+            Dictionary<string, string> formParams,
+            Dictionary<string, FileParameter> fileParams,
+            Dictionary<string, string> pathParams,
+            string contentType) {
             log.Trace("start");
             var request = PrepareRequest(
                 path, method, queryParams, postBody, headerParams, formParams, fileParams,
@@ -250,7 +251,7 @@ namespace {{packageName}}.Client
             var response = await RestClient.Execute{{^netStandard}}TaskAsync{{/netStandard}}(request);
             log.Debug("Received response");
             InterceptResponse(request, response);
-            log.Trace("enc");
+            log.Trace("end");
             return (Object)response;
         }{{/supportsAsync}}
 
@@ -259,8 +260,7 @@ namespace {{packageName}}.Client
         /// </summary>
         /// <param name="str">String to be escaped.</param>
         /// <returns>Escaped string.</returns>
-        public string EscapeString(string str)
-        {
+        public string EscapeString(string str) {
             return UrlEncode(str);
         }
 
@@ -270,8 +270,7 @@ namespace {{packageName}}.Client
         /// <param name="name">Parameter name.</param>
         /// <param name="stream">Input stream.</param>
         /// <returns>FileParameter.</returns>
-        public FileParameter ParameterToFile(string name, Stream stream)
-        {
+        public FileParameter ParameterToFile(string name, Stream stream) {
             log.Trace("start");
             if (stream is FileStream) {
                 log.Debug("FileStream");
@@ -288,8 +287,7 @@ namespace {{packageName}}.Client
         /// </summary>
         /// <param name="obj">The parameter (header, path, query, form).</param>
         /// <returns>Formatted string.</returns>
-        public string ParameterToString(object obj)
-        {
+        public string ParameterToString(object obj) {
             log.Trace("start");
             if (obj is DateTime) {
                 // Return a formatted date string - Can be customized with Configuration.DateTimeFormat
@@ -327,8 +325,7 @@ namespace {{packageName}}.Client
         /// <param name="response">The HTTP response.</param>
         /// <param name="type">Object type.</param>
         /// <returns>Object representation of the JSON string.</returns>
-        public object Deserialize(IRestResponse response, Type type)
-        {
+        public object Deserialize(IRestResponse response, Type type) {
             log.Trace("start");
             {{^netStandard}}IList<Parameter>{{/netStandard}}{{#netStandard}}IHttpHeaders{{/netStandard}} headers = response.Headers;
             if (type == typeof(byte[])) {
@@ -343,11 +340,9 @@ namespace {{packageName}}.Client
                         ? Path.GetTempPath()
                         : Configuration.TempFolderPath;
                     var regex = new Regex(@"Content-Disposition=.*filename=['""]?([^'""\s]+)['""]?$");
-                    foreach (var header in headers)
-                    {
+                    foreach (var header in headers) {
                         var match = regex.Match(header.ToString());
-                        if (match.Success)
-                        {
+                        if (match.Success) {
                             string fileName = filePath + SanitizeFilename(match.Groups[1].Value.Replace("\"", "").Replace("'", ""));
                             File.WriteAllBytes(fileName, response.RawBytes);
                             return new FileStream(fileName, FileMode.Open);
@@ -359,17 +354,15 @@ namespace {{packageName}}.Client
                 return stream;
             }
 
-            if (type.Name.StartsWith("System.Nullable`1[[System.DateTime"))
-            {
+            if (type.Name.StartsWith("System.Nullable`1[[System.DateTime")) {
+                // return a datetime object 
                 log.Trace("end");
-                // return a datetime object
                 return DateTime.Parse(response.Content,  null, System.Globalization.DateTimeStyles.RoundtripKind);
             }
 
-            if (type == typeof(String) || type.Name.StartsWith("System.Nullable"))
-            {
+            if (type == typeof(String) || type.Name.StartsWith("System.Nullable")) {
+                // return primitive type 
                 log.Trace("end");
-                // return primitive type
                 return ConvertType(response.Content, type);
             }
 
@@ -408,19 +401,14 @@ namespace {{packageName}}.Client
         /// </summary>
         /// <param name="obj">Object.</param>
         /// <returns>JSON string.</returns>
-        public String Serialize(object obj)
-        {
+        public String Serialize(object obj) {
             log.Trace("start");
-            try
-            {
-
+            try {
                 string result=obj != null ? JsonConvert.SerializeObject(obj) : null;
                 log.Debug("result: "+result);
                 log.Trace("end");
                 return result;
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 log.Trace("abort");
                 throw new ApiException(500, e.Message);
             }
@@ -433,8 +421,7 @@ namespace {{packageName}}.Client
         /// </summary>
         /// <param name="contentTypes">The Content-Type array to select from.</param>
         /// <returns>The Content-Type header to use.</returns>
-        public String SelectHeaderContentType(String[] contentTypes)
-        {
+        public String SelectHeaderContentType(String[] contentTypes) {
             log.Trace("start");
             if (contentTypes.Length == 0) {
                 return null;
@@ -454,8 +441,7 @@ namespace {{packageName}}.Client
         /// </summary>
         /// <param name="accepts">The accepts array to select from.</param>
         /// <returns>The Accept header to use.</returns>
-        public String SelectHeaderAccept(String[] accepts)
-        {
+        public String SelectHeaderAccept(String[] accepts) {
             if (accepts.Length == 0) {
                 return null;
             }
@@ -472,8 +458,7 @@ namespace {{packageName}}.Client
         /// </summary>
         /// <param name="text">String to be encoded.</param>
         /// <returns>Encoded string.</returns>
-        public static string Base64Encode(string text)
-        {
+        public static string Base64Encode(string text) {
             return System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(text));
         }
 
@@ -484,8 +469,7 @@ namespace {{packageName}}.Client
         /// <param name="source">Object to be casted</param>
         /// <param name="dest">Target type</param>
         /// <returns>Casted object</returns>
-        {{#supportsAsync}}public static dynamic ConvertType(dynamic source, Type dest){{/supportsAsync}}{{^supportsAsync}}public static object ConvertType<T>(T source, Type dest) where T : class{{/supportsAsync}}
-        {
+        {{#supportsAsync}}public static dynamic ConvertType(dynamic source, Type dest){{/supportsAsync}}{{^supportsAsync}}public static object ConvertType<T>(T source, Type dest) where T : class{{/supportsAsync}} {
             return Convert.ChangeType(source, dest);
         }
 
@@ -495,15 +479,12 @@ namespace {{packageName}}.Client
         /// </summary>
         /// <param name="input">Input stream to be converted</param>
         /// <returns>Byte array</returns>
-        public static byte[] ReadAsBytes(Stream input)
-        {
+        public static byte[] ReadAsBytes(Stream input) {
             log.Trace("start");
             byte[] buffer = new byte[16*1024];
-            using (MemoryStream ms = new MemoryStream())
-            {
+            using (MemoryStream ms = new MemoryStream()) {
                 int read;
-                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-                {
+                while ((read = input.Read(buffer, 0, buffer.Length)) > 0) {
                     ms.Write(buffer, 0, read);
                 }
                 log.Trace("end");
@@ -517,19 +498,16 @@ namespace {{packageName}}.Client
         /// </summary>
         /// <param name="input">String to be URL encoded</param>
         /// <returns>Byte array</returns>
-        public static string UrlEncode(string input)
-        {
+        public static string UrlEncode(string input) {
             log.Trace("start");
             const int maxLength = 32766;
 
-            if (input == null)
-            {
+            if (input == null) {
                 log.Trace("abort");
                 throw new ArgumentNullException("input");
             }
 
-            if (input.Length <= maxLength)
-            {
+            if (input.Length <= maxLength) {
                 log.Trace("end");
                 return Uri.EscapeDataString(input);
             }
@@ -537,8 +515,7 @@ namespace {{packageName}}.Client
             StringBuilder sb = new StringBuilder(input.Length * 2);
             int index = 0;
 
-            while (index < input.Length)
-            {
+            while (index < input.Length) {
                 int length = Math.Min(input.Length - index, maxLength);
                 string subString = input.Substring(index, length);
 
@@ -555,17 +532,13 @@ namespace {{packageName}}.Client
         /// </summary>
         /// <param name="filename">Filename</param>
         /// <returns>Filename</returns>
-        public static string SanitizeFilename(string filename)
-        {
+        public static string SanitizeFilename(string filename) {
             log.Trace("start");
             Match match = Regex.Match(filename, @".*[/\\](.*)$");
 
-            if (match.Success)
-            {
+            if (match.Success) {
                 return match.Groups[1].Value;
-            }
-            else
-            {
+            } else {
                 return filename;
             }
             log.Trace("end");
@@ -577,8 +550,7 @@ namespace {{packageName}}.Client
         /// </summary>
         /// <param name="stream">IO stream</param>
         /// <returns>Byte array</returns>
-        public static byte[] ToByteArray(Stream stream)
-        {
+        public static byte[] ToByteArray(Stream stream) {
             log.Trace("start");
             stream.Position = 0;
             byte[] buffer = new byte[stream.Length];
