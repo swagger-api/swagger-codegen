@@ -44,7 +44,7 @@ public class {{classname}}Controller implements {{classname}} {
 {{^jdk8-no-delegate}}
 {{#operation}}
     public {{#async}}Callable<{{/async}}ResponseEntity<{{>returnTypes}}>{{#async}}>{{/async}} {{operationId}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},
-        {{/hasMore}}{{/allParams}}){{#examples}}{{#-first}} throws IOException{{/-first}}{{/examples}} {
+        {{/hasMore}}{{/allParams}}{{#examples}}{{#-first}}, @RequestHeader("Accept") String accept {{/-first}}{{/examples}}){{#examples}}{{#-first}} throws IOException{{/-first}}{{/examples}} {
         // do some magic!
         {{^isDelegate}}
         {{^async}}
@@ -54,7 +54,7 @@ public class {{classname}}Controller implements {{classname}} {
         ObjectMapper objectMapper = new ObjectMapper();
 
         {{/-first}}
-        if ("{{{contentType}}}".equals("")) { //TODO need to compare HTTP request "Accept"
+        if ("{{{contentType}}}".contains(accept)) {
             return new ResponseEntity<{{>returnTypes}}>(objectMapper.readValue("{{{example}}}",{{>exampleReturnTypes}}.class), HttpStatus.OK);
         }
 
