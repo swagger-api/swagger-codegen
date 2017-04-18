@@ -50,28 +50,13 @@ public class TypeScriptJqueryClientCodegen extends AbstractTypeScriptClientCodeg
         super.processOpts();
 
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
+		supportingFiles.add(new SupportingFile("common.mustache", apiPackage().replace('.', File.separatorChar), "common.ts"));
+        supportingFiles.add(new SupportingFile("models.mustache", modelPackage().replace('.', File.separatorChar), "models.ts"));
+        supportingFiles.add(new SupportingFile("apis.mustache", apiPackage().replace('.', File.separatorChar), "api.ts"));
 
         LOGGER.warn("check additionals: " + additionalProperties.get(NPM_NAME));
         if(additionalProperties.containsKey(NPM_NAME)) {
             addNpmPackageGeneration();
-        }
-    }
-
-    @Override
-    public String getTypeDeclaration(Property p) {
-        Property inner;
-        if(p instanceof ArrayProperty) {
-            ArrayProperty mp1 = (ArrayProperty)p;
-            inner = mp1.getItems();
-            return this.getSwaggerType(p) + "<" + this.getTypeDeclaration(inner) + ">";
-        } else if(p instanceof MapProperty) {
-            MapProperty mp = (MapProperty)p;
-            inner = mp.getAdditionalProperties();
-            return "{ [key: string]: " + this.getTypeDeclaration(inner) + "; }";
-        } else if(p instanceof FileProperty || p instanceof ObjectProperty) {
-            return "any";
-        } else {
-            return super.getTypeDeclaration(p);
         }
     }
 
