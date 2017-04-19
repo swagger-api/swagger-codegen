@@ -1,6 +1,7 @@
 package {{configPackage}};
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.xml.XmlMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -70,12 +71,17 @@ public class SwaggerUiConfiguration extends WebMvcConfigurerAdapter {
 
   @Override
   public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-    converters.add(new MappingJackson2HttpMessageConverter(objectMapper()));
+    converters.add(new MappingJackson2HttpMessageConverter());
     super.configureMessageConverters(converters);
   }
 
   @Bean
   public ObjectMapper objectMapper(){
-    return builder().build();
+    return new ObjectMapper();
   }
+
+    @Bean
+    public XmlMapper xmlMapper(){
+        return new XmlMapper();
+    }
 }
