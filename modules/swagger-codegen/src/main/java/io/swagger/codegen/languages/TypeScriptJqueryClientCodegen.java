@@ -50,7 +50,7 @@ public class TypeScriptJqueryClientCodegen extends AbstractTypeScriptClientCodeg
         super.processOpts();
 
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
-		supportingFiles.add(new SupportingFile("common.mustache", apiPackage().replace('.', File.separatorChar), "common.ts"));
+        supportingFiles.add(new SupportingFile("common.mustache", apiPackage().replace('.', File.separatorChar), "common.ts"));
         supportingFiles.add(new SupportingFile("models.mustache", modelPackage().replace('.', File.separatorChar), "models.ts"));
         supportingFiles.add(new SupportingFile("apis.mustache", apiPackage().replace('.', File.separatorChar), "api.ts"));
 
