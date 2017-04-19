@@ -152,8 +152,7 @@ public class XmlExampleGenerator {
                 sb.append(closeTag(name));
             }
         }
-//        return sb.toString();
-        return compressTag(name, sb.toString());
+        return compressTagWhenEmpty(name, sb.toString());
     }
 
     /**
@@ -220,7 +219,7 @@ public class XmlExampleGenerator {
         return sb.toString();
     }
 
-    private String compressTag(String name, String xmlNode){
+    private String compressTagWhenEmpty(String name, String xmlNode){
         String returnValue = xmlNode;
         if (name!=null){
             Pattern p = Pattern.compile("<(.*)>\\s*</(.*)>");

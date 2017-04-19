@@ -71,7 +71,8 @@ public class SwaggerUiConfiguration extends WebMvcConfigurerAdapter {
 
   @Override
   public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-    converters.add(new MappingJackson2HttpMessageConverter());
+    //MappingJackson2HttpMessageConverter is added already by @EnableWebMvc
+    //converters.add(new MappingJackson2HttpMessageConverter());
     super.configureMessageConverters(converters);
   }
 
