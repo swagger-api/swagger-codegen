@@ -32,7 +32,7 @@ public class TypeScriptJqueryClientCodegen extends AbstractTypeScriptClientCodeg
 
         modelTemplateFiles.put("model.mustache", ".ts");
         apiTemplateFiles.put("api.mustache", ".ts");
-        typeMapping.put("Date","Date");
+        typeMapping.put("Date", "Date");
         apiPackage = "api";
         modelPackage = "model";
 
@@ -50,20 +50,27 @@ public class TypeScriptJqueryClientCodegen extends AbstractTypeScriptClientCodeg
         super.processOpts();
 
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
-        supportingFiles.add(new SupportingFile("common.mustache", apiPackage().replace('.', File.separatorChar), "common.ts"));
         supportingFiles.add(new SupportingFile("models.mustache", modelPackage().replace('.', File.separatorChar), "models.ts"));
         supportingFiles.add(new SupportingFile("apis.mustache", apiPackage().replace('.', File.separatorChar), "api.ts"));
+        supportingFiles.add(new SupportingFile("configuration.mustache", getIndexDirectory(), "configuration.ts"));
+        supportingFiles.add(new SupportingFile("index.mustache", getIndexDirectory(), "index.ts"));
+        supportingFiles.add(new SupportingFile("variables.mustache", getIndexDirectory(), "variables.ts"));
 
         LOGGER.warn("check additionals: " + additionalProperties.get(NPM_NAME));
-        if(additionalProperties.containsKey(NPM_NAME)) {
+        if (additionalProperties.containsKey(NPM_NAME)) {
             addNpmPackageGeneration();
         }
+    }
+
+    private String getIndexDirectory() {
+        String indexPackage = modelPackage.substring(0, Math.max(0, modelPackage.lastIndexOf('.')));
+        return indexPackage.replace('.', File.separatorChar);
     }
 
     @Override
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
-        if(isLanguagePrimitive(swaggerType) || isLanguageGenericType(swaggerType)) {
+        if (isLanguagePrimitive(swaggerType) || isLanguageGenericType(swaggerType)) {
             return swaggerType;
         }
         return addModelPrefix(swaggerType);
@@ -88,8 +95,8 @@ public class TypeScriptJqueryClientCodegen extends AbstractTypeScriptClientCodeg
     }
 
     private boolean isLanguageGenericType(String type) {
-        for (String genericType: languageGenericTypes) {
-            if (type.startsWith(genericType + "<"))  {
+        for (String genericType : languageGenericTypes) {
+            if (type.startsWith(genericType + "<")) {
                 return true;
             }
         }
@@ -103,7 +110,7 @@ public class TypeScriptJqueryClientCodegen extends AbstractTypeScriptClientCodeg
     }
 
     private void addNpmPackageGeneration() {
-        if(additionalProperties.containsKey(NPM_NAME)) {
+        if (additionalProperties.containsKey(NPM_NAME)) {
             this.setNpmName(additionalProperties.get(NPM_NAME).toString());
         }
 
