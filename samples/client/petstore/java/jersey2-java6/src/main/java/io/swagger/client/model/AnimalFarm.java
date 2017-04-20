@@ -44,7 +44,7 @@ public class AnimalFarm extends ArrayList<Animal> {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AnimalFarm {\n");
+    sb.append("class ").append(this.getClass().getSimpleName()).append(" {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("}");
     return sb.toString();
