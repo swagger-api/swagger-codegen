@@ -24,7 +24,7 @@ import javax.validation.Valid;
 
 @Controller
 public class StoreApiController implements StoreApi {
-    ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     public StoreApiController(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;

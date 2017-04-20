@@ -25,7 +25,7 @@ import javax.validation.Valid;
 
 @Controller
 public class PetApiController implements PetApi {
-    ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     public PetApiController(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;

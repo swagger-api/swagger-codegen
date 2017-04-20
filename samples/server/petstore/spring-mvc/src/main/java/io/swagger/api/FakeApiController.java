@@ -26,7 +26,7 @@ import javax.validation.Valid;
 
 @Controller
 public class FakeApiController implements FakeApi {
-    ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     public FakeApiController(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
