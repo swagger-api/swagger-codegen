@@ -5,7 +5,7 @@
 use WWW::SwaggerClient::Object::FakeApi;
 ```
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -19,13 +19,15 @@ Method | HTTP request | Description
 
 To test \"client\" model
 
+To test \"client\" model
+
 ### Example 
 ```perl
 use Data::Dumper;
-use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::FakeApi;
+my $api_instance = WWW::SwaggerClient::FakeApi->new(
+);
 
-my $api_instance = WWW::SwaggerClient::FakeApi->new();
 my $body = WWW::SwaggerClient::Object::Client->new(); # Client | client model
 
 eval { 
@@ -68,14 +70,14 @@ Fake endpoint for testing various parameters 假端點 偽のエンドポイン�
 ### Example 
 ```perl
 use Data::Dumper;
-use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::FakeApi;
+my $api_instance = WWW::SwaggerClient::FakeApi->new(
 
-# Configure HTTP basic authorization: http_basic_test
-$WWW::SwaggerClient::Configuration::username = 'YOUR_USERNAME';
-$WWW::SwaggerClient::Configuration::password = 'YOUR_PASSWORD';
+    # Configure HTTP basic authorization: http_basic_test
+    username => 'YOUR_USERNAME',
+    password => 'YOUR_PASSWORD',
+);
 
-my $api_instance = WWW::SwaggerClient::FakeApi->new();
 my $number = 3.4; # Number | None
 my $double = 1.2; # double | None
 my $pattern_without_delimiter = 'pattern_without_delimiter_example'; # string | None
@@ -138,20 +140,22 @@ void (empty response body)
 
 To test enum parameters
 
+To test enum parameters
+
 ### Example 
 ```perl
 use Data::Dumper;
-use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::FakeApi;
+my $api_instance = WWW::SwaggerClient::FakeApi->new(
+);
 
-my $api_instance = WWW::SwaggerClient::FakeApi->new();
 my $enum_form_string_array = []; # ARRAY[string] | Form parameter enum test (string array)
 my $enum_form_string = 'enum_form_string_example'; # string | Form parameter enum test (string)
 my $enum_header_string_array = []; # ARRAY[string] | Header parameter enum test (string array)
 my $enum_header_string = 'enum_header_string_example'; # string | Header parameter enum test (string)
 my $enum_query_string_array = []; # ARRAY[string] | Query parameter enum test (string array)
 my $enum_query_string = 'enum_query_string_example'; # string | Query parameter enum test (string)
-my $enum_query_integer = 3.4; # Number | Query parameter enum test (double)
+my $enum_query_integer = 56; # int | Query parameter enum test (double)
 my $enum_query_double = 1.2; # double | Query parameter enum test (double)
 
 eval { 
@@ -172,7 +176,7 @@ Name | Type | Description  | Notes
  **enum_header_string** | **string**| Header parameter enum test (string) | [optional] [default to -efg]
  **enum_query_string_array** | [**ARRAY[string]**](string.md)| Query parameter enum test (string array) | [optional] 
  **enum_query_string** | **string**| Query parameter enum test (string) | [optional] [default to -efg]
- **enum_query_integer** | **Number**| Query parameter enum test (double) | [optional] 
+ **enum_query_integer** | **int**| Query parameter enum test (double) | [optional] 
  **enum_query_double** | **double**| Query parameter enum test (double) | [optional] 
 
 ### Return type

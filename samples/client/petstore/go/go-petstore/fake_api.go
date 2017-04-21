@@ -276,7 +276,7 @@ func (a *FakeApiService) TestEnumParameters(localVarOptionals map[string]interfa
 	}
 	if err := typeCheckParameter(localVarOptionals["enumQueryString"], "string", "enumQueryString"); err != nil {
 		return nil, err
-	}
+  }
 	if err := typeCheckParameter(localVarOptionals["enumQueryInteger"], "int32", "enumQueryInteger"); err != nil {
 		return nil, err
 	}

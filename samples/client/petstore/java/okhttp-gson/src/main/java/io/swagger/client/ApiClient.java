@@ -52,7 +52,7 @@ import io.swagger.client.auth.OAuth;
 
 public class ApiClient {
 
-    private String basePath = "http://petstore.swagger.io/v2";
+    private String basePath = "http://petstore.swagger.io:80/v2";
     private boolean debugging = false;
     private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
     private String tempFolderPath = null;
@@ -72,7 +72,10 @@ public class ApiClient {
      */
     public ApiClient() {
         httpClient = new OkHttpClient();
+
+
         verifyingSsl = true;
+
         json = new JSON();
 
         // Set default User-Agent.
@@ -99,7 +102,7 @@ public class ApiClient {
     /**
      * Set base path
      *
-     * @param basePath Base path of the URL (e.g http://petstore.swagger.io/v2
+     * @param basePath Base path of the URL (e.g http://petstore.swagger.io:80/v2
      * @return An instance of OkHttpClient
      */
     public ApiClient setBasePath(String basePath) {
@@ -513,12 +516,13 @@ public class ApiClient {
      *   application/json
      *   application/json; charset=UTF8
      *   APPLICATION/JSON
-     *
+     *   application/vnd.company+json
      * @param mime MIME (Multipurpose Internet Mail Extensions)
      * @return True if the given MIME is JSON, false otherwise.
      */
     public boolean isJsonMime(String mime) {
-        return mime != null && mime.matches("(?i)application\\/json(;.*)?");
+      String jsonMime = "(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$";
+      return mime != null && mime.matches(jsonMime);
     }
 
     /**
@@ -820,6 +824,13 @@ public class ApiClient {
             if (returnType == null || response.code() == 204) {
                 // returning null if the returnType is not defined,
                 // or the status code is 204 (No Content)
+                if (response.body() != null) {
+                    try {
+                        response.body().close();
+                    } catch (IOException e) {
+                        throw new ApiException(response.message(), e, response.code(), response.headers().toMultimap());
+                    }
+                }
                 return null;
             } else {
                 return deserialize(response, returnType);

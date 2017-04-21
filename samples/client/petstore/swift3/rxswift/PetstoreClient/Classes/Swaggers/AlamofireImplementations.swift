@@ -16,8 +16,8 @@ class AlamofireRequestBuilderFactory: RequestBuilderFactory {
 private var managerStore: [String: Alamofire.SessionManager] = [:]
 
 open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
-    required public init(method: String, URLString: String, parameters: [String : Any]?, isBody: Bool) {
-        super.init(method: method, URLString: URLString, parameters: parameters, isBody: isBody)
+    required public init(method: String, URLString: String, parameters: [String : Any]?, isBody: Bool, headers: [String : String] = [:]) {
+        super.init(method: method, URLString: URLString, parameters: parameters, isBody: isBody, headers: headers)
     }
 
     /**
@@ -45,8 +45,8 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
      May be overridden by a subclass if you want to control the request
      configuration (e.g. to override the cache policy).
      */
-    open func makeRequest(manager: SessionManager, method: HTTPMethod, encoding: ParameterEncoding) -> DataRequest {
-        return manager.request(URLString, method: method, parameters: parameters, encoding: encoding)
+    open func makeRequest(manager: SessionManager, method: HTTPMethod, encoding: ParameterEncoding, headers: [String:String]) -> DataRequest {
+        return manager.request(URLString, method: method, parameters: parameters, encoding: encoding, headers: headers)
     }
 
     override open func execute(_ completion: @escaping (_ response: Response<T>?, _ error: ErrorResponse?) -> Void) {
@@ -88,7 +88,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 switch encodingResult {
                 case .success(let upload, _, _):
                     if let onProgressReady = self.onProgressReady {
-                        onProgressReady(upload.progress)
+                        onProgressReady(upload.uploadProgress)
                     }
                     self.processRequest(request: upload, managerId, completion)
                 case .failure(let encodingError):
@@ -96,7 +96,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 }
             })
         } else {
-            let request = makeRequest(manager: manager, method: xMethod!, encoding: encoding)
+            let request = makeRequest(manager: manager, method: xMethod!, encoding: encoding, headers: headers)
             if let onProgressReady = self.onProgressReady {
                 onProgressReady(request.progress)
             }
@@ -189,7 +189,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 // NSNull would crash decoders
                 if response.response?.statusCode == 204 && response.result.value is NSNull{
                     completion(nil, nil)
-                    return;
+                    return
                 }
 
                 if () is T {
@@ -197,7 +197,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                     return
                 }
                 if let json: Any = response.result.value {
-                    let decoded = Decoders.decode(clazz: T.self, source: json as AnyObject)
+                    let decoded = Decoders.decode(clazz: T.self, source: json as AnyObject, instance: nil)
                     switch decoded {
                     case let .success(object): completion(Response(response: response.response!, body: object), nil)
                     case let .failure(error): completion(nil, ErrorResponse.DecodeError(response: response.data, decodeError: error))

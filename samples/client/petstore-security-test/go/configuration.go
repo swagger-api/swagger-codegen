@@ -43,6 +43,7 @@ func NewConfiguration() *Configuration {
 		BasePath:      "https://petstore.swagger.io *_/ ' \" =end -- \\r\\n \\n \\r/v2 *_/ ' \" =end -- \\r\\n \\n \\r",
 		DefaultHeader: make(map[string]string),
 		UserAgent:     "Swagger-Codegen/1.0.0/go",
+		APIClient:     &APIClient{},
 	}
 	return cfg
 }

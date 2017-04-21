@@ -177,7 +177,6 @@ func (a *PetApiService) FindPetsByStatus(ctx context.Context, status []string) (
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	localVarQueryParams.Add("status", parameterToString(status, "csv"))
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{  }
@@ -241,7 +240,6 @@ func (a *PetApiService) FindPetsByTags(ctx context.Context, tags []string) ([]Pe
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 
 	localVarQueryParams.Add("tags", parameterToString(tags, "csv"))
 	// to determine the Content-Type header
