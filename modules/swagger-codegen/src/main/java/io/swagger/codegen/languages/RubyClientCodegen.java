@@ -253,6 +253,9 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("Rakefile.mustache", "", "Rakefile"));
         supportingFiles.add(new SupportingFile("Gemfile.mustache", "", "Gemfile"));
 
+        supportingFiles.add(new SupportingFile("api_auth.mustache", gemFolder + File.separator + apiPackage, "auth_api.rb"));
+        supportingFiles.add(new SupportingFile("api_auth_spec.mustache", specFolder + File.separator + apiPackage, "auth_api_spec.rb"));
+
         // test files should not be overwritten
         writeOptional(outputFolder, new SupportingFile("rspec.mustache", "", ".rspec"));
         writeOptional(outputFolder, new SupportingFile("spec_helper.mustache", specFolder, "spec_helper.rb"));
