@@ -13,10 +13,7 @@ import com.google.common.collect.Sets;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @SuppressWarnings("static-method")
 public class ExampleGeneratorTest {
@@ -30,6 +27,7 @@ public class ExampleGeneratorTest {
         final Model node = new ModelImpl().name(nodeType).property("name", new StringProperty())
                 .property("parent", ref)
                 .property("children", new ArrayProperty(ref))
+                .property("status", getEnumData())
                 .property("wrappedChildren", new ArrayProperty(ref).xml(new Xml().wrapped(true)));
         final String pairType = "Pair";
         final ModelImpl pair = new ModelImpl().name(pairType);
@@ -51,13 +49,13 @@ public class ExampleGeneratorTest {
                 Assert.assertEquals(example, "<Pair>\n" +
                         "  <Node>\n" +
                         "    <name>aeiou</name>\n" +
-                        "    <wrappedChildren>\n" +
-                        "    </wrappedChildren>\n" +
+                        "    <status>AVAILABLE</status>\n" +
+                        "    <wrappedChildren/>\n" +
                         "  </Node>\n" +
                         "  <Node>\n" +
                         "    <name>aeiou</name>\n" +
-                        "    <wrappedChildren>\n" +
-                        "    </wrappedChildren>\n" +
+                        "    <status>AVAILABLE</status>\n" +
+                        "    <wrappedChildren/>\n" +
                         "  </Node>\n" +
                         "</Pair>");
             } else if (JSON.equals(contentType)) {
@@ -69,5 +67,14 @@ public class ExampleGeneratorTest {
 
         Assert.assertEqualsNoOrder(types.toArray(new String[types.size()]),
                 expectedTypes.toArray(new String[expectedTypes.size()]));
+    }
+
+    private StringProperty getEnumData(){
+        List<String> enumValues = new ArrayList<>();
+        enumValues.add("available");
+        enumValues.add("pending");
+        StringProperty stringProperty = new StringProperty();
+        stringProperty._enum(enumValues);
+        return stringProperty;
     }
 }

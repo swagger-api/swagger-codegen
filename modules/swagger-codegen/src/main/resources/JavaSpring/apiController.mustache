@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.xml.XmlMapper;
+import org.springframework.http.MediaType;
 import java.io.IOException;
 
 import java.util.List;
@@ -32,6 +34,14 @@ import javax.validation.Valid;
 @Controller
 {{#operations}}
 public class {{classname}}Controller implements {{classname}} {
+    ObjectMapper objectMapper;
+    XmlMapper xmlMapper;
+
+    public {{classname}}Controller(ObjectMapper objectMapper, XmlMapper xmlMapper) {
+        this.objectMapper = objectMapper;
+        this.xmlMapper = xmlMapper;
+    }
+
 {{#isDelegate}}
     private final {{classname}}Delegate delegate;
 
@@ -49,15 +59,10 @@ public class {{classname}}Controller implements {{classname}} {
         {{^isDelegate}}
         {{^async}}
         {{#examples}}
-        {{#-first}}
-        
-        ObjectMapper objectMapper = new ObjectMapper();
 
-        {{/-first}}
         if (accept != null && accept.contains("{{{contentType}}}")) {
-            return new ResponseEntity<{{>returnTypes}}>(objectMapper.readValue("{{#lamdaRemoveLineBreak}}{{#lamdaEscapeDoubleQuote}}{{{example}}}{{/lamdaEscapeDoubleQuote}}{{/lamdaRemoveLineBreak}}", {{>exampleReturnTypes}}.class), HttpStatus.OK);
+            return new ResponseEntity<{{>returnTypes}}>(getMapper("{{contentType}}").readValue("{{#lambdaRemoveLineBreak}}{{#lambdaEscapeDoubleQuote}}{{{example}}}{{/lambdaEscapeDoubleQuote}}{{/lambdaRemoveLineBreak}}", {{>exampleReturnTypes}}.class), HttpStatus.OK);
         }
-
         {{/examples}}
         return new ResponseEntity<{{>returnTypes}}>(HttpStatus.OK);
         {{/async}}
@@ -77,5 +82,12 @@ public class {{classname}}Controller implements {{classname}} {
 
 {{/operation}}
 {{/jdk8-no-delegate}}
+    private ObjectMapper getMapper(String contentType){
+        if (contentType.equals(MediaType.APPLICATION_XML_VALUE)){
+            return this.xmlMapper;
+        } else {
+            return this.objectMapper;
+        }
+    }
 }
 {{/operations}}

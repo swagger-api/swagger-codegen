@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.*;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 public class SpringCodegen extends AbstractJavaCodegen implements BeanValidationFeatures {
@@ -276,13 +275,13 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
         }
 
         // add lamda for mustache templates
-        additionalProperties.put("lamdaEscapeDoubleQuote", new Mustache.Lambda() {
+        additionalProperties.put("lambdaEscapeDoubleQuote", new Mustache.Lambda() {
             @Override
             public void execute(Template.Fragment fragment, Writer writer) throws IOException {
                 writer.write(fragment.execute().replaceAll("\"", Matcher.quoteReplacement("\\\"")));
             }
         });
-        additionalProperties.put("lamdaRemoveLineBreak", new Mustache.Lambda() {
+        additionalProperties.put("lambdaRemoveLineBreak", new Mustache.Lambda() {
             @Override
             public void execute(Template.Fragment fragment, Writer writer) throws IOException {
                 writer.write(fragment.execute().replaceAll("\\r|\\n", ""));
