@@ -180,7 +180,7 @@ export class PetApi {
      * @param body Pet object that needs to be added to the store
      */
     public addPetWithHttpInfo(body?: models.Pet, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/pet`;
+        const path = this.basePath + '/pet';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -211,7 +211,8 @@ export class PetApi {
             method: RequestMethod.Post,
             headers: headers,
             body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:true
         });
 
         // https://github.com/swagger-api/swagger-codegen/issues/4037
@@ -229,7 +230,8 @@ export class PetApi {
      * @param apiKey 
      */
     public deletePetWithHttpInfo(petId: number, apiKey?: string, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/pet/${petId}`;
+        const path = this.basePath + '/pet/${petId}'
+                    .replace('${' + 'petId' + '}', String(petId));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -261,7 +263,8 @@ export class PetApi {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Delete,
             headers: headers,
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:true
         });
 
         // https://github.com/swagger-api/swagger-codegen/issues/4037
@@ -278,7 +281,7 @@ export class PetApi {
      * @param status Status values that need to be considered for filter
      */
     public findPetsByStatusWithHttpInfo(status?: Array<string>, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/pet/findByStatus`;
+        const path = this.basePath + '/pet/findByStatus';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -310,7 +313,8 @@ export class PetApi {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
             headers: headers,
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:true
         });
 
         // https://github.com/swagger-api/swagger-codegen/issues/4037
@@ -327,7 +331,7 @@ export class PetApi {
      * @param tags Tags to filter by
      */
     public findPetsByTagsWithHttpInfo(tags?: Array<string>, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/pet/findByTags`;
+        const path = this.basePath + '/pet/findByTags';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -359,7 +363,8 @@ export class PetApi {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
             headers: headers,
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:true
         });
 
         // https://github.com/swagger-api/swagger-codegen/issues/4037
@@ -376,7 +381,8 @@ export class PetApi {
      * @param petId ID of pet that needs to be fetched
      */
     public getPetByIdWithHttpInfo(petId: number, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/pet/${petId}`;
+        const path = this.basePath + '/pet/${petId}'
+                    .replace('${' + 'petId' + '}', String(petId));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -411,7 +417,8 @@ export class PetApi {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
             headers: headers,
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:true
         });
 
         // https://github.com/swagger-api/swagger-codegen/issues/4037
@@ -428,7 +435,7 @@ export class PetApi {
      * @param body Pet object that needs to be added to the store
      */
     public updatePetWithHttpInfo(body?: models.Pet, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/pet`;
+        const path = this.basePath + '/pet';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -459,7 +466,8 @@ export class PetApi {
             method: RequestMethod.Put,
             headers: headers,
             body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:true
         });
 
         // https://github.com/swagger-api/swagger-codegen/issues/4037
@@ -478,7 +486,8 @@ export class PetApi {
      * @param status Updated status of the pet
      */
     public updatePetWithFormWithHttpInfo(petId: string, name?: string, status?: string, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/pet/${petId}`;
+        const path = this.basePath + '/pet/${petId}'
+                    .replace('${' + 'petId' + '}', String(petId));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -522,7 +531,8 @@ export class PetApi {
             method: RequestMethod.Post,
             headers: headers,
             body: formParams.toString(),
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:true
         });
 
         // https://github.com/swagger-api/swagger-codegen/issues/4037
@@ -541,7 +551,8 @@ export class PetApi {
      * @param file file to upload
      */
     public uploadFileWithHttpInfo(petId: number, additionalMetadata?: string, file?: any, extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/pet/${petId}/uploadImage`;
+        const path = this.basePath + '/pet/${petId}/uploadImage'
+                    .replace('${' + 'petId' + '}', String(petId));
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -585,7 +596,8 @@ export class PetApi {
             method: RequestMethod.Post,
             headers: headers,
             body: formParams.toString(),
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:true
         });
 
         // https://github.com/swagger-api/swagger-codegen/issues/4037

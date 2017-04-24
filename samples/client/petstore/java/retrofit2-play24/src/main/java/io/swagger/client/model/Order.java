@@ -16,6 +16,7 @@ package io.swagger.client.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.joda.time.DateTime;
@@ -55,6 +56,7 @@ public class Order {
     }
 
     @Override
+    @JsonValue
     public String toString() {
       return String.valueOf(value);
     }
@@ -85,7 +87,7 @@ public class Order {
    * Get id
    * @return id
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Long getId() {
     return id;
   }
@@ -103,7 +105,7 @@ public class Order {
    * Get petId
    * @return petId
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Long getPetId() {
     return petId;
   }
@@ -121,7 +123,7 @@ public class Order {
    * Get quantity
    * @return quantity
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Integer getQuantity() {
     return quantity;
   }
@@ -139,7 +141,7 @@ public class Order {
    * Get shipDate
    * @return shipDate
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public DateTime getShipDate() {
     return shipDate;
   }
@@ -157,7 +159,7 @@ public class Order {
    * Order Status
    * @return status
   **/
-  @ApiModelProperty(example = "null", value = "Order Status")
+  @ApiModelProperty(value = "Order Status")
   public StatusEnum getStatus() {
     return status;
   }
@@ -175,7 +177,7 @@ public class Order {
    * Get complete
    * @return complete
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Boolean getComplete() {
     return complete;
   }

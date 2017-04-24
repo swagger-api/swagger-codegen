@@ -1,13 +1,9 @@
 # for CI with appveyor.yml
 # Ref: http://www.yegor256.com/2015/01/10/windows-appveyor-maven.html
-version: 'swagger-{branch}-{build}'
+version: '{branch}-{build}'
+os: Windows Server 2012
 hosts:
-  api.ordercloud.io: 127.0.0.1
-environment:
-  Environment: QA
-  Languages: csharp;php;python;ruby;swift
-  API_KEY:
-    secure: YLGqOeIZhR3sUjPRboMhJKoU9U8oD/+PVXwgUA2cEjo=
+  petstore.swagger.io: 127.0.0.1
 install:
   - ps: |
       Add-Type -AssemblyName System.IO.Compression.FileSystem
@@ -18,39 +14,34 @@ install:
         )
         [System.IO.Compression.ZipFile]::ExtractToDirectory("C:\maven-bin.zip", "C:\maven")
       }
-      $apiUrl = "https://ci.appveyor.com/api"
-      $headers = @{
-        "Authorization" = "Bearer $env:API_KEY"
-        "Content-type" = "application/json"
-      }
-      $JobID = "a0bt6ix08mj3s1ic"
-      Invoke-RestMethod -Method Get -Uri "$apiUrl/buildjobs/$JobID/artifacts/SwaggerSpec.json" -OutFile "$env:APPVEYOR_BUILD_FOLDER/SwaggerSpec.json" -Headers @{ "Authorization" = "Bearer $env:API_KEY" }
   - cmd: SET PATH=C:\maven\apache-maven-3.2.5\bin;%JAVA_HOME%\bin;%PATH%
   - cmd: SET MAVEN_OPTS=-XX:MaxPermSize=2g -Xmx4g
   - cmd: SET JAVA_OPTS=-XX:MaxPermSize=2g -Xmx4g
-  - git clone https://github.com/ordercloud-api/swagger.git ./swagger-ordercloud
+  - cmd: SET M2_HOME=C:\maven\apache-maven-3.2.5
+  - cmd: dir/w
+#  - cmd: RMDIR "C:\projects\swagger-codegen\swagger-samples" /S /Q
+  - git clone https://github.com/wing328/swagger-samples
+  - ps: Start-Process -FilePath 'C:\maven\apache-maven-3.2.5\bin\mvn' -ArgumentList 'jetty:run' -WorkingDirectory "$env:appveyor_build_folder\swagger-samples\java\java-jersey-jaxrs"
 build_script:
+  # build C# API client
+  - nuget restore samples\client\petstore\csharp\SwaggerClient\IO.Swagger.sln
+  - msbuild samples\client\petstore\csharp\SwaggerClient\IO.Swagger.sln /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+  # build C# API client (with PropertyChanged)
+  - nuget restore samples\client\petstore\csharp\SwaggerClientWithPropertyChanged\IO.Swagger.sln
+  - msbuild samples\client\petstore\csharp\SwaggerClientWithPropertyChanged\IO.Swagger.sln /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+  # build C# .net standard 1.3+ API client
+  - nuget restore samples\client\petstore\csharp\SwaggerClientNetStandard\IO.Swagger.sln
+  - msbuild samples\client\petstore\csharp\SwaggerClientNetStandard\IO.Swagger.sln /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
   # install swagger codegen locally
-  - mvn clean install -DskipTests --quiet
-  - ps: |
-      $output = @()
-      foreach ($language in $env:Languages.split(';')) {
-        $output += (java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate -i SwaggerSpec.json -l $language -o ordercloud-$language-sdk -c ('swagger-ordercloud/config/' + $language + '.json') -t swagger-ordercloud/templates/$language) 2>&1
-        Compress-Archive -Path $env:APPVEYOR_BUILD_FOLDER\ordercloud-$language-sdk\* -DestinationPath $env:APPVEYOR_BUILD_FOLDER\ordercloud-$language-sdk
-      }
-artifacts:
-  - path: SwaggerSpec.json
-    name: SwaggerSpec
-  - path: ordercloud-csharp-sdk.zip
-    name: CSharpSDK
-  - path: ordercloud-php-sdk.zip
-    name: PHPSDK
-  - path: ordercloud-python-sdk.zip
-    name: PythonSDK
-  - path: ordercloud-ruby-sdk.zip
-    name: RubySDK
-  - path: ordercloud-swift-sdk.zip
-    name: SwiftSDK
-cache:
-  - C:\maven\ -> pom.xml
-  - C:\Users\appveyor\.m2
+  - mvn clean install --batch-mode
+test_script:
+  # test c# API client
+  - nunit-console samples\client\petstore\csharp\SwaggerClient\src\IO.Swagger.Test\bin\Debug\IO.Swagger.Test.dll --result=myresults.xml;format=AppVeyor
+  # test c# API client (with PropertyChanged)
+  - nunit-console samples\client\petstore\csharp\SwaggerClientWithPropertyChanged\src\IO.Swagger.Test\bin\Debug\IO.Swagger.Test.dll --result=myresults.xml;format=AppVeyor
+
+  # generate all petstore clients
+  - .\bin\windows\run-all-petstore.cmd
+#cache:
+#  - C:\maven\
+#  - C:\Users\appveyor\.m2

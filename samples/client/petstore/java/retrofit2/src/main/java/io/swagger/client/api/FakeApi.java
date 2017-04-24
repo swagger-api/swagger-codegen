@@ -3,6 +3,7 @@ package io.swagger.client.api;
 import io.swagger.client.CollectionFormats.*;
 
 
+
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -26,9 +27,8 @@ public interface FakeApi {
    * @param body client model (required)
    * @return Call&lt;Client&gt;
    */
-  
   @Headers({
-  	"Content-Type:application/json" 
+    "Content-Type:application/json"
   })
   @PATCH("fake")
   Call<Client> testClientModel(
@@ -54,7 +54,6 @@ public interface FakeApi {
    * @param paramCallback None (optional)
    * @return Call&lt;Void&gt;
    */
-  
   @retrofit2.http.FormUrlEncoded
   @POST("fake")
   Call<Void> testEndpointParameters(
@@ -74,7 +73,6 @@ public interface FakeApi {
    * @param enumQueryDouble Query parameter enum test (double) (optional)
    * @return Call&lt;Void&gt;
    */
-  
   @retrofit2.http.FormUrlEncoded
   @GET("fake")
   Call<Void> testEnumParameters(

@@ -213,6 +213,18 @@
       <version>${retrofit-version}</version>
     </dependency>
     {{/useRxJava}}
+    {{#useRxJava2}}
+    <dependency>
+      <groupId>io.reactivex.rxjava2</groupId>
+      <artifactId>rxjava</artifactId>
+      <version>${rxjava-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.jakewharton.retrofit</groupId>
+      <artifactId>retrofit2-rxjava2-adapter</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+    {{/useRxJava2}}
 
     {{#usePlay24WS}}
     <!-- JSON processing: jackson -->
@@ -243,8 +255,8 @@
     </dependency>
     <dependency>
         <groupId>com.typesafe.play</groupId>
-        <artifactId>play-java-ws_2.10</artifactId>
-        <version>2.4.6</version>
+        <artifactId>play-java-ws_2.11</artifactId>
+        <version>${play-version}</version>
     </dependency>
     {{/usePlay24WS}}
 
@@ -261,14 +273,18 @@
     <java.version>{{#java8}}1.8{{/java8}}{{^java8}}1.7{{/java8}}</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
-    <swagger-core-version>1.5.9</swagger-core-version>
-    <retrofit-version>2.1.0</retrofit-version>
+    <swagger-core-version>1.5.12</swagger-core-version>
     {{#usePlay24WS}}
     <jackson-version>2.7.5</jackson-version>
+    <play-version>2.4.11</play-version>
     {{/usePlay24WS}}
+    <retrofit-version>2.2.0</retrofit-version>
     {{#useRxJava}}
-    <rxjava-version>1.1.6</rxjava-version>
+    <rxjava-version>1.2.9</rxjava-version>
     {{/useRxJava}}
+    {{#useRxJava2}}
+    <rxjava-version>2.0.7</rxjava-version>
+    {{/useRxJava2}}
     {{^java8}}
     <jodatime-version>2.9.4</jodatime-version>
     {{/java8}}
