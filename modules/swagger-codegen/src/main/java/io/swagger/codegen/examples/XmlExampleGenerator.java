@@ -184,7 +184,12 @@ public class XmlExampleGenerator {
             return "046b6c7f-0b8a-43b9-b35d-6489e6daee91";
         // do these last in case the specific types above are derived from these classes
         } else if (property instanceof StringProperty) {
-            return "aeiou";
+            List<String> enumValues = ((StringProperty) property).getEnum();
+            if (enumValues != null && !enumValues.isEmpty()) {
+                return enumValues.get(0);
+            } else {
+                return "aeiou";
+            }
         } else if (property instanceof BaseIntegerProperty) {
             return "123";
         } else if (property instanceof AbstractNumericProperty) {
