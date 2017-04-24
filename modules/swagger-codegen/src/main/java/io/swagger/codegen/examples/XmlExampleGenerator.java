@@ -5,33 +5,14 @@ import io.swagger.models.Model;
 import io.swagger.models.ModelImpl;
 import io.swagger.models.RefModel;
 import io.swagger.models.Xml;
-import io.swagger.models.properties.ArrayProperty;
-import io.swagger.models.properties.BooleanProperty;
-import io.swagger.models.properties.DateProperty;
-import io.swagger.models.properties.DateTimeProperty;
-import io.swagger.models.properties.LongProperty;
-import io.swagger.models.properties.DecimalProperty;
-import io.swagger.models.properties.DoubleProperty;
-import io.swagger.models.properties.BaseIntegerProperty;
-import io.swagger.models.properties.AbstractNumericProperty;
-import io.swagger.models.properties.PasswordProperty;
-import io.swagger.models.properties.UUIDProperty;
-import io.swagger.models.properties.Property;
-import io.swagger.models.properties.RefProperty;
-import io.swagger.models.properties.StringProperty;
-
+import io.swagger.models.properties.*;
 import org.apache.commons.lang3.StringUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class XmlExampleGenerator {
     protected final Logger LOGGER = LoggerFactory.getLogger(XmlExampleGenerator.class);
@@ -170,7 +151,7 @@ public class XmlExampleGenerator {
                 sb.append(closeTag(name));
             }
         }
-        return sb.toString();
+        return compressTagWhenEmpty(name, sb.toString());
     }
 
     /**
@@ -230,5 +211,18 @@ public class XmlExampleGenerator {
             sb.append("  ");
         }
         return sb.toString();
+    }
+
+    private String compressTagWhenEmpty(String name, String xmlNode){
+        String returnValue = xmlNode;
+        if (name!=null){
+            Pattern p = Pattern.compile("<(.*)>\\s*</(.*)>");
+            String node = xmlNode.replace("\n","");
+            Matcher matcher = p.matcher(node);
+            if (matcher.find() && matcher.groupCount()==2 && matcher.group(1).equals(matcher.group(2))){
+                returnValue = String.format("    <%s/>",name);
+            }
+        }
+        return returnValue;
     }
 }

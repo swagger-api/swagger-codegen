@@ -9,10 +9,12 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import org.springframework.context.annotation.Bean;
 
 import java.util.List;
 
@@ -58,14 +60,27 @@ public class SwaggerUiConfiguration extends WebMvcConfigurerAdapter {
     }
   }
 
-  @Override
-  public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-    ObjectMapper objectMapper = Jackson2ObjectMapperBuilder.json()
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.add(new MappingJackson2HttpMessageConverter(objectMapper()));
+        converters.add(new MappingJackson2XmlHttpMessageConverter(xmlMapper()));
+        super.configureMessageConverters(converters);
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return Jackson2ObjectMapperBuilder.json()
         .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
         .dateFormat( new RFC3339DateFormat())
         .build();
-    converters.add(new MappingJackson2HttpMessageConverter(objectMapper));
-    super.configureMessageConverters(converters);
-  }
+    }
+
+    @Bean
+    public ObjectMapper xmlMapper(){
+    return Jackson2ObjectMapperBuilder.xml()
+        .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+        .dateFormat( new RFC3339DateFormat())
+        .build();
+    }
 
 }

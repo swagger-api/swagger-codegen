@@ -7,6 +7,7 @@ package {{package}};
 import io.swagger.annotations.*;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 {{/jdk8-no-delegate}}
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import java.io.IOException;
 
 import java.util.List;
@@ -32,6 +34,11 @@ import javax.validation.Valid;
 @Controller
 {{#operations}}
 public class {{classname}}Controller implements {{classname}} {
+    @Autowired
+    ObjectMapper objectMapper;
+
+    @Autowired
+    ObjectMapper xmlMapper;
 {{#isDelegate}}
     private final {{classname}}Delegate delegate;
 
@@ -49,15 +56,9 @@ public class {{classname}}Controller implements {{classname}} {
         {{^isDelegate}}
         {{^async}}
         {{#examples}}
-        {{#-first}}
-        
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        {{/-first}}
         if (accept != null && accept.contains("{{{contentType}}}")) {
-            return new ResponseEntity<{{>returnTypes}}>(objectMapper.readValue("{{#lambdaRemoveLineBreak}}{{#lambdaEscapeDoubleQuote}}{{{example}}}{{/lambdaEscapeDoubleQuote}}{{/lambdaRemoveLineBreak}}", {{>exampleReturnTypes}}.class), HttpStatus.OK);
+            return new ResponseEntity<{{>returnTypes}}>(getObjectMapperByContentType("{{{contentType}}}").readValue("{{#lambdaRemoveLineBreak}}{{#lambdaEscapeDoubleQuote}}{{{example}}}{{/lambdaEscapeDoubleQuote}}{{/lambdaRemoveLineBreak}}", {{>exampleReturnTypes}}.class), HttpStatus.OK);
         }
-
         {{/examples}}
         return new ResponseEntity<{{>returnTypes}}>(HttpStatus.OK);
         {{/async}}
@@ -77,5 +78,12 @@ public class {{classname}}Controller implements {{classname}} {
 
 {{/operation}}
 {{/jdk8-no-delegate}}
+    private ObjectMapper getObjectMapperByContentType(String mediaType){
+        if(MediaType.APPLICATION_XML_VALUE.equals(mediaType)){
+            return xmlMapper;
+        } else {
+            return objectMapper;
+        }
+    }
 }
 {{/operations}}

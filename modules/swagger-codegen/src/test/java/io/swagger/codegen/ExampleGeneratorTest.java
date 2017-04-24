@@ -51,13 +51,11 @@ public class ExampleGeneratorTest {
                 Assert.assertEquals(example, "<Pair>\n" +
                         "  <Node>\n" +
                         "    <name>aeiou</name>\n" +
-                        "    <wrappedChildren>\n" +
-                        "    </wrappedChildren>\n" +
+                        "    <wrappedChildren/>\n" +
                         "  </Node>\n" +
                         "  <Node>\n" +
                         "    <name>aeiou</name>\n" +
-                        "    <wrappedChildren>\n" +
-                        "    </wrappedChildren>\n" +
+                        "    <wrappedChildren/>\n" +
                         "  </Node>\n" +
                         "</Pair>");
             } else if (JSON.equals(contentType)) {
