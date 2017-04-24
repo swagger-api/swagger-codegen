@@ -127,7 +127,6 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         config.processOpts();
         config.preprocessSwagger(swagger);
         // TODO need to obtain version from a file instead of hardcoding it
-        config.additionalProperties().put("generatorVersion", "2.2.3-SNAPSHOT");
         config.additionalProperties().put("generatedDate", DateTime.now().toString());
         config.additionalProperties().put("generatorVersion", Version.readVersionFromResources());
         config.additionalProperties().put("generatorClass", config.getClass().getName());
