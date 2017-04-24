@@ -610,7 +610,7 @@ pplx::task<std::shared_ptr<User>> UserApi::getUserByName(utility::string_t usern
         else
         {
             throw ApiException(500
-                , U("error calling findPetsByStatus: unsupported response type"));
+                , U("error calling getUserByName: unsupported response type"));
         }
 
         return result;
@@ -745,7 +745,7 @@ pplx::task<utility::string_t> UserApi::loginUser(utility::string_t username, uti
         else
         {
             throw ApiException(500
-                , U("error calling findPetsByStatus: unsupported response type"));
+                , U("error calling loginUser: unsupported response type"));
         }
 
         return result;

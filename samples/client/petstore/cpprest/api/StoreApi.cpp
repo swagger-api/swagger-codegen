@@ -260,7 +260,7 @@ pplx::task<std::map<utility::string_t, int32_t>> StoreApi::getInventory()
         else
         {
             throw ApiException(500
-                , U("error calling findPetsByStatus: unsupported response type"));
+                , U("error calling getInventory: unsupported response type"));
         }
 
         return result;
@@ -378,7 +378,7 @@ pplx::task<std::shared_ptr<Order>> StoreApi::getOrderById(utility::string_t orde
         else
         {
             throw ApiException(500
-                , U("error calling findPetsByStatus: unsupported response type"));
+                , U("error calling getOrderById: unsupported response type"));
         }
 
         return result;
@@ -508,7 +508,7 @@ pplx::task<std::shared_ptr<Order>> StoreApi::placeOrder(std::shared_ptr<Order> b
         else
         {
             throw ApiException(500
-                , U("error calling findPetsByStatus: unsupported response type"));
+                , U("error calling placeOrder: unsupported response type"));
         }
 
         return result;

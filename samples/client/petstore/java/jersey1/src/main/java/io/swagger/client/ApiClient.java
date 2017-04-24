@@ -21,6 +21,7 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.client.filter.GZIPContentEncodingFilter;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.api.client.WebResource.Builder;
 
@@ -55,7 +56,7 @@ import io.swagger.client.auth.OAuth;
 
 public class ApiClient {
   private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
-  private String basePath = "http://petstore.swagger.io/v2";
+  private String basePath = "http://petstore.swagger.io:80/v2";
   private boolean debugging = false;
   private int connectionTimeout = 0;
 
@@ -111,6 +112,7 @@ public class ApiClient {
     DefaultClientConfig conf = new DefaultClientConfig();
     conf.getSingletons().add(jsonProvider);
     Client client = Client.create(conf);
+    client.addFilter(new GZIPContentEncodingFilter(false));
     if (debugging) {
       client.addFilter(new LoggingFilter());
     }
@@ -457,11 +459,13 @@ public class ApiClient {
    *   application/json
    *   application/json; charset=UTF8
    *   APPLICATION/JSON
+   *   application/vnd.company+json
    * @param mime MIME
    * @return True if MIME type is boolean
    */
   public boolean isJsonMime(String mime) {
-    return mime != null && mime.matches("(?i)application\\/json(;.*)?");
+    String jsonMime = "(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$";
+    return mime != null && mime.matches(jsonMime);
   }
 
   /**

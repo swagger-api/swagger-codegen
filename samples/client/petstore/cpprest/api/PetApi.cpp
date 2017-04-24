@@ -512,7 +512,7 @@ pplx::task<std::vector<std::shared_ptr<Pet>>> PetApi::findPetsByTags(std::vector
         else
         {
             throw ApiException(500
-                , U("error calling findPetsByStatus: unsupported response type"));
+                , U("error calling findPetsByTags: unsupported response type"));
         }
 
         return result;
@@ -640,7 +640,7 @@ pplx::task<std::shared_ptr<Pet>> PetApi::getPetById(int64_t petId)
         else
         {
             throw ApiException(500
-                , U("error calling findPetsByStatus: unsupported response type"));
+                , U("error calling getPetById: unsupported response type"));
         }
 
         return result;

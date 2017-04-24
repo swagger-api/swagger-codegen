@@ -811,6 +811,7 @@ public class DefaultCodegen {
         typeMapping.put("ByteArray", "byte[]");
         typeMapping.put("binary", "byte[]");
         typeMapping.put("file", "File");
+        typeMapping.put("UUID", "UUID");
 
 
         instantiationTypes = new HashMap<String, String>();
@@ -1481,7 +1482,10 @@ public class DefaultCodegen {
         property.title = p.getTitle();
         property.getter = "get" + getterAndSetterCapitalize(name);
         property.setter = "set" + getterAndSetterCapitalize(name);
-        property.example = toExampleValue(p);
+        String example = toExampleValue(p);
+        if(!"null".equals(example)) {
+            property.example = example;
+        }
         property.defaultValue = toDefaultValue(p);
         property.defaultValueWithParam = toDefaultValueWithParam(name, p);
         property.jsonSchema = Json.pretty(p);
@@ -1735,12 +1739,16 @@ public class DefaultCodegen {
             CodegenProperty cp = fromProperty(property.name, ap.getItems());
             updatePropertyForArray(property, cp);
           } else if (p instanceof MapProperty) {
+            MapProperty ap = (MapProperty) p;
+
             property.isContainer = true;
             property.isMapContainer = true;
             property.containerType = "map";
             property.baseType = getSwaggerType(p);
+            property.minItems = ap.getMinProperties();
+            property.maxItems = ap.getMaxProperties();
+
             // handle inner property
-            MapProperty ap = (MapProperty) p;
             CodegenProperty cp = fromProperty("inner", ap.getAdditionalProperties());
             updatePropertyForMap(property, cp);
         } else {
@@ -1823,7 +1831,7 @@ public class DefaultCodegen {
             currentProperty = currentProperty.items;
         }
 
-        return currentProperty.isEnum;
+        return currentProperty == null ? false : currentProperty.isEnum;
     }
 
     protected Map<String, Object> getInnerEnumAllowableValues(CodegenProperty property) {
@@ -1833,7 +1841,7 @@ public class DefaultCodegen {
             currentProperty = currentProperty.items;
         }
 
-        return currentProperty.allowableValues;
+        return currentProperty == null ? new HashMap<String, Object>() : currentProperty.allowableValues;
     }
 
 
@@ -1847,16 +1855,18 @@ public class DefaultCodegen {
                     || Boolean.TRUE.equals(baseItem.isListContainer))) {
             baseItem = baseItem.items;
         }
-        // set both datatype and datetypeWithEnum as only the inner type is enum
-        property.datatypeWithEnum = property.datatypeWithEnum.replace(baseItem.baseType, toEnumName(baseItem));
+        if (baseItem != null) {
+            // set both datatype and datetypeWithEnum as only the inner type is enum
+            property.datatypeWithEnum = property.datatypeWithEnum.replace(baseItem.baseType, toEnumName(baseItem));
 
-        // naming the enum with respect to the language enum naming convention
-        // e.g. remove [], {} from array/map of enum
-        property.enumName = toEnumName(property);
+            // naming the enum with respect to the language enum naming convention
+            // e.g. remove [], {} from array/map of enum
+            property.enumName = toEnumName(property);
 
-        // set default value for variable with inner enum
-        if (property.defaultValue != null) {
-            property.defaultValue = property.defaultValue.replace(baseItem.baseType, toEnumName(baseItem));
+            // set default value for variable with inner enum
+            if (property.defaultValue != null) {
+                property.defaultValue = property.defaultValue.replace(baseItem.baseType, toEnumName(baseItem));
+            }
         }
     }
 
@@ -1870,16 +1880,19 @@ public class DefaultCodegen {
                     || Boolean.TRUE.equals(baseItem.isListContainer))) {
             baseItem = baseItem.items;
         }
-        // set both datatype and datetypeWithEnum as only the inner type is enum
-        property.datatypeWithEnum = property.datatypeWithEnum.replace(", " + baseItem.baseType, ", " + toEnumName(baseItem));
 
-        // naming the enum with respect to the language enum naming convention
-        // e.g. remove [], {} from array/map of enum
-        property.enumName = toEnumName(property);
+        if (baseItem != null) {
+            // set both datatype and datetypeWithEnum as only the inner type is enum
+            property.datatypeWithEnum = property.datatypeWithEnum.replace(", " + baseItem.baseType, ", " + toEnumName(baseItem));
 
-        // set default value for variable with inner enum
-        if (property.defaultValue != null) {
-            property.defaultValue = property.defaultValue.replace(", " + property.items.baseType, ", " + toEnumName(property.items));
+            // naming the enum with respect to the language enum naming convention
+            // e.g. remove [], {} from array/map of enum
+            property.enumName = toEnumName(property);
+
+            // set default value for variable with inner enum
+            if (property.defaultValue != null) {
+                property.defaultValue = property.defaultValue.replace(", " + property.items.baseType, ", " + toEnumName(property.items));
+            }
         }
     }
 
@@ -2231,6 +2244,7 @@ public class DefaultCodegen {
         r.jsonSchema = Json.pretty(response);
         r.vendorExtensions = response.getVendorExtensions();
         addHeaders(response, r.headers);
+        r.hasHeaders = !r.headers.isEmpty();
 
         if (r.schema != null) {
             Property responseProperty = response.getSchema();
@@ -2475,6 +2489,9 @@ public class DefaultCodegen {
                         p.isPrimitiveType = cp.isPrimitiveType;
                         p.isBinary = isDataTypeBinary(cp.datatype);
                         p.isFile = isDataTypeFile(cp.datatype);
+                        if (cp.complexType != null) {
+                            imports.add(cp.complexType);
+                        }
                     }
 
                     // set boolean flag (e.g. isString)
@@ -2819,6 +2836,7 @@ public class DefaultCodegen {
         }
         co.operationId = uniqueName;
         co.operationIdLowerCase = uniqueName.toLowerCase();
+        co.operationIdCamelCase = DefaultCodegen.camelize(uniqueName);
         opList.add(co);
         co.baseName = tag;
     }

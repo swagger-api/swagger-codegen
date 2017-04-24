@@ -75,12 +75,12 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         StringBuilder hostBuilder = new StringBuilder();
         hostBuilder.append(getScheme());
         hostBuilder.append("://");
-        if (swagger.getHost() != null) {
+        if (!StringUtils.isEmpty(swagger.getHost())) {
             hostBuilder.append(swagger.getHost());
         } else {
             hostBuilder.append("localhost");
         }
-        if (swagger.getBasePath() != null) {
+        if (!StringUtils.isEmpty(swagger.getBasePath()) && !swagger.getBasePath().equals("/")) {
             hostBuilder.append(swagger.getBasePath());
         }
         return hostBuilder.toString();
@@ -126,6 +126,8 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
         config.processOpts();
         config.preprocessSwagger(swagger);
+        // TODO need to obtain version from a file instead of hardcoding it
+        config.additionalProperties().put("generatorVersion", "2.2.3-SNAPSHOT");
         config.additionalProperties().put("generatedDate", DateTime.now().toString());
         config.additionalProperties().put("generatorClass", config.getClass().getName());
         config.additionalProperties().put("inputSpec", config.getInputSpec());
