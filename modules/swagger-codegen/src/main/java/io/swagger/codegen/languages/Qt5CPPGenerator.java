@@ -126,6 +126,7 @@ public class Qt5CPPGenerator extends DefaultCodegen implements CodegenConfig {
         // mapped to String as a workaround
         typeMapping.put("binary", "QString");
         typeMapping.put("ByteArray", "QByteArray");
+        typeMapping.put("UUID", "QUuid");
 
         importMapping = new HashMap<String, String>();
 
@@ -141,6 +142,7 @@ public class Qt5CPPGenerator extends DefaultCodegen implements CodegenConfig {
         systemIncludes.add("QDate");
         systemIncludes.add("QDateTime");
         systemIncludes.add("QByteArray");
+        systemIncludes.add("QUuid");
     }
 
     /**
