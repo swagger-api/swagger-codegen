@@ -753,11 +753,17 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 }
             } else {
                 for (String tagName : tagNames) {
+                    boolean foundTag = false;
                     for (Tag tag : swaggerTags) {
                         if (tag.getName().equals(tagName)) {
                             tags.add(tag);
+                            foundTag = true;
                             break;
                         }
+                    }
+
+                    if (!foundTag) {
+                        tags.add(new Tag().name(tagName));
                     }
                 }
             }
