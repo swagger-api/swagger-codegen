@@ -274,7 +274,7 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
                 break;
         }
 
-        // add lamda for mustache templates
+        // add lambda for mustache templates
         additionalProperties.put("lambdaEscapeDoubleQuote", new Mustache.Lambda() {
             @Override
             public void execute(Template.Fragment fragment, Writer writer) throws IOException {
