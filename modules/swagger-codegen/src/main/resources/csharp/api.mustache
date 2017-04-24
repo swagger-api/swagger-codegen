@@ -80,6 +80,8 @@ namespace {{packageName}}.{{apiPackage}}
     /// </summary>
     {{>visibility}} partial class {{classname}} : {{interfacePrefix}}{{classname}}
     {
+
+        private static Logger log = new Logger(nameof({{classname}}));
         private {{packageName}}.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
         /// <summary>
@@ -88,6 +90,7 @@ namespace {{packageName}}.{{apiPackage}}
         /// <returns></returns>
         public {{classname}}(String basePath)
         {
+            log.Trace("ctor");
             this.Configuration = new Configuration(new ApiClient(basePath));
 
             ExceptionFactory = {{packageName}}.Client.Configuration.DefaultExceptionFactory;
@@ -107,8 +110,13 @@ namespace {{packageName}}.{{apiPackage}}
         /// <returns></returns>
         public {{classname}}(Configuration configuration = null)
         {
-            if (configuration == null) // use the default one in Configuration
+            log.Trace("ctor");
+            if (configuration == null)
+            {
+                // use the default one in Configuration
+                log.Debug("Use default configuration");
                 this.Configuration = Configuration.Default;
+            }
             else
                 this.Configuration = configuration;
 
@@ -119,6 +127,7 @@ namespace {{packageName}}.{{apiPackage}}
             {
                 this.Configuration.ApiClient.Configuration = this.Configuration;
             }
+            log.Trace("end");
         }
 
         /// <summary>
@@ -181,6 +190,7 @@ namespace {{packageName}}.{{apiPackage}}
         [Obsolete("AddDefaultHeader is deprecated, please use Configuration.AddDefaultHeader instead.")]
         public void AddDefaultHeader(string key, string value)
         {
+            log.Debug("Adding default header: " + key + ":" + value);
             this.Configuration.AddDefaultHeader(key, value);
         }
 
@@ -205,11 +215,12 @@ namespace {{packageName}}.{{apiPackage}}
         {{/allParams}}/// <returns>ApiResponse of {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}Object(void){{/returnType}}</returns>
         public ApiResponse<{{#returnType}} {{{returnType}}} {{/returnType}}{{^returnType}}Object{{/returnType}}> {{operationId}}WithHttpInfo ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = null{{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
         {
+            log.Trace("start");
             {{#allParams}}
             {{#required}}
             // verify the required parameter '{{paramName}}' is set
             if ({{paramName}} == null)
-                throw new ApiException(400, "Missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}");
+            throw new ApiException(400, "Missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}");
             {{/required}}
             {{/allParams}}
 
@@ -302,8 +313,12 @@ namespace {{packageName}}.{{apiPackage}}
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("{{operationId}}", localVarResponse);
-                if (exception != null) throw exception;
+                Exception exception = ExceptionFactory(nameof({{operationId}}), localVarResponse);
+                if (exception != null){
+
+                    log.Error(exception, "API Exception");
+                    throw exception;
+                }
             }
 
             {{#returnType}}return new ApiResponse<{{{returnType}}}>(localVarStatusCode,
@@ -340,7 +355,7 @@ namespace {{packageName}}.{{apiPackage}}
             {{#required}}
             // verify the required parameter '{{paramName}}' is set
             if ({{paramName}} == null)
-                throw new ApiException(400, "Missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}");
+            throw new ApiException(400, "Missing required parameter '{{paramName}}' when calling {{classname}}->{{operationId}}");
             {{/required}}
             {{/allParams}}
 
@@ -434,7 +449,7 @@ namespace {{packageName}}.{{apiPackage}}
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("{{operationId}}", localVarResponse);
+                Exception exception = ExceptionFactory(nameof({{operationId}}), localVarResponse);
                 if (exception != null) throw exception;
             }
 

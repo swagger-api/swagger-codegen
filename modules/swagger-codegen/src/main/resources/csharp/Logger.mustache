@@ -1,0 +1,55 @@
+{{>partial_header}}
+using System;
+
+namespace {{packageName}}.Client {
+    public partial class Logger {
+        public Logger(string loggerName) {
+            Initialize(loggerName);
+        }
+
+        partial void Initialize(string loggerName);
+
+        public void Trace(string message) {
+            TracePartial(message);
+        }
+
+        partial void TracePartial(string message);
+
+        public void Debug(string message) {
+            DebugPartial(message);
+        }
+
+        partial void DebugPartial(string message);
+
+        public void Fatal(string message) {
+            FatalPartial(message);
+        }
+
+        partial void FatalPartial(string message);
+
+        public void Warn(string message) {
+            WarnPartial(message);
+        }
+
+        partial void WarnPartial(string message);
+
+        public void Error(Exception ex, string message) {
+            ErrorPartial(ex, message);
+        }
+
+        partial void ErrorPartial(Exception ex, string message);
+
+        public void Error(string message) {
+            ErrorPartial(message);
+        }
+
+        partial void ErrorPartial(string message);
+
+        public void Info(string message) {
+            InfoPartial(message);
+        }
+
+        partial void InfoPartial(string message);
+    }
+
+}
