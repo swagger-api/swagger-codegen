@@ -38,7 +38,13 @@ class ArrayOfArrayOfNumberOnly(object):
             'array_array_number': 'ArrayArrayNumber'
         }
 
-        self._array_array_number = array_array_number
+        self._array_array_number = None
+
+        # TODO: let required properties as mandatory parameter in the constructor.
+        #       - to check if required property is not None (e.g. by calling setter)
+        #       - ApiClient.__deserialize_model has to be adapted as well
+        if array_array_number is not None:
+          self.array_array_number = array_array_number
 
     @property
     def array_array_number(self):
@@ -103,6 +109,9 @@ class ArrayOfArrayOfNumberOnly(object):
         """
         Returns true if both objects are equal
         """
+        if not isinstance(other, ArrayOfArrayOfNumberOnly):
+            return False
+
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other):

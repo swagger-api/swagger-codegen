@@ -38,7 +38,13 @@ class Client(object):
             'client': 'client'
         }
 
-        self._client = client
+        self._client = None
+
+        # TODO: let required properties as mandatory parameter in the constructor.
+        #       - to check if required property is not None (e.g. by calling setter)
+        #       - ApiClient.__deserialize_model has to be adapted as well
+        if client is not None:
+          self.client = client
 
     @property
     def client(self):
@@ -103,6 +109,9 @@ class Client(object):
         """
         Returns true if both objects are equal
         """
+        if not isinstance(other, Client):
+            return False
+
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other):

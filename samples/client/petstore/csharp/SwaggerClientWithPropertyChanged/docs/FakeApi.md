@@ -1,6 +1,6 @@
 # IO.Swagger.Api.FakeApi
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -12,6 +12,8 @@ Method | HTTP request | Description
 <a name="testclientmodel"></a>
 # **TestClientModel**
 > ModelClient TestClientModel (ModelClient body)
+
+To test \"client\" model
 
 To test \"client\" model
 
@@ -166,6 +168,8 @@ void (empty response body)
 
 To test enum parameters
 
+To test enum parameters
+
 ### Example
 ```csharp
 using System;
@@ -209,11 +213,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **enumFormStringArray** | [**List<string>**](string.md)| Form parameter enum test (string array) | [optional] 
+ **enumFormStringArray** | [**List&lt;string&gt;**](string.md)| Form parameter enum test (string array) | [optional] 
  **enumFormString** | **string**| Form parameter enum test (string) | [optional] [default to -efg]
- **enumHeaderStringArray** | [**List<string>**](string.md)| Header parameter enum test (string array) | [optional] 
+ **enumHeaderStringArray** | [**List&lt;string&gt;**](string.md)| Header parameter enum test (string array) | [optional] 
  **enumHeaderString** | **string**| Header parameter enum test (string) | [optional] [default to -efg]
- **enumQueryStringArray** | [**List<string>**](string.md)| Query parameter enum test (string array) | [optional] 
+ **enumQueryStringArray** | [**List&lt;string&gt;**](string.md)| Query parameter enum test (string array) | [optional] 
  **enumQueryString** | **string**| Query parameter enum test (string) | [optional] [default to -efg]
  **enumQueryInteger** | **int?**| Query parameter enum test (double) | [optional] 
  **enumQueryDouble** | **double?**| Query parameter enum test (double) | [optional] 

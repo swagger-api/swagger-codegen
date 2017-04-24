@@ -20,6 +20,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.UUID;
+import javax.validation.constraints.*;
 
 /**
  * FormatTest
@@ -60,7 +62,7 @@ public class FormatTest   {
   private Date dateTime = null;
 
   @JsonProperty("uuid")
-  private String uuid = null;
+  private UUID uuid = null;
 
   @JsonProperty("password")
   private String password = null;
@@ -78,7 +80,7 @@ public class FormatTest   {
   **/
   @JsonProperty("integer")
   @ApiModelProperty(value = "")
-  public Integer getInteger() {
+ @Min(10) @Max(100)  public Integer getInteger() {
     return integer;
   }
 
@@ -99,7 +101,7 @@ public class FormatTest   {
   **/
   @JsonProperty("int32")
   @ApiModelProperty(value = "")
-  public Integer getInt32() {
+ @Min(20) @Max(200)  public Integer getInt32() {
     return int32;
   }
 
@@ -139,7 +141,8 @@ public class FormatTest   {
   **/
   @JsonProperty("number")
   @ApiModelProperty(required = true, value = "")
-  public BigDecimal getNumber() {
+  @NotNull
+ @DecimalMin("32.1") @DecimalMax("543.2")  public BigDecimal getNumber() {
     return number;
   }
 
@@ -160,7 +163,7 @@ public class FormatTest   {
   **/
   @JsonProperty("float")
   @ApiModelProperty(value = "")
-  public Float getFloat() {
+ @DecimalMin("54.3") @DecimalMax("987.6")  public Float getFloat() {
     return _float;
   }
 
@@ -181,7 +184,7 @@ public class FormatTest   {
   **/
   @JsonProperty("double")
   @ApiModelProperty(value = "")
-  public Double getDouble() {
+ @DecimalMin("67.8") @DecimalMax("123.4")  public Double getDouble() {
     return _double;
   }
 
@@ -200,7 +203,7 @@ public class FormatTest   {
   **/
   @JsonProperty("string")
   @ApiModelProperty(value = "")
-  public String getString() {
+ @Pattern(regexp="/[a-z]/i")  public String getString() {
     return string;
   }
 
@@ -219,6 +222,7 @@ public class FormatTest   {
   **/
   @JsonProperty("byte")
   @ApiModelProperty(required = true, value = "")
+  @NotNull
   public byte[] getByte() {
     return _byte;
   }
@@ -257,6 +261,7 @@ public class FormatTest   {
   **/
   @JsonProperty("date")
   @ApiModelProperty(required = true, value = "")
+  @NotNull
   public Date getDate() {
     return date;
   }
@@ -284,7 +289,7 @@ public class FormatTest   {
     this.dateTime = dateTime;
   }
 
-  public FormatTest uuid(String uuid) {
+  public FormatTest uuid(UUID uuid) {
     this.uuid = uuid;
     return this;
   }
@@ -295,11 +300,11 @@ public class FormatTest   {
   **/
   @JsonProperty("uuid")
   @ApiModelProperty(value = "")
-  public String getUuid() {
+  public UUID getUuid() {
     return uuid;
   }
 
-  public void setUuid(String uuid) {
+  public void setUuid(UUID uuid) {
     this.uuid = uuid;
   }
 
@@ -314,7 +319,8 @@ public class FormatTest   {
   **/
   @JsonProperty("password")
   @ApiModelProperty(required = true, value = "")
-  public String getPassword() {
+  @NotNull
+ @Size(min=10,max=64)  public String getPassword() {
     return password;
   }
 

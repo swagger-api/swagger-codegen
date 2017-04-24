@@ -40,8 +40,16 @@ class ReadOnlyFirst(object):
             'baz': 'baz'
         }
 
-        self._bar = bar
-        self._baz = baz
+        self._bar = None
+        self._baz = None
+
+        # TODO: let required properties as mandatory parameter in the constructor.
+        #       - to check if required property is not None (e.g. by calling setter)
+        #       - ApiClient.__deserialize_model has to be adapted as well
+        if bar is not None:
+          self.bar = bar
+        if baz is not None:
+          self.baz = baz
 
     @property
     def bar(self):
@@ -127,6 +135,9 @@ class ReadOnlyFirst(object):
         """
         Returns true if both objects are equal
         """
+        if not isinstance(other, ReadOnlyFirst):
+            return False
+
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other):

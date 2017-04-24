@@ -42,9 +42,19 @@ class ApiResponse(object):
             'message': 'message'
         }
 
-        self._code = code
-        self._type = type
-        self._message = message
+        self._code = None
+        self._type = None
+        self._message = None
+
+        # TODO: let required properties as mandatory parameter in the constructor.
+        #       - to check if required property is not None (e.g. by calling setter)
+        #       - ApiClient.__deserialize_model has to be adapted as well
+        if code is not None:
+          self.code = code
+        if type is not None:
+          self.type = type
+        if message is not None:
+          self.message = message
 
     @property
     def code(self):
@@ -151,6 +161,9 @@ class ApiResponse(object):
         """
         Returns true if both objects are equal
         """
+        if not isinstance(other, ApiResponse):
+            return False
+
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other):

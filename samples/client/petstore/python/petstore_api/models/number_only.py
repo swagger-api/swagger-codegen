@@ -38,7 +38,13 @@ class NumberOnly(object):
             'just_number': 'JustNumber'
         }
 
-        self._just_number = just_number
+        self._just_number = None
+
+        # TODO: let required properties as mandatory parameter in the constructor.
+        #       - to check if required property is not None (e.g. by calling setter)
+        #       - ApiClient.__deserialize_model has to be adapted as well
+        if just_number is not None:
+          self.just_number = just_number
 
     @property
     def just_number(self):
@@ -103,6 +109,9 @@ class NumberOnly(object):
         """
         Returns true if both objects are equal
         """
+        if not isinstance(other, NumberOnly):
+            return False
+
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other):

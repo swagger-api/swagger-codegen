@@ -38,7 +38,13 @@ class List(object):
             '_123_list': '123-list'
         }
 
-        self.__123_list = _123_list
+        self.__123_list = None
+
+        # TODO: let required properties as mandatory parameter in the constructor.
+        #       - to check if required property is not None (e.g. by calling setter)
+        #       - ApiClient.__deserialize_model has to be adapted as well
+        if _123_list is not None:
+          self._123_list = _123_list
 
     @property
     def _123_list(self):
@@ -103,6 +109,9 @@ class List(object):
         """
         Returns true if both objects are equal
         """
+        if not isinstance(other, List):
+            return False
+
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other):

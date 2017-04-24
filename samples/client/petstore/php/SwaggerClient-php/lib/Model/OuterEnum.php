@@ -29,23 +29,34 @@
 
 namespace Swagger\Client\Model;
 
-use \ArrayAccess;
-
 /**
  * OuterEnum Class Doc Comment
  *
- * @category    Class */
-/**
+ * @category    Class
  * @package     Swagger\Client
  * @author      Swagger Codegen team
  * @link        https://github.com/swagger-api/swagger-codegen
  */
 class OuterEnum {
+    /**
+     * Possible values of this enum
+     */
     const PLACED = 'placed';
     const APPROVED = 'approved';
     const DELIVERED = 'delivered';
     
-
-    
+    /**
+     * Gets allowable values of the enum
+     * @return string[]
+     */
+    public static function getAllowableEnumValues()
+    {
+        return [
+            self::PLACED,
+            self::APPROVED,
+            self::DELIVERED,
+        ];
+    }
 }
+
 

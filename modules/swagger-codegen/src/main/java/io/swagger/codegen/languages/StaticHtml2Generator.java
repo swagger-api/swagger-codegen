@@ -1,15 +1,24 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.*;
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenParameter;
+import io.swagger.codegen.CodegenResponse;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.SupportingFile;
+import io.swagger.models.Info;
 import io.swagger.models.Model;
 import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
-import io.swagger.models.Info;
 
 import org.apache.commons.lang3.StringUtils;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -24,6 +33,8 @@ public class StaticHtml2Generator extends DefaultCodegen implements CodegenConfi
     protected String artifactVersion = "1.0.0";
     protected String jsProjectName;
     protected String jsModuleName;
+    protected String perlModuleName = "WWW::SwaggerClient";
+    protected String pythonPackageName = "swagger_client";
 
     public StaticHtml2Generator() {
         super();
@@ -40,6 +51,8 @@ public class StaticHtml2Generator extends DefaultCodegen implements CodegenConfi
         cliOptions.add(new CliOption("licenseUrl", "a URL pointing to the full license"));
         cliOptions.add(new CliOption(CodegenConstants.INVOKER_PACKAGE, CodegenConstants.INVOKER_PACKAGE_DESC));
         cliOptions.add(new CliOption(CodegenConstants.PHP_INVOKER_PACKAGE, CodegenConstants.PHP_INVOKER_PACKAGE_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.PERL_MODULE_NAME, CodegenConstants.PERL_MODULE_NAME_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.PYTHON_PACKAGE_NAME, CodegenConstants.PYTHON_PACKAGE_NAME_DESC));
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "C# package name"));
         cliOptions.add(new CliOption(CodegenConstants.GROUP_ID, CodegenConstants.GROUP_ID_DESC));
         cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_ID, CodegenConstants.ARTIFACT_ID_DESC));
@@ -53,6 +66,8 @@ public class StaticHtml2Generator extends DefaultCodegen implements CodegenConfi
         additionalProperties.put("licenseUrl", "http://apache.org/licenses/LICENSE-2.0.html");
         additionalProperties.put(CodegenConstants.INVOKER_PACKAGE, invokerPackage);
         additionalProperties.put(CodegenConstants.PHP_INVOKER_PACKAGE, phpInvokerPackage);
+        additionalProperties.put(CodegenConstants.PERL_MODULE_NAME, perlModuleName);
+        additionalProperties.put(CodegenConstants.PYTHON_PACKAGE_NAME, pythonPackageName);
         additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
         additionalProperties.put(CodegenConstants.GROUP_ID, groupId);
         additionalProperties.put(CodegenConstants.ARTIFACT_ID, artifactId);
@@ -107,6 +122,11 @@ public class StaticHtml2Generator extends DefaultCodegen implements CodegenConfi
         List<CodegenOperation> operationList = (List<CodegenOperation>) operations.get("operation");
         for (CodegenOperation op : operationList) {
             op.httpMethod = op.httpMethod.toLowerCase();
+            for (CodegenResponse response : op.responses){
+                if ("0".equals(response.code)){
+                    response.code = "default";
+                }
+            }
         }
         return objs;
     }
@@ -152,7 +172,7 @@ public class StaticHtml2Generator extends DefaultCodegen implements CodegenConfi
         CodegenParameter lastRequired = null;
         CodegenParameter lastOptional = null;
         for (CodegenParameter p : op.allParams) {
-            if (p.required != null && p.required) {
+            if (p.required) {
                 lastRequired = p;
             } else {
                 lastOptional = p;

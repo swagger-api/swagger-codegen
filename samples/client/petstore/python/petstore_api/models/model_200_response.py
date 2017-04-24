@@ -40,8 +40,16 @@ class Model200Response(object):
             '_class': 'class'
         }
 
-        self._name = name
-        self.__class = _class
+        self._name = None
+        self.__class = None
+
+        # TODO: let required properties as mandatory parameter in the constructor.
+        #       - to check if required property is not None (e.g. by calling setter)
+        #       - ApiClient.__deserialize_model has to be adapted as well
+        if name is not None:
+          self.name = name
+        if _class is not None:
+          self._class = _class
 
     @property
     def name(self):
@@ -127,6 +135,9 @@ class Model200Response(object):
         """
         Returns true if both objects are equal
         """
+        if not isinstance(other, Model200Response):
+            return False
+
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other):

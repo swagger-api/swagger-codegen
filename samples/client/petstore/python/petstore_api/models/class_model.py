@@ -38,7 +38,13 @@ class ClassModel(object):
             '_class': '_class'
         }
 
-        self.__class = _class
+        self.__class = None
+
+        # TODO: let required properties as mandatory parameter in the constructor.
+        #       - to check if required property is not None (e.g. by calling setter)
+        #       - ApiClient.__deserialize_model has to be adapted as well
+        if _class is not None:
+          self._class = _class
 
     @property
     def _class(self):
@@ -103,6 +109,9 @@ class ClassModel(object):
         """
         Returns true if both objects are equal
         """
+        if not isinstance(other, ClassModel):
+            return False
+
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other):

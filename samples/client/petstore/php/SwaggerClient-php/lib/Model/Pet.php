@@ -34,8 +34,7 @@ use \ArrayAccess;
 /**
  * Pet Class Doc Comment
  *
- * @category    Class */
-/**
+ * @category    Class
  * @package     Swagger\Client
  * @author      Swagger Codegen team
  * @link        https://github.com/swagger-api/swagger-codegen
@@ -172,15 +171,19 @@ class Pet implements ArrayAccess
     public function listInvalidProperties()
     {
         $invalid_properties = [];
+
         if ($this->container['name'] === null) {
             $invalid_properties[] = "'name' can't be null";
         }
         if ($this->container['photo_urls'] === null) {
             $invalid_properties[] = "'photo_urls' can't be null";
         }
-        $allowed_values = ["available", "pending", "sold"];
+        $allowed_values = $this->getStatusAllowableValues();
         if (!in_array($this->container['status'], $allowed_values)) {
-            $invalid_properties[] = "invalid value for 'status', must be one of #{allowed_values}.";
+            $invalid_properties[] = sprintf(
+                "invalid value for 'status', must be one of '%s'",
+                implode("', '", $allowed_values)
+            );
         }
 
         return $invalid_properties;
@@ -190,17 +193,18 @@ class Pet implements ArrayAccess
      * validate all the properties in the model
      * return true if all passed
      *
-     * @return bool True if all properteis are valid
+     * @return bool True if all properties are valid
      */
     public function valid()
     {
+
         if ($this->container['name'] === null) {
             return false;
         }
         if ($this->container['photo_urls'] === null) {
             return false;
         }
-        $allowed_values = ["available", "pending", "sold"];
+        $allowed_values = $this->getStatusAllowableValues();
         if (!in_array($this->container['status'], $allowed_values)) {
             return false;
         }
@@ -329,9 +333,14 @@ class Pet implements ArrayAccess
      */
     public function setStatus($status)
     {
-        $allowed_values = array('available', 'pending', 'sold');
-        if (!is_null($status) && (!in_array($status, $allowed_values))) {
-            throw new \InvalidArgumentException("Invalid value for 'status', must be one of 'available', 'pending', 'sold'");
+        $allowed_values = $this->getStatusAllowableValues();
+        if (!is_null($status) && !in_array($status, $allowed_values)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'status', must be one of '%s'",
+                    implode("', '", $allowed_values)
+                )
+            );
         }
         $this->container['status'] = $status;
 

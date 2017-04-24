@@ -184,9 +184,8 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
 
         // Setup unwrapRequired option, which makes all the properties with "required" non-optional
         if (additionalProperties.containsKey(UNWRAP_REQUIRED)) {
-            setUnwrapRequired(Boolean.parseBoolean(String.valueOf(additionalProperties.get(UNWRAP_REQUIRED))));
+            setUnwrapRequired(convertPropertyToBooleanAndWriteBack(UNWRAP_REQUIRED));
         }
-        additionalProperties.put(UNWRAP_REQUIRED, unwrapRequired);
 
         // Setup unwrapRequired option, which makes all the properties with "required" non-optional
         if (additionalProperties.containsKey(RESPONSE_AS)) {
@@ -207,9 +206,8 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
 
         // Setup swiftUseApiNamespace option, which makes all the API classes inner-class of {{projectName}}API
         if (additionalProperties.containsKey(SWIFT_USE_API_NAMESPACE)) {
-            swiftUseApiNamespace = Boolean.parseBoolean(String.valueOf(additionalProperties.get(SWIFT_USE_API_NAMESPACE)));
+            setSwiftUseApiNamespace(convertPropertyToBooleanAndWriteBack(SWIFT_USE_API_NAMESPACE));
         }
-        additionalProperties.put(SWIFT_USE_API_NAMESPACE, swiftUseApiNamespace);
 
         if (!additionalProperties.containsKey(POD_AUTHORS)) {
             additionalProperties.put(POD_AUTHORS, DEFAULT_POD_AUTHORS);
@@ -279,8 +277,13 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
+    public boolean isDataTypeFile(String dataType) {
+        return dataType != null && dataType.equals("NSURL");
+    }
+
+    @Override
     public boolean isDataTypeBinary(final String dataType) {
-      return dataType != null && dataType.equals("NSData");
+        return dataType != null && dataType.equals("NSData");
     }
 
     /**
@@ -488,14 +491,7 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, Map<String, Model> definitions, Swagger swagger) {
         path = normalizePath(path); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
-        List<Parameter> parameters = operation.getParameters();
-        parameters = Lists.newArrayList(Iterators.filter(parameters.iterator(), new Predicate<Parameter>() {
-            @Override
-            public boolean apply(@Nullable Parameter parameter) {
-                return !(parameter instanceof HeaderParameter);
-            }
-        }));
-        operation.setParameters(parameters);
+        // issue 3914 - removed logic designed to remove any parameter of type HeaderParameter
         return super.fromOperation(path, httpMethod, operation, definitions, swagger);
     }
 
@@ -536,6 +532,10 @@ public class SwiftCodegen extends DefaultCodegen implements CodegenConfig {
 
     public void setResponseAs(String[] responseAs) {
         this.responseAs = responseAs;
+    }
+
+    public void setSwiftUseApiNamespace(boolean swiftUseApiNamespace) {
+        this.swiftUseApiNamespace = swiftUseApiNamespace;
     }
 
     @Override

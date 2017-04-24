@@ -38,7 +38,13 @@ class SpecialModelName(object):
             'special_property_name': '$special[property.name]'
         }
 
-        self._special_property_name = special_property_name
+        self._special_property_name = None
+
+        # TODO: let required properties as mandatory parameter in the constructor.
+        #       - to check if required property is not None (e.g. by calling setter)
+        #       - ApiClient.__deserialize_model has to be adapted as well
+        if special_property_name is not None:
+          self.special_property_name = special_property_name
 
     @property
     def special_property_name(self):
@@ -103,6 +109,9 @@ class SpecialModelName(object):
         """
         Returns true if both objects are equal
         """
+        if not isinstance(other, SpecialModelName):
+            return False
+
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other):

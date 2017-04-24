@@ -1,6 +1,6 @@
 # IO.Swagger.Api.FakeApi
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -12,6 +12,8 @@ Method | HTTP request | Description
 <a name="testclientmodel"></a>
 # **TestClientModel**
 > ModelClient TestClientModel (ModelClient body)
+
+To test \"client\" model
 
 To test \"client\" model
 
@@ -163,6 +165,8 @@ void (empty response body)
 <a name="testenumparameters"></a>
 # **TestEnumParameters**
 > void TestEnumParameters (List<string> enumFormStringArray = null, string enumFormString = null, List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null, double? enumQueryDouble = null)
+
+To test enum parameters
 
 To test enum parameters
 

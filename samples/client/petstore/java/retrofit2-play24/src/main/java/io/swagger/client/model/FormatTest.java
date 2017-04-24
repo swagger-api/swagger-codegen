@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
+import java.util.UUID;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import javax.validation.constraints.*;
@@ -62,7 +63,7 @@ public class FormatTest {
   private DateTime dateTime = null;
 
   @JsonProperty("uuid")
-  private String uuid = null;
+  private UUID uuid = null;
 
   @JsonProperty("password")
   private String password = null;
@@ -78,9 +79,7 @@ public class FormatTest {
    * maximum: 100
    * @return integer
   **/
-  @Min(10)
-  @Max(100)
-  @ApiModelProperty(example = "null", value = "")
+ @Min(10) @Max(100)  @ApiModelProperty(value = "")
   public Integer getInteger() {
     return integer;
   }
@@ -100,9 +99,7 @@ public class FormatTest {
    * maximum: 200
    * @return int32
   **/
-  @Min(20)
-  @Max(200)
-  @ApiModelProperty(example = "null", value = "")
+ @Min(20) @Max(200)  @ApiModelProperty(value = "")
   public Integer getInt32() {
     return int32;
   }
@@ -120,7 +117,7 @@ public class FormatTest {
    * Get int64
    * @return int64
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Long getInt64() {
     return int64;
   }
@@ -141,7 +138,7 @@ public class FormatTest {
    * @return number
   **/
   @NotNull
-  @ApiModelProperty(example = "null", required = true, value = "")
+ @DecimalMin("32.1") @DecimalMax("543.2")  @ApiModelProperty(required = true, value = "")
   public BigDecimal getNumber() {
     return number;
   }
@@ -161,7 +158,7 @@ public class FormatTest {
    * maximum: 987.6
    * @return _float
   **/
-  @ApiModelProperty(example = "null", value = "")
+ @DecimalMin("54.3") @DecimalMax("987.6")  @ApiModelProperty(value = "")
   public Float getFloat() {
     return _float;
   }
@@ -181,7 +178,7 @@ public class FormatTest {
    * maximum: 123.4
    * @return _double
   **/
-  @ApiModelProperty(example = "null", value = "")
+ @DecimalMin("67.8") @DecimalMax("123.4")  @ApiModelProperty(value = "")
   public Double getDouble() {
     return _double;
   }
@@ -199,8 +196,7 @@ public class FormatTest {
    * Get string
    * @return string
   **/
-  @Pattern(regexp="/[a-z]/i")
-  @ApiModelProperty(example = "null", value = "")
+ @Pattern(regexp="/[a-z]/i")  @ApiModelProperty(value = "")
   public String getString() {
     return string;
   }
@@ -219,7 +215,7 @@ public class FormatTest {
    * @return _byte
   **/
   @NotNull
-  @ApiModelProperty(example = "null", required = true, value = "")
+  @ApiModelProperty(required = true, value = "")
   public byte[] getByte() {
     return _byte;
   }
@@ -237,7 +233,7 @@ public class FormatTest {
    * Get binary
    * @return binary
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public byte[] getBinary() {
     return binary;
   }
@@ -256,7 +252,7 @@ public class FormatTest {
    * @return date
   **/
   @NotNull
-  @ApiModelProperty(example = "null", required = true, value = "")
+  @ApiModelProperty(required = true, value = "")
   public LocalDate getDate() {
     return date;
   }
@@ -274,7 +270,7 @@ public class FormatTest {
    * Get dateTime
    * @return dateTime
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public DateTime getDateTime() {
     return dateTime;
   }
@@ -283,7 +279,7 @@ public class FormatTest {
     this.dateTime = dateTime;
   }
 
-  public FormatTest uuid(String uuid) {
+  public FormatTest uuid(UUID uuid) {
     this.uuid = uuid;
     return this;
   }
@@ -292,12 +288,12 @@ public class FormatTest {
    * Get uuid
    * @return uuid
   **/
-  @ApiModelProperty(example = "null", value = "")
-  public String getUuid() {
+  @ApiModelProperty(value = "")
+  public UUID getUuid() {
     return uuid;
   }
 
-  public void setUuid(String uuid) {
+  public void setUuid(UUID uuid) {
     this.uuid = uuid;
   }
 
@@ -311,8 +307,7 @@ public class FormatTest {
    * @return password
   **/
   @NotNull
-  @Size(min=10,max=64)
-  @ApiModelProperty(example = "null", required = true, value = "")
+ @Size(min=10,max=64)  @ApiModelProperty(required = true, value = "")
   public String getPassword() {
     return password;
   }

@@ -34,8 +34,7 @@ use \ArrayAccess;
 /**
  * EnumTest Class Doc Comment
  *
- * @category    Class */
-/**
+ * @category    Class
  * @package     Swagger\Client
  * @author      Swagger Codegen team
  * @link        https://github.com/swagger-api/swagger-codegen
@@ -190,19 +189,29 @@ class EnumTest implements ArrayAccess
     public function listInvalidProperties()
     {
         $invalid_properties = [];
-        $allowed_values = ["UPPER", "lower", ""];
+
+        $allowed_values = $this->getEnumStringAllowableValues();
         if (!in_array($this->container['enum_string'], $allowed_values)) {
-            $invalid_properties[] = "invalid value for 'enum_string', must be one of #{allowed_values}.";
+            $invalid_properties[] = sprintf(
+                "invalid value for 'enum_string', must be one of '%s'",
+                implode("', '", $allowed_values)
+            );
         }
 
-        $allowed_values = ["1", "-1"];
+        $allowed_values = $this->getEnumIntegerAllowableValues();
         if (!in_array($this->container['enum_integer'], $allowed_values)) {
-            $invalid_properties[] = "invalid value for 'enum_integer', must be one of #{allowed_values}.";
+            $invalid_properties[] = sprintf(
+                "invalid value for 'enum_integer', must be one of '%s'",
+                implode("', '", $allowed_values)
+            );
         }
 
-        $allowed_values = ["1.1", "-1.2"];
+        $allowed_values = $this->getEnumNumberAllowableValues();
         if (!in_array($this->container['enum_number'], $allowed_values)) {
-            $invalid_properties[] = "invalid value for 'enum_number', must be one of #{allowed_values}.";
+            $invalid_properties[] = sprintf(
+                "invalid value for 'enum_number', must be one of '%s'",
+                implode("', '", $allowed_values)
+            );
         }
 
         return $invalid_properties;
@@ -212,19 +221,20 @@ class EnumTest implements ArrayAccess
      * validate all the properties in the model
      * return true if all passed
      *
-     * @return bool True if all properteis are valid
+     * @return bool True if all properties are valid
      */
     public function valid()
     {
-        $allowed_values = ["UPPER", "lower", ""];
+
+        $allowed_values = $this->getEnumStringAllowableValues();
         if (!in_array($this->container['enum_string'], $allowed_values)) {
             return false;
         }
-        $allowed_values = ["1", "-1"];
+        $allowed_values = $this->getEnumIntegerAllowableValues();
         if (!in_array($this->container['enum_integer'], $allowed_values)) {
             return false;
         }
-        $allowed_values = ["1.1", "-1.2"];
+        $allowed_values = $this->getEnumNumberAllowableValues();
         if (!in_array($this->container['enum_number'], $allowed_values)) {
             return false;
         }
@@ -248,9 +258,14 @@ class EnumTest implements ArrayAccess
      */
     public function setEnumString($enum_string)
     {
-        $allowed_values = array('UPPER', 'lower', '');
-        if (!is_null($enum_string) && (!in_array($enum_string, $allowed_values))) {
-            throw new \InvalidArgumentException("Invalid value for 'enum_string', must be one of 'UPPER', 'lower', ''");
+        $allowed_values = $this->getEnumStringAllowableValues();
+        if (!is_null($enum_string) && !in_array($enum_string, $allowed_values)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'enum_string', must be one of '%s'",
+                    implode("', '", $allowed_values)
+                )
+            );
         }
         $this->container['enum_string'] = $enum_string;
 
@@ -273,9 +288,14 @@ class EnumTest implements ArrayAccess
      */
     public function setEnumInteger($enum_integer)
     {
-        $allowed_values = array('1', '-1');
-        if (!is_null($enum_integer) && (!in_array($enum_integer, $allowed_values))) {
-            throw new \InvalidArgumentException("Invalid value for 'enum_integer', must be one of '1', '-1'");
+        $allowed_values = $this->getEnumIntegerAllowableValues();
+        if (!is_null($enum_integer) && !in_array($enum_integer, $allowed_values)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'enum_integer', must be one of '%s'",
+                    implode("', '", $allowed_values)
+                )
+            );
         }
         $this->container['enum_integer'] = $enum_integer;
 
@@ -298,9 +318,14 @@ class EnumTest implements ArrayAccess
      */
     public function setEnumNumber($enum_number)
     {
-        $allowed_values = array('1.1', '-1.2');
-        if (!is_null($enum_number) && (!in_array($enum_number, $allowed_values))) {
-            throw new \InvalidArgumentException("Invalid value for 'enum_number', must be one of '1.1', '-1.2'");
+        $allowed_values = $this->getEnumNumberAllowableValues();
+        if (!is_null($enum_number) && !in_array($enum_number, $allowed_values)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'enum_number', must be one of '%s'",
+                    implode("', '", $allowed_values)
+                )
+            );
         }
         $this->container['enum_number'] = $enum_number;
 

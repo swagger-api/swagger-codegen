@@ -40,8 +40,16 @@ class EnumArrays(object):
             'array_enum': 'array_enum'
         }
 
-        self._just_symbol = just_symbol
-        self._array_enum = array_enum
+        self._just_symbol = None
+        self._array_enum = None
+
+        # TODO: let required properties as mandatory parameter in the constructor.
+        #       - to check if required property is not None (e.g. by calling setter)
+        #       - ApiClient.__deserialize_model has to be adapted as well
+        if just_symbol is not None:
+          self.just_symbol = just_symbol
+        if array_enum is not None:
+          self.array_enum = array_enum
 
     @property
     def just_symbol(self):
@@ -140,6 +148,9 @@ class EnumArrays(object):
         """
         Returns true if both objects are equal
         """
+        if not isinstance(other, EnumArrays):
+            return False
+
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other):

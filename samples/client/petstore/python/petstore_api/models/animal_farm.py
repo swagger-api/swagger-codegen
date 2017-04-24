@@ -39,6 +39,10 @@ class AnimalFarm(object):
         }
 
 
+        # TODO: let required properties as mandatory parameter in the constructor.
+        #       - to check if required property is not None (e.g. by calling setter)
+        #       - ApiClient.__deserialize_model has to be adapted as well
+
     def to_dict(self):
         """
         Returns the model properties as a dict
@@ -81,6 +85,9 @@ class AnimalFarm(object):
         """
         Returns true if both objects are equal
         """
+        if not isinstance(other, AnimalFarm):
+            return False
+
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other):

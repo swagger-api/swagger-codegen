@@ -40,8 +40,16 @@ class Animal(object):
             'color': 'color'
         }
 
-        self._class_name = class_name
-        self._color = color
+        self._class_name = None
+        self._color = None
+
+        # TODO: let required properties as mandatory parameter in the constructor.
+        #       - to check if required property is not None (e.g. by calling setter)
+        #       - ApiClient.__deserialize_model has to be adapted as well
+        if class_name is not None:
+          self.class_name = class_name
+        if color is not None:
+          self.color = color
 
     @property
     def class_name(self):
@@ -129,6 +137,9 @@ class Animal(object):
         """
         Returns true if both objects are equal
         """
+        if not isinstance(other, Animal):
+            return False
+
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other):

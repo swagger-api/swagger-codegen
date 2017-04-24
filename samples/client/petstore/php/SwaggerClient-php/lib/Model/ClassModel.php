@@ -34,9 +34,8 @@ use \ArrayAccess;
 /**
  * ClassModel Class Doc Comment
  *
- * @category    Class */
- // @description Model for testing model with \&quot;_class\&quot; property
-/**
+ * @category    Class
+ * @description Model for testing model with \&quot;_class\&quot; property
  * @package     Swagger\Client
  * @author      Swagger Codegen team
  * @link        https://github.com/swagger-api/swagger-codegen
@@ -132,6 +131,7 @@ class ClassModel implements ArrayAccess
     public function listInvalidProperties()
     {
         $invalid_properties = [];
+
         return $invalid_properties;
     }
 
@@ -139,10 +139,11 @@ class ClassModel implements ArrayAccess
      * validate all the properties in the model
      * return true if all passed
      *
-     * @return bool True if all properteis are valid
+     * @return bool True if all properties are valid
      */
     public function valid()
     {
+
         return true;
     }
 

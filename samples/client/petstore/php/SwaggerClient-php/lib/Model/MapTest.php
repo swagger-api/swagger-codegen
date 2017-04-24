@@ -34,8 +34,7 @@ use \ArrayAccess;
 /**
  * MapTest Class Doc Comment
  *
- * @category    Class */
-/**
+ * @category    Class
  * @package     Swagger\Client
  * @author      Swagger Codegen team
  * @link        https://github.com/swagger-api/swagger-codegen
@@ -150,6 +149,7 @@ class MapTest implements ArrayAccess
     public function listInvalidProperties()
     {
         $invalid_properties = [];
+
         return $invalid_properties;
     }
 
@@ -157,10 +157,11 @@ class MapTest implements ArrayAccess
      * validate all the properties in the model
      * return true if all passed
      *
-     * @return bool True if all properteis are valid
+     * @return bool True if all properties are valid
      */
     public function valid()
     {
+
         return true;
     }
 
@@ -202,9 +203,14 @@ class MapTest implements ArrayAccess
      */
     public function setMapOfEnumString($map_of_enum_string)
     {
-        $allowed_values = array('UPPER', 'lower');
-        if (!is_null($map_of_enum_string) && (array_diff($map_of_enum_string, $allowed_values))) {
-            throw new \InvalidArgumentException("Invalid value for 'map_of_enum_string', must be one of 'UPPER', 'lower'");
+        $allowed_values = $this->getMapOfEnumStringAllowableValues();
+        if (!is_null($map_of_enum_string) && array_diff($map_of_enum_string, $allowed_values)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'map_of_enum_string', must be one of '%s'",
+                    implode("', '", $allowed_values)
+                )
+            );
         }
         $this->container['map_of_enum_string'] = $map_of_enum_string;
 
