@@ -1024,6 +1024,8 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         if (input != null) {
             return input.replace("\"", "").replace("'", "");
         }
+        
+        return "1.0.0";
     }
 
     @Override
@@ -1031,6 +1033,8 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         if (input != null) {
             return input.replace("*/", "*_/").replace("/*", "/_*");
         }
+        
+        return "1.0.0";
     }
 
 }
