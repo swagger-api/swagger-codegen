@@ -1,4 +1,4 @@
-# Java client, server tests
+# Java-related client, server tests
 machine:
   java:
     version: openjdk8
