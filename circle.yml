@@ -27,6 +27,6 @@ test:
     - java -version
     - mvn -q clean verify -Psamples
     # test with jdk7
-    - sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
-    - java -version
-    - mvn -q clean verify -Psamples
+    #- sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
+    #- java -version
+    #- mvn -q clean verify -Psamples
