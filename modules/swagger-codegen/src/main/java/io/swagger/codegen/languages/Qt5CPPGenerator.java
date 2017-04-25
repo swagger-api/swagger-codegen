@@ -1,9 +1,6 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.DefaultCodegen;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.*;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.BooleanProperty;
 import io.swagger.models.properties.DateProperty;
@@ -27,6 +24,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class Qt5CPPGenerator extends DefaultCodegen implements CodegenConfig {
+    public static final String CPP_NAMESPACE = "cppNamespace";
+    public static final String CPP_NAMESPACE_DESC = "C++ namespace (convention: name::space::for::api).";
+
     protected final String PREFIX = "SWG";
     protected Set<String> foundationClasses = new HashSet<String>();
     // source folder where to write the files
@@ -34,6 +34,7 @@ public class Qt5CPPGenerator extends DefaultCodegen implements CodegenConfig {
     protected String apiVersion = "1.0.0";
     protected Map<String, String> namespaces = new HashMap<String, String>();
     protected Set<String> systemIncludes = new HashSet<String>();
+    protected String cppNamespace = "Swagger";
 
     public Qt5CPPGenerator() {
         super();
@@ -73,6 +74,9 @@ public class Qt5CPPGenerator extends DefaultCodegen implements CodegenConfig {
          * will use the resource stream to attempt to read the templates.
          */
         embeddedTemplateDir = templateDir = "qt5cpp";
+
+        // CLI options
+        addOption(CPP_NAMESPACE, CPP_NAMESPACE_DESC, this.cppNamespace);
 
         /*
          * Reserved words.  Override this with reserved words specific to your language
@@ -148,6 +152,24 @@ public class Qt5CPPGenerator extends DefaultCodegen implements CodegenConfig {
         systemIncludes.add("QByteArray");
     }
 
+    protected void addOption(String key, String description, String defaultValue) {
+        CliOption option = new CliOption(key, description);
+        if (defaultValue != null)
+            option.defaultValue(defaultValue);
+        cliOptions.add(option);
+    }
+
+    @Override
+    public void processOpts() {
+        super.processOpts();
+
+        if (additionalProperties.containsKey("cppNamespace")){
+            cppNamespace = (String) additionalProperties.get("cppNamespace");
+        }
+
+        additionalProperties.put("cppNamespaceDeclarations", cppNamespace.split("\\::"));
+    }
+
     /**
      * Configures the type of generator.
      *
@@ -203,7 +225,7 @@ public class Qt5CPPGenerator extends DefaultCodegen implements CodegenConfig {
      * @return the escaped term
      */
     @Override
-    public String escapeReservedWord(String name) {           
+    public String escapeReservedWord(String name) {
         if(this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
@@ -266,6 +288,7 @@ public class Qt5CPPGenerator extends DefaultCodegen implements CodegenConfig {
         }
     }
 
+
     @Override
     public String toDefaultValue(Property p) {
         if (p instanceof StringProperty) {
@@ -309,7 +332,6 @@ public class Qt5CPPGenerator extends DefaultCodegen implements CodegenConfig {
         }
         return "NULL";
     }
-
 
     /**
      * Optional - swagger type conversion.  This is used to map swagger types in a `Property` into
