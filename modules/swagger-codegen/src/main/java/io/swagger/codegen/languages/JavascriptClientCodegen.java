@@ -1021,20 +1021,12 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     @Override
     public String escapeQuotationMark(String input) {
         // remove ', " to avoid code injection
-        if (input != null) {
-            return input.replace("\"", "").replace("'", "");
-        }
-        
-        return "1.0.0";
+        return input.replace("\"", "").replace("'", "");
     }
 
     @Override
     public String escapeUnsafeCharacters(String input) {
-        if (input != null) {
-            return input.replace("*/", "*_/").replace("/*", "/_*");
-        }
-        
-        return "1.0.0";
+        return input.replace("*/", "*_/").replace("/*", "/_*");
     }
 
 }
