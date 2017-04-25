@@ -39,7 +39,7 @@ Import-Module -Name '.\src\IO.Swagger'
 ## Getting Started
 
 ```posh
-Set-Credential -AccessToken 'YOUR_ACCESS_TOKEN'
+Set-ApiCredential -AccessToken 'YOUR_ACCESS_TOKEN'
 
 New-Pet -Id 1 -Name 'foo' -Category (
     New-Category -Id 2 -Name 'bar'
