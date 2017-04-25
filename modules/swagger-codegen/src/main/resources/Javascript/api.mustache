@@ -1,5 +1,16 @@
 {{>licenseInfo}}
-{{=< >=}}(function(root, factory) {
+
+{{=< >=}}
+<#useES6>
+import ApiClient from "../ApiClient";
+<#imports>import <import> from '../<#modelPackage><&modelPackage>/</modelPackage><import>';
+</imports>
+
+export default class <classname> {
+</useES6>
+
+<^useES6>
+(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
     define(['<#invokerPackage><&invokerPackage>/</invokerPackage>ApiClient'<#imports>, '<#invokerPackage><&invokerPackage>/</invokerPackage><#modelPackage><&modelPackage>/</modelPackage><import>'</imports>], factory);
@@ -15,23 +26,28 @@
   }
 }(this, function(ApiClient<#imports>, <import></imports>) {
   'use strict';
+</useES6>
+<#emitJSDoc>
+    /**
+    * <baseName> service.
+    * @module <#invokerPackage><&invokerPackage>/</invokerPackage><#apiPackage><&apiPackage>/</apiPackage><classname>
+    * @version <projectVersion>
+    */
 
-<#emitJSDoc>  /**
-   * <baseName> service.
-   * @module <#invokerPackage><&invokerPackage>/</invokerPackage><#apiPackage><&apiPackage>/</apiPackage><classname>
-   * @version <projectVersion>
-   */
-
-  /**
-   * Constructs a new <&classname>. <#description>
-   * <description></description>
-   * @alias module:<#invokerPackage><&invokerPackage>/</invokerPackage><#apiPackage><apiPackage>/</apiPackage><classname>
-   * @class
-   * @param {module:<#invokerPackage><&invokerPackage>/</invokerPackage>ApiClient} apiClient Optional API client implementation to use,
-   * default to {@link module:<#invokerPackage><&invokerPackage>/</invokerPackage>ApiClient#instance} if unspecified.
-   */
-</emitJSDoc>  var exports = function(apiClient) {
-    this.apiClient = apiClient || ApiClient.instance;
+    /**
+    * Constructs a new <&classname>. <#description>
+    * <description></description>
+    * @alias module:<#invokerPackage><&invokerPackage>/</invokerPackage><#apiPackage><apiPackage>/</apiPackage><classname>
+    * @class
+    * @param {module:<#invokerPackage><&invokerPackage>/</invokerPackage>ApiClient} apiClient Optional API client implementation to use,
+    * default to {@link module:<#invokerPackage><&invokerPackage>/</invokerPackage>ApiClient#instance} if unspecified.
+    */
+</emitJSDoc>
+    <#useES6>constructor(apiClient) {
+        this.apiClient = apiClient || ApiClient.instance;
+    }</useES6>
+    <^useES6>var exports = function(apiClient) {
+    this.apiClient = apiClient || ApiClient.instance;</useES6>
 
 <#operations><#operation><#emitJSDoc><^usePromises>
     /**
@@ -52,7 +68,7 @@
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}</returnType></usePromises><#usePromises>
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}<#returnType>, with an object containing data of type {@link <&vendorExtensions.x-jsdoc-type>} and HTTP response</returnType><^returnType>, with an object containing HTTP response</returnType></usePromises>
      */
-</emitJSDoc>    this.<operationId><#usePromises>WithHttpInfo</usePromises> = function(<vendorExtensions.x-codegen-argList>) {<#hasOptionalParams>
+</emitJSDoc>    <^useES6>this.</useES6><operationId><#usePromises>WithHttpInfo</usePromises><^useES6> = function</useES6>(<vendorExtensions.x-codegen-argList>) {<#hasOptionalParams>
       opts = opts || {};</hasOptionalParams>
       var postBody = <#bodyParam><#required><paramName></required><^required>opts['<paramName>']</required></bodyParam><^bodyParam>null</bodyParam>;
 <#allParams><#required>
@@ -85,7 +101,7 @@
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType<^usePromises>, callback</usePromises>
       );
-    }
+    }<^useES6>;</useES6>
 <#usePromises>
     <#emitJSDoc>
 
@@ -99,14 +115,14 @@
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}</returnType></usePromises><#usePromises>
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}<#returnType>, with data of type {@link <&vendorExtensions.x-jsdoc-type>}</returnType></usePromises>
      */
-</emitJSDoc>    this.<operationId> = function(<vendorExtensions.x-codegen-argList>) {
+</emitJSDoc>    <^useES6>this.</useES6><operationId>{{^useES6}} = function{{/useES6}}(<vendorExtensions.x-codegen-argList>) {
       return this.<operationId>WithHttpInfo(<vendorExtensions.x-codegen-argList>)
         .then(function(response_and_data) {
           return response_and_data.data;
         });
-    }
+    }<^useES6>;</useES6>
 </usePromises>
-</operation></operations>  };
+</operation></operations><^useES6>};
 
   return exports;
-}));<={{ }}=>
+}));</useES6><#useES6>}</useES6><={{ }}=>
