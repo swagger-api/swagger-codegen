@@ -192,13 +192,21 @@ export class UserApi {
 
         headers.set('Content-Type', 'application/json');
 
+        let isWithCredentials: boolean = false;
+        if (this.configuration.withCredentials) {
+            isWithCredentials = this.configuration.withCredentials;
+        }
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
             headers: headers,
             body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
             search: queryParameters,
-            withCredentials:true
+            withCredentials:isWithCredentials
         });
+
+        if (this.configuration.apiKey) {
+        headers.set('', this.configuration.apiKey);
+        }
 
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
@@ -230,13 +238,21 @@ export class UserApi {
 
         headers.set('Content-Type', 'application/json');
 
+        let isWithCredentials: boolean = false;
+        if (this.configuration.withCredentials) {
+            isWithCredentials = this.configuration.withCredentials;
+        }
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
             headers: headers,
             body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
             search: queryParameters,
-            withCredentials:true
+            withCredentials:isWithCredentials
         });
+
+        if (this.configuration.apiKey) {
+        headers.set('', this.configuration.apiKey);
+        }
 
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
@@ -268,13 +284,21 @@ export class UserApi {
 
         headers.set('Content-Type', 'application/json');
 
+        let isWithCredentials: boolean = false;
+        if (this.configuration.withCredentials) {
+            isWithCredentials = this.configuration.withCredentials;
+        }
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
             headers: headers,
             body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
             search: queryParameters,
-            withCredentials:true
+            withCredentials:isWithCredentials
         });
+
+        if (this.configuration.apiKey) {
+        headers.set('', this.configuration.apiKey);
+        }
 
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
@@ -309,12 +333,20 @@ export class UserApi {
             'application/xml'
         ];
 
+        let isWithCredentials: boolean = false;
+        if (this.configuration.withCredentials) {
+            isWithCredentials = this.configuration.withCredentials;
+        }
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Delete,
             headers: headers,
             search: queryParameters,
-            withCredentials:true
+            withCredentials:isWithCredentials
         });
+
+        if (this.configuration.apiKey) {
+        headers.set('', this.configuration.apiKey);
+        }
 
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
@@ -349,12 +381,20 @@ export class UserApi {
             'application/xml'
         ];
 
+        let isWithCredentials: boolean = false;
+        if (this.configuration.withCredentials) {
+            isWithCredentials = this.configuration.withCredentials;
+        }
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
             headers: headers,
             search: queryParameters,
-            withCredentials:true
+            withCredentials:isWithCredentials
         });
+
+        if (this.configuration.apiKey) {
+        headers.set('', this.configuration.apiKey);
+        }
 
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
@@ -393,12 +433,20 @@ export class UserApi {
             'application/xml'
         ];
 
+        let isWithCredentials: boolean = false;
+        if (this.configuration.withCredentials) {
+            isWithCredentials = this.configuration.withCredentials;
+        }
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
             headers: headers,
             search: queryParameters,
-            withCredentials:true
+            withCredentials:isWithCredentials
         });
+
+        if (this.configuration.apiKey) {
+        headers.set('', this.configuration.apiKey);
+        }
 
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
@@ -427,12 +475,20 @@ export class UserApi {
             'application/xml'
         ];
 
+        let isWithCredentials: boolean = false;
+        if (this.configuration.withCredentials) {
+            isWithCredentials = this.configuration.withCredentials;
+        }
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
             headers: headers,
             search: queryParameters,
-            withCredentials:true
+            withCredentials:isWithCredentials
         });
+
+        if (this.configuration.apiKey) {
+        headers.set('', this.configuration.apiKey);
+        }
 
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
@@ -470,13 +526,21 @@ export class UserApi {
 
         headers.set('Content-Type', 'application/json');
 
+        let isWithCredentials: boolean = false;
+        if (this.configuration.withCredentials) {
+            isWithCredentials = this.configuration.withCredentials;
+        }
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Put,
             headers: headers,
             body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
             search: queryParameters,
-            withCredentials:true
+            withCredentials:isWithCredentials
         });
+
+        if (this.configuration.apiKey) {
+        headers.set('', this.configuration.apiKey);
+        }
 
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {

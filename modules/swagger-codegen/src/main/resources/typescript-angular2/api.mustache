@@ -195,6 +195,10 @@ export class {{classname}} {
         {{/isListContainer}}
 
 {{/formParams}}
+        let isWithCredentials: boolean = false;
+        if (this.configuration.withCredentials) {
+            isWithCredentials = this.configuration.withCredentials;
+        }
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: {{httpMethod}},
             headers: headers,
@@ -205,8 +209,12 @@ export class {{classname}} {
             body: formParams.toString(),
 {{/hasFormParams}}
             search: queryParameters,
-            withCredentials:true
+            withCredentials:isWithCredentials
         });
+
+        if (this.configuration.apiKey) {
+        headers.set('{{keyParamName}}', this.configuration.apiKey);
+        }
 
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
