@@ -53,7 +53,7 @@ function Update-PetUsingParameterSet {
         [string]
         ${Status},
 
-        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true, ParameterSetName = 'UpdatePet')]
+        [Parameter(Position = 0, ValueFromPipeline = $true, Mandatory = $true, ParameterSetName = 'UpdatePet')]
         [IO.Swagger.Model.Pet]
         ${Pet}
     )
