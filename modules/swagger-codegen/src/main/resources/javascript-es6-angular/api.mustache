@@ -1,0 +1,32 @@
+{{#operations}}
+
+export default class {{classname}} {
+
+  /* @ngInject */
+  constructor($resource) {
+    this.basePath = '{{basePath}}';
+
+    return $resource(null, {}, {
+    {{#operation}}
+      '{{operationId}}': this.{{operationId}}(),
+    {{/operation}}
+    });
+  }
+
+{{#operation}}
+
+  /**
+   * {{notes}}
+   */
+  {{operationId}} () {
+    return {
+      method: '{{httpMethod}}',
+      url: this.basePath + '{{path}}'
+      {{#pathParams}}
+        .replace('{' + '{{baseName}}' + '}', ':{{paramName}}')
+      {{/pathParams}}
+    }
+  }
+{{/operation}}
+}
+{{/operations}}
