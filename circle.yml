@@ -25,7 +25,7 @@ test:
   override:
     # test with jdk8
     - java -version
-    - mvn clean pacakge
+    - mvn clean install 
     #- mvn -q clean verify -Psamples
     # test with jdk7
     #- sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
