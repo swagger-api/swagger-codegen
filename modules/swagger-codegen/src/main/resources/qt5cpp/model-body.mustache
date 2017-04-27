@@ -9,8 +9,9 @@
 #include <QObject>
 #include <QDebug>
 
-namespace Swagger {
-
+{{#cppNamespaceDeclarations}}
+namespace {{this}} {
+{{/cppNamespaceDeclarations}}
 
 {{classname}}::{{classname}}(QString* json) {
     init();
@@ -107,8 +108,9 @@ void
 
 {{/vars}}
 
-
-} /* namespace Swagger */
+{{#cppNamespaceDeclarations}}
+}
+{{/cppNamespaceDeclarations}}
 
 {{/model}}
 {{/models}}
