@@ -126,6 +126,8 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
         config.processOpts();
         config.preprocessSwagger(swagger);
+        // TODO need to obtain version from a file instead of hardcoding it
+        config.additionalProperties().put("generatorVersion", "2.2.3-SNAPSHOT");
         config.additionalProperties().put("generatedDate", DateTime.now().toString());
         config.additionalProperties().put("generatorClass", config.getClass().getName());
         config.additionalProperties().put("inputSpec", config.getInputSpec());
@@ -149,7 +151,11 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
         if (info.getVersion() != null) {
             config.additionalProperties().put("appVersion", config.escapeText(info.getVersion()));
+        } else {
+            LOGGER.error("Missing required field info version. Default appVersion set to 1.0.0");
+            config.additionalProperties().put("appVersion", "1.0.0");
         }
+        
         if (StringUtils.isEmpty(info.getDescription())) {
             // set a default description if none if provided
             config.additionalProperties().put("appDescription",
@@ -178,6 +184,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
         if (info.getVersion() != null) {
             config.additionalProperties().put("version", config.escapeText(info.getVersion()));
+        } else {
+            LOGGER.error("Missing required field info version. Default version set to 1.0.0");
+            config.additionalProperties().put("version", "1.0.0");
         }
         if (info.getTermsOfService() != null) {
             config.additionalProperties().put("termsOfService", config.escapeText(info.getTermsOfService()));

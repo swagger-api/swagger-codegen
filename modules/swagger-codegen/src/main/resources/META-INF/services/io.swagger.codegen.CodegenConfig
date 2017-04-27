@@ -41,6 +41,7 @@ io.swagger.codegen.languages.SinatraServerCodegen
 io.swagger.codegen.languages.Rails5ServerCodegen
 io.swagger.codegen.languages.SlimFrameworkServerCodegen
 io.swagger.codegen.languages.SpringCodegen
+io.swagger.codegen.languages.JavaPlayFrameworkCodegen
 io.swagger.codegen.languages.StaticDocCodegen
 io.swagger.codegen.languages.StaticHtmlGenerator
 io.swagger.codegen.languages.StaticHtml2Generator
@@ -51,6 +52,7 @@ io.swagger.codegen.languages.Swift3Codegen
 io.swagger.codegen.languages.TizenClientCodegen
 io.swagger.codegen.languages.TypeScriptAngular2ClientCodegen
 io.swagger.codegen.languages.TypeScriptAngularClientCodegen
+io.swagger.codegen.languages.TypeScriptJqueryClientCodegen
 io.swagger.codegen.languages.TypeScriptNodeClientCodegen
 io.swagger.codegen.languages.TypeScriptFetchClientCodegen
 io.swagger.codegen.languages.AkkaScalaClientCodegen

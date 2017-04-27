@@ -54,6 +54,12 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
         specialCharReplacements.put(">", "GreaterThan");
         specialCharReplacements.put("<", "LessThan");
 
+        // backslash and double quote need double the escapement for both Java and Haskell
+        specialCharReplacements.remove("\\");
+        specialCharReplacements.remove("\"");
+        specialCharReplacements.put("\\\\", "Back_Slash");
+        specialCharReplacements.put("\\\"", "Double_Quote");
+
         // set the output folder here
         outputFolder = "generated-code/haskell-servant";
 
@@ -139,6 +145,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
         typeMapping.put("number", "Double");
         typeMapping.put("integer", "Int");
         typeMapping.put("any", "Value");
+        typeMapping.put("UUID", "Text");
 
         importMapping.clear();
         importMapping.put("Map", "qualified Data.Map as Map");

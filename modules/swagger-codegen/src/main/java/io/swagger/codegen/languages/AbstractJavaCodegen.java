@@ -317,6 +317,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             typeMapping.put("array", "java.util.List");
             typeMapping.put("map", "java.util.Map");
             typeMapping.put("DateTime", "java.util.Date");
+            typeMapping.put("UUID", "java.util.UUID");
             typeMapping.remove("List");
             importMapping.remove("Date");
             importMapping.remove("Map");
@@ -326,6 +327,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             importMapping.remove("List");
             importMapping.remove("Set");
             importMapping.remove("DateTime");
+            importMapping.remove("UUID");
             instantiationTypes.put("array", "java.util.ArrayList");
             instantiationTypes.put("map", "java.util.HashMap");
         }
@@ -702,6 +704,15 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         p.example = example;
     }
 
+    @Override
+    public String toExampleValue(Property p) {
+        if(p.getExample() != null) {
+            return escapeText(p.getExample().toString());
+        } else {
+            return super.toExampleValue(p);
+        }
+    }
+    
     @Override
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
