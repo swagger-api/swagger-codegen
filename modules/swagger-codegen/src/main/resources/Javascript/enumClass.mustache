@@ -3,7 +3,7 @@
    * @enum {{=<% %>=}}{<%datatype%>}<%={{ }}=%>
    * @readonly
    */{{/emitJSDoc}}
-  exports.{{datatypeWithEnum}} = {
+  {{#useES6}}export default {{/useES6}}{{^useES6}}exports.{{/useES6}}{{datatypeWithEnum}} = {
   {{#allowableValues}}
   {{#enumVars}}
 {{#emitJSDoc}}
