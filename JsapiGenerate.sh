@@ -424,7 +424,7 @@ git commit -m "JSAPI Java API clear"
 git push -u origin master
 
 cd ../..
-java -jar $BASE_JAR generate -i $JSON_FILE -DinvokerPackage="com.knetikcloud.client",modelPackage="com.knetikcloud.model",apiPackage="com.knetikcloud.api" -l java $ID_FLAGS --artifact-id knetikcloud-java-client -o sdk/java
+java -jar $BASE_JAR generate -i $JSON_FILE -DinvokerPackage="com.knetikcloud.client",modelPackage="com.knetikcloud.model",apiPackage="com.knetikcloud.api" -l java $ID_FLAGS --artifact-id knetikcloud-java-client --library jersey2 -o sdk/java
 cd sdk/java
 
 sed -i -e 's~'"$README_ORIGINAL"'~'"$README_REPLACEMENT"'~g' README.md
