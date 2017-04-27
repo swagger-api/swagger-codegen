@@ -94,6 +94,11 @@ public class Qt5CPPGenerator extends DefaultCodegen implements CodegenConfig {
         additionalProperties.put("apiVersion", apiVersion);
         additionalProperties().put("prefix", PREFIX);
 
+        // Write defaults namespace in properties so that it can be accessible in templates.
+        // At this point command line has not been parsed so if value is given
+        // in command line it will superseed this content
+        additionalProperties.put("cppNamespace",cppNamespace);
+
         /*
          * Language Specific Primitives.  These types will not trigger imports by
          * the client generator
