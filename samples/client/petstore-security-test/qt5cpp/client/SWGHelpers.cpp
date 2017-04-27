@@ -18,6 +18,7 @@
 #include <QJsonValue>
 #include <QDateTime>
 
+
 namespace Swagger {
 
 void
@@ -290,4 +291,5 @@ QString
 stringValue(bool value) {
     return QString(value ? "true" : "false");
 }
-} /* namespace Swagger */
+
+}
