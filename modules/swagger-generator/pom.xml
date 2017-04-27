@@ -22,6 +22,7 @@
                 </includes>
             </resource>
         </resources>
+        <pluginManagement>
         <plugins>
             <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -128,6 +129,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        </pluginManagement>
     </build>
     <dependencies>
         <dependency>
