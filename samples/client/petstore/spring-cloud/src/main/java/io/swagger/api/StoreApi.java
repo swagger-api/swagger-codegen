@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
-import java.io.IOException;
 
 import java.util.List;
 import javax.validation.constraints.*;
@@ -54,7 +53,7 @@ public interface StoreApi {
         produces = "application/json",
         consumes = "application/json",
         method = RequestMethod.GET)
-    com.netflix.hystrix.HystrixCommand<ResponseEntity<Order>> getOrderById( @Min(1) @Max(5)@ApiParam(value = "ID of pet that needs to be fetched",required=true ) @PathVariable("orderId") Long orderId);
+    com.netflix.hystrix.HystrixCommand<ResponseEntity<Order>> getOrderById(@ApiParam(value = "ID of pet that needs to be fetched",required=true ) @PathVariable("orderId") String orderId);
 
 
     @ApiOperation(value = "Place an order for a pet", notes = "", response = Order.class, tags={ "store", })
@@ -65,6 +64,6 @@ public interface StoreApi {
         produces = "application/json",
         consumes = "application/json",
         method = RequestMethod.POST)
-    com.netflix.hystrix.HystrixCommand<ResponseEntity<Order>> placeOrder(@ApiParam(value = "order placed for purchasing the pet" ,required=true )  @Valid @RequestBody Order body);
+    com.netflix.hystrix.HystrixCommand<ResponseEntity<Order>> placeOrder(@ApiParam(value = "order placed for purchasing the pet"  )  @Valid @RequestBody Order body);
 
 }
