@@ -92,11 +92,11 @@ public class {{classname}}Controller implements {{classname}} {
             }
         };
         {{/async}}
-{{/useSpringCloudClient}}
         {{/isDelegate}}
         {{#isDelegate}}
         return delegate.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
         {{/isDelegate}}
+{{/useSpringCloudClient}}
     }
 
 {{/operation}}
