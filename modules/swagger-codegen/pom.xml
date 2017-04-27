@@ -40,7 +40,6 @@
         </extensions>
         <directory>target</directory>
         <finalName>${project.artifactId}-${project.version}</finalName>
-        <pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -120,7 +119,6 @@
                 </configuration>
             </plugin>
         </plugins>
-        </pluginManagement>
     </build>
     <profiles>
         <profile>
