@@ -1,0 +1,42 @@
+cmake_minimum_required (VERSION 2.8.11)
+
+project(CppRestClient)
+
+file(GLOB HEADERS
+    "*.h"
+)
+
+file(GLOB SOURCE
+    "*.cpp"
+)
+
+file(GLOB API_HEADERS
+    "api/*.h"
+)
+
+file(GLOB API_SOURCE
+    "api/*.cpp"
+)
+
+file(GLOB MODEL_HEADERS
+    "model/*.h"
+)
+
+file(GLOB MODEL_SOURCE
+    "model/*.cpp"
+)
+
+
+file(GLOB UNIFIED_SOURCE
+	${HEADERS}
+	${SOURCE}
+	${API_HEADERS}
+	${API_SOURCE}
+	${MODEL_HEADERS}
+    	${MODEL_SOURCE}
+)
+
+add_library(${PROJECT_NAME} ${UNIFIED_SOURCE})
+
+#TODO
+target_link_libraries(${PROJET_NAME} ${CPPREST_LIBRARY_DIR})
