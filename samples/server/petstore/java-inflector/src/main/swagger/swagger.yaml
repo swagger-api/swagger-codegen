@@ -109,11 +109,11 @@ paths:
         type: "array"
         items:
           type: "string"
+          default: "available"
           enum:
           - "available"
           - "pending"
           - "sold"
-          default: "available"
         collectionFormat: "csv"
       responses:
         200:
@@ -348,7 +348,7 @@ paths:
           description: "Invalid Order"
       x-contentType: "application/json"
       x-accepts: "application/json"
-  /store/order/{orderId}:
+  /store/order/{order_id}:
     get:
       tags:
       - "store"
@@ -360,7 +360,7 @@ paths:
       - "application/xml"
       - "application/json"
       parameters:
-      - name: "orderId"
+      - name: "order_id"
         in: "path"
         description: "ID of pet that needs to be fetched"
         required: true
@@ -390,7 +390,7 @@ paths:
       - "application/xml"
       - "application/json"
       parameters:
-      - name: "orderId"
+      - name: "order_id"
         in: "path"
         description: "ID of the order that needs to be deleted"
         required: true
@@ -623,10 +623,10 @@ paths:
         type: "array"
         items:
           type: "string"
+          default: "$"
           enum:
           - ">"
           - "$"
-          default: "$"
       - name: "enum_form_string"
         in: "formData"
         description: "Form parameter enum test (string)"
@@ -644,10 +644,10 @@ paths:
         type: "array"
         items:
           type: "string"
+          default: "$"
           enum:
           - ">"
           - "$"
-          default: "$"
       - name: "enum_header_string"
         in: "header"
         description: "Header parameter enum test (string)"
@@ -665,10 +665,10 @@ paths:
         type: "array"
         items:
           type: "string"
+          default: "$"
           enum:
           - ">"
           - "$"
-          default: "$"
       - name: "enum_query_string"
         in: "query"
         description: "Query parameter enum test (string)"

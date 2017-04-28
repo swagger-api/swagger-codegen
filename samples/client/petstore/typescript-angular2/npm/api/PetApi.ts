@@ -211,9 +211,9 @@ export class PetApi {
             method: RequestMethod.Post,
             headers: headers,
             body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:this.configuration.withCredentials
         });
-
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
@@ -262,9 +262,9 @@ export class PetApi {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Delete,
             headers: headers,
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:this.configuration.withCredentials
         });
-
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
@@ -311,9 +311,9 @@ export class PetApi {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
             headers: headers,
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:this.configuration.withCredentials
         });
-
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
@@ -360,9 +360,9 @@ export class PetApi {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
             headers: headers,
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:this.configuration.withCredentials
         });
-
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
@@ -413,9 +413,9 @@ export class PetApi {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
             headers: headers,
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:this.configuration.withCredentials
         });
-
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
@@ -461,9 +461,9 @@ export class PetApi {
             method: RequestMethod.Put,
             headers: headers,
             body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:this.configuration.withCredentials
         });
-
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
@@ -525,9 +525,9 @@ export class PetApi {
             method: RequestMethod.Post,
             headers: headers,
             body: formParams.toString(),
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:this.configuration.withCredentials
         });
-
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
@@ -589,9 +589,9 @@ export class PetApi {
             method: RequestMethod.Post,
             headers: headers,
             body: formParams.toString(),
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:this.configuration.withCredentials
         });
-
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);

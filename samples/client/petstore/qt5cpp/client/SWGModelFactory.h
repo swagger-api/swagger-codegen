@@ -22,6 +22,7 @@
 #include "SWGUser.h"
 
 namespace Swagger {
+
   inline void* create(QString type) {
     if(QString("SWGApiResponse").compare(type) == 0) {
       return new SWGApiResponse();
@@ -56,6 +57,7 @@ namespace Swagger {
     }
     return nullptr;
   }
-} /* namespace Swagger */
+
+}
 
 #endif /* ModelFactory_H_ */

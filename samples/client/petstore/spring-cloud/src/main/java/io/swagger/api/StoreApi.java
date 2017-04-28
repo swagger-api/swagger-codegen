@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 @Api(value = "Store", description = "the Store API")
 public interface StoreApi {
@@ -24,7 +25,6 @@ public interface StoreApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid ID supplied", response = Void.class),
         @ApiResponse(code = 404, message = "Order not found", response = Void.class) })
-    
     @RequestMapping(value = "/store/order/{orderId}",
         produces = "application/json",
         consumes = "application/json",
@@ -37,7 +37,6 @@ public interface StoreApi {
     }, tags={ "store", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Integer.class) })
-    
     @RequestMapping(value = "/store/inventory",
         produces = "application/json",
         consumes = "application/json",
@@ -50,7 +49,6 @@ public interface StoreApi {
         @ApiResponse(code = 200, message = "successful operation", response = Order.class),
         @ApiResponse(code = 400, message = "Invalid ID supplied", response = Order.class),
         @ApiResponse(code = 404, message = "Order not found", response = Order.class) })
-    
     @RequestMapping(value = "/store/order/{orderId}",
         produces = "application/json",
         consumes = "application/json",
@@ -62,11 +60,10 @@ public interface StoreApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Order.class),
         @ApiResponse(code = 400, message = "Invalid Order", response = Order.class) })
-    
     @RequestMapping(value = "/store/order",
         produces = "application/json",
         consumes = "application/json",
         method = RequestMethod.POST)
-    com.netflix.hystrix.HystrixCommand<ResponseEntity<Order>> placeOrder(@ApiParam(value = "order placed for purchasing the pet" ,required=true ) @RequestBody Order body);
+    com.netflix.hystrix.HystrixCommand<ResponseEntity<Order>> placeOrder(@ApiParam(value = "order placed for purchasing the pet" ,required=true )  @Valid @RequestBody Order body);
 
 }

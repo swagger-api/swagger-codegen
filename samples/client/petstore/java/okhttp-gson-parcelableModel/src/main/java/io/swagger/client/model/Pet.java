@@ -42,7 +42,7 @@ public class Pet implements Parcelable {
   private List<String> photoUrls = new ArrayList<String>();
 
   @SerializedName("tags")
-  private List<Tag> tags = new ArrayList<Tag>();
+  private List<Tag> tags = null;
 
   /**
    * pet status in the store
@@ -155,6 +155,9 @@ public class Pet implements Parcelable {
   }
 
   public Pet addTagsItem(Tag tagsItem) {
+    if (this.tags == null) {
+      this.tags = new ArrayList<Tag>();
+    }
     this.tags.add(tagsItem);
     return this;
   }
@@ -262,7 +265,7 @@ public class Pet implements Parcelable {
   Pet(Parcel in) {
     
     id = (Long)in.readValue(null);
-    category = (Category)in.readValue(null);
+    category = (Category)in.readValue(Category.class.getClassLoader());
     name = (String)in.readValue(null);
     photoUrls = (List<String>)in.readValue(null);
     tags = (List<Tag>)in.readValue(Tag.class.getClassLoader());
