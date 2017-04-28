@@ -12,14 +12,12 @@ using System;
 using System.Linq;
 using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System.ComponentModel.DataAnnotations;
 
 namespace IO.Swagger.Model
 {
@@ -27,7 +25,7 @@ namespace IO.Swagger.Model
     /// EnumArrays
     /// </summary>
     [DataContract]
-    public partial class EnumArrays :  IEquatable<EnumArrays>, IValidatableObject
+    public partial class EnumArrays :  IEquatable<EnumArrays>
     {
         /// <summary>
         /// Gets or Sets JustSymbol
@@ -70,8 +68,6 @@ namespace IO.Swagger.Model
             Crab
         }
 
-
-
         /// <summary>
         /// Gets or Sets JustSymbol
         /// </summary>
@@ -83,21 +79,14 @@ namespace IO.Swagger.Model
         [DataMember(Name="array_enum", EmitDefaultValue=false)]
         public List<ArrayEnumEnum> ArrayEnum { get; set; }
         /// <summary>
-        /// Gets or Sets ArrayArrayEnum
-        /// </summary>
-        [DataMember(Name="array_array_enum", EmitDefaultValue=false)]
-        public List<List<ArrayArrayEnumEnum>> ArrayArrayEnum { get; set; }
-        /// <summary>
         /// Initializes a new instance of the <see cref="EnumArrays" /> class.
         /// </summary>
         /// <param name="JustSymbol">JustSymbol.</param>
         /// <param name="ArrayEnum">ArrayEnum.</param>
-        /// <param name="ArrayArrayEnum">ArrayArrayEnum.</param>
-        public EnumArrays(JustSymbolEnum? JustSymbol = default(JustSymbolEnum?), List<ArrayEnumEnum> ArrayEnum = default(List<ArrayEnumEnum>), List<List<ArrayArrayEnumEnum>> ArrayArrayEnum = default(List<List<ArrayArrayEnumEnum>>))
+        public EnumArrays(JustSymbolEnum? JustSymbol = default(JustSymbolEnum?), List<ArrayEnumEnum> ArrayEnum = default(List<ArrayEnumEnum>))
         {
             this.JustSymbol = JustSymbol;
             this.ArrayEnum = ArrayEnum;
-            this.ArrayArrayEnum = ArrayArrayEnum;
         }
         
         /// <summary>
@@ -110,7 +99,6 @@ namespace IO.Swagger.Model
             sb.Append("class EnumArrays {\n");
             sb.Append("  JustSymbol: ").Append(JustSymbol).Append("\n");
             sb.Append("  ArrayEnum: ").Append(ArrayEnum).Append("\n");
-            sb.Append("  ArrayArrayEnum: ").Append(ArrayArrayEnum).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -156,11 +144,6 @@ namespace IO.Swagger.Model
                     this.ArrayEnum == other.ArrayEnum ||
                     this.ArrayEnum != null &&
                     this.ArrayEnum.SequenceEqual(other.ArrayEnum)
-                ) && 
-                (
-                    this.ArrayArrayEnum == other.ArrayArrayEnum ||
-                    this.ArrayArrayEnum != null &&
-                    this.ArrayArrayEnum.SequenceEqual(other.ArrayArrayEnum)
                 );
         }
 
@@ -179,20 +162,8 @@ namespace IO.Swagger.Model
                     hash = hash * 59 + this.JustSymbol.GetHashCode();
                 if (this.ArrayEnum != null)
                     hash = hash * 59 + this.ArrayEnum.GetHashCode();
-                if (this.ArrayArrayEnum != null)
-                    hash = hash * 59 + this.ArrayArrayEnum.GetHashCode();
                 return hash;
             }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-        { 
-            yield break;
         }
     }
 

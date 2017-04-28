@@ -269,7 +269,7 @@ public class ObjcModelTest {
 
     @Test(description = "test udid")
     public void udidAndPasswordDataModelTest() {
-        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
+        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/fake-endpoints-v2/petstore.yaml");
         final DefaultCodegen codegen = new ObjcClientCodegen();
         final Model definition = model.getDefinitions().get("format_test");
 
@@ -283,7 +283,7 @@ public class ObjcModelTest {
 
     @Test(description = "test mixedProperties")
     public void mixedPropertiesDataModelTest() {
-        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
+        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/fake-endpoints-v2/petstore.yaml");
         final DefaultCodegen codegen = new ObjcClientCodegen();
         final Model definition = model.getDefinitions().get("MixedPropertiesAndAdditionalPropertiesClass");
 
@@ -294,7 +294,7 @@ public class ObjcModelTest {
 
     @Test(description = "test isArrayModel")
     public void isArrayModelModelTest() {
-        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
+        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/fake-endpoints-v2/petstore.yaml");
         final DefaultCodegen codegen = new ObjcClientCodegen();
         final Model definition = model.getDefinitions().get("AnimalFarm");
         final CodegenModel codegenModel = codegen.fromModel("AnimalFarm",definition);

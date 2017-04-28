@@ -96,7 +96,7 @@ public class JavaScriptModelEnumTest {
 
     @Test(description = "test enum array model")
     public void enumArrayModelTest() {
-        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
+        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/fake-endpoints-v2/petstore.yaml");
         final DefaultCodegen codegen = new JavascriptClientCodegen();
         final Model definition = model.getDefinitions().get("EnumArrays");
 
@@ -127,7 +127,7 @@ public class JavaScriptModelEnumTest {
 
     @Test(description = "test enum model for values (numeric, string, etc)")
     public void enumModelValueTest() {
-        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
+        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/fake-endpoints-v2/petstore.yaml");
         final DefaultCodegen codegen = new JavascriptClientCodegen();
         final Model definition = model.getDefinitions().get("Enum_Test");
 

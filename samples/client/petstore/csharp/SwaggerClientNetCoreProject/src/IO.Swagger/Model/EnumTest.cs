@@ -12,14 +12,12 @@ using System;
 using System.Linq;
 using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System.ComponentModel.DataAnnotations;
 
 namespace IO.Swagger.Model
 {
@@ -27,7 +25,7 @@ namespace IO.Swagger.Model
     /// EnumTest
     /// </summary>
     [DataContract]
-    public partial class EnumTest :  IEquatable<EnumTest>, IValidatableObject
+    public partial class EnumTest :  IEquatable<EnumTest>
     {
         /// <summary>
         /// Gets or Sets EnumString
@@ -46,7 +44,13 @@ namespace IO.Swagger.Model
             /// Enum Lower for "lower"
             /// </summary>
             [EnumMember(Value = "lower")]
-            Lower
+            Lower,
+            
+            /// <summary>
+            /// Enum Empty for ""
+            /// </summary>
+            [EnumMember(Value = "")]
+            Empty
         }
 
         /// <summary>
@@ -215,16 +219,6 @@ namespace IO.Swagger.Model
                     hash = hash * 59 + this.OuterEnum.GetHashCode();
                 return hash;
             }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-        { 
-            yield break;
         }
     }
 

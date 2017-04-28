@@ -6,7 +6,7 @@ PATH
       typhoeus (~> 1.0, >= 1.0.1)
 
 GEM
-  remote: https://rubygems.org/
+  remote: http://rubygems.org/
   specs:
     ZenTest (4.11.0)
     addressable (2.3.8)
@@ -24,7 +24,6 @@ GEM
     ffi (1.9.8)
     hashdiff (0.3.0)
     json (1.8.3)
-    rake (12.0.0)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
@@ -58,10 +57,6 @@ DEPENDENCIES
   autotest-growl (~> 0.2, >= 0.2.16)
   autotest-rails-pure (~> 4.1, >= 4.1.2)
   petstore!
-  rake (~> 12.0.0)
   rspec (~> 3.4, >= 3.4.0)
   vcr (~> 3.0, >= 3.0.1)
   webmock (~> 1.24, >= 1.24.3)
-
-BUNDLED WITH
-   1.14.6
