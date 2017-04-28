@@ -1,29 +1,92 @@
-cmake_minimum_required (VERSION 2.8.11)
+cmake_minimum_required (VERSION 2.8)
 
+#PROJECT's NAME
 project(CppRestClient)
 
+# BUILD TYPE
+set(CMAKE_BUILD_TYPE Release)
+message(WARNING "A ${CMAKE_BUILD_TYPE} build configuration is detected")
+
+# THE LOCATION OF OUTPUT BINARIES
+set(CMAKE_LIBRARY_DIR ${CMAKE_SOURCE_DIR}/lib)
+set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
+set(LIBRARY_OUTPUT_PATH ${CMAKE_LIBRARY_DIR})
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+# Default build type to Debug if build type was not specified
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Debug)
+endif()
+
+set(CMAKE_TOOLCHAIN_FILE CrossCompile.txt)
+
+# use 64 bit boost library
+set(BOOST_ROOT ${PROJECT_SOURCE_DIR}/../../../developmentTools/3rdParty/boost_host64/inst)
+set(Boost_DIR ${BOOST_ROOT})
+set(Boost_INCLUDE_DIR ${BOOST_ROOT}/include)
+set(Boost_LIBRARY_DIR ${BOOST_ROOT}/lib)
+
+
+#
+# Generic Compiler Flags
+#
+
+if (CMAKE_COMPILER_IS_GNUCXX)
+    #set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Weffc++") host dont use -Wreffc++ flag
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Werror")
+    # TODO: A better fix should handle ld's --as-needed flag
+    if (UNIX)
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Xlinker '--no-as-needed'")
+    endif ()
+elseif (MSVC)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNOMINMAX") # exclude M$ min/max macros
+    #set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /analyze")
+endif ()
+
+
+if (Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS})
+    set(${Boost_THREAD_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_REGEX_LIBRARY} ${Boost_DATE_TIME_LIBRARY} ${Boost_PROGRAM_OPTIONS_LIBRARY} ${Boost_FILESYSTEM_LIBRARY})
+endif ()
+
+
+# 64 bit cpp rest sdk
+set(CPPREST_ROOT ${PROJECT_SOURCE_DIR}/../../../developmentTools/3rdParty/cpprest_host64/inst)
+set(CPPREST_INCLUDE_DIR ${CPPREST_ROOT}/include)
+set(CPPREST_LIBRARY_DIR ${CPPREST_ROOT}/lib)
+
+set(OPENSSL_ROOT ${PROJECT_SOURCE_DIR}/../../../developmentTools/3rdParty/openssl_host64/inst)
+set(OPENSSL_INCLUDE_DIR ${OPENSSL_ROOT}/include)
+set(OPENSSL_LIBRARY_DIR ${OPENSSL_ROOT}/lib)
+
+include_directories(src src/api src/model ${OPENSSL_INCLUDE_DIR} ${CPPREST_INCLUDE_DIR} SYSTEM ${Boost_INCLUDE_DIR})
+
+
+#SOURCE FILES
 file(GLOB HEADERS
-    "*.h"
+    "src/*.h"
 )
 
 file(GLOB SOURCE
-    "*.cpp"
+    "src/*.cpp"
 )
 
 file(GLOB API_HEADERS
-    "api/*.h"
+    "src/api/*.h"
 )
 
 file(GLOB API_SOURCE
-    "api/*.cpp"
+    "src/api/*.cpp"
 )
 
 file(GLOB MODEL_HEADERS
-    "model/*.h"
+    "src/model/*.h"
 )
 
 file(GLOB MODEL_SOURCE
-    "model/*.cpp"
+    "src/model/*.cpp"
 )
 
 
@@ -37,6 +100,3 @@ file(GLOB UNIFIED_SOURCE
 )
 
 add_library(${PROJECT_NAME} ${UNIFIED_SOURCE})
-
-#TODO
-target_link_libraries(${PROJET_NAME} ${CPPREST_LIBRARY_DIR})
