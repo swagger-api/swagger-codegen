@@ -1,33 +1,31 @@
-{{#emitJSDoc}}
-  /**
-   * Enum class {{classname}}.
-   * @enum {{=<% %>=}}{<%datatype%>}<%={{ }}=%>
-   * @readonly
-   */
-{{/emitJSDoc}}
-  var exports = {
-  {{#allowableValues}}
-  {{#enumVars}}
-{{#emitJSDoc}}
-    /**
-     * value: {{{value}}}
-     * @const
-     */
-{{/emitJSDoc}}
-    "{{name}}": {{{value}}}{{^-last}},
-    {{/-last}}
-  {{/enumVars}}
-  {{/allowableValues}}
-  };
+{{#useES6}}export default class {{classname}} { {{/useES6}}
+    {{#emitJSDoc}}/**
+    * Enum class {{classname}}.
+    * @enum {{=<% %>=}}{<%datatype%>}<%={{ }}=%>
+    * @readonly
+    */{{/emitJSDoc}}
+    {{^useES6}}var exports = { {{/useES6}}
+    {{#allowableValues}}{{#enumVars}}
+        {{#emitJSDoc}}/**
+         * value: {{{value}}}
+         * @const
+         */{{/emitJSDoc}}
+        {{^useES6}}"{{/useES6}}{{name}}{{^useES6}}":{{/useES6}} {{#useES6}}= {{/useES6}}{{{value}}}{{#useES6}};{{/useES6}}{{^useES6}}{{^-last}},{{/-last}}{{/useES6}}
 
-  /**
-   * Returns a <code>{{classname}}</code> enum value from a Javascript object name.
-   * @param {Object} data The plain JavaScript object containing the name of the enum value.
-   * @return {{=< >=}}{module:<#invokerPackage><invokerPackage>/</invokerPackage><#modelPackage><modelPackage>/</modelPackage><classname>}<={{ }}=> The enum <code>{{classname}}</code> value.
-   */
-  exports.constructFromObject = function(object) {
-    return object;
-  }
+    {{/enumVars}}{{/allowableValues}}
 
-  return exports;
-}));
+    {{^useES6}}
+    };
+    {{/useES6}}
+
+    {{#emitJSDoc}}/**
+    * Returns a <code>{{classname}}</code> enum value from a Javascript object name.
+    * @param {Object} data The plain JavaScript object containing the name of the enum value.
+    * @return {{=< >=}}{module:<#invokerPackage><invokerPackage>/</invokerPackage><#modelPackage><modelPackage>/</modelPackage><classname>}<={{ }}=> The enum <code>{{classname}}</code> value.
+    */{{/emitJSDoc}}
+    {{^useES6}}exports.{{/useES6}}{{#useES6}}static {{/useES6}}constructFromObject{{^useES6}} = function{{/useES6}}(object) {
+        return object;
+    }
+
+    {{^useES6}}return exports;{{/useES6}}
+}{{^useES6}}));{{/useES6}}
