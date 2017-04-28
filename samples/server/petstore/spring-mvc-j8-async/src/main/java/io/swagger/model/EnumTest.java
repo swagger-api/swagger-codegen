@@ -21,9 +21,7 @@ public class EnumTest   {
   public enum EnumStringEnum {
     UPPER("UPPER"),
     
-    LOWER("lower"),
-    
-    EMPTY("");
+    LOWER("lower");
 
     private String value;
 

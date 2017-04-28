@@ -12,12 +12,14 @@ using System;
 using System.Linq;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.ComponentModel.DataAnnotations;
 
 namespace IO.Swagger.Model
 {
@@ -25,7 +27,7 @@ namespace IO.Swagger.Model
     /// MapTest
     /// </summary>
     [DataContract]
-    public partial class MapTest :  IEquatable<MapTest>
+    public partial class MapTest :  IEquatable<MapTest>, IValidatableObject
     {
 
         /// <summary>
@@ -57,10 +59,12 @@ namespace IO.Swagger.Model
         /// Initializes a new instance of the <see cref="MapTest" /> class.
         /// </summary>
         /// <param name="MapMapOfString">MapMapOfString.</param>
+        /// <param name="MapMapOfEnum">MapMapOfEnum.</param>
         /// <param name="MapOfEnumString">MapOfEnumString.</param>
-        public MapTest(Dictionary<string, Dictionary<string, string>> MapMapOfString = default(Dictionary<string, Dictionary<string, string>>), Dictionary<string, InnerEnum> MapOfEnumString = default(Dictionary<string, InnerEnum>))
+        public MapTest(Dictionary<string, Dictionary<string, string>> MapMapOfString = default(Dictionary<string, Dictionary<string, string>>), Dictionary<string, Dictionary<string, string>> MapMapOfEnum = default(Dictionary<string, Dictionary<string, string>>), Dictionary<string, InnerEnum> MapOfEnumString = default(Dictionary<string, InnerEnum>))
         {
             this.MapMapOfString = MapMapOfString;
+            this.MapMapOfEnum = MapMapOfEnum;
             this.MapOfEnumString = MapOfEnumString;
         }
         
@@ -70,6 +74,11 @@ namespace IO.Swagger.Model
         [DataMember(Name="map_map_of_string", EmitDefaultValue=false)]
         public Dictionary<string, Dictionary<string, string>> MapMapOfString { get; set; }
         /// <summary>
+        /// Gets or Sets MapMapOfEnum
+        /// </summary>
+        [DataMember(Name="map_map_of_enum", EmitDefaultValue=false)]
+        public Dictionary<string, Dictionary<string, string>> MapMapOfEnum { get; set; }
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -78,6 +87,7 @@ namespace IO.Swagger.Model
             var sb = new StringBuilder();
             sb.Append("class MapTest {\n");
             sb.Append("  MapMapOfString: ").Append(MapMapOfString).Append("\n");
+            sb.Append("  MapMapOfEnum: ").Append(MapMapOfEnum).Append("\n");
             sb.Append("  MapOfEnumString: ").Append(MapOfEnumString).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -121,6 +131,11 @@ namespace IO.Swagger.Model
                     this.MapMapOfString.SequenceEqual(other.MapMapOfString)
                 ) && 
                 (
+                    this.MapMapOfEnum == other.MapMapOfEnum ||
+                    this.MapMapOfEnum != null &&
+                    this.MapMapOfEnum.SequenceEqual(other.MapMapOfEnum)
+                ) && 
+                (
                     this.MapOfEnumString == other.MapOfEnumString ||
                     this.MapOfEnumString != null &&
                     this.MapOfEnumString.SequenceEqual(other.MapOfEnumString)
@@ -140,10 +155,22 @@ namespace IO.Swagger.Model
                 // Suitable nullity checks etc, of course :)
                 if (this.MapMapOfString != null)
                     hash = hash * 59 + this.MapMapOfString.GetHashCode();
+                if (this.MapMapOfEnum != null)
+                    hash = hash * 59 + this.MapMapOfEnum.GetHashCode();
                 if (this.MapOfEnumString != null)
                     hash = hash * 59 + this.MapOfEnumString.GetHashCode();
                 return hash;
             }
+        }
+
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        { 
+            yield break;
         }
     }
 

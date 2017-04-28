@@ -56,14 +56,13 @@ Please follow the [installation procedure](#installation--usage) and then run th
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-$api_instance = new Swagger\Client\Api\FakeApi();
-$body = new \Swagger\Client\Model\Client(); // \Swagger\Client\Model\Client | client model
+$api_instance = new Swagger\Client\Api\CatalogApi();
 
 try {
-    $result = $api_instance->testClientModel($body);
+    $result = $api_instance->definition1();
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling FakeApi->testClientModel: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling CatalogApi->definition1: ', $e->getMessage(), PHP_EOL;
 }
 
 ?>
@@ -71,10 +70,13 @@ try {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://petstore.swagger.io:80/v2*
+All URIs are relative to *http://petstore.swagger.io/v2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*CatalogApi* | [**definition1**](docs/Api/CatalogApi.md#definition1) | **GET** /api/fakedef1 | Definition 1
+*CatalogApi* | [**definition2**](docs/Api/CatalogApi.md#definition2) | **GET** /api/fakedef2 | Definition 2
+*CatalogApi* | [**definition3**](docs/Api/CatalogApi.md#definition3) | **GET** /api/fakedef3 | Definition 3
 *FakeApi* | [**testClientModel**](docs/Api/FakeApi.md#testclientmodel) | **PATCH** /fake | To test \&quot;client\&quot; model
 *FakeApi* | [**testEndpointParameters**](docs/Api/FakeApi.md#testendpointparameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트
 *FakeApi* | [**testEnumParameters**](docs/Api/FakeApi.md#testenumparameters) | **GET** /fake | To test enum parameters
@@ -87,9 +89,9 @@ Class | Method | HTTP request | Description
 *PetApi* | [**updatePet**](docs/Api/PetApi.md#updatepet) | **PUT** /pet | Update an existing pet
 *PetApi* | [**updatePetWithForm**](docs/Api/PetApi.md#updatepetwithform) | **POST** /pet/{petId} | Updates a pet in the store with form data
 *PetApi* | [**uploadFile**](docs/Api/PetApi.md#uploadfile) | **POST** /pet/{petId}/uploadImage | uploads an image
-*StoreApi* | [**deleteOrder**](docs/Api/StoreApi.md#deleteorder) | **DELETE** /store/order/{order_id} | Delete purchase order by ID
+*StoreApi* | [**deleteOrder**](docs/Api/StoreApi.md#deleteorder) | **DELETE** /store/order/{orderId} | Delete purchase order by ID
 *StoreApi* | [**getInventory**](docs/Api/StoreApi.md#getinventory) | **GET** /store/inventory | Returns pet inventories by status
-*StoreApi* | [**getOrderById**](docs/Api/StoreApi.md#getorderbyid) | **GET** /store/order/{order_id} | Find purchase order by ID
+*StoreApi* | [**getOrderById**](docs/Api/StoreApi.md#getorderbyid) | **GET** /store/order/{orderId} | Find purchase order by ID
 *StoreApi* | [**placeOrder**](docs/Api/StoreApi.md#placeorder) | **POST** /store/order | Place an order for a pet
 *UserApi* | [**createUser**](docs/Api/UserApi.md#createuser) | **POST** /user | Create user
 *UserApi* | [**createUsersWithArrayInput**](docs/Api/UserApi.md#createuserswitharrayinput) | **POST** /user/createWithArray | Creates list of users with given input array
@@ -110,11 +112,13 @@ Class | Method | HTTP request | Description
  - [ArrayOfArrayOfNumberOnly](docs/Model/ArrayOfArrayOfNumberOnly.md)
  - [ArrayOfNumberOnly](docs/Model/ArrayOfNumberOnly.md)
  - [ArrayTest](docs/Model/ArrayTest.md)
- - [Capitalization](docs/Model/Capitalization.md)
  - [Cat](docs/Model/Cat.md)
  - [Category](docs/Model/Category.md)
  - [ClassModel](docs/Model/ClassModel.md)
  - [Client](docs/Model/Client.md)
+ - [Definition1](docs/Model/Definition1.md)
+ - [Definition2](docs/Model/Definition2.md)
+ - [Definition3](docs/Model/Definition3.md)
  - [Dog](docs/Model/Dog.md)
  - [EnumArrays](docs/Model/EnumArrays.md)
  - [EnumClass](docs/Model/EnumClass.md)

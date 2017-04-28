@@ -156,16 +156,25 @@ __PACKAGE__->method_documentation({
     	format => '',
     	read_only => '',
     		},
+    'array_array_enum' => {
+    	datatype => 'ARRAY[ARRAY[string]]',
+    	base_name => 'array_array_enum',
+    	description => '',
+    	format => '',
+    	read_only => '',
+    		},
 });
 
 __PACKAGE__->swagger_types( {
     'just_symbol' => 'string',
-    'array_enum' => 'ARRAY[string]'
+    'array_enum' => 'ARRAY[string]',
+    'array_array_enum' => 'ARRAY[ARRAY[string]]'
 } );
 
 __PACKAGE__->attribute_map( {
     'just_symbol' => 'just_symbol',
-    'array_enum' => 'array_enum'
+    'array_enum' => 'array_enum',
+    'array_array_enum' => 'array_array_enum'
 } );
 
 __PACKAGE__->mk_accessors(keys %{__PACKAGE__->attribute_map});

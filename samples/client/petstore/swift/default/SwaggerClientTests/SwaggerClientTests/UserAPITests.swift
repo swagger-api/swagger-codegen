@@ -51,7 +51,7 @@ class UserAPITests: XCTestCase {
         newUser.email = "test@test.com"
         // TODO comment out the following as dateOfBirth has been removed
         // from petstore.json, we'll need to add back the test after switching
-        // to petstore-with-fake-endpoints-models-for-testing.yaml
+        // to fake-endpoints-v2/petstore.yaml
         ////newUser.dateOfBirth = ISOFullDate.from(string: "1999-12-31")
         newUser.firstName = "Test"
         newUser.lastName = "Tester"
@@ -91,7 +91,7 @@ class UserAPITests: XCTestCase {
                 XCTAssert(user.phone == "867-5309", "invalid phone")
                 // TODO comment out the following as dateOfBirth has been removed
                 // from petstore.json, we'll need to add back the test after switching
-                // to petstore-with-fake-endpoints-models-for-testing.yaml
+                // to fake-endpoints-v2/petstore.yaml
                 //XCTAssert(user.dateOfBirth?.description == "1999-12-31", "invalid date of birth")
 
                 expectation.fulfill()

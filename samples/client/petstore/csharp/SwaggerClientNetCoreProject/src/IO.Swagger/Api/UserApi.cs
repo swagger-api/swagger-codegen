@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using RestSharp.Portable;
+using RestSharp;
 using IO.Swagger.Client;
 using IO.Swagger.Model;
 
@@ -501,9 +501,9 @@ namespace IO.Swagger.Api
             if (body == null)
                 throw new ApiException(400, "Missing required parameter 'body' when calling UserApi->CreateUser");
 
-            var localVarPath = "./user";
+            var localVarPath = "/user";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -548,7 +548,7 @@ namespace IO.Swagger.Api
 
             
             return new ApiResponse<Object>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
 
@@ -576,9 +576,9 @@ namespace IO.Swagger.Api
             if (body == null)
                 throw new ApiException(400, "Missing required parameter 'body' when calling UserApi->CreateUser");
 
-            var localVarPath = "./user";
+            var localVarPath = "/user";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -623,7 +623,7 @@ namespace IO.Swagger.Api
 
             
             return new ApiResponse<Object>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
 
@@ -650,9 +650,9 @@ namespace IO.Swagger.Api
             if (body == null)
                 throw new ApiException(400, "Missing required parameter 'body' when calling UserApi->CreateUsersWithArrayInput");
 
-            var localVarPath = "./user/createWithArray";
+            var localVarPath = "/user/createWithArray";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -697,7 +697,7 @@ namespace IO.Swagger.Api
 
             
             return new ApiResponse<Object>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
 
@@ -725,9 +725,9 @@ namespace IO.Swagger.Api
             if (body == null)
                 throw new ApiException(400, "Missing required parameter 'body' when calling UserApi->CreateUsersWithArrayInput");
 
-            var localVarPath = "./user/createWithArray";
+            var localVarPath = "/user/createWithArray";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -772,7 +772,7 @@ namespace IO.Swagger.Api
 
             
             return new ApiResponse<Object>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
 
@@ -799,9 +799,9 @@ namespace IO.Swagger.Api
             if (body == null)
                 throw new ApiException(400, "Missing required parameter 'body' when calling UserApi->CreateUsersWithListInput");
 
-            var localVarPath = "./user/createWithList";
+            var localVarPath = "/user/createWithList";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -846,7 +846,7 @@ namespace IO.Swagger.Api
 
             
             return new ApiResponse<Object>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
 
@@ -874,9 +874,9 @@ namespace IO.Swagger.Api
             if (body == null)
                 throw new ApiException(400, "Missing required parameter 'body' when calling UserApi->CreateUsersWithListInput");
 
-            var localVarPath = "./user/createWithList";
+            var localVarPath = "/user/createWithList";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -921,7 +921,7 @@ namespace IO.Swagger.Api
 
             
             return new ApiResponse<Object>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
 
@@ -948,9 +948,9 @@ namespace IO.Swagger.Api
             if (username == null)
                 throw new ApiException(400, "Missing required parameter 'username' when calling UserApi->DeleteUser");
 
-            var localVarPath = "./user/{username}";
+            var localVarPath = "/user/{username}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -988,7 +988,7 @@ namespace IO.Swagger.Api
 
             
             return new ApiResponse<Object>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
 
@@ -1016,9 +1016,9 @@ namespace IO.Swagger.Api
             if (username == null)
                 throw new ApiException(400, "Missing required parameter 'username' when calling UserApi->DeleteUser");
 
-            var localVarPath = "./user/{username}";
+            var localVarPath = "/user/{username}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -1056,7 +1056,7 @@ namespace IO.Swagger.Api
 
             
             return new ApiResponse<Object>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
 
@@ -1084,9 +1084,9 @@ namespace IO.Swagger.Api
             if (username == null)
                 throw new ApiException(400, "Missing required parameter 'username' when calling UserApi->GetUserByName");
 
-            var localVarPath = "./user/{username}";
+            var localVarPath = "/user/{username}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -1123,7 +1123,7 @@ namespace IO.Swagger.Api
             }
 
             return new ApiResponse<User>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (User) Configuration.ApiClient.Deserialize(localVarResponse, typeof(User)));
             
         }
@@ -1153,9 +1153,9 @@ namespace IO.Swagger.Api
             if (username == null)
                 throw new ApiException(400, "Missing required parameter 'username' when calling UserApi->GetUserByName");
 
-            var localVarPath = "./user/{username}";
+            var localVarPath = "/user/{username}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -1192,7 +1192,7 @@ namespace IO.Swagger.Api
             }
 
             return new ApiResponse<User>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (User) Configuration.ApiClient.Deserialize(localVarResponse, typeof(User)));
             
         }
@@ -1226,9 +1226,9 @@ namespace IO.Swagger.Api
             if (password == null)
                 throw new ApiException(400, "Missing required parameter 'password' when calling UserApi->LoginUser");
 
-            var localVarPath = "./user/login";
+            var localVarPath = "/user/login";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -1248,8 +1248,8 @@ namespace IO.Swagger.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (username != null) localVarQueryParams.Add("username", Configuration.ApiClient.ParameterToString(username)); // query parameter
-            if (password != null) localVarQueryParams.Add("password", Configuration.ApiClient.ParameterToString(password)); // query parameter
+            if (username != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "username", username)); // query parameter
+            if (password != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "password", password)); // query parameter
 
 
             // make the HTTP request
@@ -1266,7 +1266,7 @@ namespace IO.Swagger.Api
             }
 
             return new ApiResponse<string>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (string) Configuration.ApiClient.Deserialize(localVarResponse, typeof(string)));
             
         }
@@ -1301,9 +1301,9 @@ namespace IO.Swagger.Api
             if (password == null)
                 throw new ApiException(400, "Missing required parameter 'password' when calling UserApi->LoginUser");
 
-            var localVarPath = "./user/login";
+            var localVarPath = "/user/login";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -1323,8 +1323,8 @@ namespace IO.Swagger.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (username != null) localVarQueryParams.Add("username", Configuration.ApiClient.ParameterToString(username)); // query parameter
-            if (password != null) localVarQueryParams.Add("password", Configuration.ApiClient.ParameterToString(password)); // query parameter
+            if (username != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "username", username)); // query parameter
+            if (password != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "password", password)); // query parameter
 
 
             // make the HTTP request
@@ -1341,7 +1341,7 @@ namespace IO.Swagger.Api
             }
 
             return new ApiResponse<string>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (string) Configuration.ApiClient.Deserialize(localVarResponse, typeof(string)));
             
         }
@@ -1364,9 +1364,9 @@ namespace IO.Swagger.Api
         public ApiResponse<Object> LogoutUserWithHttpInfo ()
         {
 
-            var localVarPath = "./user/logout";
+            var localVarPath = "/user/logout";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -1403,7 +1403,7 @@ namespace IO.Swagger.Api
 
             
             return new ApiResponse<Object>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
 
@@ -1426,9 +1426,9 @@ namespace IO.Swagger.Api
         public async System.Threading.Tasks.Task<ApiResponse<Object>> LogoutUserAsyncWithHttpInfo ()
         {
 
-            var localVarPath = "./user/logout";
+            var localVarPath = "/user/logout";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -1465,7 +1465,7 @@ namespace IO.Swagger.Api
 
             
             return new ApiResponse<Object>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
 
@@ -1497,9 +1497,9 @@ namespace IO.Swagger.Api
             if (body == null)
                 throw new ApiException(400, "Missing required parameter 'body' when calling UserApi->UpdateUser");
 
-            var localVarPath = "./user/{username}";
+            var localVarPath = "/user/{username}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -1545,7 +1545,7 @@ namespace IO.Swagger.Api
 
             
             return new ApiResponse<Object>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
 
@@ -1578,9 +1578,9 @@ namespace IO.Swagger.Api
             if (body == null)
                 throw new ApiException(400, "Missing required parameter 'body' when calling UserApi->UpdateUser");
 
-            var localVarPath = "./user/{username}";
+            var localVarPath = "/user/{username}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -1626,7 +1626,7 @@ namespace IO.Swagger.Api
 
             
             return new ApiResponse<Object>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
 

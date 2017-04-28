@@ -40,7 +40,7 @@ type Configuration struct {
 
 func NewConfiguration() *Configuration {
 	cfg := &Configuration{
-		BasePath:      "http://petstore.swagger.io:80/v2",
+		BasePath:      "http://petstore.swagger.io/v2",
 		DefaultHeader: make(map[string]string),
 		UserAgent:     "Swagger-Codegen/1.0.0/go",
 	}

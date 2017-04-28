@@ -10,7 +10,7 @@
 
 
 using System;
-using RestSharp.Portable;
+using RestSharp;
 
 namespace IO.Swagger.Client
 {

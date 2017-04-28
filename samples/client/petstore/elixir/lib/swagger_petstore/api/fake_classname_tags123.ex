@@ -8,6 +8,11 @@ defmodule SwaggerPetstore.Api.Fake_classname_tags123 do
   plug Tesla.Middleware.BaseUrl, "http://petstore.swagger.io/v2"
   plug Tesla.Middleware.JSON
 
+  @doc """
+  To test class name in snake case
+
+  
+  """
   def test_classname(body) do
     method = [method: :patch]
     url = [url: "/fake_classname_test"]

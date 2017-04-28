@@ -123,8 +123,9 @@ export class FakeService {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Put,
             headers: headers,
-            body: formParams,
-            search: queryParameters
+            body: formParams.toString(),
+            search: queryParameters,
+            withCredentials:true
         });
 
         // https://github.com/swagger-api/swagger-codegen/issues/4037

@@ -76,6 +76,9 @@ public enum ArrayEnumEnum {
 
   private List<ArrayEnumEnum> arrayEnum = new ArrayList<ArrayEnumEnum>();
 
+
+  private List<List<ArrayArrayEnumEnum>> arrayArrayEnum = new ArrayList<List<ArrayArrayEnumEnum>>();
+
   /**
    **/
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {
@@ -108,6 +111,22 @@ public enum ArrayEnumEnum {
     this.arrayEnum = arrayEnum;
   }
 
+  /**
+   **/
+  public EnumArrays arrayArrayEnum(List<List<ArrayArrayEnumEnum>> arrayArrayEnum) {
+    this.arrayArrayEnum = arrayArrayEnum;
+    return this;
+  }
+
+  
+  @ApiModelProperty(value = "")
+  public List<List<ArrayArrayEnumEnum>> getArrayArrayEnum() {
+    return arrayArrayEnum;
+  }
+  public void setArrayArrayEnum(List<List<ArrayArrayEnumEnum>> arrayArrayEnum) {
+    this.arrayArrayEnum = arrayArrayEnum;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -119,12 +138,13 @@ public enum ArrayEnumEnum {
     }
     EnumArrays enumArrays = (EnumArrays) o;
     return Objects.equals(justSymbol, enumArrays.justSymbol) &&
-        Objects.equals(arrayEnum, enumArrays.arrayEnum);
+        Objects.equals(arrayEnum, enumArrays.arrayEnum) &&
+        Objects.equals(arrayArrayEnum, enumArrays.arrayArrayEnum);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(justSymbol, arrayEnum);
+    return Objects.hash(justSymbol, arrayEnum, arrayArrayEnum);
   }
 
   @Override
@@ -134,6 +154,7 @@ public enum ArrayEnumEnum {
     
     sb.append("    justSymbol: ").append(toIndentedString(justSymbol)).append("\n");
     sb.append("    arrayEnum: ").append(toIndentedString(arrayEnum)).append("\n");
+    sb.append("    arrayArrayEnum: ").append(toIndentedString(arrayArrayEnum)).append("\n");
     sb.append("}");
     return sb.toString();
   }

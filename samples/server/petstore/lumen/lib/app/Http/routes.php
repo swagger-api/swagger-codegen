@@ -22,6 +22,27 @@ $app->get('/', function () use ($app) {
 });
 
 /**
+ * GET definition1
+ * Summary: Definition 1
+ * Notes: 
+ * Output-Formats: [application/json, text/json, application/xml, text/xml]
+ */
+$app->GET('/v2/api/fakedef1', 'CatalogApi@definition1');
+/**
+ * GET definition2
+ * Summary: Definition 2
+ * Notes: 
+ * Output-Formats: [application/json, text/json, application/xml, text/xml]
+ */
+$app->GET('/v2/api/fakedef2', 'CatalogApi@definition2');
+/**
+ * GET definition3
+ * Summary: Definition 3
+ * Notes: 
+ * Output-Formats: [application/json, text/json, application/xml, text/xml]
+ */
+$app->GET('/v2/api/fakedef3', 'CatalogApi@definition3');
+/**
  * PATCH testClientModel
  * Summary: To test \&quot;client\&quot; model
  * Notes: To test \&quot;client\&quot; model
@@ -125,14 +146,14 @@ $app->POST('/v2/store/order', 'StoreApi@placeOrder');
  * Notes: For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
  * Output-Formats: [application/xml, application/json]
  */
-$app->DELETE('/v2/store/order/{order_id}', 'StoreApi@deleteOrder');
+$app->DELETE('/v2/store/order/{orderId}', 'StoreApi@deleteOrder');
 /**
  * GET getOrderById
  * Summary: Find purchase order by ID
  * Notes: For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
  * Output-Formats: [application/xml, application/json]
  */
-$app->GET('/v2/store/order/{order_id}', 'StoreApi@getOrderById');
+$app->GET('/v2/store/order/{orderId}', 'StoreApi@getOrderById');
 /**
  * POST createUser
  * Summary: Create user

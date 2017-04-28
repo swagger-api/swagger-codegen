@@ -68,6 +68,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
       };
       var formParams = {
@@ -81,7 +83,7 @@
 
       return this.apiClient.callApi(
         '/fake', 'PUT',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
     }

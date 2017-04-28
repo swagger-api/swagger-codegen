@@ -1,6 +1,41 @@
 path_handler:
   routes:
     routes:
+      'api':
+        type: Literal
+        options:
+          route: /api
+        child_routes:
+          'fakedef1':
+            type: Literal
+            options:
+              route: /fakedef1
+              defaults:
+                handler: ApiFakedef1
+          'fakedef2':
+            type: Literal
+            options:
+              route: /fakedef2
+              defaults:
+                handler: ApiFakedef2
+          'fakedef3':
+            type: Literal
+            options:
+              route: /fakedef3
+              defaults:
+                handler: ApiFakedef3
+      'fake':
+        type: Literal
+        options:
+          route: /fake
+          defaults:
+            handler: Fake
+      'fake_classname_test':
+        type: Literal
+        options:
+          route: /fake_classname_test
+          defaults:
+            handler: FakeClassnameTest
       'pet':
         type: Literal
         options:
@@ -112,6 +147,11 @@ path_handler:
 
   handlers:
     invokables:
+      ApiFakedef1: App\Handler\ApiFakedef1
+      ApiFakedef2: App\Handler\ApiFakedef2
+      ApiFakedef3: App\Handler\ApiFakedef3
+      Fake: App\Handler\Fake
+      FakeClassnameTest: App\Handler\FakeClassnameTest
       Pet: App\Handler\Pet
       PetFindByStatus: App\Handler\PetFindByStatus
       PetFindByTags: App\Handler\PetFindByTags

@@ -48,18 +48,17 @@ namespace Example
         public void main()
         {
             
-            var apiInstance = new FakeApi();
-            var body = new ModelClient(); // ModelClient | client model
+            var apiInstance = new CatalogApi();
 
             try
             {
-                // To test \"client\" model
-                ModelClient result = apiInstance.TestClientModel(body);
+                // Definition 1
+                List<Definition1> result = apiInstance.Definition1();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling FakeApi.TestClientModel: " + e.Message );
+                Debug.Print("Exception when calling CatalogApi.Definition1: " + e.Message );
             }
         }
     }
@@ -69,10 +68,13 @@ namespace Example
 <a name="documentation-for-api-endpoints"></a>
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://petstore.swagger.io:80/v2*
+All URIs are relative to *http://petstore.swagger.io/v2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*CatalogApi* | [**Definition1**](docs/CatalogApi.md#definition1) | **GET** /api/fakedef1 | Definition 1
+*CatalogApi* | [**Definition2**](docs/CatalogApi.md#definition2) | **GET** /api/fakedef2 | Definition 2
+*CatalogApi* | [**Definition3**](docs/CatalogApi.md#definition3) | **GET** /api/fakedef3 | Definition 3
 *FakeApi* | [**TestClientModel**](docs/FakeApi.md#testclientmodel) | **PATCH** /fake | To test \"client\" model
 *FakeApi* | [**TestEndpointParameters**](docs/FakeApi.md#testendpointparameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 *FakeApi* | [**TestEnumParameters**](docs/FakeApi.md#testenumparameters) | **GET** /fake | To test enum parameters
@@ -85,9 +87,9 @@ Class | Method | HTTP request | Description
 *PetApi* | [**UpdatePet**](docs/PetApi.md#updatepet) | **PUT** /pet | Update an existing pet
 *PetApi* | [**UpdatePetWithForm**](docs/PetApi.md#updatepetwithform) | **POST** /pet/{petId} | Updates a pet in the store with form data
 *PetApi* | [**UploadFile**](docs/PetApi.md#uploadfile) | **POST** /pet/{petId}/uploadImage | uploads an image
-*StoreApi* | [**DeleteOrder**](docs/StoreApi.md#deleteorder) | **DELETE** /store/order/{order_id} | Delete purchase order by ID
+*StoreApi* | [**DeleteOrder**](docs/StoreApi.md#deleteorder) | **DELETE** /store/order/{orderId} | Delete purchase order by ID
 *StoreApi* | [**GetInventory**](docs/StoreApi.md#getinventory) | **GET** /store/inventory | Returns pet inventories by status
-*StoreApi* | [**GetOrderById**](docs/StoreApi.md#getorderbyid) | **GET** /store/order/{order_id} | Find purchase order by ID
+*StoreApi* | [**GetOrderById**](docs/StoreApi.md#getorderbyid) | **GET** /store/order/{orderId} | Find purchase order by ID
 *StoreApi* | [**PlaceOrder**](docs/StoreApi.md#placeorder) | **POST** /store/order | Place an order for a pet
 *UserApi* | [**CreateUser**](docs/UserApi.md#createuser) | **POST** /user | Create user
 *UserApi* | [**CreateUsersWithArrayInput**](docs/UserApi.md#createuserswitharrayinput) | **POST** /user/createWithArray | Creates list of users with given input array
@@ -109,10 +111,12 @@ Class | Method | HTTP request | Description
  - [Model.ArrayOfArrayOfNumberOnly](docs/ArrayOfArrayOfNumberOnly.md)
  - [Model.ArrayOfNumberOnly](docs/ArrayOfNumberOnly.md)
  - [Model.ArrayTest](docs/ArrayTest.md)
- - [Model.Capitalization](docs/Capitalization.md)
  - [Model.Cat](docs/Cat.md)
  - [Model.Category](docs/Category.md)
  - [Model.ClassModel](docs/ClassModel.md)
+ - [Model.Definition1](docs/Definition1.md)
+ - [Model.Definition2](docs/Definition2.md)
+ - [Model.Definition3](docs/Definition3.md)
  - [Model.Dog](docs/Dog.md)
  - [Model.EnumArrays](docs/EnumArrays.md)
  - [Model.EnumClass](docs/EnumClass.md)

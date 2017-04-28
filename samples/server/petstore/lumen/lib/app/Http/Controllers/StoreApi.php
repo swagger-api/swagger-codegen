@@ -83,6 +83,9 @@ class StoreApi extends Controller
         $input = Request::all();
 
         //path params validation
+        if ($order_id] < 1) {
+            throw new \InvalidArgumentException('invalid value for $order_id when calling StoreApi.deleteOrder, must be bigger than or equal to 1.');
+        }
 
 
         //not path params validation

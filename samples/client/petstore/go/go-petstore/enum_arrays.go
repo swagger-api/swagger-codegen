@@ -15,4 +15,6 @@ type EnumArrays struct {
 	JustSymbol string `json:"just_symbol,omitempty"`
 
 	ArrayEnum []string `json:"array_enum,omitempty"`
+
+	ArrayArrayEnum [][]string `json:"array_array_enum,omitempty"`
 }

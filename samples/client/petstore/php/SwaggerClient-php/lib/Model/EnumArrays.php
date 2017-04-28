@@ -55,7 +55,8 @@ class EnumArrays implements ArrayAccess
       */
     protected static $swaggerTypes = [
         'just_symbol' => 'string',
-        'array_enum' => 'string[]'
+        'array_enum' => 'string[]',
+        'array_array_enum' => 'string[][]'
     ];
 
     public static function swaggerTypes()
@@ -69,7 +70,8 @@ class EnumArrays implements ArrayAccess
      */
     protected static $attributeMap = [
         'just_symbol' => 'just_symbol',
-        'array_enum' => 'array_enum'
+        'array_enum' => 'array_enum',
+        'array_array_enum' => 'array_array_enum'
     ];
 
 
@@ -79,7 +81,8 @@ class EnumArrays implements ArrayAccess
      */
     protected static $setters = [
         'just_symbol' => 'setJustSymbol',
-        'array_enum' => 'setArrayEnum'
+        'array_enum' => 'setArrayEnum',
+        'array_array_enum' => 'setArrayArrayEnum'
     ];
 
 
@@ -89,7 +92,8 @@ class EnumArrays implements ArrayAccess
      */
     protected static $getters = [
         'just_symbol' => 'getJustSymbol',
-        'array_enum' => 'getArrayEnum'
+        'array_enum' => 'getArrayEnum',
+        'array_array_enum' => 'getArrayArrayEnum'
     ];
 
     public static function attributeMap()
@@ -111,6 +115,8 @@ class EnumArrays implements ArrayAccess
     const JUST_SYMBOL_DOLLAR = '$';
     const ARRAY_ENUM_FISH = 'fish';
     const ARRAY_ENUM_CRAB = 'crab';
+    const ARRAY_ARRAY_ENUM_CAT = 'Cat';
+    const ARRAY_ARRAY_ENUM_DOG = 'Dog';
     
 
     
@@ -138,6 +144,18 @@ class EnumArrays implements ArrayAccess
         ];
     }
     
+    /**
+     * Gets allowable values of the enum
+     * @return string[]
+     */
+    public function getArrayArrayEnumAllowableValues()
+    {
+        return [
+            self::ARRAY_ARRAY_ENUM_CAT,
+            self::ARRAY_ARRAY_ENUM_DOG,
+        ];
+    }
+    
 
     /**
      * Associative array for storing property values
@@ -153,6 +171,7 @@ class EnumArrays implements ArrayAccess
     {
         $this->container['just_symbol'] = isset($data['just_symbol']) ? $data['just_symbol'] : null;
         $this->container['array_enum'] = isset($data['array_enum']) ? $data['array_enum'] : null;
+        $this->container['array_array_enum'] = isset($data['array_array_enum']) ? $data['array_array_enum'] : null;
     }
 
     /**
@@ -248,6 +267,36 @@ class EnumArrays implements ArrayAccess
             );
         }
         $this->container['array_enum'] = $array_enum;
+
+        return $this;
+    }
+
+    /**
+     * Gets array_array_enum
+     * @return string[][]
+     */
+    public function getArrayArrayEnum()
+    {
+        return $this->container['array_array_enum'];
+    }
+
+    /**
+     * Sets array_array_enum
+     * @param string[][] $array_array_enum
+     * @return $this
+     */
+    public function setArrayArrayEnum($array_array_enum)
+    {
+        $allowed_values = $this->getArrayArrayEnumAllowableValues();
+        if (!is_null($array_array_enum) && array_diff($array_array_enum, $allowed_values)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'array_array_enum', must be one of '%s'",
+                    implode("', '", $allowed_values)
+                )
+            );
+        }
+        $this->container['array_array_enum'] = $array_array_enum;
 
         return $this;
     }

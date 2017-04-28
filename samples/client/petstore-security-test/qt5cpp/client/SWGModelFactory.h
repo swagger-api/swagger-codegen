@@ -14,12 +14,12 @@
 #define ModelFactory_H_
 
 
-#include "SWGReturn.h"
+#include "Return.h"
 
 namespace Swagger {
   inline void* create(QString type) {
-    if(QString("SWGReturn").compare(type) == 0) {
-      return new SWGReturn();
+    if(QString("Return").compare(type) == 0) {
+      return new Return();
     }
     
     return nullptr;

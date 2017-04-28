@@ -149,6 +149,13 @@ __PACKAGE__->method_documentation({
     	format => '',
     	read_only => '',
     		},
+    'map_map_of_enum' => {
+    	datatype => 'HASH[string,HASH[string,string]]',
+    	base_name => 'map_map_of_enum',
+    	description => '',
+    	format => '',
+    	read_only => '',
+    		},
     'map_of_enum_string' => {
     	datatype => 'HASH[string,string]',
     	base_name => 'map_of_enum_string',
@@ -160,11 +167,13 @@ __PACKAGE__->method_documentation({
 
 __PACKAGE__->swagger_types( {
     'map_map_of_string' => 'HASH[string,HASH[string,string]]',
+    'map_map_of_enum' => 'HASH[string,HASH[string,string]]',
     'map_of_enum_string' => 'HASH[string,string]'
 } );
 
 __PACKAGE__->attribute_map( {
     'map_map_of_string' => 'map_map_of_string',
+    'map_map_of_enum' => 'map_map_of_enum',
     'map_of_enum_string' => 'map_of_enum_string'
 } );
 

@@ -13,7 +13,7 @@ public class EnumTest   {
 
 public enum EnumStringEnum {
 
-    UPPER(String.valueOf("UPPER")), LOWER(String.valueOf("lower")), EMPTY(String.valueOf(""));
+    UPPER(String.valueOf("UPPER")), LOWER(String.valueOf("lower"));
 
 
     private String value;

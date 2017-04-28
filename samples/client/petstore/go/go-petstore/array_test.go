@@ -17,4 +17,6 @@ type ArrayTest struct {
 	ArrayArrayOfInteger [][]int64 `json:"array_array_of_integer,omitempty"`
 
 	ArrayArrayOfModel [][]ReadOnlyFirst `json:"array_array_of_model,omitempty"`
+
+	ArrayOfEnum []string `json:"array_of_enum,omitempty"`
 }

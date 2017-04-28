@@ -13,6 +13,7 @@ import java.util.Objects;
 public class MapTest   {
   
   private Map<String, Map<String, String>> mapMapOfString = new HashMap<String, Map<String, String>>();
+  private Map<String, Map<String, String>> mapMapOfEnum = new HashMap<String, Map<String, String>>();
 
 public enum InnerEnum {
 
@@ -64,6 +65,22 @@ public enum InnerEnum {
 
   /**
    **/
+  public MapTest mapMapOfEnum(Map<String, Map<String, String>> mapMapOfEnum) {
+    this.mapMapOfEnum = mapMapOfEnum;
+    return this;
+  }
+
+  
+  @ApiModelProperty(value = "")
+  public Map<String, Map<String, String>> getMapMapOfEnum() {
+    return mapMapOfEnum;
+  }
+  public void setMapMapOfEnum(Map<String, Map<String, String>> mapMapOfEnum) {
+    this.mapMapOfEnum = mapMapOfEnum;
+  }
+
+  /**
+   **/
   public MapTest mapOfEnumString(Map<String, InnerEnum> mapOfEnumString) {
     this.mapOfEnumString = mapOfEnumString;
     return this;
@@ -89,12 +106,13 @@ public enum InnerEnum {
     }
     MapTest mapTest = (MapTest) o;
     return Objects.equals(mapMapOfString, mapTest.mapMapOfString) &&
+        Objects.equals(mapMapOfEnum, mapTest.mapMapOfEnum) &&
         Objects.equals(mapOfEnumString, mapTest.mapOfEnumString);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(mapMapOfString, mapOfEnumString);
+    return Objects.hash(mapMapOfString, mapMapOfEnum, mapOfEnumString);
   }
 
   @Override
@@ -103,6 +121,7 @@ public enum InnerEnum {
     sb.append("class MapTest {\n");
     
     sb.append("    mapMapOfString: ").append(toIndentedString(mapMapOfString)).append("\n");
+    sb.append("    mapMapOfEnum: ").append(toIndentedString(mapMapOfEnum)).append("\n");
     sb.append("    mapOfEnumString: ").append(toIndentedString(mapOfEnumString)).append("\n");
     sb.append("}");
     return sb.toString();

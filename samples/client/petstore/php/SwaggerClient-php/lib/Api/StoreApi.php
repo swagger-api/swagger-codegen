@@ -112,8 +112,12 @@ class StoreApi
         if ($order_id === null) {
             throw new \InvalidArgumentException('Missing the required parameter $order_id when calling deleteOrder');
         }
+        if ($order_id < 1) {
+            throw new \InvalidArgumentException('invalid value for "$order_id" when calling StoreApi.deleteOrder, must be bigger than or equal to 1.');
+        }
 
-        $resourcePath = '/store/order/{order_id}';
+
+        $resourcePath = '/store/order/{orderId}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -124,7 +128,7 @@ class StoreApi
 
         // path params
         if ($order_id !== null) {
-            $resourcePath = str_replace('{' . 'order_id' . '}', ObjectSerializer::toPathValue($order_id), $resourcePath);
+            $resourcePath = str_replace('{' . 'orderId' . '}', ObjectSerializer::toPathValue($order_id), $resourcePath);
         }
 
         
@@ -397,7 +401,7 @@ class StoreApi
         }
 
 
-        $resourcePath = '/store/order/{order_id}';
+        $resourcePath = '/store/order/{orderId}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -408,7 +412,7 @@ class StoreApi
 
         // path params
         if ($order_id !== null) {
-            $resourcePath = str_replace('{' . 'order_id' . '}', ObjectSerializer::toPathValue($order_id), $resourcePath);
+            $resourcePath = str_replace('{' . 'orderId' . '}', ObjectSerializer::toPathValue($order_id), $resourcePath);
         }
 
         

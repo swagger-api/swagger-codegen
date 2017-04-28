@@ -19,7 +19,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>sbt</executable>
+                            <executable>/usr/local/bin/sbt</executable>
                             <arguments>
                                 <argument>test</argument>
                             </arguments>

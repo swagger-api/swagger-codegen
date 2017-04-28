@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using RestSharp.Portable;
+using RestSharp;
 using IO.Swagger.Client;
 using IO.Swagger.Model;
 
@@ -517,9 +517,9 @@ namespace IO.Swagger.Api
             if (body == null)
                 throw new ApiException(400, "Missing required parameter 'body' when calling PetApi->AddPet");
 
-            var localVarPath = "./pet";
+            var localVarPath = "/pet";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -572,7 +572,7 @@ namespace IO.Swagger.Api
 
             
             return new ApiResponse<Object>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
 
@@ -600,9 +600,9 @@ namespace IO.Swagger.Api
             if (body == null)
                 throw new ApiException(400, "Missing required parameter 'body' when calling PetApi->AddPet");
 
-            var localVarPath = "./pet";
+            var localVarPath = "/pet";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -655,7 +655,7 @@ namespace IO.Swagger.Api
 
             
             return new ApiResponse<Object>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
 
@@ -684,9 +684,9 @@ namespace IO.Swagger.Api
             if (petId == null)
                 throw new ApiException(400, "Missing required parameter 'petId' when calling PetApi->DeletePet");
 
-            var localVarPath = "./pet/{petId}";
+            var localVarPath = "/pet/{petId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -731,7 +731,7 @@ namespace IO.Swagger.Api
 
             
             return new ApiResponse<Object>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
 
@@ -761,9 +761,9 @@ namespace IO.Swagger.Api
             if (petId == null)
                 throw new ApiException(400, "Missing required parameter 'petId' when calling PetApi->DeletePet");
 
-            var localVarPath = "./pet/{petId}";
+            var localVarPath = "/pet/{petId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -808,7 +808,7 @@ namespace IO.Swagger.Api
 
             
             return new ApiResponse<Object>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
 
@@ -836,9 +836,9 @@ namespace IO.Swagger.Api
             if (status == null)
                 throw new ApiException(400, "Missing required parameter 'status' when calling PetApi->FindPetsByStatus");
 
-            var localVarPath = "./pet/findByStatus";
+            var localVarPath = "/pet/findByStatus";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -858,7 +858,7 @@ namespace IO.Swagger.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (status != null) localVarQueryParams.Add("status", Configuration.ApiClient.ParameterToString(status)); // query parameter
+            if (status != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("csv", "status", status)); // query parameter
 
             // authentication (petstore_auth) required
             // oauth required
@@ -881,7 +881,7 @@ namespace IO.Swagger.Api
             }
 
             return new ApiResponse<List<Pet>>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Pet>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Pet>)));
             
         }
@@ -911,9 +911,9 @@ namespace IO.Swagger.Api
             if (status == null)
                 throw new ApiException(400, "Missing required parameter 'status' when calling PetApi->FindPetsByStatus");
 
-            var localVarPath = "./pet/findByStatus";
+            var localVarPath = "/pet/findByStatus";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -933,7 +933,7 @@ namespace IO.Swagger.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (status != null) localVarQueryParams.Add("status", Configuration.ApiClient.ParameterToString(status)); // query parameter
+            if (status != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("csv", "status", status)); // query parameter
 
             // authentication (petstore_auth) required
             // oauth required
@@ -956,7 +956,7 @@ namespace IO.Swagger.Api
             }
 
             return new ApiResponse<List<Pet>>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Pet>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Pet>)));
             
         }
@@ -985,9 +985,9 @@ namespace IO.Swagger.Api
             if (tags == null)
                 throw new ApiException(400, "Missing required parameter 'tags' when calling PetApi->FindPetsByTags");
 
-            var localVarPath = "./pet/findByTags";
+            var localVarPath = "/pet/findByTags";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -1007,7 +1007,7 @@ namespace IO.Swagger.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (tags != null) localVarQueryParams.Add("tags", Configuration.ApiClient.ParameterToString(tags)); // query parameter
+            if (tags != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("csv", "tags", tags)); // query parameter
 
             // authentication (petstore_auth) required
             // oauth required
@@ -1030,7 +1030,7 @@ namespace IO.Swagger.Api
             }
 
             return new ApiResponse<List<Pet>>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Pet>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Pet>)));
             
         }
@@ -1060,9 +1060,9 @@ namespace IO.Swagger.Api
             if (tags == null)
                 throw new ApiException(400, "Missing required parameter 'tags' when calling PetApi->FindPetsByTags");
 
-            var localVarPath = "./pet/findByTags";
+            var localVarPath = "/pet/findByTags";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -1082,7 +1082,7 @@ namespace IO.Swagger.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (tags != null) localVarQueryParams.Add("tags", Configuration.ApiClient.ParameterToString(tags)); // query parameter
+            if (tags != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("csv", "tags", tags)); // query parameter
 
             // authentication (petstore_auth) required
             // oauth required
@@ -1105,7 +1105,7 @@ namespace IO.Swagger.Api
             }
 
             return new ApiResponse<List<Pet>>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Pet>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Pet>)));
             
         }
@@ -1134,9 +1134,9 @@ namespace IO.Swagger.Api
             if (petId == null)
                 throw new ApiException(400, "Missing required parameter 'petId' when calling PetApi->GetPetById");
 
-            var localVarPath = "./pet/{petId}";
+            var localVarPath = "/pet/{petId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -1179,7 +1179,7 @@ namespace IO.Swagger.Api
             }
 
             return new ApiResponse<Pet>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Pet) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Pet)));
             
         }
@@ -1209,9 +1209,9 @@ namespace IO.Swagger.Api
             if (petId == null)
                 throw new ApiException(400, "Missing required parameter 'petId' when calling PetApi->GetPetById");
 
-            var localVarPath = "./pet/{petId}";
+            var localVarPath = "/pet/{petId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -1253,7 +1253,7 @@ namespace IO.Swagger.Api
             }
 
             return new ApiResponse<Pet>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Pet) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Pet)));
             
         }
@@ -1281,9 +1281,9 @@ namespace IO.Swagger.Api
             if (body == null)
                 throw new ApiException(400, "Missing required parameter 'body' when calling PetApi->UpdatePet");
 
-            var localVarPath = "./pet";
+            var localVarPath = "/pet";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -1336,7 +1336,7 @@ namespace IO.Swagger.Api
 
             
             return new ApiResponse<Object>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
 
@@ -1364,9 +1364,9 @@ namespace IO.Swagger.Api
             if (body == null)
                 throw new ApiException(400, "Missing required parameter 'body' when calling PetApi->UpdatePet");
 
-            var localVarPath = "./pet";
+            var localVarPath = "/pet";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -1419,7 +1419,7 @@ namespace IO.Swagger.Api
 
             
             return new ApiResponse<Object>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
 
@@ -1450,9 +1450,9 @@ namespace IO.Swagger.Api
             if (petId == null)
                 throw new ApiException(400, "Missing required parameter 'petId' when calling PetApi->UpdatePetWithForm");
 
-            var localVarPath = "./pet/{petId}";
+            var localVarPath = "/pet/{petId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -1499,7 +1499,7 @@ namespace IO.Swagger.Api
 
             
             return new ApiResponse<Object>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
 
@@ -1531,9 +1531,9 @@ namespace IO.Swagger.Api
             if (petId == null)
                 throw new ApiException(400, "Missing required parameter 'petId' when calling PetApi->UpdatePetWithForm");
 
-            var localVarPath = "./pet/{petId}";
+            var localVarPath = "/pet/{petId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -1580,7 +1580,7 @@ namespace IO.Swagger.Api
 
             
             return new ApiResponse<Object>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
 
@@ -1612,9 +1612,9 @@ namespace IO.Swagger.Api
             if (petId == null)
                 throw new ApiException(400, "Missing required parameter 'petId' when calling PetApi->UploadFile");
 
-            var localVarPath = "./pet/{petId}/uploadImage";
+            var localVarPath = "/pet/{petId}/uploadImage";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -1659,7 +1659,7 @@ namespace IO.Swagger.Api
             }
 
             return new ApiResponse<ApiResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (ApiResponse) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ApiResponse)));
             
         }
@@ -1693,9 +1693,9 @@ namespace IO.Swagger.Api
             if (petId == null)
                 throw new ApiException(400, "Missing required parameter 'petId' when calling PetApi->UploadFile");
 
-            var localVarPath = "./pet/{petId}/uploadImage";
+            var localVarPath = "/pet/{petId}/uploadImage";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -1740,7 +1740,7 @@ namespace IO.Swagger.Api
             }
 
             return new ApiResponse<ApiResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Key, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (ApiResponse) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ApiResponse)));
             
         }

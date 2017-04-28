@@ -14,12 +14,12 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.IO;
+using System.Web;
 using System.Linq;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json;
-using RestSharp.Portable;
-using RestSharp.Portable.HttpClient;
+using RestSharp;
 
 namespace IO.Swagger.Client
 {
@@ -48,18 +48,17 @@ namespace IO.Swagger.Client
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiClient" /> class
-        /// with default configuration and base path (http://petstore.swagger.io:80/v2).
+        /// with default configuration and base path (http://petstore.swagger.io/v2).
         /// </summary>
         public ApiClient()
         {
             Configuration = Configuration.Default;
-            RestClient = new RestClient("http://petstore.swagger.io:80/v2");
-            RestClient.IgnoreResponseStatusCode = true;
+            RestClient = new RestClient("http://petstore.swagger.io/v2");
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiClient" /> class
-        /// with default base path (http://petstore.swagger.io:80/v2).
+        /// with default base path (http://petstore.swagger.io/v2).
         /// </summary>
         /// <param name="config">An instance of Configuration.</param>
         public ApiClient(Configuration config = null)
@@ -69,8 +68,7 @@ namespace IO.Swagger.Client
             else
                 Configuration = config;
 
-            RestClient = new RestClient("http://petstore.swagger.io:80/v2");
-            RestClient.IgnoreResponseStatusCode = true;
+            RestClient = new RestClient("http://petstore.swagger.io/v2");
         }
 
         /// <summary>
@@ -78,13 +76,12 @@ namespace IO.Swagger.Client
         /// with default configuration.
         /// </summary>
         /// <param name="basePath">The base path.</param>
-        public ApiClient(String basePath = "http://petstore.swagger.io:80/v2")
+        public ApiClient(String basePath = "http://petstore.swagger.io/v2")
         {
            if (String.IsNullOrEmpty(basePath))
                 throw new ArgumentException("basePath cannot be empty");
 
             RestClient = new RestClient(basePath);
-            RestClient.IgnoreResponseStatusCode = true;
             Configuration = Configuration.Default;
         }
 
@@ -109,7 +106,7 @@ namespace IO.Swagger.Client
 
         // Creates and sets up a RestRequest prior to a call.
         private RestRequest PrepareRequest(
-            String path, Method method, Dictionary<String, String> queryParams, Object postBody,
+            String path, RestSharp.Method method, List<KeyValuePair<String, String>> queryParams, Object postBody,
             Dictionary<String, String> headerParams, Dictionary<String, String> formParams,
             Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams,
             String contentType)
@@ -135,7 +132,7 @@ namespace IO.Swagger.Client
             // add file parameter, if any
             foreach(var param in fileParams)
             {
-                request.AddFile(param.Value);
+                request.AddFile(param.Value.Name, param.Value.Writer, param.Value.FileName, param.Value.ContentType);
             }
 
             if (postBody != null) // http body (model or byte[]) parameter
@@ -167,7 +164,7 @@ namespace IO.Swagger.Client
         /// <param name="contentType">Content Type of the request</param>
         /// <returns>Object</returns>
         public Object CallApi(
-            String path, Method method, Dictionary<String, String> queryParams, Object postBody,
+            String path, RestSharp.Method method, List<KeyValuePair<String, String>> queryParams, Object postBody,
             Dictionary<String, String> headerParams, Dictionary<String, String> formParams,
             Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams,
             String contentType)
@@ -182,7 +179,7 @@ namespace IO.Swagger.Client
             RestClient.UserAgent = Configuration.UserAgent;
 
             InterceptRequest(request);
-            var response = RestClient.Execute(request).Result;
+            var response = RestClient.Execute(request);
             InterceptResponse(request, response);
 
             return (Object) response;
@@ -201,7 +198,7 @@ namespace IO.Swagger.Client
         /// <param name="contentType">Content type.</param>
         /// <returns>The Task instance.</returns>
         public async System.Threading.Tasks.Task<Object> CallApiAsync(
-            String path, Method method, Dictionary<String, String> queryParams, Object postBody,
+            String path, RestSharp.Method method, List<KeyValuePair<String, String>> queryParams, Object postBody,
             Dictionary<String, String> headerParams, Dictionary<String, String> formParams,
             Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams,
             String contentType)
@@ -210,7 +207,7 @@ namespace IO.Swagger.Client
                 path, method, queryParams, postBody, headerParams, formParams, fileParams,
                 pathParams, contentType);
             InterceptRequest(request);
-            var response = await RestClient.Execute(request);
+            var response = await RestClient.ExecuteTaskAsync(request);
             InterceptResponse(request, response);
             return (Object)response;
         }
@@ -283,7 +280,7 @@ namespace IO.Swagger.Client
         /// <returns>Object representation of the JSON string.</returns>
         public object Deserialize(IRestResponse response, Type type)
         {
-            IHttpHeaders headers = response.Headers;
+            IList<Parameter> headers = response.Headers;
             if (type == typeof(byte[])) // return byte array
             {
                 return response.RawBytes;
@@ -480,6 +477,40 @@ namespace IO.Swagger.Client
             {
                 return filename;
             }
+        }
+
+        /// <summary>
+        /// Convert params to key/value pairs. 
+        /// Use collectionFormat to properly format lists and collections.
+        /// </summary>
+        /// <param name="name">Key name.</param>
+        /// <param name="value">Value object.</param>
+        /// <returns>A list of KeyValuePairs</returns>
+        public IEnumerable<KeyValuePair<string, string>> ParameterToKeyValuePairs(string collectionFormat, string name, object value)
+        {
+            var parameters = new List<KeyValuePair<string, string>>();
+
+            if (IsCollection(value) && collectionFormat == "multi")
+            {
+                var valueCollection = value as IEnumerable;
+                parameters.AddRange(from object item in valueCollection select new KeyValuePair<string, string>(name, ParameterToString(item)));
+            }
+            else
+            {
+                parameters.Add(new KeyValuePair<string, string>(name, ParameterToString(value)));
+            }
+
+            return parameters;
+        }
+
+        /// <summary>
+        /// Check if generic object is a collection.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>True if object is a collection type</returns>
+        private static bool IsCollection(object value)
+        {
+            return value is IList || value is ICollection;
         }
     }
 }
