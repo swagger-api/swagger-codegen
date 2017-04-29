@@ -35,6 +35,8 @@ class DeserializationTests(unittest.TestCase):
         self.assertTrue(isinstance(deserialized, dict))
         self.assertTrue(isinstance(deserialized['enum_test'], petstore_api.EnumTest))
         self.assertEqual(deserialized['enum_test'].enum_integer, 1)
+        # FIXME: fixe attribute_map !! why 'baseName'? 
+        # self.assertEqual(deserialized['enum_test'].outer_enum, "placed")
 
     def test_deserialize_dict_str_pet(self):
         """ deserialize dict(str, Pet) """
