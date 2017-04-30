@@ -65,38 +65,6 @@ include_directories(src src/api src/model ${OPENSSL_INCLUDE_DIR} ${CPPREST_INCLU
 
 
 #SOURCE FILES
-file(GLOB HEADERS
-    "src/*.h"
-)
+file(GLOB_RECURSE SOURCE "*.h" "*.cpp")
 
-file(GLOB SOURCE
-    "src/*.cpp"
-)
-
-file(GLOB API_HEADERS
-    "src/api/*.h"
-)
-
-file(GLOB API_SOURCE
-    "src/api/*.cpp"
-)
-
-file(GLOB MODEL_HEADERS
-    "src/model/*.h"
-)
-
-file(GLOB MODEL_SOURCE
-    "src/model/*.cpp"
-)
-
-
-file(GLOB UNIFIED_SOURCE
-	${HEADERS}
-	${SOURCE}
-	${API_HEADERS}
-	${API_SOURCE}
-	${MODEL_HEADERS}
-    	${MODEL_SOURCE}
-)
-
-add_library(${PROJECT_NAME} ${UNIFIED_SOURCE})
+add_library(${PROJECT_NAME} ${SOURCE})
