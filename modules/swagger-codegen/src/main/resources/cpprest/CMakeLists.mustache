@@ -1,11 +1,7 @@
 cmake_minimum_required (VERSION 2.8)
 
 #PROJECT's NAME
-project(CppRestClient)
-
-# BUILD TYPE
-set(CMAKE_BUILD_TYPE Release)
-message(WARNING "A ${CMAKE_BUILD_TYPE} build configuration is detected")
+project(SwaggerClient)
 
 # THE LOCATION OF OUTPUT BINARIES
 set(CMAKE_LIBRARY_DIR ${CMAKE_SOURCE_DIR}/lib)
@@ -20,7 +16,8 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
 endif()
 
-set(CMAKE_TOOLCHAIN_FILE CrossCompile.txt)
+# BUILD TYPE
+message(WARNING "A ${CMAKE_BUILD_TYPE} build configuration is detected")
 
 # use 64 bit boost library
 set(BOOST_ROOT ${PROJECT_SOURCE_DIR}/../../../developmentTools/3rdParty/boost_host64/inst)
