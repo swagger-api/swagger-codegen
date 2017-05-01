@@ -5,7 +5,7 @@ import {{classname}} from './resources/{{classname}}';
 {{/operations}}
 {{/apis}}
 
-let moduleName = '{{appName}}'.toLowerCase().replace(' ', '.');
+let moduleName = '{{appName}}'.toLowerCase().replace(/\s/g, '.');
 
 export default angular
   .module(moduleName, [])
