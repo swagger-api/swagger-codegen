@@ -18,15 +18,21 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.io.IOException;
 
 import java.util.List;
 {{#async}}
 import java.util.concurrent.Callable;
-{{/async}}{{/jdk8-no-delegate}}
+{{/async}}
+{{/jdk8-no-delegate}}
+{{^useSpringCloudClient}}
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
+import java.io.IOException;
+
+{{/useSpringCloudClient}}
 {{#useBeanValidation}}
 import javax.validation.constraints.*;
 import javax.validation.Valid;
@@ -35,13 +41,14 @@ import javax.validation.Valid;
 @Controller
 {{#operations}}
 public class {{classname}}Controller implements {{classname}} {
-    @Autowired
-    @Qualifier("objectMapper")
-    ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
+    private final XmlMapper xmlMapper;
 
-    @Autowired
-    @Qualifier("xmlMapper")
-    ObjectMapper xmlMapper;
+    public {{classname}}Controller(ObjectMapper objectMapper, XmlMapper xmlMapper) {
+        this.objectMapper = objectMapper;
+        this.xmlMapper = xmlMapper;
+    }
+
 {{#isDelegate}}
     private final {{classname}}Delegate delegate;
 
@@ -56,12 +63,33 @@ public class {{classname}}Controller implements {{classname}} {
     public {{#async}}Callable<{{/async}}ResponseEntity<{{>returnTypes}}>{{#async}}>{{/async}} {{operationId}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}},
         {{/allParams}}@RequestHeader("Accept") String accept){{#examples}}{{#-first}} throws IOException{{/-first}}{{/examples}} {
         // do some magic!
+{{#useSpringCloudClient}}
+        {{^isDelegate}}
+        {{^async}}
+        return new ResponseEntity<{{>returnTypes}}>(HttpStatus.OK);
+        {{/async}}
+        {{#async}}
+        return new Callable<ResponseEntity<{{>returnTypes}}>>() {
+            @Override
+            public ResponseEntity<{{>returnTypes}}> call() throws Exception {
+                return new ResponseEntity<{{>returnTypes}}>(HttpStatus.OK);
+            }
+        };
+        {{/async}}
+        {{/isDelegate}}
+        {{#isDelegate}}
+        return delegate.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        {{/isDelegate}}
+{{/useSpringCloudClient}}
+{{^useSpringCloudClient}}
         {{^isDelegate}}
         {{^async}}
         {{#examples}}
+
         if (accept != null && accept.contains("{{{contentType}}}")) {
             return new ResponseEntity<{{>returnTypes}}>(getObjectMapperByContentType("{{{contentType}}}").readValue("{{#lambdaRemoveLineBreak}}{{#lambdaEscapeDoubleQuote}}{{{example}}}{{/lambdaEscapeDoubleQuote}}{{/lambdaRemoveLineBreak}}", {{>exampleReturnTypes}}.class), HttpStatus.OK);
         }
+
         {{/examples}}
         return new ResponseEntity<{{>returnTypes}}>(HttpStatus.OK);
         {{/async}}
@@ -77,6 +105,7 @@ public class {{classname}}Controller implements {{classname}} {
         {{#isDelegate}}
         return delegate.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
         {{/isDelegate}}
+{{/useSpringCloudClient}}
     }
 
 {{/operation}}

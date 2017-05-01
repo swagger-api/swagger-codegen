@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.*;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 public class SpringCodegen extends AbstractJavaCodegen implements BeanValidationFeatures {
@@ -207,8 +206,8 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
                 if (!additionalProperties.containsKey(SINGLE_CONTENT_TYPES)) {
                     additionalProperties.put(SINGLE_CONTENT_TYPES, "true");
                     this.setSingleContentTypes(true);
-
                 }
+                additionalProperties.put("useSpringCloudClient", true);
 
             } else {
                 apiTemplateFiles.put("apiController.mustache", "Controller.java");
