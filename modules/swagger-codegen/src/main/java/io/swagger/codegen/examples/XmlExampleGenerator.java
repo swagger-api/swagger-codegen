@@ -222,7 +222,7 @@ public class XmlExampleGenerator {
     /**
      * Allows XmlMapper to successfully marshal empty XML nodes into Java objects. As an example:
      * <li><code>"&lt;tags&gt;   &lt;/tags&gt;"</code> will not work</li>
-     * <li><code>"&lt;tags/&gt;"</code> will not work</li>
+     * <li><code>"&lt;tags/&gt;"</code> will work</li>
      *
      * @param name
      * @param xmlNode
