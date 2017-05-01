@@ -99,7 +99,7 @@ public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
         apiPackage = packageName + ".Controllers";
         modelPackage = packageName + ".Models";
 
-        String packageFolder = sourceFolder + File.separator + packageName;
+        String packageFolder = packageName;
 
         supportingFiles.add(new SupportingFile("NuGet.Config", "", "NuGet.Config"));
         supportingFiles.add(new SupportingFile("global.json", "", "global.json"));
@@ -111,12 +111,19 @@ public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
         supportingFiles.add(new SupportingFile("gitignore", packageFolder, ".gitignore"));
         supportingFiles.add(new SupportingFile("appsettings.json", packageFolder, "appsettings.json"));
 
+        supportingFiles.add(new SupportingFile("docker-compose.vs.release.yml.mustache", "", "docker-compose.vs.release.yml"));
+        supportingFiles.add(new SupportingFile("docker-compose.override.yml.mustache", "", "docker-compose.override.yml"));
+        supportingFiles.add(new SupportingFile("docker-compose.vs.debug.yml.mustache", "", "docker-compose.vs.debug.yml"));
+        supportingFiles.add(new SupportingFile("docker-compose.yml.mustache", "", "docker-compose.yml"));
+        supportingFiles.add(new SupportingFile("docker-compose.ci.build.yml.mustache", "", "docker-compose.ci.build.yml"));
+        supportingFiles.add(new SupportingFile("docker-compose.dcproj.mustache", "","docker-compose.dcproj"));
+
         supportingFiles.add(new SupportingFile("project.json.mustache", packageFolder, "project.json"));
         supportingFiles.add(new SupportingFile("Startup.mustache", packageFolder, "Startup.cs"));
         supportingFiles.add(new SupportingFile("Program.mustache", packageFolder, "Program.cs"));
         supportingFiles.add(new SupportingFile("web.config", packageFolder, "web.config"));
 
-        supportingFiles.add(new SupportingFile("Project.xproj.mustache", packageFolder, this.packageName + ".xproj"));
+        supportingFiles.add(new SupportingFile("Project.csproj.mustache", packageFolder, this.packageName + ".csproj"));
 
         supportingFiles.add(new SupportingFile("Properties" + File.separator + "launchSettings.json", packageFolder + File.separator + "Properties", "launchSettings.json"));
 
@@ -144,12 +151,12 @@ public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
     
     @Override
     public String apiFileFolder() {
-        return outputFolder + File.separator + sourceFolder + File.separator + packageName + File.separator + "Controllers";
+        return outputFolder + File.separator + packageName + File.separator + "Controllers";
     }
 
     @Override
     public String modelFileFolder() {
-        return outputFolder + File.separator + sourceFolder + File.separator + packageName + File.separator  + "Models";
+        return outputFolder + File.separator + packageName + File.separator  + "Models";
     }
 
     @Override
