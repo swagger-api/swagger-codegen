@@ -11,18 +11,25 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * ArrayTest
  */
 
+@JacksonXmlRootElement
 public class ArrayTest   {
   @JsonProperty("array_of_string")
+  @JacksonXmlProperty
   private List<String> arrayOfString = null;
 
   @JsonProperty("array_array_of_integer")
+  @JacksonXmlProperty
   private List<List<Long>> arrayArrayOfInteger = null;
 
   @JsonProperty("array_array_of_model")
+  @JacksonXmlProperty
   private List<List<ReadOnlyFirst>> arrayArrayOfModel = null;
 
   public ArrayTest arrayOfString(List<String> arrayOfString) {

@@ -151,6 +151,7 @@ public class XmlExampleGenerator {
                 sb.append(closeTag(name));
             }
         }
+
         return compressTagWhenEmpty(name, sb.toString());
     }
 
@@ -218,6 +219,15 @@ public class XmlExampleGenerator {
         return sb.toString();
     }
 
+    /**
+     * Allows XmlMapper to successfully marshal empty XML nodes into Java objects. As an example:
+     * <li><code>"&lt;tags&gt;   &lt;/tags&gt;"</code> will not work</li>
+     * <li><code>"&lt;tags/&gt;"</code> will not work</li>
+     *
+     * @param name
+     * @param xmlNode
+     * @return
+     */
     private String compressTagWhenEmpty(String name, String xmlNode){
         String returnValue = xmlNode;
         if (name!=null){

@@ -8,15 +8,21 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * Category
  */
 
+@JacksonXmlRootElement
 public class Category   {
   @JsonProperty("id")
+  @JacksonXmlProperty
   private Long id = null;
 
   @JsonProperty("name")
+  @JacksonXmlProperty
   private String name = null;
 
   public Category id(Long id) {

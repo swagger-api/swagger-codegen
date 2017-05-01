@@ -10,21 +10,29 @@ import org.joda.time.DateTime;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * Order
  */
 
+@JacksonXmlRootElement
 public class Order   {
   @JsonProperty("id")
+  @JacksonXmlProperty
   private Long id = null;
 
   @JsonProperty("petId")
+  @JacksonXmlProperty
   private Long petId = null;
 
   @JsonProperty("quantity")
+  @JacksonXmlProperty
   private Integer quantity = null;
 
   @JsonProperty("shipDate")
+  @JacksonXmlProperty
   private DateTime shipDate = null;
 
   /**
@@ -61,9 +69,11 @@ public class Order   {
   }
 
   @JsonProperty("status")
+  @JacksonXmlProperty
   private StatusEnum status = null;
 
   @JsonProperty("complete")
+  @JacksonXmlProperty
   private Boolean complete = false;
 
   public Order id(Long id) {

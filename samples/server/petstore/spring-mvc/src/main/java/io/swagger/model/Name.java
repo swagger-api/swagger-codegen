@@ -8,22 +8,30 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * Model for testing model name same as property name
  */
 @ApiModel(description = "Model for testing model name same as property name")
 
+@JacksonXmlRootElement
 public class Name   {
   @JsonProperty("name")
+  @JacksonXmlProperty
   private Integer name = null;
 
   @JsonProperty("snake_case")
+  @JacksonXmlProperty
   private Integer snakeCase = null;
 
   @JsonProperty("property")
+  @JacksonXmlProperty
   private String property = null;
 
   @JsonProperty("123Number")
+  @JacksonXmlProperty
   private Integer _123Number = null;
 
   public Name name(Integer name) {

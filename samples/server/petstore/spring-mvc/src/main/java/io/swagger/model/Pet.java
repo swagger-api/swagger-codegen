@@ -13,24 +13,33 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * Pet
  */
 
+@JacksonXmlRootElement
 public class Pet   {
   @JsonProperty("id")
+  @JacksonXmlProperty
   private Long id = null;
 
   @JsonProperty("category")
+  @JacksonXmlProperty
   private Category category = null;
 
   @JsonProperty("name")
+  @JacksonXmlProperty
   private String name = null;
 
   @JsonProperty("photoUrls")
+  @JacksonXmlProperty
   private List<String> photoUrls = new ArrayList<String>();
 
   @JsonProperty("tags")
+  @JacksonXmlProperty
   private List<Tag> tags = null;
 
   /**
@@ -67,6 +76,7 @@ public class Pet   {
   }
 
   @JsonProperty("status")
+  @JacksonXmlProperty
   private StatusEnum status = null;
 
   public Pet id(Long id) {

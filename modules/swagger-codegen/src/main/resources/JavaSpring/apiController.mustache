@@ -110,6 +110,11 @@ public class {{classname}}Controller implements {{classname}} {
 
 {{/operation}}
 {{/jdk8-no-delegate}}
+    /**
+     * Returns the appropriate Object Mapper depending on the media type.
+     * @param mediaType
+     * @return
+     */
     private ObjectMapper getObjectMapperByContentType(String mediaType){
         if(MediaType.APPLICATION_XML_VALUE.equals(mediaType)){
             return xmlMapper;

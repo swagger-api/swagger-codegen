@@ -10,6 +10,9 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * Animal
  */
@@ -19,11 +22,14 @@ import javax.validation.constraints.*;
   @JsonSubTypes.Type(value = Cat.class, name = "Cat"),
 })
 
+@JacksonXmlRootElement
 public class Animal   {
   @JsonProperty("className")
+  @JacksonXmlProperty
   private String className = null;
 
   @JsonProperty("color")
+  @JacksonXmlProperty
   private String color = "red";
 
   public Animal className(String className) {

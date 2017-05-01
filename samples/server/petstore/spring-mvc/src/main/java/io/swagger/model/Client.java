@@ -8,12 +8,17 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * Client
  */
 
+@JacksonXmlRootElement
 public class Client   {
   @JsonProperty("client")
+  @JacksonXmlProperty
   private String client = null;
 
   public Client client(String client) {

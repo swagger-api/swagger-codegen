@@ -8,12 +8,17 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * SpecialModelName
  */
 
+@JacksonXmlRootElement
 public class SpecialModelName   {
   @JsonProperty("$special[property.name]")
+  @JacksonXmlProperty
   private Long specialPropertyName = null;
 
   public SpecialModelName specialPropertyName(Long specialPropertyName) {

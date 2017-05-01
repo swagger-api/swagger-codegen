@@ -8,27 +8,37 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * Capitalization
  */
 
+@JacksonXmlRootElement
 public class Capitalization   {
   @JsonProperty("smallCamel")
+  @JacksonXmlProperty
   private String smallCamel = null;
 
   @JsonProperty("CapitalCamel")
+  @JacksonXmlProperty
   private String capitalCamel = null;
 
   @JsonProperty("small_Snake")
+  @JacksonXmlProperty
   private String smallSnake = null;
 
   @JsonProperty("Capital_Snake")
+  @JacksonXmlProperty
   private String capitalSnake = null;
 
   @JsonProperty("SCA_ETH_Flow_Points")
+  @JacksonXmlProperty
   private String scAETHFlowPoints = null;
 
   @JsonProperty("ATT_NAME")
+  @JacksonXmlProperty
   private String ATT_NAME = null;
 
   public Capitalization smallCamel(String smallCamel) {

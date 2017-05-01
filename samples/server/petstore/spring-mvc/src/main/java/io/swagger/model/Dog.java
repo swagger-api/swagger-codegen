@@ -9,12 +9,17 @@ import io.swagger.model.Animal;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * Dog
  */
 
+@JacksonXmlRootElement
 public class Dog extends Animal  {
   @JsonProperty("breed")
+  @JacksonXmlProperty
   private String breed = null;
 
   public Dog breed(String breed) {

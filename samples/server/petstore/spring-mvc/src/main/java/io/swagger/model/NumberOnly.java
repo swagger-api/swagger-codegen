@@ -9,12 +9,17 @@ import java.math.BigDecimal;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * NumberOnly
  */
 
+@JacksonXmlRootElement
 public class NumberOnly   {
   @JsonProperty("JustNumber")
+  @JacksonXmlProperty
   private BigDecimal justNumber = null;
 
   public NumberOnly justNumber(BigDecimal justNumber) {
