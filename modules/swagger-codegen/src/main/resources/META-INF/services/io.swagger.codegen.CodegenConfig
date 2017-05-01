@@ -23,7 +23,6 @@ io.swagger.codegen.languages.JavaJAXRSCXFCDIServerCodegen
 io.swagger.codegen.languages.JavaInflectorServerCodegen
 io.swagger.codegen.languages.JavascriptClientCodegen
 io.swagger.codegen.languages.JavascriptClosureAngularClientCodegen
-io.swagger.codegen.languages.JavascriptEs6AngularGenerator
 io.swagger.codegen.languages.JavaJerseyServerCodegen
 io.swagger.codegen.languages.JMeterCodegen
 io.swagger.codegen.languages.NancyFXServerCodegen
