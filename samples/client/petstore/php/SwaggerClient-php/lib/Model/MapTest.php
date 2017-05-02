@@ -55,6 +55,7 @@ class MapTest implements ArrayAccess
       */
     protected static $swaggerTypes = [
         'map_map_of_string' => 'map[string,map[string,string]]',
+        'map_map_of_enum' => 'map[string,map[string,string]]',
         'map_of_enum_string' => 'map[string,string]'
     ];
 
@@ -69,6 +70,7 @@ class MapTest implements ArrayAccess
      */
     protected static $attributeMap = [
         'map_map_of_string' => 'map_map_of_string',
+        'map_map_of_enum' => 'map_map_of_enum',
         'map_of_enum_string' => 'map_of_enum_string'
     ];
 
@@ -79,6 +81,7 @@ class MapTest implements ArrayAccess
      */
     protected static $setters = [
         'map_map_of_string' => 'setMapMapOfString',
+        'map_map_of_enum' => 'setMapMapOfEnum',
         'map_of_enum_string' => 'setMapOfEnumString'
     ];
 
@@ -89,6 +92,7 @@ class MapTest implements ArrayAccess
      */
     protected static $getters = [
         'map_map_of_string' => 'getMapMapOfString',
+        'map_map_of_enum' => 'getMapMapOfEnum',
         'map_of_enum_string' => 'getMapOfEnumString'
     ];
 
@@ -138,6 +142,7 @@ class MapTest implements ArrayAccess
     public function __construct(array $data = null)
     {
         $this->container['map_map_of_string'] = isset($data['map_map_of_string']) ? $data['map_map_of_string'] : null;
+        $this->container['map_map_of_enum'] = isset($data['map_map_of_enum']) ? $data['map_map_of_enum'] : null;
         $this->container['map_of_enum_string'] = isset($data['map_of_enum_string']) ? $data['map_of_enum_string'] : null;
     }
 
@@ -183,6 +188,27 @@ class MapTest implements ArrayAccess
     public function setMapMapOfString($map_map_of_string)
     {
         $this->container['map_map_of_string'] = $map_map_of_string;
+
+        return $this;
+    }
+
+    /**
+     * Gets map_map_of_enum
+     * @return map[string,map[string,string]]
+     */
+    public function getMapMapOfEnum()
+    {
+        return $this->container['map_map_of_enum'];
+    }
+
+    /**
+     * Sets map_map_of_enum
+     * @param map[string,map[string,string]] $map_map_of_enum
+     * @return $this
+     */
+    public function setMapMapOfEnum($map_map_of_enum)
+    {
+        $this->container['map_map_of_enum'] = $map_map_of_enum;
 
         return $this;
     }

@@ -189,7 +189,7 @@ public class TypeScriptFetchModelTest {
 
     @Test(description = "test enum array model")
     public void enumArrayMdoelTest() {
-        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
+        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/fake-endpoints-v2/petstore.yaml");
         final DefaultCodegen codegen = new TypeScriptFetchClientCodegen();
         final Model definition = model.getDefinitions().get("EnumArrays");
 
@@ -223,7 +223,7 @@ public class TypeScriptFetchModelTest {
 
     @Test(description = "test enum model for values (numeric, string, etc)")
     public void enumMdoelValueTest() {
-        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml");
+        final Swagger model =  new SwaggerParser().read("src/test/resources/2_0/fake-endpoints-v2/petstore.yaml");
         final DefaultCodegen codegen = new TypeScriptFetchClientCodegen();
         final Model definition = model.getDefinitions().get("Enum_Test");
 

@@ -296,6 +296,12 @@ case $state in
   ops)
     # Operations
     _values "Operations" \
+            "definition1[Definition 1]" \
+            "definition2[Definition 2]" \
+            "definition3[Definition 3]" \
+            "postJSON[]" \
+            "postJSON_0[]" \
+            "postJSON_1[]" \
             "testClientModel[To test \"client\" model]" \
             "testEndpointParameters[Fake endpoint for testing various parameters
 假端點
@@ -325,6 +331,43 @@ case $state in
     ;;
   args)
     case $line[1] in
+      definition1)
+        local -a _op_arguments
+        _op_arguments=(
+                              )
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      definition2)
+        local -a _op_arguments
+        _op_arguments=(
+                              )
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      definition3)
+        local -a _op_arguments
+        _op_arguments=(
+                              )
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      postJSON)
+        local -a _op_arguments
+        _op_arguments=(
+                    "items=:[QUERY] Array of ints"
+          )
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      postJSON_0)
+        local -a _op_arguments
+        _op_arguments=(
+                              )
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      postJSON_1)
+        local -a _op_arguments
+        _op_arguments=(
+                              )
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
       testClientModel)
         local -a _op_arguments
         _op_arguments=(

@@ -183,4 +183,133 @@ class FakeApi extends Controller
 
         return response('How about implementing testEnumParameters as a GET method ?');
     }
+    /**
+     * Operation postJSON
+     *
+     * .
+     *
+     *
+     * @return Http response
+     */
+    public function postJSON()
+    {
+        $input = Request::all();
+
+        //path params validation
+
+
+        //not path params validation
+        if (!isset($input['items'])) {
+            throw new \InvalidArgumentException('Missing the required parameter $items when calling postJSON');
+        }
+        $items = $input['items'];
+
+
+        return response('How about implementing postJSON as a GET method ?');
+    }
+    /**
+     * Operation postJSON_0
+     *
+     * .
+     *
+     *
+     * @return Http response
+     */
+    public function postJSON_0()
+    {
+        $input = Request::all();
+
+        //path params validation
+
+
+        //not path params validation
+        if (!isset($input['items'])) {
+            throw new \InvalidArgumentException('Missing the required parameter $items when calling postJSON_0');
+        }
+        $items = $input['items'];
+
+
+        return response('How about implementing postJSON_1 as a POST method ?');
+    }
+    /**
+     * Operation definition1
+     *
+     * Definition 1.
+     *
+     *
+     * @return Http response
+     */
+    public function definition1()
+    {
+        $input = Request::all();
+
+        //path params validation
+
+
+        //not path params validation
+
+        return response('How about implementing definition1 as a GET method ?');
+    }
+    /**
+     * Operation postJSON_1
+     *
+     * .
+     *
+     *
+     * @return Http response
+     */
+    public function postJSON_1()
+    {
+        $input = Request::all();
+
+        //path params validation
+
+
+        //not path params validation
+        if (!isset($input['body'])) {
+            throw new \InvalidArgumentException('Missing the required parameter $body when calling postJSON_1');
+        }
+        $body = $input['body'];
+
+
+        return response('How about implementing postJSON_2 as a POST method ?');
+    }
+    /**
+     * Operation definition2
+     *
+     * Definition 2.
+     *
+     *
+     * @return Http response
+     */
+    public function definition2()
+    {
+        $input = Request::all();
+
+        //path params validation
+
+
+        //not path params validation
+
+        return response('How about implementing definition2 as a GET method ?');
+    }
+    /**
+     * Operation definition3
+     *
+     * Definition 3.
+     *
+     *
+     * @return Http response
+     */
+    public function definition3()
+    {
+        $input = Request::all();
+
+        //path params validation
+
+
+        //not path params validation
+
+        return response('How about implementing definition3 as a GET method ?');
+    }
 }

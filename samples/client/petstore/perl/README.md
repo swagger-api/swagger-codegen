@@ -243,6 +243,9 @@ use WWW::SwaggerClient::Object::Cat;
 use WWW::SwaggerClient::Object::Category;
 use WWW::SwaggerClient::Object::ClassModel;
 use WWW::SwaggerClient::Object::Client;
+use WWW::SwaggerClient::Object::Definition1;
+use WWW::SwaggerClient::Object::Definition2;
+use WWW::SwaggerClient::Object::Definition3;
 use WWW::SwaggerClient::Object::Dog;
 use WWW::SwaggerClient::Object::EnumArrays;
 use WWW::SwaggerClient::Object::EnumClass;
@@ -293,6 +296,9 @@ use WWW::SwaggerClient::Object::Cat;
 use WWW::SwaggerClient::Object::Category;
 use WWW::SwaggerClient::Object::ClassModel;
 use WWW::SwaggerClient::Object::Client;
+use WWW::SwaggerClient::Object::Definition1;
+use WWW::SwaggerClient::Object::Definition2;
+use WWW::SwaggerClient::Object::Definition3;
 use WWW::SwaggerClient::Object::Dog;
 use WWW::SwaggerClient::Object::EnumArrays;
 use WWW::SwaggerClient::Object::EnumClass;
@@ -321,14 +327,13 @@ use WWW::SwaggerClient::;
 my $api_instance = WWW::SwaggerClient::->new(
 );
 
-my $body = WWW::SwaggerClient::Object::Client->new(); # Client | client model
 
 eval {
-    my $result = $api_instance->test_client_model(body => $body);
+    my $result = $api_instance->definition1();
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling FakeApi->test_client_model: $@\n";
+    warn "Exception when calling FakeApi->definition1: $@\n";
 }
 
 ```
@@ -339,6 +344,12 @@ All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*FakeApi* | [**definition1**](docs/FakeApi.md#definition1) | **GET** /fakedef1 | Definition 1
+*FakeApi* | [**definition2**](docs/FakeApi.md#definition2) | **GET** /fakedef2 | Definition 2
+*FakeApi* | [**definition3**](docs/FakeApi.md#definition3) | **GET** /fakedef3 | Definition 3
+*FakeApi* | [**post_json**](docs/FakeApi.md#post_json) | **GET** /fakeArrays | 
+*FakeApi* | [**post_json_1**](docs/FakeApi.md#post_json_1) | **POST** /fakeArrays | 
+*FakeApi* | [**post_json_2**](docs/FakeApi.md#post_json_2) | **POST** /fakedef1 | 
 *FakeApi* | [**test_client_model**](docs/FakeApi.md#test_client_model) | **PATCH** /fake | To test \&quot;client\&quot; model
 *FakeApi* | [**test_endpoint_parameters**](docs/FakeApi.md#test_endpoint_parameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 *FakeApi* | [**test_enum_parameters**](docs/FakeApi.md#test_enum_parameters) | **GET** /fake | To test enum parameters
@@ -378,6 +389,9 @@ Class | Method | HTTP request | Description
  - [WWW::SwaggerClient::Object::Category](docs/Category.md)
  - [WWW::SwaggerClient::Object::ClassModel](docs/ClassModel.md)
  - [WWW::SwaggerClient::Object::Client](docs/Client.md)
+ - [WWW::SwaggerClient::Object::Definition1](docs/Definition1.md)
+ - [WWW::SwaggerClient::Object::Definition2](docs/Definition2.md)
+ - [WWW::SwaggerClient::Object::Definition3](docs/Definition3.md)
  - [WWW::SwaggerClient::Object::Dog](docs/Dog.md)
  - [WWW::SwaggerClient::Object::EnumArrays](docs/EnumArrays.md)
  - [WWW::SwaggerClient::Object::EnumClass](docs/EnumClass.md)

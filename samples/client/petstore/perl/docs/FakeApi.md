@@ -9,10 +9,271 @@ All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**definition1**](FakeApi.md#definition1) | **GET** /fakedef1 | Definition 1
+[**definition2**](FakeApi.md#definition2) | **GET** /fakedef2 | Definition 2
+[**definition3**](FakeApi.md#definition3) | **GET** /fakedef3 | Definition 3
+[**post_json**](FakeApi.md#post_json) | **GET** /fakeArrays | 
+[**post_json_0**](FakeApi.md#post_json_0) | **POST** /fakeArrays | 
+[**post_json_1**](FakeApi.md#post_json_1) | **POST** /fakedef1 | 
 [**test_client_model**](FakeApi.md#test_client_model) | **PATCH** /fake | To test \&quot;client\&quot; model
 [**test_endpoint_parameters**](FakeApi.md#test_endpoint_parameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 [**test_enum_parameters**](FakeApi.md#test_enum_parameters) | **GET** /fake | To test enum parameters
 
+
+# **definition1**
+> ARRAY[Definition1] definition1()
+
+Definition 1
+
+### Example 
+```perl
+use Data::Dumper;
+use WWW::SwaggerClient::FakeApi;
+my $api_instance = WWW::SwaggerClient::FakeApi->new(
+);
+
+
+eval { 
+    my $result = $api_instance->definition1();
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling FakeApi->definition1: $@\n";
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**ARRAY[Definition1]**](Definition1.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **definition2**
+> ARRAY[Definition2] definition2()
+
+Definition 2
+
+### Example 
+```perl
+use Data::Dumper;
+use WWW::SwaggerClient::FakeApi;
+my $api_instance = WWW::SwaggerClient::FakeApi->new(
+);
+
+
+eval { 
+    my $result = $api_instance->definition2();
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling FakeApi->definition2: $@\n";
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**ARRAY[Definition2]**](Definition2.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **definition3**
+> ARRAY[Definition3] definition3()
+
+Definition 3
+
+### Example 
+```perl
+use Data::Dumper;
+use WWW::SwaggerClient::FakeApi;
+my $api_instance = WWW::SwaggerClient::FakeApi->new(
+);
+
+
+eval { 
+    my $result = $api_instance->definition3();
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling FakeApi->definition3: $@\n";
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**ARRAY[Definition3]**](Definition3.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **post_json**
+> post_json(items => $items)
+
+
+
+submitting JSON
+
+### Example 
+```perl
+use Data::Dumper;
+use WWW::SwaggerClient::FakeApi;
+my $api_instance = WWW::SwaggerClient::FakeApi->new(
+);
+
+my $items = 789; # int | Array of ints
+
+eval { 
+    $api_instance->post_json(items => $items);
+};
+if ($@) {
+    warn "Exception when calling FakeApi->post_json: $@\n";
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **items** | **int**| Array of ints | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **post_json_0**
+> post_json_0(items => $items)
+
+
+
+submitting JSON
+
+### Example 
+```perl
+use Data::Dumper;
+use WWW::SwaggerClient::FakeApi;
+my $api_instance = WWW::SwaggerClient::FakeApi->new(
+);
+
+my $items = [WWW::SwaggerClient::Object::ARRAY[int]->new()]; # ARRAY[int] | Array of ints
+
+eval { 
+    $api_instance->post_json_0(items => $items);
+};
+if ($@) {
+    warn "Exception when calling FakeApi->post_json_0: $@\n";
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **items** | **ARRAY[int]**| Array of ints | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **post_json_1**
+> post_json_1(body => $body)
+
+
+
+submitting JSON
+
+### Example 
+```perl
+use Data::Dumper;
+use WWW::SwaggerClient::FakeApi;
+my $api_instance = WWW::SwaggerClient::FakeApi->new(
+);
+
+my $body = WWW::SwaggerClient::Object::object->new(); # object | JSON
+
+eval { 
+    $api_instance->post_json_1(body => $body);
+};
+if ($@) {
+    warn "Exception when calling FakeApi->post_json_1: $@\n";
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | **object**| JSON | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **test_client_model**
 > Client test_client_model(body => $body)

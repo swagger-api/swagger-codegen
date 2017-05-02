@@ -634,6 +634,130 @@
         }
       }
     },
+    "/fakeArrays" : {
+      "get" : {
+        "tags" : [ "fake" ],
+        "description" : "submitting JSON",
+        "operationId" : "postJSON",
+        "parameters" : [ {
+          "name" : "items",
+          "in" : "query",
+          "description" : "Array of ints",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ]
+      },
+      "post" : {
+        "tags" : [ "fake" ],
+        "description" : "submitting JSON",
+        "operationId" : "postJSON",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "items",
+          "description" : "Array of ints",
+          "required" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "integer",
+              "format" : "int64"
+            }
+          }
+        } ]
+      }
+    },
+    "/fakedef1" : {
+      "get" : {
+        "tags" : [ "fake" ],
+        "summary" : "Definition 1",
+        "operationId" : "Definition1",
+        "consumes" : [ ],
+        "produces" : [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Definition 1",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Definition1"
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "fake" ],
+        "description" : "submitting JSON",
+        "operationId" : "postJSON",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "JSON",
+          "required" : true,
+          "schema" : {
+            "type" : "object"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "received Raw JSON"
+          }
+        }
+      }
+    },
+    "/fakedef2" : {
+      "get" : {
+        "tags" : [ "fake" ],
+        "summary" : "Definition 2",
+        "operationId" : "Definition2",
+        "consumes" : [ ],
+        "produces" : [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Definition 2",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Definition2"
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found"
+          }
+        }
+      }
+    },
+    "/fakedef3" : {
+      "get" : {
+        "tags" : [ "fake" ],
+        "summary" : "Definition 3",
+        "operationId" : "Definition3",
+        "consumes" : [ ],
+        "produces" : [ "application/json", "text/json", "application/xml", "text/xml" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Definition 3",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Definition3"
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found"
+          }
+        }
+      }
+    },
     "/fake_classname_test" : {
       "patch" : {
         "tags" : [ "fake_classname_tags 123#$%^" ],
@@ -753,8 +877,8 @@
       },
       "post" : {
         "tags" : [ "fake" ],
-        "summary" : "Fake endpoint for testing various parameters\n假端點\n偽のエンドポイント\n가짜 엔드 포인트\n",
-        "description" : "Fake endpoint for testing various parameters\n假端點\n偽のエンドポイント\n가짜 엔드 포인트\n",
+        "summary" : "Fake endpoint for testing various parameters\n???\n?????????\n?? ?? ???\n",
+        "description" : "Fake endpoint for testing various parameters\n???\n?????????\n?? ?? ???\n",
         "operationId" : "testEndpointParameters",
         "consumes" : [ "application/xml; charset=utf-8", "application/json; charset=utf-8" ],
         "produces" : [ "application/xml; charset=utf-8", "application/json; charset=utf-8" ],
@@ -924,6 +1048,53 @@
     }
   },
   "definitions" : {
+    "Definition1" : {
+      "type" : "object",
+      "properties" : {
+        "Definition2" : {
+          "$ref" : "#/definitions/Definition2"
+        },
+        "Id" : {
+          "type" : "string",
+          "description" : "Content Id for lookup"
+        }
+      },
+      "description" : "Definition 2"
+    },
+    "Definition2" : {
+      "type" : "object",
+      "properties" : {
+        "Definition1" : {
+          "type" : "array",
+          "description" : "nested Definition1 array",
+          "items" : {
+            "$ref" : "#/definitions/Definition1"
+          }
+        },
+        "Id" : {
+          "type" : "string",
+          "description" : "Content Id for lookup"
+        }
+      },
+      "description" : "Definition 2"
+    },
+    "Definition3" : {
+      "type" : "object",
+      "properties" : {
+        "Definition3" : {
+          "type" : "array",
+          "description" : "nested Definition3 array",
+          "items" : {
+            "$ref" : "#/definitions/Definition3"
+          }
+        },
+        "Id" : {
+          "type" : "string",
+          "description" : "Content Id for lookup"
+        }
+      },
+      "description" : "Definition 3 (recursive)"
+    },
     "Order" : {
       "type" : "object",
       "properties" : {
@@ -1410,6 +1581,15 @@
             }
           }
         },
+        "map_map_of_enum" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          }
+        },
         "map_of_enum_string" : {
           "type" : "object",
           "additionalProperties" : {
@@ -1445,6 +1625,13 @@
             "items" : {
               "$ref" : "#/definitions/ReadOnlyFirst"
             }
+          }
+        },
+        "array_of_enum" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "enum" : [ "UPPER", "lower" ]
           }
         }
       }
@@ -1494,6 +1681,16 @@
           "items" : {
             "type" : "string",
             "enum" : [ "fish", "crab" ]
+          }
+        },
+        "array_array_enum" : {
+          "type" : "array",
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "enum" : [ "Cat", "Dog" ]
+            }
           }
         }
       }

@@ -14,5 +14,7 @@ type MapTest struct {
 
 	MapMapOfString map[string]map[string]string `json:"map_map_of_string,omitempty"`
 
+	MapMapOfEnum map[string]map[string]string `json:"map_map_of_enum,omitempty"`
+
 	MapOfEnumString map[string]string `json:"map_of_enum_string,omitempty"`
 }

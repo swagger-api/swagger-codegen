@@ -57,13 +57,12 @@ Please follow the [installation procedure](#installation--usage) and then run th
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\Api\FakeApi();
-$body = new \Swagger\Client\Model\Client(); // \Swagger\Client\Model\Client | client model
 
 try {
-    $result = $api_instance->testClientModel($body);
+    $result = $api_instance->definition1();
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling FakeApi->testClientModel: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling FakeApi->definition1: ', $e->getMessage(), PHP_EOL;
 }
 
 ?>
@@ -75,6 +74,12 @@ All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*FakeApi* | [**definition1**](docs/Api/FakeApi.md#definition1) | **GET** /fakedef1 | Definition 1
+*FakeApi* | [**definition2**](docs/Api/FakeApi.md#definition2) | **GET** /fakedef2 | Definition 2
+*FakeApi* | [**definition3**](docs/Api/FakeApi.md#definition3) | **GET** /fakedef3 | Definition 3
+*FakeApi* | [**postJSON**](docs/Api/FakeApi.md#postjson) | **GET** /fakeArrays | 
+*FakeApi* | [**postJSON_0**](docs/Api/FakeApi.md#postjson_0) | **POST** /fakeArrays | 
+*FakeApi* | [**postJSON_1**](docs/Api/FakeApi.md#postjson_1) | **POST** /fakedef1 | 
 *FakeApi* | [**testClientModel**](docs/Api/FakeApi.md#testclientmodel) | **PATCH** /fake | To test \&quot;client\&quot; model
 *FakeApi* | [**testEndpointParameters**](docs/Api/FakeApi.md#testendpointparameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트
 *FakeApi* | [**testEnumParameters**](docs/Api/FakeApi.md#testenumparameters) | **GET** /fake | To test enum parameters
@@ -115,6 +120,9 @@ Class | Method | HTTP request | Description
  - [Category](docs/Model/Category.md)
  - [ClassModel](docs/Model/ClassModel.md)
  - [Client](docs/Model/Client.md)
+ - [Definition1](docs/Model/Definition1.md)
+ - [Definition2](docs/Model/Definition2.md)
+ - [Definition3](docs/Model/Definition3.md)
  - [Dog](docs/Model/Dog.md)
  - [EnumArrays](docs/Model/EnumArrays.md)
  - [EnumClass](docs/Model/EnumClass.md)

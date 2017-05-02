@@ -12,6 +12,357 @@ import RxSwift
 
 open class FakeAPI: APIBase {
     /**
+     Definition 1
+     
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func definition1(completion: @escaping ((_ data: [Definition1]?, _ error: ErrorResponse?) -> Void)) {
+        definition1WithRequestBuilder().execute { (response, error) -> Void in
+            completion(response?.body, error)
+        }
+    }
+
+    /**
+     Definition 1
+     
+     - returns: Observable<[Definition1]>
+     */
+    open class func definition1() -> Observable<[Definition1]> {
+        return Observable.create { observer -> Disposable in
+            definition1() { data, error in
+                if let error = error {
+                    observer.on(.error(error as Error))
+                } else {
+                    observer.on(.next(data!))
+                }
+                observer.on(.completed)
+            }
+            return NopDisposable.instance
+        }
+    }
+
+    /**
+     Definition 1
+     - GET /fakedef1
+     - examples: [{contentType=application/json, example=[ {
+  "Definition2" : {
+    "Definition1" : [ "" ],
+    "Id" : "aeiou"
+  },
+  "Id" : "aeiou"
+} ]}, {contentType=application/xml, example=<null>
+  <Id>aeiou</Id>
+</null>}]
+     - examples: [{contentType=application/json, example=[ {
+  "Definition2" : {
+    "Definition1" : [ "" ],
+    "Id" : "aeiou"
+  },
+  "Id" : "aeiou"
+} ]}, {contentType=application/xml, example=<null>
+  <Id>aeiou</Id>
+</null>}]
+
+     - returns: RequestBuilder<[Definition1]> 
+     */
+    open class func definition1WithRequestBuilder() -> RequestBuilder<[Definition1]> {
+        let path = "/fakedef1"
+        let URLString = PetstoreClientAPI.basePath + path
+        let parameters: [String:Any]? = nil
+
+        let url = NSURLComponents(string: URLString)
+
+
+        let requestBuilder: RequestBuilder<[Definition1]>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
+
+    /**
+     Definition 2
+     
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func definition2(completion: @escaping ((_ data: [Definition2]?, _ error: ErrorResponse?) -> Void)) {
+        definition2WithRequestBuilder().execute { (response, error) -> Void in
+            completion(response?.body, error)
+        }
+    }
+
+    /**
+     Definition 2
+     
+     - returns: Observable<[Definition2]>
+     */
+    open class func definition2() -> Observable<[Definition2]> {
+        return Observable.create { observer -> Disposable in
+            definition2() { data, error in
+                if let error = error {
+                    observer.on(.error(error as Error))
+                } else {
+                    observer.on(.next(data!))
+                }
+                observer.on(.completed)
+            }
+            return NopDisposable.instance
+        }
+    }
+
+    /**
+     Definition 2
+     - GET /fakedef2
+     - examples: [{contentType=application/json, example=[ {
+  "Definition1" : [ {
+    "Definition2" : "",
+    "Id" : "aeiou"
+  } ],
+  "Id" : "aeiou"
+} ]}, {contentType=application/xml, example=<null>
+  <Id>aeiou</Id>
+</null>}]
+     - examples: [{contentType=application/json, example=[ {
+  "Definition1" : [ {
+    "Definition2" : "",
+    "Id" : "aeiou"
+  } ],
+  "Id" : "aeiou"
+} ]}, {contentType=application/xml, example=<null>
+  <Id>aeiou</Id>
+</null>}]
+
+     - returns: RequestBuilder<[Definition2]> 
+     */
+    open class func definition2WithRequestBuilder() -> RequestBuilder<[Definition2]> {
+        let path = "/fakedef2"
+        let URLString = PetstoreClientAPI.basePath + path
+        let parameters: [String:Any]? = nil
+
+        let url = NSURLComponents(string: URLString)
+
+
+        let requestBuilder: RequestBuilder<[Definition2]>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
+
+    /**
+     Definition 3
+     
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func definition3(completion: @escaping ((_ data: [Definition3]?, _ error: ErrorResponse?) -> Void)) {
+        definition3WithRequestBuilder().execute { (response, error) -> Void in
+            completion(response?.body, error)
+        }
+    }
+
+    /**
+     Definition 3
+     
+     - returns: Observable<[Definition3]>
+     */
+    open class func definition3() -> Observable<[Definition3]> {
+        return Observable.create { observer -> Disposable in
+            definition3() { data, error in
+                if let error = error {
+                    observer.on(.error(error as Error))
+                } else {
+                    observer.on(.next(data!))
+                }
+                observer.on(.completed)
+            }
+            return NopDisposable.instance
+        }
+    }
+
+    /**
+     Definition 3
+     - GET /fakedef3
+     - examples: [{contentType=application/json, example=[ {
+  "Definition3" : [ "" ],
+  "Id" : "aeiou"
+} ]}, {contentType=application/xml, example=<null>
+  <Id>aeiou</Id>
+</null>}]
+     - examples: [{contentType=application/json, example=[ {
+  "Definition3" : [ "" ],
+  "Id" : "aeiou"
+} ]}, {contentType=application/xml, example=<null>
+  <Id>aeiou</Id>
+</null>}]
+
+     - returns: RequestBuilder<[Definition3]> 
+     */
+    open class func definition3WithRequestBuilder() -> RequestBuilder<[Definition3]> {
+        let path = "/fakedef3"
+        let URLString = PetstoreClientAPI.basePath + path
+        let parameters: [String:Any]? = nil
+
+        let url = NSURLComponents(string: URLString)
+
+
+        let requestBuilder: RequestBuilder<[Definition3]>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
+
+    /**
+
+     - parameter items: (query) Array of ints 
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func postJSON(items: Int64, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
+        postJSONWithRequestBuilder(items: items).execute { (response, error) -> Void in
+            completion(error)
+        }
+    }
+
+    /**
+
+     - parameter items: (query) Array of ints 
+     - returns: Observable<Void>
+     */
+    open class func postJSON(items: Int64) -> Observable<Void> {
+        return Observable.create { observer -> Disposable in
+            postJSON(items: items) { error in
+                if let error = error {
+                    observer.on(.error(error as Error))
+                } else {
+                    observer.on(.next())
+                }
+                observer.on(.completed)
+            }
+            return NopDisposable.instance
+        }
+    }
+
+    /**
+     - GET /fakeArrays
+     - submitting JSON
+     
+     - parameter items: (query) Array of ints 
+
+     - returns: RequestBuilder<Void> 
+     */
+    open class func postJSONWithRequestBuilder(items: Int64) -> RequestBuilder<Void> {
+        let path = "/fakeArrays"
+        let URLString = PetstoreClientAPI.basePath + path
+        let parameters: [String:Any]? = nil
+
+        let url = NSURLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
+            "items": items.encodeToJSON()
+        ])
+        
+
+        let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
+
+    /**
+
+     - parameter items: (body) Array of ints 
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func postJSON_0(items: [Int64], completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
+        postJSON_0WithRequestBuilder(items: items).execute { (response, error) -> Void in
+            completion(error)
+        }
+    }
+
+    /**
+
+     - parameter items: (body) Array of ints 
+     - returns: Observable<Void>
+     */
+    open class func postJSON_0(items: [Int64]) -> Observable<Void> {
+        return Observable.create { observer -> Disposable in
+            postJSON_0(items: items) { error in
+                if let error = error {
+                    observer.on(.error(error as Error))
+                } else {
+                    observer.on(.next())
+                }
+                observer.on(.completed)
+            }
+            return NopDisposable.instance
+        }
+    }
+
+    /**
+     - POST /fakeArrays
+     - submitting JSON
+     
+     - parameter items: (body) Array of ints 
+
+     - returns: RequestBuilder<Void> 
+     */
+    open class func postJSON_0WithRequestBuilder(items: [Int64]) -> RequestBuilder<Void> {
+        let path = "/fakeArrays"
+        let URLString = PetstoreClientAPI.basePath + path
+        let parameters = items.encodeToJSON() as? [String:AnyObject]
+
+        let url = NSURLComponents(string: URLString)
+
+
+        let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
+    }
+
+    /**
+
+     - parameter body: (body) JSON 
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func postJSON_1(body: Any, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
+        postJSON_1WithRequestBuilder(body: body).execute { (response, error) -> Void in
+            completion(error)
+        }
+    }
+
+    /**
+
+     - parameter body: (body) JSON 
+     - returns: Observable<Void>
+     */
+    open class func postJSON_1(body: Any) -> Observable<Void> {
+        return Observable.create { observer -> Disposable in
+            postJSON_1(body: body) { error in
+                if let error = error {
+                    observer.on(.error(error as Error))
+                } else {
+                    observer.on(.next())
+                }
+                observer.on(.completed)
+            }
+            return NopDisposable.instance
+        }
+    }
+
+    /**
+     - POST /fakedef1
+     - submitting JSON
+     
+     - parameter body: (body) JSON 
+
+     - returns: RequestBuilder<Void> 
+     */
+    open class func postJSON_1WithRequestBuilder(body: Any) -> RequestBuilder<Void> {
+        let path = "/fakedef1"
+        let URLString = PetstoreClientAPI.basePath + path
+        let parameters = body.encodeToJSON() as? [String:AnyObject]
+
+        let url = NSURLComponents(string: URLString)
+
+
+        let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
+    }
+
+    /**
      To test \"client\" model
      
      - parameter body: (body) client model 

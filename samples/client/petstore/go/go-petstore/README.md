@@ -21,6 +21,12 @@ All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*FakeApi* | [**Definition1**](docs/FakeApi.md#definition1) | **Get** /fakedef1 | Definition 1
+*FakeApi* | [**Definition2**](docs/FakeApi.md#definition2) | **Get** /fakedef2 | Definition 2
+*FakeApi* | [**Definition3**](docs/FakeApi.md#definition3) | **Get** /fakedef3 | Definition 3
+*FakeApi* | [**PostJSON**](docs/FakeApi.md#postjson) | **Get** /fakeArrays | 
+*FakeApi* | [**PostJSON_0**](docs/FakeApi.md#postjson_0) | **Post** /fakeArrays | 
+*FakeApi* | [**PostJSON_1**](docs/FakeApi.md#postjson_1) | **Post** /fakedef1 | 
 *FakeApi* | [**TestClientModel**](docs/FakeApi.md#testclientmodel) | **Patch** /fake | To test \&quot;client\&quot; model
 *FakeApi* | [**TestEndpointParameters**](docs/FakeApi.md#testendpointparameters) | **Post** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 *FakeApi* | [**TestEnumParameters**](docs/FakeApi.md#testenumparameters) | **Get** /fake | To test enum parameters
@@ -60,6 +66,9 @@ Class | Method | HTTP request | Description
  - [Category](docs/Category.md)
  - [ClassModel](docs/ClassModel.md)
  - [Client](docs/Client.md)
+ - [Definition1](docs/Definition1.md)
+ - [Definition2](docs/Definition2.md)
+ - [Definition3](docs/Definition3.md)
  - [Dog](docs/Dog.md)
  - [EnumArrays](docs/EnumArrays.md)
  - [EnumClass](docs/EnumClass.md)

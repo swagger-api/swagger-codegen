@@ -17,8 +17,13 @@ open class EnumArrays: JSONEncodable {
         case fish = "fish"
         case crab = "crab"
     }
+    public enum ArrayArrayEnum: String { 
+        case cat = "Cat"
+        case dog = "Dog"
+    }
     public var justSymbol: JustSymbol?
     public var arrayEnum: [ArrayEnum]?
+    public var arrayArrayEnum: [[ArrayArrayEnum]]?
 
     public init() {}
 
@@ -27,6 +32,7 @@ open class EnumArrays: JSONEncodable {
         var nillableDictionary = [String:Any?]()
         nillableDictionary["just_symbol"] = self.justSymbol?.rawValue
         nillableDictionary["array_enum"] = self.arrayEnum?.map({$0.rawValue}).encodeToJSON()
+        nillableDictionary["array_array_enum"] = self.arrayArrayEnum?.map({$0.rawValue}).encodeToJSON()
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
     }

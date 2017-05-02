@@ -4,10 +4,265 @@ All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**definition1**](FakeApi.md#definition1) | **GET** /fakedef1 | Definition 1
+[**definition2**](FakeApi.md#definition2) | **GET** /fakedef2 | Definition 2
+[**definition3**](FakeApi.md#definition3) | **GET** /fakedef3 | Definition 3
+[**postJSON**](FakeApi.md#postJSON) | **GET** /fakeArrays | 
+[**postJSON_0**](FakeApi.md#postJSON_0) | **POST** /fakeArrays | 
+[**postJSON_1**](FakeApi.md#postJSON_1) | **POST** /fakedef1 | 
 [**testClientModel**](FakeApi.md#testClientModel) | **PATCH** /fake | To test \&quot;client\&quot; model
 [**testEndpointParameters**](FakeApi.md#testEndpointParameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트
 [**testEnumParameters**](FakeApi.md#testEnumParameters) | **GET** /fake | To test enum parameters
 
+
+# **definition1**
+> \Swagger\Client\Model\Definition1[] definition1()
+
+Definition 1
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\Api\FakeApi(new \Http\Adapter\Guzzle6\Client());
+
+try {
+    $result = $api_instance->definition1();
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling FakeApi->definition1: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**\Swagger\Client\Model\Definition1[]**](../Model/Definition1.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **definition2**
+> \Swagger\Client\Model\Definition2[] definition2()
+
+Definition 2
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\Api\FakeApi(new \Http\Adapter\Guzzle6\Client());
+
+try {
+    $result = $api_instance->definition2();
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling FakeApi->definition2: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**\Swagger\Client\Model\Definition2[]**](../Model/Definition2.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **definition3**
+> \Swagger\Client\Model\Definition3[] definition3()
+
+Definition 3
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\Api\FakeApi(new \Http\Adapter\Guzzle6\Client());
+
+try {
+    $result = $api_instance->definition3();
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling FakeApi->definition3: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**\Swagger\Client\Model\Definition3[]**](../Model/Definition3.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **postJSON**
+> postJSON($items)
+
+
+
+submitting JSON
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\Api\FakeApi(new \Http\Adapter\Guzzle6\Client());
+$items = 789; // int | Array of ints
+
+try {
+    $api_instance->postJSON($items);
+} catch (Exception $e) {
+    echo 'Exception when calling FakeApi->postJSON: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **items** | **int**| Array of ints |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **postJSON_0**
+> postJSON_0($items)
+
+
+
+submitting JSON
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\Api\FakeApi(new \Http\Adapter\Guzzle6\Client());
+$items = array(new int[]()); // int[] | Array of ints
+
+try {
+    $api_instance->postJSON_0($items);
+} catch (Exception $e) {
+    echo 'Exception when calling FakeApi->postJSON_0: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **items** | **int[]**| Array of ints |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **postJSON_1**
+> postJSON_1($body)
+
+
+
+submitting JSON
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\Api\FakeApi(new \Http\Adapter\Guzzle6\Client());
+$body = NULL; // object | JSON
+
+try {
+    $api_instance->postJSON_1($body);
+} catch (Exception $e) {
+    echo 'Exception when calling FakeApi->postJSON_1: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | **object**| JSON |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **testClientModel**
 > \Swagger\Client\Model\Client testClientModel($body)

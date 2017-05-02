@@ -14,6 +14,7 @@ open class MapTest: JSONEncodable {
         case lower = "lower"
     }
     public var mapMapOfString: [String:[String:String]]?
+    public var mapMapOfEnum: [String:[String:String]]?
     public var mapOfEnumString: [String:String]?
 
     public init() {}
@@ -21,7 +22,8 @@ open class MapTest: JSONEncodable {
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
-        nillableDictionary["map_map_of_string"] = self.mapMapOfString?.encodeToJSON()//TODO: handle enum map scenario
+        nillableDictionary["map_map_of_string"] = self.mapMapOfString?.encodeToJSON()
+        nillableDictionary["map_map_of_enum"] = self.mapMapOfEnum?.encodeToJSON()//TODO: handle enum map scenario
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
     }

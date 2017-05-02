@@ -56,7 +56,8 @@ class ArrayTest implements ArrayAccess
     protected static $swaggerTypes = [
         'array_of_string' => 'string[]',
         'array_array_of_integer' => 'int[][]',
-        'array_array_of_model' => '\Swagger\Client\Model\ReadOnlyFirst[][]'
+        'array_array_of_model' => '\Swagger\Client\Model\ReadOnlyFirst[][]',
+        'array_of_enum' => 'string[]'
     ];
 
     public static function swaggerTypes()
@@ -71,7 +72,8 @@ class ArrayTest implements ArrayAccess
     protected static $attributeMap = [
         'array_of_string' => 'array_of_string',
         'array_array_of_integer' => 'array_array_of_integer',
-        'array_array_of_model' => 'array_array_of_model'
+        'array_array_of_model' => 'array_array_of_model',
+        'array_of_enum' => 'array_of_enum'
     ];
 
 
@@ -82,7 +84,8 @@ class ArrayTest implements ArrayAccess
     protected static $setters = [
         'array_of_string' => 'setArrayOfString',
         'array_array_of_integer' => 'setArrayArrayOfInteger',
-        'array_array_of_model' => 'setArrayArrayOfModel'
+        'array_array_of_model' => 'setArrayArrayOfModel',
+        'array_of_enum' => 'setArrayOfEnum'
     ];
 
 
@@ -93,7 +96,8 @@ class ArrayTest implements ArrayAccess
     protected static $getters = [
         'array_of_string' => 'getArrayOfString',
         'array_array_of_integer' => 'getArrayArrayOfInteger',
-        'array_array_of_model' => 'getArrayArrayOfModel'
+        'array_array_of_model' => 'getArrayArrayOfModel',
+        'array_of_enum' => 'getArrayOfEnum'
     ];
 
     public static function attributeMap()
@@ -111,8 +115,22 @@ class ArrayTest implements ArrayAccess
         return self::$getters;
     }
 
+    const ARRAY_OF_ENUM_UPPER = 'UPPER';
+    const ARRAY_OF_ENUM_LOWER = 'lower';
     
 
+    
+    /**
+     * Gets allowable values of the enum
+     * @return string[]
+     */
+    public function getArrayOfEnumAllowableValues()
+    {
+        return [
+            self::ARRAY_OF_ENUM_UPPER,
+            self::ARRAY_OF_ENUM_LOWER,
+        ];
+    }
     
 
     /**
@@ -130,6 +148,7 @@ class ArrayTest implements ArrayAccess
         $this->container['array_of_string'] = isset($data['array_of_string']) ? $data['array_of_string'] : null;
         $this->container['array_array_of_integer'] = isset($data['array_array_of_integer']) ? $data['array_array_of_integer'] : null;
         $this->container['array_array_of_model'] = isset($data['array_array_of_model']) ? $data['array_array_of_model'] : null;
+        $this->container['array_of_enum'] = isset($data['array_of_enum']) ? $data['array_of_enum'] : null;
     }
 
     /**
@@ -216,6 +235,36 @@ class ArrayTest implements ArrayAccess
     public function setArrayArrayOfModel($array_array_of_model)
     {
         $this->container['array_array_of_model'] = $array_array_of_model;
+
+        return $this;
+    }
+
+    /**
+     * Gets array_of_enum
+     * @return string[]
+     */
+    public function getArrayOfEnum()
+    {
+        return $this->container['array_of_enum'];
+    }
+
+    /**
+     * Sets array_of_enum
+     * @param string[] $array_of_enum
+     * @return $this
+     */
+    public function setArrayOfEnum($array_of_enum)
+    {
+        $allowed_values = $this->getArrayOfEnumAllowableValues();
+        if (!is_null($array_of_enum) && array_diff($array_of_enum, $allowed_values)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'array_of_enum', must be one of '%s'",
+                    implode("', '", $allowed_values)
+                )
+            );
+        }
+        $this->container['array_of_enum'] = $array_of_enum;
 
         return $this;
     }

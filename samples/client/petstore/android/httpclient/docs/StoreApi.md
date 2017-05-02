@@ -50,7 +50,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
 <a name="getInventory"></a>
 # **getInventory**
@@ -89,7 +89,7 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/xml
 
 <a name="getOrderById"></a>
 # **getOrderById**
@@ -105,7 +105,7 @@ For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other val
 //import io.swagger.client.api.StoreApi;
 
 StoreApi apiInstance = new StoreApi();
-Long orderId = 789L; // Long | ID of pet that needs to be fetched
+String orderId = "orderId_example"; // String | ID of pet that needs to be fetched
 try {
     Order result = apiInstance.getOrderById(orderId);
     System.out.println(result);
@@ -119,7 +119,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **orderId** | **Long**| ID of pet that needs to be fetched |
+ **orderId** | **String**| ID of pet that needs to be fetched |
 
 ### Return type
 
@@ -132,7 +132,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
 <a name="placeOrder"></a>
 # **placeOrder**
@@ -162,7 +162,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Order**](Order.md)| order placed for purchasing the pet |
+ **body** | [**Order**](Order.md)| order placed for purchasing the pet | [optional]
 
 ### Return type
 
@@ -175,5 +175,5 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
