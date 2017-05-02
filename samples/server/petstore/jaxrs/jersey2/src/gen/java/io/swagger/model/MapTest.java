@@ -32,9 +32,6 @@ public class MapTest   {
   @JsonProperty("map_map_of_string")
   private Map<String, Map<String, String>> mapMapOfString = null;
 
-  @JsonProperty("map_map_of_enum")
-  private Map<String, Map<String, String>> mapMapOfEnum = null;
-
   /**
    * Gets or Sets inner
    */
@@ -96,33 +93,6 @@ public class MapTest   {
     this.mapMapOfString = mapMapOfString;
   }
 
-  public MapTest mapMapOfEnum(Map<String, Map<String, String>> mapMapOfEnum) {
-    this.mapMapOfEnum = mapMapOfEnum;
-    return this;
-  }
-
-  public MapTest putMapMapOfEnumItem(String key, Map<String, String> mapMapOfEnumItem) {
-    if (this.mapMapOfEnum == null) {
-      this.mapMapOfEnum = new HashMap<String, Map<String, String>>();
-    }
-    this.mapMapOfEnum.put(key, mapMapOfEnumItem);
-    return this;
-  }
-
-   /**
-   * Get mapMapOfEnum
-   * @return mapMapOfEnum
-  **/
-  @JsonProperty("map_map_of_enum")
-  @ApiModelProperty(value = "")
-  public Map<String, Map<String, String>> getMapMapOfEnum() {
-    return mapMapOfEnum;
-  }
-
-  public void setMapMapOfEnum(Map<String, Map<String, String>> mapMapOfEnum) {
-    this.mapMapOfEnum = mapMapOfEnum;
-  }
-
   public MapTest mapOfEnumString(Map<String, InnerEnum> mapOfEnumString) {
     this.mapOfEnumString = mapOfEnumString;
     return this;
@@ -161,13 +131,12 @@ public class MapTest   {
     }
     MapTest mapTest = (MapTest) o;
     return Objects.equals(this.mapMapOfString, mapTest.mapMapOfString) &&
-        Objects.equals(this.mapMapOfEnum, mapTest.mapMapOfEnum) &&
         Objects.equals(this.mapOfEnumString, mapTest.mapOfEnumString);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(mapMapOfString, mapMapOfEnum, mapOfEnumString);
+    return Objects.hash(mapMapOfString, mapOfEnumString);
   }
 
 
@@ -177,7 +146,6 @@ public class MapTest   {
     sb.append("class MapTest {\n");
     
     sb.append("    mapMapOfString: ").append(toIndentedString(mapMapOfString)).append("\n");
-    sb.append("    mapMapOfEnum: ").append(toIndentedString(mapMapOfEnum)).append("\n");
     sb.append("    mapOfEnumString: ").append(toIndentedString(mapOfEnumString)).append("\n");
     sb.append("}");
     return sb.toString();
