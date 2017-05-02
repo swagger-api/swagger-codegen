@@ -103,15 +103,15 @@ public class PetApi {
     } catch (InterruptedException ex) {
        throw ex;
     } catch (ExecutionException ex) {
-       if (ex.getCause() instanceof VolleyError) {
-         VolleyError volleyError = (VolleyError)ex.getCause();
-         if (volleyError.networkResponse != null) {
-           throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
-         }
-       }
-       throw ex;
+      if (ex.getCause() instanceof VolleyError) {
+        VolleyError volleyError = (VolleyError)ex.getCause();
+        if (volleyError.networkResponse != null) {
+          throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
+        }
+      }
+      throw ex;
     } catch (TimeoutException ex) {
-       throw ex;
+      throw ex;
     }
   }
 
@@ -123,7 +123,6 @@ public class PetApi {
   public void addPet (Pet body, final Response.Listener<String> responseListener, final Response.ErrorListener errorListener) {
     Object postBody = body;
 
-  
 
     // create path and map variables
     String path = "/pet".replaceAll("\\{format\\}","json");
@@ -153,7 +152,7 @@ public class PetApi {
       // normal form params
           }
 
-      String[] authNames = new String[] { "petstore_auth" };
+    String[] authNames = new String[] { "petstore_auth" };
 
     try {
       apiInvoker.invokeAPI(basePath, path, "POST", queryParams, postBody, headerParams, formParams, contentType, authNames,
@@ -224,15 +223,15 @@ public class PetApi {
     } catch (InterruptedException ex) {
        throw ex;
     } catch (ExecutionException ex) {
-       if (ex.getCause() instanceof VolleyError) {
-         VolleyError volleyError = (VolleyError)ex.getCause();
-         if (volleyError.networkResponse != null) {
-           throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
-         }
-       }
-       throw ex;
+      if (ex.getCause() instanceof VolleyError) {
+        VolleyError volleyError = (VolleyError)ex.getCause();
+        if (volleyError.networkResponse != null) {
+          throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
+        }
+      }
+      throw ex;
     } catch (TimeoutException ex) {
-       throw ex;
+      throw ex;
     }
   }
 
@@ -244,13 +243,11 @@ public class PetApi {
   public void deletePet (Long petId, String apiKey, final Response.Listener<String> responseListener, final Response.ErrorListener errorListener) {
     Object postBody = null;
 
-  
     // verify the required parameter 'petId' is set
     if (petId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'petId' when calling deletePet",
-         new ApiException(400, "Missing the required parameter 'petId' when calling deletePet"));
+      VolleyError error = new VolleyError("Missing the required parameter 'petId' when calling deletePet",
+        new ApiException(400, "Missing the required parameter 'petId' when calling deletePet"));
     }
-    
 
     // create path and map variables
     String path = "/pet/{petId}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "petId" + "\\}", apiInvoker.escapeString(petId.toString()));
@@ -281,7 +278,7 @@ public class PetApi {
       // normal form params
           }
 
-      String[] authNames = new String[] { "petstore_auth" };
+    String[] authNames = new String[] { "petstore_auth" };
 
     try {
       apiInvoker.invokeAPI(basePath, path, "DELETE", queryParams, postBody, headerParams, formParams, contentType, authNames,
@@ -346,15 +343,15 @@ public class PetApi {
     } catch (InterruptedException ex) {
        throw ex;
     } catch (ExecutionException ex) {
-       if (ex.getCause() instanceof VolleyError) {
-         VolleyError volleyError = (VolleyError)ex.getCause();
-         if (volleyError.networkResponse != null) {
-           throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
-         }
-       }
-       throw ex;
+      if (ex.getCause() instanceof VolleyError) {
+        VolleyError volleyError = (VolleyError)ex.getCause();
+        if (volleyError.networkResponse != null) {
+          throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
+        }
+      }
+      throw ex;
     } catch (TimeoutException ex) {
-       throw ex;
+      throw ex;
     }
   }
 
@@ -366,7 +363,6 @@ public class PetApi {
   public void findPetsByStatus (List<String> status, final Response.Listener<List<Pet>> responseListener, final Response.ErrorListener errorListener) {
     Object postBody = null;
 
-  
 
     // create path and map variables
     String path = "/pet/findByStatus".replaceAll("\\{format\\}","json");
@@ -397,7 +393,7 @@ public class PetApi {
       // normal form params
           }
 
-      String[] authNames = new String[] { "petstore_auth" };
+    String[] authNames = new String[] { "petstore_auth" };
 
     try {
       apiInvoker.invokeAPI(basePath, path, "GET", queryParams, postBody, headerParams, formParams, contentType, authNames,
@@ -466,15 +462,15 @@ public class PetApi {
     } catch (InterruptedException ex) {
        throw ex;
     } catch (ExecutionException ex) {
-       if (ex.getCause() instanceof VolleyError) {
-         VolleyError volleyError = (VolleyError)ex.getCause();
-         if (volleyError.networkResponse != null) {
-           throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
-         }
-       }
-       throw ex;
+      if (ex.getCause() instanceof VolleyError) {
+        VolleyError volleyError = (VolleyError)ex.getCause();
+        if (volleyError.networkResponse != null) {
+          throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
+        }
+      }
+      throw ex;
     } catch (TimeoutException ex) {
-       throw ex;
+      throw ex;
     }
   }
 
@@ -486,7 +482,6 @@ public class PetApi {
   public void findPetsByTags (List<String> tags, final Response.Listener<List<Pet>> responseListener, final Response.ErrorListener errorListener) {
     Object postBody = null;
 
-  
 
     // create path and map variables
     String path = "/pet/findByTags".replaceAll("\\{format\\}","json");
@@ -517,7 +512,7 @@ public class PetApi {
       // normal form params
           }
 
-      String[] authNames = new String[] { "petstore_auth" };
+    String[] authNames = new String[] { "petstore_auth" };
 
     try {
       apiInvoker.invokeAPI(basePath, path, "GET", queryParams, postBody, headerParams, formParams, contentType, authNames,
@@ -590,15 +585,15 @@ public class PetApi {
     } catch (InterruptedException ex) {
        throw ex;
     } catch (ExecutionException ex) {
-       if (ex.getCause() instanceof VolleyError) {
-         VolleyError volleyError = (VolleyError)ex.getCause();
-         if (volleyError.networkResponse != null) {
-           throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
-         }
-       }
-       throw ex;
+      if (ex.getCause() instanceof VolleyError) {
+        VolleyError volleyError = (VolleyError)ex.getCause();
+        if (volleyError.networkResponse != null) {
+          throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
+        }
+      }
+      throw ex;
     } catch (TimeoutException ex) {
-       throw ex;
+      throw ex;
     }
   }
 
@@ -610,13 +605,11 @@ public class PetApi {
   public void getPetById (Long petId, final Response.Listener<Pet> responseListener, final Response.ErrorListener errorListener) {
     Object postBody = null;
 
-  
     // verify the required parameter 'petId' is set
     if (petId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'petId' when calling getPetById",
-         new ApiException(400, "Missing the required parameter 'petId' when calling getPetById"));
+      VolleyError error = new VolleyError("Missing the required parameter 'petId' when calling getPetById",
+        new ApiException(400, "Missing the required parameter 'petId' when calling getPetById"));
     }
-    
 
     // create path and map variables
     String path = "/pet/{petId}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "petId" + "\\}", apiInvoker.escapeString(petId.toString()));
@@ -646,7 +639,7 @@ public class PetApi {
       // normal form params
           }
 
-      String[] authNames = new String[] { "petstore_auth", "api_key" };
+    String[] authNames = new String[] { "petstore_auth", "api_key" };
 
     try {
       apiInvoker.invokeAPI(basePath, path, "GET", queryParams, postBody, headerParams, formParams, contentType, authNames,
@@ -716,15 +709,15 @@ public class PetApi {
     } catch (InterruptedException ex) {
        throw ex;
     } catch (ExecutionException ex) {
-       if (ex.getCause() instanceof VolleyError) {
-         VolleyError volleyError = (VolleyError)ex.getCause();
-         if (volleyError.networkResponse != null) {
-           throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
-         }
-       }
-       throw ex;
+      if (ex.getCause() instanceof VolleyError) {
+        VolleyError volleyError = (VolleyError)ex.getCause();
+        if (volleyError.networkResponse != null) {
+          throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
+        }
+      }
+      throw ex;
     } catch (TimeoutException ex) {
-       throw ex;
+      throw ex;
     }
   }
 
@@ -736,7 +729,6 @@ public class PetApi {
   public void updatePet (Pet body, final Response.Listener<String> responseListener, final Response.ErrorListener errorListener) {
     Object postBody = body;
 
-  
 
     // create path and map variables
     String path = "/pet".replaceAll("\\{format\\}","json");
@@ -766,7 +758,7 @@ public class PetApi {
       // normal form params
           }
 
-      String[] authNames = new String[] { "petstore_auth" };
+    String[] authNames = new String[] { "petstore_auth" };
 
     try {
       apiInvoker.invokeAPI(basePath, path, "PUT", queryParams, postBody, headerParams, formParams, contentType, authNames,
@@ -846,15 +838,15 @@ public class PetApi {
     } catch (InterruptedException ex) {
        throw ex;
     } catch (ExecutionException ex) {
-       if (ex.getCause() instanceof VolleyError) {
-         VolleyError volleyError = (VolleyError)ex.getCause();
-         if (volleyError.networkResponse != null) {
-           throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
-         }
-       }
-       throw ex;
+      if (ex.getCause() instanceof VolleyError) {
+        VolleyError volleyError = (VolleyError)ex.getCause();
+        if (volleyError.networkResponse != null) {
+          throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
+        }
+      }
+      throw ex;
     } catch (TimeoutException ex) {
-       throw ex;
+      throw ex;
     }
   }
 
@@ -866,13 +858,11 @@ public class PetApi {
   public void updatePetWithForm (String petId, String name, String status, final Response.Listener<String> responseListener, final Response.ErrorListener errorListener) {
     Object postBody = null;
 
-  
     // verify the required parameter 'petId' is set
     if (petId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'petId' when calling updatePetWithForm",
-         new ApiException(400, "Missing the required parameter 'petId' when calling updatePetWithForm"));
+      VolleyError error = new VolleyError("Missing the required parameter 'petId' when calling updatePetWithForm",
+        new ApiException(400, "Missing the required parameter 'petId' when calling updatePetWithForm"));
     }
-    
 
     // create path and map variables
     String path = "/pet/{petId}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "petId" + "\\}", apiInvoker.escapeString(petId.toString()));
@@ -912,7 +902,7 @@ public class PetApi {
 formParams.put("status", ApiInvoker.parameterToString(status));
     }
 
-      String[] authNames = new String[] { "petstore_auth" };
+    String[] authNames = new String[] { "petstore_auth" };
 
     try {
       apiInvoker.invokeAPI(basePath, path, "POST", queryParams, postBody, headerParams, formParams, contentType, authNames,
@@ -991,15 +981,15 @@ formParams.put("status", ApiInvoker.parameterToString(status));
     } catch (InterruptedException ex) {
        throw ex;
     } catch (ExecutionException ex) {
-       if (ex.getCause() instanceof VolleyError) {
-         VolleyError volleyError = (VolleyError)ex.getCause();
-         if (volleyError.networkResponse != null) {
-           throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
-         }
-       }
-       throw ex;
+      if (ex.getCause() instanceof VolleyError) {
+        VolleyError volleyError = (VolleyError)ex.getCause();
+        if (volleyError.networkResponse != null) {
+          throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
+        }
+      }
+      throw ex;
     } catch (TimeoutException ex) {
-       throw ex;
+      throw ex;
     }
   }
 
@@ -1011,13 +1001,11 @@ formParams.put("status", ApiInvoker.parameterToString(status));
   public void uploadFile (Long petId, String additionalMetadata, File file, final Response.Listener<String> responseListener, final Response.ErrorListener errorListener) {
     Object postBody = null;
 
-  
     // verify the required parameter 'petId' is set
     if (petId == null) {
-       VolleyError error = new VolleyError("Missing the required parameter 'petId' when calling uploadFile",
-         new ApiException(400, "Missing the required parameter 'petId' when calling uploadFile"));
+      VolleyError error = new VolleyError("Missing the required parameter 'petId' when calling uploadFile",
+        new ApiException(400, "Missing the required parameter 'petId' when calling uploadFile"));
     }
-    
 
     // create path and map variables
     String path = "/pet/{petId}/uploadImage".replaceAll("\\{format\\}","json").replaceAll("\\{" + "petId" + "\\}", apiInvoker.escapeString(petId.toString()));
@@ -1057,7 +1045,7 @@ formParams.put("status", ApiInvoker.parameterToString(status));
 
     }
 
-      String[] authNames = new String[] { "petstore_auth" };
+    String[] authNames = new String[] { "petstore_auth" };
 
     try {
       apiInvoker.invokeAPI(basePath, path, "POST", queryParams, postBody, headerParams, formParams, contentType, authNames,

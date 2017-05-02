@@ -49,6 +49,336 @@ sub new {
 
 
 #
+# definition1
+#
+# Definition 1
+# 
+{
+    my $params = {
+    };
+    __PACKAGE__->method_documentation->{ 'definition1' } = { 
+    	summary => 'Definition 1',
+        params => $params,
+        returns => 'ARRAY[Definition1]',
+        };
+}
+# @return ARRAY[Definition1]
+#
+sub definition1 {
+    my ($self, %args) = @_;
+
+    # parse inputs
+    my $_resource_path = '/fakedef1';
+
+    my $_method = 'GET';
+    my $query_params = {};
+    my $header_params = {};
+    my $form_params = {};
+
+    # 'Accept' and 'Content-Type' header
+    my $_header_accept = $self->{api_client}->select_header_accept('application/json', 'text/json', 'application/xml', 'text/xml');
+    if ($_header_accept) {
+        $header_params->{'Accept'} = $_header_accept;
+    }
+    $header_params->{'Content-Type'} = $self->{api_client}->select_header_content_type();
+
+    my $_body_data;
+    # authentication setting, if any
+    my $auth_settings = [qw()];
+
+    # make the API Call
+    my $response = $self->{api_client}->call_api($_resource_path, $_method,
+                                           $query_params, $form_params,
+                                           $header_params, $_body_data, $auth_settings);
+    if (!$response) {
+        return;
+    }
+    my $_response_object = $self->{api_client}->deserialize('ARRAY[Definition1]', $response);
+    return $_response_object;
+}
+
+#
+# definition2
+#
+# Definition 2
+# 
+{
+    my $params = {
+    };
+    __PACKAGE__->method_documentation->{ 'definition2' } = { 
+    	summary => 'Definition 2',
+        params => $params,
+        returns => 'ARRAY[Definition2]',
+        };
+}
+# @return ARRAY[Definition2]
+#
+sub definition2 {
+    my ($self, %args) = @_;
+
+    # parse inputs
+    my $_resource_path = '/fakedef2';
+
+    my $_method = 'GET';
+    my $query_params = {};
+    my $header_params = {};
+    my $form_params = {};
+
+    # 'Accept' and 'Content-Type' header
+    my $_header_accept = $self->{api_client}->select_header_accept('application/json', 'text/json', 'application/xml', 'text/xml');
+    if ($_header_accept) {
+        $header_params->{'Accept'} = $_header_accept;
+    }
+    $header_params->{'Content-Type'} = $self->{api_client}->select_header_content_type();
+
+    my $_body_data;
+    # authentication setting, if any
+    my $auth_settings = [qw()];
+
+    # make the API Call
+    my $response = $self->{api_client}->call_api($_resource_path, $_method,
+                                           $query_params, $form_params,
+                                           $header_params, $_body_data, $auth_settings);
+    if (!$response) {
+        return;
+    }
+    my $_response_object = $self->{api_client}->deserialize('ARRAY[Definition2]', $response);
+    return $_response_object;
+}
+
+#
+# definition3
+#
+# Definition 3
+# 
+{
+    my $params = {
+    };
+    __PACKAGE__->method_documentation->{ 'definition3' } = { 
+    	summary => 'Definition 3',
+        params => $params,
+        returns => 'ARRAY[Definition3]',
+        };
+}
+# @return ARRAY[Definition3]
+#
+sub definition3 {
+    my ($self, %args) = @_;
+
+    # parse inputs
+    my $_resource_path = '/fakedef3';
+
+    my $_method = 'GET';
+    my $query_params = {};
+    my $header_params = {};
+    my $form_params = {};
+
+    # 'Accept' and 'Content-Type' header
+    my $_header_accept = $self->{api_client}->select_header_accept('application/json', 'text/json', 'application/xml', 'text/xml');
+    if ($_header_accept) {
+        $header_params->{'Accept'} = $_header_accept;
+    }
+    $header_params->{'Content-Type'} = $self->{api_client}->select_header_content_type();
+
+    my $_body_data;
+    # authentication setting, if any
+    my $auth_settings = [qw()];
+
+    # make the API Call
+    my $response = $self->{api_client}->call_api($_resource_path, $_method,
+                                           $query_params, $form_params,
+                                           $header_params, $_body_data, $auth_settings);
+    if (!$response) {
+        return;
+    }
+    my $_response_object = $self->{api_client}->deserialize('ARRAY[Definition3]', $response);
+    return $_response_object;
+}
+
+#
+# post_json
+#
+# 
+# 
+# @param int $items Array of ints (required)
+{
+    my $params = {
+    'items' => {
+        data_type => 'int',
+        description => 'Array of ints',
+        required => '1',
+    },
+    };
+    __PACKAGE__->method_documentation->{ 'post_json' } = { 
+    	summary => '',
+        params => $params,
+        returns => undef,
+        };
+}
+# @return void
+#
+sub post_json {
+    my ($self, %args) = @_;
+
+    # verify the required parameter 'items' is set
+    unless (exists $args{'items'}) {
+      croak("Missing the required parameter 'items' when calling post_json");
+    }
+
+    # parse inputs
+    my $_resource_path = '/fakeArrays';
+
+    my $_method = 'GET';
+    my $query_params = {};
+    my $header_params = {};
+    my $form_params = {};
+
+    # 'Accept' and 'Content-Type' header
+    my $_header_accept = $self->{api_client}->select_header_accept();
+    if ($_header_accept) {
+        $header_params->{'Accept'} = $_header_accept;
+    }
+    $header_params->{'Content-Type'} = $self->{api_client}->select_header_content_type();
+
+    # query params
+    if ( exists $args{'items'}) {
+        $query_params->{'items'} = $self->{api_client}->to_query_value($args{'items'});
+    }
+
+    my $_body_data;
+    # authentication setting, if any
+    my $auth_settings = [qw()];
+
+    # make the API Call
+    $self->{api_client}->call_api($_resource_path, $_method,
+                                           $query_params, $form_params,
+                                           $header_params, $_body_data, $auth_settings);
+    return;
+}
+
+#
+# post_json_0
+#
+# 
+# 
+# @param ARRAY[int] $items Array of ints (required)
+{
+    my $params = {
+    'items' => {
+        data_type => 'ARRAY[int]',
+        description => 'Array of ints',
+        required => '1',
+    },
+    };
+    __PACKAGE__->method_documentation->{ 'post_json_0' } = { 
+    	summary => '',
+        params => $params,
+        returns => undef,
+        };
+}
+# @return void
+#
+sub post_json_0 {
+    my ($self, %args) = @_;
+
+    # verify the required parameter 'items' is set
+    unless (exists $args{'items'}) {
+      croak("Missing the required parameter 'items' when calling post_json_0");
+    }
+
+    # parse inputs
+    my $_resource_path = '/fakeArrays';
+
+    my $_method = 'POST';
+    my $query_params = {};
+    my $header_params = {};
+    my $form_params = {};
+
+    # 'Accept' and 'Content-Type' header
+    my $_header_accept = $self->{api_client}->select_header_accept();
+    if ($_header_accept) {
+        $header_params->{'Accept'} = $_header_accept;
+    }
+    $header_params->{'Content-Type'} = $self->{api_client}->select_header_content_type();
+
+    my $_body_data;
+    # body params
+    if ( exists $args{'items'}) {
+        $_body_data = $args{'items'};
+    }
+
+    # authentication setting, if any
+    my $auth_settings = [qw()];
+
+    # make the API Call
+    $self->{api_client}->call_api($_resource_path, $_method,
+                                           $query_params, $form_params,
+                                           $header_params, $_body_data, $auth_settings);
+    return;
+}
+
+#
+# post_json_1
+#
+# 
+# 
+# @param object $body JSON (required)
+{
+    my $params = {
+    'body' => {
+        data_type => 'object',
+        description => 'JSON',
+        required => '1',
+    },
+    };
+    __PACKAGE__->method_documentation->{ 'post_json_1' } = { 
+    	summary => '',
+        params => $params,
+        returns => undef,
+        };
+}
+# @return void
+#
+sub post_json_1 {
+    my ($self, %args) = @_;
+
+    # verify the required parameter 'body' is set
+    unless (exists $args{'body'}) {
+      croak("Missing the required parameter 'body' when calling post_json_1");
+    }
+
+    # parse inputs
+    my $_resource_path = '/fakedef1';
+
+    my $_method = 'POST';
+    my $query_params = {};
+    my $header_params = {};
+    my $form_params = {};
+
+    # 'Accept' and 'Content-Type' header
+    my $_header_accept = $self->{api_client}->select_header_accept();
+    if ($_header_accept) {
+        $header_params->{'Accept'} = $_header_accept;
+    }
+    $header_params->{'Content-Type'} = $self->{api_client}->select_header_content_type();
+
+    my $_body_data;
+    # body params
+    if ( exists $args{'body'}) {
+        $_body_data = $args{'body'};
+    }
+
+    # authentication setting, if any
+    my $auth_settings = [qw()];
+
+    # make the API Call
+    $self->{api_client}->call_api($_resource_path, $_method,
+                                           $query_params, $form_params,
+                                           $header_params, $_body_data, $auth_settings);
+    return;
+}
+
+#
 # test_client_model
 #
 # To test \"client\" model

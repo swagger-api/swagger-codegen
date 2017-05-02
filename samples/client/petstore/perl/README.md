@@ -221,7 +221,6 @@ Each of these calls returns a hashref with various useful pieces of information.
 
 To load the API packages:
 ```perl
-use WWW::SwaggerClient::CatalogApi;
 use WWW::SwaggerClient::FakeApi;
 use WWW::SwaggerClient::FakeClassnameTags123Api;
 use WWW::SwaggerClient::PetApi;
@@ -239,6 +238,7 @@ use WWW::SwaggerClient::Object::ApiResponse;
 use WWW::SwaggerClient::Object::ArrayOfArrayOfNumberOnly;
 use WWW::SwaggerClient::Object::ArrayOfNumberOnly;
 use WWW::SwaggerClient::Object::ArrayTest;
+use WWW::SwaggerClient::Object::Capitalization;
 use WWW::SwaggerClient::Object::Cat;
 use WWW::SwaggerClient::Object::Category;
 use WWW::SwaggerClient::Object::ClassModel;
@@ -277,7 +277,6 @@ use lib 'lib';
 use strict;
 use warnings;
 # load the API package
-use WWW::SwaggerClient::CatalogApi;
 use WWW::SwaggerClient::FakeApi;
 use WWW::SwaggerClient::FakeClassnameTags123Api;
 use WWW::SwaggerClient::PetApi;
@@ -292,6 +291,7 @@ use WWW::SwaggerClient::Object::ApiResponse;
 use WWW::SwaggerClient::Object::ArrayOfArrayOfNumberOnly;
 use WWW::SwaggerClient::Object::ArrayOfNumberOnly;
 use WWW::SwaggerClient::Object::ArrayTest;
+use WWW::SwaggerClient::Object::Capitalization;
 use WWW::SwaggerClient::Object::Cat;
 use WWW::SwaggerClient::Object::Category;
 use WWW::SwaggerClient::Object::ClassModel;
@@ -333,20 +333,23 @@ eval {
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling CatalogApi->definition1: $@\n";
+    warn "Exception when calling FakeApi->definition1: $@\n";
 }
 
 ```
 
 # DOCUMENTATION FOR API ENDPOINTS
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*CatalogApi* | [**definition1**](docs/CatalogApi.md#definition1) | **GET** /api/fakedef1 | Definition 1
-*CatalogApi* | [**definition2**](docs/CatalogApi.md#definition2) | **GET** /api/fakedef2 | Definition 2
-*CatalogApi* | [**definition3**](docs/CatalogApi.md#definition3) | **GET** /api/fakedef3 | Definition 3
+*FakeApi* | [**definition1**](docs/FakeApi.md#definition1) | **GET** /fakedef1 | Definition 1
+*FakeApi* | [**definition2**](docs/FakeApi.md#definition2) | **GET** /fakedef2 | Definition 2
+*FakeApi* | [**definition3**](docs/FakeApi.md#definition3) | **GET** /fakedef3 | Definition 3
+*FakeApi* | [**post_json**](docs/FakeApi.md#post_json) | **GET** /fakeArrays | 
+*FakeApi* | [**post_json_1**](docs/FakeApi.md#post_json_1) | **POST** /fakeArrays | 
+*FakeApi* | [**post_json_2**](docs/FakeApi.md#post_json_2) | **POST** /fakedef1 | 
 *FakeApi* | [**test_client_model**](docs/FakeApi.md#test_client_model) | **PATCH** /fake | To test \&quot;client\&quot; model
 *FakeApi* | [**test_endpoint_parameters**](docs/FakeApi.md#test_endpoint_parameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 *FakeApi* | [**test_enum_parameters**](docs/FakeApi.md#test_enum_parameters) | **GET** /fake | To test enum parameters
@@ -359,9 +362,9 @@ Class | Method | HTTP request | Description
 *PetApi* | [**update_pet**](docs/PetApi.md#update_pet) | **PUT** /pet | Update an existing pet
 *PetApi* | [**update_pet_with_form**](docs/PetApi.md#update_pet_with_form) | **POST** /pet/{petId} | Updates a pet in the store with form data
 *PetApi* | [**upload_file**](docs/PetApi.md#upload_file) | **POST** /pet/{petId}/uploadImage | uploads an image
-*StoreApi* | [**delete_order**](docs/StoreApi.md#delete_order) | **DELETE** /store/order/{orderId} | Delete purchase order by ID
+*StoreApi* | [**delete_order**](docs/StoreApi.md#delete_order) | **DELETE** /store/order/{order_id} | Delete purchase order by ID
 *StoreApi* | [**get_inventory**](docs/StoreApi.md#get_inventory) | **GET** /store/inventory | Returns pet inventories by status
-*StoreApi* | [**get_order_by_id**](docs/StoreApi.md#get_order_by_id) | **GET** /store/order/{orderId} | Find purchase order by ID
+*StoreApi* | [**get_order_by_id**](docs/StoreApi.md#get_order_by_id) | **GET** /store/order/{order_id} | Find purchase order by ID
 *StoreApi* | [**place_order**](docs/StoreApi.md#place_order) | **POST** /store/order | Place an order for a pet
 *UserApi* | [**create_user**](docs/UserApi.md#create_user) | **POST** /user | Create user
 *UserApi* | [**create_users_with_array_input**](docs/UserApi.md#create_users_with_array_input) | **POST** /user/createWithArray | Creates list of users with given input array
@@ -381,6 +384,7 @@ Class | Method | HTTP request | Description
  - [WWW::SwaggerClient::Object::ArrayOfArrayOfNumberOnly](docs/ArrayOfArrayOfNumberOnly.md)
  - [WWW::SwaggerClient::Object::ArrayOfNumberOnly](docs/ArrayOfNumberOnly.md)
  - [WWW::SwaggerClient::Object::ArrayTest](docs/ArrayTest.md)
+ - [WWW::SwaggerClient::Object::Capitalization](docs/Capitalization.md)
  - [WWW::SwaggerClient::Object::Cat](docs/Cat.md)
  - [WWW::SwaggerClient::Object::Category](docs/Category.md)
  - [WWW::SwaggerClient::Object::ClassModel](docs/ClassModel.md)

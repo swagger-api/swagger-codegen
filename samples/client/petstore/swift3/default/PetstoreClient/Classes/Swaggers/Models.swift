@@ -426,6 +426,57 @@ class Decoders {
         }
 
 
+        // Decoder for [Capitalization]
+            return Decoders.decode(clazz: [Capitalization].self, source: source, instance: instance)
+        }
+        // Decoder for Capitalization
+        Decoders.addDecoder(clazz: Capitalization.self) { (source: AnyObject, instance: AnyObject?) -> Decoded<Capitalization> in
+            if let sourceDictionary = source as? [AnyHashable: Any] {
+
+                let result = instance == nil ? Capitalization() : instance as! Capitalization
+                switch Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["smallCamel"] as AnyObject?) {
+                
+                case let .success(value): result.smallCamel = value
+                case let .failure(error): return .failure(error)
+                
+                }
+                switch Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["CapitalCamel"] as AnyObject?) {
+                
+                case let .success(value): result.capitalCamel = value
+                case let .failure(error): return .failure(error)
+                
+                }
+                switch Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["small_Snake"] as AnyObject?) {
+                
+                case let .success(value): result.smallSnake = value
+                case let .failure(error): return .failure(error)
+                
+                }
+                switch Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["Capital_Snake"] as AnyObject?) {
+                
+                case let .success(value): result.capitalSnake = value
+                case let .failure(error): return .failure(error)
+                
+                }
+                switch Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["SCA_ETH_Flow_Points"] as AnyObject?) {
+                
+                case let .success(value): result.sCAETHFlowPoints = value
+                case let .failure(error): return .failure(error)
+                
+                }
+                switch Decoders.decodeOptional(clazz: String.self, source: sourceDictionary["ATT_NAME"] as AnyObject?) {
+                
+                case let .success(value): result.ATT_NAME = value
+                case let .failure(error): return .failure(error)
+                
+                }
+                return .success(result)
+            } else {
+                return .failure(.typeMismatch(expected: "Capitalization", actual: "\(source)"))
+            }
+        }
+
+
         // Decoder for [Cat]
             return Decoders.decode(clazz: [Cat].self, source: source, instance: instance)
         }

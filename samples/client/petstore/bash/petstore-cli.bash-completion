@@ -71,6 +71,9 @@ _petstore-cli()
     operations["definition1"]=1
     operations["definition2"]=1
     operations["definition3"]=1
+    operations["postJSON"]=1
+    operations["postJSON_0"]=1
+    operations["postJSON_1"]=1
     operations["testClientModel"]=1
     operations["testEndpointParameters"]=1
     operations["testEnumParameters"]=1
@@ -102,6 +105,9 @@ _petstore-cli()
     operation_parameters["definition1"]=""
     operation_parameters["definition2"]=""
     operation_parameters["definition3"]=""
+    operation_parameters["postJSON"]="items= "
+    operation_parameters["postJSON_0"]=""
+    operation_parameters["postJSON_1"]=""
     operation_parameters["testClientModel"]=""
     operation_parameters["testEndpointParameters"]=""
     operation_parameters["testEnumParameters"]="enum_query_string_array= enum_query_string= enum_query_integer= enum_header_string_array: enum_header_string: "
@@ -114,9 +120,9 @@ _petstore-cli()
     operation_parameters["updatePet"]=""
     operation_parameters["updatePetWithForm"]="petId= "
     operation_parameters["uploadFile"]="petId= "
-    operation_parameters["deleteOrder"]="orderId= "
+    operation_parameters["deleteOrder"]="order_id= "
     operation_parameters["getInventory"]=""
-    operation_parameters["getOrderById"]="orderId= "
+    operation_parameters["getOrderById"]="order_id= "
     operation_parameters["placeOrder"]=""
     operation_parameters["createUser"]=""
     operation_parameters["createUsersWithArrayInput"]=""

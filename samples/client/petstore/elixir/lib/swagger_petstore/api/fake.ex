@@ -5,8 +5,122 @@ defmodule SwaggerPetstore.Api.Fake do
 
   use Tesla
 
-  plug Tesla.Middleware.BaseUrl, "http://petstore.swagger.io/v2"
+  plug Tesla.Middleware.BaseUrl, "http://petstore.swagger.io:80/v2"
   plug Tesla.Middleware.JSON
+
+  @doc """
+  Definition 1
+
+  
+  """
+  def definition1() do
+    method = [method: :get]
+    url = [url: "/fakedef1"]
+    query_params = []
+    header_params = []
+    body_params = []
+    form_params = []
+    params = query_params ++ header_params ++ body_params ++ form_params
+    opts = []
+    options = method ++ url ++ params ++ opts
+
+    request(options)
+  end
+
+  @doc """
+  Definition 2
+
+  
+  """
+  def definition2() do
+    method = [method: :get]
+    url = [url: "/fakedef2"]
+    query_params = []
+    header_params = []
+    body_params = []
+    form_params = []
+    params = query_params ++ header_params ++ body_params ++ form_params
+    opts = []
+    options = method ++ url ++ params ++ opts
+
+    request(options)
+  end
+
+  @doc """
+  Definition 3
+
+  
+  """
+  def definition3() do
+    method = [method: :get]
+    url = [url: "/fakedef3"]
+    query_params = []
+    header_params = []
+    body_params = []
+    form_params = []
+    params = query_params ++ header_params ++ body_params ++ form_params
+    opts = []
+    options = method ++ url ++ params ++ opts
+
+    request(options)
+  end
+
+  @doc """
+  
+
+  submitting JSON
+  """
+  def post_json(items) do
+    method = [method: :get]
+    url = [url: "/fakeArrays"]
+    query_params = [query: [{:"items", items}]]
+    header_params = []
+    body_params = []
+    form_params = []
+    params = query_params ++ header_params ++ body_params ++ form_params
+    opts = []
+    options = method ++ url ++ params ++ opts
+
+    request(options)
+  end
+
+  @doc """
+  
+
+  submitting JSON
+  """
+  def post_json_0(items) do
+    method = [method: :post]
+    url = [url: "/fakeArrays"]
+    query_params = []
+    header_params = []
+    body_params = [body: items]
+    form_params = []
+    params = query_params ++ header_params ++ body_params ++ form_params
+    opts = []
+    options = method ++ url ++ params ++ opts
+
+    request(options)
+  end
+
+  @doc """
+  
+
+  submitting JSON
+  """
+  def post_json_1(body) do
+    method = [method: :post]
+    url = [url: "/fakedef1"]
+    query_params = []
+    header_params = []
+    body_params = [body: body]
+    form_params = []
+    params = query_params ++ header_params ++ body_params ++ form_params
+    opts = []
+    options = method ++ url ++ params ++ opts
+
+    request(options)
+  end
 
   @doc """
   To test \&quot;client\&quot; model

@@ -17,13 +17,16 @@ Put the package under your project folder and add the following in import:
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*CatalogApi* | [**Definition1**](docs/CatalogApi.md#definition1) | **Get** /api/fakedef1 | Definition 1
-*CatalogApi* | [**Definition2**](docs/CatalogApi.md#definition2) | **Get** /api/fakedef2 | Definition 2
-*CatalogApi* | [**Definition3**](docs/CatalogApi.md#definition3) | **Get** /api/fakedef3 | Definition 3
+*FakeApi* | [**Definition1**](docs/FakeApi.md#definition1) | **Get** /fakedef1 | Definition 1
+*FakeApi* | [**Definition2**](docs/FakeApi.md#definition2) | **Get** /fakedef2 | Definition 2
+*FakeApi* | [**Definition3**](docs/FakeApi.md#definition3) | **Get** /fakedef3 | Definition 3
+*FakeApi* | [**PostJSON**](docs/FakeApi.md#postjson) | **Get** /fakeArrays | 
+*FakeApi* | [**PostJSON_0**](docs/FakeApi.md#postjson_0) | **Post** /fakeArrays | 
+*FakeApi* | [**PostJSON_1**](docs/FakeApi.md#postjson_1) | **Post** /fakedef1 | 
 *FakeApi* | [**TestClientModel**](docs/FakeApi.md#testclientmodel) | **Patch** /fake | To test \&quot;client\&quot; model
 *FakeApi* | [**TestEndpointParameters**](docs/FakeApi.md#testendpointparameters) | **Post** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 *FakeApi* | [**TestEnumParameters**](docs/FakeApi.md#testenumparameters) | **Get** /fake | To test enum parameters
@@ -36,9 +39,9 @@ Class | Method | HTTP request | Description
 *PetApi* | [**UpdatePet**](docs/PetApi.md#updatepet) | **Put** /pet | Update an existing pet
 *PetApi* | [**UpdatePetWithForm**](docs/PetApi.md#updatepetwithform) | **Post** /pet/{petId} | Updates a pet in the store with form data
 *PetApi* | [**UploadFile**](docs/PetApi.md#uploadfile) | **Post** /pet/{petId}/uploadImage | uploads an image
-*StoreApi* | [**DeleteOrder**](docs/StoreApi.md#deleteorder) | **Delete** /store/order/{orderId} | Delete purchase order by ID
+*StoreApi* | [**DeleteOrder**](docs/StoreApi.md#deleteorder) | **Delete** /store/order/{order_id} | Delete purchase order by ID
 *StoreApi* | [**GetInventory**](docs/StoreApi.md#getinventory) | **Get** /store/inventory | Returns pet inventories by status
-*StoreApi* | [**GetOrderById**](docs/StoreApi.md#getorderbyid) | **Get** /store/order/{orderId} | Find purchase order by ID
+*StoreApi* | [**GetOrderById**](docs/StoreApi.md#getorderbyid) | **Get** /store/order/{order_id} | Find purchase order by ID
 *StoreApi* | [**PlaceOrder**](docs/StoreApi.md#placeorder) | **Post** /store/order | Place an order for a pet
 *UserApi* | [**CreateUser**](docs/UserApi.md#createuser) | **Post** /user | Create user
 *UserApi* | [**CreateUsersWithArrayInput**](docs/UserApi.md#createuserswitharrayinput) | **Post** /user/createWithArray | Creates list of users with given input array
@@ -58,6 +61,7 @@ Class | Method | HTTP request | Description
  - [ArrayOfArrayOfNumberOnly](docs/ArrayOfArrayOfNumberOnly.md)
  - [ArrayOfNumberOnly](docs/ArrayOfNumberOnly.md)
  - [ArrayTest](docs/ArrayTest.md)
+ - [Capitalization](docs/Capitalization.md)
  - [Cat](docs/Cat.md)
  - [Category](docs/Category.md)
  - [ClassModel](docs/ClassModel.md)

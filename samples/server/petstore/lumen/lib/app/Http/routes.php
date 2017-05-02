@@ -22,27 +22,6 @@ $app->get('/', function () use ($app) {
 });
 
 /**
- * GET definition1
- * Summary: Definition 1
- * Notes: 
- * Output-Formats: [application/json, text/json, application/xml, text/xml]
- */
-$app->GET('/v2/api/fakedef1', 'CatalogApi@definition1');
-/**
- * GET definition2
- * Summary: Definition 2
- * Notes: 
- * Output-Formats: [application/json, text/json, application/xml, text/xml]
- */
-$app->GET('/v2/api/fakedef2', 'CatalogApi@definition2');
-/**
- * GET definition3
- * Summary: Definition 3
- * Notes: 
- * Output-Formats: [application/json, text/json, application/xml, text/xml]
- */
-$app->GET('/v2/api/fakedef3', 'CatalogApi@definition3');
-/**
  * PATCH testClientModel
  * Summary: To test \&quot;client\&quot; model
  * Notes: To test \&quot;client\&quot; model
@@ -63,6 +42,48 @@ $app->POST('/v2/fake', 'FakeApi@testEndpointParameters');
  * Output-Formats: [*/*]
  */
 $app->GET('/v2/fake', 'FakeApi@testEnumParameters');
+/**
+ * GET postJSON
+ * Summary: 
+ * Notes: submitting JSON
+
+ */
+$app->GET('/v2/fakeArrays', 'FakeApi@postJSON');
+/**
+ * POST postJSON_0
+ * Summary: 
+ * Notes: submitting JSON
+
+ */
+$app->POST('/v2/fakeArrays', 'FakeApi@postJSON_0');
+/**
+ * GET definition1
+ * Summary: Definition 1
+ * Notes: 
+ * Output-Formats: [application/json, text/json, application/xml, text/xml]
+ */
+$app->GET('/v2/fakedef1', 'FakeApi@definition1');
+/**
+ * POST postJSON_1
+ * Summary: 
+ * Notes: submitting JSON
+
+ */
+$app->POST('/v2/fakedef1', 'FakeApi@postJSON_1');
+/**
+ * GET definition2
+ * Summary: Definition 2
+ * Notes: 
+ * Output-Formats: [application/json, text/json, application/xml, text/xml]
+ */
+$app->GET('/v2/fakedef2', 'FakeApi@definition2');
+/**
+ * GET definition3
+ * Summary: Definition 3
+ * Notes: 
+ * Output-Formats: [application/json, text/json, application/xml, text/xml]
+ */
+$app->GET('/v2/fakedef3', 'FakeApi@definition3');
 /**
  * PATCH testClassname
  * Summary: To test class name in snake case
@@ -146,14 +167,14 @@ $app->POST('/v2/store/order', 'StoreApi@placeOrder');
  * Notes: For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
  * Output-Formats: [application/xml, application/json]
  */
-$app->DELETE('/v2/store/order/{orderId}', 'StoreApi@deleteOrder');
+$app->DELETE('/v2/store/order/{order_id}', 'StoreApi@deleteOrder');
 /**
  * GET getOrderById
  * Summary: Find purchase order by ID
  * Notes: For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
  * Output-Formats: [application/xml, application/json]
  */
-$app->GET('/v2/store/order/{orderId}', 'StoreApi@getOrderById');
+$app->GET('/v2/store/order/{order_id}', 'StoreApi@getOrderById');
 /**
  * POST createUser
  * Summary: Create user

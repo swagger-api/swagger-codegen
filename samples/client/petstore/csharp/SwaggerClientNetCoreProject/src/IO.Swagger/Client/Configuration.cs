@@ -65,7 +65,7 @@ namespace IO.Swagger.Client
 
             TempFolderPath = tempFolderPath;
             DateTimeFormat = dateTimeFormat;
-            Timeout = TimeSpan.FromMilliseconds(timeout);
+            Timeout = timeout;
         }
 
         /// <summary>
@@ -96,6 +96,7 @@ namespace IO.Swagger.Client
         {
             int status = (int) response.StatusCode;
             if (status >= 400) return new ApiException(status, String.Format("Error calling {0}: {1}", methodName, response.Content), response.Content);
+            if (status == 0) return new ApiException(status, String.Format("Error calling {0}: {1}", methodName, response.ErrorMessage), response.ErrorMessage);
             return null;
         };
 
@@ -103,7 +104,7 @@ namespace IO.Swagger.Client
         /// Gets or sets the HTTP timeout (milliseconds) of ApiClient. Default to 100000 milliseconds.
         /// </summary>
         /// <value>Timeout.</value>
-        public TimeSpan? Timeout
+        public int Timeout
         {
             get { return ApiClient.RestClient.Timeout; }
 
@@ -319,7 +320,11 @@ namespace IO.Swagger.Client
         public static String ToDebugReport()
         {
             String report = "C# SDK (IO.Swagger) Debug Report:\n";
-            report += "    OS: " + System.Runtime.InteropServices.RuntimeInformation.OSDescription + "\n";
+            report += "    OS: " + Environment.OSVersion + "\n";
+            report += "    .NET Framework Version: " + Assembly
+                     .GetExecutingAssembly()
+                     .GetReferencedAssemblies()
+                     .Where(x => x.Name == "System.Core").First().Version.ToString()  + "\n";
             report += "    Version of the API: 1.0.0\n";
             report += "    SDK Package Version: 1.0.0\n";
 

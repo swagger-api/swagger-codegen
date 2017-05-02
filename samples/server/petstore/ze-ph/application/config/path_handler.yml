@@ -1,41 +1,42 @@
 path_handler:
   routes:
     routes:
-      'api':
-        type: Literal
-        options:
-          route: /api
-        child_routes:
-          'fakedef1':
-            type: Literal
-            options:
-              route: /fakedef1
-              defaults:
-                handler: ApiFakedef1
-          'fakedef2':
-            type: Literal
-            options:
-              route: /fakedef2
-              defaults:
-                handler: ApiFakedef2
-          'fakedef3':
-            type: Literal
-            options:
-              route: /fakedef3
-              defaults:
-                handler: ApiFakedef3
       'fake':
         type: Literal
         options:
           route: /fake
           defaults:
             handler: Fake
+      'fakeArrays':
+        type: Literal
+        options:
+          route: /fakeArrays
+          defaults:
+            handler: FakeArrays
       'fake_classname_test':
         type: Literal
         options:
           route: /fake_classname_test
           defaults:
             handler: FakeClassnameTest
+      'fakedef1':
+        type: Literal
+        options:
+          route: /fakedef1
+          defaults:
+            handler: Fakedef1
+      'fakedef2':
+        type: Literal
+        options:
+          route: /fakedef2
+          defaults:
+            handler: Fakedef2
+      'fakedef3':
+        type: Literal
+        options:
+          route: /fakedef3
+          defaults:
+            handler: Fakedef3
       'pet':
         type: Literal
         options:
@@ -89,10 +90,10 @@ path_handler:
                 handler: StoreOrder
             may_terminate: true
             child_routes:
-              '{orderId}':
+              '{order_id}':
                 type: Segment
                 options:
-                  route: /:orderId
+                  route: /:order_id
                   defaults:
                     handler: StoreOrderOrderId
       'user':
@@ -147,11 +148,12 @@ path_handler:
 
   handlers:
     invokables:
-      ApiFakedef1: App\Handler\ApiFakedef1
-      ApiFakedef2: App\Handler\ApiFakedef2
-      ApiFakedef3: App\Handler\ApiFakedef3
       Fake: App\Handler\Fake
+      FakeArrays: App\Handler\FakeArrays
       FakeClassnameTest: App\Handler\FakeClassnameTest
+      Fakedef1: App\Handler\Fakedef1
+      Fakedef2: App\Handler\Fakedef2
+      Fakedef3: App\Handler\Fakedef3
       Pet: App\Handler\Pet
       PetFindByStatus: App\Handler\PetFindByStatus
       PetFindByTags: App\Handler\PetFindByTags

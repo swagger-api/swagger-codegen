@@ -66,6 +66,9 @@ declare -A operation_parameters
 # 0 - optional
 # 1 - required
 declare -A operation_parameters_minimum_occurences
+operation_parameters_minimum_occurences["postJSON:::items"]=1
+operation_parameters_minimum_occurences["postJSON_0:::items"]=1
+operation_parameters_minimum_occurences["postJSON_1:::body"]=1
 operation_parameters_minimum_occurences["testClientModel:::body"]=1
 operation_parameters_minimum_occurences["testEndpointParameters:::number"]=1
 operation_parameters_minimum_occurences["testEndpointParameters:::double"]=1
@@ -103,8 +106,8 @@ operation_parameters_minimum_occurences["updatePetWithForm:::status"]=0
 operation_parameters_minimum_occurences["uploadFile:::petId"]=1
 operation_parameters_minimum_occurences["uploadFile:::additionalMetadata"]=0
 operation_parameters_minimum_occurences["uploadFile:::file"]=0
-operation_parameters_minimum_occurences["deleteOrder:::orderId"]=1
-operation_parameters_minimum_occurences["getOrderById:::orderId"]=1
+operation_parameters_minimum_occurences["deleteOrder:::order_id"]=1
+operation_parameters_minimum_occurences["getOrderById:::order_id"]=1
 operation_parameters_minimum_occurences["placeOrder:::body"]=1
 operation_parameters_minimum_occurences["createUser:::body"]=1
 operation_parameters_minimum_occurences["createUsersWithArrayInput:::body"]=1
@@ -123,6 +126,9 @@ operation_parameters_minimum_occurences["updateUser:::body"]=1
 # N - N values
 # 0 - unlimited
 declare -A operation_parameters_maximum_occurences
+operation_parameters_maximum_occurences["postJSON:::items"]=0
+operation_parameters_maximum_occurences["postJSON_0:::items"]=0
+operation_parameters_maximum_occurences["postJSON_1:::body"]=0
 operation_parameters_maximum_occurences["testClientModel:::body"]=0
 operation_parameters_maximum_occurences["testEndpointParameters:::number"]=0
 operation_parameters_maximum_occurences["testEndpointParameters:::double"]=0
@@ -160,8 +166,8 @@ operation_parameters_maximum_occurences["updatePetWithForm:::status"]=0
 operation_parameters_maximum_occurences["uploadFile:::petId"]=0
 operation_parameters_maximum_occurences["uploadFile:::additionalMetadata"]=0
 operation_parameters_maximum_occurences["uploadFile:::file"]=0
-operation_parameters_maximum_occurences["deleteOrder:::orderId"]=0
-operation_parameters_maximum_occurences["getOrderById:::orderId"]=0
+operation_parameters_maximum_occurences["deleteOrder:::order_id"]=0
+operation_parameters_maximum_occurences["getOrderById:::order_id"]=0
 operation_parameters_maximum_occurences["placeOrder:::body"]=0
 operation_parameters_maximum_occurences["createUser:::body"]=0
 operation_parameters_maximum_occurences["createUsersWithArrayInput:::body"]=0
@@ -177,6 +183,9 @@ operation_parameters_maximum_occurences["updateUser:::body"]=0
 # The type of collection for specifying multiple values for parameter:
 # - multi, csv, ssv, tsv
 declare -A operation_parameters_collection_type
+operation_parameters_collection_type["postJSON:::items"]=""
+operation_parameters_collection_type["postJSON_0:::items"]=
+operation_parameters_collection_type["postJSON_1:::body"]=""
 operation_parameters_collection_type["testClientModel:::body"]=""
 operation_parameters_collection_type["testEndpointParameters:::number"]=""
 operation_parameters_collection_type["testEndpointParameters:::double"]=""
@@ -214,8 +223,8 @@ operation_parameters_collection_type["updatePetWithForm:::status"]=""
 operation_parameters_collection_type["uploadFile:::petId"]=""
 operation_parameters_collection_type["uploadFile:::additionalMetadata"]=""
 operation_parameters_collection_type["uploadFile:::file"]=""
-operation_parameters_collection_type["deleteOrder:::orderId"]=""
-operation_parameters_collection_type["getOrderById:::orderId"]=""
+operation_parameters_collection_type["deleteOrder:::order_id"]=""
+operation_parameters_collection_type["getOrderById:::order_id"]=""
 operation_parameters_collection_type["placeOrder:::body"]=""
 operation_parameters_collection_type["createUser:::body"]=""
 operation_parameters_collection_type["createUsersWithArrayInput:::body"]=
@@ -712,16 +721,14 @@ EOF
     echo ""
     echo -e "$(tput bold)$(tput setaf 7)Operations (grouped by tags)$(tput sgr0)"
     echo ""
-    echo -e "$(tput bold)$(tput setaf 7)[catalog]$(tput sgr0)"
+    echo -e "$(tput bold)$(tput setaf 7)[fake]$(tput sgr0)"
 read -d '' ops <<EOF
   $(tput setaf 6)definition1$(tput sgr0);Definition 1
   $(tput setaf 6)definition2$(tput sgr0);Definition 2
   $(tput setaf 6)definition3$(tput sgr0);Definition 3
-EOF
-echo "  $ops" | column -t -s ';'
-    echo ""
-    echo -e "$(tput bold)$(tput setaf 7)[fake]$(tput sgr0)"
-read -d '' ops <<EOF
+  $(tput setaf 6)postJSON$(tput sgr0);
+  $(tput setaf 6)postJSON_0$(tput sgr0);
+  $(tput setaf 6)postJSON_1$(tput sgr0);
   $(tput setaf 6)testClientModel$(tput sgr0);To test \"client\" model
   $(tput setaf 6)testEndpointParameters$(tput sgr0);Fake endpoint for testing various parameters
 假端點
@@ -777,7 +784,7 @@ echo "  $ops" | column -t -s ';'
     echo -e "  -V,--version\t\t\t\tPrint API version"
     echo -e "  --about\t\t\t\tPrint the information about service"
     echo -e "  --host $(tput setaf 6)<url>$(tput sgr0)\t\t\t\tSpecify the host URL "
-echo -e "              \t\t\t\t(e.g. 'https://petstore.swagger.io')"
+echo -e "              \t\t\t\t(e.g. 'https://petstore.swagger.io:80')"
 
     echo -e "  --force\t\t\t\tForce command invocation in spite of missing"
     echo -e "         \t\t\t\trequired parameters or wrong content type"
@@ -974,6 +981,77 @@ print_definition3_help() {
         ;;
         *)
         echo -e "$(tput setaf 7)  404;Not found$(tput sgr0)" | column -t -s ';' | fold -sw 80 | sed '2,$s/^/       /'
+        ;;
+    esac
+}
+##############################################################################
+#
+# Print help for postJSON operation
+#
+##############################################################################
+print_postJSON_help() {
+    echo ""
+    echo -e "$(tput bold)$(tput setaf 7)postJSON - $(tput sgr0)"
+    echo -e ""
+    echo -e "submitting JSON" | fold -sw 80
+    echo -e ""
+    echo -e "$(tput bold)$(tput setaf 7)Parameters$(tput sgr0)"
+    echo -e "  * $(tput setaf 2)items$(tput sgr0) $(tput setaf 4)[Integer]$(tput sgr0) $(tput setaf 1)(required)$(tput sgr0)$(tput sgr0) - Array of ints$(tput setaf 3) Specify as: items=value$(tput sgr0)" \
+        | fold -sw 80 | sed '2,$s/^/    /'
+    echo ""
+    echo -e "$(tput bold)$(tput setaf 7)Responses$(tput sgr0)"
+}
+##############################################################################
+#
+# Print help for postJSON_0 operation
+#
+##############################################################################
+print_postJSON_0_help() {
+    echo ""
+    echo -e "$(tput bold)$(tput setaf 7)postJSON_0 - $(tput sgr0)"
+    echo -e ""
+    echo -e "submitting JSON" | fold -sw 80
+    echo -e ""
+    echo -e "$(tput bold)$(tput setaf 7)Parameters$(tput sgr0)"
+    echo -e "  * $(tput setaf 2)body$(tput sgr0) $(tput setaf 4)[]$(tput sgr0) $(tput setaf 1)(required)$(tput sgr0)$(tput sgr0) - Array of ints" | fold -sw 80 | sed '2,$s/^/    /'
+    echo -e ""
+    echo ""
+    echo -e "$(tput bold)$(tput setaf 7)Responses$(tput sgr0)"
+}
+##############################################################################
+#
+# Print help for postJSON_1 operation
+#
+##############################################################################
+print_postJSON_1_help() {
+    echo ""
+    echo -e "$(tput bold)$(tput setaf 7)postJSON_1 - $(tput sgr0)"
+    echo -e ""
+    echo -e "submitting JSON" | fold -sw 80
+    echo -e ""
+    echo -e "$(tput bold)$(tput setaf 7)Parameters$(tput sgr0)"
+    echo -e "  * $(tput setaf 2)body$(tput sgr0) $(tput setaf 4)[]$(tput sgr0) $(tput setaf 1)(required)$(tput sgr0)$(tput sgr0) - JSON" | fold -sw 80 | sed '2,$s/^/    /'
+    echo -e ""
+    echo ""
+    echo -e "$(tput bold)$(tput setaf 7)Responses$(tput sgr0)"
+    case 200 in
+        1*)
+        echo -e "$(tput setaf 7)  200;received Raw JSON$(tput sgr0)" | column -t -s ';' | fold -sw 80 | sed '2,$s/^/       /'
+        ;;
+        2*)
+        echo -e "$(tput setaf 2)  200;received Raw JSON$(tput sgr0)" | column -t -s ';' | fold -sw 80 | sed '2,$s/^/       /'
+        ;;
+        3*)
+        echo -e "$(tput setaf 3)  200;received Raw JSON$(tput sgr0)" | column -t -s ';' | fold -sw 80 | sed '2,$s/^/       /'
+        ;;
+        4*)
+        echo -e "$(tput setaf 1)  200;received Raw JSON$(tput sgr0)" | column -t -s ';' | fold -sw 80 | sed '2,$s/^/       /'
+        ;;
+        5*)
+        echo -e "$(tput setaf 5)  200;received Raw JSON$(tput sgr0)" | column -t -s ';' | fold -sw 80 | sed '2,$s/^/       /'
+        ;;
+        *)
+        echo -e "$(tput setaf 7)  200;received Raw JSON$(tput sgr0)" | column -t -s ';' | fold -sw 80 | sed '2,$s/^/       /'
         ;;
     esac
 }
@@ -1598,7 +1676,7 @@ print_deleteOrder_help() {
     echo -e "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors" | fold -sw 80
     echo -e ""
     echo -e "$(tput bold)$(tput setaf 7)Parameters$(tput sgr0)"
-    echo -e "  * $(tput setaf 2)orderId$(tput sgr0) $(tput setaf 4)[String]$(tput sgr0) $(tput setaf 1)(required)$(tput sgr0)$(tput sgr0) - ID of the order that needs to be deleted $(tput setaf 3)Specify as: orderId=value$(tput sgr0)" | fold -sw 80 | sed '2,$s/^/    /'
+    echo -e "  * $(tput setaf 2)order_id$(tput sgr0) $(tput setaf 4)[String]$(tput sgr0) $(tput setaf 1)(required)$(tput sgr0)$(tput sgr0) - ID of the order that needs to be deleted $(tput setaf 3)Specify as: order_id=value$(tput sgr0)" | fold -sw 80 | sed '2,$s/^/    /'
     echo ""
     echo -e "$(tput bold)$(tput setaf 7)Responses$(tput sgr0)"
     case 400 in
@@ -1688,7 +1766,7 @@ print_getOrderById_help() {
     echo -e "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions" | fold -sw 80
     echo -e ""
     echo -e "$(tput bold)$(tput setaf 7)Parameters$(tput sgr0)"
-    echo -e "  * $(tput setaf 2)orderId$(tput sgr0) $(tput setaf 4)[Integer]$(tput sgr0) $(tput setaf 1)(required)$(tput sgr0)$(tput sgr0) - ID of pet that needs to be fetched $(tput setaf 3)Specify as: orderId=value$(tput sgr0)" | fold -sw 80 | sed '2,$s/^/    /'
+    echo -e "  * $(tput setaf 2)order_id$(tput sgr0) $(tput setaf 4)[Integer]$(tput sgr0) $(tput setaf 1)(required)$(tput sgr0)$(tput sgr0) - ID of pet that needs to be fetched $(tput setaf 3)Specify as: order_id=value$(tput sgr0)" | fold -sw 80 | sed '2,$s/^/    /'
     echo ""
     echo -e "$(tput bold)$(tput setaf 7)Responses$(tput sgr0)"
     case 200 in
@@ -2218,10 +2296,10 @@ call_definition1() {
     local query_parameter_names=()
 
     if [[ $force = false ]]; then
-        validate_request_parameters "/v2/api/fakedef1" path_parameter_names query_parameter_names
+        validate_request_parameters "/v2/fakedef1" path_parameter_names query_parameter_names
     fi
 
-    local path=$(build_request_path "/v2/api/fakedef1" path_parameter_names query_parameter_names)
+    local path=$(build_request_path "/v2/fakedef1" path_parameter_names query_parameter_names)
     local method="GET"
     local headers_curl=$(header_arguments_to_curl)
     if [[ -n $header_accept ]]; then
@@ -2249,10 +2327,10 @@ call_definition2() {
     local query_parameter_names=()
 
     if [[ $force = false ]]; then
-        validate_request_parameters "/v2/api/fakedef2" path_parameter_names query_parameter_names
+        validate_request_parameters "/v2/fakedef2" path_parameter_names query_parameter_names
     fi
 
-    local path=$(build_request_path "/v2/api/fakedef2" path_parameter_names query_parameter_names)
+    local path=$(build_request_path "/v2/fakedef2" path_parameter_names query_parameter_names)
     local method="GET"
     local headers_curl=$(header_arguments_to_curl)
     if [[ -n $header_accept ]]; then
@@ -2280,10 +2358,10 @@ call_definition3() {
     local query_parameter_names=()
 
     if [[ $force = false ]]; then
-        validate_request_parameters "/v2/api/fakedef3" path_parameter_names query_parameter_names
+        validate_request_parameters "/v2/fakedef3" path_parameter_names query_parameter_names
     fi
 
-    local path=$(build_request_path "/v2/api/fakedef3" path_parameter_names query_parameter_names)
+    local path=$(build_request_path "/v2/fakedef3" path_parameter_names query_parameter_names)
     local method="GET"
     local headers_curl=$(header_arguments_to_curl)
     if [[ -n $header_accept ]]; then
@@ -2298,6 +2376,165 @@ call_definition3() {
         echo "curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} \"${host}${path}\""
     else
         eval "curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} \"${host}${path}\""
+    fi
+}
+
+##############################################################################
+#
+# Call postJSON operation
+#
+##############################################################################
+call_postJSON() {
+    local path_parameter_names=()
+    local query_parameter_names=(items)
+
+    if [[ $force = false ]]; then
+        validate_request_parameters "/v2/fakeArrays" path_parameter_names query_parameter_names
+    fi
+
+    local path=$(build_request_path "/v2/fakeArrays" path_parameter_names query_parameter_names)
+    local method="GET"
+    local headers_curl=$(header_arguments_to_curl)
+    if [[ -n $header_accept ]]; then
+        headers_curl="${headers_curl} -H 'Accept: ${header_accept}'"
+    fi
+
+    local basic_auth_option=""
+    if [[ -n $basic_auth_credential ]]; then
+        basic_auth_option="-u ${basic_auth_credential}"
+    fi
+    if [[ "$print_curl" = true ]]; then
+        echo "curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} \"${host}${path}\""
+    else
+        eval "curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} \"${host}${path}\""
+    fi
+}
+
+##############################################################################
+#
+# Call postJSON_0 operation
+#
+##############################################################################
+call_postJSON_0() {
+    local path_parameter_names=()
+    local query_parameter_names=()
+
+    if [[ $force = false ]]; then
+        validate_request_parameters "/v2/fakeArrays" path_parameter_names query_parameter_names
+    fi
+
+    local path=$(build_request_path "/v2/fakeArrays" path_parameter_names query_parameter_names)
+    local method="POST"
+    local headers_curl=$(header_arguments_to_curl)
+    if [[ -n $header_accept ]]; then
+        headers_curl="${headers_curl} -H 'Accept: ${header_accept}'"
+    fi
+
+    local basic_auth_option=""
+    if [[ -n $basic_auth_credential ]]; then
+        basic_auth_option="-u ${basic_auth_credential}"
+    fi
+    local body_json_curl=""
+
+    #
+    # Check if the user provided 'Content-type' headers in the
+    # command line. If not try to set them based on the Swagger specification
+    # if values produces and consumes are defined unambigously
+    #
+
+
+    if [[ -z $header_content_type && "$force" = false ]]; then
+        :
+    else
+        headers_curl="${headers_curl} -H 'Content-type: ${header_content_type}'"
+    fi
+
+
+    #
+    # If we have received some body content over pipe, pass it from the
+    # temporary file to cURL
+    #
+    if [[ -n $body_content_temp_file ]]; then
+        if [[ "$print_curl" = true ]]; then
+            echo "cat ${body_content_temp_file} | curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} \"${host}${path}\" -d @-"
+        else
+            eval "cat ${body_content_temp_file} | curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} \"${host}${path}\" -d @-"
+        fi
+        rm "${body_content_temp_file}"
+    #
+    # If not, try to build the content body from arguments KEY==VALUE and KEY:=VALUE
+    #
+    else
+        body_json_curl=$(body_parameters_to_json)
+        if [[ "$print_curl" = true ]]; then
+            echo "curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} ${body_json_curl} \"${host}${path}\""
+        else
+            eval "curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} ${body_json_curl} \"${host}${path}\""
+        fi
+    fi
+}
+
+##############################################################################
+#
+# Call postJSON_1 operation
+#
+##############################################################################
+call_postJSON_1() {
+    local path_parameter_names=()
+    local query_parameter_names=()
+
+    if [[ $force = false ]]; then
+        validate_request_parameters "/v2/fakedef1" path_parameter_names query_parameter_names
+    fi
+
+    local path=$(build_request_path "/v2/fakedef1" path_parameter_names query_parameter_names)
+    local method="POST"
+    local headers_curl=$(header_arguments_to_curl)
+    if [[ -n $header_accept ]]; then
+        headers_curl="${headers_curl} -H 'Accept: ${header_accept}'"
+    fi
+
+    local basic_auth_option=""
+    if [[ -n $basic_auth_credential ]]; then
+        basic_auth_option="-u ${basic_auth_credential}"
+    fi
+    local body_json_curl=""
+
+    #
+    # Check if the user provided 'Content-type' headers in the
+    # command line. If not try to set them based on the Swagger specification
+    # if values produces and consumes are defined unambigously
+    #
+
+
+    if [[ -z $header_content_type && "$force" = false ]]; then
+        :
+    else
+        headers_curl="${headers_curl} -H 'Content-type: ${header_content_type}'"
+    fi
+
+
+    #
+    # If we have received some body content over pipe, pass it from the
+    # temporary file to cURL
+    #
+    if [[ -n $body_content_temp_file ]]; then
+        if [[ "$print_curl" = true ]]; then
+            echo "cat ${body_content_temp_file} | curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} \"${host}${path}\" -d @-"
+        else
+            eval "cat ${body_content_temp_file} | curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} \"${host}${path}\" -d @-"
+        fi
+        rm "${body_content_temp_file}"
+    #
+    # If not, try to build the content body from arguments KEY==VALUE and KEY:=VALUE
+    #
+    else
+        body_json_curl=$(body_parameters_to_json)
+        if [[ "$print_curl" = true ]]; then
+            echo "curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} ${body_json_curl} \"${host}${path}\""
+        else
+            eval "curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} ${body_json_curl} \"${host}${path}\""
+        fi
     fi
 }
 
@@ -2843,14 +3080,14 @@ call_uploadFile() {
 #
 ##############################################################################
 call_deleteOrder() {
-    local path_parameter_names=(orderId)
+    local path_parameter_names=(order_id)
     local query_parameter_names=()
 
     if [[ $force = false ]]; then
-        validate_request_parameters "/v2/store/order/{orderId}" path_parameter_names query_parameter_names
+        validate_request_parameters "/v2/store/order/{order_id}" path_parameter_names query_parameter_names
     fi
 
-    local path=$(build_request_path "/v2/store/order/{orderId}" path_parameter_names query_parameter_names)
+    local path=$(build_request_path "/v2/store/order/{order_id}" path_parameter_names query_parameter_names)
     local method="DELETE"
     local headers_curl=$(header_arguments_to_curl)
     if [[ -n $header_accept ]]; then
@@ -2905,14 +3142,14 @@ call_getInventory() {
 #
 ##############################################################################
 call_getOrderById() {
-    local path_parameter_names=(orderId)
+    local path_parameter_names=(order_id)
     local query_parameter_names=()
 
     if [[ $force = false ]]; then
-        validate_request_parameters "/v2/store/order/{orderId}" path_parameter_names query_parameter_names
+        validate_request_parameters "/v2/store/order/{order_id}" path_parameter_names query_parameter_names
     fi
 
-    local path=$(build_request_path "/v2/store/order/{orderId}" path_parameter_names query_parameter_names)
+    local path=$(build_request_path "/v2/store/order/{order_id}" path_parameter_names query_parameter_names)
     local method="GET"
     local headers_curl=$(header_arguments_to_curl)
     if [[ -n $header_accept ]]; then
@@ -3468,6 +3705,15 @@ case $key in
     definition3)
     operation="definition3"
     ;;
+    postJSON)
+    operation="postJSON"
+    ;;
+    postJSON_0)
+    operation="postJSON_0"
+    ;;
+    postJSON_1)
+    operation="postJSON_1"
+    ;;
     testClientModel)
     operation="testClientModel"
     ;;
@@ -3632,6 +3878,15 @@ case $operation in
     ;;
     definition3)
     call_definition3
+    ;;
+    postJSON)
+    call_postJSON
+    ;;
+    postJSON_0)
+    call_postJSON_0
+    ;;
+    postJSON_1)
+    call_postJSON_1
     ;;
     testClientModel)
     call_testClientModel

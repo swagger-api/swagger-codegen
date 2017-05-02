@@ -57,12 +57,10 @@ public class StoreApi {
    */
   public void  deleteOrder (String orderId) throws ApiException {
     Object localVarPostBody = null;
-    
     // verify the required parameter 'orderId' is set
     if (orderId == null) {
        throw new ApiException(400, "Missing the required parameter 'orderId' when calling deleteOrder");
     }
-    
 
     // create path and map variables
     String localVarPath = "/store/order/{orderId}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "orderId" + "\\}", apiInvoker.escapeString(orderId.toString()));
@@ -110,7 +108,6 @@ public class StoreApi {
    */
   public Map<String, Integer>  getInventory () throws ApiException {
     Object localVarPostBody = null;
-    
 
     // create path and map variables
     String localVarPath = "/store/inventory".replaceAll("\\{format\\}","json");
@@ -159,12 +156,10 @@ public class StoreApi {
    */
   public Order  getOrderById (String orderId) throws ApiException {
     Object localVarPostBody = null;
-    
     // verify the required parameter 'orderId' is set
     if (orderId == null) {
        throw new ApiException(400, "Missing the required parameter 'orderId' when calling getOrderById");
     }
-    
 
     // create path and map variables
     String localVarPath = "/store/order/{orderId}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "orderId" + "\\}", apiInvoker.escapeString(orderId.toString()));
@@ -213,7 +208,6 @@ public class StoreApi {
    */
   public Order  placeOrder (Order body) throws ApiException {
     Object localVarPostBody = body;
-    
 
     // create path and map variables
     String localVarPath = "/store/order".replaceAll("\\{format\\}","json");

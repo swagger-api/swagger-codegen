@@ -1,13 +1,166 @@
 # \FakeApi
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**Definition1**](FakeApi.md#Definition1) | **Get** /fakedef1 | Definition 1
+[**Definition2**](FakeApi.md#Definition2) | **Get** /fakedef2 | Definition 2
+[**Definition3**](FakeApi.md#Definition3) | **Get** /fakedef3 | Definition 3
+[**PostJSON**](FakeApi.md#PostJSON) | **Get** /fakeArrays | 
+[**PostJSON_0**](FakeApi.md#PostJSON_0) | **Post** /fakeArrays | 
+[**PostJSON_1**](FakeApi.md#PostJSON_1) | **Post** /fakedef1 | 
 [**TestClientModel**](FakeApi.md#TestClientModel) | **Patch** /fake | To test \&quot;client\&quot; model
 [**TestEndpointParameters**](FakeApi.md#TestEndpointParameters) | **Post** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 [**TestEnumParameters**](FakeApi.md#TestEnumParameters) | **Get** /fake | To test enum parameters
 
+
+# **Definition1**
+> []Definition1 Definition1()
+Definition 1
+
+### Required Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**[]Definition1**](Definition1.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **Definition2**
+> []Definition2 Definition2()
+Definition 2
+
+### Required Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**[]Definition2**](Definition2.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **Definition3**
+> []Definition3 Definition3()
+Definition 3
+
+### Required Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**[]Definition3**](Definition3.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **PostJSON**
+> PostJSON(items)
+
+
+submitting JSON
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+  **items** | **int64**| Array of ints | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **PostJSON_0**
+> PostJSON_0(items)
+
+
+submitting JSON
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+  **items** | **[]int64**| Array of ints | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **PostJSON_1**
+> PostJSON_1(body)
+
+
+submitting JSON
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+  **body** | [**interface{}**](interface{}.md)| JSON | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **TestClientModel**
 > Client TestClientModel(body)

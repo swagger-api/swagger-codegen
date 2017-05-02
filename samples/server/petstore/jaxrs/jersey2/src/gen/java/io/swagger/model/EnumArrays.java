@@ -96,6 +96,9 @@ public class EnumArrays   {
   @JsonProperty("array_enum")
   private List<ArrayEnumEnum> arrayEnum = null;
 
+  @JsonProperty("array_array_enum")
+  private List<List<ArrayArrayEnumEnum>> arrayArrayEnum = null;
+
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
     return this;
@@ -142,6 +145,33 @@ public class EnumArrays   {
     this.arrayEnum = arrayEnum;
   }
 
+  public EnumArrays arrayArrayEnum(List<List<ArrayArrayEnumEnum>> arrayArrayEnum) {
+    this.arrayArrayEnum = arrayArrayEnum;
+    return this;
+  }
+
+  public EnumArrays addArrayArrayEnumItem(List<ArrayArrayEnumEnum> arrayArrayEnumItem) {
+    if (this.arrayArrayEnum == null) {
+      this.arrayArrayEnum = new ArrayList<List<ArrayArrayEnumEnum>>();
+    }
+    this.arrayArrayEnum.add(arrayArrayEnumItem);
+    return this;
+  }
+
+   /**
+   * Get arrayArrayEnum
+   * @return arrayArrayEnum
+  **/
+  @JsonProperty("array_array_enum")
+  @ApiModelProperty(value = "")
+  public List<List<ArrayArrayEnumEnum>> getArrayArrayEnum() {
+    return arrayArrayEnum;
+  }
+
+  public void setArrayArrayEnum(List<List<ArrayArrayEnumEnum>> arrayArrayEnum) {
+    this.arrayArrayEnum = arrayArrayEnum;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -153,12 +183,13 @@ public class EnumArrays   {
     }
     EnumArrays enumArrays = (EnumArrays) o;
     return Objects.equals(this.justSymbol, enumArrays.justSymbol) &&
-        Objects.equals(this.arrayEnum, enumArrays.arrayEnum);
+        Objects.equals(this.arrayEnum, enumArrays.arrayEnum) &&
+        Objects.equals(this.arrayArrayEnum, enumArrays.arrayArrayEnum);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(justSymbol, arrayEnum);
+    return Objects.hash(justSymbol, arrayEnum, arrayArrayEnum);
   }
 
 
@@ -169,6 +200,7 @@ public class EnumArrays   {
     
     sb.append("    justSymbol: ").append(toIndentedString(justSymbol)).append("\n");
     sb.append("    arrayEnum: ").append(toIndentedString(arrayEnum)).append("\n");
+    sb.append("    arrayArrayEnum: ").append(toIndentedString(arrayArrayEnum)).append("\n");
     sb.append("}");
     return sb.toString();
   }

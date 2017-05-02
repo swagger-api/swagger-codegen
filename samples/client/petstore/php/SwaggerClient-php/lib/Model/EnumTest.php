@@ -117,6 +117,7 @@ class EnumTest implements ArrayAccess
 
     const ENUM_STRING_UPPER = 'UPPER';
     const ENUM_STRING_LOWER = 'lower';
+    const ENUM_STRING_EMPTY = '';
     const ENUM_INTEGER_1 = 1;
     const ENUM_INTEGER_MINUS_1 = -1;
     const ENUM_NUMBER_1_DOT_1 = 1.1;
@@ -133,6 +134,7 @@ class EnumTest implements ArrayAccess
         return [
             self::ENUM_STRING_UPPER,
             self::ENUM_STRING_LOWER,
+            self::ENUM_STRING_EMPTY,
         ];
     }
     

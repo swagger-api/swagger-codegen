@@ -12,6 +12,7 @@ open class EnumTest: JSONEncodable {
     public enum EnumString: String { 
         case upper = "UPPER"
         case lower = "lower"
+        case empty = ""
     }
     public enum EnumInteger: Int32 { 
         case _1 = 1

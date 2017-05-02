@@ -38,7 +38,7 @@ android {
         variant.outputs.each { output ->
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.aar')) {
-                def fileName = "swagger-codegen (core library)-${variant.baseName}-2.3.0-SNAPSHOT.aar"
+                def fileName = "${project.name}-${variant.baseName}-${version}.aar"
                 output.outputFile = new File(outputFile.parent, fileName)
             }
         }
@@ -81,7 +81,7 @@ afterEvaluate {
         task.dependsOn variant.javaCompile
         task.from variant.javaCompile.destinationDir
         task.destinationDir = project.file("${project.buildDir}/outputs/jar")
-        task.archiveName = "swagger-codegen (core library)-${variant.baseName}-2.3.0-SNAPSHOT.jar"
+        task.archiveName = "${project.name}-${variant.baseName}-${version}.jar"
         artifacts.add('archives', task);
     }
 }

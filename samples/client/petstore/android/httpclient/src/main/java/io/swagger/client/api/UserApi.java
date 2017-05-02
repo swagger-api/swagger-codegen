@@ -57,7 +57,6 @@ public class UserApi {
    */
   public void  createUser (User body) throws ApiException {
     Object localVarPostBody = body;
-    
 
     // create path and map variables
     String localVarPath = "/user".replaceAll("\\{format\\}","json");
@@ -106,7 +105,6 @@ public class UserApi {
    */
   public void  createUsersWithArrayInput (List<User> body) throws ApiException {
     Object localVarPostBody = body;
-    
 
     // create path and map variables
     String localVarPath = "/user/createWithArray".replaceAll("\\{format\\}","json");
@@ -155,7 +153,6 @@ public class UserApi {
    */
   public void  createUsersWithListInput (List<User> body) throws ApiException {
     Object localVarPostBody = body;
-    
 
     // create path and map variables
     String localVarPath = "/user/createWithList".replaceAll("\\{format\\}","json");
@@ -204,12 +201,10 @@ public class UserApi {
    */
   public void  deleteUser (String username) throws ApiException {
     Object localVarPostBody = null;
-    
     // verify the required parameter 'username' is set
     if (username == null) {
        throw new ApiException(400, "Missing the required parameter 'username' when calling deleteUser");
     }
-    
 
     // create path and map variables
     String localVarPath = "/user/{username}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "username" + "\\}", apiInvoker.escapeString(username.toString()));
@@ -258,12 +253,10 @@ public class UserApi {
    */
   public User  getUserByName (String username) throws ApiException {
     Object localVarPostBody = null;
-    
     // verify the required parameter 'username' is set
     if (username == null) {
        throw new ApiException(400, "Missing the required parameter 'username' when calling getUserByName");
     }
-    
 
     // create path and map variables
     String localVarPath = "/user/{username}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "username" + "\\}", apiInvoker.escapeString(username.toString()));
@@ -313,7 +306,6 @@ public class UserApi {
    */
   public String  loginUser (String username, String password) throws ApiException {
     Object localVarPostBody = null;
-    
 
     // create path and map variables
     String localVarPath = "/user/login".replaceAll("\\{format\\}","json");
@@ -363,7 +355,6 @@ public class UserApi {
    */
   public void  logoutUser () throws ApiException {
     Object localVarPostBody = null;
-    
 
     // create path and map variables
     String localVarPath = "/user/logout".replaceAll("\\{format\\}","json");
@@ -413,12 +404,10 @@ public class UserApi {
    */
   public void  updateUser (String username, User body) throws ApiException {
     Object localVarPostBody = body;
-    
     // verify the required parameter 'username' is set
     if (username == null) {
        throw new ApiException(400, "Missing the required parameter 'username' when calling updateUser");
     }
-    
 
     // create path and map variables
     String localVarPath = "/user/{username}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "username" + "\\}", apiInvoker.escapeString(username.toString()));

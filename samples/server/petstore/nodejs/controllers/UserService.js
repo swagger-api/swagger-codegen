@@ -1,59 +1,73 @@
 'use strict';
 
-exports.createUser = function(args, res, next) {
-  /**
-   * Create user
-   * This can only be done by the logged in user.
-   *
-   * body User Created user object
-   * no response value expected for this operation
-   **/
-  res.end();
+
+/**
+ * Create user
+ * This can only be done by the logged in user.
+ *
+ * body User Created user object
+ * no response value expected for this operation
+ **/
+exports.createUser = function(body) {
+  return new Promise(function(resolve, reject) {
+    resolve();
+  });
 }
 
-exports.createUsersWithArrayInput = function(args, res, next) {
-  /**
-   * Creates list of users with given input array
-   * 
-   *
-   * body List List of user object
-   * no response value expected for this operation
-   **/
-  res.end();
+
+/**
+ * Creates list of users with given input array
+ * 
+ *
+ * body List List of user object
+ * no response value expected for this operation
+ **/
+exports.createUsersWithArrayInput = function(body) {
+  return new Promise(function(resolve, reject) {
+    resolve();
+  });
 }
 
-exports.createUsersWithListInput = function(args, res, next) {
-  /**
-   * Creates list of users with given input array
-   * 
-   *
-   * body List List of user object
-   * no response value expected for this operation
-   **/
-  res.end();
+
+/**
+ * Creates list of users with given input array
+ * 
+ *
+ * body List List of user object
+ * no response value expected for this operation
+ **/
+exports.createUsersWithListInput = function(body) {
+  return new Promise(function(resolve, reject) {
+    resolve();
+  });
 }
 
-exports.deleteUser = function(args, res, next) {
-  /**
-   * Delete user
-   * This can only be done by the logged in user.
-   *
-   * username String The name that needs to be deleted
-   * no response value expected for this operation
-   **/
-  res.end();
+
+/**
+ * Delete user
+ * This can only be done by the logged in user.
+ *
+ * username String The name that needs to be deleted
+ * no response value expected for this operation
+ **/
+exports.deleteUser = function(username) {
+  return new Promise(function(resolve, reject) {
+    resolve();
+  });
 }
 
-exports.getUserByName = function(args, res, next) {
-  /**
-   * Get user by user name
-   * 
-   *
-   * username String The name that needs to be fetched. Use user1 for testing. 
-   * returns User
-   **/
-  var examples = {};
-  examples['application/json'] = {
+
+/**
+ * Get user by user name
+ * 
+ *
+ * username String The name that needs to be fetched. Use user1 for testing. 
+ * returns User
+ **/
+exports.getUserByName = function(username) {
+  return new Promise(function(resolve, reject) {
+    var examples = {};
+    examples['application/json'] = {
   "firstName" : "aeiou",
   "lastName" : "aeiou",
   "password" : "aeiou",
@@ -63,52 +77,60 @@ exports.getUserByName = function(args, res, next) {
   "email" : "aeiou",
   "username" : "aeiou"
 };
-  if (Object.keys(examples).length > 0) {
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(examples[Object.keys(examples)[0]] || {}, null, 2));
-  } else {
-    res.end();
-  }
+    if (Object.keys(examples).length > 0) {
+      resolve(examples[Object.keys(examples)[0]]);
+    } else {
+      resolve();
+    }
+  });
 }
 
-exports.loginUser = function(args, res, next) {
-  /**
-   * Logs user into the system
-   * 
-   *
-   * username String The user name for login
-   * password String The password for login in clear text
-   * returns String
-   **/
-  var examples = {};
-  examples['application/json'] = "aeiou";
-  if (Object.keys(examples).length > 0) {
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(examples[Object.keys(examples)[0]] || {}, null, 2));
-  } else {
-    res.end();
-  }
+
+/**
+ * Logs user into the system
+ * 
+ *
+ * username String The user name for login
+ * password String The password for login in clear text
+ * returns String
+ **/
+exports.loginUser = function(username,password) {
+  return new Promise(function(resolve, reject) {
+    var examples = {};
+    examples['application/json'] = "aeiou";
+    if (Object.keys(examples).length > 0) {
+      resolve(examples[Object.keys(examples)[0]]);
+    } else {
+      resolve();
+    }
+  });
 }
 
-exports.logoutUser = function(args, res, next) {
-  /**
-   * Logs out current logged in user session
-   * 
-   *
-   * no response value expected for this operation
-   **/
-  res.end();
+
+/**
+ * Logs out current logged in user session
+ * 
+ *
+ * no response value expected for this operation
+ **/
+exports.logoutUser = function() {
+  return new Promise(function(resolve, reject) {
+    resolve();
+  });
 }
 
-exports.updateUser = function(args, res, next) {
-  /**
-   * Updated user
-   * This can only be done by the logged in user.
-   *
-   * username String name that need to be deleted
-   * body User Updated user object
-   * no response value expected for this operation
-   **/
-  res.end();
+
+/**
+ * Updated user
+ * This can only be done by the logged in user.
+ *
+ * username String name that need to be deleted
+ * body User Updated user object
+ * no response value expected for this operation
+ **/
+exports.updateUser = function(username,body) {
+  return new Promise(function(resolve, reject) {
+    resolve();
+  });
 }
 

@@ -13,7 +13,7 @@
       "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "host" : "petstore.swagger.io",
+  "host" : "petstore.swagger.io:80",
   "basePath" : "/v2",
   "tags" : [ {
     "name" : "pet",
@@ -108,8 +108,8 @@
           "type" : "array",
           "items" : {
             "type" : "string",
-            "enum" : [ "available", "pending", "sold" ],
-            "default" : "available"
+            "default" : "available",
+            "enum" : [ "available", "pending", "sold" ]
           },
           "collectionFormat" : "csv"
         } ],
@@ -362,7 +362,7 @@
         }
       }
     },
-    "/store/order/{orderId}" : {
+    "/store/order/{order_id}" : {
       "get" : {
         "tags" : [ "store" ],
         "summary" : "Find purchase order by ID",
@@ -370,7 +370,7 @@
         "operationId" : "getOrderById",
         "produces" : [ "application/xml", "application/json" ],
         "parameters" : [ {
-          "name" : "orderId",
+          "name" : "order_id",
           "in" : "path",
           "description" : "ID of pet that needs to be fetched",
           "required" : true,
@@ -401,12 +401,11 @@
         "operationId" : "deleteOrder",
         "produces" : [ "application/xml", "application/json" ],
         "parameters" : [ {
-          "name" : "orderId",
+          "name" : "order_id",
           "in" : "path",
           "description" : "ID of the order that needs to be deleted",
           "required" : true,
-          "type" : "string",
-          "minimum" : 1
+          "type" : "string"
         } ],
         "responses" : {
           "400" : {
@@ -635,9 +634,42 @@
         }
       }
     },
-    "/api/fakedef1" : {
+    "/fakeArrays" : {
       "get" : {
-        "tags" : [ "Catalog" ],
+        "tags" : [ "fake" ],
+        "description" : "submitting JSON",
+        "operationId" : "postJSON",
+        "parameters" : [ {
+          "name" : "items",
+          "in" : "query",
+          "description" : "Array of ints",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ]
+      },
+      "post" : {
+        "tags" : [ "fake" ],
+        "description" : "submitting JSON",
+        "operationId" : "postJSON",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "items",
+          "description" : "Array of ints",
+          "required" : true,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "integer",
+              "format" : "int64"
+            }
+          }
+        } ]
+      }
+    },
+    "/fakedef1" : {
+      "get" : {
+        "tags" : [ "fake" ],
         "summary" : "Definition 1",
         "operationId" : "Definition1",
         "consumes" : [ ],
@@ -657,11 +689,30 @@
             "description" : "Not found"
           }
         }
+      },
+      "post" : {
+        "tags" : [ "fake" ],
+        "description" : "submitting JSON",
+        "operationId" : "postJSON",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "JSON",
+          "required" : true,
+          "schema" : {
+            "type" : "object"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "received Raw JSON"
+          }
+        }
       }
     },
-    "/api/fakedef2" : {
+    "/fakedef2" : {
       "get" : {
-        "tags" : [ "Catalog" ],
+        "tags" : [ "fake" ],
         "summary" : "Definition 2",
         "operationId" : "Definition2",
         "consumes" : [ ],
@@ -683,9 +734,9 @@
         }
       }
     },
-    "/api/fakedef3" : {
+    "/fakedef3" : {
       "get" : {
-        "tags" : [ "Catalog" ],
+        "tags" : [ "fake" ],
         "summary" : "Definition 3",
         "operationId" : "Definition3",
         "consumes" : [ ],
@@ -749,8 +800,8 @@
           "type" : "array",
           "items" : {
             "type" : "string",
-            "enum" : [ ">", "$" ],
-            "default" : "$"
+            "default" : "$",
+            "enum" : [ ">", "$" ]
           }
         }, {
           "name" : "enum_form_string",
@@ -768,8 +819,8 @@
           "type" : "array",
           "items" : {
             "type" : "string",
-            "enum" : [ ">", "$" ],
-            "default" : "$"
+            "default" : "$",
+            "enum" : [ ">", "$" ]
           }
         }, {
           "name" : "enum_header_string",
@@ -787,8 +838,8 @@
           "type" : "array",
           "items" : {
             "type" : "string",
-            "enum" : [ ">", "$" ],
-            "default" : "$"
+            "default" : "$",
+            "enum" : [ ">", "$" ]
           }
         }, {
           "name" : "enum_query_string",
@@ -826,8 +877,8 @@
       },
       "post" : {
         "tags" : [ "fake" ],
-        "summary" : "Fake endpoint for testing various parameters\n假端點\n偽のエンドポイント\n가짜 엔드 포인트\n",
-        "description" : "Fake endpoint for testing various parameters\n假端點\n偽のエンドポイント\n가짜 엔드 포인트\n",
+        "summary" : "Fake endpoint for testing various parameters\n???\n?????????\n?? ?? ???\n",
+        "description" : "Fake endpoint for testing various parameters\n???\n?????????\n?? ?? ???\n",
         "operationId" : "testEndpointParameters",
         "consumes" : [ "application/xml; charset=utf-8", "application/json; charset=utf-8" ],
         "produces" : [ "application/xml; charset=utf-8", "application/json; charset=utf-8" ],
@@ -1397,7 +1448,7 @@
       "properties" : {
         "enum_string" : {
           "type" : "string",
-          "enum" : [ "UPPER", "lower" ]
+          "enum" : [ "UPPER", "lower", "" ]
         },
         "enum_integer" : {
           "type" : "integer",
@@ -1491,6 +1542,30 @@
         "foo" : {
           "type" : "string",
           "readOnly" : true
+        }
+      }
+    },
+    "Capitalization" : {
+      "type" : "object",
+      "properties" : {
+        "smallCamel" : {
+          "type" : "string"
+        },
+        "CapitalCamel" : {
+          "type" : "string"
+        },
+        "small_Snake" : {
+          "type" : "string"
+        },
+        "Capital_Snake" : {
+          "type" : "string"
+        },
+        "SCA_ETH_Flow_Points" : {
+          "type" : "string"
+        },
+        "ATT_NAME" : {
+          "type" : "string",
+          "description" : "Name of the pet\n"
         }
       }
     },
