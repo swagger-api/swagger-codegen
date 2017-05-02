@@ -9,7 +9,7 @@ info:
   license:
     name: Apache 2.0 
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-host: petstore.swagger.io 
+host: petstore.swagger.io:80
 basePath: /v2 
 tags:
   - name: pet
@@ -324,7 +324,7 @@ paths:
             $ref: '#/definitions/Order'
         '400':
           description: Invalid Order
-  '/store/order/{orderId}':
+  '/store/order/{order_id}':
     get:
       tags:
         - store
@@ -335,7 +335,7 @@ paths:
         - application/xml
         - application/json
       parameters:
-        - name: orderId
+        - name: order_id
           in: path
           description: ID of pet that needs to be fetched
           required: true
@@ -362,12 +362,11 @@ paths:
         - application/xml
         - application/json
       parameters:
-        - name: orderId
+        - name: order_id
           in: path
           description: ID of the order that needs to be deleted
           required: true
           type: string
-          minimum: 1
       responses:
         '400':
           description: Invalid ID supplied
@@ -559,10 +558,56 @@ paths:
           description: Invalid username supplied
         '404':
           description: User not found
-  /api/fakedef1:
+  /fakeArrays:
+    post:
+      tags:
+        - fake
+      description: submitting JSON
+      operationId: postJSON
+      parameters:
+        - in: body
+          name: items
+          description: Array of ints
+          schema:
+            type: array
+            items:
+              format: int64
+              type: integer
+          required: true
     get:
       tags:
-        - Catalog
+        - fake
+      description: submitting JSON
+      operationId: postJSON
+      parameters:
+        - in: query
+          name: items
+          description: Array of ints
+          required: true
+          format: int64
+          type: integer
+    responses:
+      200:
+        description: received Raw JSON
+  /fakedef1:
+    post:
+      tags:
+        - fake
+      description: submitting JSON
+      operationId: postJSON
+      parameters:
+        - in: body
+          name: body
+          description: JSON
+          required: true
+          schema:
+            type: object
+      responses:
+        200:
+          description: received Raw JSON
+    get:
+      tags:
+        - fake
       summary: Definition 1
       operationId: Definition1
       consumes: []
@@ -581,10 +626,10 @@ paths:
         '404':
           description: Not found
       deprecated: false
-  /api/fakedef2:
+  /fakedef2:
     get:
       tags:
-        - Catalog
+        - fake
       summary: Definition 2
       operationId: Definition2
       consumes: []
@@ -603,10 +648,10 @@ paths:
         '404':
           description: Not found
       deprecated: false
-  /api/fakedef3:
+  /fakedef3:
     get:
       tags:
-        - Catalog
+        - fake
       summary: Definition 3
       operationId: Definition3
       consumes: []
@@ -625,7 +670,6 @@ paths:
         '404':
           description: Not found
       deprecated: false
-
   /fake_classname_test:
     patch:
       tags:
@@ -1189,6 +1233,7 @@ definitions:
         enum:
           - UPPER
           - lower
+          - ''
       enum_integer:
         type: integer
         format: int32
@@ -1256,6 +1301,23 @@ definitions:
       foo:
         type: string
         readOnly: true
+  Capitalization:
+      type: object
+      properties:
+        smallCamel:
+          type: string
+        CapitalCamel:
+          type: string
+        small_Snake:
+          type: string
+        Capital_Snake:
+          type: string
+        SCA_ETH_Flow_Points:
+          type: string
+        ATT_NAME:
+          description: >
+            Name of the pet
+          type: string
   MapTest:
     type: object
     properties:

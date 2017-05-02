@@ -24,4 +24,6 @@ Resources
 	 - Recursive models in operations.
 	 - map of map of enum.
 	 - Array of enum and array of array of enum.
-	 - Array responses in operations.
+	 - Array parameters in body and query string.
+	 - Objects in POST body.
+
