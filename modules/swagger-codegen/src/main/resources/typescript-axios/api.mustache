@@ -1,0 +1,59 @@
+{{>licenseInfo}}
+
+import { AxiosRequestConfig } from 'axios';
+import { axios } from '../axios.config';
+{{#hasFormParams}}
+import { stringify } from 'query-string';
+{{/hasFormParams}}
+
+{{#imports}}
+import { {{classname}} } from '../{{filename}}';
+{{/imports}}
+
+/* tslint:disable:no-unused-variable member-ordering max-line-length */
+
+{{#operations}}
+
+{{#description}}
+/**
+ * {{&description}}
+ */
+{{/description}}
+export default class {{classname}} {
+
+{{#operation}}
+    /**
+     * {{summary}}
+     * {{notes}}
+     {{#allParams}}* @param {{paramName}} {{description}}
+     {{/allParams}}*/
+    public {{nickname}}({{#allParams}}{{^isQueryParam}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/isQueryParam}}{{/allParams}}{{#hasQueryParams}}query?: { {{#queryParams}}{{paramName}}{{^required}}?{{/required}}: {{dataType}}{{^-last}},{{/-last}} {{/queryParams}}}, {{/hasQueryParams}}axiosConfig?: AxiosRequestConfig): Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}> {
+        const reqPath = '{{path}}'{{#pathParams}}
+                    .replace('{' + '{{baseName}}}', String({{paramName}}{{#isDate}}.toISOString(){{/isDate}})){{/pathParams}};
+{{#hasFormParams}}
+        let reqFormParams = {
+{{#formParams}}
+            {{baseName}}: {{paramName}}{{^-last}},{{/-last}}
+{{/formParams}}
+        };
+{{/hasFormParams}}
+        let reqConfig = {
+            ...axiosConfig,
+            method: '{{httpMethod}}',
+            url: reqPath{{#hasQueryParams}},
+            params: query{{/hasQueryParams}}{{#bodyParam}},
+            data: {{paramName}}{{/bodyParam}}{{#hasFormParams}},
+            data: stringify(formParams)
+{{/hasFormParams}}
+
+        };
+        return axios.request(reqConfig)
+            .then(res => {
+                return res.data;
+            });
+    }
+
+{{/operation}}
+
+}
+{{/operations}}
