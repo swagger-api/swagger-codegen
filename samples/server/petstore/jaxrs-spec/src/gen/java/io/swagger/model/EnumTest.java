@@ -116,7 +116,7 @@ public enum EnumNumberEnum {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public EnumStringEnum getEnumString() {
     return enumString;
   }
@@ -132,7 +132,7 @@ public enum EnumNumberEnum {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public EnumIntegerEnum getEnumInteger() {
     return enumInteger;
   }
@@ -148,7 +148,7 @@ public enum EnumNumberEnum {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public EnumNumberEnum getEnumNumber() {
     return enumNumber;
   }
@@ -164,7 +164,7 @@ public enum EnumNumberEnum {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public OuterEnum getOuterEnum() {
     return outerEnum;
   }

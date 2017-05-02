@@ -22,7 +22,7 @@ public class ArrayOfArrayOfNumberOnly   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public List<List<BigDecimal>> getArrayArrayNumber() {
     return arrayArrayNumber;
   }

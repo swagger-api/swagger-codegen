@@ -61,7 +61,7 @@ export class {{classname}} {
      {{#allParams}}* @param {{paramName}} {{description}}
      {{/allParams}}*/
     public {{nickname}}WithHttpInfo({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '{{path}}'{{#pathParams}}
+        const path = this.basePath + '{{{path}}}'{{#pathParams}}
                     .replace('${' + '{{baseName}}' + '}', String({{paramName}})){{/pathParams}};
 
         let queryParameters = new URLSearchParams();
@@ -93,17 +93,17 @@ export class {{classname}} {
         {{/isListContainer}}
         {{^isListContainer}}
         if ({{paramName}} !== undefined) {
-            {{#isDateTime}}
-                queryParameters.set('{{baseName}}', <any>{{paramName}}.toISOString());
-            {{/isDateTime}}
-            {{^isDateTime}}
-                {{#isDate}}
-                    queryParameters.set('{{baseName}}', <any>{{paramName}}.toISOString());
-                {{/isDate}}
-                {{^isDate}}
-                    queryParameters.set('{{baseName}}', <any>{{paramName}});
-                {{/isDate}}
-            {{/isDateTime}}
+        {{#isDateTime}}
+            queryParameters.set('{{baseName}}', <any>{{paramName}}.toISOString());
+        {{/isDateTime}}
+        {{^isDateTime}}
+            {{#isDate}}
+            queryParameters.set('{{baseName}}', <any>{{paramName}}.toISOString());
+            {{/isDate}}
+            {{^isDate}}
+            queryParameters.set('{{baseName}}', <any>{{paramName}});
+            {{/isDate}}
+        {{/isDateTime}}
         }
         {{/isListContainer}}
 
@@ -204,9 +204,9 @@ export class {{classname}} {
 {{#hasFormParams}}
             body: formParams.toString(),
 {{/hasFormParams}}
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:this.configuration.withCredentials
         });
-
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);

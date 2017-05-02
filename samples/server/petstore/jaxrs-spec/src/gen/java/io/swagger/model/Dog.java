@@ -20,7 +20,7 @@ public class Dog extends Animal  {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public String getBreed() {
     return breed;
   }

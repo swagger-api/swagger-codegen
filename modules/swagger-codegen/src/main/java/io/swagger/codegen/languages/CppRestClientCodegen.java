@@ -113,6 +113,8 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
         typeMapping.put("file", "HttpContent");
         typeMapping.put("object", "Object");
         typeMapping.put("binary", "std::string");
+        typeMapping.put("number", "double");
+        typeMapping.put("UUID", "utility::string_t");
 
         super.importMapping = new HashMap<String, String>();
         importMapping.put("std::vector", "#include <vector>");

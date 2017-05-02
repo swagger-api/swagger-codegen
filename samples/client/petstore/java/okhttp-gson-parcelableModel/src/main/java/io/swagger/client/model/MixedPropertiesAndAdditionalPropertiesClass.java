@@ -21,6 +21,7 @@ import io.swagger.client.model.Animal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import org.joda.time.DateTime;
 import android.os.Parcelable;
 import android.os.Parcel;
@@ -31,15 +32,15 @@ import android.os.Parcel;
 
 public class MixedPropertiesAndAdditionalPropertiesClass implements Parcelable {
   @SerializedName("uuid")
-  private String uuid = null;
+  private UUID uuid = null;
 
   @SerializedName("dateTime")
   private DateTime dateTime = null;
 
   @SerializedName("map")
-  private Map<String, Animal> map = new HashMap<String, Animal>();
+  private Map<String, Animal> map = null;
 
-  public MixedPropertiesAndAdditionalPropertiesClass uuid(String uuid) {
+  public MixedPropertiesAndAdditionalPropertiesClass uuid(UUID uuid) {
     this.uuid = uuid;
     return this;
   }
@@ -48,12 +49,12 @@ public class MixedPropertiesAndAdditionalPropertiesClass implements Parcelable {
    * Get uuid
    * @return uuid
   **/
-  @ApiModelProperty(example = "null", value = "")
-  public String getUuid() {
+  @ApiModelProperty(value = "")
+  public UUID getUuid() {
     return uuid;
   }
 
-  public void setUuid(String uuid) {
+  public void setUuid(UUID uuid) {
     this.uuid = uuid;
   }
 
@@ -66,7 +67,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass implements Parcelable {
    * Get dateTime
    * @return dateTime
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public DateTime getDateTime() {
     return dateTime;
   }
@@ -81,6 +82,9 @@ public class MixedPropertiesAndAdditionalPropertiesClass implements Parcelable {
   }
 
   public MixedPropertiesAndAdditionalPropertiesClass putMapItem(String key, Animal mapItem) {
+    if (this.map == null) {
+      this.map = new HashMap<String, Animal>();
+    }
     this.map.put(key, mapItem);
     return this;
   }
@@ -89,7 +93,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass implements Parcelable {
    * Get map
    * @return map
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Map<String, Animal> getMap() {
     return map;
   }
@@ -157,8 +161,8 @@ public class MixedPropertiesAndAdditionalPropertiesClass implements Parcelable {
 
   MixedPropertiesAndAdditionalPropertiesClass(Parcel in) {
     
-    uuid = (String)in.readValue(null);
-    dateTime = (DateTime)in.readValue(null);
+    uuid = (UUID)in.readValue(UUID.class.getClassLoader());
+    dateTime = (DateTime)in.readValue(DateTime.class.getClassLoader());
     map = (Map<String, Animal>)in.readValue(Animal.class.getClassLoader());
   }
   

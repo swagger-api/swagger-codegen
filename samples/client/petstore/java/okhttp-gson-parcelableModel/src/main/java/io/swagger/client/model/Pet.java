@@ -42,7 +42,7 @@ public class Pet implements Parcelable {
   private List<String> photoUrls = new ArrayList<String>();
 
   @SerializedName("tags")
-  private List<Tag> tags = new ArrayList<Tag>();
+  private List<Tag> tags = null;
 
   /**
    * pet status in the store
@@ -81,7 +81,7 @@ public class Pet implements Parcelable {
    * Get id
    * @return id
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Long getId() {
     return id;
   }
@@ -99,7 +99,7 @@ public class Pet implements Parcelable {
    * Get category
    * @return category
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Category getCategory() {
     return category;
   }
@@ -140,7 +140,7 @@ public class Pet implements Parcelable {
    * Get photoUrls
    * @return photoUrls
   **/
-  @ApiModelProperty(example = "null", required = true, value = "")
+  @ApiModelProperty(required = true, value = "")
   public List<String> getPhotoUrls() {
     return photoUrls;
   }
@@ -155,6 +155,9 @@ public class Pet implements Parcelable {
   }
 
   public Pet addTagsItem(Tag tagsItem) {
+    if (this.tags == null) {
+      this.tags = new ArrayList<Tag>();
+    }
     this.tags.add(tagsItem);
     return this;
   }
@@ -163,7 +166,7 @@ public class Pet implements Parcelable {
    * Get tags
    * @return tags
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public List<Tag> getTags() {
     return tags;
   }
@@ -181,7 +184,7 @@ public class Pet implements Parcelable {
    * pet status in the store
    * @return status
   **/
-  @ApiModelProperty(example = "null", value = "pet status in the store")
+  @ApiModelProperty(value = "pet status in the store")
   public StatusEnum getStatus() {
     return status;
   }
@@ -262,7 +265,7 @@ public class Pet implements Parcelable {
   Pet(Parcel in) {
     
     id = (Long)in.readValue(null);
-    category = (Category)in.readValue(null);
+    category = (Category)in.readValue(Category.class.getClassLoader());
     name = (String)in.readValue(null);
     photoUrls = (List<String>)in.readValue(null);
     tags = (List<Tag>)in.readValue(Tag.class.getClassLoader());

@@ -118,7 +118,7 @@ class StoreApi
             throw new \InvalidArgumentException('Missing the required parameter $order_id when calling deleteOrder');
         }
         // parse inputs
-        $resourcePath = "/store/order/{orderId}";
+        $resourcePath = "/store/order/{order_id}";
         $httpBody = '';
         $queryParams = [];
         $headerParams = [];
@@ -132,14 +132,11 @@ class StoreApi
         // path params
         if ($order_id !== null) {
             $resourcePath = str_replace(
-                "{" . "orderId" . "}",
+                "{" . "order_id" . "}",
                 $this->apiClient->getSerializer()->toPathValue($order_id),
                 $resourcePath
             );
         }
-        // default format to json
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-
         
         // for model (json/xml)
         if (isset($_tempBody)) {
@@ -156,7 +153,7 @@ class StoreApi
                 $httpBody,
                 $headerParams,
                 null,
-                '/store/order/{orderId}'
+                '/store/order/{order_id}'
             );
 
             return [null, $statusCode, $httpHeader];
@@ -203,9 +200,6 @@ class StoreApi
             $headerParams['Accept'] = $_header_accept;
         }
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType([]);
-
-        // default format to json
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
 
         
         // for model (json/xml)
@@ -282,7 +276,7 @@ class StoreApi
         }
 
         // parse inputs
-        $resourcePath = "/store/order/{orderId}";
+        $resourcePath = "/store/order/{order_id}";
         $httpBody = '';
         $queryParams = [];
         $headerParams = [];
@@ -296,14 +290,11 @@ class StoreApi
         // path params
         if ($order_id !== null) {
             $resourcePath = str_replace(
-                "{" . "orderId" . "}",
+                "{" . "order_id" . "}",
                 $this->apiClient->getSerializer()->toPathValue($order_id),
                 $resourcePath
             );
         }
-        // default format to json
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
-
         
         // for model (json/xml)
         if (isset($_tempBody)) {
@@ -320,7 +311,7 @@ class StoreApi
                 $httpBody,
                 $headerParams,
                 '\Swagger\Client\Model\Order',
-                '/store/order/{orderId}'
+                '/store/order/{order_id}'
             );
 
             return [$this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\Model\Order', $httpHeader), $statusCode, $httpHeader];
@@ -377,9 +368,6 @@ class StoreApi
             $headerParams['Accept'] = $_header_accept;
         }
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType([]);
-
-        // default format to json
-        $resourcePath = str_replace("{format}", "json", $resourcePath);
 
         // body params
         $_tempBody = null;

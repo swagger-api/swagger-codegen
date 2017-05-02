@@ -1,6 +1,7 @@
 package io.swagger.model;
 
 import io.swagger.model.Animal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,7 @@ import java.util.Objects;
 public class MixedPropertiesAndAdditionalPropertiesClass   {
   
   private UUID uuid = null;
-  private javax.xml.datatype.XMLGregorianCalendar dateTime = null;
+  private Date dateTime = null;
   private Map<String, Animal> map = new HashMap<String, Animal>();
 
   /**
@@ -26,7 +27,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public UUID getUuid() {
     return uuid;
   }
@@ -36,17 +37,17 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
 
   /**
    **/
-  public MixedPropertiesAndAdditionalPropertiesClass dateTime(javax.xml.datatype.XMLGregorianCalendar dateTime) {
+  public MixedPropertiesAndAdditionalPropertiesClass dateTime(Date dateTime) {
     this.dateTime = dateTime;
     return this;
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
-  public javax.xml.datatype.XMLGregorianCalendar getDateTime() {
+  @ApiModelProperty(value = "")
+  public Date getDateTime() {
     return dateTime;
   }
-  public void setDateTime(javax.xml.datatype.XMLGregorianCalendar dateTime) {
+  public void setDateTime(Date dateTime) {
     this.dateTime = dateTime;
   }
 
@@ -58,7 +59,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Map<String, Animal> getMap() {
     return map;
   }

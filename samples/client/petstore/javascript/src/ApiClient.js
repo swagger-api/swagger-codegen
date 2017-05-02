@@ -44,9 +44,9 @@
     /**
      * The base URL against which to resolve every API call's (relative) path.
      * @type {String}
-     * @default http://petstore.swagger.io/v2
+     * @default http://petstore.swagger.io:80/v2
      */
-    this.basePath = 'http://petstore.swagger.io/v2'.replace(/\/+$/, '');
+    this.basePath = 'http://petstore.swagger.io:80/v2'.replace(/\/+$/, '');
 
     /**
      * The authentication methods to be included for all API calls.
@@ -78,6 +78,22 @@
      * @default true
      */
     this.cache = true;
+
+    /**
+     * If set to true, the client will save the cookies from each server
+     * response, and return them in the next request.
+     * @default false
+     */
+    this.enableCookies = false;
+
+    /*
+     * Used to save and return cookies in a node.js (non-browser) setting,
+     * if this.enableCookies is set to true.
+     */
+    if (typeof window === 'undefined') {
+      this.agent = new superagent.agent();
+    }
+
   };
 
   /**
@@ -408,6 +424,20 @@
       request.accept(accept);
     }
 
+    if (returnType === 'Blob') {
+      request.responseType('blob');
+    }
+
+    // Attach previously saved cookies, if enabled
+    if (this.enableCookies){
+      if (typeof window === 'undefined') {
+        this.agent.attachCookies(request);
+      }
+      else {
+        request.withCredentials();
+      }
+    }
+
 
     request.end(function(error, response) {
       if (callback) {
@@ -415,6 +445,9 @@
         if (!error) {
           try {
             data = _this.deserialize(response, returnType);
+            if (_this.enableCookies && typeof window === 'undefined'){
+              _this.agent.saveCookies(response);
+            }
           } catch (err) {
             error = err;
           }
@@ -459,6 +492,8 @@
         return String(data);
       case 'Date':
         return this.parseDate(String(data));
+      case 'Blob':
+      	return data;
       default:
         if (type === Object) {
           // generic object, return directly

@@ -78,7 +78,7 @@ public class Order implements Parcelable {
    * Get id
    * @return id
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Long getId() {
     return id;
   }
@@ -96,7 +96,7 @@ public class Order implements Parcelable {
    * Get petId
    * @return petId
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Long getPetId() {
     return petId;
   }
@@ -114,7 +114,7 @@ public class Order implements Parcelable {
    * Get quantity
    * @return quantity
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Integer getQuantity() {
     return quantity;
   }
@@ -132,7 +132,7 @@ public class Order implements Parcelable {
    * Get shipDate
    * @return shipDate
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public DateTime getShipDate() {
     return shipDate;
   }
@@ -150,7 +150,7 @@ public class Order implements Parcelable {
    * Order Status
    * @return status
   **/
-  @ApiModelProperty(example = "null", value = "Order Status")
+  @ApiModelProperty(value = "Order Status")
   public StatusEnum getStatus() {
     return status;
   }
@@ -168,7 +168,7 @@ public class Order implements Parcelable {
    * Get complete
    * @return complete
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Boolean getComplete() {
     return complete;
   }
@@ -251,7 +251,7 @@ public class Order implements Parcelable {
     id = (Long)in.readValue(null);
     petId = (Long)in.readValue(null);
     quantity = (Integer)in.readValue(null);
-    shipDate = (DateTime)in.readValue(null);
+    shipDate = (DateTime)in.readValue(DateTime.class.getClassLoader());
     status = (StatusEnum)in.readValue(null);
     complete = (Boolean)in.readValue(null);
   }

@@ -5,6 +5,7 @@ import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 import io.swagger.codegen.*;
 import io.swagger.models.Model;
+import io.swagger.models.ModelImpl;
 import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
 import io.swagger.models.parameters.HeaderParameter;
@@ -46,7 +47,6 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
     protected boolean swiftUseApiNamespace;
     protected String[] responseAs = new String[0];
     protected String sourceFolder = "Classes" + File.separator + "Swaggers";
-    private static final Pattern PATH_PARAM_PATTERN = Pattern.compile("\\{[a-zA-Z_]+\\}");
 
     @Override
     public CodegenType getTag() {
@@ -61,6 +61,16 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public String getHelp() {
         return "Generates a swift client library.";
+    }
+
+    @Override
+    protected void addAdditionPropertiesToCodeGenModel(CodegenModel codegenModel, ModelImpl swaggerModel) {
+
+        final Property additionalProperties = swaggerModel.getAdditionalProperties();
+
+        if(additionalProperties != null) {
+            codegenModel.additionalPropertiesType = getSwaggerType(additionalProperties);
+        }
     }
 
     public Swift3Codegen() {
@@ -103,7 +113,7 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         reservedWords = new HashSet<>(
                 Arrays.asList(
                     // name used by swift client
-                    "ErrorResponse",
+                    "ErrorResponse", "Response",
 
                     // swift keywords
                     "Int", "Int32", "Int64", "Int64", "Float", "Double", "Bool", "Void", "String", "Character", "AnyObject", "Any", "Error", "URL",
@@ -185,7 +195,7 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
 
         // Setup unwrapRequired option, which makes all the properties with "required" non-optional
         if (additionalProperties.containsKey(UNWRAP_REQUIRED)) {
-            setUnwrapRequired(Boolean.parseBoolean(String.valueOf(additionalProperties.get(UNWRAP_REQUIRED))));
+            setUnwrapRequired(convertPropertyToBooleanAndWriteBack(UNWRAP_REQUIRED));
         }
         additionalProperties.put(UNWRAP_REQUIRED, unwrapRequired);
 
@@ -208,9 +218,8 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
 
         // Setup swiftUseApiNamespace option, which makes all the API classes inner-class of {{projectName}}API
         if (additionalProperties.containsKey(SWIFT_USE_API_NAMESPACE)) {
-            swiftUseApiNamespace = Boolean.parseBoolean(String.valueOf(additionalProperties.get(SWIFT_USE_API_NAMESPACE)));
+            setSwiftUseApiNamespace(convertPropertyToBooleanAndWriteBack(SWIFT_USE_API_NAMESPACE));
         }
-        additionalProperties.put(SWIFT_USE_API_NAMESPACE, swiftUseApiNamespace);
 
         if (!additionalProperties.containsKey(POD_AUTHORS)) {
             additionalProperties.put(POD_AUTHORS, DEFAULT_POD_AUTHORS);
@@ -280,6 +289,11 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
+    public boolean isDataTypeFile(String dataType) {
+        return dataType != null && dataType.equals("URL");
+    }
+
+    @Override
     public boolean isDataTypeBinary(final String dataType) {
         return dataType != null && dataType.equals("Data");
     }
@@ -346,7 +360,7 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         if (p instanceof MapProperty) {
             MapProperty ap = (MapProperty) p;
             String inner = getSwaggerType(ap.getAdditionalProperties());
-            return "[String:" + inner + "]";
+            return inner;
         } else if (p instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) p;
             String inner = getSwaggerType(ap.getItems());
@@ -451,40 +465,6 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         return codegenModel;
     }
 
-    @Override
-    public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, Map<String, Model> definitions, Swagger swagger) {
-        path = normalizePath(path); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
-        // issue 3914 - removed logic designed to remove any parameter of type HeaderParameter
-        return super.fromOperation(path, httpMethod, operation, definitions, swagger);
-    }
-
-    private static String normalizePath(String path) {
-        StringBuilder builder = new StringBuilder();
-
-        int cursor = 0;
-        Matcher matcher = PATH_PARAM_PATTERN.matcher(path);
-        boolean found = matcher.find();
-        while (found) {
-            String stringBeforeMatch = path.substring(cursor, matcher.start());
-            builder.append(stringBeforeMatch);
-
-            String group = matcher.group().substring(1, matcher.group().length() - 1);
-            group = camelize(group, true);
-            builder
-                    .append("{")
-                    .append(group)
-                    .append("}");
-
-            cursor = matcher.end();
-            found = matcher.find();
-        }
-
-        String stringAfterMatch = path.substring(cursor);
-        builder.append(stringAfterMatch);
-
-        return builder.toString();
-    }
-
     public void setProjectName(String projectName) {
         this.projectName = projectName;
     }
@@ -495,6 +475,10 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
 
     public void setResponseAs(String[] responseAs) {
         this.responseAs = responseAs;
+    }
+
+    public void setSwiftUseApiNamespace(boolean swiftUseApiNamespace) {
+        this.swiftUseApiNamespace = swiftUseApiNamespace;
     }
 
     @Override
@@ -511,6 +495,15 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
     public String toEnumVarName(String name, String datatype) {
         if (name.length() == 0) {
             return "empty";
+        }
+
+        Pattern startWithNumberPattern = Pattern.compile("^\\d+");
+        Matcher startWithNumberMatcher = startWithNumberPattern.matcher(name);
+        if (startWithNumberMatcher.find()) {
+            String startingNumbers = startWithNumberMatcher.group(0);
+            String nameWithoutStartingNumbers = name.substring(startingNumbers.length());
+
+            return "_" + startingNumbers + camelize(nameWithoutStartingNumbers, true);
         }
 
         // for symbol, e.g. $, #

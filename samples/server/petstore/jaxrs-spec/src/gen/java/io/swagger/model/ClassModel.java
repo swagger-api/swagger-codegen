@@ -23,7 +23,7 @@ public class ClassModel   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public String getPropertyClass() {
     return propertyClass;
   }

@@ -6,7 +6,10 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 
-namespace Swagger {
+{{#cppNamespaceDeclarations}}
+namespace {{this}} {
+{{/cppNamespaceDeclarations}}
+
 {{classname}}::{{classname}}() {}
 
 {{classname}}::~{{classname}}() {}
@@ -21,7 +24,7 @@ namespace Swagger {
 void
 {{classname}}::{{nickname}}({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {
     QString fullPath;
-    fullPath.append(this->host).append(this->basePath).append("{{path}}");
+    fullPath.append(this->host).append(this->basePath).append("{{{path}}}");
 
     {{#pathParams}}
     QString {{paramName}}PathParam("{"); {{paramName}}PathParam.append("{{baseName}}").append("}");
@@ -178,4 +181,7 @@ void
 }
 {{/operation}}
 {{/operations}}
-} /* namespace Swagger */
+
+{{#cppNamespaceDeclarations}}
+}
+{{/cppNamespaceDeclarations}}

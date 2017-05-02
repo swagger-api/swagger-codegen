@@ -1,15 +1,25 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.*;
-import io.swagger.codegen.languages.features.BeanValidationFeatures;
-import io.swagger.models.Operation;
-import io.swagger.models.Path;
-import io.swagger.models.Swagger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenParameter;
+import io.swagger.codegen.CodegenResponse;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.languages.features.BeanValidationFeatures;
+import io.swagger.codegen.languages.features.UseGenericResponseFeatures;
+import io.swagger.models.Operation;
+import io.swagger.models.Path;
+import io.swagger.models.Swagger;
 
 public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen implements BeanValidationFeatures {
     /**
@@ -21,12 +31,11 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
     protected String testResourcesFolder = "src/test/resources";
     protected String title = "Swagger Server";
 
-	protected boolean useBeanValidation = true;
+    protected boolean useBeanValidation = true;
 
     static Logger LOGGER = LoggerFactory.getLogger(AbstractJavaJAXRSServerCodegen.class);
 
-    public AbstractJavaJAXRSServerCodegen()
-    {
+    public AbstractJavaJAXRSServerCodegen() {
         super();
 
         sourceFolder = "src/gen/java";
@@ -44,8 +53,8 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
         cliOptions.add(new CliOption(CodegenConstants.IMPL_FOLDER, CodegenConstants.IMPL_FOLDER_DESC));
         cliOptions.add(new CliOption("title", "a title describing the application"));
 
-		cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
-
+        cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
+        cliOptions.add(new CliOption("serverPort", "The port on which the server should be started"));
     }
 
 
@@ -54,8 +63,7 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
     // ===============
 
     @Override
-    public CodegenType getTag()
-    {
+    public CodegenType getTag() {
         return CodegenType.SERVER;
     }
 
@@ -67,13 +75,13 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
             implFolder = (String) additionalProperties.get(CodegenConstants.IMPL_FOLDER);
         }
 
-		if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
-			this.setUseBeanValidation(convertPropertyToBoolean(USE_BEANVALIDATION));
-		}
+        if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
+            this.setUseBeanValidation(convertPropertyToBoolean(USE_BEANVALIDATION));
+        }
 
-		if (useBeanValidation) {
-			writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
-		}
+        if (useBeanValidation) {
+            writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
+        }
 
     }
 
@@ -83,15 +91,19 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
             swagger.setBasePath("");
         }
 
-        String host = swagger.getHost();
-        String port = "8080"; // Default value for a JEE Server
-        if ( host != null ) {
-            String[] parts = host.split(":");
-            if ( parts.length > 1 ) {
-                port = parts[1];
+        if (!this.additionalProperties.containsKey("serverPort")) {
+            final String host = swagger.getHost();
+            String port = "8080"; // Default value for a JEE Server
+            if ( host != null ) {
+                String[] parts = host.split(":");
+                if ( parts.length > 1 ) {
+                    port = parts[1];
+                }
             }
+
+            this.additionalProperties.put("serverPort", port);
         }
-        this.additionalProperties.put("serverPort", port);
+
         if ( swagger.getPaths() != null ) {
             for ( String pathname : swagger.getPaths().keySet() ) {
                 Path path = swagger.getPath(pathname);
@@ -153,6 +165,12 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
                         if ( "0".equals(resp.code) ) {
                             resp.code = "200";
                         }
+
+                         // set vendorExtensions.x-java-is-response-void to true as dataType is set to "void"
+                        if (resp.dataType == null) {
+                            resp.vendorExtensions.put("x-java-is-response-void", true);
+                        }
+
                     }
                 }
 
@@ -220,8 +238,9 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
         return outputFolder + "/" + output + "/" + apiPackage().replace('.', '/');
     }
 
-	public void setUseBeanValidation(boolean useBeanValidation) {
-		this.useBeanValidation = useBeanValidation;
-	}
+    public void setUseBeanValidation(boolean useBeanValidation) {
+        this.useBeanValidation = useBeanValidation;
+    }
+
 
 }

@@ -24,7 +24,7 @@ public class Model200Response   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Integer getName() {
     return name;
   }
@@ -40,7 +40,7 @@ public class Model200Response   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public String getPropertyClass() {
     return propertyClass;
   }

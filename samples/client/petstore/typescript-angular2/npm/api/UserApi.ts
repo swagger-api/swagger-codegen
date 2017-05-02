@@ -196,9 +196,9 @@ export class UserApi {
             method: RequestMethod.Post,
             headers: headers,
             body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:this.configuration.withCredentials
         });
-
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
@@ -233,9 +233,9 @@ export class UserApi {
             method: RequestMethod.Post,
             headers: headers,
             body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:this.configuration.withCredentials
         });
-
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
@@ -270,9 +270,9 @@ export class UserApi {
             method: RequestMethod.Post,
             headers: headers,
             body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:this.configuration.withCredentials
         });
-
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
@@ -309,9 +309,9 @@ export class UserApi {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Delete,
             headers: headers,
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:this.configuration.withCredentials
         });
-
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
@@ -348,9 +348,9 @@ export class UserApi {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
             headers: headers,
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:this.configuration.withCredentials
         });
-
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
@@ -371,19 +371,11 @@ export class UserApi {
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
         if (username !== undefined) {
-            if(username instanceof Date) {
-                queryParameters.set('username', <any>username.d.toISOString());
-            } else {
-                queryParameters.set('username', <any>username);
-            }
+            queryParameters.set('username', <any>username);
         }
 
         if (password !== undefined) {
-            if(password instanceof Date) {
-                queryParameters.set('password', <any>password.d.toISOString());
-            } else {
-                queryParameters.set('password', <any>password);
-            }
+            queryParameters.set('password', <any>password);
         }
 
         // to determine the Content-Type header
@@ -399,9 +391,9 @@ export class UserApi {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
             headers: headers,
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:this.configuration.withCredentials
         });
-
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
@@ -432,9 +424,9 @@ export class UserApi {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
             headers: headers,
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:this.configuration.withCredentials
         });
-
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
@@ -475,9 +467,9 @@ export class UserApi {
             method: RequestMethod.Put,
             headers: headers,
             body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:this.configuration.withCredentials
         });
-
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);

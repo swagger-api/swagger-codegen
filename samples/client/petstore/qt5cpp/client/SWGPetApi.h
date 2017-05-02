@@ -65,5 +65,6 @@ signals:
     void uploadFileSignal(SWGApiResponse* summary);
     
 };
+
 }
 #endif

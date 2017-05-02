@@ -29,7 +29,7 @@ import android.os.Parcel;
 
 public class MapTest implements Parcelable {
   @SerializedName("map_map_of_string")
-  private Map<String, Map<String, String>> mapMapOfString = new HashMap<String, Map<String, String>>();
+  private Map<String, Map<String, String>> mapMapOfString = null;
 
   /**
    * Gets or Sets inner
@@ -54,7 +54,7 @@ public class MapTest implements Parcelable {
   }
 
   @SerializedName("map_of_enum_string")
-  private Map<String, InnerEnum> mapOfEnumString = new HashMap<String, InnerEnum>();
+  private Map<String, InnerEnum> mapOfEnumString = null;
 
   public MapTest mapMapOfString(Map<String, Map<String, String>> mapMapOfString) {
     this.mapMapOfString = mapMapOfString;
@@ -62,6 +62,9 @@ public class MapTest implements Parcelable {
   }
 
   public MapTest putMapMapOfStringItem(String key, Map<String, String> mapMapOfStringItem) {
+    if (this.mapMapOfString == null) {
+      this.mapMapOfString = new HashMap<String, Map<String, String>>();
+    }
     this.mapMapOfString.put(key, mapMapOfStringItem);
     return this;
   }
@@ -70,7 +73,7 @@ public class MapTest implements Parcelable {
    * Get mapMapOfString
    * @return mapMapOfString
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Map<String, Map<String, String>> getMapMapOfString() {
     return mapMapOfString;
   }
@@ -85,6 +88,9 @@ public class MapTest implements Parcelable {
   }
 
   public MapTest putMapOfEnumStringItem(String key, InnerEnum mapOfEnumStringItem) {
+    if (this.mapOfEnumString == null) {
+      this.mapOfEnumString = new HashMap<String, InnerEnum>();
+    }
     this.mapOfEnumString.put(key, mapOfEnumStringItem);
     return this;
   }
@@ -93,7 +99,7 @@ public class MapTest implements Parcelable {
    * Get mapOfEnumString
    * @return mapOfEnumString
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Map<String, InnerEnum> getMapOfEnumString() {
     return mapOfEnumString;
   }

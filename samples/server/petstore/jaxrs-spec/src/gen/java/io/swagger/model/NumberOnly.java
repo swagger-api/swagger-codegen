@@ -20,7 +20,7 @@ public class NumberOnly   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public BigDecimal getJustNumber() {
     return justNumber;
   }

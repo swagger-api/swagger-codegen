@@ -19,7 +19,7 @@ public class SpecialModelName   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Long getSpecialPropertyName() {
     return specialPropertyName;
   }

@@ -38,7 +38,7 @@ public class NumberOnly implements Parcelable {
    * Get justNumber
    * @return justNumber
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public BigDecimal getJustNumber() {
     return justNumber;
   }
@@ -98,7 +98,7 @@ public class NumberOnly implements Parcelable {
 
   NumberOnly(Parcel in) {
     
-    justNumber = (BigDecimal)in.readValue(null);
+    justNumber = (BigDecimal)in.readValue(BigDecimal.class.getClassLoader());
   }
   
   public int describeContents() {

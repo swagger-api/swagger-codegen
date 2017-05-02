@@ -26,7 +26,7 @@ public class Name   {
   }
 
   
-  @ApiModelProperty(example = "null", required = true, value = "")
+  @ApiModelProperty(required = true, value = "")
   @NotNull
   public Integer getName() {
     return name;
@@ -43,7 +43,7 @@ public class Name   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Integer getSnakeCase() {
     return snakeCase;
   }
@@ -59,7 +59,7 @@ public class Name   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public String getProperty() {
     return property;
   }
@@ -75,7 +75,7 @@ public class Name   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   public Integer get123Number() {
     return _123Number;
   }
