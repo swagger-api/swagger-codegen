@@ -30,6 +30,7 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
     public static final String SPRING_MVC_LIBRARY = "spring-mvc";
     public static final String SPRING_CLOUD_LIBRARY = "spring-cloud";
     public static final String IMPLICIT_HEADERS = "implicitHeaders";
+    public static final String SWAGGER_DOCKET_CONFIG = "swaggerDocketConfig";
 
     protected String title = "swagger-petstore";
     protected String configPackage = "io.swagger.configuration";
@@ -43,6 +44,7 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
     protected boolean useTags = false;
     protected boolean useBeanValidation = true;
     protected boolean implicitHeaders = false;
+    protected boolean swaggerDocketConfig = false;
 
     public SpringCodegen() {
         super();
@@ -72,6 +74,7 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
         cliOptions.add(CliOption.newBoolean(USE_TAGS, "use tags for creating interface and controller classnames"));
         cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
         cliOptions.add(CliOption.newBoolean(IMPLICIT_HEADERS, "Use of @ApiImplicitParams for headers."));
+        cliOptions.add(CliOption.newBoolean(SWAGGER_DOCKET_CONFIG, "Generate Spring Swagger Docket configuration class."));
 
         supportedLibraries.put(DEFAULT_LIBRARY, "Spring-boot Server application using the SpringFox integration.");
         supportedLibraries.put(SPRING_MVC_LIBRARY, "Spring-MVC Server application using the SpringFox integration.");
@@ -163,6 +166,10 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
             this.setImplicitHeaders(Boolean.valueOf(additionalProperties.get(IMPLICIT_HEADERS).toString()));
         }
 
+        if (additionalProperties.containsKey(SWAGGER_DOCKET_CONFIG)) {
+            this.setSwaggerDocketConfig(Boolean.valueOf(additionalProperties.get(SWAGGER_DOCKET_CONFIG).toString()));
+        }
+
         typeMapping.put("file", "Resource");
         importMapping.put("Resource", "org.springframework.core.io.Resource");
 
@@ -222,6 +229,9 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
                 supportingFiles.add(new SupportingFile("swaggerDocumentationConfig.mustache",
                         (sourceFolder + File.separator + configPackage).replace(".", java.io.File.separator), "SwaggerDocumentationConfig.java"));
             }
+        } else if ( this.swaggerDocketConfig && !library.equals(SPRING_CLOUD_LIBRARY)) {
+            supportingFiles.add(new SupportingFile("swaggerDocumentationConfig.mustache",
+                    (sourceFolder + File.separator + configPackage).replace(".", java.io.File.separator), "SwaggerDocumentationConfig.java"));
         }
 
         if (!this.delegatePattern && this.java8) {
@@ -528,6 +538,10 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
 
     public void setImplicitHeaders(boolean implicitHeaders) {
         this.implicitHeaders = implicitHeaders;
+    }
+
+    public void setSwaggerDocketConfig(boolean swaggerDocketConfig) {
+        this.swaggerDocketConfig = swaggerDocketConfig;
     }
 
     @Override
