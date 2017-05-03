@@ -15,10 +15,11 @@
 
 #include "SWGHttpRequest.h"
 
+#include "ApiResponse.h"
+#include "Pet.h"
 #include <QString>
 #include "SWGApiResponse.h"
 #include "SWGHttpRequest.h"
-#include "SWGPet.h"
 
 #include <QObject>
 
@@ -35,12 +36,16 @@ public:
     QString host;
     QString basePath;
 
-    void addPet(SWGPet body);
+    void addPet(Pet body);
     void deletePet(qint64 pet_id, QString* api_key);
     void findPetsByStatus(QList<QString*>* status);
     void findPetsByTags(QList<QString*>* tags);
     void getPetById(qint64 pet_id);
+<<<<<<< HEAD
+    void updatePet(Pet body);
+=======
     void updatePet(SWGPet body);
+>>>>>>> origin/master
     void updatePetWithForm(qint64 pet_id, QString* name, QString* status);
     void uploadFile(qint64 pet_id, QString* additional_metadata, SWGHttpRequestInputFileElement* file);
     
@@ -57,12 +62,16 @@ private:
 signals:
     void addPetSignal();
     void deletePetSignal();
-    void findPetsByStatusSignal(QList<SWGPet*>* summary);
-    void findPetsByTagsSignal(QList<SWGPet*>* summary);
-    void getPetByIdSignal(SWGPet* summary);
+    void findPetsByStatusSignal(QList<Pet*>* summary);
+    void findPetsByTagsSignal(QList<Pet*>* summary);
+    void getPetByIdSignal(Pet* summary);
     void updatePetSignal();
     void updatePetWithFormSignal();
+<<<<<<< HEAD
+    void uploadFileSignal(ApiResponse* summary);
+=======
     void uploadFileSignal(SWGApiResponse* summary);
+>>>>>>> origin/master
     
 };
 

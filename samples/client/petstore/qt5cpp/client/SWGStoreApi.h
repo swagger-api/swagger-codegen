@@ -15,9 +15,9 @@
 
 #include "SWGHttpRequest.h"
 
+#include "Order.h"
 #include <QMap>
 #include <QString>
-#include "SWGOrder.h"
 
 #include <QObject>
 
@@ -37,7 +37,11 @@ public:
     void deleteOrder(QString* order_id);
     void getInventory();
     void getOrderById(qint64 order_id);
+<<<<<<< HEAD
+    void placeOrder(Order body);
+=======
     void placeOrder(SWGOrder body);
+>>>>>>> origin/master
     
 private:
     void deleteOrderCallback (HttpRequestWorker * worker);
@@ -48,8 +52,8 @@ private:
 signals:
     void deleteOrderSignal();
     void getInventorySignal(QMap<QString, qint32>* summary);
-    void getOrderByIdSignal(SWGOrder* summary);
-    void placeOrderSignal(SWGOrder* summary);
+    void getOrderByIdSignal(Order* summary);
+    void placeOrderSignal(Order* summary);
     
 };
 

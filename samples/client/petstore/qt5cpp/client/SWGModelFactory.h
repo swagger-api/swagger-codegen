@@ -14,33 +14,50 @@
 #define ModelFactory_H_
 
 
+<<<<<<< HEAD
+#include "ApiResponse.h"
+#include "Category.h"
+#include "Order.h"
+#include "Pet.h"
+#include "Tag.h"
+#include "User.h"
+=======
 #include "SWGApiResponse.h"
 #include "SWGCategory.h"
 #include "SWGOrder.h"
 #include "SWGPet.h"
 #include "SWGTag.h"
 #include "SWGUser.h"
+>>>>>>> origin/master
 
 namespace Swagger {
 
   inline void* create(QString type) {
+<<<<<<< HEAD
+    if(QString("ApiResponse").compare(type) == 0) {
+      return new ApiResponse();
+=======
     if(QString("SWGApiResponse").compare(type) == 0) {
       return new SWGApiResponse();
     }
     if(QString("SWGCategory").compare(type) == 0) {
       return new SWGCategory();
+>>>>>>> origin/master
     }
-    if(QString("SWGOrder").compare(type) == 0) {
-      return new SWGOrder();
+    if(QString("Category").compare(type) == 0) {
+      return new Category();
     }
-    if(QString("SWGPet").compare(type) == 0) {
-      return new SWGPet();
+    if(QString("Order").compare(type) == 0) {
+      return new Order();
     }
-    if(QString("SWGTag").compare(type) == 0) {
-      return new SWGTag();
+    if(QString("Pet").compare(type) == 0) {
+      return new Pet();
     }
-    if(QString("SWGUser").compare(type) == 0) {
-      return new SWGUser();
+    if(QString("Tag").compare(type) == 0) {
+      return new Tag();
+    }
+    if(QString("User").compare(type) == 0) {
+      return new User();
     }
     
     return nullptr;

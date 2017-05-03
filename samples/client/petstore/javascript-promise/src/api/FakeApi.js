@@ -65,6 +65,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
       };
       var formParams = {
@@ -77,7 +79,7 @@
 
       return this.apiClient.callApi(
         '/fake', 'PATCH',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }
@@ -145,6 +147,8 @@
       };
       var queryParams = {
       };
+      var collectionQueryParams = {
+      };
       var headerParams = {
       };
       var formParams = {
@@ -171,7 +175,7 @@
 
       return this.apiClient.callApi(
         '/fake', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }
@@ -226,9 +230,14 @@
       var pathParams = {
       };
       var queryParams = {
-        'enum_query_string_array': this.apiClient.buildCollectionParam(opts['enumQueryStringArray'], 'csv'),
         'enum_query_string': opts['enumQueryString'],
-        'enum_query_integer': opts['enumQueryInteger']
+        'enum_query_integer': opts['enumQueryInteger'],
+      };
+      var collectionQueryParams = {
+        'enum_query_string_array': {
+          value: opts['enumQueryStringArray'],
+          collectionFormat: 'csv'
+        },
       };
       var headerParams = {
         'enum_header_string_array': opts['enumHeaderStringArray'],
@@ -247,7 +256,7 @@
 
       return this.apiClient.callApi(
         '/fake', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType
       );
     }

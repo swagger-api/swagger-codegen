@@ -29,7 +29,7 @@ SWGPetApi::SWGPetApi(QString host, QString basePath) {
 }
 
 void
-SWGPetApi::addPet(SWGPet body) {
+SWGPetApi::addPet(Pet body) {
     QString fullPath;
     fullPath.append(this->host).append(this->basePath).append("/pet");
 
@@ -186,14 +186,14 @@ SWGPetApi::findPetsByStatusCallback(HttpRequestWorker * worker) {
     }
 
     
-    QList<SWGPet*>* output = new QList<SWGPet*>();
+    QList<Pet*>* output = new QList<Pet*>();
     QString json(worker->response);
     QByteArray array (json.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(array);
     QJsonArray jsonArray = doc.array();
 
     foreach(QJsonValue obj, jsonArray) {
-        SWGPet* o = new SWGPet();
+        Pet* o = new Pet();
         QJsonObject jv = obj.toObject();
         QJsonObject * ptr = (QJsonObject*)&jv;
         o->fromJsonObject(*ptr);
@@ -282,14 +282,14 @@ SWGPetApi::findPetsByTagsCallback(HttpRequestWorker * worker) {
     }
 
     
-    QList<SWGPet*>* output = new QList<SWGPet*>();
+    QList<Pet*>* output = new QList<Pet*>();
     QString json(worker->response);
     QByteArray array (json.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(array);
     QJsonArray jsonArray = doc.array();
 
     foreach(QJsonValue obj, jsonArray) {
-        SWGPet* o = new SWGPet();
+        Pet* o = new Pet();
         QJsonObject jv = obj.toObject();
         QJsonObject * ptr = (QJsonObject*)&jv;
         o->fromJsonObject(*ptr);
@@ -339,7 +339,7 @@ SWGPetApi::getPetByIdCallback(HttpRequestWorker * worker) {
 
     
         QString json(worker->response);
-    SWGPet* output = static_cast<SWGPet*>(create(json, QString("SWGPet")));
+    Pet* output = static_cast<Pet*>(create(json, QString("Pet")));
     
 
     worker->deleteLater();
@@ -348,7 +348,7 @@ SWGPetApi::getPetByIdCallback(HttpRequestWorker * worker) {
     
 }
 void
-SWGPetApi::updatePet(SWGPet body) {
+SWGPetApi::updatePet(Pet body) {
     QString fullPath;
     fullPath.append(this->host).append(this->basePath).append("/pet");
 
@@ -477,7 +477,11 @@ SWGPetApi::uploadFileCallback(HttpRequestWorker * worker) {
 
     
         QString json(worker->response);
+<<<<<<< HEAD
+    ApiResponse* output = static_cast<ApiResponse*>(create(json, QString("ApiResponse")));
+=======
     SWGApiResponse* output = static_cast<SWGApiResponse*>(create(json, QString("SWGApiResponse")));
+>>>>>>> origin/master
     
 
     worker->deleteLater();

@@ -2,8 +2,8 @@ package io.swagger.api;
 
 import java.math.BigDecimal;
 import io.swagger.model.Client;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.OffsetDateTime;
 
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
