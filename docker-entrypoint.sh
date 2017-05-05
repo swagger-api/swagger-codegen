@@ -9,7 +9,7 @@ JAVA_OPTS=${JAVA_OPTS:-"-Xmx1024M -DloggerPath=conf/log4j.properties"}
 codegen="${GEN_DIR}/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar"
 
 case "$1" in
-    generate|help|langs|meta|config-help)
+    generate|help|langs|meta|config-help|validate|version)
         # If ${GEN_DIR} has been mapped elsewhere from default, and that location has not been built
         if [[ ! -f "${codegen}" ]]; then
             (cd ${GEN_DIR} && exec mvn -am -pl "modules/swagger-codegen-cli" package)
