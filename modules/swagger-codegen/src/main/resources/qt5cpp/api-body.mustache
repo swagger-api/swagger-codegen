@@ -180,14 +180,8 @@ void
     {{/returnType}}
     worker->deleteLater();
 
-    {{#returnType}}
-    emit {{nickname}}Signal(output);
-    emit {{nickname}}Signal(output,error_type,error_str);
-    {{/returnType}}
-    {{^returnType}}
-    emit {{nickname}}Signal();
-    emit {{nickname}}Signal(error_type,error_str);
-    {{/returnType}}
+    emit {{nickname}}Signal({{#returnType}}output{{/returnType}});
+    emit {{nickname}}SignalE({{#returnType}}output, {{/returnType}}error_type, error_str);
 }
 
 {{/operation}}
