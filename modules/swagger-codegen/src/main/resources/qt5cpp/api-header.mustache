@@ -30,8 +30,18 @@ private:
     {{#operations}}{{#operation}}void {{nickname}}Callback (HttpRequestWorker * worker);
     {{/operation}}{{/operations}}
 signals:
-    {{#operations}}{{#operation}}void {{nickname}}Signal({{#returnType}}{{{returnType}}} summary{{/returnType}});
-    {{/operation}}{{/operations}}
+    {{#operations}}
+    {{#operation}}
+    {{#returnType}}
+    void {{nickname}}Signal({{{returnType}}} summary);
+    void {{nickname}}Signal({{{returnType}}} summary, QNetworkReply::NetworkError error_type, QString& error_str);
+    {{/returnType}}
+    {{^returnType}}
+    void {{nickname}}Signal();
+    void {{nickname}}Signal(QNetworkReply::NetworkError error_type, QString& error_str);
+    {{/returnType}}
+    {{/operation}}
+    {{/operations}}
 };
 
 {{#cppNamespaceDeclarations}}

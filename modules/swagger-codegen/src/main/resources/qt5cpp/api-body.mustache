@@ -125,6 +125,10 @@ void
 void
 {{classname}}::{{nickname}}Callback(HttpRequestWorker * worker) {
     QString msg;
+    QString error_str = worker->error_str;
+    QNetworkReply::NetworkError error_type = worker->error_type;
+
+
     if (worker->error_type == QNetworkReply::NoError) {
         msg = QString("Success! %1 bytes").arg(worker->response.length());
     }
@@ -165,7 +169,6 @@ void
         output->insert(key, *val);
     }
 
-
     {{/isMapContainer}}
     {{^isMapContainer}}
     {{^returnTypeIsPrimitive}}QString json(worker->response);
@@ -173,12 +176,18 @@ void
     {{/returnTypeIsPrimitive}}
     {{/isMapContainer}}
     {{/isListContainer}}{{/returnType}}
-
     worker->deleteLater();
 
-    {{#returnType}}emit {{nickname}}Signal(output);{{/returnType}}
-    {{^returnType}}emit {{nickname}}Signal();{{/returnType}}
+    {{#returnType}}
+    emit {{nickname}}Signal(output);
+    emit {{nickname}}Signal(output,error_type,error_str);
+    {{/returnType}}
+    {{^returnType}}
+    emit {{nickname}}Signal();
+    emit {{nickname}}Signal(error_type,error_str);
+    {{/returnType}}
 }
+
 {{/operation}}
 {{/operations}}
 
