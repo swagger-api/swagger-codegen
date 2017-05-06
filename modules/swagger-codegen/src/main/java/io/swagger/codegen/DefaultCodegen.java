@@ -48,6 +48,7 @@ import io.swagger.models.properties.RefProperty;
 import io.swagger.models.properties.StringProperty;
 import io.swagger.models.properties.UUIDProperty;
 import io.swagger.util.Json;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -1736,7 +1737,11 @@ public class DefaultCodegen {
             ArrayProperty ap = (ArrayProperty) p;
             property.maxItems = ap.getMaxItems();
             property.minItems = ap.getMinItems();
-            CodegenProperty cp = fromProperty(property.name, ap.getItems());
+            String itemName = (String) p.getVendorExtensions().get("x-item-name");
+            if (itemName == null) {
+                itemName = property.name;
+            }
+            CodegenProperty cp = fromProperty(itemName, ap.getItems());
             updatePropertyForArray(property, cp);
           } else if (p instanceof MapProperty) {
             MapProperty ap = (MapProperty) p;
@@ -2689,9 +2694,23 @@ public class DefaultCodegen {
                 }
             }
 
-            sec.hasMore = it.hasNext();
             secs.add(sec);
         }
+
+        // sort auth methods to maintain the same order
+        Collections.sort(secs, new Comparator<CodegenSecurity>() {
+            @Override
+            public int compare(CodegenSecurity one, CodegenSecurity another) {
+                return ObjectUtils.compare(one.name, another.name);
+            }
+        });
+        // set 'hasMore'
+        Iterator<CodegenSecurity> it = secs.iterator();
+        while (it.hasNext()) {
+            final CodegenSecurity security = it.next();
+            security.hasMore = it.hasNext();
+        }
+
         return secs;
     }
 
