@@ -15,6 +15,7 @@ using System.Linq;
 using RestSharp;
 using IO.Swagger.Client;
 using IO.Swagger.Model;
+using ModelClient = IO.Swagger.Model.ModelClient;
 
 namespace IO.Swagger.Api
 {
