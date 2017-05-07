@@ -309,6 +309,7 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         }
 
         processUsings(objs);
+
         // process enum in models
         return postProcessModelsEnum(objs);
     }
