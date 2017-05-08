@@ -407,6 +407,11 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
 
     public void setUseES6(boolean useES6) {
         this.useES6 = useES6;
+        if (useES6) {
+            embeddedTemplateDir = templateDir = "Javascript-es6";
+        } else {
+            embeddedTemplateDir = templateDir = "Javascript";
+        }
     }
 
     public void setUseInheritance(boolean useInheritance) {

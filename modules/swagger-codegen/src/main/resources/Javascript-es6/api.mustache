@@ -1,37 +1,28 @@
 {{>licenseInfo}}
-{{=< >=}}(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module.
-    define(['<#invokerPackage><&invokerPackage>/</invokerPackage>ApiClient'<#imports>, '<#invokerPackage><&invokerPackage>/</invokerPackage><#modelPackage><&modelPackage>/</modelPackage><import>'</imports>], factory);
-  } else if (typeof module === 'object' && module.exports) {
-    // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient')<#imports>, require('../<#modelPackage><&modelPackage>/</modelPackage><import>')</imports>);
-  } else {
-    // Browser globals (root is window)
-    if (!root.<&moduleName>) {
-      root.<&moduleName> = {};
+
+{{=< >=}}
+import ApiClient from "../ApiClient";
+<#imports>import <import> from '../<#modelPackage><&modelPackage>/</modelPackage><import>';
+</imports>
+
+<#emitJSDoc>/**
+* <baseName> service.
+* @module <#invokerPackage><&invokerPackage>/</invokerPackage><#apiPackage><&apiPackage>/</apiPackage><classname>
+* @version <projectVersion>
+*/</emitJSDoc>
+export default class <classname> {
+
+    <#emitJSDoc>/**
+    * Constructs a new <&classname>. <#description>
+    * <description></description>
+    * @alias module:<#invokerPackage><&invokerPackage>/</invokerPackage><#apiPackage><apiPackage>/</apiPackage><classname>
+    * @class
+    * @param {module:<#invokerPackage><&invokerPackage>/</invokerPackage>ApiClient} apiClient Optional API client implementation to use,
+    * default to {@link module:<#invokerPackage><&invokerPackage>/</invokerPackage>ApiClient#instance} if unspecified.
+    */</emitJSDoc>
+    constructor(apiClient) {
+        this.apiClient = apiClient || ApiClient.instance;
     }
-    root.<&moduleName>.<&classname> = factory(root.<&moduleName>.ApiClient<#imports>, root.<&moduleName>.<import></imports>);
-  }
-}(this, function(ApiClient<#imports>, <import></imports>) {
-  'use strict';
-
-<#emitJSDoc>  /**
-   * <baseName> service.
-   * @module <#invokerPackage><&invokerPackage>/</invokerPackage><#apiPackage><&apiPackage>/</apiPackage><classname>
-   * @version <projectVersion>
-   */
-
-  /**
-   * Constructs a new <&classname>. <#description>
-   * <description></description>
-   * @alias module:<#invokerPackage><&invokerPackage>/</invokerPackage><#apiPackage><apiPackage>/</apiPackage><classname>
-   * @class
-   * @param {module:<#invokerPackage><&invokerPackage>/</invokerPackage>ApiClient} apiClient Optional API client implementation to use,
-   * default to {@link module:<#invokerPackage><&invokerPackage>/</invokerPackage>ApiClient#instance} if unspecified.
-   */
-</emitJSDoc>  var exports = function(apiClient) {
-    this.apiClient = apiClient || ApiClient.instance;
 
 <#operations><#operation><#emitJSDoc><^usePromises>
     /**
@@ -52,9 +43,9 @@
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}</returnType></usePromises><#usePromises>
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}<#returnType>, with an object containing data of type {@link <&vendorExtensions.x-jsdoc-type>} and HTTP response</returnType><^returnType>, with an object containing HTTP response</returnType></usePromises>
      */
-</emitJSDoc>    this.<operationId><#usePromises>WithHttpInfo</usePromises> = function(<vendorExtensions.x-codegen-argList>) {<#hasOptionalParams>
+</emitJSDoc>    <operationId><#usePromises>WithHttpInfo</usePromises>(<vendorExtensions.x-codegen-argList>) {<#hasOptionalParams>
       opts = opts || {};</hasOptionalParams>
-      var postBody = <#bodyParam><#required><paramName></required><^required>opts['<paramName>']</required></bodyParam><^bodyParam>null</bodyParam>;
+      let postBody = <#bodyParam><#required><paramName></required><^required>opts['<paramName>']</required></bodyParam><^bodyParam>null</bodyParam>;
 <#allParams><#required>
       // verify the required parameter '<paramName>' is set
       if (<paramName> === undefined || <paramName> === null) {
@@ -62,23 +53,23 @@
       }
 </required></allParams>
 
-      var pathParams = {<#pathParams>
+      let pathParams = {<#pathParams>
         '<baseName>': <#required><paramName></required><^required>opts['<paramName>']</required><#hasMore>,</hasMore></pathParams>
       };
-      var queryParams = {<#queryParams>
+      let queryParams = {<#queryParams>
         '<baseName>': <#collectionFormat>this.apiClient.buildCollectionParam(<#required><paramName></required><^required>opts['<paramName>']</required>, '<collectionFormat>')</collectionFormat><^collectionFormat><#required><paramName></required><^required>opts['<paramName>']</required></collectionFormat><#hasMore>,</hasMore></queryParams>
       };
-      var headerParams = {<#headerParams>
+      let headerParams = {<#headerParams>
         '<baseName>': <#required><paramName></required><^required>opts['<paramName>']</required><#hasMore>,</hasMore></headerParams>
       };
-      var formParams = {<#formParams>
+      let formParams = {<#formParams>
         '<baseName>': <#collectionFormat>this.apiClient.buildCollectionParam(<#required><paramName></required><^required>opts['<paramName>']</required>, '<collectionFormat>')</collectionFormat><^collectionFormat><#required><paramName></required><^required>opts['<paramName>']</required></collectionFormat><#hasMore>,</hasMore></formParams>
       };
 
-      var authNames = [<#authMethods>'<name>'<#hasMore>, </hasMore></authMethods>];
-      var contentTypes = [<#consumes>'<& mediaType>'<#hasMore>, </hasMore></consumes>];
-      var accepts = [<#produces>'<& mediaType>'<#hasMore>, </hasMore></produces>];
-      var returnType = <#returnType><&returnType></returnType><^returnType>null</returnType>;
+      let authNames = [<#authMethods>'<name>'<#hasMore>, </hasMore></authMethods>];
+      let contentTypes = [<#consumes>'<& mediaType>'<#hasMore>, </hasMore></consumes>];
+      let accepts = [<#produces>'<& mediaType>'<#hasMore>, </hasMore></produces>];
+      let returnType = <#returnType><&returnType></returnType><^returnType>null</returnType>;
 
       return this.apiClient.callApi(
         '<&path>', '<httpMethod>',
@@ -99,14 +90,14 @@
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}</returnType></usePromises><#usePromises>
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}<#returnType>, with data of type {@link <&vendorExtensions.x-jsdoc-type>}</returnType></usePromises>
      */
-</emitJSDoc>    this.<operationId> = function(<vendorExtensions.x-codegen-argList>) {
+</emitJSDoc>    <operationId>(<vendorExtensions.x-codegen-argList>) {
       return this.<operationId>WithHttpInfo(<vendorExtensions.x-codegen-argList>)
         .then(function(response_and_data) {
           return response_and_data.data;
         });
     }
 </usePromises>
-</operation></operations>  };
+</operation></operations>
 
-  return exports;
-}));<={{ }}=>
+}
+<={{ }}=>
