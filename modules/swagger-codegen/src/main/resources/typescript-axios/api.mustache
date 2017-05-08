@@ -1,9 +1,8 @@
 {{>licenseInfo}}
-
 import { AxiosRequestConfig } from 'axios';
 import { axios } from '../axios.config';
 {{#hasFormParams}}
-import { stringify } from 'query-string';
+import { stringify } from 'qs';
 {{/hasFormParams}}
 
 {{#imports}}
@@ -13,13 +12,12 @@ import { {{classname}} } from '../{{filename}}';
 /* tslint:disable:no-unused-variable member-ordering max-line-length */
 
 {{#operations}}
-
 {{#description}}
 /**
  * {{&description}}
  */
 {{/description}}
-export default class {{classname}} {
+export class {{classname}}Resource {
 
 {{#operation}}
     /**
@@ -43,7 +41,7 @@ export default class {{classname}} {
             url: reqPath{{#hasQueryParams}},
             params: query{{/hasQueryParams}}{{#bodyParam}},
             data: {{paramName}}{{/bodyParam}}{{#hasFormParams}},
-            data: stringify(formParams)
+            data: stringify(reqFormParams)
 {{/hasFormParams}}
 
         };
@@ -54,6 +52,7 @@ export default class {{classname}} {
     }
 
 {{/operation}}
-
 }
 {{/operations}}
+
+export const {{classname}} = new {{classname}}Resource();
