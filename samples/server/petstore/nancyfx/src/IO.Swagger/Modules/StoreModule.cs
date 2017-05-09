@@ -21,7 +21,7 @@ namespace IO.Swagger.v2.Modules
         /// <param name="service">Service handling requests</param>
         public StoreModule(StoreService service) : base("/v2")
         { 
-            Delete["/store/order/{orderId}"] = parameters =>
+            Delete["/store/order/{order_id}"] = parameters =>
             {
                 var orderId = Parameters.ValueOf<string>(parameters, Context.Request, "orderId", ParameterType.Path);
                 Preconditions.IsNotNull(orderId, "Required parameter: 'orderId' is missing at 'DeleteOrder'");
@@ -36,7 +36,7 @@ namespace IO.Swagger.v2.Modules
                 return service.GetInventory(Context);
             };
 
-            Get["/store/order/{orderId}"] = parameters =>
+            Get["/store/order/{order_id}"] = parameters =>
             {
                 var orderId = Parameters.ValueOf<long?>(parameters, Context.Request, "orderId", ParameterType.Path);
                 Preconditions.IsNotNull(orderId, "Required parameter: 'orderId' is missing at 'GetOrderById'");
