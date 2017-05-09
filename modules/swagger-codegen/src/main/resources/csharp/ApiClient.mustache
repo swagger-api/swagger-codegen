@@ -592,11 +592,12 @@ namespace {{packageName}}.Client {
 
             if (match.Success)
             {
+                log.Trace("end with success");
                 return match.Groups[1].Value;
             } else {
+                log.Trace("end");
                 return filename;
             }
-            log.Trace("end");
         }
         {{^netStandard}}
         {{#supportsUWP}}
