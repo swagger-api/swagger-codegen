@@ -59,6 +59,27 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     public static final String EMIT_JS_DOC = "emitJSDoc";
     public static final String USE_ES6 = "useES6";
 
+    final String[][] JAVASCRIPT_SUPPORTING_FILES = new String[][] {
+            new String[] {"package.mustache", "package.json"},
+            new String[] {"index.mustache", "src/index.js"},
+            new String[] {"ApiClient.mustache", "src/ApiClient.js"},
+            new String[] {"git_push.sh.mustache", "git_push.sh"},
+            new String[] {"README.mustache", "README.md"},
+            new String[] {"mocha.opts", "mocha.opts"},
+            new String[] {"travis.yml", ".travis.yml"}
+    };
+
+    final String[][] JAVASCRIPT_ES6_SUPPORTING_FILES = new String[][] {
+            new String[] {"package.mustache", "package.json"},
+            new String[] {"index.mustache", "src/index.js"},
+            new String[] {"ApiClient.mustache", "src/ApiClient.js"},
+            new String[] {"git_push.sh.mustache", "git_push.sh"},
+            new String[] {"README.mustache", "README.md"},
+            new String[] {"mocha.opts", "mocha.opts"},
+            new String[] {"travis.yml", ".travis.yml"},
+            new String[] {".babelrc.mustache", ".babelrc"}
+    };
+
     protected String projectName;
     protected String moduleName;
     protected String projectDescription;
@@ -309,13 +330,14 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         additionalProperties.put("apiDocPath", apiDocPath);
         additionalProperties.put("modelDocPath", modelDocPath);
 
-        supportingFiles.add(new SupportingFile("package.mustache", "", "package.json"));
-        supportingFiles.add(new SupportingFile("index.mustache", createPath(sourceFolder, invokerPackage), "index.js"));
-        supportingFiles.add(new SupportingFile("ApiClient.mustache", createPath(sourceFolder, invokerPackage), "ApiClient.js"));
-        supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
-        supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
-        supportingFiles.add(new SupportingFile("mocha.opts", "", "mocha.opts"));
-        supportingFiles.add(new SupportingFile("travis.yml", "", ".travis.yml"));
+        String[][] supportingTemplateFiles = JAVASCRIPT_SUPPORTING_FILES;
+        if (useES6) {
+            supportingTemplateFiles = JAVASCRIPT_ES6_SUPPORTING_FILES;
+        }
+
+        for (String[] supportingTemplateFile :supportingTemplateFiles) {
+            supportingFiles.add(new SupportingFile(supportingTemplateFile[0], "", supportingTemplateFile[1]));
+        }
     }
 
     @Override
