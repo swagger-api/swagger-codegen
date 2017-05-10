@@ -11,15 +11,21 @@ import java.util.Map;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * AdditionalPropertiesClass
  */
 
+@JacksonXmlRootElement
 public class AdditionalPropertiesClass   {
   @JsonProperty("map_property")
+  @JacksonXmlProperty
   private Map<String, String> mapProperty = null;
 
   @JsonProperty("map_of_map_property")
+  @JacksonXmlProperty
   private Map<String, Map<String, String>> mapOfMapProperty = null;
 
   public AdditionalPropertiesClass mapProperty(Map<String, String> mapProperty) {

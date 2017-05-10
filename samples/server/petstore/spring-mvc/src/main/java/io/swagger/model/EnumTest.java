@@ -10,10 +10,14 @@ import io.swagger.model.OuterEnum;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * EnumTest
  */
 
+@JacksonXmlRootElement
 public class EnumTest   {
   /**
    * Gets or Sets enumString
@@ -49,6 +53,7 @@ public class EnumTest   {
   }
 
   @JsonProperty("enum_string")
+  @JacksonXmlProperty
   private EnumStringEnum enumString = null;
 
   /**
@@ -83,6 +88,7 @@ public class EnumTest   {
   }
 
   @JsonProperty("enum_integer")
+  @JacksonXmlProperty
   private EnumIntegerEnum enumInteger = null;
 
   /**
@@ -117,9 +123,11 @@ public class EnumTest   {
   }
 
   @JsonProperty("enum_number")
+  @JacksonXmlProperty
   private EnumNumberEnum enumNumber = null;
 
   @JsonProperty("outerEnum")
+  @JacksonXmlProperty
   private OuterEnum outerEnum = null;
 
   public EnumTest enumString(EnumStringEnum enumString) {

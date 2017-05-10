@@ -8,16 +8,22 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * Model for testing model name starting with number
  */
 @ApiModel(description = "Model for testing model name starting with number")
 
+@JacksonXmlRootElement
 public class Model200Response   {
   @JsonProperty("name")
+  @JacksonXmlProperty
   private Integer name = null;
 
   @JsonProperty("class")
+  @JacksonXmlProperty
   private String propertyClass = null;
 
   public Model200Response name(Integer name) {

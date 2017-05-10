@@ -12,12 +12,17 @@ import java.util.Map;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * MapTest
  */
 
+@JacksonXmlRootElement
 public class MapTest   {
   @JsonProperty("map_map_of_string")
+  @JacksonXmlProperty
   private Map<String, Map<String, String>> mapMapOfString = null;
 
   /**
@@ -52,6 +57,7 @@ public class MapTest   {
   }
 
   @JsonProperty("map_of_enum_string")
+  @JacksonXmlProperty
   private Map<String, InnerEnum> mapOfEnumString = null;
 
   public MapTest mapMapOfString(Map<String, Map<String, String>> mapMapOfString) {

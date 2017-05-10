@@ -8,15 +8,21 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * ReadOnlyFirst
  */
 
+@JacksonXmlRootElement
 public class ReadOnlyFirst   {
   @JsonProperty("bar")
+  @JacksonXmlProperty
   private String bar = null;
 
   @JsonProperty("baz")
+  @JacksonXmlProperty
   private String baz = null;
 
   public ReadOnlyFirst bar(String bar) {

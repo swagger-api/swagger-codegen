@@ -7,6 +7,7 @@ import org.springframework.core.io.Resource;
 import io.swagger.annotations.*;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,19 +16,26 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.beans.factory.annotation.Autowired;
+import java.io.IOException;
 
 import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import java.io.IOException;
+
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 @Controller
 public class PetApiController implements PetApi {
     private final ObjectMapper objectMapper;
+    private final XmlMapper xmlMapper;
 
-    public PetApiController(ObjectMapper objectMapper) {
+    public PetApiController(ObjectMapper objectMapper, XmlMapper xmlMapper) {
         this.objectMapper = objectMapper;
+        this.xmlMapper = xmlMapper;
     }
 
     public ResponseEntity<Void> addPet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true )  @Valid @RequestBody Pet body,
@@ -48,12 +56,12 @@ public class PetApiController implements PetApi {
         // do some magic!
 
         if (accept != null && accept.contains("application/xml")) {
-            return new ResponseEntity<List<Pet>>(objectMapper.readValue("<Pet>  <id>123456789</id>  <name>doggie</name>  <photoUrls>    <photoUrls>aeiou</photoUrls>  </photoUrls>  <tags>  </tags>  <status>aeiou</status></Pet>", List.class), HttpStatus.OK);
+            return new ResponseEntity<List<Pet>>(getObjectMapperByContentType("application/xml").readValue("<Pet>  <id>123456789</id>  <name>doggie</name>  <photoUrls>    <photoUrls>aeiou</photoUrls>  </photoUrls>    <tags/>  <status>available</status></Pet>", List.class), HttpStatus.OK);
         }
 
 
         if (accept != null && accept.contains("application/json")) {
-            return new ResponseEntity<List<Pet>>(objectMapper.readValue("[ {  \"photoUrls\" : [ \"aeiou\" ],  \"name\" : \"doggie\",  \"id\" : 0,  \"category\" : {    \"name\" : \"aeiou\",    \"id\" : 6  },  \"tags\" : [ {    \"name\" : \"aeiou\",    \"id\" : 1  } ],  \"status\" : \"available\"} ]", List.class), HttpStatus.OK);
+            return new ResponseEntity<List<Pet>>(getObjectMapperByContentType("application/json").readValue("[ {  \"photoUrls\" : [ \"aeiou\" ],  \"name\" : \"doggie\",  \"id\" : 0,  \"category\" : {    \"name\" : \"aeiou\",    \"id\" : 6  },  \"tags\" : [ {    \"name\" : \"aeiou\",    \"id\" : 1  } ],  \"status\" : \"available\"} ]", List.class), HttpStatus.OK);
         }
 
         return new ResponseEntity<List<Pet>>(HttpStatus.OK);
@@ -64,12 +72,12 @@ public class PetApiController implements PetApi {
         // do some magic!
 
         if (accept != null && accept.contains("application/xml")) {
-            return new ResponseEntity<List<Pet>>(objectMapper.readValue("<Pet>  <id>123456789</id>  <name>doggie</name>  <photoUrls>    <photoUrls>aeiou</photoUrls>  </photoUrls>  <tags>  </tags>  <status>aeiou</status></Pet>", List.class), HttpStatus.OK);
+            return new ResponseEntity<List<Pet>>(getObjectMapperByContentType("application/xml").readValue("<Pet>  <id>123456789</id>  <name>doggie</name>  <photoUrls>    <photoUrls>aeiou</photoUrls>  </photoUrls>    <tags/>  <status>available</status></Pet>", List.class), HttpStatus.OK);
         }
 
 
         if (accept != null && accept.contains("application/json")) {
-            return new ResponseEntity<List<Pet>>(objectMapper.readValue("[ {  \"photoUrls\" : [ \"aeiou\" ],  \"name\" : \"doggie\",  \"id\" : 0,  \"category\" : {    \"name\" : \"aeiou\",    \"id\" : 6  },  \"tags\" : [ {    \"name\" : \"aeiou\",    \"id\" : 1  } ],  \"status\" : \"available\"} ]", List.class), HttpStatus.OK);
+            return new ResponseEntity<List<Pet>>(getObjectMapperByContentType("application/json").readValue("[ {  \"photoUrls\" : [ \"aeiou\" ],  \"name\" : \"doggie\",  \"id\" : 0,  \"category\" : {    \"name\" : \"aeiou\",    \"id\" : 6  },  \"tags\" : [ {    \"name\" : \"aeiou\",    \"id\" : 1  } ],  \"status\" : \"available\"} ]", List.class), HttpStatus.OK);
         }
 
         return new ResponseEntity<List<Pet>>(HttpStatus.OK);
@@ -80,12 +88,12 @@ public class PetApiController implements PetApi {
         // do some magic!
 
         if (accept != null && accept.contains("application/xml")) {
-            return new ResponseEntity<Pet>(objectMapper.readValue("<Pet>  <id>123456789</id>  <name>doggie</name>  <photoUrls>    <photoUrls>aeiou</photoUrls>  </photoUrls>  <tags>  </tags>  <status>aeiou</status></Pet>", Pet.class), HttpStatus.OK);
+            return new ResponseEntity<Pet>(getObjectMapperByContentType("application/xml").readValue("<Pet>  <id>123456789</id>  <name>doggie</name>  <photoUrls>    <photoUrls>aeiou</photoUrls>  </photoUrls>    <tags/>  <status>available</status></Pet>", Pet.class), HttpStatus.OK);
         }
 
 
         if (accept != null && accept.contains("application/json")) {
-            return new ResponseEntity<Pet>(objectMapper.readValue("{  \"photoUrls\" : [ \"aeiou\" ],  \"name\" : \"doggie\",  \"id\" : 0,  \"category\" : {    \"name\" : \"aeiou\",    \"id\" : 6  },  \"tags\" : [ {    \"name\" : \"aeiou\",    \"id\" : 1  } ],  \"status\" : \"available\"}", Pet.class), HttpStatus.OK);
+            return new ResponseEntity<Pet>(getObjectMapperByContentType("application/json").readValue("{  \"photoUrls\" : [ \"aeiou\" ],  \"name\" : \"doggie\",  \"id\" : 0,  \"category\" : {    \"name\" : \"aeiou\",    \"id\" : 6  },  \"tags\" : [ {    \"name\" : \"aeiou\",    \"id\" : 1  } ],  \"status\" : \"available\"}", Pet.class), HttpStatus.OK);
         }
 
         return new ResponseEntity<Pet>(HttpStatus.OK);
@@ -112,10 +120,22 @@ public class PetApiController implements PetApi {
         // do some magic!
 
         if (accept != null && accept.contains("application/json")) {
-            return new ResponseEntity<ModelApiResponse>(objectMapper.readValue("{  \"code\" : 0,  \"type\" : \"aeiou\",  \"message\" : \"aeiou\"}", ModelApiResponse.class), HttpStatus.OK);
+            return new ResponseEntity<ModelApiResponse>(getObjectMapperByContentType("application/json").readValue("{  \"code\" : 0,  \"type\" : \"aeiou\",  \"message\" : \"aeiou\"}", ModelApiResponse.class), HttpStatus.OK);
         }
 
         return new ResponseEntity<ModelApiResponse>(HttpStatus.OK);
     }
 
+    /**
+     * Returns the appropriate Object Mapper depending on the media type.
+     * @param mediaType
+     * @return
+     */
+    private ObjectMapper getObjectMapperByContentType(String mediaType){
+        if(MediaType.APPLICATION_XML_VALUE.equals(mediaType)){
+            return xmlMapper;
+        } else {
+            return objectMapper;
+        }
+    }
 }

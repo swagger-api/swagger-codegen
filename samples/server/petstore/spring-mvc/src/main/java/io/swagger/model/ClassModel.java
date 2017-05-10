@@ -8,13 +8,18 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * Model for testing model with \&quot;_class\&quot; property
  */
 @ApiModel(description = "Model for testing model with \"_class\" property")
 
+@JacksonXmlRootElement
 public class ClassModel   {
   @JsonProperty("_class")
+  @JacksonXmlProperty
   private String propertyClass = null;
 
   public ClassModel propertyClass(String propertyClass) {

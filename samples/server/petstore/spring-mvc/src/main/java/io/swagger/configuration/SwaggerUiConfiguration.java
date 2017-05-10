@@ -6,14 +6,15 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import org.springframework.context.annotation.Bean;
 
 import java.util.List;
 
@@ -59,23 +60,27 @@ public class SwaggerUiConfiguration extends WebMvcConfigurerAdapter {
     }
   }
 
-  @Bean
-  public Jackson2ObjectMapperBuilder builder() {
-    Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder()
-        .indentOutput(true)
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.add(new MappingJackson2HttpMessageConverter(objectMapper()));
+        converters.add(new MappingJackson2XmlHttpMessageConverter(xmlMapper()));
+        super.configureMessageConverters(converters);
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return Jackson2ObjectMapperBuilder.json()
         .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-        .dateFormat(new RFC3339DateFormat());
-    return builder;
-  }
+        .dateFormat( new RFC3339DateFormat())
+        .build();
+    }
 
-  @Override
-  public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-    converters.add(new MappingJackson2HttpMessageConverter(objectMapper()));
-    super.configureMessageConverters(converters);
-  }
+    @Bean
+    public ObjectMapper xmlMapper(){
+    return Jackson2ObjectMapperBuilder.xml()
+        .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+        .dateFormat( new RFC3339DateFormat())
+        .build();
+    }
 
-  @Bean
-  public ObjectMapper objectMapper(){
-    return builder().build();
-  }
 }

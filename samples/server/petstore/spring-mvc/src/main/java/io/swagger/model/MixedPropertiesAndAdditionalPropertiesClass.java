@@ -14,18 +14,25 @@ import org.joda.time.DateTime;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * MixedPropertiesAndAdditionalPropertiesClass
  */
 
+@JacksonXmlRootElement
 public class MixedPropertiesAndAdditionalPropertiesClass   {
   @JsonProperty("uuid")
+  @JacksonXmlProperty
   private UUID uuid = null;
 
   @JsonProperty("dateTime")
+  @JacksonXmlProperty
   private DateTime dateTime = null;
 
   @JsonProperty("map")
+  @JacksonXmlProperty
   private Map<String, Animal> map = null;
 
   public MixedPropertiesAndAdditionalPropertiesClass uuid(UUID uuid) {

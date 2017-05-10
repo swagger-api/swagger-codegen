@@ -11,10 +11,14 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * EnumArrays
  */
 
+@JacksonXmlRootElement
 public class EnumArrays   {
   /**
    * Gets or Sets justSymbol
@@ -48,6 +52,7 @@ public class EnumArrays   {
   }
 
   @JsonProperty("just_symbol")
+  @JacksonXmlProperty
   private JustSymbolEnum justSymbol = null;
 
   /**
@@ -82,6 +87,7 @@ public class EnumArrays   {
   }
 
   @JsonProperty("array_enum")
+  @JacksonXmlProperty
   private List<ArrayEnumEnum> arrayEnum = null;
 
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {

@@ -8,18 +8,25 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * ModelApiResponse
  */
 
+@JacksonXmlRootElement
 public class ModelApiResponse   {
   @JsonProperty("code")
+  @JacksonXmlProperty
   private Integer code = null;
 
   @JsonProperty("type")
+  @JacksonXmlProperty
   private String type = null;
 
   @JsonProperty("message")
+  @JacksonXmlProperty
   private String message = null;
 
   public ModelApiResponse code(Integer code) {

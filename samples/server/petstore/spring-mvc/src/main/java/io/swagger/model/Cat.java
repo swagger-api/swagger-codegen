@@ -9,12 +9,17 @@ import io.swagger.model.Animal;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * Cat
  */
 
+@JacksonXmlRootElement
 public class Cat extends Animal  {
   @JsonProperty("declawed")
+  @JacksonXmlProperty
   private Boolean declawed = null;
 
   public Cat declawed(Boolean declawed) {

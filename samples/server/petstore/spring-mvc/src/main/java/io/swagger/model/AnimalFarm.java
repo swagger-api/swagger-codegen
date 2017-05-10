@@ -7,10 +7,14 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * AnimalFarm
  */
 
+@JacksonXmlRootElement
 public class AnimalFarm extends ArrayList<Animal>  {
 
   @Override

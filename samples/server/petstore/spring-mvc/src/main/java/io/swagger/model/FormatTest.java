@@ -12,48 +12,65 @@ import org.joda.time.LocalDate;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * FormatTest
  */
 
+@JacksonXmlRootElement
 public class FormatTest   {
   @JsonProperty("integer")
+  @JacksonXmlProperty
   private Integer integer = null;
 
   @JsonProperty("int32")
+  @JacksonXmlProperty
   private Integer int32 = null;
 
   @JsonProperty("int64")
+  @JacksonXmlProperty
   private Long int64 = null;
 
   @JsonProperty("number")
+  @JacksonXmlProperty
   private BigDecimal number = null;
 
   @JsonProperty("float")
+  @JacksonXmlProperty
   private Float _float = null;
 
   @JsonProperty("double")
+  @JacksonXmlProperty
   private Double _double = null;
 
   @JsonProperty("string")
+  @JacksonXmlProperty
   private String string = null;
 
   @JsonProperty("byte")
+  @JacksonXmlProperty
   private byte[] _byte = null;
 
   @JsonProperty("binary")
+  @JacksonXmlProperty
   private byte[] binary = null;
 
   @JsonProperty("date")
+  @JacksonXmlProperty
   private LocalDate date = null;
 
   @JsonProperty("dateTime")
+  @JacksonXmlProperty
   private DateTime dateTime = null;
 
   @JsonProperty("uuid")
+  @JacksonXmlProperty
   private UUID uuid = null;
 
   @JsonProperty("password")
+  @JacksonXmlProperty
   private String password = null;
 
   public FormatTest integer(Integer integer) {

@@ -8,33 +8,45 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * User
  */
 
+@JacksonXmlRootElement
 public class User   {
   @JsonProperty("id")
+  @JacksonXmlProperty
   private Long id = null;
 
   @JsonProperty("username")
+  @JacksonXmlProperty
   private String username = null;
 
   @JsonProperty("firstName")
+  @JacksonXmlProperty
   private String firstName = null;
 
   @JsonProperty("lastName")
+  @JacksonXmlProperty
   private String lastName = null;
 
   @JsonProperty("email")
+  @JacksonXmlProperty
   private String email = null;
 
   @JsonProperty("password")
+  @JacksonXmlProperty
   private String password = null;
 
   @JsonProperty("phone")
+  @JacksonXmlProperty
   private String phone = null;
 
   @JsonProperty("userStatus")
+  @JacksonXmlProperty
   private Integer userStatus = null;
 
   public User id(Long id) {

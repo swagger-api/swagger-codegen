@@ -8,13 +8,18 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * Model for testing reserved words
  */
 @ApiModel(description = "Model for testing reserved words")
 
+@JacksonXmlRootElement
 public class ModelReturn   {
   @JsonProperty("return")
+  @JacksonXmlProperty
   private Integer _return = null;
 
   public ModelReturn _return(Integer _return) {

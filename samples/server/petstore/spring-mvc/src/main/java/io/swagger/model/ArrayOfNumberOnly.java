@@ -11,12 +11,17 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 /**
  * ArrayOfNumberOnly
  */
 
+@JacksonXmlRootElement
 public class ArrayOfNumberOnly   {
   @JsonProperty("ArrayNumber")
+  @JacksonXmlProperty
   private List<BigDecimal> arrayNumber = null;
 
   public ArrayOfNumberOnly arrayNumber(List<BigDecimal> arrayNumber) {
