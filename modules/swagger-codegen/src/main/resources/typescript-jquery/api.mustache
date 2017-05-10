@@ -1,6 +1,11 @@
 {{>licenseInfo}}
 
+{{#jqueryAlreadyImported}}
+declare var $ : any;
+{{/jqueryAlreadyImported}}
+{{^jqueryAlreadyImported}}
 import * as $ from 'jquery';
+{{/jqueryAlreadyImported}}
 import * as models from '../model/models';
 import { COLLECTION_FORMATS } from '../variables';
 import { Configuration } from '../configuration';
@@ -44,13 +49,13 @@ export class {{classname}} {
      {{#allParams}}* @param {{paramName}} {{description}}
      {{/allParams}}*/
     public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}{{#hasMore}}, {{/hasMore}}{{/allParams}}): JQueryPromise<{ response: JQueryXHR; {{#returnType}}body: {{{returnType}}}; {{/returnType}}{{^returnType}}body?: any; {{/returnType}} }> {
-        let localVarPath = this.basePath + '{{{path}}}'{{#pathParams}}
-            .replace('{' + '{{baseName}}' + '}', String({{paramName}})){{/pathParams}};
+        let localVarPath = this.basePath + '{{{path}}}'{{#pathParams}}.replace('{' + '{{baseName}}' + '}', String({{paramName}})){{/pathParams}};
 
-        let queryParameters: Array<string> = [];
-        let headerParams: Array<string> = [];
+        let queryParameters: any = {};
+        let headerParams: any = {};
 {{#hasFormParams}}
-        let formParams = new URLSearchParams();
+        let formParams = new FormData();
+        let reqHasFile = false;
 
 {{/hasFormParams}}
 {{#allParams}}
@@ -67,7 +72,7 @@ export class {{classname}} {
         if ({{paramName}}) {
         {{#isCollectionFormatMulti}}
             {{paramName}}.forEach((element: any) => {
-                queryParameters.push('{{baseName}}', element);
+                queryParameters['{{baseName}}'].push(element);
             });
         {{/isCollectionFormatMulti}}
         {{^isCollectionFormatMulti}}
@@ -85,7 +90,7 @@ export class {{classname}} {
             queryParameters['{{baseName}}'] = {{paramName}}.toISOString();
             {{/isDate}}
             {{^isDate}}
-            queryParameters['{{baseName}}'] = <string>{{paramName}};
+            queryParameters['{{baseName}}'] = <string><any>{{paramName}};
             {{/isDate}}
         {{/isDateTime}}
         }
@@ -93,6 +98,29 @@ export class {{classname}} {
 {{/queryParams}}
 
         localVarPath = localVarPath + "?" + $.param(queryParameters);
+{{#formParams}}
+{{#isFile}}
+        reqHasFile = true;
+{{/isFile}}
+        {{#isListContainer}}
+        if ({{paramName}}) {
+        {{#isCollectionFormatMulti}}
+            {{paramName}}.forEach((element: any) => {
+                formParams.append('{{baseName}}', element);
+            });
+        {{/isCollectionFormatMulti}}
+        {{^isCollectionFormatMulti}}
+            formParams.append('{{baseName}}', {{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}']));
+        {{/isCollectionFormatMulti}}
+        }
+        {{/isListContainer}}
+        {{^isListContainer}}
+        if ({{paramName}} !== undefined) {
+            formParams.append('{{baseName}}', <any>{{paramName}});
+        }
+        {{/isListContainer}}
+
+{{/formParams}}
 {{#headerParams}}
         {{#isListContainer}}
         if ({{paramName}}) {
@@ -153,7 +181,9 @@ export class {{classname}} {
 {{/isOAuth}}
 {{/authMethods}}
 {{#hasFormParams}}
-        headerParams['Content-Type'] = 'application/x-www-form-urlencoded';
+        if (!reqHasFile) {
+            headerParams['Content-Type'] = 'application/x-www-form-urlencoded';
+        }
 
 {{/hasFormParams}}
 
@@ -161,26 +191,6 @@ export class {{classname}} {
         headerParams['Content-Type'] = 'application/json';
 
 {{/bodyParam}}
-{{#formParams}}
-        {{#isListContainer}}
-        if ({{paramName}}) {
-        {{#isCollectionFormatMulti}}
-            {{paramName}}.forEach((element: any) => {
-                formParams.append('{{baseName}}', element);
-            });
-        {{/isCollectionFormatMulti}}
-        {{^isCollectionFormatMulti}}
-            formParams.set('{{baseName}}', {{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}']));
-        {{/isCollectionFormatMulti}}
-        }
-        {{/isListContainer}}
-        {{^isListContainer}}
-        if ({{paramName}} !== undefined) {
-            formParams.set('{{baseName}}', <any>{{paramName}});
-        }
-        {{/isListContainer}}
-
-{{/formParams}}
         let requestOptions: JQueryAjaxSettings = {
             url: localVarPath,
             type: '{{httpMethod}}',
@@ -188,23 +198,25 @@ export class {{classname}} {
             processData: false
         };
 
-        /* TODO: Will not support file for now... Any help on this appreciated! */
 {{#bodyParam}}
         requestOptions.data = JSON.stringify({{paramName}});
 {{/bodyParam}}
-{{#hasFormParams}}
-        requestOptions.data = formParams.toString();
-{{/hasFormParams}}
         if (headerParams['Content-Type']) {
             requestOptions.contentType = headerParams['Content-Type'];
         }
+{{#hasFormParams}}
+        requestOptions.data = formParams;
+        if (reqHasFile) {
+            requestOptions.contentType = false;
+        }
+{{/hasFormParams}}
 
         let dfd = $.Deferred();
         $.ajax(requestOptions).then(
             (data: {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}any{{/returnType}}, textStatus: string, jqXHR: JQueryXHR) =>
-                dfd.resolve({ response: jqXHR, body: data }),
+                dfd.resolve(jqXHR, data),
             (xhr: JQueryXHR, textStatus: string, errorThrown: string) =>
-                dfd.reject({ response: xhr, body: errorThrown })
+                dfd.reject(xhr, errorThrown)
         );
         return dfd.promise();
     }

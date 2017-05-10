@@ -22,6 +22,7 @@ public class TypeScriptJqueryClientCodegen extends AbstractTypeScriptClientCodeg
     public static final String NPM_VERSION = "npmVersion";
     public static final String NPM_REPOSITORY = "npmRepository";
     public static final String SNAPSHOT = "snapshot";
+    public static final String JQUERY_ALREADY_IMPORTED = "jqueryAlreadyImported";
 
     protected String npmName = null;
     protected String npmVersion = "1.0.0";
@@ -43,6 +44,7 @@ public class TypeScriptJqueryClientCodegen extends AbstractTypeScriptClientCodeg
         this.cliOptions.add(new CliOption(NPM_VERSION, "The version of your npm package"));
         this.cliOptions.add(new CliOption(NPM_REPOSITORY, "Use this property to set an url your private npmRepo in the package.json"));
         this.cliOptions.add(new CliOption(SNAPSHOT, "When setting this property to true the version will be suffixed with -SNAPSHOT.yyyyMMddHHmm", BooleanProperty.TYPE).defaultValue(Boolean.FALSE.toString()));
+        this.cliOptions.add(new CliOption(JQUERY_ALREADY_IMPORTED, "When using this in legacy app using mix of typescript and javascript, this will only declare jquery and not import it", BooleanProperty.TYPE).defaultValue(Boolean.FALSE.toString()));
     }
 
     @Override
