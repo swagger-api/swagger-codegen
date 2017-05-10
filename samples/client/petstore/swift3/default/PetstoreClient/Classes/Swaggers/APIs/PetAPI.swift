@@ -5,6 +5,7 @@
 // https://github.com/swagger-api/swagger-codegen
 //
 
+import Foundation
 import Alamofire
 
 
@@ -122,7 +123,7 @@ open class PetAPI: APIBase {
      - OAuth:
        - type: oauth2
        - name: petstore_auth
-     - examples: [{example=<Pet>
+     - examples: [{contentType=application/xml, example=<Pet>
   <id>123456789</id>
   <name>doggie</name>
   <photoUrls>
@@ -131,21 +132,21 @@ open class PetAPI: APIBase {
   <tags>
   </tags>
   <status>aeiou</status>
-</Pet>, contentType=application/xml}, {example=[ {
-  "tags" : [ {
-    "id" : 1,
-    "name" : "aeiou"
-  } ],
+</Pet>}, {contentType=application/json, example=[ {
+  "photoUrls" : [ "aeiou" ],
+  "name" : "doggie",
   "id" : 0,
   "category" : {
-    "id" : 6,
-    "name" : "aeiou"
+    "name" : "aeiou",
+    "id" : 6
   },
-  "status" : "available",
-  "name" : "doggie",
-  "photoUrls" : [ "aeiou" ]
-} ], contentType=application/json}]
-     - examples: [{example=<Pet>
+  "tags" : [ {
+    "name" : "aeiou",
+    "id" : 1
+  } ],
+  "status" : "available"
+} ]}]
+     - examples: [{contentType=application/xml, example=<Pet>
   <id>123456789</id>
   <name>doggie</name>
   <photoUrls>
@@ -154,20 +155,20 @@ open class PetAPI: APIBase {
   <tags>
   </tags>
   <status>aeiou</status>
-</Pet>, contentType=application/xml}, {example=[ {
-  "tags" : [ {
-    "id" : 1,
-    "name" : "aeiou"
-  } ],
+</Pet>}, {contentType=application/json, example=[ {
+  "photoUrls" : [ "aeiou" ],
+  "name" : "doggie",
   "id" : 0,
   "category" : {
-    "id" : 6,
-    "name" : "aeiou"
+    "name" : "aeiou",
+    "id" : 6
   },
-  "status" : "available",
-  "name" : "doggie",
-  "photoUrls" : [ "aeiou" ]
-} ], contentType=application/json}]
+  "tags" : [ {
+    "name" : "aeiou",
+    "id" : 1
+  } ],
+  "status" : "available"
+} ]}]
      
      - parameter status: (query) Status values that need to be considered for filter 
 
@@ -209,7 +210,7 @@ open class PetAPI: APIBase {
      - OAuth:
        - type: oauth2
        - name: petstore_auth
-     - examples: [{example=<Pet>
+     - examples: [{contentType=application/xml, example=<Pet>
   <id>123456789</id>
   <name>doggie</name>
   <photoUrls>
@@ -218,21 +219,21 @@ open class PetAPI: APIBase {
   <tags>
   </tags>
   <status>aeiou</status>
-</Pet>, contentType=application/xml}, {example=[ {
-  "tags" : [ {
-    "id" : 1,
-    "name" : "aeiou"
-  } ],
+</Pet>}, {contentType=application/json, example=[ {
+  "photoUrls" : [ "aeiou" ],
+  "name" : "doggie",
   "id" : 0,
   "category" : {
-    "id" : 6,
-    "name" : "aeiou"
+    "name" : "aeiou",
+    "id" : 6
   },
-  "status" : "available",
-  "name" : "doggie",
-  "photoUrls" : [ "aeiou" ]
-} ], contentType=application/json}]
-     - examples: [{example=<Pet>
+  "tags" : [ {
+    "name" : "aeiou",
+    "id" : 1
+  } ],
+  "status" : "available"
+} ]}]
+     - examples: [{contentType=application/xml, example=<Pet>
   <id>123456789</id>
   <name>doggie</name>
   <photoUrls>
@@ -241,20 +242,20 @@ open class PetAPI: APIBase {
   <tags>
   </tags>
   <status>aeiou</status>
-</Pet>, contentType=application/xml}, {example=[ {
-  "tags" : [ {
-    "id" : 1,
-    "name" : "aeiou"
-  } ],
+</Pet>}, {contentType=application/json, example=[ {
+  "photoUrls" : [ "aeiou" ],
+  "name" : "doggie",
   "id" : 0,
   "category" : {
-    "id" : 6,
-    "name" : "aeiou"
+    "name" : "aeiou",
+    "id" : 6
   },
-  "status" : "available",
-  "name" : "doggie",
-  "photoUrls" : [ "aeiou" ]
-} ], contentType=application/json}]
+  "tags" : [ {
+    "name" : "aeiou",
+    "id" : 1
+  } ],
+  "status" : "available"
+} ]}]
      
      - parameter tags: (query) Tags to filter by 
 
@@ -296,7 +297,7 @@ open class PetAPI: APIBase {
      - API Key:
        - type: apiKey api_key 
        - name: api_key
-     - examples: [{example=<Pet>
+     - examples: [{contentType=application/xml, example=<Pet>
   <id>123456789</id>
   <name>doggie</name>
   <photoUrls>
@@ -305,21 +306,21 @@ open class PetAPI: APIBase {
   <tags>
   </tags>
   <status>aeiou</status>
-</Pet>, contentType=application/xml}, {example={
-  "tags" : [ {
-    "id" : 1,
-    "name" : "aeiou"
-  } ],
+</Pet>}, {contentType=application/json, example={
+  "photoUrls" : [ "aeiou" ],
+  "name" : "doggie",
   "id" : 0,
   "category" : {
-    "id" : 6,
-    "name" : "aeiou"
+    "name" : "aeiou",
+    "id" : 6
   },
-  "status" : "available",
-  "name" : "doggie",
-  "photoUrls" : [ "aeiou" ]
-}, contentType=application/json}]
-     - examples: [{example=<Pet>
+  "tags" : [ {
+    "name" : "aeiou",
+    "id" : 1
+  } ],
+  "status" : "available"
+}}]
+     - examples: [{contentType=application/xml, example=<Pet>
   <id>123456789</id>
   <name>doggie</name>
   <photoUrls>
@@ -328,20 +329,20 @@ open class PetAPI: APIBase {
   <tags>
   </tags>
   <status>aeiou</status>
-</Pet>, contentType=application/xml}, {example={
-  "tags" : [ {
-    "id" : 1,
-    "name" : "aeiou"
-  } ],
+</Pet>}, {contentType=application/json, example={
+  "photoUrls" : [ "aeiou" ],
+  "name" : "doggie",
   "id" : 0,
   "category" : {
-    "id" : 6,
-    "name" : "aeiou"
+    "name" : "aeiou",
+    "id" : 6
   },
-  "status" : "available",
-  "name" : "doggie",
-  "photoUrls" : [ "aeiou" ]
-}, contentType=application/json}]
+  "tags" : [ {
+    "name" : "aeiou",
+    "id" : 1
+  } ],
+  "status" : "available"
+}}]
      
      - parameter petId: (path) ID of pet to return 
 
@@ -470,11 +471,11 @@ open class PetAPI: APIBase {
      - OAuth:
        - type: oauth2
        - name: petstore_auth
-     - examples: [{example={
-  "message" : "aeiou",
+     - examples: [{contentType=application/json, example={
   "code" : 0,
-  "type" : "aeiou"
-}, contentType=application/json}]
+  "type" : "aeiou",
+  "message" : "aeiou"
+}}]
      
      - parameter petId: (path) ID of pet to update 
      - parameter additionalMetadata: (form) Additional data to pass to server (optional)

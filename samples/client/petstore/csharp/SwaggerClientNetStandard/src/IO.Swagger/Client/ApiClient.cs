@@ -48,18 +48,18 @@ namespace IO.Swagger.Client
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiClient" /> class
-        /// with default configuration and base path (http://petstore.swagger.io/v2).
+        /// with default configuration and base path (http://petstore.swagger.io:80/v2).
         /// </summary>
         public ApiClient()
         {
             Configuration = Configuration.Default;
-            RestClient = new RestClient("http://petstore.swagger.io/v2");
+            RestClient = new RestClient("http://petstore.swagger.io:80/v2");
             RestClient.IgnoreResponseStatusCode = true;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiClient" /> class
-        /// with default base path (http://petstore.swagger.io/v2).
+        /// with default base path (http://petstore.swagger.io:80/v2).
         /// </summary>
         /// <param name="config">An instance of Configuration.</param>
         public ApiClient(Configuration config = null)
@@ -69,7 +69,7 @@ namespace IO.Swagger.Client
             else
                 Configuration = config;
 
-            RestClient = new RestClient("http://petstore.swagger.io/v2");
+            RestClient = new RestClient("http://petstore.swagger.io:80/v2");
             RestClient.IgnoreResponseStatusCode = true;
         }
 
@@ -78,7 +78,7 @@ namespace IO.Swagger.Client
         /// with default configuration.
         /// </summary>
         /// <param name="basePath">The base path.</param>
-        public ApiClient(String basePath = "http://petstore.swagger.io/v2")
+        public ApiClient(String basePath = "http://petstore.swagger.io:80/v2")
         {
            if (String.IsNullOrEmpty(basePath))
                 throw new ArgumentException("basePath cannot be empty");
@@ -115,6 +115,8 @@ namespace IO.Swagger.Client
             String contentType)
         {
             var request = new RestRequest(path, method);
+            // disable ResetSharp.Portable built-in serialization
+            request.Serializer = null;
 
             // add path parameter, if any
             foreach(var param in pathParams)
@@ -142,11 +144,11 @@ namespace IO.Swagger.Client
             {
                 if (postBody.GetType() == typeof(String))
                 {
-                    request.AddParameter("application/json", postBody, ParameterType.RequestBody);
+                    request.AddParameter(new Parameter { Value = postBody, Type = ParameterType.RequestBody, ContentType = "application/json" });
                 }
                 else if (postBody.GetType() == typeof(byte[]))
                 {
-                    request.AddParameter(contentType, postBody, ParameterType.RequestBody);
+                    request.AddParameter(new Parameter { Value = postBody, Type = ParameterType.RequestBody, ContentType = contentType });
                 }
             }
 
@@ -187,7 +189,33 @@ namespace IO.Swagger.Client
 
             return (Object) response;
         }
-
+        /// <summary>
+        /// Makes the asynchronous HTTP request.
+        /// </summary>
+        /// <param name="path">URL path.</param>
+        /// <param name="method">HTTP method.</param>
+        /// <param name="queryParams">Query parameters.</param>
+        /// <param name="postBody">HTTP body (POST request).</param>
+        /// <param name="headerParams">Header parameters.</param>
+        /// <param name="formParams">Form parameters.</param>
+        /// <param name="fileParams">File parameters.</param>
+        /// <param name="pathParams">Path parameters.</param>
+        /// <param name="contentType">Content type.</param>
+        /// <returns>The Task instance.</returns>
+        public async System.Threading.Tasks.Task<Object> CallApiAsync(
+            String path, Method method, Dictionary<String, String> queryParams, Object postBody,
+            Dictionary<String, String> headerParams, Dictionary<String, String> formParams,
+            Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams,
+            String contentType)
+        {
+            var request = PrepareRequest(
+                path, method, queryParams, postBody, headerParams, formParams, fileParams,
+                pathParams, contentType);
+            InterceptRequest(request);
+            var response = await RestClient.Execute(request);
+            InterceptResponse(request, response);
+            return (Object)response;
+        }
 
         /// <summary>
         /// Escape string (url-encoded).
@@ -377,7 +405,7 @@ namespace IO.Swagger.Client
         /// <param name="source">Object to be casted</param>
         /// <param name="dest">Target type</param>
         /// <returns>Casted object</returns>
-        public static object ConvertType<T>(T source, Type dest) where T : class
+        public static dynamic ConvertType(dynamic source, Type dest)
         {
             return Convert.ChangeType(source, dest);
         }

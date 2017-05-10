@@ -5,6 +5,7 @@
 // https://github.com/swagger-api/swagger-codegen
 //
 
+import Foundation
 import Alamofire
 import PromiseKit
 
@@ -45,9 +46,9 @@ open class FakeAPI: APIBase {
      To test \"client\" model
      - PATCH /fake
      - To test \"client\" model
-     - examples: [{example={
+     - examples: [{contentType=application/json, example={
   "client" : "aeiou"
-}, contentType=application/json}]
+}}]
      
      - parameter body: (body) client model 
 

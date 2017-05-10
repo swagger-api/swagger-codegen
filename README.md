@@ -713,6 +713,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Cachet Financial](http://www.cachetfinancial.com/)
 - [carpolo](http://www.carpolo.co/)
 - [CloudBoost](https://www.CloudBoost.io/)
+- [Cisco](http://www.cisco.com/)
 - [Conplement](http://www.conplement.de/)
 - [Cummins](http://www.cummins.com/)
 - [Cupix](http://www.cupix.com)
@@ -721,7 +722,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [DocRaptor](https://docraptor.com)
 - [DocuSign](https://www.docusign.com)
 - [Ergon](http://www.ergon.ch/)
-- [EMC](https://www.emc.com/)
+- [Dell EMC](https://www.emc.com/)
 - [eureka](http://eure.jp/)
 - [everystory.us](http://everystory.us)
 - [Expected Behavior](http://www.expectedbehavior.com/)
@@ -791,9 +792,11 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [snapCX](https://snapcx.io)
 - [SPINEN](http://www.spinen.com)
 - [SRC](https://www.src.si/)
+- [Stardog Ventures](https://www.stardog.io)
 - [Stingray](http://www.stingray.com)
 - [StyleRecipe](http://stylerecipe.co.jp)
 - [Svenska Spel AB](https://www.svenskaspel.se/)
+- [Switch Database](https://www.switchdatabase.com/)
 - [TaskData](http://www.taskdata.com/)
 - [ThoughtWorks](https://www.thoughtworks.com)
 - [Trexle](https://trexle.com/)
@@ -804,6 +807,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Wealthfront](https://www.wealthfront.com/)
 - [Webever GmbH](https://www.webever.de/)
 - [WEXO A/S](https://www.wexo.dk/)
+- [XSky](http://www.xsky.com/)
 - [Zalando](https://tech.zalando.com)
 - [ZEEF.com](https://zeef.com/)
 
@@ -864,20 +868,25 @@ Here is a list of template creators:
    * Bash: @bkryza
    * C++ REST: @Danielku15
    * C# (.NET 2.0): @who
+   * C# (.NET Standard 1.3 ): @Gronsak
    * Clojure: @xhh
    * Dart: @yissachar
    * Elixir: @niku
    * Groovy: @victorgit
    * Go: @wing328
+   * Go (rewritten in 2.3.0): @antihax
    * Java (Feign): @davidkiss
    * Java (Retrofit): @0legg
    * Java (Retrofi2): @emilianobonassi
    * Java (Jersey2): @xhh
    * Java (okhttp-gson): @xhh
+   * Java (RestTemplate): @nbruno
+   * Java (RESTEasy): @gayathrigs
    * Javascript/NodeJS: @jfiala
    * Javascript (Closure-annotated Angular) @achew22
    * JMeter @davidkiss
    * Perl: @wing328
+   * PHP (Guzzle): @baartosz
    * Swift: @tkqubo
    * Swift 3: @hexelon
    * TypeScript (Node):  @mhardorf
