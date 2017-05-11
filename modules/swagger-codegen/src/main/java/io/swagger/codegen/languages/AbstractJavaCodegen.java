@@ -849,7 +849,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
                     }
                 }
               //only add content-Type if its no a GET-Method
-                if(!path.getGet().equals(operation)){
+                if(path.getGet() != null || ! operation.equals(path.getGet())){
                 	String defaultContentType = hasFormParameters ? "application/x-www-form-urlencoded" : "application/json";
                 	String contentType =  operation.getConsumes() == null || operation.getConsumes().isEmpty()
                 	                            ? defaultContentType : operation.getConsumes().get(0);
