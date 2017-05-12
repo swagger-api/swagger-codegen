@@ -10,7 +10,7 @@
 
 package swagger
 
-// Model for testing reserved words  *_/ ' \" =end -- \\r\\n \\n \\r
+// ModelReturn : Model for testing reserved words  *_/ ' \" =end -- \\r\\n \\n \\r
 type ModelReturn struct {
 
 	// property description  *_/ ' \" =end -- \\r\\n \\n \\r

@@ -10,7 +10,7 @@
 
 package petstore
 
-// Model for testing reserved words
+// ModelReturn : Model for testing reserved words
 type ModelReturn struct {
 
 	Return_ int32 `json:"return,omitempty"`

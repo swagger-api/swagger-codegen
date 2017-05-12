@@ -10,5 +10,13 @@
 
 package petstore
 
-type EnumClass struct {
-}
+
+type EnumClass string
+
+// List of EnumClasss
+const (
+	_abc EnumClass = "_abc"
+	-efg EnumClass = "-efg"
+	(xyz) EnumClass = "(xyz)"
+	
+)

@@ -4,12 +4,20 @@ package {{packageName}}
 import ({{/imports}}{{#imports}}
 	"{{import}}"{{/imports}}{{#imports}}
 )
-{{/imports}}{{#model}}{{#description}}
-// {{{description}}}{{/description}}
+{{/imports}}{{#model}}{{#isEnum}}
+{{#description}}// {{name}} : {{{description}}}{{/description}}
+type {{name}} string
+
+// List of {{name}}s
+const (
+	{{#allowableValues}}{{#values}}{{this}} {{name}} = "{{this}}"
+	{{/values}}{{/allowableValues}}
+){{/isEnum}}{{^isEnum}}
+{{#description}}
+// {{classname}} : {{{description}}}{{/description}}
 type {{classname}} struct {
 {{#vars}}{{#description}}
 	// {{{description}}}{{/description}}
-	{{name}} {{^isPrimitiveType}}{{^isContainer}}{{^isDateTime}}*{{/isDateTime}}{{/isContainer}}{{/isPrimitiveType}}{{{datatype}}} `json:"{{baseName}}{{^required}},omitempty{{/required}}"`
+	{{name}} {{^isEnum}}{{^isPrimitiveType}}{{^isContainer}}{{^isDateTime}}*{{/isDateTime}}{{/isContainer}}{{/isPrimitiveType}}{{/isEnum}}{{{datatype}}} `json:"{{baseName}}{{^required}},omitempty{{/required}}"`
 {{/vars}}
-}
-{{/model}}{{/models}}
+}{{/isEnum}}{{/model}}{{/models}}

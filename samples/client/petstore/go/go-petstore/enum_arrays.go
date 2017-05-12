@@ -10,6 +10,7 @@
 
 package petstore
 
+
 type EnumArrays struct {
 
 	JustSymbol string `json:"just_symbol,omitempty"`

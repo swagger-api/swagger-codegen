@@ -10,6 +10,7 @@
 
 package petstore
 
+
 type ArrayTest struct {
 
 	ArrayOfString []string `json:"array_of_string,omitempty"`

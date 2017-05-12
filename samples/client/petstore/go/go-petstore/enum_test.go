@@ -10,6 +10,7 @@
 
 package petstore
 
+
 type EnumTest struct {
 
 	EnumString string `json:"enum_string,omitempty"`

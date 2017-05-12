@@ -10,6 +10,7 @@
 
 package petstore
 
+
 type ArrayOfArrayOfNumberOnly struct {
 
 	ArrayArrayNumber [][]float32 `json:"ArrayArrayNumber,omitempty"`
