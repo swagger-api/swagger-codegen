@@ -42,7 +42,7 @@ public class UserApiControllerImp implements UserApiControllerImpInterface {
     }
 
     @Override
-    public String loginUser( String username,  String password) throws Exception {
+    public String loginUser( @NotNullString username,  @NotNullString password) throws Exception {
         //Do your magic!!!
         return new String();
     }

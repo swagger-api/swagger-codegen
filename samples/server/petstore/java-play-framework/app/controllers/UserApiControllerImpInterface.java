@@ -21,7 +21,7 @@ public interface UserApiControllerImpInterface {
 
     User getUserByName(String username) throws Exception;
 
-    String loginUser( String username,  String password) throws Exception;
+    String loginUser( @NotNullString username,  @NotNullString password) throws Exception;
 
     void logoutUser() throws Exception;
 
