@@ -21,13 +21,13 @@ import 'rxjs/add/operator/map';
 import * as models                                           from '../model/models';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
-import { IUserApi }                                    from "./UserApiInterface";
+import { UserApiInterface }                            from './UserApiInterface';
 
 /* tslint:disable:no-unused-variable member-ordering */
 
 
 @Injectable()
-export class UserApi implements IUserApi {
+export class UserApi implements UserApiInterface {
 
     protected basePath = 'http://petstore.swagger.io/v2';
     public defaultHeaders: Headers = new Headers();
@@ -53,7 +53,7 @@ export class UserApi implements IUserApi {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json();
+                    return response.json() || {};
                 }
             });
     }
@@ -69,7 +69,7 @@ export class UserApi implements IUserApi {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json();
+                    return response.json() || {};
                 }
             });
     }
@@ -85,7 +85,7 @@ export class UserApi implements IUserApi {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json();
+                    return response.json() || {};
                 }
             });
     }
@@ -101,7 +101,7 @@ export class UserApi implements IUserApi {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json();
+                    return response.json() || {};
                 }
             });
     }
@@ -117,7 +117,7 @@ export class UserApi implements IUserApi {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json();
+                    return response.json() || {};
                 }
             });
     }
@@ -134,7 +134,7 @@ export class UserApi implements IUserApi {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json();
+                    return response.json() || {};
                 }
             });
     }
@@ -149,7 +149,7 @@ export class UserApi implements IUserApi {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json();
+                    return response.json() || {};
                 }
             });
     }
@@ -166,7 +166,7 @@ export class UserApi implements IUserApi {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json();
+                    return response.json() || {};
                 }
             });
     }

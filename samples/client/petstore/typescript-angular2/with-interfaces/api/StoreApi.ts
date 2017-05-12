@@ -21,13 +21,13 @@ import 'rxjs/add/operator/map';
 import * as models                                           from '../model/models';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
-import { IStoreApi }                                    from "./StoreApiInterface";
+import { StoreApiInterface }                            from './StoreApiInterface';
 
 /* tslint:disable:no-unused-variable member-ordering */
 
 
 @Injectable()
-export class StoreApi implements IStoreApi {
+export class StoreApi implements StoreApiInterface {
 
     protected basePath = 'http://petstore.swagger.io/v2';
     public defaultHeaders: Headers = new Headers();
@@ -53,7 +53,7 @@ export class StoreApi implements IStoreApi {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json();
+                    return response.json() || {};
                 }
             });
     }
@@ -68,7 +68,7 @@ export class StoreApi implements IStoreApi {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json();
+                    return response.json() || {};
                 }
             });
     }
@@ -84,7 +84,7 @@ export class StoreApi implements IStoreApi {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json();
+                    return response.json() || {};
                 }
             });
     }
@@ -100,7 +100,7 @@ export class StoreApi implements IStoreApi {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json();
+                    return response.json() || {};
                 }
             });
     }

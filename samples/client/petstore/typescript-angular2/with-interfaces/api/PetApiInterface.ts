@@ -18,7 +18,7 @@ import * as models                                           from '../model/mode
 import { Configuration }                                     from '../configuration';
 
 
-export interface IPetApi {
+export interface PetApiInterface {
     defaultHeaders: Headers;
     configuration: Configuration;
     [others: string]: any;

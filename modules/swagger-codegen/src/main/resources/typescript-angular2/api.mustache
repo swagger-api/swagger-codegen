@@ -11,7 +11,7 @@ import * as models                                           from '../model/mode
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 {{#withInterfaces}}
-import { I{{classname}} }                                    from './{{classname}}Interface';
+import { {{classname}}Interface }                            from './{{classname}}Interface';
 {{/withInterfaces}}
 
 /* tslint:disable:no-unused-variable member-ordering */
@@ -25,7 +25,7 @@ import { I{{classname}} }                                    from './{{classname
 {{/description}}
 @Injectable()
 {{#withInterfaces}}
-export class {{classname}} implements I{{classname}} {
+export class {{classname}} implements {{classname}}Interface {
 {{/withInterfaces}}
 {{^withInterfaces}}
 export class {{classname}} {

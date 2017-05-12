@@ -21,13 +21,13 @@ import 'rxjs/add/operator/map';
 import * as models                                           from '../model/models';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
-import { IPetApi }                                    from "./PetApiInterface";
+import { PetApiInterface }                            from './PetApiInterface';
 
 /* tslint:disable:no-unused-variable member-ordering */
 
 
 @Injectable()
-export class PetApi implements IPetApi {
+export class PetApi implements PetApiInterface {
 
     protected basePath = 'http://petstore.swagger.io/v2';
     public defaultHeaders: Headers = new Headers();
@@ -53,7 +53,7 @@ export class PetApi implements IPetApi {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json();
+                    return response.json() || {};
                 }
             });
     }
@@ -70,7 +70,7 @@ export class PetApi implements IPetApi {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json();
+                    return response.json() || {};
                 }
             });
     }
@@ -86,7 +86,7 @@ export class PetApi implements IPetApi {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json();
+                    return response.json() || {};
                 }
             });
     }
@@ -102,7 +102,7 @@ export class PetApi implements IPetApi {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json();
+                    return response.json() || {};
                 }
             });
     }
@@ -118,7 +118,7 @@ export class PetApi implements IPetApi {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json();
+                    return response.json() || {};
                 }
             });
     }
@@ -134,7 +134,7 @@ export class PetApi implements IPetApi {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json();
+                    return response.json() || {};
                 }
             });
     }
@@ -152,7 +152,7 @@ export class PetApi implements IPetApi {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json();
+                    return response.json() || {};
                 }
             });
     }
@@ -170,7 +170,7 @@ export class PetApi implements IPetApi {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json();
+                    return response.json() || {};
                 }
             });
     }
