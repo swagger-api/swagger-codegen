@@ -10,7 +10,6 @@
 
 package petstore
 
-
 type Dog struct {
 
 	ClassName string `json:"className"`

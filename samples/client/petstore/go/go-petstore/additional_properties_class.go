@@ -10,7 +10,6 @@
 
 package petstore
 
-
 type AdditionalPropertiesClass struct {
 
 	MapProperty map[string]string `json:"map_property,omitempty"`

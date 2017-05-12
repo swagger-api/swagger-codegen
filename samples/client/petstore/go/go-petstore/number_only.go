@@ -10,7 +10,6 @@
 
 package petstore
 
-
 type NumberOnly struct {
 
 	JustNumber float32 `json:"JustNumber,omitempty"`

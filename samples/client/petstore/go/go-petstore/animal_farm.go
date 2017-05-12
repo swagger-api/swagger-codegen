@@ -10,6 +10,5 @@
 
 package petstore
 
-
 type AnimalFarm struct {
 }

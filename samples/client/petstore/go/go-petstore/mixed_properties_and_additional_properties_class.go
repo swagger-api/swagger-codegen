@@ -14,7 +14,6 @@ import (
 	"time"
 )
 
-
 type MixedPropertiesAndAdditionalPropertiesClass struct {
 
 	Uuid string `json:"uuid,omitempty"`

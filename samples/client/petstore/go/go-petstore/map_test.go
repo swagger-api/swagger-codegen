@@ -10,7 +10,6 @@
 
 package petstore
 
-
 type MapTest struct {
 
 	MapMapOfString map[string]map[string]string `json:"map_map_of_string,omitempty"`

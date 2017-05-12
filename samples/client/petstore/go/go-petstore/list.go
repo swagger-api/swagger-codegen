@@ -10,7 +10,6 @@
 
 package petstore
 
-
 type List struct {
 
 	Var123List string `json:"123-list,omitempty"`

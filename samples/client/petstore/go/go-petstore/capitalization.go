@@ -10,7 +10,6 @@
 
 package petstore
 
-
 type Capitalization struct {
 
 	SmallCamel string `json:"smallCamel,omitempty"`

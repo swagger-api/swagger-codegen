@@ -10,7 +10,6 @@
 
 package petstore
 
-
 type EnumClass string
 
 // List of EnumClasss

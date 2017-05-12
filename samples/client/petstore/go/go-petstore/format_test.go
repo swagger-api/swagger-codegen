@@ -14,7 +14,6 @@ import (
 	"time"
 )
 
-
 type FormatTest struct {
 
 	Integer int32 `json:"integer,omitempty"`

@@ -10,7 +10,6 @@
 
 package petstore
 
-
 type OuterEnum string
 
 // List of OuterEnums

@@ -10,7 +10,6 @@
 
 package petstore
 
-
 type Cat struct {
 
 	ClassName string `json:"className"`
