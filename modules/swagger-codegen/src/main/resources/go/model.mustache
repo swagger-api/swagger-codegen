@@ -4,10 +4,10 @@ package {{packageName}}
 import ({{/imports}}{{#imports}}
 	"{{import}}"{{/imports}}{{#imports}}
 )
-{{/imports}}{{#model}}{{#isEnum}}{{#description}}// {{name}} : {{{description}}}{{/description}}
-type {{name}} string
+{{/imports}}{{#model}}{{#isEnum}}{{#description}}// {{{name}}} : {{{description}}}{{/description}}
+type {{{name}}} {{^format}}string{{/format}}{{#format}}{{{format}}}{{/format}}
 
-// List of {{name}}s
+// List of {{{name}}}
 const (
 	{{#allowableValues}}{{#values}}{{this}} {{name}} = "{{this}}"
 	{{/values}}{{/allowableValues}}

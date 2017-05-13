@@ -12,7 +12,7 @@ package petstore
 
 type EnumClass string
 
-// List of EnumClasss
+// List of EnumClass
 const (
 	_abc EnumClass = "_abc"
 	-efg EnumClass = "-efg"

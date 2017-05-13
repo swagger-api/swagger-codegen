@@ -106,7 +106,7 @@ func (a *FakeApiService) TestClientModel(body Client) (Client,  *http.Response, 
      @param "float" (float32) None
      @param "string_" (string) None
      @param "binary" (string) None
-     @param "date" (time.Time) None
+     @param "date" (string) None
      @param "dateTime" (time.Time) None
      @param "password" (string) None
      @param "callback" (string) None
@@ -156,7 +156,7 @@ func (a *FakeApiService) TestEndpointParameters(ctx context.Context, number floa
 	if err := typeCheckParameter(localVarOptionals["binary"], "string", "binary"); err != nil {
 		return nil, err
 	}
-	if err := typeCheckParameter(localVarOptionals["date"], "time.Time", "date"); err != nil {
+	if err := typeCheckParameter(localVarOptionals["date"], "string", "date"); err != nil {
 		return nil, err
 	}
 	if err := typeCheckParameter(localVarOptionals["dateTime"], "time.Time", "dateTime"); err != nil {
@@ -211,7 +211,7 @@ func (a *FakeApiService) TestEndpointParameters(ctx context.Context, number floa
 	if localVarTempParam, localVarOk := localVarOptionals["binary"].(string); localVarOk {
 		localVarFormParams.Add("binary", parameterToString(localVarTempParam, ""))
 	}
-	if localVarTempParam, localVarOk := localVarOptionals["date"].(time.Time); localVarOk {
+	if localVarTempParam, localVarOk := localVarOptionals["date"].(string); localVarOk {
 		localVarFormParams.Add("date", parameterToString(localVarTempParam, ""))
 	}
 	if localVarTempParam, localVarOk := localVarOptionals["dateTime"].(time.Time); localVarOk {

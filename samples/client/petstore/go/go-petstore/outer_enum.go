@@ -12,7 +12,7 @@ package petstore
 
 type OuterEnum string
 
-// List of OuterEnums
+// List of OuterEnum
 const (
 	placed OuterEnum = "placed"
 	approved OuterEnum = "approved"
