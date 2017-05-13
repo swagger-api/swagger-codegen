@@ -36,9 +36,16 @@ public class UndertowCodegen extends AbstractJavaCodegen {
         modelDocTemplateFiles.remove("model_doc.mustache");
         apiDocTemplateFiles.remove("api_doc.mustache");
 
+        if(System.getProperty("swagger.codegen.undertow.apipackage") != null) {
+            LOGGER.warn("System property 'swagger.codegen.undertow.apipackage' is not supported anymore, use the standard apiPackage parameter.");
+        }
 
-        apiPackage = System.getProperty("swagger.codegen.undertow.apipackage", "io.swagger.handler");
-        modelPackage = System.getProperty("swagger.codegen.undertow.modelpackage", "io.swagger.model");
+        if(System.getProperty("swagger.codegen.undertow.modelpackage") != null) {
+            LOGGER.warn("System property 'swagger.codegen.undertow.modelpackage' is not supported anymore, please use the standard modelPackage parameter.");
+        }
+
+        apiPackage = "io.swagger.handler";
+        modelPackage = "io.swagger.model";
 
         additionalProperties.put("title", title);
     }
