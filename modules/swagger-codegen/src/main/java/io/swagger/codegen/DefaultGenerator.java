@@ -531,6 +531,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                                     }
                                 })
                                 .defaultValue("")
+                                .withEscaper(config.escaper())
                                 .compile(template);
 
                         writeToFile(outputFilename, tmpl.execute(bundle));
@@ -698,6 +699,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                         }
                     })
                     .defaultValue("")
+                    .withEscaper(config.escaper())
                     .compile(template);
 
             writeToFile(adjustedOutputFilename, tmpl.execute(templateData));
