@@ -1,4 +1,4 @@
-/* 
+/*
  * Swagger Petstore
  *
  * This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
@@ -10,5 +10,11 @@
 
 package petstore
 
-type EnumClass struct {
-}
+type EnumClass string
+
+// List of EnumClass
+const (
+	ABC EnumClass = "_abc"
+	EFG EnumClass = "-efg"
+	XYZ EnumClass = "(xyz)"
+)
