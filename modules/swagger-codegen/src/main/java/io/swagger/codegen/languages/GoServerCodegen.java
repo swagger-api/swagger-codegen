@@ -34,7 +34,7 @@ public class GoServerCodegen extends DefaultCodegen implements CodegenConfig {
     protected int serverPort = 8080;
     protected String projectName = "swagger-server";
     protected String apiPath = "go";
-    
+
     public GoServerCodegen() {
         super();
 
@@ -160,8 +160,8 @@ public class GoServerCodegen extends DefaultCodegen implements CodegenConfig {
         );
         supportingFiles.add(new SupportingFile("main.mustache", "", "main.go"));
         supportingFiles.add(new SupportingFile("routers.mustache", apiPath, "routers.go"));
-        supportingFiles.add(new SupportingFile("logger.mustache", apiPath, "logger.go")); 
-        supportingFiles.add(new SupportingFile("app.mustache", apiPath, "app.yaml"));        
+        supportingFiles.add(new SupportingFile("logger.mustache", apiPath, "logger.go"));
+        supportingFiles.add(new SupportingFile("app.mustache", apiPath, "app.yaml"));
         writeOptional(outputFolder, new SupportingFile("README.mustache", apiPath, "README.md"));
     }
 
@@ -222,7 +222,7 @@ public class GoServerCodegen extends DefaultCodegen implements CodegenConfig {
     public String escapeReservedWord(String name) {
         if(this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
-        }        
+        }
         return "_" + name;  // add an underscore to the name
     }
 
@@ -275,6 +275,52 @@ public class GoServerCodegen extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
+    public String toEnumValue(String value, String datatype) {
+        if ("int".equals(datatype) || "double".equals(datatype) || "float".equals(datatype)) {
+            return value;
+        } else {
+            return "\'" + escapeText(value) + "\'";
+        }
+    }
+
+    @Override
+    public String toEnumDefaultValue(String value, String datatype) {
+        return datatype + "_" + value;
+    }
+
+    @Override
+    public String toEnumVarName(String name, String datatype) {
+        if (name.length() == 0) {
+            return "EMPTY";
+        }
+
+        // number
+        if ("int".equals(datatype) || "double".equals(datatype) || "float".equals(datatype)) {
+            String varName = name;
+            varName = varName.replaceAll("-", "MINUS_");
+            varName = varName.replaceAll("\\+", "PLUS_");
+            varName = varName.replaceAll("\\.", "_DOT_");
+            return varName;
+        }
+
+        // for symbol, e.g. $, #
+        if (getSymbolName(name) != null) {
+            return getSymbolName(name).toUpperCase();
+        }
+
+        // string
+        String enumName = sanitizeName(underscore(name).toUpperCase());
+        enumName = enumName.replaceFirst("^_", "");
+        enumName = enumName.replaceFirst("_$", "");
+
+        if (isReservedWord(enumName) || enumName.matches("\\d.*")) { // reserved word or starts with number
+            return escapeReservedWord(enumName);
+        } else {
+            return enumName;
+        }
+    }
+
+    @Override
     public String getTypeDeclaration(Property p) {
         if(p instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) p;
@@ -306,7 +352,7 @@ public class GoServerCodegen extends DefaultCodegen implements CodegenConfig {
 
         return toModelName(swaggerType);
     }
-    
+
     @Override
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);

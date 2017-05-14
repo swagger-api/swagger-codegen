@@ -10,5 +10,12 @@
 
 package petstore
 
-type OuterEnum struct {
-}
+type OuterEnum string
+
+// List of OuterEnum
+const (
+	placed OuterEnum = "placed"
+	approved OuterEnum = "approved"
+	delivered OuterEnum = "delivered"
+	
+)
