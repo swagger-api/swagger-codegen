@@ -26,10 +26,10 @@ export class Pet {
     /**
      * pet status in the store
      */
-    status?: Pet.StatusEnum;
+    status?: PetEnums.StatusEnum;
 
 }
-export namespace Pet {
+export namespace PetEnums {
     export enum StatusEnum {
         Available = <any> 'available',
         Pending = <any> 'pending',

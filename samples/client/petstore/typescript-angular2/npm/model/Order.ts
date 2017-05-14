@@ -24,12 +24,12 @@ export class Order {
     /**
      * Order Status
      */
-    status?: Order.StatusEnum;
+    status?: OrderEnums.StatusEnum;
 
     complete?: boolean;
 
 }
-export namespace Order {
+export namespace OrderEnums {
     export enum StatusEnum {
         Placed = <any> 'placed',
         Approved = <any> 'approved',
