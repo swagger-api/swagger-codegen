@@ -6,4 +6,4 @@ export const COLLECTION_FORMATS = {
     'tsv': '   ',
     'ssv': ' ',
     'pipes': '|'
-}
+};
