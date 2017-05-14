@@ -31,8 +31,8 @@ export class Order {
 }
 export namespace OrderEnums {
     export enum StatusEnum {
-        Placed = <any> 'placed',
-        Approved = <any> 'approved',
-        Delivered = <any> 'delivered'
+        Placed = <any> "placed",
+        Approved = <any> "approved",
+        Delivered = <any> "delivered"
     }
 }

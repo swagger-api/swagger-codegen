@@ -203,10 +203,10 @@ public class TypeScriptFetchModelTest {
 
         HashMap<String, String> fish= new HashMap<String, String>();
         fish.put("name", "Fish");
-        fish.put("value", "'fish'");
+        fish.put("value", "\"fish\"");
         HashMap<String, String> crab= new HashMap<String, String>();
         crab.put("name", "Crab");
-        crab.put("value", "'crab'");
+        crab.put("value", "\"crab\"");
         Assert.assertEquals(prope.allowableValues.get("enumVars"), Arrays.asList(fish, crab));
 
         // assert inner items

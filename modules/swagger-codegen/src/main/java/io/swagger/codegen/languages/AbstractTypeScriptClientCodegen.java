@@ -277,7 +277,7 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
         if ("number".equals(datatype)) {
             return value;
         } else {
-            return "\'" + escapeText(value) + "\'";
+            return "\"" + escapeText(value) + "\"";
         }
     }
 
