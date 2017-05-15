@@ -25,13 +25,13 @@ public class PetApiControllerImp implements PetApiControllerImpInterface {
     }
 
     @Override
-    public List<Pet> findPetsByStatus( @NotNullList<String> status) throws Exception {
+    public List<Pet> findPetsByStatus( @NotNull List<String> status) throws Exception {
         //Do your magic!!!
         return new ArrayList<Pet>();
     }
 
     @Override
-    public List<Pet> findPetsByTags( @NotNullList<String> tags) throws Exception {
+    public List<Pet> findPetsByTags( @NotNull List<String> tags) throws Exception {
         //Do your magic!!!
         return new ArrayList<Pet>();
     }

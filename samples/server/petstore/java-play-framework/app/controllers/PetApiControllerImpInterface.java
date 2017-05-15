@@ -16,9 +16,9 @@ public interface PetApiControllerImpInterface {
 
     void deletePet(Long petId, String apiKey) throws Exception;
 
-    List<Pet> findPetsByStatus( @NotNullList<String> status) throws Exception;
+    List<Pet> findPetsByStatus( @NotNull List<String> status) throws Exception;
 
-    List<Pet> findPetsByTags( @NotNullList<String> tags) throws Exception;
+    List<Pet> findPetsByTags( @NotNull List<String> tags) throws Exception;
 
     Pet getPetById(Long petId) throws Exception;
 
