@@ -32,7 +32,7 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
     protected String npmName = null;
     protected String npmVersion = "1.0.0";
     protected String npmRepository = null;
-    protected String injectionToken = "InjectionToken<string>";
+    protected String injectionToken = "InjectionToken";
 
     public TypeScriptAngular2ClientCodegen() {
         super();
