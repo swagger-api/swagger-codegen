@@ -7,16 +7,20 @@ import io.swagger.codegen.languages.features.BeanValidationFeatures;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
+import io.swagger.models.auth.OAuth2Definition;
+import io.swagger.models.auth.SecuritySchemeDefinition;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.*;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 
 
 public class SpringCodegen extends AbstractJavaCodegen implements BeanValidationFeatures {
-    public static final String DEFAULT_LIBRARY = "spring-boot";
+    private static final String USE_SPRING_BOOT_SECURITY_SERVER = "useSpringBootSecurityServer";
+	public static final String DEFAULT_LIBRARY = "spring-boot";
     public static final String TITLE = "title";
     public static final String CONFIG_PACKAGE = "configPackage";
     public static final String BASE_PACKAGE = "basePackage";
@@ -29,6 +33,7 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
     public static final String USE_TAGS = "useTags";
     public static final String SPRING_MVC_LIBRARY = "spring-mvc";
     public static final String SPRING_CLOUD_LIBRARY = "spring-cloud";
+    public static final String SPRING_BOOT_SECURITY_LIBRARY = "spring-boot-security";
     public static final String IMPLICIT_HEADERS = "implicitHeaders";
 
     protected String title = "swagger-petstore";
@@ -76,10 +81,10 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
         supportedLibraries.put(DEFAULT_LIBRARY, "Spring-boot Server application using the SpringFox integration.");
         supportedLibraries.put(SPRING_MVC_LIBRARY, "Spring-MVC Server application using the SpringFox integration.");
         supportedLibraries.put(SPRING_CLOUD_LIBRARY, "Spring-Cloud-Feign client with Spring-Boot auto-configured settings.");
+        supportedLibraries.put(SPRING_BOOT_SECURITY_LIBRARY, "Spring-boot Server application using the SpringFox integration and SpringSecurity.");
         setLibrary(DEFAULT_LIBRARY);
 
         CliOption library = new CliOption(CodegenConstants.LIBRARY, "library template (sub-template) to use");
-        library.setDefault(DEFAULT_LIBRARY);
         library.setEnum(supportedLibraries);
         library.setDefault(DEFAULT_LIBRARY);
         cliOptions.add(library);
@@ -208,6 +213,18 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
                     this.setSingleContentTypes(true);
                 }
                 additionalProperties.put("useSpringCloudClient", true);
+
+            }   if (library.equals(SPRING_BOOT_SECURITY_LIBRARY)) {
+            	 supportingFiles.add(new SupportingFile("homeController.mustache",
+                         (sourceFolder + File.separator + configPackage).replace(".", java.io.File.separator), "HomeController.java"));
+                 supportingFiles.add(new SupportingFile("swagger2SpringBoot.mustache",
+                         (sourceFolder + File.separator + basePackage).replace(".", java.io.File.separator), "Swagger2SpringBoot.java"));
+                 supportingFiles.add(new SupportingFile("RFC3339DateFormat.mustache",
+                         (sourceFolder + File.separator + basePackage).replace(".", java.io.File.separator), "RFC3339DateFormat.java"));
+                 supportingFiles.add(new SupportingFile("application.mustache",
+                         ("src.main.resources").replace(".", java.io.File.separator), "application.properties"));
+                 
+                 additionalProperties.put(USE_SPRING_BOOT_SECURITY_SERVER, true);
 
             } else {
                 apiTemplateFiles.put("apiController.mustache", "Controller.java");
@@ -340,8 +357,8 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
             }
             additionalProperties.put(TITLE, this.title);
         }
-
-        String host = swagger.getHost();
+        
+                String host = swagger.getHost();
         String port = "8080";
         if (host != null) {
             String[] parts = host.split(":");

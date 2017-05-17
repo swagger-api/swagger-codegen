@@ -78,6 +78,7 @@ public interface FakeApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Client.class) })
     
+    
     @RequestMapping(value = "/fake",
         produces = { "application/json" }, 
         consumes = { "application/json" },
@@ -95,6 +96,7 @@ public interface FakeApi {
         @ApiResponse(code = 400, message = "Invalid username supplied", response = Void.class),
         @ApiResponse(code = 404, message = "User not found", response = Void.class) })
     
+    
     @RequestMapping(value = "/fake",
         produces = { "application/xml; charset=utf-8", "application/json; charset=utf-8" }, 
         consumes = { "application/xml; charset=utf-8", "application/json; charset=utf-8" },
@@ -109,6 +111,7 @@ public interface FakeApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid request", response = Void.class),
         @ApiResponse(code = 404, message = "Not found", response = Void.class) })
+    
     
     @RequestMapping(value = "/fake",
         produces = { "*/*" }, 

@@ -3,3 +3,18 @@ server.contextPath={{^contextPath}}/{{/contextPath}}{{#contextPath}}{{contextPat
 server.port={{serverPort}}
 spring.jackson.date-format={{basePackage}}.RFC3339DateFormat
 spring.jackson.serialization.WRITE_DATES_AS_TIMESTAMPS=false
+
+{{#useSpringBootSecurityServer}}
+ {{#authMethods}}
+  {{#isOAuth}}
+security.oauth2.client.clientId={{oauth2.clientId}}
+security.oauth2.client.clientSecret={{oauth2.clientSecret}}
+security.oauth2.client.accessTokenUri={{tokenUrl}}
+security.oauth2.client.userAuthorizationUri={{authorizationUrl}}
+security.oauth2.client.tokenName=access_token
+security.oauth2.client.authenticationScheme=query
+security.oauth2.client.clientAuthenticationScheme=form
+security.oauth2.resource.userInfoUri={{oauth2.userInfoUri}}
+  {{/isOAuth}}
+ {{/authMethods}}
+{{/useSpringBootSecurityServer}}
