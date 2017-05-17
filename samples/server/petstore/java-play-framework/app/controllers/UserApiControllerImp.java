@@ -7,45 +7,54 @@ import play.mvc.Http;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.io.FileInputStream;
 import javax.validation.constraints.*;
 
-public class UserApiControllerImp {
-    void createUser(User body) {
+public class UserApiControllerImp implements UserApiControllerImpInterface {
+    @Override
+    public void createUser(User body) throws Exception {
         //Do your magic!!!
         
     }
 
-    void createUsersWithArrayInput(List<User> body) {
+    @Override
+    public void createUsersWithArrayInput(List<User> body) throws Exception {
         //Do your magic!!!
         
     }
 
-    void createUsersWithListInput(List<User> body) {
+    @Override
+    public void createUsersWithListInput(List<User> body) throws Exception {
         //Do your magic!!!
         
     }
 
-    void deleteUser( String username) {
+    @Override
+    public void deleteUser(String username) throws Exception {
         //Do your magic!!!
         
     }
 
-    User getUserByName( String username) {
+    @Override
+    public User getUserByName(String username) throws Exception {
         //Do your magic!!!
         return new User();
     }
 
-    String loginUser( String username,  String password) {
+    @Override
+    public String loginUser( @NotNull String username,  @NotNull String password) throws Exception {
         //Do your magic!!!
         return new String();
     }
 
-    void logoutUser() {
+    @Override
+    public void logoutUser() throws Exception {
         //Do your magic!!!
         
     }
 
-    void updateUser( String username, User body) {
+    @Override
+    public void updateUser(String username, User body) throws Exception {
         //Do your magic!!!
         
     }

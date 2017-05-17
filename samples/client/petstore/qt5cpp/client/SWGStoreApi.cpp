@@ -18,6 +18,7 @@
 #include <QJsonDocument>
 
 namespace Swagger {
+
 SWGStoreApi::SWGStoreApi() {}
 
 SWGStoreApi::~SWGStoreApi() {}
@@ -39,7 +40,7 @@ SWGStoreApi::deleteOrder(QString* order_id) {
     HttpRequestWorker *worker = new HttpRequestWorker();
     HttpRequestInput input(fullPath, "DELETE");
 
-    
+
 
 
 
@@ -54,6 +55,9 @@ SWGStoreApi::deleteOrder(QString* order_id) {
 void
 SWGStoreApi::deleteOrderCallback(HttpRequestWorker * worker) {
     QString msg;
+    QString error_str = worker->error_str;
+    QNetworkReply::NetworkError error_type = worker->error_type;
+
     if (worker->error_type == QNetworkReply::NoError) {
         msg = QString("Success! %1 bytes").arg(worker->response.length());
     }
@@ -61,13 +65,12 @@ SWGStoreApi::deleteOrderCallback(HttpRequestWorker * worker) {
         msg = "Error: " + worker->error_str;
     }
 
-    
-
     worker->deleteLater();
 
-    
     emit deleteOrderSignal();
+    emit deleteOrderSignalE(error_type, error_str);
 }
+
 void
 SWGStoreApi::getInventory() {
     QString fullPath;
@@ -78,7 +81,7 @@ SWGStoreApi::getInventory() {
     HttpRequestWorker *worker = new HttpRequestWorker();
     HttpRequestInput input(fullPath, "GET");
 
-    
+
 
 
 
@@ -93,6 +96,9 @@ SWGStoreApi::getInventory() {
 void
 SWGStoreApi::getInventoryCallback(HttpRequestWorker * worker) {
     QString msg;
+    QString error_str = worker->error_str;
+    QNetworkReply::NetworkError error_type = worker->error_type;
+
     if (worker->error_type == QNetworkReply::NoError) {
         msg = QString("Success! %1 bytes").arg(worker->response.length());
     }
@@ -100,9 +106,8 @@ SWGStoreApi::getInventoryCallback(HttpRequestWorker * worker) {
         msg = "Error: " + worker->error_str;
     }
 
-    
-        QMap<QString, qint32>* output = new QMap<QString, qint32>();
 
+    QMap<QString, qint32>* output = new QMap<QString, qint32>();
     QString json(worker->response);
     QByteArray array (json.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(array);
@@ -113,15 +118,12 @@ SWGStoreApi::getInventoryCallback(HttpRequestWorker * worker) {
         setValue(&val, obj[key], "QMap", "");
         output->insert(key, *val);
     }
-
-
-    
-
     worker->deleteLater();
 
     emit getInventorySignal(output);
-    
+    emit getInventorySignalE(output, error_type, error_str);
 }
+
 void
 SWGStoreApi::getOrderById(qint64 order_id) {
     QString fullPath;
@@ -134,7 +136,7 @@ SWGStoreApi::getOrderById(qint64 order_id) {
     HttpRequestWorker *worker = new HttpRequestWorker();
     HttpRequestInput input(fullPath, "GET");
 
-    
+
 
 
 
@@ -149,6 +151,9 @@ SWGStoreApi::getOrderById(qint64 order_id) {
 void
 SWGStoreApi::getOrderByIdCallback(HttpRequestWorker * worker) {
     QString msg;
+    QString error_str = worker->error_str;
+    QNetworkReply::NetworkError error_type = worker->error_type;
+
     if (worker->error_type == QNetworkReply::NoError) {
         msg = QString("Success! %1 bytes").arg(worker->response.length());
     }
@@ -156,16 +161,15 @@ SWGStoreApi::getOrderByIdCallback(HttpRequestWorker * worker) {
         msg = "Error: " + worker->error_str;
     }
 
-    
-        QString json(worker->response);
-    SWGOrder* output = static_cast<SWGOrder*>(create(json, QString("SWGOrder")));
-    
 
+    QString json(worker->response);
+    SWGOrder* output = static_cast<SWGOrder*>(create(json, QString("SWGOrder")));
     worker->deleteLater();
 
     emit getOrderByIdSignal(output);
-    
+    emit getOrderByIdSignalE(output, error_type, error_str);
 }
+
 void
 SWGStoreApi::placeOrder(SWGOrder body) {
     QString fullPath;
@@ -176,7 +180,7 @@ SWGStoreApi::placeOrder(SWGOrder body) {
     HttpRequestWorker *worker = new HttpRequestWorker();
     HttpRequestInput input(fullPath, "POST");
 
-    
+
     QString output = body.asJson();
     input.request_body.append(output);
     
@@ -193,6 +197,9 @@ SWGStoreApi::placeOrder(SWGOrder body) {
 void
 SWGStoreApi::placeOrderCallback(HttpRequestWorker * worker) {
     QString msg;
+    QString error_str = worker->error_str;
+    QNetworkReply::NetworkError error_type = worker->error_type;
+
     if (worker->error_type == QNetworkReply::NoError) {
         msg = QString("Success! %1 bytes").arg(worker->response.length());
     }
@@ -200,14 +207,14 @@ SWGStoreApi::placeOrderCallback(HttpRequestWorker * worker) {
         msg = "Error: " + worker->error_str;
     }
 
-    
-        QString json(worker->response);
-    SWGOrder* output = static_cast<SWGOrder*>(create(json, QString("SWGOrder")));
-    
 
+    QString json(worker->response);
+    SWGOrder* output = static_cast<SWGOrder*>(create(json, QString("SWGOrder")));
     worker->deleteLater();
 
     emit placeOrderSignal(output);
-    
+    emit placeOrderSignalE(output, error_type, error_str);
 }
-} /* namespace Swagger */
+
+
+}

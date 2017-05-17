@@ -11,7 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
+
 /**
  * MixedPropertiesAndAdditionalPropertiesClass
  */
@@ -24,7 +26,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
   private OffsetDateTime dateTime = null;
 
   @JsonProperty("map")
-  private Map<String, Animal> map = new HashMap<String, Animal>();
+  private Map<String, Animal> map = null;
 
   public MixedPropertiesAndAdditionalPropertiesClass uuid(UUID uuid) {
     this.uuid = uuid;
@@ -36,6 +38,9 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
    * @return uuid
   **/
   @ApiModelProperty(value = "")
+
+  @Valid
+
   public UUID getUuid() {
     return uuid;
   }
@@ -54,6 +59,9 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
    * @return dateTime
   **/
   @ApiModelProperty(value = "")
+
+  @Valid
+
   public OffsetDateTime getDateTime() {
     return dateTime;
   }
@@ -68,6 +76,9 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
   }
 
   public MixedPropertiesAndAdditionalPropertiesClass putMapItem(String key, Animal mapItem) {
+    if (this.map == null) {
+      this.map = new HashMap<String, Animal>();
+    }
     this.map.put(key, mapItem);
     return this;
   }
@@ -77,6 +88,9 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
    * @return map
   **/
   @ApiModelProperty(value = "")
+
+  @Valid
+
   public Map<String, Animal> getMap() {
     return map;
   }

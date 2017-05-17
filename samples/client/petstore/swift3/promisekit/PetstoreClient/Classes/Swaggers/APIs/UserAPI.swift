@@ -5,6 +5,7 @@
 // https://github.com/swagger-api/swagger-codegen
 //
 
+import Foundation
 import Alamofire
 import PromiseKit
 
@@ -267,7 +268,7 @@ open class UserAPI: APIBase {
   "firstName" : "aeiou",
   "lastName" : "aeiou",
   "password" : "aeiou",
-  "userStatus" : 5,
+  "userStatus" : 6,
   "phone" : "aeiou",
   "id" : 0,
   "email" : "aeiou",
@@ -286,7 +287,7 @@ open class UserAPI: APIBase {
   "firstName" : "aeiou",
   "lastName" : "aeiou",
   "password" : "aeiou",
-  "userStatus" : 5,
+  "userStatus" : 6,
   "phone" : "aeiou",
   "id" : 0,
   "email" : "aeiou",

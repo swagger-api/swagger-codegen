@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import io.swagger.client.model.Client;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import io.swagger.client.model.OuterComposite;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,14 +25,57 @@ import retrofit2.Response;
 
 public interface FakeApi {
   /**
+   * 
+   * Test serialization of outer boolean types
+   * @param body Input boolean as post body (optional)
+   * @return Call&lt;Boolean&gt;
+   */
+  @POST("fake/outer/boolean")
+  F.Promise<Response<Boolean>> fakeOuterBooleanSerialize(
+    @retrofit2.http.Body Boolean body
+  );
+
+  /**
+   * 
+   * Test serialization of object with outer number type
+   * @param body Input composite as post body (optional)
+   * @return Call&lt;OuterComposite&gt;
+   */
+  @POST("fake/outer/composite")
+  F.Promise<Response<OuterComposite>> fakeOuterCompositeSerialize(
+    @retrofit2.http.Body OuterComposite body
+  );
+
+  /**
+   * 
+   * Test serialization of outer number types
+   * @param body Input number as post body (optional)
+   * @return Call&lt;BigDecimal&gt;
+   */
+  @POST("fake/outer/number")
+  F.Promise<Response<BigDecimal>> fakeOuterNumberSerialize(
+    @retrofit2.http.Body BigDecimal body
+  );
+
+  /**
+   * 
+   * Test serialization of outer string types
+   * @param body Input string as post body (optional)
+   * @return Call&lt;String&gt;
+   */
+  @POST("fake/outer/string")
+  F.Promise<Response<String>> fakeOuterStringSerialize(
+    @retrofit2.http.Body String body
+  );
+
+  /**
    * To test \&quot;client\&quot; model
    * To test \&quot;client\&quot; model
    * @param body client model (required)
    * @return Call&lt;Client&gt;
    */
-  
   @Headers({
-  	"Content-Type:application/json" 
+    "Content-Type:application/json"
   })
   @PATCH("fake")
   F.Promise<Response<Client>> testClientModel(
@@ -57,7 +101,6 @@ public interface FakeApi {
    * @param paramCallback None (optional)
    * @return Call&lt;Void&gt;
    */
-  
   @retrofit2.http.FormUrlEncoded
   @POST("fake")
   F.Promise<Response<Void>> testEndpointParameters(
@@ -77,7 +120,6 @@ public interface FakeApi {
    * @param enumQueryDouble Query parameter enum test (double) (optional)
    * @return Call&lt;Void&gt;
    */
-  
   @retrofit2.http.FormUrlEncoded
   @GET("fake")
   F.Promise<Response<Void>> testEnumParameters(

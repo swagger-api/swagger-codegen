@@ -3,6 +3,9 @@ package io.swagger.api.impl;
 import io.swagger.api.*;
 import java.math.BigDecimal;
 import io.swagger.model.Client;
+import java.util.Date;
+
+import io.swagger.model.OuterComposite;
 import org.joda.time.LocalDate;
 
 import java.io.InputStream;
@@ -19,13 +22,37 @@ import org.apache.cxf.jaxrs.ext.multipart.*;
 import io.swagger.annotations.Api;
 
 public class FakeApiServiceImpl implements FakeApi {
+    @Override
+    public Boolean fakeOuterBooleanSerialize(Boolean body) {
+        // TODO: Implement...
+        return null;
+    }
+
+    @Override
+    public OuterComposite fakeOuterCompositeSerialize(OuterComposite body) {
+        // TODO: Implement...
+        return null;
+    }
+
+    @Override
+    public BigDecimal fakeOuterNumberSerialize(BigDecimal body) {
+        // TODO: Implement...
+        return null;
+    }
+
+    @Override
+    public String fakeOuterStringSerialize(String body) {
+        // TODO: Implement...
+        return null;
+    }
+
     public Client testClientModel(Client body) {
         // TODO: Implement...
         
         return null;
     }
     
-    public void testEndpointParameters(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, LocalDate date, javax.xml.datatype.XMLGregorianCalendar dateTime, String password, String paramCallback) {
+    public void testEndpointParameters(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, LocalDate date, Date dateTime, String password, String paramCallback) {
         // TODO: Implement...
         
         

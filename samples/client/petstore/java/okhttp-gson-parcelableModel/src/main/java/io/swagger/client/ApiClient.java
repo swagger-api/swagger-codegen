@@ -112,7 +112,7 @@ public class ApiClient {
      */
     public static final String LENIENT_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 
-    private String basePath = "http://petstore.swagger.io/v2";
+    private String basePath = "http://petstore.swagger.io:80/v2";
     private boolean lenientOnJson = false;
     private boolean debugging = false;
     private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
@@ -127,6 +127,7 @@ public class ApiClient {
 
     private InputStream sslCaCert;
     private boolean verifyingSsl;
+    private KeyManager[] keyManagers;
 
     private OkHttpClient httpClient;
     private JSON json;
@@ -181,7 +182,7 @@ public class ApiClient {
     /**
      * Set base path
      *
-     * @param basePath Base path of the URL (e.g http://petstore.swagger.io/v2
+     * @param basePath Base path of the URL (e.g http://petstore.swagger.io:80/v2
      * @return An instance of OkHttpClient
      */
     public ApiClient setBasePath(String basePath) {
@@ -270,6 +271,23 @@ public class ApiClient {
      */
     public ApiClient setSslCaCert(InputStream sslCaCert) {
         this.sslCaCert = sslCaCert;
+        applySslSettings();
+        return this;
+    }
+
+    public KeyManager[] getKeyManagers() {
+        return keyManagers;
+    }
+
+    /**
+     * Configure client keys to use for authorization in an SSL session.
+     * Use null to reset to default.
+     *
+     * @param managers The KeyManagers to use
+     * @return ApiClient
+     */
+    public ApiClient setKeyManagers(KeyManager[] managers) {
+        this.keyManagers = managers;
         applySslSettings();
         return this;
     }
@@ -727,12 +745,13 @@ public class ApiClient {
      *   application/json
      *   application/json; charset=UTF8
      *   APPLICATION/JSON
-     *
+     *   application/vnd.company+json
      * @param mime MIME (Multipurpose Internet Mail Extensions)
      * @return True if the given MIME is JSON, false otherwise.
      */
     public boolean isJsonMime(String mime) {
-        return mime != null && mime.matches("(?i)application\\/json(;.*)?");
+      String jsonMime = "(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$";
+      return mime != null && mime.matches(jsonMime);
     }
 
     /**
@@ -1262,7 +1281,6 @@ public class ApiClient {
      */
     private void applySslSettings() {
         try {
-            KeyManager[] keyManagers = null;
             TrustManager[] trustManagers = null;
             HostnameVerifier hostnameVerifier = null;
             if (!verifyingSsl) {

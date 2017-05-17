@@ -5,6 +5,7 @@
 // https://github.com/swagger-api/swagger-codegen
 //
 
+import Foundation
 import Alamofire
 import RxSwift
 
@@ -277,9 +278,9 @@ open class UserAPI: APIBase {
   "firstName" : "aeiou",
   "lastName" : "aeiou",
   "password" : "aeiou",
-  "userStatus" : 2,
+  "userStatus" : 6,
   "phone" : "aeiou",
-  "id" : 7,
+  "id" : 0,
   "email" : "aeiou",
   "username" : "aeiou"
 }}]
@@ -296,9 +297,9 @@ open class UserAPI: APIBase {
   "firstName" : "aeiou",
   "lastName" : "aeiou",
   "password" : "aeiou",
-  "userStatus" : 2,
+  "userStatus" : 6,
   "phone" : "aeiou",
-  "id" : 7,
+  "id" : 0,
   "email" : "aeiou",
   "username" : "aeiou"
 }}]

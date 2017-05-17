@@ -70,9 +70,9 @@ Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 -------------------------- | ------------ | -------------------------- | -----
 2.3.0 (upcoming minor release) | Apr/May 2017   | 1.0, 1.1, 1.2, 2.0   | Minor release with breaking changes
 2.2.3 (upcoming patch release) | TBD   | 1.0, 1.1, 1.2, 2.0   | Patch release without breaking changes
-2.2.2 (**current stable**) | 2017-03-01   | 1.0, 1.1, 1.2, 2.0   | [tag v2.2.2](https://github.com/swagger-api/swagger-codegen/tree/v2.2.2)
-2.2.1 | 2016-08-07   | 1.0, 1.1, 1.2, 2.0   | [tag v2.2.1](https://github.com/swagger-api/swagger-codegen/tree/v2.2.1)
-2.1.6 | 2016-04-06   | 1.0, 1.1, 1.2, 2.0   | [tag v2.1.6](https://github.com/swagger-api/swagger-codegen/tree/v2.1.6)
+[2.2.2](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.2.2) (**current stable**) | 2017-03-01   | 1.0, 1.1, 1.2, 2.0   | [tag v2.2.2](https://github.com/swagger-api/swagger-codegen/tree/v2.2.2)
+[2.2.1](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.2.1) | 2016-08-07   | 1.0, 1.1, 1.2, 2.0   | [tag v2.2.1](https://github.com/swagger-api/swagger-codegen/tree/v2.2.1)
+[2.1.6](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.1.6) | 2016-04-06   | 1.0, 1.1, 1.2, 2.0   | [tag v2.1.6](https://github.com/swagger-api/swagger-codegen/tree/v2.1.6)
 2.0.17                     | 2014-08-22   | 1.1, 1.2             | [tag v2.0.17](https://github.com/swagger-api/swagger-codegen/tree/v2.0.17)
 1.0.4                      | 2012-04-12   | 1.0, 1.1             | [tag v1.0.4](https://github.com/swagger-api/swagger-codegen/tree/swagger-codegen_2.9.1-1.1)
 
@@ -248,7 +248,7 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -o samples/client/petstore/java
 ```
 
-with a number of options.  You can get the options with the `help generate` command:
+with a number of options. You can get the options with the `help generate` command (below only shows partal results):
 
 ```
 NAME
@@ -279,84 +279,9 @@ OPTIONS
             adds authorization headers when fetching the swagger definitions
             remotely. Pass in a URL-encoded string of name:header with a comma
             separating multiple values
+	    
+...... (results omitted)    
 
-        --additional-properties <additional properties>
-            sets additional properties that can be referenced by the mustache
-            templates in the format of name=value,name=value
-
-        --api-package <api package>
-            package for generated api classes
-
-        --artifact-id <artifact id>
-            artifactId in generated pom.xml
-
-        --artifact-version <artifact version>
-            artifact version in generated pom.xml
-
-        -c <configuration file>, --config <configuration file>
-            Path to json configuration file. File content should be in a json
-            format {"optionKey":"optionValue", "optionKey1":"optionValue1"...}
-            Supported options can be different for each language. Run
-            config-help -l {lang} command for language specific config options.
-
-        -D <system properties>
-            sets specified system properties in the format of
-            name=value,name=value
-
-        --group-id <group id>
-            groupId in generated pom.xml
-
-        -i <spec file>, --input-spec <spec file>
-            location of the swagger spec, as URL or file (required)
-
-
-        --import-mappings <import mappings>
-            specifies mappings between a given class and the import that should
-            be used for that class in the format of type=import,type=import
-
-        --instantiation-types <instantiation types>
-            sets instantiation type mappings in the format of
-            type=instantiatedType,type=instantiatedType.For example (in Java):
-            array=ArrayList,map=HashMap. In other words array types will get
-            instantiated as ArrayList in generated code.
-
-        --invoker-package <invoker package>
-            root package for generated code
-
-        -l <language>, --lang <language>
-            client language to generate (maybe class name in classpath,
-            required)
-
-        --language-specific-primitives <language specific primitives>
-            specifies additional language specific primitive types in the format
-            of type1,type2,type3,type3. For example:
-            String,boolean,Boolean,Double
-
-        --library <library>
-            library template (sub-template)
-
-        --model-package <model package>
-            package for generated models
-
-        -o <output directory>, --output <output directory>
-            where to write the generated files (current dir by default)
-
-        -s, --skip-overwrite
-            specifies if the existing files should be overwritten during the
-            generation.
-
-        -t <template directory>, --template-dir <template directory>
-            folder containing the template files
-
-        --type-mappings <type mappings>
-            sets mappings between swagger spec types and generated code types in
-            the format of swaggerType=generatedType,swaggerType=generatedType.
-            For example: array=List,map=Map,string=String
-
-        --reserved-words-mappings <import mappings>
-            specifies how a reserved name should be escaped to. Otherwise, the
-            default _<name> is used. For example id=identifier
-            
         -v, --verbose
             verbose mode
 
@@ -526,47 +451,7 @@ There are different aspects of customizing the code generator beyond just creati
 $ ls -1 modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/
 AbstractJavaJAXRSServerCodegen.java
 AbstractTypeScriptClientCodegen.java
-AkkaScalaClientCodegen.java
-AndroidClientCodegen.java
-AspNet5ServerCodegen.java
-AspNetCoreServerCodegen.java
-AsyncScalaClientCodegen.java
-BashClientCodegen.java
-CSharpClientCodegen.java
-ClojureClientCodegen.java
-CsharpDotNet2ClientCodegen.java
-DartClientCodegen.java
-FlashClientCodegen.java
-FlaskConnexionCodegen.java
-GoClientCodegen.java
-HaskellServantCodegen.java
-JMeterCodegen.java
-JavaCXFServerCodegen.java
-JavaClientCodegen.java
-JavaInflectorServerCodegen.java
-JavaJerseyServerCodegen.java
-JavaResteasyServerCodegen.java
-JavascriptClientCodegen.java
-NodeJSServerCodegen.java
-NancyFXServerCodegen
-ObjcClientCodegen.java
-PerlClientCodegen.java
-PhpClientCodegen.java
-PythonClientCodegen.java
-Qt5CPPGenerator.java
-RubyClientCodegen.java
-ScalaClientCodegen.java
-ScalatraServerCodegen.java
-SilexServerCodegen.java
-SinatraServerCodegen.java
-SlimFrameworkServerCodegen.java
-SpringMVCServerCodegen.java
-StaticDocCodegen.java
-StaticHtmlGenerator.java
-SwaggerGenerator.java
-SwaggerYamlGenerator.java
-SwiftCodegen.java
-TizenClientCodegen.java
+... (results omitted)
 TypeScriptAngularClientCodegen.java
 TypeScriptNodeClientCodegen.java
 ```
@@ -588,7 +473,7 @@ and `config.json` contains the following as an example:
 ```
 
 Supported config options can be different per language. Running `config-help -l {lang}` will show available options.  
-**These options are applied via configuration file (e.g. config.json) or by passing them with `-D{optionName}={optionValue}**. (If `-D{optionName}` does not work, please open a [ticket](https://github.com/swagger-api/swagger-codegen/issues/new) and we'll look into it)
+**These options are applied via configuration file (e.g. config.json) or by passing them with `-D{optionName}={optionValue}`**. (If `-D{optionName}` does not work, please open a [ticket](https://github.com/swagger-api/swagger-codegen/issues/new) and we'll look into it)
 
 ```
 java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar config-help -l java
@@ -603,31 +488,7 @@ CONFIG OPTIONS
 
 	apiPackage
 	    package for generated api classes
-
-	sortParamsByRequiredFlag
-	    Sort method arguments to place required parameters before optional parameters. Default: true
-
-	invokerPackage
-	    root package for generated code
-
-	groupId
-	    groupId in generated pom.xml
-
-	artifactId
-	    artifactId in generated pom.xml
-
-	artifactVersion
-	    artifact version in generated pom.xml
-
-	sourceFolder
-	    source folder for generated code
-
-	localVariablePrefix
-	    prefix for generated code members and local variables
-
-	serializableModel
-	    boolean - toggle "implements Serializable" for generated models
-
+...... (results omitted)
 	library
 	    library template (sub-template) to use:
 	    jersey1 - HTTP client: Jersey client 1.18. JSON processing: Jackson 2.4.2
@@ -816,6 +677,21 @@ and here is the curl command:
 curl -H "Content-type: application/json" -X POST -d '{"options": {"packageName": "pet_store"},"swaggerUrl": "http://petstore.swagger.io/v2/swagger.json"}' https://generator.swagger.io/api/gen/clients/python
 ```
 
+Instead of using `swaggerUrl` with an URL to the OpenAPI/Swagger spec, one can include the spec in the JSON payload with `spec`, e.g.
+```
+{
+  "options": {},
+  "spec": {
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Test API"
+    },
+    ...
+  }
+}
+```
+
 Guidelines for Contribution
 ---------------------------
 
@@ -833,18 +709,21 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Balance Internet](https://www.balanceinternet.com.au/)
 - [beemo](http://www.beemo.eu)
 - [bitly](https://bitly.com)
+- [Box](https://box.com)
 - [Bufferfly Network](https://www.butterflynetinc.com/)
 - [Cachet Financial](http://www.cachetfinancial.com/)
 - [carpolo](http://www.carpolo.co/)
 - [CloudBoost](https://www.CloudBoost.io/)
+- [Cisco](http://www.cisco.com/)
 - [Conplement](http://www.conplement.de/)
 - [Cummins](http://www.cummins.com/)
 - [Cupix](http://www.cupix.com)
 - [DBBest Technologies](https://www.dbbest.com)
 - [DecentFoX](http://decentfox.com/)
+- [DocRaptor](https://docraptor.com)
 - [DocuSign](https://www.docusign.com)
 - [Ergon](http://www.ergon.ch/)
-- [EMC](https://www.emc.com/)
+- [Dell EMC](https://www.emc.com/)
 - [eureka](http://eure.jp/)
 - [everystory.us](http://everystory.us)
 - [Expected Behavior](http://www.expectedbehavior.com/)
@@ -855,13 +734,16 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Fotition](https://www.fotition.com/)
 - [Gear Zero Network](https://www.gearzero.ca)
 - [Germin8](http://www.germin8.com)
+- [GigaSpaces](http://www.gigaspaces.com)
 - [goTransverse](http://www.gotransverse.com/api)
 - [GraphHopper](https://graphhopper.com/)
 - [Gravitate Solutions](http://gravitatesolutions.com/)
 - [HashData](http://www.hashdata.cn/)
 - [Hewlett Packard Enterprise](https://hpe.com)
 - [High Technologies Center](http://htc-cs.com)
+- [IBM](https://www.ibm.com)
 - [IMS Health](http://www.imshealth.com/en/solution-areas/technology-and-applications)
+- [Individual Standard IVS](http://www.individual-standard.com) 
 - [Intent HQ](http://www.intenthq.com)
 - [Interactive Intelligence](http://developer.mypurecloud.com/)
 - [Kabuku](http://www.kabuku.co.jp/en)
@@ -874,6 +756,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Leica Geosystems AG](http://leica-geosystems.com)
 - [LiveAgent](https://www.ladesk.com/)
 - [LXL Tech](http://lxltech.com)
+- [Lyft](https://www.lyft.com/developers)
 - [MailMojo](https://mailmojo.no/)
 - [Mindera](http://mindera.com/)
 - [Mporium](http://mporium.com/)
@@ -910,11 +793,14 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [snapCX](https://snapcx.io)
 - [SPINEN](http://www.spinen.com)
 - [SRC](https://www.src.si/)
+- [Stardog Ventures](https://www.stardog.io)
 - [Stingray](http://www.stingray.com)
 - [StyleRecipe](http://stylerecipe.co.jp)
 - [Svenska Spel AB](https://www.svenskaspel.se/)
+- [Switch Database](https://www.switchdatabase.com/)
 - [TaskData](http://www.taskdata.com/)
 - [ThoughtWorks](https://www.thoughtworks.com)
+- [Trexle](https://trexle.com/)
 - [Upwork](http://upwork.com/)
 - [uShip](https://www.uship.com/)
 - [VMware](https://vmware.com/)
@@ -922,6 +808,8 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Wealthfront](https://www.wealthfront.com/)
 - [Webever GmbH](https://www.webever.de/)
 - [WEXO A/S](https://www.wexo.dk/)
+- [XSky](http://www.xsky.com/)
+- [Yelp](http://www.yelp.com/)
 - [Zalando](https://tech.zalando.com)
 - [ZEEF.com](https://zeef.com/)
 
@@ -982,20 +870,25 @@ Here is a list of template creators:
    * Bash: @bkryza
    * C++ REST: @Danielku15
    * C# (.NET 2.0): @who
+   * C# (.NET Standard 1.3 ): @Gronsak
    * Clojure: @xhh
    * Dart: @yissachar
    * Elixir: @niku
    * Groovy: @victorgit
    * Go: @wing328
+   * Go (rewritten in 2.3.0): @antihax
    * Java (Feign): @davidkiss
    * Java (Retrofit): @0legg
    * Java (Retrofi2): @emilianobonassi
    * Java (Jersey2): @xhh
    * Java (okhttp-gson): @xhh
+   * Java (RestTemplate): @nbruno
+   * Java (RESTEasy): @gayathrigs
    * Javascript/NodeJS: @jfiala
    * Javascript (Closure-annotated Angular) @achew22
    * JMeter @davidkiss
    * Perl: @wing328
+   * PHP (Guzzle): @baartosz
    * Swift: @tkqubo
    * Swift 3: @hexelon
    * TypeScript (Node):  @mhardorf

@@ -1,7 +1,11 @@
 package io.swagger.codegen.languages;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.codegen.*;
 import io.swagger.codegen.languages.features.BeanValidationFeatures;
+import io.swagger.models.Model;
+import io.swagger.models.Swagger;
+import io.swagger.util.Json;
 
 import java.io.File;
 import java.util.List;
@@ -13,18 +17,20 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
     public static final String CONFIG_PACKAGE = "configPackage";
     public static final String BASE_PACKAGE = "basePackage";
     public static final String CONTROLLER_ONLY = "controllerOnly";
-    public static final String SINGLE_CONTENT_TYPES = "singleContentTypes";
-    public static final String RESPONSE_WRAPPER = "responseWrapper";
-    public static final String USE_TAGS = "useTags";
+    public static final String USE_INTERFACES = "useInterfaces";
+    public static final String HANDLE_EXCEPTIONS = "handleExceptions";
+    public static final String WRAP_CALLS = "wrapCalls";
+    public static final String USE_SWAGGER_UI = "useSwaggerUI";
 
     protected String title = "swagger-petstore";
     protected String configPackage = "io.swagger.configuration";
     protected String basePackage = "io.swagger";
     protected boolean controllerOnly = false;
-    protected boolean singleContentTypes = false;
-    protected String responseWrapper = "";
-    protected boolean useTags = false;
+    protected boolean useInterfaces = true;
     protected boolean useBeanValidation = true;
+    protected boolean handleExceptions = true;
+    protected boolean wrapCalls = true;
+    protected boolean useSwaggerUI = true;
 
     public JavaPlayFrameworkCodegen() {
         super();
@@ -49,11 +55,14 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
         cliOptions.add(new CliOption(TITLE, "server title name or client service name"));
         cliOptions.add(new CliOption(CONFIG_PACKAGE, "configuration package for generated code"));
         cliOptions.add(new CliOption(BASE_PACKAGE, "base package for generated code"));
-        cliOptions.add(CliOption.newBoolean(CONTROLLER_ONLY, "Whether to generate only API interface stubs without the server files."));
-        cliOptions.add(CliOption.newBoolean(SINGLE_CONTENT_TYPES, "Whether to select only one produces/consumes content-type by operation."));
-        cliOptions.add(new CliOption(RESPONSE_WRAPPER, "wrap the responses in given type (Future,Callable,CompletableFuture,ListenableFuture,DeferredResult,HystrixCommand,RxObservable,RxSingle or fully qualified type)"));
-        cliOptions.add(CliOption.newBoolean(USE_TAGS, "use tags for creating interface and controller classnames"));
-        cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
+
+        //Custom options for this generator
+        cliOptions.add(createBooleanCliWithDefault(CONTROLLER_ONLY, "Whether to generate only API interface stubs without the server files.", controllerOnly));
+        cliOptions.add(createBooleanCliWithDefault(USE_BEANVALIDATION, "Use BeanValidation API annotations", useBeanValidation));
+        cliOptions.add(createBooleanCliWithDefault(USE_INTERFACES, "Makes the controllerImp implements an interface to facilitate automatic completion when updating from version x to y of your spec", useInterfaces));
+        cliOptions.add(createBooleanCliWithDefault(HANDLE_EXCEPTIONS, "Add a 'throw exception' to each controller function. Add also a custom error handler where you can put your custom logic", handleExceptions));
+        cliOptions.add(createBooleanCliWithDefault(WRAP_CALLS, "Add a wrapper to each controller function to handle things like metrics, response modification, etc..", wrapCalls));
+        cliOptions.add(createBooleanCliWithDefault(USE_SWAGGER_UI, "Add a route to /api which show your documentation in swagger-ui. Will also import needed dependencies", useSwaggerUI));
     }
 
     @Override
@@ -94,28 +103,44 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
         }
 
         if (additionalProperties.containsKey(CONTROLLER_ONLY)) {
-            this.setControllerOnly(Boolean.valueOf(additionalProperties.get(CONTROLLER_ONLY).toString()));
-        }
-
-        if (additionalProperties.containsKey(SINGLE_CONTENT_TYPES)) {
-            this.setSingleContentTypes(Boolean.valueOf(additionalProperties.get(SINGLE_CONTENT_TYPES).toString()));
-        }
-
-        if (additionalProperties.containsKey(RESPONSE_WRAPPER)) {
-            this.setResponseWrapper((String) additionalProperties.get(RESPONSE_WRAPPER));
-        }
-
-        if (additionalProperties.containsKey(USE_TAGS)) {
-            this.setUseTags(Boolean.valueOf(additionalProperties.get(USE_TAGS).toString()));
+            this.setControllerOnly(convertPropertyToBoolean(CONTROLLER_ONLY));
+        } else {
+            writePropertyBack(CONTROLLER_ONLY, controllerOnly);
         }
 
         if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
             this.setUseBeanValidation(convertPropertyToBoolean(USE_BEANVALIDATION));
-        }
-
-        if (useBeanValidation) {
+        } else {
             writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
         }
+
+        if (additionalProperties.containsKey(USE_INTERFACES)) {
+            this.setUseInterfaces(convertPropertyToBoolean(USE_INTERFACES));
+        } else {
+            writePropertyBack(USE_INTERFACES, useInterfaces);
+        }
+
+        if (additionalProperties.containsKey(HANDLE_EXCEPTIONS)) {
+            this.setHandleExceptions(convertPropertyToBoolean(HANDLE_EXCEPTIONS));
+        } else {
+            writePropertyBack(HANDLE_EXCEPTIONS, handleExceptions);
+        }
+
+        if (additionalProperties.containsKey(WRAP_CALLS)) {
+            this.setWrapCalls(convertPropertyToBoolean(WRAP_CALLS));
+        } else {
+            writePropertyBack(WRAP_CALLS, wrapCalls);
+        }
+
+        if (additionalProperties.containsKey(USE_SWAGGER_UI)) {
+            this.setUseSwaggerUI(convertPropertyToBoolean(USE_SWAGGER_UI));
+        } else {
+            writePropertyBack(USE_SWAGGER_UI, useSwaggerUI);
+        }
+
+        //We don't use annotation anymore
+        importMapping.remove("ApiModelProperty");
+        importMapping.remove("ApiModel");
 
         //Root folder
         supportingFiles.add(new SupportingFile("README.mustache", "", "README"));
@@ -133,15 +158,28 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
 
         //App/Utils folder
         supportingFiles.add(new SupportingFile("swaggerUtils.mustache", "app/swagger", "SwaggerUtils.java"));
+        if (this.handleExceptions) {
+            supportingFiles.add(new SupportingFile("errorHandler.mustache", "app/swagger", "ErrorHandler.java"));
+        }
 
-        //App/Controllers
-        supportingFiles.add(new SupportingFile("apiDocController.mustache", "app/controllers", "ApiDocController.java"));
+        if(this.wrapCalls) {
+            supportingFiles.add(new SupportingFile("apiCall.mustache", "app/swagger", "ApiCall.java"));
+        }
+
+        if(this.useSwaggerUI) {
+            //App/Controllers
+            supportingFiles.add(new SupportingFile("swagger.mustache", "public", "swagger.json"));
+            supportingFiles.add(new SupportingFile("apiDocController.mustache", "app/controllers", "ApiDocController.java"));
+        }
 
         //We remove the default api.mustache that is used
         apiTemplateFiles.remove("api.mustache");
         apiTemplateFiles.put("newApiController.mustache", "Controller.java");
         if (!this.controllerOnly) {
             apiTemplateFiles.put("newApi.mustache", "ControllerImp.java");
+        }
+        if (this.useInterfaces) {
+            apiTemplateFiles.put("newApiInterface.mustache", "ControllerImpInterface.java");
         }
 
         additionalProperties.put("javaVersion", "1.8");
@@ -151,16 +189,26 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
         importMapping.put("LocalDate", "java.time.LocalDate");
         importMapping.put("OffsetDateTime", "java.time.OffsetDateTime");
 
-        // Some well-known Spring or Spring-Cloud response wrappers
-        switch (this.responseWrapper) {
-            case "Future":
-            case "Callable":
-            case "CompletableFuture":
-                additionalProperties.put(RESPONSE_WRAPPER, "java.util.concurrent" + this.responseWrapper);
-                break;
-            default:
-                break;
+        importMapping.put("InputStream", "java.io.InputStream");
+        typeMapping.put("file", "InputStream");
+    }
+
+    @Override
+    public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
+        super.postProcessModelProperty(model, property);
+
+        //We don't use annotation anymore
+        model.imports.remove("ApiModelProperty");
+        model.imports.remove("ApiModel");
+    }
+
+    @Override
+    public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
+        CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
+        if(codegenModel.description != null) {
+            codegenModel.imports.remove("ApiModel");
         }
+        return codegenModel;
     }
 
     public void setTitle(String title) {
@@ -177,14 +225,24 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
 
     public void setControllerOnly(boolean controllerOnly) { this.controllerOnly = controllerOnly; }
 
-    public void setSingleContentTypes(boolean singleContentTypes) {
-        this.singleContentTypes = singleContentTypes;
+    public void setUseInterfaces(boolean useInterfaces) {
+        this.useInterfaces = useInterfaces;
     }
 
-    public void setResponseWrapper(String responseWrapper) { this.responseWrapper = responseWrapper; }
+    public void setUseBeanValidation(boolean useBeanValidation) {
+        this.useBeanValidation = useBeanValidation;
+    }
 
-    public void setUseTags(boolean useTags) {
-        this.useTags = useTags;
+    public void setHandleExceptions(boolean handleExceptions) {
+        this.handleExceptions = handleExceptions;
+    }
+
+    public void setWrapCalls(boolean wrapCalls) {
+        this.wrapCalls = wrapCalls;
+    }
+
+    public void setUseSwaggerUI(boolean useSwaggerUI) {
+        this.useSwaggerUI = useSwaggerUI;
     }
 
     @Override
@@ -194,17 +252,15 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
             List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
             for (CodegenOperation operation : ops) {
 
-                //This is to fix this bug in the swagger-play project: https://github.com/swagger-api/swagger-play/issues/131
-                //We need to explicitly add the model package name in front of the dataType because if we don't, the
-                //implicitParam is not valid and show error when loading the documentation
-                //This can be removed safely after the bug has been fixed
                 for (CodegenParameter param : operation.allParams) {
-                    if (!param.isPathParam ) {
-                        if (!param.isPrimitiveType && !param.isListContainer && !param.isMapContainer) {
-                            param.dataTypeForImplicitParam = String.format("%s.%s", modelPackage, param.dataType);
-                        } else {
-                            param.dataTypeForImplicitParam = param.dataType;
-                        }
+                    if (param.isFormParam && param.isFile) {
+                        param.dataType = "Http.MultipartFormData.FilePart";
+                    }
+                }
+
+                for (CodegenParameter param : operation.formParams) {
+                    if (param.isFile) {
+                        param.dataType = "Http.MultipartFormData.FilePart";
                     }
                 }
 
@@ -242,7 +298,23 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
         return objs;
     }
 
-    public void setUseBeanValidation(boolean useBeanValidation) {
-        this.useBeanValidation = useBeanValidation;
+    private CliOption createBooleanCliWithDefault(String optionName, String description, boolean defaultValue) {
+        CliOption defaultOption = CliOption.newBoolean(optionName, description);
+        defaultOption.setDefault(Boolean.toString(defaultValue));
+        return defaultOption;
+    }
+
+    @Override
+    public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
+        Swagger swagger = (Swagger)objs.get("swagger");
+        System.out.println("swagger" + swagger.toString());
+        if(swagger != null) {
+            try {
+                objs.put("swagger-json", Json.pretty().writeValueAsString(swagger));
+            } catch (JsonProcessingException e) {
+                LOGGER.error(e.getMessage(), e);
+            }
+        }
+        return super.postProcessSupportingFileData(objs);
     }
 }

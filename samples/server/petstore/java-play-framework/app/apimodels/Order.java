@@ -1,13 +1,11 @@
 package apimodels;
 
 import java.util.Objects;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import javax.validation.constraints.*;
 import com.fasterxml.jackson.annotation.*;
 /**
- * Order
+ * An order for a pets from the pet store
  */
 
 public class Order   {
@@ -60,7 +58,7 @@ public class Order   {
   private StatusEnum status = null;
 
   @JsonProperty("complete")
-  private Boolean complete = null;
+  private Boolean complete = false;
 
   public Order id(Long id) {
     this.id = id;
@@ -71,7 +69,6 @@ public class Order   {
    * Get id
    * @return id
   **/
-  @ApiModelProperty(value = "")
     public Long getId() {
     return id;
   }
@@ -89,7 +86,6 @@ public class Order   {
    * Get petId
    * @return petId
   **/
-  @ApiModelProperty(value = "")
     public Long getPetId() {
     return petId;
   }
@@ -107,7 +103,6 @@ public class Order   {
    * Get quantity
    * @return quantity
   **/
-  @ApiModelProperty(value = "")
     public Integer getQuantity() {
     return quantity;
   }
@@ -125,7 +120,6 @@ public class Order   {
    * Get shipDate
    * @return shipDate
   **/
-  @ApiModelProperty(value = "")
     public OffsetDateTime getShipDate() {
     return shipDate;
   }
@@ -143,7 +137,6 @@ public class Order   {
    * Order Status
    * @return status
   **/
-  @ApiModelProperty(value = "Order Status")
     public StatusEnum getStatus() {
     return status;
   }
@@ -161,7 +154,6 @@ public class Order   {
    * Get complete
    * @return complete
   **/
-  @ApiModelProperty(value = "")
     public Boolean getComplete() {
     return complete;
   }

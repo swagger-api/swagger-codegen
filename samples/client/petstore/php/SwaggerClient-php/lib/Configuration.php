@@ -88,7 +88,7 @@ class Configuration
      *
      * @var string
      */
-    protected $host = 'http://petstore.swagger.io/v2';
+    protected $host = 'http://petstore.swagger.io:80/v2';
 
     /**
      * Timeout (second) of the HTTP request, by default set to 0, no timeout
@@ -176,6 +176,13 @@ class Configuration
      * @var string
      */
     protected $proxyPassword;
+
+    /**
+     * Allow Curl encoding header
+     *
+     * @var bool
+     */
+    protected $allowEncoding = false;
 
     /**
      * Constructor
@@ -446,6 +453,16 @@ class Configuration
     }
 
     /**
+     * Set whether to accept encoding
+     * @param bool $allowEncoding
+     */
+    public function setAllowEncoding($allowEncoding)
+    {
+        $this->allowEncoding = $allowEncoding;
+        return $this;
+    }
+
+    /**
      * Gets the HTTP connect timeout value
      *
      * @return string HTTP connect timeout value
@@ -455,6 +472,15 @@ class Configuration
         return $this->curlConnectTimeout;
     }
 
+    /**
+     * Get whether to allow encoding
+     *
+     * @return bool
+     */
+    public function getAllowEncoding()
+    {
+        return $this->allowEncoding;
+    }
 
     /**
      * Sets the HTTP Proxy Host

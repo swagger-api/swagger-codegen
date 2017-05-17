@@ -1,19 +1,24 @@
 package io.swagger.codegen.javaPlayFramework;
 
+import io.swagger.codegen.AbstractOptionsTest;
 import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.java.JavaClientOptionsTest;
 import io.swagger.codegen.languages.JavaPlayFrameworkCodegen;
 import io.swagger.codegen.options.JavaPlayFrameworkOptionsProvider;
+import io.swagger.codegen.options.OptionsProvider;
 import mockit.Expectations;
 import mockit.Tested;
 
-public class JavaPlayFrameworkOptionsTest extends JavaClientOptionsTest {
+public class JavaPlayFrameworkOptionsTest extends AbstractOptionsTest {
 
     @Tested
     private JavaPlayFrameworkCodegen clientCodegen;
 
     public JavaPlayFrameworkOptionsTest() {
         super(new JavaPlayFrameworkOptionsProvider());
+    }
+
+    protected JavaPlayFrameworkOptionsTest(OptionsProvider optionsProvider) {
+        super(optionsProvider);
     }
 
     @Override
@@ -55,13 +60,15 @@ public class JavaPlayFrameworkOptionsTest extends JavaClientOptionsTest {
             times = 1;
             clientCodegen.setControllerOnly(Boolean.valueOf(JavaPlayFrameworkOptionsProvider.CONTROLLER_ONLY));
             times = 1;
-            clientCodegen.setSingleContentTypes(Boolean.valueOf(JavaPlayFrameworkOptionsProvider.SINGLE_CONTENT_TYPES));
-            times = 1;
-            clientCodegen.setResponseWrapper(JavaPlayFrameworkOptionsProvider.RESPONSE_WRAPPER);
-            times = 1;
-            clientCodegen.setUseTags(Boolean.valueOf(JavaPlayFrameworkOptionsProvider.USE_TAGS));
-            times = 1;
             clientCodegen.setUseBeanValidation(Boolean.valueOf(JavaPlayFrameworkOptionsProvider.USE_BEANVALIDATION));
+            times = 1;
+            clientCodegen.setUseInterfaces(Boolean.valueOf(JavaPlayFrameworkOptionsProvider.USE_INTERFACES));
+            times = 1;
+            clientCodegen.setHandleExceptions(Boolean.valueOf(JavaPlayFrameworkOptionsProvider.HANDLE_EXCEPTIONS));
+            times = 1;
+            clientCodegen.setWrapCalls(Boolean.valueOf(JavaPlayFrameworkOptionsProvider.WRAP_CALLS));
+            times = 1;
+            clientCodegen.setUseSwaggerUI(Boolean.valueOf(JavaPlayFrameworkOptionsProvider.USE_SWAGGER_UI));
             times = 1;
         }};
     }

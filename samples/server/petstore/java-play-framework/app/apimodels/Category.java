@@ -1,12 +1,10 @@
 package apimodels;
 
 import java.util.Objects;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.*;
 import com.fasterxml.jackson.annotation.*;
 /**
- * Category
+ * A category for a pet
  */
 
 public class Category   {
@@ -25,7 +23,6 @@ public class Category   {
    * Get id
    * @return id
   **/
-  @ApiModelProperty(value = "")
     public Long getId() {
     return id;
   }
@@ -43,7 +40,6 @@ public class Category   {
    * Get name
    * @return name
   **/
-  @ApiModelProperty(value = "")
     public String getName() {
     return name;
   }

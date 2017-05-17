@@ -1,53 +1,63 @@
 package controllers;
 
-import java.io.File;
+import java.io.InputStream;
+import apimodels.ModelApiResponse;
 import apimodels.Pet;
 
 import play.mvc.Http;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.io.FileInputStream;
 import javax.validation.constraints.*;
 
-public class PetApiControllerImp {
-    void addPet(Pet body) {
+public class PetApiControllerImp implements PetApiControllerImpInterface {
+    @Override
+    public void addPet(Pet body) throws Exception {
         //Do your magic!!!
         
     }
 
-    void deletePet( Long petId, String apiKey) {
+    @Override
+    public void deletePet(Long petId, String apiKey) throws Exception {
         //Do your magic!!!
         
     }
 
-    List<Pet> findPetsByStatus( List<String> status) {
+    @Override
+    public List<Pet> findPetsByStatus( @NotNull List<String> status) throws Exception {
         //Do your magic!!!
         return new ArrayList<Pet>();
     }
 
-    List<Pet> findPetsByTags( List<String> tags) {
+    @Override
+    public List<Pet> findPetsByTags( @NotNull List<String> tags) throws Exception {
         //Do your magic!!!
         return new ArrayList<Pet>();
     }
 
-    Pet getPetById( Long petId) {
+    @Override
+    public Pet getPetById(Long petId) throws Exception {
         //Do your magic!!!
         return new Pet();
     }
 
-    void updatePet(Pet body) {
+    @Override
+    public void updatePet(Pet body) throws Exception {
         //Do your magic!!!
         
     }
 
-    void updatePetWithForm( String petId, String name, String status) {
+    @Override
+    public void updatePetWithForm(Long petId, String name, String status) throws Exception {
         //Do your magic!!!
         
     }
 
-    void uploadFile( Long petId, String additionalMetadata, Http.MultipartFormData.FilePart file) {
+    @Override
+    public ModelApiResponse uploadFile(Long petId, String additionalMetadata, Http.MultipartFormData.FilePart file) throws Exception {
         //Do your magic!!!
-        
+        return new ModelApiResponse();
     }
 
 }

@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class MapTest   {
   @JsonProperty("map_map_of_string")
-  private Map<String, Map<String, String>> mapMapOfString = new HashMap<String, Map<String, String>>();
+  private Map<String, Map<String, String>> mapMapOfString = null;
 
   /**
    * Gets or Sets inner
@@ -51,7 +51,7 @@ public class MapTest   {
   }
 
   @JsonProperty("map_of_enum_string")
-  private Map<String, InnerEnum> mapOfEnumString = new HashMap<String, InnerEnum>();
+  private Map<String, InnerEnum> mapOfEnumString = null;
 
   /**
    **/
@@ -61,7 +61,7 @@ public class MapTest   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("map_map_of_string")
   public Map<String, Map<String, String>> getMapMapOfString() {
     return mapMapOfString;
@@ -78,7 +78,7 @@ public class MapTest   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("map_of_enum_string")
   public Map<String, InnerEnum> getMapOfEnumString() {
     return mapOfEnumString;

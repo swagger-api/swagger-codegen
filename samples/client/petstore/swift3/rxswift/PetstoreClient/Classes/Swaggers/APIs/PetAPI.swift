@@ -5,6 +5,7 @@
 // https://github.com/swagger-api/swagger-codegen
 //
 
+import Foundation
 import Alamofire
 import RxSwift
 
@@ -193,7 +194,7 @@ open class PetAPI: APIBase {
 </Pet>}, {contentType=application/json, example=[ {
   "photoUrls" : [ "aeiou" ],
   "name" : "doggie",
-  "id" : 6,
+  "id" : 0,
   "category" : {
     "name" : "aeiou",
     "id" : 6
@@ -216,7 +217,7 @@ open class PetAPI: APIBase {
 </Pet>}, {contentType=application/json, example=[ {
   "photoUrls" : [ "aeiou" ],
   "name" : "doggie",
-  "id" : 6,
+  "id" : 0,
   "category" : {
     "name" : "aeiou",
     "id" : 6
@@ -299,14 +300,14 @@ open class PetAPI: APIBase {
 </Pet>}, {contentType=application/json, example=[ {
   "photoUrls" : [ "aeiou" ],
   "name" : "doggie",
-  "id" : 2,
+  "id" : 0,
   "category" : {
     "name" : "aeiou",
-    "id" : 1
+    "id" : 6
   },
   "tags" : [ {
     "name" : "aeiou",
-    "id" : 2
+    "id" : 1
   } ],
   "status" : "available"
 } ]}]
@@ -322,14 +323,14 @@ open class PetAPI: APIBase {
 </Pet>}, {contentType=application/json, example=[ {
   "photoUrls" : [ "aeiou" ],
   "name" : "doggie",
-  "id" : 2,
+  "id" : 0,
   "category" : {
     "name" : "aeiou",
-    "id" : 1
+    "id" : 6
   },
   "tags" : [ {
     "name" : "aeiou",
-    "id" : 2
+    "id" : 1
   } ],
   "status" : "available"
 } ]}]
@@ -405,14 +406,14 @@ open class PetAPI: APIBase {
 </Pet>}, {contentType=application/json, example={
   "photoUrls" : [ "aeiou" ],
   "name" : "doggie",
-  "id" : 8,
+  "id" : 0,
   "category" : {
     "name" : "aeiou",
-    "id" : 7
+    "id" : 6
   },
   "tags" : [ {
     "name" : "aeiou",
-    "id" : 7
+    "id" : 1
   } ],
   "status" : "available"
 }}]
@@ -428,14 +429,14 @@ open class PetAPI: APIBase {
 </Pet>}, {contentType=application/json, example={
   "photoUrls" : [ "aeiou" ],
   "name" : "doggie",
-  "id" : 8,
+  "id" : 0,
   "category" : {
     "name" : "aeiou",
-    "id" : 7
+    "id" : 6
   },
   "tags" : [ {
     "name" : "aeiou",
-    "id" : 7
+    "id" : 1
   } ],
   "status" : "available"
 }}]
@@ -629,7 +630,7 @@ open class PetAPI: APIBase {
        - type: oauth2
        - name: petstore_auth
      - examples: [{contentType=application/json, example={
-  "code" : 9,
+  "code" : 0,
   "type" : "aeiou",
   "message" : "aeiou"
 }}]
