@@ -10,9 +10,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.samskivert.mustache.Escapers;
 import com.samskivert.mustache.Mustache.Compiler;
+import com.samskivert.mustache.Mustache.Escaper;
 
 public interface CodegenConfig {
+
     CodegenType getTag();
     
     String getName();
@@ -178,7 +181,7 @@ public interface CodegenConfig {
     /**
      * Library template (sub-template).
      *
-     * @return libray template
+     * @return library template
      */
     String getLibrary();
 
@@ -203,4 +206,10 @@ public interface CodegenConfig {
     void setIgnoreFilePathOverride(String ignoreFileOverride);
 
     String getIgnoreFilePathOverride();
+    /** 
+     * The default Mustache escaper escapes HTML markup. Override to change this behavior 
+     * (i.e. return {@link Escapers#NONE}
+     */
+    Escaper escaper(); 
+
 }

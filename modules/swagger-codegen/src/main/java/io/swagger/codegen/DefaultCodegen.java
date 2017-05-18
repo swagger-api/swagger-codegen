@@ -3,6 +3,8 @@ package io.swagger.codegen;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.samskivert.mustache.Mustache.Compiler;
+import com.samskivert.mustache.Mustache.Escaper;
+import com.samskivert.mustache.Escapers;
 
 import io.swagger.codegen.examples.ExampleGenerator;
 import io.swagger.models.ArrayModel;
@@ -3590,4 +3592,14 @@ public class DefaultCodegen {
     public void writePropertyBack(String propertyKey, boolean value) {
         additionalProperties.put(propertyKey, value);
     }
+
+   
+   /** 
+    * The default Mustache escaper escapes HTML markup. Override to change this behavior 
+    * (i.e. return {@link Escapers#NONE}
+    */
+   public Escaper escaper() {
+       return Escapers.simple();
+   }  
+
 }
