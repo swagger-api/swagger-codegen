@@ -1,8 +1,8 @@
 package io.swagger.api;
 
-import java.io.File;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+import org.springframework.core.io.Resource;
 
 import io.swagger.annotations.*;
 
@@ -19,13 +19,14 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 @Controller
 public class PetApiController implements PetApi {
 
 
 
-    public ResponseEntity<Void> addPet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true ) @RequestBody Pet body) {
+    public ResponseEntity<Void> addPet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true )  @Valid @RequestBody Pet body) {
         // do some magic!
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
@@ -35,12 +36,12 @@ public class PetApiController implements PetApi {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    public ResponseEntity<List<Pet>> findPetsByStatus( @NotNull @ApiParam(value = "Status values that need to be considered for filter", required = true, allowableValues = "available, pending, sold") @RequestParam(value = "status", required = true) List<String> status) {
+    public ResponseEntity<List<Pet>> findPetsByStatus( @NotNull@ApiParam(value = "Status values that need to be considered for filter", required = true, allowableValues = "available, pending, sold") @RequestParam(value = "status", required = true) List<String> status) {
         // do some magic!
         return new ResponseEntity<List<Pet>>(HttpStatus.OK);
     }
 
-    public ResponseEntity<List<Pet>> findPetsByTags( @NotNull @ApiParam(value = "Tags to filter by", required = true) @RequestParam(value = "tags", required = true) List<String> tags) {
+    public ResponseEntity<List<Pet>> findPetsByTags( @NotNull@ApiParam(value = "Tags to filter by", required = true) @RequestParam(value = "tags", required = true) List<String> tags) {
         // do some magic!
         return new ResponseEntity<List<Pet>>(HttpStatus.OK);
     }
@@ -50,7 +51,7 @@ public class PetApiController implements PetApi {
         return new ResponseEntity<Pet>(HttpStatus.OK);
     }
 
-    public ResponseEntity<Void> updatePet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true ) @RequestBody Pet body) {
+    public ResponseEntity<Void> updatePet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true )  @Valid @RequestBody Pet body) {
         // do some magic!
         return new ResponseEntity<Void>(HttpStatus.OK);
     }

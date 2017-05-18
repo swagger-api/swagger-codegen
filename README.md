@@ -709,6 +709,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Balance Internet](https://www.balanceinternet.com.au/)
 - [beemo](http://www.beemo.eu)
 - [bitly](https://bitly.com)
+- [Box](https://box.com)
 - [Bufferfly Network](https://www.butterflynetinc.com/)
 - [Cachet Financial](http://www.cachetfinancial.com/)
 - [carpolo](http://www.carpolo.co/)
@@ -808,6 +809,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Webever GmbH](https://www.webever.de/)
 - [WEXO A/S](https://www.wexo.dk/)
 - [XSky](http://www.xsky.com/)
+- [Yelp](http://www.yelp.com/)
 - [Zalando](https://tech.zalando.com)
 - [ZEEF.com](https://zeef.com/)
 
