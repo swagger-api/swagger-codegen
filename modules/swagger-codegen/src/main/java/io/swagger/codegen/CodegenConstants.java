@@ -191,4 +191,6 @@ public class CodegenConstants {
     public static final String IGNORE_FILE_OVERRIDE = "ignoreFileOverride";
     public static final String IGNORE_FILE_OVERRIDE_DESC = "Specifies an override location for the .swagger-codegen-ignore file. Most useful on initial generation.";
 
+    public static final String MODEL_DEFAULT_NULL = "modelDefaultNull";
+    public static final String MODEL_DEFAULT_NULL_DESC = "Generate models with null as default value";
 }

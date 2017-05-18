@@ -76,6 +76,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
     protected boolean supportJava6= false;
+    protected boolean modelDefaultNull = false;
 
     public AbstractJavaCodegen() {
         super();
@@ -292,6 +293,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
         if(additionalProperties.containsKey(CodegenConstants.SERIALIZE_BIG_DECIMAL_AS_STRING)) {
             this.setSerializeBigDecimalAsString(Boolean.valueOf(additionalProperties.get(CodegenConstants.SERIALIZE_BIG_DECIMAL_AS_STRING).toString()));
+        }
+
+        if(additionalProperties.containsKey(CodegenConstants.MODEL_DEFAULT_NULL)) {
+            this.setModelDefaultNull(Boolean.valueOf(additionalProperties.get(CodegenConstants.MODEL_DEFAULT_NULL).toString()));
         }
 
         // need to put back serializableModel (boolean) into additionalProperties as value in additionalProperties is string
@@ -584,6 +589,9 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
     @Override
     public String toDefaultValue(Property p) {
+        if (this.modelDefaultNull) {
+            return "null";
+        }
         if (p instanceof ArrayProperty) {
             final ArrayProperty ap = (ArrayProperty) p;
             final String pattern;
@@ -1148,6 +1156,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
     public void setSupportJava6(boolean value) {
         this.supportJava6 = value;
+    }
+
+    public void setModelDefaultNull(boolean value) {
+        this.modelDefaultNull = value;
     }
 
     public String toRegularExpression(String pattern) {
