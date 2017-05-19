@@ -27,7 +27,7 @@ export class {{classname}}Resource {
      {{/allParams}}*/
     public {{nickname}}({{#allParams}}{{^isQueryParam}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/isQueryParam}}{{/allParams}}{{#hasQueryParams}}query?: { {{#queryParams}}{{paramName}}{{^required}}?{{/required}}: {{dataType}}{{^-last}},{{/-last}} {{/queryParams}}}, {{/hasQueryParams}}axiosConfig?: AxiosRequestConfig): Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}> {
         const reqPath = '{{path}}'{{#pathParams}}
-                    .replace('{' + '{{baseName}}}', String({{paramName}}{{#isDate}}.toISOString(){{/isDate}})){{/pathParams}};
+                    .replace('{' + '{{baseName}}}', String({{paramName}}{{#isDateTime}}.toISOString(){{/isDateTime}})){{/pathParams}};
 {{#hasFormParams}}
         let reqFormParams = {
 {{#formParams}}

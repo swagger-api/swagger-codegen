@@ -20,11 +20,8 @@ export namespace {{classname}} {
     export enum {{enumName}} {
     {{#allowableValues}}
         {{#enumVars}}
-            {{{name}}}{{^-last}},{{/-last}}
+            {{{name}}} = <any> {{{value}}}{{^-last}},{{/-last}}
         {{/enumVars}}
     {{/allowableValues}}
-    }
-
-{{/isEnum}}{{/vars}}
-}
-{{/hasEnums}}
+    }{{/isEnum}}{{/vars}}
+}{{/hasEnums}}
