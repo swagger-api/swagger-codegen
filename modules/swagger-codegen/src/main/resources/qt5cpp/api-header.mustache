@@ -9,7 +9,9 @@
 
 #include <QObject>
 
-namespace Swagger {
+{{#cppNamespaceDeclarations}}
+namespace {{this}} {
+{{/cppNamespaceDeclarations}}
 
 class {{classname}}: public QObject {
     Q_OBJECT
@@ -30,6 +32,11 @@ private:
 signals:
     {{#operations}}{{#operation}}void {{nickname}}Signal({{#returnType}}{{{returnType}}} summary{{/returnType}});
     {{/operation}}{{/operations}}
+    {{#operations}}{{#operation}}void {{nickname}}SignalE({{#returnType}}{{{returnType}}} summary, {{/returnType}}QNetworkReply::NetworkError error_type, QString& error_str);
+    {{/operation}}{{/operations}}
 };
+
+{{#cppNamespaceDeclarations}}
 }
+{{/cppNamespaceDeclarations}}
 #endif

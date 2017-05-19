@@ -4,6 +4,7 @@
 // https://github.com/swagger-api/swagger-codegen
 //
 
+import Foundation
 import Alamofire
 
 class AlamofireRequestBuilderFactory: RequestBuilderFactory {
@@ -12,8 +13,38 @@ class AlamofireRequestBuilderFactory: RequestBuilderFactory {
     }
 }
 
+private struct SynchronizedDictionary<K: Hashable, V> {
+
+    private var dictionary = [K: V]()
+    private let queue = DispatchQueue(
+        label: "SynchronizedDictionary",
+        qos: DispatchQoS.userInitiated,
+        attributes: [DispatchQueue.Attributes.concurrent],
+        autoreleaseFrequency: DispatchQueue.AutoreleaseFrequency.inherit,
+        target: nil
+    )
+
+    public subscript(key: K) -> V? {
+        get {
+            var value: V?
+
+            queue.sync {
+                value = self.dictionary[key]
+            }
+
+            return value
+        }
+        set {
+            queue.sync(flags: DispatchWorkItemFlags.barrier) {
+                self.dictionary[key] = newValue
+            }
+        }
+    }
+
+}
+
 // Store manager to retain its reference
-private var managerStore: [String: Alamofire.SessionManager] = [:]
+private var managerStore = SynchronizedDictionary<String, Alamofire.SessionManager>()
 
 open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
     required public init(method: String, URLString: String, parameters: [String : Any]?, isBody: Bool, headers: [String : String] = [:]) {
@@ -45,8 +76,8 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
      May be overridden by a subclass if you want to control the request
      configuration (e.g. to override the cache policy).
      */
-    open func makeRequest(manager: SessionManager, method: HTTPMethod, encoding: ParameterEncoding) -> DataRequest {
-        return manager.request(URLString, method: method, parameters: parameters, encoding: encoding)
+    open func makeRequest(manager: SessionManager, method: HTTPMethod, encoding: ParameterEncoding, headers: [String:String]) -> DataRequest {
+        return manager.request(URLString, method: method, parameters: parameters, encoding: encoding, headers: headers)
     }
 
     override open func execute(_ completion: @escaping (_ response: Response<T>?, _ error: ErrorResponse?) -> Void) {
@@ -96,7 +127,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 }
             })
         } else {
-            let request = makeRequest(manager: manager, method: xMethod!, encoding: encoding)
+            let request = makeRequest(manager: manager, method: xMethod!, encoding: encoding, headers: headers)
             if let onProgressReady = self.onProgressReady {
                 onProgressReady(request.progress)
             }
@@ -111,7 +142,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
         }
 
         let cleanupRequest = {
-            _ = managerStore.removeValue(forKey: managerId)
+            managerStore[managerId] = nil
         }
 
         let validatedRequest = request.validate()
@@ -197,7 +228,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                     return
                 }
                 if let json: Any = response.result.value {
-                    let decoded = Decoders.decode(clazz: T.self, source: json as AnyObject)
+                    let decoded = Decoders.decode(clazz: T.self, source: json as AnyObject, instance: nil)
                     switch decoded {
                     case let .success(object): completion(Response(response: response.response!, body: object), nil)
                     case let .failure(error): completion(nil, ErrorResponse.DecodeError(response: response.data, decodeError: error))
@@ -215,7 +246,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
         }
     }
 
-    private func buildHeaders() -> [String: String] {
+    open func buildHeaders() -> [String: String] {
         var httpHeaders = SessionManager.defaultHTTPHeaders
         for (key, value) in self.headers {
             httpHeaders[key] = value

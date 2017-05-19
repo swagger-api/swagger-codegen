@@ -64,6 +64,16 @@ signals:
     void updatePetWithFormSignal();
     void uploadFileSignal(ApiResponse* summary);
     
+    void addPetSignalE(QNetworkReply::NetworkError error_type, QString& error_str);
+    void deletePetSignalE(QNetworkReply::NetworkError error_type, QString& error_str);
+    void findPetsByStatusSignalE(QList<Pet*>* summary, QNetworkReply::NetworkError error_type, QString& error_str);
+    void findPetsByTagsSignalE(QList<Pet*>* summary, QNetworkReply::NetworkError error_type, QString& error_str);
+    void getPetByIdSignalE(Pet* summary, QNetworkReply::NetworkError error_type, QString& error_str);
+    void updatePetSignalE(QNetworkReply::NetworkError error_type, QString& error_str);
+    void updatePetWithFormSignalE(QNetworkReply::NetworkError error_type, QString& error_str);
+    void uploadFileSignalE(ApiResponse* summary, QNetworkReply::NetworkError error_type, QString& error_str);
+    
 };
+
 }
 #endif

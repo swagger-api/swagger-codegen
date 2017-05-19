@@ -71,6 +71,6 @@ private:
     bool complete;
 };
 
-} /* namespace Swagger */
+}
 
 #endif /* Order_H_ */

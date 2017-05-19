@@ -22,7 +22,6 @@
 
 namespace Swagger {
 
-
 Pet::Pet(QString* json) {
     init();
     this->fromJson(*json);
@@ -190,6 +189,5 @@ Pet::setStatus(QString* status) {
 }
 
 
-
-} /* namespace Swagger */
+}
 

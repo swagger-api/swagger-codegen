@@ -16,6 +16,7 @@ package io.swagger.client.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.Category;
@@ -23,6 +24,7 @@ import io.swagger.client.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * Pet
@@ -42,7 +44,7 @@ public class Pet {
   private List<String> photoUrls = new ArrayList<String>();
 
   @JsonProperty("tags")
-  private List<Tag> tags = new ArrayList<Tag>();
+  private List<Tag> tags = null;
 
   /**
    * pet status in the store
@@ -60,7 +62,12 @@ public class Pet {
       this.value = value;
     }
 
+    public String getValue() {
+      return value;
+    }
+
     @Override
+    @JsonValue
     public String toString() {
       return String.valueOf(value);
     }
@@ -106,6 +113,7 @@ public class Pet {
    * Get category
    * @return category
   **/
+  @Valid
   @ApiModelProperty(value = "")
   public Category getCategory() {
     return category;
@@ -164,6 +172,9 @@ public class Pet {
   }
 
   public Pet addTagsItem(Tag tagsItem) {
+    if (this.tags == null) {
+      this.tags = new ArrayList<Tag>();
+    }
     this.tags.add(tagsItem);
     return this;
   }
@@ -172,6 +183,7 @@ public class Pet {
    * Get tags
    * @return tags
   **/
+  @Valid
   @ApiModelProperty(value = "")
   public List<Tag> getTags() {
     return tags;

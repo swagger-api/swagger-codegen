@@ -22,7 +22,6 @@
 
 namespace Swagger {
 
-
 Category::Category(QString* json) {
     init();
     this->fromJson(*json);
@@ -106,6 +105,5 @@ Category::setName(QString* name) {
 }
 
 
-
-} /* namespace Swagger */
+}
 

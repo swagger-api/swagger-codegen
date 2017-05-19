@@ -22,7 +22,6 @@
 
 namespace Swagger {
 
-
 ApiResponse::ApiResponse(QString* json) {
     init();
     this->fromJson(*json);
@@ -123,6 +122,5 @@ ApiResponse::setMessage(QString* message) {
 }
 
 
-
-} /* namespace Swagger */
+}
 

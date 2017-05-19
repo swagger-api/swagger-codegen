@@ -38,7 +38,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass implements Parcelable {
   private OffsetDateTime dateTime = null;
 
   @SerializedName("map")
-  private Map<String, Animal> map = new HashMap<String, Animal>();
+  private Map<String, Animal> map = null;
 
   public MixedPropertiesAndAdditionalPropertiesClass uuid(UUID uuid) {
     this.uuid = uuid;
@@ -82,6 +82,9 @@ public class MixedPropertiesAndAdditionalPropertiesClass implements Parcelable {
   }
 
   public MixedPropertiesAndAdditionalPropertiesClass putMapItem(String key, Animal mapItem) {
+    if (this.map == null) {
+      this.map = new HashMap<String, Animal>();
+    }
     this.map.put(key, mapItem);
     return this;
   }
@@ -158,8 +161,8 @@ public class MixedPropertiesAndAdditionalPropertiesClass implements Parcelable {
 
   MixedPropertiesAndAdditionalPropertiesClass(Parcel in) {
     
-    uuid = (UUID)in.readValue(null);
-    dateTime = (OffsetDateTime)in.readValue(null);
+    uuid = (UUID)in.readValue(UUID.class.getClassLoader());
+    dateTime = (OffsetDateTime)in.readValue(OffsetDateTime.class.getClassLoader());
     map = (Map<String, Animal>)in.readValue(Animal.class.getClassLoader());
   }
   

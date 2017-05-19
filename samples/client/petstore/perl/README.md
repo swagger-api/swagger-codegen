@@ -88,37 +88,37 @@ you are accessing. Usually `prefix` and `in` will be determined by the code gene
 the spec and you will not need to set them at run time. If not, `in` will
 default to 'head' and `prefix` to the empty string.
 
-The tokens will be placed in the `WWW::SwaggerClient::Configuration` namespace
+The tokens will be placed in a L<WWW::SwaggerClient::Configuration> instance
 as follows, but you don't need to know about this.
 
-- `$WWW::SwaggerClient::Configuration::username`
+- `$cfg->{username}`
 
     String. The username for basic auth.
 
-- `$WWW::SwaggerClient::Configuration::password`
+- `$cfg->{password}`
 
     String. The password for basic auth.
 
-- `$WWW::SwaggerClient::Configuration::api_key`
+- `$cfg->{api_key}`
 
     Hashref. Keyed on the name of each key (there can be multiple tokens).
 
-            $WWW::SwaggerClient::Configuration::api_key = {
+            $cfg->{api_key} = {
                     secretKey => 'aaaabbbbccccdddd',
                     anotherKey => '1111222233334444',
                     };
 
-- `$WWW::SwaggerClient::Configuration::api_key_prefix`
+- `$cfg->{api_key_prefix}`
 
     Hashref. Keyed on the name of each key (there can be multiple tokens). Note not
     all api keys require a prefix.
 
-            $WWW::SwaggerClient::Configuration::api_key_prefix = {
+            $cfg->{api_key_prefix} = {
                     secretKey => 'string',
                     anotherKey => 'same or some other string',
                     };
 
-- `$WWW::SwaggerClient::Configuration::access_token`
+- `$cfg->{access_token}`
 
     String. The OAuth access token.
 
@@ -127,8 +127,7 @@ as follows, but you don't need to know about this.
 ## `base_url`
 
 The generated code has the `base_url` already set as a default value. This method
-returns (and optionally sets, but only if the API client has not been
-created yet) the current value of `base_url`.
+returns the current value of `base_url`.
 
 ## `api_factory`
 
@@ -258,7 +257,11 @@ use WWW::SwaggerClient::Object::ModelReturn;
 use WWW::SwaggerClient::Object::Name;
 use WWW::SwaggerClient::Object::NumberOnly;
 use WWW::SwaggerClient::Object::Order;
+use WWW::SwaggerClient::Object::OuterBoolean;
+use WWW::SwaggerClient::Object::OuterComposite;
 use WWW::SwaggerClient::Object::OuterEnum;
+use WWW::SwaggerClient::Object::OuterNumber;
+use WWW::SwaggerClient::Object::OuterString;
 use WWW::SwaggerClient::Object::Pet;
 use WWW::SwaggerClient::Object::ReadOnlyFirst;
 use WWW::SwaggerClient::Object::SpecialModelName;
@@ -308,7 +311,11 @@ use WWW::SwaggerClient::Object::ModelReturn;
 use WWW::SwaggerClient::Object::Name;
 use WWW::SwaggerClient::Object::NumberOnly;
 use WWW::SwaggerClient::Object::Order;
+use WWW::SwaggerClient::Object::OuterBoolean;
+use WWW::SwaggerClient::Object::OuterComposite;
 use WWW::SwaggerClient::Object::OuterEnum;
+use WWW::SwaggerClient::Object::OuterNumber;
+use WWW::SwaggerClient::Object::OuterString;
 use WWW::SwaggerClient::Object::Pet;
 use WWW::SwaggerClient::Object::ReadOnlyFirst;
 use WWW::SwaggerClient::Object::SpecialModelName;
@@ -317,18 +324,19 @@ use WWW::SwaggerClient::Object::User;
 
 # for displaying the API response data
 use Data::Dumper;
-use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::;
 
-my $api_instance = WWW::SwaggerClient::FakeApi->new();
-my $body = WWW::SwaggerClient::Object::Client->new(); # Client | client model
+my $api_instance = WWW::SwaggerClient::->new(
+);
+
+my $body = WWW::SwaggerClient::Object::OuterBoolean->new(); # OuterBoolean | Input boolean as post body
 
 eval {
-    my $result = $api_instance->test_client_model(body => $body);
+    my $result = $api_instance->fake_outer_boolean_serialize(body => $body);
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling FakeApi->test_client_model: $@\n";
+    warn "Exception when calling FakeApi->fake_outer_boolean_serialize: $@\n";
 }
 
 ```
@@ -339,6 +347,10 @@ All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*FakeApi* | [**fake_outer_boolean_serialize**](docs/FakeApi.md#fake_outer_boolean_serialize) | **POST** /fake/outer/boolean | 
+*FakeApi* | [**fake_outer_composite_serialize**](docs/FakeApi.md#fake_outer_composite_serialize) | **POST** /fake/outer/composite | 
+*FakeApi* | [**fake_outer_number_serialize**](docs/FakeApi.md#fake_outer_number_serialize) | **POST** /fake/outer/number | 
+*FakeApi* | [**fake_outer_string_serialize**](docs/FakeApi.md#fake_outer_string_serialize) | **POST** /fake/outer/string | 
 *FakeApi* | [**test_client_model**](docs/FakeApi.md#test_client_model) | **PATCH** /fake | To test \&quot;client\&quot; model
 *FakeApi* | [**test_endpoint_parameters**](docs/FakeApi.md#test_endpoint_parameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 *FakeApi* | [**test_enum_parameters**](docs/FakeApi.md#test_enum_parameters) | **GET** /fake | To test enum parameters
@@ -392,7 +404,11 @@ Class | Method | HTTP request | Description
  - [WWW::SwaggerClient::Object::Name](docs/Name.md)
  - [WWW::SwaggerClient::Object::NumberOnly](docs/NumberOnly.md)
  - [WWW::SwaggerClient::Object::Order](docs/Order.md)
+ - [WWW::SwaggerClient::Object::OuterBoolean](docs/OuterBoolean.md)
+ - [WWW::SwaggerClient::Object::OuterComposite](docs/OuterComposite.md)
  - [WWW::SwaggerClient::Object::OuterEnum](docs/OuterEnum.md)
+ - [WWW::SwaggerClient::Object::OuterNumber](docs/OuterNumber.md)
+ - [WWW::SwaggerClient::Object::OuterString](docs/OuterString.md)
  - [WWW::SwaggerClient::Object::Pet](docs/Pet.md)
  - [WWW::SwaggerClient::Object::ReadOnlyFirst](docs/ReadOnlyFirst.md)
  - [WWW::SwaggerClient::Object::SpecialModelName](docs/SpecialModelName.md)

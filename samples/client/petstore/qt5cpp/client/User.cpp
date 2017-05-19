@@ -22,7 +22,6 @@
 
 namespace Swagger {
 
-
 User::User(QString* json) {
     init();
     this->fromJson(*json);
@@ -205,6 +204,5 @@ User::setUserStatus(qint32 user_status) {
 }
 
 
-
-} /* namespace Swagger */
+}
 

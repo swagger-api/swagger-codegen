@@ -22,7 +22,6 @@
 
 namespace Swagger {
 
-
 Order::Order(QString* json) {
     init();
     this->fromJson(*json);
@@ -165,6 +164,5 @@ Order::setComplete(bool complete) {
 }
 
 
-
-} /* namespace Swagger */
+}
 

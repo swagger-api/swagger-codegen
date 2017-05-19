@@ -41,6 +41,10 @@ public class EnumArrays {
       this.value = value;
     }
 
+    public String getValue() {
+      return value;
+    }
+
     @Override
     public String toString() {
       return String.valueOf(value);
@@ -66,6 +70,10 @@ public class EnumArrays {
       this.value = value;
     }
 
+    public String getValue() {
+      return value;
+    }
+
     @Override
     public String toString() {
       return String.valueOf(value);
@@ -73,7 +81,7 @@ public class EnumArrays {
   }
 
   @SerializedName("array_enum")
-  private List<ArrayEnumEnum> arrayEnum = new ArrayList<ArrayEnumEnum>();
+  private List<ArrayEnumEnum> arrayEnum = null;
 
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
@@ -99,6 +107,9 @@ public class EnumArrays {
   }
 
   public EnumArrays addArrayEnumItem(ArrayEnumEnum arrayEnumItem) {
+    if (this.arrayEnum == null) {
+      this.arrayEnum = new ArrayList<ArrayEnumEnum>();
+    }
     this.arrayEnum.add(arrayEnumItem);
     return this;
   }

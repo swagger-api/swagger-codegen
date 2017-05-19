@@ -5,6 +5,7 @@ import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 import io.swagger.codegen.*;
 import io.swagger.models.Model;
+import io.swagger.models.ModelImpl;
 import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
 import io.swagger.models.parameters.HeaderParameter;
@@ -62,6 +63,16 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         return "Generates a swift client library.";
     }
 
+    @Override
+    protected void addAdditionPropertiesToCodeGenModel(CodegenModel codegenModel, ModelImpl swaggerModel) {
+
+        final Property additionalProperties = swaggerModel.getAdditionalProperties();
+
+        if(additionalProperties != null) {
+            codegenModel.additionalPropertiesType = getSwaggerType(additionalProperties);
+        }
+    }
+
     public Swift3Codegen() {
         super();
         outputFolder = "generated-code" + File.separator + "swift";
@@ -102,7 +113,7 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         reservedWords = new HashSet<>(
                 Arrays.asList(
                     // name used by swift client
-                    "ErrorResponse",
+                    "ErrorResponse", "Response",
 
                     // swift keywords
                     "Int", "Int32", "Int64", "Int64", "Float", "Double", "Bool", "Void", "String", "Character", "AnyObject", "Any", "Error", "URL",
@@ -348,7 +359,7 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         if (p instanceof MapProperty) {
             MapProperty ap = (MapProperty) p;
             String inner = getSwaggerType(ap.getAdditionalProperties());
-            return "[String:" + inner + "]";
+            return inner;
         } else if (p instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) p;
             String inner = getSwaggerType(ap.getItems());

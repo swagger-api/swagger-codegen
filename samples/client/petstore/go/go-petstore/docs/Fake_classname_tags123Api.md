@@ -1,6 +1,6 @@
 # \Fake_classname_tags123Api
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -8,16 +8,14 @@ Method | HTTP request | Description
 
 
 # **TestClassname**
-> Client TestClassname($body)
-
+> Client TestClassname(body)
 To test class name in snake case
 
-
-### Parameters
+### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Client**](Client.md)| client model | 
+  **body** | [**Client**](Client.md)| client model | 
 
 ### Return type
 
