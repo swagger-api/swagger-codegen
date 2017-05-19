@@ -4,9 +4,9 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**myNumber** | [**OuterNumber**](OuterNumber.md) |  |  [optional]
-**myString** | [**OuterString**](OuterString.md) |  |  [optional]
-**myBoolean** | [**OuterBoolean**](OuterBoolean.md) |  |  [optional]
+**myNumber** | [**BigDecimal**](BigDecimal.md) |  |  [optional]
+**myString** | **String** |  |  [optional]
+**myBoolean** | **Boolean** |  |  [optional]
 
 
 

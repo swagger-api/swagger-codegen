@@ -529,19 +529,17 @@ public class ApiClient {
             return params;
         }
 
+        // collectionFormat is assumed to be "csv" by default
         String delimiter = ",";
 
-        // escape all delimiters except commas, which are URI reserved characters
-        if ("csv".equals(collectionFormat)) {
-            delimiter = ",";
-        } else if ("ssv".equals(collectionFormat)) {
+        // escape all delimiters except commas, which are URI reserved
+        // characters
+        if ("ssv".equals(collectionFormat)) {
             delimiter = escapeString(" ");
         } else if ("tsv".equals(collectionFormat)) {
             delimiter = escapeString("\t");
         } else if ("pipes".equals(collectionFormat)) {
             delimiter = escapeString("|");
-        } else {
-            return params;
         }
 
         StringBuilder sb = new StringBuilder() ;

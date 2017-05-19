@@ -15,7 +15,7 @@ Method | HTTP request | Description
 
 <a name="fakeOuterBooleanSerialize"></a>
 # **fakeOuterBooleanSerialize**
-> OuterBoolean fakeOuterBooleanSerialize(body)
+> Boolean fakeOuterBooleanSerialize(body)
 
 
 
@@ -29,9 +29,9 @@ Test serialization of outer boolean types
 
 
 FakeApi apiInstance = new FakeApi();
-OuterBoolean body = new OuterBoolean(); // OuterBoolean | Input boolean as post body
+Boolean body = true; // Boolean | Input boolean as post body
 try {
-    OuterBoolean result = apiInstance.fakeOuterBooleanSerialize(body);
+    Boolean result = apiInstance.fakeOuterBooleanSerialize(body);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling FakeApi#fakeOuterBooleanSerialize");
@@ -43,11 +43,11 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**OuterBoolean**](OuterBoolean.md)| Input boolean as post body | [optional]
+ **body** | [**Boolean**](Boolean.md)| Input boolean as post body | [optional]
 
 ### Return type
 
-[**OuterBoolean**](OuterBoolean.md)
+**Boolean**
 
 ### Authorization
 
@@ -105,7 +105,7 @@ No authorization required
 
 <a name="fakeOuterNumberSerialize"></a>
 # **fakeOuterNumberSerialize**
-> OuterNumber fakeOuterNumberSerialize(body)
+> BigDecimal fakeOuterNumberSerialize(body)
 
 
 
@@ -119,9 +119,9 @@ Test serialization of outer number types
 
 
 FakeApi apiInstance = new FakeApi();
-OuterNumber body = new OuterNumber(); // OuterNumber | Input number as post body
+BigDecimal body = new BigDecimal(); // BigDecimal | Input number as post body
 try {
-    OuterNumber result = apiInstance.fakeOuterNumberSerialize(body);
+    BigDecimal result = apiInstance.fakeOuterNumberSerialize(body);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling FakeApi#fakeOuterNumberSerialize");
@@ -133,11 +133,11 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**OuterNumber**](OuterNumber.md)| Input number as post body | [optional]
+ **body** | [**BigDecimal**](BigDecimal.md)| Input number as post body | [optional]
 
 ### Return type
 
-[**OuterNumber**](OuterNumber.md)
+[**BigDecimal**](BigDecimal.md)
 
 ### Authorization
 
@@ -150,7 +150,7 @@ No authorization required
 
 <a name="fakeOuterStringSerialize"></a>
 # **fakeOuterStringSerialize**
-> OuterString fakeOuterStringSerialize(body)
+> String fakeOuterStringSerialize(body)
 
 
 
@@ -164,9 +164,9 @@ Test serialization of outer string types
 
 
 FakeApi apiInstance = new FakeApi();
-OuterString body = new OuterString(); // OuterString | Input string as post body
+String body = "body_example"; // String | Input string as post body
 try {
-    OuterString result = apiInstance.fakeOuterStringSerialize(body);
+    String result = apiInstance.fakeOuterStringSerialize(body);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling FakeApi#fakeOuterStringSerialize");
@@ -178,11 +178,11 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**OuterString**](OuterString.md)| Input string as post body | [optional]
+ **body** | [**String**](String.md)| Input string as post body | [optional]
 
 ### Return type
 
-[**OuterString**](OuterString.md)
+**String**
 
 ### Authorization
 

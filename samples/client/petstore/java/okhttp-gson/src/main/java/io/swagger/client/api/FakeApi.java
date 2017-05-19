@@ -31,10 +31,7 @@ import java.math.BigDecimal;
 import io.swagger.client.model.Client;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
-import io.swagger.client.model.OuterBoolean;
 import io.swagger.client.model.OuterComposite;
-import io.swagger.client.model.OuterNumber;
-import io.swagger.client.model.OuterString;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -69,7 +66,7 @@ public class FakeApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call fakeOuterBooleanSerializeCall(OuterBoolean body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call fakeOuterBooleanSerializeCall(Boolean body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
         
         // create path and map variables
@@ -111,7 +108,7 @@ public class FakeApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call fakeOuterBooleanSerializeValidateBeforeCall(OuterBoolean body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call fakeOuterBooleanSerializeValidateBeforeCall(Boolean body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         
         com.squareup.okhttp.Call call = fakeOuterBooleanSerializeCall(body, progressListener, progressRequestListener);
@@ -127,11 +124,11 @@ public class FakeApi {
      * 
      * Test serialization of outer boolean types
      * @param body Input boolean as post body (optional)
-     * @return OuterBoolean
+     * @return Boolean
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public OuterBoolean fakeOuterBooleanSerialize(OuterBoolean body) throws ApiException {
-        ApiResponse<OuterBoolean> resp = fakeOuterBooleanSerializeWithHttpInfo(body);
+    public Boolean fakeOuterBooleanSerialize(Boolean body) throws ApiException {
+        ApiResponse<Boolean> resp = fakeOuterBooleanSerializeWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -139,12 +136,12 @@ public class FakeApi {
      * 
      * Test serialization of outer boolean types
      * @param body Input boolean as post body (optional)
-     * @return ApiResponse&lt;OuterBoolean&gt;
+     * @return ApiResponse&lt;Boolean&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<OuterBoolean> fakeOuterBooleanSerializeWithHttpInfo(OuterBoolean body) throws ApiException {
+    public ApiResponse<Boolean> fakeOuterBooleanSerializeWithHttpInfo(Boolean body) throws ApiException {
         com.squareup.okhttp.Call call = fakeOuterBooleanSerializeValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<OuterBoolean>(){}.getType();
+        Type localVarReturnType = new TypeToken<Boolean>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -156,7 +153,7 @@ public class FakeApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call fakeOuterBooleanSerializeAsync(OuterBoolean body, final ApiCallback<OuterBoolean> callback) throws ApiException {
+    public com.squareup.okhttp.Call fakeOuterBooleanSerializeAsync(Boolean body, final ApiCallback<Boolean> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -178,7 +175,7 @@ public class FakeApi {
         }
 
         com.squareup.okhttp.Call call = fakeOuterBooleanSerializeValidateBeforeCall(body, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<OuterBoolean>(){}.getType();
+        Type localVarReturnType = new TypeToken<Boolean>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
@@ -311,7 +308,7 @@ public class FakeApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call fakeOuterNumberSerializeCall(OuterNumber body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call fakeOuterNumberSerializeCall(BigDecimal body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
         
         // create path and map variables
@@ -353,7 +350,7 @@ public class FakeApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call fakeOuterNumberSerializeValidateBeforeCall(OuterNumber body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call fakeOuterNumberSerializeValidateBeforeCall(BigDecimal body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         
         com.squareup.okhttp.Call call = fakeOuterNumberSerializeCall(body, progressListener, progressRequestListener);
@@ -369,11 +366,11 @@ public class FakeApi {
      * 
      * Test serialization of outer number types
      * @param body Input number as post body (optional)
-     * @return OuterNumber
+     * @return BigDecimal
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public OuterNumber fakeOuterNumberSerialize(OuterNumber body) throws ApiException {
-        ApiResponse<OuterNumber> resp = fakeOuterNumberSerializeWithHttpInfo(body);
+    public BigDecimal fakeOuterNumberSerialize(BigDecimal body) throws ApiException {
+        ApiResponse<BigDecimal> resp = fakeOuterNumberSerializeWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -381,12 +378,12 @@ public class FakeApi {
      * 
      * Test serialization of outer number types
      * @param body Input number as post body (optional)
-     * @return ApiResponse&lt;OuterNumber&gt;
+     * @return ApiResponse&lt;BigDecimal&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<OuterNumber> fakeOuterNumberSerializeWithHttpInfo(OuterNumber body) throws ApiException {
+    public ApiResponse<BigDecimal> fakeOuterNumberSerializeWithHttpInfo(BigDecimal body) throws ApiException {
         com.squareup.okhttp.Call call = fakeOuterNumberSerializeValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<OuterNumber>(){}.getType();
+        Type localVarReturnType = new TypeToken<BigDecimal>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -398,7 +395,7 @@ public class FakeApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call fakeOuterNumberSerializeAsync(OuterNumber body, final ApiCallback<OuterNumber> callback) throws ApiException {
+    public com.squareup.okhttp.Call fakeOuterNumberSerializeAsync(BigDecimal body, final ApiCallback<BigDecimal> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -420,7 +417,7 @@ public class FakeApi {
         }
 
         com.squareup.okhttp.Call call = fakeOuterNumberSerializeValidateBeforeCall(body, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<OuterNumber>(){}.getType();
+        Type localVarReturnType = new TypeToken<BigDecimal>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
@@ -432,7 +429,7 @@ public class FakeApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call fakeOuterStringSerializeCall(OuterString body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call fakeOuterStringSerializeCall(String body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
         
         // create path and map variables
@@ -474,7 +471,7 @@ public class FakeApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call fakeOuterStringSerializeValidateBeforeCall(OuterString body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call fakeOuterStringSerializeValidateBeforeCall(String body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         
         com.squareup.okhttp.Call call = fakeOuterStringSerializeCall(body, progressListener, progressRequestListener);
@@ -490,11 +487,11 @@ public class FakeApi {
      * 
      * Test serialization of outer string types
      * @param body Input string as post body (optional)
-     * @return OuterString
+     * @return String
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public OuterString fakeOuterStringSerialize(OuterString body) throws ApiException {
-        ApiResponse<OuterString> resp = fakeOuterStringSerializeWithHttpInfo(body);
+    public String fakeOuterStringSerialize(String body) throws ApiException {
+        ApiResponse<String> resp = fakeOuterStringSerializeWithHttpInfo(body);
         return resp.getData();
     }
 
@@ -502,12 +499,12 @@ public class FakeApi {
      * 
      * Test serialization of outer string types
      * @param body Input string as post body (optional)
-     * @return ApiResponse&lt;OuterString&gt;
+     * @return ApiResponse&lt;String&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<OuterString> fakeOuterStringSerializeWithHttpInfo(OuterString body) throws ApiException {
+    public ApiResponse<String> fakeOuterStringSerializeWithHttpInfo(String body) throws ApiException {
         com.squareup.okhttp.Call call = fakeOuterStringSerializeValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<OuterString>(){}.getType();
+        Type localVarReturnType = new TypeToken<String>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -519,7 +516,7 @@ public class FakeApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call fakeOuterStringSerializeAsync(OuterString body, final ApiCallback<OuterString> callback) throws ApiException {
+    public com.squareup.okhttp.Call fakeOuterStringSerializeAsync(String body, final ApiCallback<String> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -541,7 +538,7 @@ public class FakeApi {
         }
 
         com.squareup.okhttp.Call call = fakeOuterStringSerializeValidateBeforeCall(body, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<OuterString>(){}.getType();
+        Type localVarReturnType = new TypeToken<String>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }

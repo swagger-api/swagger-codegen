@@ -17,9 +17,7 @@ import java.util.Objects;
 import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.client.model.OuterBoolean;
-import io.swagger.client.model.OuterNumber;
-import io.swagger.client.model.OuterString;
+import java.math.BigDecimal;
 
 /**
  * OuterComposite
@@ -27,15 +25,15 @@ import io.swagger.client.model.OuterString;
 
 public class OuterComposite {
   @SerializedName("my_number")
-  private OuterNumber myNumber = null;
+  private BigDecimal myNumber = null;
 
   @SerializedName("my_string")
-  private OuterString myString = null;
+  private String myString = null;
 
   @SerializedName("my_boolean")
-  private OuterBoolean myBoolean = null;
+  private Boolean myBoolean = null;
 
-  public OuterComposite myNumber(OuterNumber myNumber) {
+  public OuterComposite myNumber(BigDecimal myNumber) {
     this.myNumber = myNumber;
     return this;
   }
@@ -45,15 +43,15 @@ public class OuterComposite {
    * @return myNumber
   **/
   @ApiModelProperty(value = "")
-  public OuterNumber getMyNumber() {
+  public BigDecimal getMyNumber() {
     return myNumber;
   }
 
-  public void setMyNumber(OuterNumber myNumber) {
+  public void setMyNumber(BigDecimal myNumber) {
     this.myNumber = myNumber;
   }
 
-  public OuterComposite myString(OuterString myString) {
+  public OuterComposite myString(String myString) {
     this.myString = myString;
     return this;
   }
@@ -63,15 +61,15 @@ public class OuterComposite {
    * @return myString
   **/
   @ApiModelProperty(value = "")
-  public OuterString getMyString() {
+  public String getMyString() {
     return myString;
   }
 
-  public void setMyString(OuterString myString) {
+  public void setMyString(String myString) {
     this.myString = myString;
   }
 
-  public OuterComposite myBoolean(OuterBoolean myBoolean) {
+  public OuterComposite myBoolean(Boolean myBoolean) {
     this.myBoolean = myBoolean;
     return this;
   }
@@ -81,11 +79,11 @@ public class OuterComposite {
    * @return myBoolean
   **/
   @ApiModelProperty(value = "")
-  public OuterBoolean getMyBoolean() {
+  public Boolean getMyBoolean() {
     return myBoolean;
   }
 
-  public void setMyBoolean(OuterBoolean myBoolean) {
+  public void setMyBoolean(Boolean myBoolean) {
     this.myBoolean = myBoolean;
   }
 

@@ -249,6 +249,8 @@ public class ApiClientTest {
         collectionFormatMap.put("tsv", "\t");
         collectionFormatMap.put("ssv", " ");
         collectionFormatMap.put("pipes", "|");
+        collectionFormatMap.put("", ","); // no format, must default to csv
+        collectionFormatMap.put("unknown", ","); // all other formats, must default to csv
 
         String name = "param-a";
 
