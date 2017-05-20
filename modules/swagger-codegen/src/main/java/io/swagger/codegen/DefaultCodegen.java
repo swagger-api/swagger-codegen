@@ -859,10 +859,6 @@ public class DefaultCodegen {
         cliOptions.add(CliOption.newBoolean(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, CodegenConstants
                 .ALLOW_UNICODE_IDENTIFIERS_DESC).defaultValue(Boolean.FALSE.toString()));
 
-        // option to remove prefix of operationId (e.g. config_getId => getId)
-        cliOptions.add(CliOption.newBoolean(CodegenConstants.REMOVE_OPERATION_ID_PREFIX,
-                CodegenConstants.REMOVE_OPERATION_ID_PREFIX_DESC).defaultValue(Boolean.FALSE.toString()));
-
         // initialize special character mapping
         initalizeSpecialCharacterMapping();
     }
