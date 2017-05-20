@@ -427,7 +427,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
     public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
         CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
         if (allDefinitions != null && codegenModel != null && codegenModel.parent != null && codegenModel.hasEnums) {
-            final Model parentModel = allDefinitions.get(toModelName(codegenModel.parent));
+            final Model parentModel = allDefinitions.get(codegenModel.parentSchema);
             final CodegenModel parentCodegenModel = super.fromModel(codegenModel.parent, parentModel);
             codegenModel = this.reconcileInlineEnums(codegenModel, parentCodegenModel);
         }
