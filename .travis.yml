@@ -34,7 +34,7 @@ cache:
 before_install:
   - export SW=`pwd`
   - rvm list
-  - rvm use 2.2.4
+  - rvm use 2.2.5
   - gem environment 
   - gem install bundler
   - gem install cocoapods -v 1.0.1 -N --no-ri --no-rdoc
