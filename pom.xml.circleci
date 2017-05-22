@@ -792,7 +792,7 @@
             </activation>
             <modules>
                 <!-- clients -->
-                <!-- only test java-related projects 
+                <!-- only test java-related projects -->
                 <module>samples/client/petstore/clojure</module>
                 <module>samples/client/petstore/java/feign</module>
                 <module>samples/client/petstore/java/jersey1</module>
@@ -805,7 +805,7 @@
                 <module>samples/client/petstore/java/resttemplate</module>
                 <module>samples/client/petstore/ruby</module>
                 <!-- comment out bash as it's failing after switching to CircleCI
-                <module>samples/client/petstore/bash</module>-->
+                  <module>samples/client/petstore/bash</module> -->
                 <!-- servers -->
                 <module>samples/server/petstore/java-inflector</module>
                 <module>samples/server/petstore/java-play-framework</module>
