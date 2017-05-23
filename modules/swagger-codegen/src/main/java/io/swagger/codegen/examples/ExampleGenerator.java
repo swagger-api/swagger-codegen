@@ -181,7 +181,7 @@ public class ExampleGenerator {
 
     private Object resolveModelToExample(String name, String mediaType, Model model, Set<String> processedModels) {
         if (processedModels.contains(name)) {
-           return model.getExample();
+            return model.getExample();
         }
         if (model instanceof ModelImpl) {
             processedModels.add(name);
