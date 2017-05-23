@@ -9,7 +9,7 @@ public class CodegenResponse {
     public String code, message;
     public boolean hasMore;
     public List<Map<String, Object>> examples;
-    public String dataType, baseType, containerType;
+    public String dataType, baseType, containerType, respReturnContainer;
     public boolean hasHeaders;
     public boolean isString, isInteger, isLong, isFloat, isDouble, isByteArray, isBoolean, isDate, isDateTime;
     public boolean isDefault;

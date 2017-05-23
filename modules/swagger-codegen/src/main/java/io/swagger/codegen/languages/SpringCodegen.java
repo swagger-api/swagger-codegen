@@ -391,6 +391,28 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
                         if ("0".equals(resp.code)) {
                             resp.code = "200";
                         }
+
+                        if (resp.dataType == null) {
+                            resp.dataType = "Void";
+                        } else if (resp.dataType.startsWith("List")) {
+                            String rt = resp.dataType;
+                            int end = rt.lastIndexOf(">");
+                            if (end > 0) {
+                                resp.respReturnContainer = "List";
+                            }
+                        } else if (resp.dataType.startsWith("Map")) {
+                            String rt = resp.dataType;
+                            int end = rt.lastIndexOf(">");
+                            if (end > 0) {
+                                resp.respReturnContainer = "Map";
+                            }
+                        } else if (resp.dataType.startsWith("Set")) {
+                            String rt = resp.dataType;
+                            int end = rt.lastIndexOf(">");
+                            if (end > 0) {
+                                resp.respReturnContainer = "Set";
+                            }
+                        }
                     }
                 }
 
