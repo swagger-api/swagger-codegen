@@ -29,6 +29,8 @@ namespace {{packageName}}.Client
     /// </summary>
     {{>visibility}} partial class ApiClient
     {
+        private static Logger log = new Logger("ApiClient");
+
         private JsonSerializerSettings serializerSettings = new JsonSerializerSettings
         {
             ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
@@ -53,6 +55,7 @@ namespace {{packageName}}.Client
         /// </summary>
         public ApiClient()
         {
+            log.Trace("ApiClient ctor without parameters");
             Configuration = Configuration.Default;
             RestClient = new RestClient("{{{basePath}}}");
             {{#netStandard}}
@@ -67,6 +70,7 @@ namespace {{packageName}}.Client
         /// <param name="config">An instance of Configuration.</param>
         public ApiClient(Configuration config = null)
         {
+            log.Trace("ApiClient ctor with configuration");
             if (config == null)
                 Configuration = Configuration.Default;
             else
@@ -85,6 +89,7 @@ namespace {{packageName}}.Client
         /// <param name="basePath">The base path.</param>
         public ApiClient(String basePath = "{{{basePath}}}")
         {
+           log.Trace("ApiClient ctor with basePath");
            if (String.IsNullOrEmpty(basePath))
                 throw new ArgumentException("basePath cannot be empty");
 
@@ -121,6 +126,7 @@ namespace {{packageName}}.Client
             Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams,
             String contentType)
         {
+            log.Trace("Prepare request start");
             var request = new RestRequest(path, method);
             {{#netStandard}}
             // disable ResetSharp.Portable built-in serialization
@@ -129,19 +135,31 @@ namespace {{packageName}}.Client
 
             // add path parameter, if any
             foreach(var param in pathParams)
+            {
+                log.Debug("Add path param " + param.Key + " = " + param.Value);
                 request.AddParameter(param.Key, param.Value, ParameterType.UrlSegment);
+            }
 
             // add header parameter, if any
             foreach(var param in headerParams)
+            {
+                log.Debug("Add header param " + param.Key + " = " + param.Value);
                 request.AddHeader(param.Key, param.Value);
+            }
 
             // add query parameter, if any
             foreach(var param in queryParams)
+            {
+                log.Debug("Add query param " + param.Key + " = " + param.Value);
                 request.AddQueryParameter(param.Key, param.Value);
+            }
 
             // add form parameter, if any
             foreach(var param in formParams)
+            {
+                log.Debug("Add form param " + param.Key + " = " + param.Value);
                 request.AddParameter(param.Key, param.Value);
+            }
 
             // add file parameter, if any
             foreach(var param in fileParams)
@@ -165,6 +183,7 @@ namespace {{packageName}}.Client
             {
                 if (postBody.GetType() == typeof(String))
                 {
+                    log.Debug("Request with string body. Length: "+(postBody as string).Length);
                     {{#netStandard}}
                     request.AddParameter(new Parameter { Value = postBody, Type = ParameterType.RequestBody, ContentType = "application/json" });
                     {{/netStandard}}
@@ -174,6 +193,7 @@ namespace {{packageName}}.Client
                 }
                 else if (postBody.GetType() == typeof(byte[]))
                 {
+                    log.Debug("Request with bytes body. Length: "+(postBody as bytes[]).Length);
                     {{#netStandard}}
                     request.AddParameter(new Parameter { Value = postBody, Type = ParameterType.RequestBody, ContentType = contentType });
                     {{/netStandard}}
@@ -183,6 +203,7 @@ namespace {{packageName}}.Client
                 }
             }
 
+            log.Trace("PrepareRequest end");
             return request;
         }
 
