@@ -226,30 +226,38 @@ namespace {{packageName}}.Client
             Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams,
             String contentType)
         {
+            log.Trace("CallApi start");
             var request = PrepareRequest(
                 path, method, queryParams, postBody, headerParams, formParams, fileParams,
                 pathParams, contentType);
 
             // set timeout
             RestClient.Timeout = Configuration.Timeout;
+            log.Debug(string.Format("RestClient timeout: {0}",RestClient.Timeout));
             // set user agent
             RestClient.UserAgent = Configuration.UserAgent;
+            log.Debug("UserAgent: "+ RestClient.UserAgent;
 
             InterceptRequest(request);
             {{#netStandard}}
+            log.Debug("Executing request");
             var response = RestClient.Execute(request).Result;
             {{/netStandard}}
             {{^netStandard}}
             {{^supportsUWP}}
+            log.Debug("Executing request");
             var response = RestClient.Execute(request);
             {{/supportsUWP}}
             {{#supportsUWP}}
             // Using async method to perform sync call (uwp-only)
+            log.Debug("Executing request async");
             var response = RestClient.ExecuteTaskAsync(request).Result;
             {{/supportsUWP}}
             {{/netStandard}}
+            log.Info("API was called and response was received");
             InterceptResponse(request, response);
 
+            log.Trace("CallApi end")
             return (Object) response;
         }
         {{#supportsAsync}}
@@ -272,12 +280,15 @@ namespace {{packageName}}.Client
             Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams,
             String contentType)
         {
+            log.Trace("CallApi start async");
             var request = PrepareRequest(
                 path, method, queryParams, postBody, headerParams, formParams, fileParams,
                 pathParams, contentType);
             InterceptRequest(request);
             var response = await RestClient.Execute{{^netStandard}}TaskAsync{{/netStandard}}(request);
+            log.Info("API was called with async and response was received");
             InterceptResponse(request, response);
+            log.Trace("CallApi async end")
             return (Object)response;
         }{{/supportsAsync}}
 
@@ -288,7 +299,9 @@ namespace {{packageName}}.Client
         /// <returns>Escaped string.</returns>
         public string EscapeString(string str)
         {
-            return UrlEncode(str);
+            string encodedString = UrlEncode(str);
+            log.Debug(string.Format("string was encoded to {0}", encodedString));
+            return encodedString;
         }
 
         /// <summary>
@@ -349,9 +362,11 @@ namespace {{packageName}}.Client
         /// <returns>Object representation of the JSON string.</returns>
         public object Deserialize(IRestResponse response, Type type)
         {
+            log.Trace("Deserialize response start");
             {{^netStandard}}IList<Parameter>{{/netStandard}}{{#netStandard}}IHttpHeaders{{/netStandard}} headers = response.Headers;
             if (type == typeof(byte[])) // return byte array
             {
+                log.Trace("return RawBytes");
                 return response.RawBytes;
             }
 
@@ -375,26 +390,32 @@ namespace {{packageName}}.Client
                     }
                 }
                 var stream = new MemoryStream(response.RawBytes);
+                log.Trace("return stream");
                 return stream;
             }
 
             if (type.Name.StartsWith("System.Nullable`1[[System.DateTime")) // return a datetime object
             {
+                log.Trace("return nullable DateTime");
                 return DateTime.Parse(response.Content,  null, System.Globalization.DateTimeStyles.RoundtripKind);
             }
 
             if (type == typeof(String) || type.Name.StartsWith("System.Nullable")) // return primitive type
             {
+                log.Trace("return string");
                 return ConvertType(response.Content, type);
             }
 
             // at this point, it must be a model (json)
             try
             {
-                return JsonConvert.DeserializeObject(response.Content, type, serializerSettings);
+                var respObj = JsonConvert.DeserializeObject(response.Content, type, serializerSettings);
+                log.Debug(string.Format("return response deserialized to type {0}", type.Name));
+                return respObj;
             }
             catch (Exception e)
             {
+                log.Error(e, string.Format("Cannot deserialize response to type {0}", type.Name));
                 throw new ApiException(500, e.Message);
             }
         }
@@ -412,6 +433,7 @@ namespace {{packageName}}.Client
             }
             catch (Exception e)
             {
+                log.Error(e, "Cannot serialize object");
                 throw new ApiException(500, e.Message);
             }
         }
@@ -526,7 +548,9 @@ namespace {{packageName}}.Client
                 index += subString.Length;
             }
 
-            return sb.ToString();
+            string url = sb.ToString();
+            log.Debug(string.Format("Encoded url: {0}", url));
+            return url;
         }
 
         /// <summary>
