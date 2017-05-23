@@ -80,7 +80,7 @@ namespace {{packageName}}.{{apiPackage}}
     /// </summary>
     {{>visibility}} partial class {{classname}} : {{interfacePrefix}}{{classname}}
     {
-        private static Logger log = new Logger("ApiClient");
+        private static {{packageName}}.Client.Logger log = new {{packageName}}.Client.Logger("{{classname}}");
         private {{packageName}}.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
         /// <summary>

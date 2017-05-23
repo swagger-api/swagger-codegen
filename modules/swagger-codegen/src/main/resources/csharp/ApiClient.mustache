@@ -29,7 +29,7 @@ namespace {{packageName}}.Client
     /// </summary>
     {{>visibility}} partial class ApiClient
     {
-        private static Logger log = new Logger("ApiClient");
+        private static {{packageName}}.Client.Logger log = new {{packageName}}.Client.Logger("ApiClient");
 
         private JsonSerializerSettings serializerSettings = new JsonSerializerSettings
         {
