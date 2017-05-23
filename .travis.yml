@@ -37,7 +37,7 @@ before_install:
   - rvm use 2.2.5
   - gem environment 
   - gem install bundler
-  - gem install cocoapods -v 1.0.1 -N --no-ri --no-rdoc
+  - gem install cocoapods -v 1.2.1 -N --no-ri --no-rdoc
   - gem install xcpretty -N --no-ri --no-rdoc
   - pod --version
   - pod setup --silent > /dev/null
