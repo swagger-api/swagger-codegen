@@ -62,6 +62,8 @@ before_install:
   - java -version
   # show brew version
   - brew --version
+  # show xcpretty version
+  - xcpretty -v
 
 install:
   # Add Godeps dependencies to GOPATH and PATH
