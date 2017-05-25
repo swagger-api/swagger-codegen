@@ -1,4 +1,5 @@
 import Foundation
+// When using Carthage add `github "mxcl/OMGHTTPURLRQ"` to your Cartfile.
 import OMGHTTPURLRQ
 #if !COCOAPODS
 import PromiseKit
@@ -46,6 +47,10 @@ extension NSURLConnection {
 
     public class func DELETE(URL: String) -> URLDataPromise {
         return go(try OMGHTTPURLRQ.DELETE(URL, nil))
+    }
+
+    public class func PATCH(URL: String, JSON: NSDictionary) -> URLDataPromise {
+        return go(try OMGHTTPURLRQ.PATCH(URL, JSON: JSON))
     }
 
     public class func promise(request: NSURLRequest) -> URLDataPromise {

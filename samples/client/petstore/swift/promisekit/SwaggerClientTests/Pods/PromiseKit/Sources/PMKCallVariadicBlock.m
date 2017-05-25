@@ -2,6 +2,7 @@
 #import <Foundation/NSDictionary.h>
 #import <Foundation/NSError.h>
 #import <Foundation/NSException.h>
+#import "AnyPromise+Private.h"
 #import "NSMethodSignatureForBlock.m"
 #import <PromiseKit/Umbrella.h>
 #import <PromiseKit/PromiseKit.h>

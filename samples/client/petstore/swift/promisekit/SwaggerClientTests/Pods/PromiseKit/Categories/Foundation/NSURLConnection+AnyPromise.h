@@ -179,6 +179,27 @@
 + (AnyPromise *)DELETE:(NSString *)urlString formURLEncodedParameters:(NSDictionary *)params;
 
 /**
+ Makes a PATCH request to the provided URL passing the provided JSON parameters.
+
+     id url = @"http://jsonplaceholder.typicode.com/posts/1";
+     id params = nil;
+     [NSURLConnection PATCH:url JSON:params].then(^(NSDictionary *jsonResponse){
+         // PromiseKit decodes the JSON dictionary (if it’s JSON)
+     });
+
+ @param urlString The URL to request.
+
+ @param JSONParameters The JSON parameters.
+
+ @return A promise that fulfills with three parameters:
+
+   1) The deserialized data response.
+   2) The `NSHTTPURLResponse`.
+   3) The raw `NSData` response.
+*/
++ (AnyPromise *)PATCH:(NSString *)urlString JSON:(NSDictionary *)JSONParameters;
+
+/**
  Makes an HTTP request using the parameters specified by the provided URL
  request.
 

@@ -20,6 +20,10 @@ public func join<T>(promises: Promise<T>...) -> Promise<[T]> {
     return join(promises)
 }
 
+public func join(promises: [Promise<Void>]) -> Promise<Void> {
+    return join(promises).then(on: zalgo) { (_: [Void]) in return Promise() }
+}
+
 public func join<T>(promises: [Promise<T>]) -> Promise<[T]> {
     guard !promises.isEmpty else { return Promise<[T]>([]) }
   

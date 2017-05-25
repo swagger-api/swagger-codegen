@@ -31,6 +31,11 @@ static inline NSMutableURLRequest *OMGMutableURLRequest() {
 }
 
 - (void)add:(NSData *)payload :(NSString *)name :(NSString *)filename :(NSString *)contentType {
+	if (body.length) {
+		// if we already added something then we need an additional newline
+        [body appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+
     id ln1 = [NSString stringWithFormat:@"--%@\r\n", boundary];
     id ln2 = ({
         id s = [NSMutableString stringWithString:@"Content-Disposition: form-data; "];
@@ -161,6 +166,12 @@ static NSMutableURLRequest *OMGFormURLEncodedRequest(NSString *urlString, NSStri
 + (NSMutableURLRequest *)PUT:(NSString *)url JSON:(id)params error:(NSError **)error {
     NSMutableURLRequest *rq = [OMGHTTPURLRQ POST:url JSON:params error:error];
     rq.HTTPMethod = @"PUT";
+    return rq;
+}
+
++ (NSMutableURLRequest *)PATCH:(NSString *)url JSON:(id)params error:(NSError **)error {
+    NSMutableURLRequest *rq = [OMGHTTPURLRQ POST:url JSON:params error:error];
+    rq.HTTPMethod = @"PATCH";
     return rq;
 }
 

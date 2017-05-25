@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (nullable NSMutableURLRequest *)POST:(NSString *)url JSON:(nullable id)JSONObject error:(NSError **)error;
 + (nullable NSMutableURLRequest *)PUT:(NSString *)url :(nullable NSDictionary *)parameters error:(NSError **)error;
 + (nullable NSMutableURLRequest *)PUT:(NSString *)url JSON:(nullable id)JSONObject error:(NSError **)error;
++ (nullable NSMutableURLRequest *)PATCH:(NSString *)url JSON:(nullable id)JSONObject error:(NSError **)error;
 + (nullable NSMutableURLRequest *)DELETE:(NSString *)url :(nullable NSDictionary *)parameters error:(NSError **)error;
 
 @end

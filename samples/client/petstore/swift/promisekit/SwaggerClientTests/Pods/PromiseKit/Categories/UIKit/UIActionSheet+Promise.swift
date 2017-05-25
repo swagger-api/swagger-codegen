@@ -31,14 +31,14 @@ extension UIActionSheet {
 
         return proxy.promise
     }
+}
 
-    public enum Error: CancellableErrorType {
-        case Cancelled
+public enum UIActionSheetError: CancellableErrorType {
+    case Cancelled
 
-        public var cancelled: Bool {
-            switch self {
-                case .Cancelled: return true
-            }
+    public var cancelled: Bool {
+        switch self {
+            case .Cancelled: return true
         }
     }
 }
@@ -53,7 +53,7 @@ private class PMKActionSheetDelegate: NSObject, UIActionSheetDelegate {
         if buttonIndex != actionSheet.cancelButtonIndex {
             fulfill(buttonIndex)
         } else {
-            reject(UIActionSheet.Error.Cancelled)
+            reject(UIActionSheetError.Cancelled)
         }
     }
 }

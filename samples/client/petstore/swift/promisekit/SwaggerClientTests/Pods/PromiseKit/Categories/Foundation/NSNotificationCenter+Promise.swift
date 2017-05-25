@@ -32,7 +32,10 @@ extension NSNotificationCenter {
 }
 
 public class NotificationPromise: Promise<[NSObject: AnyObject]> {
-    private let (parentPromise, parentFulfill, _) = Promise<NSNotification>.pendingPromise()
+    /// Hack to fix https://github.com/mxcl/PromiseKit/issues/415
+    private class NotePromise: Promise<NSNotification> {}
+
+    private let (parentPromise, parentFulfill, _) = NotePromise.pendingPromise()
 
     public func asNotification() -> Promise<NSNotification> {
         return parentPromise

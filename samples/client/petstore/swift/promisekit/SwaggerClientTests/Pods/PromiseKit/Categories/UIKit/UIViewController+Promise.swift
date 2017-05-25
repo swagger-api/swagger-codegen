@@ -21,7 +21,7 @@ import PromiseKit
 */
 extension UIViewController {
 
-    public enum Error: ErrorType {
+    public enum PMKError: ErrorType {
         case NavigationControllerEmpty
         case NoImageFound
         case NotPromisable
@@ -29,34 +29,70 @@ extension UIViewController {
         case NilPromisable
     }
 
+    public enum FulfillmentType {
+        case OnceDisappeared
+        case BeforeDismissal
+    }
+
+    @available(*, deprecated=3.4, renamed="promiseViewController(_:animate:fulfills:completion:)")
     public func promiseViewController<T>(vc: UIViewController, animated: Bool = true, completion: (() -> Void)? = nil) -> Promise<T> {
+        return promiseViewController(vc, animate: [.Appear, .Disappear], completion: completion)
+    }
 
-        let p: Promise<T> = promise(vc)
-        if p.pending {
-            presentViewController(vc, animated: animated, completion: completion)
-            p.always {
-                vc.presentingViewController!.dismissViewControllerAnimated(animated, completion: nil)
-            }
+    public func promiseViewController<T>(vc: UIViewController, animate animationOptions: PMKAnimationOptions = [.Appear, .Disappear], fulfills fulfillmentType: FulfillmentType = .OnceDisappeared, completion: (() -> Void)? = nil) -> Promise<T> {
+
+        let pvc: UIViewController
+
+        switch vc {
+        case let nc as UINavigationController:
+            guard let vc = nc.viewControllers.first else { return Promise(error: PMKError.NavigationControllerEmpty) }
+            pvc = vc
+        default:
+            pvc = vc
         }
 
-        return p
-    }
-    
-    public func promiseViewController<T>(nc: UINavigationController, animated: Bool = true, completion:(()->Void)? = nil) -> Promise<T> {
-        if let vc = nc.viewControllers.first {
-            let p: Promise<T> = promise(vc)
-            if p.pending {
-                presentViewController(nc, animated: animated, completion: completion)
-                p.always {
-                    vc.presentingViewController!.dismissViewControllerAnimated(animated, completion: nil)
-                }
-            }
-            return p
+        let promise: Promise<T>
+
+        if !pvc.conformsToProtocol(Promisable) {
+            promise = Promise(error: PMKError.NotPromisable)
+        } else if let p = pvc.valueForKeyPath("promise") as? Promise<T> {
+            promise = p
+        } else if let _: AnyObject = pvc.valueForKeyPath("promise") {
+            promise = Promise(error: PMKError.NotGenericallyPromisable)
         } else {
-            return Promise(error: Error.NavigationControllerEmpty)
+            promise = Promise(error: PMKError.NilPromisable)
         }
+
+        if !promise.pending {
+            return promise
+        }
+
+        presentViewController(vc, animated: animationOptions.contains(.Appear), completion: completion)
+
+        let (wrappingPromise, fulfill, reject) = Promise<T>.pendingPromise()
+
+        switch fulfillmentType {
+        case .OnceDisappeared:
+            promise.then { result in
+                vc.presentingViewController?.dismissViewControllerAnimated(animationOptions.contains(.Disappear), completion: { fulfill(result) })
+            }
+            .error(policy: .AllErrors) { error in
+                vc.presentingViewController?.dismissViewControllerAnimated(animationOptions.contains(.Disappear), completion: { reject(error) })
+            }
+        case .BeforeDismissal:
+            promise.then { result -> Void in
+                fulfill(result)
+                vc.presentingViewController?.dismissViewControllerAnimated(animationOptions.contains(.Disappear), completion: nil)
+            }
+            .error(policy: .AllErrors) { error in
+                reject(error)
+                vc.presentingViewController?.dismissViewControllerAnimated(animationOptions.contains(.Disappear), completion: nil)
+            }
+        }
+
+        return wrappingPromise
     }
-  
+
     public func promiseViewController(vc: UIImagePickerController, animated: Bool = true, completion: (() -> Void)? = nil) -> Promise<UIImage> {
         let proxy = UIImagePickerControllerProxy()
         vc.delegate = proxy
@@ -69,9 +105,9 @@ extension UIViewController {
             if let img = info[UIImagePickerControllerOriginalImage] as? UIImage {
                 return img
             }
-            throw Error.NoImageFound
+            throw PMKError.NoImageFound
         }.always {
-            vc.presentingViewController!.dismissViewControllerAnimated(animated, completion: nil)
+            vc.presentingViewController?.dismissViewControllerAnimated(animated, completion: nil)
         }
     }
 
@@ -80,33 +116,21 @@ extension UIViewController {
         vc.delegate = proxy
         presentViewController(vc, animated: animated, completion: completion)
         return proxy.promise.always {
-            vc.presentingViewController!.dismissViewControllerAnimated(animated, completion: nil)
+            vc.presentingViewController?.dismissViewControllerAnimated(animated, completion: nil)
         }
     }
 }
 
-@objc public protocol Promisable {
+@objc(Promisable) public protocol Promisable {
     /**
-    Provide a promise for promiseViewController here.
+     Provide a promise for promiseViewController here.
 
-    The resulting property must be annotated with @objc.
+     The resulting property must be annotated with @objc.
 
-    Obviously return a Promise<T>. There is an issue with generics and Swift and
-    protocols currently so we couldn't specify that.
+     Obviously return a Promise<T>. There is an issue with generics and Swift and
+     protocols currently so we couldn't specify that.
     */
     var promise: AnyObject! { get }
-}
-
-private func promise<T>(vc: UIViewController) -> Promise<T> {
-    if !vc.conformsToProtocol(Promisable) {
-        return Promise(error: UIViewController.Error.NotPromisable)
-    } else if let promise = vc.valueForKeyPath("promise") as? Promise<T> {
-        return promise
-    } else if let _: AnyObject = vc.valueForKeyPath("promise") {
-        return Promise(error: UIViewController.Error.NotGenericallyPromisable)
-    } else {
-        return Promise(error: UIViewController.Error.NilPromisable)
-    }
 }
 
 

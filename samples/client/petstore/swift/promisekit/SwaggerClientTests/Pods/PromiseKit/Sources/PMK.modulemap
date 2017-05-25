@@ -29,4 +29,5 @@ framework module PromiseKit {
   exclude header "UIAlertView+AnyPromise.h"
   exclude header "UIView+AnyPromise.h"
   exclude header "UIViewController+AnyPromise.h"
+  exclude header "NSURLSession+AnyPromise.h"
 }

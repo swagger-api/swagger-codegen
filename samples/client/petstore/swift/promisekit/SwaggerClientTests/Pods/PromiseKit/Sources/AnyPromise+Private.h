@@ -32,16 +32,6 @@
 
 extern NSError * __nullable PMKProcessUnhandledException(id __nonnull thrown);
 
-// TODO really this is not valid, we should instead nest the errors with NSUnderlyingError
-// since a special error subclass may be being used and we may not set it up correctly
-// with our copy
-#define NSErrorSupplement(_err, supplements) ({ \
-    NSError *err = _err; \
-    id userInfo = err.userInfo.mutableCopy ?: [NSMutableArray new]; \
-    [userInfo addEntriesFromDictionary:supplements]; \
-    [[[err class] alloc] initWithDomain:err.domain code:err.code userInfo:userInfo]; \
-})
-
 @interface NSError (PMKUnhandledErrorHandler)
 - (void)pmk_consume;
 @end

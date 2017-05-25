@@ -20,7 +20,7 @@ public func race<T>(promises: Promise<T>...) -> Promise<T> {
 public func race<T>(promises: [Promise<T>]) throws -> Promise<T> {
     guard !promises.isEmpty else {
         let message = "Cannot race with an empty list of runners (Promises)"
-        throw NSError(domain: PMKErrorDomain, code: PMKInvalidUsageError, userInfo: ["messaage": message])
+        throw NSError(domain: PMKErrorDomain, code: PMKInvalidUsageError, userInfo: ["message": message, "messaage": message])
     }
   
     return Promise(sealant: { resolve in

@@ -1,125 +1,164 @@
-![PromiseKit](http://methylblue.com/junk/PMKBanner.png)
+![PromiseKit](http://promisekit.org/public/img/logo-tight.png)
 
-Modern development is highly asynchronous: isn’t it about time we had tools that made programming asynchronously powerful, easy and delightful?
+![badge-pod] ![badge-languages] ![badge-pms] ![badge-platforms] ![badge-mit]
+
+Modern development is highly asynchronous: isn’t it about time we had tools that
+made programming asynchronously powerful, easy and delightful?
 
 ```swift
 UIApplication.sharedApplication().networkActivityIndicatorVisible = true
 
-when(fetchImage(), getLocation()).then { image, location in
-    self.imageView.image = image;
-    self.label.text = "Buy your cat a house in \(location)"
+firstly {
+    when(NSURLSession.GET(url).asImage(), CLLocationManager.promise())
+}.then { image, location -> Void in
+    self.imageView.image = image
+    self.label.text = "\(location)"
 }.always {
     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
 }.error { error in
-    UIAlertView(…).show()
+    UIAlertView(/*…*/).show()
 }
 ```
 
-PromiseKit is a thoughtful and complete implementation of promises for iOS and OS X with first-class support for **both** Objective-C *and* Swift.
+PromiseKit is a thoughtful and complete implementation of promises for any
+platform with a `swiftc`, it has *excellent* Objective-C bridging and
+*delightful* specializations for iOS, macOS, tvOS and watchOS.
 
-[![Join the chat at https://gitter.im/mxcl/PromiseKit](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mxcl/PromiseKit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) ![](https://img.shields.io/cocoapods/v/PromiseKit.svg?label=Current%20Release)  [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg)](https://github.com/Carthage/Carthage)
-[![codebeat](https://codebeat.co/badges/6a2fc7b4-cc8f-4865-a81d-644edd38c662)](https://codebeat.co/projects/github-com-mxcl-promisekit)
-
-# Which PromiseKit Should I Use?
-
-If you are writing a library, [**use PromiseKit 1.x**](https://github.com/mxcl/PromiseKit/tree/legacy-1.x). This is because PromiseKit > 2 breaks every time Swift changes. While Swift is in flux it is not feasible to depend on a library that will break every time Xcode updates.
-
-If you are making an app then PromiseKit 3 is the best PromiseKit, you may have to make some fixes when Xcode updates, but probably you will be OK as long as you update PromiseKit when Xcode updates.
-
-PromiseKit 1 and 3 can be installed in parallel if necessary, but CocoaPods will not support this.
-
-Once Swift becomes ABI or API stable we can all just move to the latest PromiseKit.
-
-Thus we intend to support PromiseKit 1.x for longer than expected.
-
-
-# PromiseKit 3
-
-In Swift 2.0 `catch` and `defer` became reserved keywords mandating we rename our functions with these names. This forced a major semantic version change on PromiseKit and thus we took the opportunity to make other minor (source compatibility breaking) improvements.
-
-Thus if you cannot afford to adapt to PromiseKit 3 but still want to use Xcode-7.0/Swift-2.0 we provide a [minimal changes branch] where `catch` and `defer` are renamed `catch_` and `defer_` and all other changes are the bare minimum to make PromiseKit 2 compile against Swift 2.
-
-If you still are using Xcode 6 and Swift 1.2 then use PromiseKit 2.
-
-[minimal changes branch]: https://github.com/mxcl/PromiseKit/tree/swift-2.0-minimal-changes
-
-# PromiseKit 2
-
-PromiseKit 2 contains many interesting and important additions. Check out our our [release announcement](http://promisekit.org/PromiseKit-2.0-Released) for full details.
-
-# PromiseKit 1
-
-The original, nice to use with Objective-C, less nice to use with Swift, hence PromiseKit 2.
-
-
-# How To Get Started
-
-* Check out the complete, comprehensive [PromiseKit documentation](http://promisekit.org).
-* Read the [API documentation](http://cocoadocs.org/docsets/PromiseKit/), (note the documentation is not 100% currently as CocoaDocs is not good with Swift, you may have better luck reading the comments in the sources).
-* [Integrate](http://promisekit.org/getting-started) promises into your existing projects.
-
-## Quick Start Guide
-
-### CocoaPods
+# Quick Start
 
 ```ruby
-use_frameworks!
+# CocoaPods
+pod "PromiseKit", "~> 3.5"
 
-pod "PromiseKit", "~> 2.0"
+# Carthage
+github "mxcl/PromiseKit" ~> 3.5
+
+# SwiftPM
+let package = Package(
+    dependencies: [
+        .Package(url: "https://github.com/mxcl/PromiseKit", majorVersion: 4)
+    ]
+)
 ```
 
-### Carthage
-```ruby
-github "mxcl/PromiseKit" ~> 2.0
+Alternatively, drop `PromiseKit.xcodeproj` into your project and add
+`PromiseKit.framework` to your app’s embedded frameworks.
+
+# Documentation
+
+We have thorough and complete documentation at [promisekit.org].
+
+## Overview
+
+Promises are defined by the function `then`:
+
+```swift
+login().then { json in
+    //…
+}
 ```
 
-*Note*: In order to avoid linking nearly all system frameworks with PromiseKit, the convenience categories have not been included with the Carthage framework . You must manually copy the categories you need in from the Carthage checkout.
+They are chainable:
 
-### Standalone Distributions
+```swift
+login().then { json -> Promise<UIImage> in
+    return fetchAvatar(json["username"])
+}.then { avatarImage in
+    self.imageView.image = avatarImage
+}
+```
 
-* [iOS 8 & OS X 10.9  Frameworks](https://github.com/mxcl/PromiseKit/releases/download/2.2.2/PromiseKit-2.2.2.zip) (Binaries)
+Errors cascade through chains:
 
-*Please note*, the preferred way to integrate PromiseKit is CocoaPods or Carthage.
+```swift
+login().then {
+    return fetchAvatar()
+}.then { avatarImage in
+    //…
+}.catch { error in
+    UIAlertView(/*…*/).show()
+}
+```
 
-###  iOS 7 And Below
+They are composable:
 
-Neither CocoaPods or Carthage will install PromiseKit 2 for an iOS 7 target. Your options are:
+```swift
+let username = login().then{ $0["username"] }
 
- 1. `pod "PromiseKit", "~> 1.7"` †‡
- 2. Use our [iOS 7 EZ-Bake](https://github.com/PromiseKit/EZiOS7)
- 3. Download our pre-built static framework (coming soon!)
+when(username, CLLocationManager.promise()).then { user, location in
+    return fetchAvatar(user, location: location)
+}.then { image in
+    //…
+}
+```
 
-† There is no Swift support with PromiseKit 1.x installed via CocoaPods.<br>‡ PromiseKit 1.x will work as far back as iOS 5 if required.
+They are trivial to refactor:
 
+```swift
+func avatar() -> Promise<UIImage> {
+    let username = login().then{ $0["username"] }
+
+    return when(username, CLLocationManager.promise()).then { user, location in
+        return fetchAvatar(user, location: location)
+    }
+}
+```
+
+## Continue Learning…
+
+Complete and progressive learning guide at [promisekit.org].
+
+## PromiseKit vs. Xcode
+
+PromiseKit contains Swift, so we engage in an unending battle with Xcode:
+
+| Xcode | Swift | PromiseKit |   CI Status  |   Release Notes   |
+| ----- | ----- | ---------- | ------------ | ----------------- |
+|   8   |  3.0  |      4     | ![ci-swift3] | [Pending][news-4] |
+|   8   |  2.3  |      3     | ![ci-master] | [2015/10][news-3] |
+|   7   |  2.2  |      3     | ![ci-master] | [2015/10][news-3] |
+|   6   |  1.2  |      2     |  –           | [2015/05][news-2] |
+|   *   | *N/A* |      1†    | ![ci-legacy] |                   |
+
+† PromiseKit 1 is pure Objective-C and thus can be used with any Xcode, it is
+also your only choice if you need to support iOS 7 or below.
+
+---
+
+We maintain some branches to aid migrating between Swift versions:
+
+| Xcode | Swift | PromiseKit | Branch                      | CI Status |
+| ----- | ----- | -----------| --------------------------- | --------- |
+|  8.0  |  2.3  | 2          | [swift-2.3-minimal-changes] | ![ci-23]  |
+|  7.3  |  2.2  | 2          | [swift-2.2-minimal-changes] | ![ci-22]  |
+|  7.2  |  2.2  | 2          | [swift-2.2-minimal-changes] | ![ci-22]  |
+|  7.1  |  2.1  | 2          | [swift-2.0-minimal-changes] | ![ci-20]  |
+|  7.0  |  2.0  | 2          | [swift-2.0-minimal-changes] | ![ci-20]  |
+
+We do **not** backport fixes (mostly) to these migration-branches, but pull-requests are welcome.
 
 # Support
 
-PromiseKit is lucky enough to have a large community behind it which is reflected in our [Gitter chat](https://gitter.im/mxcl/PromiseKit). If you're new to PromiseKit and are stumped or otherwise have a question that doesn't feel like an issue (and isn't answered in our [documentation](http://promisekit.org/introduction)) then our Gitter is a great place to go for help. Of course if you're onto something that you believe is broken or could be improved then opening a new issue is still the way to go 👍.
+* Ask questions of the developers and the community at our [Gitter chat channel](https://gitter.im/mxcl/PromiseKit).
+* Ask your question by [opening a ticket](https://github.com/mxcl/PromiseKit/issues/new).
 
 
-# Donations
-
-PromiseKit is hundreds of hours of work almost completely by just me: [Max Howell](https://twitter.com/mxcl). I thoroughly enjoyed making PromiseKit, but nevertheless if you have found it useful then your bitcoin will give me a warm fuzzy feeling from my head right down to my toes: 1JDbV5zuym3jFw4kBCc5Z758maUD8e4dKR.
-
-
-# License
-
-Copyright 2015, Max Howell; <mxcl@me.com>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+[travis]: https://travis-ci.org/mxcl/PromiseKit
+[ci-master]: https://travis-ci.org/mxcl/PromiseKit.svg?branch=master
+[ci-legacy]: https://travis-ci.org/mxcl/PromiseKit.svg?branch=legacy-1.x
+[ci-swift3]: https://travis-ci.org/mxcl/PromiseKit.svg?branch=swift-3.0
+[ci-23]: https://travis-ci.org/mxcl/PromiseKit.svg?branch=swift-2.3-minimal-changes
+[ci-22]: https://travis-ci.org/mxcl/PromiseKit.svg?branch=swift-2.2-minimal-changes
+[ci-20]: https://travis-ci.org/mxcl/PromiseKit.svg?branch=swift-2.0-minimal-changes
+[news-2]: http://promisekit.org/news/2015/05/PromiseKit-2.0-Released/
+[news-3]: https://github.com/mxcl/PromiseKit/blob/master/CHANGELOG.markdown#300-oct-1st-2015
+[news-4]: http://promisekit.org/news/
+[swift-2.3-minimal-changes]: https://github.com/mxcl/PromiseKit/tree/swift-2.3-minimal-changes
+[swift-2.2-minimal-changes]: https://github.com/mxcl/PromiseKit/tree/swift-2.2-minimal-changes
+[swift-2.0-minimal-changes]: https://github.com/mxcl/PromiseKit/tree/swift-2.0-minimal-changes
+[promisekit.org]: http://promisekit.org/docs/
+[badge-pod]: https://img.shields.io/cocoapods/v/PromiseKit.svg?label=version
+[badge-platforms]: https://img.shields.io/badge/platforms-macOS%20%7C%20iOS%20%7C%20watchOS%20%7C%20tvOS-lightgrey.svg
+[badge-languages]: https://img.shields.io/badge/languages-Swift%20%7C%20ObjC-orange.svg
+[badge-mit]: https://img.shields.io/badge/license-MIT-blue.svg
+[badge-pms]: https://img.shields.io/badge/supports-CocoaPods%20%7C%20Carthage%20%7C%20SwiftPM-green.svg

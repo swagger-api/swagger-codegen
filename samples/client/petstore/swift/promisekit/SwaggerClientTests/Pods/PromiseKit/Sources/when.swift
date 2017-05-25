@@ -86,3 +86,101 @@ public func when<U, V>(pu: Promise<U>, _ pv: Promise<V>) -> Promise<(U, V)> {
 public func when<U, V, X>(pu: Promise<U>, _ pv: Promise<V>, _ px: Promise<X>) -> Promise<(U, V, X)> {
     return _when([pu.asVoid(), pv.asVoid(), px.asVoid()]).then(on: zalgo) { (pu.value!, pv.value!, px.value!) }
 }
+
+/**
+ Generate promises at a limited rate and wait for all to resolve.
+
+ For example:
+ 
+     func downloadFile(url: NSURL) -> Promise<NSData> {
+         // ...
+     }
+ 
+     let urls: [NSURL] = /*…*/
+     let urlGenerator = urls.generate()
+
+     let generator = AnyGenerator<Promise<NSData>> {
+         guard url = urlGenerator.next() else {
+             return nil
+         }
+
+         return downloadFile(url)
+     }
+
+     when(generator, concurrently: 3).then { datum: [NSData] -> Void in
+         // ...
+     }
+
+ - Warning: Refer to the warnings on `when(fulfilled:)`
+ - Parameter promiseGenerator: Generator of promises.
+ - Returns: A new promise that resolves when all the provided promises fulfill or one of the provided promises rejects.
+ - SeeAlso: `join()`
+ */
+
+public func when<T, PromiseGenerator: GeneratorType where PromiseGenerator.Element == Promise<T> >(promiseGenerator: PromiseGenerator, concurrently: Int = 1) -> Promise<[T]> {
+
+    guard concurrently > 0 else {
+        return Promise(error: Error.WhenConcurrentlyZero)
+    }
+
+    var generator = promiseGenerator
+    var root = Promise<[T]>.pendingPromise()
+    var pendingPromises = 0
+    var promises: [Promise<T>] = []
+
+    let barrier = dispatch_queue_create("org.promisekit.barrier.when", DISPATCH_QUEUE_CONCURRENT)
+
+    func dequeue() {
+        var shouldDequeue = false
+        dispatch_sync(barrier) {
+            shouldDequeue = pendingPromises < concurrently
+        }
+        guard shouldDequeue else { return }
+
+        var index: Int!
+        var promise: Promise<T>!
+
+        dispatch_barrier_sync(barrier) {
+            guard let next = generator.next() else { return }
+
+            promise = next
+            index = promises.count
+
+            pendingPromises += 1
+            promises.append(next)
+        }
+
+        func testDone() {
+            dispatch_sync(barrier) {
+                if pendingPromises == 0 {
+                    root.fulfill(promises.flatMap{ $0.value })
+                }
+            }
+        }
+
+        guard promise != nil else {
+            return testDone()
+        }
+
+        promise.pipe { resolution in
+            dispatch_barrier_sync(barrier) {
+                pendingPromises -= 1
+            }
+
+            switch resolution {
+            case .Fulfilled:
+                dequeue()
+                testDone()
+            case .Rejected(let error, let token):
+                token.consumed = true
+                root.reject(Error.When(index, error))
+            }
+        }
+
+        dequeue()
+    }
+        
+    dequeue()
+
+    return root.promise
+}

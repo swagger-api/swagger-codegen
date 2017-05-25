@@ -10,6 +10,12 @@ typedef NS_ENUM(NSInteger, PMKCatchPolicy) {
     PMKCatchPolicyAllErrorsExceptCancellation
 };
 
+/**
+ This block lets you override the default dispatch queue for Promises.
+ 
+ By default this returns dispatch_get_main_queue()
+ */
+extern __nonnull dispatch_queue_t (^__nonnull PMKDefaultDispatchQueue)();
 
 /**
  @see AnyPromise.swift
@@ -75,7 +81,7 @@ typedef NS_ENUM(NSInteger, PMKCatchPolicy) {
  
  @warning *Note* Cancellation errors are not caught.
  
- @warning *Note* Since catch is a c++ keyword, this method is not available in Objective-C++ files. Instead use catchWithPolicy.
+ @warning *Note* Since catch is a c++ keyword, this method is not availble in Objective-C++ files. Instead use catchWithPolicy.
 
  @see catchWithPolicy
 */
@@ -126,7 +132,7 @@ typedef NS_ENUM(NSInteger, PMKCatchPolicy) {
 /**
  Creates a resolved promise.
 
- When developing your own promise systems, it is occasionally useful to be able to return an already resolved promise.
+ When developing your own promise systems, it is ocassionally useful to be able to return an already resolved promise.
 
  @param value The value with which to resolve this promise. Passing an `NSError` will cause the promise to be rejected, otherwise the promise will be fulfilled.
 

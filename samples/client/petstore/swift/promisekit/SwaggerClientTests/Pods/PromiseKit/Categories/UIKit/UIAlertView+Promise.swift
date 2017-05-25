@@ -32,14 +32,14 @@ extension UIAlertView {
         
         return proxy.promise
     }
+}
 
-    public enum Error: CancellableErrorType {
-        case Cancelled
+public enum UIAlertViewError: CancellableErrorType {
+    case Cancelled
 
-        public var cancelled: Bool {
-            switch self {
-                case .Cancelled: return true
-            }
+    public var cancelled: Bool {
+        switch self {
+            case .Cancelled: return true
         }
     }
 }
@@ -52,7 +52,7 @@ private class PMKAlertViewDelegate: NSObject, UIAlertViewDelegate {
         if buttonIndex != alertView.cancelButtonIndex {
             fulfill(buttonIndex)
         } else {
-            reject(UIAlertView.Error.Cancelled)
+            reject(UIAlertViewError.Cancelled)
         }
     }
 }
