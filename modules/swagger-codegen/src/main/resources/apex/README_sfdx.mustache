@@ -19,7 +19,6 @@ If everything is set correctly:
 
 
 ## Installation
-{{#gitRepoId}}{{#gitUserId}}
 
 1. Copy the output into your Salesforce DX folder - or alternatively deploy the output directly into the workspace.
 2. Deploy the code via Salesforce DX to your Scratch Org
@@ -51,11 +50,7 @@ Please follow the [installation](#installation) instruction and execute the foll
 {{#isApiKey}}
 // Configure API key authorization: {{{name}}}
 ApiKeyAuth {{{name}}} = (ApiKeyAuth) client.getAuthentication('{{{name}}}');
-{{{name}}}.setApiKey('YOUR API KEY');{{/isApiKey}}{{#isOAuth}}
-// Configure OAuth2 access token for authorization: {{{name}}}
-Swagger.OAuth {{{name}}} = (Swagger.OAuth) client.getAuthentication('{{{name}}}');
-{{{name}}}.setAccessToken('YOUR ACCESS TOKEN');{{/isOAuth}}
-{{/authMethods}}
+{{{name}}}.setApiKey('YOUR API KEY');{{/isApiKey}}
 {{/hasAuthMethods}}
 {{#hasParams}}
 
