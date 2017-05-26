@@ -265,8 +265,8 @@ $int64 = 789; // int | None
 $float = 3.4; // float | None
 $string = "string_example"; // string | None
 $binary = "B"; // string | None
-$date = new \DateTime(); // \DateTime | None
-$date_time = new \DateTime(); // \DateTime | None
+$date = new \DateTime("2013-10-20"); // \DateTime | None
+$date_time = new \DateTime("2013-10-20T19:20:30+01:00"); // \DateTime | None
 $password = "password_example"; // string | None
 $callback = "callback_example"; // string | None
 
