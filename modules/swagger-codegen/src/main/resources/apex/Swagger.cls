@@ -65,50 +65,7 @@ public class Swagger {
         }
     }
 
-    public class HttpBasicAuth implements Authentication {
-        private String username = '';
-        private String password = '';
-
-        public void setUsername(String username) {
-            this.username = username;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-        public void setCredentials(String username, String password) {
-            setUsername(username);
-            setPassword(password);
-        }
-
-        @TestVisible
-        private String getHeaderValue() {
-            return 'Basic ' + EncodingUtil.base64Encode(Blob.valueOf(username + ':' + password));
-        }
-
-        public void apply(Map<String, Object> headers, List<Param> query) {
-            headers.put('Authorization', getHeaderValue());
-        }
-    }
-
-    public class OAuth2 implements Authentication {
-        private String accessToken = '';
-
-        public void setAccessToken(String accessToken) {
-            this.accessToken = accessToken;
-        }
-
-        @TestVisible
-        private String getHeaderValue() {
-            return 'Bearer ' + accessToken;
-        }
-
-        public void apply(Map<String, Object> headers, List<Param> query) {
-            headers.put('Authorization', getHeaderValue());
-        }
-    }
-
+ 
     public class ApiException extends Exception {
         private final Integer code;
         private final String status;
@@ -144,42 +101,13 @@ public class Swagger {
         protected String preferredContentType = 'application/json';
         protected String preferredAccept = 'application/json';
         protected final String basePath;
+        protected final String calloutName;
 
         @TestVisible
         protected final Map<String, Authentication> authentications = new Map<String, Authentication>();
 
         public virtual Authentication getAuthentication(String authName) {
             return authentications.get(authName);
-        }
-
-        public virtual void setUsername(String username) {
-            for (Authentication auth : authentications.values()) {
-                if (auth instanceof HttpBasicAuth) {
-                    ((HttpBasicAuth) auth).setUsername(username);
-                    return;
-                }
-            }
-            throw new NoSuchElementException('No HTTP basic authentication configured!');
-        }
-
-        public virtual void setPassword(String password) {
-            for (Authentication auth : authentications.values()) {
-                if (auth instanceof HttpBasicAuth) {
-                    ((HttpBasicAuth) auth).setPassword(password);
-                    return;
-                }
-            }
-            throw new NoSuchElementException('No HTTP basic authentication configured!');
-        }
-
-        public virtual void setCredentials(String username, String password) {
-            for (Authentication auth : authentications.values()) {
-                if (auth instanceof HttpBasicAuth) {
-                    ((HttpBasicAuth) auth).setCredentials(username, password);
-                    return;
-                }
-            }
-            throw new NoSuchElementException('No HTTP basic authentication configured!');
         }
 
         public virtual void setApiKey(String apiKey) {
@@ -190,16 +118,6 @@ public class Swagger {
                 }
             }
             throw new NoSuchElementException('No API key authentication configured!');
-        }
-
-        public virtual void setAccessToken(String accessToken) {
-            for (Authentication auth : authentications.values()) {
-                if (auth instanceof OAuth2) {
-                    ((OAuth2) auth).setAccessToken(accessToken);
-                    return;
-                }
-            }
-            throw new NoSuchElementException('No OAuth2 authentication configured!');
         }
 
         public List<Param> makeParams(String name, List<Object> values) {
@@ -380,7 +298,7 @@ public class Swagger {
         protected virtual String toEndpoint(String path, Map<String, Object> params,
                                             List<Param> queryParams) {
             String query = '?' + paramsToString(queryParams);
-            return basePath + toPath(path, params) + query.removeEnd('?');
+            return '"callout:' + calloutName + toPath(path, params) + query.removeEnd('?') + '""';
         }
 
         @TestVisible
