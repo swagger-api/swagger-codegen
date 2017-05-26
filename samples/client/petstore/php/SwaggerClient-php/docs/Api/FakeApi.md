@@ -41,7 +41,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**\Swagger\Client\Model\OuterBoolean**](../Model/\Swagger\Client\Model\OuterBoolean.md)| Input boolean as post body | [optional]
+ **body** | [**\Swagger\Client\Model\OuterBoolean**](../Model/OuterBoolean.md)| Input boolean as post body | [optional]
 
 ### Return type
 
@@ -86,7 +86,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**\Swagger\Client\Model\OuterComposite**](../Model/\Swagger\Client\Model\OuterComposite.md)| Input composite as post body | [optional]
+ **body** | [**\Swagger\Client\Model\OuterComposite**](../Model/OuterComposite.md)| Input composite as post body | [optional]
 
 ### Return type
 
@@ -131,7 +131,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**\Swagger\Client\Model\OuterNumber**](../Model/\Swagger\Client\Model\OuterNumber.md)| Input number as post body | [optional]
+ **body** | [**\Swagger\Client\Model\OuterNumber**](../Model/OuterNumber.md)| Input number as post body | [optional]
 
 ### Return type
 
@@ -176,7 +176,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**\Swagger\Client\Model\OuterString**](../Model/\Swagger\Client\Model\OuterString.md)| Input string as post body | [optional]
+ **body** | [**\Swagger\Client\Model\OuterString**](../Model/OuterString.md)| Input string as post body | [optional]
 
 ### Return type
 
@@ -221,7 +221,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**\Swagger\Client\Model\Client**](../Model/\Swagger\Client\Model\Client.md)| client model |
+ **body** | [**\Swagger\Client\Model\Client**](../Model/Client.md)| client model |
 
 ### Return type
 

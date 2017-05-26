@@ -628,7 +628,7 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
             example = "new \\DateTime(\"" + escapeText(example) + "\")";
         } else if (!languageSpecificPrimitives.contains(type)) {
             // type is a model class, e.g. User
-            example = "new " + type + "()";
+            example = "new " + p.dataType + "()";
         } else {
             LOGGER.warn("Type " + type + " not handled properly in setParameterExampleValue");
         }
