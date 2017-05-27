@@ -56,7 +56,6 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
         // at the moment
         importMapping.clear();
 
-
         supportsInheritance = true;
         outputFolder = "generated-code" + File.separator + "php";
         modelTemplateFiles.put("model.mustache", ".php");
@@ -315,7 +314,7 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
-    public String escapeReservedWord(String name) {           
+    public String escapeReservedWord(String name) {
         if(this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
@@ -617,19 +616,19 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
                 example = "/path/to/file";
             }
             example = "\"" + escapeText(example) + "\"";
-        } else if ("Date".equalsIgnoreCase(type)) {
+        } else if ("\\Date".equalsIgnoreCase(type)) {
             if (example == null) {
                 example = "2013-10-20";
             }
             example = "new \\DateTime(\"" + escapeText(example) + "\")";
-        } else if ("DateTime".equalsIgnoreCase(type)) {
+        } else if ("\\DateTime".equalsIgnoreCase(type)) {
             if (example == null) {
                 example = "2013-10-20T19:20:30+01:00";
             }
             example = "new \\DateTime(\"" + escapeText(example) + "\")";
         } else if (!languageSpecificPrimitives.contains(type)) {
             // type is a model class, e.g. User
-            example = "new " + type + "()";
+            example = "new " + getTypeDeclaration(type) + "()";
         } else {
             LOGGER.warn("Type " + type + " not handled properly in setParameterExampleValue");
         }
@@ -674,13 +673,18 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
             return varName;
         }
 
+        // for symbol, e.g. $, #
+        if (getSymbolName(name) != null) {
+            return getSymbolName(name).toUpperCase();
+        }
+
         // string
         String enumName = sanitizeName(underscore(name).toUpperCase());
         enumName = enumName.replaceFirst("^_", "");
         enumName = enumName.replaceFirst("_$", "");
 
-        if (enumName.matches("\\d.*")) { // starts with number
-            return "_" + enumName;
+        if (isReservedWord(enumName) || enumName.matches("\\d.*")) { // reserved word or starts with number
+            return escapeReservedWord(enumName);
         } else {
             return enumName;
         }

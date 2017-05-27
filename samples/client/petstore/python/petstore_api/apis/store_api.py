@@ -110,9 +110,9 @@ class StoreApi(object):
 
         path_params = {}
         if 'order_id' in params:
-            path_params['orderId'] = params['order_id']
+            path_params['order_id'] = params['order_id']
 
-        query_params = {}
+        query_params = []
 
         header_params = {}
 
@@ -127,7 +127,7 @@ class StoreApi(object):
         # Authentication setting
         auth_settings = []
 
-        return self.api_client.call_api('/store/order/{orderId}', 'DELETE',
+        return self.api_client.call_api('/store/order/{order_id}', 'DELETE',
                                         path_params,
                                         query_params,
                                         header_params,
@@ -206,7 +206,7 @@ class StoreApi(object):
 
         path_params = {}
 
-        query_params = {}
+        query_params = []
 
         header_params = {}
 
@@ -310,9 +310,9 @@ class StoreApi(object):
 
         path_params = {}
         if 'order_id' in params:
-            path_params['orderId'] = params['order_id']
+            path_params['order_id'] = params['order_id']
 
-        query_params = {}
+        query_params = []
 
         header_params = {}
 
@@ -327,7 +327,7 @@ class StoreApi(object):
         # Authentication setting
         auth_settings = []
 
-        return self.api_client.call_api('/store/order/{orderId}', 'GET',
+        return self.api_client.call_api('/store/order/{order_id}', 'GET',
                                         path_params,
                                         query_params,
                                         header_params,
@@ -412,7 +412,7 @@ class StoreApi(object):
 
         path_params = {}
 
-        query_params = {}
+        query_params = []
 
         header_params = {}
 

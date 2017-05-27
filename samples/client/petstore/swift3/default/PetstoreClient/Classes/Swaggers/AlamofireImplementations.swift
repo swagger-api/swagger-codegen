@@ -4,6 +4,7 @@
 // https://github.com/swagger-api/swagger-codegen
 //
 
+import Foundation
 import Alamofire
 
 class AlamofireRequestBuilderFactory: RequestBuilderFactory {
@@ -45,8 +46,8 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
      May be overridden by a subclass if you want to control the request
      configuration (e.g. to override the cache policy).
      */
-    open func makeRequest(manager: SessionManager, method: HTTPMethod, encoding: ParameterEncoding) -> DataRequest {
-        return manager.request(URLString, method: method, parameters: parameters, encoding: encoding)
+    open func makeRequest(manager: SessionManager, method: HTTPMethod, encoding: ParameterEncoding, headers: [String:String]) -> DataRequest {
+        return manager.request(URLString, method: method, parameters: parameters, encoding: encoding, headers: headers)
     }
 
     override open func execute(_ completion: @escaping (_ response: Response<T>?, _ error: Error?) -> Void) {
@@ -96,7 +97,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 }
             })
         } else {
-            let request = makeRequest(manager: manager, method: xMethod!, encoding: encoding)
+            let request = makeRequest(manager: manager, method: xMethod!, encoding: encoding, headers: headers)
             if let onProgressReady = self.onProgressReady {
                 onProgressReady(request.progress)
             }
@@ -197,7 +198,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                     return
                 }
                 if let json: Any = response.result.value {
-                    let body = Decoders.decode(clazz: T.self, source: json as AnyObject)
+                    let body = Decoders.decode(clazz: T.self, source: json as AnyObject, instance: nil)
                     completion(Response(response: response.response!, body: body), nil)
                     return
                 } else if "" is T {
@@ -212,7 +213,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
         }
     }
 
-    private func buildHeaders() -> [String: String] {
+    open func buildHeaders() -> [String: String] {
         var httpHeaders = SessionManager.defaultHTTPHeaders
         for (key, value) in self.headers {
             httpHeaders[key] = value

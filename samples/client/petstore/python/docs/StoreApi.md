@@ -4,9 +4,9 @@ All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**delete_order**](StoreApi.md#delete_order) | **DELETE** /store/order/{orderId} | Delete purchase order by ID
+[**delete_order**](StoreApi.md#delete_order) | **DELETE** /store/order/{order_id} | Delete purchase order by ID
 [**get_inventory**](StoreApi.md#get_inventory) | **GET** /store/inventory | Returns pet inventories by status
-[**get_order_by_id**](StoreApi.md#get_order_by_id) | **GET** /store/order/{orderId} | Find purchase order by ID
+[**get_order_by_id**](StoreApi.md#get_order_by_id) | **GET** /store/order/{order_id} | Find purchase order by ID
 [**place_order**](StoreApi.md#place_order) | **POST** /store/order | Place an order for a pet
 
 
@@ -19,7 +19,7 @@ For valid response try integer IDs with value < 1000. Anything above 1000 or non
 
 ### Example 
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
 import petstore_api
 from petstore_api.rest import ApiException
@@ -66,7 +66,7 @@ Returns a map of status codes to quantities
 
 ### Example 
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
 import petstore_api
 from petstore_api.rest import ApiException
@@ -115,7 +115,7 @@ For valid response try integer IDs with value <= 5 or > 10. Other values will ge
 
 ### Example 
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
 import petstore_api
 from petstore_api.rest import ApiException
@@ -163,7 +163,7 @@ Place an order for a pet
 
 ### Example 
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
 import petstore_api
 from petstore_api.rest import ApiException
