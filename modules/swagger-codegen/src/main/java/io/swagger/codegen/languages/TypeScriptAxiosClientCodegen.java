@@ -15,8 +15,6 @@ public class TypeScriptAxiosClientCodegen extends AbstractTypeScriptClientCodege
 
         this.outputFolder = "generated-code/typescript-axios";
         embeddedTemplateDir = templateDir = "typescript-axios";
-//        embeddedTemplateDir = templateDir = "/Users/ian/dev/swagger-codegen/modules/swagger-codegen/src/main/resources/typescript-axios";
-        // @todo ^ change above
 
         modelTemplateFiles.put("model.mustache", ".ts");
         apiTemplateFiles.put("api.mustache", ".ts");
