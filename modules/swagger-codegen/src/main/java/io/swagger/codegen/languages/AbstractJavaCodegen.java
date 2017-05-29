@@ -952,8 +952,11 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     @Override
     public String toEnumValue(String value, String datatype) {
         if ("Integer".equals(datatype) || "Long".equals(datatype) ||
-            "Float".equals(datatype) || "Double".equals(datatype)) {
+            "Double".equals(datatype)) {
             return value;
+        } else if ("Float".equals(datatype)) {
+            return value + "f";
+
         } else {
             return "\"" + escapeText(value) + "\"";
         }
