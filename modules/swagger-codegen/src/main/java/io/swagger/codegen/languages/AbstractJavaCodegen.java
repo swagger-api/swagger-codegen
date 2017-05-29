@@ -955,8 +955,8 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             "Double".equals(datatype)) {
             return value;
         } else if ("Float".equals(datatype)) {
+            // add f to number, e.g. 3.14 => 3.14f
             return value + "f";
-
         } else {
             return "\"" + escapeText(value) + "\"";
         }
