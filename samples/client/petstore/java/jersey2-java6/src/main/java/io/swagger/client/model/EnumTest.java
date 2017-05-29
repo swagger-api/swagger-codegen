@@ -16,6 +16,7 @@ package io.swagger.client.model;
 import org.apache.commons.lang3.ObjectUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.OuterEnum;
@@ -41,7 +42,12 @@ public class EnumTest {
       this.value = value;
     }
 
+    public String getValue() {
+      return value;
+    }
+
     @Override
+    @JsonValue
     public String toString() {
       return String.valueOf(value);
     }
@@ -74,7 +80,12 @@ public class EnumTest {
       this.value = value;
     }
 
+    public Integer getValue() {
+      return value;
+    }
+
     @Override
+    @JsonValue
     public String toString() {
       return String.valueOf(value);
     }
@@ -107,7 +118,12 @@ public class EnumTest {
       this.value = value;
     }
 
+    public Double getValue() {
+      return value;
+    }
+
     @Override
+    @JsonValue
     public String toString() {
       return String.valueOf(value);
     }

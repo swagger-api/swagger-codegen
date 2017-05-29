@@ -12,9 +12,6 @@ public class CodegenParameter {
     public String baseName, paramName, dataType, datatypeWithEnum, dataFormat,
           collectionFormat, description, unescapedDescription, baseType, defaultValue, enumName;
 
-    //This was added for javaPlayFramework specifically to get around a bug in swagger-play. See generator for more info on the bug.
-    public String dataTypeForImplicitParam;
-
     public String example; // example value (x-example)
     public String jsonSchema;
     public boolean isString, isInteger, isLong, isFloat, isDouble, isByteArray, isBinary, isBoolean, isDate, isDateTime;
@@ -94,6 +91,7 @@ public class CodegenParameter {
         output.dataFormat = this.dataFormat;
         output.collectionFormat = this.collectionFormat;
         output.isCollectionFormatMulti = this.isCollectionFormatMulti;
+        output.isPrimitiveType = this.isPrimitiveType;
         output.description = this.description;
         output.unescapedDescription = this.unescapedDescription;
         output.baseType = this.baseType;
