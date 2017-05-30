@@ -101,7 +101,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
                 "import", "public", "throws", "case", "enum", "instanceof", "return", "transient",
                 "catch", "extends", "int", "short", "try", "char", "final", "interface", "static",
                 "void", "class", "finally", "long", "strictfp", "volatile", "const", "float",
-                "native", "super", "while")
+                "native", "super", "while", "null")
         );
 
         languageSpecificPrimitives = new HashSet<String>(
@@ -511,6 +511,12 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
     @Override
     public String toModelName(final String name) {
+        // We need to check if import-mapping has a different model for this class, so we use it
+        // instead of the auto-generated one.
+        if (importMapping.containsKey(name)) {
+            return importMapping.get(name);
+        }
+
         final String sanitizedName = sanitizeName(name);
 
         String nameWithPrefixSuffix = sanitizedName;
@@ -573,6 +579,14 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             return getSwaggerType(p) + "<String, " + getTypeDeclaration(inner) + ">";
         }
         return super.getTypeDeclaration(p);
+    }
+
+    @Override
+    public String getAlias(String name) {
+        if (typeAliases.containsKey(name)) {
+            return typeAliases.get(name);
+        }
+        return name;
     }
 
     @Override
@@ -723,6 +737,8 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     @Override
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
+
+        swaggerType = getAlias(swaggerType);
 
         // don't apply renaming on types from the typeMapping
         if (typeMapping.containsKey(swaggerType)) {
@@ -943,8 +959,11 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     @Override
     public String toEnumValue(String value, String datatype) {
         if ("Integer".equals(datatype) || "Long".equals(datatype) ||
-            "Float".equals(datatype) || "Double".equals(datatype)) {
+            "Double".equals(datatype)) {
             return value;
+        } else if ("Float".equals(datatype)) {
+            // add f to number, e.g. 3.14 => 3.14f
+            return value + "f";
         } else {
             return "\"" + escapeText(value) + "\"";
         }

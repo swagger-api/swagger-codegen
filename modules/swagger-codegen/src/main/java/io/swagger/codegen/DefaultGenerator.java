@@ -3,6 +3,8 @@ package io.swagger.codegen;
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
 import io.swagger.codegen.ignore.CodegenIgnoreProcessor;
+import io.swagger.codegen.utils.ImplementationVersion;
+import io.swagger.codegen.languages.AbstractJavaCodegen;
 import io.swagger.models.*;
 import io.swagger.models.auth.OAuth2Definition;
 import io.swagger.models.auth.SecuritySchemeDefinition;
@@ -126,8 +128,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
         config.processOpts();
         config.preprocessSwagger(swagger);
-        // TODO need to obtain version from a file instead of hardcoding it
-        config.additionalProperties().put("generatorVersion", "2.2.3-SNAPSHOT");
+        config.additionalProperties().put("generatorVersion", ImplementationVersion.read());
         config.additionalProperties().put("generatedDate", DateTime.now().toString());
         config.additionalProperties().put("generatorClass", config.getClass().getName());
         config.additionalProperties().put("inputSpec", config.getInputSpec());
@@ -287,6 +288,14 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             private Model getParent(Model model) {
                 if (model instanceof ComposedModel) {
                     Model parent = ((ComposedModel) model).getParent();
+                    if (parent == null) {
+                        // check for interfaces
+                        List<RefModel> interfaces = ((ComposedModel) model).getInterfaces();
+                        if (interfaces.size() > 0) {
+                            RefModel interf = interfaces.get(0);
+                            return definitions.get(interf.getSimpleRef());
+                        }
+                    }
                     if(parent != null) {
                         return definitions.get(parent.getReference());
                     }
@@ -327,7 +336,17 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 if(config.importMapping().containsKey(modelName)) {
                     continue;
                 }
-                allModels.add(((List<Object>) models.get("models")).get(0));
+                Map<String, Object> modelTemplate = (Map<String, Object>) ((List<Object>) models.get("models")).get(0);
+                if (config instanceof AbstractJavaCodegen) {
+                    // Special handling of aliases only applies to Java
+                    if (modelTemplate != null && modelTemplate.containsKey("model")) {
+                        CodegenModel m = (CodegenModel) modelTemplate.get("model");
+                        if (m.isAlias) {
+                            continue;  // Don't create user-defined classes for aliases
+                        }
+                    }
+                }
+                allModels.add(modelTemplate);
                 for (String templateName : config.modelTemplateFiles().keySet()) {
                     String suffix = config.modelTemplateFiles().get(templateName);
                     String filename = config.modelFileFolder() + File.separator + config.toModelFilename(modelName) + suffix;
@@ -579,6 +598,15 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 throw new RuntimeException("Could not generate supporting file '" + swaggerCodegenIgnore + "'", e);
             }
             files.add(ignoreFile);
+        }
+
+        final String swaggerVersionMetadata = config.outputFolder() + File.separator + ".swagger-codegen" + File.separator + "VERSION";
+        File swaggerVersionMetadataFile = new File(swaggerVersionMetadata);
+        try {
+            writeToFile(swaggerVersionMetadata, ImplementationVersion.read());
+            files.add(swaggerVersionMetadataFile);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not generate supporting file '" + swaggerVersionMetadata + "'", e);
         }
 
         /*

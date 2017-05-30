@@ -21,6 +21,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.OuterEnum;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * EnumTest
@@ -41,6 +42,10 @@ public class EnumTest {
 
     EnumStringEnum(String value) {
       this.value = value;
+    }
+
+    public String getValue() {
+      return value;
     }
 
     @Override
@@ -77,6 +82,10 @@ public class EnumTest {
       this.value = value;
     }
 
+    public Integer getValue() {
+      return value;
+    }
+
     @Override
     @JsonValue
     public String toString() {
@@ -109,6 +118,10 @@ public class EnumTest {
 
     EnumNumberEnum(Double value) {
       this.value = value;
+    }
+
+    public Double getValue() {
+      return value;
     }
 
     @Override
@@ -197,6 +210,7 @@ public class EnumTest {
    * Get outerEnum
    * @return outerEnum
   **/
+  @Valid
   @ApiModelProperty(value = "")
   public OuterEnum getOuterEnum() {
     return outerEnum;

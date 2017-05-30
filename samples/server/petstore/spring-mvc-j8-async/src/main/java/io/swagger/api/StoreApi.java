@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -30,7 +31,7 @@ public interface StoreApi {
     @RequestMapping(value = "/store/order/{order_id}",
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.DELETE)
-    default CompletableFuture<ResponseEntity<Void>> deleteOrder(@ApiParam(value = "ID of the order that needs to be deleted",required=true ) @PathVariable("order_id") String orderId, @RequestHeader("Accept") String accept) {
+    default CompletableFuture<ResponseEntity<Void>> deleteOrder(@ApiParam(value = "ID of the order that needs to be deleted",required=true ) @PathVariable("order_id") String orderId, @RequestHeader(value = "Accept", required = false) String accept) {
         // do some magic!
         return CompletableFuture.completedFuture(new ResponseEntity<Void>(HttpStatus.OK));
     }
@@ -44,7 +45,7 @@ public interface StoreApi {
     @RequestMapping(value = "/store/inventory",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    default CompletableFuture<ResponseEntity<Map<String, Integer>>> getInventory( @RequestHeader("Accept") String accept) throws IOException {
+    default CompletableFuture<ResponseEntity<Map<String, Integer>>> getInventory( @RequestHeader(value = "Accept", required = false) String accept) throws IOException {
         // do some magic!
         return CompletableFuture.completedFuture(new ResponseEntity<Map<String, Integer>>(HttpStatus.OK));
     }
@@ -58,7 +59,7 @@ public interface StoreApi {
     @RequestMapping(value = "/store/order/{order_id}",
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.GET)
-    default CompletableFuture<ResponseEntity<Order>> getOrderById( @Min(1) @Max(5)@ApiParam(value = "ID of pet that needs to be fetched",required=true ) @PathVariable("order_id") Long orderId, @RequestHeader("Accept") String accept) throws IOException {
+    default CompletableFuture<ResponseEntity<Order>> getOrderById( @Min(1) @Max(5)@ApiParam(value = "ID of pet that needs to be fetched",required=true ) @PathVariable("order_id") Long orderId, @RequestHeader(value = "Accept", required = false) String accept) throws IOException {
         // do some magic!
         return CompletableFuture.completedFuture(new ResponseEntity<Order>(HttpStatus.OK));
     }
@@ -71,7 +72,7 @@ public interface StoreApi {
     @RequestMapping(value = "/store/order",
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.POST)
-    default CompletableFuture<ResponseEntity<Order>> placeOrder(@ApiParam(value = "order placed for purchasing the pet" ,required=true )  @Valid @RequestBody Order body, @RequestHeader("Accept") String accept) throws IOException {
+    default CompletableFuture<ResponseEntity<Order>> placeOrder(@ApiParam(value = "order placed for purchasing the pet" ,required=true )  @Valid @RequestBody Order body, @RequestHeader(value = "Accept", required = false) String accept) throws IOException {
         // do some magic!
         return CompletableFuture.completedFuture(new ResponseEntity<Order>(HttpStatus.OK));
     }

@@ -22,6 +22,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * EnumArrays
@@ -40,6 +41,10 @@ public class EnumArrays {
 
     JustSymbolEnum(String value) {
       this.value = value;
+    }
+
+    public String getValue() {
+      return value;
     }
 
     @Override
@@ -74,6 +79,10 @@ public class EnumArrays {
 
     ArrayEnumEnum(String value) {
       this.value = value;
+    }
+
+    public String getValue() {
+      return value;
     }
 
     @Override
