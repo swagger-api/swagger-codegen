@@ -416,6 +416,7 @@ namespace IO.Swagger.Api
         /// <returns></returns>
         public FakeApi(String basePath)
         {
+<<<<<<< HEAD
             this.Configuration = new Configuration(new ApiClient(basePath));
 
             ExceptionFactory = IO.Swagger.Client.Configuration.DefaultExceptionFactory;
@@ -788,6 +789,11 @@ namespace IO.Swagger.Api
             return new ApiResponse<OuterComposite>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (OuterComposite) Configuration.ApiClient.Deserialize(localVarResponse, typeof(OuterComposite)));
+=======
+            this.Configuration = new Configuration { BasePath = basePath };
+
+            ExceptionFactory = IO.Swagger.Client.Configuration.DefaultExceptionFactory;
+>>>>>>> e9671dc... [csharp] Regenerate sample
         }
 
         /// <summary>
@@ -840,6 +846,7 @@ namespace IO.Swagger.Api
                 localVarPostBody = body; // byte array
             }
 
+<<<<<<< HEAD
 
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
@@ -857,6 +864,9 @@ namespace IO.Swagger.Api
             return new ApiResponse<OuterNumber>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (OuterNumber) Configuration.ApiClient.Deserialize(localVarResponse, typeof(OuterNumber)));
+=======
+            ExceptionFactory = IO.Swagger.Client.Configuration.DefaultExceptionFactory;
+>>>>>>> e9671dc... [csharp] Regenerate sample
         }
 
         /// <summary>
@@ -1001,6 +1011,7 @@ namespace IO.Swagger.Api
         /// <summary>
         ///  Test serialization of outer string types
         /// </summary>
+<<<<<<< HEAD
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input string as post body (optional)</param>
         /// <returns>Task of OuterString</returns>
@@ -1009,6 +1020,13 @@ namespace IO.Swagger.Api
              ApiResponse<OuterString> localVarResponse = await FakeOuterStringSerializeAsyncWithHttpInfo(body);
              return localVarResponse.Data;
 
+=======
+        /// <returns>Dictionary of HTTP header</returns>
+        [Obsolete("DefaultHeader is deprecated, please use Configuration.DefaultHeader instead.")]
+        public IDictionary<String, String> DefaultHeader()
+        {
+            return new ReadOnlyDictionary<string, string>(this.Configuration.DefaultHeader);
+>>>>>>> e9671dc... [csharp] Regenerate sample
         }
 
         /// <summary>
