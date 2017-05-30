@@ -5,32 +5,26 @@
 {{#models}}{{#model}}
 #include "{{classname}}.h"{{/model}}{{/models}}
 
-{{#cppNamespaceDeclarations}}
-namespace {{this}} {
-{{/cppNamespaceDeclarations}}
-
+namespace Swagger {
   inline void* create(QString type) {
     {{#models}}{{#model}}if(QString("{{classname}}").compare(type) == 0) {
       return new {{classname}}();
     }
     {{/model}}{{/models}}
-    return nullptr;
+    return NULL;
   }
 
   inline void* create(QString json, QString type) {
     void* val = create(type);
-    if(val != nullptr) {
+    if(val != NULL) {
       SWGObject* obj = static_cast<SWGObject*>(val);
       return obj->fromJson(json);
     }
     if(type.startsWith("QString")) {
       return new QString();
     }
-    return nullptr;
+    return NULL;
   }
-
-{{#cppNamespaceDeclarations}}
-}
-{{/cppNamespaceDeclarations}}
+} /* namespace Swagger */
 
 #endif /* ModelFactory_H_ */

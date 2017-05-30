@@ -5,7 +5,8 @@
  *
  * @category Class
  * @package  {{invokerPackage}}
- * @author   Swagger Codegen team
+ * @author   http://github.com/swagger-api/swagger-codegen
+ * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
@@ -25,7 +26,8 @@ use \Exception;
  *
  * @category Class
  * @package  {{invokerPackage}}
- * @author   Swagger Codegen team
+ * @author   http://github.com/swagger-api/swagger-codegen
+ * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 class ApiException extends Exception
@@ -58,9 +60,9 @@ class ApiException extends Exception
      * @param string        $message         Error message
      * @param int           $code            HTTP status code
      * @param string[]|null $responseHeaders HTTP response header
-     * @param mixed         $responseBody    HTTP decoded body of the server response either as \stdClass or string
+     * @param mixed         $responseBody    HTTP body of the server response either as Json or string
      */
-    public function __construct($message = "", $code = 0, $responseHeaders = [], $responseBody = null)
+    public function __construct($message = "", $code = 0, array $responseHeaders = null, $responseBody = null)
     {
         parent::__construct($message, $code);
         $this->responseHeaders = $responseHeaders;
@@ -80,7 +82,7 @@ class ApiException extends Exception
     /**
      * Gets the HTTP body of the server response either as Json or string
      *
-     * @return mixed HTTP body of the server response either as \stdClass or string
+     * @return mixed HTTP body of the server response either as Json or string
      */
     public function getResponseBody()
     {

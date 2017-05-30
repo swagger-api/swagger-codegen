@@ -12,7 +12,7 @@ namespace {{packageName}}.Client
     /// <summary>
     /// Represents a set of configuration settings
     /// </summary>
-    {{>visibility}} class Configuration : IReadableConfiguration
+    public class Configuration : IReadableConfiguration
     {
 
         #region Constants
@@ -411,15 +411,10 @@ namespace {{packageName}}.Client
         public static String ToDebugReport()
         {
             String report = "C# SDK ({{{packageName}}}) Debug Report:\n";
-            {{^netStandard}}
             {{^supportsUWP}}
             report += "    OS: " + System.Environment.OSVersion + "\n";
             report += "    .NET Framework Version: " + System.Environment.Version  + "\n";
             {{/supportsUWP}}
-            {{/netStandard}}
-            {{#netStandard}}
-            report += "    OS: " + System.Runtime.InteropServices.RuntimeInformation.OSDescription + "\n";
-            {{/netStandard}}
             report += "    Version of the API: {{{version}}}\n";
             report += "    SDK Package Version: {{{packageVersion}}}\n";
 

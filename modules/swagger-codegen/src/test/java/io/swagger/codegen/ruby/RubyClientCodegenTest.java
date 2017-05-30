@@ -49,7 +49,8 @@ public class RubyClientCodegenTest {
       ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
 
       DefaultGenerator generator = new DefaultGenerator();
-      List<File> files = generator.opts(clientOptInput).generate();
+      generator.opts(clientOptInput);
+      List<File> files = generator.generate();
       boolean apiFileGenerated = false;
       for (File file : files) {
         if (file.getName().equals("default_api.rb")) {

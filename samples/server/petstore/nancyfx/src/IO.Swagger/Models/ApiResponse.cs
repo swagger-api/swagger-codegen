@@ -8,7 +8,7 @@ using NodaTime;
 namespace IO.Swagger.v2.Models
 {
     /// <summary>
-    /// Describes the result of uploading an image resource
+    /// ApiResponse
     /// </summary>
     public sealed class ApiResponse:  IEquatable<ApiResponse>
     { 

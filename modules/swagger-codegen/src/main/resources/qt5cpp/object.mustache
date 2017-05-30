@@ -4,19 +4,15 @@
 
 #include <QJsonValue>
 
-{{#cppNamespaceDeclarations}}
-namespace {{this}} {
-{{/cppNamespaceDeclarations}}
-
 class {{prefix}}Object {
   public:
     virtual QJsonObject* asJsonObject() {
-      return nullptr;
+      return NULL;
     }
     virtual ~SWGObject() {}
     virtual SWGObject* fromJson(QString &jsonString) {
         Q_UNUSED(jsonString);
-        return nullptr;
+        return NULL;
     }
     virtual void fromJsonObject(QJsonObject &json) {
         Q_UNUSED(json);
@@ -25,9 +21,5 @@ class {{prefix}}Object {
         return QString("");
     }
 };
-
-{{#cppNamespaceDeclarations}}
-}
-{{/cppNamespaceDeclarations}}
 
 #endif /* _{{prefix}}_OBJECT_H_ */

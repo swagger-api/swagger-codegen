@@ -41,8 +41,8 @@ public struct SynchronizedDictionary<K: Hashable, V> {
 private var managerStore = SynchronizedDictionary<String, Alamofire.Manager>()
 
 class AlamofireRequestBuilder<T>: RequestBuilder<T> {
-    required init(method: String, URLString: String, parameters: [String : AnyObject]?, isBody: Bool, headers: [String : String] = [:]) {
-        super.init(method: method, URLString: URLString, parameters: parameters, isBody: isBody, headers: headers)
+    required init(method: String, URLString: String, parameters: [String : AnyObject]?, isBody: Bool) {
+        super.init(method: method, URLString: URLString, parameters: parameters, isBody: isBody)
     }
 
     override func execute(completion: (response: Response<T>?, error: ErrorType?) -> Void) {

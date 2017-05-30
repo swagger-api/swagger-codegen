@@ -1,7 +1,6 @@
 goog.provide('API.Client.User');
 
 /**
- * A User who is purchasing from the pet store
  * @record
  */
 API.Client.User = function() {}

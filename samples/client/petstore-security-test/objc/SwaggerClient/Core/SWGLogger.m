@@ -17,7 +17,8 @@
 
 #pragma mark - Log Methods
 
-- (void)debugLog:(NSString *)method message:(NSString *)format, ... {
+- (void)debugLog:(NSString *)method
+         message:(NSString *)format, ... {
     if (!self.isEnabled) {
         return;
     }

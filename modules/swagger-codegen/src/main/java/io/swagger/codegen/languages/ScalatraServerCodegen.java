@@ -66,6 +66,7 @@ public class ScalatraServerCodegen extends AbstractScalaCodegen implements Codeg
         typeMapping.put("binary", "String");
 
         additionalProperties.put("appName", "Swagger Sample");
+        additionalProperties.put("appName", "Swagger Sample");
         additionalProperties.put("appDescription", "A sample swagger server");
         additionalProperties.put("infoUrl", "http://swagger.io");
         additionalProperties.put("infoEmail", "apiteam@swagger.io");

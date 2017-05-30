@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
-import javax.validation.constraints.*;
-import io.swagger.annotations.*;
 
-@ApiModel(description="A User who is purchasing from the pet store")
 
 public class User   {
   
@@ -24,7 +21,6 @@ public class User   {
   /**
    **/
   
-  @ApiModelProperty(value = "")
   @JsonProperty("id")
   public Long getId() {
     return id;
@@ -36,7 +32,6 @@ public class User   {
   /**
    **/
   
-  @ApiModelProperty(value = "")
   @JsonProperty("username")
   public String getUsername() {
     return username;
@@ -48,7 +43,6 @@ public class User   {
   /**
    **/
   
-  @ApiModelProperty(value = "")
   @JsonProperty("firstName")
   public String getFirstName() {
     return firstName;
@@ -60,7 +54,6 @@ public class User   {
   /**
    **/
   
-  @ApiModelProperty(value = "")
   @JsonProperty("lastName")
   public String getLastName() {
     return lastName;
@@ -72,7 +65,6 @@ public class User   {
   /**
    **/
   
-  @ApiModelProperty(value = "")
   @JsonProperty("email")
   public String getEmail() {
     return email;
@@ -84,7 +76,6 @@ public class User   {
   /**
    **/
   
-  @ApiModelProperty(value = "")
   @JsonProperty("password")
   public String getPassword() {
     return password;
@@ -96,7 +87,6 @@ public class User   {
   /**
    **/
   
-  @ApiModelProperty(value = "")
   @JsonProperty("phone")
   public String getPhone() {
     return phone;
@@ -109,7 +99,6 @@ public class User   {
    * User Status
    **/
   
-  @ApiModelProperty(value = "User Status")
   @JsonProperty("userStatus")
   public Integer getUserStatus() {
     return userStatus;
@@ -120,7 +109,7 @@ public class User   {
 
 
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -164,7 +153,7 @@ public class User   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

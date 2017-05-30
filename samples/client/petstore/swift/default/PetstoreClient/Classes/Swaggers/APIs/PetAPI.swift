@@ -51,11 +51,10 @@ public class PetAPI: APIBase {
      Deletes a pet
      
      - parameter petId: (path) Pet id to delete 
-     - parameter apiKey: (header)  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func deletePet(petId petId: Int64, apiKey: String? = nil, completion: ((error: ErrorType?) -> Void)) {
-        deletePetWithRequestBuilder(petId: petId, apiKey: apiKey).execute { (response, error) -> Void in
+    public class func deletePet(petId petId: Int64, completion: ((error: ErrorType?) -> Void)) {
+        deletePetWithRequestBuilder(petId: petId).execute { (response, error) -> Void in
             completion(error: error);
         }
     }
@@ -70,11 +69,10 @@ public class PetAPI: APIBase {
        - name: petstore_auth
      
      - parameter petId: (path) Pet id to delete 
-     - parameter apiKey: (header)  (optional)
 
      - returns: RequestBuilder<Void> 
      */
-    public class func deletePetWithRequestBuilder(petId petId: Int64, apiKey: String? = nil) -> RequestBuilder<Void> {
+    public class func deletePetWithRequestBuilder(petId petId: Int64) -> RequestBuilder<Void> {
         var path = "/pet/{petId}"
         path = path.stringByReplacingOccurrencesOfString("{petId}", withString: "\(petId)", options: .LiteralSearch, range: nil)
         let URLString = PetstoreClientAPI.basePath + path
@@ -84,14 +82,10 @@ public class PetAPI: APIBase {
         let parameters = APIHelper.rejectNil(nillableParameters)
  
         let convertedParameters = APIHelper.convertBoolToString(parameters)
-        let nillableHeaders: [String: AnyObject?] = [
-            "api_key": apiKey
-        ]
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
  
         let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true, headers: headerParameters)
+        return requestBuilder.init(method: "DELETE", URLString: URLString, parameters: convertedParameters, isBody: true)
     }
 
     /**
@@ -114,13 +108,13 @@ public class PetAPI: APIBase {
      - OAuth:
        - type: oauth2
        - name: petstore_auth
-     - examples: [{contentType=application/json, example={
+     - examples: [{example={
   "name" : "Puma",
   "type" : "Dog",
   "color" : "Black",
   "gender" : "Female",
   "breed" : "Mixed"
-}}]
+}, contentType=application/json}]
      
      - parameter status: (query) Status values that need to be considered for filter (optional, default to available)
 
@@ -163,52 +157,52 @@ public class PetAPI: APIBase {
      - OAuth:
        - type: oauth2
        - name: petstore_auth
-     - examples: [{contentType=application/json, example=[ {
-  "photoUrls" : [ "aeiou" ],
-  "name" : "doggie",
-  "id" : 0,
-  "category" : {
-    "name" : "aeiou",
-    "id" : 6
-  },
+     - examples: [{example=[ {
   "tags" : [ {
-    "name" : "aeiou",
-    "id" : 1
+    "id" : 123456789,
+    "name" : "aeiou"
   } ],
-  "status" : "available"
-} ]}, {contentType=application/xml, example=<Pet>
-  <id>123456789</id>
+  "id" : 123456789,
+  "category" : {
+    "id" : 123456789,
+    "name" : "aeiou"
+  },
+  "status" : "aeiou",
+  "name" : "doggie",
+  "photoUrls" : [ "aeiou" ]
+} ], contentType=application/json}, {example=<Pet>
+  <id>123456</id>
   <name>doggie</name>
   <photoUrls>
-    <photoUrls>aeiou</photoUrls>
+    <photoUrls>string</photoUrls>
   </photoUrls>
   <tags>
   </tags>
-  <status>aeiou</status>
-</Pet>}]
-     - examples: [{contentType=application/json, example=[ {
-  "photoUrls" : [ "aeiou" ],
-  "name" : "doggie",
-  "id" : 0,
-  "category" : {
-    "name" : "aeiou",
-    "id" : 6
-  },
+  <status>string</status>
+</Pet>, contentType=application/xml}]
+     - examples: [{example=[ {
   "tags" : [ {
-    "name" : "aeiou",
-    "id" : 1
+    "id" : 123456789,
+    "name" : "aeiou"
   } ],
-  "status" : "available"
-} ]}, {contentType=application/xml, example=<Pet>
-  <id>123456789</id>
+  "id" : 123456789,
+  "category" : {
+    "id" : 123456789,
+    "name" : "aeiou"
+  },
+  "status" : "aeiou",
+  "name" : "doggie",
+  "photoUrls" : [ "aeiou" ]
+} ], contentType=application/json}, {example=<Pet>
+  <id>123456</id>
   <name>doggie</name>
   <photoUrls>
-    <photoUrls>aeiou</photoUrls>
+    <photoUrls>string</photoUrls>
   </photoUrls>
   <tags>
   </tags>
-  <status>aeiou</status>
-</Pet>}]
+  <status>string</status>
+</Pet>, contentType=application/xml}]
      
      - parameter tags: (query) Tags to filter by (optional)
 
@@ -254,52 +248,52 @@ public class PetAPI: APIBase {
      - OAuth:
        - type: oauth2
        - name: petstore_auth
-     - examples: [{contentType=application/json, example={
-  "photoUrls" : [ "aeiou" ],
-  "name" : "doggie",
-  "id" : 0,
-  "category" : {
-    "name" : "aeiou",
-    "id" : 6
-  },
+     - examples: [{example={
   "tags" : [ {
-    "name" : "aeiou",
-    "id" : 1
+    "id" : 123456789,
+    "name" : "aeiou"
   } ],
-  "status" : "available"
-}}, {contentType=application/xml, example=<Pet>
-  <id>123456789</id>
+  "id" : 123456789,
+  "category" : {
+    "id" : 123456789,
+    "name" : "aeiou"
+  },
+  "status" : "aeiou",
+  "name" : "doggie",
+  "photoUrls" : [ "aeiou" ]
+}, contentType=application/json}, {example=<Pet>
+  <id>123456</id>
   <name>doggie</name>
   <photoUrls>
-    <photoUrls>aeiou</photoUrls>
+    <photoUrls>string</photoUrls>
   </photoUrls>
   <tags>
   </tags>
-  <status>aeiou</status>
-</Pet>}]
-     - examples: [{contentType=application/json, example={
-  "photoUrls" : [ "aeiou" ],
-  "name" : "doggie",
-  "id" : 0,
-  "category" : {
-    "name" : "aeiou",
-    "id" : 6
-  },
+  <status>string</status>
+</Pet>, contentType=application/xml}]
+     - examples: [{example={
   "tags" : [ {
-    "name" : "aeiou",
-    "id" : 1
+    "id" : 123456789,
+    "name" : "aeiou"
   } ],
-  "status" : "available"
-}}, {contentType=application/xml, example=<Pet>
-  <id>123456789</id>
+  "id" : 123456789,
+  "category" : {
+    "id" : 123456789,
+    "name" : "aeiou"
+  },
+  "status" : "aeiou",
+  "name" : "doggie",
+  "photoUrls" : [ "aeiou" ]
+}, contentType=application/json}, {example=<Pet>
+  <id>123456</id>
   <name>doggie</name>
   <photoUrls>
-    <photoUrls>aeiou</photoUrls>
+    <photoUrls>string</photoUrls>
   </photoUrls>
   <tags>
   </tags>
-  <status>aeiou</status>
-</Pet>}]
+  <status>string</status>
+</Pet>, contentType=application/xml}]
      
      - parameter petId: (path) ID of pet that needs to be fetched 
 

@@ -6,7 +6,6 @@ Name | Type | Description | Notes
 **enumString** | **String** |  | [optional] 
 **enumInteger** | **Number** |  | [optional] 
 **enumNumber** | **Number** |  | [optional] 
-**outerEnum** | [**OuterEnum**](OuterEnum.md) |  | [optional] 
 
 
 <a name="EnumStringEnum"></a>
@@ -16,8 +15,6 @@ Name | Type | Description | Notes
 * `UPPER` (value: `"UPPER"`)
 
 * `lower` (value: `"lower"`)
-
-* `empty` (value: `""`)
 
 
 

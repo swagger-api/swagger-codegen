@@ -6,11 +6,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
-import java.util.UUID;
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.OffsetDateTime;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 /**
  * FormatTest
@@ -48,10 +45,10 @@ public class FormatTest   {
   private LocalDate date = null;
 
   @JsonProperty("dateTime")
-  private OffsetDateTime dateTime = null;
+  private DateTime dateTime = null;
 
   @JsonProperty("uuid")
-  private UUID uuid = null;
+  private String uuid = null;
 
   @JsonProperty("password")
   private String password = null;
@@ -63,13 +60,11 @@ public class FormatTest   {
 
    /**
    * Get integer
-   * minimum: 10
-   * maximum: 100
+   * minimum: 10.0
+   * maximum: 100.0
    * @return integer
   **/
   @ApiModelProperty(value = "")
-
- @Min(10) @Max(100)
   public Integer getInteger() {
     return integer;
   }
@@ -85,13 +80,11 @@ public class FormatTest   {
 
    /**
    * Get int32
-   * minimum: 20
-   * maximum: 200
+   * minimum: 20.0
+   * maximum: 200.0
    * @return int32
   **/
   @ApiModelProperty(value = "")
-
- @Min(20) @Max(200)
   public Integer getInt32() {
     return int32;
   }
@@ -110,8 +103,6 @@ public class FormatTest   {
    * @return int64
   **/
   @ApiModelProperty(value = "")
-
-
   public Long getInt64() {
     return int64;
   }
@@ -132,10 +123,6 @@ public class FormatTest   {
    * @return number
   **/
   @ApiModelProperty(required = true, value = "")
-  @NotNull
-
-  @Valid
- @DecimalMin("32.1") @DecimalMax("543.2")
   public BigDecimal getNumber() {
     return number;
   }
@@ -156,8 +143,6 @@ public class FormatTest   {
    * @return _float
   **/
   @ApiModelProperty(value = "")
-
- @DecimalMin("54.3") @DecimalMax("987.6")
   public Float getFloat() {
     return _float;
   }
@@ -178,8 +163,6 @@ public class FormatTest   {
    * @return _double
   **/
   @ApiModelProperty(value = "")
-
- @DecimalMin("67.8") @DecimalMax("123.4")
   public Double getDouble() {
     return _double;
   }
@@ -198,8 +181,6 @@ public class FormatTest   {
    * @return string
   **/
   @ApiModelProperty(value = "")
-
- @Pattern(regexp="/[a-z]/i")
   public String getString() {
     return string;
   }
@@ -218,9 +199,6 @@ public class FormatTest   {
    * @return _byte
   **/
   @ApiModelProperty(required = true, value = "")
-  @NotNull
-
-
   public byte[] getByte() {
     return _byte;
   }
@@ -239,8 +217,6 @@ public class FormatTest   {
    * @return binary
   **/
   @ApiModelProperty(value = "")
-
-
   public byte[] getBinary() {
     return binary;
   }
@@ -259,10 +235,6 @@ public class FormatTest   {
    * @return date
   **/
   @ApiModelProperty(required = true, value = "")
-  @NotNull
-
-  @Valid
-
   public LocalDate getDate() {
     return date;
   }
@@ -271,7 +243,7 @@ public class FormatTest   {
     this.date = date;
   }
 
-  public FormatTest dateTime(OffsetDateTime dateTime) {
+  public FormatTest dateTime(DateTime dateTime) {
     this.dateTime = dateTime;
     return this;
   }
@@ -281,18 +253,15 @@ public class FormatTest   {
    * @return dateTime
   **/
   @ApiModelProperty(value = "")
-
-  @Valid
-
-  public OffsetDateTime getDateTime() {
+  public DateTime getDateTime() {
     return dateTime;
   }
 
-  public void setDateTime(OffsetDateTime dateTime) {
+  public void setDateTime(DateTime dateTime) {
     this.dateTime = dateTime;
   }
 
-  public FormatTest uuid(UUID uuid) {
+  public FormatTest uuid(String uuid) {
     this.uuid = uuid;
     return this;
   }
@@ -302,14 +271,11 @@ public class FormatTest   {
    * @return uuid
   **/
   @ApiModelProperty(value = "")
-
-  @Valid
-
-  public UUID getUuid() {
+  public String getUuid() {
     return uuid;
   }
 
-  public void setUuid(UUID uuid) {
+  public void setUuid(String uuid) {
     this.uuid = uuid;
   }
 
@@ -323,9 +289,6 @@ public class FormatTest   {
    * @return password
   **/
   @ApiModelProperty(required = true, value = "")
-  @NotNull
-
- @Size(min=10,max=64)
   public String getPassword() {
     return password;
   }

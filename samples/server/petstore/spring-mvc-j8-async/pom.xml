@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.swagger</groupId>
-    <artifactId>swagger-spring-mvc-server-j8-async</artifactId>
+    <artifactId>swagger-spring</artifactId>
     <packaging>jar</packaging>
-    <name>swagger-spring-mvc-server-j8-async</name>
+    <name>swagger-spring</name>
     <version>1.0.0</version>
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
@@ -93,12 +93,6 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>${springfox-version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-annotations</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
@@ -123,13 +117,6 @@
             <artifactId>servlet-api</artifactId>
             <version>${servlet-api-version}</version>
         </dependency>
-    <!-- Bean Validation API support -->
-    <dependency>
-        <groupId>javax.validation</groupId>
-        <artifactId>validation-api</artifactId>
-        <version>1.1.0.Final</version>
-        <scope>provided</scope>
-    </dependency>
     </dependencies>
     <properties>
         <java.version>1.8</java.version>
@@ -139,8 +126,8 @@
         <slf4j-version>1.7.21</slf4j-version>
         <junit-version>4.12</junit-version>
         <servlet-api-version>2.5</servlet-api-version>
-        <springfox-version>2.6.0</springfox-version>
-        <jackson-version>2.6.4</jackson-version>
+        <springfox-version>2.4.0</springfox-version>
+        <jackson-version>2.4.5</jackson-version>
         <spring-version>4.2.5.RELEASE</spring-version>
     </properties>
 </project>

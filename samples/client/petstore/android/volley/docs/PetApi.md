@@ -41,7 +41,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Pet**](Pet.md)| Pet object that needs to be added to the store |
+ **body** | [**Pet**](Pet.md)| Pet object that needs to be added to the store | [optional]
 
 ### Return type
 
@@ -54,7 +54,7 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json, application/xml
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
 <a name="deletePet"></a>
 # **deletePet**
@@ -98,7 +98,7 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
 <a name="findPetsByStatus"></a>
 # **findPetsByStatus**
@@ -114,7 +114,7 @@ Multiple status values can be provided with comma separated strings
 //import io.swagger.client.api.PetApi;
 
 PetApi apiInstance = new PetApi();
-List<String> status = Arrays.asList("status_example"); // List<String> | Status values that need to be considered for filter
+List<String> status = Arrays.asList("available"); // List<String> | Status values that need to be considered for filter
 try {
     List<Pet> result = apiInstance.findPetsByStatus(status);
     System.out.println(result);
@@ -128,7 +128,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **status** | [**List&lt;String&gt;**](String.md)| Status values that need to be considered for filter | [enum: available, pending, sold]
+ **status** | [**List&lt;String&gt;**](String.md)| Status values that need to be considered for filter | [optional] [default to available] [enum: available, pending, sold]
 
 ### Return type
 
@@ -141,7 +141,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
 <a name="findPetsByTags"></a>
 # **findPetsByTags**
@@ -171,7 +171,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **tags** | [**List&lt;String&gt;**](String.md)| Tags to filter by |
+ **tags** | [**List&lt;String&gt;**](String.md)| Tags to filter by | [optional]
 
 ### Return type
 
@@ -184,7 +184,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
 <a name="getPetById"></a>
 # **getPetById**
@@ -192,7 +192,7 @@ Name | Type | Description  | Notes
 
 Find pet by ID
 
-Returns a single pet
+Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions
 
 ### Example
 ```java
@@ -200,7 +200,7 @@ Returns a single pet
 //import io.swagger.client.api.PetApi;
 
 PetApi apiInstance = new PetApi();
-Long petId = 789L; // Long | ID of pet to return
+Long petId = 789L; // Long | ID of pet that needs to be fetched
 try {
     Pet result = apiInstance.getPetById(petId);
     System.out.println(result);
@@ -214,7 +214,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petId** | **Long**| ID of pet to return |
+ **petId** | **Long**| ID of pet that needs to be fetched |
 
 ### Return type
 
@@ -222,12 +222,12 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[api_key](../README.md#api_key)
+[api_key](../README.md#api_key), [petstore_auth](../README.md#petstore_auth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
 <a name="updatePet"></a>
 # **updatePet**
@@ -256,7 +256,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Pet**](Pet.md)| Pet object that needs to be added to the store |
+ **body** | [**Pet**](Pet.md)| Pet object that needs to be added to the store | [optional]
 
 ### Return type
 
@@ -269,7 +269,7 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json, application/xml
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
 <a name="updatePetWithForm"></a>
 # **updatePetWithForm**
@@ -285,7 +285,7 @@ Updates a pet in the store with form data
 //import io.swagger.client.api.PetApi;
 
 PetApi apiInstance = new PetApi();
-Long petId = 789L; // Long | ID of pet that needs to be updated
+String petId = "petId_example"; // String | ID of pet that needs to be updated
 String name = "name_example"; // String | Updated name of the pet
 String status = "status_example"; // String | Updated status of the pet
 try {
@@ -300,7 +300,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petId** | **Long**| ID of pet that needs to be updated |
+ **petId** | **String**| ID of pet that needs to be updated |
  **name** | **String**| Updated name of the pet | [optional]
  **status** | **String**| Updated status of the pet | [optional]
 
@@ -315,11 +315,11 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/x-www-form-urlencoded
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
 <a name="uploadFile"></a>
 # **uploadFile**
-> ApiResponse uploadFile(petId, additionalMetadata, file)
+> uploadFile(petId, additionalMetadata, file)
 
 uploads an image
 
@@ -335,8 +335,7 @@ Long petId = 789L; // Long | ID of pet to update
 String additionalMetadata = "additionalMetadata_example"; // String | Additional data to pass to server
 File file = new File("/path/to/file.txt"); // File | file to upload
 try {
-    ApiResponse result = apiInstance.uploadFile(petId, additionalMetadata, file);
-    System.out.println(result);
+    apiInstance.uploadFile(petId, additionalMetadata, file);
 } catch (ApiException e) {
     System.err.println("Exception when calling PetApi#uploadFile");
     e.printStackTrace();
@@ -353,7 +352,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ApiResponse**](ApiResponse.md)
+null (empty response body)
 
 ### Authorization
 
@@ -362,5 +361,5 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: multipart/form-data
- - **Accept**: application/json
+ - **Accept**: application/json, application/xml
 

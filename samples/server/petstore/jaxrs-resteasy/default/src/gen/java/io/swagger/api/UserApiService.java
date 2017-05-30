@@ -4,8 +4,8 @@ import io.swagger.api.*;
 import io.swagger.model.*;
 
 
-import java.util.List;
 import io.swagger.model.User;
+import java.util.List;
 
 import java.util.List;
 import io.swagger.api.NotFoundException;

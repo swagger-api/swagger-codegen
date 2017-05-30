@@ -61,17 +61,4 @@ public class SwaggerYamlGenerator extends DefaultCodegen implements CodegenConfi
             LOGGER.error(e.getMessage(), e);
         }
     }
-
-    @Override
-    public String escapeQuotationMark(String input) {
-        // just return the original string
-        return input;
-    }
-
-    @Override
-    public String escapeUnsafeCharacters(String input) {
-        // just return the original string
-        return input;
-    }   
-
 }

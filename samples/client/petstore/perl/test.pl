@@ -15,14 +15,15 @@ use JSON;
 use Data::Dumper;
 use DateTime;
 
-my $api = WWW::SwaggerClient::PetApi->new(
-    http_user_agent => 'Perl-Swagger-Test',
-    api_key => { api_key => 'ZZZZZZZZZZZZZZ' },
-    api_key_prefix => { api_key => 'Bearer' },
+$WWW::SwaggerClient::Configuration::http_user_agent = 'Perl-Swagger-Test';
+$WWW::SwaggerClient::Configuration::api_key->{'api_key'} = 'ZZZZZZZZZZZZZZ';
+$WWW::SwaggerClient::Configuration::api_key_prefix->{'api_key'} = 'Bearer';
 
-    username => 'username',
-    password => 'password',
-);
+$WWW::SwaggerClient::Configuration::username = 'username';
+$WWW::SwaggerClient::Configuration::password = 'password';
+
+
+my $api = WWW::SwaggerClient::PetApi->new();
 
 # exception handling
 #eval {

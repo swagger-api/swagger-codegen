@@ -1,7 +1,6 @@
 goog.provide('API.Client.Category');
 
 /**
- * A category for a pet
  * @record
  */
 API.Client.Category = function() {}

@@ -1,7 +1,5 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.models.properties.FileProperty;
-import io.swagger.models.properties.Property;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,8 +26,6 @@ public class TypeScriptNodeClientCodegen extends AbstractTypeScriptClientCodegen
 
     public TypeScriptNodeClientCodegen() {
         super();
-
-        typeMapping.put("file", "Buffer");
 
         // clear import mapping (from default generator) as TS does not use it
         // at the moment
@@ -94,19 +90,6 @@ public class TypeScriptNodeClientCodegen extends AbstractTypeScriptClientCodegen
     @Override
     public String getHelp() {
         return "Generates a TypeScript nodejs client library.";
-    }
-
-    @Override
-    public boolean isDataTypeFile(final String dataType) {
-        return dataType != null && dataType.equals("Buffer");
-    }
-
-    @Override
-    public String getTypeDeclaration(Property p) {
-        if (p instanceof FileProperty) {
-            return "Buffer";
-        }
-        return super.getTypeDeclaration(p);
     }
 
 

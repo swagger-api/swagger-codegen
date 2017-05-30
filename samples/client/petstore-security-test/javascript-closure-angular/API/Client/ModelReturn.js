@@ -1,13 +1,13 @@
 goog.provide('API.Client.Return');
 
 /**
- * Model for testing reserved words  *_/ ' \" =end -- \\r\\n \\n \\r
+ * Model for testing reserved words   ' \" =end
  * @record
  */
 API.Client.ModelReturn = function() {}
 
 /**
- * property description  *_/ ' \" =end -- \\r\\n \\n \\r
+ * property description   ' \" =end
  * @type {!number}
  * @export
  */

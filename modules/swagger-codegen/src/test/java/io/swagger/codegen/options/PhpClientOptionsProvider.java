@@ -21,8 +21,6 @@ public class PhpClientOptionsProvider implements OptionsProvider {
     public static final String GIT_USER_ID_VALUE = "gitSwaggerPhp";
     public static final String GIT_REPO_ID_VALUE = "git-swagger-client-php";
     public static final String ARTIFACT_VERSION_VALUE = "1.0.0-SNAPSHOT";
-    public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
-
 
     @Override
     public String getLanguage() {
@@ -46,7 +44,6 @@ public class PhpClientOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.GIT_REPO_ID, GIT_REPO_ID_VALUE)
                 .put(CodegenConstants.ARTIFACT_VERSION, ARTIFACT_VERSION_VALUE)
                 .put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "true")
-                .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
                 .build();
     }
 

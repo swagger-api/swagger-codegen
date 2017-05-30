@@ -1,7 +1,5 @@
 class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}implements ArrayAccess
 {
-    const DISCRIMINATOR = {{#discriminator}}'{{discriminator}}'{{/discriminator}}{{^discriminator}}null{{/discriminator}};
-
     /**
       * The original name of the model.
       * @var string
@@ -105,8 +103,8 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}imple
         {{#discriminator}}
 
         // Initialize discriminator property with the model name.
-        $discriminator = array_search('{{discriminator}}', self::$attributeMap);
-        $this->container[$discriminator] = static::$swaggerModelName;
+        $discrimintor = array_search('{{discriminator}}', self::$attributeMap);
+        $this->container[$discrimintor] = static::$swaggerModelName;
         {{/discriminator}}
     }
 
@@ -117,13 +115,7 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}imple
      */
     public function listInvalidProperties()
     {
-        {{#parent}}
-        $invalid_properties = parent::listInvalidProperties();
-        {{/parent}}
-        {{^parent}}
         $invalid_properties = [];
-        {{/parent}}
-
         {{#vars}}
         {{#required}}
         if ($this->container['{{name}}'] === null) {
@@ -132,12 +124,9 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}imple
         {{/required}}
         {{#isEnum}}
         {{^isContainer}}
-        $allowed_values = $this->{{getter}}AllowableValues();
+        $allowed_values = [{{#allowableValues}}{{#values}}"{{{this}}}"{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}];
         if (!in_array($this->container['{{name}}'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
-                "invalid value for '{{name}}', must be one of '%s'",
-                implode("', '", $allowed_values)
-            );
+            $invalid_properties[] = "invalid value for '{{name}}', must be one of #{allowed_values}.";
         }
 
         {{/isContainer}}
@@ -194,16 +183,10 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}imple
      * validate all the properties in the model
      * return true if all passed
      *
-     * @return bool True if all properties are valid
+     * @return bool True if all properteis are valid
      */
     public function valid()
     {
-        {{#parent}}
-        if (!parent::valid()) {
-            return false;
-        }
-        {{/parent}}
-
         {{#vars}}
         {{#required}}
         if ($this->container['{{name}}'] === null) {
@@ -212,7 +195,7 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}imple
         {{/required}}
         {{#isEnum}}
         {{^isContainer}}
-        $allowed_values = $this->{{getter}}AllowableValues();
+        $allowed_values = [{{#allowableValues}}{{#values}}"{{{this}}}"{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}];
         if (!in_array($this->container['{{name}}'], $allowed_values)) {
             return false;
         }
@@ -278,25 +261,15 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}imple
     public function {{setter}}(${{name}})
     {
         {{#isEnum}}
-        $allowed_values = $this->{{getter}}AllowableValues();
+        $allowed_values = array({{#allowableValues}}{{#values}}'{{{this}}}'{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}});
         {{^isContainer}}
-        if ({{^required}}!is_null(${{name}}) && {{/required}}!in_array(${{{name}}}, $allowed_values)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for '{{name}}', must be one of '%s'",
-                    implode("', '", $allowed_values)
-                )
-            );
+        if ({{^required}}!is_null(${{name}}) && {{/required}}(!in_array(${{{name}}}, $allowed_values))) {
+            throw new \InvalidArgumentException("Invalid value for '{{name}}', must be one of {{#allowableValues}}{{#values}}'{{{this}}}'{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}");
         }
         {{/isContainer}}
         {{#isContainer}}
-        if ({{^required}}!is_null(${{name}}) && {{/required}}array_diff(${{{name}}}, $allowed_values)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for '{{name}}', must be one of '%s'",
-                    implode("', '", $allowed_values)
-                )
-            );
+        if ({{^required}}!is_null(${{name}}) && {{/required}}(array_diff(${{{name}}}, $allowed_values))) {
+            throw new \InvalidArgumentException("Invalid value for '{{name}}', must be one of {{#allowableValues}}{{#values}}'{{{this}}}'{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}");
         }
         {{/isContainer}}
         {{/isEnum}}

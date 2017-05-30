@@ -6,7 +6,8 @@
  *
  * @category Class
  * @package  {{invokerPackage}}
- * @author   Swagger Codegen team
+ * @author   http://github.com/swagger-api/swagger-codegen
+ * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
@@ -24,7 +25,8 @@ namespace {{invokerPackage}};
  *
  * @category Class
  * @package  {{invokerPackage}}
- * @author   Swagger Codegen team
+ * @author   http://github.com/swagger-api/swagger-codegen
+ * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 class ObjectSerializer
@@ -49,16 +51,10 @@ class ObjectSerializer
             return $data;
         } elseif (is_object($data)) {
             $values = [];
-            foreach ($data::swaggerTypes() as $property => $swaggerType) {
+            foreach (array_keys($data::swaggerTypes()) as $property) {
                 $getter = $data::getters()[$property];
-                $value = $data->$getter();
-                if ($value !== null && method_exists($swaggerType, 'getAllowableEnumValues')
-                    && !in_array($value, $swaggerType::getAllowableEnumValues())) {
-                    $imploded = implode("', '", $swaggerType::getAllowableEnumValues());
-                    throw new \InvalidArgumentException("Invalid value for enum '$swaggerType', must be one of: '$imploded'");
-                }
-                if ($value !== null) {
-                    $values[$data::attributeMap()[$property]] = self::sanitizeForSerialization($value);
+                if ($data->$getter() !== null) {
+                    $values[$data::attributeMap()[$property]] = self::sanitizeForSerialization($data->$getter());
                 }
             }
             return (object)$values;
@@ -75,7 +71,7 @@ class ObjectSerializer
      *
      * @return string the sanitized filename
      */
-    public static function sanitizeFilename($filename)
+    public function sanitizeFilename($filename)
     {
         if (preg_match("/.*[\/\\\\](.*)$/", $filename, $match)) {
             return $match[1];
@@ -92,9 +88,9 @@ class ObjectSerializer
      *
      * @return string the serialized object
      */
-    public static function toPathValue($value)
+    public function toPathValue($value)
     {
-        return rawurlencode(self::toString($value));
+        return rawurlencode($this->toString($value));
     }
 
     /**
@@ -107,12 +103,12 @@ class ObjectSerializer
      *
      * @return string the serialized object
      */
-    public static function toQueryValue($object)
+    public function toQueryValue($object)
     {
         if (is_array($object)) {
             return implode(',', $object);
         } else {
-            return self::toString($object);
+            return $this->toString($object);
         }
     }
 
@@ -125,9 +121,9 @@ class ObjectSerializer
      *
      * @return string the header string
      */
-    public static function toHeaderValue($value)
+    public function toHeaderValue($value)
     {
-        return self::toString($value);
+        return $this->toString($value);
     }
 
     /**
@@ -139,12 +135,12 @@ class ObjectSerializer
      *
      * @return string the form string
      */
-    public static function toFormValue($value)
+    public function toFormValue($value)
     {
         if ($value instanceof \SplFileObject) {
             return $value->getRealPath();
         } else {
-            return self::toString($value);
+            return $this->toString($value);
         }
     }
 
@@ -157,7 +153,7 @@ class ObjectSerializer
      *
      * @return string the header string
      */
-    public static function toString($value)
+    public function toString($value)
     {
         if ($value instanceof \DateTime) { // datetime in ISO8601 format
             return $value->format(\DateTime::ATOM);
@@ -176,7 +172,7 @@ class ObjectSerializer
      *
      * @return string
      */
-    public static function serializeCollection(array $collection, $collectionFormat, $allowCollectionFormatMulti = false)
+    public function serializeCollection(array $collection, $collectionFormat, $allowCollectionFormatMulti = false)
     {
         if ($allowCollectionFormatMulti && ('multi' === $collectionFormat)) {
             // http_build_query() almost does the job for us. We just
@@ -210,7 +206,7 @@ class ObjectSerializer
      *
      * @return object|array|null an single or an array of $class instances
      */
-    public static function deserialize($data, $class, $httpHeaders = null)
+    public static function deserialize($data, $class, $httpHeaders = null, $discriminator = null)
     {
         if (null === $data) {
             return null;
@@ -221,7 +217,7 @@ class ObjectSerializer
                 $subClass_array = explode(',', $inner, 2);
                 $subClass = $subClass_array[1];
                 foreach ($data as $key => $value) {
-                    $deserialized[$key] = self::deserialize($value, $subClass, null);
+                    $deserialized[$key] = self::deserialize($value, $subClass, null, $discriminator);
                 }
             }
             return $deserialized;
@@ -229,7 +225,7 @@ class ObjectSerializer
             $subClass = substr($class, 0, -2);
             $values = [];
             foreach ($data as $key => $value) {
-                $values[] = self::deserialize($value, $subClass, null);
+                $values[] = self::deserialize($value, $subClass, null, $discriminator);
             }
             return $values;
         } elseif ($class === 'object') {
@@ -251,8 +247,6 @@ class ObjectSerializer
             settype($data, $class);
             return $data;
         } elseif ($class === '\SplFileObject') {
-            /** @var \Psr\Http\Message\StreamInterface $data */
-
             // determine file name
             if (array_key_exists('Content-Disposition', $httpHeaders) &&
                 preg_match('/inline; filename=[\'"]?([^\'"\s]+)[\'"]?$/i', $httpHeaders['Content-Disposition'], $match)) {
@@ -260,23 +254,15 @@ class ObjectSerializer
             } else {
                 $filename = tempnam(Configuration::getDefaultConfiguration()->getTempFolderPath(), '');
             }
-
-            $file = fopen($filename, 'w');
-            while ($chunk = $data->read(200)) {
-                fwrite($file, $chunk);
+            $deserialized = new \SplFileObject($filename, "w");
+            $byte_written = $deserialized->fwrite($data);
+            if (Configuration::getDefaultConfiguration()->getDebug()) {
+                error_log("[DEBUG] Written $byte_written byte to $filename. Please move the file to a proper folder or delete the temp file after processing.".PHP_EOL, 3, Configuration::getDefaultConfiguration()->getDebugFile());
             }
-            fclose($file);
 
-            return new \SplFileObject($filename, 'r');
-        } elseif (method_exists($class, 'getAllowableEnumValues')) {
-            if (!in_array($data, $class::getAllowableEnumValues())) {
-                $imploded = implode("', '", $class::getAllowableEnumValues());
-                throw new \InvalidArgumentException("Invalid value for enum '$class', must be one of: '$imploded'");
-            }
-            return $data;
+            return $deserialized;
         } else {
             // If a discriminator is defined and points to a valid subclass, use it.
-            $discriminator = $class::DISCRIMINATOR;
             if (!empty($discriminator) && isset($data->{$discriminator}) && is_string($data->{$discriminator})) {
                 $subclass = '\{{invokerPackage}}\Model\\' . $data->{$discriminator};
                 if (is_subclass_of($subclass, $class)) {
@@ -293,7 +279,7 @@ class ObjectSerializer
 
                 $propertyValue = $data->{$instance::attributeMap()[$property]};
                 if (isset($propertyValue)) {
-                    $instance->$propertySetter(self::deserialize($propertyValue, $type, null));
+                    $instance->$propertySetter(self::deserialize($propertyValue, $type, null, $discriminator));
                 }
             }
             return $instance;

@@ -22,10 +22,7 @@ using namespace Tizen::Web::Json;
 {{/imports}}
 
 {{#models}}{{#model}}
-
-{{#cppNamespaceDeclarations}}
-namespace {{this}} {
-{{/cppNamespaceDeclarations}}
+namespace Swagger {
 
 class {{classname}}: public {{prefix}}Object {
 public:
@@ -55,9 +52,7 @@ private:
     {{/vars}}
 };
 
-{{#cppNamespaceDeclarations}}
-}
-{{/cppNamespaceDeclarations}}
+} /* namespace Swagger */
 
 #endif /* {{classname}}_H_ */
 {{/model}}

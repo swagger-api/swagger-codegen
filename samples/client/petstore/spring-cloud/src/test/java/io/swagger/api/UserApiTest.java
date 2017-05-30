@@ -1,21 +1,23 @@
 package io.swagger.api;
 
-import io.swagger.Application;
 import io.swagger.TestUtils;
 import io.swagger.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = Application.class)
+@SpringApplicationConfiguration(classes = UserApiTest.Application.class)
+
 public class UserApiTest {
 
     @Autowired
@@ -25,9 +27,9 @@ public class UserApiTest {
     public void testCreateUser() {
         User user = createUser();
 
-        client.createUser(user).execute();
+        client.createUser(user);
 
-        User fetched = client.getUserByName(user.getUsername()).execute().getBody();
+        User fetched = client.getUserByName(user.getUsername()).getBody();
         assertEquals(user.getId(), fetched.getId());
     }
 
@@ -38,9 +40,9 @@ public class UserApiTest {
         User user2 = createUser();
         user2.setUsername("user" + user2.getId());
 
-        client.createUsersWithArrayInput(Arrays.asList(user1, user2)).execute();
+        client.createUsersWithArrayInput(Arrays.asList(new User[]{user1, user2}));
 
-        User fetched = client.getUserByName(user1.getUsername()).execute().getBody();
+        User fetched = client.getUserByName(user1.getUsername()).getBody();
         assertEquals(user1.getId(), fetched.getId());
     }
 
@@ -51,24 +53,24 @@ public class UserApiTest {
         User user2 = createUser();
         user2.setUsername("user" + user2.getId());
 
-        client.createUsersWithListInput(Arrays.asList(user1, user2)).execute();
+        client.createUsersWithListInput(Arrays.asList(new User[]{user1, user2}));
 
-        User fetched = client.getUserByName(user1.getUsername()).execute().getBody();
+        User fetched = client.getUserByName(user1.getUsername()).getBody();
         assertEquals(user1.getId(), fetched.getId());
     }
 
     @Test
     public void testLoginUser() {
         User user = createUser();
-        client.createUser(user).execute();
+        client.createUser(user);
 
-        String token = client.loginUser(user.getUsername(), user.getPassword()).execute().getBody();
+        String token = client.loginUser(user.getUsername(), user.getPassword()).getBody();
         assertTrue(token.startsWith("logged in user session:"));
     }
 
     @Test
     public void logoutUser() {
-        client.logoutUser().execute();
+        client.logoutUser();
     }
 
     private User createUser() {
@@ -85,4 +87,11 @@ public class UserApiTest {
         return user;
     }
 
+    @SpringBootApplication
+    @EnableFeignClients
+    protected static class Application {
+        public static void main(String[] args) {
+            new SpringApplicationBuilder(UserApiTest.Application.class).run(args);
+        }
+    }
 }

@@ -10,8 +10,6 @@ import io.swagger.model.Category;
 import io.swagger.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
 
 /**
  * A pet for sale in the pet store
@@ -32,7 +30,7 @@ public class Pet   {
   private List<String> photoUrls = new ArrayList<String>();
 
   @JsonProperty("tags")
-  private List<Tag> tags = null;
+  private List<Tag> tags = new ArrayList<Tag>();
 
   /**
    * pet status in the store
@@ -80,8 +78,6 @@ public class Pet   {
    * @return id
   **/
   @ApiModelProperty(value = "")
-
-
   public Long getId() {
     return id;
   }
@@ -100,9 +96,6 @@ public class Pet   {
    * @return category
   **/
   @ApiModelProperty(value = "")
-
-  @Valid
-
   public Category getCategory() {
     return category;
   }
@@ -121,9 +114,6 @@ public class Pet   {
    * @return name
   **/
   @ApiModelProperty(example = "doggie", required = true, value = "")
-  @NotNull
-
-
   public String getName() {
     return name;
   }
@@ -147,9 +137,6 @@ public class Pet   {
    * @return photoUrls
   **/
   @ApiModelProperty(required = true, value = "")
-  @NotNull
-
-
   public List<String> getPhotoUrls() {
     return photoUrls;
   }
@@ -164,9 +151,6 @@ public class Pet   {
   }
 
   public Pet addTagsItem(Tag tagsItem) {
-    if (this.tags == null) {
-      this.tags = new ArrayList<Tag>();
-    }
     this.tags.add(tagsItem);
     return this;
   }
@@ -176,9 +160,6 @@ public class Pet   {
    * @return tags
   **/
   @ApiModelProperty(value = "")
-
-  @Valid
-
   public List<Tag> getTags() {
     return tags;
   }
@@ -197,8 +178,6 @@ public class Pet   {
    * @return status
   **/
   @ApiModelProperty(value = "pet status in the store")
-
-
   public StatusEnum getStatus() {
     return status;
   }

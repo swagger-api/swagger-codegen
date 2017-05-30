@@ -15,7 +15,7 @@ class UserApi {
     String versionPath = "/api/v1"
 
     def createUser ( User body, Closure onSuccess, Closure onFailure)  {
-        // create path and map path parameters (TODO)
+        // create path and map variables
         String resourcePath = "/user"
 
         // query params
@@ -29,15 +29,13 @@ class UserApi {
 
         
 
-        // Also still TODO: form params, body param
-
         invokeApi(onSuccess, onFailure, basePath, versionPath, resourcePath, queryParams, headerParams,
                     "POST", "",
                     null )
                     
     }
     def createUsersWithArrayInput ( List<User> body, Closure onSuccess, Closure onFailure)  {
-        // create path and map path parameters (TODO)
+        // create path and map variables
         String resourcePath = "/user/createWithArray"
 
         // query params
@@ -51,15 +49,13 @@ class UserApi {
 
         
 
-        // Also still TODO: form params, body param
-
         invokeApi(onSuccess, onFailure, basePath, versionPath, resourcePath, queryParams, headerParams,
                     "POST", "",
                     null )
                     
     }
     def createUsersWithListInput ( List<User> body, Closure onSuccess, Closure onFailure)  {
-        // create path and map path parameters (TODO)
+        // create path and map variables
         String resourcePath = "/user/createWithList"
 
         // query params
@@ -73,15 +69,13 @@ class UserApi {
 
         
 
-        // Also still TODO: form params, body param
-
         invokeApi(onSuccess, onFailure, basePath, versionPath, resourcePath, queryParams, headerParams,
                     "POST", "",
                     null )
                     
     }
     def deleteUser ( String username, Closure onSuccess, Closure onFailure)  {
-        // create path and map path parameters (TODO)
+        // create path and map variables
         String resourcePath = "/user/{username}"
 
         // query params
@@ -94,8 +88,6 @@ class UserApi {
         }
 
         
-
-        // Also still TODO: form params, body param
 
         invokeApi(onSuccess, onFailure, basePath, versionPath, resourcePath, queryParams, headerParams,
                     "DELETE", "",
@@ -103,7 +95,7 @@ class UserApi {
                     
     }
     def getUserByName ( String username, Closure onSuccess, Closure onFailure)  {
-        // create path and map path parameters (TODO)
+        // create path and map variables
         String resourcePath = "/user/{username}"
 
         // query params
@@ -117,15 +109,13 @@ class UserApi {
 
         
 
-        // Also still TODO: form params, body param
-
         invokeApi(onSuccess, onFailure, basePath, versionPath, resourcePath, queryParams, headerParams,
                     "GET", "",
                     User.class )
                     
     }
     def loginUser ( String username, String password, Closure onSuccess, Closure onFailure)  {
-        // create path and map path parameters (TODO)
+        // create path and map variables
         String resourcePath = "/user/login"
 
         // query params
@@ -147,15 +137,13 @@ if (!"null".equals(String.valueOf(password)))
             queryParams.put("password", String.valueOf(password))
 
 
-        // Also still TODO: form params, body param
-
         invokeApi(onSuccess, onFailure, basePath, versionPath, resourcePath, queryParams, headerParams,
                     "GET", "",
                     String.class )
                     
     }
     def logoutUser ( Closure onSuccess, Closure onFailure)  {
-        // create path and map path parameters (TODO)
+        // create path and map variables
         String resourcePath = "/user/logout"
 
         // query params
@@ -165,15 +153,13 @@ if (!"null".equals(String.valueOf(password)))
 
         
 
-        // Also still TODO: form params, body param
-
         invokeApi(onSuccess, onFailure, basePath, versionPath, resourcePath, queryParams, headerParams,
                     "GET", "",
                     null )
                     
     }
     def updateUser ( String username, User body, Closure onSuccess, Closure onFailure)  {
-        // create path and map path parameters (TODO)
+        // create path and map variables
         String resourcePath = "/user/{username}"
 
         // query params
@@ -190,8 +176,6 @@ if (!"null".equals(String.valueOf(password)))
         }
 
         
-
-        // Also still TODO: form params, body param
 
         invokeApi(onSuccess, onFailure, basePath, versionPath, resourcePath, queryParams, headerParams,
                     "PUT", "",

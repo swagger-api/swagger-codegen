@@ -2,7 +2,9 @@ using System;
 using System.Diagnostics;
 using {{packageName}}.Api;
 using {{packageName}}.Client;
-using {{packageName}}.Model;
+{{#modelPackage}}
+using {{{.}}};
+{{/modelPackage}}
 
 namespace Example
 {
@@ -25,10 +27,10 @@ namespace Example
             var apiInstance = new {{classname}}();
             {{#allParams}}
             {{#isPrimitiveType}}
-            var {{paramName}} = {{{example}}};  // {{{dataType}}} | {{{unescapedDescription}}}{{^required}} (optional) {{/required}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
+            var {{paramName}} = {{example}};  // {{{dataType}}} | {{{description}}}{{^required}} (optional) {{/required}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
             {{/isPrimitiveType}}
             {{^isPrimitiveType}}
-            var {{paramName}} = new {{{dataType}}}(); // {{{dataType}}} | {{{unescapedDescription}}}{{^required}} (optional) {{/required}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
+            var {{paramName}} = new {{{dataType}}}(); // {{{dataType}}} | {{{description}}}{{^required}} (optional) {{/required}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
             {{/isPrimitiveType}}
             {{/allParams}}
 

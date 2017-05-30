@@ -10,13 +10,12 @@ import java.lang.reflect.Field;
 import java.util.Map;
 
 import org.junit.*;
-import org.threeten.bp.OffsetDateTime;
 
 import retrofit2.Response;
 import static org.junit.Assert.*;
 
 public class StoreApiTest {
-    private StoreApi api = null;
+    StoreApi api = null;
 
     @Before
     public void setup() {
@@ -57,10 +56,9 @@ public class StoreApiTest {
 
     private Order createOrder() {
         Order order = new Order();
-        order.setPetId(200L);
-        order.setQuantity(13);
-        //Ensure 3 fractional digits because of a bug in the petstore server
-        order.setShipDate(OffsetDateTime.now().withNano(123000000));
+        order.setPetId(new Long(200));
+        order.setQuantity(new Integer(13));
+        order.setShipDate(org.joda.time.DateTime.now());
         order.setStatus(Order.StatusEnum.PLACED);
         order.setComplete(true);
 

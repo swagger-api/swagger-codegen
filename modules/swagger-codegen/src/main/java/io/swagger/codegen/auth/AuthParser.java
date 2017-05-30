@@ -15,7 +15,7 @@ import config.ConfigParser;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 public class AuthParser {
-
+	
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthParser.class);
 
     public static List<AuthorizationValue> parse(String urlEncodedAuthStr) {
@@ -25,8 +25,7 @@ public class AuthParser {
             for (String part : parts) {
                 String[] kvPair = part.split(":");
                 if (kvPair.length == 2) {
-                    // FIXME replace the deprecated method by decode(string, encoding). Which encoding is used ? Default UTF-8 ?
-                    auths.add(new AuthorizationValue(URLDecoder.decode(kvPair[0]), URLDecoder.decode(kvPair[1]), "header"));
+                    auths.add(new AuthorizationValue(URLDecoder.decode(kvPair[0]), URLDecoder.decode(kvPair[1]), "header")); // FIXME replace the deprecated method by decode(string, encoding). Which encoding is used ? Default UTF-8 ?
                 }
             }
         }
@@ -54,4 +53,5 @@ public class AuthParser {
             return null;
         }
     }
+
 }

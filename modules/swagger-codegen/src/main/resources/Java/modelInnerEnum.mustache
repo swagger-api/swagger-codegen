@@ -26,14 +26,7 @@
       this.value = value;
     }
 
-    public {{{datatype}}} getValue() {
-      return value;
-    }
-
     @Override
-{{#jackson}}
-    @JsonValue
-{{/jackson}}
     public String toString() {
       return String.valueOf(value);
     }
