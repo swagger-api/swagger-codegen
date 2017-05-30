@@ -239,8 +239,10 @@ namespace {{packageName}}.Client
         /// </summary>
         public virtual int Timeout
         {
+{{#netStandard}}get { return ApiClient.RestClient.Timeout != null ? ApiClient.RestClient.Timeout.Value.TotalSeconds : 0 ; }
+            set { ApiClient.RestClient.Timeout = TimeSpan.FromSeconds(value); }{{/netStandard}}{{^netStandard}}
             get { return ApiClient.RestClient.Timeout; }
-            set { ApiClient.RestClient.Timeout = value; }
+            set { ApiClient.RestClient.Timeout = value; }{{/netStandard}}
         }
 
         /// <summary>
