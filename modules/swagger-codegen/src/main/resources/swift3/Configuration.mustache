@@ -8,7 +8,7 @@ import Foundation
 
 open class Configuration {
 	
-	//This value is read only once. 
+	// This value is read only once. 
     open static var dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
     
 }
