@@ -22,6 +22,7 @@ cache:
   - $HOME/samples/client/petstore/typescript-fetch/npm/with-npm-version/typings
   - $HOME/samples/client/petstore/typescript-angular/node_modules
   - $HOME/samples/client/petstore/typescript-angular/typings
+  - /Users/travis/.cocoapods/repos/master
 # note: docker is not yet supported in iOS build
 #services:
 #  - docker
