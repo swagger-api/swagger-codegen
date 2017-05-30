@@ -23,7 +23,6 @@ namespace IO.Swagger.Client
     /// </summary>
     public class Configuration : IReadableConfiguration
     {
-
         #region Constants
 
         /// <summary>
@@ -82,7 +81,6 @@ namespace IO.Swagger.Client
             }
         }
 
-
         #endregion Static Members
 
         #region Private Members
@@ -117,7 +115,7 @@ namespace IO.Swagger.Client
         public Configuration()
         {
             UserAgent = "Swagger-Codegen/1.0.0/csharp";
-            BasePath = "http://petstore.swagger.io/v2";
+            BasePath = "http://petstore.swagger.io:80/v2";
             DefaultHeader = new ConcurrentDictionary<string, string>();
             ApiKey = new ConcurrentDictionary<string, string>();
             ApiKeyPrefix = new ConcurrentDictionary<string, string>();
@@ -133,7 +131,7 @@ namespace IO.Swagger.Client
             IDictionary<string, string> defaultHeader,
             IDictionary<string, string> apiKey,
             IDictionary<string, string> apiKeyPrefix,
-            string basePath = "http://petstore.swagger.io/v2") : this()
+            string basePath = "http://petstore.swagger.io:80/v2") : this()
         {
             if (string.IsNullOrWhiteSpace(basePath))
                 throw new ArgumentException("The provided basePath is invalid.", "basePath");
@@ -275,7 +273,6 @@ namespace IO.Swagger.Client
         /// <summary>
         /// Gets or sets the access token for OAuth2 authentication.
         /// </summary>
-<<<<<<< HEAD
         /// <param name="apiKeyIdentifier">API key identifier (authentication scheme).</param>
         /// <returns>API key with prefix.</returns>
         public string GetApiKeyWithPrefix (string apiKeyIdentifier)
@@ -289,11 +286,11 @@ namespace IO.Swagger.Client
                 return apiKeyValue;
         }
 
-        private string _tempFolderPath;
-=======
+        /// <summary>
+        /// Gets or sets the access token for OAuth2 authentication.
+        /// </summary>
         /// <value>The access token.</value>
         public virtual string AccessToken { get; set; }
->>>>>>> a4e15ed... [csharp] Regenerate csharp samples
 
         /// <summary>
         /// Gets or sets the temporary folder path to store the files downloaded from the server.
@@ -301,15 +298,7 @@ namespace IO.Swagger.Client
         /// <value>Folder path.</value>
         public virtual string TempFolderPath
         {
-            get
-            {
-                // default to Path.GetTempPath() if _tempFolderPath is not set
-                if (String.IsNullOrEmpty(_tempFolderPath))
-                {
-                    _tempFolderPath = Path.GetTempPath();
-                }
-                return _tempFolderPath;
-            }
+            get { return _tempFolderPath; }
 
             set
             {
@@ -411,22 +400,6 @@ namespace IO.Swagger.Client
         public void AddDefaultHeader(string key, string value)
         {
             DefaultHeader[key] = value;
-        }
-
-        /// <summary>
-        /// Get the API key with prefix.
-        /// </summary>
-        /// <param name="apiKeyIdentifier">API key identifier (authentication scheme).</param>
-        /// <returns>API key with prefix.</returns>
-        public string GetApiKeyWithPrefix(string apiKeyIdentifier)
-        {
-            var apiKeyValue = "";
-            ApiKey.TryGetValue (apiKeyIdentifier, out apiKeyValue);
-            var apiKeyPrefix = "";
-            if (ApiKeyPrefix.TryGetValue (apiKeyIdentifier, out apiKeyPrefix))
-                return apiKeyPrefix + " " + apiKeyValue;
-            else
-                return apiKeyValue;
         }
 
         /// <summary>
