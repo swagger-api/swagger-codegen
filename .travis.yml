@@ -36,7 +36,7 @@ before_install:
   - rvm list
   - rvm use 2.2.5
   - gem environment 
-  - gem install bundler
+  - gem install bundler -N --no-ri --no-rdoc
   - gem install cocoapods -v 1.2.1 -N --no-ri --no-rdoc
   - gem install xcpretty -N --no-ri --no-rdoc
   - pod --version
@@ -49,9 +49,10 @@ before_install:
   - brew install python3
   - pip install virtualenv
   # start local petstore server
-  - git clone https://github.com/swagger-api/swagger-samples
-  - cd swagger-samples/java?java-jersey-jaxrs
-  - mvn jetty:run -Djetty.http.port=80
+  - git clone https://github.com/wing328/swagger-samples
+  - cd swagger-samples/java/java-jersey-jaxrs
+  - sudo mvn jetty:run
+  - cd $SW
   # NOTE: iOS build not support docker at the moment
   # to run petstore server locally via docker
   #- docker pull swaggerapi/petstore
