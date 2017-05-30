@@ -1,22 +1,16 @@
 package io.swagger.codegen.languages;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenProperty;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.*;
 import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
 import io.swagger.util.Yaml;
 import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class JavaInflectorServerCodegen extends AbstractJavaCodegen {
 
@@ -30,7 +24,7 @@ public class JavaInflectorServerCodegen extends AbstractJavaCodegen {
         sourceFolder = "src/gen/java";
         apiTestTemplateFiles.clear(); // TODO: add test template
         embeddedTemplateDir = templateDir = "JavaInflector";
-        invokerPackage = "io.swagger.controllers";
+        invokerPackage = "io.swagger.handler";
         artifactId = "swagger-inflector-server";
         dateLibrary = "legacy"; //TODO: add joda support
 
@@ -41,7 +35,7 @@ public class JavaInflectorServerCodegen extends AbstractJavaCodegen {
         apiDocTemplateFiles.remove("api_doc.mustache");
 
 
-        apiPackage = System.getProperty("swagger.codegen.inflector.apipackage", "io.swagger.controllers");
+        apiPackage = System.getProperty("swagger.codegen.inflector.apipackage", "io.swagger.handler");
         modelPackage = System.getProperty("swagger.codegen.inflector.modelpackage", "io.swagger.model");
 
         additionalProperties.put("title", title);
@@ -179,11 +173,6 @@ public class JavaInflectorServerCodegen extends AbstractJavaCodegen {
         return objs;
     }
 
-    @Override
-    protected String getOrGenerateOperationId(Operation operation, String path, String httpMethod) {
-        return super.getOrGenerateOperationId(operation, path, httpMethod.toUpperCase());
-    }
-
     public String apiFilename(String templateName, String tag) {
         String result = super.apiFilename(templateName, tag);
 
@@ -215,7 +204,7 @@ public class JavaInflectorServerCodegen extends AbstractJavaCodegen {
         if (name.length() == 0) {
             return "DefaultController";
         }
-        name = name.replaceAll("[^a-zA-Z0-9]+", "_");
+        name = name.replaceAll("[^a-zA-Z0-9]+", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
         return camelize(name)+ "Controller";
     }
 }

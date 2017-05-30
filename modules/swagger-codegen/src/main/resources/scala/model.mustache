@@ -12,9 +12,8 @@ case class {{classname}} (
   {{#description}}
   /* {{{description}}} */
   {{/description}}
-  {{{name}}}: {{^required}}Option[{{/required}}{{datatype}}{{^required}}]{{/required}}{{#hasMore}},{{/hasMore}}
+  {{name}}: {{{datatype}}}{{#hasMore}},{{/hasMore}}
   {{/vars}}
 )
-
 {{/model}}
 {{/models}}

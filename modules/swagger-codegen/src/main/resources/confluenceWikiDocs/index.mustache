@@ -32,12 +32,12 @@ h2. Endpoints
         {{/bodyParams}}
     {{/hasBodyParam}}
 
-    {{#hasHeaderParams}}
+    {{#hasHeaderParam}}
         h5. Header Parameters
         ||Name||Description||Required||Default||Pattern||
         {{#headerParam}}{{>param}}
         {{/headerParam}}
-    {{/hasHeaderParams}}
+    {{/hasHeaderParam}}
 
     {{#hasQueryParams}}
         h5. Query Parameters

@@ -24,7 +24,6 @@ public class PerlClientOptionsProvider implements OptionsProvider {
                 .put(PerlClientCodegen.MODULE_VERSION, MODULE_VERSION_VALUE)
                 .put(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG, "true")
                 .put(CodegenConstants.ENSURE_UNIQUE_PARAMS, "true")
-                .put("hideGenerationTimestamp", "true")
                 .build();
     }
 

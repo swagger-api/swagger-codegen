@@ -77,10 +77,7 @@ public class StaticDocCodegen extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
-    public String escapeReservedWord(String name) {           
-        if(this.reservedWordsMappings().containsKey(name)) {
-            return this.reservedWordsMappings().get(name);
-        }
+    public String escapeReservedWord(String name) {
         return "_" + name;
     }
 

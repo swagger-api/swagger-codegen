@@ -8,7 +8,7 @@
         "api"
     ],
     "homepage": "http://swagger.io",
-    "license": "proprietary",
+    "license": "Apache v2",
     "authors": [
         {
             "name": "Swagger and contributors",

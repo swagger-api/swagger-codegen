@@ -41,7 +41,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**User**](User.md)| Created user object |
+ **body** | [**User**](User.md)| Created user object | [optional]
 
 ### Return type
 
@@ -54,7 +54,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
 <a name="createUsersWithArrayInput"></a>
 # **createUsersWithArrayInput**
@@ -83,7 +83,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**List&lt;User&gt;**](User.md)| List of user object |
+ **body** | [**List&lt;User&gt;**](User.md)| List of user object | [optional]
 
 ### Return type
 
@@ -96,7 +96,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
 <a name="createUsersWithListInput"></a>
 # **createUsersWithListInput**
@@ -125,7 +125,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**List&lt;User&gt;**](User.md)| List of user object |
+ **body** | [**List&lt;User&gt;**](User.md)| List of user object | [optional]
 
 ### Return type
 
@@ -138,7 +138,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
 <a name="deleteUser"></a>
 # **deleteUser**
@@ -180,7 +180,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
 <a name="getUserByName"></a>
 # **getUserByName**
@@ -223,7 +223,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
 <a name="loginUser"></a>
 # **loginUser**
@@ -254,8 +254,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **String**| The user name for login |
- **password** | **String**| The password for login in clear text |
+ **username** | **String**| The user name for login | [optional]
+ **password** | **String**| The password for login in clear text | [optional]
 
 ### Return type
 
@@ -268,7 +268,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
 <a name="logoutUser"></a>
 # **logoutUser**
@@ -306,7 +306,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
 <a name="updateUser"></a>
 # **updateUser**
@@ -337,7 +337,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **username** | **String**| name that need to be deleted |
- **body** | [**User**](User.md)| Updated user object |
+ **body** | [**User**](User.md)| Updated user object | [optional]
 
 ### Return type
 
@@ -350,5 +350,5 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 

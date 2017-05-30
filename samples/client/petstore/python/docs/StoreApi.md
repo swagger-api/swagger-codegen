@@ -1,12 +1,12 @@
 # petstore_api.StoreApi
 
-All URIs are relative to *http://petstore.swagger.io:80/v2*
+All URIs are relative to *http://petstore.swagger.io/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**delete_order**](StoreApi.md#delete_order) | **DELETE** /store/order/{order_id} | Delete purchase order by ID
+[**delete_order**](StoreApi.md#delete_order) | **DELETE** /store/order/{orderId} | Delete purchase order by ID
 [**get_inventory**](StoreApi.md#get_inventory) | **GET** /store/inventory | Returns pet inventories by status
-[**get_order_by_id**](StoreApi.md#get_order_by_id) | **GET** /store/order/{order_id} | Find purchase order by ID
+[**get_order_by_id**](StoreApi.md#get_order_by_id) | **GET** /store/order/{orderId} | Find purchase order by ID
 [**place_order**](StoreApi.md#place_order) | **POST** /store/order | Place an order for a pet
 
 
@@ -19,7 +19,7 @@ For valid response try integer IDs with value < 1000. Anything above 1000 or non
 
 ### Example 
 ```python
-from __future__ import print_function
+from __future__ import print_statement
 import time
 import petstore_api
 from petstore_api.rest import ApiException
@@ -66,20 +66,19 @@ Returns a map of status codes to quantities
 
 ### Example 
 ```python
-from __future__ import print_function
+from __future__ import print_statement
 import time
 import petstore_api
 from petstore_api.rest import ApiException
 from pprint import pprint
 
 # Configure API key authorization: api_key
-configuration = petstore_api.Configuration()
-configuration.api_key['api_key'] = 'YOUR_API_KEY'
+petstore_api.configuration.api_key['api_key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['api_key'] = 'Bearer'
+# petstore_api.configuration.api_key_prefix['api_key'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = petstore_api.StoreApi(petstore_api.ApiClient(configuration))
+api_instance = petstore_api.StoreApi()
 
 try: 
     # Returns pet inventories by status
@@ -116,7 +115,7 @@ For valid response try integer IDs with value <= 5 or > 10. Other values will ge
 
 ### Example 
 ```python
-from __future__ import print_function
+from __future__ import print_statement
 import time
 import petstore_api
 from petstore_api.rest import ApiException
@@ -164,7 +163,7 @@ Place an order for a pet
 
 ### Example 
 ```python
-from __future__ import print_function
+from __future__ import print_statement
 import time
 import petstore_api
 from petstore_api.rest import ApiException

@@ -9,10 +9,7 @@ import io.swagger.model.Animal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
-import org.threeten.bp.OffsetDateTime;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import org.joda.time.DateTime;
 
 /**
  * MixedPropertiesAndAdditionalPropertiesClass
@@ -20,15 +17,15 @@ import javax.validation.constraints.*;
 
 public class MixedPropertiesAndAdditionalPropertiesClass   {
   @JsonProperty("uuid")
-  private UUID uuid = null;
+  private String uuid = null;
 
   @JsonProperty("dateTime")
-  private OffsetDateTime dateTime = null;
+  private DateTime dateTime = null;
 
   @JsonProperty("map")
-  private Map<String, Animal> map = null;
+  private Map<String, Animal> map = new HashMap<String, Animal>();
 
-  public MixedPropertiesAndAdditionalPropertiesClass uuid(UUID uuid) {
+  public MixedPropertiesAndAdditionalPropertiesClass uuid(String uuid) {
     this.uuid = uuid;
     return this;
   }
@@ -38,18 +35,15 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
    * @return uuid
   **/
   @ApiModelProperty(value = "")
-
-  @Valid
-
-  public UUID getUuid() {
+  public String getUuid() {
     return uuid;
   }
 
-  public void setUuid(UUID uuid) {
+  public void setUuid(String uuid) {
     this.uuid = uuid;
   }
 
-  public MixedPropertiesAndAdditionalPropertiesClass dateTime(OffsetDateTime dateTime) {
+  public MixedPropertiesAndAdditionalPropertiesClass dateTime(DateTime dateTime) {
     this.dateTime = dateTime;
     return this;
   }
@@ -59,14 +53,11 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
    * @return dateTime
   **/
   @ApiModelProperty(value = "")
-
-  @Valid
-
-  public OffsetDateTime getDateTime() {
+  public DateTime getDateTime() {
     return dateTime;
   }
 
-  public void setDateTime(OffsetDateTime dateTime) {
+  public void setDateTime(DateTime dateTime) {
     this.dateTime = dateTime;
   }
 
@@ -76,9 +67,6 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
   }
 
   public MixedPropertiesAndAdditionalPropertiesClass putMapItem(String key, Animal mapItem) {
-    if (this.map == null) {
-      this.map = new HashMap<String, Animal>();
-    }
     this.map.put(key, mapItem);
     return this;
   }
@@ -88,9 +76,6 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
    * @return map
   **/
   @ApiModelProperty(value = "")
-
-  @Valid
-
   public Map<String, Animal> getMap() {
     return map;
   }

@@ -9,9 +9,8 @@
 #include <QObject>
 #include <QDebug>
 
-{{#cppNamespaceDeclarations}}
-namespace {{this}} {
-{{/cppNamespaceDeclarations}}
+namespace Swagger {
+
 
 {{classname}}::{{classname}}(QString* json) {
     init();
@@ -28,15 +27,13 @@ namespace {{this}} {
 
 void
 {{classname}}::init() {
-    {{#vars}}
-    {{name}} = {{{defaultValue}}};
+    {{#vars}}{{name}} = {{{defaultValue}}};
     {{/vars}}
 }
 
 void
 {{classname}}::cleanup() {
-    {{#vars}}{{#complexType}}
-    if({{name}} != nullptr) {
+    {{#vars}}{{#complexType}}if({{name}} != NULL) {
         {{#isContainer}}QList<{{complexType}}*>* arr = {{name}};
         foreach({{complexType}}* o, *arr) {
             delete o;
@@ -57,12 +54,7 @@ void
 
 void
 {{classname}}::fromJsonObject(QJsonObject &pJson) {
-    {{#vars}}
-    {{^isContainer}}::{{cppNamespace}}::setValue(&{{name}}, pJson["{{baseName}}"], "{{baseType}}", "{{complexType}}");{{/isContainer}}
-    {{#isContainer}}
-    {{#complexType}}::{{cppNamespace}}::setValue(&{{name}}, pJson["{{baseName}}"], "{{baseType}}", "{{complexType}}");{{/complexType}}
-    {{^complexType}}::{{cppNamespace}}::setValue(&{{name}}, pJson["{{baseName}}"], "{{baseType}}", "{{items.baseType}}");{{/complexType}}
-    {{/isContainer}}
+    {{#vars}}setValue(&{{name}}, pJson["{{name}}"], "{{baseType}}", "{{complexType}}");
     {{/vars}}
 }
 
@@ -79,18 +71,21 @@ QString
 QJsonObject*
 {{classname}}::asJsonObject() {
     QJsonObject* obj = new QJsonObject();
-    {{#vars}}{{#complexType}}{{^isContainer}}{{#complexType}}
-    toJsonValue(QString("{{baseName}}"), {{name}}, obj, QString("{{complexType}}"));{{/complexType}}{{^complexType}}
-    if({{name}} != nullptr && *{{name}} != nullptr) { 
-        obj->insert("{{name}}", QJsonValue(*{{name}}));
-    }{{/complexType}}{{/isContainer}}{{#isContainer}}
+    {{#vars}}{{#complexType}}
+    {{^isContainer}}{{#complexType}}
+    toJsonValue(QString("{{name}}"), {{name}}, obj, QString("{{complexType}}"));
+    {{/complexType}}{{^complexType}}
+    else if({{name}} != NULL && *{{name}} != NULL) {
+      obj->insert("{{name}}", QJsonValue(*{{name}}));
+    }{{/complexType}}
+    {{/isContainer}}{{#isContainer}}
+    QList<{{complexType}}*>* {{name}}List = {{name}};
     QJsonArray {{name}}JsonArray;
     toJsonArray((QList<void*>*){{name}}, &{{name}}JsonArray, "{{name}}", "{{complexType}}");
-    obj->insert("{{baseName}}", {{name}}JsonArray);{{/isContainer}}{{/complexType}}{{^complexType}}{{^isContainer}}
-    obj->insert("{{baseName}}", QJsonValue({{name}}));{{/isContainer}}{{#isContainer}}
-    QJsonArray {{name}}JsonArray;
-    toJsonArray((QList<void*>*){{name}}, &{{name}}JsonArray, "{{name}}", "{{items.baseType}}");
-    obj->insert("{{baseName}}", {{name}}JsonArray);{{/isContainer}}{{/complexType}}
+
+    obj->insert("{{name}}", {{name}}JsonArray);
+    {{/isContainer}}
+    {{/complexType}}{{^complexType}}obj->insert("{{name}}", QJsonValue({{name}}));{{/complexType}}
     {{/vars}}
 
     return obj;
@@ -108,9 +103,8 @@ void
 
 {{/vars}}
 
-{{#cppNamespaceDeclarations}}
-}
-{{/cppNamespaceDeclarations}}
+
+} /* namespace Swagger */
 
 {{/model}}
 {{/models}}

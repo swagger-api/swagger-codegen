@@ -3,7 +3,6 @@ package io.swagger.client.api;
 import io.swagger.client.CollectionFormats.*;
 
 
-
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -16,7 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public interface StoreApi {
   /**
    * Delete purchase order by ID
@@ -24,16 +22,18 @@ public interface StoreApi {
    * @param orderId ID of the order that needs to be deleted (required)
    * @return Call&lt;Void&gt;
    */
-  @DELETE("store/order/{order_id}")
+  
+  @DELETE("store/order/{orderId}")
   Call<Void> deleteOrder(
-    @retrofit2.http.Path("order_id") String orderId
+    @Path("orderId") String orderId
   );
 
   /**
    * Returns pet inventories by status
    * Returns a map of status codes to quantities
-   * @return Call&lt;Map&lt;String, Integer&gt;&gt;
+   * @return Call&lt;Map<String, Integer>&gt;
    */
+  
   @GET("store/inventory")
   Call<Map<String, Integer>> getInventory();
     
@@ -44,9 +44,10 @@ public interface StoreApi {
    * @param orderId ID of pet that needs to be fetched (required)
    * @return Call&lt;Order&gt;
    */
-  @GET("store/order/{order_id}")
+  
+  @GET("store/order/{orderId}")
   Call<Order> getOrderById(
-    @retrofit2.http.Path("order_id") Long orderId
+    @Path("orderId") Long orderId
   );
 
   /**
@@ -55,9 +56,10 @@ public interface StoreApi {
    * @param body order placed for purchasing the pet (required)
    * @return Call&lt;Order&gt;
    */
+  
   @POST("store/order")
   Call<Order> placeOrder(
-    @retrofit2.http.Body Order body
+    @Body Order body
   );
 
 }

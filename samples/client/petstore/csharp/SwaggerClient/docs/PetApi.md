@@ -1,6 +1,6 @@
 # IO.Swagger.Api.PetApi
 
-All URIs are relative to *http://petstore.swagger.io:80/v2*
+All URIs are relative to *http://petstore.swagger.io/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -36,6 +36,7 @@ namespace Example
     {
         public void main()
         {
+            
             // Configure OAuth2 access token for authorization: petstore_auth
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
@@ -99,6 +100,7 @@ namespace Example
     {
         public void main()
         {
+            
             // Configure OAuth2 access token for authorization: petstore_auth
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
@@ -164,6 +166,7 @@ namespace Example
     {
         public void main()
         {
+            
             // Configure OAuth2 access token for authorization: petstore_auth
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
@@ -189,7 +192,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **status** | [**List&lt;string&gt;**](string.md)| Status values that need to be considered for filter | 
+ **status** | [**List<string>**](string.md)| Status values that need to be considered for filter | 
 
 ### Return type
 
@@ -228,6 +231,7 @@ namespace Example
     {
         public void main()
         {
+            
             // Configure OAuth2 access token for authorization: petstore_auth
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
@@ -253,7 +257,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **tags** | [**List&lt;string&gt;**](string.md)| Tags to filter by | 
+ **tags** | [**List<string>**](string.md)| Tags to filter by | 
 
 ### Return type
 
@@ -292,6 +296,7 @@ namespace Example
     {
         public void main()
         {
+            
             // Configure API key authorization: api_key
             Configuration.Default.ApiKey.Add("api_key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -358,6 +363,7 @@ namespace Example
     {
         public void main()
         {
+            
             // Configure OAuth2 access token for authorization: petstore_auth
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
@@ -421,6 +427,7 @@ namespace Example
     {
         public void main()
         {
+            
             // Configure OAuth2 access token for authorization: petstore_auth
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
@@ -488,6 +495,7 @@ namespace Example
     {
         public void main()
         {
+            
             // Configure OAuth2 access token for authorization: petstore_auth
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 

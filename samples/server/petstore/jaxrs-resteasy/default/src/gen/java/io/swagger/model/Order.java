@@ -7,10 +7,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import java.util.Date;
-import javax.validation.constraints.*;
-import io.swagger.annotations.*;
 
-@ApiModel(description="An order for a pets from the pet store")
 
 public class Order   {
   
@@ -47,7 +44,6 @@ public class Order   {
   /**
    **/
   
-  @ApiModelProperty(value = "")
   @JsonProperty("id")
   public Long getId() {
     return id;
@@ -59,7 +55,6 @@ public class Order   {
   /**
    **/
   
-  @ApiModelProperty(value = "")
   @JsonProperty("petId")
   public Long getPetId() {
     return petId;
@@ -71,7 +66,6 @@ public class Order   {
   /**
    **/
   
-  @ApiModelProperty(value = "")
   @JsonProperty("quantity")
   public Integer getQuantity() {
     return quantity;
@@ -83,7 +77,6 @@ public class Order   {
   /**
    **/
   
-  @ApiModelProperty(value = "")
   @JsonProperty("shipDate")
   public Date getShipDate() {
     return shipDate;
@@ -96,7 +89,6 @@ public class Order   {
    * Order Status
    **/
   
-  @ApiModelProperty(value = "Order Status")
   @JsonProperty("status")
   public StatusEnum getStatus() {
     return status;
@@ -108,7 +100,6 @@ public class Order   {
   /**
    **/
   
-  @ApiModelProperty(value = "")
   @JsonProperty("complete")
   public Boolean getComplete() {
     return complete;
@@ -119,7 +110,7 @@ public class Order   {
 
 
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -159,7 +150,7 @@ public class Order   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

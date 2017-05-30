@@ -16,9 +16,6 @@
 
 enum HttpRequestVarLayout {NOT_SET, ADDRESS, URL_ENCODED, MULTIPART};
 
-{{#cppNamespaceDeclarations}}
-namespace {{this}} {
-{{/cppNamespaceDeclarations}}
 
 class SWGHttpRequestInputFileElement {
 
@@ -75,9 +72,5 @@ private slots:
     void on_manager_finished(QNetworkReply *reply);
 
 };
-
-{{#cppNamespaceDeclarations}}
-}
-{{/cppNamespaceDeclarations}}
 
 #endif // HTTPREQUESTWORKER_H

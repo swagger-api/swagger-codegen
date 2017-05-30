@@ -102,10 +102,7 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
     }
 
     @Override
-    public String escapeReservedWord(String name) {           
-        if(this.reservedWordsMappings().containsKey(name)) {
-            return this.reservedWordsMappings().get(name);
-        }
+    public String escapeReservedWord(String name) {
         return "_" + name;
     }
 

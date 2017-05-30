@@ -5,9 +5,9 @@ import static groovyx.net.http.ContentType.*
 import static groovyx.net.http.Method.*
 import io.swagger.api.ApiUtils
 
-import io.swagger.model.File
-import io.swagger.model.ModelApiResponse
 import io.swagger.model.Pet
+import io.swagger.model.ModelApiResponse
+import java.io.File
 
 import java.util.*;
 
@@ -17,7 +17,7 @@ class PetApi {
     String versionPath = "/api/v1"
 
     def addPet ( Pet body, Closure onSuccess, Closure onFailure)  {
-        // create path and map path parameters (TODO)
+        // create path and map variables
         String resourcePath = "/pet"
 
         // query params
@@ -31,15 +31,13 @@ class PetApi {
 
         
 
-        // Also still TODO: form params, body param
-
         invokeApi(onSuccess, onFailure, basePath, versionPath, resourcePath, queryParams, headerParams,
                     "POST", "",
                     null )
                     
     }
     def deletePet ( Long petId, String apiKey, Closure onSuccess, Closure onFailure)  {
-        // create path and map path parameters (TODO)
+        // create path and map variables
         String resourcePath = "/pet/{petId}"
 
         // query params
@@ -52,9 +50,7 @@ class PetApi {
         }
 
         
-        headerParams.put("api_key", apiKey)
-
-        // Also still TODO: form params, body param
+        headerParams.put("apiKey", apiKey)
 
         invokeApi(onSuccess, onFailure, basePath, versionPath, resourcePath, queryParams, headerParams,
                     "DELETE", "",
@@ -62,7 +58,7 @@ class PetApi {
                     
     }
     def findPetsByStatus ( List<String> status, Closure onSuccess, Closure onFailure)  {
-        // create path and map path parameters (TODO)
+        // create path and map variables
         String resourcePath = "/pet/findByStatus"
 
         // query params
@@ -78,15 +74,13 @@ class PetApi {
             queryParams.put("status", String.valueOf(status))
 
 
-        // Also still TODO: form params, body param
-
         invokeApi(onSuccess, onFailure, basePath, versionPath, resourcePath, queryParams, headerParams,
                     "GET", "array",
                     Pet.class )
                     
     }
     def findPetsByTags ( List<String> tags, Closure onSuccess, Closure onFailure)  {
-        // create path and map path parameters (TODO)
+        // create path and map variables
         String resourcePath = "/pet/findByTags"
 
         // query params
@@ -102,15 +96,13 @@ class PetApi {
             queryParams.put("tags", String.valueOf(tags))
 
 
-        // Also still TODO: form params, body param
-
         invokeApi(onSuccess, onFailure, basePath, versionPath, resourcePath, queryParams, headerParams,
                     "GET", "array",
                     Pet.class )
                     
     }
     def getPetById ( Long petId, Closure onSuccess, Closure onFailure)  {
-        // create path and map path parameters (TODO)
+        // create path and map variables
         String resourcePath = "/pet/{petId}"
 
         // query params
@@ -124,15 +116,13 @@ class PetApi {
 
         
 
-        // Also still TODO: form params, body param
-
         invokeApi(onSuccess, onFailure, basePath, versionPath, resourcePath, queryParams, headerParams,
                     "GET", "",
                     Pet.class )
                     
     }
     def updatePet ( Pet body, Closure onSuccess, Closure onFailure)  {
-        // create path and map path parameters (TODO)
+        // create path and map variables
         String resourcePath = "/pet"
 
         // query params
@@ -146,15 +136,13 @@ class PetApi {
 
         
 
-        // Also still TODO: form params, body param
-
         invokeApi(onSuccess, onFailure, basePath, versionPath, resourcePath, queryParams, headerParams,
                     "PUT", "",
                     null )
                     
     }
     def updatePetWithForm ( Long petId, String name, String status, Closure onSuccess, Closure onFailure)  {
-        // create path and map path parameters (TODO)
+        // create path and map variables
         String resourcePath = "/pet/{petId}"
 
         // query params
@@ -168,15 +156,13 @@ class PetApi {
 
         
 
-        // Also still TODO: form params, body param
-
         invokeApi(onSuccess, onFailure, basePath, versionPath, resourcePath, queryParams, headerParams,
                     "POST", "",
                     null )
                     
     }
     def uploadFile ( Long petId, String additionalMetadata, File file, Closure onSuccess, Closure onFailure)  {
-        // create path and map path parameters (TODO)
+        // create path and map variables
         String resourcePath = "/pet/{petId}/uploadImage"
 
         // query params
@@ -189,8 +175,6 @@ class PetApi {
         }
 
         
-
-        // Also still TODO: form params, body param
 
         invokeApi(onSuccess, onFailure, basePath, versionPath, resourcePath, queryParams, headerParams,
                     "POST", "",

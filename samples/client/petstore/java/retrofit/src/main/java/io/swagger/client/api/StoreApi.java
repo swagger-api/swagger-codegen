@@ -22,9 +22,9 @@ public interface StoreApi {
    * @return Void
    */
   
-  @DELETE("/store/order/{order_id}")
+  @DELETE("/store/order/{orderId}")
   Void deleteOrder(
-    @retrofit.http.Path("order_id") String orderId
+    @Path("orderId") String orderId
   );
 
   /**
@@ -32,17 +32,18 @@ public interface StoreApi {
    * Async method
    * @param orderId ID of the order that needs to be deleted (required)
    * @param cb callback method
+   * @return void
    */
   
-  @DELETE("/store/order/{order_id}")
+  @DELETE("/store/order/{orderId}")
   void deleteOrder(
-    @retrofit.http.Path("order_id") String orderId, Callback<Void> cb
+    @Path("orderId") String orderId, Callback<Void> cb
   );
   /**
    * Returns pet inventories by status
    * Sync method
    * Returns a map of status codes to quantities
-   * @return Map&lt;String, Integer&gt;
+   * @return Map<String, Integer>
    */
   
   @GET("/store/inventory")
@@ -53,6 +54,7 @@ public interface StoreApi {
    * Returns pet inventories by status
    * Async method
    * @param cb callback method
+   * @return void
    */
   
   @GET("/store/inventory")
@@ -67,9 +69,9 @@ public interface StoreApi {
    * @return Order
    */
   
-  @GET("/store/order/{order_id}")
+  @GET("/store/order/{orderId}")
   Order getOrderById(
-    @retrofit.http.Path("order_id") Long orderId
+    @Path("orderId") Long orderId
   );
 
   /**
@@ -77,11 +79,12 @@ public interface StoreApi {
    * Async method
    * @param orderId ID of pet that needs to be fetched (required)
    * @param cb callback method
+   * @return void
    */
   
-  @GET("/store/order/{order_id}")
+  @GET("/store/order/{orderId}")
   void getOrderById(
-    @retrofit.http.Path("order_id") Long orderId, Callback<Order> cb
+    @Path("orderId") Long orderId, Callback<Order> cb
   );
   /**
    * Place an order for a pet
@@ -93,7 +96,7 @@ public interface StoreApi {
   
   @POST("/store/order")
   Order placeOrder(
-    @retrofit.http.Body Order body
+    @Body Order body
   );
 
   /**
@@ -101,10 +104,11 @@ public interface StoreApi {
    * Async method
    * @param body order placed for purchasing the pet (required)
    * @param cb callback method
+   * @return void
    */
   
   @POST("/store/order")
   void placeOrder(
-    @retrofit.http.Body Order body, Callback<Order> cb
+    @Body Order body, Callback<Order> cb
   );
 }

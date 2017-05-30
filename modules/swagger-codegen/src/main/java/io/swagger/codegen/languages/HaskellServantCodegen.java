@@ -54,12 +54,6 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
         specialCharReplacements.put(">", "GreaterThan");
         specialCharReplacements.put("<", "LessThan");
 
-        // backslash and double quote need double the escapement for both Java and Haskell
-        specialCharReplacements.remove("\\");
-        specialCharReplacements.remove("\"");
-        specialCharReplacements.put("\\\\", "Back_Slash");
-        specialCharReplacements.put("\\\"", "Double_Quote");
-
         // set the output folder here
         outputFolder = "generated-code/haskell-servant";
 
@@ -145,7 +139,6 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
         typeMapping.put("number", "Double");
         typeMapping.put("integer", "Int");
         typeMapping.put("any", "Value");
-        typeMapping.put("UUID", "Text");
 
         importMapping.clear();
         importMapping.put("Map", "qualified Data.Map as Map");
@@ -161,31 +154,8 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
      * @return the escaped term
      */
     @Override
-    public String escapeReservedWord(String name) {           
-        if(this.reservedWordsMappings().containsKey(name)) {
-            return this.reservedWordsMappings().get(name);
-        }
-        return "_" + name;
-    }
-
-    public String firstLetterToUpper(String word) {
-        if (word.length() == 0) {
-            return word;
-        } else if (word.length() == 1) {
-            return word.substring(0, 1).toUpperCase();
-        } else {
-            return word.substring(0, 1).toUpperCase() + word.substring(1);
-        }
-    }
-
-    public String firstLetterToLower(String word) {
-        if (word.length() == 0) {
-            return word;
-        } else if (word.length() == 1) {
-            return word.substring(0, 1).toLowerCase();
-        } else {
-            return word.substring(0, 1).toLowerCase() + word.substring(1);
-        }
+    public String escapeReservedWord(String name) {
+        return name + "_";
     }
 
     @Override
@@ -215,7 +185,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
         // The API name is made by appending the capitalized words of the title
         List<String> wordsCaps = new ArrayList<String>();
         for (String word : words) {
-            wordsCaps.add(firstLetterToUpper(word));
+            wordsCaps.add(word.substring(0, 1).toUpperCase() + word.substring(1));
         }
         String apiName = joinStrings("", wordsCaps);
 
@@ -226,7 +196,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
 
 
         additionalProperties.put("title", apiName);
-        additionalProperties.put("titleLower", firstLetterToLower(apiName));
+        additionalProperties.put("titleLower", apiName.substring(0, 1).toLowerCase() + apiName.substring(1));
         additionalProperties.put("package", cabalName);
 
         // Due to the way servant resolves types, we need a high context stack limit
@@ -396,7 +366,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
         // Query parameters appended to routes
         for (CodegenParameter param : op.queryParams) {
             String paramType = param.dataType;
-            if (param.isListContainer) {
+            if(param.isListContainer != null && param.isListContainer) {
                 paramType = makeQueryListType(paramType, param.collectionFormat);
             }
             path.add("QueryParam \"" + param.baseName + "\" " + paramType);
@@ -427,7 +397,7 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
             path.add("Header \"" + param.baseName + "\" " + param.dataType);
 
             String paramType = param.dataType;
-            if (param.isListContainer) {
+            if(param.isListContainer != null && param.isListContainer) {
                 paramType = makeQueryListType(paramType, param.collectionFormat);
             }
             type.add("Maybe " + paramType);

@@ -16,7 +16,6 @@ NSInteger const SWGUnknownResponseObjectErrorCode = 143528;
 @property (nonatomic, strong) NSNumberFormatter* numberFormatter;
 @property (nonatomic, strong) NSArray *primitiveTypes;
 @property (nonatomic, strong) NSArray *basicReturnTypes;
-@property (nonatomic, strong) NSArray *dataReturnTypes;
 
 @property (nonatomic, strong) NSRegularExpression* arrayOfModelsPatExpression;
 @property (nonatomic, strong) NSRegularExpression* arrayOfPrimitivesPatExpression;
@@ -34,9 +33,7 @@ NSInteger const SWGUnknownResponseObjectErrorCode = 143528;
         formatter.numberStyle = NSNumberFormatterDecimalStyle;
         _numberFormatter = formatter;
         _primitiveTypes = @[@"NSString", @"NSDate", @"NSNumber"];
-        _basicReturnTypes = @[@"NSObject", @"id"];
-        _dataReturnTypes = @[@"NSData"];
-
+        _basicReturnTypes = @[@"NSObject", @"id", @"NSData"];
         _arrayOfModelsPatExpression = [NSRegularExpression regularExpressionWithPattern:@"NSArray<(.+)>"
                                                                                 options:NSRegularExpressionCaseInsensitive
                                                                                   error:nil];
@@ -56,36 +53,23 @@ NSInteger const SWGUnknownResponseObjectErrorCode = 143528;
 #pragma mark - Deserialize methods
 
 - (id) deserialize:(id) data class:(NSString *) className error:(NSError **) error {
-    if (!data || !className) {
+    // return nil if data is nil or className is nil
+    if (!data || !className || [data isKindOfClass:[NSNull class]]) {
         return nil;
     }
 
+    // remove "*" from className, if ends with "*"
     if ([className hasSuffix:@"*"]) {
         className = [className substringToIndex:[className length] - 1];
     }
-    if([self.dataReturnTypes containsObject:className]) {
-        return data;
-    }
-    id jsonData = nil;
-    if([data isKindOfClass:[NSData class]]) {
-        jsonData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:error];
-    } else {
-        jsonData = data;
-    }
-    if(!jsonData) {
-        jsonData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    } else if([jsonData isKindOfClass:[NSNull class]]) {
-        return nil;
-    }
-
     // pure object
     if ([self.basicReturnTypes containsObject:className]) {
-        return jsonData;
+        return data;
     }
 
     // primitives
     if ([self.primitiveTypes containsObject:className]) {
-        return [self deserializePrimitiveValue:jsonData class:className error:error];
+        return [self deserializePrimitiveValue:data class:className error:error];
     }
 
     NSTextCheckingResult *match = nil;
@@ -94,37 +78,37 @@ NSInteger const SWGUnknownResponseObjectErrorCode = 143528;
     match = [self.arrayOfModelsPatExpression firstMatchInString:className options:0 range:range];
     if (match) {
         NSString *innerType = [className substringWithRange:[match rangeAtIndex:1]];
-        return [self deserializeArrayValue:jsonData innerType:innerType error:error];
+        return [self deserializeArrayValue:data innerType:innerType error:error];
     }
 
     // list of primitives
     match = [self.arrayOfPrimitivesPatExpression firstMatchInString:className options:0 range:range];
     if (match) {
         NSString *innerType = [className substringWithRange:[match rangeAtIndex:1]];
-        return [self deserializeArrayValue:jsonData innerType:innerType error:error];
+        return [self deserializeArrayValue:data innerType:innerType error:error];
     }
 
     // map
     match = [self.dictPatExpression firstMatchInString:className options:0 range:range];
     if (match) {
         NSString *valueType = [className substringWithRange:[match rangeAtIndex:2]];
-        return [self deserializeDictionaryValue:jsonData valueType:valueType error:error];
+        return [self deserializeDictionaryValue:data valueType:valueType error:error];
     }
 
     match = [self.dictModelsPatExpression firstMatchInString:className options:0 range:range];
     if (match) {
         NSString *valueType = [className substringWithRange:[match rangeAtIndex:2]];
-        return [self deserializeDictionaryValue:jsonData valueType:valueType error:error];
+        return [self deserializeDictionaryValue:data valueType:valueType error:error];
     }
 
     // model
     Class ModelClass = NSClassFromString(className);
     if ([ModelClass instancesRespondToSelector:@selector(initWithDictionary:error:)]) {
-        return [(JSONModel *) [ModelClass alloc] initWithDictionary:jsonData error:error];
+        return [(JSONModel *) [ModelClass alloc] initWithDictionary:data error:error];
     }
 
     if(error) {
-        *error = [self unknownResponseErrorWithExpectedType:className data:jsonData];
+        *error = [self unknownResponseErrorWithExpectedType:className data:data];
     }
     return nil;
 }
@@ -188,7 +172,7 @@ NSInteger const SWGUnknownResponseObjectErrorCode = 143528;
 
 - (id) deserializePrimitiveValue:(id) data class:(NSString *) className error:(NSError**)error {
     if ([className isEqualToString:@"NSString"]) {
-        return [NSString stringWithFormat:@"%@",data];
+        return [NSString stringWithString:data];
     }
     else if ([className isEqualToString:@"NSDate"]) {
         return [self deserializeDateValue:data error:error];

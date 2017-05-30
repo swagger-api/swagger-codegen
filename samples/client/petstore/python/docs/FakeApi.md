@@ -1,216 +1,22 @@
 # petstore_api.FakeApi
 
-All URIs are relative to *http://petstore.swagger.io:80/v2*
+All URIs are relative to *http://petstore.swagger.io/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**fake_outer_boolean_serialize**](FakeApi.md#fake_outer_boolean_serialize) | **POST** /fake/outer/boolean | 
-[**fake_outer_composite_serialize**](FakeApi.md#fake_outer_composite_serialize) | **POST** /fake/outer/composite | 
-[**fake_outer_number_serialize**](FakeApi.md#fake_outer_number_serialize) | **POST** /fake/outer/number | 
-[**fake_outer_string_serialize**](FakeApi.md#fake_outer_string_serialize) | **POST** /fake/outer/string | 
 [**test_client_model**](FakeApi.md#test_client_model) | **PATCH** /fake | To test \&quot;client\&quot; model
 [**test_endpoint_parameters**](FakeApi.md#test_endpoint_parameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 [**test_enum_parameters**](FakeApi.md#test_enum_parameters) | **GET** /fake | To test enum parameters
 
-
-# **fake_outer_boolean_serialize**
-> OuterBoolean fake_outer_boolean_serialize(body=body)
-
-
-
-Test serialization of outer boolean types
-
-### Example 
-```python
-from __future__ import print_function
-import time
-import petstore_api
-from petstore_api.rest import ApiException
-from pprint import pprint
-
-# create an instance of the API class
-api_instance = petstore_api.FakeApi()
-body = petstore_api.OuterBoolean() # OuterBoolean | Input boolean as post body (optional)
-
-try: 
-    api_response = api_instance.fake_outer_boolean_serialize(body=body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling FakeApi->fake_outer_boolean_serialize: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | [**OuterBoolean**](OuterBoolean.md)| Input boolean as post body | [optional] 
-
-### Return type
-
-[**OuterBoolean**](OuterBoolean.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **fake_outer_composite_serialize**
-> OuterComposite fake_outer_composite_serialize(body=body)
-
-
-
-Test serialization of object with outer number type
-
-### Example 
-```python
-from __future__ import print_function
-import time
-import petstore_api
-from petstore_api.rest import ApiException
-from pprint import pprint
-
-# create an instance of the API class
-api_instance = petstore_api.FakeApi()
-body = petstore_api.OuterComposite() # OuterComposite | Input composite as post body (optional)
-
-try: 
-    api_response = api_instance.fake_outer_composite_serialize(body=body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling FakeApi->fake_outer_composite_serialize: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | [**OuterComposite**](OuterComposite.md)| Input composite as post body | [optional] 
-
-### Return type
-
-[**OuterComposite**](OuterComposite.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **fake_outer_number_serialize**
-> OuterNumber fake_outer_number_serialize(body=body)
-
-
-
-Test serialization of outer number types
-
-### Example 
-```python
-from __future__ import print_function
-import time
-import petstore_api
-from petstore_api.rest import ApiException
-from pprint import pprint
-
-# create an instance of the API class
-api_instance = petstore_api.FakeApi()
-body = petstore_api.OuterNumber() # OuterNumber | Input number as post body (optional)
-
-try: 
-    api_response = api_instance.fake_outer_number_serialize(body=body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling FakeApi->fake_outer_number_serialize: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | [**OuterNumber**](OuterNumber.md)| Input number as post body | [optional] 
-
-### Return type
-
-[**OuterNumber**](OuterNumber.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **fake_outer_string_serialize**
-> OuterString fake_outer_string_serialize(body=body)
-
-
-
-Test serialization of outer string types
-
-### Example 
-```python
-from __future__ import print_function
-import time
-import petstore_api
-from petstore_api.rest import ApiException
-from pprint import pprint
-
-# create an instance of the API class
-api_instance = petstore_api.FakeApi()
-body = petstore_api.OuterString() # OuterString | Input string as post body (optional)
-
-try: 
-    api_response = api_instance.fake_outer_string_serialize(body=body)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling FakeApi->fake_outer_string_serialize: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | [**OuterString**](OuterString.md)| Input string as post body | [optional] 
-
-### Return type
-
-[**OuterString**](OuterString.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **test_client_model**
 > Client test_client_model(body)
 
 To test \"client\" model
 
-To test \"client\" model
-
 ### Example 
 ```python
-from __future__ import print_function
+from __future__ import print_statement
 import time
 import petstore_api
 from petstore_api.rest import ApiException
@@ -258,19 +64,18 @@ Fake endpoint for testing various parameters 假端點 偽のエンドポイン�
 
 ### Example 
 ```python
-from __future__ import print_function
+from __future__ import print_statement
 import time
 import petstore_api
 from petstore_api.rest import ApiException
 from pprint import pprint
 
 # Configure HTTP basic authorization: http_basic_test
-configuration = petstore_api.Configuration()
-configuration.username = 'YOUR_USERNAME'
-configuration.password = 'YOUR_PASSWORD'
+petstore_api.configuration.username = 'YOUR_USERNAME'
+petstore_api.configuration.password = 'YOUR_PASSWORD'
 
 # create an instance of the API class
-api_instance = petstore_api.FakeApi(petstore_api.ApiClient(configuration))
+api_instance = petstore_api.FakeApi()
 number = 3.4 # float | None
 double = 1.2 # float | None
 pattern_without_delimiter = 'pattern_without_delimiter_example' # str | None
@@ -332,11 +137,9 @@ void (empty response body)
 
 To test enum parameters
 
-To test enum parameters
-
 ### Example 
 ```python
-from __future__ import print_function
+from __future__ import print_statement
 import time
 import petstore_api
 from petstore_api.rest import ApiException
@@ -350,7 +153,7 @@ enum_header_string_array = ['enum_header_string_array_example'] # list[str] | He
 enum_header_string = '-efg' # str | Header parameter enum test (string) (optional) (default to -efg)
 enum_query_string_array = ['enum_query_string_array_example'] # list[str] | Query parameter enum test (string array) (optional)
 enum_query_string = '-efg' # str | Query parameter enum test (string) (optional) (default to -efg)
-enum_query_integer = 56 # int | Query parameter enum test (double) (optional)
+enum_query_integer = 3.4 # float | Query parameter enum test (double) (optional)
 enum_query_double = 1.2 # float | Query parameter enum test (double) (optional)
 
 try: 
@@ -370,7 +173,7 @@ Name | Type | Description  | Notes
  **enum_header_string** | **str**| Header parameter enum test (string) | [optional] [default to -efg]
  **enum_query_string_array** | [**list[str]**](str.md)| Query parameter enum test (string array) | [optional] 
  **enum_query_string** | **str**| Query parameter enum test (string) | [optional] [default to -efg]
- **enum_query_integer** | **int**| Query parameter enum test (double) | [optional] 
+ **enum_query_integer** | **float**| Query parameter enum test (double) | [optional] 
  **enum_query_double** | **float**| Query parameter enum test (double) | [optional] 
 
 ### Return type
@@ -383,8 +186,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: */*
- - **Accept**: */*
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

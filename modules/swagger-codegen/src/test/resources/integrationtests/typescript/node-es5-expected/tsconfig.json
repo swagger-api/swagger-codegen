@@ -10,10 +10,9 @@
         "noLib": false,
         "declaration": true
     },
-    "exclude": [
-        "node_modules",
-        "typings/browser",
-        "typings/browser.d.ts"
+    "files": [
+        "api.ts",
+        "typings/main.d.ts"
     ]
 }
 

@@ -13,7 +13,7 @@ import io.swagger.annotations.ApiModelProperty;
  **/
 
 @ApiModel(description = "A User who is purchasing from the pet store")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.UndertowCodegen")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-09-26T16:15:27.984+08:00")
 public class User   {
   
   private Long id = null;
@@ -33,7 +33,7 @@ public class User   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("id")
   public Long getId() {
     return id;
@@ -50,7 +50,7 @@ public class User   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("username")
   public String getUsername() {
     return username;
@@ -67,7 +67,7 @@ public class User   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("firstName")
   public String getFirstName() {
     return firstName;
@@ -84,7 +84,7 @@ public class User   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("lastName")
   public String getLastName() {
     return lastName;
@@ -101,7 +101,7 @@ public class User   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("email")
   public String getEmail() {
     return email;
@@ -118,7 +118,7 @@ public class User   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("password")
   public String getPassword() {
     return password;
@@ -135,7 +135,7 @@ public class User   {
   }
 
   
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(example = "null", value = "")
   @JsonProperty("phone")
   public String getPhone() {
     return phone;
@@ -153,7 +153,7 @@ public class User   {
   }
 
   
-  @ApiModelProperty(value = "User Status")
+  @ApiModelProperty(example = "null", value = "User Status")
   @JsonProperty("userStatus")
   public Integer getUserStatus() {
     return userStatus;
@@ -164,7 +164,7 @@ public class User   {
 
 
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -208,7 +208,7 @@ public class User   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

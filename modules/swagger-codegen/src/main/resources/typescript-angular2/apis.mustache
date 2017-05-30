@@ -1,9 +1,7 @@
 {{#apiInfo}}
 {{#apis}}
 {{#operations}}
-export * from './{{ classFilename }}';
-import { {{ classname }} } from './{{ classFilename }}';
+export * from './{{ classname }}';
 {{/operations}}
 {{/apis}}
-export const APIS = [{{#apis}}{{#operations}}{{ classname }}{{/operations}}{{^-last}}, {{/-last}}{{/apis}}];
 {{/apiInfo}}

@@ -11,8 +11,6 @@ public class HaskellServantOptionsProvider implements OptionsProvider {
     public static final String API_PACKAGE_VALUE = "Api";
     public static final String SORT_PARAMS_VALUE = "false";
     public static final String ENSURE_UNIQUE_PARAMS_VALUE = "true";
-    public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
-
 
     @Override
     public String getLanguage() {
@@ -26,7 +24,6 @@ public class HaskellServantOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.API_PACKAGE, API_PACKAGE_VALUE)
                 .put(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG, SORT_PARAMS_VALUE)
                 .put(CodegenConstants.ENSURE_UNIQUE_PARAMS, ENSURE_UNIQUE_PARAMS_VALUE)
-                .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
                 .build();
     }
 

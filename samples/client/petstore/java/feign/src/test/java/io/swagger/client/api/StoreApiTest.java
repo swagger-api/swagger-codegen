@@ -11,16 +11,15 @@ import java.lang.reflect.Field;
 import java.util.Map;
 
 import org.junit.*;
-import org.threeten.bp.OffsetDateTime;
-
 import static org.junit.Assert.*;
 
 public class StoreApiTest {
-    private StoreApi api;
+    ApiClient apiClient;
+    StoreApi api;
 
     @Before
     public void setup() {
-        ApiClient apiClient = new ApiClient();
+        apiClient = new ApiClient();
         api = apiClient.buildClient(StoreApi.class);
     }
 
@@ -39,7 +38,7 @@ public class StoreApiTest {
         assertEquals(order.getId(), fetched.getId());
         assertEquals(order.getPetId(), fetched.getPetId());
         assertEquals(order.getQuantity(), fetched.getQuantity());
-        assertTrue(order.getShipDate().isEqual(fetched.getShipDate()));
+        assertEquals(order.getShipDate().toInstant(), fetched.getShipDate().toInstant());
     }
 
     @Test
@@ -62,10 +61,9 @@ public class StoreApiTest {
 
     private Order createOrder() {
         Order order = new Order();
-        order.setPetId(200L);
-        order.setQuantity(13);
-        //Ensure 3 fractional digits because of a bug in the petstore server
-        order.setShipDate(OffsetDateTime.now().withNano(123000000));
+        order.setPetId(new Long(200));
+        order.setQuantity(new Integer(13));
+        order.setShipDate(org.joda.time.DateTime.now());
         order.setStatus(Order.StatusEnum.PLACED);
         order.setComplete(true);
 

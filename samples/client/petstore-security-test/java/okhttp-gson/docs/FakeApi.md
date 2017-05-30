@@ -1,17 +1,17 @@
 # FakeApi
 
-All URIs are relative to *https://petstore.swagger.io *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r/v2 *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r*
+All URIs are relative to *https://petstore.swagger.io  &#39; \&quot; &#x3D;end/v2  &#39; \&quot; &#x3D;end*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**testCodeInjectEndRnNR**](FakeApi.md#testCodeInjectEndRnNR) | **PUT** /fake | To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
+[**testCodeInjectEnd**](FakeApi.md#testCodeInjectEnd) | **PUT** /fake | To test code injection  &#39; \&quot; &#x3D;end
 
 
-<a name="testCodeInjectEndRnNR"></a>
-# **testCodeInjectEndRnNR**
-> testCodeInjectEndRnNR(testCodeInjectEndRnNR)
+<a name="testCodeInjectEnd"></a>
+# **testCodeInjectEnd**
+> testCodeInjectEnd(testCodeInjectEnd)
 
-To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
+To test code injection  &#39; \&quot; &#x3D;end
 
 ### Example
 ```java
@@ -21,11 +21,11 @@ To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
 
 
 FakeApi apiInstance = new FakeApi();
-String testCodeInjectEndRnNR = "testCodeInjectEndRnNR_example"; // String | To test code injection *_/ ' \" =end -- \\r\\n \\n \\r
+String testCodeInjectEnd = "testCodeInjectEnd_example"; // String | To test code injection  ' \" =end
 try {
-    apiInstance.testCodeInjectEndRnNR(testCodeInjectEndRnNR);
+    apiInstance.testCodeInjectEnd(testCodeInjectEnd);
 } catch (ApiException e) {
-    System.err.println("Exception when calling FakeApi#testCodeInjectEndRnNR");
+    System.err.println("Exception when calling FakeApi#testCodeInjectEnd");
     e.printStackTrace();
 }
 ```
@@ -34,7 +34,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **testCodeInjectEndRnNR** | **String**| To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r | [optional]
+ **testCodeInjectEnd** | **String**| To test code injection  &#39; \&quot; &#x3D;end | [optional]
 
 ### Return type
 
@@ -46,6 +46,6 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, *_/ '  =end --       
- - **Accept**: application/json, *_/ '  =end --       
+ - **Content-Type**: application/json, */ '  =end
+ - **Accept**: application/json, */ '  =end
 

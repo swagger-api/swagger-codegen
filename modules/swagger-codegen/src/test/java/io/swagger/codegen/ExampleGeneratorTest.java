@@ -50,12 +50,12 @@ public class ExampleGeneratorTest {
                 types.add(XML);
                 Assert.assertEquals(example, "<Pair>\n" +
                         "  <Node>\n" +
-                        "    <name>aeiou</name>\n" +
+                        "    <name>string</name>\n" +
                         "    <wrappedChildren>\n" +
                         "    </wrappedChildren>\n" +
                         "  </Node>\n" +
                         "  <Node>\n" +
-                        "    <name>aeiou</name>\n" +
+                        "    <name>string</name>\n" +
                         "    <wrappedChildren>\n" +
                         "    </wrappedChildren>\n" +
                         "  </Node>\n" +

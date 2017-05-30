@@ -7,8 +7,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
 
 /**
  * Order
@@ -76,8 +74,6 @@ public class Order   {
    * @return id
   **/
   @ApiModelProperty(value = "")
-
-
   public Long getId() {
     return id;
   }
@@ -96,8 +92,6 @@ public class Order   {
    * @return petId
   **/
   @ApiModelProperty(value = "")
-
-
   public Long getPetId() {
     return petId;
   }
@@ -116,8 +110,6 @@ public class Order   {
    * @return quantity
   **/
   @ApiModelProperty(value = "")
-
-
   public Integer getQuantity() {
     return quantity;
   }
@@ -136,9 +128,6 @@ public class Order   {
    * @return shipDate
   **/
   @ApiModelProperty(value = "")
-
-  @Valid
-
   public OffsetDateTime getShipDate() {
     return shipDate;
   }
@@ -157,8 +146,6 @@ public class Order   {
    * @return status
   **/
   @ApiModelProperty(value = "Order Status")
-
-
   public StatusEnum getStatus() {
     return status;
   }
@@ -177,8 +164,6 @@ public class Order   {
    * @return complete
   **/
   @ApiModelProperty(value = "")
-
-
   public Boolean getComplete() {
     return complete;
   }

@@ -251,11 +251,8 @@ public abstract class AbstractPhpCodegen extends DefaultCodegen implements Codeg
                 .replaceAll(regLastPathSeparator+ "$", "");
     }
 
-   @Override
-    public String escapeReservedWord(String name) {           
-        if(this.reservedWordsMappings().containsKey(name)) {
-            return this.reservedWordsMappings().get(name);
-        }
+    @Override
+    public String escapeReservedWord(String name) {
         return "_" + name;
     }
 
@@ -560,7 +557,7 @@ public abstract class AbstractPhpCodegen extends DefaultCodegen implements Codeg
             example = "new \\DateTime(\"" + escapeText(example) + "\")";
         } else if (!languageSpecificPrimitives.contains(type)) {
             // type is a model class, e.g. User
-            example = "new " + getTypeDeclaration(type) + "()";
+            example = "new " + type + "()";
         } else {
             LOGGER.warn("Type " + type + " not handled properly in setParameterExampleValue");
         }
@@ -592,10 +589,6 @@ public abstract class AbstractPhpCodegen extends DefaultCodegen implements Codeg
 
     @Override
     public String toEnumVarName(String name, String datatype) {
-        if (name.length() == 0) {
-            return "EMPTY";
-        }
-
         // for symbol, e.g. $, #
         if (getSymbolName(name) != null) {
             return (getSymbolName(name)).toUpperCase();

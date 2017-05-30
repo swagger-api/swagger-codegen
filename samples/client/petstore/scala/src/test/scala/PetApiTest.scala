@@ -17,22 +17,22 @@ class PetApiTest extends FlatSpec with Matchers {
 
   it should "add and fetch a pet" in {
     val pet = Pet(
-      Some(1000),
-      Some(Category(Some(1), Some("sold"))),
+      1000,
+      Category(1, "sold"),
       "dragon",
       (for (i <- (1 to 10)) yield "http://foo.com/photo/" + i).toList,
-      Some((for (i <- (1 to 5)) yield io.swagger.client.model.Tag(Some(i), Some("tag-" + i))).toList),
-      Some("lost")
+      (for (i <- (1 to 5)) yield io.swagger.client.model.Tag(i, "tag-" + i)).toList,
+      "lost"
     )
 
     api.addPet(pet)
     api.getPetById(1000) match {
       case Some(pet) => {
-        pet.id should be(Some(1000))
-        pet.tags.get.size should be(5)
-        pet.status should be(Some("lost"))
+        pet.id should be(1000)
+        pet.tags.size should be(5)
+        pet.status should be("lost")
         pet.category should not be (null)
-        pet.category.get.name should be(Some("sold"))
+        pet.category.name should be("sold")
         pet.name should be("dragon")
         pet.photoUrls.size should be(10)
       }
@@ -42,12 +42,12 @@ class PetApiTest extends FlatSpec with Matchers {
 
   it should "update a pet" in {
     val pet = Pet(
-      Some(1000),
-      Some(Category(Some(1), Some("sold"))),
+      1000,
+      Category(1, "sold"),
       "programmer",
       (for (i <- (1 to 10)) yield "http://foo.com/photo/" + i).toList,
-      Some((for (i <- (1 to 5)) yield io.swagger.client.model.Tag(Some(i), Some("tag-" + i))).toList),
-      Some("confused")
+      (for (i <- (1 to 5)) yield io.swagger.client.model.Tag(i, "tag-" + i)).toList,
+      "confused"
     )
 
     api.addPet(pet)
@@ -55,16 +55,16 @@ class PetApiTest extends FlatSpec with Matchers {
     api.getPetById(1000) match {
       case Some(pet) => {
         pet.name should be("programmer")
-        pet.status should be(Some("confused"))
+        pet.status should be("confused")
       }
       case None => fail("didn't find pet created")
     }
-    val updatedPet = pet.copy(status = Some("fulfilled"))
+    val updatedPet = pet.copy(status = "fulfilled")
     api.updatePet(updatedPet)
     api.getPetById(1000) match {
       case Some(pet) => {
         pet.name should be("programmer")
-        pet.status should be(Some("fulfilled"))
+        pet.status should be("fulfilled")
       }
       case None => fail("didn't find pet updated")
     }
@@ -83,8 +83,8 @@ class PetApiTest extends FlatSpec with Matchers {
     api.findPetsByTags(List("tag1", "tag2")) match {
       case Some(pets) => {
         pets.foreach(pet => {
-          val tags = (for (tag <- pet.tags.get) yield tag.name).toSet
-                       if ((tags & Set(Some("tag1"), Some("tag2"))).size == 0)
+          val tags = (for (tag <- pet.tags) yield tag.name).toSet
+          if ((tags & Set("tag1", "tag2")).size == 0)
             fail("unexpected tags in " + tags)
         })
       }

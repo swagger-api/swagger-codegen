@@ -1,7 +1,6 @@
 goog.provide('API.Client.Pet');
 
 /**
- * A pet for sale in the pet store
  * @record
  */
 API.Client.Pet = function() {}

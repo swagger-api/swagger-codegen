@@ -42,21 +42,22 @@ class EnumArraysTests(unittest.TestCase):
       #
       try:
         fish_or_crab = petstore_api.EnumArrays(just_symbol="<=")
-        self.assertTrue(0)
       except ValueError:
-        self.assertTrue(1)
+        self.assertEqual(fish_or_crab.just_symbol, None)
+        self.assertEqual(fish_or_crab.array_enum, None)
 
       try:
         fish_or_crab = petstore_api.EnumArrays(just_symbol="$", array_enum=["dog"])
-        self.assertTrue(0)
       except ValueError:
-        self.assertTrue(1)
+        self.assertEqual(fish_or_crab.just_symbol, None)
+        self.assertEqual(fish_or_crab.array_enum, None)
 
+      
       try:
         fish_or_crab = petstore_api.EnumArrays(just_symbol=["$"], array_enum=["dog"])
-        self.assertTrue(0)
       except ValueError:
-        self.assertTrue(1)
+        self.assertEqual(fish_or_crab.just_symbol, None)
+        self.assertEqual(fish_or_crab.array_enum, None)
 
 
     def test_enumarrays_setter(self):

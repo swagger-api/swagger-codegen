@@ -8,7 +8,7 @@
         "api"
     ],
     "homepage": "http://swagger.io",
-    "license": "proprietary",
+    "license": "Apache v2",
     "authors": [
         {
             "name": "Swagger and contributors",
@@ -16,16 +16,15 @@
         }
     ],
     "require": {
-        "php": ">=5.5",
+        "php": ">=5.4",
         "ext-curl": "*",
         "ext-json": "*",
-        "ext-mbstring": "*",
-        "guzzlehttp/guzzle": "^6.2"
+        "ext-mbstring": "*"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.8",
-        "squizlabs/php_codesniffer": "~2.6",
-        "friendsofphp/php-cs-fixer": "~1.12"
+        "phpunit/phpunit": "~4.8",
+        "satooshi/php-coveralls": "~1.0",
+        "squizlabs/php_codesniffer": "~2.6"
     },
     "autoload": {
         "psr-4": { "Swagger\\Client\\" : "lib/" }

@@ -1,11 +1,10 @@
 #import "SWGFakeApi.h"
 #import "SWGQueryParamCollection.h"
-#import "SWGApiClient.h"
 
 
 @interface SWGFakeApi ()
 
-@property (nonatomic, strong, readwrite) NSMutableDictionary *mutableDefaultHeaders;
+@property (nonatomic, strong) NSMutableDictionary *defaultHeaders;
 
 @end
 
@@ -19,45 +18,69 @@ NSInteger kSWGFakeApiMissingParamErrorCode = 234513;
 #pragma mark - Initialize methods
 
 - (instancetype) init {
-    return [self initWithApiClient:[SWGApiClient sharedClient]];
+    self = [super init];
+    if (self) {
+        SWGConfiguration *config = [SWGConfiguration sharedConfig];
+        if (config.apiClient == nil) {
+            config.apiClient = [[SWGApiClient alloc] init];
+        }
+        _apiClient = config.apiClient;
+        _defaultHeaders = [NSMutableDictionary dictionary];
+    }
+    return self;
 }
 
-
--(instancetype) initWithApiClient:(SWGApiClient *)apiClient {
+- (id) initWithApiClient:(SWGApiClient *)apiClient {
     self = [super init];
     if (self) {
         _apiClient = apiClient;
-        _mutableDefaultHeaders = [NSMutableDictionary dictionary];
+        _defaultHeaders = [NSMutableDictionary dictionary];
     }
     return self;
 }
 
 #pragma mark -
 
++ (instancetype)sharedAPI {
+    static SWGFakeApi *sharedAPI;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        sharedAPI = [[self alloc] init];
+    });
+    return sharedAPI;
+}
+
 -(NSString*) defaultHeaderForKey:(NSString*)key {
-    return self.mutableDefaultHeaders[key];
+    return self.defaultHeaders[key];
+}
+
+-(void) addHeader:(NSString*)value forKey:(NSString*)key {
+    [self setDefaultHeaderValue:value forKey:key];
 }
 
 -(void) setDefaultHeaderValue:(NSString*) value forKey:(NSString*)key {
-    [self.mutableDefaultHeaders setValue:value forKey:key];
+    [self.defaultHeaders setValue:value forKey:key];
 }
 
--(NSDictionary *)defaultHeaders {
-    return self.mutableDefaultHeaders;
+-(NSUInteger) requestQueueSize {
+    return [SWGApiClient requestQueueSize];
 }
 
 #pragma mark - Api Methods
 
 ///
-/// To test code injection *_/ ' \" =end -- \\r\\n \\n \\r
+/// To test code injection *_/ ' \" =end \\r\\n \\n \\r
 /// 
-///  @param testCodeInjectEndRnNR To test code injection *_/ ' \" =end -- \\r\\n \\n \\r (optional)
+///  @param testCodeInjectEndRnNR To test code injection *_/ ' \" =end \\r\\n \\n \\r (optional)
 ///
 ///  @returns void
 ///
--(NSURLSessionTask*) testCodeInjectEndRnNRWithTestCodeInjectEndRnNR: (NSString*) testCodeInjectEndRnNR
+-(NSNumber*) testCodeInjectEndRnNRWithTestCodeInjectEndRnNR: (NSString*) testCodeInjectEndRnNR
     completionHandler: (void (^)(NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/fake"];
+
+    // remove format in URL if needed
+    [resourcePath replaceOccurrencesOfString:@".{format}" withString:@".json" options:0 range:NSMakeRange(0,resourcePath.length)];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 
@@ -65,7 +88,9 @@ NSInteger kSWGFakeApiMissingParamErrorCode = 234513;
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
-    NSString *acceptHeader = [self.apiClient.sanitizer selectHeaderAccept:@[@"application/json", @"*_/ '  =end --       "]];
+    NSString *acceptHeader = [self.apiClient.sanitizer selectHeaderAccept:@[@"application/json", @"*/ '  =end 
+ 
+ "]];
     if(acceptHeader.length > 0) {
         headerParams[@"Accept"] = acceptHeader;
     }
@@ -74,7 +99,9 @@ NSInteger kSWGFakeApiMissingParamErrorCode = 234513;
     NSString *responseContentType = [[acceptHeader componentsSeparatedByString:@", "] firstObject] ?: @"";
 
     // request content type
-    NSString *requestContentType = [self.apiClient.sanitizer selectHeaderContentType:@[@"application/json", @"*_/ '  =end --       "]];
+    NSString *requestContentType = [self.apiClient.sanitizer selectHeaderContentType:@[@"application/json", @"*/ '  =end 
+ 
+ "]];
 
     // Authentication setting
     NSArray *authSettings = @[];
@@ -83,7 +110,7 @@ NSInteger kSWGFakeApiMissingParamErrorCode = 234513;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *localVarFiles = [[NSMutableDictionary alloc] init];
     if (testCodeInjectEndRnNR) {
-        formParams[@"test code inject */ &#39; &quot; &#x3D;end -- \r\n \n \r"] = testCodeInjectEndRnNR;
+        formParams[@"test code inject */ &#39; &quot; &#x3D;end \r\n \n \r"] = testCodeInjectEndRnNR;
     }
 
     return [self.apiClient requestWithPath: resourcePath
@@ -102,7 +129,8 @@ NSInteger kSWGFakeApiMissingParamErrorCode = 234513;
                                 if(handler) {
                                     handler(error);
                                 }
-                            }];
+                           }
+          ];
 }
 
 

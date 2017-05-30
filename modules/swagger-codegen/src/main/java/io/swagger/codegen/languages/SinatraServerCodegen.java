@@ -67,7 +67,6 @@ public class SinatraServerCodegen extends DefaultCodegen implements CodegenConfi
         //TODO binary should be mapped to byte array
         // mapped to String as a workaround
         typeMapping.put("binary", "string");
-        typeMapping.put("UUID", "string");
 
         // remove modelPackage and apiPackage added by default
         cliOptions.clear();
@@ -105,10 +104,7 @@ public class SinatraServerCodegen extends DefaultCodegen implements CodegenConfi
     }
 
     @Override
-    public String escapeReservedWord(String name) {           
-        if(this.reservedWordsMappings().containsKey(name)) {
-            return this.reservedWordsMappings().get(name);
-        }
+    public String escapeReservedWord(String name) {
         return "_" + name;
     }
 
@@ -186,8 +182,7 @@ public class SinatraServerCodegen extends DefaultCodegen implements CodegenConfi
     public String toModelName(String name) {
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
-            LOGGER.warn(name + " (reserved word) cannot be used as model filename. Renamed to " + camelize("model_" + name));
-            name = "model_" + name; // e.g. return => ModelReturn (after camelize)
+            throw new RuntimeException(name + " (reserved word) cannot be used as a model name");
         }
 
         // camelize the model name
@@ -199,8 +194,7 @@ public class SinatraServerCodegen extends DefaultCodegen implements CodegenConfi
     public String toModelFilename(String name) {
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
-            LOGGER.warn(name + " (reserved word) cannot be used as model filename. Renamed to " + underscore("model_" + name));
-            name = "model_" + name; // e.g. return => ModelReturn (after camelize)
+            throw new RuntimeException(name + " (reserved word) cannot be used as a model name");
         }
 
         // underscore the model file name
@@ -230,9 +224,7 @@ public class SinatraServerCodegen extends DefaultCodegen implements CodegenConfi
     public String toOperationId(String operationId) {
         // method name cannot use reserved keyword, e.g. return
         if (isReservedWord(operationId)) {
-            String newOperationId = underscore("call_" + operationId);
-            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + newOperationId);
-            return newOperationId;
+            throw new RuntimeException(operationId + " (reserved word) cannot be used as method name");
         }
 
         return underscore(operationId);

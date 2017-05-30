@@ -6,74 +6,72 @@ import java.util.Map;
 import java.util.List;
 
 public class CodegenParameter {
-    public boolean isFormParam, isQueryParam, isPathParam, isHeaderParam,
+    public Boolean isFormParam, isQueryParam, isPathParam, isHeaderParam,
             isCookieParam, isBodyParam, hasMore, isContainer,
             secondaryParam, isCollectionFormatMulti, isPrimitiveType;
-    public String baseName, paramName, dataType, datatypeWithEnum, dataFormat,
-          collectionFormat, description, unescapedDescription, baseType, defaultValue, enumName;
-
+    public String baseName, paramName, dataType, datatypeWithEnum, dataFormat, collectionFormat, description, unescapedDescription, baseType, defaultValue;
     public String example; // example value (x-example)
     public String jsonSchema;
-    public boolean isString, isInteger, isLong, isFloat, isDouble, isByteArray, isBinary, isBoolean, isDate, isDateTime;
-    public boolean isListContainer, isMapContainer;
-    public boolean isFile, notFile;
+    public Boolean isString, isInteger, isLong, isFloat, isDouble, isByteArray, isBinary, isBoolean, isDate, isDateTime;
+    public Boolean isListContainer, isMapContainer;
+    public Boolean isFile, notFile;
     public boolean isEnum;
     public List<String> _enum;
     public Map<String, Object> allowableValues;
     public CodegenProperty items;
     public Map<String, Object> vendorExtensions;
-    public boolean hasValidation;
+    public Boolean hasValidation;
 
     /**
      * Determines whether this parameter is mandatory. If the parameter is in "path",
      * this property is required and its value MUST be true. Otherwise, the property
      * MAY be included and its default value is false.
      */
-    public boolean required;
+    public Boolean required;
 
-    /**
-     * See http://json-schema.org/latest/json-schema-validation.html#anchor17.
-     */
-    public String maximum;
-    /**
-     * See http://json-schema.org/latest/json-schema-validation.html#anchor17
-     */
-    public boolean exclusiveMaximum;
-    /**
-     * See http://json-schema.org/latest/json-schema-validation.html#anchor21
-     */
-    public String minimum;
-    /**
-     * See http://json-schema.org/latest/json-schema-validation.html#anchor21
-     */
-    public boolean exclusiveMinimum;
-    /**
-     * See http://json-schema.org/latest/json-schema-validation.html#anchor26
-     */
+	/**
+	 * See http://json-schema.org/latest/json-schema-validation.html#anchor17.
+	 */
+    public Number maximum;
+	/**
+	 * See http://json-schema.org/latest/json-schema-validation.html#anchor17
+	 */
+    public Boolean exclusiveMaximum;
+	/**
+	 * See http://json-schema.org/latest/json-schema-validation.html#anchor21
+	 */
+    public Number minimum;
+	/**
+	 * See http://json-schema.org/latest/json-schema-validation.html#anchor21
+	 */
+    public Boolean exclusiveMinimum;
+	/**
+	 * See http://json-schema.org/latest/json-schema-validation.html#anchor26
+	 */
     public Integer maxLength;
-    /**
-     * See http://json-schema.org/latest/json-schema-validation.html#anchor29
-     */
+	/**
+	 * See http://json-schema.org/latest/json-schema-validation.html#anchor29
+	 */
     public Integer minLength;
-    /**
-     * See http://json-schema.org/latest/json-schema-validation.html#anchor33
-     */
+	/**
+	 * See http://json-schema.org/latest/json-schema-validation.html#anchor33
+	 */
     public String pattern;
-    /**
-     * See http://json-schema.org/latest/json-schema-validation.html#anchor42
-     */
+	/**
+	 * See http://json-schema.org/latest/json-schema-validation.html#anchor42
+	 */
     public Integer maxItems;
-    /**
-     * See http://json-schema.org/latest/json-schema-validation.html#anchor45
-     */
+	/**
+	 * See http://json-schema.org/latest/json-schema-validation.html#anchor45
+	 */
     public Integer minItems;
-    /**
-     * See http://json-schema.org/latest/json-schema-validation.html#anchor49
-     */
-    public boolean uniqueItems;
-    /**
-     * See http://json-schema.org/latest/json-schema-validation.html#anchor14
-     */
+	/**
+	 * See http://json-schema.org/latest/json-schema-validation.html#anchor49
+	 */
+    public Boolean uniqueItems;
+	/**
+	 * See http://json-schema.org/latest/json-schema-validation.html#anchor14
+	 */
     public Number multipleOf;
     
     public CodegenParameter copy() {
@@ -87,13 +85,10 @@ public class CodegenParameter {
         output.paramName = this.paramName;
         output.dataType = this.dataType;
         output.datatypeWithEnum = this.datatypeWithEnum;
-        output.enumName = this.enumName;
         output.dataFormat = this.dataFormat;
         output.collectionFormat = this.collectionFormat;
         output.isCollectionFormatMulti = this.isCollectionFormatMulti;
-        output.isPrimitiveType = this.isPrimitiveType;
         output.description = this.description;
-        output.unescapedDescription = this.unescapedDescription;
         output.baseType = this.baseType;
         output.isFormParam = this.isFormParam;
         output.isQueryParam = this.isQueryParam;
@@ -126,9 +121,7 @@ public class CodegenParameter {
         if (this.items != null) {
             output.items = this.items;
         }
-        if(this.vendorExtensions != null){
-            output.vendorExtensions = new HashMap<String, Object>(this.vendorExtensions);
-        }
+        output.vendorExtensions = this.vendorExtensions;
         output.hasValidation = this.hasValidation;
         output.isBinary = this.isBinary;
         output.isByteArray = this.isByteArray;
@@ -159,27 +152,27 @@ public class CodegenParameter {
         CodegenParameter that = (CodegenParameter) o;
 
         if (isEnum != that.isEnum) return false;
-        if (isFormParam != that.isFormParam)
+        if (isFormParam != null ? !isFormParam.equals(that.isFormParam) : that.isFormParam != null)
             return false;
-        if (isQueryParam != that.isQueryParam)
+        if (isQueryParam != null ? !isQueryParam.equals(that.isQueryParam) : that.isQueryParam != null)
             return false;
-        if (isPathParam != that.isPathParam)
+        if (isPathParam != null ? !isPathParam.equals(that.isPathParam) : that.isPathParam != null)
             return false;
-        if (isHeaderParam != that.isHeaderParam)
+        if (isHeaderParam != null ? !isHeaderParam.equals(that.isHeaderParam) : that.isHeaderParam != null)
             return false;
-        if (isCookieParam != that.isCookieParam)
+        if (isCookieParam != null ? !isCookieParam.equals(that.isCookieParam) : that.isCookieParam != null)
             return false;
-        if (isBodyParam != that.isBodyParam)
+        if (isBodyParam != null ? !isBodyParam.equals(that.isBodyParam) : that.isBodyParam != null)
             return false;
-        if (hasMore != that.hasMore)
+        if (hasMore != null ? !hasMore.equals(that.hasMore) : that.hasMore != null)
             return false;
-        if (isContainer != that.isContainer)
+        if (isContainer != null ? !isContainer.equals(that.isContainer) : that.isContainer != null)
             return false;
-        if (secondaryParam != that.secondaryParam)
+        if (secondaryParam != null ? !secondaryParam.equals(that.secondaryParam) : that.secondaryParam != null)
             return false;
-        if (isCollectionFormatMulti != that.isCollectionFormatMulti)
+        if (isCollectionFormatMulti != null ? !isCollectionFormatMulti.equals(that.isCollectionFormatMulti) : that.isCollectionFormatMulti != null)
             return false;
-        if (isPrimitiveType != that.isPrimitiveType)
+        if (isPrimitiveType != null ? !isPrimitiveType.equals(that.isPrimitiveType) : that.isPrimitiveType != null)
             return false;
         if (baseName != null ? !baseName.equals(that.baseName) : that.baseName != null)
             return false;
@@ -188,8 +181,6 @@ public class CodegenParameter {
         if (dataType != null ? !dataType.equals(that.dataType) : that.dataType != null)
             return false;
         if (datatypeWithEnum != null ? !datatypeWithEnum.equals(that.datatypeWithEnum) : that.datatypeWithEnum != null)
-            return false;
-        if (enumName != null ? !enumName.equals(that.enumName) : that.enumName != null)
             return false;
         if (dataFormat != null ? !dataFormat.equals(that.dataFormat) : that.dataFormat != null)
             return false;
@@ -207,33 +198,33 @@ public class CodegenParameter {
             return false;
         if (jsonSchema != null ? !jsonSchema.equals(that.jsonSchema) : that.jsonSchema != null)
             return false;
-        if (isString != that.isString)
+        if (isString != null ? !isString.equals(that.isString) : that.isString != null)
             return false;
-        if (isInteger != that.isInteger)
+        if (isInteger != null ? !isInteger.equals(that.isInteger) : that.isInteger != null)
             return false;
-        if (isLong != that.isLong)
+        if (isLong != null ? !isLong.equals(that.isLong) : that.isLong != null)
             return false;
-        if (isFloat != that.isFloat)
+        if (isFloat != null ? !isFloat.equals(that.isFloat) : that.isFloat != null)
             return false;
-        if (isDouble != that.isDouble)
+        if (isDouble != null ? !isDouble.equals(that.isDouble) : that.isDouble != null)
             return false;
-        if (isByteArray != that.isByteArray)
+        if (isByteArray != null ? !isByteArray.equals(that.isByteArray) : that.isByteArray != null)
             return false;
-        if (isBinary != that.isBinary)
+        if (isBinary != null ? !isBinary.equals(that.isBinary) : that.isBinary != null)
             return false;
-        if (isBoolean != that.isBoolean)
+        if (isBoolean != null ? !isBoolean.equals(that.isBoolean) : that.isBoolean != null)
             return false;
-        if (isDate != that.isDate)
+        if (isDate != null ? !isDate.equals(that.isDate) : that.isDate != null)
             return false;
-        if (isDateTime != that.isDateTime)
+        if (isDateTime != null ? !isDateTime.equals(that.isDateTime) : that.isDateTime != null)
             return false;
-        if (isListContainer != that.isListContainer)
+        if (isListContainer != null ? !isListContainer.equals(that.isListContainer) : that.isListContainer != null)
             return false;
-        if (isMapContainer != that.isMapContainer)
+        if (isMapContainer != null ? !isMapContainer.equals(that.isMapContainer) : that.isMapContainer != null)
             return false;
-        if (isFile != that.isFile)
+        if (isFile != null ? !isFile.equals(that.isFile) : that.isFile != null)
             return false;
-        if (notFile != that.notFile)
+        if (notFile != null ? !notFile.equals(that.notFile) : that.notFile != null)
             return false;
         if (_enum != null ? !_enum.equals(that._enum) : that._enum != null)
             return false;
@@ -243,17 +234,17 @@ public class CodegenParameter {
             return false;
         if (vendorExtensions != null ? !vendorExtensions.equals(that.vendorExtensions) : that.vendorExtensions != null)
             return false;
-        if (hasValidation != that.hasValidation)
+        if (hasValidation != null ? !hasValidation.equals(that.hasValidation) : that.hasValidation != null)
             return false;
-        if (required != that.required)
+        if (required != null ? !required.equals(that.required) : that.required != null)
             return false;
         if (maximum != null ? !maximum.equals(that.maximum) : that.maximum != null)
             return false;
-        if (exclusiveMaximum != that.exclusiveMaximum)
+        if (exclusiveMaximum != null ? !exclusiveMaximum.equals(that.exclusiveMaximum) : that.exclusiveMaximum != null)
             return false;
         if (minimum != null ? !minimum.equals(that.minimum) : that.minimum != null)
             return false;
-        if (exclusiveMinimum != that.exclusiveMinimum)
+        if (exclusiveMinimum != null ? !exclusiveMinimum.equals(that.exclusiveMinimum) : that.exclusiveMinimum != null)
             return false;
         if (maxLength != null ? !maxLength.equals(that.maxLength) : that.maxLength != null)
             return false;
@@ -265,7 +256,7 @@ public class CodegenParameter {
             return false;
         if (minItems != null ? !minItems.equals(that.minItems) : that.minItems != null)
             return false;
-        if (uniqueItems != that.uniqueItems)
+        if (uniqueItems != null ? !uniqueItems.equals(that.uniqueItems) : that.uniqueItems != null)
             return false;
         return multipleOf != null ? multipleOf.equals(that.multipleOf) : that.multipleOf == null;
 
@@ -273,22 +264,21 @@ public class CodegenParameter {
 
     @Override
     public int hashCode() {
-        int result = isFormParam ? 13:31;
-        result = 31 * result + (isQueryParam ? 13:31);
-        result = 31 * result + (isPathParam ? 13:31);
-        result = 31 * result + (isHeaderParam ? 13:31);
-        result = 31 * result + (isCookieParam ? 13:31);
-        result = 31 * result + (isBodyParam ? 13:31);
-        result = 31 * result + (hasMore ? 13:31);
-        result = 31 * result + (isContainer ? 13:31);
-        result = 31 * result + (secondaryParam ? 13:31);
-        result = 31 * result + (isCollectionFormatMulti ? 13:31);
-        result = 31 * result + (isPrimitiveType ? 13:31);
+        int result = isFormParam != null ? isFormParam.hashCode() : 0;
+        result = 31 * result + (isQueryParam != null ? isQueryParam.hashCode() : 0);
+        result = 31 * result + (isPathParam != null ? isPathParam.hashCode() : 0);
+        result = 31 * result + (isHeaderParam != null ? isHeaderParam.hashCode() : 0);
+        result = 31 * result + (isCookieParam != null ? isCookieParam.hashCode() : 0);
+        result = 31 * result + (isBodyParam != null ? isBodyParam.hashCode() : 0);
+        result = 31 * result + (hasMore != null ? hasMore.hashCode() : 0);
+        result = 31 * result + (isContainer != null ? isContainer.hashCode() : 0);
+        result = 31 * result + (secondaryParam != null ? secondaryParam.hashCode() : 0);
+        result = 31 * result + (isCollectionFormatMulti != null ? isCollectionFormatMulti.hashCode() : 0);
+        result = 31 * result + (isPrimitiveType != null ? isPrimitiveType.hashCode() : 0);
         result = 31 * result + (baseName != null ? baseName.hashCode() : 0);
         result = 31 * result + (paramName != null ? paramName.hashCode() : 0);
         result = 31 * result + (dataType != null ? dataType.hashCode() : 0);
         result = 31 * result + (datatypeWithEnum != null ? datatypeWithEnum.hashCode() : 0);
-        result = 31 * result + (enumName != null ? enumName.hashCode() : 0);
         result = 31 * result + (dataFormat != null ? dataFormat.hashCode() : 0);
         result = 31 * result + (collectionFormat != null ? collectionFormat.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
@@ -297,37 +287,37 @@ public class CodegenParameter {
         result = 31 * result + (defaultValue != null ? defaultValue.hashCode() : 0);
         result = 31 * result + (example != null ? example.hashCode() : 0);
         result = 31 * result + (jsonSchema != null ? jsonSchema.hashCode() : 0);
-        result = 31 * result + (isString ? 13:31);
-        result = 31 * result + (isInteger ? 13:31);
-        result = 31 * result + (isLong ? 13:31);
-        result = 31 * result + (isFloat ? 13:31);
-        result = 31 * result + (isDouble ? 13:31);
-        result = 31 * result + (isByteArray ? 13:31);
-        result = 31 * result + (isBinary ? 13:31);
-        result = 31 * result + (isBoolean ? 13:31);
-        result = 31 * result + (isDate ? 13:31);
-        result = 31 * result + (isDateTime ? 13:31);
-        result = 31 * result + (isListContainer ? 13:31);
-        result = 31 * result + (isMapContainer ? 13:31);
-        result = 31 * result + (isFile ? 13:31);
-        result = 31 * result + (notFile ? 13:31);
+        result = 31 * result + (isString != null ? isString.hashCode() : 0);
+        result = 31 * result + (isInteger != null ? isInteger.hashCode() : 0);
+        result = 31 * result + (isLong != null ? isLong.hashCode() : 0);
+        result = 31 * result + (isFloat != null ? isFloat.hashCode() : 0);
+        result = 31 * result + (isDouble != null ? isDouble.hashCode() : 0);
+        result = 31 * result + (isByteArray != null ? isByteArray.hashCode() : 0);
+        result = 31 * result + (isBinary != null ? isBinary.hashCode() : 0);
+        result = 31 * result + (isBoolean != null ? isBoolean.hashCode() : 0);
+        result = 31 * result + (isDate != null ? isDate.hashCode() : 0);
+        result = 31 * result + (isDateTime != null ? isDateTime.hashCode() : 0);
+        result = 31 * result + (isListContainer != null ? isListContainer.hashCode() : 0);
+        result = 31 * result + (isMapContainer != null ? isMapContainer.hashCode() : 0);
+        result = 31 * result + (isFile != null ? isFile.hashCode() : 0);
+        result = 31 * result + (notFile != null ? notFile.hashCode() : 0);
         result = 31 * result + (isEnum ? 1 : 0);
         result = 31 * result + (_enum != null ? _enum.hashCode() : 0);
         result = 31 * result + (allowableValues != null ? allowableValues.hashCode() : 0);
         result = 31 * result + (items != null ? items.hashCode() : 0);
         result = 31 * result + (vendorExtensions != null ? vendorExtensions.hashCode() : 0);
-        result = 31 * result + (hasValidation ? 13:31);
-        result = 31 * result + (required ? 13:31);
+        result = 31 * result + (hasValidation != null ? hasValidation.hashCode() : 0);
+        result = 31 * result + (required != null ? required.hashCode() : 0);
         result = 31 * result + (maximum != null ? maximum.hashCode() : 0);
-        result = 31 * result + (exclusiveMaximum ? 13:31);
+        result = 31 * result + (exclusiveMaximum != null ? exclusiveMaximum.hashCode() : 0);
         result = 31 * result + (minimum != null ? minimum.hashCode() : 0);
-        result = 31 * result + (exclusiveMinimum ? 13:31);
+        result = 31 * result + (exclusiveMinimum != null ? exclusiveMinimum.hashCode() : 0);
         result = 31 * result + (maxLength != null ? maxLength.hashCode() : 0);
         result = 31 * result + (minLength != null ? minLength.hashCode() : 0);
         result = 31 * result + (pattern != null ? pattern.hashCode() : 0);
         result = 31 * result + (maxItems != null ? maxItems.hashCode() : 0);
         result = 31 * result + (minItems != null ? minItems.hashCode() : 0);
-        result = 31 * result + (uniqueItems ? 13:31);
+        result = 31 * result + (uniqueItems != null ? uniqueItems.hashCode() : 0);
         result = 31 * result + (multipleOf != null ? multipleOf.hashCode() : 0);
         return result;
     }

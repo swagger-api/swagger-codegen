@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
 
     s.summary          = "Swagger Petstore"
     s.description      = <<-DESC
-                         This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
+                         This is a sample server Petstore server.  You can find out more about Swagger at <a href=\"http://swagger.io\">http://swagger.io</a> or on irc.freenode.net, #swagger.  For this sample, you can use the api key \"special-key\" to test the authorization filters
                          DESC
 
     s.platform     = :ios, '7.0'
@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
     s.framework    = 'SystemConfiguration'
 
     s.homepage     = "https://github.com/swagger-api/swagger-codegen"
-    s.license      = "Proprietary"
+    s.license      = "Apache License, Version 2.0"
     s.source       = { :git => "https://github.com/swagger-api/swagger-codegen.git", :tag => "#{s.version}" }
     s.author       = { "Swagger" => "apiteam@swagger.io" }
 

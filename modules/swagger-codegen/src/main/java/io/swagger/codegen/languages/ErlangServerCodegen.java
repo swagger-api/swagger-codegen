@@ -182,11 +182,8 @@ public class ErlangServerCodegen extends DefaultCodegen implements CodegenConfig
      * @return the escaped term
      */
     @Override
-    public String escapeReservedWord(String name) {           
-        if(this.reservedWordsMappings().containsKey(name)) {
-            return this.reservedWordsMappings().get(name);
-        }
-        return "_" + name;
+    public String escapeReservedWord(String name) {
+        return name + "_";  // add an underscore to the name
     }
 
     /**
@@ -236,7 +233,7 @@ public class ErlangServerCodegen extends DefaultCodegen implements CodegenConfig
         Swagger swagger = (Swagger)objs.get("swagger");
         if(swagger != null) {
             try {
-                objs.put("swagger-json", Json.pretty().writeValueAsString(swagger).replace("\r\n", "\n"));
+                objs.put("swagger-json", Json.mapper().writeValueAsString(swagger));
             } catch (JsonProcessingException e) {
                 LOGGER.error(e.getMessage(), e);
             }
