@@ -14,7 +14,7 @@ import com.samskivert.mustache.Mustache.Compiler;
 
 public interface CodegenConfig {
     CodegenType getTag();
-
+    
     String getName();
 
     String getHelp();
@@ -118,6 +118,8 @@ public interface CodegenConfig {
     Map<String, String> modelDocTemplateFiles();
 
     Set<String> languageSpecificPrimitives();
+    
+    Map<String, String> reservedWordsMappings();
 
     void preprocessSwagger(Swagger swagger);
 
@@ -169,6 +171,10 @@ public interface CodegenConfig {
 
     void setSkipOverwrite(boolean skipOverwrite);
 
+    boolean isRemoveOperationIdPrefix();
+
+    void setRemoveOperationIdPrefix(boolean removeOperationIdPrefix);
+
     Map<String, String> supportedLibraries();
 
     void setLibrary(String library);
@@ -197,4 +203,8 @@ public interface CodegenConfig {
     String getHttpUserAgent();
 
     String getCommonTemplateDir();
+
+    void setIgnoreFilePathOverride(String ignoreFileOverride);
+
+    String getIgnoreFilePathOverride();
 }

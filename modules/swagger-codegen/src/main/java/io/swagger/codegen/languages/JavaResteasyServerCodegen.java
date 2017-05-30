@@ -1,6 +1,8 @@
 package io.swagger.codegen.languages;
 
 import io.swagger.codegen.*;
+import io.swagger.codegen.languages.features.BeanValidationFeatures;
+import io.swagger.codegen.languages.features.JbossFeature;
 import io.swagger.models.Operation;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -8,15 +10,17 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.File;
 import java.util.*;
 
-public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen {
+public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen implements JbossFeature {
 
+    protected boolean generateJbossDeploymentDescriptor = true;
+    
     public JavaResteasyServerCodegen() {
 
         super();
 
         artifactId = "swagger-jaxrs-resteasy-server";
 
-        outputFolder = "generated-code/javaJaxRS";
+        outputFolder = "generated-code/JavaJaxRS-Resteasy";
         apiTemplateFiles.put("apiService.mustache", ".java");
         apiTemplateFiles.put("apiServiceImpl.mustache", ".java");
         apiTemplateFiles.put("apiServiceFactory.mustache", ".java");
@@ -31,6 +35,9 @@ public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen {
         dateLibrary = "legacy";// TODO: change to joda
 
         embeddedTemplateDir = templateDir = "JavaJaxRS" + File.separator + "resteasy";
+
+        cliOptions.add(
+                CliOption.newBoolean(GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR, "Generate Jboss Deployment Descriptor"));
     }
 
     @Override
@@ -47,6 +54,12 @@ public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen {
     public void processOpts() {
         super.processOpts();
 
+        if (additionalProperties.containsKey(GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR)) {
+            boolean generateJbossDeploymentDescriptorProp = convertPropertyToBooleanAndWriteBack(
+                    GENERATE_JBOSS_DEPLOYMENT_DESCRIPTOR);
+            this.setGenerateJbossDeploymentDescriptor(generateJbossDeploymentDescriptorProp);
+        }
+        
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
         writeOptional(outputFolder, new SupportingFile("gradle.mustache", "", "build.gradle"));
         writeOptional(outputFolder, new SupportingFile("settingsGradle.mustache", "", "settings.gradle"));
@@ -61,16 +74,22 @@ public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen {
                 (sourceFolder + '/' + apiPackage).replace(".", "/"), "NotFoundException.java"));
         writeOptional(outputFolder, new SupportingFile("web.mustache",
                 ("src/main/webapp/WEB-INF"), "web.xml"));
-        writeOptional(outputFolder, new SupportingFile("jboss-web.mustache",
+
+        if (generateJbossDeploymentDescriptor) {
+            writeOptional(outputFolder, new SupportingFile("jboss-web.mustache",
                 ("src/main/webapp/WEB-INF"), "jboss-web.xml"));
+        }
+
         writeOptional(outputFolder, new SupportingFile("RestApplication.mustache",
                 (sourceFolder + '/' + invokerPackage).replace(".", "/"), "RestApplication.java"));
         supportingFiles.add(new SupportingFile("StringUtil.mustache",
                 (sourceFolder + '/' + invokerPackage).replace(".", "/"), "StringUtil.java"));
+        supportingFiles.add(new SupportingFile("JacksonConfig.mustache",
+                (sourceFolder + '/' + invokerPackage).replace(".", "/"), "JacksonConfig.java"));
+        supportingFiles.add(new SupportingFile("RFC3339DateFormat.mustache",
+                (sourceFolder + '/' + invokerPackage).replace(".", "/"), "RFC3339DateFormat.java"));
 
         if ("joda".equals(dateLibrary)) {
-            supportingFiles.add(new SupportingFile("JacksonConfig.mustache",
-                    (sourceFolder + '/' + invokerPackage).replace(".", "/"), "JacksonConfig.java"));
             supportingFiles.add(new SupportingFile("JodaDateTimeProvider.mustache",
                     (sourceFolder + '/' + apiPackage).replace(".", "/"), "JodaDateTimeProvider.java"));
             supportingFiles.add(new SupportingFile("JodaLocalDateProvider.mustache",
@@ -195,5 +214,9 @@ public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen {
         }
 
         return objs;
+    }
+    
+    public void setGenerateJbossDeploymentDescriptor(boolean generateJbossDeploymentDescriptor) {
+        this.generateJbossDeploymentDescriptor = generateJbossDeploymentDescriptor;
     }
 }

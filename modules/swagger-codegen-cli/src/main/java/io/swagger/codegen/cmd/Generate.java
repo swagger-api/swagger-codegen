@@ -117,6 +117,16 @@ public class Generate implements Runnable {
 
     @Option(name = {"--http-user-agent"}, title = "http user agent", description = CodegenConstants.HTTP_USER_AGENT_DESC)
     private String httpUserAgent;
+    
+    @Option(name = {"--reserved-words-mappings"}, title = "import mappings",
+            description = "specifies how a reserved name should be escaped to. Otherwise, the default _<name> is used. For example id=identifier")
+    private String reservedWordsMappings;
+
+    @Option(name = {"--ignore-file-override"}, title = "ignore file override location", description = CodegenConstants.IGNORE_FILE_OVERRIDE_DESC)
+    private String ignoreFileOverride;
+    
+    @Option(name = {"--remove-operation-id-prefix"}, title = "remove prefix of the operationId", description = CodegenConstants.REMOVE_OPERATION_ID_PREFIX_DESC)
+    private Boolean removeOperationIdPrefix;
 
     @Override
     public void run() {
@@ -211,13 +221,21 @@ public class Generate implements Runnable {
             configurator.setHttpUserAgent(httpUserAgent);
         }
 
+        if (isNotEmpty(ignoreFileOverride)) {
+            configurator.setIgnoreFileOverride(ignoreFileOverride);
+        }
+
+        if (removeOperationIdPrefix != null) {
+            configurator.setRemoveOperationIdPrefix(removeOperationIdPrefix);
+        }
+
         applySystemPropertiesKvp(systemProperties, configurator);
         applyInstantiationTypesKvp(instantiationTypes, configurator);
         applyImportMappingsKvp(importMappings, configurator);
         applyTypeMappingsKvp(typeMappings, configurator);
         applyAdditionalPropertiesKvp(additionalProperties, configurator);
         applyLanguageSpecificPrimitivesCsv(languageSpecificPrimitives, configurator);
-
+        applyReservedWordsMappingsKvp(reservedWordsMappings, configurator);
         final ClientOptInput clientOptInput = configurator.toClientOptInput();
 
         new DefaultGenerator().opts(clientOptInput).generate();

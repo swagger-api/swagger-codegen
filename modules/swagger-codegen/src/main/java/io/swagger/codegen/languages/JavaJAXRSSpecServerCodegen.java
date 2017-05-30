@@ -2,11 +2,12 @@ package io.swagger.codegen.languages;
 
 import java.io.File;
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.io.FileUtils;
 
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConstants;
@@ -14,17 +15,18 @@ import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.languages.features.BeanValidationFeatures;
 import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
+import io.swagger.models.properties.Property;
 import io.swagger.util.Json;
-import org.apache.commons.io.FileUtils;
 
 public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
-{	
-	public JavaJAXRSSpecServerCodegen()
-	{
+{
+
+    public JavaJAXRSSpecServerCodegen()
+    {
         super();
-        sourceFolder = "src/main/java";
         invokerPackage = "io.swagger.api";
         artifactId = "swagger-jaxrs-server";
         outputFolder = "generated-code/JavaJaxRS-Spec";
@@ -46,7 +48,6 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
         additionalProperties.put("title", title);
 
         typeMapping.put("date", "LocalDate");
-        typeMapping.put("DateTime", "javax.xml.datatype.XMLGregorianCalendar"); // Map DateTime fields to Java standart class 'XMLGregorianCalendar'
 
         importMapping.put("LocalDate", "org.joda.time.LocalDate");
 
@@ -58,7 +59,7 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
                 break;
             }
         }
-                
+
         CliOption library = new CliOption(CodegenConstants.LIBRARY, "library template (sub-template) to use");
         library.setDefault(DEFAULT_LIBRARY);
 
@@ -68,26 +69,27 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
         library.setEnum(supportedLibraries);
 
         cliOptions.add(library);
-	}
-	
-	@Override
-	public void processOpts()
-	{
-		super.processOpts();
+    }
 
-		supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
+    @Override
+    public void processOpts()
+    {
+        super.processOpts();
+
+        supportingFiles.clear(); // Don't need extra files provided by AbstractJAX-RS & Java Codegen
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
-        
+
         writeOptional(outputFolder, new SupportingFile("RestApplication.mustache",
                 (sourceFolder + '/' + invokerPackage).replace(".", "/"), "RestApplication.java"));
-        
-	} 
 
-	@Override
-	public String getName()
-	{
-		return "jaxrs-spec";
-	}
+    }
+
+
+    @Override
+    public String getName()
+    {
+        return "jaxrs-spec";
+    }
 
     @Override
     public void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co, Map<String, List<CodegenOperation>> operations) {
@@ -116,7 +118,7 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
         opList.add(co);
         co.baseName = basePath;
     }
-    
+
     @Override
     public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
         super.postProcessModelProperty(model, property);
@@ -127,17 +129,17 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
         model.imports.remove("JsonValue");
         model.imports.remove("JsonProperty");
     }
-    
-	@Override
+
+    @Override
     public void preprocessSwagger(Swagger swagger) {
-		//copy input swagger to output folder 
-    	try {
-			String swaggerJson = Json.pretty(swagger);
+        //copy input swagger to output folder
+        try {
+            String swaggerJson = Json.pretty(swagger);
             FileUtils.writeStringToFile(new File(outputFolder + File.separator + "swagger.json"), swaggerJson);
-		} catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e.getCause());
-		}
-		super.preprocessSwagger(swagger);
+        }
+        super.preprocessSwagger(swagger);
 
     }
     @Override

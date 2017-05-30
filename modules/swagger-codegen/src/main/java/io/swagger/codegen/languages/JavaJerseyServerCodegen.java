@@ -1,6 +1,7 @@
 package io.swagger.codegen.languages;
 
 import io.swagger.codegen.*;
+import io.swagger.codegen.languages.features.BeanValidationFeatures;
 import io.swagger.models.Operation;
 
 import java.util.*;
@@ -12,7 +13,7 @@ public class JavaJerseyServerCodegen extends AbstractJavaJAXRSServerCodegen {
 
     protected static final String LIBRARY_JERSEY1 = "jersey1";
     protected static final String LIBRARY_JERSEY2 = "jersey2";
-
+    
     /**
      * Default library template to use. (Default:{@value #DEFAULT_LIBRARY})
      */
@@ -44,7 +45,7 @@ public class JavaJerseyServerCodegen extends AbstractJavaJAXRSServerCodegen {
         library.setDefault(DEFAULT_LIBRARY);
 
         cliOptions.add(library);
-
+        cliOptions.add(CliOption.newBoolean(SUPPORT_JAVA6, "Whether to support Java6 with the Jersey1/2 library."));
     }
 
     @Override
@@ -84,7 +85,7 @@ public class JavaJerseyServerCodegen extends AbstractJavaJAXRSServerCodegen {
         if (StringUtils.isEmpty(library)) {
             setLibrary(DEFAULT_LIBRARY);
         }
-
+        
         if ( additionalProperties.containsKey(CodegenConstants.IMPL_FOLDER)) {
             implFolder = (String) additionalProperties.get(CodegenConstants.IMPL_FOLDER);
         }
@@ -104,10 +105,12 @@ public class JavaJerseyServerCodegen extends AbstractJavaJAXRSServerCodegen {
         supportingFiles.add(new SupportingFile("ApiResponseMessage.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "ApiResponseMessage.java"));
         supportingFiles.add(new SupportingFile("NotFoundException.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "NotFoundException.java"));
         supportingFiles.add(new SupportingFile("jacksonJsonProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "JacksonJsonProvider.java"));
+        supportingFiles.add(new SupportingFile("RFC3339DateFormat.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "RFC3339DateFormat.java"));
         writeOptional(outputFolder, new SupportingFile("bootstrap.mustache", (implFolder + '/' + apiPackage).replace(".", "/"), "Bootstrap.java"));
         writeOptional(outputFolder, new SupportingFile("web.mustache", ("src/main/webapp/WEB-INF"), "web.xml"));
         supportingFiles.add(new SupportingFile("StringUtil.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "StringUtil.java"));
     }
+
 
     @Override
     public Map<String, Object> postProcessModelsEnum(Map<String, Object> objs) {
@@ -158,5 +161,5 @@ public class JavaJerseyServerCodegen extends AbstractJavaJAXRSServerCodegen {
         opList.add(co);
         co.baseName = basePath;
     }
-
+    
 }

@@ -18,6 +18,7 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     protected boolean useDateTimeOffsetFlag = false;
     protected boolean useCollection = false;
     protected boolean returnICollection = false;
+    protected boolean netCoreProjectFileFlag = false;
 
     protected String packageVersion = "1.0.0";
     protected String packageName = "IO.Swagger";
@@ -26,6 +27,9 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     protected String packageDescription = "A library generated from a Swagger doc";
     protected String packageCompany = "Swagger";
     protected String packageCopyright = "No Copyright";
+    protected String packageAuthors = "Swagger";
+
+    protected String interfacePrefix = "I";
 
     protected String sourceFolder = "src";
 
@@ -60,10 +64,10 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
         setReservedWordsLowerCase(
                 Arrays.asList(
-                        // set client as a reserved word to avoid conflicts with IO.Swagger.Client
+                        // set "client" as a reserved word to avoid conflicts with IO.Swagger.Client
                         // this is a workaround and can be removed if c# api client is updated to use
                         // fully qualified name
-                        "client",
+                        "client", "parameter",
                         // local variable names in API methods (endpoints)
                         "localVarPath", "localVarPathParams", "localVarQueryParams", "localVarHeaderParams", 
                         "localVarFormParams", "localVarFileParams", "localVarStatusCode", "localVarResponse",
@@ -159,6 +163,10 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         this.optionalMethodArgumentFlag = flag;
     }
 
+    public void setNetCoreProjectFileFlag(boolean flag) {
+        this.netCoreProjectFileFlag = flag;
+    }
+
     protected void addOption(String key, String description, String defaultValue) {
         CliOption option = new CliOption(key, description);
         if (defaultValue != null) option.defaultValue(defaultValue);
@@ -201,6 +209,10 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         } else {
             additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
         }
+
+        if (additionalProperties.containsKey(CodegenConstants.INVOKER_PACKAGE)) {
+            LOGGER.warn(String.format("%s is not used by C# generators. Please use %s", CodegenConstants.INVOKER_PACKAGE, CodegenConstants.PACKAGE_NAME));
+        }
         
         // {{packageTitle}}
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_TITLE)) {
@@ -236,6 +248,13 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         } else {
             additionalProperties.put(CodegenConstants.PACKAGE_COPYRIGHT, packageCopyright);
         }
+
+        // {{packageAuthors}}
+        if (additionalProperties.containsKey(CodegenConstants.PACKAGE_AUTHORS)) {
+            setPackageAuthors((String) additionalProperties.get(CodegenConstants.PACKAGE_AUTHORS));
+        } else {
+            additionalProperties.put(CodegenConstants.PACKAGE_AUTHORS, packageAuthors);
+        }
         
         // {{useDateTimeOffset}}
         if (additionalProperties.containsKey(CodegenConstants.USE_DATETIME_OFFSET)) {
@@ -254,6 +273,23 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         if (additionalProperties.containsKey(CodegenConstants.OPTIONAL_EMIT_DEFAULT_VALUES)) {
             setOptionalEmitDefaultValue(Boolean.valueOf(additionalProperties.get(CodegenConstants.OPTIONAL_EMIT_DEFAULT_VALUES).toString()));
         }
+
+        if (additionalProperties.containsKey(CodegenConstants.NETCORE_PROJECT_FILE)) {
+            setNetCoreProjectFileFlag(Boolean.valueOf(additionalProperties.get(CodegenConstants.NETCORE_PROJECT_FILE).toString()));
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.INTERFACE_PREFIX)) {
+            String useInterfacePrefix = additionalProperties.get(CodegenConstants.INTERFACE_PREFIX).toString();
+            if("false".equals(useInterfacePrefix.toLowerCase())) {
+                setInterfacePrefix("");
+            } else if(!"true".equals(useInterfacePrefix.toLowerCase())) {
+                // NOTE: if user passes "true" explicitly, we use the default I- prefix. The other supported case here is a custom prefix.
+                setInterfacePrefix(sanitizeName(useInterfacePrefix));
+            }
+        }
+
+        // This either updates additionalProperties with the above fixes, or sets the default if the option was not specified.
+        additionalProperties.put(CodegenConstants.INTERFACE_PREFIX, interfacePrefix);
     }
 
     @Override
@@ -401,10 +437,13 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         }
 
         return name;
-    }
+    }   
 
     @Override
-    public String escapeReservedWord(String name) {
+    public String escapeReservedWord(String name) {           
+        if(this.reservedWordsMappings().containsKey(name)) {
+            return this.reservedWordsMappings().get(name);
+        }
         return "_" + name;
     }
 
@@ -466,7 +505,13 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         if (p instanceof StringProperty) {
             StringProperty dp = (StringProperty) p;
             if (dp.getDefault() != null) {
-                return "\"" + dp.getDefault() + "\"";
+               String _default = dp.getDefault();
+               if (dp.getEnum() == null) {
+                   return "\"" + _default + "\"";
+               } else {
+                   // convert to enum var name later in postProcessModels
+                   return _default;
+               }
             }
         } else if (p instanceof BooleanProperty) {
             BooleanProperty dp = (BooleanProperty) p;
@@ -590,31 +635,47 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     }
     
     public void setPackageTitle(String packageTitle) {
-		this.packageTitle = packageTitle;
-	}
+        this.packageTitle = packageTitle;
+    }
     
     public void setPackageProductName(String packageProductName) {
-		this.packageProductName = packageProductName;
-	}
+        this.packageProductName = packageProductName;
+    }
 
-	public void setPackageDescription(String packageDescription) {
-		this.packageDescription = packageDescription;
-	}
-	
+    public void setPackageDescription(String packageDescription) {
+        this.packageDescription = packageDescription;
+    }
+    
     public void setPackageCompany(String packageCompany) {
-		this.packageCompany = packageCompany;
-	}
+        this.packageCompany = packageCompany;
+    }
     
     public void setPackageCopyright(String packageCopyright) {
-		this.packageCopyright = packageCopyright;
-	}
+        this.packageCopyright = packageCopyright;
+    }
+
+    public void setPackageAuthors(String packageAuthors) {
+        this.packageAuthors = packageAuthors;
+    }
     
     public void setSourceFolder(String sourceFolder) {
         this.sourceFolder = sourceFolder;
     }
 
+    public String getInterfacePrefix() {
+        return interfacePrefix;
+    }
+
+    public void setInterfacePrefix(final String interfacePrefix) {
+        this.interfacePrefix = interfacePrefix;
+    }
+
     @Override
     public String toEnumVarName(String name, String datatype) {
+        if (name.length() == 0) {
+            return "Empty";
+        }
+
         // for symbol, e.g. $, #
         if (getSymbolName(name) != null) {
             return camelize(getSymbolName(name));

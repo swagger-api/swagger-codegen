@@ -11,16 +11,17 @@
         "test": "npm run build && node client.js"
     },
     "author": "Swagger Codegen Contributors",
-    "license": "Apache-2.0",
+    "license": "Unlicense",
     "dependencies": {
         "bluebird": "^3.3.5",
-        "request": "^2.72.0"
+        "request": "^2.72.0",
+        "rewire": "^2.5.2"
     },
     "devDependencies": {
         "typescript": "^1.8.10",
         "typings": "^0.8.1"
     },
-    "publishConfig":{
-        "registry":"https://skimdb.npmjs.com/registry"
+    "publishConfig": {
+        "registry": "https://skimdb.npmjs.com/registry"
     }
 }

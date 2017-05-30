@@ -6,6 +6,10 @@ import java.util.Objects;
 {{#serializableModel}}
 import java.io.Serializable;
 {{/serializableModel}}
+{{#useBeanValidation}}
+import javax.validation.Valid;
+import javax.validation.constraints.*;
+{{/useBeanValidation}}
 
 {{#models}}
 {{#model}}

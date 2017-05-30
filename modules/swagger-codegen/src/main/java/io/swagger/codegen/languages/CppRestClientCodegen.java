@@ -62,7 +62,7 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
         apiTemplateFiles.put("api-header.mustache", ".h");
         apiTemplateFiles.put("api-source.mustache", ".cpp");
 
-        templateDir = "cpprest";
+        embeddedTemplateDir = templateDir = "cpprest";
 
         cliOptions.clear();
 
@@ -97,6 +97,7 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
         supportingFiles.add(new SupportingFile("multipart-source.mustache", "", "MultipartFormData.cpp"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
+        supportingFiles.add(new SupportingFile("cmake-lists.mustache", "", "CMakeLists.txt"));
 
         languageSpecificPrimitives = new HashSet<String>(
                 Arrays.asList("int", "char", "bool", "long", "float", "double", "int32_t", "int64_t"));
@@ -113,6 +114,8 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
         typeMapping.put("file", "HttpContent");
         typeMapping.put("object", "Object");
         typeMapping.put("binary", "std::string");
+        typeMapping.put("number", "double");
+        typeMapping.put("UUID", "utility::string_t");
 
         super.importMapping = new HashMap<String, String>();
         importMapping.put("std::vector", "#include <vector>");

@@ -95,6 +95,7 @@ public class TizenClientCodegen extends DefaultCodegen implements CodegenConfig 
         typeMapping.put("file", "std::string");
         typeMapping.put("DateTime", "std::string");
         typeMapping.put("Date", "std::string");
+        typeMapping.put("UUID", "std::string");
 
         importMapping = new HashMap<String, String>();
 
@@ -264,7 +265,10 @@ public class TizenClientCodegen extends DefaultCodegen implements CodegenConfig 
     }
 
     @Override
-    public String escapeReservedWord(String name) {
+    public String escapeReservedWord(String name) {           
+        if(this.reservedWordsMappings().containsKey(name)) {
+            return this.reservedWordsMappings().get(name);
+        }
         return "_" + name;
     }
 

@@ -106,6 +106,7 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Models
 
+ - [ApiResponse](docs/ApiResponse.md)
  - [Category](docs/Category.md)
  - [Order](docs/Order.md)
  - [Pet](docs/Pet.md)
@@ -126,7 +127,7 @@ Authentication schemes defined for the API:
 
 - **Type**: OAuth
 - **Flow**: implicit
-- **Authorizatoin URL**: http://petstore.swagger.io/api/oauth/dialog
+- **Authorization URL**: http://petstore.swagger.io/api/oauth/dialog
 - **Scopes**: 
   - write:pets: modify pets in your account
   - read:pets: read your pets
@@ -138,5 +139,5 @@ It's recommended to create an instance of `ApiClient` per thread in a multithrea
 
 ## Author
 
-apiteam@wordnik.com
+apiteam@swagger.io
 

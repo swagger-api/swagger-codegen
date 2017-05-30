@@ -71,9 +71,6 @@ NSInteger kSWGStoreApiMissingParamErrorCode = 234513;
 
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/store/order/{orderId}"];
 
-    // remove format in URL if needed
-    [resourcePath replaceOccurrencesOfString:@".{format}" withString:@".json" options:0 range:NSMakeRange(0,resourcePath.length)];
-
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
     if (orderId != nil) {
         pathParams[@"orderId"] = orderId;
@@ -83,7 +80,7 @@ NSInteger kSWGStoreApiMissingParamErrorCode = 234513;
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
-    NSString *acceptHeader = [self.apiClient.sanitizer selectHeaderAccept:@[@"application/json", @"application/xml"]];
+    NSString *acceptHeader = [self.apiClient.sanitizer selectHeaderAccept:@[@"application/xml", @"application/json"]];
     if(acceptHeader.length > 0) {
         headerParams[@"Accept"] = acceptHeader;
     }
@@ -129,16 +126,13 @@ NSInteger kSWGStoreApiMissingParamErrorCode = 234513;
     (void (^)(NSDictionary<NSString*, NSNumber*>* output, NSError* error)) handler {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/store/inventory"];
 
-    // remove format in URL if needed
-    [resourcePath replaceOccurrencesOfString:@".{format}" withString:@".json" options:0 range:NSMakeRange(0,resourcePath.length)];
-
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
-    NSString *acceptHeader = [self.apiClient.sanitizer selectHeaderAccept:@[@"application/json", @"application/xml"]];
+    NSString *acceptHeader = [self.apiClient.sanitizer selectHeaderAccept:@[@"application/json"]];
     if(acceptHeader.length > 0) {
         headerParams[@"Accept"] = acceptHeader;
     }
@@ -182,7 +176,7 @@ NSInteger kSWGStoreApiMissingParamErrorCode = 234513;
 ///
 ///  @returns SWGOrder*
 ///
--(NSURLSessionTask*) getOrderByIdWithOrderId: (NSString*) orderId
+-(NSURLSessionTask*) getOrderByIdWithOrderId: (NSNumber*) orderId
     completionHandler: (void (^)(SWGOrder* output, NSError* error)) handler {
     // verify the required parameter 'orderId' is set
     if (orderId == nil) {
@@ -197,9 +191,6 @@ NSInteger kSWGStoreApiMissingParamErrorCode = 234513;
 
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/store/order/{orderId}"];
 
-    // remove format in URL if needed
-    [resourcePath replaceOccurrencesOfString:@".{format}" withString:@".json" options:0 range:NSMakeRange(0,resourcePath.length)];
-
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
     if (orderId != nil) {
         pathParams[@"orderId"] = orderId;
@@ -209,7 +200,7 @@ NSInteger kSWGStoreApiMissingParamErrorCode = 234513;
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
-    NSString *acceptHeader = [self.apiClient.sanitizer selectHeaderAccept:@[@"application/json", @"application/xml"]];
+    NSString *acceptHeader = [self.apiClient.sanitizer selectHeaderAccept:@[@"application/xml", @"application/json"]];
     if(acceptHeader.length > 0) {
         headerParams[@"Accept"] = acceptHeader;
     }
@@ -249,16 +240,24 @@ NSInteger kSWGStoreApiMissingParamErrorCode = 234513;
 ///
 /// Place an order for a pet
 /// 
-///  @param body order placed for purchasing the pet (optional)
+///  @param body order placed for purchasing the pet 
 ///
 ///  @returns SWGOrder*
 ///
 -(NSURLSessionTask*) placeOrderWithBody: (SWGOrder*) body
     completionHandler: (void (^)(SWGOrder* output, NSError* error)) handler {
-    NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/store/order"];
+    // verify the required parameter 'body' is set
+    if (body == nil) {
+        NSParameterAssert(body);
+        if(handler) {
+            NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"body"] };
+            NSError* error = [NSError errorWithDomain:kSWGStoreApiErrorDomain code:kSWGStoreApiMissingParamErrorCode userInfo:userInfo];
+            handler(nil, error);
+        }
+        return nil;
+    }
 
-    // remove format in URL if needed
-    [resourcePath replaceOccurrencesOfString:@".{format}" withString:@".json" options:0 range:NSMakeRange(0,resourcePath.length)];
+    NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/store/order"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 
@@ -266,7 +265,7 @@ NSInteger kSWGStoreApiMissingParamErrorCode = 234513;
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
     // HTTP header `Accept`
-    NSString *acceptHeader = [self.apiClient.sanitizer selectHeaderAccept:@[@"application/json", @"application/xml"]];
+    NSString *acceptHeader = [self.apiClient.sanitizer selectHeaderAccept:@[@"application/xml", @"application/json"]];
     if(acceptHeader.length > 0) {
         headerParams[@"Accept"] = acceptHeader;
     }

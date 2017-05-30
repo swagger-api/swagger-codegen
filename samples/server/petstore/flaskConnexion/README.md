@@ -7,11 +7,15 @@ is an example of building a swagger-enabled Flask server.
 
 This example uses the [Connexion](https://github.com/zalando/connexion) library on top of Flask.
 
-To run the server, please execute the following:
+## Requirements
+Python 3.5.2+
+
+## Usage
+To run the server, please execute the following from the root directory:
 
 ```
-sudo pip3 install -U connexion # install Connexion from PyPI
-python3 app.py
+pip3 install -r requirements.txt
+python3 -m swagger_server
 ```
 
 and open your browser to here:
@@ -26,3 +30,20 @@ Your Swagger definition lives here:
 http://localhost:8080/v2/swagger.json
 ```
 
+To launch the integration tests, use tox:
+```
+sudo pip install tox
+tox
+```
+
+## Running with Docker
+
+To run the server on a Docker container, please execute the following from the root directory:
+
+```bash
+# building the image
+docker build -t swagger_server .
+
+# starting up a container
+docker run -p 8080:8080 swagger_server
+```

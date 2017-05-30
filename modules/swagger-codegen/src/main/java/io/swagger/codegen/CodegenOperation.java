@@ -1,6 +1,7 @@
 package io.swagger.codegen;
 
 import io.swagger.models.ExternalDocs;
+import io.swagger.models.Tag;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -11,15 +12,15 @@ import java.util.Arrays;
 
 public class CodegenOperation {
     public final List<CodegenProperty> responseHeaders = new ArrayList<CodegenProperty>();
-    public Boolean hasAuthMethods, hasConsumes, hasProduces, hasParams, hasOptionalParams,
+    public boolean hasAuthMethods, hasConsumes, hasProduces, hasParams, hasOptionalParams,
             returnTypeIsPrimitive, returnSimpleType, subresourceOperation, isMapContainer,
-            isListContainer, isMultipart, hasMore = Boolean.TRUE,
-            isResponseBinary = Boolean.FALSE, hasReference = Boolean.FALSE,
+            isListContainer, isMultipart, hasMore = true,
+            isResponseBinary = false, isResponseFile = false, hasReference = false,
             isRestfulIndex, isRestfulShow, isRestfulCreate, isRestfulUpdate, isRestfulDestroy,
             isRestful;
     public String path, operationId, returnType, httpMethod, returnBaseType,
             returnContainer, summary, unescapedNotes, notes, baseName, defaultResponse, discriminator;
-    public List<Map<String, String>> consumes, produces;
+    public List<Map<String, String>> consumes, produces, prioritizedContentTypes;
     public CodegenParameter bodyParam;
     public List<CodegenParameter> allParams = new ArrayList<CodegenParameter>();
     public List<CodegenParameter> bodyParams = new ArrayList<CodegenParameter>();
@@ -28,14 +29,16 @@ public class CodegenOperation {
     public List<CodegenParameter> headerParams = new ArrayList<CodegenParameter>();
     public List<CodegenParameter> formParams = new ArrayList<CodegenParameter>();
     public List<CodegenSecurity> authMethods;
-    public List<String> tags;
+    public List<Tag> tags;
     public List<CodegenResponse> responses = new ArrayList<CodegenResponse>();
     public Set<String> imports = new HashSet<String>();
     public List<Map<String, String>> examples;
     public ExternalDocs externalDocs;
     public Map<String, Object> vendorExtensions;
     public String nickname; // legacy support
-    public String operationIdLowerCase; // for mardown documentation
+    public String operationIdLowerCase; // for markdown documentation
+    public String operationIdCamelCase; // for class names
+    public String operationIdSnakeCase;
 
     /**
      * Check if there's at least one parameter
@@ -189,33 +192,35 @@ public class CodegenOperation {
 
         if (responseHeaders != null ? !responseHeaders.equals(that.responseHeaders) : that.responseHeaders != null)
             return false;
-        if (hasAuthMethods != null ? !hasAuthMethods.equals(that.hasAuthMethods) : that.hasAuthMethods != null)
+        if (hasAuthMethods != that.hasAuthMethods)
             return false;
-        if (hasConsumes != null ? !hasConsumes.equals(that.hasConsumes) : that.hasConsumes != null)
+        if (hasConsumes != that.hasConsumes)
             return false;
-        if (hasProduces != null ? !hasProduces.equals(that.hasProduces) : that.hasProduces != null)
+        if (hasProduces != that.hasProduces)
             return false;
-        if (hasParams != null ? !hasParams.equals(that.hasParams) : that.hasParams != null)
+        if (hasParams != that.hasParams)
             return false;
-        if (hasOptionalParams != null ? !hasOptionalParams.equals(that.hasOptionalParams) : that.hasOptionalParams != null)
+        if (hasOptionalParams != that.hasOptionalParams)
             return false;
-        if (returnTypeIsPrimitive != null ? !returnTypeIsPrimitive.equals(that.returnTypeIsPrimitive) : that.returnTypeIsPrimitive != null)
+        if (returnTypeIsPrimitive != that.returnTypeIsPrimitive)
             return false;
-        if (returnSimpleType != null ? !returnSimpleType.equals(that.returnSimpleType) : that.returnSimpleType != null)
+        if (returnSimpleType != that.returnSimpleType)
             return false;
-        if (subresourceOperation != null ? !subresourceOperation.equals(that.subresourceOperation) : that.subresourceOperation != null)
+        if (subresourceOperation != that.subresourceOperation)
             return false;
-        if (isMapContainer != null ? !isMapContainer.equals(that.isMapContainer) : that.isMapContainer != null)
+        if (isMapContainer != that.isMapContainer)
             return false;
-        if (isListContainer != null ? !isListContainer.equals(that.isListContainer) : that.isListContainer != null)
+        if (isListContainer != that.isListContainer)
             return false;
-        if (isMultipart != null ? !isMultipart.equals(that.isMultipart) : that.isMultipart != null)
+        if (isMultipart != that.isMultipart)
             return false;
-        if (hasMore != null ? !hasMore.equals(that.hasMore) : that.hasMore != null)
+        if (hasMore != that.hasMore)
             return false;
-        if (isResponseBinary != null ? !isResponseBinary.equals(that.isResponseBinary) : that.isResponseBinary != null)
+        if (isResponseBinary != that.isResponseBinary)
             return false;
-        if (hasReference != null ? !hasReference.equals(that.hasReference) : that.hasReference != null)
+        if (hasReference != that.hasReference)
+            return false;
+        if (isResponseFile != that.isResponseFile)
             return false;
         if (path != null ? !path.equals(that.path) : that.path != null)
             return false;
@@ -275,27 +280,32 @@ public class CodegenOperation {
             return false;
         if (nickname != null ? !nickname.equals(that.nickname) : that.nickname != null)
             return false;
-        return operationIdLowerCase != null ? operationIdLowerCase.equals(that.operationIdLowerCase) : that.operationIdLowerCase == null;
+        if ( prioritizedContentTypes != null ? !prioritizedContentTypes.equals(that.prioritizedContentTypes) : that.prioritizedContentTypes != null )
+            return false;
+        if ( operationIdLowerCase != null ? !operationIdLowerCase.equals(that.operationIdLowerCase) : that.operationIdLowerCase != null )
+            return false;
+        return operationIdCamelCase != null ? operationIdCamelCase.equals(that.operationIdCamelCase) : that.operationIdCamelCase == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = responseHeaders.hashCode();
-        result = 31 * result + (hasAuthMethods != null ? hasAuthMethods.hashCode() : 0);
-        result = 31 * result + (hasConsumes != null ? hasConsumes.hashCode() : 0);
-        result = 31 * result + (hasProduces != null ? hasProduces.hashCode() : 0);
-        result = 31 * result + (hasParams != null ? hasParams.hashCode() : 0);
-        result = 31 * result + (hasOptionalParams != null ? hasOptionalParams.hashCode() : 0);
-        result = 31 * result + (returnTypeIsPrimitive != null ? returnTypeIsPrimitive.hashCode() : 0);
-        result = 31 * result + (returnSimpleType != null ? returnSimpleType.hashCode() : 0);
-        result = 31 * result + (subresourceOperation != null ? subresourceOperation.hashCode() : 0);
-        result = 31 * result + (isMapContainer != null ? isMapContainer.hashCode() : 0);
-        result = 31 * result + (isListContainer != null ? isListContainer.hashCode() : 0);
-        result = 31 * result + (isMultipart != null ? isMultipart.hashCode() : 0);
-        result = 31 * result + (hasMore != null ? hasMore.hashCode() : 0);
-        result = 31 * result + (isResponseBinary != null ? isResponseBinary.hashCode() : 0);
-        result = 31 * result + (hasReference != null ? hasReference.hashCode() : 0);
+        result = 31 * result + (hasAuthMethods ? 13:31);
+        result = 31 * result + (hasConsumes ? 13:31);
+        result = 31 * result + (hasProduces ? 13:31);
+        result = 31 * result + (hasParams ? 13:31);
+        result = 31 * result + (hasOptionalParams ? 13:31);
+        result = 31 * result + (returnTypeIsPrimitive ? 13:31);
+        result = 31 * result + (returnSimpleType ? 13:31);
+        result = 31 * result + (subresourceOperation ? 13:31);
+        result = 31 * result + (isMapContainer ? 13:31);
+        result = 31 * result + (isListContainer ? 13:31);
+        result = 31 * result + (isMultipart ? 13:31);
+        result = 31 * result + (hasMore ? 13:31);
+        result = 31 * result + (isResponseBinary ? 13:31);
+        result = 31 * result + (isResponseFile ? 13:31);
+        result = 31 * result + (hasReference ? 13:31);
         result = 31 * result + (path != null ? path.hashCode() : 0);
         result = 31 * result + (operationId != null ? operationId.hashCode() : 0);
         result = 31 * result + (returnType != null ? returnType.hashCode() : 0);
@@ -325,7 +335,9 @@ public class CodegenOperation {
         result = 31 * result + (externalDocs != null ? externalDocs.hashCode() : 0);
         result = 31 * result + (vendorExtensions != null ? vendorExtensions.hashCode() : 0);
         result = 31 * result + (nickname != null ? nickname.hashCode() : 0);
+        result = 31 * result + (prioritizedContentTypes != null ? prioritizedContentTypes.hashCode() : 0);
         result = 31 * result + (operationIdLowerCase != null ? operationIdLowerCase.hashCode() : 0);
+        result = 31 * result + (operationIdCamelCase != null ? operationIdCamelCase.hashCode() : 0);
         return result;
     }
 }
