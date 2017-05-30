@@ -75,7 +75,11 @@ Contact: apiteam@swagger.io
   <Import Project="$(MsBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
       <ProjectReference Include="..\IO.Swagger\IO.Swagger.csproj">
+<<<<<<< HEAD
           <Project>{5CD900DE-8266-412F-A758-28E1F9C623D5}</Project>
+=======
+          <Project>{53CC789E-73F0-4A6D-995F-61AEE1D561FB}</Project>
+>>>>>>> a4e15ed... [csharp] Regenerate csharp samples
           <Name>IO.Swagger</Name>
       </ProjectReference>
   </ItemGroup>

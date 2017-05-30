@@ -48,21 +48,12 @@ namespace IO.Swagger.Client
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiClient" /> class
-<<<<<<< HEAD
-        /// with default configuration and base path (http://petstore.swagger.io:80/v2).
-        /// </summary>
-        public ApiClient()
-        {
-            Configuration = Configuration.Default;
-            RestClient = new RestClient("http://petstore.swagger.io:80/v2");
-=======
         /// with default configuration.
         /// </summary>
         public ApiClient()
         {
             Configuration = IO.Swagger.Client.Configuration.Default;
-            RestClient = new RestClient("http://petstore.swagger.io/v2");
->>>>>>> e9671dc... [csharp] Regenerate sample
+            RestClient = new RestClient("http://petstore.swagger.io:80/v2");
         }
 
         /// <summary>
@@ -74,11 +65,7 @@ namespace IO.Swagger.Client
         {
             Configuration = config ?? IO.Swagger.Client.Configuration.Default;
 
-<<<<<<< HEAD
-            RestClient = new RestClient("http://petstore.swagger.io:80/v2");
-=======
             RestClient = new RestClient(Configuration.BasePath);
->>>>>>> e9671dc... [csharp] Regenerate sample
         }
 
         /// <summary>

@@ -23,7 +23,6 @@ namespace IO.Swagger.Client
     /// </summary>
     public class Configuration : IReadableConfiguration
     {
-
         #region Constants
 
         /// <summary>
@@ -82,7 +81,6 @@ namespace IO.Swagger.Client
             }
         }
 
-
         #endregion Static Members
 
         #region Private Members
@@ -116,12 +114,14 @@ namespace IO.Swagger.Client
         /// </summary>
         public Configuration()
         {
-            Timeout = 100000;
             UserAgent = "Swagger-Codegen/1.0.0/csharp";
-            BasePath = "http://petstore.swagger.io/v2";
+            BasePath = "http://petstore.swagger.io:80/v2";
             DefaultHeader = new ConcurrentDictionary<string, string>();
             ApiKey = new ConcurrentDictionary<string, string>();
             ApiKeyPrefix = new ConcurrentDictionary<string, string>();
+
+            // Setting Timeout has side effects (forces ApiClient creation).
+            Timeout = 100000;
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace IO.Swagger.Client
             IDictionary<string, string> defaultHeader,
             IDictionary<string, string> apiKey,
             IDictionary<string, string> apiKeyPrefix,
-            string basePath = "http://petstore.swagger.io/v2") : this()
+            string basePath = "http://petstore.swagger.io:80/v2") : this()
         {
             if (string.IsNullOrWhiteSpace(basePath))
                 throw new ArgumentException("The provided basePath is invalid.", "basePath");
@@ -191,7 +191,7 @@ namespace IO.Swagger.Client
             // ReSharper restore UnusedParameter.Local
             )
         {
-            
+
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace IO.Swagger.Client
         // ReSharper disable once UnusedParameter.Local
         public Configuration(ApiClient apiClient)
         {
-            
+
         }
 
         #endregion Constructors
@@ -223,10 +223,20 @@ namespace IO.Swagger.Client
             }
         }
 
+        private String _basePath = null;
         /// <summary>
         /// Gets or sets the base path for API access.
         /// </summary>
-        public virtual string BasePath { get; set; }
+        public virtual string BasePath {
+            get { return _basePath; }
+            set {
+                _basePath = value;
+                // pass-through to ApiClient if it's set.
+                if(_apiClient != null) {
+                    _apiClient.RestClient.BaseUrl = new Uri(_basePath);
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the default header.
@@ -236,7 +246,11 @@ namespace IO.Swagger.Client
         /// <summary>
         /// Gets or sets the HTTP timeout (milliseconds) of ApiClient. Default to 100000 milliseconds.
         /// </summary>
-        public virtual int Timeout { get; set; }
+        public virtual int Timeout
+        {
+            get { return ApiClient.RestClient.Timeout; }
+            set { ApiClient.RestClient.Timeout = value; }
+        }
 
         /// <summary>
         /// Gets or sets the HTTP user agent.
@@ -259,7 +273,6 @@ namespace IO.Swagger.Client
         /// <summary>
         /// Gets or sets the access token for OAuth2 authentication.
         /// </summary>
-<<<<<<< HEAD
         /// <param name="apiKeyIdentifier">API key identifier (authentication scheme).</param>
         /// <returns>API key with prefix.</returns>
         public string GetApiKeyWithPrefix (string apiKeyIdentifier)
@@ -273,11 +286,11 @@ namespace IO.Swagger.Client
                 return apiKeyValue;
         }
 
-        private string _tempFolderPath;
-=======
+        /// <summary>
+        /// Gets or sets the access token for OAuth2 authentication.
+        /// </summary>
         /// <value>The access token.</value>
         public virtual string AccessToken { get; set; }
->>>>>>> e9671dc... [csharp] Regenerate sample
 
         /// <summary>
         /// Gets or sets the temporary folder path to store the files downloaded from the server.
@@ -285,15 +298,7 @@ namespace IO.Swagger.Client
         /// <value>Folder path.</value>
         public virtual string TempFolderPath
         {
-            get
-            {
-                // default to Path.GetTempPath() if _tempFolderPath is not set
-                if (String.IsNullOrEmpty(_tempFolderPath))
-                {
-                    _tempFolderPath = Path.GetTempPath();
-                }
-                return _tempFolderPath;
-            }
+            get { return _tempFolderPath; }
 
             set
             {
@@ -395,22 +400,6 @@ namespace IO.Swagger.Client
         public void AddDefaultHeader(string key, string value)
         {
             DefaultHeader[key] = value;
-        }
-
-        /// <summary>
-        /// Get the API key with prefix.
-        /// </summary>
-        /// <param name="apiKeyIdentifier">API key identifier (authentication scheme).</param>
-        /// <returns>API key with prefix.</returns>
-        public string GetApiKeyWithPrefix(string apiKeyIdentifier)
-        {
-            var apiKeyValue = "";
-            ApiKey.TryGetValue (apiKeyIdentifier, out apiKeyValue);
-            var apiKeyPrefix = "";
-            if (ApiKeyPrefix.TryGetValue (apiKeyIdentifier, out apiKeyPrefix))
-                return apiKeyPrefix + " " + apiKeyValue;
-            else
-                return apiKeyValue;
         }
 
         /// <summary>

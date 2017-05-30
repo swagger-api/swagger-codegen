@@ -12,15 +12,7 @@ Contact: apiteam@swagger.io
     
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-<<<<<<< HEAD
-<<<<<<< HEAD
     <ProjectGuid>{321C8C3F-0156-40C1-AE42-D59761FB9B6C}</ProjectGuid>
-=======
-    <ProjectGuid>{391DEE9D-C48B-4846-838D-E96F4BC01E1D}</ProjectGuid>
->>>>>>> e9671dc... [csharp] Regenerate sample
-=======
-    <ProjectGuid>{FC4B9E7E-E263-4FA0-964C-77104CD0C318}</ProjectGuid>
->>>>>>> 2ee61e5... [csharp] Regenerate sample
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>IO.Swagger</RootNamespace>
