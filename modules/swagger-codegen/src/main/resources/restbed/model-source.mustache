@@ -1,0 +1,42 @@
+{{>licenseInfo}}
+{{#models}}{{#model}}
+
+#include "{{classname}}.h"
+
+{{#modelNamespaceDeclarations}}
+namespace {{this}} {
+{{/modelNamespaceDeclarations}}
+
+{{classname}}::{{classname}}()
+{
+    {{#vars}}{{#isNotContainer}}{{#isPrimitiveType}}m_{{name}} = {{{defaultValue}}};
+    {{/isPrimitiveType}}{{^isPrimitiveType}}{{#isString}}m_{{name}} = {{{defaultValue}}};
+    {{/isString}}{{#isDateTime}}m_{{name}} = {{{defaultValue}}};
+    {{/isDateTime}}{{/isPrimitiveType}}{{/isNotContainer}}{{/vars}}
+}
+
+{{classname}}::~{{classname}}()
+{
+}
+
+{{#vars}}{{^isNotContainer}}{{{datatype}}}& {{classname}}::{{getter}}()
+{
+    return m_{{name}};
+}
+{{/isNotContainer}}{{#isNotContainer}}{{{datatype}}} {{classname}}::{{getter}}() const
+{
+    return m_{{name}};
+}
+void {{classname}}::{{setter}}({{{datatype}}} value)
+{
+    m_{{name}} = value;
+}
+{{/isNotContainer}}
+{{/vars}}
+
+{{#modelNamespaceDeclarations}}
+}
+{{/modelNamespaceDeclarations}}
+
+{{/model}}
+{{/models}}

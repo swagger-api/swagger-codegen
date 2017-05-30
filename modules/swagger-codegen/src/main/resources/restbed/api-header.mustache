@@ -1,0 +1,66 @@
+{{>licenseInfo}}
+{{#operations}}/*
+ * {{classname}}.h
+ *
+ * {{description}}
+ */
+
+#ifndef {{classname}}_H_
+#define {{classname}}_H_
+
+{{{defaultInclude}}}
+#include <memory>
+#include <corvusoft/restbed/session.hpp>
+#include <corvusoft/restbed/resource.hpp>
+#include <corvusoft/restbed/service.hpp>
+
+{{#imports}}{{{import}}}
+{{/imports}}
+
+{{#apiNamespaceDeclarations}}
+namespace {{this}} {
+{{/apiNamespaceDeclarations}}
+
+using namespace {{modelNamespace}};
+
+class {{declspec}} {{classname}}: public restbed::Service
+{
+public:
+	{{classname}}();
+	~{{classname}}();
+	void startService(int const& port);
+	void stopService();
+};
+
+
+{{#operation}}
+/// <summary>
+/// {{summary}}
+/// </summary>
+/// <remarks>
+/// {{notes}}
+/// </remarks>
+class {{declspec}} {{classname}}{{operationIdCamelCase}}Resource: public restbed::Resource
+{
+public:
+	{{classname}}{{operationIdCamelCase}}Resource();
+    virtual ~{{classname}}{{operationIdCamelCase}}Resource();
+    {{#allParams}}/// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}</param>
+    {{/allParams}}
+    void {{httpMethod}}_method_handler(const std::shared_ptr<restbed::Session> session);
+    {{#vendorExtensions.x-codegen-otherMethods}}
+    {{#allParams}}/// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}</param>
+    {{/allParams}}
+    void {{httpMethod}}_method_handler(const std::shared_ptr<restbed::Session> session);
+    {{/vendorExtensions.x-codegen-otherMethods}}
+};
+
+{{/operation}}
+
+{{#apiNamespaceDeclarations}}
+}
+{{/apiNamespaceDeclarations}}
+
+#endif /* {{classname}}_H_ */
+
+{{/operations}}
