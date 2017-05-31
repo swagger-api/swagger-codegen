@@ -50,8 +50,8 @@ export class PetApi {
     public addPet(body?: models.Pet): JQueryPromise<{ response: JQueryXHR; body?: any;  }> {
         let localVarPath = this.basePath + '/pet';
 
-        let queryParameters: Array<string> = [];
-        let headerParams: Array<string> = [];
+        let queryParameters: any = {};
+        let headerParams: any = {};
 
 
         localVarPath = localVarPath + "?" + $.param(queryParameters);
@@ -86,7 +86,6 @@ export class PetApi {
             processData: false
         };
 
-        /* TODO: Will not support file for now... Any help on this appreciated! */
         requestOptions.data = JSON.stringify(body);
         if (headerParams['Content-Type']) {
             requestOptions.contentType = headerParams['Content-Type'];
@@ -95,9 +94,9 @@ export class PetApi {
         let dfd = $.Deferred();
         $.ajax(requestOptions).then(
             (data: any, textStatus: string, jqXHR: JQueryXHR) =>
-                dfd.resolve({ response: jqXHR, body: data }),
+                dfd.resolve(jqXHR, data),
             (xhr: JQueryXHR, textStatus: string, errorThrown: string) =>
-                dfd.reject({ response: xhr, body: errorThrown })
+                dfd.reject(xhr, errorThrown)
         );
         return dfd.promise();
     }
@@ -109,11 +108,10 @@ export class PetApi {
      * @param apiKey 
      */
     public deletePet(petId: number, apiKey?: string): JQueryPromise<{ response: JQueryXHR; body?: any;  }> {
-        let localVarPath = this.basePath + '/pet/{petId}'
-            .replace('{' + 'petId' + '}', String(petId));
+        let localVarPath = this.basePath + '/pet/{petId}'.replace('{' + 'petId' + '}', String(petId));
 
-        let queryParameters: Array<string> = [];
-        let headerParams: Array<string> = [];
+        let queryParameters: any = {};
+        let headerParams: any = {};
         // verify required parameter 'petId' is not null or undefined
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling deletePet.');
@@ -151,7 +149,6 @@ export class PetApi {
             processData: false
         };
 
-        /* TODO: Will not support file for now... Any help on this appreciated! */
         if (headerParams['Content-Type']) {
             requestOptions.contentType = headerParams['Content-Type'];
         }
@@ -159,9 +156,9 @@ export class PetApi {
         let dfd = $.Deferred();
         $.ajax(requestOptions).then(
             (data: any, textStatus: string, jqXHR: JQueryXHR) =>
-                dfd.resolve({ response: jqXHR, body: data }),
+                dfd.resolve(jqXHR, data),
             (xhr: JQueryXHR, textStatus: string, errorThrown: string) =>
-                dfd.reject({ response: xhr, body: errorThrown })
+                dfd.reject(xhr, errorThrown)
         );
         return dfd.promise();
     }
@@ -174,12 +171,12 @@ export class PetApi {
     public findPetsByStatus(status?: Array<string>): JQueryPromise<{ response: JQueryXHR; body: Array<models.Pet>;  }> {
         let localVarPath = this.basePath + '/pet/findByStatus';
 
-        let queryParameters: Array<string> = [];
-        let headerParams: Array<string> = [];
+        let queryParameters: any = {};
+        let headerParams: any = {};
 
         if (status) {
             status.forEach((element: any) => {
-                queryParameters.push('status', element);
+                queryParameters['status'].push(element);
             });
         }
 
@@ -211,7 +208,6 @@ export class PetApi {
             processData: false
         };
 
-        /* TODO: Will not support file for now... Any help on this appreciated! */
         if (headerParams['Content-Type']) {
             requestOptions.contentType = headerParams['Content-Type'];
         }
@@ -219,9 +215,9 @@ export class PetApi {
         let dfd = $.Deferred();
         $.ajax(requestOptions).then(
             (data: Array<models.Pet>, textStatus: string, jqXHR: JQueryXHR) =>
-                dfd.resolve({ response: jqXHR, body: data }),
+                dfd.resolve(jqXHR, data),
             (xhr: JQueryXHR, textStatus: string, errorThrown: string) =>
-                dfd.reject({ response: xhr, body: errorThrown })
+                dfd.reject(xhr, errorThrown)
         );
         return dfd.promise();
     }
@@ -234,12 +230,12 @@ export class PetApi {
     public findPetsByTags(tags?: Array<string>): JQueryPromise<{ response: JQueryXHR; body: Array<models.Pet>;  }> {
         let localVarPath = this.basePath + '/pet/findByTags';
 
-        let queryParameters: Array<string> = [];
-        let headerParams: Array<string> = [];
+        let queryParameters: any = {};
+        let headerParams: any = {};
 
         if (tags) {
             tags.forEach((element: any) => {
-                queryParameters.push('tags', element);
+                queryParameters['tags'].push(element);
             });
         }
 
@@ -271,7 +267,6 @@ export class PetApi {
             processData: false
         };
 
-        /* TODO: Will not support file for now... Any help on this appreciated! */
         if (headerParams['Content-Type']) {
             requestOptions.contentType = headerParams['Content-Type'];
         }
@@ -279,9 +274,9 @@ export class PetApi {
         let dfd = $.Deferred();
         $.ajax(requestOptions).then(
             (data: Array<models.Pet>, textStatus: string, jqXHR: JQueryXHR) =>
-                dfd.resolve({ response: jqXHR, body: data }),
+                dfd.resolve(jqXHR, data),
             (xhr: JQueryXHR, textStatus: string, errorThrown: string) =>
-                dfd.reject({ response: xhr, body: errorThrown })
+                dfd.reject(xhr, errorThrown)
         );
         return dfd.promise();
     }
@@ -292,11 +287,10 @@ export class PetApi {
      * @param petId ID of pet that needs to be fetched
      */
     public getPetById(petId: number): JQueryPromise<{ response: JQueryXHR; body: models.Pet;  }> {
-        let localVarPath = this.basePath + '/pet/{petId}'
-            .replace('{' + 'petId' + '}', String(petId));
+        let localVarPath = this.basePath + '/pet/{petId}'.replace('{' + 'petId' + '}', String(petId));
 
-        let queryParameters: Array<string> = [];
-        let headerParams: Array<string> = [];
+        let queryParameters: any = {};
+        let headerParams: any = {};
         // verify required parameter 'petId' is not null or undefined
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling getPetById.');
@@ -314,6 +308,11 @@ export class PetApi {
             'application/xml'
         ];
 
+        // authentication (api_key) required
+        if (this.configuration.apiKey) {
+            headerParams['api_key'] = this.configuration.apiKey;
+        }
+
         // authentication (petstore_auth) required
         // oauth required
         if (this.configuration.accessToken) {
@@ -321,11 +320,6 @@ export class PetApi {
                 ? this.configuration.accessToken()
                 : this.configuration.accessToken;
             headerParams['Authorization'] = 'Bearer ' + accessToken;
-        }
-
-        // authentication (api_key) required
-        if (this.configuration.apiKey) {
-            headerParams['api_key'] = this.configuration.apiKey;
         }
 
 
@@ -336,7 +330,6 @@ export class PetApi {
             processData: false
         };
 
-        /* TODO: Will not support file for now... Any help on this appreciated! */
         if (headerParams['Content-Type']) {
             requestOptions.contentType = headerParams['Content-Type'];
         }
@@ -344,9 +337,9 @@ export class PetApi {
         let dfd = $.Deferred();
         $.ajax(requestOptions).then(
             (data: models.Pet, textStatus: string, jqXHR: JQueryXHR) =>
-                dfd.resolve({ response: jqXHR, body: data }),
+                dfd.resolve(jqXHR, data),
             (xhr: JQueryXHR, textStatus: string, errorThrown: string) =>
-                dfd.reject({ response: xhr, body: errorThrown })
+                dfd.reject(xhr, errorThrown)
         );
         return dfd.promise();
     }
@@ -359,8 +352,8 @@ export class PetApi {
     public updatePet(body?: models.Pet): JQueryPromise<{ response: JQueryXHR; body?: any;  }> {
         let localVarPath = this.basePath + '/pet';
 
-        let queryParameters: Array<string> = [];
-        let headerParams: Array<string> = [];
+        let queryParameters: any = {};
+        let headerParams: any = {};
 
 
         localVarPath = localVarPath + "?" + $.param(queryParameters);
@@ -395,7 +388,6 @@ export class PetApi {
             processData: false
         };
 
-        /* TODO: Will not support file for now... Any help on this appreciated! */
         requestOptions.data = JSON.stringify(body);
         if (headerParams['Content-Type']) {
             requestOptions.contentType = headerParams['Content-Type'];
@@ -404,9 +396,9 @@ export class PetApi {
         let dfd = $.Deferred();
         $.ajax(requestOptions).then(
             (data: any, textStatus: string, jqXHR: JQueryXHR) =>
-                dfd.resolve({ response: jqXHR, body: data }),
+                dfd.resolve(jqXHR, data),
             (xhr: JQueryXHR, textStatus: string, errorThrown: string) =>
-                dfd.reject({ response: xhr, body: errorThrown })
+                dfd.reject(xhr, errorThrown)
         );
         return dfd.promise();
     }
@@ -419,12 +411,12 @@ export class PetApi {
      * @param status Updated status of the pet
      */
     public updatePetWithForm(petId: string, name?: string, status?: string): JQueryPromise<{ response: JQueryXHR; body?: any;  }> {
-        let localVarPath = this.basePath + '/pet/{petId}'
-            .replace('{' + 'petId' + '}', String(petId));
+        let localVarPath = this.basePath + '/pet/{petId}'.replace('{' + 'petId' + '}', String(petId));
 
-        let queryParameters: Array<string> = [];
-        let headerParams: Array<string> = [];
-        let formParams = new URLSearchParams();
+        let queryParameters: any = {};
+        let headerParams: any = {};
+        let formParams = new FormData();
+        let reqHasFile = false;
 
         // verify required parameter 'petId' is not null or undefined
         if (petId === null || petId === undefined) {
@@ -435,6 +427,14 @@ export class PetApi {
 
 
         localVarPath = localVarPath + "?" + $.param(queryParameters);
+        if (name !== undefined) {
+            formParams.append('name', <any>name);
+        }
+
+        if (status !== undefined) {
+            formParams.append('status', <any>status);
+        }
+
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/x-www-form-urlencoded'
@@ -455,16 +455,10 @@ export class PetApi {
             headerParams['Authorization'] = 'Bearer ' + accessToken;
         }
 
-        headerParams['Content-Type'] = 'application/x-www-form-urlencoded';
-
-
-        if (name !== undefined) {
-            formParams.set('name', <any>name);
+        if (!reqHasFile) {
+            headerParams['Content-Type'] = 'application/x-www-form-urlencoded';
         }
 
-        if (status !== undefined) {
-            formParams.set('status', <any>status);
-        }
 
         let requestOptions: JQueryAjaxSettings = {
             url: localVarPath,
@@ -473,18 +467,20 @@ export class PetApi {
             processData: false
         };
 
-        /* TODO: Will not support file for now... Any help on this appreciated! */
-        requestOptions.data = formParams.toString();
         if (headerParams['Content-Type']) {
             requestOptions.contentType = headerParams['Content-Type'];
+        }
+        requestOptions.data = formParams;
+        if (reqHasFile) {
+            requestOptions.contentType = false;
         }
 
         let dfd = $.Deferred();
         $.ajax(requestOptions).then(
             (data: any, textStatus: string, jqXHR: JQueryXHR) =>
-                dfd.resolve({ response: jqXHR, body: data }),
+                dfd.resolve(jqXHR, data),
             (xhr: JQueryXHR, textStatus: string, errorThrown: string) =>
-                dfd.reject({ response: xhr, body: errorThrown })
+                dfd.reject(xhr, errorThrown)
         );
         return dfd.promise();
     }
@@ -497,12 +493,12 @@ export class PetApi {
      * @param file file to upload
      */
     public uploadFile(petId: number, additionalMetadata?: string, file?: any): JQueryPromise<{ response: JQueryXHR; body?: any;  }> {
-        let localVarPath = this.basePath + '/pet/{petId}/uploadImage'
-            .replace('{' + 'petId' + '}', String(petId));
+        let localVarPath = this.basePath + '/pet/{petId}/uploadImage'.replace('{' + 'petId' + '}', String(petId));
 
-        let queryParameters: Array<string> = [];
-        let headerParams: Array<string> = [];
-        let formParams = new URLSearchParams();
+        let queryParameters: any = {};
+        let headerParams: any = {};
+        let formParams = new FormData();
+        let reqHasFile = false;
 
         // verify required parameter 'petId' is not null or undefined
         if (petId === null || petId === undefined) {
@@ -513,6 +509,15 @@ export class PetApi {
 
 
         localVarPath = localVarPath + "?" + $.param(queryParameters);
+        if (additionalMetadata !== undefined) {
+            formParams.append('additionalMetadata', <any>additionalMetadata);
+        }
+
+        reqHasFile = true;
+        if (file !== undefined) {
+            formParams.append('file', <any>file);
+        }
+
         // to determine the Content-Type header
         let consumes: string[] = [
             'multipart/form-data'
@@ -533,16 +538,10 @@ export class PetApi {
             headerParams['Authorization'] = 'Bearer ' + accessToken;
         }
 
-        headerParams['Content-Type'] = 'application/x-www-form-urlencoded';
-
-
-        if (additionalMetadata !== undefined) {
-            formParams.set('additionalMetadata', <any>additionalMetadata);
+        if (!reqHasFile) {
+            headerParams['Content-Type'] = 'application/x-www-form-urlencoded';
         }
 
-        if (file !== undefined) {
-            formParams.set('file', <any>file);
-        }
 
         let requestOptions: JQueryAjaxSettings = {
             url: localVarPath,
@@ -551,18 +550,20 @@ export class PetApi {
             processData: false
         };
 
-        /* TODO: Will not support file for now... Any help on this appreciated! */
-        requestOptions.data = formParams.toString();
         if (headerParams['Content-Type']) {
             requestOptions.contentType = headerParams['Content-Type'];
+        }
+        requestOptions.data = formParams;
+        if (reqHasFile) {
+            requestOptions.contentType = false;
         }
 
         let dfd = $.Deferred();
         $.ajax(requestOptions).then(
             (data: any, textStatus: string, jqXHR: JQueryXHR) =>
-                dfd.resolve({ response: jqXHR, body: data }),
+                dfd.resolve(jqXHR, data),
             (xhr: JQueryXHR, textStatus: string, errorThrown: string) =>
-                dfd.reject({ response: xhr, body: errorThrown })
+                dfd.reject(xhr, errorThrown)
         );
         return dfd.promise();
     }

@@ -50,8 +50,8 @@ export class UserApi {
     public createUser(body?: models.User): JQueryPromise<{ response: JQueryXHR; body?: any;  }> {
         let localVarPath = this.basePath + '/user';
 
-        let queryParameters: Array<string> = [];
-        let headerParams: Array<string> = [];
+        let queryParameters: any = {};
+        let headerParams: any = {};
 
 
         localVarPath = localVarPath + "?" + $.param(queryParameters);
@@ -75,7 +75,6 @@ export class UserApi {
             processData: false
         };
 
-        /* TODO: Will not support file for now... Any help on this appreciated! */
         requestOptions.data = JSON.stringify(body);
         if (headerParams['Content-Type']) {
             requestOptions.contentType = headerParams['Content-Type'];
@@ -84,9 +83,9 @@ export class UserApi {
         let dfd = $.Deferred();
         $.ajax(requestOptions).then(
             (data: any, textStatus: string, jqXHR: JQueryXHR) =>
-                dfd.resolve({ response: jqXHR, body: data }),
+                dfd.resolve(jqXHR, data),
             (xhr: JQueryXHR, textStatus: string, errorThrown: string) =>
-                dfd.reject({ response: xhr, body: errorThrown })
+                dfd.reject(xhr, errorThrown)
         );
         return dfd.promise();
     }
@@ -99,8 +98,8 @@ export class UserApi {
     public createUsersWithArrayInput(body?: Array<models.User>): JQueryPromise<{ response: JQueryXHR; body?: any;  }> {
         let localVarPath = this.basePath + '/user/createWithArray';
 
-        let queryParameters: Array<string> = [];
-        let headerParams: Array<string> = [];
+        let queryParameters: any = {};
+        let headerParams: any = {};
 
 
         localVarPath = localVarPath + "?" + $.param(queryParameters);
@@ -124,7 +123,6 @@ export class UserApi {
             processData: false
         };
 
-        /* TODO: Will not support file for now... Any help on this appreciated! */
         requestOptions.data = JSON.stringify(body);
         if (headerParams['Content-Type']) {
             requestOptions.contentType = headerParams['Content-Type'];
@@ -133,9 +131,9 @@ export class UserApi {
         let dfd = $.Deferred();
         $.ajax(requestOptions).then(
             (data: any, textStatus: string, jqXHR: JQueryXHR) =>
-                dfd.resolve({ response: jqXHR, body: data }),
+                dfd.resolve(jqXHR, data),
             (xhr: JQueryXHR, textStatus: string, errorThrown: string) =>
-                dfd.reject({ response: xhr, body: errorThrown })
+                dfd.reject(xhr, errorThrown)
         );
         return dfd.promise();
     }
@@ -148,8 +146,8 @@ export class UserApi {
     public createUsersWithListInput(body?: Array<models.User>): JQueryPromise<{ response: JQueryXHR; body?: any;  }> {
         let localVarPath = this.basePath + '/user/createWithList';
 
-        let queryParameters: Array<string> = [];
-        let headerParams: Array<string> = [];
+        let queryParameters: any = {};
+        let headerParams: any = {};
 
 
         localVarPath = localVarPath + "?" + $.param(queryParameters);
@@ -173,7 +171,6 @@ export class UserApi {
             processData: false
         };
 
-        /* TODO: Will not support file for now... Any help on this appreciated! */
         requestOptions.data = JSON.stringify(body);
         if (headerParams['Content-Type']) {
             requestOptions.contentType = headerParams['Content-Type'];
@@ -182,9 +179,9 @@ export class UserApi {
         let dfd = $.Deferred();
         $.ajax(requestOptions).then(
             (data: any, textStatus: string, jqXHR: JQueryXHR) =>
-                dfd.resolve({ response: jqXHR, body: data }),
+                dfd.resolve(jqXHR, data),
             (xhr: JQueryXHR, textStatus: string, errorThrown: string) =>
-                dfd.reject({ response: xhr, body: errorThrown })
+                dfd.reject(xhr, errorThrown)
         );
         return dfd.promise();
     }
@@ -195,11 +192,10 @@ export class UserApi {
      * @param username The name that needs to be deleted
      */
     public deleteUser(username: string): JQueryPromise<{ response: JQueryXHR; body?: any;  }> {
-        let localVarPath = this.basePath + '/user/{username}'
-            .replace('{' + 'username' + '}', String(username));
+        let localVarPath = this.basePath + '/user/{username}'.replace('{' + 'username' + '}', String(username));
 
-        let queryParameters: Array<string> = [];
-        let headerParams: Array<string> = [];
+        let queryParameters: any = {};
+        let headerParams: any = {};
         // verify required parameter 'username' is not null or undefined
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling deleteUser.');
@@ -225,7 +221,6 @@ export class UserApi {
             processData: false
         };
 
-        /* TODO: Will not support file for now... Any help on this appreciated! */
         if (headerParams['Content-Type']) {
             requestOptions.contentType = headerParams['Content-Type'];
         }
@@ -233,9 +228,9 @@ export class UserApi {
         let dfd = $.Deferred();
         $.ajax(requestOptions).then(
             (data: any, textStatus: string, jqXHR: JQueryXHR) =>
-                dfd.resolve({ response: jqXHR, body: data }),
+                dfd.resolve(jqXHR, data),
             (xhr: JQueryXHR, textStatus: string, errorThrown: string) =>
-                dfd.reject({ response: xhr, body: errorThrown })
+                dfd.reject(xhr, errorThrown)
         );
         return dfd.promise();
     }
@@ -246,11 +241,10 @@ export class UserApi {
      * @param username The name that needs to be fetched. Use user1 for testing. 
      */
     public getUserByName(username: string): JQueryPromise<{ response: JQueryXHR; body: models.User;  }> {
-        let localVarPath = this.basePath + '/user/{username}'
-            .replace('{' + 'username' + '}', String(username));
+        let localVarPath = this.basePath + '/user/{username}'.replace('{' + 'username' + '}', String(username));
 
-        let queryParameters: Array<string> = [];
-        let headerParams: Array<string> = [];
+        let queryParameters: any = {};
+        let headerParams: any = {};
         // verify required parameter 'username' is not null or undefined
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling getUserByName.');
@@ -276,7 +270,6 @@ export class UserApi {
             processData: false
         };
 
-        /* TODO: Will not support file for now... Any help on this appreciated! */
         if (headerParams['Content-Type']) {
             requestOptions.contentType = headerParams['Content-Type'];
         }
@@ -284,9 +277,9 @@ export class UserApi {
         let dfd = $.Deferred();
         $.ajax(requestOptions).then(
             (data: models.User, textStatus: string, jqXHR: JQueryXHR) =>
-                dfd.resolve({ response: jqXHR, body: data }),
+                dfd.resolve(jqXHR, data),
             (xhr: JQueryXHR, textStatus: string, errorThrown: string) =>
-                dfd.reject({ response: xhr, body: errorThrown })
+                dfd.reject(xhr, errorThrown)
         );
         return dfd.promise();
     }
@@ -300,15 +293,15 @@ export class UserApi {
     public loginUser(username?: string, password?: string): JQueryPromise<{ response: JQueryXHR; body: string;  }> {
         let localVarPath = this.basePath + '/user/login';
 
-        let queryParameters: Array<string> = [];
-        let headerParams: Array<string> = [];
+        let queryParameters: any = {};
+        let headerParams: any = {};
 
 
         if (username !== undefined) {
-            queryParameters['username'] = <string>username;
+            queryParameters['username'] = <string><any>username;
         }
         if (password !== undefined) {
-            queryParameters['password'] = <string>password;
+            queryParameters['password'] = <string><any>password;
         }
 
         localVarPath = localVarPath + "?" + $.param(queryParameters);
@@ -330,7 +323,6 @@ export class UserApi {
             processData: false
         };
 
-        /* TODO: Will not support file for now... Any help on this appreciated! */
         if (headerParams['Content-Type']) {
             requestOptions.contentType = headerParams['Content-Type'];
         }
@@ -338,9 +330,9 @@ export class UserApi {
         let dfd = $.Deferred();
         $.ajax(requestOptions).then(
             (data: string, textStatus: string, jqXHR: JQueryXHR) =>
-                dfd.resolve({ response: jqXHR, body: data }),
+                dfd.resolve(jqXHR, data),
             (xhr: JQueryXHR, textStatus: string, errorThrown: string) =>
-                dfd.reject({ response: xhr, body: errorThrown })
+                dfd.reject(xhr, errorThrown)
         );
         return dfd.promise();
     }
@@ -352,8 +344,8 @@ export class UserApi {
     public logoutUser(): JQueryPromise<{ response: JQueryXHR; body?: any;  }> {
         let localVarPath = this.basePath + '/user/logout';
 
-        let queryParameters: Array<string> = [];
-        let headerParams: Array<string> = [];
+        let queryParameters: any = {};
+        let headerParams: any = {};
 
         localVarPath = localVarPath + "?" + $.param(queryParameters);
         // to determine the Content-Type header
@@ -374,7 +366,6 @@ export class UserApi {
             processData: false
         };
 
-        /* TODO: Will not support file for now... Any help on this appreciated! */
         if (headerParams['Content-Type']) {
             requestOptions.contentType = headerParams['Content-Type'];
         }
@@ -382,9 +373,9 @@ export class UserApi {
         let dfd = $.Deferred();
         $.ajax(requestOptions).then(
             (data: any, textStatus: string, jqXHR: JQueryXHR) =>
-                dfd.resolve({ response: jqXHR, body: data }),
+                dfd.resolve(jqXHR, data),
             (xhr: JQueryXHR, textStatus: string, errorThrown: string) =>
-                dfd.reject({ response: xhr, body: errorThrown })
+                dfd.reject(xhr, errorThrown)
         );
         return dfd.promise();
     }
@@ -396,11 +387,10 @@ export class UserApi {
      * @param body Updated user object
      */
     public updateUser(username: string, body?: models.User): JQueryPromise<{ response: JQueryXHR; body?: any;  }> {
-        let localVarPath = this.basePath + '/user/{username}'
-            .replace('{' + 'username' + '}', String(username));
+        let localVarPath = this.basePath + '/user/{username}'.replace('{' + 'username' + '}', String(username));
 
-        let queryParameters: Array<string> = [];
-        let headerParams: Array<string> = [];
+        let queryParameters: any = {};
+        let headerParams: any = {};
         // verify required parameter 'username' is not null or undefined
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling updateUser.');
@@ -429,7 +419,6 @@ export class UserApi {
             processData: false
         };
 
-        /* TODO: Will not support file for now... Any help on this appreciated! */
         requestOptions.data = JSON.stringify(body);
         if (headerParams['Content-Type']) {
             requestOptions.contentType = headerParams['Content-Type'];
@@ -438,9 +427,9 @@ export class UserApi {
         let dfd = $.Deferred();
         $.ajax(requestOptions).then(
             (data: any, textStatus: string, jqXHR: JQueryXHR) =>
-                dfd.resolve({ response: jqXHR, body: data }),
+                dfd.resolve(jqXHR, data),
             (xhr: JQueryXHR, textStatus: string, errorThrown: string) =>
-                dfd.reject({ response: xhr, body: errorThrown })
+                dfd.reject(xhr, errorThrown)
         );
         return dfd.promise();
     }

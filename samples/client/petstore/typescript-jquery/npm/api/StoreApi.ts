@@ -48,11 +48,10 @@ export class StoreApi {
      * @param orderId ID of the order that needs to be deleted
      */
     public deleteOrder(orderId: string): JQueryPromise<{ response: JQueryXHR; body?: any;  }> {
-        let localVarPath = this.basePath + '/store/order/{orderId}'
-            .replace('{' + 'orderId' + '}', String(orderId));
+        let localVarPath = this.basePath + '/store/order/{orderId}'.replace('{' + 'orderId' + '}', String(orderId));
 
-        let queryParameters: Array<string> = [];
-        let headerParams: Array<string> = [];
+        let queryParameters: any = {};
+        let headerParams: any = {};
         // verify required parameter 'orderId' is not null or undefined
         if (orderId === null || orderId === undefined) {
             throw new Error('Required parameter orderId was null or undefined when calling deleteOrder.');
@@ -78,7 +77,6 @@ export class StoreApi {
             processData: false
         };
 
-        /* TODO: Will not support file for now... Any help on this appreciated! */
         if (headerParams['Content-Type']) {
             requestOptions.contentType = headerParams['Content-Type'];
         }
@@ -86,9 +84,9 @@ export class StoreApi {
         let dfd = $.Deferred();
         $.ajax(requestOptions).then(
             (data: any, textStatus: string, jqXHR: JQueryXHR) =>
-                dfd.resolve({ response: jqXHR, body: data }),
+                dfd.resolve(jqXHR, data),
             (xhr: JQueryXHR, textStatus: string, errorThrown: string) =>
-                dfd.reject({ response: xhr, body: errorThrown })
+                dfd.reject(xhr, errorThrown)
         );
         return dfd.promise();
     }
@@ -100,8 +98,8 @@ export class StoreApi {
     public getInventory(): JQueryPromise<{ response: JQueryXHR; body: { [key: string]: number; };  }> {
         let localVarPath = this.basePath + '/store/inventory';
 
-        let queryParameters: Array<string> = [];
-        let headerParams: Array<string> = [];
+        let queryParameters: any = {};
+        let headerParams: any = {};
 
         localVarPath = localVarPath + "?" + $.param(queryParameters);
         // to determine the Content-Type header
@@ -127,7 +125,6 @@ export class StoreApi {
             processData: false
         };
 
-        /* TODO: Will not support file for now... Any help on this appreciated! */
         if (headerParams['Content-Type']) {
             requestOptions.contentType = headerParams['Content-Type'];
         }
@@ -135,9 +132,9 @@ export class StoreApi {
         let dfd = $.Deferred();
         $.ajax(requestOptions).then(
             (data: { [key: string]: number; }, textStatus: string, jqXHR: JQueryXHR) =>
-                dfd.resolve({ response: jqXHR, body: data }),
+                dfd.resolve(jqXHR, data),
             (xhr: JQueryXHR, textStatus: string, errorThrown: string) =>
-                dfd.reject({ response: xhr, body: errorThrown })
+                dfd.reject(xhr, errorThrown)
         );
         return dfd.promise();
     }
@@ -148,11 +145,10 @@ export class StoreApi {
      * @param orderId ID of pet that needs to be fetched
      */
     public getOrderById(orderId: string): JQueryPromise<{ response: JQueryXHR; body: models.Order;  }> {
-        let localVarPath = this.basePath + '/store/order/{orderId}'
-            .replace('{' + 'orderId' + '}', String(orderId));
+        let localVarPath = this.basePath + '/store/order/{orderId}'.replace('{' + 'orderId' + '}', String(orderId));
 
-        let queryParameters: Array<string> = [];
-        let headerParams: Array<string> = [];
+        let queryParameters: any = {};
+        let headerParams: any = {};
         // verify required parameter 'orderId' is not null or undefined
         if (orderId === null || orderId === undefined) {
             throw new Error('Required parameter orderId was null or undefined when calling getOrderById.');
@@ -178,7 +174,6 @@ export class StoreApi {
             processData: false
         };
 
-        /* TODO: Will not support file for now... Any help on this appreciated! */
         if (headerParams['Content-Type']) {
             requestOptions.contentType = headerParams['Content-Type'];
         }
@@ -186,9 +181,9 @@ export class StoreApi {
         let dfd = $.Deferred();
         $.ajax(requestOptions).then(
             (data: models.Order, textStatus: string, jqXHR: JQueryXHR) =>
-                dfd.resolve({ response: jqXHR, body: data }),
+                dfd.resolve(jqXHR, data),
             (xhr: JQueryXHR, textStatus: string, errorThrown: string) =>
-                dfd.reject({ response: xhr, body: errorThrown })
+                dfd.reject(xhr, errorThrown)
         );
         return dfd.promise();
     }
@@ -201,8 +196,8 @@ export class StoreApi {
     public placeOrder(body?: models.Order): JQueryPromise<{ response: JQueryXHR; body: models.Order;  }> {
         let localVarPath = this.basePath + '/store/order';
 
-        let queryParameters: Array<string> = [];
-        let headerParams: Array<string> = [];
+        let queryParameters: any = {};
+        let headerParams: any = {};
 
 
         localVarPath = localVarPath + "?" + $.param(queryParameters);
@@ -226,7 +221,6 @@ export class StoreApi {
             processData: false
         };
 
-        /* TODO: Will not support file for now... Any help on this appreciated! */
         requestOptions.data = JSON.stringify(body);
         if (headerParams['Content-Type']) {
             requestOptions.contentType = headerParams['Content-Type'];
@@ -235,9 +229,9 @@ export class StoreApi {
         let dfd = $.Deferred();
         $.ajax(requestOptions).then(
             (data: models.Order, textStatus: string, jqXHR: JQueryXHR) =>
-                dfd.resolve({ response: jqXHR, body: data }),
+                dfd.resolve(jqXHR, data),
             (xhr: JQueryXHR, textStatus: string, errorThrown: string) =>
-                dfd.reject({ response: xhr, body: errorThrown })
+                dfd.reject(xhr, errorThrown)
         );
         return dfd.promise();
     }
