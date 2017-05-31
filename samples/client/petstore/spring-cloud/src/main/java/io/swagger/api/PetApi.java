@@ -61,14 +61,14 @@ public interface PetApi {
             })
     }, tags={ "pet", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Pet.class),
-        @ApiResponse(code = 400, message = "Invalid status value", response = Pet.class) })
+        @ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
+        @ApiResponse(code = 400, message = "Invalid status value", response = Void.class) })
     
     @RequestMapping(value = "/pet/findByStatus",
         produces = "application/json",
         consumes = "application/json",
         method = RequestMethod.GET)
-    com.netflix.hystrix.HystrixCommand<ResponseEntity<List<Pet>>> findPetsByStatus( @NotNull @ApiParam(value = "Status values that need to be considered for filter", required = true, allowableValues = "available, pending, sold") @RequestParam(value = "status", required = true) List<String> status);
+    com.netflix.hystrix.HystrixCommand<ResponseEntity<List<Pet>>> findPetsByStatus( @NotNull@ApiParam(value = "Status values that need to be considered for filter", required = true, allowableValues = "available, pending, sold") @RequestParam(value = "status", required = true) List<String> status);
 
 
     @ApiOperation(value = "Finds Pets by tags", notes = "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.", response = Pet.class, responseContainer = "List", authorizations = {
@@ -78,14 +78,14 @@ public interface PetApi {
             })
     }, tags={ "pet", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Pet.class),
-        @ApiResponse(code = 400, message = "Invalid tag value", response = Pet.class) })
+        @ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
+        @ApiResponse(code = 400, message = "Invalid tag value", response = Void.class) })
     
     @RequestMapping(value = "/pet/findByTags",
         produces = "application/json",
         consumes = "application/json",
         method = RequestMethod.GET)
-    com.netflix.hystrix.HystrixCommand<ResponseEntity<List<Pet>>> findPetsByTags( @NotNull @ApiParam(value = "Tags to filter by", required = true) @RequestParam(value = "tags", required = true) List<String> tags);
+    com.netflix.hystrix.HystrixCommand<ResponseEntity<List<Pet>>> findPetsByTags( @NotNull@ApiParam(value = "Tags to filter by", required = true) @RequestParam(value = "tags", required = true) List<String> tags);
 
 
     @ApiOperation(value = "Find pet by ID", notes = "Returns a single pet", response = Pet.class, authorizations = {
@@ -93,8 +93,8 @@ public interface PetApi {
     }, tags={ "pet", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Pet.class),
-        @ApiResponse(code = 400, message = "Invalid ID supplied", response = Pet.class),
-        @ApiResponse(code = 404, message = "Pet not found", response = Pet.class) })
+        @ApiResponse(code = 400, message = "Invalid ID supplied", response = Void.class),
+        @ApiResponse(code = 404, message = "Pet not found", response = Void.class) })
     
     @RequestMapping(value = "/pet/{petId}",
         produces = "application/json",

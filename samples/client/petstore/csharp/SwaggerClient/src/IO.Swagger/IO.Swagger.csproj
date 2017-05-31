@@ -62,7 +62,8 @@ Contact: apiteam@swagger.io
     
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="**\*.cs"/>
+    <Compile Include="**\*.cs"
+             Exclude="obj\**" />
   </ItemGroup>
   <ItemGroup>
       <None Include="packages.config" />

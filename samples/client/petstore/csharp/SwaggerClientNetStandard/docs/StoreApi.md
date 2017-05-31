@@ -1,12 +1,12 @@
 # IO.Swagger.Api.StoreApi
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**DeleteOrder**](StoreApi.md#deleteorder) | **DELETE** /store/order/{orderId} | Delete purchase order by ID
+[**DeleteOrder**](StoreApi.md#deleteorder) | **DELETE** /store/order/{order_id} | Delete purchase order by ID
 [**GetInventory**](StoreApi.md#getinventory) | **GET** /store/inventory | Returns pet inventories by status
-[**GetOrderById**](StoreApi.md#getorderbyid) | **GET** /store/order/{orderId} | Find purchase order by ID
+[**GetOrderById**](StoreApi.md#getorderbyid) | **GET** /store/order/{order_id} | Find purchase order by ID
 [**PlaceOrder**](StoreApi.md#placeorder) | **POST** /store/order | Place an order for a pet
 
 
@@ -32,7 +32,6 @@ namespace Example
     {
         public void main()
         {
-            
             var apiInstance = new StoreApi();
             var orderId = orderId_example;  // string | ID of the order that needs to be deleted
 
@@ -93,7 +92,6 @@ namespace Example
     {
         public void main()
         {
-            
             // Configure API key authorization: api_key
             Configuration.Default.ApiKey.Add("api_key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -156,7 +154,6 @@ namespace Example
     {
         public void main()
         {
-            
             var apiInstance = new StoreApi();
             var orderId = 789;  // long? | ID of pet that needs to be fetched
 
@@ -218,7 +215,6 @@ namespace Example
     {
         public void main()
         {
-            
             var apiInstance = new StoreApi();
             var body = new Order(); // Order | order placed for purchasing the pet
 

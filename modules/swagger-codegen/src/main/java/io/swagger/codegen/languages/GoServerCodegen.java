@@ -68,7 +68,8 @@ public class GoServerCodegen extends DefaultCodegen implements CodegenConfig {
                 "case", "defer", "go", "map", "struct",
                 "chan", "else", "goto", "package", "switch",
                 "const", "fallthrough", "if", "range", "type",
-                "continue", "for", "import", "return", "var", "error", "ApiResponse")
+                "continue", "for", "import", "return", "var", "error", "ApiResponse",
+                "nil")
                 // Added "error" as it's used so frequently that it may as well be a keyword
         );
 
@@ -117,6 +118,7 @@ public class GoServerCodegen extends DefaultCodegen implements CodegenConfig {
         // the correct solution is to use []byte
         typeMapping.put("binary", "string");
         typeMapping.put("ByteArray", "string");
+        typeMapping.put("UUID", "string");
 
         importMapping = new HashMap<String, String>();
         importMapping.put("time.Time", "time");

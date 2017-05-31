@@ -70,7 +70,7 @@ class Decoders {
     static func decode<T>(clazz: T.Type, source: AnyObject, instance: AnyObject?) -> T {
         initialize()
         if T.self is Int32.Type && source is NSNumber {
-            return source.int32Value as! T;
+            return (source as! NSNumber).int32Value as! T;
         }
         if T.self is Int64.Type && source is NSNumber {
             return source.int64Value as! T;
@@ -179,11 +179,14 @@ class Decoders {
             let sourceDictionary = source as! [AnyHashable: Any]
             {{#discriminator}}
             // Check discriminator to support inheritance
-            if let discriminator = sourceDictionary["{{discriminator}}"] as? String, discriminator != "{{classname}}"{
+            if let discriminator = sourceDictionary["{{discriminator}}"] as? String, instance == nil && discriminator != "{{classname}}" {
                 return Decoders.decode(clazz: {{classname}}.self, discriminator: discriminator, source: source)
             }
             {{/discriminator}}
-
+            {{#additionalPropertiesType}}
+            var propsDictionary = sourceDictionary
+            let keys : [AnyHashable] = [{{#allVars}}{{^-last}}"{{baseName}}", {{/-last}}{{#-last}}"{{baseName}}"{{/-last}}{{/allVars}}]
+            {{/additionalPropertiesType}}
             {{#unwrapRequired}}
             let result = {{classname}}({{#requiredVars}}{{^-first}}, {{/-first}}{{#isEnum}}{{name}}: {{classname}}.{{datatypeWithEnum}}(rawValue: (sourceDictionary["{{baseName}}"] as! {{datatype}}))! {{/isEnum}}{{^isEnum}}{{name}}: Decoders.decode(clazz: {{{baseType}}}.self, source: sourceDictionary["{{baseName}}"]! as AnyObject, instance: nil){{/isEnum}}{{/requiredVars}})
             {{#optionalVars}}{{#isEnum}}
@@ -197,7 +200,9 @@ class Decoders {
             {{^unwrapRequired}}
             let result = instance == nil ? {{classname}}() : instance as! {{classname}}
             {{#parent}}
-            _ = Decoders.decode(clazz: {{parent}}.self, source: source, instance: result)
+            if decoders["\({{parent}}.self)"] != nil {
+              _ = Decoders.decode(clazz: {{parent}}.self, source: source, instance: result)
+            }
             {{/parent}}
             {{#allVars}}{{#isEnum}}
             if let {{name}} = sourceDictionary["{{baseName}}"] as? {{datatype}} { {{^isContainer}}
@@ -206,6 +211,18 @@ class Decoders {
             }{{/isEnum}}
             {{^isEnum}}result.{{name}} = Decoders.decodeOptional(clazz: {{{baseType}}}.self, source: sourceDictionary["{{baseName}}"] as AnyObject?){{/isEnum}}{{/allVars}}
             {{/unwrapRequired}}
+            {{#additionalPropertiesType}}
+
+            for key in keys {
+                propsDictionary.removeValue(forKey: key)
+            }
+
+            for key in propsDictionary.keys {
+                if let decodedValue = Decoders.decodeOptional(clazz: String.self, source: propsDictionary[key] as AnyObject?) {
+                    result[key] = decodedValue
+                }
+            }
+            {{/additionalPropertiesType}}
             return result
 {{/allVars.isEmpty}}
 {{/isEnum}}

@@ -63,6 +63,10 @@ public class Pet implements Parcelable {
       this.value = value;
     }
 
+    public String getValue() {
+      return value;
+    }
+
     @Override
     public String toString() {
       return String.valueOf(value);
@@ -265,7 +269,7 @@ public class Pet implements Parcelable {
   Pet(Parcel in) {
     
     id = (Long)in.readValue(null);
-    category = (Category)in.readValue(null);
+    category = (Category)in.readValue(Category.class.getClassLoader());
     name = (String)in.readValue(null);
     photoUrls = (List<String>)in.readValue(null);
     tags = (List<Tag>)in.readValue(Tag.class.getClassLoader());

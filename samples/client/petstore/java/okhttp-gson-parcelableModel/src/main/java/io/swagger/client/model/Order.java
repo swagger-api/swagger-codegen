@@ -57,6 +57,10 @@ public class Order implements Parcelable {
       this.value = value;
     }
 
+    public String getValue() {
+      return value;
+    }
+
     @Override
     public String toString() {
       return String.valueOf(value);
@@ -251,7 +255,7 @@ public class Order implements Parcelable {
     id = (Long)in.readValue(null);
     petId = (Long)in.readValue(null);
     quantity = (Integer)in.readValue(null);
-    shipDate = (DateTime)in.readValue(null);
+    shipDate = (DateTime)in.readValue(DateTime.class.getClassLoader());
     status = (StatusEnum)in.readValue(null);
     complete = (Boolean)in.readValue(null);
   }

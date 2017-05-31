@@ -67,13 +67,13 @@ public interface PetApi {
             })
     }, tags={ "pet", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Pet.class),
-        @ApiResponse(code = 400, message = "Invalid status value", response = Pet.class) })
+        @ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
+        @ApiResponse(code = 400, message = "Invalid status value", response = Void.class) })
     
     @RequestMapping(value = "/pet/findByStatus",
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.GET)
-    default ResponseEntity<List<Pet>> findPetsByStatus( @NotNull @ApiParam(value = "Status values that need to be considered for filter", required = true, allowableValues = "available, pending, sold") @RequestParam(value = "status", required = true) List<String> status) {
+    default ResponseEntity<List<Pet>> findPetsByStatus( @NotNull@ApiParam(value = "Status values that need to be considered for filter", required = true, allowableValues = "available, pending, sold") @RequestParam(value = "status", required = true) List<String> status) {
         // do some magic!
         return new ResponseEntity<List<Pet>>(HttpStatus.OK);
     }
@@ -86,13 +86,13 @@ public interface PetApi {
             })
     }, tags={ "pet", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Pet.class),
-        @ApiResponse(code = 400, message = "Invalid tag value", response = Pet.class) })
+        @ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
+        @ApiResponse(code = 400, message = "Invalid tag value", response = Void.class) })
     
     @RequestMapping(value = "/pet/findByTags",
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.GET)
-    default ResponseEntity<List<Pet>> findPetsByTags( @NotNull @ApiParam(value = "Tags to filter by", required = true) @RequestParam(value = "tags", required = true) List<String> tags) {
+    default ResponseEntity<List<Pet>> findPetsByTags( @NotNull@ApiParam(value = "Tags to filter by", required = true) @RequestParam(value = "tags", required = true) List<String> tags) {
         // do some magic!
         return new ResponseEntity<List<Pet>>(HttpStatus.OK);
     }
@@ -103,8 +103,8 @@ public interface PetApi {
     }, tags={ "pet", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Pet.class),
-        @ApiResponse(code = 400, message = "Invalid ID supplied", response = Pet.class),
-        @ApiResponse(code = 404, message = "Pet not found", response = Pet.class) })
+        @ApiResponse(code = 400, message = "Invalid ID supplied", response = Void.class),
+        @ApiResponse(code = 404, message = "Pet not found", response = Void.class) })
     
     @RequestMapping(value = "/pet/{petId}",
         produces = { "application/xml", "application/json" }, 

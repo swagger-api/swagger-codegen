@@ -1,5 +1,7 @@
 package io.swagger.codegen.languages;
 
+import com.samskivert.mustache.Mustache;
+import com.samskivert.mustache.Template;
 import io.swagger.codegen.*;
 import io.swagger.codegen.languages.features.BeanValidationFeatures;
 import io.swagger.models.Operation;
@@ -7,7 +9,11 @@ import io.swagger.models.Path;
 import io.swagger.models.Swagger;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.*;
+import java.util.regex.Matcher;
+
 
 public class SpringCodegen extends AbstractJavaCodegen implements BeanValidationFeatures {
     public static final String DEFAULT_LIBRARY = "spring-boot";
@@ -200,8 +206,8 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
                 if (!additionalProperties.containsKey(SINGLE_CONTENT_TYPES)) {
                     additionalProperties.put(SINGLE_CONTENT_TYPES, "true");
                     this.setSingleContentTypes(true);
-
                 }
+                additionalProperties.put("useSpringCloudClient", true);
 
             } else {
                 apiTemplateFiles.put("apiController.mustache", "Controller.java");
@@ -268,6 +274,19 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
                 break;
         }
 
+        // add lambda for mustache templates
+        additionalProperties.put("lambdaEscapeDoubleQuote", new Mustache.Lambda() {
+            @Override
+            public void execute(Template.Fragment fragment, Writer writer) throws IOException {
+                writer.write(fragment.execute().replaceAll("\"", Matcher.quoteReplacement("\\\"")));
+            }
+        });
+        additionalProperties.put("lambdaRemoveLineBreak", new Mustache.Lambda() {
+            @Override
+            public void execute(Template.Fragment fragment, Writer writer) throws IOException {
+                writer.write(fragment.execute().replaceAll("\\r|\\n", ""));
+            }
+        });
     }
 
     @Override
@@ -365,40 +384,39 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
         Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
         if (operations != null) {
             List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
-            for (CodegenOperation operation : ops) {
+            for (final CodegenOperation operation : ops) {
                 List<CodegenResponse> responses = operation.responses;
                 if (responses != null) {
-                    for (CodegenResponse resp : responses) {
+                    for (final CodegenResponse resp : responses) {
                         if ("0".equals(resp.code)) {
                             resp.code = "200";
                         }
+                        doDataTypeAssignment(resp.dataType, new DataTypeAssigner() {
+                            @Override
+                            public void setReturnType(final String returnType) {
+                                resp.dataType = returnType;
+                            }
+
+                            @Override
+                            public void setReturnContainer(final String returnContainer) {
+                                resp.containerType = returnContainer;
+                            }
+                        });
                     }
                 }
 
-                if (operation.returnType == null) {
-                    operation.returnType = "Void";
-                } else if (operation.returnType.startsWith("List")) {
-                    String rt = operation.returnType;
-                    int end = rt.lastIndexOf(">");
-                    if (end > 0) {
-                        operation.returnType = rt.substring("List<".length(), end).trim();
-                        operation.returnContainer = "List";
+                doDataTypeAssignment(operation.returnType, new DataTypeAssigner() {
+
+                    @Override
+                    public void setReturnType(final String returnType) {
+                        operation.returnType = returnType;
                     }
-                } else if (operation.returnType.startsWith("Map")) {
-                    String rt = operation.returnType;
-                    int end = rt.lastIndexOf(">");
-                    if (end > 0) {
-                        operation.returnType = rt.substring("Map<".length(), end).split(",")[1].trim();
-                        operation.returnContainer = "Map";
+
+                    @Override
+                    public void setReturnContainer(final String returnContainer) {
+                        operation.returnContainer = returnContainer;
                     }
-                } else if (operation.returnType.startsWith("Set")) {
-                    String rt = operation.returnType;
-                    int end = rt.lastIndexOf(">");
-                    if (end > 0) {
-                        operation.returnType = rt.substring("Set<".length(), end).trim();
-                        operation.returnContainer = "Set";
-                    }
-                }
+                });
 
                 if(implicitHeaders){
                     removeHeadersFromAllParams(operation.allParams);
@@ -407,6 +425,41 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
         }
 
         return objs;
+    }
+
+    private interface DataTypeAssigner {
+        void setReturnType(String returnType);
+        void setReturnContainer(String returnContainer);
+    }
+
+    /**
+     *
+     * @param returnType The return type that needs to be converted
+     * @param dataTypeAssigner An object that will assign the data to the respective fields in the model.
+     */
+    private void doDataTypeAssignment(String returnType, DataTypeAssigner dataTypeAssigner) {
+        final String rt = returnType;
+        if (rt == null) {
+            dataTypeAssigner.setReturnType("Void");
+        } else if (rt.startsWith("List")) {
+            int end = rt.lastIndexOf(">");
+            if (end > 0) {
+                dataTypeAssigner.setReturnType(rt.substring("List<".length(), end).trim());
+                dataTypeAssigner.setReturnContainer("List");
+            }
+        } else if (rt.startsWith("Map")) {
+            int end = rt.lastIndexOf(">");
+            if (end > 0) {
+                dataTypeAssigner.setReturnType(rt.substring("Map<".length(), end).split(",")[1].trim());
+                dataTypeAssigner.setReturnContainer("Map");
+            }
+        } else if (rt.startsWith("Set")) {
+            int end = rt.lastIndexOf(">");
+            if (end > 0) {
+                dataTypeAssigner.setReturnType(rt.substring("Set<".length(), end).trim());
+                dataTypeAssigner.setReturnContainer("Set");
+            }
+        }
     }
 
     /**

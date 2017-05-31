@@ -16,11 +16,13 @@ package io.swagger.client.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * EnumArrays
@@ -41,7 +43,12 @@ public class EnumArrays {
       this.value = value;
     }
 
+    public String getValue() {
+      return value;
+    }
+
     @Override
+    @JsonValue
     public String toString() {
       return String.valueOf(value);
     }
@@ -74,7 +81,12 @@ public class EnumArrays {
       this.value = value;
     }
 
+    public String getValue() {
+      return value;
+    }
+
     @Override
+    @JsonValue
     public String toString() {
       return String.valueOf(value);
     }

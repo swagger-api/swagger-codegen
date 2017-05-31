@@ -55,8 +55,8 @@ public class UserApiController implements UserApi {
         return delegate.getUserByName(username);
     }
 
-    public ResponseEntity<String> loginUser( @NotNull @ApiParam(value = "The user name for login", required = true) @RequestParam(value = "username", required = true) String username,
-         @NotNull @ApiParam(value = "The password for login in clear text", required = true) @RequestParam(value = "password", required = true) String password) {
+    public ResponseEntity<String> loginUser( @NotNull@ApiParam(value = "The user name for login", required = true) @RequestParam(value = "username", required = true) String username,
+         @NotNull@ApiParam(value = "The password for login in clear text", required = true) @RequestParam(value = "password", required = true) String password) {
         // do some magic!
         return delegate.loginUser(username, password);
     }
