@@ -212,7 +212,8 @@ namespace {{packageName}}.Client
                 pathParams, contentType);
 
             // set timeout
-            RestClient.Timeout = Configuration.Timeout;
+            {{#netStandard}}RestClient.Timeout = TimeSpan.FromMilliseconds(Configuration.Timeout);{{/netStandard}}
+            {{^netStandard}}RestClient.Timeout = Configuration.Timeout;{{/netStandard}}
             // set user agent
             RestClient.UserAgent = Configuration.UserAgent;
 

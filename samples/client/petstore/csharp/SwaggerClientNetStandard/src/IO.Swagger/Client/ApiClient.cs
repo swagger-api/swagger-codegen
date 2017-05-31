@@ -181,7 +181,8 @@ namespace IO.Swagger.Client
                 pathParams, contentType);
 
             // set timeout
-            RestClient.Timeout = Configuration.Timeout;
+            RestClient.Timeout = TimeSpan.FromMilliseconds(Configuration.Timeout);
+            
             // set user agent
             RestClient.UserAgent = Configuration.UserAgent;
 

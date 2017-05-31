@@ -248,7 +248,7 @@ namespace IO.Swagger.Client
         /// </summary>
         public virtual int Timeout
         {
-
+            
             get { return ApiClient.RestClient.Timeout; }
             set { ApiClient.RestClient.Timeout = value; }
         }
