@@ -107,6 +107,10 @@ void {{classname}}{{operationIdCamelCase}}Resource::{{httpMethod}}_method_handle
 			
 			{{#responses}}
 			if (status_code == {{code}}) {
+				{{#headers}}
+				// Description: {{description}}
+				session->set_header("{{baseName}}", ""); // Change second param to your header value
+				{{/headers}}
 				session->close({{code}}, "{{message}}", { {"Connection", "close"} });
 				return;
 			}
@@ -168,6 +172,13 @@ void {{classname}}{{operationIdCamelCase}}Resource::{{httpMethod}}_method_handle
 			
 			{{#responses}}
 			if (status_code == {{code}}) {
+				{{#baseType}}
+				std::shared_ptr<{{.}}> response = NULL;
+				{{/baseType}}
+				{{#headers}}
+				// Description: {{description}}
+				session->set_header("{{baseName}}", ""); // Change second param to your header value
+				{{/headers}}
 				session->close({{code}}, "{{message}}", { {"Connection", "close"} });
 				return;
 			}

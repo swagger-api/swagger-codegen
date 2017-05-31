@@ -26,10 +26,13 @@ class {{declspec}} {{classname}}
 public:
     {{classname}}();
     virtual ~{{classname}}();
+    
+    std::string toJsonString();
+    void fromJsonString(std::string const& jsonString);
 
     /////////////////////////////////////////////
     /// {{classname}} members
-
+    
     {{#vars}}
     /// <summary>
     /// {{description}}

@@ -133,7 +133,6 @@ public class RestbedCodegen extends DefaultCodegen implements CodegenConfig {
       importMapping.put("std::vector", "#include <vector>");
       importMapping.put("std::map", "#include <map>");
       importMapping.put("std::string", "#include <string>");
-      //importMapping.put("HttpContent", "#include \"HttpContent.h\"");
       importMapping.put("Object", "#include \"Object.h\"");
       importMapping.put("restbed::Bytes", "#include <corvusoft/restbed/byte.hpp>");
   }
@@ -219,29 +218,6 @@ public class RestbedCodegen extends DefaultCodegen implements CodegenConfig {
       return codegenModel;
   }
 
-  @Override
-  public CodegenOperation fromOperation(String path, String httpMethod, Operation operation,
-          Map<String, Model> definitions, Swagger swagger) {
-      CodegenOperation op = super.fromOperation(path, httpMethod, operation, definitions, swagger);
-
-      if (operation.getResponses() != null && !operation.getResponses().isEmpty()) {
-          Response methodResponse = findMethodResponse(operation.getResponses());
-
-          if (methodResponse != null) {
-              if (methodResponse.getSchema() != null) {
-                  CodegenProperty cm = fromProperty("response", methodResponse.getSchema());
-                  op.vendorExtensions.put("x-codegen-response", cm);
-                  if(cm.datatype == "HttpContent")
-                  {
-                      op.vendorExtensions.put("x-codegen-response-ishttpcontent", true);
-                  }
-              }
-          }
-      }
-
-      return op;
-  }
-
 
   @Override
   public String toModelFilename(String name) {
@@ -293,10 +269,6 @@ public class RestbedCodegen extends DefaultCodegen implements CodegenConfig {
     }
     operations.put("operation", newOpList);
     return objs;
-  }
-  
-  private boolean checkForPath(CodegenOperation op) {
-    return true;
   }
 
   /**

@@ -45,12 +45,8 @@ class {{declspec}} {{classname}}{{operationIdCamelCase}}Resource: public restbed
 public:
 	{{classname}}{{operationIdCamelCase}}Resource();
     virtual ~{{classname}}{{operationIdCamelCase}}Resource();
-    {{#allParams}}/// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}</param>
-    {{/allParams}}
     void {{httpMethod}}_method_handler(const std::shared_ptr<restbed::Session> session);
     {{#vendorExtensions.x-codegen-otherMethods}}
-    {{#allParams}}/// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}</param>
-    {{/allParams}}
     void {{httpMethod}}_method_handler(const std::shared_ptr<restbed::Session> session);
     {{/vendorExtensions.x-codegen-otherMethods}}
 };
