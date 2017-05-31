@@ -44,6 +44,7 @@ before_install:
   - pod repo update
   - pod setup --silent > /dev/null
   - npm install -g typescript
+  - npm config set registry http://registry.npmjs.org/
   - brew install leiningen
   - brew install bats
   - brew install curl
