@@ -120,6 +120,10 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         // Additional properties added for tests to exclude references in project related files
         config.additionalProperties().put(CodegenConstants.GENERATE_API_TESTS, generateApiTests);
         config.additionalProperties().put(CodegenConstants.GENERATE_MODEL_TESTS, generateModelTests);
+
+        config.additionalProperties().put(CodegenConstants.GENERATE_API_DOCS, generateApiDocumentation);
+        config.additionalProperties().put(CodegenConstants.GENERATE_MODEL_DOCS, generateModelDocumentation);
+
         if(!generateApiTests && !generateModelTests) {
             config.additionalProperties().put(CodegenConstants.EXCLUDE_TESTS, true);
         }
@@ -288,6 +292,14 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             private Model getParent(Model model) {
                 if (model instanceof ComposedModel) {
                     Model parent = ((ComposedModel) model).getParent();
+                    if (parent == null) {
+                        // check for interfaces
+                        List<RefModel> interfaces = ((ComposedModel) model).getInterfaces();
+                        if (interfaces.size() > 0) {
+                            RefModel interf = interfaces.get(0);
+                            return definitions.get(interf.getSimpleRef());
+                        }
+                    }
                     if(parent != null) {
                         return definitions.get(parent.getReference());
                     }

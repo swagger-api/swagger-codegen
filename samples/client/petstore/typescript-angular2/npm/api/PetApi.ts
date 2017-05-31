@@ -10,6 +10,8 @@
  * Do not edit the class manually.
  */
 
+/* tslint:disable:no-unused-variable member-ordering */
+
 import { Inject, Injectable, Optional }                      from '@angular/core';
 import { Http, Headers, URLSearchParams }                    from '@angular/http';
 import { RequestMethod, RequestOptions, RequestOptionsArgs } from '@angular/http';
@@ -22,11 +24,10 @@ import * as models                                           from '../model/mode
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
-/* tslint:disable:no-unused-variable member-ordering */
-
 
 @Injectable()
 export class PetApi {
+
     protected basePath = 'http://petstore.swagger.io/v2';
     public defaultHeaders: Headers = new Headers();
     public configuration: Configuration = new Configuration();
@@ -242,7 +243,9 @@ export class PetApi {
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling deletePet.');
         }
-        headers.set('api_key', String(apiKey));
+        if (apiKey !== undefined && apiKey !== null) {
+            headers.set('api_key', String(apiKey));
+        }
 
         // to determine the Content-Type header
         let consumes: string[] = [
