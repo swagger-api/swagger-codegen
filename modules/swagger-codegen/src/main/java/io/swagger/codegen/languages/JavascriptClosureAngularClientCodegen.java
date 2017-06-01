@@ -73,7 +73,7 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
         cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "hides the timestamp when files were generated")
                 .defaultValue(Boolean.TRUE.toString()));
         cliOptions.add(new CliOption(USE_ES6,
-                "use plain ES6 templates instead - drops Google Closure Compiler annotations")
+                "use ES6 templates")
                 .defaultValue(Boolean.FALSE.toString()));
     }
 
