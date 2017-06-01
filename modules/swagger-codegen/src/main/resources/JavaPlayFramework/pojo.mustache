@@ -39,8 +39,8 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {{#seriali
 
   public {{classname}} add{{nameInCamelCase}}Item({{{items.datatypeWithEnum}}} {{name}}Item) {
     {{^required}}
-    if (this.{{name}} == null) {
-      this.{{name}} = {{{defaultValue}}};
+    if ({{name}} == null) {
+      {{name}} = {{{defaultValue}}};
     }
     {{/required}}
     {{name}}.add({{name}}Item);
