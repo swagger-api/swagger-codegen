@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.*;
  * A User who is purchasing from the pet store
  */
 
+@SuppressWarnings("UnusedReturnValue")
 public class User   {
   @JsonProperty("id")
   private Long id = null;
@@ -193,6 +194,7 @@ public class User   {
     return Objects.hash(id, username, firstName, lastName, email, password, phone, userStatus);
   }
 
+  @SuppressWarnings("StringBufferReplaceableByString")
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();

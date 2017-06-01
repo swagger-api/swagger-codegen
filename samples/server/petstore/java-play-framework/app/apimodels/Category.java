@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.*;
  * A category for a pet
  */
 
+@SuppressWarnings("UnusedReturnValue")
 public class Category   {
   @JsonProperty("id")
   private Long id = null;
@@ -67,6 +68,7 @@ public class Category   {
     return Objects.hash(id, name);
   }
 
+  @SuppressWarnings("StringBufferReplaceableByString")
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();

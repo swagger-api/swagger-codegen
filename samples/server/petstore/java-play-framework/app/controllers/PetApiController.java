@@ -50,7 +50,7 @@ public class PetApiController extends Controller {
         String valueapiKey = request().getHeader("api_key");
         String apiKey;
         if (valueapiKey != null) {
-            apiKey = (String)valueapiKey;
+            apiKey = valueapiKey;
         
         } else {
             apiKey = "";
@@ -113,7 +113,7 @@ public class PetApiController extends Controller {
         String valuename = ((String[]) request().body().asMultipartFormData().asFormUrlEncoded().get("name"))[0];
         String name;
         if (valuename != null) {
-            name = (String)valuename;
+            name = valuename;
         
         } else {
             name = "";
@@ -121,7 +121,7 @@ public class PetApiController extends Controller {
         String valuestatus = ((String[]) request().body().asMultipartFormData().asFormUrlEncoded().get("status"))[0];
         String status;
         if (valuestatus != null) {
-            status = (String)valuestatus;
+            status = valuestatus;
         
         } else {
             status = "";
@@ -136,7 +136,7 @@ public class PetApiController extends Controller {
         String valueadditionalMetadata = ((String[]) request().body().asMultipartFormData().asFormUrlEncoded().get("additionalMetadata"))[0];
         String additionalMetadata;
         if (valueadditionalMetadata != null) {
-            additionalMetadata = (String)valueadditionalMetadata;
+            additionalMetadata = valueadditionalMetadata;
         
         } else {
             additionalMetadata = "";

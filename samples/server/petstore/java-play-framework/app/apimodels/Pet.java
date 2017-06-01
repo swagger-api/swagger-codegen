@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.*;
  * A pet for sale in the pet store
  */
 
+@SuppressWarnings("UnusedReturnValue")
 public class Pet   {
   @JsonProperty("id")
   private Long id = null;
@@ -37,7 +38,7 @@ public class Pet   {
     
     SOLD("sold");
 
-    private String value;
+    private final String value;
 
     StatusEnum(String value) {
       this.value = value;
@@ -144,8 +145,8 @@ public class Pet   {
   }
 
   public Pet addTagsItem(Tag tagsItem) {
-    if (this.tags == null) {
-      this.tags = new ArrayList<>();
+    if (tags == null) {
+      tags = new ArrayList<>();
     }
     tags.add(tagsItem);
     return this;
@@ -203,6 +204,7 @@ public class Pet   {
     return Objects.hash(id, category, name, photoUrls, tags, status);
   }
 
+  @SuppressWarnings("StringBufferReplaceableByString")
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();

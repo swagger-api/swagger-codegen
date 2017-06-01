@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.*;
  * Describes the result of uploading an image resource
  */
 
+@SuppressWarnings("UnusedReturnValue")
 public class ModelApiResponse   {
   @JsonProperty("code")
   private Integer code = null;
@@ -88,6 +89,7 @@ public class ModelApiResponse   {
     return Objects.hash(code, type, message);
   }
 
+  @SuppressWarnings("StringBufferReplaceableByString")
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();

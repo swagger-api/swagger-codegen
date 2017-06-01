@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.*;
  * An order for a pets from the pet store
  */
 
+@SuppressWarnings("UnusedReturnValue")
 public class Order   {
   @JsonProperty("id")
   private Long id = null;
@@ -31,7 +32,7 @@ public class Order   {
     
     DELIVERED("delivered");
 
-    private String value;
+    private final String value;
 
     StatusEnum(String value) {
       this.value = value;
@@ -185,6 +186,7 @@ public class Order   {
     return Objects.hash(id, petId, quantity, shipDate, status, complete);
   }
 
+  @SuppressWarnings("StringBufferReplaceableByString")
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
