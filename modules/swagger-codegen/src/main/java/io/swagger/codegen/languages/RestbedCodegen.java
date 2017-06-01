@@ -240,14 +240,15 @@ public class RestbedCodegen extends DefaultCodegen implements CodegenConfig {
 
       String[] items = path.split("/", -1);
       List<String> splitPath = new ArrayList<String>();
+      op.path = "";
       for (String item: items) {
         if (item.matches("^\\{(.*)\\}$")) {
           item = item.substring(0, item.length()-1);
           item += ": .*}";
         }
         splitPath.add(item);
+        op.path += item + "/";
       }
-      op.path = String.join("/", splitPath);
       boolean foundInNewList = false;
       for (CodegenOperation op1 : newOpList) {
         if (!foundInNewList) {
