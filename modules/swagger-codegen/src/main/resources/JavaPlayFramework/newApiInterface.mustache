@@ -13,7 +13,8 @@ import javax.validation.constraints.*;
 {{/useBeanValidation}}
 
 {{#operations}}
-public interface {{classname}}ControllerImpInterface {
+@SuppressWarnings("RedundantThrows")
+interface {{classname}}ControllerImpInterface {
 {{#operation}}
     {{>returnTypes}} {{operationId}}({{#allParams}}{{>pathParams}}{{>queryParams}}{{>bodyParams}}{{>formParams}}{{>headerParams}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {{#handleExceptions}}throws Exception{{/handleExceptions}};
 

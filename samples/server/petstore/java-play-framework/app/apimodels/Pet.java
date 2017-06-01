@@ -22,7 +22,7 @@ public class Pet   {
   private String name = null;
 
   @JsonProperty("photoUrls")
-  private List<String> photoUrls = new ArrayList<String>();
+  private List<String> photoUrls = new ArrayList<>();
 
   @JsonProperty("tags")
   private List<Tag> tags = null;
@@ -121,7 +121,7 @@ public class Pet   {
   }
 
   public Pet addPhotoUrlsItem(String photoUrlsItem) {
-    this.photoUrls.add(photoUrlsItem);
+    photoUrls.add(photoUrlsItem);
     return this;
   }
 
@@ -145,9 +145,9 @@ public class Pet   {
 
   public Pet addTagsItem(Tag tagsItem) {
     if (this.tags == null) {
-      this.tags = new ArrayList<Tag>();
+      this.tags = new ArrayList<>();
     }
-    this.tags.add(tagsItem);
+    tags.add(tagsItem);
     return this;
   }
 
@@ -190,12 +190,12 @@ public class Pet   {
       return false;
     }
     Pet pet = (Pet) o;
-    return Objects.equals(this.id, pet.id) &&
-        Objects.equals(this.category, pet.category) &&
-        Objects.equals(this.name, pet.name) &&
-        Objects.equals(this.photoUrls, pet.photoUrls) &&
-        Objects.equals(this.tags, pet.tags) &&
-        Objects.equals(this.status, pet.status);
+    return Objects.equals(id, pet.id) &&
+        Objects.equals(category, pet.category) &&
+        Objects.equals(name, pet.name) &&
+        Objects.equals(photoUrls, pet.photoUrls) &&
+        Objects.equals(tags, pet.tags) &&
+        Objects.equals(status, pet.status);
   }
 
   @Override

@@ -26,7 +26,7 @@ public class SwaggerUtils {
         // preconditions
         if (name == null || name.isEmpty() || value == null) return params;
 
-        Collection valueCollection = null;
+        Collection valueCollection;
         if (value instanceof Collection) {
             valueCollection = (Collection) value;
         } else {
@@ -52,14 +52,23 @@ public class SwaggerUtils {
 
         String delimiter = ",";
 
-        if (collectionFormat.equals("csv")) {
-            delimiter = ",";
-        } else if (collectionFormat.equals("ssv")) {
-            delimiter = " ";
-        } else if (collectionFormat.equals("tsv")) {
-            delimiter = "\t";
-        } else if (collectionFormat.equals("pipes")) {
-            delimiter = "|";
+        switch(collectionFormat) {
+            case "csv": {
+                delimiter = ",";
+                break;
+            }
+            case "ssv": {
+                delimiter = " ";
+                break;
+            }
+            case "tsv": {
+                delimiter = "\t";
+                break;
+            }
+            case "pipes": {
+                delimiter = "|";
+                break;
+            }
         }
 
         StringBuilder sb = new StringBuilder() ;

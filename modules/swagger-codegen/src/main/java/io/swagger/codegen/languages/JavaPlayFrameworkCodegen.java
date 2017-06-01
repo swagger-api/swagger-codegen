@@ -49,7 +49,7 @@ public class JavaPlayFrameworkCodegen extends AbstractJavaCodegen implements Bea
 
         additionalProperties.put(CONFIG_PACKAGE, configPackage);
         additionalProperties.put(BASE_PACKAGE, basePackage);
-
+        additionalProperties.put("java8", true);
         additionalProperties.put("jackson", "true");
 
         cliOptions.add(new CliOption(TITLE, "server title name or client service name"));
