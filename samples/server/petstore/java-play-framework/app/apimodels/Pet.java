@@ -1,17 +1,17 @@
 package apimodels;
 
-import java.util.Objects;
 import apimodels.Category;
 import apimodels.Tag;
 import java.util.ArrayList;
 import java.util.List;
-import javax.validation.constraints.*;
 import com.fasterxml.jackson.annotation.*;
+import java.util.Objects;
+import javax.validation.constraints.*;
 /**
  * A pet for sale in the pet store
  */
 
-@SuppressWarnings("UnusedReturnValue")
+@SuppressWarnings({"UnusedReturnValue", "WeakerAccess"})
 public class Pet   {
   @JsonProperty("id")
   private Long id = null;

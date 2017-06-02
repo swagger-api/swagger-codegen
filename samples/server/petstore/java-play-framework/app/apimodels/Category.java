@@ -1,13 +1,13 @@
 package apimodels;
 
+import com.fasterxml.jackson.annotation.*;
 import java.util.Objects;
 import javax.validation.constraints.*;
-import com.fasterxml.jackson.annotation.*;
 /**
  * A category for a pet
  */
 
-@SuppressWarnings("UnusedReturnValue")
+@SuppressWarnings({"UnusedReturnValue", "WeakerAccess"})
 public class Category   {
   @JsonProperty("id")
   private Long id = null;

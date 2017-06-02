@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
-import java.io.IOException;
 import swagger.SwaggerUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 

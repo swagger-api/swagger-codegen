@@ -1,13 +1,13 @@
 package apimodels;
 
+import com.fasterxml.jackson.annotation.*;
 import java.util.Objects;
 import javax.validation.constraints.*;
-import com.fasterxml.jackson.annotation.*;
 /**
  * Describes the result of uploading an image resource
  */
 
-@SuppressWarnings("UnusedReturnValue")
+@SuppressWarnings({"UnusedReturnValue", "WeakerAccess"})
 public class ModelApiResponse   {
   @JsonProperty("code")
   private Integer code = null;

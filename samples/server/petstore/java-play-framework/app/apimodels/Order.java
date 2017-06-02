@@ -1,14 +1,14 @@
 package apimodels;
 
-import java.util.Objects;
 import java.time.OffsetDateTime;
-import javax.validation.constraints.*;
 import com.fasterxml.jackson.annotation.*;
+import java.util.Objects;
+import javax.validation.constraints.*;
 /**
  * An order for a pets from the pet store
  */
 
-@SuppressWarnings("UnusedReturnValue")
+@SuppressWarnings({"UnusedReturnValue", "WeakerAccess"})
 public class Order   {
   @JsonProperty("id")
   private Long id = null;

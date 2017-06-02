@@ -1,13 +1,13 @@
 package apimodels;
 
+import com.fasterxml.jackson.annotation.*;
 import java.util.Objects;
 import javax.validation.constraints.*;
-import com.fasterxml.jackson.annotation.*;
 /**
  * A User who is purchasing from the pet store
  */
 
-@SuppressWarnings("UnusedReturnValue")
+@SuppressWarnings({"UnusedReturnValue", "WeakerAccess"})
 public class User   {
   @JsonProperty("id")
   private Long id = null;
