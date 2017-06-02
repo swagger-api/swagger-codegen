@@ -41,7 +41,7 @@ before_install:
   - gem install cocoapods -v 1.2.1 -N --no-ri --no-rdoc
   - gem install xcpretty -N --no-ri --no-rdoc
   - pod --version
-  - pod repo update
+    #- pod repo update
   - pod setup --silent > /dev/null
   - npm install -g typescript
   - npm config set registry http://registry.npmjs.org/
