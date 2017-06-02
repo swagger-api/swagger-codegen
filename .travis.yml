@@ -72,6 +72,8 @@ before_install:
   - brew --version
   # show xcpretty version
   - xcpretty -v
+  # show go version
+  - go version
 
 install:
   # Add Godeps dependencies to GOPATH and PATH
