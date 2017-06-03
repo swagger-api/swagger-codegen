@@ -792,7 +792,6 @@
             </activation>
             <modules>
                 <!-- clients -->
-                <module>samples/client/petstore/go</module>
                 <module>samples/client/petstore/ruby</module>
                 <module>samples/client/petstore/swift3/default/SwaggerClientTests</module>
                 <module>samples/client/petstore/swift3/promisekit/SwaggerClientTests</module>
