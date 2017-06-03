@@ -792,7 +792,8 @@
             </activation>
             <modules>
                 <!-- clients -->
-                <!-- only test java-related projects -->
+                <module>samples/client/petstore/go</module>
+                <!-- test java-related projects -->
                 <module>samples/client/petstore/clojure</module>
                 <module>samples/client/petstore/java/feign</module>
                 <module>samples/client/petstore/java/jersey1</module>
