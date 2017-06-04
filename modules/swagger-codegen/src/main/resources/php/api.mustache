@@ -241,7 +241,7 @@ use {{invokerPackage}}\ObjectSerializer;
             $response = $exception->getResponse();
             $statusCode = $response->getStatusCode();
             throw new ApiException(
-                "[$statusCode] Error connecting to the API (" . $exception->getRequest()->getUri() . ")",
+                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
                 $statusCode,
                 $response->getHeaders(),
                 $response->getBody()
