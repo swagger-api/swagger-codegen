@@ -108,6 +108,94 @@ class FakeApi
      */
     public function testCodeInjectEndRnNRWithHttpInfo($test_code_inject____end____rn_n_r = null)
     {
+        $returnType = '';
+        $request = $this->testCodeInjectEndRnNRRequest($test_code_inject____end____rn_n_r);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            return [null, $statusCode, $response->getHeaders()];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation testCodeInjectEndRnNRAsync
+     *
+     * To test code injection *_/ ' \" =end -- \\r\\n \\n \\r
+     *
+     * @param string $test_code_inject____end____rn_n_r To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r (optional)
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function testCodeInjectEndRnNRAsync($test_code_inject____end____rn_n_r = null)
+    {
+        return $this->testCodeInjectEndRnNRAsyncWithHttpInfo($test_code_inject____end____rn_n_r)->then(function ($response) {
+            return $response[0];
+        });
+    }
+
+    /**
+     * Operation testCodeInjectEndRnNRAsyncWithHttpInfo
+     *
+     * To test code injection *_/ ' \" =end -- \\r\\n \\n \\r
+     *
+     * @param string $test_code_inject____end____rn_n_r To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\Promise
+     */
+    public function testCodeInjectEndRnNRAsyncWithHttpInfo($test_code_inject____end____rn_n_r = null)
+    {
+        $returnType = '';
+        $request = $this->testCodeInjectEndRnNRRequest($test_code_inject____end____rn_n_r);
+
+        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
+            return [null, $response->getStatusCode(), $response->getHeaders()];
+        }, function ($exception) {
+            $response = $exception->getResponse();
+            $statusCode = $response->getStatusCode();
+            throw new ApiException(
+                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
+                $statusCode,
+                $response->getHeaders(),
+                $response->getBody()
+            );
+        });
+    }
+
+    /**
+     * Create request for operation 'testCodeInjectEndRnNR'
+     *
+     * @param string $test_code_inject____end____rn_n_r To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function testCodeInjectEndRnNRRequest($test_code_inject____end____rn_n_r = null)
+    {
 
         $resourcePath = '/fake';
         $formParams = [];
@@ -115,7 +203,6 @@ class FakeApi
         $headerParams = [];
         $httpBody = '';
         $multipart = false;
-        $returnType = '';
 
 
 
@@ -123,7 +210,7 @@ class FakeApi
         if ($test_code_inject____end____rn_n_r !== null) {
             $formParams['test code inject */ &#39; &quot; &#x3D;end -- \r\n \n \r'] = ObjectSerializer::toFormValue($test_code_inject____end____rn_n_r);
         }
-        
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
@@ -170,42 +257,12 @@ class FakeApi
             $headers
         );
 
-        $request = new Request(
+        return new Request(
             'PUT',
             $url,
             $headers,
             $httpBody
         );
-
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ($url)",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            return [null, $statusCode, $response->getHeaders()];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-            }
-            throw $e;
-        }
     }
+
 }
