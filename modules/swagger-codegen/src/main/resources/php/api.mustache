@@ -235,7 +235,7 @@ use {{invokerPackage}}\ObjectSerializer;
             ];
             {{/returnType}}
             {{^returnType}}
-            return [null, $statusCode, $response->getHeaders()];
+            return [null, $response->getStatusCode(), $response->getHeaders()];
             {{/returnType}}
         });
     }
