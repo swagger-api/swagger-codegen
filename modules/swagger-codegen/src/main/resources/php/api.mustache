@@ -356,6 +356,28 @@ use {{invokerPackage}}\ObjectSerializer;
     }
 
     /**
+     * Operation {{{operationId}}} Asynchronously
+     *
+     * {{{summary}}}
+     *
+{{#description}}
+     * {{.}}
+     *
+{{/description}}
+{{#allParams}}
+     * @param {{dataType}} ${{paramName}} {{description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+{{/allParams}}
+     * @throws \InvalidArgumentException
+     * @return {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}
+     */
+    public function {{operationId}}Async({{#allParams}}${{paramName}}{{^required}} = {{#defaultValue}}'{{{.}}}'{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+    {
+        return $this->{{operationId}}AsyncWithHttpInfo({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})->then(function ($response) {
+            return $response[0];
+        });
+    }
+
+    /**
      * Operation {{{operationId}}}WithHttpInfo Asynchronously
      *
      * {{{summary}}}
