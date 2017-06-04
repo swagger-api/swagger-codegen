@@ -245,6 +245,17 @@ class FakeApi
             $_tempBody = $body;
         }
 
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                []
+            );
+        }
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
@@ -260,20 +271,12 @@ class FakeApi
                 }
                 $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
 
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
             } else {
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
-            );
         }
 
 
@@ -463,6 +466,17 @@ class FakeApi
             $_tempBody = $body;
         }
 
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                []
+            );
+        }
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
@@ -478,20 +492,12 @@ class FakeApi
                 }
                 $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
 
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
             } else {
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
-            );
         }
 
 
@@ -681,6 +687,17 @@ class FakeApi
             $_tempBody = $body;
         }
 
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                []
+            );
+        }
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
@@ -696,20 +713,12 @@ class FakeApi
                 }
                 $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
 
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
             } else {
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
-            );
         }
 
 
@@ -899,6 +908,17 @@ class FakeApi
             $_tempBody = $body;
         }
 
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                []
+            );
+        }
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
@@ -914,20 +934,12 @@ class FakeApi
                 }
                 $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
 
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
             } else {
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                []
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                [],
-                []
-            );
         }
 
 
@@ -1121,6 +1133,17 @@ class FakeApi
             $_tempBody = $body;
         }
 
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
@@ -1136,20 +1159,12 @@ class FakeApi
                 }
                 $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
 
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
             } else {
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
         }
 
 
@@ -1485,6 +1500,17 @@ class FakeApi
             $formParams['callback'] = ObjectSerializer::toFormValue($callback);
         }
 
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                ['application/xml; charset=utf-8', 'application/json; charset=utf-8']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/xml; charset=utf-8', 'application/json; charset=utf-8'],
+                ['application/xml; charset=utf-8', 'application/json; charset=utf-8']
+            );
+        }
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
@@ -1500,20 +1526,12 @@ class FakeApi
                 }
                 $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
 
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
             } else {
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/xml; charset=utf-8', 'application/json; charset=utf-8']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/xml; charset=utf-8', 'application/json; charset=utf-8'],
-                ['application/xml; charset=utf-8', 'application/json; charset=utf-8']
-            );
         }
 
         // this endpoint requires HTTP basic authentication
@@ -1742,6 +1760,17 @@ class FakeApi
             $formParams['enum_query_double'] = ObjectSerializer::toFormValue($enum_query_double);
         }
 
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                ['*/*']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['*/*'],
+                ['*/*']
+            );
+        }
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
@@ -1757,20 +1786,156 @@ class FakeApi
                 }
                 $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
 
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
             } else {
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
         }
 
-        if ($httpBody instanceof MultipartStream) {
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $request = new Request(
+            'GET',
+            $url,
+            $headers,
+            $httpBody
+        );
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ($url)",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            return [null, $statusCode, $response->getHeaders()];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+            }
+            throw $e;
+        }
+    }
+    /**
+     * Operation testJsonFormData
+     *
+     * test json serialization of form data
+     *
+     * @param string $param field1 (required)
+     * @param string $param2 field2 (required)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function testJsonFormData($param, $param2)
+    {
+        $this->testJsonFormDataWithHttpInfo($param, $param2);
+    }
+
+    /**
+     * Operation testJsonFormDataWithHttpInfo
+     *
+     * test json serialization of form data
+     *
+     * @param string $param field1 (required)
+     * @param string $param2 field2 (required)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function testJsonFormDataWithHttpInfo($param, $param2)
+    {
+        // verify the required parameter 'param' is set
+        if ($param === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $param when calling testJsonFormData');
+        }
+        // verify the required parameter 'param2' is set
+        if ($param2 === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $param2 when calling testJsonFormData');
+        }
+
+        $resourcePath = '/fake/jsonFormData';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+        $returnType = '';
+
+
+
+        // form params
+        if ($param !== null) {
+            $formParams['param'] = ObjectSerializer::toFormValue($param);
+        }
+        // form params
+        if ($param2 !== null) {
+            $formParams['param2'] = ObjectSerializer::toFormValue($param2);
+        }
+
+        if ($multipart) {
             $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['*/*']
+                []
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['*/*'],
-                ['*/*']
+                [],
+                ['application/json']
             );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
         }
 
 

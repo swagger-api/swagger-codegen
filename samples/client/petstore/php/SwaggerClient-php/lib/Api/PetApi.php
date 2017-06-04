@@ -216,6 +216,17 @@ class PetApi
             $_tempBody = $body;
         }
 
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                ['application/xml', 'application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/xml', 'application/json'],
+                ['application/json', 'application/xml']
+            );
+        }
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
@@ -231,20 +242,12 @@ class PetApi
                 }
                 $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
 
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
             } else {
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/xml', 'application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/xml', 'application/json'],
-                ['application/json', 'application/xml']
-            );
         }
 
         // this endpoint requires OAuth (access token)
@@ -417,6 +420,17 @@ class PetApi
         }
 
 
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                ['application/xml', 'application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/xml', 'application/json'],
+                []
+            );
+        }
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
@@ -432,20 +446,12 @@ class PetApi
                 }
                 $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
 
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
             } else {
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/xml', 'application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/xml', 'application/json'],
-                []
-            );
         }
 
         // this endpoint requires OAuth (access token)
@@ -645,6 +651,17 @@ class PetApi
 
 
 
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                ['application/xml', 'application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/xml', 'application/json'],
+                []
+            );
+        }
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
@@ -660,20 +677,12 @@ class PetApi
                 }
                 $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
 
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
             } else {
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/xml', 'application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/xml', 'application/json'],
-                []
-            );
         }
 
         // this endpoint requires OAuth (access token)
@@ -873,6 +882,17 @@ class PetApi
 
 
 
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                ['application/xml', 'application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/xml', 'application/json'],
+                []
+            );
+        }
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
@@ -888,20 +908,12 @@ class PetApi
                 }
                 $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
 
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
             } else {
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/xml', 'application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/xml', 'application/json'],
-                []
-            );
         }
 
         // this endpoint requires OAuth (access token)
@@ -1098,6 +1110,17 @@ class PetApi
         }
 
 
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                ['application/xml', 'application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/xml', 'application/json'],
+                []
+            );
+        }
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
@@ -1113,20 +1136,12 @@ class PetApi
                 }
                 $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
 
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
             } else {
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/xml', 'application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/xml', 'application/json'],
-                []
-            );
         }
 
         // this endpoint requires API key authentication
@@ -1292,6 +1307,17 @@ class PetApi
             $_tempBody = $body;
         }
 
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                ['application/xml', 'application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/xml', 'application/json'],
+                ['application/json', 'application/xml']
+            );
+        }
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
@@ -1307,20 +1333,12 @@ class PetApi
                 }
                 $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
 
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
             } else {
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/xml', 'application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/xml', 'application/json'],
-                ['application/json', 'application/xml']
-            );
         }
 
         // this endpoint requires OAuth (access token)
@@ -1502,6 +1520,17 @@ class PetApi
             $formParams['status'] = ObjectSerializer::toFormValue($status);
         }
 
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                ['application/xml', 'application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/xml', 'application/json'],
+                ['application/x-www-form-urlencoded']
+            );
+        }
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
@@ -1517,20 +1546,12 @@ class PetApi
                 }
                 $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
 
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
             } else {
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/xml', 'application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/xml', 'application/json'],
-                ['application/x-www-form-urlencoded']
-            );
         }
 
         // this endpoint requires OAuth (access token)
@@ -1746,6 +1767,17 @@ class PetApi
             $formParams['file'] = \GuzzleHttp\Psr7\try_fopen(ObjectSerializer::toFormValue($file), 'rb');
         }
 
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['multipart/form-data']
+            );
+        }
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
@@ -1761,20 +1793,12 @@ class PetApi
                 }
                 $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
 
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
             } else {
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['multipart/form-data']
-            );
         }
 
         // this endpoint requires OAuth (access token)
