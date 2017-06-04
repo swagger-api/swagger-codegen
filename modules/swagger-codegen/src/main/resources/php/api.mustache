@@ -237,6 +237,15 @@ use {{invokerPackage}}\ObjectSerializer;
             {{^returnType}}
             return [null, $response->getStatusCode(), $response->getHeaders()];
             {{/returnType}}
+        }, function ($exception) {
+            $response = $exception->getResponse();
+            $statusCode = $response->getStatusCode();
+            throw new ApiException(
+                "[$statusCode] Error connecting to the API (" . $exception->getRequest()->getUri() . ")",
+                $statusCode,
+                $response->getHeaders(),
+                $response->getBody()
+            );
         });
     }
 
