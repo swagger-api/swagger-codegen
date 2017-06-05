@@ -1,5 +1,5 @@
 use_frameworks!
-source 'https://github.com/CocoaPods/Specs.git'
+source 'http://github.com/CocoaPods/Specs.git'
 
 target 'SwaggerClient' do
     pod "PetstoreClient", :path => "../"
