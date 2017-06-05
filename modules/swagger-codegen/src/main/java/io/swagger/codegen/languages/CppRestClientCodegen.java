@@ -441,8 +441,6 @@ public class CppRestClientCodegen extends DefaultCodegen implements CodegenConfi
         for (final CodegenProperty parentProperty : parent.vars) {
             final CodegenProperty duplicatedByParent = childPropertiesByName.get(parentProperty.name);
             if (duplicatedByParent != null) {
-                System.out.println(String.format("Property: '%s' in '%s' model is inherited from '%s'" ,
-                        parentProperty.name, child.classname, parent.classname));
                 duplicatedByParent.isInherited = true;
             }
         }
