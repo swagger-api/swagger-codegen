@@ -22,6 +22,17 @@ public class CodegenParameter {
     public Map<String, Object> vendorExtensions;
     public Boolean hasValidation;
 
+    public Map<String, Object> getAllowableValues() {
+        if (this.allowableValues != null)
+            // String property with enum value
+            return this.allowableValues;
+        else if (this.items != null && this.items.allowableValues != null)
+            // Array of string with enum values
+            return this.items.allowableValues;
+        else
+            return null;
+    }
+
     /**
      * Determines whether this parameter is mandatory. If the parameter is in "path",
      * this property is required and its value MUST be true. Otherwise, the property
