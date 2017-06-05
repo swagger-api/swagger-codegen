@@ -19,6 +19,7 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
 
     public JavascriptClosureAngularClientCodegen() {
         super();
+        outputFolder = "generated-code/javascript-closure-angular";
 
         supportsInheritance = false;
         setReservedWordsLowerCase(Arrays.asList("abstract",
@@ -96,15 +97,11 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
         super.preprocessSwagger(swagger);
 
         if (useEs6) {
-            outputFolder = "generated-code/javascript-es6-angular";
             embeddedTemplateDir = templateDir = "javascript-es6-angular";
             apiPackage = "resources";
-
             apiTemplateFiles.put("api.mustache", ".js");
-
             supportingFiles.add(new SupportingFile("module.mustache", "", "module.js"));
         } else {
-            outputFolder = "generated-code/javascript-closure-angular";
             modelTemplateFiles.put("model.mustache", ".js");
             apiTemplateFiles.put("api.mustache", ".js");
             embeddedTemplateDir = templateDir = "Javascript-Closure-Angular";
