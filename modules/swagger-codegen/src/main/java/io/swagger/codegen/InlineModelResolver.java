@@ -161,7 +161,7 @@ public class InlineModelResolver {
 
                     Map<String, Property> properties = m.getProperties();
                     flattenProperties(properties, modelName);
-
+                    fixStringModel(m);
                 } else if (model instanceof ArrayModel) {
                     ArrayModel m = (ArrayModel) model;
                     Property inner = m.getItems();
@@ -188,6 +188,12 @@ public class InlineModelResolver {
                     }
                 }
             }
+        }
+    }
+
+    private void fixStringModel(ModelImpl m) {
+        if (m.getType() != null && m.getType().equals("string") && m.getExample() != null) {
+            m.setExample(m.getExample().toString().replace("\"", ""));
         }
     }
 
