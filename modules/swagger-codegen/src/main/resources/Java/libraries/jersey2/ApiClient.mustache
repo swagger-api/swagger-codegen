@@ -682,8 +682,9 @@ public class ApiClient {
 
     Entity<?> entity = serialize(body, formParams, contentType);
 
-    Response response;
+    Response response = null;
 
+    try {
     if ("GET".equals(method)) {
       response = invocationBuilder.get();
     } else if ("POST".equals(method)) {
@@ -724,6 +725,11 @@ public class ApiClient {
         message,
         buildResponseHeaders(response),
         respBody);
+    }
+    } finally {
+      try {
+        response.close();
+      } catch (Exception e) {}
     }
   }
 
