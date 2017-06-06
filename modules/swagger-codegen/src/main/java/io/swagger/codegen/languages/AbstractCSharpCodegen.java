@@ -307,8 +307,24 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
                 }
             }
         }
+
+        processUsings(objs);
+
         // process enum in models
         return postProcessModelsEnum(objs);
+    }
+
+    private void processUsings(Map<String, Object> objs) {
+        List<Map<String, String>> imports = (List<Map<String, String>>)objs.get("imports");
+        Map<String,String> usings = new HashMap<String,String>();
+        for(Map<String, String> importMap: imports) {
+            for(Map.Entry<String, String> entry: importMap.entrySet()) {
+                String fullModelName = entry.getValue();
+                String[] parts = fullModelName.split("\\.");
+                usings.put(parts[1], fullModelName);
+            }
+        }
+        objs.put("usings", usings.entrySet());
     }
 
     @Override
@@ -352,7 +368,7 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
                 }
             }
         }
-
+        processUsings(objs);
         return objs;
     }
 

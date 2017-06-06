@@ -12,6 +12,8 @@ using RestSharp;
 using {{packageName}}.Client;
 {{#hasImport}}using {{packageName}}.{{modelPackage}};
 {{/hasImport}}
+{{#usings}}using {{key}} = {{packageName}}.{{value}};
+{{/usings}}
 
 namespace {{packageName}}.{{apiPackage}}
 {
