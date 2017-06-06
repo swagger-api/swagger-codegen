@@ -187,7 +187,7 @@ use {{invokerPackage}}\ObjectSerializer;
      * @param {{dataType}} ${{paramName}} {{description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
 {{/allParams}}
      * @throws \InvalidArgumentException
-     * @return {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function {{operationId}}Async({{#allParams}}${{paramName}}{{^required}} = {{#defaultValue}}'{{{.}}}'{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
     {
@@ -209,7 +209,7 @@ use {{invokerPackage}}\ObjectSerializer;
      * @param {{dataType}} ${{paramName}} {{description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
 {{/allParams}}
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\Promise
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function {{operationId}}AsyncWithHttpInfo({{#allParams}}${{paramName}}{{^required}} = {{#defaultValue}}'{{{.}}}'{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
     {
