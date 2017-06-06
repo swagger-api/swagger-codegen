@@ -1,11 +1,9 @@
 function UserApi-createUser {
     [CmdletBinding()]
     Param (
-    {{#allParams}
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [.Model.Pet]
-        ${  }
-    {{/allParams}
+        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [IO.Swagger.Model.Pet]
+        ${ body }
     )
 
     Process {
@@ -21,11 +19,9 @@ function UserApi-createUser {
 function UserApi-createUsersWithArrayInput {
     [CmdletBinding()]
     Param (
-    {{#allParams}
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [.Model.Pet]
-        ${  }
-    {{/allParams}
+        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [IO.Swagger.Model.Pet]
+        ${ body }
     )
 
     Process {
@@ -41,11 +37,9 @@ function UserApi-createUsersWithArrayInput {
 function UserApi-createUsersWithListInput {
     [CmdletBinding()]
     Param (
-    {{#allParams}
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [.Model.Pet]
-        ${  }
-    {{/allParams}
+        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [IO.Swagger.Model.Pet]
+        ${ body }
     )
 
     Process {
@@ -61,11 +55,9 @@ function UserApi-createUsersWithListInput {
 function UserApi-deleteUser {
     [CmdletBinding()]
     Param (
-    {{#allParams}
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [.Model.Pet]
-        ${  }
-    {{/allParams}
+        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [IO.Swagger.Model.Pet]
+        ${ username }
     )
 
     Process {
@@ -81,11 +73,9 @@ function UserApi-deleteUser {
 function UserApi-getUserByName {
     [CmdletBinding()]
     Param (
-    {{#allParams}
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [.Model.Pet]
-        ${  }
-    {{/allParams}
+        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [IO.Swagger.Model.Pet]
+        ${ username }
     )
 
     Process {
@@ -101,11 +91,12 @@ function UserApi-getUserByName {
 function UserApi-loginUser {
     [CmdletBinding()]
     Param (
-    {{#allParams}
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [.Model.Pet]
-        ${  }
-    {{/allParams}
+        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [IO.Swagger.Model.Pet]
+        ${ username }
+        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [IO.Swagger.Model.Pet]
+        ${ password }
     )
 
     Process {
@@ -122,11 +113,6 @@ function UserApi-loginUser {
 function UserApi-logoutUser {
     [CmdletBinding()]
     Param (
-    {{#allParams}
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [.Model.Pet]
-        ${  }
-    {{/allParams}
     )
 
     Process {
@@ -141,11 +127,12 @@ function UserApi-logoutUser {
 function UserApi-updateUser {
     [CmdletBinding()]
     Param (
-    {{#allParams}
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [.Model.Pet]
-        ${  }
-    {{/allParams}
+        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [IO.Swagger.Model.Pet]
+        ${ username }
+        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [IO.Swagger.Model.Pet]
+        ${ body }
     )
 
     Process {

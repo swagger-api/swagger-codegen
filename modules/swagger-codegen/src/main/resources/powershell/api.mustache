@@ -3,11 +3,11 @@
 function {{{classname}}}-{{{operationId}}} {
     [CmdletBinding()]
     Param (
-    {{#allParams}
+    {{#allParams}}
         [Parameter(Position = {{@index}}, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = {{#required}}$true{{/required}}{{^required}}$false{{/required}})]
-        [{{{pacakgeName}}}.Model.Pet]
-        ${ {{{paramName}}} }
-    {{/allParams}
+        [{{{packageName}}}.Model.Pet]
+        ${ {{paramName}} }
+    {{/allParams}}
     )
 
     Process {

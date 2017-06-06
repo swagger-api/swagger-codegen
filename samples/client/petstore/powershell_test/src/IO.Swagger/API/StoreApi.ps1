@@ -1,11 +1,9 @@
 function StoreApi-deleteOrder {
     [CmdletBinding()]
     Param (
-    {{#allParams}
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [.Model.Pet]
-        ${  }
-    {{/allParams}
+        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [IO.Swagger.Model.Pet]
+        ${ orderId }
     )
 
     Process {
@@ -21,11 +19,6 @@ function StoreApi-deleteOrder {
 function StoreApi-getInventory {
     [CmdletBinding()]
     Param (
-    {{#allParams}
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [.Model.Pet]
-        ${  }
-    {{/allParams}
     )
 
     Process {
@@ -40,11 +33,9 @@ function StoreApi-getInventory {
 function StoreApi-getOrderById {
     [CmdletBinding()]
     Param (
-    {{#allParams}
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [.Model.Pet]
-        ${  }
-    {{/allParams}
+        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [IO.Swagger.Model.Pet]
+        ${ orderId }
     )
 
     Process {
@@ -60,11 +51,9 @@ function StoreApi-getOrderById {
 function StoreApi-placeOrder {
     [CmdletBinding()]
     Param (
-    {{#allParams}
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [.Model.Pet]
-        ${  }
-    {{/allParams}
+        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [IO.Swagger.Model.Pet]
+        ${ body }
     )
 
     Process {

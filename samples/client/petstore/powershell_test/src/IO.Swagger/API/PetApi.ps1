@@ -1,11 +1,9 @@
 function PetApi-addPet {
     [CmdletBinding()]
     Param (
-    {{#allParams}
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [.Model.Pet]
-        ${  }
-    {{/allParams}
+        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [IO.Swagger.Model.Pet]
+        ${ body }
     )
 
     Process {
@@ -21,11 +19,12 @@ function PetApi-addPet {
 function PetApi-deletePet {
     [CmdletBinding()]
     Param (
-    {{#allParams}
+        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [IO.Swagger.Model.Pet]
+        ${ petId }
         [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [.Model.Pet]
-        ${  }
-    {{/allParams}
+        [IO.Swagger.Model.Pet]
+        ${ apiKey }
     )
 
     Process {
@@ -42,11 +41,9 @@ function PetApi-deletePet {
 function PetApi-findPetsByStatus {
     [CmdletBinding()]
     Param (
-    {{#allParams}
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [.Model.Pet]
-        ${  }
-    {{/allParams}
+        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [IO.Swagger.Model.Pet]
+        ${ status }
     )
 
     Process {
@@ -62,11 +59,9 @@ function PetApi-findPetsByStatus {
 function PetApi-findPetsByTags {
     [CmdletBinding()]
     Param (
-    {{#allParams}
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [.Model.Pet]
-        ${  }
-    {{/allParams}
+        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [IO.Swagger.Model.Pet]
+        ${ tags }
     )
 
     Process {
@@ -82,11 +77,9 @@ function PetApi-findPetsByTags {
 function PetApi-getPetById {
     [CmdletBinding()]
     Param (
-    {{#allParams}
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [.Model.Pet]
-        ${  }
-    {{/allParams}
+        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [IO.Swagger.Model.Pet]
+        ${ petId }
     )
 
     Process {
@@ -102,11 +95,9 @@ function PetApi-getPetById {
 function PetApi-updatePet {
     [CmdletBinding()]
     Param (
-    {{#allParams}
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [.Model.Pet]
-        ${  }
-    {{/allParams}
+        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [IO.Swagger.Model.Pet]
+        ${ body }
     )
 
     Process {
@@ -122,11 +113,15 @@ function PetApi-updatePet {
 function PetApi-updatePetWithForm {
     [CmdletBinding()]
     Param (
-    {{#allParams}
+        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [IO.Swagger.Model.Pet]
+        ${ petId }
         [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [.Model.Pet]
-        ${  }
-    {{/allParams}
+        [IO.Swagger.Model.Pet]
+        ${ name }
+        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
+        [IO.Swagger.Model.Pet]
+        ${ status }
     )
 
     Process {
@@ -144,11 +139,15 @@ function PetApi-updatePetWithForm {
 function PetApi-uploadFile {
     [CmdletBinding()]
     Param (
-    {{#allParams}
+        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [IO.Swagger.Model.Pet]
+        ${ petId }
         [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [.Model.Pet]
-        ${  }
-    {{/allParams}
+        [IO.Swagger.Model.Pet]
+        ${ additionalMetadata }
+        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
+        [IO.Swagger.Model.Pet]
+        ${ file }
     )
 
     Process {
