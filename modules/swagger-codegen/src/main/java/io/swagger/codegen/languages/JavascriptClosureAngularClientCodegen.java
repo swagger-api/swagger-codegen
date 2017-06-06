@@ -97,7 +97,7 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
         super.preprocessSwagger(swagger);
 
         if (useEs6) {
-            embeddedTemplateDir = templateDir = "javascript-es6-angular";
+            embeddedTemplateDir = templateDir = "Javascript-Closure-Angular/es6";
             apiPackage = "resources";
             apiTemplateFiles.put("api.mustache", ".js");
             supportingFiles.add(new SupportingFile("module.mustache", "", "module.js"));
