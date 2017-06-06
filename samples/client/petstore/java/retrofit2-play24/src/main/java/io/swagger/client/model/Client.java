@@ -70,7 +70,7 @@ public class Client {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Client {\n");
+    sb.append("class ").append(this.getClass().getSimpleName()).append(" {\n");
     
     sb.append("    client: ").append(toIndentedString(client)).append("\n");
     sb.append("}");

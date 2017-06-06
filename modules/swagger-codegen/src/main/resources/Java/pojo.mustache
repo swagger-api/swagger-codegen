@@ -8,6 +8,26 @@ public class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{{#parcela
   private static final long serialVersionUID = 1L;
 
 {{/serializableModel}}
+{{#discriminator}}
+{{^parent}}
+  public static class Unknown{{classname}} extends {{classname}} {
+    {{#jackson}}
+    private final Map<String, Object> data = new HashMap<>();
+
+    @JsonAnySetter
+    public void set(String name, Object value) {
+        data.put(name, value);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> get() {
+      return data;
+    }
+    {{/jackson}}
+  }
+
+{{/parent}}
+{{/discriminator}}
   {{#vars}}
     {{#isEnum}}
     {{^isContainer}}
@@ -146,7 +166,7 @@ public class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{{#parcela
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class {{classname}} {\n");
+    sb.append("class ").append(this.getClass().getSimpleName()).append(" {\n");
     {{#parent}}sb.append("    ").append(toIndentedString(super.toString())).append("\n");{{/parent}}
     {{#vars}}sb.append("    {{name}}: ").append(toIndentedString({{name}})).append("\n");
     {{/vars}}sb.append("}");

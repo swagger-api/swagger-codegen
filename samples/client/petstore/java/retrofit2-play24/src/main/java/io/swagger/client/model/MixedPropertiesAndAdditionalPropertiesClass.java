@@ -131,7 +131,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class MixedPropertiesAndAdditionalPropertiesClass {\n");
+    sb.append("class ").append(this.getClass().getSimpleName()).append(" {\n");
     
     sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
     sb.append("    dateTime: ").append(toIndentedString(dateTime)).append("\n");

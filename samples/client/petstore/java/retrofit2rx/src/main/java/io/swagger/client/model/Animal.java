@@ -29,6 +29,9 @@ import java.io.IOException;
 
 
 public class Animal {
+  public static class UnknownAnimal extends Animal {
+  }
+
   @SerializedName("className")
   private String className = null;
 
@@ -94,7 +97,7 @@ public class Animal {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Animal {\n");
+    sb.append("class ").append(this.getClass().getSimpleName()).append(" {\n");
     
     sb.append("    className: ").append(toIndentedString(className)).append("\n");
     sb.append("    color: ").append(toIndentedString(color)).append("\n");

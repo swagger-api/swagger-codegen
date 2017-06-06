@@ -71,7 +71,7 @@ public class SpecialModelName {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SpecialModelName {\n");
+    sb.append("class ").append(this.getClass().getSimpleName()).append(" {\n");
     
     sb.append("    specialPropertyName: ").append(toIndentedString(specialPropertyName)).append("\n");
     sb.append("}");

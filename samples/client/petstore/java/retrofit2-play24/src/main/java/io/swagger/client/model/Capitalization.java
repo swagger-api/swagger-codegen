@@ -180,7 +180,7 @@ public class Capitalization {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Capitalization {\n");
+    sb.append("class ").append(this.getClass().getSimpleName()).append(" {\n");
     
     sb.append("    smallCamel: ").append(toIndentedString(smallCamel)).append("\n");
     sb.append("    capitalCamel: ").append(toIndentedString(capitalCamel)).append("\n");

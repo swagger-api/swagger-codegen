@@ -231,7 +231,7 @@ public class Order {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Order {\n");
+    sb.append("class ").append(this.getClass().getSimpleName()).append(" {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    petId: ").append(toIndentedString(petId)).append("\n");

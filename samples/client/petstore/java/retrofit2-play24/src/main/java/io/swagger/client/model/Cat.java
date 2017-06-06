@@ -72,7 +72,7 @@ public class Cat extends Animal {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Cat {\n");
+    sb.append("class ").append(this.getClass().getSimpleName()).append(" {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    declawed: ").append(toIndentedString(declawed)).append("\n");
     sb.append("}");

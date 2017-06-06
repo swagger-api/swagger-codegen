@@ -14,6 +14,8 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -21,19 +23,35 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.HashMap;
+import java.util.Map;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 /**
  * Animal
  */
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "className", visible = true )
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "className", visible = true, defaultImpl = Animal.UnknownAnimal.class )
 @JsonSubTypes({
   @JsonSubTypes.Type(value = Dog.class, name = "Dog"),
   @JsonSubTypes.Type(value = Cat.class, name = "Cat"),
 })
 
 public class Animal {
+  public static class UnknownAnimal extends Animal {
+    private final Map<String, Object> data = new HashMap<>();
+
+    @JsonAnySetter
+    public void set(String name, Object value) {
+        data.put(name, value);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> get() {
+      return data;
+    }
+  }
+
   @JsonProperty("className")
   private String className = null;
 
@@ -100,7 +118,7 @@ public class Animal {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Animal {\n");
+    sb.append("class ").append(this.getClass().getSimpleName()).append(" {\n");
     
     sb.append("    className: ").append(toIndentedString(className)).append("\n");
     sb.append("    color: ").append(toIndentedString(color)).append("\n");

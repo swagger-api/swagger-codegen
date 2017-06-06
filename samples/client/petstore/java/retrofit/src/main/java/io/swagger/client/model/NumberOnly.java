@@ -72,7 +72,7 @@ public class NumberOnly {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class NumberOnly {\n");
+    sb.append("class ").append(this.getClass().getSimpleName()).append(" {\n");
     
     sb.append("    justNumber: ").append(toIndentedString(justNumber)).append("\n");
     sb.append("}");

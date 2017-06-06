@@ -82,7 +82,7 @@ public class ArrayOfNumberOnly {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ArrayOfNumberOnly {\n");
+    sb.append("class ").append(this.getClass().getSimpleName()).append(" {\n");
     
     sb.append("    arrayNumber: ").append(toIndentedString(arrayNumber)).append("\n");
     sb.append("}");

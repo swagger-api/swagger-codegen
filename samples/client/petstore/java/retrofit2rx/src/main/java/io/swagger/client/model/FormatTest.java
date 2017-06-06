@@ -349,7 +349,7 @@ public class FormatTest {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class FormatTest {\n");
+    sb.append("class ").append(this.getClass().getSimpleName()).append(" {\n");
     
     sb.append("    integer: ").append(toIndentedString(integer)).append("\n");
     sb.append("    int32: ").append(toIndentedString(int32)).append("\n");

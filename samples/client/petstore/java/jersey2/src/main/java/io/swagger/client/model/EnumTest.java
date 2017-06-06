@@ -242,7 +242,7 @@ public class EnumTest {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class EnumTest {\n");
+    sb.append("class ").append(this.getClass().getSimpleName()).append(" {\n");
     
     sb.append("    enumString: ").append(toIndentedString(enumString)).append("\n");
     sb.append("    enumInteger: ").append(toIndentedString(enumInteger)).append("\n");

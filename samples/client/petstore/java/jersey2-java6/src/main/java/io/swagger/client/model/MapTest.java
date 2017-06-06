@@ -144,7 +144,7 @@ public class MapTest {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class MapTest {\n");
+    sb.append("class ").append(this.getClass().getSimpleName()).append(" {\n");
     
     sb.append("    mapMapOfString: ").append(toIndentedString(mapMapOfString)).append("\n");
     sb.append("    mapOfEnumString: ").append(toIndentedString(mapOfEnumString)).append("\n");
