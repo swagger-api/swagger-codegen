@@ -150,7 +150,7 @@ class FakeApi
      *
      * @param string $test_code_inject____end____rn_n_r To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r (optional)
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function testCodeInjectEndRnNRAsync($test_code_inject____end____rn_n_r = null)
     {
@@ -166,7 +166,7 @@ class FakeApi
      *
      * @param string $test_code_inject____end____rn_n_r To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r (optional)
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\Promise
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function testCodeInjectEndRnNRAsyncWithHttpInfo($test_code_inject____end____rn_n_r = null)
     {
