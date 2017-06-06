@@ -169,7 +169,7 @@ class Fake_classname_tags123Api
      *
      * @param \Swagger\Client\Model\Client $body client model (required)
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\Client
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function testClassnameAsync($body)
     {
@@ -185,7 +185,7 @@ class Fake_classname_tags123Api
      *
      * @param \Swagger\Client\Model\Client $body client model (required)
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\Promise
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function testClassnameAsyncWithHttpInfo($body)
     {

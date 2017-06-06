@@ -150,7 +150,7 @@ class StoreApi
      *
      * @param string $order_id ID of the order that needs to be deleted (required)
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function deleteOrderAsync($order_id)
     {
@@ -166,7 +166,7 @@ class StoreApi
      *
      * @param string $order_id ID of the order that needs to be deleted (required)
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\Promise
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function deleteOrderAsyncWithHttpInfo($order_id)
     {
@@ -357,7 +357,7 @@ class StoreApi
      * Returns pet inventories by status
      *
      * @throws \InvalidArgumentException
-     * @return map[string,int]
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getInventoryAsync()
     {
@@ -372,7 +372,7 @@ class StoreApi
      * Returns pet inventories by status
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\Promise
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getInventoryAsyncWithHttpInfo()
     {
@@ -576,7 +576,7 @@ class StoreApi
      *
      * @param int $order_id ID of pet that needs to be fetched (required)
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\Order
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getOrderByIdAsync($order_id)
     {
@@ -592,7 +592,7 @@ class StoreApi
      *
      * @param int $order_id ID of pet that needs to be fetched (required)
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\Promise
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getOrderByIdAsyncWithHttpInfo($order_id)
     {
@@ -807,7 +807,7 @@ class StoreApi
      *
      * @param \Swagger\Client\Model\Order $body order placed for purchasing the pet (required)
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\Order
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function placeOrderAsync($body)
     {
@@ -823,7 +823,7 @@ class StoreApi
      *
      * @param \Swagger\Client\Model\Order $body order placed for purchasing the pet (required)
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\Promise
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function placeOrderAsyncWithHttpInfo($body)
     {

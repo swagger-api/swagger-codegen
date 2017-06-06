@@ -150,7 +150,7 @@ class UserApi
      *
      * @param \Swagger\Client\Model\User $body Created user object (required)
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function createUserAsync($body)
     {
@@ -166,7 +166,7 @@ class UserApi
      *
      * @param \Swagger\Client\Model\User $body Created user object (required)
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\Promise
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function createUserAsyncWithHttpInfo($body)
     {
@@ -342,7 +342,7 @@ class UserApi
      *
      * @param \Swagger\Client\Model\User[] $body List of user object (required)
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function createUsersWithArrayInputAsync($body)
     {
@@ -358,7 +358,7 @@ class UserApi
      *
      * @param \Swagger\Client\Model\User[] $body List of user object (required)
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\Promise
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function createUsersWithArrayInputAsyncWithHttpInfo($body)
     {
@@ -534,7 +534,7 @@ class UserApi
      *
      * @param \Swagger\Client\Model\User[] $body List of user object (required)
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function createUsersWithListInputAsync($body)
     {
@@ -550,7 +550,7 @@ class UserApi
      *
      * @param \Swagger\Client\Model\User[] $body List of user object (required)
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\Promise
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function createUsersWithListInputAsyncWithHttpInfo($body)
     {
@@ -726,7 +726,7 @@ class UserApi
      *
      * @param string $username The name that needs to be deleted (required)
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function deleteUserAsync($username)
     {
@@ -742,7 +742,7 @@ class UserApi
      *
      * @param string $username The name that needs to be deleted (required)
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\Promise
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function deleteUserAsyncWithHttpInfo($username)
     {
@@ -936,7 +936,7 @@ class UserApi
      *
      * @param string $username The name that needs to be fetched. Use user1 for testing. (required)
      * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\User
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getUserByNameAsync($username)
     {
@@ -952,7 +952,7 @@ class UserApi
      *
      * @param string $username The name that needs to be fetched. Use user1 for testing. (required)
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\Promise
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getUserByNameAsyncWithHttpInfo($username)
     {
@@ -1163,7 +1163,7 @@ class UserApi
      * @param string $username The user name for login (required)
      * @param string $password The password for login in clear text (required)
      * @throws \InvalidArgumentException
-     * @return string
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function loginUserAsync($username, $password)
     {
@@ -1180,7 +1180,7 @@ class UserApi
      * @param string $username The user name for login (required)
      * @param string $password The password for login in clear text (required)
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\Promise
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function loginUserAsyncWithHttpInfo($username, $password)
     {
@@ -1375,7 +1375,7 @@ class UserApi
      * Logs out current logged in user session
      *
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function logoutUserAsync()
     {
@@ -1390,7 +1390,7 @@ class UserApi
      * Logs out current logged in user session
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\Promise
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function logoutUserAsyncWithHttpInfo()
     {
@@ -1559,7 +1559,7 @@ class UserApi
      * @param string $username name that need to be deleted (required)
      * @param \Swagger\Client\Model\User $body Updated user object (required)
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function updateUserAsync($username, $body)
     {
@@ -1576,7 +1576,7 @@ class UserApi
      * @param string $username name that need to be deleted (required)
      * @param \Swagger\Client\Model\User $body Updated user object (required)
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\Promise
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function updateUserAsyncWithHttpInfo($username, $body)
     {
