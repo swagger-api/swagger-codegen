@@ -132,7 +132,8 @@ public class {{classname}}Controller extends Controller {
         }{{/required}}
         {{/collectionFormat}}
         {{/headerParams}}
-        {{#returnType}}{{>returnTypesNoVoid}} obj = {{/returnType}}imp.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        {{#returnType}}{{>returnTypesNoVoid}} obj = {{/returnType}}imp.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});{{#returnType}}{{^isPrimitiveType}}{{#useBeanValidation}}
+        obj.validate();{{/useBeanValidation}}{{/isPrimitiveType}}{{/returnType}}
         {{#returnType}}{{^isResponseFile}}JsonNode result = mapper.valueToTree(obj);
         return ok(result);{{/isResponseFile}}{{#isResponseFile}}return ok(obj);{{/isResponseFile}}{{/returnType}}
         {{^returnType}}return ok();{{/returnType}}

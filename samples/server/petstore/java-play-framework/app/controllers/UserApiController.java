@@ -78,6 +78,7 @@ public class UserApiController extends Controller {
     @ApiAction
     public Result getUserByName(String username) throws Exception {
         User obj = imp.getUserByName(username);
+        obj.validate();
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
         
@@ -96,6 +97,7 @@ public class UserApiController extends Controller {
         password = (String)valuepassword;
 
         String obj = imp.loginUser(username, password);
+        obj.validate();
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
         

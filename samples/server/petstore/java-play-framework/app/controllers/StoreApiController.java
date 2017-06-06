@@ -42,6 +42,7 @@ public class StoreApiController extends Controller {
     @ApiAction
     public Result getInventory() throws Exception {
         Map<String, Integer> obj = imp.getInventory();
+        obj.validate();
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
         
@@ -50,6 +51,7 @@ public class StoreApiController extends Controller {
     @ApiAction
     public Result getOrderById( @Min(1) @Max(5)Long orderId) throws Exception {
         Order obj = imp.getOrderById(orderId);
+        obj.validate();
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
         
@@ -63,6 +65,7 @@ public class StoreApiController extends Controller {
         body = mapper.readValue(nodebody.toString(), Order.class);
 
         Order obj = imp.placeOrder(body);
+        obj.validate();
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
         

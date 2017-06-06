@@ -69,6 +69,7 @@ public class PetApiController extends Controller {
         //    status.add(pair.getValue());
         //}
         List<Pet> obj = imp.findPetsByStatus(status);
+        obj.validate();
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
         
@@ -83,6 +84,7 @@ public class PetApiController extends Controller {
         //    tags.add(pair.getValue());
         //}
         List<Pet> obj = imp.findPetsByTags(tags);
+        obj.validate();
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
         
@@ -91,6 +93,7 @@ public class PetApiController extends Controller {
     @ApiAction
     public Result getPetById(Long petId) throws Exception {
         Pet obj = imp.getPetById(petId);
+        obj.validate();
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
         
@@ -143,6 +146,7 @@ public class PetApiController extends Controller {
         }
         Http.MultipartFormData.FilePart file = request().body().asMultipartFormData().getFile("file");
                 ModelApiResponse obj = imp.uploadFile(petId, additionalMetadata, file);
+        obj.validate();
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
         
