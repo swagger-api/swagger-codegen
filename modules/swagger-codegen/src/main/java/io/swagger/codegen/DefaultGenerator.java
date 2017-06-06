@@ -3,6 +3,8 @@ package io.swagger.codegen;
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
 import io.swagger.codegen.ignore.CodegenIgnoreProcessor;
+import io.swagger.codegen.utils.ImplementationVersion;
+import io.swagger.codegen.languages.AbstractJavaCodegen;
 import io.swagger.models.*;
 import io.swagger.models.auth.OAuth2Definition;
 import io.swagger.models.auth.SecuritySchemeDefinition;
@@ -118,6 +120,10 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         // Additional properties added for tests to exclude references in project related files
         config.additionalProperties().put(CodegenConstants.GENERATE_API_TESTS, generateApiTests);
         config.additionalProperties().put(CodegenConstants.GENERATE_MODEL_TESTS, generateModelTests);
+
+        config.additionalProperties().put(CodegenConstants.GENERATE_API_DOCS, generateApiDocumentation);
+        config.additionalProperties().put(CodegenConstants.GENERATE_MODEL_DOCS, generateModelDocumentation);
+
         if(!generateApiTests && !generateModelTests) {
             config.additionalProperties().put(CodegenConstants.EXCLUDE_TESTS, true);
         }
@@ -126,6 +132,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
         config.processOpts();
         config.preprocessSwagger(swagger);
+        config.additionalProperties().put("generatorVersion", ImplementationVersion.read());
         config.additionalProperties().put("generatedDate", DateTime.now().toString());
         config.additionalProperties().put("generatorClass", config.getClass().getName());
         config.additionalProperties().put("inputSpec", config.getInputSpec());
@@ -149,7 +156,11 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
         if (info.getVersion() != null) {
             config.additionalProperties().put("appVersion", config.escapeText(info.getVersion()));
+        } else {
+            LOGGER.error("Missing required field info version. Default appVersion set to 1.0.0");
+            config.additionalProperties().put("appVersion", "1.0.0");
         }
+        
         if (StringUtils.isEmpty(info.getDescription())) {
             // set a default description if none if provided
             config.additionalProperties().put("appDescription",
@@ -178,6 +189,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
         if (info.getVersion() != null) {
             config.additionalProperties().put("version", config.escapeText(info.getVersion()));
+        } else {
+            LOGGER.error("Missing required field info version. Default version set to 1.0.0");
+            config.additionalProperties().put("version", "1.0.0");
         }
         if (info.getTermsOfService() != null) {
             config.additionalProperties().put("termsOfService", config.escapeText(info.getTermsOfService()));
@@ -278,6 +292,14 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             private Model getParent(Model model) {
                 if (model instanceof ComposedModel) {
                     Model parent = ((ComposedModel) model).getParent();
+                    if (parent == null) {
+                        // check for interfaces
+                        List<RefModel> interfaces = ((ComposedModel) model).getInterfaces();
+                        if (interfaces.size() > 0) {
+                            RefModel interf = interfaces.get(0);
+                            return definitions.get(interf.getSimpleRef());
+                        }
+                    }
                     if(parent != null) {
                         return definitions.get(parent.getReference());
                     }
@@ -318,7 +340,17 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 if(config.importMapping().containsKey(modelName)) {
                     continue;
                 }
-                allModels.add(((List<Object>) models.get("models")).get(0));
+                Map<String, Object> modelTemplate = (Map<String, Object>) ((List<Object>) models.get("models")).get(0);
+                if (config instanceof AbstractJavaCodegen) {
+                    // Special handling of aliases only applies to Java
+                    if (modelTemplate != null && modelTemplate.containsKey("model")) {
+                        CodegenModel m = (CodegenModel) modelTemplate.get("model");
+                        if (m.isAlias) {
+                            continue;  // Don't create user-defined classes for aliases
+                        }
+                    }
+                }
+                allModels.add(modelTemplate);
                 for (String templateName : config.modelTemplateFiles().keySet()) {
                     String suffix = config.modelTemplateFiles().get(templateName);
                     String filename = config.modelFileFolder() + File.separator + config.toModelFilename(modelName) + suffix;
@@ -572,6 +604,15 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             files.add(ignoreFile);
         }
 
+        final String swaggerVersionMetadata = config.outputFolder() + File.separator + ".swagger-codegen" + File.separator + "VERSION";
+        File swaggerVersionMetadataFile = new File(swaggerVersionMetadata);
+        try {
+            writeToFile(swaggerVersionMetadata, ImplementationVersion.read());
+            files.add(swaggerVersionMetadataFile);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not generate supporting file '" + swaggerVersionMetadata + "'", e);
+        }
+
         /*
          * The following code adds default LICENSE (Apache-2.0) for all generators
          * To use license other than Apache2.0, update the following file:
@@ -616,13 +657,6 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         bundle.put("modelPackage", config.modelPackage());
         List<CodegenSecurity> authMethods = config.fromSecurity(swagger.getSecurityDefinitions());
         if (authMethods != null && !authMethods.isEmpty()) {
-            // sort auth methods to maintain the same order
-            Collections.sort(authMethods, new Comparator<CodegenSecurity>() {
-                @Override
-                public int compare(CodegenSecurity one, CodegenSecurity another) {
-                    return ObjectUtils.compare(one.name, another.name);
-                }
-            });
             bundle.put("authMethods", authMethods);
             bundle.put("hasAuthMethods", true);
         }

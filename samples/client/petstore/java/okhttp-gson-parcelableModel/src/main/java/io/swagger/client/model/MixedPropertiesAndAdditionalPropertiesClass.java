@@ -14,10 +14,15 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.Animal;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -161,8 +166,8 @@ public class MixedPropertiesAndAdditionalPropertiesClass implements Parcelable {
 
   MixedPropertiesAndAdditionalPropertiesClass(Parcel in) {
     
-    uuid = (UUID)in.readValue(null);
-    dateTime = (DateTime)in.readValue(null);
+    uuid = (UUID)in.readValue(UUID.class.getClassLoader());
+    dateTime = (DateTime)in.readValue(DateTime.class.getClassLoader());
     map = (Map<String, Animal>)in.readValue(Animal.class.getClassLoader());
   }
   

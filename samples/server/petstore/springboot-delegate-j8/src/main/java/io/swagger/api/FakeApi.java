@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import io.swagger.model.Client;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import io.swagger.model.OuterComposite;
 
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
-import java.io.IOException;
 
 import java.util.List;
 import javax.validation.constraints.*;
@@ -24,6 +24,54 @@ import javax.validation.Valid;
 
 @Api(value = "fake", description = "the fake API")
 public interface FakeApi {
+
+    @ApiOperation(value = "", notes = "Test serialization of outer boolean types", response = Boolean.class, tags={ "fake", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Output boolean", response = Boolean.class) })
+    
+    @RequestMapping(value = "/fake/outer/boolean",
+        method = RequestMethod.POST)
+    default ResponseEntity<Boolean> fakeOuterBooleanSerialize(@ApiParam(value = "Input boolean as post body"  )  @Valid @RequestBody Boolean body) {
+        // do some magic!
+        return new ResponseEntity<Boolean>(HttpStatus.OK);
+    }
+
+
+    @ApiOperation(value = "", notes = "Test serialization of object with outer number type", response = OuterComposite.class, tags={ "fake", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Output composite", response = OuterComposite.class) })
+    
+    @RequestMapping(value = "/fake/outer/composite",
+        method = RequestMethod.POST)
+    default ResponseEntity<OuterComposite> fakeOuterCompositeSerialize(@ApiParam(value = "Input composite as post body"  )  @Valid @RequestBody OuterComposite body) {
+        // do some magic!
+        return new ResponseEntity<OuterComposite>(HttpStatus.OK);
+    }
+
+
+    @ApiOperation(value = "", notes = "Test serialization of outer number types", response = BigDecimal.class, tags={ "fake", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Output number", response = BigDecimal.class) })
+    
+    @RequestMapping(value = "/fake/outer/number",
+        method = RequestMethod.POST)
+    default ResponseEntity<BigDecimal> fakeOuterNumberSerialize(@ApiParam(value = "Input number as post body"  )  @Valid @RequestBody BigDecimal body) {
+        // do some magic!
+        return new ResponseEntity<BigDecimal>(HttpStatus.OK);
+    }
+
+
+    @ApiOperation(value = "", notes = "Test serialization of outer string types", response = String.class, tags={ "fake", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Output string", response = String.class) })
+    
+    @RequestMapping(value = "/fake/outer/string",
+        method = RequestMethod.POST)
+    default ResponseEntity<String> fakeOuterStringSerialize(@ApiParam(value = "Input string as post body"  )  @Valid @RequestBody String body) {
+        // do some magic!
+        return new ResponseEntity<String>(HttpStatus.OK);
+    }
+
 
     @ApiOperation(value = "To test \"client\" model", notes = "To test \"client\" model", response = Client.class, tags={ "fake", })
     @ApiResponses(value = { 
@@ -33,7 +81,7 @@ public interface FakeApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.PATCH)
-    default ResponseEntity<Client> testClientModel(@ApiParam(value = "client model" ,required=true )  @Valid @RequestBody Client body) throws IOException {
+    default ResponseEntity<Client> testClientModel(@ApiParam(value = "client model" ,required=true )  @Valid @RequestBody Client body) {
         // do some magic!
         return new ResponseEntity<Client>(HttpStatus.OK);
     }
@@ -65,7 +113,7 @@ public interface FakeApi {
         produces = { "*/*" }, 
         consumes = { "*/*" },
         method = RequestMethod.GET)
-    default ResponseEntity<Void> testEnumParameters(@ApiParam(value = "Form parameter enum test (string array)", allowableValues=">, $") @RequestPart(value="enum_form_string_array", required=false)  List<String> enumFormStringArray,@ApiParam(value = "Form parameter enum test (string)", allowableValues="_abc, -efg, (xyz)", defaultValue="-efg") @RequestPart(value="enum_form_string", required=false)  String enumFormString,@ApiParam(value = "Header parameter enum test (string array)" , allowableValues=">, $") @RequestHeader(value="enum_header_string_array", required=false) List<String> enumHeaderStringArray,@ApiParam(value = "Header parameter enum test (string)" , allowableValues="_abc, -efg, (xyz)", defaultValue="-efg") @RequestHeader(value="enum_header_string", required=false) String enumHeaderString, @ApiParam(value = "Query parameter enum test (string array)", allowableValues = ">, $") @RequestParam(value = "enum_query_string_array", required = false) List<String> enumQueryStringArray, @ApiParam(value = "Query parameter enum test (string)", allowableValues = "_abc, -efg, (xyz)", defaultValue = "-efg") @RequestParam(value = "enum_query_string", required = false, defaultValue="-efg") String enumQueryString, @ApiParam(value = "Query parameter enum test (double)", allowableValues = "1, -2") @RequestParam(value = "enum_query_integer", required = false) Integer enumQueryInteger,@ApiParam(value = "Query parameter enum test (double)", allowableValues="1.1, -1.2") @RequestPart(value="enum_query_double", required=false)  Double enumQueryDouble) {
+    default ResponseEntity<Void> testEnumParameters(@ApiParam(value = "Form parameter enum test (string array)", allowableValues=">, $") @RequestPart(value="enum_form_string_array", required=false)  List<String> enumFormStringArray,@ApiParam(value = "Form parameter enum test (string)", allowableValues="_abc, -efg, (xyz)", defaultValue="-efg") @RequestPart(value="enum_form_string", required=false)  String enumFormString,@ApiParam(value = "Header parameter enum test (string array)" , allowableValues=">, $") @RequestHeader(value="enum_header_string_array", required=false) List<String> enumHeaderStringArray,@ApiParam(value = "Header parameter enum test (string)" , allowableValues="_abc, -efg, (xyz)", defaultValue="-efg") @RequestHeader(value="enum_header_string", required=false) String enumHeaderString,@ApiParam(value = "Query parameter enum test (string array)", allowableValues = ">, $") @RequestParam(value = "enum_query_string_array", required = false) List<String> enumQueryStringArray,@ApiParam(value = "Query parameter enum test (string)", allowableValues = "_abc, -efg, (xyz)", defaultValue = "-efg") @RequestParam(value = "enum_query_string", required = false, defaultValue="-efg") String enumQueryString,@ApiParam(value = "Query parameter enum test (double)", allowableValues = "1, -2") @RequestParam(value = "enum_query_integer", required = false) Integer enumQueryInteger,@ApiParam(value = "Query parameter enum test (double)", allowableValues="1.1, -1.2") @RequestPart(value="enum_query_double", required=false)  Double enumQueryDouble) {
         // do some magic!
         return new ResponseEntity<Void>(HttpStatus.OK);
     }

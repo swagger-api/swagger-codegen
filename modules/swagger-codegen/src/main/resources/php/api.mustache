@@ -80,8 +80,10 @@ use \{{invokerPackage}}\ObjectSerializer;
 
     /**
      * Operation {{{operationId}}}
+{{#summary}}
      *
      * {{{summary}}}
+{{/summary}}
      *
 {{#description}}
      * {{.}}
@@ -93,7 +95,7 @@ use \{{invokerPackage}}\ObjectSerializer;
      * @throws \{{invokerPackage}}\ApiException on non-2xx response
      * @return {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}
      */
-    public function {{operationId}}({{#allParams}}${{paramName}}{{^required}} = null{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+    public function {{operationId}}({{#allParams}}${{paramName}}{{^required}} = {{#defaultValue}}'{{{.}}}'{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
     {
         list($response) = $this->{{operationId}}WithHttpInfo({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
         return $response;
@@ -101,8 +103,10 @@ use \{{invokerPackage}}\ObjectSerializer;
 
     /**
      * Operation {{{operationId}}}WithHttpInfo
+{{#summary}}
      *
      * {{{summary}}}
+{{/summary}}
      *
 {{#description}}
      * {{.}}
@@ -114,7 +118,7 @@ use \{{invokerPackage}}\ObjectSerializer;
      * @throws \{{invokerPackage}}\ApiException on non-2xx response
      * @return array of {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}null{{/returnType}}, HTTP status code, HTTP response headers (array of strings)
      */
-    public function {{operationId}}WithHttpInfo({{#allParams}}${{paramName}}{{^required}} = null{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+    public function {{operationId}}WithHttpInfo({{#allParams}}${{paramName}}{{^required}} = {{#defaultValue}}'{{{.}}}'{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
     {
         {{#allParams}}
         {{#required}}
@@ -228,7 +232,8 @@ use \{{invokerPackage}}\ObjectSerializer;
             {{/isFile}}
         }
         {{/formParams}}
-        {{#bodyParams}}// body params
+        {{#bodyParams}}
+        // body params
         $_tempBody = null;
         if (isset(${{paramName}})) {
             $_tempBody = ${{paramName}};

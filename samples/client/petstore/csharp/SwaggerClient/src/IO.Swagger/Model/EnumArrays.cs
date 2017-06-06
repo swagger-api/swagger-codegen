@@ -20,6 +20,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
@@ -91,6 +92,8 @@ namespace IO.Swagger.Model
             this.ArrayEnum = ArrayEnum;
         }
         
+
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -174,7 +177,7 @@ namespace IO.Swagger.Model
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-        { 
+        {
             yield break;
         }
     }

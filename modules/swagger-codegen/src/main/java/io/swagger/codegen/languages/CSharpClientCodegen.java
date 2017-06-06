@@ -151,6 +151,10 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
                 CodegenConstants.ALLOW_UNICODE_IDENTIFIERS_DESC,
                 this.allowUnicodeIdentifiers);
 
+        addSwitch(CodegenConstants.NETCORE_PROJECT_FILE,
+                CodegenConstants.NETCORE_PROJECT_FILE_DESC,
+                this.netCoreProjectFileFlag);
+
         regexModifiers = new HashMap<Character, String>();
         regexModifiers.put('i', "IgnoreCase");
         regexModifiers.put('m', "Multiline");
@@ -184,12 +188,14 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         }
 
         additionalProperties.put(CodegenConstants.API_PACKAGE, apiPackage);
-
         additionalProperties.put(CodegenConstants.MODEL_PACKAGE, modelPackage);
-
         additionalProperties.put("clientPackage", clientPackage);
-
         additionalProperties.put("emitDefaultValue", optionalEmitDefaultValue);
+
+        if (!additionalProperties.containsKey("validatable")) {
+            // default validatable to true if not set
+            additionalProperties.put("validatable", true);
+        }
 
         if (additionalProperties.containsKey(CodegenConstants.DOTNET_FRAMEWORK)) {
             setTargetFramework((String) additionalProperties.get(CodegenConstants.DOTNET_FRAMEWORK));
@@ -205,6 +211,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
             if(additionalProperties.containsKey("supportsAsync")){
                 additionalProperties.remove("supportsAsync");
             }
+            additionalProperties.put("validatable", false);
         } else if (NETSTANDARD.equals(this.targetFramework)){
             setTargetFrameworkNuget("netstandard1.3");
             setSupportsAsync(Boolean.TRUE);
@@ -239,6 +246,8 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
                 LOGGER.warn(CodegenConstants.GENERATE_PROPERTY_CHANGED + " is only supported by generated code for .NET 4+.");
             } else if(NETSTANDARD.equals(targetFramework)) {
                 LOGGER.warn(CodegenConstants.GENERATE_PROPERTY_CHANGED + " is not supported in .NET Standard generated code.");
+            } else if(Boolean.TRUE.equals(netCoreProjectFileFlag)) {
+                LOGGER.warn(CodegenConstants.GENERATE_PROPERTY_CHANGED + " is not supported in .NET Core csproj project format.");
             } else {
                 setGeneratePropertyChanged(Boolean.valueOf(additionalProperties.get(CodegenConstants.GENERATE_PROPERTY_CHANGED).toString()));
             }
@@ -303,7 +312,9 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
                 clientPackageDir, "ApiResponse.cs"));
         supportingFiles.add(new SupportingFile("ExceptionFactory.mustache",
                 clientPackageDir, "ExceptionFactory.cs"));
-        if(Boolean.FALSE.equals(this.netStandard)) {
+        supportingFiles.add(new SupportingFile("SwaggerDateConverter.mustache",
+                clientPackageDir, "SwaggerDateConverter.cs"));
+        if(Boolean.FALSE.equals(this.netStandard) && Boolean.FALSE.equals(this.netCoreProjectFileFlag)) {
             supportingFiles.add(new SupportingFile("compile.mustache", "", "build.bat"));
             supportingFiles.add(new SupportingFile("compile-mono.sh.mustache", "", "build.sh"));
 
@@ -311,7 +322,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
             supportingFiles.add(new SupportingFile("packages.config.mustache", packageFolder + File.separator, "packages.config"));
             // .travis.yml for travis-ci.org CI
             supportingFiles.add(new SupportingFile("travis.mustache", "", ".travis.yml"));
-        } else {
+        } else if(Boolean.FALSE.equals(this.netCoreProjectFileFlag)) {
             supportingFiles.add(new SupportingFile("project.json.mustache", packageFolder + File.separator, "project.json"));
         }
 
@@ -323,7 +334,9 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
             modelTestTemplateFiles.put("model_test.mustache", ".cs");
             apiTestTemplateFiles.put("api_test.mustache", ".cs");
 
-            supportingFiles.add(new SupportingFile("packages_test.config.mustache", testPackageFolder + File.separator, "packages.config"));
+            if (Boolean.FALSE.equals(this.netCoreProjectFileFlag)) {
+                supportingFiles.add(new SupportingFile("packages_test.config.mustache", testPackageFolder + File.separator, "packages.config"));
+            }
         }
 
         if(Boolean.TRUE.equals(generatePropertyChanged)) {
@@ -337,19 +350,28 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         // UPDATE (20160612) no longer needed as the Apache v2 LICENSE is added globally
         //supportingFiles.add(new SupportingFile("LICENSE", "", "LICENSE"));
 
-        if (optionalAssemblyInfoFlag) {
+        if (optionalAssemblyInfoFlag && Boolean.FALSE.equals(this.netCoreProjectFileFlag)) {
             supportingFiles.add(new SupportingFile("AssemblyInfo.mustache", packageFolder + File.separator + "Properties", "AssemblyInfo.cs"));
         }
         if (optionalProjectFileFlag) {
             supportingFiles.add(new SupportingFile("Solution.mustache", "", packageName + ".sln"));
-            supportingFiles.add(new SupportingFile("Project.mustache", packageFolder, packageName + ".csproj"));
-            if(Boolean.FALSE.equals(this.netStandard)) {
-                supportingFiles.add(new SupportingFile("nuspec.mustache", packageFolder, packageName + ".nuspec"));
+            
+            if(Boolean.TRUE.equals(this.netCoreProjectFileFlag)) {
+                supportingFiles.add(new SupportingFile("netcore_project.mustache", packageFolder, packageName + ".csproj"));
+            } else {
+                supportingFiles.add(new SupportingFile("Project.mustache", packageFolder, packageName + ".csproj"));
+                if(Boolean.FALSE.equals(this.netStandard)) {
+                    supportingFiles.add(new SupportingFile("nuspec.mustache", packageFolder, packageName + ".nuspec"));
+                }
             }
 
             if(Boolean.FALSE.equals(excludeTests)) {
                 // NOTE: This exists here rather than previous excludeTests block because the test project is considered an optional project file.
-                supportingFiles.add(new SupportingFile("TestProject.mustache", testPackageFolder, testPackageName + ".csproj"));
+                if(Boolean.TRUE.equals(this.netCoreProjectFileFlag)) {
+                    supportingFiles.add(new SupportingFile("netcore_testproject.mustache", testPackageFolder, testPackageName + ".csproj"));
+                } else {
+                    supportingFiles.add(new SupportingFile("TestProject.mustache", testPackageFolder, testPackageName + ".csproj"));
+                }
             }
         }
 
@@ -540,6 +562,9 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         if ("int?".equalsIgnoreCase(datatype) || "long?".equalsIgnoreCase(datatype) ||
             "double?".equalsIgnoreCase(datatype) || "float?".equalsIgnoreCase(datatype)) {
             return value;
+        } else if ("float?".equalsIgnoreCase(datatype)) {
+            // for float in C#, append "f". e.g. 3.14 => 3.14f
+            return value + "f";
         } else {
             return "\"" + escapeText(value) + "\"";
         }

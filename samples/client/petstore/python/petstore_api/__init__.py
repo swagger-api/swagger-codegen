@@ -22,11 +22,9 @@ from .models.array_of_array_of_number_only import ArrayOfArrayOfNumberOnly
 from .models.array_of_number_only import ArrayOfNumberOnly
 from .models.array_test import ArrayTest
 from .models.capitalization import Capitalization
-from .models.cat import Cat
 from .models.category import Category
 from .models.class_model import ClassModel
 from .models.client import Client
-from .models.dog import Dog
 from .models.enum_arrays import EnumArrays
 from .models.enum_class import EnumClass
 from .models.enum_test import EnumTest
@@ -40,12 +38,18 @@ from .models.model_return import ModelReturn
 from .models.name import Name
 from .models.number_only import NumberOnly
 from .models.order import Order
+from .models.outer_boolean import OuterBoolean
+from .models.outer_composite import OuterComposite
 from .models.outer_enum import OuterEnum
+from .models.outer_number import OuterNumber
+from .models.outer_string import OuterString
 from .models.pet import Pet
 from .models.read_only_first import ReadOnlyFirst
 from .models.special_model_name import SpecialModelName
 from .models.tag import Tag
 from .models.user import User
+from .models.cat import Cat
+from .models.dog import Dog
 
 # import apis into sdk package
 from .apis.fake_api import FakeApi

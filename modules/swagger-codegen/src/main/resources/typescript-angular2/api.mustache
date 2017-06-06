@@ -1,4 +1,6 @@
 {{>licenseInfo}}
+/* tslint:disable:no-unused-variable member-ordering */
+
 import { Inject, Injectable, Optional }                      from '@angular/core';
 import { Http, Headers, URLSearchParams }                    from '@angular/http';
 import { RequestMethod, RequestOptions, RequestOptionsArgs } from '@angular/http';
@@ -10,8 +12,9 @@ import 'rxjs/add/operator/map';
 import * as models                                           from '../model/models';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
-
-/* tslint:disable:no-unused-variable member-ordering */
+{{#withInterfaces}}
+import { {{classname}}Interface }                            from './{{classname}}Interface';
+{{/withInterfaces}}
 
 {{#operations}}
 
@@ -21,7 +24,13 @@ import { Configuration }                                     from '../configurat
  */
 {{/description}}
 @Injectable()
+{{#withInterfaces}}
+export class {{classname}} implements {{classname}}Interface {
+{{/withInterfaces}}
+{{^withInterfaces}}
 export class {{classname}} {
+{{/withInterfaces}}
+
     protected basePath = '{{{basePath}}}';
     public defaultHeaders: Headers = new Headers();
     public configuration: Configuration = new Configuration();
@@ -47,7 +56,7 @@ export class {{classname}} {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json();
+                    return response.json() || {};
                 }
             });
     }
@@ -115,7 +124,9 @@ export class {{classname}} {
         }
         {{/isListContainer}}
         {{^isListContainer}}
-        headers.set('{{baseName}}', String({{paramName}}));
+        if ({{paramName}} !== undefined && {{paramName}} !== null) {
+            headers.set('{{baseName}}', String({{paramName}}));
+        }
         {{/isListContainer}}
 
 {{/headerParams}}
@@ -204,9 +215,9 @@ export class {{classname}} {
 {{#hasFormParams}}
             body: formParams.toString(),
 {{/hasFormParams}}
-            search: queryParameters
+            search: queryParameters,
+            withCredentials:this.configuration.withCredentials
         });
-
         // https://github.com/swagger-api/swagger-codegen/issues/4037
         if (extraHttpRequestParams) {
             requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);

@@ -7,4 +7,7 @@ import javax.validation.Valid;
 
 @Controller
 public class FakeApiController implements FakeApi {
+
+
+
 }

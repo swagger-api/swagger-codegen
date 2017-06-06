@@ -4,6 +4,7 @@
 // https://github.com/swagger-api/swagger-codegen
 //
 
+import Foundation
 import Alamofire
 
 class AlamofireRequestBuilderFactory: RequestBuilderFactory {
@@ -212,7 +213,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
         }
     }
 
-    private func buildHeaders() -> [String: String] {
+    open func buildHeaders() -> [String: String] {
         var httpHeaders = SessionManager.defaultHTTPHeaders
         for (key, value) in self.headers {
             httpHeaders[key] = value

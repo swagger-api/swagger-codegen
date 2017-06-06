@@ -58,9 +58,23 @@ class EnumArrays implements ArrayAccess
         'array_enum' => 'string[]'
     ];
 
+    /**
+      * Array of property to format mappings. Used for (de)serialization
+      * @var string[]
+      */
+    protected static $swaggerFormats = [
+        'just_symbol' => null,
+        'array_enum' => null
+    ];
+
     public static function swaggerTypes()
     {
         return self::$swaggerTypes;
+    }
+
+    public static function swaggerFormats()
+    {
+        return self::$swaggerFormats;
     }
 
     /**
@@ -107,8 +121,8 @@ class EnumArrays implements ArrayAccess
         return self::$getters;
     }
 
-    const JUST_SYMBOL_ = '>=';
-    const JUST_SYMBOL_ = '$';
+    const JUST_SYMBOL_GREATER_THAN_OR_EQUAL_TO = '>=';
+    const JUST_SYMBOL_DOLLAR = '$';
     const ARRAY_ENUM_FISH = 'fish';
     const ARRAY_ENUM_CRAB = 'crab';
     
@@ -121,8 +135,8 @@ class EnumArrays implements ArrayAccess
     public function getJustSymbolAllowableValues()
     {
         return [
-            self::JUST_SYMBOL_,
-            self::JUST_SYMBOL_,
+            self::JUST_SYMBOL_GREATER_THAN_OR_EQUAL_TO,
+            self::JUST_SYMBOL_DOLLAR,
         ];
     }
     
@@ -164,9 +178,12 @@ class EnumArrays implements ArrayAccess
     {
         $invalid_properties = [];
 
-        $allowed_values = [">=", "$"];
+        $allowed_values = $this->getJustSymbolAllowableValues();
         if (!in_array($this->container['just_symbol'], $allowed_values)) {
-            $invalid_properties[] = "invalid value for 'just_symbol', must be one of '>=', '$'.";
+            $invalid_properties[] = sprintf(
+                "invalid value for 'just_symbol', must be one of '%s'",
+                implode("', '", $allowed_values)
+            );
         }
 
         return $invalid_properties;
@@ -181,7 +198,7 @@ class EnumArrays implements ArrayAccess
     public function valid()
     {
 
-        $allowed_values = [">=", "$"];
+        $allowed_values = $this->getJustSymbolAllowableValues();
         if (!in_array($this->container['just_symbol'], $allowed_values)) {
             return false;
         }
@@ -205,9 +222,14 @@ class EnumArrays implements ArrayAccess
      */
     public function setJustSymbol($just_symbol)
     {
-        $allowed_values = array('>=', '$');
-        if (!is_null($just_symbol) && (!in_array($just_symbol, $allowed_values))) {
-            throw new \InvalidArgumentException("Invalid value for 'just_symbol', must be one of '>=', '$'");
+        $allowed_values = $this->getJustSymbolAllowableValues();
+        if (!is_null($just_symbol) && !in_array($just_symbol, $allowed_values)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'just_symbol', must be one of '%s'",
+                    implode("', '", $allowed_values)
+                )
+            );
         }
         $this->container['just_symbol'] = $just_symbol;
 
@@ -230,9 +252,14 @@ class EnumArrays implements ArrayAccess
      */
     public function setArrayEnum($array_enum)
     {
-        $allowed_values = array('fish', 'crab');
-        if (!is_null($array_enum) && (array_diff($array_enum, $allowed_values))) {
-            throw new \InvalidArgumentException("Invalid value for 'array_enum', must be one of 'fish', 'crab'");
+        $allowed_values = $this->getArrayEnumAllowableValues();
+        if (!is_null($array_enum) && array_diff($array_enum, $allowed_values)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'array_enum', must be one of '%s'",
+                    implode("', '", $allowed_values)
+                )
+            );
         }
         $this->container['array_enum'] = $array_enum;
 

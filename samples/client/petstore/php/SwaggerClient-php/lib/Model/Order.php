@@ -62,9 +62,27 @@ class Order implements ArrayAccess
         'complete' => 'bool'
     ];
 
+    /**
+      * Array of property to format mappings. Used for (de)serialization
+      * @var string[]
+      */
+    protected static $swaggerFormats = [
+        'id' => 'int64',
+        'pet_id' => 'int64',
+        'quantity' => 'int32',
+        'ship_date' => 'date-time',
+        'status' => null,
+        'complete' => null
+    ];
+
     public static function swaggerTypes()
     {
         return self::$swaggerTypes;
+    }
+
+    public static function swaggerFormats()
+    {
+        return self::$swaggerFormats;
     }
 
     /**
@@ -172,9 +190,12 @@ class Order implements ArrayAccess
     {
         $invalid_properties = [];
 
-        $allowed_values = ["placed", "approved", "delivered"];
+        $allowed_values = $this->getStatusAllowableValues();
         if (!in_array($this->container['status'], $allowed_values)) {
-            $invalid_properties[] = "invalid value for 'status', must be one of 'placed', 'approved', 'delivered'.";
+            $invalid_properties[] = sprintf(
+                "invalid value for 'status', must be one of '%s'",
+                implode("', '", $allowed_values)
+            );
         }
 
         return $invalid_properties;
@@ -189,7 +210,7 @@ class Order implements ArrayAccess
     public function valid()
     {
 
-        $allowed_values = ["placed", "approved", "delivered"];
+        $allowed_values = $this->getStatusAllowableValues();
         if (!in_array($this->container['status'], $allowed_values)) {
             return false;
         }
@@ -297,9 +318,14 @@ class Order implements ArrayAccess
      */
     public function setStatus($status)
     {
-        $allowed_values = array('placed', 'approved', 'delivered');
-        if (!is_null($status) && (!in_array($status, $allowed_values))) {
-            throw new \InvalidArgumentException("Invalid value for 'status', must be one of 'placed', 'approved', 'delivered'");
+        $allowed_values = $this->getStatusAllowableValues();
+        if (!is_null($status) && !in_array($status, $allowed_values)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'status', must be one of '%s'",
+                    implode("', '", $allowed_values)
+                )
+            );
         }
         $this->container['status'] = $status;
 

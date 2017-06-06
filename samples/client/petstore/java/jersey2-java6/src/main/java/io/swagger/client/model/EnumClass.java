@@ -16,6 +16,7 @@ package io.swagger.client.model;
 import org.apache.commons.lang3.ObjectUtils;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * Gets or Sets EnumClass
@@ -32,6 +33,11 @@ public enum EnumClass {
 
   EnumClass(String value) {
     this.value = value;
+  }
+
+  @JsonValue
+  public String getValue() {
+    return value;
   }
 
   @Override

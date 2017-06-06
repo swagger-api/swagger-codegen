@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
-import java.io.IOException;
 
 import java.util.List;
 import javax.validation.constraints.*;
@@ -41,12 +40,12 @@ public interface StoreApi {
         @Authorization(value = "api_key")
     }, tags={ "store", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Integer.class) })
+        @ApiResponse(code = 200, message = "successful operation", response = Integer.class, responseContainer = "Map") })
     
     @RequestMapping(value = "/store/inventory",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    default ResponseEntity<Map<String, Integer>> getInventory() throws IOException {
+    default ResponseEntity<Map<String, Integer>> getInventory() {
         // do some magic!
         return new ResponseEntity<Map<String, Integer>>(HttpStatus.OK);
     }
@@ -55,13 +54,13 @@ public interface StoreApi {
     @ApiOperation(value = "Find purchase order by ID", notes = "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions", response = Order.class, tags={ "store", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Order.class),
-        @ApiResponse(code = 400, message = "Invalid ID supplied", response = Order.class),
-        @ApiResponse(code = 404, message = "Order not found", response = Order.class) })
+        @ApiResponse(code = 400, message = "Invalid ID supplied", response = Void.class),
+        @ApiResponse(code = 404, message = "Order not found", response = Void.class) })
     
     @RequestMapping(value = "/store/order/{order_id}",
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.GET)
-    default ResponseEntity<Order> getOrderById( @Min(1) @Max(5)@ApiParam(value = "ID of pet that needs to be fetched",required=true ) @PathVariable("order_id") Long orderId) throws IOException {
+    default ResponseEntity<Order> getOrderById( @Min(1) @Max(5)@ApiParam(value = "ID of pet that needs to be fetched",required=true ) @PathVariable("order_id") Long orderId) {
         // do some magic!
         return new ResponseEntity<Order>(HttpStatus.OK);
     }
@@ -70,12 +69,12 @@ public interface StoreApi {
     @ApiOperation(value = "Place an order for a pet", notes = "", response = Order.class, tags={ "store", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Order.class),
-        @ApiResponse(code = 400, message = "Invalid Order", response = Order.class) })
+        @ApiResponse(code = 400, message = "Invalid Order", response = Void.class) })
     
     @RequestMapping(value = "/store/order",
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.POST)
-    default ResponseEntity<Order> placeOrder(@ApiParam(value = "order placed for purchasing the pet" ,required=true )  @Valid @RequestBody Order body) throws IOException {
+    default ResponseEntity<Order> placeOrder(@ApiParam(value = "order placed for purchasing the pet" ,required=true )  @Valid @RequestBody Order body) {
         // do some magic!
         return new ResponseEntity<Order>(HttpStatus.OK);
     }
