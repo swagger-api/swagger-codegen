@@ -8,6 +8,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Http;
 import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -69,7 +70,9 @@ public class PetApiController extends Controller {
         //    status.add(pair.getValue());
         //}
         List<Pet> obj = imp.findPetsByStatus(status);
-        obj.validate();
+        for (Pet curItem : obj) {
+            curItem.validate();
+        }
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
         
@@ -84,7 +87,9 @@ public class PetApiController extends Controller {
         //    tags.add(pair.getValue());
         //}
         List<Pet> obj = imp.findPetsByTags(tags);
-        obj.validate();
+        for (Pet curItem : obj) {
+            curItem.validate();
+        }
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
         

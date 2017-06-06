@@ -7,6 +7,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Http;
 import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -132,8 +133,13 @@ public class {{classname}}Controller extends Controller {
         }{{/required}}
         {{/collectionFormat}}
         {{/headerParams}}
-        {{#returnType}}{{>returnTypesNoVoid}} obj = {{/returnType}}imp.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});{{#returnType}}{{^isPrimitiveType}}{{#useBeanValidation}}
-        obj.validate();{{/useBeanValidation}}{{/isPrimitiveType}}{{/returnType}}
+        {{#returnType}}{{>returnTypesNoVoid}} obj = {{/returnType}}imp.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});{{#returnType}}{{^returnTypeIsPrimitive}}{{#useBeanValidation}}
+        {{#isListContainer}}for ({{{returnType}}} curItem : obj) {
+            curItem.validate();
+        }{{/isListContainer}}{{#isMapContainer}}for (Map.Entry<String, {{{returnType}}}> entry : obj.entrySet()) {
+            entry.getValue().validate();
+        }
+        {{/isMapContainer}}{{^returnContainer}}obj.validate();{{/returnContainer}}{{/useBeanValidation}}{{/returnTypeIsPrimitive}}{{/returnType}}
         {{#returnType}}{{^isResponseFile}}JsonNode result = mapper.valueToTree(obj);
         return ok(result);{{/isResponseFile}}{{#isResponseFile}}return ok(obj);{{/isResponseFile}}{{/returnType}}
         {{^returnType}}return ok();{{/returnType}}
