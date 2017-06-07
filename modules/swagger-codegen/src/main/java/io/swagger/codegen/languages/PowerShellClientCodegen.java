@@ -347,6 +347,12 @@ public class PowerShellClientCodegen extends DefaultCodegen implements CodegenCo
         return camelize(name);
     }
 
+    @Override
+    public String toModelFilename(String name) {
+        // should be the same as the model name
+        return "New-" + toModelName(name);
+    }
+
     /**
      * returns the swagger type for the property
      *
