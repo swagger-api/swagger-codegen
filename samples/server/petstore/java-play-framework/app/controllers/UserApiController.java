@@ -39,6 +39,7 @@ public class UserApiController extends Controller {
         User body;
 
         body = mapper.readValue(nodebody.toString(), User.class);
+        body.validate();
 
         imp.createUser(body);
         
@@ -50,7 +51,10 @@ public class UserApiController extends Controller {
         JsonNode nodebody = request().body().asJson();
         List<User> body;
 
-        body = mapper.readValue(nodebody.toString(), new TypeReference<List<List<User>>>(){});
+        body = mapper.readValue(nodebody.toString(), new TypeReference<List<User>>(){});
+        for (User curItem : body) {
+            curItem.validate();
+        }
 
         imp.createUsersWithArrayInput(body);
         
@@ -62,7 +66,10 @@ public class UserApiController extends Controller {
         JsonNode nodebody = request().body().asJson();
         List<User> body;
 
-        body = mapper.readValue(nodebody.toString(), new TypeReference<List<List<User>>>(){});
+        body = mapper.readValue(nodebody.toString(), new TypeReference<List<User>>(){});
+        for (User curItem : body) {
+            curItem.validate();
+        }
 
         imp.createUsersWithListInput(body);
         
@@ -116,6 +123,7 @@ public class UserApiController extends Controller {
         User body;
 
         body = mapper.readValue(nodebody.toString(), User.class);
+        body.validate();
 
         imp.updateUser(username, body);
         

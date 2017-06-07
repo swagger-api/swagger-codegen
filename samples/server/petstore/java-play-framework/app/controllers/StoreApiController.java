@@ -63,6 +63,7 @@ public class StoreApiController extends Controller {
         Order body;
 
         body = mapper.readValue(nodebody.toString(), Order.class);
+        body.validate();
 
         Order obj = imp.placeOrder(body);
         obj.validate();

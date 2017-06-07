@@ -40,6 +40,7 @@ public class PetApiController extends Controller {
         Pet body;
 
         body = mapper.readValue(nodebody.toString(), Pet.class);
+        body.validate();
 
         imp.addPet(body);
         
@@ -110,6 +111,7 @@ public class PetApiController extends Controller {
         Pet body;
 
         body = mapper.readValue(nodebody.toString(), Pet.class);
+        body.validate();
 
         imp.updatePet(body);
         
