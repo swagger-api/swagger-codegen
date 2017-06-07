@@ -18,9 +18,9 @@ open class PetAPI: APIBase {
      - parameter body: (body) Pet object that needs to be added to the store 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func addPet(body: Pet, completion: @escaping ((_ error: Error?) -> Void)) {
+    open class func addPet(body: Pet, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
         addPetWithRequestBuilder(body: body).execute { (response, error) -> Void in
-            completion(error);
+            completion(error)
         }
     }
 
@@ -74,9 +74,9 @@ open class PetAPI: APIBase {
      - parameter apiKey: (header)  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deletePet(petId: Int64, apiKey: String? = nil, completion: @escaping ((_ error: Error?) -> Void)) {
+    open class func deletePet(petId: Int64, apiKey: String? = nil, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
         deletePetWithRequestBuilder(petId: petId, apiKey: apiKey).execute { (response, error) -> Void in
-            completion(error);
+            completion(error)
         }
     }
 
@@ -145,9 +145,9 @@ open class PetAPI: APIBase {
      - parameter status: (query) Status values that need to be considered for filter 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func findPetsByStatus(status: [String], completion: @escaping ((_ data: [Pet]?,_ error: Error?) -> Void)) {
+    open class func findPetsByStatus(status: [String], completion: @escaping ((_ data: [Pet]?, _ error: ErrorResponse?) -> Void)) {
         findPetsByStatusWithRequestBuilder(status: status).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -249,9 +249,9 @@ open class PetAPI: APIBase {
      - parameter tags: (query) Tags to filter by 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func findPetsByTags(tags: [String], completion: @escaping ((_ data: [Pet]?,_ error: Error?) -> Void)) {
+    open class func findPetsByTags(tags: [String], completion: @escaping ((_ data: [Pet]?, _ error: ErrorResponse?) -> Void)) {
         findPetsByTagsWithRequestBuilder(tags: tags).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -353,9 +353,9 @@ open class PetAPI: APIBase {
      - parameter petId: (path) ID of pet to return 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getPetById(petId: Int64, completion: @escaping ((_ data: Pet?,_ error: Error?) -> Void)) {
+    open class func getPetById(petId: Int64, completion: @escaping ((_ data: Pet?, _ error: ErrorResponse?) -> Void)) {
         getPetByIdWithRequestBuilder(petId: petId).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
@@ -455,9 +455,9 @@ open class PetAPI: APIBase {
      - parameter body: (body) Pet object that needs to be added to the store 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func updatePet(body: Pet, completion: @escaping ((_ error: Error?) -> Void)) {
+    open class func updatePet(body: Pet, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
         updatePetWithRequestBuilder(body: body).execute { (response, error) -> Void in
-            completion(error);
+            completion(error)
         }
     }
 
@@ -512,9 +512,9 @@ open class PetAPI: APIBase {
      - parameter status: (form) Updated status of the pet (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func updatePetWithForm(petId: Int64, name: String? = nil, status: String? = nil, completion: @escaping ((_ error: Error?) -> Void)) {
+    open class func updatePetWithForm(petId: Int64, name: String? = nil, status: String? = nil, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
         updatePetWithFormWithRequestBuilder(petId: petId, name: name, status: status).execute { (response, error) -> Void in
-            completion(error);
+            completion(error)
         }
     }
 
@@ -580,9 +580,9 @@ open class PetAPI: APIBase {
      - parameter file: (form) file to upload (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func uploadFile(petId: Int64, additionalMetadata: String? = nil, file: URL? = nil, completion: @escaping ((_ data: ApiResponse?,_ error: Error?) -> Void)) {
+    open class func uploadFile(petId: Int64, additionalMetadata: String? = nil, file: URL? = nil, completion: @escaping ((_ data: ApiResponse?, _ error: ErrorResponse?) -> Void)) {
         uploadFileWithRequestBuilder(petId: petId, additionalMetadata: additionalMetadata, file: file).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(response?.body, error)
         }
     }
 
