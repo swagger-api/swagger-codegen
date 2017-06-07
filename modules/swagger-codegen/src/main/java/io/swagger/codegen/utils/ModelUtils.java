@@ -9,8 +9,6 @@ public class ModelUtils {
     /**
      * Searches for the model by name in the map of models and returns it
      *
-     * @Param name Name of the model
-     * @Param models Map of models
      * @return model
      */
     public static CodegenModel getModelByName(final String name, final Map<String, Object> models) {
