@@ -29,7 +29,7 @@ then rm -rf intouch_api/php_client/php
   -l php \
   -o intouch_api/php_client/php
   tar cvzf intouch_api/php_client/php_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/php_client/php/ .
-  fpm -s dir -t deb -n swagger-php-sdk -v $BUILD_NUMBER -C ./intouch_api/php_client/php/ --deb-no-default-config-files
+  fpm -f -s "dir" -t "deb" -a "all" -n "swagger-sdk" -v $BUILD_NUMBER -C ./intouch_api/php_client --deb-no-default-config-files  php="/usr/share/php/capillary-libs/swagger-sdk"
 elif [ "$Client" = "nodejs" ]
 then rm -rf intouch_api/nodejs_client
 	mkdir -p intouch_api/nodejs_client/
