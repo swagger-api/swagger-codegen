@@ -469,9 +469,10 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
     private String fixOperatorChars(String string) {
         StringBuilder sb = new StringBuilder();
         for (char c : string.toCharArray()) {
-            if (specialCharReplacements.containsKey(c)) {
+            String cString = String.valueOf(c);
+            if (specialCharReplacements.containsKey(cString)) {
                 sb.append("'");
-                sb.append(specialCharReplacements.get(c));
+                sb.append(specialCharReplacements.get(cString));
             } else {
                 sb.append(c);
             }
