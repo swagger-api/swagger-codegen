@@ -65,22 +65,22 @@ public class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{{#parcela
     return this;
   }
   {{/isMapContainer}}
-
   {{/isReadOnly}}
-   /**
-  {{#description}}
-   * {{{description}}}
-  {{/description}}
-  {{^description}}
-   * Get {{name}}
-  {{/description}}
-  {{#minimum}}
-   * minimum: {{minimum}}
-  {{/minimum}}
-  {{#maximum}}
-   * maximum: {{maximum}}
-  {{/maximum}}
-   * @return {{name}}
+  
+  /**
+{{#description}}
+  * {{{description}}}
+{{/description}}
+{{^description}}
+  * Get {{name}}
+{{/description}}
+{{#minimum}}
+  * minimum: {{minimum}}
+{{/minimum}}
+{{#maximum}}
+  * maximum: {{maximum}}
+{{/maximum}}
+  * @return {{name}}
   **/
 {{#useBeanValidation}}{{>beanValidation}}{{/useBeanValidation}}  @ApiModelProperty({{#example}}example = "{{{example}}}", {{/example}}{{#required}}required = {{required}}, {{/required}}value = "{{{description}}}")
 {{#vendorExtensions.extraAnnotation}}
