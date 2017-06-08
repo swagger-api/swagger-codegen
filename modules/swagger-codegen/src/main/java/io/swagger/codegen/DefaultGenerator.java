@@ -27,9 +27,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     protected ClientOptInput opts;
     protected Swagger swagger;
     protected CodegenIgnoreProcessor ignoreProcessor;
-    private Boolean generateApis = null;
-    private Boolean generateModels = null;
-    private Boolean generateSupportingFiles = null;
+    private boolean generateApis;
+    private boolean generateModels;
+    private boolean generateSupportingFiles;
     private Boolean generateApiTests = null;
     private Boolean generateApiDocumentation = null;
     private Boolean generateModelTests = null;
@@ -88,33 +88,56 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         return hostBuilder.toString();
     }
 
+    /**
+     * Checks whether a system property is set.
+     * "System property" here means a value in the systemProperty map of {@code opts}.
+     * 
+     * @param name the name of the property.
+     * @return {@code true} if the property is set, otherwise false.
+     */
+    private boolean isSystemPropertySet(String name) {
+        return opts.getSystemProperties().get(name) != null;
+    }
+
+    /**
+     * Returns the value of the "system property" as a boolean, with default {@code true}.
+     * "System property" here means a value in the systemProperty map of {@code opts}.
+     * 
+     * @param name The name of the system property.
+     * @return {@code true} if the property is not set, or if the value is (case-insensitive) "true", otherwise {@code false}.
+     */
+    private boolean getSystemPropertyAsBoolean(String name) {
+        String value = opts.getSystemProperties().get(name);
+        return value == null || Boolean.valueOf(value);
+    }
+
+    private Set<String> getSystemPropertyAsStringSet(String name) {
+        String value = opts.getSystemProperties().get(name);
+        if (value != null && !value.isEmpty()) {
+            return new HashSet<String>(Arrays.asList(value.split(",")));
+        } else {
+            return null;
+        }
+    }
+
     private void configureGeneratorProperties() {
 
         // allows generating only models by specifying a CSV of models to generate, or empty for all
-        generateApis = System.getProperty("apis") != null ? true:null;
-        generateModels = System.getProperty("models") != null ? true: null;
-        generateSupportingFiles = System.getProperty("supportingFiles") != null ? true:null;
 
-        if (generateApis == null && generateModels == null && generateSupportingFiles == null) {
+        generateApis = isSystemPropertySet("apis");
+        generateModels = isSystemPropertySet("models");
+        generateSupportingFiles = isSystemPropertySet("supportingFiles");
+
+        if (!generateApis && !generateModels && !generateSupportingFiles) {
             // no specifics are set, generate everything
             generateApis = generateModels = generateSupportingFiles = true;
-        } else {
-            if(generateApis == null) {
-                generateApis = false;
-            }
-            if(generateModels == null) {
-                generateModels = false;
-            }
-            if(generateSupportingFiles == null) {
-                generateSupportingFiles = false;
-            }
         }
         // model/api tests and documentation options rely on parent generate options (api or model) and no other options.
         // They default to true in all scenarios and can only be marked false explicitly
-        generateModelTests = System.getProperty("modelTests") != null ? Boolean.valueOf(System.getProperty("modelTests")): true;
-        generateModelDocumentation = System.getProperty("modelDocs") != null ? Boolean.valueOf(System.getProperty("modelDocs")):true;
-        generateApiTests = System.getProperty("apiTests") != null ? Boolean.valueOf(System.getProperty("apiTests")): true;
-        generateApiDocumentation = System.getProperty("apiDocs") != null ? Boolean.valueOf(System.getProperty("apiDocs")):true;
+        generateModelTests = getSystemPropertyAsBoolean("modelTests");
+        generateModelDocumentation = getSystemPropertyAsBoolean("modelDocs");
+        generateApiTests = getSystemPropertyAsBoolean("apiTests");
+        generateApiDocumentation = getSystemPropertyAsBoolean("apiDocs");
 
 
         // Additional properties added for tests to exclude references in project related files
@@ -127,7 +150,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         if(!generateApiTests && !generateModelTests) {
             config.additionalProperties().put(CodegenConstants.EXCLUDE_TESTS, true);
         }
-        if (System.getProperty("debugSwagger") != null) {
+        if (isSystemPropertySet("debugSwagger")) {
             Json.prettyPrint(swagger);
         }
         config.processOpts();
@@ -241,11 +264,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             return;
         }
 
-        String modelNames = System.getProperty("models");
-        Set<String> modelsToGenerate = null;
-        if(modelNames != null && !modelNames.isEmpty()) {
-            modelsToGenerate = new HashSet<String>(Arrays.asList(modelNames.split(",")));
-        }
+        Set<String> modelsToGenerate = getSystemPropertyAsStringSet("models");
 
         Set<String> modelKeys = definitions.keySet();
         if(modelsToGenerate != null && !modelsToGenerate.isEmpty()) {
@@ -374,7 +393,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 throw new RuntimeException("Could not generate model '" + modelName + "'", e);
             }
         }
-        if (System.getProperty("debugModels") != null) {
+        if (isSystemPropertySet("debugModels")) {
             LOGGER.info("############ Model info ############");
             Json.prettyPrint(allModels);
         }
@@ -386,11 +405,8 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             return;
         }
         Map<String, List<CodegenOperation>> paths = processPaths(swagger.getPaths());
-        Set<String> apisToGenerate = null;
-        String apiNames = System.getProperty("apis");
-        if(apiNames != null && !apiNames.isEmpty()) {
-            apisToGenerate = new HashSet<String>(Arrays.asList(apiNames.split(",")));
-        }
+        Set<String> apisToGenerate = getSystemPropertyAsStringSet("apis");
+
         if(apisToGenerate != null && !apisToGenerate.isEmpty()) {
             Map<String, List<CodegenOperation>> updatedPaths = new TreeMap<String, List<CodegenOperation>>();
             for(String m : paths.keySet()) {
@@ -495,7 +511,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 throw new RuntimeException("Could not generate api file for '" + tag + "'", e);
             }
         }
-        if (System.getProperty("debugOperations") != null) {
+        if (isSystemPropertySet("debugOperations")) {
             LOGGER.info("############ Operation info ############");
             Json.prettyPrint(allOperations);
         }
@@ -506,11 +522,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         if (!generateSupportingFiles) {
             return;
         }
-        Set<String> supportingFilesToGenerate = null;
-        String supportingFiles = System.getProperty("supportingFiles");
-        if(supportingFiles!= null && !supportingFiles.isEmpty()) {
-            supportingFilesToGenerate = new HashSet<String>(Arrays.asList(supportingFiles.split(",")));
-        }
+        Set<String> supportingFilesToGenerate = getSystemPropertyAsStringSet("supportingFiles");
 
         for (SupportingFile support : config.supportingFiles()) {
             try {
@@ -671,7 +683,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
         config.postProcessSupportingFileData(bundle);
 
-        if (System.getProperty("debugSupportingFiles") != null) {
+        if(isSystemPropertySet("debugSupportingFiles")) {
             LOGGER.info("############ Supporting file info ############");
             Json.prettyPrint(bundle);
         }
@@ -773,7 +785,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         if (operation == null) {
             return;
         }
-        if (System.getProperty("debugOperations") != null) {
+        if (isSystemPropertySet("debugOperations")) {
             LOGGER.info("processOperation: resourcePath= " + resourcePath + "\t;" + httpMethod + " " + operation + "\n");
         }
         List<String> tags = operation.getTags();
@@ -785,7 +797,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
          build up a set of parameter "ids" defined at the operation level
          per the swagger 2.0 spec "A unique parameter is defined by a combination of a name and location"
           i'm assuming "location" == "in"
-        */
+         */
         Set<String> operationParameters = new HashSet<String>();
         if (operation.getParameters() != null) {
             for (Parameter parameter : operation.getParameters()) {

@@ -1,8 +1,9 @@
 package io.swagger.codegen.statichtml;
 
+import static java.util.Collections.singletonMap;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -44,7 +45,7 @@ public class StaticHtmlTagsTest {
     public void tearDown() throws Exception {
         folder.delete();
     }
-    
+
     @Test 
     public void testApiTags() throws Exception {
         final Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/petstore.json");
@@ -52,10 +53,10 @@ public class StaticHtmlTagsTest {
         final int maxTagsToTest = 2; // how to flip it randomly from 2 to 1, and shuffle ops?
         // if an op has a few tags it will be duplicated here, but it's exactly what we expect in doc
         final List<Operation> expectedOperations = new ArrayList<Operation>();
-        
+
         final String capitalCommatizedTags = pickupFewTagsAndOps(swagger,
                 maxTagsToTest, expectedOperations);
-        
+
         final Collection<Object> seenOperations = new ArrayList<Object>();
         CodegenConfig codegenConfig =  new StaticHtmlGenerator(){ // new StaticDocCodegen(){
             public  Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs)  {
@@ -65,29 +66,25 @@ public class StaticHtmlTagsTest {
                 assertEquals(actualOperations.size(), expectedOperations.size(), 
                         "Expectig the same size of ops for -Dapis="+capitalCommatizedTags +
                         " in fact, actual "+actualOperations+" doesn't seem like expecting " 
-                                + expectedOperations);
+                        + expectedOperations);
                 return objs;
             }
         };
         codegenConfig.setOutputDir(folder.getRoot().getAbsolutePath());
-            
-        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger)
-                .config(codegenConfig);
 
-        final String apisBackup = System.setProperty("apis", capitalCommatizedTags);
-        try {
-            DefaultGenerator gen = new DefaultGenerator();
-            gen.opts(clientOptInput);
-            gen.generate();
-            assertEquals(seenOperations.isEmpty(), false, 
-                    "something has been changed in code and now code bypass the mock above...");
-        } finally {
-            if (apisBackup!=null) {
-                System.setProperty("apis", apisBackup);
-            }else{
-                System.clearProperty("apis");  
-            }
-        }
+        final ClientOptInput clientOptInput =
+                new ClientOptInput()
+                .opts(new ClientOpts())
+                .swagger(swagger)
+                .config(codegenConfig)
+                .systemProperties(singletonMap("apis", capitalCommatizedTags));
+
+
+        new DefaultGenerator()
+            .opts(clientOptInput)
+            .generate();
+        assertFalse(seenOperations.isEmpty(),  
+                "something has been changed in code and now code bypass the mock above...");
     }
 
     protected String pickupFewTagsAndOps(final Swagger swagger,
@@ -107,19 +104,19 @@ public class StaticHtmlTagsTest {
                 }
             }
         }
-        
+
         final String capitalCommatizedTags = StringUtils.join(
                 Lists.transform(Lists.newArrayList(expectedTags), 
                         new Function<String, String>() { 
-            @Nullable
-            @Override
-            public String apply(final String input) {
-                return StringUtils.capitalize(input);
-            }
-        }), ",");
+                    @Nullable
+                    @Override
+                    public String apply(final String input) {
+                        return StringUtils.capitalize(input);
+                    }
+                }), ",");
         return capitalCommatizedTags;
     }
-    
+
     @SuppressWarnings({ "rawtypes", "unchecked" })
     protected static Collection getOperations(Map<String, Object> objs) {
         final ArrayList rez = new ArrayList();
@@ -127,7 +124,7 @@ public class StaticHtmlTagsTest {
         for(Object apiElem : ((List)apiInfo.get("apis"))){ 
             Map<String, Object> api = (Map<String, Object>) apiElem;
             rez.addAll( (Collection) // what if the same op goes on two tags??
-            ((Map)api.get("operations")).get("operation"));
+                    ((Map)api.get("operations")).get("operation"));
         }
         return rez;
     }
