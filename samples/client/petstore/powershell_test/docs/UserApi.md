@@ -4,19 +4,19 @@ All URIs are relative to *http://petstore.swagger.io/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createUser**](UserApi.md#createuser) | **POST** /user | Create user
-[**createUsersWithArrayInput**](UserApi.md#createuserswitharrayinput) | **POST** /user/createWithArray | Creates list of users with given input array
-[**createUsersWithListInput**](UserApi.md#createuserswithlistinput) | **POST** /user/createWithList | Creates list of users with given input array
-[**deleteUser**](UserApi.md#deleteuser) | **DELETE** /user/{username} | Delete user
-[**getUserByName**](UserApi.md#getuserbyname) | **GET** /user/{username} | Get user by user name
-[**loginUser**](UserApi.md#loginuser) | **GET** /user/login | Logs user into the system
-[**logoutUser**](UserApi.md#logoutuser) | **GET** /user/logout | Logs out current logged in user session
-[**updateUser**](UserApi.md#updateuser) | **PUT** /user/{username} | Updated user
+[**CreateUser**](UserApi.md#createuser) | **POST** /user | Create user
+[**CreateUsersWithArrayInput**](UserApi.md#createuserswitharrayinput) | **POST** /user/createWithArray | Creates list of users with given input array
+[**CreateUsersWithListInput**](UserApi.md#createuserswithlistinput) | **POST** /user/createWithList | Creates list of users with given input array
+[**DeleteUser**](UserApi.md#deleteuser) | **DELETE** /user/{username} | Delete user
+[**GetUserByName**](UserApi.md#getuserbyname) | **GET** /user/{username} | Get user by user name
+[**LoginUser**](UserApi.md#loginuser) | **GET** /user/login | Logs user into the system
+[**LogoutUser**](UserApi.md#logoutuser) | **GET** /user/logout | Logs out current logged in user session
+[**UpdateUser**](UserApi.md#updateuser) | **PUT** /user/{username} | Updated user
 
 
 <a name="createuser"></a>
-# **createUser**
-> void createUser (User body)
+# **CreateUser**
+> void CreateUser (User body)
 
 Create user
 
@@ -32,7 +32,7 @@ using IO.Swagger.IO.Swagger/Model;
 
 namespace Example
 {
-    public class createUserExample
+    public class CreateUserExample
     {
         public void main()
         {
@@ -42,11 +42,11 @@ namespace Example
             try
             {
                 // Create user
-                apiInstance.createUser(body);
+                apiInstance.CreateUser(body);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling UserApi.createUser: " + e.Message );
+                Debug.Print("Exception when calling UserApi.CreateUser: " + e.Message );
             }
         }
     }
@@ -75,8 +75,8 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="createuserswitharrayinput"></a>
-# **createUsersWithArrayInput**
-> void createUsersWithArrayInput ([IO.Swagger.Model.User] body)
+# **CreateUsersWithArrayInput**
+> void CreateUsersWithArrayInput ([IO.Swagger.Model.User] body)
 
 Creates list of users with given input array
 
@@ -92,7 +92,7 @@ using IO.Swagger.IO.Swagger/Model;
 
 namespace Example
 {
-    public class createUsersWithArrayInputExample
+    public class CreateUsersWithArrayInputExample
     {
         public void main()
         {
@@ -102,11 +102,11 @@ namespace Example
             try
             {
                 // Creates list of users with given input array
-                apiInstance.createUsersWithArrayInput(body);
+                apiInstance.CreateUsersWithArrayInput(body);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling UserApi.createUsersWithArrayInput: " + e.Message );
+                Debug.Print("Exception when calling UserApi.CreateUsersWithArrayInput: " + e.Message );
             }
         }
     }
@@ -135,8 +135,8 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="createuserswithlistinput"></a>
-# **createUsersWithListInput**
-> void createUsersWithListInput ([IO.Swagger.Model.User] body)
+# **CreateUsersWithListInput**
+> void CreateUsersWithListInput ([IO.Swagger.Model.User] body)
 
 Creates list of users with given input array
 
@@ -152,7 +152,7 @@ using IO.Swagger.IO.Swagger/Model;
 
 namespace Example
 {
-    public class createUsersWithListInputExample
+    public class CreateUsersWithListInputExample
     {
         public void main()
         {
@@ -162,11 +162,11 @@ namespace Example
             try
             {
                 // Creates list of users with given input array
-                apiInstance.createUsersWithListInput(body);
+                apiInstance.CreateUsersWithListInput(body);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling UserApi.createUsersWithListInput: " + e.Message );
+                Debug.Print("Exception when calling UserApi.CreateUsersWithListInput: " + e.Message );
             }
         }
     }
@@ -195,8 +195,8 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="deleteuser"></a>
-# **deleteUser**
-> void deleteUser (String username)
+# **DeleteUser**
+> void DeleteUser (String username)
 
 Delete user
 
@@ -212,7 +212,7 @@ using IO.Swagger.IO.Swagger/Model;
 
 namespace Example
 {
-    public class deleteUserExample
+    public class DeleteUserExample
     {
         public void main()
         {
@@ -222,11 +222,11 @@ namespace Example
             try
             {
                 // Delete user
-                apiInstance.deleteUser(username);
+                apiInstance.DeleteUser(username);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling UserApi.deleteUser: " + e.Message );
+                Debug.Print("Exception when calling UserApi.DeleteUser: " + e.Message );
             }
         }
     }
@@ -255,8 +255,8 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="getuserbyname"></a>
-# **getUserByName**
-> IO.Swagger.Model.User getUserByName (String username)
+# **GetUserByName**
+> IO.Swagger.Model.User GetUserByName (String username)
 
 Get user by user name
 
@@ -272,7 +272,7 @@ using IO.Swagger.IO.Swagger/Model;
 
 namespace Example
 {
-    public class getUserByNameExample
+    public class GetUserByNameExample
     {
         public void main()
         {
@@ -282,12 +282,12 @@ namespace Example
             try
             {
                 // Get user by user name
-                IO.Swagger.Model.User result = apiInstance.getUserByName(username);
+                IO.Swagger.Model.User result = apiInstance.GetUserByName(username);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling UserApi.getUserByName: " + e.Message );
+                Debug.Print("Exception when calling UserApi.GetUserByName: " + e.Message );
             }
         }
     }
@@ -316,8 +316,8 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="loginuser"></a>
-# **loginUser**
-> String loginUser (String username, String password)
+# **LoginUser**
+> String LoginUser (String username, String password)
 
 Logs user into the system
 
@@ -333,7 +333,7 @@ using IO.Swagger.IO.Swagger/Model;
 
 namespace Example
 {
-    public class loginUserExample
+    public class LoginUserExample
     {
         public void main()
         {
@@ -344,12 +344,12 @@ namespace Example
             try
             {
                 // Logs user into the system
-                String result = apiInstance.loginUser(username, password);
+                String result = apiInstance.LoginUser(username, password);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling UserApi.loginUser: " + e.Message );
+                Debug.Print("Exception when calling UserApi.LoginUser: " + e.Message );
             }
         }
     }
@@ -379,8 +379,8 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="logoutuser"></a>
-# **logoutUser**
-> void logoutUser ()
+# **LogoutUser**
+> void LogoutUser ()
 
 Logs out current logged in user session
 
@@ -396,7 +396,7 @@ using IO.Swagger.IO.Swagger/Model;
 
 namespace Example
 {
-    public class logoutUserExample
+    public class LogoutUserExample
     {
         public void main()
         {
@@ -405,11 +405,11 @@ namespace Example
             try
             {
                 // Logs out current logged in user session
-                apiInstance.logoutUser();
+                apiInstance.LogoutUser();
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling UserApi.logoutUser: " + e.Message );
+                Debug.Print("Exception when calling UserApi.LogoutUser: " + e.Message );
             }
         }
     }
@@ -435,8 +435,8 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="updateuser"></a>
-# **updateUser**
-> void updateUser (String username, User body)
+# **UpdateUser**
+> void UpdateUser (String username, User body)
 
 Updated user
 
@@ -452,7 +452,7 @@ using IO.Swagger.IO.Swagger/Model;
 
 namespace Example
 {
-    public class updateUserExample
+    public class UpdateUserExample
     {
         public void main()
         {
@@ -463,11 +463,11 @@ namespace Example
             try
             {
                 // Updated user
-                apiInstance.updateUser(username, body);
+                apiInstance.UpdateUser(username, body);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling UserApi.updateUser: " + e.Message );
+                Debug.Print("Exception when calling UserApi.UpdateUser: " + e.Message );
             }
         }
     }

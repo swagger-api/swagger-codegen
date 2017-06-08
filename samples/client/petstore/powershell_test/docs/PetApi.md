@@ -4,19 +4,19 @@ All URIs are relative to *http://petstore.swagger.io/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**addPet**](PetApi.md#addpet) | **POST** /pet | Add a new pet to the store
-[**deletePet**](PetApi.md#deletepet) | **DELETE** /pet/{petId} | Deletes a pet
-[**findPetsByStatus**](PetApi.md#findpetsbystatus) | **GET** /pet/findByStatus | Finds Pets by status
-[**findPetsByTags**](PetApi.md#findpetsbytags) | **GET** /pet/findByTags | Finds Pets by tags
-[**getPetById**](PetApi.md#getpetbyid) | **GET** /pet/{petId} | Find pet by ID
-[**updatePet**](PetApi.md#updatepet) | **PUT** /pet | Update an existing pet
-[**updatePetWithForm**](PetApi.md#updatepetwithform) | **POST** /pet/{petId} | Updates a pet in the store with form data
-[**uploadFile**](PetApi.md#uploadfile) | **POST** /pet/{petId}/uploadImage | uploads an image
+[**AddPet**](PetApi.md#addpet) | **POST** /pet | Add a new pet to the store
+[**DeletePet**](PetApi.md#deletepet) | **DELETE** /pet/{petId} | Deletes a pet
+[**FindPetsByStatus**](PetApi.md#findpetsbystatus) | **GET** /pet/findByStatus | Finds Pets by status
+[**FindPetsByTags**](PetApi.md#findpetsbytags) | **GET** /pet/findByTags | Finds Pets by tags
+[**GetPetById**](PetApi.md#getpetbyid) | **GET** /pet/{petId} | Find pet by ID
+[**UpdatePet**](PetApi.md#updatepet) | **PUT** /pet | Update an existing pet
+[**UpdatePetWithForm**](PetApi.md#updatepetwithform) | **POST** /pet/{petId} | Updates a pet in the store with form data
+[**UploadFile**](PetApi.md#uploadfile) | **POST** /pet/{petId}/uploadImage | uploads an image
 
 
 <a name="addpet"></a>
-# **addPet**
-> void addPet (Pet body)
+# **AddPet**
+> void AddPet (Pet body)
 
 Add a new pet to the store
 
@@ -32,7 +32,7 @@ using IO.Swagger.IO.Swagger/Model;
 
 namespace Example
 {
-    public class addPetExample
+    public class AddPetExample
     {
         public void main()
         {
@@ -45,11 +45,11 @@ namespace Example
             try
             {
                 // Add a new pet to the store
-                apiInstance.addPet(body);
+                apiInstance.AddPet(body);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling PetApi.addPet: " + e.Message );
+                Debug.Print("Exception when calling PetApi.AddPet: " + e.Message );
             }
         }
     }
@@ -78,8 +78,8 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="deletepet"></a>
-# **deletePet**
-> void deletePet (Int64 petId, String apiKey)
+# **DeletePet**
+> void DeletePet (Int64 petId, String apiKey)
 
 Deletes a pet
 
@@ -95,7 +95,7 @@ using IO.Swagger.IO.Swagger/Model;
 
 namespace Example
 {
-    public class deletePetExample
+    public class DeletePetExample
     {
         public void main()
         {
@@ -109,11 +109,11 @@ namespace Example
             try
             {
                 // Deletes a pet
-                apiInstance.deletePet(petId, apiKey);
+                apiInstance.DeletePet(petId, apiKey);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling PetApi.deletePet: " + e.Message );
+                Debug.Print("Exception when calling PetApi.DeletePet: " + e.Message );
             }
         }
     }
@@ -143,8 +143,8 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="findpetsbystatus"></a>
-# **findPetsByStatus**
-> [IO.Swagger.Model.Pet] findPetsByStatus ([String] status)
+# **FindPetsByStatus**
+> [IO.Swagger.Model.Pet] FindPetsByStatus ([String] status)
 
 Finds Pets by status
 
@@ -160,7 +160,7 @@ using IO.Swagger.IO.Swagger/Model;
 
 namespace Example
 {
-    public class findPetsByStatusExample
+    public class FindPetsByStatusExample
     {
         public void main()
         {
@@ -173,12 +173,12 @@ namespace Example
             try
             {
                 // Finds Pets by status
-                [IO.Swagger.Model.Pet] result = apiInstance.findPetsByStatus(status);
+                [IO.Swagger.Model.Pet] result = apiInstance.FindPetsByStatus(status);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling PetApi.findPetsByStatus: " + e.Message );
+                Debug.Print("Exception when calling PetApi.FindPetsByStatus: " + e.Message );
             }
         }
     }
@@ -207,8 +207,8 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="findpetsbytags"></a>
-# **findPetsByTags**
-> [IO.Swagger.Model.Pet] findPetsByTags ([String] tags)
+# **FindPetsByTags**
+> [IO.Swagger.Model.Pet] FindPetsByTags ([String] tags)
 
 Finds Pets by tags
 
@@ -224,7 +224,7 @@ using IO.Swagger.IO.Swagger/Model;
 
 namespace Example
 {
-    public class findPetsByTagsExample
+    public class FindPetsByTagsExample
     {
         public void main()
         {
@@ -237,12 +237,12 @@ namespace Example
             try
             {
                 // Finds Pets by tags
-                [IO.Swagger.Model.Pet] result = apiInstance.findPetsByTags(tags);
+                [IO.Swagger.Model.Pet] result = apiInstance.FindPetsByTags(tags);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling PetApi.findPetsByTags: " + e.Message );
+                Debug.Print("Exception when calling PetApi.FindPetsByTags: " + e.Message );
             }
         }
     }
@@ -271,8 +271,8 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="getpetbyid"></a>
-# **getPetById**
-> IO.Swagger.Model.Pet getPetById (Int64 petId)
+# **GetPetById**
+> IO.Swagger.Model.Pet GetPetById (Int64 petId)
 
 Find pet by ID
 
@@ -288,7 +288,7 @@ using IO.Swagger.IO.Swagger/Model;
 
 namespace Example
 {
-    public class getPetByIdExample
+    public class GetPetByIdExample
     {
         public void main()
         {
@@ -303,12 +303,12 @@ namespace Example
             try
             {
                 // Find pet by ID
-                IO.Swagger.Model.Pet result = apiInstance.getPetById(petId);
+                IO.Swagger.Model.Pet result = apiInstance.GetPetById(petId);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling PetApi.getPetById: " + e.Message );
+                Debug.Print("Exception when calling PetApi.GetPetById: " + e.Message );
             }
         }
     }
@@ -337,8 +337,8 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="updatepet"></a>
-# **updatePet**
-> void updatePet (Pet body)
+# **UpdatePet**
+> void UpdatePet (Pet body)
 
 Update an existing pet
 
@@ -354,7 +354,7 @@ using IO.Swagger.IO.Swagger/Model;
 
 namespace Example
 {
-    public class updatePetExample
+    public class UpdatePetExample
     {
         public void main()
         {
@@ -367,11 +367,11 @@ namespace Example
             try
             {
                 // Update an existing pet
-                apiInstance.updatePet(body);
+                apiInstance.UpdatePet(body);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling PetApi.updatePet: " + e.Message );
+                Debug.Print("Exception when calling PetApi.UpdatePet: " + e.Message );
             }
         }
     }
@@ -400,8 +400,8 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="updatepetwithform"></a>
-# **updatePetWithForm**
-> void updatePetWithForm (Int64 petId, String name, String status)
+# **UpdatePetWithForm**
+> void UpdatePetWithForm (Int64 petId, String name, String status)
 
 Updates a pet in the store with form data
 
@@ -417,7 +417,7 @@ using IO.Swagger.IO.Swagger/Model;
 
 namespace Example
 {
-    public class updatePetWithFormExample
+    public class UpdatePetWithFormExample
     {
         public void main()
         {
@@ -432,11 +432,11 @@ namespace Example
             try
             {
                 // Updates a pet in the store with form data
-                apiInstance.updatePetWithForm(petId, name, status);
+                apiInstance.UpdatePetWithForm(petId, name, status);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling PetApi.updatePetWithForm: " + e.Message );
+                Debug.Print("Exception when calling PetApi.UpdatePetWithForm: " + e.Message );
             }
         }
     }
@@ -467,8 +467,8 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="uploadfile"></a>
-# **uploadFile**
-> IO.Swagger.Model.ApiResponse uploadFile (Int64 petId, String additionalMetadata, String file)
+# **UploadFile**
+> IO.Swagger.Model.ApiResponse UploadFile (Int64 petId, String additionalMetadata, String file)
 
 uploads an image
 
@@ -484,7 +484,7 @@ using IO.Swagger.IO.Swagger/Model;
 
 namespace Example
 {
-    public class uploadFileExample
+    public class UploadFileExample
     {
         public void main()
         {
@@ -499,12 +499,12 @@ namespace Example
             try
             {
                 // uploads an image
-                IO.Swagger.Model.ApiResponse result = apiInstance.uploadFile(petId, additionalMetadata, file);
+                IO.Swagger.Model.ApiResponse result = apiInstance.UploadFile(petId, additionalMetadata, file);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling PetApi.uploadFile: " + e.Message );
+                Debug.Print("Exception when calling PetApi.UploadFile: " + e.Message );
             }
         }
     }

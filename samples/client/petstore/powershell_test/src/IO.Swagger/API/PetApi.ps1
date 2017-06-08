@@ -1,4 +1,4 @@
-function PetApi-addPet {
+function Invoke-PetApiAddPet {
     [CmdletBinding()]
     Param (
         [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
@@ -7,16 +7,16 @@ function PetApi-addPet {
     )
 
     Process {
-        'Calling method: PetApi-addPet' | Write-Verbose
+        'Calling method: PetApi-AddPet' | Write-Verbose
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
-        $Script:PetApi.addPet(
+        $Script:PetApi.AddPet(
             ${body}
         )
     }
 }
 
-function PetApi-deletePet {
+function Invoke-PetApiDeletePet {
     [CmdletBinding()]
     Param (
         [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
@@ -28,17 +28,17 @@ function PetApi-deletePet {
     )
 
     Process {
-        'Calling method: PetApi-deletePet' | Write-Verbose
+        'Calling method: PetApi-DeletePet' | Write-Verbose
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
-        $Script:PetApi.deletePet(
+        $Script:PetApi.DeletePet(
             ${petId},
             ${apiKey}
         )
     }
 }
 
-function PetApi-findPetsByStatus {
+function Invoke-PetApiFindPetsByStatus {
     [CmdletBinding()]
     Param (
         [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
@@ -47,16 +47,16 @@ function PetApi-findPetsByStatus {
     )
 
     Process {
-        'Calling method: PetApi-findPetsByStatus' | Write-Verbose
+        'Calling method: PetApi-FindPetsByStatus' | Write-Verbose
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
-        $Script:PetApi.findPetsByStatus(
+        $Script:PetApi.FindPetsByStatus(
             ${status}
         )
     }
 }
 
-function PetApi-findPetsByTags {
+function Invoke-PetApiFindPetsByTags {
     [CmdletBinding()]
     Param (
         [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
@@ -65,16 +65,16 @@ function PetApi-findPetsByTags {
     )
 
     Process {
-        'Calling method: PetApi-findPetsByTags' | Write-Verbose
+        'Calling method: PetApi-FindPetsByTags' | Write-Verbose
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
-        $Script:PetApi.findPetsByTags(
+        $Script:PetApi.FindPetsByTags(
             ${tags}
         )
     }
 }
 
-function PetApi-getPetById {
+function Invoke-PetApiGetPetById {
     [CmdletBinding()]
     Param (
         [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
@@ -83,16 +83,16 @@ function PetApi-getPetById {
     )
 
     Process {
-        'Calling method: PetApi-getPetById' | Write-Verbose
+        'Calling method: PetApi-GetPetById' | Write-Verbose
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
-        $Script:PetApi.getPetById(
+        $Script:PetApi.GetPetById(
             ${petId}
         )
     }
 }
 
-function PetApi-updatePet {
+function Invoke-PetApiUpdatePet {
     [CmdletBinding()]
     Param (
         [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
@@ -101,16 +101,16 @@ function PetApi-updatePet {
     )
 
     Process {
-        'Calling method: PetApi-updatePet' | Write-Verbose
+        'Calling method: PetApi-UpdatePet' | Write-Verbose
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
-        $Script:PetApi.updatePet(
+        $Script:PetApi.UpdatePet(
             ${body}
         )
     }
 }
 
-function PetApi-updatePetWithForm {
+function Invoke-PetApiUpdatePetWithForm {
     [CmdletBinding()]
     Param (
         [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
@@ -125,10 +125,10 @@ function PetApi-updatePetWithForm {
     )
 
     Process {
-        'Calling method: PetApi-updatePetWithForm' | Write-Verbose
+        'Calling method: PetApi-UpdatePetWithForm' | Write-Verbose
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
-        $Script:PetApi.updatePetWithForm(
+        $Script:PetApi.UpdatePetWithForm(
             ${petId},
             ${name},
             ${status}
@@ -136,7 +136,7 @@ function PetApi-updatePetWithForm {
     }
 }
 
-function PetApi-uploadFile {
+function Invoke-PetApiUploadFile {
     [CmdletBinding()]
     Param (
         [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
@@ -151,10 +151,10 @@ function PetApi-uploadFile {
     )
 
     Process {
-        'Calling method: PetApi-uploadFile' | Write-Verbose
+        'Calling method: PetApi-UploadFile' | Write-Verbose
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
-        $Script:PetApi.uploadFile(
+        $Script:PetApi.UploadFile(
             ${petId},
             ${additionalMetadata},
             ${file}

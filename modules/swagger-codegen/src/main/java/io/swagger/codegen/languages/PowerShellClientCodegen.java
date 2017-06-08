@@ -401,4 +401,20 @@ public class PowerShellClientCodegen extends DefaultCodegen implements CodegenCo
         return super.getTypeDeclaration(p);
     }
 
+    @Override
+    public String toOperationId(String operationId) {
+        // throw exception if method name is empty (should not occur as an auto-generated method name will be used)
+        if (StringUtils.isEmpty(operationId)) {
+            throw new RuntimeException("Empty method name (operationId) not allowed");
+        }
+
+        // method name cannot use reserved keyword, e.g. return
+        if (isReservedWord(operationId)) {
+            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + camelize(sanitizeName("call_" + operationId)));
+            operationId = "call_" + operationId;
+        }
+
+        return camelize(sanitizeName(operationId));
+    }
+
 }

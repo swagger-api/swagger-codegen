@@ -1,4 +1,4 @@
-function StoreApi-deleteOrder {
+function Invoke-StoreApiDeleteOrder {
     [CmdletBinding()]
     Param (
         [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
@@ -7,30 +7,30 @@ function StoreApi-deleteOrder {
     )
 
     Process {
-        'Calling method: StoreApi-deleteOrder' | Write-Verbose
+        'Calling method: StoreApi-DeleteOrder' | Write-Verbose
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
-        $Script:StoreApi.deleteOrder(
+        $Script:StoreApi.DeleteOrder(
             ${orderId}
         )
     }
 }
 
-function StoreApi-getInventory {
+function Invoke-StoreApiGetInventory {
     [CmdletBinding()]
     Param (
     )
 
     Process {
-        'Calling method: StoreApi-getInventory' | Write-Verbose
+        'Calling method: StoreApi-GetInventory' | Write-Verbose
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
-        $Script:StoreApi.getInventory(
+        $Script:StoreApi.GetInventory(
         )
     }
 }
 
-function StoreApi-getOrderById {
+function Invoke-StoreApiGetOrderById {
     [CmdletBinding()]
     Param (
         [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
@@ -39,16 +39,16 @@ function StoreApi-getOrderById {
     )
 
     Process {
-        'Calling method: StoreApi-getOrderById' | Write-Verbose
+        'Calling method: StoreApi-GetOrderById' | Write-Verbose
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
-        $Script:StoreApi.getOrderById(
+        $Script:StoreApi.GetOrderById(
             ${orderId}
         )
     }
 }
 
-function StoreApi-placeOrder {
+function Invoke-StoreApiPlaceOrder {
     [CmdletBinding()]
     Param (
         [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
@@ -57,10 +57,10 @@ function StoreApi-placeOrder {
     )
 
     Process {
-        'Calling method: StoreApi-placeOrder' | Write-Verbose
+        'Calling method: StoreApi-PlaceOrder' | Write-Verbose
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
-        $Script:StoreApi.placeOrder(
+        $Script:StoreApi.PlaceOrder(
             ${body}
         )
     }
