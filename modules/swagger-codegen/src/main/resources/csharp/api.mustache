@@ -88,7 +88,7 @@ namespace {{packageName}}.{{apiPackage}}
         /// <returns></returns>
         public {{classname}}(String basePath)
         {
-            this.Configuration = new Configuration(new ApiClient(basePath));
+            this.Configuration = new {{packageName}}.Client.Configuration(new ApiClient(basePath));
 
             ExceptionFactory = {{packageName}}.Client.Configuration.DefaultExceptionFactory;
 
@@ -105,10 +105,10 @@ namespace {{packageName}}.{{apiPackage}}
         /// </summary>
         /// <param name="configuration">An instance of Configuration</param>
         /// <returns></returns>
-        public {{classname}}(Configuration configuration = null)
+        public {{classname}}({{packageName}}.Client.Configuration configuration = null)
         {
             if (configuration == null) // use the default one in Configuration
-                this.Configuration = Configuration.Default;
+                this.Configuration = {{packageName}}.Client.Configuration.Default;
             else
                 this.Configuration = configuration;
 
@@ -144,7 +144,7 @@ namespace {{packageName}}.{{apiPackage}}
         /// Gets or sets the configuration object
         /// </summary>
         /// <value>An instance of the Configuration</value>
-        public Configuration Configuration {get; set;}
+        public {{packageName}}.Client.Configuration Configuration {get; set;}
 
         /// <summary>
         /// Provides a factory method hook for the creation of exceptions.
