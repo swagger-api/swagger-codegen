@@ -3,22 +3,22 @@ function New-Pet {
     Param (
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
         [System.Nullable[Int64]]
-        ${ id },
+        ${id},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
-        [System.Nullable[Category]]
-        ${ category },
+        [System.Nullable[IO.Swagger.Model.Category]]
+        ${category},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
         [[String]]
-        ${ name },
+        ${name},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
         [[[String]]]
-        ${ photoUrls },
+        ${photoUrls},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
-        [System.Nullable[[Tag]]]
-        ${ tags },
+        [System.Nullable[[IO.Swagger.Model.Tag]]]
+        ${tags},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
         [System.Nullable[String]]
-        ${ status }
+        ${status}
     )
 
     Process {
@@ -26,11 +26,11 @@ function New-Pet {
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
         New-Object -TypeName IO.Swagger.Model.Pet -ArgumentList @(
-            ${ id },
-            ${ category },
-            ${ name },
-            ${ photoUrls },
-            ${ tags },
-            ${ status }
+            ${id},
+            ${category},
+            ${name},
+            ${photoUrls},
+            ${tags},
+            ${status}
         )
     }

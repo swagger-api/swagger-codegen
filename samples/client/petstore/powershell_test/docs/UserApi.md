@@ -76,7 +76,7 @@ No authorization required
 
 <a name="createuserswitharrayinput"></a>
 # **createUsersWithArrayInput**
-> void createUsersWithArrayInput ([User] body)
+> void createUsersWithArrayInput ([IO.Swagger.Model.User] body)
 
 Creates list of users with given input array
 
@@ -97,7 +97,7 @@ namespace Example
         public void main()
         {
             var apiInstance = new UserApi();
-            var body = new [User](); // [User] | List of user object
+            var body = new [IO.Swagger.Model.User](); // [IO.Swagger.Model.User] | List of user object
 
             try
             {
@@ -117,7 +117,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**[User]**](User.md)| List of user object | 
+ **body** | [**[IO.Swagger.Model.User]**](User.md)| List of user object | 
 
 ### Return type
 
@@ -136,7 +136,7 @@ No authorization required
 
 <a name="createuserswithlistinput"></a>
 # **createUsersWithListInput**
-> void createUsersWithListInput ([User] body)
+> void createUsersWithListInput ([IO.Swagger.Model.User] body)
 
 Creates list of users with given input array
 
@@ -157,7 +157,7 @@ namespace Example
         public void main()
         {
             var apiInstance = new UserApi();
-            var body = new [User](); // [User] | List of user object
+            var body = new [IO.Swagger.Model.User](); // [IO.Swagger.Model.User] | List of user object
 
             try
             {
@@ -177,7 +177,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**[User]**](User.md)| List of user object | 
+ **body** | [**[IO.Swagger.Model.User]**](User.md)| List of user object | 
 
 ### Return type
 
@@ -256,7 +256,7 @@ No authorization required
 
 <a name="getuserbyname"></a>
 # **getUserByName**
-> User getUserByName (String username)
+> IO.Swagger.Model.User getUserByName (String username)
 
 Get user by user name
 
@@ -282,7 +282,7 @@ namespace Example
             try
             {
                 // Get user by user name
-                User result = apiInstance.getUserByName(username);
+                IO.Swagger.Model.User result = apiInstance.getUserByName(username);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -302,7 +302,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**User**](User.md)
+[**IO.Swagger.Model.User**](User.md)
 
 ### Authorization
 

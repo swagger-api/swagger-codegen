@@ -55,7 +55,7 @@ public class PowerShellClientCodegen extends DefaultCodegen implements CodegenCo
                 "Single",
                 "Double",
                 "TimeSpan",
-                "DateTime",
+                "System.DateTime",
                 "ProgressRecord",
                 "Char",
                 "String",
@@ -137,22 +137,22 @@ public class PowerShellClientCodegen extends DefaultCodegen implements CodegenCo
         typeMapping.put("long", "Int64");
         typeMapping.put("double", "Double");
         typeMapping.put("number", "Decimal");
-        typeMapping.put("date-time", "java.time.LocalDateTime");
-        typeMapping.put("date", "java.time.LocalDateTime");
-        typeMapping.put("file", "java.io.File");
-        typeMapping.put("array", "collections.List");
-        typeMapping.put("list", "collections.List");
-        typeMapping.put("map", "collections.Map");
-        typeMapping.put("object", "Any");
-        typeMapping.put("binary", "Array<Byte>");
-        typeMapping.put("Date", "java.time.LocalDateTime");
-        typeMapping.put("DateTime", "java.time.LocalDateTime");
+        typeMapping.put("date-time", "System.DateTime");
+        typeMapping.put("date", "System.DateTime");
+        typeMapping.put("file", "String");
+        //typeMapping.put("array", "collections.List");
+        //typeMapping.put("list", "collections.List");
+        //typeMapping.put("map", "collections.Map");
+        typeMapping.put("object", "String");
+        typeMapping.put("binary", "String");
+        typeMapping.put("Date", "System.DateTime");
+        typeMapping.put("DateTime", "System.DateTime");
 
-        instantiationTypes.put("array", "listOf");
-        instantiationTypes.put("list", "listOf");
-        instantiationTypes.put("map", "mapOf");
+        //instantiationTypes.put("array", "listOf");
+        //instantiationTypes.put("list", "listOf");
+        //instantiationTypes.put("map", "mapOf");
 
-        importMapping = new HashMap<String, String>();
+        /*importMapping = new HashMap<String, String>();
         importMapping.put("BigDecimal", "java.math.BigDecimal");
         importMapping.put("UUID", "java.util.UUID");
         importMapping.put("File", "java.io.File");
@@ -161,7 +161,7 @@ public class PowerShellClientCodegen extends DefaultCodegen implements CodegenCo
         importMapping.put("DateTime", "java.time.LocalDateTime");
         importMapping.put("LocalDateTime", "java.time.LocalDateTime");
         importMapping.put("LocalDate", "java.time.LocalDate");
-        importMapping.put("LocalTime", "java.time.LocalTime");
+        importMapping.put("LocalTime", "java.time.LocalTime");*/
 
         cliOptions.clear();
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "Client package name (e.g. io.swagger.client).").defaultValue(this.packageName));
@@ -367,11 +367,13 @@ public class PowerShellClientCodegen extends DefaultCodegen implements CodegenCo
         if (typeMapping.containsKey(swaggerType)) {
             type = typeMapping.get(swaggerType);
             if (languageSpecificPrimitives.contains(type)) {
-                return toModelName(type);
+                return type;
             }
-        } else {
+        } else  {
             type = swaggerType;
         }
+
+        // model/object
         return toModelName(type);
     }
 
@@ -392,6 +394,9 @@ public class PowerShellClientCodegen extends DefaultCodegen implements CodegenCo
             Property inner = mp.getAdditionalProperties();
             // TODO not sure if the following map/hash declaration is correct
             return "{String, " + getTypeDeclaration(inner) + "}";
+        } else if (!languageSpecificPrimitives.contains(typeMapping.get(super.getSwaggerType(p)))) {
+            return packageName + ".Model." + super.getTypeDeclaration(p);
+
         }
         return super.getTypeDeclaration(p);
     }

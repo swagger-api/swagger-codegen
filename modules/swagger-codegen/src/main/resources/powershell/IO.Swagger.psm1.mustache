@@ -20,9 +20,11 @@
 {{#apis}}
 {{#operations}}
 {{#operation}}
+{{#-first}}
 'Creating object: {{{packageName}}}.Api.{{{classname}}}' | Write-Verbose
 $Script:{{{classname}}}= New-Object -TypeName {{{packageName}}}.Api.{{{classname}}} -ArgumentList @($null)
 
+{{/-first}}
 {{/operation}}
 {{/operations}}
 {{/apis}}

@@ -1,9 +1,9 @@
 function StoreApi-deleteOrder {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
-        [IO.Swagger.Model.Pet]
-        ${ orderId }
+        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [String]
+        ${orderId}
     )
 
     Process {
@@ -11,7 +11,7 @@ function StoreApi-deleteOrder {
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
         $Script:StoreApi.deleteOrder(
-            ${ orderId }
+            ${orderId}
         )
     }
 }
@@ -33,9 +33,9 @@ function StoreApi-getInventory {
 function StoreApi-getOrderById {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
-        [IO.Swagger.Model.Pet]
-        ${ orderId }
+        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [Int64]
+        ${orderId}
     )
 
     Process {
@@ -43,7 +43,7 @@ function StoreApi-getOrderById {
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
         $Script:StoreApi.getOrderById(
-            ${ orderId }
+            ${orderId}
         )
     }
 }
@@ -51,9 +51,9 @@ function StoreApi-getOrderById {
 function StoreApi-placeOrder {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
-        [IO.Swagger.Model.Pet]
-        ${ body }
+        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [IO.Swagger.Model.Order]
+        ${body}
     )
 
     Process {
@@ -61,7 +61,7 @@ function StoreApi-placeOrder {
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
         $Script:StoreApi.placeOrder(
-            ${ body }
+            ${body}
         )
     }
 }

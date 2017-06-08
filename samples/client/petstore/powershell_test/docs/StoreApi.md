@@ -119,7 +119,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**{String, Int32}**](CollectionsMap.md)
+[**{String, Int32}**](Map.md)
 
 ### Authorization
 
@@ -134,7 +134,7 @@ This endpoint does not need any parameter.
 
 <a name="getorderbyid"></a>
 # **getOrderById**
-> Order getOrderById (Int64 orderId)
+> IO.Swagger.Model.Order getOrderById (Int64 orderId)
 
 Find purchase order by ID
 
@@ -160,7 +160,7 @@ namespace Example
             try
             {
                 // Find purchase order by ID
-                Order result = apiInstance.getOrderById(orderId);
+                IO.Swagger.Model.Order result = apiInstance.getOrderById(orderId);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -180,7 +180,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Order**](Order.md)
+[**IO.Swagger.Model.Order**](Order.md)
 
 ### Authorization
 
@@ -195,7 +195,7 @@ No authorization required
 
 <a name="placeorder"></a>
 # **placeOrder**
-> Order placeOrder (Order body)
+> IO.Swagger.Model.Order placeOrder (Order body)
 
 Place an order for a pet
 
@@ -221,7 +221,7 @@ namespace Example
             try
             {
                 // Place an order for a pet
-                Order result = apiInstance.placeOrder(body);
+                IO.Swagger.Model.Order result = apiInstance.placeOrder(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -241,7 +241,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Order**](Order.md)
+[**IO.Swagger.Model.Order**](Order.md)
 
 ### Authorization
 

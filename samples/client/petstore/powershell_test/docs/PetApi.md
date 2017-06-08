@@ -144,7 +144,7 @@ void (empty response body)
 
 <a name="findpetsbystatus"></a>
 # **findPetsByStatus**
-> [Pet] findPetsByStatus ([String] status)
+> [IO.Swagger.Model.Pet] findPetsByStatus ([String] status)
 
 Finds Pets by status
 
@@ -173,7 +173,7 @@ namespace Example
             try
             {
                 // Finds Pets by status
-                [Pet] result = apiInstance.findPetsByStatus(status);
+                [IO.Swagger.Model.Pet] result = apiInstance.findPetsByStatus(status);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -193,7 +193,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[Pet]**](Pet.md)
+[**[IO.Swagger.Model.Pet]**](Pet.md)
 
 ### Authorization
 
@@ -208,7 +208,7 @@ Name | Type | Description  | Notes
 
 <a name="findpetsbytags"></a>
 # **findPetsByTags**
-> [Pet] findPetsByTags ([String] tags)
+> [IO.Swagger.Model.Pet] findPetsByTags ([String] tags)
 
 Finds Pets by tags
 
@@ -237,7 +237,7 @@ namespace Example
             try
             {
                 // Finds Pets by tags
-                [Pet] result = apiInstance.findPetsByTags(tags);
+                [IO.Swagger.Model.Pet] result = apiInstance.findPetsByTags(tags);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -257,7 +257,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[Pet]**](Pet.md)
+[**[IO.Swagger.Model.Pet]**](Pet.md)
 
 ### Authorization
 
@@ -272,7 +272,7 @@ Name | Type | Description  | Notes
 
 <a name="getpetbyid"></a>
 # **getPetById**
-> Pet getPetById (Int64 petId)
+> IO.Swagger.Model.Pet getPetById (Int64 petId)
 
 Find pet by ID
 
@@ -303,7 +303,7 @@ namespace Example
             try
             {
                 // Find pet by ID
-                Pet result = apiInstance.getPetById(petId);
+                IO.Swagger.Model.Pet result = apiInstance.getPetById(petId);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -323,7 +323,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Pet**](Pet.md)
+[**IO.Swagger.Model.Pet**](Pet.md)
 
 ### Authorization
 
@@ -468,7 +468,7 @@ void (empty response body)
 
 <a name="uploadfile"></a>
 # **uploadFile**
-> ApiResponse uploadFile (Int64 petId, String additionalMetadata, JavaIoFile file)
+> IO.Swagger.Model.ApiResponse uploadFile (Int64 petId, String additionalMetadata, String file)
 
 uploads an image
 
@@ -494,12 +494,12 @@ namespace Example
             var apiInstance = new PetApi();
             var petId = 789;  // Int64 | ID of pet to update
             var additionalMetadata = additionalMetadata_example;  // String | Additional data to pass to server (optional) 
-            var file = new JavaIoFile(); // JavaIoFile | file to upload (optional) 
+            var file = new String(); // String | file to upload (optional) 
 
             try
             {
                 // uploads an image
-                ApiResponse result = apiInstance.uploadFile(petId, additionalMetadata, file);
+                IO.Swagger.Model.ApiResponse result = apiInstance.uploadFile(petId, additionalMetadata, file);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -517,11 +517,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **petId** | **Int64**| ID of pet to update | 
  **additionalMetadata** | **String**| Additional data to pass to server | [optional] 
- **file** | **JavaIoFile**| file to upload | [optional] 
+ **file** | **String**| file to upload | [optional] 
 
 ### Return type
 
-[**ApiResponse**](ApiResponse.md)
+[**IO.Swagger.Model.ApiResponse**](ApiResponse.md)
 
 ### Authorization
 

@@ -3,10 +3,10 @@ function New-Category {
     Param (
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
         [System.Nullable[Int64]]
-        ${ id },
+        ${id},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
         [System.Nullable[String]]
-        ${ name }
+        ${name}
     )
 
     Process {
@@ -14,7 +14,7 @@ function New-Category {
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
         New-Object -TypeName IO.Swagger.Model.Category -ArgumentList @(
-            ${ id },
-            ${ name }
+            ${id},
+            ${name}
         )
     }

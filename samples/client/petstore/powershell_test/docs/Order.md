@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 **id** | **Int64** |  | [optional] [default to null]
 **petId** | **Int64** |  | [optional] [default to null]
 **quantity** | **Int32** |  | [optional] [default to null]
-**shipDate** | [**JavaTimeLocalDateTime**](JavaTimeLocalDateTime.md) |  | [optional] [default to null]
+**shipDate** | **System.DateTime** |  | [optional] [default to null]
 **status** | **String** | Order Status | [optional] [default to null]
 **complete** | **Boolean** |  | [optional] [default to null]
 

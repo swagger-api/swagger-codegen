@@ -3,28 +3,28 @@ function New-User {
     Param (
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
         [System.Nullable[Int64]]
-        ${ id },
+        ${id},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
         [System.Nullable[String]]
-        ${ username },
+        ${username},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
         [System.Nullable[String]]
-        ${ firstName },
+        ${firstName},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
         [System.Nullable[String]]
-        ${ lastName },
+        ${lastName},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
         [System.Nullable[String]]
-        ${ email },
+        ${email},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
         [System.Nullable[String]]
-        ${ password },
+        ${password},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
         [System.Nullable[String]]
-        ${ phone },
+        ${phone},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
         [System.Nullable[Int32]]
-        ${ userStatus }
+        ${userStatus}
     )
 
     Process {
@@ -32,13 +32,13 @@ function New-User {
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
         New-Object -TypeName IO.Swagger.Model.User -ArgumentList @(
-            ${ id },
-            ${ username },
-            ${ firstName },
-            ${ lastName },
-            ${ email },
-            ${ password },
-            ${ phone },
-            ${ userStatus }
+            ${id},
+            ${username},
+            ${firstName},
+            ${lastName},
+            ${email},
+            ${password},
+            ${phone},
+            ${userStatus}
         )
     }

@@ -1,9 +1,9 @@
 function UserApi-createUser {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
-        [IO.Swagger.Model.Pet]
-        ${ body }
+        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [IO.Swagger.Model.User]
+        ${body}
     )
 
     Process {
@@ -11,7 +11,7 @@ function UserApi-createUser {
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
         $Script:UserApi.createUser(
-            ${ body }
+            ${body}
         )
     }
 }
@@ -19,9 +19,9 @@ function UserApi-createUser {
 function UserApi-createUsersWithArrayInput {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
-        [IO.Swagger.Model.Pet]
-        ${ body }
+        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [[IO.Swagger.Model.User]]
+        ${body}
     )
 
     Process {
@@ -29,7 +29,7 @@ function UserApi-createUsersWithArrayInput {
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
         $Script:UserApi.createUsersWithArrayInput(
-            ${ body }
+            ${body}
         )
     }
 }
@@ -37,9 +37,9 @@ function UserApi-createUsersWithArrayInput {
 function UserApi-createUsersWithListInput {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
-        [IO.Swagger.Model.Pet]
-        ${ body }
+        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [[IO.Swagger.Model.User]]
+        ${body}
     )
 
     Process {
@@ -47,7 +47,7 @@ function UserApi-createUsersWithListInput {
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
         $Script:UserApi.createUsersWithListInput(
-            ${ body }
+            ${body}
         )
     }
 }
@@ -55,9 +55,9 @@ function UserApi-createUsersWithListInput {
 function UserApi-deleteUser {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
-        [IO.Swagger.Model.Pet]
-        ${ username }
+        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [String]
+        ${username}
     )
 
     Process {
@@ -65,7 +65,7 @@ function UserApi-deleteUser {
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
         $Script:UserApi.deleteUser(
-            ${ username }
+            ${username}
         )
     }
 }
@@ -73,9 +73,9 @@ function UserApi-deleteUser {
 function UserApi-getUserByName {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
-        [IO.Swagger.Model.Pet]
-        ${ username }
+        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [String]
+        ${username}
     )
 
     Process {
@@ -83,7 +83,7 @@ function UserApi-getUserByName {
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
         $Script:UserApi.getUserByName(
-            ${ username }
+            ${username}
         )
     }
 }
@@ -91,12 +91,12 @@ function UserApi-getUserByName {
 function UserApi-loginUser {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
-        [IO.Swagger.Model.Pet]
-        ${ username }
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
-        [IO.Swagger.Model.Pet]
-        ${ password }
+        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [String]
+        ${username},
+        [Parameter(Position = 2, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [String]
+        ${password}
     )
 
     Process {
@@ -104,8 +104,8 @@ function UserApi-loginUser {
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
         $Script:UserApi.loginUser(
-            ${ username },
-            ${ password }
+            ${username},
+            ${password}
         )
     }
 }
@@ -127,12 +127,12 @@ function UserApi-logoutUser {
 function UserApi-updateUser {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
-        [IO.Swagger.Model.Pet]
-        ${ username }
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
-        [IO.Swagger.Model.Pet]
-        ${ body }
+        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [String]
+        ${username},
+        [Parameter(Position = 2, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [IO.Swagger.Model.User]
+        ${body}
     )
 
     Process {
@@ -140,8 +140,8 @@ function UserApi-updateUser {
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
         $Script:UserApi.updateUser(
-            ${ username },
-            ${ body }
+            ${username},
+            ${body}
         )
     }
 }

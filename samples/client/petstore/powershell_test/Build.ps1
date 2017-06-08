@@ -1,24 +1,24 @@
 $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
-$ClientPath = "$ScriptDir\..\..\csharp\SwaggerClient"
+$ClientPath = ("$ScriptDir\..\..\petstore\csharp\SwaggerClient" | Resolve-Path).ProviderPath
 $PublicPath = "$ScriptDir\src\IO.Swagger\Public"
-$BinPath = "$ScriptDir\src\\Bin"
+$BinPath = "$ScriptDir\src\IO.Swagger\Bin"
 
 Start-Process -FilePath "$ClientPath\build.bat" -WorkingDirectory $ClientPath -Wait -NoNewWindow
 
-if (!(Test-Path "$ScriptDir\src\IO.Swaggerr\Bin" -PathType Container)) {
+if (!(Test-Path "$ScriptDir\src\IO.Swagger\Bin" -PathType Container)) {
     New-Item "$ScriptDir\src\IO.Swagger\Bin" -ItemType Directory > $null
 }
 
 Copy-Item "$ClientPath\bin\*.dll" $BinPath
 
 $Manifest = @{
-    Path = "$ScriptDir\src\\.psd1"
+    Path = "$ScriptDir\src\IO.Swagger\IO.Swagger.psd1"
 
     Author = 'Swagger Codegen Team'
     CompanyName = 'swagger.io'
-    Description = ' - the PowerShell module for Swagger Petstore'
+    Description = 'IO.Swagger - the PowerShell module for Swagger Petstore'
 
-    RootModule = '.psm1'
+    RootModule = 'IO.Swagger.psm1'
     Guid = 'a27b908d-2a20-467f-bc32-af6f3a654ac5' # Has to be static, otherwise each new build will be considered different module
 
     PowerShellVersion = '3.0'

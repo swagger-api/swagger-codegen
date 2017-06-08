@@ -1,9 +1,9 @@
 function PetApi-addPet {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
         [IO.Swagger.Model.Pet]
-        ${ body }
+        ${body}
     )
 
     Process {
@@ -11,7 +11,7 @@ function PetApi-addPet {
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
         $Script:PetApi.addPet(
-            ${ body }
+            ${body}
         )
     }
 }
@@ -19,12 +19,12 @@ function PetApi-addPet {
 function PetApi-deletePet {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
-        [IO.Swagger.Model.Pet]
-        ${ petId }
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [IO.Swagger.Model.Pet]
-        ${ apiKey }
+        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [Int64]
+        ${petId},
+        [Parameter(Position = 2, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
+        [String]
+        ${apiKey}
     )
 
     Process {
@@ -32,8 +32,8 @@ function PetApi-deletePet {
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
         $Script:PetApi.deletePet(
-            ${ petId },
-            ${ apiKey }
+            ${petId},
+            ${apiKey}
         )
     }
 }
@@ -41,9 +41,9 @@ function PetApi-deletePet {
 function PetApi-findPetsByStatus {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
-        [IO.Swagger.Model.Pet]
-        ${ status }
+        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [[String]]
+        ${status}
     )
 
     Process {
@@ -51,7 +51,7 @@ function PetApi-findPetsByStatus {
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
         $Script:PetApi.findPetsByStatus(
-            ${ status }
+            ${status}
         )
     }
 }
@@ -59,9 +59,9 @@ function PetApi-findPetsByStatus {
 function PetApi-findPetsByTags {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
-        [IO.Swagger.Model.Pet]
-        ${ tags }
+        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [[String]]
+        ${tags}
     )
 
     Process {
@@ -69,7 +69,7 @@ function PetApi-findPetsByTags {
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
         $Script:PetApi.findPetsByTags(
-            ${ tags }
+            ${tags}
         )
     }
 }
@@ -77,9 +77,9 @@ function PetApi-findPetsByTags {
 function PetApi-getPetById {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
-        [IO.Swagger.Model.Pet]
-        ${ petId }
+        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [Int64]
+        ${petId}
     )
 
     Process {
@@ -87,7 +87,7 @@ function PetApi-getPetById {
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
         $Script:PetApi.getPetById(
-            ${ petId }
+            ${petId}
         )
     }
 }
@@ -95,9 +95,9 @@ function PetApi-getPetById {
 function PetApi-updatePet {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
         [IO.Swagger.Model.Pet]
-        ${ body }
+        ${body}
     )
 
     Process {
@@ -105,7 +105,7 @@ function PetApi-updatePet {
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
         $Script:PetApi.updatePet(
-            ${ body }
+            ${body}
         )
     }
 }
@@ -113,15 +113,15 @@ function PetApi-updatePet {
 function PetApi-updatePetWithForm {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
-        [IO.Swagger.Model.Pet]
-        ${ petId }
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [IO.Swagger.Model.Pet]
-        ${ name }
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [IO.Swagger.Model.Pet]
-        ${ status }
+        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [Int64]
+        ${petId},
+        [Parameter(Position = 2, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
+        [String]
+        ${name},
+        [Parameter(Position = 3, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
+        [String]
+        ${status}
     )
 
     Process {
@@ -129,9 +129,9 @@ function PetApi-updatePetWithForm {
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
         $Script:PetApi.updatePetWithForm(
-            ${ petId },
-            ${ name },
-            ${ status }
+            ${petId},
+            ${name},
+            ${status}
         )
     }
 }
@@ -139,15 +139,15 @@ function PetApi-updatePetWithForm {
 function PetApi-uploadFile {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
-        [IO.Swagger.Model.Pet]
-        ${ petId }
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [IO.Swagger.Model.Pet]
-        ${ additionalMetadata }
-        [Parameter(Position = , ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [IO.Swagger.Model.Pet]
-        ${ file }
+        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [Int64]
+        ${petId},
+        [Parameter(Position = 2, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
+        [String]
+        ${additionalMetadata},
+        [Parameter(Position = 3, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
+        [IO.Swagger.Model.String]
+        ${file}
     )
 
     Process {
@@ -155,9 +155,9 @@ function PetApi-uploadFile {
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
         $Script:PetApi.uploadFile(
-            ${ petId },
-            ${ additionalMetadata },
-            ${ file }
+            ${petId},
+            ${additionalMetadata},
+            ${file}
         )
     }
 }

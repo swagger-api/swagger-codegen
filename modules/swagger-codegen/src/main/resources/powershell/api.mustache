@@ -4,10 +4,10 @@ function {{{classname}}}-{{{operationId}}} {
     [CmdletBinding()]
     Param (
     {{#allParams}}
-        [Parameter(Position = {{@index}}, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = {{#required}}$true{{/required}}{{^required}}$false{{/required}})]
-        [{{{packageName}}}.Model.Pet]
+        [Parameter(Position = {{-index}}, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = {{#required}}$true{{/required}}{{^required}}$false{{/required}})]
+        [{{^isContainer}}{{^isPrimitiveType}}{{{packageName}}}.Model.{{/isPrimitiveType}}{{/isContainer}}{{{dataType}}}]
         {{=<% %>=}}
-        ${<%paramName%>}
+        ${<%paramName%>}<%^-last%>,<%/-last%>
         <%={{ }}=%>
     {{/allParams}}
     )

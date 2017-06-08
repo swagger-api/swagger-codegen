@@ -3,13 +3,13 @@ function New-ApiResponse {
     Param (
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
         [System.Nullable[Int32]]
-        ${ code },
+        ${code},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
         [System.Nullable[String]]
-        ${ type },
+        ${type},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
         [System.Nullable[String]]
-        ${ message }
+        ${message}
     )
 
     Process {
@@ -17,8 +17,8 @@ function New-ApiResponse {
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
         New-Object -TypeName IO.Swagger.Model.ApiResponse -ArgumentList @(
-            ${ code },
-            ${ type },
-            ${ message }
+            ${code},
+            ${type},
+            ${message}
         )
     }
