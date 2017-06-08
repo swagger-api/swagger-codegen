@@ -5,10 +5,10 @@ function New-ApiResponse {
         [System.Nullable[Int32]]
         ${code},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
-        [System.Nullable[String]]
+        [String]
         ${type},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
-        [System.Nullable[String]]
+        [String]
         ${message}
     )
 

@@ -14,7 +14,7 @@ function New-Order {
         [System.Nullable[System.DateTime]]
         ${shipDate},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
-        [System.Nullable[String]]
+        [String]
         ${status},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
         [System.Nullable[Boolean]]

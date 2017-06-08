@@ -5,22 +5,22 @@ function New-User {
         [System.Nullable[Int64]]
         ${id},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
-        [System.Nullable[String]]
+        [String]
         ${username},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
-        [System.Nullable[String]]
+        [String]
         ${firstName},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
-        [System.Nullable[String]]
+        [String]
         ${lastName},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
-        [System.Nullable[String]]
+        [String]
         ${email},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
-        [System.Nullable[String]]
+        [String]
         ${password},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
-        [System.Nullable[String]]
+        [String]
         ${phone},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
         [System.Nullable[Int32]]

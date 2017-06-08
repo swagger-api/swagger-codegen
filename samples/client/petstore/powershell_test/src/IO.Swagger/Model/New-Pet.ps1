@@ -8,7 +8,7 @@ function New-Pet {
         [System.Nullable[IO.Swagger.Model.Category]]
         ${category},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
-        [[String]]
+        [String]
         ${name},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
         [[[String]]]
@@ -17,7 +17,7 @@ function New-Pet {
         [System.Nullable[[IO.Swagger.Model.Tag]]]
         ${tags},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
-        [System.Nullable[String]]
+        [String]
         ${status}
     )
 

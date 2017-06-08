@@ -5,7 +5,7 @@ function New-Tag {
         [System.Nullable[Int64]]
         ${id},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
-        [System.Nullable[String]]
+        [String]
         ${name}
     )
 
