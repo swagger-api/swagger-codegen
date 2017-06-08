@@ -77,7 +77,8 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
                         // C# reserved words
                         "abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char", "checked",
                         "class", "const", "continue", "decimal", "default", "delegate", "do", "double", "else",
-                        "enum", "event", "explicit", "extern", "false", "finally", "fixed", "float", "for",
+                        "enum",// "event",
+			"explicit", "extern", "false", "finally", "fixed", "float", "for",
                         "foreach", "goto", "if", "implicit", "in", "int", "interface", "internal", "is", "lock",
                         "long", "namespace", "new", "null", "object", "operator", "out", "override", "params",
                         "private", "protected", "public", "readonly", "ref", "return", "sbyte", "sealed",
@@ -550,16 +551,27 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     @Override
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
-        String type;
+	String fullTypeName=null;
         if (typeMapping.containsKey(swaggerType.toLowerCase())) {
-            type = typeMapping.get(swaggerType.toLowerCase());
-            if (languageSpecificPrimitives.contains(type)) {
-                return type;
-            }
+	    fullTypeName = typeMapping.get(swaggerType.toLowerCase());
+	    if (languageSpecificPrimitives.contains(fullTypeName)) {
+		return fullTypeName;
+	    }
         } else {
-            type = swaggerType;
+	    if((packageName!=null)&&(! packageName.equals(""))) {
+		fullTypeName = packageName;
+		if(!apiPackage.equals(""))
+		    fullTypeName+="."+modelPackage();
+	    }else {
+		if(!apiPackage().equals(""))
+		    fullTypeName=modelPackage();
+                else
+		    fullTypeName="";
+	    }
+	    if(!fullTypeName.equals(""))
+		fullTypeName= fullTypeName+"."+swaggerType;
         }
-        return toModelName(type);
+	return fullTypeName;
     }
 
     @Override
