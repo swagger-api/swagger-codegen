@@ -3119,6 +3119,9 @@ public class DefaultCodegen {
      * @return camelized string
      */
     public static String camelize(String word, boolean lowercaseFirstLetter) {
+        // Replace all dashes with underscores (which will be handled later).
+        word = word.replace('-', '_');
+
         // Replace all slashes with dots (package separator)
         Pattern p = Pattern.compile("\\/(.?)");
         Matcher m = p.matcher(word);
