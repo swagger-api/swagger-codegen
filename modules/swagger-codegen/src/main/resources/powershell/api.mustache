@@ -6,7 +6,9 @@ function {{{classname}}}-{{{operationId}}} {
     {{#allParams}}
         [Parameter(Position = {{@index}}, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = {{#required}}$true{{/required}}{{^required}}$false{{/required}})]
         [{{{packageName}}}.Model.Pet]
-        ${ {{paramName}} }
+        {{=<% %>=}}
+        ${<%paramName%>}
+        <%={{ }}=%>
     {{/allParams}}
     )
 
@@ -16,7 +18,9 @@ function {{{classname}}}-{{{operationId}}} {
 
         $Script:{{{classname}}}.{{{operationId}}}(
         {{#allParams}}
-            ${ {{paramName}} }{{^-last}},{{/-last}}
+            {{=<% %>=}}
+            ${<%paramName%>}<%^-last%>,<%/-last%>
+            <%={{ }}=%>
         {{/allParams}}
         )
     }

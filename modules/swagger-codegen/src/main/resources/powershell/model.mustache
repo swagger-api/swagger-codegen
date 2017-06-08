@@ -6,7 +6,9 @@ function New-{{{classname}}} {
 {{#vars}}
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true{{#required}}, Mandatory = $true{{/required}})]
         [{{^required}}System.Nullable{{/required}}[{{datatype}}]]
-        ${ {{{name}}} }{{^-last}},{{/-last}}
+        {{=<% %>=}}
+        ${<%name%>}<%^-last%>,<%/-last%>
+        <%={{ }}=%>
 {{/vars}}
     )
 
@@ -16,7 +18,9 @@ function New-{{{classname}}} {
 
         New-Object -TypeName {{{packageName}}}.Model.{{{classname}}} -ArgumentList @(
 {{#vars}}
-            ${ {{{name}}} }{{^-last}},{{/-last}}
+            {{=<% %>=}}
+            ${<%name%>}<%^-last%>,<%/-last%>
+            <%={{ }}=%>
 {{/vars}}
         )
     }
