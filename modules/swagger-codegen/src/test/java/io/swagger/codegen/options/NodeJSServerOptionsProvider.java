@@ -12,6 +12,7 @@ public class NodeJSServerOptionsProvider implements OptionsProvider {
     public static final String GOOGLE_CLOUD_FUNCTIONS = "false";
     public static final String EXPORTED_NAME = "exported";
     public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
+    public static final String NOSERVICE_VALUE = "true";
 
 
     @Override
@@ -27,6 +28,7 @@ public class NodeJSServerOptionsProvider implements OptionsProvider {
                 .put(NodeJSServerCodegen.GOOGLE_CLOUD_FUNCTIONS, GOOGLE_CLOUD_FUNCTIONS)
                 .put(NodeJSServerCodegen.EXPORTED_NAME, EXPORTED_NAME)
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
+                .put(NodeJSServerCodegen.NOSERVICE, NOSERVICE_VALUE)
                 .build();
     }
 
