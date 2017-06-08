@@ -27,13 +27,12 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
     public static final String NPM_REPOSITORY = "npmRepository";
     public static final String SNAPSHOT = "snapshot";
     public static final String USE_OPAQUE_TOKEN = "useOpaqueToken";
-    public static final String INJECTION_TOKEN = "injectionToken";
     public static final String WITH_INTERFACES = "withInterfaces";
 
     protected String npmName = null;
     protected String npmVersion = "1.0.0";
     protected String npmRepository = null;
-    protected String injectionToken = "InjectionToken<string>";
+    protected boolean useOpaqueToken = false;
 
     public TypeScriptAngular2ClientCodegen() {
         super();
@@ -86,10 +85,8 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
             addNpmPackageGeneration();
         }
 
-        if(additionalProperties.containsKey(USE_OPAQUE_TOKEN) && Boolean.valueOf(additionalProperties.get(USE_OPAQUE_TOKEN).toString())) {
-            this.setOpaqueToken();
-        }
-        additionalProperties.put(INJECTION_TOKEN, this.injectionToken);
+        this.useOpaqueToken = additionalProperties.containsKey(USE_OPAQUE_TOKEN) &&
+                Boolean.valueOf(additionalProperties.get(USE_OPAQUE_TOKEN).toString());
 
         if(additionalProperties.containsKey(WITH_INTERFACES)) {
             boolean withInterfaces = Boolean.parseBoolean(additionalProperties.get(WITH_INTERFACES).toString());
@@ -251,9 +248,5 @@ public class TypeScriptAngular2ClientCodegen extends AbstractTypeScriptClientCod
 
     public void setNpmRepository(String npmRepository) {
         this.npmRepository = npmRepository;
-    }
-
-    public void setOpaqueToken() {
-        this.injectionToken = "OpaqueToken";
     }
 }
