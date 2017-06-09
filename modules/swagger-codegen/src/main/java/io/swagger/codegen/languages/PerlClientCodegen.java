@@ -339,7 +339,7 @@ public class PerlClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String toModelTestFilename(String name) {
-        return toModelFilename(name);
+        return toModelFilename(name)+ "Test";
     }
 
     @Override

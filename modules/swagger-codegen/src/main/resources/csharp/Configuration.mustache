@@ -59,7 +59,7 @@ namespace {{packageName}}.Client
             Timeout = {{#netStandard}}TimeSpan.FromMilliseconds({{/netStandard}}timeout{{#netStandard}}){{/netStandard}};
         }
 
-	/// <summary>
+        /// <summary>
         /// Gets the default base path of the rest API.
         ///</summary>
         private	static String _defaultBasePath = "{{{basePath}}}";
@@ -137,7 +137,7 @@ namespace {{packageName}}.Client
         /// <returns></returns>
         public void setApiClientUsingDefault (ApiClient apiClient = null)
         {
-	     if(apiClient == null){
+             if(apiClient == null){
                  if(Default!=null ){
                      if(Default.ApiClient == null || !Default.ApiClient.RestClient.BaseUrl.ToString().Equals(defaultBasePath)){
                          Default.ApiClient = new ApiClient(defaultBasePath);

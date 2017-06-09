@@ -78,7 +78,7 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
                         "abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char", "checked",
                         "class", "const", "continue", "decimal", "default", "delegate", "do", "double", "else",
                         "enum",// "event",
-			"explicit", "extern", "false", "finally", "fixed", "float", "for",
+                        "explicit", "extern", "false", "finally", "fixed", "float", "for",
                         "foreach", "goto", "if", "implicit", "in", "int", "interface", "internal", "is", "lock",
                         "long", "namespace", "new", "null", "object", "operator", "out", "override", "params",
                         "private", "protected", "public", "readonly", "ref", "return", "sbyte", "sealed",
@@ -551,27 +551,27 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     @Override
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
-	String fullTypeName=null;
+        String fullTypeName=null;
         if (typeMapping.containsKey(swaggerType.toLowerCase())) {
-	    fullTypeName = typeMapping.get(swaggerType.toLowerCase());
-	    if (languageSpecificPrimitives.contains(fullTypeName)) {
-		return fullTypeName;
-	    }
+            fullTypeName = typeMapping.get(swaggerType.toLowerCase());
+            if (languageSpecificPrimitives.contains(fullTypeName)) {
+                return fullTypeName;
+            }
         } else {
-	    if((packageName!=null)&&(! packageName.equals(""))) {
-		fullTypeName = packageName;
-		if(!apiPackage.equals(""))
-		    fullTypeName+="."+modelPackage();
-	    }else {
-		if(!apiPackage().equals(""))
-		    fullTypeName=modelPackage();
+            if((packageName!=null)&&(! packageName.equals(""))) {
+                fullTypeName = packageName;
+                if(!apiPackage.equals(""))
+                    fullTypeName+="."+modelPackage();
+            }else {
+                if(!apiPackage().equals(""))
+                    fullTypeName=modelPackage();
                 else
-		    fullTypeName="";
-	    }
-	    if(!fullTypeName.equals(""))
-		fullTypeName= fullTypeName+"."+swaggerType;
+                    fullTypeName="";
+            }
+            if(!fullTypeName.equals(""))
+                fullTypeName= fullTypeName+"."+swaggerType;
         }
-	return fullTypeName;
+        return fullTypeName;
     }
 
     @Override
