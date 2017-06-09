@@ -33,7 +33,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns></returns>
-        void AddPet (Pet body);
+        void AddPet (IO.Swagger.Model.Pet body);
 
         /// <summary>
         /// Add a new pet to the store
@@ -44,7 +44,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AddPetWithHttpInfo (Pet body);
+        ApiResponse<Object> AddPetWithHttpInfo (IO.Swagger.Model.Pet body);
         /// <summary>
         /// Deletes a pet
         /// </summary>
@@ -76,8 +76,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="status">Status values that need to be considered for filter</param>
-        /// <returns>List&lt;Pet&gt;</returns>
-        List<Pet> FindPetsByStatus (List<string> status);
+        /// <returns>List&lt;IO.Swagger.Model.Pet&gt;</returns>
+        List<IO.Swagger.Model.Pet> FindPetsByStatus (IO.Swagger.Model.List<string> status);
 
         /// <summary>
         /// Finds Pets by status
@@ -87,8 +87,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="status">Status values that need to be considered for filter</param>
-        /// <returns>ApiResponse of List&lt;Pet&gt;</returns>
-        ApiResponse<List<Pet>> FindPetsByStatusWithHttpInfo (List<string> status);
+        /// <returns>ApiResponse of List&lt;IO.Swagger.Model.Pet&gt;</returns>
+        ApiResponse<List<IO.Swagger.Model.Pet>> FindPetsByStatusWithHttpInfo (IO.Swagger.Model.List<string> status);
         /// <summary>
         /// Finds Pets by tags
         /// </summary>
@@ -97,8 +97,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="tags">Tags to filter by</param>
-        /// <returns>List&lt;Pet&gt;</returns>
-        List<Pet> FindPetsByTags (List<string> tags);
+        /// <returns>List&lt;IO.Swagger.Model.Pet&gt;</returns>
+        List<IO.Swagger.Model.Pet> FindPetsByTags (IO.Swagger.Model.List<string> tags);
 
         /// <summary>
         /// Finds Pets by tags
@@ -108,8 +108,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="tags">Tags to filter by</param>
-        /// <returns>ApiResponse of List&lt;Pet&gt;</returns>
-        ApiResponse<List<Pet>> FindPetsByTagsWithHttpInfo (List<string> tags);
+        /// <returns>ApiResponse of List&lt;IO.Swagger.Model.Pet&gt;</returns>
+        ApiResponse<List<IO.Swagger.Model.Pet>> FindPetsByTagsWithHttpInfo (IO.Swagger.Model.List<string> tags);
         /// <summary>
         /// Find pet by ID
         /// </summary>
@@ -118,8 +118,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to return</param>
-        /// <returns>Pet</returns>
-        Pet GetPetById (long? petId);
+        /// <returns>IO.Swagger.Model.Pet</returns>
+        IO.Swagger.Model.Pet GetPetById (long? petId);
 
         /// <summary>
         /// Find pet by ID
@@ -129,8 +129,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to return</param>
-        /// <returns>ApiResponse of Pet</returns>
-        ApiResponse<Pet> GetPetByIdWithHttpInfo (long? petId);
+        /// <returns>ApiResponse of IO.Swagger.Model.Pet</returns>
+        ApiResponse<IO.Swagger.Model.Pet> GetPetByIdWithHttpInfo (long? petId);
         /// <summary>
         /// Update an existing pet
         /// </summary>
@@ -140,7 +140,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns></returns>
-        void UpdatePet (Pet body);
+        void UpdatePet (IO.Swagger.Model.Pet body);
 
         /// <summary>
         /// Update an existing pet
@@ -151,7 +151,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> UpdatePetWithHttpInfo (Pet body);
+        ApiResponse<Object> UpdatePetWithHttpInfo (IO.Swagger.Model.Pet body);
         /// <summary>
         /// Updates a pet in the store with form data
         /// </summary>
@@ -187,8 +187,8 @@ namespace IO.Swagger.Api
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata">Additional data to pass to server (optional)</param>
         /// <param name="file">file to upload (optional)</param>
-        /// <returns>ApiResponse</returns>
-        ApiResponse UploadFile (long? petId, string additionalMetadata = null, System.IO.Stream file = null);
+        /// <returns>IO.Swagger.Model.ApiResponse</returns>
+        IO.Swagger.Model.ApiResponse UploadFile (long? petId, string additionalMetadata = null, System.IO.Stream file = null);
 
         /// <summary>
         /// uploads an image
@@ -200,8 +200,8 @@ namespace IO.Swagger.Api
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata">Additional data to pass to server (optional)</param>
         /// <param name="file">file to upload (optional)</param>
-        /// <returns>ApiResponse of ApiResponse</returns>
-        ApiResponse<ApiResponse> UploadFileWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream file = null);
+        /// <returns>ApiResponse of IO.Swagger.Model.ApiResponse</returns>
+        ApiResponse<IO.Swagger.Model.ApiResponse> UploadFileWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream file = null);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -213,7 +213,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AddPetAsync (Pet body);
+        System.Threading.Tasks.Task AddPetAsync (IO.Swagger.Model.Pet body);
 
         /// <summary>
         /// Add a new pet to the store
@@ -224,7 +224,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AddPetAsyncWithHttpInfo (Pet body);
+        System.Threading.Tasks.Task<ApiResponse<Object>> AddPetAsyncWithHttpInfo (IO.Swagger.Model.Pet body);
         /// <summary>
         /// Deletes a pet
         /// </summary>
@@ -256,8 +256,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="status">Status values that need to be considered for filter</param>
-        /// <returns>Task of List&lt;Pet&gt;</returns>
-        System.Threading.Tasks.Task<List<Pet>> FindPetsByStatusAsync (List<string> status);
+        /// <returns>Task of List&lt;IO.Swagger.Model.Pet&gt;</returns>
+        System.Threading.Tasks.Task<List<IO.Swagger.Model.Pet>> FindPetsByStatusAsync (IO.Swagger.Model.List<string> status);
 
         /// <summary>
         /// Finds Pets by status
@@ -267,8 +267,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="status">Status values that need to be considered for filter</param>
-        /// <returns>Task of ApiResponse (List&lt;Pet&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<Pet>>> FindPetsByStatusAsyncWithHttpInfo (List<string> status);
+        /// <returns>Task of ApiResponse (List&lt;IO.Swagger.Model.Pet&gt;)</returns>
+        System.Threading.Tasks.Task<ApiResponse<List<IO.Swagger.Model.Pet>>> FindPetsByStatusAsyncWithHttpInfo (IO.Swagger.Model.List<string> status);
         /// <summary>
         /// Finds Pets by tags
         /// </summary>
@@ -277,8 +277,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="tags">Tags to filter by</param>
-        /// <returns>Task of List&lt;Pet&gt;</returns>
-        System.Threading.Tasks.Task<List<Pet>> FindPetsByTagsAsync (List<string> tags);
+        /// <returns>Task of List&lt;IO.Swagger.Model.Pet&gt;</returns>
+        System.Threading.Tasks.Task<List<IO.Swagger.Model.Pet>> FindPetsByTagsAsync (IO.Swagger.Model.List<string> tags);
 
         /// <summary>
         /// Finds Pets by tags
@@ -288,8 +288,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="tags">Tags to filter by</param>
-        /// <returns>Task of ApiResponse (List&lt;Pet&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<Pet>>> FindPetsByTagsAsyncWithHttpInfo (List<string> tags);
+        /// <returns>Task of ApiResponse (List&lt;IO.Swagger.Model.Pet&gt;)</returns>
+        System.Threading.Tasks.Task<ApiResponse<List<IO.Swagger.Model.Pet>>> FindPetsByTagsAsyncWithHttpInfo (IO.Swagger.Model.List<string> tags);
         /// <summary>
         /// Find pet by ID
         /// </summary>
@@ -298,8 +298,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to return</param>
-        /// <returns>Task of Pet</returns>
-        System.Threading.Tasks.Task<Pet> GetPetByIdAsync (long? petId);
+        /// <returns>Task of IO.Swagger.Model.Pet</returns>
+        System.Threading.Tasks.Task<IO.Swagger.Model.Pet> GetPetByIdAsync (long? petId);
 
         /// <summary>
         /// Find pet by ID
@@ -309,8 +309,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to return</param>
-        /// <returns>Task of ApiResponse (Pet)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Pet>> GetPetByIdAsyncWithHttpInfo (long? petId);
+        /// <returns>Task of ApiResponse (IO.Swagger.Model.Pet)</returns>
+        System.Threading.Tasks.Task<ApiResponse<IO.Swagger.Model.Pet>> GetPetByIdAsyncWithHttpInfo (long? petId);
         /// <summary>
         /// Update an existing pet
         /// </summary>
@@ -320,7 +320,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task UpdatePetAsync (Pet body);
+        System.Threading.Tasks.Task UpdatePetAsync (IO.Swagger.Model.Pet body);
 
         /// <summary>
         /// Update an existing pet
@@ -331,7 +331,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> UpdatePetAsyncWithHttpInfo (Pet body);
+        System.Threading.Tasks.Task<ApiResponse<Object>> UpdatePetAsyncWithHttpInfo (IO.Swagger.Model.Pet body);
         /// <summary>
         /// Updates a pet in the store with form data
         /// </summary>
@@ -367,8 +367,8 @@ namespace IO.Swagger.Api
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata">Additional data to pass to server (optional)</param>
         /// <param name="file">file to upload (optional)</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse> UploadFileAsync (long? petId, string additionalMetadata = null, System.IO.Stream file = null);
+        /// <returns>Task of IO.Swagger.Model.ApiResponse</returns>
+        System.Threading.Tasks.Task<IO.Swagger.Model.ApiResponse> UploadFileAsync (long? petId, string additionalMetadata = null, System.IO.Stream file = null);
 
         /// <summary>
         /// uploads an image
@@ -380,8 +380,8 @@ namespace IO.Swagger.Api
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata">Additional data to pass to server (optional)</param>
         /// <param name="file">file to upload (optional)</param>
-        /// <returns>Task of ApiResponse (ApiResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ApiResponse>> UploadFileAsyncWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream file = null);
+        /// <returns>Task of ApiResponse (IO.Swagger.Model.ApiResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<IO.Swagger.Model.ApiResponse>> UploadFileAsyncWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream file = null);
         #endregion Asynchronous Operations
     }
 
@@ -500,7 +500,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns></returns>
-        public void AddPet (Pet body)
+        public void AddPet (IO.Swagger.Model.Pet body)
         {
              AddPetWithHttpInfo(body);
         }
@@ -511,7 +511,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> AddPetWithHttpInfo (Pet body)
+        public ApiResponse<Object> AddPetWithHttpInfo (IO.Swagger.Model.Pet body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -581,7 +581,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AddPetAsync (Pet body)
+        public async System.Threading.Tasks.Task AddPetAsync (IO.Swagger.Model.Pet body)
         {
              await AddPetAsyncWithHttpInfo(body);
 
@@ -593,7 +593,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> AddPetAsyncWithHttpInfo (Pet body)
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> AddPetAsyncWithHttpInfo (IO.Swagger.Model.Pet body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -813,10 +813,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="status">Status values that need to be considered for filter</param>
-        /// <returns>List&lt;Pet&gt;</returns>
-        public List<Pet> FindPetsByStatus (List<string> status)
+        /// <returns>List&lt;IO.Swagger.Model.Pet&gt;</returns>
+        public List<IO.Swagger.Model.Pet> FindPetsByStatus (IO.Swagger.Model.List<string> status)
         {
-             ApiResponse<List<Pet>> localVarResponse = FindPetsByStatusWithHttpInfo(status);
+             ApiResponse<List<IO.Swagger.Model.Pet>> localVarResponse = FindPetsByStatusWithHttpInfo(status);
              return localVarResponse.Data;
         }
 
@@ -825,8 +825,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="status">Status values that need to be considered for filter</param>
-        /// <returns>ApiResponse of List&lt;Pet&gt;</returns>
-        public ApiResponse< List<Pet> > FindPetsByStatusWithHttpInfo (List<string> status)
+        /// <returns>ApiResponse of List&lt;IO.Swagger.Model.Pet&gt;</returns>
+        public ApiResponse< List<IO.Swagger.Model.Pet> > FindPetsByStatusWithHttpInfo (IO.Swagger.Model.List<string> status)
         {
             // verify the required parameter 'status' is set
             if (status == null)
@@ -876,9 +876,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<List<Pet>>(localVarStatusCode,
+            return new ApiResponse<List<IO.Swagger.Model.Pet>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (List<Pet>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Pet>)));
+                (List<IO.Swagger.Model.Pet>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<IO.Swagger.Model.Pet>)));
         }
 
         /// <summary>
@@ -886,10 +886,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="status">Status values that need to be considered for filter</param>
-        /// <returns>Task of List&lt;Pet&gt;</returns>
-        public async System.Threading.Tasks.Task<List<Pet>> FindPetsByStatusAsync (List<string> status)
+        /// <returns>Task of List&lt;IO.Swagger.Model.Pet&gt;</returns>
+        public async System.Threading.Tasks.Task<List<IO.Swagger.Model.Pet>> FindPetsByStatusAsync (IO.Swagger.Model.List<string> status)
         {
-             ApiResponse<List<Pet>> localVarResponse = await FindPetsByStatusAsyncWithHttpInfo(status);
+             ApiResponse<List<IO.Swagger.Model.Pet>> localVarResponse = await FindPetsByStatusAsyncWithHttpInfo(status);
              return localVarResponse.Data;
 
         }
@@ -899,8 +899,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="status">Status values that need to be considered for filter</param>
-        /// <returns>Task of ApiResponse (List&lt;Pet&gt;)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<List<Pet>>> FindPetsByStatusAsyncWithHttpInfo (List<string> status)
+        /// <returns>Task of ApiResponse (List&lt;IO.Swagger.Model.Pet&gt;)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<List<IO.Swagger.Model.Pet>>> FindPetsByStatusAsyncWithHttpInfo (IO.Swagger.Model.List<string> status)
         {
             // verify the required parameter 'status' is set
             if (status == null)
@@ -950,9 +950,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<List<Pet>>(localVarStatusCode,
+            return new ApiResponse<List<IO.Swagger.Model.Pet>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (List<Pet>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Pet>)));
+                (List<IO.Swagger.Model.Pet>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<IO.Swagger.Model.Pet>)));
         }
 
         /// <summary>
@@ -960,10 +960,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="tags">Tags to filter by</param>
-        /// <returns>List&lt;Pet&gt;</returns>
-        public List<Pet> FindPetsByTags (List<string> tags)
+        /// <returns>List&lt;IO.Swagger.Model.Pet&gt;</returns>
+        public List<IO.Swagger.Model.Pet> FindPetsByTags (IO.Swagger.Model.List<string> tags)
         {
-             ApiResponse<List<Pet>> localVarResponse = FindPetsByTagsWithHttpInfo(tags);
+             ApiResponse<List<IO.Swagger.Model.Pet>> localVarResponse = FindPetsByTagsWithHttpInfo(tags);
              return localVarResponse.Data;
         }
 
@@ -972,8 +972,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="tags">Tags to filter by</param>
-        /// <returns>ApiResponse of List&lt;Pet&gt;</returns>
-        public ApiResponse< List<Pet> > FindPetsByTagsWithHttpInfo (List<string> tags)
+        /// <returns>ApiResponse of List&lt;IO.Swagger.Model.Pet&gt;</returns>
+        public ApiResponse< List<IO.Swagger.Model.Pet> > FindPetsByTagsWithHttpInfo (IO.Swagger.Model.List<string> tags)
         {
             // verify the required parameter 'tags' is set
             if (tags == null)
@@ -1023,9 +1023,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<List<Pet>>(localVarStatusCode,
+            return new ApiResponse<List<IO.Swagger.Model.Pet>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (List<Pet>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Pet>)));
+                (List<IO.Swagger.Model.Pet>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<IO.Swagger.Model.Pet>)));
         }
 
         /// <summary>
@@ -1033,10 +1033,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="tags">Tags to filter by</param>
-        /// <returns>Task of List&lt;Pet&gt;</returns>
-        public async System.Threading.Tasks.Task<List<Pet>> FindPetsByTagsAsync (List<string> tags)
+        /// <returns>Task of List&lt;IO.Swagger.Model.Pet&gt;</returns>
+        public async System.Threading.Tasks.Task<List<IO.Swagger.Model.Pet>> FindPetsByTagsAsync (IO.Swagger.Model.List<string> tags)
         {
-             ApiResponse<List<Pet>> localVarResponse = await FindPetsByTagsAsyncWithHttpInfo(tags);
+             ApiResponse<List<IO.Swagger.Model.Pet>> localVarResponse = await FindPetsByTagsAsyncWithHttpInfo(tags);
              return localVarResponse.Data;
 
         }
@@ -1046,8 +1046,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="tags">Tags to filter by</param>
-        /// <returns>Task of ApiResponse (List&lt;Pet&gt;)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<List<Pet>>> FindPetsByTagsAsyncWithHttpInfo (List<string> tags)
+        /// <returns>Task of ApiResponse (List&lt;IO.Swagger.Model.Pet&gt;)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<List<IO.Swagger.Model.Pet>>> FindPetsByTagsAsyncWithHttpInfo (IO.Swagger.Model.List<string> tags)
         {
             // verify the required parameter 'tags' is set
             if (tags == null)
@@ -1097,9 +1097,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<List<Pet>>(localVarStatusCode,
+            return new ApiResponse<List<IO.Swagger.Model.Pet>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (List<Pet>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Pet>)));
+                (List<IO.Swagger.Model.Pet>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<IO.Swagger.Model.Pet>)));
         }
 
         /// <summary>
@@ -1107,10 +1107,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to return</param>
-        /// <returns>Pet</returns>
-        public Pet GetPetById (long? petId)
+        /// <returns>IO.Swagger.Model.Pet</returns>
+        public IO.Swagger.Model.Pet GetPetById (long? petId)
         {
-             ApiResponse<Pet> localVarResponse = GetPetByIdWithHttpInfo(petId);
+             ApiResponse<IO.Swagger.Model.Pet> localVarResponse = GetPetByIdWithHttpInfo(petId);
              return localVarResponse.Data;
         }
 
@@ -1119,8 +1119,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to return</param>
-        /// <returns>ApiResponse of Pet</returns>
-        public ApiResponse< Pet > GetPetByIdWithHttpInfo (long? petId)
+        /// <returns>ApiResponse of IO.Swagger.Model.Pet</returns>
+        public ApiResponse< IO.Swagger.Model.Pet > GetPetByIdWithHttpInfo (long? petId)
         {
             // verify the required parameter 'petId' is set
             if (petId == null)
@@ -1170,9 +1170,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<Pet>(localVarStatusCode,
+            return new ApiResponse<IO.Swagger.Model.Pet>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (Pet) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Pet)));
+                (IO.Swagger.Model.Pet) Configuration.ApiClient.Deserialize(localVarResponse, typeof(IO.Swagger.Model.Pet)));
         }
 
         /// <summary>
@@ -1180,10 +1180,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to return</param>
-        /// <returns>Task of Pet</returns>
-        public async System.Threading.Tasks.Task<Pet> GetPetByIdAsync (long? petId)
+        /// <returns>Task of IO.Swagger.Model.Pet</returns>
+        public async System.Threading.Tasks.Task<IO.Swagger.Model.Pet> GetPetByIdAsync (long? petId)
         {
-             ApiResponse<Pet> localVarResponse = await GetPetByIdAsyncWithHttpInfo(petId);
+             ApiResponse<IO.Swagger.Model.Pet> localVarResponse = await GetPetByIdAsyncWithHttpInfo(petId);
              return localVarResponse.Data;
 
         }
@@ -1193,8 +1193,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to return</param>
-        /// <returns>Task of ApiResponse (Pet)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Pet>> GetPetByIdAsyncWithHttpInfo (long? petId)
+        /// <returns>Task of ApiResponse (IO.Swagger.Model.Pet)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<IO.Swagger.Model.Pet>> GetPetByIdAsyncWithHttpInfo (long? petId)
         {
             // verify the required parameter 'petId' is set
             if (petId == null)
@@ -1243,9 +1243,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<Pet>(localVarStatusCode,
+            return new ApiResponse<IO.Swagger.Model.Pet>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (Pet) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Pet)));
+                (IO.Swagger.Model.Pet) Configuration.ApiClient.Deserialize(localVarResponse, typeof(IO.Swagger.Model.Pet)));
         }
 
         /// <summary>
@@ -1254,7 +1254,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns></returns>
-        public void UpdatePet (Pet body)
+        public void UpdatePet (IO.Swagger.Model.Pet body)
         {
              UpdatePetWithHttpInfo(body);
         }
@@ -1265,7 +1265,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> UpdatePetWithHttpInfo (Pet body)
+        public ApiResponse<Object> UpdatePetWithHttpInfo (IO.Swagger.Model.Pet body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -1335,7 +1335,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task UpdatePetAsync (Pet body)
+        public async System.Threading.Tasks.Task UpdatePetAsync (IO.Swagger.Model.Pet body)
         {
              await UpdatePetAsyncWithHttpInfo(body);
 
@@ -1347,7 +1347,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> UpdatePetAsyncWithHttpInfo (Pet body)
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> UpdatePetAsyncWithHttpInfo (IO.Swagger.Model.Pet body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -1577,10 +1577,10 @@ namespace IO.Swagger.Api
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata">Additional data to pass to server (optional)</param>
         /// <param name="file">file to upload (optional)</param>
-        /// <returns>ApiResponse</returns>
-        public ApiResponse UploadFile (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
+        /// <returns>IO.Swagger.Model.ApiResponse</returns>
+        public IO.Swagger.Model.ApiResponse UploadFile (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
         {
-             ApiResponse<ApiResponse> localVarResponse = UploadFileWithHttpInfo(petId, additionalMetadata, file);
+             ApiResponse<IO.Swagger.Model.ApiResponse> localVarResponse = UploadFileWithHttpInfo(petId, additionalMetadata, file);
              return localVarResponse.Data;
         }
 
@@ -1591,8 +1591,8 @@ namespace IO.Swagger.Api
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata">Additional data to pass to server (optional)</param>
         /// <param name="file">file to upload (optional)</param>
-        /// <returns>ApiResponse of ApiResponse</returns>
-        public ApiResponse< ApiResponse > UploadFileWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
+        /// <returns>ApiResponse of IO.Swagger.Model.ApiResponse</returns>
+        public ApiResponse< IO.Swagger.Model.ApiResponse > UploadFileWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
         {
             // verify the required parameter 'petId' is set
             if (petId == null)
@@ -1644,9 +1644,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<ApiResponse>(localVarStatusCode,
+            return new ApiResponse<IO.Swagger.Model.ApiResponse>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (ApiResponse) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ApiResponse)));
+                (IO.Swagger.Model.ApiResponse) Configuration.ApiClient.Deserialize(localVarResponse, typeof(IO.Swagger.Model.ApiResponse)));
         }
 
         /// <summary>
@@ -1656,10 +1656,10 @@ namespace IO.Swagger.Api
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata">Additional data to pass to server (optional)</param>
         /// <param name="file">file to upload (optional)</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse> UploadFileAsync (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
+        /// <returns>Task of IO.Swagger.Model.ApiResponse</returns>
+        public async System.Threading.Tasks.Task<IO.Swagger.Model.ApiResponse> UploadFileAsync (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
         {
-             ApiResponse<ApiResponse> localVarResponse = await UploadFileAsyncWithHttpInfo(petId, additionalMetadata, file);
+             ApiResponse<IO.Swagger.Model.ApiResponse> localVarResponse = await UploadFileAsyncWithHttpInfo(petId, additionalMetadata, file);
              return localVarResponse.Data;
 
         }
@@ -1671,8 +1671,8 @@ namespace IO.Swagger.Api
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata">Additional data to pass to server (optional)</param>
         /// <param name="file">file to upload (optional)</param>
-        /// <returns>Task of ApiResponse (ApiResponse)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<ApiResponse>> UploadFileAsyncWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
+        /// <returns>Task of ApiResponse (IO.Swagger.Model.ApiResponse)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<IO.Swagger.Model.ApiResponse>> UploadFileAsyncWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
         {
             // verify the required parameter 'petId' is set
             if (petId == null)
@@ -1724,9 +1724,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<ApiResponse>(localVarStatusCode,
+            return new ApiResponse<IO.Swagger.Model.ApiResponse>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (ApiResponse) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ApiResponse)));
+                (IO.Swagger.Model.ApiResponse) Configuration.ApiClient.Deserialize(localVarResponse, typeof(IO.Swagger.Model.ApiResponse)));
         }
 
     }

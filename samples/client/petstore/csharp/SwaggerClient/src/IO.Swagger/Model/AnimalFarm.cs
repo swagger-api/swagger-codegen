@@ -28,7 +28,7 @@ namespace IO.Swagger.Model
     /// AnimalFarm
     /// </summary>
     [DataContract]
-    public partial class AnimalFarm : List<Animal>,  IEquatable<AnimalFarm>, IValidatableObject
+    public partial class AnimalFarm : List<IO.Swagger.Model.Animal>,  IEquatable<AnimalFarm>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AnimalFarm" /> class.

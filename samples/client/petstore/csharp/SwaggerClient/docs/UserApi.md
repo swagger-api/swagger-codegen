@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 <a name="createuser"></a>
 # **CreateUser**
-> void CreateUser (User body)
+> void CreateUser (IO.Swagger.Model.User body)
 
 Create user
 
@@ -37,7 +37,7 @@ namespace Example
         public void main()
         {
             var apiInstance = new UserApi();
-            var body = new User(); // User | Created user object
+            var body = new IO.Swagger.Model.User(); // IO.Swagger.Model.User | Created user object
 
             try
             {
@@ -57,7 +57,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**User**](User.md)| Created user object | 
+ **body** | [**IO.Swagger.Model.User**](IO.Swagger.Model.User.md)| Created user object | 
 
 ### Return type
 
@@ -76,7 +76,7 @@ No authorization required
 
 <a name="createuserswitharrayinput"></a>
 # **CreateUsersWithArrayInput**
-> void CreateUsersWithArrayInput (List<User> body)
+> void CreateUsersWithArrayInput (IO.Swagger.Model.List<IO.Swagger.Model.User> body)
 
 Creates list of users with given input array
 
@@ -97,7 +97,7 @@ namespace Example
         public void main()
         {
             var apiInstance = new UserApi();
-            var body = new List<User>(); // List<User> | List of user object
+            var body = new IO.Swagger.Model.List<IO.Swagger.Model.User>(); // IO.Swagger.Model.List<IO.Swagger.Model.User> | List of user object
 
             try
             {
@@ -117,7 +117,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**List&lt;User&gt;**](User.md)| List of user object | 
+ **body** | [**IO.Swagger.Model.List&lt;IO.Swagger.Model.User&gt;**](IO.Swagger.Model.User.md)| List of user object | 
 
 ### Return type
 
@@ -136,7 +136,7 @@ No authorization required
 
 <a name="createuserswithlistinput"></a>
 # **CreateUsersWithListInput**
-> void CreateUsersWithListInput (List<User> body)
+> void CreateUsersWithListInput (IO.Swagger.Model.List<IO.Swagger.Model.User> body)
 
 Creates list of users with given input array
 
@@ -157,7 +157,7 @@ namespace Example
         public void main()
         {
             var apiInstance = new UserApi();
-            var body = new List<User>(); // List<User> | List of user object
+            var body = new IO.Swagger.Model.List<IO.Swagger.Model.User>(); // IO.Swagger.Model.List<IO.Swagger.Model.User> | List of user object
 
             try
             {
@@ -177,7 +177,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**List&lt;User&gt;**](User.md)| List of user object | 
+ **body** | [**IO.Swagger.Model.List&lt;IO.Swagger.Model.User&gt;**](IO.Swagger.Model.User.md)| List of user object | 
 
 ### Return type
 
@@ -256,7 +256,7 @@ No authorization required
 
 <a name="getuserbyname"></a>
 # **GetUserByName**
-> User GetUserByName (string username)
+> IO.Swagger.Model.User GetUserByName (string username)
 
 Get user by user name
 
@@ -282,7 +282,7 @@ namespace Example
             try
             {
                 // Get user by user name
-                User result = apiInstance.GetUserByName(username);
+                IO.Swagger.Model.User result = apiInstance.GetUserByName(username);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -302,7 +302,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**User**](User.md)
+[**IO.Swagger.Model.User**](IO.Swagger.Model.User.md)
 
 ### Authorization
 
@@ -436,7 +436,7 @@ No authorization required
 
 <a name="updateuser"></a>
 # **UpdateUser**
-> void UpdateUser (string username, User body)
+> void UpdateUser (string username, IO.Swagger.Model.User body)
 
 Updated user
 
@@ -458,7 +458,7 @@ namespace Example
         {
             var apiInstance = new UserApi();
             var username = username_example;  // string | name that need to be deleted
-            var body = new User(); // User | Updated user object
+            var body = new IO.Swagger.Model.User(); // IO.Swagger.Model.User | Updated user object
 
             try
             {
@@ -479,7 +479,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **username** | **string**| name that need to be deleted | 
- **body** | [**User**](User.md)| Updated user object | 
+ **body** | [**IO.Swagger.Model.User**](IO.Swagger.Model.User.md)| Updated user object | 
 
 ### Return type
 

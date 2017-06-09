@@ -36,7 +36,7 @@ namespace IO.Swagger.Model
         /// <param name="ArrayOfString">ArrayOfString.</param>
         /// <param name="ArrayArrayOfInteger">ArrayArrayOfInteger.</param>
         /// <param name="ArrayArrayOfModel">ArrayArrayOfModel.</param>
-        public ArrayTest(List<string> ArrayOfString = default(List<string>), List<List<long?>> ArrayArrayOfInteger = default(List<List<long?>>), List<List<ReadOnlyFirst>> ArrayArrayOfModel = default(List<List<ReadOnlyFirst>>))
+        public ArrayTest(List<string> ArrayOfString = default(List<string>), List<List<long?>> ArrayArrayOfInteger = default(List<List<long?>>), List<List<IO.Swagger.Model.ReadOnlyFirst>> ArrayArrayOfModel = default(List<List<IO.Swagger.Model.ReadOnlyFirst>>))
         {
             this.ArrayOfString = ArrayOfString;
             this.ArrayArrayOfInteger = ArrayArrayOfInteger;
@@ -59,7 +59,7 @@ namespace IO.Swagger.Model
         /// Gets or Sets ArrayArrayOfModel
         /// </summary>
         [DataMember(Name="array_array_of_model", EmitDefaultValue=false)]
-        public List<List<ReadOnlyFirst>> ArrayArrayOfModel { get; set; }
+        public List<List<IO.Swagger.Model.ReadOnlyFirst>> ArrayArrayOfModel { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
