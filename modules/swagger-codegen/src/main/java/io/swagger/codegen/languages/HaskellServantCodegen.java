@@ -9,12 +9,14 @@ import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class HaskellServantCodegen extends DefaultCodegen implements CodegenConfig {
 
     // source folder where to write the files
     protected String sourceFolder = "src";
     protected String apiVersion = "0.0.1";
+    private static final Pattern LEADING_UNDERSCORE = Pattern.compile("^_+");
 
     /**
      * Configures the type of generator.
@@ -468,12 +470,14 @@ public class HaskellServantCodegen extends DefaultCodegen implements CodegenConf
 
     private String fixOperatorChars(String string) {
         StringBuilder sb = new StringBuilder();
-        String name;
+        String name = string;
         //Check if it is a reserved word, in which case the underscore is added when property name is generated.
-        if (string.startsWith("_") && escapeReservedWord(string.substring(1, string.length())).equals(string)) {
-            name = string.substring(1, string.length());
-        } else {
-            name = string;
+        if (string.startsWith("_")) {
+            if (reservedWords.contains(string.substring(1, string.length()))) {
+                name = string.substring(1, string.length());
+            } else if (reservedWordsMappings.containsValue(string)) {
+                name = LEADING_UNDERSCORE.matcher(string).replaceFirst("");
+            }
         }
         for (char c : name.toCharArray()) {
             String cString = String.valueOf(c);
