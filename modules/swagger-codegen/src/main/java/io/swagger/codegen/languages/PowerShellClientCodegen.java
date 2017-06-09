@@ -12,6 +12,8 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 
 public class PowerShellClientCodegen extends DefaultCodegen implements CodegenConfig {
     static Logger LOGGER = LoggerFactory.getLogger(PowerShellClientCodegen.class);
@@ -417,4 +419,17 @@ public class PowerShellClientCodegen extends DefaultCodegen implements CodegenCo
         return camelize(sanitizeName(operationId));
     }
 
+    @Override
+    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
+        Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
+        List<CodegenOperation> operationList = (List<CodegenOperation>) operations.get("operation");
+        for (CodegenOperation op : operationList) {
+            int index = 0;
+            for (CodegenParameter p : op.allParams) {
+                p.vendorExtensions.put("x-index", index);
+                index++;
+            }
+        }
+        return objs;
+    }
 }

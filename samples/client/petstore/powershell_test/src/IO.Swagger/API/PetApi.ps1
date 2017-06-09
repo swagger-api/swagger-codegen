@@ -1,7 +1,7 @@
 function Invoke-PetApiAddPet {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
         [IO.Swagger.Model.Pet]
         ${body}
     )
@@ -19,10 +19,10 @@ function Invoke-PetApiAddPet {
 function Invoke-PetApiDeletePet {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
         [Int64]
         ${petId},
-        [Parameter(Position = 2, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
+        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
         [String]
         ${apiKey}
     )
@@ -41,7 +41,7 @@ function Invoke-PetApiDeletePet {
 function Invoke-PetApiFindPetsByStatus {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
         [[String]]
         ${status}
     )
@@ -59,7 +59,7 @@ function Invoke-PetApiFindPetsByStatus {
 function Invoke-PetApiFindPetsByTags {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
         [[String]]
         ${tags}
     )
@@ -77,7 +77,7 @@ function Invoke-PetApiFindPetsByTags {
 function Invoke-PetApiGetPetById {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
         [Int64]
         ${petId}
     )
@@ -95,7 +95,7 @@ function Invoke-PetApiGetPetById {
 function Invoke-PetApiUpdatePet {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
         [IO.Swagger.Model.Pet]
         ${body}
     )
@@ -113,13 +113,13 @@ function Invoke-PetApiUpdatePet {
 function Invoke-PetApiUpdatePetWithForm {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
         [Int64]
         ${petId},
-        [Parameter(Position = 2, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
+        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
         [String]
         ${name},
-        [Parameter(Position = 3, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
+        [Parameter(Position = 2, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
         [String]
         ${status}
     )
@@ -139,13 +139,13 @@ function Invoke-PetApiUpdatePetWithForm {
 function Invoke-PetApiUploadFile {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
+        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
         [Int64]
         ${petId},
-        [Parameter(Position = 2, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
+        [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
         [String]
         ${additionalMetadata},
-        [Parameter(Position = 3, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
+        [Parameter(Position = 2, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
         [IO.Swagger.Model.String]
         ${file}
     )
