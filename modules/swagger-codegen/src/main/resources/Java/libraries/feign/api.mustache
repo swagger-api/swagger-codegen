@@ -38,7 +38,7 @@ public interface {{classname}} extends ApiClient.Api {
     "{{baseName}}: {{=<% %>=}}{<%paramName%>}<%={{ }}=%>"{{#hasMore}},
     {{/hasMore}}{{/headerParams}}
   })
-  {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{nickname}}({{#allParams}}{{^isBodyParam}}{{^legacyDates}}@Param("{{paramName}}") {{/legacyDates}}{{#legacyDates}}@Param(value="{{paramName}}", expander=ParamExpander.class) {{/legacyDates}}{{/isBodyParam}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+  {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{nickname}}({{#allParams}}{{^isBodyParam}}{{^legacyDates}}@Param("{{baseName}}") {{/legacyDates}}{{#legacyDates}}@Param(value="{{baseName}}", expander=ParamExpander.class) {{/legacyDates}}{{/isBodyParam}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
     {{#hasQueryParams}}
 
   /**
