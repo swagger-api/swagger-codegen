@@ -98,9 +98,9 @@ export const {{classname}}FetchParamCreator = {
 {{/hasQueryParams}}
         let fetchOptions: RequestInit = {{#supportsES6}}Object.{{/supportsES6}}assign({}, { method: "{{httpMethod}}" }, options);
 
-        let contentTypeHeader: Dictionary<string> = {};
+        const headers: Dictionary<string> = (options && options.headers) ? options.headers : {};
 {{#hasFormParams}}
-        contentTypeHeader = { "Content-Type": "application/x-www-form-urlencoded" };
+        headers["Content-Type"] = "application/x-www-form-urlencoded";
         fetchOptions.body = querystring.stringify({
         {{#formParams}}
             "{{baseName}}": params["{{paramName}}"],
@@ -108,7 +108,7 @@ export const {{classname}}FetchParamCreator = {
         });
 {{/hasFormParams}}
 {{#hasBodyParam}}
-        contentTypeHeader = { "Content-Type": "application/json" };{{#bodyParam}}
+        headers["Content-Type"] = "application/json";{{#bodyParam}}
         if (params["{{paramName}}"]) {
             fetchOptions.body = JSON.stringify(params["{{paramName}}"] || {});
         }{{/bodyParam}}
@@ -116,12 +116,10 @@ export const {{classname}}FetchParamCreator = {
 {{#hasHeaderParams}}
         fetchOptions.headers = {{#supportsES6}}Object.{{/supportsES6}}assign({
             {{#headerParams}}"{{baseName}}": params["{{paramName}}"],{{/headerParams}}
-        }, contentTypeHeader);
+        }, headers);
 {{/hasHeaderParams}}
 {{^hasHeaderParams}}
-        if (contentTypeHeader) {
-            fetchOptions.headers = contentTypeHeader;
-        }
+        fetchOptions.headers = headers;
 {{/hasHeaderParams}}
         return {
             url: url.format(urlObj),
