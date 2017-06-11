@@ -15,13 +15,13 @@ import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
 import io.swagger.codegen.SupportingFile;
 
-public class Apache2Confgen extends DefaultCodegen implements CodegenConfig {
+public class Apache2ConfigCodegen extends DefaultCodegen implements CodegenConfig {
   public static final String USER_INFO_PATH = "userInfoPath";
   protected String userInfoPath = "/var/www/html/";
 
   @Override
   public CodegenType getTag() {
-    return CodegenType.OTHER;
+    return CodegenType.CONFIG;
   }
 
   @Override
@@ -34,7 +34,7 @@ public class Apache2Confgen extends DefaultCodegen implements CodegenConfig {
     return "Generates an Apache2 Config file with the permissions";
   }
 
-  public Apache2Confgen() {
+  public Apache2ConfigCodegen() {
     super();
     apiTemplateFiles.put("apache-config.mustache", ".conf");
 
