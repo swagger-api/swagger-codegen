@@ -146,7 +146,7 @@ function Invoke-PetApiUploadFile {
         [String]
         ${additionalMetadata},
         [Parameter(Position = 2, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
-        [IO.Swagger.Model.String]
+        [String]
         ${file}
     )
 

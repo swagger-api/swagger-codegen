@@ -119,7 +119,7 @@ public class PowerShellClientCodegen extends DefaultCodegen implements CodegenCo
                 "Single",
                 "Double",
                 "TimeSpan",
-                "DateTime",
+                "System.DateTime",
                 "ProgressRecord",
                 "Char",
                 "String",
@@ -365,13 +365,14 @@ public class PowerShellClientCodegen extends DefaultCodegen implements CodegenCo
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
         String type;
+
         // This maps, for example, long -> Long based on hashes in this type's constructor
         if (typeMapping.containsKey(swaggerType)) {
             type = typeMapping.get(swaggerType);
             if (languageSpecificPrimitives.contains(type)) {
                 return type;
             }
-        } else  {
+        } else {
             type = swaggerType;
         }
 
@@ -396,9 +397,8 @@ public class PowerShellClientCodegen extends DefaultCodegen implements CodegenCo
             Property inner = mp.getAdditionalProperties();
             // TODO not sure if the following map/hash declaration is correct
             return "{String, " + getTypeDeclaration(inner) + "}";
-        } else if (!languageSpecificPrimitives.contains(typeMapping.get(super.getSwaggerType(p)))) {
+        } else if (!languageSpecificPrimitives.contains(getSwaggerType(p))) {
             return packageName + ".Model." + super.getTypeDeclaration(p);
-
         }
         return super.getTypeDeclaration(p);
     }

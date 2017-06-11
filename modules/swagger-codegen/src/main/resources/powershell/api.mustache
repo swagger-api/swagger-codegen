@@ -5,7 +5,7 @@ function Invoke-{{{classname}}}{{{operationId}}} {
     Param (
     {{#allParams}}
         [Parameter(Position = {{vendorExtensions.x-index}}, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = {{#required}}$true{{/required}}{{^required}}$false{{/required}})]
-        [{{^isContainer}}{{^isPrimitiveType}}{{{packageName}}}.Model.{{/isPrimitiveType}}{{/isContainer}}{{{dataType}}}]
+        [{{^isContainer}}{{^isPrimitiveType}}{{^isFile}}{{{packageName}}}.Model.{{/isFile}}{{/isPrimitiveType}}{{/isContainer}}{{{dataType}}}]
         {{=<% %>=}}
         ${<%paramName%>}<%^-last%>,<%/-last%>
         <%={{ }}=%>

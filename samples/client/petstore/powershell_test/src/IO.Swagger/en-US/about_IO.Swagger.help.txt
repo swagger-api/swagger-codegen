@@ -11,7 +11,7 @@ LONG DESCRIPTION
 
     - API version: 1.0.0
     - SDK version: 
-    - Build date: 2017-06-09T22:35:13.543+08:00
+    - Build date: 2017-06-12T00:52:17.472+08:00
     - Build package: io.swagger.codegen.languages.PowerShellClientCodegen
 
     Frameworks supported:
