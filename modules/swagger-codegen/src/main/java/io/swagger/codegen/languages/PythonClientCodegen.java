@@ -115,6 +115,7 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         cliOptions.clear();
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "python package name (convention: snake_case).")
                 .defaultValue("swagger_client"));
+        cliOptions.add(new CliOption(CodegenConstants.PROJECT_NAME, "python project name in setup.py (e.g. petstore-api)."));
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_VERSION, "python package version.")
                 .defaultValue("1.0.0"));
         cliOptions.add(new CliOption(PACKAGE_URL, "python package URL."));
