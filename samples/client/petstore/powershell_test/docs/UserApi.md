@@ -76,7 +76,7 @@ No authorization required
 
 <a name="createuserswitharrayinput"></a>
 # **CreateUsersWithArrayInput**
-> void CreateUsersWithArrayInput ([IO.Swagger.Model.User] body)
+> void CreateUsersWithArrayInput (IO.Swagger.Model.User body)
 
 Creates list of users with given input array
 
@@ -97,7 +97,7 @@ namespace Example
         public void main()
         {
             var apiInstance = new UserApi();
-            var body = new [IO.Swagger.Model.User](); // [IO.Swagger.Model.User] | List of user object
+            var body = new IO.Swagger.Model.User(); // IO.Swagger.Model.User | List of user object
 
             try
             {
@@ -117,7 +117,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**[IO.Swagger.Model.User]**](User.md)| List of user object | 
+ **body** | [**IO.Swagger.Model.User**](User.md)| List of user object | 
 
 ### Return type
 
@@ -136,7 +136,7 @@ No authorization required
 
 <a name="createuserswithlistinput"></a>
 # **CreateUsersWithListInput**
-> void CreateUsersWithListInput ([IO.Swagger.Model.User] body)
+> void CreateUsersWithListInput (IO.Swagger.Model.User body)
 
 Creates list of users with given input array
 
@@ -157,7 +157,7 @@ namespace Example
         public void main()
         {
             var apiInstance = new UserApi();
-            var body = new [IO.Swagger.Model.User](); // [IO.Swagger.Model.User] | List of user object
+            var body = new IO.Swagger.Model.User(); // IO.Swagger.Model.User | List of user object
 
             try
             {
@@ -177,7 +177,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**[IO.Swagger.Model.User]**](User.md)| List of user object | 
+ **body** | [**IO.Swagger.Model.User**](User.md)| List of user object | 
 
 ### Return type
 

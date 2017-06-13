@@ -11,10 +11,10 @@ function New-Pet {
         [String]
         ${name},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
-        [[[String]]]
+        [[String]]
         ${photoUrls},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
-        [System.Nullable[[IO.Swagger.Model.Tag]]]
+        [System.Nullable[IO.Swagger.Model.Tag]]
         ${tags},
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
         [String]
@@ -34,3 +34,4 @@ function New-Pet {
             ${status}
         )
     }
+}

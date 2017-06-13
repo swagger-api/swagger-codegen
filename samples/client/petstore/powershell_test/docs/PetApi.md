@@ -144,7 +144,7 @@ void (empty response body)
 
 <a name="findpetsbystatus"></a>
 # **FindPetsByStatus**
-> [IO.Swagger.Model.Pet] FindPetsByStatus ([String] status)
+> IO.Swagger.Model.Pet FindPetsByStatus (String status)
 
 Finds Pets by status
 
@@ -168,12 +168,12 @@ namespace Example
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new PetApi();
-            var status = new [String](); // [String] | Status values that need to be considered for filter
+            var status = new String(); // String | Status values that need to be considered for filter
 
             try
             {
                 // Finds Pets by status
-                [IO.Swagger.Model.Pet] result = apiInstance.FindPetsByStatus(status);
+                IO.Swagger.Model.Pet result = apiInstance.FindPetsByStatus(status);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -189,11 +189,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **status** | [**[String]**](String.md)| Status values that need to be considered for filter | 
+ **status** | [**String**](String.md)| Status values that need to be considered for filter | 
 
 ### Return type
 
-[**[IO.Swagger.Model.Pet]**](Pet.md)
+[**IO.Swagger.Model.Pet**](Pet.md)
 
 ### Authorization
 
@@ -208,7 +208,7 @@ Name | Type | Description  | Notes
 
 <a name="findpetsbytags"></a>
 # **FindPetsByTags**
-> [IO.Swagger.Model.Pet] FindPetsByTags ([String] tags)
+> IO.Swagger.Model.Pet FindPetsByTags (String tags)
 
 Finds Pets by tags
 
@@ -232,12 +232,12 @@ namespace Example
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new PetApi();
-            var tags = new [String](); // [String] | Tags to filter by
+            var tags = new String(); // String | Tags to filter by
 
             try
             {
                 // Finds Pets by tags
-                [IO.Swagger.Model.Pet] result = apiInstance.FindPetsByTags(tags);
+                IO.Swagger.Model.Pet result = apiInstance.FindPetsByTags(tags);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -253,11 +253,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **tags** | [**[String]**](String.md)| Tags to filter by | 
+ **tags** | [**String**](String.md)| Tags to filter by | 
 
 ### Return type
 
-[**[IO.Swagger.Model.Pet]**](Pet.md)
+[**IO.Swagger.Model.Pet**](Pet.md)
 
 ### Authorization
 

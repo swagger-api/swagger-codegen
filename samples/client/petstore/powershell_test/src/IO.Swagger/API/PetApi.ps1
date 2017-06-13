@@ -42,7 +42,7 @@ function Invoke-PetApiFindPetsByStatus {
     [CmdletBinding()]
     Param (
         [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
-        [[String]]
+        [String]
         ${status}
     )
 
@@ -60,7 +60,7 @@ function Invoke-PetApiFindPetsByTags {
     [CmdletBinding()]
     Param (
         [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
-        [[String]]
+        [String]
         ${tags}
     )
 

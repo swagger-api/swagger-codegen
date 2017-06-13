@@ -1,6 +1,45 @@
+function Get-FunctionsToExport {
+    [CmdletBinding()]
+    Param (
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('FullName')]
+        $Path
+    )
+
+    Process {
+        $Token = $null
+        $ParserErr = $null
+
+        $Ast = [System.Management.Automation.Language.Parser]::ParseFile(
+            $Path,
+            [ref]$Token,
+            [ref]$ParserErr
+        )
+
+        if ($ParserErr) {
+            throw $ParserErr
+        } else {
+            foreach ($name in 'Begin', 'Process', 'End') {
+	            foreach ($Statement in $Ast."${name}Block".Statements) {
+		            if (
+                        [String]::IsNullOrWhiteSpace($Statement.Name) -or
+                        $Statement.Extent.ToString() -notmatch
+                        ('function\W+{0}' -f $Statement.Name)
+                    ) {
+			            continue
+		            }
+
+		            $Statement.Name
+	            }
+            }
+        }
+    }
+}
+
 $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
 $ClientPath = ("$ScriptDir\..\..\petstore\csharp\SwaggerClient" | Resolve-Path).ProviderPath
-$PublicPath = "$ScriptDir\src\IO.Swagger\Public"
+$FunctionPath = 'API', 'Model' | ForEach-Object {Join-Path "$ScriptDir\src\IO.Swagger\" $_}
 $BinPath = "$ScriptDir\src\IO.Swagger\Bin"
 
 Start-Process -FilePath "$ClientPath\build.bat" -WorkingDirectory $ClientPath -Wait -NoNewWindow
@@ -27,9 +66,7 @@ $Manifest = @{
         Join-Path $_.Directory.Name $_.Name
     }
 
-    FunctionsToExport = Get-ChildItem "$PublicPath\*.ps1" | ForEach-Object {
-        $_.BaseName
-    }
+    FunctionsToExport = $FunctionPath | Get-ChildItem -Filter *.ps1 | Get-FunctionsToExport
 
     VariablesToExport = @()
     AliasesToExport = @()

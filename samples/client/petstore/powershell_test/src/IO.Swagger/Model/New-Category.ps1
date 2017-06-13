@@ -18,3 +18,4 @@ function New-Category {
             ${name}
         )
     }
+}

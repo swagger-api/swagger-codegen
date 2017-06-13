@@ -22,3 +22,4 @@ function New-ApiResponse {
             ${message}
         )
     }
+}

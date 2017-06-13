@@ -42,3 +42,4 @@ function New-User {
             ${userStatus}
         )
     }
+}
