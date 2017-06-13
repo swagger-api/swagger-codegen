@@ -5,7 +5,7 @@
 import sys
 from setuptools import setup, find_packages
 
-NAME = "{{packageName}}"
+NAME = "{{packageName}}".replace('_', '-')
 VERSION = "{{packageVersion}}"
 {{#apiInfo}}
 {{#apis}}
