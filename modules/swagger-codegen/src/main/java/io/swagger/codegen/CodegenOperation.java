@@ -117,7 +117,7 @@ public class CodegenOperation {
      * @return true if act as Restful show method, false otherwise
      */
     public boolean isRestfulShow() {
-        return "GET".equalsIgnoreCase(httpMethod);
+        return "GET".equalsIgnoreCase(httpMethod) && isMemberPath();
     }
 
     /**
@@ -126,7 +126,7 @@ public class CodegenOperation {
      * @return true if act as Restful create method, false otherwise
      */
     public boolean isRestfulCreate() {
-        return "POST".equalsIgnoreCase(httpMethod);
+        return "POST".equalsIgnoreCase(httpMethod) && isMemberPath();
     }
 
     /**
@@ -135,7 +135,7 @@ public class CodegenOperation {
      * @return true if act as Restful update method, false otherwise
      */
     public boolean isRestfulUpdate() {
-        return Arrays.asList("PUT", "PATCH").contains(httpMethod.toUpperCase());
+        return Arrays.asList("PUT", "PATCH").contains(httpMethod.toUpperCase()) && isMemberPath();
     }
 
     /**
@@ -144,7 +144,7 @@ public class CodegenOperation {
      * @return true if act as Restful destroy method, false otherwise
      */
     public boolean isRestfulDestroy() {
-        return "DELETE".equalsIgnoreCase(httpMethod);
+        return "DELETE".equalsIgnoreCase(httpMethod) && isMemberPath();
     }
 
     /**
