@@ -44,16 +44,13 @@ void PetApi::setupRoutes() {
     using namespace Net::Rest;
 
     Routes::Post(router, base + "/pet", Routes::bind(&PetApi::add_pet_handler, this));
-    Routes::Post(router, base + "/pet/:petId", Routes::bind(&PetApi::update_pet_with_form_handler, this));
-    Routes::Post(router, base + "/pet/:petId/uploadImage", Routes::bind(&PetApi::upload_file_handler, this));
-
-    Routes::Put(router, base + "/pet", Routes::bind(&PetApi::update_pet_handler, this));
-
+    Routes::Delete(router, base + "/pet/:petId", Routes::bind(&PetApi::delete_pet_handler, this));
     Routes::Get(router, base + "/pet/findByStatus", Routes::bind(&PetApi::find_pets_by_status_handler, this));
     Routes::Get(router, base + "/pet/findByTags", Routes::bind(&PetApi::find_pets_by_tags_handler, this));
     Routes::Get(router, base + "/pet/:petId", Routes::bind(&PetApi::get_pet_by_id_handler, this));
-
-    Routes::Delete(router, base + "/pet/:petId", Routes::bind(&PetApi::delete_pet_handler, this));
+    Routes::Put(router, base + "/pet", Routes::bind(&PetApi::update_pet_handler, this));
+    Routes::Post(router, base + "/pet/:petId", Routes::bind(&PetApi::update_pet_with_form_handler, this));
+    Routes::Post(router, base + "/pet/:petId/uploadImage", Routes::bind(&PetApi::upload_file_handler, this));
 
     // Default handler, called when a route is not found
     router.addCustomHandler(Routes::bind(&PetApi::pet_api_default_handler, this));

@@ -46,14 +46,11 @@ void UserApi::setupRoutes() {
     Routes::Post(router, base + "/user", Routes::bind(&UserApi::create_user_handler, this));
     Routes::Post(router, base + "/user/createWithArray", Routes::bind(&UserApi::create_users_with_array_input_handler, this));
     Routes::Post(router, base + "/user/createWithList", Routes::bind(&UserApi::create_users_with_list_input_handler, this));
-
-    Routes::Put(router, base + "/user/:username", Routes::bind(&UserApi::update_user_handler, this));
-
+    Routes::Delete(router, base + "/user/:username", Routes::bind(&UserApi::delete_user_handler, this));
     Routes::Get(router, base + "/user/:username", Routes::bind(&UserApi::get_user_by_name_handler, this));
     Routes::Get(router, base + "/user/login", Routes::bind(&UserApi::login_user_handler, this));
     Routes::Get(router, base + "/user/logout", Routes::bind(&UserApi::logout_user_handler, this));
-
-    Routes::Delete(router, base + "/user/:username", Routes::bind(&UserApi::delete_user_handler, this));
+    Routes::Put(router, base + "/user/:username", Routes::bind(&UserApi::update_user_handler, this));
 
     // Default handler, called when a route is not found
     router.addCustomHandler(Routes::bind(&UserApi::user_api_default_handler, this));

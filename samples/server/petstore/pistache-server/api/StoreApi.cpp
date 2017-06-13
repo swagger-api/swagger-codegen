@@ -43,13 +43,10 @@ void StoreApi::shutdown() {
 void StoreApi::setupRoutes() {
     using namespace Net::Rest;
 
-    Routes::Post(router, base + "/store/order", Routes::bind(&StoreApi::place_order_handler, this));
-
-
+    Routes::Delete(router, base + "/store/order/:orderId", Routes::bind(&StoreApi::delete_order_handler, this));
     Routes::Get(router, base + "/store/inventory", Routes::bind(&StoreApi::get_inventory_handler, this));
     Routes::Get(router, base + "/store/order/:orderId", Routes::bind(&StoreApi::get_order_by_id_handler, this));
-
-    Routes::Delete(router, base + "/store/order/:orderId", Routes::bind(&StoreApi::delete_order_handler, this));
+    Routes::Post(router, base + "/store/order", Routes::bind(&StoreApi::place_order_handler, this));
 
     // Default handler, called when a route is not found
     router.addCustomHandler(Routes::bind(&StoreApi::store_api_default_handler, this));

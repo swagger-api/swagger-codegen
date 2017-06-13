@@ -180,7 +180,7 @@ public class PistacheServerCodegen extends DefaultCodegen implements CodegenConf
                 }
             }
 
-            op.httpMethod = DefaultCodegen.camelize(op.httpMethod);
+            op.httpMethod = op.httpMethod.substring(0, 1).toUpperCase() + op.httpMethod.substring(1).toLowerCase();
 
             for(CodegenParameter param : op.allParams){
                 if (param.isFormParam) isParsingSupported=false;
