@@ -164,7 +164,7 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
                     Boolean.valueOf(additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP).toString()));
         }
 
-        additionalProperties.put(CodegenConstants.PROJECT_NAME, packageName);
+        additionalProperties.put(CodegenConstants.PROJECT_NAME, projectName);
         additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
         additionalProperties.put(CodegenConstants.PACKAGE_VERSION, packageVersion);
 
