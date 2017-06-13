@@ -391,7 +391,7 @@ public class PowerShellClientCodegen extends DefaultCodegen implements CodegenCo
         if (p instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) p;
             Property inner = ap.getItems();
-            return "[" + getTypeDeclaration(inner) + "]";
+            return getTypeDeclaration(inner);
         } else if (p instanceof MapProperty) {
             MapProperty mp = (MapProperty) p;
             Property inner = mp.getAdditionalProperties();
