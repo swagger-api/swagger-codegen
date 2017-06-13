@@ -179,6 +179,9 @@ public class PistacheServerCodegen extends DefaultCodegen implements CodegenConf
                     }
                 }
             }
+
+            op.httpMethod = DefaultCodegen.camelize(op.httpMethod);
+
             for(CodegenParameter param : op.allParams){
                 if (param.isFormParam) isParsingSupported=false;
                 if (param.isFile) isParsingSupported=false;

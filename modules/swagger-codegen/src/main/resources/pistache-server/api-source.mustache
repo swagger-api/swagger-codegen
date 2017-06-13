@@ -34,27 +34,7 @@ void {{classname}}::setupRoutes() {
     using namespace Net::Rest;
 
     {{#operation}}
-    {{#isRestfulCreate}}
-    Routes::Post(router, base + "{{{vendorExtensions.x-codegen-pistache-path}}}", Routes::bind(&{{classname}}::{{operationIdSnakeCase}}_handler, this));
-    {{/isRestfulCreate}}
-    {{/operation}}
-
-    {{#operation}}
-    {{#isRestfulUpdate}}
-    Routes::Put(router, base + "{{{vendorExtensions.x-codegen-pistache-path}}}", Routes::bind(&{{classname}}::{{operationIdSnakeCase}}_handler, this));
-    {{/isRestfulUpdate}}
-    {{/operation}}
-
-    {{#operation}}
-    {{#isRestfulShow}}
-    Routes::Get(router, base + "{{{vendorExtensions.x-codegen-pistache-path}}}", Routes::bind(&{{classname}}::{{operationIdSnakeCase}}_handler, this));
-    {{/isRestfulShow}}
-    {{/operation}}
-
-    {{#operation}}
-    {{#isRestfulDestroy}}
-    Routes::Delete(router, base + "{{{vendorExtensions.x-codegen-pistache-path}}}", Routes::bind(&{{classname}}::{{operationIdSnakeCase}}_handler, this));
-    {{/isRestfulDestroy}}
+    Routes::{{httpMethod}}(router, base + "{{{vendorExtensions.x-codegen-pistache-path}}}", Routes::bind(&{{classname}}::{{operationIdSnakeCase}}_handler, this));
     {{/operation}}
 
     // Default handler, called when a route is not found
