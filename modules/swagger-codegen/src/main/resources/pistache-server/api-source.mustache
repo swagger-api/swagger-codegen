@@ -42,7 +42,6 @@ void {{classname}}::setupRoutes() {
 }
 
 {{#operation}}
-{{#isRestful}}
 void {{classname}}::{{operationIdSnakeCase}}_handler(const Net::Rest::Request &request, Net::Http::ResponseWriter response) {
     {{#vendorExtensions.x-codegen-pistache-isParsingSupported}}
     {{#hasPathParams}}
@@ -96,7 +95,6 @@ void {{classname}}::{{operationIdSnakeCase}}_handler(const Net::Rest::Request &r
     }
 
 }
-{{/isRestful}}
 {{/operation}}
 
 void {{classname}}::{{classnameSnakeLowerCase}}_default_handler(const Net::Rest::Request &request, Net::Http::ResponseWriter response) {
