@@ -61,11 +61,6 @@ utility::string_t ApiClient::parameterToString(float value)
     return utility::conversions::to_string_t(std::to_string(value));
 }
 
-utility::string_t ApiClient::parameterToString(float value)
-{
-    return utility::conversions::to_string_t(std::to_string(value));
-}
-
 utility::string_t ApiClient::parameterToString(const utility::datetime &value)
 {
     return utility::conversions::to_string_t(value.to_string(utility::datetime::ISO_8601));
@@ -139,7 +134,7 @@ pplx::task<web::http::http_response> ApiClient::callApi(
                 web::json::value body_data = web::json::value::object();
                 for (auto& kvp : formParams)
                 {
-                    body_data[U(kvp.first)] = ModelBase::toJson(kvp.second);
+                    body_data[kvp.first] = ModelBase::toJson(kvp.second);
                 }
                 request.set_body(body_data);
             }

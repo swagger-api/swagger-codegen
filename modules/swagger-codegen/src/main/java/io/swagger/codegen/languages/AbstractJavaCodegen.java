@@ -347,6 +347,11 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         importMapping.put("JsonCreator", "com.fasterxml.jackson.annotation.JsonCreator");
         importMapping.put("JsonValue", "com.fasterxml.jackson.annotation.JsonValue");
         importMapping.put("SerializedName", "com.google.gson.annotations.SerializedName");
+        importMapping.put("TypeAdapter", "com.google.gson.TypeAdapter");
+        importMapping.put("JsonAdapter", "com.google.gson.annotations.JsonAdapter");
+        importMapping.put("JsonReader", "com.google.gson.stream.JsonReader");
+        importMapping.put("JsonWriter", "com.google.gson.stream.JsonWriter");
+        importMapping.put("IOException", "java.io.IOException");
         importMapping.put("Objects", "java.util.Objects");
         importMapping.put("StringUtil", invokerPackage + ".StringUtil");
         // import JsonCreator if JsonProperty is imported
@@ -864,11 +869,13 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
                         hasFormParameters = true;
                     }
                 }
-                String defaultContentType = hasFormParameters ? "application/x-www-form-urlencoded" : "application/json";
-                String contentType = operation.getConsumes() == null || operation.getConsumes().isEmpty()
-                        ? defaultContentType : operation.getConsumes().get(0);
+              //only add content-Type if its no a GET-Method
+                if(path.getGet() != null || ! operation.equals(path.getGet())){
+                    String defaultContentType = hasFormParameters ? "application/x-www-form-urlencoded" : "application/json";
+                    String contentType =  operation.getConsumes() == null || operation.getConsumes().isEmpty() ? defaultContentType : operation.getConsumes().get(0);
+                    operation.setVendorExtension("x-contentType", contentType);
+                }
                 String accepts = getAccept(operation);
-                operation.setVendorExtension("x-contentType", contentType);
                 operation.setVendorExtension("x-accepts", accepts);
             }
         }
@@ -952,8 +959,11 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     @Override
     public String toEnumValue(String value, String datatype) {
         if ("Integer".equals(datatype) || "Long".equals(datatype) ||
-            "Float".equals(datatype) || "Double".equals(datatype)) {
+            "Double".equals(datatype)) {
             return value;
+        } else if ("Float".equals(datatype)) {
+            // add f to number, e.g. 3.14 => 3.14f
+            return value + "f";
         } else {
             return "\"" + escapeText(value) + "\"";
         }
