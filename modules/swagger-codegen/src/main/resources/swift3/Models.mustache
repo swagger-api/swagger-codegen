@@ -303,7 +303,7 @@ class Decoders {
                     return .failure(.typeMismatch(expected: "{{classname}}", actual: "\({{name}}Source)"))
                 }
                 {{/requiredVars}}
-                let result = {{classname}}({{#requiredVars}}{{^-first}}, {{/-first}}{{name}}: {{name}}{{/requiredVars}})
+                let _result = {{classname}}({{#requiredVars}}{{^-first}}, {{/-first}}{{name}}: {{name}}{{/requiredVars}})
                 {{#optionalVars}}
                 switch Decoders.decodeOptional(clazz: {{#isEnum}}{{^isListContainer}}{{classname}}.{{enumName}}.self{{/isListContainer}}{{#isListContainer}}Array<{{classname}}.{{enumName}}>.self{{/isListContainer}}{{/isEnum}}{{^isEnum}}{{{datatype}}}.self{{/isEnum}}, source: sourceDictionary["{{baseName}}"] as AnyObject?) {
                 case let .success(value): instance.{{name}} = value
@@ -312,16 +312,16 @@ class Decoders {
                 {{/optionalVars}}
             {{/unwrapRequired}}
             {{^unwrapRequired}}
-                let result = instance == nil ? {{classname}}() : instance as! {{classname}}
+                let _result = instance == nil ? {{classname}}() : instance as! {{classname}}
                 {{#parent}}
                 if decoders["\({{parent}}.self)"] != nil {
-                  _ = Decoders.decode(clazz: {{parent}}.self, source: source, instance: result)
+                  _ = Decoders.decode(clazz: {{parent}}.self, source: source, instance: _result)
                 }
                 {{/parent}}
                 {{#allVars}}
                 switch Decoders.decodeOptional(clazz: {{#isEnum}}{{^isListContainer}}{{classname}}.{{enumName}}.self{{/isListContainer}}{{#isListContainer}}Array<{{classname}}.{{enumName}}>.self{{/isListContainer}}{{/isEnum}}{{^isEnum}}{{{datatype}}}.self{{/isEnum}}, source: sourceDictionary["{{baseName}}"] as AnyObject?) {
                 {{#isEnum}}{{#isMapContainer}}/*{{/isMapContainer}}{{/isEnum}}
-                case let .success(value): result.{{name}} = value
+                case let .success(value): _result.{{name}} = value
                 case let .failure(error): return .failure(error)
                 {{#isEnum}}{{#isMapContainer}}*/ default: break //TODO: handle enum map scenario{{/isMapContainer}}{{/isEnum}}
                 }
@@ -335,11 +335,11 @@ class Decoders {
 
                 for key in propsDictionary.keys {
                     if let decodedValue = Decoders.decodeOptional(clazz: String.self, source: propsDictionary[key] as AnyObject?) {
-                        result[key] = decodedValue
+                        _result[key] = decodedValue
                     }
                 }
             {{/additionalPropertiesType}}
-                return .success(result)
+                return .success(_result)
             } else {
                 return .failure(.typeMismatch(expected: "{{classname}}", actual: "\(source)"))
             }
