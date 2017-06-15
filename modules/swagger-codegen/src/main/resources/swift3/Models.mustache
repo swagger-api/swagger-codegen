@@ -299,13 +299,13 @@ class Decoders {
                 guard let {{name}}Source = sourceDictionary["{{baseName}}"] as AnyObject? else {
                     return .failure(.missingKey(key: "{{baseName}}"))
                 }
-                guard let {{name}} = Decoders.decode(clazz: {{#isEnum}}{{^isListContainer}}{{classname}}.{{enumName}}.self{{/isListContainer}}{{#isListContainer}}Array<{{classname}}.{{enumName}}>.self{{/isListContainer}}{{/isEnum}}{{^isEnum}}{{{datatype}}}.self{{/isEnum}}.self, source: {{name}}Source).value else {
+                guard let {{name}} = Decoders.decode(clazz: {{#isEnum}}{{^isListContainer}}{{classname}}.{{enumName}}{{/isListContainer}}{{#isListContainer}}Array<{{classname}}.{{enumName}}>{{/isListContainer}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}}.self, source: {{name}}Source).value else {
                     return .failure(.typeMismatch(expected: "{{classname}}", actual: "\({{name}}Source)"))
                 }
                 {{/requiredVars}}
                 let result = {{classname}}({{#requiredVars}}{{^-first}}, {{/-first}}{{name}}: {{name}}{{/requiredVars}})
                 {{#optionalVars}}
-                switch Decoders.decodeOptional(clazz: {{#isEnum}}{{^isListContainer}}{{classname}}.{{enumName}}.self{{/isListContainer}}{{#isListContainer}}Array<{{classname}}.{{enumName}}>.self{{/isListContainer}}{{/isEnum}}{{^isEnum}}{{{datatype}}}.self{{/isEnum}}, source: sourceDictionary["{{baseName}}"] as AnyObject?) {
+                switch Decoders.decodeOptional(clazz: {{#isEnum}}{{^isListContainer}}{{classname}}.{{enumName}}{{/isListContainer}}{{#isListContainer}}Array<{{classname}}.{{enumName}}>{{/isListContainer}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}}.self, source: sourceDictionary["{{baseName}}"] as AnyObject?) {
                 case let .success(value): instance.{{name}} = value
                 case let .failure(error): return .failure(error)
                 }
