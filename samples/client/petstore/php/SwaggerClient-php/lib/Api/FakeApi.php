@@ -82,6 +82,874 @@ class FakeApi
     }
 
     /**
+     * Operation fakeOuterBooleanSerialize
+     *
+     * @param \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Swagger\Client\Model\OuterBoolean
+     */
+    public function fakeOuterBooleanSerialize($body = null)
+    {
+        list($response) = $this->fakeOuterBooleanSerializeWithHttpInfo($body);
+        return $response;
+    }
+
+    /**
+     * Operation fakeOuterBooleanSerializeWithHttpInfo
+     *
+     * @param \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Swagger\Client\Model\OuterBoolean, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function fakeOuterBooleanSerializeWithHttpInfo($body = null)
+    {
+        $returnType = '\Swagger\Client\Model\OuterBoolean';
+        $request = $this->fakeOuterBooleanSerializeRequest($body);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\OuterBoolean', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation fakeOuterBooleanSerializeAsync
+     *
+     * 
+     *
+     * @param \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function fakeOuterBooleanSerializeAsync($body = null)
+    {
+        return $this->fakeOuterBooleanSerializeAsyncWithHttpInfo($body)->then(function ($response) {
+            return $response[0];
+        });
+    }
+
+    /**
+     * Operation fakeOuterBooleanSerializeAsyncWithHttpInfo
+     *
+     * 
+     *
+     * @param \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function fakeOuterBooleanSerializeAsyncWithHttpInfo($body = null)
+    {
+        $returnType = '\Swagger\Client\Model\OuterBoolean';
+        $request = $this->fakeOuterBooleanSerializeRequest($body);
+
+        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+        }, function ($exception) {
+            $response = $exception->getResponse();
+            $statusCode = $response->getStatusCode();
+            throw new ApiException(
+                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
+                $statusCode,
+                $response->getHeaders(),
+                $response->getBody()
+            );
+        });
+    }
+
+    /**
+     * Create request for operation 'fakeOuterBooleanSerialize'
+     *
+     * @param \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function fakeOuterBooleanSerializeRequest($body = null)
+    {
+
+        $resourcePath = '/fake/outer/boolean';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // body params
+        $_tempBody = null;
+        if (isset($body)) {
+            $_tempBody = $body;
+        }
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
+        }
+
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        return new Request(
+            'POST',
+            $url,
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation fakeOuterCompositeSerialize
+     *
+     * 
+     *
+     * @param \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Swagger\Client\Model\OuterComposite
+     */
+    public function fakeOuterCompositeSerialize($body = null)
+    {
+        list($response) = $this->fakeOuterCompositeSerializeWithHttpInfo($body);
+        return $response;
+    }
+
+    /**
+     * Operation fakeOuterCompositeSerializeWithHttpInfo
+     *
+     * 
+     *
+     * @param \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Swagger\Client\Model\OuterComposite, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function fakeOuterCompositeSerializeWithHttpInfo($body = null)
+    {
+        $returnType = '\Swagger\Client\Model\OuterComposite';
+        $request = $this->fakeOuterCompositeSerializeRequest($body);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\OuterComposite', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation fakeOuterCompositeSerializeAsync
+     *
+     * @param \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function fakeOuterCompositeSerializeAsync($body = null)
+    {
+        return $this->fakeOuterCompositeSerializeAsyncWithHttpInfo($body)->then(function ($response) {
+            return $response[0];
+        });
+    }
+
+    /**
+     * Operation fakeOuterCompositeSerializeAsyncWithHttpInfo
+     *
+     * @param \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function fakeOuterCompositeSerializeAsyncWithHttpInfo($body = null)
+    {
+        $returnType = '\Swagger\Client\Model\OuterComposite';
+        $request = $this->fakeOuterCompositeSerializeRequest($body);
+
+        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+        }, function ($exception) {
+            $response = $exception->getResponse();
+            $statusCode = $response->getStatusCode();
+            throw new ApiException(
+                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
+                $statusCode,
+                $response->getHeaders(),
+                $response->getBody()
+            );
+        });
+    }
+
+    /**
+     * Create request for operation 'fakeOuterCompositeSerialize'
+     *
+     * @param \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function fakeOuterCompositeSerializeRequest($body = null)
+    {
+
+        $resourcePath = '/fake/outer/composite';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // body params
+        $_tempBody = null;
+        if (isset($body)) {
+            $_tempBody = $body;
+        }
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
+        }
+
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        return new Request(
+            'POST',
+            $url,
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation fakeOuterNumberSerialize
+     *
+     * 
+     *
+     * @param \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Swagger\Client\Model\OuterNumber
+     */
+    public function fakeOuterNumberSerialize($body = null)
+    {
+        list($response) = $this->fakeOuterNumberSerializeWithHttpInfo($body);
+        return $response;
+    }
+
+    /**
+     * Operation fakeOuterNumberSerializeWithHttpInfo
+     *
+     * 
+     *
+     * @param \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Swagger\Client\Model\OuterNumber, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function fakeOuterNumberSerializeWithHttpInfo($body = null)
+    {
+        $returnType = '\Swagger\Client\Model\OuterNumber';
+        $request = $this->fakeOuterNumberSerializeRequest($body);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\OuterNumber', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation fakeOuterNumberSerializeAsync
+     *
+     * @param \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function fakeOuterNumberSerializeAsync($body = null)
+    {
+        return $this->fakeOuterNumberSerializeAsyncWithHttpInfo($body)->then(function ($response) {
+            return $response[0];
+        });
+    }
+
+    /**
+     * Operation fakeOuterNumberSerializeAsyncWithHttpInfo
+     *
+     * @param \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function fakeOuterNumberSerializeAsyncWithHttpInfo($body = null)
+    {
+        $returnType = '\Swagger\Client\Model\OuterNumber';
+        $request = $this->fakeOuterNumberSerializeRequest($body);
+
+        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+        }, function ($exception) {
+            $response = $exception->getResponse();
+            $statusCode = $response->getStatusCode();
+            throw new ApiException(
+                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
+                $statusCode,
+                $response->getHeaders(),
+                $response->getBody()
+            );
+        });
+    }
+
+    /**
+     * Create request for operation 'fakeOuterNumberSerialize'
+     *
+     * @param \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function fakeOuterNumberSerializeRequest($body = null)
+    {
+
+        $resourcePath = '/fake/outer/number';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // body params
+        $_tempBody = null;
+        if (isset($body)) {
+            $_tempBody = $body;
+        }
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
+        }
+
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        return new Request(
+            'POST',
+            $url,
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation fakeOuterStringSerialize
+     *
+     * 
+     *
+     * @param \Swagger\Client\Model\OuterString $body Input string as post body (optional)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Swagger\Client\Model\OuterString
+     */
+    public function fakeOuterStringSerialize($body = null)
+    {
+        list($response) = $this->fakeOuterStringSerializeWithHttpInfo($body);
+        return $response;
+    }
+
+    /**
+     * Operation fakeOuterStringSerializeWithHttpInfo
+     *
+     * 
+     *
+     * @param \Swagger\Client\Model\OuterString $body Input string as post body (optional)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Swagger\Client\Model\OuterString, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function fakeOuterStringSerializeWithHttpInfo($body = null)
+    {
+        $returnType = '\Swagger\Client\Model\OuterString';
+        $request = $this->fakeOuterStringSerializeRequest($body);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\Model\OuterString', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation fakeOuterStringSerializeAsync
+     *
+     * @param \Swagger\Client\Model\OuterString $body Input string as post body (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function fakeOuterStringSerializeAsync($body = null)
+    {
+        return $this->fakeOuterStringSerializeAsyncWithHttpInfo($body)->then(function ($response) {
+            return $response[0];
+        });
+    }
+
+    /**
+     * Operation fakeOuterStringSerializeAsyncWithHttpInfo
+     *
+     * @param \Swagger\Client\Model\OuterString $body Input string as post body (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function fakeOuterStringSerializeAsyncWithHttpInfo($body = null)
+    {
+        $returnType = '\Swagger\Client\Model\OuterString';
+        $request = $this->fakeOuterStringSerializeRequest($body);
+
+        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+        }, function ($exception) {
+            $response = $exception->getResponse();
+            $statusCode = $response->getStatusCode();
+            throw new ApiException(
+                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
+                $statusCode,
+                $response->getHeaders(),
+                $response->getBody()
+            );
+        });
+    }
+
+    /**
+     * Create request for operation 'fakeOuterStringSerialize'
+     *
+     * @param \Swagger\Client\Model\OuterString $body Input string as post body (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function fakeOuterStringSerializeRequest($body = null)
+    {
+
+        $resourcePath = '/fake/outer/string';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // body params
+        $_tempBody = null;
+        if (isset($body)) {
+            $_tempBody = $body;
+        }
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
+        }
+
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        return new Request(
+            'POST',
+            $url,
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation testClientModel
      *
      * To test \"client\" model
@@ -109,79 +977,8 @@ class FakeApi
      */
     public function testClientModelWithHttpInfo($body)
     {
-        // verify the required parameter 'body' is set
-        if ($body === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $body when calling testClientModel');
-        }
-
-        $resourcePath = '/fake';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
         $returnType = '\Swagger\Client\Model\Client';
-
-
-
-        // body params
-        $_tempBody = null;
-        if (isset($body)) {
-            $_tempBody = $body;
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $request = new Request(
-            'PATCH',
-            $url,
-            $headers,
-            $httpBody
-        );
+        $request = $this->testClientModelRequest($body);
 
         try {
 
@@ -199,7 +996,7 @@ class FakeApi
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
-                    "[$statusCode] Error connecting to the API ($url)",
+                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
                     $statusCode,
                     $response->getHeaders(),
                     $response->getBody()
@@ -232,6 +1029,151 @@ class FakeApi
             throw $e;
         }
     }
+
+    /**
+     * Operation testClientModelAsync
+     *
+     * To test \"client\" model
+     *
+     * @param \Swagger\Client\Model\Client $body client model (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function testClientModelAsync($body)
+    {
+        return $this->testClientModelAsyncWithHttpInfo($body)->then(function ($response) {
+            return $response[0];
+        });
+    }
+
+    /**
+     * Operation testClientModelAsyncWithHttpInfo
+     *
+     * To test \"client\" model
+     *
+     * @param \Swagger\Client\Model\Client $body client model (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function testClientModelAsyncWithHttpInfo($body)
+    {
+        $returnType = '\Swagger\Client\Model\Client';
+        $request = $this->testClientModelRequest($body);
+
+        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+        }, function ($exception) {
+            $response = $exception->getResponse();
+            $statusCode = $response->getStatusCode();
+            throw new ApiException(
+                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
+                $statusCode,
+                $response->getHeaders(),
+                $response->getBody()
+            );
+        });
+    }
+
+    /**
+     * Create request for operation 'testClientModel'
+     *
+     * @param \Swagger\Client\Model\Client $body client model (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function testClientModelRequest($body)
+    {
+        // verify the required parameter 'body' is set
+        if ($body === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $body when calling testClientModel');
+        }
+
+        $resourcePath = '/fake';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // body params
+        $_tempBody = null;
+        if (isset($body)) {
+            $_tempBody = $body;
+        }
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
+        }
+
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        return new Request(
+            'PATCH',
+            $url,
+            $headers,
+            $httpBody
+        );
+    }
+
     /**
      * Operation testEndpointParameters
      *
@@ -284,6 +1226,133 @@ class FakeApi
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function testEndpointParametersWithHttpInfo($number, $double, $pattern_without_delimiter, $byte, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null, $callback = null)
+    {
+        $returnType = '';
+        $request = $this->testEndpointParametersRequest($number, $double, $pattern_without_delimiter, $byte, $integer, $int32, $int64, $float, $string, $binary, $date, $date_time, $password, $callback);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            return [null, $statusCode, $response->getHeaders()];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation testEndpointParametersAsync
+     *
+     * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트
+     *
+     * @param float $number None (required)
+     * @param double $double None (required)
+     * @param string $pattern_without_delimiter None (required)
+     * @param string $byte None (required)
+     * @param int $integer None (optional)
+     * @param int $int32 None (optional)
+     * @param int $int64 None (optional)
+     * @param float $float None (optional)
+     * @param string $string None (optional)
+     * @param string $binary None (optional)
+     * @param \DateTime $date None (optional)
+     * @param \DateTime $date_time None (optional)
+     * @param string $password None (optional)
+     * @param string $callback None (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function testEndpointParametersAsync($number, $double, $pattern_without_delimiter, $byte, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null, $callback = null)
+    {
+        return $this->testEndpointParametersAsyncWithHttpInfo($number, $double, $pattern_without_delimiter, $byte, $integer, $int32, $int64, $float, $string, $binary, $date, $date_time, $password, $callback)->then(function ($response) {
+            return $response[0];
+        });
+    }
+
+    /**
+     * Operation testEndpointParametersAsyncWithHttpInfo
+     *
+     * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트
+     *
+     * @param float $number None (required)
+     * @param double $double None (required)
+     * @param string $pattern_without_delimiter None (required)
+     * @param string $byte None (required)
+     * @param int $integer None (optional)
+     * @param int $int32 None (optional)
+     * @param int $int64 None (optional)
+     * @param float $float None (optional)
+     * @param string $string None (optional)
+     * @param string $binary None (optional)
+     * @param \DateTime $date None (optional)
+     * @param \DateTime $date_time None (optional)
+     * @param string $password None (optional)
+     * @param string $callback None (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function testEndpointParametersAsyncWithHttpInfo($number, $double, $pattern_without_delimiter, $byte, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null, $callback = null)
+    {
+        $returnType = '';
+        $request = $this->testEndpointParametersRequest($number, $double, $pattern_without_delimiter, $byte, $integer, $int32, $int64, $float, $string, $binary, $date, $date_time, $password, $callback);
+
+        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
+            return [null, $response->getStatusCode(), $response->getHeaders()];
+        }, function ($exception) {
+            $response = $exception->getResponse();
+            $statusCode = $response->getStatusCode();
+            throw new ApiException(
+                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
+                $statusCode,
+                $response->getHeaders(),
+                $response->getBody()
+            );
+        });
+    }
+
+    /**
+     * Create request for operation 'testEndpointParameters'
+     *
+     * @param float $number None (required)
+     * @param double $double None (required)
+     * @param string $pattern_without_delimiter None (required)
+     * @param string $byte None (required)
+     * @param int $integer None (optional)
+     * @param int $int32 None (optional)
+     * @param int $int64 None (optional)
+     * @param float $float None (optional)
+     * @param string $string None (optional)
+     * @param string $binary None (optional)
+     * @param \DateTime $date None (optional)
+     * @param \DateTime $date_time None (optional)
+     * @param string $password None (optional)
+     * @param string $callback None (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function testEndpointParametersRequest($number, $double, $pattern_without_delimiter, $byte, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null, $callback = null)
     {
         // verify the required parameter 'number' is set
         if ($number === null) {
@@ -355,7 +1424,6 @@ class FakeApi
         $headerParams = [];
         $httpBody = '';
         $multipart = false;
-        $returnType = '';
 
 
 
@@ -415,7 +1483,18 @@ class FakeApi
         if ($callback !== null) {
             $formParams['callback'] = ObjectSerializer::toFormValue($callback);
         }
-        
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                ['application/xml; charset=utf-8', 'application/json; charset=utf-8']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/xml; charset=utf-8', 'application/json; charset=utf-8'],
+                ['application/xml; charset=utf-8', 'application/json; charset=utf-8']
+            );
+        }
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
@@ -431,20 +1510,12 @@ class FakeApi
                 }
                 $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
 
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
             } else {
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/xml; charset=utf-8', 'application/json; charset=utf-8']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/xml; charset=utf-8', 'application/json; charset=utf-8'],
-                ['application/xml; charset=utf-8', 'application/json; charset=utf-8']
-            );
         }
 
         // this endpoint requires HTTP basic authentication
@@ -466,44 +1537,14 @@ class FakeApi
             $headers
         );
 
-        $request = new Request(
+        return new Request(
             'POST',
             $url,
             $headers,
             $httpBody
         );
-
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ($url)",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            return [null, $statusCode, $response->getHeaders()];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-            }
-            throw $e;
-        }
     }
+
     /**
      * Operation testEnumParameters
      *
@@ -521,7 +1562,7 @@ class FakeApi
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function testEnumParameters($enum_form_string_array = null, $enum_form_string = null, $enum_header_string_array = null, $enum_header_string = null, $enum_query_string_array = null, $enum_query_string = null, $enum_query_integer = null, $enum_query_double = null)
+    public function testEnumParameters($enum_form_string_array = null, $enum_form_string = '-efg', $enum_header_string_array = null, $enum_header_string = '-efg', $enum_query_string_array = null, $enum_query_string = '-efg', $enum_query_integer = null, $enum_query_double = null)
     {
         $this->testEnumParametersWithHttpInfo($enum_form_string_array, $enum_form_string, $enum_header_string_array, $enum_header_string, $enum_query_string_array, $enum_query_string, $enum_query_integer, $enum_query_double);
     }
@@ -543,7 +1584,116 @@ class FakeApi
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function testEnumParametersWithHttpInfo($enum_form_string_array = null, $enum_form_string = null, $enum_header_string_array = null, $enum_header_string = null, $enum_query_string_array = null, $enum_query_string = null, $enum_query_integer = null, $enum_query_double = null)
+    public function testEnumParametersWithHttpInfo($enum_form_string_array = null, $enum_form_string = '-efg', $enum_header_string_array = null, $enum_header_string = '-efg', $enum_query_string_array = null, $enum_query_string = '-efg', $enum_query_integer = null, $enum_query_double = null)
+    {
+        $returnType = '';
+        $request = $this->testEnumParametersRequest($enum_form_string_array, $enum_form_string, $enum_header_string_array, $enum_header_string, $enum_query_string_array, $enum_query_string, $enum_query_integer, $enum_query_double);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            return [null, $statusCode, $response->getHeaders()];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation testEnumParametersAsync
+     *
+     * To test enum parameters
+     *
+     * @param string[] $enum_form_string_array Form parameter enum test (string array) (optional)
+     * @param string $enum_form_string Form parameter enum test (string) (optional, default to -efg)
+     * @param string[] $enum_header_string_array Header parameter enum test (string array) (optional)
+     * @param string $enum_header_string Header parameter enum test (string) (optional, default to -efg)
+     * @param string[] $enum_query_string_array Query parameter enum test (string array) (optional)
+     * @param string $enum_query_string Query parameter enum test (string) (optional, default to -efg)
+     * @param int $enum_query_integer Query parameter enum test (double) (optional)
+     * @param double $enum_query_double Query parameter enum test (double) (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function testEnumParametersAsync($enum_form_string_array = null, $enum_form_string = '-efg', $enum_header_string_array = null, $enum_header_string = '-efg', $enum_query_string_array = null, $enum_query_string = '-efg', $enum_query_integer = null, $enum_query_double = null)
+    {
+        return $this->testEnumParametersAsyncWithHttpInfo($enum_form_string_array, $enum_form_string, $enum_header_string_array, $enum_header_string, $enum_query_string_array, $enum_query_string, $enum_query_integer, $enum_query_double)->then(function ($response) {
+            return $response[0];
+        });
+    }
+
+    /**
+     * Operation testEnumParametersAsyncWithHttpInfo
+     *
+     * To test enum parameters
+     *
+     * @param string[] $enum_form_string_array Form parameter enum test (string array) (optional)
+     * @param string $enum_form_string Form parameter enum test (string) (optional, default to -efg)
+     * @param string[] $enum_header_string_array Header parameter enum test (string array) (optional)
+     * @param string $enum_header_string Header parameter enum test (string) (optional, default to -efg)
+     * @param string[] $enum_query_string_array Query parameter enum test (string array) (optional)
+     * @param string $enum_query_string Query parameter enum test (string) (optional, default to -efg)
+     * @param int $enum_query_integer Query parameter enum test (double) (optional)
+     * @param double $enum_query_double Query parameter enum test (double) (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function testEnumParametersAsyncWithHttpInfo($enum_form_string_array = null, $enum_form_string = '-efg', $enum_header_string_array = null, $enum_header_string = '-efg', $enum_query_string_array = null, $enum_query_string = '-efg', $enum_query_integer = null, $enum_query_double = null)
+    {
+        $returnType = '';
+        $request = $this->testEnumParametersRequest($enum_form_string_array, $enum_form_string, $enum_header_string_array, $enum_header_string, $enum_query_string_array, $enum_query_string, $enum_query_integer, $enum_query_double);
+
+        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
+            return [null, $response->getStatusCode(), $response->getHeaders()];
+        }, function ($exception) {
+            $response = $exception->getResponse();
+            $statusCode = $response->getStatusCode();
+            throw new ApiException(
+                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
+                $statusCode,
+                $response->getHeaders(),
+                $response->getBody()
+            );
+        });
+    }
+
+    /**
+     * Create request for operation 'testEnumParameters'
+     *
+     * @param string[] $enum_form_string_array Form parameter enum test (string array) (optional)
+     * @param string $enum_form_string Form parameter enum test (string) (optional, default to -efg)
+     * @param string[] $enum_header_string_array Header parameter enum test (string array) (optional)
+     * @param string $enum_header_string Header parameter enum test (string) (optional, default to -efg)
+     * @param string[] $enum_query_string_array Query parameter enum test (string array) (optional)
+     * @param string $enum_query_string Query parameter enum test (string) (optional, default to -efg)
+     * @param int $enum_query_integer Query parameter enum test (double) (optional)
+     * @param double $enum_query_double Query parameter enum test (double) (optional)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function testEnumParametersRequest($enum_form_string_array = null, $enum_form_string = '-efg', $enum_header_string_array = null, $enum_header_string = '-efg', $enum_query_string_array = null, $enum_query_string = '-efg', $enum_query_integer = null, $enum_query_double = null)
     {
 
         $resourcePath = '/fake';
@@ -552,7 +1702,6 @@ class FakeApi
         $headerParams = [];
         $httpBody = '';
         $multipart = false;
-        $returnType = '';
 
         // query params
         if (is_array($enum_query_string_array)) {
@@ -594,7 +1743,18 @@ class FakeApi
         if ($enum_query_double !== null) {
             $formParams['enum_query_double'] = ObjectSerializer::toFormValue($enum_query_double);
         }
-        
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                ['*/*']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['*/*'],
+                ['*/*']
+            );
+        }
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
@@ -610,20 +1770,12 @@ class FakeApi
                 }
                 $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
 
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
             } else {
                 $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
             }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['*/*']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['*/*'],
-                ['*/*']
-            );
         }
 
 
@@ -641,12 +1793,45 @@ class FakeApi
             $headers
         );
 
-        $request = new Request(
+        return new Request(
             'GET',
             $url,
             $headers,
             $httpBody
         );
+    }
+
+    /**
+     * Operation testJsonFormData
+     *
+     * test json serialization of form data
+     *
+     * @param string $param field1 (required)
+     * @param string $param2 field2 (required)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function testJsonFormData($param, $param2)
+    {
+        $this->testJsonFormDataWithHttpInfo($param, $param2);
+    }
+
+    /**
+     * Operation testJsonFormDataWithHttpInfo
+     *
+     * test json serialization of form data
+     *
+     * @param string $param field1 (required)
+     * @param string $param2 field2 (required)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function testJsonFormDataWithHttpInfo($param, $param2)
+    {
+        $returnType = '';
+        $request = $this->testJsonFormDataRequest($param, $param2);
 
         try {
 
@@ -664,7 +1849,7 @@ class FakeApi
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
-                    "[$statusCode] Error connecting to the API ($url)",
+                    "[$statusCode] Error connecting to the API ({$request->getUri()})",
                     $statusCode,
                     $response->getHeaders(),
                     $response->getBody()
@@ -679,4 +1864,145 @@ class FakeApi
             throw $e;
         }
     }
+
+    /**
+     * Operation testJsonFormDataAsync
+     *
+     * test json serialization of form data
+     *
+     * @param string $param field1 (required)
+     * @param string $param2 field2 (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function testJsonFormDataAsync($param, $param2)
+    {
+        return $this->testJsonFormDataAsyncWithHttpInfo($param, $param2)->then(function ($response) {
+            return $response[0];
+        });
+    }
+
+    /**
+     * Operation testJsonFormDataAsyncWithHttpInfo
+     *
+     * test json serialization of form data
+     *
+     * @param string $param field1 (required)
+     * @param string $param2 field2 (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function testJsonFormDataAsyncWithHttpInfo($param, $param2)
+    {
+        $returnType = '';
+        $request = $this->testJsonFormDataRequest($param, $param2);
+
+        return $this->client->sendAsync($request)->then(function ($response) use ($returnType) {
+            return [null, $response->getStatusCode(), $response->getHeaders()];
+        }, function ($exception) {
+            $response = $exception->getResponse();
+            $statusCode = $response->getStatusCode();
+            throw new ApiException(
+                "[$statusCode] Error connecting to the API ({$exception->getRequest()->getUri()})",
+                $statusCode,
+                $response->getHeaders(),
+                $response->getBody()
+            );
+        });
+    }
+
+    /**
+     * Create request for operation 'testJsonFormData'
+     *
+     * @param string $param field1 (required)
+     * @param string $param2 field2 (required)
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function testJsonFormDataRequest($param, $param2)
+    {
+        // verify the required parameter 'param' is set
+        if ($param === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $param when calling testJsonFormData');
+        }
+        // verify the required parameter 'param2' is set
+        if ($param2 === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $param2 when calling testJsonFormData');
+        }
+
+        $resourcePath = '/fake/jsonFormData';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // form params
+        if ($param !== null) {
+            $formParams['param'] = ObjectSerializer::toFormValue($param);
+        }
+        // form params
+        if ($param2 !== null) {
+            $formParams['param2'] = ObjectSerializer::toFormValue($param2);
+        }
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
+            }
+        }
+
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        return new Request(
+            'GET',
+            $url,
+            $headers,
+            $httpBody
+        );
+    }
+
 }

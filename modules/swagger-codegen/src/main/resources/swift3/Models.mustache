@@ -140,6 +140,20 @@ class Decoders {
         if let intermediate = source as? String, let value = Data(base64Encoded: intermediate) as? T {
             return .success(value)
         }
+        {{#lenientTypeCast}}
+        if T.self is Int32.Type && source is String {
+            return (source as! NSString).intValue as! T
+        }
+        if T.self is Int64.Type && source is String {
+            return (source as! NSString).intValue as! T
+        }
+        if T.self is Bool.Type && source is String {
+            return (source as! NSString).boolValue as! T
+        }
+        if T.self is String.Type && source is NSNumber {
+            return String(describing: source) as! T
+        }
+        {{/lenientTypeCast}}
 
         let key = "\(T.self)"
         if let decoder = decoders[key], let value = decoder(source, instance) as? Decoded<T> {
@@ -249,12 +263,11 @@ class Decoders {
             } else {
             	return .failure(.typeMismatch(expected: "ISO date", actual: "\(source)"))
             }
-        } {{#models}}{{#model}}
-
-{{^isArrayModel}}
-        // Decoder for [{{{classname}}}]
-            return Decoders.decode(clazz: [{{{classname}}}].self, source: source, instance: instance)
         }
+
+        {{#models}}
+        {{#model}}
+        {{^isArrayModel}}        
         // Decoder for {{{classname}}}
         Decoders.addDecoder(clazz: {{{classname}}}.self) { (source: AnyObject, instance: AnyObject?) -> Decoded<{{{classname}}}> in
 {{#isEnum}}
@@ -291,12 +304,12 @@ class Decoders {
                 }
                 {{/requiredVars}}
                 let result = {{classname}}({{#requiredVars}}{{^-first}}, {{/-first}}{{name}}: {{name}}{{/requiredVars}})
-            {{#optionalVars}}
+                {{#optionalVars}}
                 switch Decoders.decodeOptional(clazz: {{#isEnum}}{{^isListContainer}}{{classname}}.{{enumName}}.self{{/isListContainer}}{{#isListContainer}}Array<{{classname}}.{{enumName}}>.self{{/isListContainer}}{{/isEnum}}{{^isEnum}}{{{datatype}}}.self{{/isEnum}}, source: sourceDictionary["{{baseName}}"] as AnyObject?) {
                 case let .success(value): instance.{{name}} = value
                 case let .failure(error): return .failure(error)
                 }
-            {{/optionalVars}}
+                {{/optionalVars}}
             {{/unwrapRequired}}
             {{^unwrapRequired}}
                 let result = instance == nil ? {{classname}}() : instance as! {{classname}}
@@ -312,7 +325,7 @@ class Decoders {
                 case let .failure(error): return .failure(error)
                 {{#isEnum}}{{#isMapContainer}}*/ default: break //TODO: handle enum map scenario{{/isMapContainer}}{{/isEnum}}
                 }
-            {{/allVars}}
+                {{/allVars}}
             {{/unwrapRequired}}
             {{#additionalPropertiesType}}
 
@@ -332,7 +345,9 @@ class Decoders {
             }
 {{/allVars.isEmpty}}
 {{/isEnum}}
-        }{{/isArrayModel}}{{/model}}
+        }
+        {{/isArrayModel}}
+        {{/model}}
         {{/models}}
     }()
 

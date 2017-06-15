@@ -5,15 +5,14 @@
 // https://github.com/swagger-api/swagger-codegen
 //
 
+import Foundation
 import Alamofire
 import RxSwift
-
 
 
 open class Fake_classname_tags123API: APIBase {
     /**
      To test class name in snake case
-     
      - parameter body: (body) client model 
      - parameter completion: completion handler to receive the data and the error objects
      */
@@ -25,7 +24,6 @@ open class Fake_classname_tags123API: APIBase {
 
     /**
      To test class name in snake case
-     
      - parameter body: (body) client model 
      - returns: Observable<Client>
      */
@@ -39,19 +37,18 @@ open class Fake_classname_tags123API: APIBase {
                 }
                 observer.on(.completed)
             }
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 
     /**
      To test class name in snake case
      - PATCH /fake_classname_test
+
      - examples: [{contentType=application/json, example={
   "client" : "aeiou"
 }}]
-     
      - parameter body: (body) client model 
-
      - returns: RequestBuilder<Client> 
      */
     open class func testClassnameWithRequestBuilder(body: Client) -> RequestBuilder<Client> {
@@ -60,7 +57,6 @@ open class Fake_classname_tags123API: APIBase {
         let parameters = body.encodeToJSON() as? [String:AnyObject]
 
         let url = NSURLComponents(string: URLString)
-
 
         let requestBuilder: RequestBuilder<Client>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 

@@ -14,9 +14,14 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.UUID;
 import org.threeten.bp.LocalDate;
@@ -420,15 +425,9 @@ public class FormatTest implements Parcelable {
     string = (String)in.readValue(null);
     _byte = (byte[])in.readValue(null);
     binary = (byte[])in.readValue(null);
-<<<<<<< HEAD
-    date = (LocalDate)in.readValue(null);
-    dateTime = (OffsetDateTime)in.readValue(null);
-    uuid = (UUID)in.readValue(null);
-=======
     date = (LocalDate)in.readValue(LocalDate.class.getClassLoader());
-    dateTime = (DateTime)in.readValue(DateTime.class.getClassLoader());
+    dateTime = (OffsetDateTime)in.readValue(OffsetDateTime.class.getClassLoader());
     uuid = (UUID)in.readValue(UUID.class.getClassLoader());
->>>>>>> origin/master
     password = (String)in.readValue(null);
   }
   

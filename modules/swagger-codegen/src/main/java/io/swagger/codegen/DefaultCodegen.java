@@ -102,6 +102,7 @@ public class DefaultCodegen {
     protected List<SupportingFile> supportingFiles = new ArrayList<SupportingFile>();
     protected List<CliOption> cliOptions = new ArrayList<CliOption>();
     protected boolean skipOverwrite;
+    protected boolean removeOperationIdPrefix;
     protected boolean supportsInheritance;
     protected boolean supportsMixins;
     protected Map<String, String> supportedLibraries = new LinkedHashMap<String, String>();
@@ -116,6 +117,8 @@ public class DefaultCodegen {
     // They are translated to words like "Dollar" and prefixed with '
     // Then translated back during JSON encoding and decoding
     protected Map<String, String> specialCharReplacements = new HashMap<String, String>();
+    // When a model is an alias for a simple type
+    protected Map<String, String> typeAliases = new HashMap<>();
 
     protected String ignoreFilePathOverride;
 
@@ -157,6 +160,11 @@ public class DefaultCodegen {
 
         if(additionalProperties.containsKey(CodegenConstants.MODEL_NAME_SUFFIX)){
             this.setModelNameSuffix((String) additionalProperties.get(CodegenConstants.MODEL_NAME_SUFFIX));
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.REMOVE_OPERATION_ID_PREFIX)) {
+            this.setSortParamsByRequiredFlag(Boolean.valueOf(additionalProperties
+                    .get(CodegenConstants.REMOVE_OPERATION_ID_PREFIX).toString()));
         }
     }
 
@@ -847,7 +855,7 @@ public class DefaultCodegen {
         cliOptions.add(CliOption.newBoolean(CodegenConstants.ENSURE_UNIQUE_PARAMS, CodegenConstants
                 .ENSURE_UNIQUE_PARAMS_DESC).defaultValue(Boolean.TRUE.toString()));
 
-        //name formatting options
+        // name formatting options
         cliOptions.add(CliOption.newBoolean(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, CodegenConstants
                 .ALLOW_UNICODE_IDENTIFIERS_DESC).defaultValue(Boolean.FALSE.toString()));
 
@@ -1211,6 +1219,18 @@ public class DefaultCodegen {
     }
 
     /**
+     * Determine the type alias for the given type if it exists. This feature
+     * is only used for Java, because the language does not have a aliasing
+     * mechanism of its own.
+     * @param name The type name.
+     * @return The alias of the given type, if it exists. If there is no alias
+     * for this type, then returns the input type name.
+     */
+    public String getAlias(String name) {
+        return name;
+    }
+
+    /**
      * Output the API (class) name (capitalized) ending with "Api"
      * Return DefaultApi if name is empty
      *
@@ -1374,6 +1394,10 @@ public class DefaultCodegen {
             ModelImpl impl = (ModelImpl) model;
             if (impl.getType() != null) {
                 Property p = PropertyBuilder.build(impl.getType(), impl.getFormat(), null);
+                if (!impl.getType().equals("object") && impl.getEnum() == null) {
+                    typeAliases.put(name, impl.getType());
+                    m.isAlias = true;
+                }
                 m.dataType = getSwaggerType(p);
             }
             if(impl.getEnum() != null && impl.getEnum().size() > 0) {
@@ -1737,7 +1761,11 @@ public class DefaultCodegen {
             ArrayProperty ap = (ArrayProperty) p;
             property.maxItems = ap.getMaxItems();
             property.minItems = ap.getMinItems();
-            CodegenProperty cp = fromProperty(property.name, ap.getItems());
+            String itemName = (String) p.getVendorExtensions().get("x-item-name");
+            if (itemName == null) {
+                itemName = property.name;
+            }
+            CodegenProperty cp = fromProperty(itemName, ap.getItems());
             updatePropertyForArray(property, cp);
           } else if (p instanceof MapProperty) {
             MapProperty ap = (MapProperty) p;
@@ -1960,6 +1988,13 @@ public class DefaultCodegen {
         op.vendorExtensions = operation.getVendorExtensions();
 
         String operationId = getOrGenerateOperationId(operation, path, httpMethod);
+        // remove prefix in operationId
+        if (removeOperationIdPrefix) {
+            int offset = operationId.indexOf('_');
+            if (offset > -1) {
+                operationId = operationId.substring(offset+1);
+            }
+        }
         operationId = removeNonNameElementToCamelCase(operationId);
         op.path = path;
         op.operationId = toOperationId(operationId);
@@ -2522,9 +2557,12 @@ public class DefaultCodegen {
                 Model sub = bp.getSchema();
                 if (sub instanceof RefModel) {
                     String name = ((RefModel) sub).getSimpleRef();
+                    name = getAlias(name);
                     if (typeMapping.containsKey(name)) {
                         name = typeMapping.get(name);
+                        p.baseType = name;
                     } else {
+                        p.baseType = name;
                         name = toModelName(name);
                         if (defaultIncludes.contains(name)) {
                             imports.add(name);
@@ -2533,7 +2571,6 @@ public class DefaultCodegen {
                         name = getTypeDeclaration(name);
                     }
                     p.dataType = name;
-                    p.baseType = name;
                 }
             }
             p.paramName = toParamName(bp.getName());
@@ -2851,6 +2888,7 @@ public class DefaultCodegen {
         co.operationId = uniqueName;
         co.operationIdLowerCase = uniqueName.toLowerCase();
         co.operationIdCamelCase = DefaultCodegen.camelize(uniqueName);
+        co.operationIdSnakeCase = DefaultCodegen.underscore(uniqueName);
         opList.add(co);
         co.baseName = tag;
     }
@@ -3169,6 +3207,14 @@ public class DefaultCodegen {
 
     public void setSkipOverwrite(boolean skipOverwrite) {
         this.skipOverwrite = skipOverwrite;
+    }
+
+    public boolean isRemoveOperationIdPrefix() {
+        return removeOperationIdPrefix;
+    }
+
+    public void setRemoveOperationIdPrefix(boolean removeOperationIdPrefix) {
+        this.removeOperationIdPrefix = removeOperationIdPrefix;
     }
 
     /**

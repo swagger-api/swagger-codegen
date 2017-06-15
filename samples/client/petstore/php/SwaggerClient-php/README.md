@@ -57,13 +57,13 @@ Please follow the [installation procedure](#installation--usage) and then run th
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\Api\FakeApi();
-$body = new \Swagger\Client\Model\Client(); // \Swagger\Client\Model\Client | client model
+$body = new \Swagger\Client\Model\OuterBoolean(); // \Swagger\Client\Model\OuterBoolean | Input boolean as post body
 
 try {
-    $result = $api_instance->testClientModel($body);
+    $result = $api_instance->fakeOuterBooleanSerialize($body);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling FakeApi->testClientModel: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling FakeApi->fakeOuterBooleanSerialize: ', $e->getMessage(), PHP_EOL;
 }
 
 ?>
@@ -75,9 +75,14 @@ All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*FakeApi* | [**fakeOuterBooleanSerialize**](docs/Api/FakeApi.md#fakeouterbooleanserialize) | **POST** /fake/outer/boolean | 
+*FakeApi* | [**fakeOuterCompositeSerialize**](docs/Api/FakeApi.md#fakeoutercompositeserialize) | **POST** /fake/outer/composite | 
+*FakeApi* | [**fakeOuterNumberSerialize**](docs/Api/FakeApi.md#fakeouternumberserialize) | **POST** /fake/outer/number | 
+*FakeApi* | [**fakeOuterStringSerialize**](docs/Api/FakeApi.md#fakeouterstringserialize) | **POST** /fake/outer/string | 
 *FakeApi* | [**testClientModel**](docs/Api/FakeApi.md#testclientmodel) | **PATCH** /fake | To test \&quot;client\&quot; model
 *FakeApi* | [**testEndpointParameters**](docs/Api/FakeApi.md#testendpointparameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트
 *FakeApi* | [**testEnumParameters**](docs/Api/FakeApi.md#testenumparameters) | **GET** /fake | To test enum parameters
+*FakeApi* | [**testJsonFormData**](docs/Api/FakeApi.md#testjsonformdata) | **GET** /fake/jsonFormData | test json serialization of form data
 *Fake_classname_tags123Api* | [**testClassname**](docs/Api/Fake_classname_tags123Api.md#testclassname) | **PATCH** /fake_classname_test | To test class name in snake case
 *PetApi* | [**addPet**](docs/Api/PetApi.md#addpet) | **POST** /pet | Add a new pet to the store
 *PetApi* | [**deletePet**](docs/Api/PetApi.md#deletepet) | **DELETE** /pet/{petId} | Deletes a pet
@@ -111,11 +116,9 @@ Class | Method | HTTP request | Description
  - [ArrayOfNumberOnly](docs/Model/ArrayOfNumberOnly.md)
  - [ArrayTest](docs/Model/ArrayTest.md)
  - [Capitalization](docs/Model/Capitalization.md)
- - [Cat](docs/Model/Cat.md)
  - [Category](docs/Model/Category.md)
  - [ClassModel](docs/Model/ClassModel.md)
  - [Client](docs/Model/Client.md)
- - [Dog](docs/Model/Dog.md)
  - [EnumArrays](docs/Model/EnumArrays.md)
  - [EnumClass](docs/Model/EnumClass.md)
  - [EnumTest](docs/Model/EnumTest.md)
@@ -129,12 +132,18 @@ Class | Method | HTTP request | Description
  - [Name](docs/Model/Name.md)
  - [NumberOnly](docs/Model/NumberOnly.md)
  - [Order](docs/Model/Order.md)
+ - [OuterBoolean](docs/Model/OuterBoolean.md)
+ - [OuterComposite](docs/Model/OuterComposite.md)
  - [OuterEnum](docs/Model/OuterEnum.md)
+ - [OuterNumber](docs/Model/OuterNumber.md)
+ - [OuterString](docs/Model/OuterString.md)
  - [Pet](docs/Model/Pet.md)
  - [ReadOnlyFirst](docs/Model/ReadOnlyFirst.md)
  - [SpecialModelName](docs/Model/SpecialModelName.md)
  - [Tag](docs/Model/Tag.md)
  - [User](docs/Model/User.md)
+ - [Cat](docs/Model/Cat.md)
+ - [Dog](docs/Model/Dog.md)
 
 
 ## Documentation For Authorization

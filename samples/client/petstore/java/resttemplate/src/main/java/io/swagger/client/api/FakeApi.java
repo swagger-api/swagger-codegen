@@ -4,8 +4,9 @@ import io.swagger.client.ApiClient;
 
 import java.math.BigDecimal;
 import io.swagger.client.model.Client;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.OffsetDateTime;
+import io.swagger.client.model.OuterComposite;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +49,114 @@ public class FakeApi {
         this.apiClient = apiClient;
     }
 
+    /**
+     * 
+     * Test serialization of outer boolean types
+     * <p><b>200</b> - Output boolean
+     * @param body Input boolean as post body
+     * @return Boolean
+     * @throws RestClientException if an error occurs while attempting to invoke the API
+     */
+    public Boolean fakeOuterBooleanSerialize(Boolean body) throws RestClientException {
+        Object postBody = body;
+        
+        String path = UriComponentsBuilder.fromPath("/fake/outer/boolean").build().toUriString();
+        
+        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
+        final HttpHeaders headerParams = new HttpHeaders();
+        final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
+
+        final String[] accepts = { };
+        final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);
+        final String[] contentTypes = { };
+        final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
+
+        String[] authNames = new String[] {  };
+
+        ParameterizedTypeReference<Boolean> returnType = new ParameterizedTypeReference<Boolean>() {};
+        return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    }
+    /**
+     * 
+     * Test serialization of object with outer number type
+     * <p><b>200</b> - Output composite
+     * @param body Input composite as post body
+     * @return OuterComposite
+     * @throws RestClientException if an error occurs while attempting to invoke the API
+     */
+    public OuterComposite fakeOuterCompositeSerialize(OuterComposite body) throws RestClientException {
+        Object postBody = body;
+        
+        String path = UriComponentsBuilder.fromPath("/fake/outer/composite").build().toUriString();
+        
+        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
+        final HttpHeaders headerParams = new HttpHeaders();
+        final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
+
+        final String[] accepts = { };
+        final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);
+        final String[] contentTypes = { };
+        final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
+
+        String[] authNames = new String[] {  };
+
+        ParameterizedTypeReference<OuterComposite> returnType = new ParameterizedTypeReference<OuterComposite>() {};
+        return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    }
+    /**
+     * 
+     * Test serialization of outer number types
+     * <p><b>200</b> - Output number
+     * @param body Input number as post body
+     * @return BigDecimal
+     * @throws RestClientException if an error occurs while attempting to invoke the API
+     */
+    public BigDecimal fakeOuterNumberSerialize(BigDecimal body) throws RestClientException {
+        Object postBody = body;
+        
+        String path = UriComponentsBuilder.fromPath("/fake/outer/number").build().toUriString();
+        
+        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
+        final HttpHeaders headerParams = new HttpHeaders();
+        final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
+
+        final String[] accepts = { };
+        final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);
+        final String[] contentTypes = { };
+        final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
+
+        String[] authNames = new String[] {  };
+
+        ParameterizedTypeReference<BigDecimal> returnType = new ParameterizedTypeReference<BigDecimal>() {};
+        return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    }
+    /**
+     * 
+     * Test serialization of outer string types
+     * <p><b>200</b> - Output string
+     * @param body Input string as post body
+     * @return String
+     * @throws RestClientException if an error occurs while attempting to invoke the API
+     */
+    public String fakeOuterStringSerialize(String body) throws RestClientException {
+        Object postBody = body;
+        
+        String path = UriComponentsBuilder.fromPath("/fake/outer/string").build().toUriString();
+        
+        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
+        final HttpHeaders headerParams = new HttpHeaders();
+        final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
+
+        final String[] accepts = { };
+        final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);
+        final String[] contentTypes = { };
+        final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
+
+        String[] authNames = new String[] {  };
+
+        ParameterizedTypeReference<String> returnType = new ParameterizedTypeReference<String>() {};
+        return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    }
     /**
      * To test \&quot;client\&quot; model
      * To test \&quot;client\&quot; model
@@ -105,7 +214,7 @@ public class FakeApi {
      * @param paramCallback None
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public void testEndpointParameters(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, LocalDate date, DateTime dateTime, String password, String paramCallback) throws RestClientException {
+    public void testEndpointParameters(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, LocalDate date, OffsetDateTime dateTime, String password, String paramCallback) throws RestClientException {
         Object postBody = null;
         
         // verify the required parameter 'number' is set
@@ -223,6 +332,50 @@ public class FakeApi {
         final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);
         final String[] contentTypes = { 
             "*/*"
+        };
+        final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
+
+        String[] authNames = new String[] {  };
+
+        ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
+        apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    }
+    /**
+     * test json serialization of form data
+     * 
+     * <p><b>200</b> - successful operation
+     * @param param field1
+     * @param param2 field2
+     * @throws RestClientException if an error occurs while attempting to invoke the API
+     */
+    public void testJsonFormData(String param, String param2) throws RestClientException {
+        Object postBody = null;
+        
+        // verify the required parameter 'param' is set
+        if (param == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'param' when calling testJsonFormData");
+        }
+        
+        // verify the required parameter 'param2' is set
+        if (param2 == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'param2' when calling testJsonFormData");
+        }
+        
+        String path = UriComponentsBuilder.fromPath("/fake/jsonFormData").build().toUriString();
+        
+        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
+        final HttpHeaders headerParams = new HttpHeaders();
+        final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
+        
+        if (param != null)
+            formParams.add("param", param);
+        if (param2 != null)
+            formParams.add("param2", param2);
+
+        final String[] accepts = { };
+        final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);
+        final String[] contentTypes = { 
+            "application/json"
         };
         final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
 
