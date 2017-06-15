@@ -1,0 +1,25 @@
+```
+docker run --rm 
+-v D:/swagger/s:/local 
+jixiu/codegen:lasted generate 
+-i /local/user.yaml 
+-c /local/server.json 
+-l aspnetcore 
+-o /local 
+-t /local/resources/aspnetcore 
+-s 
+```
+
+-v 本地域docker的文件夹映射关系
+
+-s 表示不覆盖已经存在的文件
+
+-i swagger描述文件的路径
+
+-l 生成代码的语言
+
+-o 生成文件的位置
+
+-t 自定义模板文件的路径
+
+-c 生成语言的对应配置
