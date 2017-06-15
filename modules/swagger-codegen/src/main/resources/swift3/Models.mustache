@@ -299,7 +299,7 @@ class Decoders {
                 guard let {{name}}Source = sourceDictionary["{{baseName}}"] as AnyObject? else {
                     return .failure(.missingKey(key: "{{baseName}}"))
                 }
-                guard let {{name}} = Decoders.decode(clazz: {{#isEnum}}{{^isListContainer}}{{classname}}.{{enumName}}.self{{/isListContainer}}{{#isListContainer}}Array<{{classname}}.{{enumName}}>.self{{/isListContainer}}{{/isEnum}}{{^isEnum}}{{{datatype}}}.self{{/isEnum}}.self, source: {{name}}Source).value else {
+                guard let {{name}} = Decoders.decode(clazz: {{#isEnum}}{{^isListContainer}}{{classname}}.{{enumName}}.self{{/isListContainer}}{{#isListContainer}}Array<{{classname}}.{{enumName}}>.self{{/isListContainer}}{{/isEnum}}{{^isEnum}}{{{datatype}}}.self{{/isEnum}}, source: {{name}}Source).value else {
                     return .failure(.typeMismatch(expected: "{{classname}}", actual: "\({{name}}Source)"))
                 }
                 {{/requiredVars}}
