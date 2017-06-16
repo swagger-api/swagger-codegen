@@ -283,7 +283,7 @@ void HttpRequestWorker::execute(HttpRequestInput *input) {
         manager->deleteResource(request);
     }
     else {
-        QBuffer buff(&request_content);
+        QByteArray buff = request_content;
         manager->sendCustomRequest(request, input->http_method.toLatin1(), &buff);
     }
 
