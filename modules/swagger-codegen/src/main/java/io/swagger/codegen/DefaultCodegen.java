@@ -835,6 +835,16 @@ public class DefaultCodegen {
     }
 
     /**
+     * Return the symbol name of a symbol
+     *
+     * @param input Symbol (e.g. $)
+     * @return Symbol name (e.g. Dollar)
+     */
+    protected String getSymbolName(String input) {
+        return specialCharReplacements.get(input);
+    }
+
+    /**
      * Return the example path
      *
      * @param path the path of the operation
