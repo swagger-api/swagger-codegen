@@ -175,7 +175,7 @@
     </dependency>
   </dependencies>
   <properties>
-    <swagger-core-version>1.5.9</swagger-core-version>
+    <swagger-core-version>1.5.15</swagger-core-version>
     <resteasy-version>3.0.19.Final</resteasy-version>
     <jackson-version>2.7.5</jackson-version>
     <jodatime-version>2.9.4</jodatime-version>
