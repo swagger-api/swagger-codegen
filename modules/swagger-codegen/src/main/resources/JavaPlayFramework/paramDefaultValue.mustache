@@ -1,1 +1,1 @@
-{{#isBoolean}}false{{/isBoolean}}{{#isInteger}}0{{/isInteger}}{{#isDouble}}0.0{{/isDouble}}{{#isLong}}0L{{/isLong}}{{#isFloat}}0.0{{/isFloat}}{{#isString}}""{{/isString}}
+{{#defaultValue}}{{#isBoolean}}{{{defaultValue}}}{{/isBoolean}}{{#isInteger}}{{{defaultValue}}}{{/isInteger}}{{#isDouble}}{{{defaultValue}}}{{/isDouble}}{{#isLong}}{{{defaultValue}}}{{/isLong}}{{#isFloat}}{{{defaultValue}}}{{/isFloat}}{{#isString}}"{{{defaultValue}}}"{{/isString}}{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}
