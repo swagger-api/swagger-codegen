@@ -179,12 +179,6 @@ int64_t Order::getId() const
     return m_Id;
 }
 
-void Order::setId(int64_t value)
-{
-    m_Id = value;
-    m_IdIsSet = true;
-}
-
 bool Order::idIsSet() const
 {
     return m_IdIsSet;
@@ -195,15 +189,14 @@ void Order::unsetId()
     m_IdIsSet = false;
 }
 
+void Order::setId(int64_t value)
+{
+    m_Id = value;
+    m_IdIsSet = true;
+}
 int64_t Order::getPetId() const
 {
     return m_PetId;
-}
-
-void Order::setPetId(int64_t value)
-{
-    m_PetId = value;
-    m_PetIdIsSet = true;
 }
 
 bool Order::petIdIsSet() const
@@ -216,15 +209,14 @@ void Order::unsetPetId()
     m_PetIdIsSet = false;
 }
 
+void Order::setPetId(int64_t value)
+{
+    m_PetId = value;
+    m_PetIdIsSet = true;
+}
 int32_t Order::getQuantity() const
 {
     return m_Quantity;
-}
-
-void Order::setQuantity(int32_t value)
-{
-    m_Quantity = value;
-    m_QuantityIsSet = true;
 }
 
 bool Order::quantityIsSet() const
@@ -237,15 +229,14 @@ void Order::unsetQuantity()
     m_QuantityIsSet = false;
 }
 
+void Order::setQuantity(int32_t value)
+{
+    m_Quantity = value;
+    m_QuantityIsSet = true;
+}
 utility::datetime Order::getShipDate() const
 {
     return m_ShipDate;
-}
-
-void Order::setShipDate(utility::datetime value)
-{
-    m_ShipDate = value;
-    m_ShipDateIsSet = true;
 }
 
 bool Order::shipDateIsSet() const
@@ -258,15 +249,14 @@ void Order::unsetShipDate()
     m_ShipDateIsSet = false;
 }
 
+void Order::setShipDate(utility::datetime value)
+{
+    m_ShipDate = value;
+    m_ShipDateIsSet = true;
+}
 utility::string_t Order::getStatus() const
 {
     return m_Status;
-}
-
-void Order::setStatus(utility::string_t value)
-{
-    m_Status = value;
-    m_StatusIsSet = true;
 }
 
 bool Order::statusIsSet() const
@@ -279,15 +269,14 @@ void Order::unsetStatus()
     m_StatusIsSet = false;
 }
 
+void Order::setStatus(utility::string_t value)
+{
+    m_Status = value;
+    m_StatusIsSet = true;
+}
 bool Order::getComplete() const
 {
     return m_Complete;
-}
-
-void Order::setComplete(bool value)
-{
-    m_Complete = value;
-    m_CompleteIsSet = true;
 }
 
 bool Order::completeIsSet() const
@@ -300,6 +289,11 @@ void Order::unsetComplete()
     m_CompleteIsSet = false;
 }
 
+void Order::setComplete(bool value)
+{
+    m_Complete = value;
+    m_CompleteIsSet = true;
+}
 }
 }
 }

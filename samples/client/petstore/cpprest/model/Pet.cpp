@@ -240,12 +240,6 @@ int64_t Pet::getId() const
     return m_Id;
 }
 
-void Pet::setId(int64_t value)
-{
-    m_Id = value;
-    m_IdIsSet = true;
-}
-
 bool Pet::idIsSet() const
 {
     return m_IdIsSet;
@@ -256,15 +250,14 @@ void Pet::unsetId()
     m_IdIsSet = false;
 }
 
+void Pet::setId(int64_t value)
+{
+    m_Id = value;
+    m_IdIsSet = true;
+}
 std::shared_ptr<Category> Pet::getCategory() const
 {
     return m_Category;
-}
-
-void Pet::setCategory(std::shared_ptr<Category> value)
-{
-    m_Category = value;
-    m_CategoryIsSet = true;
 }
 
 bool Pet::categoryIsSet() const
@@ -277,6 +270,11 @@ void Pet::unsetCategory()
     m_CategoryIsSet = false;
 }
 
+void Pet::setCategory(std::shared_ptr<Category> value)
+{
+    m_Category = value;
+    m_CategoryIsSet = true;
+}
 utility::string_t Pet::getName() const
 {
     return m_Name;
@@ -287,12 +285,16 @@ void Pet::setName(utility::string_t value)
     m_Name = value;
     
 }
-
 std::vector<utility::string_t>& Pet::getPhotoUrls()
 {
     return m_PhotoUrls;
 }
 
+void Pet::setPhotoUrls(std::vector<utility::string_t> value)
+{
+    m_PhotoUrls = value;
+    
+}
 std::vector<std::shared_ptr<Tag>>& Pet::getTags()
 {
     return m_Tags;
@@ -308,15 +310,14 @@ void Pet::unsetTags()
     m_TagsIsSet = false;
 }
 
+void Pet::setTags(std::vector<std::shared_ptr<Tag>> value)
+{
+    m_Tags = value;
+    m_TagsIsSet = true;
+}
 utility::string_t Pet::getStatus() const
 {
     return m_Status;
-}
-
-void Pet::setStatus(utility::string_t value)
-{
-    m_Status = value;
-    m_StatusIsSet = true;
 }
 
 bool Pet::statusIsSet() const
@@ -329,6 +330,11 @@ void Pet::unsetStatus()
     m_StatusIsSet = false;
 }
 
+void Pet::setStatus(utility::string_t value)
+{
+    m_Status = value;
+    m_StatusIsSet = true;
+}
 }
 }
 }

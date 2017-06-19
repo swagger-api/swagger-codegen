@@ -125,12 +125,6 @@ int32_t ApiResponse::getCode() const
     return m_Code;
 }
 
-void ApiResponse::setCode(int32_t value)
-{
-    m_Code = value;
-    m_CodeIsSet = true;
-}
-
 bool ApiResponse::codeIsSet() const
 {
     return m_CodeIsSet;
@@ -141,15 +135,14 @@ void ApiResponse::unsetCode()
     m_CodeIsSet = false;
 }
 
+void ApiResponse::setCode(int32_t value)
+{
+    m_Code = value;
+    m_CodeIsSet = true;
+}
 utility::string_t ApiResponse::getType() const
 {
     return m_Type;
-}
-
-void ApiResponse::setType(utility::string_t value)
-{
-    m_Type = value;
-    m_TypeIsSet = true;
 }
 
 bool ApiResponse::typeIsSet() const
@@ -162,15 +155,14 @@ void ApiResponse::unsetType()
     m_TypeIsSet = false;
 }
 
+void ApiResponse::setType(utility::string_t value)
+{
+    m_Type = value;
+    m_TypeIsSet = true;
+}
 utility::string_t ApiResponse::getMessage() const
 {
     return m_Message;
-}
-
-void ApiResponse::setMessage(utility::string_t value)
-{
-    m_Message = value;
-    m_MessageIsSet = true;
 }
 
 bool ApiResponse::messageIsSet() const
@@ -183,6 +175,11 @@ void ApiResponse::unsetMessage()
     m_MessageIsSet = false;
 }
 
+void ApiResponse::setMessage(utility::string_t value)
+{
+    m_Message = value;
+    m_MessageIsSet = true;
+}
 }
 }
 }

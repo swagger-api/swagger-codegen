@@ -106,12 +106,6 @@ int64_t Tag::getId() const
     return m_Id;
 }
 
-void Tag::setId(int64_t value)
-{
-    m_Id = value;
-    m_IdIsSet = true;
-}
-
 bool Tag::idIsSet() const
 {
     return m_IdIsSet;
@@ -122,15 +116,14 @@ void Tag::unsetId()
     m_IdIsSet = false;
 }
 
+void Tag::setId(int64_t value)
+{
+    m_Id = value;
+    m_IdIsSet = true;
+}
 utility::string_t Tag::getName() const
 {
     return m_Name;
-}
-
-void Tag::setName(utility::string_t value)
-{
-    m_Name = value;
-    m_NameIsSet = true;
 }
 
 bool Tag::nameIsSet() const
@@ -143,6 +136,11 @@ void Tag::unsetName()
     m_NameIsSet = false;
 }
 
+void Tag::setName(utility::string_t value)
+{
+    m_Name = value;
+    m_NameIsSet = true;
+}
 }
 }
 }
