@@ -1,4 +1,3 @@
-export * from './ApiResponse';
 export * from './Category';
 export * from './Order';
 export * from './Pet';
