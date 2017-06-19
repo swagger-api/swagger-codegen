@@ -219,6 +219,12 @@ int64_t User::getId() const
     return m_Id;
 }
 
+
+void User::setId(int64_t value)
+{
+    m_Id = value;
+    m_IdIsSet = true;
+}
 bool User::idIsSet() const
 {
     return m_IdIsSet;
@@ -229,16 +235,17 @@ void User::unsetId()
     m_IdIsSet = false;
 }
 
-void User::setId(int64_t value)
-{
-    m_Id = value;
-    m_IdIsSet = true;
-}
 utility::string_t User::getUsername() const
 {
     return m_Username;
 }
 
+
+void User::setUsername(utility::string_t value)
+{
+    m_Username = value;
+    m_UsernameIsSet = true;
+}
 bool User::usernameIsSet() const
 {
     return m_UsernameIsSet;
@@ -249,16 +256,17 @@ void User::unsetUsername()
     m_UsernameIsSet = false;
 }
 
-void User::setUsername(utility::string_t value)
-{
-    m_Username = value;
-    m_UsernameIsSet = true;
-}
 utility::string_t User::getFirstName() const
 {
     return m_FirstName;
 }
 
+
+void User::setFirstName(utility::string_t value)
+{
+    m_FirstName = value;
+    m_FirstNameIsSet = true;
+}
 bool User::firstNameIsSet() const
 {
     return m_FirstNameIsSet;
@@ -269,16 +277,17 @@ void User::unsetFirstName()
     m_FirstNameIsSet = false;
 }
 
-void User::setFirstName(utility::string_t value)
-{
-    m_FirstName = value;
-    m_FirstNameIsSet = true;
-}
 utility::string_t User::getLastName() const
 {
     return m_LastName;
 }
 
+
+void User::setLastName(utility::string_t value)
+{
+    m_LastName = value;
+    m_LastNameIsSet = true;
+}
 bool User::lastNameIsSet() const
 {
     return m_LastNameIsSet;
@@ -289,16 +298,17 @@ void User::unsetLastName()
     m_LastNameIsSet = false;
 }
 
-void User::setLastName(utility::string_t value)
-{
-    m_LastName = value;
-    m_LastNameIsSet = true;
-}
 utility::string_t User::getEmail() const
 {
     return m_Email;
 }
 
+
+void User::setEmail(utility::string_t value)
+{
+    m_Email = value;
+    m_EmailIsSet = true;
+}
 bool User::emailIsSet() const
 {
     return m_EmailIsSet;
@@ -309,16 +319,17 @@ void User::unsetEmail()
     m_EmailIsSet = false;
 }
 
-void User::setEmail(utility::string_t value)
-{
-    m_Email = value;
-    m_EmailIsSet = true;
-}
 utility::string_t User::getPassword() const
 {
     return m_Password;
 }
 
+
+void User::setPassword(utility::string_t value)
+{
+    m_Password = value;
+    m_PasswordIsSet = true;
+}
 bool User::passwordIsSet() const
 {
     return m_PasswordIsSet;
@@ -329,16 +340,17 @@ void User::unsetPassword()
     m_PasswordIsSet = false;
 }
 
-void User::setPassword(utility::string_t value)
-{
-    m_Password = value;
-    m_PasswordIsSet = true;
-}
 utility::string_t User::getPhone() const
 {
     return m_Phone;
 }
 
+
+void User::setPhone(utility::string_t value)
+{
+    m_Phone = value;
+    m_PhoneIsSet = true;
+}
 bool User::phoneIsSet() const
 {
     return m_PhoneIsSet;
@@ -349,16 +361,17 @@ void User::unsetPhone()
     m_PhoneIsSet = false;
 }
 
-void User::setPhone(utility::string_t value)
-{
-    m_Phone = value;
-    m_PhoneIsSet = true;
-}
 int32_t User::getUserStatus() const
 {
     return m_UserStatus;
 }
 
+
+void User::setUserStatus(int32_t value)
+{
+    m_UserStatus = value;
+    m_UserStatusIsSet = true;
+}
 bool User::userStatusIsSet() const
 {
     return m_UserStatusIsSet;
@@ -369,11 +382,6 @@ void User::unsetUserStatus()
     m_UserStatusIsSet = false;
 }
 
-void User::setUserStatus(int32_t value)
-{
-    m_UserStatus = value;
-    m_UserStatusIsSet = true;
-}
 }
 }
 }
