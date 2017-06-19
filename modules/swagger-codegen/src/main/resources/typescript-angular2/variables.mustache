@@ -1,9 +1,9 @@
-import { OpaqueToken } from '@angular/core';
+import { {{{injectionTokenImport}}} } from '@angular/core';
 
-export const BASE_PATH = new OpaqueToken('basePath');
+export const BASE_PATH = new {{{injectionToken}}}('basePath');
 export const COLLECTION_FORMATS = {
-    'csv': ',',
-    'tsv': '   ',
-    'ssv': ' ',
-    'pipes': '|'
+'csv': ',',
+'tsv': '   ',
+'ssv': ' ',
+'pipes': '|'
 }
