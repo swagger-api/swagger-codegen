@@ -20,7 +20,7 @@ function Invoke-UserApiCreateUsersWithArrayInput {
     [CmdletBinding()]
     Param (
         [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
-        [IO.Swagger.Model.User]
+        [IO.Swagger.Model.User[]]
         ${body}
     )
 
@@ -38,7 +38,7 @@ function Invoke-UserApiCreateUsersWithListInput {
     [CmdletBinding()]
     Param (
         [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
-        [IO.Swagger.Model.User]
+        [IO.Swagger.Model.User[]]
         ${body}
     )
 
