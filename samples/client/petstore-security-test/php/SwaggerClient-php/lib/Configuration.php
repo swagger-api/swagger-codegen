@@ -77,32 +77,11 @@ class Configuration
     protected $password = '';
 
     /**
-     * The default header(s)
-     *
-     * @var array
-     */
-    protected $defaultHeaders = [];
-
-    /**
      * The host
      *
      * @var string
      */
-    protected $host = 'https://petstore.swagger.io *_/ ' \" =end -- \\r\\n \\n \\r/v2 *_/ ' \" =end -- \\r\\n \\n \\r';
-
-    /**
-     * Timeout (second) of the HTTP request, by default set to 0, no timeout
-     *
-     * @var string
-     */
-    protected $curlTimeout = 0;
-
-    /**
-     * Timeout (second) of the HTTP connection, by default set to 0, no timeout
-     *
-     * @var string
-     */
-    protected $curlConnectTimeout = 0;
+    protected $host = 'https://petstore.swagger.io *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r/v2 *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r';
 
     /**
      * User agent of the HTTP request, set to "PHP-Swagger" by default
@@ -133,6 +112,8 @@ class Configuration
     protected $tempFolderPath;
 
     /**
+<<<<<<< HEAD
+=======
      * Indicates if SSL verification should be enabled or disabled.
      *
      * This is useful if the host uses a self-signed SSL certificate.
@@ -185,6 +166,7 @@ class Configuration
     protected $allowEncoding = false;
 
     /**
+>>>>>>> origin/master
      * Constructor
      */
     public function __construct()
@@ -314,48 +296,6 @@ class Configuration
     }
 
     /**
-     * Adds a default header
-     *
-     * @param string $headerName  header name (e.g. Token)
-     * @param string $headerValue header value (e.g. 1z8wp3)
-     *
-     * @throws \InvalidArgumentException
-     * @return $this
-     */
-    public function addDefaultHeader($headerName, $headerValue)
-    {
-        if (!is_string($headerName)) {
-            throw new \InvalidArgumentException('Header name must be a string.');
-        }
-
-        $this->defaultHeaders[$headerName] =  $headerValue;
-        return $this;
-    }
-
-    /**
-     * Gets the default header
-     *
-     * @return array An array of default header(s)
-     */
-    public function getDefaultHeaders()
-    {
-        return $this->defaultHeaders;
-    }
-
-    /**
-     * Deletes a default header
-     *
-     * @param string $headerName the header to delete
-     *
-     * @return $this
-     */
-    public function deleteDefaultHeader($headerName)
-    {
-        unset($this->defaultHeaders[$headerName]);
-        return $this;
-    }
-
-    /**
      * Sets the host
      *
      * @param string $host Host
@@ -407,6 +347,8 @@ class Configuration
     }
 
     /**
+<<<<<<< HEAD
+=======
      * Sets the HTTP timeout value
      *
      * @param integer $seconds Number of seconds before timing out [set to 0 for no timeout]
@@ -598,6 +540,7 @@ class Configuration
     }
 
     /**
+>>>>>>> origin/master
      * Sets debug flag
      *
      * @param bool $debug Debug flag
@@ -667,29 +610,6 @@ class Configuration
     }
 
     /**
-     * Sets if SSL verification should be enabled or disabled
-     *
-     * @param boolean $sslVerification True if the certificate should be validated, false otherwise
-     *
-     * @return $this
-     */
-    public function setSSLVerification($sslVerification)
-    {
-        $this->sslVerification = $sslVerification;
-        return $this;
-    }
-
-    /**
-     * Gets if SSL verification should be enabled or disabled
-     *
-     * @return boolean True if the certificate should be validated, false otherwise
-     */
-    public function getSSLVerification()
-    {
-        return $this->sslVerification;
-    }
-
-    /**
      * Gets the default configuration instance
      *
      * @return Configuration
@@ -729,5 +649,30 @@ class Configuration
         $report .= '    Temp Folder Path: ' . self::getDefaultConfiguration()->getTempFolderPath() . PHP_EOL;
 
         return $report;
+    }
+
+    /**
+     * Get API key (with prefix if set)
+     *
+     * @param  string $apiKeyIdentifier name of apikey
+     *
+     * @return string API key with the prefix
+     */
+    public function getApiKeyWithPrefix($apiKeyIdentifier)
+    {
+        $prefix = $this->getApiKeyPrefix($apiKeyIdentifier);
+        $apiKey = $this->getApiKey($apiKeyIdentifier);
+
+        if ($apiKey === null) {
+            return null;
+        }
+
+        if ($prefix === null) {
+            $keyWithPrefix = $apiKey;
+        } else {
+            $keyWithPrefix = $prefix . ' ' . $apiKey;
+        }
+
+        return $keyWithPrefix;
     }
 }

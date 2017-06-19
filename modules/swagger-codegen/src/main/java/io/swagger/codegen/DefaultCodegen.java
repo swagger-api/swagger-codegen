@@ -2001,7 +2001,6 @@ public class DefaultCodegen {
         op.summary = escapeText(operation.getSummary());
         op.unescapedNotes = operation.getDescription();
         op.notes = escapeText(operation.getDescription());
-        op.tags = operation.getTags();
         op.hasConsumes = false;
         op.hasProduces = false;
 
