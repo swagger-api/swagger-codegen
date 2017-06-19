@@ -81,7 +81,7 @@ export class {{classname}} {
         }
         {{/isListContainer}}
         {{^isListContainer}}
-        if ({{paramName}} !== undefined) {
+        if ({{paramName}} !== null && {{paramName}} !== undefined) {
         {{#isDateTime}}
             queryParameters['{{baseName}}'] = {{paramName}}.toISOString();
         {{/isDateTime}}
@@ -115,7 +115,7 @@ export class {{classname}} {
         }
         {{/isListContainer}}
         {{^isListContainer}}
-        if ({{paramName}} !== undefined) {
+        if ({{paramName}} !== null && {{paramName}} !== undefined) {
             formParams.append('{{baseName}}', <any>{{paramName}});
         }
         {{/isListContainer}}

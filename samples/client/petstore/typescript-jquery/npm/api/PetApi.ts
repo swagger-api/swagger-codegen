@@ -427,11 +427,11 @@ export class PetApi {
 
 
         localVarPath = localVarPath + "?" + $.param(queryParameters);
-        if (name !== undefined) {
+        if (name !== null && name !== undefined) {
             formParams.append('name', <any>name);
         }
 
-        if (status !== undefined) {
+        if (status !== null && status !== undefined) {
             formParams.append('status', <any>status);
         }
 
@@ -509,12 +509,12 @@ export class PetApi {
 
 
         localVarPath = localVarPath + "?" + $.param(queryParameters);
-        if (additionalMetadata !== undefined) {
+        if (additionalMetadata !== null && additionalMetadata !== undefined) {
             formParams.append('additionalMetadata', <any>additionalMetadata);
         }
 
         reqHasFile = true;
-        if (file !== undefined) {
+        if (file !== null && file !== undefined) {
             formParams.append('file', <any>file);
         }
 

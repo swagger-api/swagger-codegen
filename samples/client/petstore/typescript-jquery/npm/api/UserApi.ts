@@ -297,10 +297,10 @@ export class UserApi {
         let headerParams: any = {};
 
 
-        if (username !== undefined) {
+        if (username !== null && username !== undefined) {
             queryParameters['username'] = <string><any>username;
         }
-        if (password !== undefined) {
+        if (password !== null && password !== undefined) {
             queryParameters['password'] = <string><any>password;
         }
 
