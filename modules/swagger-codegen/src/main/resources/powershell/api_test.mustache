@@ -1,0 +1,14 @@
+Describe '{{{packageName}}} {{{classname}}}' {
+{{#operations}}
+{{#operation}}
+    Context '{{{classname}}}' {
+        It 'Invoke-{{{classname}}}{{{operationId}}}' {
+            $ret = Invoke-PetApiGetPetById{{#allParams}} -{{{paramName}}} {{{default}}}{{/allParams}}
+            #$ret | Should BeOfType {{{packageName}}}.Model.ModelNameHere
+            #$ret.property | Should Be 0
+        }
+    }
+
+{{/operation}}
+{{/operations}}
+}

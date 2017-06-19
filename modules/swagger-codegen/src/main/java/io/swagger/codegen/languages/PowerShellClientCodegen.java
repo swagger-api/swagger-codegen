@@ -36,8 +36,10 @@ public class PowerShellClientCodegen extends DefaultCodegen implements CodegenCo
         outputFolder = "generated-code" + File.separator + "powershell";
         modelTemplateFiles.put("model.mustache", ".ps1");
         apiTemplateFiles.put("api.mustache", ".ps1");
-        modelDocTemplateFiles.put("model_doc.mustache", ".md");
-        apiDocTemplateFiles.put("api_doc.mustache", ".md");
+        modelTestTemplateFiles.put("model_test.mustache", ".ps1");
+        apiTestTemplateFiles.put("api_test.mustache", ".ps1");
+        modelDocTemplateFiles.clear();
+        apiDocTemplateFiles.clear();
         embeddedTemplateDir = templateDir = "powershell";
         apiPackage = packageName + File.separator + "API";
         modelPackage = packageName + File.separator + "Model";
@@ -286,6 +288,11 @@ public class PowerShellClientCodegen extends DefaultCodegen implements CodegenCo
     }
 
     @Override
+    public String apiTestFileFolder() {
+        return (outputFolder + "/test").replace('/', File.separatorChar);
+    }
+
+    @Override
     public String apiDocFileFolder() {
         return (outputFolder + "/" + apiDocPath).replace('/', File.separatorChar);
     }
@@ -293,6 +300,11 @@ public class PowerShellClientCodegen extends DefaultCodegen implements CodegenCo
     @Override
     public String apiFileFolder() {
         return outputFolder + File.separator + sourceFolder + File.separator + apiPackage();
+    }
+
+    @Override
+    public String modelTestFileFolder() {
+        return (outputFolder + "/test").replace('/', File.separatorChar);
     }
 
     @Override
@@ -389,7 +401,7 @@ public class PowerShellClientCodegen extends DefaultCodegen implements CodegenCo
         if (p instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) p;
             Property inner = ap.getItems();
-            return getTypeDeclaration(inner);
+            return getTypeDeclaration(inner) + "[]";
         } else if (p instanceof MapProperty) {
             MapProperty mp = (MapProperty) p;
             Property inner = mp.getAdditionalProperties();
