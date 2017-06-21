@@ -6,7 +6,7 @@ import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
 
-public class StaticHtmlOptionsProvider implements OptionsProvider {
+public class StaticHtmlOptionsProvider extends AbstractClientOptionsProvider {
     public static final String SORT_PARAMS_VALUE = "false";
     public static final String ENSURE_UNIQUE_PARAMS_VALUE = "true";
     public static final String ARTIFACT_ID_VALUE = "swagger-java-client-test";
@@ -37,6 +37,7 @@ public class StaticHtmlOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.ARTIFACT_ID, ARTIFACT_ID_VALUE)
                 .put(CodegenConstants.ARTIFACT_VERSION, ARTIFACT_VERSION_VALUE)
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
+                .putAll(super.createOptions())
                 .build();
     }
 

@@ -7,7 +7,7 @@ import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
 
-public class SwiftOptionsProvider implements OptionsProvider {
+public class SwiftOptionsProvider extends AbstractClientOptionsProvider {
     public static final String SORT_PARAMS_VALUE = "false";
     public static final String ENSURE_UNIQUE_PARAMS_VALUE = "true";
     public static final String PROJECT_NAME_VALUE = "Swagger";
@@ -56,6 +56,7 @@ public class SwiftOptionsProvider implements OptionsProvider {
                 .put(SwiftCodegen.SWIFT_USE_API_NAMESPACE, SWIFT_USE_API_NAMESPACE_VALUE)
                 .put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "true")
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
+                .putAll(super.createOptions())
                 .build();
     }
 

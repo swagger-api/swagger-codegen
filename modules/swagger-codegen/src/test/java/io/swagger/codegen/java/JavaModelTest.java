@@ -560,9 +560,10 @@ public class JavaModelTest {
 		return model;
 	}
 
-	@Test(description = "handle 'class' properties - getter and setter - default behavior - issue 4805")
-	public void classPropertyGetterSetterCamilizeTest() {
+	@Test(description = "handle 'class' properties - getter and setter - PascalCase - issue 4805")
+	public void classPropertyGetterSetterCamelizeTest() {
 		final DefaultCodegen codegen = new JavaClientCodegen();
+		//codegen.setModelGetterSetterNaming("PascalCase");
 		final CodegenModel cm = codegen.fromModel("PRAWJ202", createRowIdTestModel());
 		int found = 0;
 		for (CodegenProperty property : cm.vars) {
@@ -574,8 +575,8 @@ public class JavaModelTest {
 			}
 			if ("ROW_ID".equals(property.name)) {
 				Assert.assertEquals(property.baseName, "ROW_ID");
-				Assert.assertEquals(property.getter, "getROWID");
-				Assert.assertEquals(property.setter, "setROWID");
+				Assert.assertEquals(property.getter, "getROW_ID");
+				Assert.assertEquals(property.setter, "setROW_ID");
 				found++;
 			}
 		}
@@ -585,7 +586,7 @@ public class JavaModelTest {
 	@Test(description = "handle 'class' properties - getter and setter - original name - issue 4805")
 	public void classPropertyGetterSetterOriginalTest() {
 		final DefaultCodegen codegen = new JavaClientCodegen();
-		codegen.setModelPropertyNaming("original");
+		codegen.setModelGetterSetterNaming("original");
 		final CodegenModel cm = codegen.fromModel("PRAWJ202", createRowIdTestModel());
 		int found = 0;
 		for (CodegenProperty property : cm.vars) {

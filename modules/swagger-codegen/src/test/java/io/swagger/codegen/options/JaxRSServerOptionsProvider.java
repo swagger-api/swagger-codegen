@@ -7,7 +7,7 @@ import io.swagger.codegen.languages.JavaClientCodegen;
 
 import java.util.Map;
 
-public class JaxRSServerOptionsProvider implements OptionsProvider {
+public class JaxRSServerOptionsProvider extends AbstractClientOptionsProvider {
     public static final String ARTIFACT_ID_VALUE = "swagger-java-client-test";
     public static final String MODEL_PACKAGE_VALUE = "package";
     public static final String API_PACKAGE_VALUE = "apiPackage";
@@ -85,8 +85,8 @@ public class JaxRSServerOptionsProvider implements OptionsProvider {
             .put("hideGenerationTimestamp", "true")
             .put(JavaCXFServerCodegen.USE_BEANVALIDATION, USE_BEANVALIDATION)
             .put("serverPort", "2345")
-            .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE);
-
+            .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
+        	.putAll(super.createOptions());
         return builder.build();
     }
 }

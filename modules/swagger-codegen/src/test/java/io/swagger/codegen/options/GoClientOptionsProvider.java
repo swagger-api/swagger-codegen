@@ -1,13 +1,12 @@
 package io.swagger.codegen.options;
 
 import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.languages.GoClientCodegen;
 
 import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
 
-public class GoClientOptionsProvider implements OptionsProvider {
+public class GoClientOptionsProvider extends AbstractClientOptionsProvider {
 
     public static final String PACKAGE_VERSION_VALUE = "1.0.0";
     public static final String PACKAGE_NAME_VALUE = "Go";
@@ -24,6 +23,7 @@ public class GoClientOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.PACKAGE_VERSION, PACKAGE_VERSION_VALUE)
                 .put(CodegenConstants.PACKAGE_NAME, PACKAGE_NAME_VALUE)
                 .put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "true")
+                //.putAll(super.createOptions())
                 .build();
     }
 

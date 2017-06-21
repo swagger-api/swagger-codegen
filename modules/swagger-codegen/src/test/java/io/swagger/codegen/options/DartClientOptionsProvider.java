@@ -7,7 +7,7 @@ import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
 
-public class DartClientOptionsProvider implements OptionsProvider {
+public class DartClientOptionsProvider extends AbstractClientOptionsProvider {
     public static final String SORT_PARAMS_VALUE = "true";
     public static final String ENSURE_UNIQUE_PARAMS_VALUE = "true";
     public static final String BROWSER_CLIENT_VALUE = "true";
@@ -34,6 +34,7 @@ public class DartClientOptionsProvider implements OptionsProvider {
                 .put(DartClientCodegen.PUB_DESCRIPTION, PUB_DESCRIPTION_VALUE)
                 .put(CodegenConstants.SOURCE_FOLDER, SOURCE_FOLDER_VALUE)
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
+                .putAll(super.createOptions())
                 .build();
     }
 

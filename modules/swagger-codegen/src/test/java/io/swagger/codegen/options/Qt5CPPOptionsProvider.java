@@ -7,7 +7,7 @@ import io.swagger.codegen.languages.Qt5CPPGenerator;
 
 import java.util.Map;
 
-public class Qt5CPPOptionsProvider implements OptionsProvider {
+public class Qt5CPPOptionsProvider extends AbstractClientOptionsProvider {
     public static final String SORT_PARAMS_VALUE = "false";
     public static final String ENSURE_UNIQUE_PARAMS_VALUE = "true";
     public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
@@ -26,6 +26,7 @@ public class Qt5CPPOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.ENSURE_UNIQUE_PARAMS, ENSURE_UNIQUE_PARAMS_VALUE)
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
                 .put(Qt5CPPGenerator.CPP_NAMESPACE, CPP_NAMESPACE_VALUE)
+                .putAll(super.createOptions())
                 .build();
     }
 

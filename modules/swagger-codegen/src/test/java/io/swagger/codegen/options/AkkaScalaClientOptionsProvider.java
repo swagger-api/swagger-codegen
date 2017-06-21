@@ -4,11 +4,9 @@ import io.swagger.codegen.CodegenConstants;
 
 import com.google.common.collect.ImmutableMap;
 
-import com.sun.org.apache.bcel.internal.classfile.Code;
-
 import java.util.Map;
 
-public class AkkaScalaClientOptionsProvider implements OptionsProvider {
+public class AkkaScalaClientOptionsProvider extends AbstractClientOptionsProvider {
     public static final String SOURCE_FOLDER_VALUE = "sourceFolder";
     public static final String MODEL_PACKAGE_VALUE = "package";
     public static final String API_PACKAGE_VALUE = "apiPackage";
@@ -30,6 +28,7 @@ public class AkkaScalaClientOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.ENSURE_UNIQUE_PARAMS, ENSURE_UNIQUE_PARAMS_VALUE)
                 .put(CodegenConstants.SOURCE_FOLDER, SOURCE_FOLDER_VALUE)
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
+                .putAll(super.createOptions())
                 .build();
     }
 

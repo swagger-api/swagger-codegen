@@ -1,14 +1,13 @@
 package io.swagger.codegen.options;
 
 import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.options.OptionsProvider;
 import io.swagger.codegen.languages.JavascriptClientCodegen;
 
 import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
 
-public class JavaScriptOptionsProvider implements OptionsProvider {
+public class JavaScriptOptionsProvider extends AbstractClientOptionsProvider {
     public static final String ARTIFACT_ID_VALUE = "swagger-javascript-client-test";
     public static final String INVOKER_PACKAGE_VALUE = "invoker";
     public static final String MODEL_PACKAGE_VALUE = "model";
@@ -64,6 +63,7 @@ public class JavaScriptOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "true")
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
                 .put(JavascriptClientCodegen.USE_ES6, USE_ES6_VALUE)
+                .putAll(super.createOptions())
                 .build();
     }
 

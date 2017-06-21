@@ -5,7 +5,7 @@ import io.swagger.codegen.CodegenConstants;
 
 import java.util.Map;
 
-public class AspNetCoreServerOptionsProvider implements OptionsProvider {
+public class AspNetCoreServerOptionsProvider extends AbstractClientOptionsProvider {
     public static final String PROJECT_GUID_VALUE = "{0FBE6C2F-40D5-4F36-85B0-365EBF0D7EE3}";
     public static final String PACKAGE_NAME_VALUE = "swagger_server_aspnetcore";
     public static final String PACKAGE_VERSION_VALUE = "1.0.0-SNAPSHOT";
@@ -27,6 +27,7 @@ public class AspNetCoreServerOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.USE_DATETIME_OFFSET, "true")
                 .put(CodegenConstants.USE_COLLECTION, "false")
                 .put(CodegenConstants.RETURN_ICOLLECTION, "false")
+                //.putAll(super.createOptions())
                 .build();
     }
 

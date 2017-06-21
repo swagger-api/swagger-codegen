@@ -3,6 +3,7 @@ package io.swagger.codegen.scala;
 import io.swagger.codegen.AbstractOptionsTest;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.languages.ScalaClientCodegen;
+import io.swagger.codegen.options.AbstractClientOptionsProvider;
 import io.swagger.codegen.options.ScalaClientOptionsProvider;
 
 import mockit.Expectations;
@@ -32,7 +33,7 @@ public class ScalaClientOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setSortParamsByRequiredFlag(Boolean.valueOf(ScalaClientOptionsProvider.SORT_PARAMS_VALUE));
             times = 1;
-            clientCodegen.setModelPropertyNaming(ScalaClientOptionsProvider.MODEL_PROPERTY_NAMING);
+            clientCodegen.setModelPropertyNaming(AbstractClientOptionsProvider.MODEL_PROPERTY_NAMING_VALUE);
             times = 1;
             clientCodegen.setSourceFolder(ScalaClientOptionsProvider.SOURCE_FOLDER_VALUE);
             times = 1;

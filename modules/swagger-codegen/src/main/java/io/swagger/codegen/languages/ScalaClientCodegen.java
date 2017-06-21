@@ -105,10 +105,6 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
     @Override
     public void processOpts() {
         super.processOpts();
-
-        if (additionalProperties.containsKey(CodegenConstants.MODEL_PROPERTY_NAMING)) {
-            setModelPropertyNaming((String) additionalProperties.get(CodegenConstants.MODEL_PROPERTY_NAMING));
-        }
     }
 
     @Override

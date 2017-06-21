@@ -5,7 +5,7 @@ import io.swagger.codegen.CodegenConstants;
 
 import java.util.Map;
 
-public class ElixirClientOptionsProvider implements OptionsProvider {
+public class ElixirClientOptionsProvider extends AbstractClientOptionsProvider {
 
     @Override
     public String getLanguage() {
@@ -19,6 +19,7 @@ public class ElixirClientOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG, "false")
                 .put(CodegenConstants.ENSURE_UNIQUE_PARAMS, "false")
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, "false")
+                .putAll(super.createOptions())
                 .build();
     }
 

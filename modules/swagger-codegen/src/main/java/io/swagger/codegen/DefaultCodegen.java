@@ -89,7 +89,8 @@ public class DefaultCodegen {
     protected Map<String, String> importMapping = new HashMap<String, String>();
     protected String modelPackage = "", apiPackage = "", fileSuffix;
     protected String modelNamePrefix = "", modelNameSuffix = "";
-    protected String modelPropertyNaming = "PascalCase";
+    protected String modelPropertyNaming = "camelCase";
+    protected String modelGetterSetterNaming = "PascalCase";
     protected String testPackage = "";
     protected Map<String, String> apiTemplateFiles = new HashMap<String, String>();
     protected Map<String, String> modelTemplateFiles = new HashMap<String, String>();
@@ -164,6 +165,14 @@ public class DefaultCodegen {
 
         if(additionalProperties.containsKey(CodegenConstants.MODEL_NAME_SUFFIX)){
             this.setModelNameSuffix((String) additionalProperties.get(CodegenConstants.MODEL_NAME_SUFFIX));
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.MODEL_PROPERTY_NAMING)) {
+            setModelPropertyNaming((String) additionalProperties.get(CodegenConstants.MODEL_PROPERTY_NAMING));
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.MODEL_GETTERSETTER_NAMING)) {
+            setModelGetterSetterNaming((String) additionalProperties.get(CodegenConstants.MODEL_GETTERSETTER_NAMING));
         }
 
         if (additionalProperties.containsKey(CodegenConstants.REMOVE_OPERATION_ID_PREFIX)) {
@@ -603,6 +612,21 @@ public class DefaultCodegen {
         return this.modelPropertyNaming;
     }
 
+    public void setModelGetterSetterNaming(String naming) {
+        if ("original".equals(naming) || "camelCase".equals(naming) ||
+                "PascalCase".equals(naming) || "snake_case".equals(naming)) {
+            this.modelGetterSetterNaming = naming;
+        } else {
+            throw new IllegalArgumentException("Invalid model getter setter naming '" +
+                    naming + "'. Must be 'original', 'camelCase', " +
+                    "'PascalCase' or 'snake_case'");
+        }
+    }
+
+    public String getModelGetterSetterNaming() {
+        return this.modelGetterSetterNaming;
+    }
+
     public void setApiPackage(String apiPackage) {
         this.apiPackage = apiPackage;
     }
@@ -879,6 +903,7 @@ public class DefaultCodegen {
                 .ALLOW_UNICODE_IDENTIFIERS_DESC).defaultValue(Boolean.FALSE.toString()));
 
         cliOptions.add(new CliOption(CodegenConstants.MODEL_PROPERTY_NAMING, CodegenConstants.MODEL_PROPERTY_NAMING_DESC).defaultValue("camelCase"));
+        cliOptions.add(new CliOption(CodegenConstants.MODEL_GETTERSETTER_NAMING, CodegenConstants.MODEL_GETTERSETTER_NAMING_DESC).defaultValue("PascalCase"));
 
         // initialize special character mapping
         initalizeSpecialCharacterMapping();
@@ -1497,13 +1522,24 @@ public class DefaultCodegen {
         switch (CodegenConstants.MODEL_PROPERTY_NAMING_TYPE.valueOf(getModelPropertyNaming())) {
             case original:    return name;
             case camelCase:   return camelize(name, true);
-            case PascalCase:  return camelize(name);
+            case PascalCase:  return camelize(name, false, false);
             case snake_case:  return underscore(name);
             default:          throw new IllegalArgumentException("Invalid model property naming '" +
                     name + "'. Must be 'original', 'camelCase', " +
                     "'PascalCase' or 'snake_case'");
         }
+    }
 
+    public String getNameUsingModelGetterSetterNaming(String name) {
+        switch (CodegenConstants.MODEL_PROPERTY_NAMING_TYPE.valueOf(getModelGetterSetterNaming())) {
+            case original:    return name;
+            case camelCase:   return camelize(name, true);
+            case PascalCase:  return camelize(name, false, false);
+            case snake_case:  return underscore(name);
+            default:          throw new IllegalArgumentException("Invalid model getter setter naming '" +
+                    name + "'. Must be 'original', 'camelCase', " +
+                    "'PascalCase' or 'snake_case'");
+        }
     }
 
     /**
@@ -1516,7 +1552,7 @@ public class DefaultCodegen {
         if (name == null || name.length() == 0) {
             return name;
         }
-        return getNameUsingModelPropertyNaming(toVarName(name));
+        return getNameUsingModelGetterSetterNaming(toVarName(name));
     }
 
     /**
@@ -3142,7 +3178,7 @@ public class DefaultCodegen {
      * @return camelized string
      */
     public static String camelize(String word) {
-        return camelize(word, false);
+        return camelize(word, false, true);
     }
 
     /**
@@ -3153,6 +3189,18 @@ public class DefaultCodegen {
      * @return camelized string
      */
     public static String camelize(String word, boolean lowercaseFirstLetter) {
+    	return camelize(word, lowercaseFirstLetter, true);
+    }
+
+    /**
+     * Camelize name (parameter, property, method, etc)
+     *
+     * @param word string to be camelize
+     * @param lowercaseFirstLetter lower case for first letter if set to true
+     * @param removeUnderscore true: underscore chars are removed
+     * @return camelized string
+     */
+    public static String camelize(String word, boolean lowercaseFirstLetter, boolean removeUnderscore) {
         // Replace all slashes with dots (package separator)
         Pattern p = Pattern.compile("\\/(.?)");
         Matcher m = p.matcher(word);
@@ -3186,12 +3234,14 @@ public class DefaultCodegen {
             word = m.replaceAll(rep);
         }
 
-        // Remove all underscores
-        p = Pattern.compile("(_)(.)");
-        m = p.matcher(word);
-        while (m.find()) {
-            word = m.replaceFirst(m.group(2).toUpperCase());
-            m = p.matcher(word);
+        if (removeUnderscore) {
+	        // Remove all underscores
+	        p = Pattern.compile("(_)(.)");
+	        m = p.matcher(word);
+	        while (m.find()) {
+	            word = m.replaceFirst(m.group(2).toUpperCase());
+	            m = p.matcher(word);
+	        }
         }
 
         if (lowercaseFirstLetter && word.length() > 0) {

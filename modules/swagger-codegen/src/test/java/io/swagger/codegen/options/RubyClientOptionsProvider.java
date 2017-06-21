@@ -7,7 +7,7 @@ import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
 
-public class RubyClientOptionsProvider implements OptionsProvider {
+public class RubyClientOptionsProvider extends AbstractClientOptionsProvider implements OptionsProvider {
     public static final String GEM_NAME_VALUE = "swagger_client_ruby";
     public static final String MODULE_NAME_VALUE = "SwaggerClientRuby";
     public static final String GEM_VERSION_VALUE = "1.0.0-SNAPSHOT";
@@ -45,6 +45,7 @@ public class RubyClientOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.ENSURE_UNIQUE_PARAMS, ENSURE_UNIQUE_PARAMS_VALUE)
                 .put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "true")
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
+                .putAll(super.createOptions())
                 .build();
     }
 
