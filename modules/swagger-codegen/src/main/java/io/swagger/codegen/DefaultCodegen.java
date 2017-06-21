@@ -1383,7 +1383,7 @@ public class DefaultCodegen {
                 allRequired = null;
             }
             // parent model
-            RefModel parent = (RefModel) composed.getParent();
+            Model parent = (Model) composed.getParent();
 
             // interfaces (intermediate models)
             if (composed.getInterfaces() != null) {
@@ -1416,16 +1416,31 @@ public class DefaultCodegen {
             }
 
             if (parent != null) {
-                final String parentRef = parent.getSimpleRef();
-                m.parentSchema = parentRef;
-                m.parent = toModelName(parent.getSimpleRef());
-                addImport(m, m.parent);
-                if (allDefinitions != null) {
-                    final Model parentModel = allDefinitions.get(m.parentSchema);
-                    if (supportsInheritance) {
-                        addProperties(allProperties, allRequired, parentModel, allDefinitions);
-                    } else {
-                        addProperties(properties, required, parentModel, allDefinitions);
+                String parentName = null;
+                if(parent instanceof RefModel) {
+                    parentName = ((RefModel)parent).getSimpleRef();
+                }
+                else {
+                    if(parent instanceof ModelImpl) {
+                        // check for a title
+                        ModelImpl parentImpl = (ModelImpl) parent;
+                        if(StringUtils.isNotBlank(parentImpl.getTitle())) {
+                            parentName = parentImpl.getTitle();
+                        }
+                    }
+                }
+
+                if(parentName != null) {
+                    m.parentSchema = parentName;
+                    m.parent = toModelName(parentName);
+                    addImport(m, m.parent);
+                    if (allDefinitions != null) {
+                        final Model parentModel = allDefinitions.get(m.parentSchema);
+                        if (supportsInheritance) {
+                            addProperties(allProperties, allRequired, parentModel, allDefinitions);
+                        } else {
+                            addProperties(properties, required, parentModel, allDefinitions);
+                        }
                     }
                 }
             }
