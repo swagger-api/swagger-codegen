@@ -23,12 +23,13 @@ import io.swagger.models.properties.StringProperty;
 
 public abstract class AbstractScalaCodegen extends DefaultCodegen {
 
-    protected String modelPropertyNaming = "camelCase";
     protected String invokerPackage = "io.swagger.client";
     protected String sourceFolder = "src/main/scala";
 
     public AbstractScalaCodegen() {
         super();
+
+        modelPropertyNaming = "camelCase";
 
         languageSpecificPrimitives.addAll(Arrays.asList(
                         "String",
@@ -67,7 +68,7 @@ public abstract class AbstractScalaCodegen extends DefaultCodegen {
     }
 
     @Override
-    public String escapeReservedWord(String name) {           
+    public String escapeReservedWord(String name) {
         if(this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
@@ -93,7 +94,7 @@ public abstract class AbstractScalaCodegen extends DefaultCodegen {
         } else if (p instanceof MapProperty) {
             MapProperty mp = (MapProperty) p;
             Property inner = mp.getAdditionalProperties();
-    
+
             return getSwaggerType(p) + "[String, " + getTypeDeclaration(inner) + "]";
         }
         return super.getTypeDeclaration(p);
