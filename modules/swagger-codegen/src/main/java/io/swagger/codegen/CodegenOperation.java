@@ -37,6 +37,7 @@ public class CodegenOperation {
     public String nickname; // legacy support
     public String operationIdLowerCase; // for mardown documentation
     public String operationIdCamelCase; // for class names
+    public String operationIdSnakeCase;
 
     /**
      * Check if there's at least one parameter
@@ -116,7 +117,7 @@ public class CodegenOperation {
      * @return true if act as Restful show method, false otherwise
      */
     public boolean isRestfulShow() {
-        return "GET".equals(httpMethod) && isMemberPath();
+        return "GET".equalsIgnoreCase(httpMethod) && isMemberPath();
     }
 
     /**
@@ -125,7 +126,7 @@ public class CodegenOperation {
      * @return true if act as Restful create method, false otherwise
      */
     public boolean isRestfulCreate() {
-        return "POST".equals(httpMethod) && "".equals(pathWithoutBaseName());
+        return "POST".equalsIgnoreCase(httpMethod) && "".equals(pathWithoutBaseName());
     }
 
     /**
@@ -134,7 +135,7 @@ public class CodegenOperation {
      * @return true if act as Restful update method, false otherwise
      */
     public boolean isRestfulUpdate() {
-        return Arrays.asList("PUT", "PATCH").contains(httpMethod) && isMemberPath();
+        return Arrays.asList("PUT", "PATCH").contains(httpMethod.toUpperCase()) && isMemberPath();
     }
 
     /**
@@ -143,7 +144,7 @@ public class CodegenOperation {
      * @return true if act as Restful destroy method, false otherwise
      */
     public boolean isRestfulDestroy() {
-        return "DELETE".equals(httpMethod) && isMemberPath();
+        return "DELETE".equalsIgnoreCase(httpMethod) && isMemberPath();
     }
 
     /**
@@ -171,7 +172,6 @@ public class CodegenOperation {
      */
     private boolean isMemberPath() {
         if (pathParams.size() != 1) return false;
-
         String id = pathParams.get(0).baseName;
         return ("/{" + id + "}").equals(pathWithoutBaseName());
     }

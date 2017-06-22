@@ -1,4 +1,6 @@
 {{>licenseInfo}}
+/* tslint:disable:no-unused-variable member-ordering */
+
 import { Inject, Injectable, Optional }                      from '@angular/core';
 import { Http, Headers, URLSearchParams }                    from '@angular/http';
 import { RequestMethod, RequestOptions, RequestOptionsArgs } from '@angular/http';
@@ -10,8 +12,9 @@ import 'rxjs/add/operator/map';
 import * as models                                           from '../model/models';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
-
-/* tslint:disable:no-unused-variable member-ordering */
+{{#withInterfaces}}
+import { {{classname}}Interface }                            from './{{classname}}Interface';
+{{/withInterfaces}}
 
 {{#operations}}
 
@@ -21,7 +24,13 @@ import { Configuration }                                     from '../configurat
  */
 {{/description}}
 @Injectable()
+{{#withInterfaces}}
+export class {{classname}} implements {{classname}}Interface {
+{{/withInterfaces}}
+{{^withInterfaces}}
 export class {{classname}} {
+{{/withInterfaces}}
+
     protected basePath = '{{{basePath}}}';
     public defaultHeaders: Headers = new Headers();
     public configuration: Configuration = new Configuration();
@@ -124,14 +133,14 @@ export class {{classname}} {
         // to determine the Content-Type header
         let consumes: string[] = [
             {{#consumes}}
-            '{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}
+            '{{{mediaType}}}'{{#hasMore}},{{/hasMore}}
             {{/consumes}}
         ];
 
         // to determine the Accept header
         let produces: string[] = [
             {{#produces}}
-            '{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}
+            '{{{mediaType}}}'{{#hasMore}},{{/hasMore}}
             {{/produces}}
         ];
 
