@@ -223,9 +223,7 @@ this.{{name}} = {{name}};
         {
             {{#parent}}
             {{^isArrayModel}}
-            {{#parentVars}}
             foreach(var x in base.Validate(validationContext)) yield return x;
-            {{/parentVars}}
             {{/isArrayModel}}
             {{/parent}}
             {{#vars}}

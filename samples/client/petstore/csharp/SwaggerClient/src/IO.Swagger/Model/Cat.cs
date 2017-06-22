@@ -128,7 +128,6 @@ namespace IO.Swagger.Model
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             foreach(var x in base.Validate(validationContext)) yield return x;
-            foreach(var x in base.Validate(validationContext)) yield return x;
             yield break;
         }
     }
