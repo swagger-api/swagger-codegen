@@ -257,7 +257,7 @@ namespace {{packageName}}.Client
             log.Info("API was called and response was received");
             InterceptResponse(request, response);
 
-            log.Trace("CallApi end")
+            log.Trace("CallApi end");
             return (Object) response;
         }
         {{#supportsAsync}}
@@ -288,7 +288,7 @@ namespace {{packageName}}.Client
             var response = await RestClient.Execute{{^netStandard}}TaskAsync{{/netStandard}}(request);
             log.Info("API was called with async and response was received");
             InterceptResponse(request, response);
-            log.Trace("CallApi async end")
+            log.Trace("CallApi async end");
             return (Object)response;
         }{{/supportsAsync}}
 
