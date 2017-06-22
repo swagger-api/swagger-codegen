@@ -1522,7 +1522,7 @@ public class DefaultCodegen {
         switch (CodegenConstants.MODEL_PROPERTY_NAMING_TYPE.valueOf(getModelPropertyNaming())) {
             case original:    return name;
             case camelCase:   return camelize(name, true);
-            case PascalCase:  return camelize(name, false, false);
+            case PascalCase:  return camelize(name, false);
             case snake_case:  return underscore(name);
             default:          throw new IllegalArgumentException("Invalid model property naming '" +
                     name + "'. Must be 'original', 'camelCase', " +
@@ -1534,7 +1534,7 @@ public class DefaultCodegen {
         switch (CodegenConstants.MODEL_PROPERTY_NAMING_TYPE.valueOf(getModelGetterSetterNaming())) {
             case original:    return name;
             case camelCase:   return camelize(name, true);
-            case PascalCase:  return camelize(name, false, false);
+            case PascalCase:  return camelize(name, false);
             case snake_case:  return underscore(name);
             default:          throw new IllegalArgumentException("Invalid model getter setter naming '" +
                     name + "'. Must be 'original', 'camelCase', " +
@@ -3178,7 +3178,7 @@ public class DefaultCodegen {
      * @return camelized string
      */
     public static String camelize(String word) {
-        return camelize(word, false, true);
+        return camelize(word, false);
     }
 
     /**
@@ -3189,18 +3189,6 @@ public class DefaultCodegen {
      * @return camelized string
      */
     public static String camelize(String word, boolean lowercaseFirstLetter) {
-    	return camelize(word, lowercaseFirstLetter, true);
-    }
-
-    /**
-     * Camelize name (parameter, property, method, etc)
-     *
-     * @param word string to be camelize
-     * @param lowercaseFirstLetter lower case for first letter if set to true
-     * @param removeUnderscore true: underscore chars are removed
-     * @return camelized string
-     */
-    public static String camelize(String word, boolean lowercaseFirstLetter, boolean removeUnderscore) {
         // Replace all slashes with dots (package separator)
         Pattern p = Pattern.compile("\\/(.?)");
         Matcher m = p.matcher(word);
@@ -3234,14 +3222,12 @@ public class DefaultCodegen {
             word = m.replaceAll(rep);
         }
 
-        if (removeUnderscore) {
-	        // Remove all underscores
-	        p = Pattern.compile("(_)(.)");
-	        m = p.matcher(word);
-	        while (m.find()) {
-	            word = m.replaceFirst(m.group(2).toUpperCase());
-	            m = p.matcher(word);
-	        }
+        // Remove all underscores
+        p = Pattern.compile("(_)(.)");
+        m = p.matcher(word);
+        while (m.find()) {
+            word = m.replaceFirst(m.group(2).toUpperCase());
+            m = p.matcher(word);
         }
 
         if (lowercaseFirstLetter && word.length() > 0) {
