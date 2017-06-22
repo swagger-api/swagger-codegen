@@ -41,7 +41,7 @@ namespace {{packageName}}.Client
                              string userAgent = "{{#httpUserAgent}}{{.}}{{/httpUserAgent}}{{^httpUserAgent}}Swagger-Codegen/{{packageVersion}}/csharp{{/httpUserAgent}}"
                             )
         {
-            log.Trace("Configuration ctor")
+            log.Trace("Configuration ctor");
             setApiClientUsingDefault(apiClient);
 
             Username = username;

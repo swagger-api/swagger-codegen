@@ -390,6 +390,7 @@ namespace IO.Swagger.Api
     /// </summary>
     public partial class PetApi : IPetApi
     {
+        private static IO.Swagger.Client.Logger log = new IO.Swagger.Client.Logger("PetApi");
         private IO.Swagger.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
         /// <summary>
@@ -398,6 +399,8 @@ namespace IO.Swagger.Api
         /// <returns></returns>
         public PetApi(String basePath)
         {
+            log.Trace("PetApi ctor with base path");
+            log.Debug(string.Format("Base API path: {0}", basePath));
             this.Configuration = new Configuration(new ApiClient(basePath));
 
             ExceptionFactory = IO.Swagger.Client.Configuration.DefaultExceptionFactory;
@@ -417,6 +420,7 @@ namespace IO.Swagger.Api
         /// <returns></returns>
         public PetApi(Configuration configuration = null)
         {
+            log.Trace("PetApi ctor with configuration object");
             if (configuration == null) // use the default one in Configuration
                 this.Configuration = Configuration.Default;
             else
@@ -465,6 +469,7 @@ namespace IO.Swagger.Api
             {
                 if (_exceptionFactory != null && _exceptionFactory.GetInvocationList().Length > 1)
                 {
+                    log.Error("Multicast delegate for ExceptionFactory is unsupported.");
                     throw new InvalidOperationException("Multicast delegate for ExceptionFactory is unsupported.");
                 }
                 return _exceptionFactory;
@@ -502,7 +507,9 @@ namespace IO.Swagger.Api
         /// <returns></returns>
         public void AddPet (Pet body)
         {
-             AddPetWithHttpInfo(body);
+            log.Trace("AddPet called");
+
+            AddPetWithHttpInfo(body);
         }
 
         /// <summary>
@@ -513,6 +520,7 @@ namespace IO.Swagger.Api
         /// <returns>ApiResponse of Object(void)</returns>
         public ApiResponse<Object> AddPetWithHttpInfo (Pet body)
         {
+            log.Trace("AddPetWithHttpInfo called");
             // verify the required parameter 'body' is set
             if (body == null)
                 throw new ApiException(400, "Missing required parameter 'body' when calling PetApi->AddPet");
@@ -550,26 +558,35 @@ namespace IO.Swagger.Api
                 localVarPostBody = body; // byte array
             }
 
+            log.Debug("Headers, params and body created. Adding auth");
             // authentication (petstore_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
+                log.Debug("Bearer auth");
                 localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
             }
 
+            log.Trace("Calling API");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("AddPet", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return null-filled response");
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
@@ -583,7 +600,8 @@ namespace IO.Swagger.Api
         /// <returns>Task of void</returns>
         public async System.Threading.Tasks.Task AddPetAsync (Pet body)
         {
-             await AddPetAsyncWithHttpInfo(body);
+            log.Trace("AddPetAsync called");
+            await AddPetAsyncWithHttpInfo(body);
 
         }
 
@@ -595,6 +613,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Object>> AddPetAsyncWithHttpInfo (Pet body)
         {
+            log.Trace("AddPetWithHttpInfo called");
             // verify the required parameter 'body' is set
             if (body == null)
                 throw new ApiException(400, "Missing required parameter 'body' when calling PetApi->AddPet");
@@ -632,26 +651,35 @@ namespace IO.Swagger.Api
                 localVarPostBody = body; // byte array
             }
 
+            log.Debug("Headers, params and body created. Adding auth");
             // authentication (petstore_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
+                log.Debug("Bearer auth");
                 localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
             }
 
+            log.Trace("Calling API async");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("AddPet", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return null-filled response");
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
@@ -666,7 +694,9 @@ namespace IO.Swagger.Api
         /// <returns></returns>
         public void DeletePet (long? petId, string apiKey = null)
         {
-             DeletePetWithHttpInfo(petId, apiKey);
+            log.Trace("DeletePet called");
+
+            DeletePetWithHttpInfo(petId, apiKey);
         }
 
         /// <summary>
@@ -678,6 +708,7 @@ namespace IO.Swagger.Api
         /// <returns>ApiResponse of Object(void)</returns>
         public ApiResponse<Object> DeletePetWithHttpInfo (long? petId, string apiKey = null)
         {
+            log.Trace("DeletePetWithHttpInfo called");
             // verify the required parameter 'petId' is set
             if (petId == null)
                 throw new ApiException(400, "Missing required parameter 'petId' when calling PetApi->DeletePet");
@@ -707,26 +738,35 @@ namespace IO.Swagger.Api
             if (petId != null) localVarPathParams.Add("petId", Configuration.ApiClient.ParameterToString(petId)); // path parameter
             if (apiKey != null) localVarHeaderParams.Add("api_key", Configuration.ApiClient.ParameterToString(apiKey)); // header parameter
 
+            log.Debug("Headers, params and body created. Adding auth");
             // authentication (petstore_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
+                log.Debug("Bearer auth");
                 localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
             }
 
+            log.Trace("Calling API");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
                 Method.DELETE, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("DeletePet", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return null-filled response");
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
@@ -741,7 +781,8 @@ namespace IO.Swagger.Api
         /// <returns>Task of void</returns>
         public async System.Threading.Tasks.Task DeletePetAsync (long? petId, string apiKey = null)
         {
-             await DeletePetAsyncWithHttpInfo(petId, apiKey);
+            log.Trace("DeletePetAsync called");
+            await DeletePetAsyncWithHttpInfo(petId, apiKey);
 
         }
 
@@ -754,6 +795,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Object>> DeletePetAsyncWithHttpInfo (long? petId, string apiKey = null)
         {
+            log.Trace("DeletePetWithHttpInfo called");
             // verify the required parameter 'petId' is set
             if (petId == null)
                 throw new ApiException(400, "Missing required parameter 'petId' when calling PetApi->DeletePet");
@@ -783,26 +825,35 @@ namespace IO.Swagger.Api
             if (petId != null) localVarPathParams.Add("petId", Configuration.ApiClient.ParameterToString(petId)); // path parameter
             if (apiKey != null) localVarHeaderParams.Add("api_key", Configuration.ApiClient.ParameterToString(apiKey)); // header parameter
 
+            log.Debug("Headers, params and body created. Adding auth");
             // authentication (petstore_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
+                log.Debug("Bearer auth");
                 localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
             }
 
+            log.Trace("Calling API async");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.DELETE, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("DeletePet", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return null-filled response");
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
@@ -816,9 +867,11 @@ namespace IO.Swagger.Api
         /// <returns>List&lt;Pet&gt;</returns>
         public List<Pet> FindPetsByStatus (List<string> status)
         {
-             ApiResponse<List<Pet>> localVarResponse = FindPetsByStatusWithHttpInfo(status);
-             return localVarResponse.Data;
-        }
+            log.Trace("FindPetsByStatus called");
+            ApiResponse<List<Pet>> localVarResponse = FindPetsByStatusWithHttpInfo(status);
+            log.Trace("return FindPetsByStatus response data");
+            return localVarResponse.Data;
+                    }
 
         /// <summary>
         /// Finds Pets by status Multiple status values can be provided with comma separated strings
@@ -828,6 +881,7 @@ namespace IO.Swagger.Api
         /// <returns>ApiResponse of List&lt;Pet&gt;</returns>
         public ApiResponse< List<Pet> > FindPetsByStatusWithHttpInfo (List<string> status)
         {
+            log.Trace("FindPetsByStatusWithHttpInfo called");
             // verify the required parameter 'status' is set
             if (status == null)
                 throw new ApiException(400, "Missing required parameter 'status' when calling PetApi->FindPetsByStatus");
@@ -856,26 +910,35 @@ namespace IO.Swagger.Api
 
             if (status != null) localVarQueryParams.Add("status", Configuration.ApiClient.ParameterToString(status)); // query parameter
 
+            log.Debug("Headers, params and body created. Adding auth");
             // authentication (petstore_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
+                log.Debug("Bearer auth");
                 localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
             }
 
+            log.Trace("Calling API");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
                 Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("FindPetsByStatus", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return response of type List<Pet>");
             return new ApiResponse<List<Pet>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Pet>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Pet>)));
@@ -889,8 +952,10 @@ namespace IO.Swagger.Api
         /// <returns>Task of List&lt;Pet&gt;</returns>
         public async System.Threading.Tasks.Task<List<Pet>> FindPetsByStatusAsync (List<string> status)
         {
-             ApiResponse<List<Pet>> localVarResponse = await FindPetsByStatusAsyncWithHttpInfo(status);
-             return localVarResponse.Data;
+            log.Trace("FindPetsByStatusAsync called");
+            ApiResponse<List<Pet>> localVarResponse = await FindPetsByStatusAsyncWithHttpInfo(status);
+            log.Trace("return FindPetsByStatusAsync response data");
+            return localVarResponse.Data;
 
         }
 
@@ -902,6 +967,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (List&lt;Pet&gt;)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<List<Pet>>> FindPetsByStatusAsyncWithHttpInfo (List<string> status)
         {
+            log.Trace("FindPetsByStatusWithHttpInfo called");
             // verify the required parameter 'status' is set
             if (status == null)
                 throw new ApiException(400, "Missing required parameter 'status' when calling PetApi->FindPetsByStatus");
@@ -930,26 +996,35 @@ namespace IO.Swagger.Api
 
             if (status != null) localVarQueryParams.Add("status", Configuration.ApiClient.ParameterToString(status)); // query parameter
 
+            log.Debug("Headers, params and body created. Adding auth");
             // authentication (petstore_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
+                log.Debug("Bearer auth");
                 localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
             }
 
+            log.Trace("Calling API async");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("FindPetsByStatus", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return response of type List<Pet>");
             return new ApiResponse<List<Pet>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Pet>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Pet>)));
@@ -963,9 +1038,11 @@ namespace IO.Swagger.Api
         /// <returns>List&lt;Pet&gt;</returns>
         public List<Pet> FindPetsByTags (List<string> tags)
         {
-             ApiResponse<List<Pet>> localVarResponse = FindPetsByTagsWithHttpInfo(tags);
-             return localVarResponse.Data;
-        }
+            log.Trace("FindPetsByTags called");
+            ApiResponse<List<Pet>> localVarResponse = FindPetsByTagsWithHttpInfo(tags);
+            log.Trace("return FindPetsByTags response data");
+            return localVarResponse.Data;
+                    }
 
         /// <summary>
         /// Finds Pets by tags Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
@@ -975,6 +1052,7 @@ namespace IO.Swagger.Api
         /// <returns>ApiResponse of List&lt;Pet&gt;</returns>
         public ApiResponse< List<Pet> > FindPetsByTagsWithHttpInfo (List<string> tags)
         {
+            log.Trace("FindPetsByTagsWithHttpInfo called");
             // verify the required parameter 'tags' is set
             if (tags == null)
                 throw new ApiException(400, "Missing required parameter 'tags' when calling PetApi->FindPetsByTags");
@@ -1003,26 +1081,35 @@ namespace IO.Swagger.Api
 
             if (tags != null) localVarQueryParams.Add("tags", Configuration.ApiClient.ParameterToString(tags)); // query parameter
 
+            log.Debug("Headers, params and body created. Adding auth");
             // authentication (petstore_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
+                log.Debug("Bearer auth");
                 localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
             }
 
+            log.Trace("Calling API");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
                 Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("FindPetsByTags", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return response of type List<Pet>");
             return new ApiResponse<List<Pet>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Pet>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Pet>)));
@@ -1036,8 +1123,10 @@ namespace IO.Swagger.Api
         /// <returns>Task of List&lt;Pet&gt;</returns>
         public async System.Threading.Tasks.Task<List<Pet>> FindPetsByTagsAsync (List<string> tags)
         {
-             ApiResponse<List<Pet>> localVarResponse = await FindPetsByTagsAsyncWithHttpInfo(tags);
-             return localVarResponse.Data;
+            log.Trace("FindPetsByTagsAsync called");
+            ApiResponse<List<Pet>> localVarResponse = await FindPetsByTagsAsyncWithHttpInfo(tags);
+            log.Trace("return FindPetsByTagsAsync response data");
+            return localVarResponse.Data;
 
         }
 
@@ -1049,6 +1138,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (List&lt;Pet&gt;)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<List<Pet>>> FindPetsByTagsAsyncWithHttpInfo (List<string> tags)
         {
+            log.Trace("FindPetsByTagsWithHttpInfo called");
             // verify the required parameter 'tags' is set
             if (tags == null)
                 throw new ApiException(400, "Missing required parameter 'tags' when calling PetApi->FindPetsByTags");
@@ -1077,26 +1167,35 @@ namespace IO.Swagger.Api
 
             if (tags != null) localVarQueryParams.Add("tags", Configuration.ApiClient.ParameterToString(tags)); // query parameter
 
+            log.Debug("Headers, params and body created. Adding auth");
             // authentication (petstore_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
+                log.Debug("Bearer auth");
                 localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
             }
 
+            log.Trace("Calling API async");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("FindPetsByTags", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return response of type List<Pet>");
             return new ApiResponse<List<Pet>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Pet>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Pet>)));
@@ -1110,9 +1209,11 @@ namespace IO.Swagger.Api
         /// <returns>Pet</returns>
         public Pet GetPetById (long? petId)
         {
-             ApiResponse<Pet> localVarResponse = GetPetByIdWithHttpInfo(petId);
-             return localVarResponse.Data;
-        }
+            log.Trace("GetPetById called");
+            ApiResponse<Pet> localVarResponse = GetPetByIdWithHttpInfo(petId);
+            log.Trace("return GetPetById response data");
+            return localVarResponse.Data;
+                    }
 
         /// <summary>
         /// Find pet by ID Returns a single pet
@@ -1122,6 +1223,7 @@ namespace IO.Swagger.Api
         /// <returns>ApiResponse of Pet</returns>
         public ApiResponse< Pet > GetPetByIdWithHttpInfo (long? petId)
         {
+            log.Trace("GetPetByIdWithHttpInfo called");
             // verify the required parameter 'petId' is set
             if (petId == null)
                 throw new ApiException(400, "Missing required parameter 'petId' when calling PetApi->GetPetById");
@@ -1150,26 +1252,35 @@ namespace IO.Swagger.Api
 
             if (petId != null) localVarPathParams.Add("petId", Configuration.ApiClient.ParameterToString(petId)); // path parameter
 
+            log.Debug("Headers, params and body created. Adding auth");
             // authentication (api_key) required
             if (!String.IsNullOrEmpty(Configuration.GetApiKeyWithPrefix("api_key")))
             {
+                log.Debug("API key in header");
                 localVarHeaderParams["api_key"] = Configuration.GetApiKeyWithPrefix("api_key");
             }
 
 
+            log.Trace("Calling API");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
                 Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("GetPetById", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return response of type Pet");
             return new ApiResponse<Pet>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Pet) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Pet)));
@@ -1183,8 +1294,10 @@ namespace IO.Swagger.Api
         /// <returns>Task of Pet</returns>
         public async System.Threading.Tasks.Task<Pet> GetPetByIdAsync (long? petId)
         {
-             ApiResponse<Pet> localVarResponse = await GetPetByIdAsyncWithHttpInfo(petId);
-             return localVarResponse.Data;
+            log.Trace("GetPetByIdAsync called");
+            ApiResponse<Pet> localVarResponse = await GetPetByIdAsyncWithHttpInfo(petId);
+            log.Trace("return GetPetByIdAsync response data");
+            return localVarResponse.Data;
 
         }
 
@@ -1196,6 +1309,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (Pet)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Pet>> GetPetByIdAsyncWithHttpInfo (long? petId)
         {
+            log.Trace("GetPetByIdWithHttpInfo called");
             // verify the required parameter 'petId' is set
             if (petId == null)
                 throw new ApiException(400, "Missing required parameter 'petId' when calling PetApi->GetPetById");
@@ -1224,25 +1338,34 @@ namespace IO.Swagger.Api
 
             if (petId != null) localVarPathParams.Add("petId", Configuration.ApiClient.ParameterToString(petId)); // path parameter
 
+            log.Debug("Headers, params and body created. Adding auth");
             // authentication (api_key) required
             if (!String.IsNullOrEmpty(Configuration.GetApiKeyWithPrefix("api_key")))
             {
+                log.Debug("API key in header");
                 localVarHeaderParams["api_key"] = Configuration.GetApiKeyWithPrefix("api_key");
             }
 
+            log.Trace("Calling API async");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("GetPetById", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return response of type Pet");
             return new ApiResponse<Pet>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Pet) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Pet)));
@@ -1256,7 +1379,9 @@ namespace IO.Swagger.Api
         /// <returns></returns>
         public void UpdatePet (Pet body)
         {
-             UpdatePetWithHttpInfo(body);
+            log.Trace("UpdatePet called");
+
+            UpdatePetWithHttpInfo(body);
         }
 
         /// <summary>
@@ -1267,6 +1392,7 @@ namespace IO.Swagger.Api
         /// <returns>ApiResponse of Object(void)</returns>
         public ApiResponse<Object> UpdatePetWithHttpInfo (Pet body)
         {
+            log.Trace("UpdatePetWithHttpInfo called");
             // verify the required parameter 'body' is set
             if (body == null)
                 throw new ApiException(400, "Missing required parameter 'body' when calling PetApi->UpdatePet");
@@ -1304,26 +1430,35 @@ namespace IO.Swagger.Api
                 localVarPostBody = body; // byte array
             }
 
+            log.Debug("Headers, params and body created. Adding auth");
             // authentication (petstore_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
+                log.Debug("Bearer auth");
                 localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
             }
 
+            log.Trace("Calling API");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
                 Method.PUT, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("UpdatePet", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return null-filled response");
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
@@ -1337,7 +1472,8 @@ namespace IO.Swagger.Api
         /// <returns>Task of void</returns>
         public async System.Threading.Tasks.Task UpdatePetAsync (Pet body)
         {
-             await UpdatePetAsyncWithHttpInfo(body);
+            log.Trace("UpdatePetAsync called");
+            await UpdatePetAsyncWithHttpInfo(body);
 
         }
 
@@ -1349,6 +1485,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Object>> UpdatePetAsyncWithHttpInfo (Pet body)
         {
+            log.Trace("UpdatePetWithHttpInfo called");
             // verify the required parameter 'body' is set
             if (body == null)
                 throw new ApiException(400, "Missing required parameter 'body' when calling PetApi->UpdatePet");
@@ -1386,26 +1523,35 @@ namespace IO.Swagger.Api
                 localVarPostBody = body; // byte array
             }
 
+            log.Debug("Headers, params and body created. Adding auth");
             // authentication (petstore_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
+                log.Debug("Bearer auth");
                 localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
             }
 
+            log.Trace("Calling API async");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.PUT, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("UpdatePet", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return null-filled response");
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
@@ -1421,7 +1567,9 @@ namespace IO.Swagger.Api
         /// <returns></returns>
         public void UpdatePetWithForm (long? petId, string name = null, string status = null)
         {
-             UpdatePetWithFormWithHttpInfo(petId, name, status);
+            log.Trace("UpdatePetWithForm called");
+
+            UpdatePetWithFormWithHttpInfo(petId, name, status);
         }
 
         /// <summary>
@@ -1434,6 +1582,7 @@ namespace IO.Swagger.Api
         /// <returns>ApiResponse of Object(void)</returns>
         public ApiResponse<Object> UpdatePetWithFormWithHttpInfo (long? petId, string name = null, string status = null)
         {
+            log.Trace("UpdatePetWithFormWithHttpInfo called");
             // verify the required parameter 'petId' is set
             if (petId == null)
                 throw new ApiException(400, "Missing required parameter 'petId' when calling PetApi->UpdatePetWithForm");
@@ -1465,26 +1614,35 @@ namespace IO.Swagger.Api
             if (name != null) localVarFormParams.Add("name", Configuration.ApiClient.ParameterToString(name)); // form parameter
             if (status != null) localVarFormParams.Add("status", Configuration.ApiClient.ParameterToString(status)); // form parameter
 
+            log.Debug("Headers, params and body created. Adding auth");
             // authentication (petstore_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
+                log.Debug("Bearer auth");
                 localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
             }
 
+            log.Trace("Calling API");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("UpdatePetWithForm", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return null-filled response");
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
@@ -1500,7 +1658,8 @@ namespace IO.Swagger.Api
         /// <returns>Task of void</returns>
         public async System.Threading.Tasks.Task UpdatePetWithFormAsync (long? petId, string name = null, string status = null)
         {
-             await UpdatePetWithFormAsyncWithHttpInfo(petId, name, status);
+            log.Trace("UpdatePetWithFormAsync called");
+            await UpdatePetWithFormAsyncWithHttpInfo(petId, name, status);
 
         }
 
@@ -1514,6 +1673,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Object>> UpdatePetWithFormAsyncWithHttpInfo (long? petId, string name = null, string status = null)
         {
+            log.Trace("UpdatePetWithFormWithHttpInfo called");
             // verify the required parameter 'petId' is set
             if (petId == null)
                 throw new ApiException(400, "Missing required parameter 'petId' when calling PetApi->UpdatePetWithForm");
@@ -1545,26 +1705,35 @@ namespace IO.Swagger.Api
             if (name != null) localVarFormParams.Add("name", Configuration.ApiClient.ParameterToString(name)); // form parameter
             if (status != null) localVarFormParams.Add("status", Configuration.ApiClient.ParameterToString(status)); // form parameter
 
+            log.Debug("Headers, params and body created. Adding auth");
             // authentication (petstore_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
+                log.Debug("Bearer auth");
                 localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
             }
 
+            log.Trace("Calling API async");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("UpdatePetWithForm", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return null-filled response");
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
@@ -1580,9 +1749,11 @@ namespace IO.Swagger.Api
         /// <returns>ApiResponse</returns>
         public ApiResponse UploadFile (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
         {
-             ApiResponse<ApiResponse> localVarResponse = UploadFileWithHttpInfo(petId, additionalMetadata, file);
-             return localVarResponse.Data;
-        }
+            log.Trace("UploadFile called");
+            ApiResponse<ApiResponse> localVarResponse = UploadFileWithHttpInfo(petId, additionalMetadata, file);
+            log.Trace("return UploadFile response data");
+            return localVarResponse.Data;
+                    }
 
         /// <summary>
         /// uploads an image 
@@ -1594,6 +1765,7 @@ namespace IO.Swagger.Api
         /// <returns>ApiResponse of ApiResponse</returns>
         public ApiResponse< ApiResponse > UploadFileWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
         {
+            log.Trace("UploadFileWithHttpInfo called");
             // verify the required parameter 'petId' is set
             if (petId == null)
                 throw new ApiException(400, "Missing required parameter 'petId' when calling PetApi->UploadFile");
@@ -1624,26 +1796,35 @@ namespace IO.Swagger.Api
             if (additionalMetadata != null) localVarFormParams.Add("additionalMetadata", Configuration.ApiClient.ParameterToString(additionalMetadata)); // form parameter
             if (file != null) localVarFileParams.Add("file", Configuration.ApiClient.ParameterToFile("file", file));
 
+            log.Debug("Headers, params and body created. Adding auth");
             // authentication (petstore_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
+                log.Debug("Bearer auth");
                 localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
             }
 
+            log.Trace("Calling API");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("UploadFile", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return response of type ApiResponse");
             return new ApiResponse<ApiResponse>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (ApiResponse) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ApiResponse)));
@@ -1659,8 +1840,10 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse</returns>
         public async System.Threading.Tasks.Task<ApiResponse> UploadFileAsync (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
         {
-             ApiResponse<ApiResponse> localVarResponse = await UploadFileAsyncWithHttpInfo(petId, additionalMetadata, file);
-             return localVarResponse.Data;
+            log.Trace("UploadFileAsync called");
+            ApiResponse<ApiResponse> localVarResponse = await UploadFileAsyncWithHttpInfo(petId, additionalMetadata, file);
+            log.Trace("return UploadFileAsync response data");
+            return localVarResponse.Data;
 
         }
 
@@ -1674,6 +1857,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (ApiResponse)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<ApiResponse>> UploadFileAsyncWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
         {
+            log.Trace("UploadFileWithHttpInfo called");
             // verify the required parameter 'petId' is set
             if (petId == null)
                 throw new ApiException(400, "Missing required parameter 'petId' when calling PetApi->UploadFile");
@@ -1704,26 +1888,35 @@ namespace IO.Swagger.Api
             if (additionalMetadata != null) localVarFormParams.Add("additionalMetadata", Configuration.ApiClient.ParameterToString(additionalMetadata)); // form parameter
             if (file != null) localVarFileParams.Add("file", Configuration.ApiClient.ParameterToFile("file", file));
 
+            log.Debug("Headers, params and body created. Adding auth");
             // authentication (petstore_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
+                log.Debug("Bearer auth");
                 localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
             }
 
+            log.Trace("Calling API async");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("UploadFile", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return response of type ApiResponse");
             return new ApiResponse<ApiResponse>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (ApiResponse) Configuration.ApiClient.Deserialize(localVarResponse, typeof(ApiResponse)));

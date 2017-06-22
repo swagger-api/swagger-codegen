@@ -198,6 +198,7 @@ namespace IO.Swagger.Api
     /// </summary>
     public partial class StoreApi : IStoreApi
     {
+        private static IO.Swagger.Client.Logger log = new IO.Swagger.Client.Logger("StoreApi");
         private IO.Swagger.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
         /// <summary>
@@ -206,6 +207,8 @@ namespace IO.Swagger.Api
         /// <returns></returns>
         public StoreApi(String basePath)
         {
+            log.Trace("StoreApi ctor with base path");
+            log.Debug(string.Format("Base API path: {0}", basePath));
             this.Configuration = new Configuration(new ApiClient(basePath));
 
             ExceptionFactory = IO.Swagger.Client.Configuration.DefaultExceptionFactory;
@@ -225,6 +228,7 @@ namespace IO.Swagger.Api
         /// <returns></returns>
         public StoreApi(Configuration configuration = null)
         {
+            log.Trace("StoreApi ctor with configuration object");
             if (configuration == null) // use the default one in Configuration
                 this.Configuration = Configuration.Default;
             else
@@ -273,6 +277,7 @@ namespace IO.Swagger.Api
             {
                 if (_exceptionFactory != null && _exceptionFactory.GetInvocationList().Length > 1)
                 {
+                    log.Error("Multicast delegate for ExceptionFactory is unsupported.");
                     throw new InvalidOperationException("Multicast delegate for ExceptionFactory is unsupported.");
                 }
                 return _exceptionFactory;
@@ -310,7 +315,9 @@ namespace IO.Swagger.Api
         /// <returns></returns>
         public void DeleteOrder (string orderId)
         {
-             DeleteOrderWithHttpInfo(orderId);
+            log.Trace("DeleteOrder called");
+
+            DeleteOrderWithHttpInfo(orderId);
         }
 
         /// <summary>
@@ -321,6 +328,7 @@ namespace IO.Swagger.Api
         /// <returns>ApiResponse of Object(void)</returns>
         public ApiResponse<Object> DeleteOrderWithHttpInfo (string orderId)
         {
+            log.Trace("DeleteOrderWithHttpInfo called");
             // verify the required parameter 'orderId' is set
             if (orderId == null)
                 throw new ApiException(400, "Missing required parameter 'orderId' when calling StoreApi->DeleteOrder");
@@ -349,20 +357,28 @@ namespace IO.Swagger.Api
 
             if (orderId != null) localVarPathParams.Add("order_id", Configuration.ApiClient.ParameterToString(orderId)); // path parameter
 
+            log.Debug("Headers, params and body created. Adding auth");
 
+            log.Trace("Calling API");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
                 Method.DELETE, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("DeleteOrder", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return null-filled response");
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
@@ -376,7 +392,8 @@ namespace IO.Swagger.Api
         /// <returns>Task of void</returns>
         public async System.Threading.Tasks.Task DeleteOrderAsync (string orderId)
         {
-             await DeleteOrderAsyncWithHttpInfo(orderId);
+            log.Trace("DeleteOrderAsync called");
+            await DeleteOrderAsyncWithHttpInfo(orderId);
 
         }
 
@@ -388,6 +405,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Object>> DeleteOrderAsyncWithHttpInfo (string orderId)
         {
+            log.Trace("DeleteOrderWithHttpInfo called");
             // verify the required parameter 'orderId' is set
             if (orderId == null)
                 throw new ApiException(400, "Missing required parameter 'orderId' when calling StoreApi->DeleteOrder");
@@ -416,20 +434,28 @@ namespace IO.Swagger.Api
 
             if (orderId != null) localVarPathParams.Add("order_id", Configuration.ApiClient.ParameterToString(orderId)); // path parameter
 
+            log.Debug("Headers, params and body created. Adding auth");
 
+            log.Trace("Calling API async");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.DELETE, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("DeleteOrder", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return null-filled response");
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
@@ -442,9 +468,11 @@ namespace IO.Swagger.Api
         /// <returns>Dictionary&lt;string, int?&gt;</returns>
         public Dictionary<string, int?> GetInventory ()
         {
-             ApiResponse<Dictionary<string, int?>> localVarResponse = GetInventoryWithHttpInfo();
-             return localVarResponse.Data;
-        }
+            log.Trace("GetInventory called");
+            ApiResponse<Dictionary<string, int?>> localVarResponse = GetInventoryWithHttpInfo();
+            log.Trace("return GetInventory response data");
+            return localVarResponse.Data;
+                    }
 
         /// <summary>
         /// Returns pet inventories by status Returns a map of status codes to quantities
@@ -453,6 +481,7 @@ namespace IO.Swagger.Api
         /// <returns>ApiResponse of Dictionary&lt;string, int?&gt;</returns>
         public ApiResponse< Dictionary<string, int?> > GetInventoryWithHttpInfo ()
         {
+            log.Trace("GetInventoryWithHttpInfo called");
 
             var localVarPath = "/store/inventory";
             var localVarPathParams = new Dictionary<String, String>();
@@ -476,26 +505,35 @@ namespace IO.Swagger.Api
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
 
+            log.Debug("Headers, params and body created. Adding auth");
             // authentication (api_key) required
             if (!String.IsNullOrEmpty(Configuration.GetApiKeyWithPrefix("api_key")))
             {
+                log.Debug("API key in header");
                 localVarHeaderParams["api_key"] = Configuration.GetApiKeyWithPrefix("api_key");
             }
 
 
+            log.Trace("Calling API");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
                 Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("GetInventory", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return response of type Dictionary<string, int?>");
             return new ApiResponse<Dictionary<string, int?>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Dictionary<string, int?>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Dictionary<string, int?>)));
@@ -508,8 +546,10 @@ namespace IO.Swagger.Api
         /// <returns>Task of Dictionary&lt;string, int?&gt;</returns>
         public async System.Threading.Tasks.Task<Dictionary<string, int?>> GetInventoryAsync ()
         {
-             ApiResponse<Dictionary<string, int?>> localVarResponse = await GetInventoryAsyncWithHttpInfo();
-             return localVarResponse.Data;
+            log.Trace("GetInventoryAsync called");
+            ApiResponse<Dictionary<string, int?>> localVarResponse = await GetInventoryAsyncWithHttpInfo();
+            log.Trace("return GetInventoryAsync response data");
+            return localVarResponse.Data;
 
         }
 
@@ -520,6 +560,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (Dictionary&lt;string, int?&gt;)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Dictionary<string, int?>>> GetInventoryAsyncWithHttpInfo ()
         {
+            log.Trace("GetInventoryWithHttpInfo called");
 
             var localVarPath = "/store/inventory";
             var localVarPathParams = new Dictionary<String, String>();
@@ -543,25 +584,34 @@ namespace IO.Swagger.Api
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
 
+            log.Debug("Headers, params and body created. Adding auth");
             // authentication (api_key) required
             if (!String.IsNullOrEmpty(Configuration.GetApiKeyWithPrefix("api_key")))
             {
+                log.Debug("API key in header");
                 localVarHeaderParams["api_key"] = Configuration.GetApiKeyWithPrefix("api_key");
             }
 
+            log.Trace("Calling API async");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("GetInventory", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return response of type Dictionary<string, int?>");
             return new ApiResponse<Dictionary<string, int?>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Dictionary<string, int?>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Dictionary<string, int?>)));
@@ -575,9 +625,11 @@ namespace IO.Swagger.Api
         /// <returns>Order</returns>
         public Order GetOrderById (long? orderId)
         {
-             ApiResponse<Order> localVarResponse = GetOrderByIdWithHttpInfo(orderId);
-             return localVarResponse.Data;
-        }
+            log.Trace("GetOrderById called");
+            ApiResponse<Order> localVarResponse = GetOrderByIdWithHttpInfo(orderId);
+            log.Trace("return GetOrderById response data");
+            return localVarResponse.Data;
+                    }
 
         /// <summary>
         /// Find purchase order by ID For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
@@ -587,6 +639,7 @@ namespace IO.Swagger.Api
         /// <returns>ApiResponse of Order</returns>
         public ApiResponse< Order > GetOrderByIdWithHttpInfo (long? orderId)
         {
+            log.Trace("GetOrderByIdWithHttpInfo called");
             // verify the required parameter 'orderId' is set
             if (orderId == null)
                 throw new ApiException(400, "Missing required parameter 'orderId' when calling StoreApi->GetOrderById");
@@ -615,20 +668,28 @@ namespace IO.Swagger.Api
 
             if (orderId != null) localVarPathParams.Add("order_id", Configuration.ApiClient.ParameterToString(orderId)); // path parameter
 
+            log.Debug("Headers, params and body created. Adding auth");
 
+            log.Trace("Calling API");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
                 Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("GetOrderById", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return response of type Order");
             return new ApiResponse<Order>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Order) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Order)));
@@ -642,8 +703,10 @@ namespace IO.Swagger.Api
         /// <returns>Task of Order</returns>
         public async System.Threading.Tasks.Task<Order> GetOrderByIdAsync (long? orderId)
         {
-             ApiResponse<Order> localVarResponse = await GetOrderByIdAsyncWithHttpInfo(orderId);
-             return localVarResponse.Data;
+            log.Trace("GetOrderByIdAsync called");
+            ApiResponse<Order> localVarResponse = await GetOrderByIdAsyncWithHttpInfo(orderId);
+            log.Trace("return GetOrderByIdAsync response data");
+            return localVarResponse.Data;
 
         }
 
@@ -655,6 +718,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (Order)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Order>> GetOrderByIdAsyncWithHttpInfo (long? orderId)
         {
+            log.Trace("GetOrderByIdWithHttpInfo called");
             // verify the required parameter 'orderId' is set
             if (orderId == null)
                 throw new ApiException(400, "Missing required parameter 'orderId' when calling StoreApi->GetOrderById");
@@ -683,20 +747,28 @@ namespace IO.Swagger.Api
 
             if (orderId != null) localVarPathParams.Add("order_id", Configuration.ApiClient.ParameterToString(orderId)); // path parameter
 
+            log.Debug("Headers, params and body created. Adding auth");
 
+            log.Trace("Calling API async");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("GetOrderById", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return response of type Order");
             return new ApiResponse<Order>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Order) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Order)));
@@ -710,9 +782,11 @@ namespace IO.Swagger.Api
         /// <returns>Order</returns>
         public Order PlaceOrder (Order body)
         {
-             ApiResponse<Order> localVarResponse = PlaceOrderWithHttpInfo(body);
-             return localVarResponse.Data;
-        }
+            log.Trace("PlaceOrder called");
+            ApiResponse<Order> localVarResponse = PlaceOrderWithHttpInfo(body);
+            log.Trace("return PlaceOrder response data");
+            return localVarResponse.Data;
+                    }
 
         /// <summary>
         /// Place an order for a pet 
@@ -722,6 +796,7 @@ namespace IO.Swagger.Api
         /// <returns>ApiResponse of Order</returns>
         public ApiResponse< Order > PlaceOrderWithHttpInfo (Order body)
         {
+            log.Trace("PlaceOrderWithHttpInfo called");
             // verify the required parameter 'body' is set
             if (body == null)
                 throw new ApiException(400, "Missing required parameter 'body' when calling StoreApi->PlaceOrder");
@@ -757,20 +832,28 @@ namespace IO.Swagger.Api
                 localVarPostBody = body; // byte array
             }
 
+            log.Debug("Headers, params and body created. Adding auth");
 
+            log.Trace("Calling API");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("PlaceOrder", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return response of type Order");
             return new ApiResponse<Order>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Order) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Order)));
@@ -784,8 +867,10 @@ namespace IO.Swagger.Api
         /// <returns>Task of Order</returns>
         public async System.Threading.Tasks.Task<Order> PlaceOrderAsync (Order body)
         {
-             ApiResponse<Order> localVarResponse = await PlaceOrderAsyncWithHttpInfo(body);
-             return localVarResponse.Data;
+            log.Trace("PlaceOrderAsync called");
+            ApiResponse<Order> localVarResponse = await PlaceOrderAsyncWithHttpInfo(body);
+            log.Trace("return PlaceOrderAsync response data");
+            return localVarResponse.Data;
 
         }
 
@@ -797,6 +882,7 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (Order)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Order>> PlaceOrderAsyncWithHttpInfo (Order body)
         {
+            log.Trace("PlaceOrderWithHttpInfo called");
             // verify the required parameter 'body' is set
             if (body == null)
                 throw new ApiException(400, "Missing required parameter 'body' when calling StoreApi->PlaceOrder");
@@ -832,20 +918,28 @@ namespace IO.Swagger.Api
                 localVarPostBody = body; // byte array
             }
 
+            log.Debug("Headers, params and body created. Adding auth");
 
+            log.Trace("Calling API async");
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
+            log.Info(string.Format("Received response with code {0}",localVarStatusCode));
 
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("PlaceOrder", localVarResponse);
-                if (exception != null) throw exception;
+                if (exception != null)
+                {
+                    log.Warn("Exception from API is not null");
+                    throw exception;
+                }
             }
 
+            log.Trace("return response of type Order");
             return new ApiResponse<Order>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Order) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Order)));

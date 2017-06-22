@@ -22,6 +22,7 @@ namespace IO.Swagger.Client
     /// </summary>
     public class Configuration
     {
+        private static IO.Swagger.Client.Logger log = new IO.Swagger.Client.Logger("Configuration");
         /// <summary>
         /// Initializes a new instance of the Configuration class with different settings
         /// </summary>
@@ -49,23 +50,40 @@ namespace IO.Swagger.Client
                              string userAgent = "Swagger-Codegen/1.0.0/csharp"
                             )
         {
+            log.Trace("Configuration ctor")
             setApiClientUsingDefault(apiClient);
 
             Username = username;
+            log.Debug(string.Format("Username: {0}", Username));
             Password = password;
+            log.Debug(string.Format("Password: {0}", Password));
             AccessToken = accessToken;
+            log.Debug(string.Format("AccessToken: {0}", AccessToken));
             UserAgent = userAgent;
+            log.Debug(string.Format("UserAgent: {0}", UserAgent));
 
             if (defaultHeader != null)
+            {
                 DefaultHeader = defaultHeader;
+                log.Debug(string.Format("DefaultHeaders length: {0}", DefaultHeader.Count));
+            }
             if (apiKey != null)
+            {
                 ApiKey = apiKey;
+                log.Debug(string.Format("ApiKey length: {0}", ApiKey.Count));
+            }
             if (apiKeyPrefix != null)
+            {
                 ApiKeyPrefix = apiKeyPrefix;
+                log.Debug(string.Format("ApiKeyPrefix length: {0}", ApiKeyPrefix.Count));
+            }
 
             TempFolderPath = tempFolderPath;
+            log.Debug(string.Format("TempFolderPath: {0}", TempFolderPath));
             DateTimeFormat = dateTimeFormat;
+            log.Debug(string.Format("DateTimeFormat: {0}", DateTimeFormat));
             Timeout = timeout;
+            log.Debug(string.Format("Timeout: {0}", Timeout));
         }
 
         /// <summary>
@@ -74,6 +92,7 @@ namespace IO.Swagger.Client
         /// <param name="apiClient">Api client.</param>
         public Configuration(ApiClient apiClient)
         {
+            log.Trace("Configuration ctor using ApiClient");
             setApiClientUsingDefault(apiClient);
         }
 
