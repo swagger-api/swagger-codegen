@@ -41,44 +41,12 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="Dog" /> class.
         /// </summary>
-        /// <param name="ClassName">ClassName (required).</param>
-        /// <param name="Color">Color (default to &quot;red&quot;).</param>
         /// <param name="Breed">Breed.</param>
-        public Dog(string ClassName = default(string), string Color = "red", string Breed = default(string))
+        public Dog(string Breed = default(string), string ClassName = default(string), string Color = "red") : base(ClassName, Color)
         {
-            // to ensure "ClassName" is required (not null)
-            if (ClassName == null)
-            {
-                throw new InvalidDataException("ClassName is a required property for Dog and cannot be null");
-            }
-            else
-            {
-                this.ClassName = ClassName;
-            }
-            // use default value if no "Color" provided
-            if (Color == null)
-            {
-                this.Color = "red";
-            }
-            else
-            {
-                this.Color = Color;
-            }
             this.Breed = Breed;
         }
         
-        /// <summary>
-        /// Gets or Sets ClassName
-        /// </summary>
-        [DataMember(Name="className", EmitDefaultValue=false)]
-        public string ClassName { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Color
-        /// </summary>
-        [DataMember(Name="color", EmitDefaultValue=false)]
-        public string Color { get; set; }
-
         /// <summary>
         /// Gets or Sets Breed
         /// </summary>
@@ -93,8 +61,7 @@ namespace IO.Swagger.Model
         {
             var sb = new StringBuilder();
             sb.Append("class Dog {\n");
-            sb.Append("  ClassName: ").Append(ClassName).Append("\n");
-            sb.Append("  Color: ").Append(Color).Append("\n");
+            sb.Append("  ").Append(base.ToString().Replace("\n", "\n  ")).Append("\n");
             sb.Append("  Breed: ").Append(Breed).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -133,16 +100,6 @@ namespace IO.Swagger.Model
 
             return 
                 (
-                    this.ClassName == other.ClassName ||
-                    this.ClassName != null &&
-                    this.ClassName.Equals(other.ClassName)
-                ) && 
-                (
-                    this.Color == other.Color ||
-                    this.Color != null &&
-                    this.Color.Equals(other.Color)
-                ) && 
-                (
                     this.Breed == other.Breed ||
                     this.Breed != null &&
                     this.Breed.Equals(other.Breed)
@@ -160,10 +117,6 @@ namespace IO.Swagger.Model
             {
                 int hash = 41;
                 // Suitable nullity checks etc, of course :)
-                if (this.ClassName != null)
-                    hash = hash * 59 + this.ClassName.GetHashCode();
-                if (this.Color != null)
-                    hash = hash * 59 + this.Color.GetHashCode();
                 if (this.Breed != null)
                     hash = hash * 59 + this.Breed.GetHashCode();
                 return hash;
@@ -197,6 +150,8 @@ namespace IO.Swagger.Model
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
+            foreach(var x in base.Validate(validationContext)) yield return x;
+            foreach(var x in base.Validate(validationContext)) yield return x;
             yield break;
         }
     }

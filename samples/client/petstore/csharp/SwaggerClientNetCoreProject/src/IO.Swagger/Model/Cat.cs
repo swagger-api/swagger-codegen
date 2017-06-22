@@ -36,44 +36,12 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="Cat" /> class.
         /// </summary>
-        /// <param name="ClassName">ClassName (required).</param>
-        /// <param name="Color">Color (default to &quot;red&quot;).</param>
         /// <param name="Declawed">Declawed.</param>
-        public Cat(string ClassName = default(string), string Color = "red", bool? Declawed = default(bool?))
+        public Cat(bool? Declawed = default(bool?), string ClassName = default(string), string Color = "red") : base(ClassName, Color)
         {
-            // to ensure "ClassName" is required (not null)
-            if (ClassName == null)
-            {
-                throw new InvalidDataException("ClassName is a required property for Cat and cannot be null");
-            }
-            else
-            {
-                this.ClassName = ClassName;
-            }
-            // use default value if no "Color" provided
-            if (Color == null)
-            {
-                this.Color = "red";
-            }
-            else
-            {
-                this.Color = Color;
-            }
             this.Declawed = Declawed;
         }
         
-        /// <summary>
-        /// Gets or Sets ClassName
-        /// </summary>
-        [DataMember(Name="className", EmitDefaultValue=false)]
-        public string ClassName { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Color
-        /// </summary>
-        [DataMember(Name="color", EmitDefaultValue=false)]
-        public string Color { get; set; }
-
         /// <summary>
         /// Gets or Sets Declawed
         /// </summary>
@@ -88,8 +56,7 @@ namespace IO.Swagger.Model
         {
             var sb = new StringBuilder();
             sb.Append("class Cat {\n");
-            sb.Append("  ClassName: ").Append(ClassName).Append("\n");
-            sb.Append("  Color: ").Append(Color).Append("\n");
+            sb.Append("  ").Append(base.ToString().Replace("\n", "\n  ")).Append("\n");
             sb.Append("  Declawed: ").Append(Declawed).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -128,16 +95,6 @@ namespace IO.Swagger.Model
 
             return 
                 (
-                    this.ClassName == other.ClassName ||
-                    this.ClassName != null &&
-                    this.ClassName.Equals(other.ClassName)
-                ) && 
-                (
-                    this.Color == other.Color ||
-                    this.Color != null &&
-                    this.Color.Equals(other.Color)
-                ) && 
-                (
                     this.Declawed == other.Declawed ||
                     this.Declawed != null &&
                     this.Declawed.Equals(other.Declawed)
@@ -155,10 +112,6 @@ namespace IO.Swagger.Model
             {
                 int hash = 41;
                 // Suitable nullity checks etc, of course :)
-                if (this.ClassName != null)
-                    hash = hash * 59 + this.ClassName.GetHashCode();
-                if (this.Color != null)
-                    hash = hash * 59 + this.Color.GetHashCode();
                 if (this.Declawed != null)
                     hash = hash * 59 + this.Declawed.GetHashCode();
                 return hash;

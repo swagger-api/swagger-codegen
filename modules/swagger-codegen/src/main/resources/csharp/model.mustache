@@ -12,6 +12,9 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+{{#discriminator}}
+using JsonSubTypes;
+{{/discriminator}}
 {{^netStandard}}
 {{#generatePropertyChanged}}
 using PropertyChanged;
