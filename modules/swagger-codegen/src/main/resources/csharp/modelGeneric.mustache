@@ -2,6 +2,10 @@
     /// {{#description}}{{.}}{{/description}}{{^description}}{{classname}}{{/description}}
     /// </summary>
     [DataContract]
+    {{#discriminator}}
+    [JsonConverter(typeof(JsonSubtypes), "{{discriminator}}")]{{#children}}
+    [JsonSubtypes.KnownSubType(typeof({{classname}}), "{{^vendorExtensions.x-discriminator-value}}{{name}}{{/vendorExtensions.x-discriminator-value}}{{#vendorExtensions.x-discriminator-value}}{{{vendorExtensions.x-discriminator-value}}}{{/vendorExtensions.x-discriminator-value}}")]{{/children}}
+    {{/discriminator}}
     {{#generatePropertyChanged}}
     [ImplementPropertyChanged]
     {{/generatePropertyChanged}}
@@ -47,7 +51,7 @@
     {{#hasOnlyReadOnly}}
         [JsonConstructorAttribute]
     {{/hasOnlyReadOnly}}
-        public {{classname}}({{#readWriteVars}}{{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}?{{/isContainer}}{{/isEnum}} {{name}} = null{{^-last}}, {{/-last}}{{/readWriteVars}}){{#parent}} : base({{#parentVars}}{{name}}{{#hasMore}}, {{/hasMore}}{{/parentVars}}){{/parent}}
+        public {{classname}}({{#readWriteVars}}{{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}?{{/isContainer}}{{/isEnum}} {{name}} = {{#defaultValue}}{{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}default({{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}?{{/isContainer}}{{/isEnum}}){{/defaultValue}}{{^-last}}, {{/-last}}{{/readWriteVars}}){{#parent}} : base({{#parentVars}}{{name}}{{#hasMore}}, {{/hasMore}}{{/parentVars}}){{/parent}}
         {
             {{#vars}}
             {{^isInherited}}
@@ -88,7 +92,7 @@ this.{{name}} = {{name}};
             {{/isInherited}}
             {{/vars}}
         }
-
+        
         {{#vars}}
         {{^isInherited}}
         {{^isEnum}}
@@ -101,6 +105,7 @@ this.{{name}} = {{name}};
         public {{{datatype}}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
         {{/isEnum}}
         {{/isInherited}}
+
         {{/vars}}
         /// <summary>
         /// Returns the string presentation of the object
@@ -110,14 +115,16 @@ this.{{name}} = {{name}};
         {
             var sb = new StringBuilder();
             sb.Append("class {{classname}} {\n");
-            {{#parent}}sb.Append("  ").Append(base.ToString().Replace("\n", "\n  ")).Append("\n");{{/parent}}
+            {{#parent}}
+            sb.Append("  ").Append(base.ToString().Replace("\n", "\n  ")).Append("\n");
+            {{/parent}}
             {{#vars}}
             sb.Append("  {{name}}: ").Append({{name}}).Append("\n");
             {{/vars}}
             sb.Append("}\n");
             return sb.ToString();
         }
-
+  
         /// <summary>
         /// Returns the JSON string presentation of the object
         /// </summary>
@@ -204,9 +211,22 @@ this.{{name}} = {{name}};
         }
 
 {{/generatePropertyChanged}}
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        { {{#parent}}{{^isArrayModel}}{{#parentVars}}
-            foreach(var x in base.Validate(validationContext)) yield return x;{{/parentVars}}{{/isArrayModel}}{{/parent}}{{#vars}}{{#hasValidation}}{{#maxLength}}
+{{#validatable}}
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
+            {{#parent}}
+            {{^isArrayModel}}
+            foreach(var x in base.Validate(validationContext)) yield return x;
+            {{/isArrayModel}}
+            {{/parent}}
+            {{#vars}}
+            {{#hasValidation}}
+            {{#maxLength}}
             // {{{name}}} ({{{datatype}}}) maxLength
             if(this.{{{name}}} != null && this.{{{name}}}.Length > {{maxLength}})
             {
