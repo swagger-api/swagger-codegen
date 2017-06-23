@@ -24,15 +24,15 @@ This can only be done by the logged in user.
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+var SwaggerPetstore = require('swagger_petstore');
 
-let apiInstance = new SwaggerPetstore.UserApi();
+var apiInstance = new SwaggerPetstore.UserApi();
 
-let body = new SwaggerPetstore.User(); // User | Created user object
+var body = new SwaggerPetstore.User(); // User | Created user object
 
-apiInstance.createUser(body).then(() => {
+apiInstance.createUser(body).then(function() {
   console.log('API called successfully.');
-}, (error) => {
+}, function(error) {
   console.error(error);
 });
 
@@ -67,15 +67,15 @@ Creates list of users with given input array
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+var SwaggerPetstore = require('swagger_petstore');
 
-let apiInstance = new SwaggerPetstore.UserApi();
+var apiInstance = new SwaggerPetstore.UserApi();
 
-let body = [new SwaggerPetstore.User()]; // [User] | List of user object
+var body = [new SwaggerPetstore.User()]; // [User] | List of user object
 
-apiInstance.createUsersWithArrayInput(body).then(() => {
+apiInstance.createUsersWithArrayInput(body).then(function() {
   console.log('API called successfully.');
-}, (error) => {
+}, function(error) {
   console.error(error);
 });
 
@@ -110,15 +110,15 @@ Creates list of users with given input array
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+var SwaggerPetstore = require('swagger_petstore');
 
-let apiInstance = new SwaggerPetstore.UserApi();
+var apiInstance = new SwaggerPetstore.UserApi();
 
-let body = [new SwaggerPetstore.User()]; // [User] | List of user object
+var body = [new SwaggerPetstore.User()]; // [User] | List of user object
 
-apiInstance.createUsersWithListInput(body).then(() => {
+apiInstance.createUsersWithListInput(body).then(function() {
   console.log('API called successfully.');
-}, (error) => {
+}, function(error) {
   console.error(error);
 });
 
@@ -153,15 +153,15 @@ This can only be done by the logged in user.
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+var SwaggerPetstore = require('swagger_petstore');
 
-let apiInstance = new SwaggerPetstore.UserApi();
+var apiInstance = new SwaggerPetstore.UserApi();
 
-let username = "username_example"; // String | The name that needs to be deleted
+var username = "username_example"; // String | The name that needs to be deleted
 
-apiInstance.deleteUser(username).then(() => {
+apiInstance.deleteUser(username).then(function() {
   console.log('API called successfully.');
-}, (error) => {
+}, function(error) {
   console.error(error);
 });
 
@@ -196,15 +196,15 @@ Get user by user name
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+var SwaggerPetstore = require('swagger_petstore');
 
-let apiInstance = new SwaggerPetstore.UserApi();
+var apiInstance = new SwaggerPetstore.UserApi();
 
-let username = "username_example"; // String | The name that needs to be fetched. Use user1 for testing. 
+var username = "username_example"; // String | The name that needs to be fetched. Use user1 for testing. 
 
-apiInstance.getUserByName(username).then((data) => {
+apiInstance.getUserByName(username).then(function(data) {
   console.log('API called successfully. Returned data: ' + data);
-}, (error) => {
+}, function(error) {
   console.error(error);
 });
 
@@ -239,17 +239,17 @@ Logs user into the system
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+var SwaggerPetstore = require('swagger_petstore');
 
-let apiInstance = new SwaggerPetstore.UserApi();
+var apiInstance = new SwaggerPetstore.UserApi();
 
-let username = "username_example"; // String | The user name for login
+var username = "username_example"; // String | The user name for login
 
-let password = "password_example"; // String | The password for login in clear text
+var password = "password_example"; // String | The password for login in clear text
 
-apiInstance.loginUser(username, password).then((data) => {
+apiInstance.loginUser(username, password).then(function(data) {
   console.log('API called successfully. Returned data: ' + data);
-}, (error) => {
+}, function(error) {
   console.error(error);
 });
 
@@ -285,12 +285,12 @@ Logs out current logged in user session
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+var SwaggerPetstore = require('swagger_petstore');
 
-let apiInstance = new SwaggerPetstore.UserApi();
-apiInstance.logoutUser().then(() => {
+var apiInstance = new SwaggerPetstore.UserApi();
+apiInstance.logoutUser().then(function() {
   console.log('API called successfully.');
-}, (error) => {
+}, function(error) {
   console.error(error);
 });
 
@@ -322,17 +322,17 @@ This can only be done by the logged in user.
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+var SwaggerPetstore = require('swagger_petstore');
 
-let apiInstance = new SwaggerPetstore.UserApi();
+var apiInstance = new SwaggerPetstore.UserApi();
 
-let username = "username_example"; // String | name that need to be deleted
+var username = "username_example"; // String | name that need to be deleted
 
-let body = new SwaggerPetstore.User(); // User | Updated user object
+var body = new SwaggerPetstore.User(); // User | Updated user object
 
-apiInstance.updateUser(username, body).then(() => {
+apiInstance.updateUser(username, body).then(function() {
   console.log('API called successfully.');
-}, (error) => {
+}, function(error) {
   console.error(error);
 });
 

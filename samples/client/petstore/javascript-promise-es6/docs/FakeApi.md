@@ -23,16 +23,16 @@ Test serialization of outer boolean types
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+var SwaggerPetstore = require('swagger_petstore');
 
-let apiInstance = new SwaggerPetstore.FakeApi();
+var apiInstance = new SwaggerPetstore.FakeApi();
 
-let opts = { 
+var opts = { 
   'body': new SwaggerPetstore.OuterBoolean() // OuterBoolean | Input boolean as post body
 };
-apiInstance.fakeOuterBooleanSerialize(opts).then((data) => {
+apiInstance.fakeOuterBooleanSerialize(opts).then(function(data) {
   console.log('API called successfully. Returned data: ' + data);
-}, (error) => {
+}, function(error) {
   console.error(error);
 });
 
@@ -67,16 +67,16 @@ Test serialization of object with outer number type
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+var SwaggerPetstore = require('swagger_petstore');
 
-let apiInstance = new SwaggerPetstore.FakeApi();
+var apiInstance = new SwaggerPetstore.FakeApi();
 
-let opts = { 
+var opts = { 
   'body': new SwaggerPetstore.OuterComposite() // OuterComposite | Input composite as post body
 };
-apiInstance.fakeOuterCompositeSerialize(opts).then((data) => {
+apiInstance.fakeOuterCompositeSerialize(opts).then(function(data) {
   console.log('API called successfully. Returned data: ' + data);
-}, (error) => {
+}, function(error) {
   console.error(error);
 });
 
@@ -111,16 +111,16 @@ Test serialization of outer number types
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+var SwaggerPetstore = require('swagger_petstore');
 
-let apiInstance = new SwaggerPetstore.FakeApi();
+var apiInstance = new SwaggerPetstore.FakeApi();
 
-let opts = { 
+var opts = { 
   'body': new SwaggerPetstore.OuterNumber() // OuterNumber | Input number as post body
 };
-apiInstance.fakeOuterNumberSerialize(opts).then((data) => {
+apiInstance.fakeOuterNumberSerialize(opts).then(function(data) {
   console.log('API called successfully. Returned data: ' + data);
-}, (error) => {
+}, function(error) {
   console.error(error);
 });
 
@@ -155,16 +155,16 @@ Test serialization of outer string types
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+var SwaggerPetstore = require('swagger_petstore');
 
-let apiInstance = new SwaggerPetstore.FakeApi();
+var apiInstance = new SwaggerPetstore.FakeApi();
 
-let opts = { 
+var opts = { 
   'body': new SwaggerPetstore.OuterString() // OuterString | Input string as post body
 };
-apiInstance.fakeOuterStringSerialize(opts).then((data) => {
+apiInstance.fakeOuterStringSerialize(opts).then(function(data) {
   console.log('API called successfully. Returned data: ' + data);
-}, (error) => {
+}, function(error) {
   console.error(error);
 });
 
@@ -199,15 +199,15 @@ To test \&quot;client\&quot; model
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+var SwaggerPetstore = require('swagger_petstore');
 
-let apiInstance = new SwaggerPetstore.FakeApi();
+var apiInstance = new SwaggerPetstore.FakeApi();
 
-let body = new SwaggerPetstore.Client(); // Client | client model
+var body = new SwaggerPetstore.Client(); // Client | client model
 
-apiInstance.testClientModel(body).then((data) => {
+apiInstance.testClientModel(body).then(function(data) {
   console.log('API called successfully. Returned data: ' + data);
-}, (error) => {
+}, function(error) {
   console.error(error);
 });
 
@@ -242,25 +242,25 @@ Fake endpoint for testing various parameters 假端點 偽のエンドポイン�
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
-let defaultClient = SwaggerPetstore.ApiClient.instance;
+var SwaggerPetstore = require('swagger_petstore');
+var defaultClient = SwaggerPetstore.ApiClient.instance;
 
 // Configure HTTP basic authorization: http_basic_test
-let http_basic_test = defaultClient.authentications['http_basic_test'];
+var http_basic_test = defaultClient.authentications['http_basic_test'];
 http_basic_test.username = 'YOUR USERNAME';
 http_basic_test.password = 'YOUR PASSWORD';
 
-let apiInstance = new SwaggerPetstore.FakeApi();
+var apiInstance = new SwaggerPetstore.FakeApi();
 
-let _number = 3.4; // Number | None
+var _number = 3.4; // Number | None
 
-let _double = 1.2; // Number | None
+var _double = 1.2; // Number | None
 
-let patternWithoutDelimiter = "patternWithoutDelimiter_example"; // String | None
+var patternWithoutDelimiter = "patternWithoutDelimiter_example"; // String | None
 
-let _byte = B; // Blob | None
+var _byte = B; // Blob | None
 
-let opts = { 
+var opts = { 
   'integer': 56, // Number | None
   'int32': 56, // Number | None
   'int64': 789, // Number | None
@@ -272,9 +272,9 @@ let opts = {
   'password': "password_example", // String | None
   'callback': "callback_example" // String | None
 };
-apiInstance.testEndpointParameters(_number, _double, patternWithoutDelimiter, _byte, opts).then(() => {
+apiInstance.testEndpointParameters(_number, _double, patternWithoutDelimiter, _byte, opts).then(function() {
   console.log('API called successfully.');
-}, (error) => {
+}, function(error) {
   console.error(error);
 });
 
@@ -322,11 +322,11 @@ To test enum parameters
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+var SwaggerPetstore = require('swagger_petstore');
 
-let apiInstance = new SwaggerPetstore.FakeApi();
+var apiInstance = new SwaggerPetstore.FakeApi();
 
-let opts = { 
+var opts = { 
   'enumFormStringArray': ["enumFormStringArray_example"], // [String] | Form parameter enum test (string array)
   'enumFormString': "-efg", // String | Form parameter enum test (string)
   'enumHeaderStringArray': ["enumHeaderStringArray_example"], // [String] | Header parameter enum test (string array)
@@ -336,9 +336,9 @@ let opts = {
   'enumQueryInteger': 56, // Number | Query parameter enum test (double)
   'enumQueryDouble': 1.2 // Number | Query parameter enum test (double)
 };
-apiInstance.testEnumParameters(opts).then(() => {
+apiInstance.testEnumParameters(opts).then(function() {
   console.log('API called successfully.');
-}, (error) => {
+}, function(error) {
   console.error(error);
 });
 
