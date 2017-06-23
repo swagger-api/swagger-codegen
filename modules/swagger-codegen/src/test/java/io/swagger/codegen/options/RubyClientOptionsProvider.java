@@ -7,7 +7,7 @@ import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
 
-public class RubyClientOptionsProvider extends AbstractClientOptionsProvider implements OptionsProvider {
+public class RubyClientOptionsProvider extends AbstractClientOptionsProvider {
     public static final String GEM_NAME_VALUE = "swagger_client_ruby";
     public static final String MODULE_NAME_VALUE = "SwaggerClientRuby";
     public static final String GEM_VERSION_VALUE = "1.0.0-SNAPSHOT";

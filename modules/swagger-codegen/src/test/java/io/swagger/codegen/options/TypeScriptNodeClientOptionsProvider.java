@@ -8,7 +8,7 @@ import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.languages.TypeScriptAngular2ClientCodegen;
 
 
-public class TypeScriptNodeClientOptionsProvider extends AbstractClientOptionsProvider implements OptionsProvider {
+public class TypeScriptNodeClientOptionsProvider extends AbstractClientOptionsProvider {
     public static final String SUPPORTS_ES6_VALUE = "false";
     public static final String SORT_PARAMS_VALUE = "false";
     public static final String ENSURE_UNIQUE_PARAMS_VALUE = "true";

@@ -6,7 +6,7 @@ import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
 
-public class ScalaClientOptionsProvider extends AbstractClientOptionsProvider implements OptionsProvider {
+public class ScalaClientOptionsProvider extends AbstractClientOptionsProvider {
     public static final String SOURCE_FOLDER_VALUE = "sourceFolder";
     public static final String MODEL_PACKAGE_VALUE = "package";
     public static final String API_PACKAGE_VALUE = "apiPackage";

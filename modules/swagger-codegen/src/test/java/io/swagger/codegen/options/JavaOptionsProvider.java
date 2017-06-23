@@ -6,7 +6,7 @@ import io.swagger.codegen.languages.JavaClientCodegen;
 
 import java.util.Map;
 
-public class JavaOptionsProvider extends AbstractClientOptionsProvider implements OptionsProvider {
+public class JavaOptionsProvider extends AbstractClientOptionsProvider {
     public static final String ARTIFACT_ID_VALUE = "swagger-java-client-test";
     public static final String MODEL_PACKAGE_VALUE = "package";
     public static final String API_PACKAGE_VALUE = "apiPackage";
