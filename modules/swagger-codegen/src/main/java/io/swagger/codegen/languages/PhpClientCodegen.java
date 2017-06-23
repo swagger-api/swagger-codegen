@@ -312,6 +312,9 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile(".travis.yml", getPackagePath(), ".travis.yml"));
         supportingFiles.add(new SupportingFile(".php_cs", getPackagePath(), ".php_cs"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", getPackagePath(), "git_push.sh"));
+
+        supportingFiles.add(new SupportingFile("auth_api.mustache", toSrcPath(apiPackage, srcBasePath), "AuthApi.php"));
+        supportingFiles.add(new SupportingFile("auth_api_test.mustache", testBasePath + "/" + apiDirName, "AuthApiTest.php"));
     }
 
     @Override

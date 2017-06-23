@@ -190,6 +190,9 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
         supportingFiles.add(new SupportingFile("travis.mustache", "", ".travis.yml"));
+
+        supportingFiles.add(new SupportingFile("api_auth.mustache", apiPackage, "auth_api.py"));
+        supportingFiles.add(new SupportingFile("api_auth_test.mustache", testFolder, "test_auth_api.py"));
     }
 
     private static String dropDots(String str) {
