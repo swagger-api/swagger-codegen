@@ -2,16 +2,22 @@
 // DO NOT MODIFY - GENERATED FILE
 //
 
-/* tslint:disable:no-unused-variable member-ordering max-line-length no-string-literal  */
+/* tslint:disable:no-unused-variable member-ordering max-line-length no-string-literal no-trailing-whitespace */
 
-import * as angular from 'angular';
+import { Injectable, Inject } from '@angular/core';
+import { Headers, Http, Request, RequestOptionsArgs, URLSearchParams } from '@angular/http';
+
+import 'rxjs/add/operator/toPromise';
 
 import { {{#imports}}{{import}}{{^-last}},
          {{/-last}}{{/imports}} } from '../api';
 
-import { LogService, Logger } from 'lib/log/log-module';
-import { ApiResult, ApiError, ApiConfig, ApiResultFactory } from 'lib/api-client/api-client-module';
-import { Cache, CacheOptions, CacheService } from 'lib/cache/cache-module';
+import { LogService, Logger } from '../../log/log.module';
+
+import { ErrorModel } from '../api';
+import { ApiResult } from '../api-result';
+import { ApiError } from '../api-error';
+import { ApiHelperService } from '../api-helper.service';
 
 {{#operations}}
 {{#description}}
@@ -19,46 +25,18 @@ import { Cache, CacheOptions, CacheService } from 'lib/cache/cache-module';
 * {{&description}}
 */
 {{/description}}
+@Injectable()
 export class {{classname}} {
   public defaultHeaders: any = {};
 
   private logger: Logger;
 
-  public static $inject: string[] = [
-    '$http',
-    '$httpParamSerializer',
-    'ApiConfigProvider',
-    'CacheService',
-    'LogService',
-    'ApiResultFactory'
-  ];
-
   constructor(
-      protected $http: ng.IHttpService,
-      protected $httpParamSerializer: (d: any) => any,
-      protected apiConfig: ApiConfig,
-      protected cacheService: CacheService,
-      logService: LogService,
-      protected apiResultFactory: ApiResultFactory) {
+      private http: Http,
+      private apiHelperService: ApiHelperService,
+      private logService: LogService) {
      this.logger = logService.getLogger('{{classname}}');
    }
-
-  private extendObj<T1, T2>(objA: T1, objB: T2) {
-    for (let key in objB) {
-      if (objB.hasOwnProperty(key)) {
-        objA[key] = objB[key];
-      }
-    }
-    return <any>objA;
-  }
-
-  private buildUrl(url: string, params: any) {
-    let serializedParams = this.$httpParamSerializer(params);
-    if (serializedParams.length > 0) {
-      url += ((url.indexOf('?') === -1) ? '?' : '&') + serializedParams;
-    }
-    return url;
-  }
 
 {{#operation}}
   /**
@@ -66,17 +44,17 @@ export class {{classname}} {
    * {{notes}}
    {{#allParams}}* @param {{paramName}} {{description}}
    {{/allParams}}*/
-  public {{nickname}} ({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}cacheOptions?: CacheOptions): ng.IPromise<ApiResult<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}> | ApiError> {
-    const path = '{{basePathWithoutHost}}' + '{{path}}'{{#pathParams}}
-          .replace('{' + '{{baseName}}' + '}', {{paramName}} + ''){{/pathParams}};
-    const apiUrl = this.apiConfig.baseUrl + path;
+  public {{nickname}} ({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}{{^-last}}, {{/-last}}{{/allParams}}): Promise<ApiResult<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}> | ApiError> {
+    const path =
+      '{{basePathWithoutHost}}' +
+      '{{path}}'{{#pathParams}}
+      .replace('{' + '{{baseName}}' + '}', {{paramName}} + ''){{/pathParams}};
 
-    let queryParameters: any = {};
-    let headerParams: any = this.extendObj({}, this.defaultHeaders);
-{{#hasFormParams}}
-    let formParams: any = {};
+    const apiUrl = this.apiHelperService.getApiRoot() + path;
 
-{{/hasFormParams}}
+    let search = new URLSearchParams();
+    let headers = new Headers(this.defaultHeaders);
+
 {{#allParams}}
 {{#required}}
     // verify required parameter '{{paramName}}' is set
@@ -87,46 +65,32 @@ export class {{classname}} {
 {{/allParams}}
 {{#queryParams}}
     if ({{paramName}} !== undefined) {
-      queryParameters['{{baseName}}'] = {{paramName}};
+      search.set('{{baseName}}', '' + {{paramName}});
     }
 
 {{/queryParams}}
 {{#headerParams}}
-    headerParams['{{baseName}}'] = {{paramName}};
-
+    headers.append('{{baseName}}', {{paramName}});
 {{/headerParams}}
-{{#hasFormParams}}
-    headerParams['Content-Type'] = 'application/x-www-form-urlencoded';
 
-{{/hasFormParams}}
-{{#formParams}}
-    formParams['{{baseName}}'] = {{paramName}};
-
-{{/formParams}}
-    let httpCache: Cache = this.cacheService.getCache(cacheOptions);
-    if (httpCache && cacheOptions.ignoreCache) {
-      httpCache.remove(this.buildUrl(apiUrl, queryParameters));
-    }
-
-    let httpRequestParams: any = {
+    let requestOptions: RequestOptionsArgs = {
       method: '{{httpMethod}}',
       url: apiUrl,
-      json: {{#hasFormParams}}false{{/hasFormParams}}{{^hasFormParams}}true{{/hasFormParams}},
-{{#bodyParam}}        data: {{paramName}},{{/bodyParam}}
-{{#hasFormParams}}        data: this.$httpParamSerializer(formParams),{{/hasFormParams}}
-      params: queryParameters,
-      headers: headerParams,
-      cache: httpCache || false
+{{#bodyParam}}      body: {{paramName}},{{/bodyParam}}
+      search: search,
+      // Don't include headers as they'll override global defaults
+      // headers: headers
     };
 
     this.logger.debug('Executing {{httpMethod}} request to ' + apiUrl);
-    return this.apiResultFactory.create(this.$http(httpRequestParams));
+    return this
+      .apiHelperService
+      .createResult<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}>(
+        this.http.request(apiUrl, requestOptions).toPromise()
+      );
   }
 
 {{/operation}}
 }
 
-angular
-  .module('cbApiClient')
-  .service('{{classname}}', {{classname}});
 {{/operations}}
