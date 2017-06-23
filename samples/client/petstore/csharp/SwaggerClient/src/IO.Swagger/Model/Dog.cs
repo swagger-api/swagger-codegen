@@ -39,7 +39,7 @@ namespace IO.Swagger.Model
         /// Initializes a new instance of the <see cref="Dog" /> class.
         /// </summary>
         /// <param name="Breed">Breed.</param>
-        public Dog(string Breed = default(string), string ClassName = default(string), string Color = "red") : base(ClassName, Color)
+        public Dog(string Breed = default(string), string ClassName = default(string), string Color = "red", string Breed = default(string)) : base(ClassName, Color)
         {
             this.Breed = Breed;
         }
@@ -127,7 +127,17 @@ namespace IO.Swagger.Model
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
-            foreach(var x in base.Validate(validationContext)) yield return x;
+            return this.BaseValidate(validationContext);
+        }
+
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        protected IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> BaseValidate(ValidationContext validationContext)
+        {
+            foreach(var x in BaseValidate(validationContext)) yield return x;
             yield break;
         }
     }
