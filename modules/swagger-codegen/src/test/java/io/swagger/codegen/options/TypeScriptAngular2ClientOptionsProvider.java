@@ -24,7 +24,7 @@ public class TypeScriptAngular2ClientOptionsProvider extends AbstractClientOptio
 
     @Override
     public Map<String, String> createOptions() {
-    	Map<String,String> map = super.createOptions();
+        Map<String,String> map = super.createOptions();
         ImmutableMap.Builder<String, String> builder = new ImmutableMap.Builder<String, String>();
         return builder.put(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG, SORT_PARAMS_VALUE)
                 .put(CodegenConstants.ENSURE_UNIQUE_PARAMS, ENSURE_UNIQUE_PARAMS_VALUE)

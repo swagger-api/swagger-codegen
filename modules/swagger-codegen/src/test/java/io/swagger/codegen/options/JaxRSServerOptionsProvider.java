@@ -86,7 +86,7 @@ public class JaxRSServerOptionsProvider extends AbstractClientOptionsProvider {
             .put(JavaCXFServerCodegen.USE_BEANVALIDATION, USE_BEANVALIDATION)
             .put("serverPort", "2345")
             .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
-        	.putAll(super.createOptions());
+            .putAll(super.createOptions());
         return builder.build();
     }
 }
