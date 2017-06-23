@@ -27,13 +27,12 @@ import org.slf4j.LoggerFactory;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 public class CSharpClientCodegen extends AbstractCSharpCodegen {
-    @SuppressWarnings({"unused", "hiding"})
+    @SuppressWarnings({"hiding"})
     private static final Logger LOGGER = LoggerFactory.getLogger(CSharpClientCodegen.class);
     private static final String NET45 = "v4.5";
     private static final String NET35 = "v3.5";
     private static final String NETSTANDARD = "v5.0";
     private static final String UWP = "uwp";
-    private static final String DATA_TYPE_WITH_ENUM_EXTENSION = "plainDatatypeWithEnum";
 
     protected String packageGuid = "{" + java.util.UUID.randomUUID().toString().toUpperCase() + "}";
     protected String clientPackage = "IO.Swagger.Client";
@@ -55,6 +54,10 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
 
     public CSharpClientCodegen() {
         super();
+
+        // TODO: This needs to be moved to base, which requires testing the change on all derived generators
+        supportsInheritance = true;
+
         modelTemplateFiles.put("model.mustache", ".cs");
         apiTemplateFiles.put("api.mustache", ".cs");
 
@@ -428,10 +431,48 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
     @Override
     public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
         CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
-        if (allDefinitions != null && codegenModel != null && codegenModel.parent != null && codegenModel.hasEnums) {
+        if (allDefinitions != null && codegenModel != null && codegenModel.parent != null) {
             final Model parentModel = allDefinitions.get(toModelName(codegenModel.parent));
-            final CodegenModel parentCodegenModel = super.fromModel(codegenModel.parent, parentModel);
-            codegenModel = this.reconcileInlineEnums(codegenModel, parentCodegenModel);
+            if(parentModel != null) {
+                final CodegenModel parentCodegenModel = super.fromModel(codegenModel.parent, parentModel);
+                if (codegenModel.hasEnums) {
+                    codegenModel = this.reconcileInlineEnums(codegenModel, parentCodegenModel);
+                }
+
+                Map<String, CodegenProperty> propertyHash = new HashMap<>(codegenModel.vars.size());
+                for (final CodegenProperty property : codegenModel.vars) {
+                    propertyHash.put(property.name, property);
+                }
+
+                CodegenProperty last = null;
+                for (final CodegenProperty property : parentCodegenModel.vars) {
+                    // helper list of parentVars simplifies templating
+                    if (!propertyHash.containsKey(property.name)) {
+                        final CodegenProperty parentVar = property.clone();
+                        parentVar.isInherited = true;
+                        parentVar.hasMore = true;
+                        last = parentVar;
+                        LOGGER.info("adding parent variable %s", property.name);
+                        codegenModel.parentVars.add(parentVar);
+                    }
+                }
+
+                if (last != null) {
+                    last.hasMore = false;
+                }
+            }
+        }
+
+        // Cleanup possible duplicates. Currently, readWriteVars can contain the same property twice. May or may not be isolated to C#.
+        if(codegenModel != null && codegenModel.readWriteVars != null && codegenModel.readWriteVars.size() > 1) {
+            int length = codegenModel.readWriteVars.size() - 1;
+            for (int i = length; i > (length / 2); i --) {
+                final CodegenProperty codegenProperty = codegenModel.readWriteVars.get(i);
+                // If the property at current index is found earlier in the list, remove this last instance.
+                if(codegenModel.readWriteVars.indexOf(codegenProperty) < i) {
+                    codegenModel.readWriteVars.remove(i);
+                }
+            }
         }
 
         return codegenModel;
