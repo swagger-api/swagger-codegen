@@ -268,6 +268,8 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         }
         if (additionalProperties.containsKey(USE_ES6)) {
             setUseES6(convertPropertyToBooleanAndWriteBack(USE_ES6));
+        } else {
+            setUseES6(false);
         }
     }
 
@@ -432,8 +434,10 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         this.useES6 = useES6;
         if (useES6) {
             embeddedTemplateDir = templateDir = "Javascript/es6";
+            LOGGER.info("Using JS ES6 templates");
         } else {
             embeddedTemplateDir = templateDir = "Javascript";
+            LOGGER.info("Using JS ES5 templates");
         }
     }
 
