@@ -96,7 +96,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     protected String modelDocPath = "docs/";
     protected String apiTestPath = "api/";
     protected String modelTestPath = "model/";
-    protected boolean useES6; // default is ES5
+    protected boolean useES6 = false; // default is ES5
 
     public JavascriptClientCodegen() {
         super();
