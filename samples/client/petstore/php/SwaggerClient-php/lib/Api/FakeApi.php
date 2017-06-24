@@ -59,6 +59,11 @@ class FakeApi
     protected $config;
 
     /**
+     * @var string
+     */
+    protected $specifiedReturnType;
+
+    /**
      * @param ClientInterface $client
      * @param Configuration $config
      * @param HeaderSelector $selector
@@ -79,6 +84,40 @@ class FakeApi
     public function getConfig()
     {
         return $this->config;
+    }
+
+    /**
+     * @params string $returnType
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function setReturnType($returnType)
+    {
+        if (!class_exists($returnType)) {
+            throw new \InvalidArgumentException($returnType . ' is not exists.');
+        }
+
+        return $this->specifiedReturnType = $returnType;
+    }
+
+    /**
+     * @params string $returnType
+     * @return string
+     */
+    protected function hydrationType($returnType)
+    {
+        if (!$this->specifiedReturnType) {
+            return $returnType;
+        }
+
+        $shouldReturnAsArray = strcasecmp(substr($returnType, -2), '[]') === 0;
+        $default = $shouldReturnAsArray ? substr($returnType, 0, strlen($returnType) - 2) : $returnType;
+
+        if (!is_subclass_of($this->specifiedReturnType, $default)) {
+            return $returnType;
+        }
+
+        return $this->specifiedReturnType . ($shouldReturnAsArray ? '[]' : '');
     }
 
     /**
@@ -142,7 +181,7 @@ class FakeApi
             }
 
             return [
-                ObjectSerializer::deserialize($content, $returnType, []),
+                ObjectSerializer::deserialize($content, $this->hydrationType($returnType), []),
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
@@ -200,7 +239,7 @@ class FakeApi
             }
 
             return [
-                ObjectSerializer::deserialize($content, $returnType, []),
+                ObjectSerializer::deserialize($content, $this->hydrationType($returnType), []),
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
@@ -301,8 +340,6 @@ class FakeApi
     /**
      * Operation fakeOuterCompositeSerialize
      *
-     * 
-     *
      * @param \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -316,8 +353,6 @@ class FakeApi
 
     /**
      * Operation fakeOuterCompositeSerializeWithHttpInfo
-     *
-     * 
      *
      * @param \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
@@ -363,7 +398,7 @@ class FakeApi
             }
 
             return [
-                ObjectSerializer::deserialize($content, $returnType, []),
+                ObjectSerializer::deserialize($content, $this->hydrationType($returnType), []),
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
@@ -382,6 +417,8 @@ class FakeApi
     /**
      * Operation fakeOuterCompositeSerializeAsync
      *
+     * 
+     *
      * @param \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -395,6 +432,8 @@ class FakeApi
 
     /**
      * Operation fakeOuterCompositeSerializeAsyncWithHttpInfo
+     *
+     * 
      *
      * @param \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
      * @throws \InvalidArgumentException
@@ -417,7 +456,7 @@ class FakeApi
             }
 
             return [
-                ObjectSerializer::deserialize($content, $returnType, []),
+                ObjectSerializer::deserialize($content, $this->hydrationType($returnType), []),
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
@@ -518,8 +557,6 @@ class FakeApi
     /**
      * Operation fakeOuterNumberSerialize
      *
-     * 
-     *
      * @param \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -533,8 +570,6 @@ class FakeApi
 
     /**
      * Operation fakeOuterNumberSerializeWithHttpInfo
-     *
-     * 
      *
      * @param \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
@@ -580,7 +615,7 @@ class FakeApi
             }
 
             return [
-                ObjectSerializer::deserialize($content, $returnType, []),
+                ObjectSerializer::deserialize($content, $this->hydrationType($returnType), []),
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
@@ -599,6 +634,8 @@ class FakeApi
     /**
      * Operation fakeOuterNumberSerializeAsync
      *
+     * 
+     *
      * @param \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -612,6 +649,8 @@ class FakeApi
 
     /**
      * Operation fakeOuterNumberSerializeAsyncWithHttpInfo
+     *
+     * 
      *
      * @param \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
      * @throws \InvalidArgumentException
@@ -634,7 +673,7 @@ class FakeApi
             }
 
             return [
-                ObjectSerializer::deserialize($content, $returnType, []),
+                ObjectSerializer::deserialize($content, $this->hydrationType($returnType), []),
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
@@ -735,8 +774,6 @@ class FakeApi
     /**
      * Operation fakeOuterStringSerialize
      *
-     * 
-     *
      * @param \Swagger\Client\Model\OuterString $body Input string as post body (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -750,8 +787,6 @@ class FakeApi
 
     /**
      * Operation fakeOuterStringSerializeWithHttpInfo
-     *
-     * 
      *
      * @param \Swagger\Client\Model\OuterString $body Input string as post body (optional)
      * @throws \Swagger\Client\ApiException on non-2xx response
@@ -797,7 +832,7 @@ class FakeApi
             }
 
             return [
-                ObjectSerializer::deserialize($content, $returnType, []),
+                ObjectSerializer::deserialize($content, $this->hydrationType($returnType), []),
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
@@ -816,6 +851,8 @@ class FakeApi
     /**
      * Operation fakeOuterStringSerializeAsync
      *
+     * 
+     *
      * @param \Swagger\Client\Model\OuterString $body Input string as post body (optional)
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -829,6 +866,8 @@ class FakeApi
 
     /**
      * Operation fakeOuterStringSerializeAsyncWithHttpInfo
+     *
+     * 
      *
      * @param \Swagger\Client\Model\OuterString $body Input string as post body (optional)
      * @throws \InvalidArgumentException
@@ -851,7 +890,7 @@ class FakeApi
             }
 
             return [
-                ObjectSerializer::deserialize($content, $returnType, []),
+                ObjectSerializer::deserialize($content, $this->hydrationType($returnType), []),
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
@@ -1014,7 +1053,7 @@ class FakeApi
             }
 
             return [
-                ObjectSerializer::deserialize($content, $returnType, []),
+                ObjectSerializer::deserialize($content, $this->hydrationType($returnType), []),
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
@@ -1072,7 +1111,7 @@ class FakeApi
             }
 
             return [
-                ObjectSerializer::deserialize($content, $returnType, []),
+                ObjectSerializer::deserialize($content, $this->hydrationType($returnType), []),
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
