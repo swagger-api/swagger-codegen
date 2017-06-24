@@ -78,10 +78,15 @@ use {{invokerPackage}}\ObjectSerializer;
 
     /**
      * @params string $returnType
+     * @throws \InvalidArgumentException
      * @return void
      */
     public function setReturnType($returnType)
     {
+        if (!class_exists($returnType)) {
+            throw new \InvalidArgumentException($returnType . ' is not exists.');
+        }
+
         return $this->specifiedReturnType = $returnType;
     }
 
