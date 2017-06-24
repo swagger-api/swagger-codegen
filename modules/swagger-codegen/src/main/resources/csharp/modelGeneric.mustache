@@ -156,7 +156,7 @@ this.{{name}} = {{name}};
             if (other == null)
                 return false;
 
-            return {{#vars}}{{#isNotContainer}}
+            return {{#vars}}{{#parent}}base.Equals(other) && {{/parent}}{{#isNotContainer}}
                 (
                     this.{{name}} == other.{{name}} ||
                     this.{{name}} != null &&
@@ -166,7 +166,7 @@ this.{{name}} = {{name}};
                     this.{{name}} == other.{{name}} ||
                     this.{{name}} != null &&
                     this.{{name}}.SequenceEqual(other.{{name}})
-                ){{#hasMore}} && {{/hasMore}}{{/isNotContainer}}{{/vars}}{{^vars}}false{{/vars}};
+                ){{#hasMore}} && {{/hasMore}}{{/isNotContainer}}{{/vars}}{{^vars}}{{#parent}}base.Equals(other){{/parent}}{{^parent}}false{{/parent}}{{/vars}};
         }
 
         /// <summary>
@@ -178,7 +178,12 @@ this.{{name}} = {{name}};
             // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
+{{#parent}}
+                int hash = base.GetHashCode();
+{{/parent}}
+{{^parent}}
                 int hash = 41;
+{{/parent}}
                 // Suitable nullity checks etc, of course :)
                 {{#vars}}
                 if (this.{{name}} != null)

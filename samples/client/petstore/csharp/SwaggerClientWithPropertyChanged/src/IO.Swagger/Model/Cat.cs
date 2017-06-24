@@ -98,7 +98,7 @@ namespace IO.Swagger.Model
             if (other == null)
                 return false;
 
-            return 
+            return base.Equals(other) && 
                 (
                     this.Declawed == other.Declawed ||
                     this.Declawed != null &&
@@ -115,7 +115,7 @@ namespace IO.Swagger.Model
             // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hash = 41;
+                int hash = base.GetHashCode();
                 // Suitable nullity checks etc, of course :)
                 if (this.Declawed != null)
                     hash = hash * 59 + this.Declawed.GetHashCode();

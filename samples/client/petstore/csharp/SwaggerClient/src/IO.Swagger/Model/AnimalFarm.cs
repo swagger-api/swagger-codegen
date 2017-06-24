@@ -82,7 +82,7 @@ namespace IO.Swagger.Model
             if (other == null)
                 return false;
 
-            return false;
+            return base.Equals(other);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace IO.Swagger.Model
             // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hash = 41;
+                int hash = base.GetHashCode();
                 // Suitable nullity checks etc, of course :)
                 return hash;
             }
