@@ -141,7 +141,7 @@ namespace JsonSubTypes
         private static IList CreateCompatibleList(Type targetContainerType, Type elementType)
         {
             IList list;
-            if (targetContainerType.IsArray || targetContainerType.IsAbstract)
+            if (targetContainerType.IsArray || targetContainerType.GetTypeInfo().IsAbstract)
             {
                 list = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(elementType));
             }
@@ -199,10 +199,10 @@ namespace JsonSubTypes
 
         private static Type GetTypeByPropertyPresence(JObject jObject, Type parentType)
         {
-            foreach (var type in parentType.GetCustomAttributes<KnownSubTypeWithPropertyAttribute>())
+            foreach (var type in parentType.GetTypeInfo().GetCustomAttributes<KnownSubTypeWithPropertyAttribute>())
             {
                 JToken ignore;
-                if (jObject.TryGetValue(type.PropertyName, StringComparison.InvariantCulture, out ignore))
+                if (jObject.TryGetValue(type.PropertyName, out ignore))
                 {
                     return type.SubType;
                 }
@@ -231,7 +231,7 @@ namespace JsonSubTypes
             if (typeName == null)
                 return null;
 
-            var insideAssembly = parentType.Assembly;
+            var insideAssembly = parentType.GetTypeInfo().Assembly;
 
             var typeByName = insideAssembly.GetType(typeName);
             if (typeByName == null)
@@ -253,12 +253,12 @@ namespace JsonSubTypes
 
         private static Dictionary<object, Type> GetSubTypeMapping(Type type)
         {
-            return type.GetCustomAttributes<KnownSubTypeAttribute>().ToDictionary(x => x.AssociatedValue, x => x.SubType);
+            return type.GetTypeInfo().GetCustomAttributes<KnownSubTypeAttribute>().ToDictionary(x => x.AssociatedValue, x => x.SubType);
         }
 
         private static object ConvertJsonValueToType(object objectType, Type targetlookupValueType)
         {
-            if (targetlookupValueType.IsEnum)
+            if (targetlookupValueType.GetTypeInfo().IsEnum)
                 return Enum.ToObject(targetlookupValueType, objectType);
 
             return Convert.ChangeType(objectType, targetlookupValueType);
