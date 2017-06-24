@@ -428,6 +428,12 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
                     propertyHash.put(property.name, property);
                 }
 
+                for (final CodegenProperty property : codegenModel.readWriteVars) {
+                    if (property.defaultValue != null && property.baseName.equals(parentCodegenModel.discriminator)) {
+                        property.defaultValue = "\"" + name + "\"";
+                    }
+                }
+
                 CodegenProperty last = null;
                 for (final CodegenProperty property : parentCodegenModel.vars) {
                     // helper list of parentVars simplifies templating
@@ -436,7 +442,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
                         parentVar.isInherited = true;
                         parentVar.hasMore = true;
                         last = parentVar;
-                        LOGGER.info("adding parent variable %s", property.name);
+                        LOGGER.info("adding parent variable {}", property.name);
                         codegenModel.parentVars.add(parentVar);
                     }
                 }
@@ -448,12 +454,12 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         }
 
         // Cleanup possible duplicates. Currently, readWriteVars can contain the same property twice. May or may not be isolated to C#.
-        if(codegenModel != null && codegenModel.readWriteVars != null && codegenModel.readWriteVars.size() > 1) {
+        if (codegenModel != null && codegenModel.readWriteVars != null && codegenModel.readWriteVars.size() > 1) {
             int length = codegenModel.readWriteVars.size() - 1;
-            for (int i = length; i > (length / 2); i --) {
+            for (int i = length; i > (length / 2); i--) {
                 final CodegenProperty codegenProperty = codegenModel.readWriteVars.get(i);
                 // If the property at current index is found earlier in the list, remove this last instance.
-                if(codegenModel.readWriteVars.indexOf(codegenProperty) < i) {
+                if (codegenModel.readWriteVars.indexOf(codegenProperty) < i) {
                     codegenModel.readWriteVars.remove(i);
                 }
             }
