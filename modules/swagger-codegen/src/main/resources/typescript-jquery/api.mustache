@@ -76,7 +76,7 @@ export class {{classname}} {
             });
         {{/isCollectionFormatMulti}}
         {{^isCollectionFormatMulti}}
-            queryParameters['{{baseName}}'] = {{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}']));
+            queryParameters['{{baseName}}'] = {{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}']);
         {{/isCollectionFormatMulti}}
         }
         {{/isListContainer}}
