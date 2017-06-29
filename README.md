@@ -27,6 +27,7 @@ This is the swagger codegen project, which allows generation of API client libra
 - **API clients**: **ActionScript**, **Apex**, **Bash**, **C#** (.net 2.0, 4.0 or later), **C++** (cpprest, Qt5, Tizen), **Clojure**, **Dart**, **Elixir**, **Go**, **Groovy**, **Haskell**, **Java** (Jersey1.x, Jersey2.x, OkHttp, Retrofit1.x, Retrofit2.x, Feign), **Kotlin**, **Node.js** (ES5, ES6, AngularJS with Google Closure Compiler annotations) **Objective-C**, **Perl**, **PHP**, **PowerShell**, **Python**, **Ruby**, **Scala**, **Swift** (2.x, 3.x), **Typescript** (Angular1.x, Angular2.x, Fetch, jQuery, Node)
 - **Server stubs**: **C#** (ASP.NET Core, NancyFx), **C++** (Pistache, Restbed), **Erlang**, **Go**, **Haskell**, **Java** (MSF4J, Spring, Undertow, JAX-RS: CDI, CXF, Inflector, RestEasy, Play Framework), **PHP** (Lumen, Slim, Silex, [Zend Expressive](https://github.com/zendframework/zend-expressive)), **Python** (Flask), **NodeJS**, **Ruby** (Sinatra, Rails5), **Scala** ([Finch](https://github.com/finagle/finch), Scalatra)
 - **API documentation generators**: **HTML**, **Confluence Wiki** 
+- **Configuration files**: [**Apache2**](https://httpd.apache.org/)
 - **Others**: **JMeter**
 
 Check out [OpenAPI-Spec](https://github.com/OAI/OpenAPI-Specification) for additional information about the OpenAPI project.
@@ -265,22 +266,29 @@ NAME
 SYNOPSIS
         swagger-codegen-cli generate
                 [(-a <authorization> | --auth <authorization>)]
-                [--additional-properties <additional properties>]
+                [--additional-properties <additional properties>...]
                 [--api-package <api package>] [--artifact-id <artifact id>]
                 [--artifact-version <artifact version>]
                 [(-c <configuration file> | --config <configuration file>)]
-                [-D <system properties>] [--group-id <group id>]
+                [-D <system properties>...] [--git-repo-id <git repo id>]
+                [--git-user-id <git user id>] [--group-id <group id>]
+                [--http-user-agent <http user agent>]
                 (-i <spec file> | --input-spec <spec file>)
-                [--import-mappings <import mappings>]
-                [--instantiation-types <instantiation types>]
+                [--ignore-file-override <ignore file override location>]
+                [--import-mappings <import mappings>...]
+                [--instantiation-types <instantiation types>...]
                 [--invoker-package <invoker package>]
                 (-l <language> | --lang <language>)
-                [--language-specific-primitives <language specific primitives>]
-                [--library <library>] [--model-package <model package>]
+                [--language-specific-primitives <language specific primitives>...]
+                [--library <library>] [--model-name-prefix <model name prefix>]
+                [--model-name-suffix <model name suffix>]
+                [--model-package <model package>]
                 [(-o <output directory> | --output <output directory>)]
+                [--release-note <release note>] [--remove-operation-id-prefix]
+                [--reserved-words-mappings <reserved word mappings>...]
                 [(-s | --skip-overwrite)]
                 [(-t <template directory> | --template-dir <template directory>)]
-                [--type-mappings <type mappings>] [(-v | --verbose)]
+                [--type-mappings <type mappings>...] [(-v | --verbose)]
 
 OPTIONS
         -a <authorization>, --auth <authorization>
@@ -558,8 +566,13 @@ To specify an import mapping, use the `--import-mappings` argument and specify t
 Or for multiple mappings:
 
 ```
-Pet=my.models.MyPet,Order=my.models.MyOrder
+--import-mappings Pet=my.models.MyPet,Order=my.models.MyOrder
 ```
+or
+```
+--import-mappings Pet=my.models.MyPet --import-mappings Order=my.models.MyOrder
+```
+
 
 ### Validating your OpenAPI Spec
 
@@ -763,6 +776,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Kubernetes](https://kubernetes.io/)
 - [LANDR Audio](https://www.landr.com/)
 - [Lascaux](http://www.lascaux.it/)
+- [Leanix](http://www.leanix.net/)
 - [Leica Geosystems AG](http://leica-geosystems.com)
 - [LiveAgent](https://www.ladesk.com/)
 - [LXL Tech](http://lxltech.com)
@@ -956,6 +970,8 @@ Here is a list of template creators:
  * Documentation
    * HTML Doc 2: @jhitchcock
    * Confluence Wiki: @jhitchcock
+ * Configuration
+   * Apache2: @stkrwork
 
 ## How to join the core team
 
