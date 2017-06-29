@@ -66,8 +66,7 @@ Contact: apiteam@swagger.io
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="**\*.cs"
-             Exclude="obj\**"/>
+    <Compile Include="**\*.cs" Exclude="obj\**" />
   </ItemGroup>
   <ItemGroup>
       <None Include="packages.config" />
@@ -78,6 +77,9 @@ Contact: apiteam@swagger.io
           <Project>{321C8C3F-0156-40C1-AE42-D59761FB9B6C}</Project>
           <Name>IO.Swagger</Name>
       </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="swagger-logo.png" />
   </ItemGroup>
 </Project>
 
