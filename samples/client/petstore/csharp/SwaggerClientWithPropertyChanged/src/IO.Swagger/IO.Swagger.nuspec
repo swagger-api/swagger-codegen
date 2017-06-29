@@ -29,7 +29,7 @@
             <dependency id="NewtonSoft.Json" version="10.0.3" />
             <dependency id="RestSharp" version="105.1.0" />
             <dependency id="Fody" version="1.29.4" />
-            <dependency id="PropertyChanged.Fody" version="1.53.0" />
+            <dependency id="PropertyChanged.Fody" version="1.51.3" />
 
         </dependencies>
     </metadata>

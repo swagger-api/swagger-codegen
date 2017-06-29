@@ -19,8 +19,8 @@ cp packages/Newtonsoft.Json.10.0.3/lib/{{targetFrameworkNuget}}/Newtonsoft.Json.
 cp packages/RestSharp.105.1.0/lib/{{targetFrameworkNuget}}/RestSharp.dll bin/RestSharp.dll;
 {{#generatePropertyChanged}}
 cp packages/Fody.1.29.4/Fody.dll bin/Fody.dll
-cp packages/PropertyChanged.Fody.1.53.0/PropertyChanged.Fody.dll bin/PropertyChanged.Fody.dll
-cp packages/PropertyChanged.Fody.1.53.0/Lib/dotnet/PropertyChanged.dll bin/PropertyChanged.dll
+cp packages/PropertyChanged.Fody.1.51.3/PropertyChanged.Fody.dll bin/PropertyChanged.Fody.dll
+cp packages/PropertyChanged.Fody.1.51.3/Lib/dotnet/PropertyChanged.dll bin/PropertyChanged.dll
 {{/generatePropertyChanged}}
 
 echo "[INFO] Run 'mcs' to build bin/{{{packageName}}}.dll"
