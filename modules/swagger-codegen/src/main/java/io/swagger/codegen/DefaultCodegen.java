@@ -1517,6 +1517,14 @@ public class DefaultCodegen {
         if (p.getReadOnly() != null) {
             property.isReadOnly = p.getReadOnly();
         }
+        if (p.getXml() != null) {
+        	if (p.getXml().getAttribute() != null) {
+        		property.isXmlAttribute = p.getXml().getAttribute();
+        	}
+        	property.xmlPrefix = p.getXml().getPrefix();
+        	property.xmlName = p.getXml().getName();
+        	property.xmlNamespace = p.getXml().getNamespace();
+        }
         property.vendorExtensions = p.getVendorExtensions();
 
         String type = getSwaggerType(p);
