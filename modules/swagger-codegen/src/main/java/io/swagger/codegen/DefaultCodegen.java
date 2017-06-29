@@ -1323,8 +1323,14 @@ public class DefaultCodegen {
                 int modelImplCnt = 0; // only one inline object allowed in a ComposedModel
                 for (Model innerModel: ((ComposedModel)model).getAllOf()) {
                     if (innerModel instanceof ModelImpl) {
+                    	ModelImpl modelImpl = (ModelImpl) innerModel;
                         if (m.discriminator == null) {
-                            m.discriminator = ((ModelImpl) innerModel).getDiscriminator();
+                            m.discriminator = modelImpl.getDiscriminator();
+                        }
+                        if (modelImpl.getXml() != null) {
+                        	m.xmlPrefix = modelImpl.getXml().getPrefix();
+                        	m.xmlNamespace = modelImpl.getXml().getNamespace();
+                        	m.xmlName = modelImpl.getXml().getName();
                         }
                         if (modelImplCnt++ > 1) {
                             LOGGER.warn("More than one inline schema specified in allOf:. Only the first one is recognized. All others are ignored.");

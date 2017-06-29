@@ -196,7 +196,7 @@
       <artifactId>spring-web</artifactId>
       <version>${spring-web-version}</version>
     </dependency>
-    
+
     <!-- JSON processing: jackson -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -218,6 +218,16 @@
       <artifactId>jackson-jaxrs-json-provider</artifactId>
       <version>${jackson-version}</version>
     </dependency>
+		{{#withXml}}
+
+		<!-- XML Support -->
+		<dependency>
+		  <groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+			<version>${jackson-version}</version>
+		</dependency>
+
+		{{/withXml}}
     {{#java8}}
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
