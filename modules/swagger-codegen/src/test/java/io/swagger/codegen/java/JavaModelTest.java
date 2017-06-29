@@ -589,11 +589,12 @@ public class JavaModelTest {
     public void modelWithXmlTest() {
         final Model model = new ModelImpl()
                 .description("a sample model")
+                .xml(new Xml().prefix("my").namespace("xmlNamespace").name("customXmlName"))
                 .property("id", new LongProperty())
                 .property("name", new StringProperty()
                         .example("Tony")
-                        .xml(new Xml().attribute(true).name("myName").prefix("my")))
-                .property("createdAt", new DateTimeProperty().xml(new Xml().name("myCreatedAt").namespace("myNamespace").prefix("my")))
+                        .xml(new Xml().attribute(true).prefix("my").name("myName")))
+                .property("createdAt", new DateTimeProperty().xml(new Xml().prefix("my").namespace("myNamespace").name("myCreatedAt")))
                 .required("id")
                 .required("name");
         final DefaultCodegen codegen = new JavaClientCodegen();
@@ -602,6 +603,9 @@ public class JavaModelTest {
         Assert.assertEquals(cm.name, "sample");
         Assert.assertEquals(cm.classname, "Sample");
         Assert.assertEquals(cm.description, "a sample model");
+        Assert.assertEquals(cm.xmlPrefix, "my");
+        Assert.assertEquals(cm.xmlName, "customXmlName");
+        Assert.assertEquals(cm.xmlNamespace, "xmlNamespace");
         Assert.assertEquals(cm.vars.size(), 3);
 
         final List<CodegenProperty> vars = cm.vars;

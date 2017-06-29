@@ -1292,7 +1292,14 @@ public class DefaultCodegen {
         m.vendorExtensions = model.getVendorExtensions();
 
         if (model instanceof ModelImpl) {
-            m.discriminator = ((ModelImpl) model).getDiscriminator();
+        	ModelImpl modelImpl = (ModelImpl) model;
+            m.discriminator = modelImpl.getDiscriminator();
+            
+            if (modelImpl.getXml() != null) {
+            	m.xmlPrefix = modelImpl.getXml().getPrefix();
+            	m.xmlNamespace = modelImpl.getXml().getNamespace();
+            	m.xmlName = modelImpl.getXml().getName();
+            }
         }
 
         if (model instanceof ArrayModel) {
