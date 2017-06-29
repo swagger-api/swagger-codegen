@@ -1292,7 +1292,14 @@ public class DefaultCodegen {
         m.vendorExtensions = model.getVendorExtensions();
 
         if (model instanceof ModelImpl) {
-            m.discriminator = ((ModelImpl) model).getDiscriminator();
+        	ModelImpl modelImpl = (ModelImpl) model;
+            m.discriminator = modelImpl.getDiscriminator();
+            
+            if (modelImpl.getXml() != null) {
+            	m.xmlPrefix = modelImpl.getXml().getPrefix();
+            	m.xmlNamespace = modelImpl.getXml().getNamespace();
+            	m.xmlName = modelImpl.getXml().getName();
+            }
         }
 
         if (model instanceof ArrayModel) {
@@ -1316,8 +1323,14 @@ public class DefaultCodegen {
                 int modelImplCnt = 0; // only one inline object allowed in a ComposedModel
                 for (Model innerModel: ((ComposedModel)model).getAllOf()) {
                     if (innerModel instanceof ModelImpl) {
+                    	ModelImpl modelImpl = (ModelImpl) innerModel;
                         if (m.discriminator == null) {
-                            m.discriminator = ((ModelImpl) innerModel).getDiscriminator();
+                            m.discriminator = modelImpl.getDiscriminator();
+                        }
+                        if (modelImpl.getXml() != null) {
+                        	m.xmlPrefix = modelImpl.getXml().getPrefix();
+                        	m.xmlNamespace = modelImpl.getXml().getNamespace();
+                        	m.xmlName = modelImpl.getXml().getName();
                         }
                         if (modelImplCnt++ > 1) {
                             LOGGER.warn("More than one inline schema specified in allOf:. Only the first one is recognized. All others are ignored.");
@@ -1516,6 +1529,14 @@ public class DefaultCodegen {
         property.jsonSchema = Json.pretty(p);
         if (p.getReadOnly() != null) {
             property.isReadOnly = p.getReadOnly();
+        }
+        if (p.getXml() != null) {
+        	if (p.getXml().getAttribute() != null) {
+        		property.isXmlAttribute = p.getXml().getAttribute();
+        	}
+        	property.xmlPrefix = p.getXml().getPrefix();
+        	property.xmlName = p.getXml().getName();
+        	property.xmlNamespace = p.getXml().getNamespace();
         }
         property.vendorExtensions = p.getVendorExtensions();
 
