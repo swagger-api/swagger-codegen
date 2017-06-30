@@ -319,10 +319,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         additionalProperties.put("javaUtilPrefix", javaUtilPrefix);
 
         if (additionalProperties.containsKey(WITH_XML)) {
-        	this.setWithXml(Boolean.valueOf(additionalProperties.get(WITH_XML).toString()));
+            this.setWithXml(Boolean.valueOf(additionalProperties.get(WITH_XML).toString()));
         }
         additionalProperties.put(WITH_XML, withXml);
-        
+
         // make api and model doc path available in mustache template
         additionalProperties.put("apiDocPath", apiDocPath);
         additionalProperties.put("modelDocPath", modelDocPath);
@@ -761,7 +761,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             return super.toExampleValue(p);
         }
     }
-    
+
     @Override
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
@@ -1155,7 +1155,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     public void setWithXml(boolean withXml) {
         this.withXml = withXml;
     }
-    
+
     public void setDateLibrary(String library) {
         this.dateLibrary = library;
     }

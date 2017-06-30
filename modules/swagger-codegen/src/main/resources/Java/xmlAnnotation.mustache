@@ -1,6 +1,2 @@
-// XML name: {{xmlName}}
-{{#jackson}}
-{{#withXml}}
-{{#withXml}}@JacksonXmlRootElement({{#xmlNamespace}}namespace="{{xmlNamespace}}", {{/xmlNamespace}}localName = "{{#xmlName}}{{xmlName}}{{/xmlName}}{{^xmlName}}{{classname}}{{/xmlName}}"){{/withXml}}
-{{/withXml}}
-{{/jackson}}
+{{#jackson}}{{#withXml}}
+@JacksonXmlRootElement({{#xmlNamespace}}namespace="{{xmlNamespace}}", {{/xmlNamespace}}localName = "{{#xmlName}}{{xmlName}}{{/xmlName}}{{^xmlName}}{{classname}}{{/xmlName}}"){{/withXml}}{{/jackson}}

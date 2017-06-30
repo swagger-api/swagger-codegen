@@ -97,7 +97,7 @@ public class CodegenModel {
         if (xmlNamespace != null ? !xmlNamespace.equals(that.xmlNamespace) : that.xmlNamespace != null)
             return false;
         if (xmlName != null ? !xmlName.equals(that.xmlName) : that.xmlName != null)
-        	return false;
+            return false;
         if (classFilename != null ? !classFilename.equals(that.classFilename) : that.classFilename != null)
             return false;
         if (unescapedDescription != null ? !unescapedDescription.equals(that.unescapedDescription) : that.unescapedDescription != null)

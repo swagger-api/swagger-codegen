@@ -22,8 +22,8 @@ public class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{{#parcela
       {{/items}}
     {{/items.isEnum}}
   {{#jackson}}
-  @JsonProperty("{{baseName}}")
-	{{#withXml}}@JacksonXmlProperty({{#isXmlAttribute}}isAttribute = true, {{/isXmlAttribute}}{{#xmlNamespace}}namespace="{{xmlNamespace}}", {{/xmlNamespace}}localName = "{{#xmlName}}{{xmlName}}{{/xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}"){{/withXml}}
+  @JsonProperty("{{baseName}}"){{#withXml}}
+  @JacksonXmlProperty({{#isXmlAttribute}}isAttribute = true, {{/isXmlAttribute}}{{#xmlNamespace}}namespace="{{xmlNamespace}}", {{/xmlNamespace}}localName = "{{#xmlName}}{{xmlName}}{{/xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}"){{/withXml}}
   {{/jackson}}
   {{#gson}}
   @SerializedName("{{baseName}}")
@@ -164,7 +164,7 @@ public class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{{#parcela
     }
     return o.toString().replace("\n", "\n    ");
   }
-
+  
   {{#parcelableModel}}
   public void writeToParcel(Parcel out, int flags) {
     {{#parent}} super.writeToParcel(out, flags); {{/parent}} {{#vars}}
@@ -187,7 +187,7 @@ public class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{{#parcela
     {{/isPrimitiveType}}
     {{/vars}}
   }
-
+  
   public int describeContents() {
     return 0;
   }

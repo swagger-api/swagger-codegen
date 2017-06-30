@@ -54,12 +54,12 @@ public class CodegenProperty implements Cloneable {
     public String enumName;
     public Integer maxItems;
     public Integer minItems;
-	
+
     // XML
     public boolean isXmlAttribute = false;
     public String xmlPrefix;
-	public String xmlName;
-	public String xmlNamespace;
+    public String xmlName;
+    public String xmlNamespace;
 
 
     @Override
