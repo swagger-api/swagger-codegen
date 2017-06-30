@@ -16,6 +16,9 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 {{/withXml}}
 {{/jackson}}
+{{#withXml}}
+import javax.xml.bind.annotation.*;
+{{/withXml}}
 
 {{#models}}
 {{#model}}
