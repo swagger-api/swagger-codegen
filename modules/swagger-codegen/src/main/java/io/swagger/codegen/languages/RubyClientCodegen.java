@@ -763,13 +763,21 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
+    public String toRegularExpression(String pattern) {
+        if (pattern == null) {
+            return pattern;
+        }
+        return escapeUnsafeCharacters(addRegularExpressionDelimiter(pattern));
+    }
+
+    @Override
     public String addRegularExpressionDelimiter(String pattern) {
         if (StringUtils.isEmpty(pattern)) {
             return pattern;
         }
 
         if (!pattern.matches("^/.*")) {
-            return "/" + pattern.replaceAll("/", Matcher.quoteReplacement("\\/")) + "/";
+            return "/" + pattern.replaceAll("/", "\\\\/") + "/";
         }
 
         return pattern;
