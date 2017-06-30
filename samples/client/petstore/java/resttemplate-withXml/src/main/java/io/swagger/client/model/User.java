@@ -21,43 +21,53 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import javax.xml.bind.annotation.*;
 
 /**
  * User
  */
-
 @JacksonXmlRootElement(localName = "User")
+@XmlRootElement(name = "User")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class User {
   @JsonProperty("id")
   @JacksonXmlProperty(localName = "id")
+  @XmlElement(name = "id")
   private Long id = null;
 
   @JsonProperty("username")
   @JacksonXmlProperty(localName = "username")
+  @XmlElement(name = "username")
   private String username = null;
 
   @JsonProperty("firstName")
   @JacksonXmlProperty(localName = "firstName")
+  @XmlElement(name = "firstName")
   private String firstName = null;
 
   @JsonProperty("lastName")
   @JacksonXmlProperty(localName = "lastName")
+  @XmlElement(name = "lastName")
   private String lastName = null;
 
   @JsonProperty("email")
   @JacksonXmlProperty(localName = "email")
+  @XmlElement(name = "email")
   private String email = null;
 
   @JsonProperty("password")
   @JacksonXmlProperty(localName = "password")
+  @XmlElement(name = "password")
   private String password = null;
 
   @JsonProperty("phone")
   @JacksonXmlProperty(localName = "phone")
+  @XmlElement(name = "phone")
   private String phone = null;
 
   @JsonProperty("userStatus")
   @JacksonXmlProperty(localName = "userStatus")
+  @XmlElement(name = "userStatus")
   private Integer userStatus = null;
 
   public User id(Long id) {

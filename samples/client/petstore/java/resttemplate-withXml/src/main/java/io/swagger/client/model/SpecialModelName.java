@@ -21,15 +21,18 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import javax.xml.bind.annotation.*;
 
 /**
  * SpecialModelName
  */
-
 @JacksonXmlRootElement(localName = "$special[model.name]")
+@XmlRootElement(name = "$special[model.name]")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class SpecialModelName {
   @JsonProperty("$special[property.name]")
   @JacksonXmlProperty(localName = "$special[property.name]")
+  @XmlElement(name = "$special[property.name]")
   private Long specialPropertyName = null;
 
   public SpecialModelName specialPropertyName(Long specialPropertyName) {

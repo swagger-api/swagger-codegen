@@ -23,12 +23,14 @@ import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import javax.xml.bind.annotation.*;
 
 /**
  * EnumArrays
  */
-
 @JacksonXmlRootElement(localName = "EnumArrays")
+@XmlRootElement(name = "EnumArrays")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class EnumArrays {
   /**
    * Gets or Sets justSymbol
@@ -67,6 +69,7 @@ public class EnumArrays {
 
   @JsonProperty("just_symbol")
   @JacksonXmlProperty(localName = "just_symbol")
+  @XmlElement(name = "just_symbol")
   private JustSymbolEnum justSymbol = null;
 
   /**
@@ -106,6 +109,7 @@ public class EnumArrays {
 
   @JsonProperty("array_enum")
   @JacksonXmlProperty(localName = "array_enum")
+  @XmlElement(name = "array_enum")
   private List<ArrayEnumEnum> arrayEnum = null;
 
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {

@@ -21,28 +21,34 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import javax.xml.bind.annotation.*;
 
 /**
  * Model for testing model name same as property name
  */
 @ApiModel(description = "Model for testing model name same as property name")
-
 @JacksonXmlRootElement(localName = "Name")
+@XmlRootElement(name = "Name")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Name {
   @JsonProperty("name")
   @JacksonXmlProperty(localName = "name")
+  @XmlElement(name = "name")
   private Integer name = null;
 
   @JsonProperty("snake_case")
   @JacksonXmlProperty(localName = "snake_case")
+  @XmlElement(name = "snake_case")
   private Integer snakeCase = null;
 
   @JsonProperty("property")
   @JacksonXmlProperty(localName = "property")
+  @XmlElement(name = "property")
   private String property = null;
 
   @JsonProperty("123Number")
   @JacksonXmlProperty(localName = "123Number")
+  @XmlElement(name = "123Number")
   private Integer _123Number = null;
 
   public Name name(Integer name) {

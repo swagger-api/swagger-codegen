@@ -24,23 +24,28 @@ import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import javax.xml.bind.annotation.*;
 
 /**
  * ArrayTest
  */
-
 @JacksonXmlRootElement(localName = "ArrayTest")
+@XmlRootElement(name = "ArrayTest")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ArrayTest {
   @JsonProperty("array_of_string")
   @JacksonXmlProperty(localName = "array_of_string")
+  @XmlElement(name = "array_of_string")
   private List<String> arrayOfString = null;
 
   @JsonProperty("array_array_of_integer")
   @JacksonXmlProperty(localName = "array_array_of_integer")
+  @XmlElement(name = "array_array_of_integer")
   private List<List<Long>> arrayArrayOfInteger = null;
 
   @JsonProperty("array_array_of_model")
   @JacksonXmlProperty(localName = "array_array_of_model")
+  @XmlElement(name = "array_array_of_model")
   private List<List<ReadOnlyFirst>> arrayArrayOfModel = null;
 
   public ArrayTest arrayOfString(List<String> arrayOfString) {

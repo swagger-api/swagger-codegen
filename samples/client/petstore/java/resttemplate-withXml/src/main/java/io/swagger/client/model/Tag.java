@@ -21,19 +21,23 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import javax.xml.bind.annotation.*;
 
 /**
  * Tag
  */
-
 @JacksonXmlRootElement(localName = "Tag")
+@XmlRootElement(name = "Tag")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Tag {
   @JsonProperty("id")
   @JacksonXmlProperty(localName = "id")
+  @XmlElement(name = "id")
   private Long id = null;
 
   @JsonProperty("name")
   @JacksonXmlProperty(localName = "name")
+  @XmlElement(name = "name")
   private String name = null;
 
   public Tag id(Long id) {

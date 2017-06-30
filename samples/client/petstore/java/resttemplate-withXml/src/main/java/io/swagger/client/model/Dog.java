@@ -22,15 +22,18 @@ import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.Animal;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import javax.xml.bind.annotation.*;
 
 /**
  * Dog
  */
-
 @JacksonXmlRootElement(localName = "Dog")
+@XmlRootElement(name = "Dog")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Dog extends Animal {
   @JsonProperty("breed")
   @JacksonXmlProperty(localName = "breed")
+  @XmlElement(name = "breed")
   private String breed = null;
 
   public Dog breed(String breed) {

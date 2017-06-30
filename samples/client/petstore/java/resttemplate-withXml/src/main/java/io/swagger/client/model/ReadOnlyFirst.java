@@ -21,19 +21,23 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import javax.xml.bind.annotation.*;
 
 /**
  * ReadOnlyFirst
  */
-
 @JacksonXmlRootElement(localName = "ReadOnlyFirst")
+@XmlRootElement(name = "ReadOnlyFirst")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ReadOnlyFirst {
   @JsonProperty("bar")
   @JacksonXmlProperty(localName = "bar")
+  @XmlElement(name = "bar")
   private String bar = null;
 
   @JsonProperty("baz")
   @JacksonXmlProperty(localName = "baz")
+  @XmlElement(name = "baz")
   private String baz = null;
 
    /**

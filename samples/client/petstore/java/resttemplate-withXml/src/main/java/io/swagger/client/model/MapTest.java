@@ -24,15 +24,18 @@ import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import javax.xml.bind.annotation.*;
 
 /**
  * MapTest
  */
-
 @JacksonXmlRootElement(localName = "MapTest")
+@XmlRootElement(name = "MapTest")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class MapTest {
   @JsonProperty("map_map_of_string")
   @JacksonXmlProperty(localName = "map_map_of_string")
+  @XmlElement(name = "map_map_of_string")
   private Map<String, Map<String, String>> mapMapOfString = null;
 
   /**
@@ -72,6 +75,7 @@ public class MapTest {
 
   @JsonProperty("map_of_enum_string")
   @JacksonXmlProperty(localName = "map_of_enum_string")
+  @XmlElement(name = "map_of_enum_string")
   private Map<String, InnerEnum> mapOfEnumString = null;
 
   public MapTest mapMapOfString(Map<String, Map<String, String>> mapMapOfString) {

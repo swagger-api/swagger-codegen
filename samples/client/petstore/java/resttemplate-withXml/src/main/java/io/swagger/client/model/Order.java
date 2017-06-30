@@ -22,27 +22,33 @@ import io.swagger.annotations.ApiModelProperty;
 import org.joda.time.DateTime;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import javax.xml.bind.annotation.*;
 
 /**
  * Order
  */
-
 @JacksonXmlRootElement(localName = "Order")
+@XmlRootElement(name = "Order")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Order {
   @JsonProperty("id")
   @JacksonXmlProperty(localName = "id")
+  @XmlElement(name = "id")
   private Long id = null;
 
   @JsonProperty("petId")
   @JacksonXmlProperty(localName = "petId")
+  @XmlElement(name = "petId")
   private Long petId = null;
 
   @JsonProperty("quantity")
   @JacksonXmlProperty(localName = "quantity")
+  @XmlElement(name = "quantity")
   private Integer quantity = null;
 
   @JsonProperty("shipDate")
   @JacksonXmlProperty(localName = "shipDate")
+  @XmlElement(name = "shipDate")
   private DateTime shipDate = null;
 
   /**
@@ -84,10 +90,12 @@ public class Order {
 
   @JsonProperty("status")
   @JacksonXmlProperty(localName = "status")
+  @XmlElement(name = "status")
   private StatusEnum status = null;
 
   @JsonProperty("complete")
   @JacksonXmlProperty(localName = "complete")
+  @XmlElement(name = "complete")
   private Boolean complete = false;
 
   public Order id(Long id) {

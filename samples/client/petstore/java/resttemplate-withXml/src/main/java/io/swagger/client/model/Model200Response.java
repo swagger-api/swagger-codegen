@@ -21,20 +21,24 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import javax.xml.bind.annotation.*;
 
 /**
  * Model for testing model name starting with number
  */
 @ApiModel(description = "Model for testing model name starting with number")
-
 @JacksonXmlRootElement(localName = "Name")
+@XmlRootElement(name = "Name")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Model200Response {
   @JsonProperty("name")
   @JacksonXmlProperty(localName = "name")
+  @XmlElement(name = "name")
   private Integer name = null;
 
   @JsonProperty("class")
   @JacksonXmlProperty(localName = "class")
+  @XmlElement(name = "class")
   private String propertyClass = null;
 
   public Model200Response name(Integer name) {

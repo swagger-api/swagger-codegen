@@ -21,16 +21,19 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import javax.xml.bind.annotation.*;
 
 /**
  * Model for testing model with \&quot;_class\&quot; property
  */
 @ApiModel(description = "Model for testing model with \"_class\" property")
-
 @JacksonXmlRootElement(localName = "ClassModel")
+@XmlRootElement(name = "ClassModel")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ClassModel {
   @JsonProperty("_class")
   @JacksonXmlProperty(localName = "_class")
+  @XmlElement(name = "_class")
   private String propertyClass = null;
 
   public ClassModel propertyClass(String propertyClass) {

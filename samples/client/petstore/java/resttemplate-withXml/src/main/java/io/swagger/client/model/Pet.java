@@ -25,31 +25,38 @@ import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import javax.xml.bind.annotation.*;
 
 /**
  * Pet
  */
-
 @JacksonXmlRootElement(localName = "Pet")
+@XmlRootElement(name = "Pet")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Pet {
   @JsonProperty("id")
   @JacksonXmlProperty(localName = "id")
+  @XmlElement(name = "id")
   private Long id = null;
 
   @JsonProperty("category")
   @JacksonXmlProperty(localName = "category")
+  @XmlElement(name = "category")
   private Category category = null;
 
   @JsonProperty("name")
   @JacksonXmlProperty(localName = "name")
+  @XmlElement(name = "name")
   private String name = null;
 
   @JsonProperty("photoUrls")
   @JacksonXmlProperty(localName = "photoUrl")
+  @XmlElement(name = "photoUrl")
   private List<String> photoUrls = new ArrayList<String>();
 
   @JsonProperty("tags")
   @JacksonXmlProperty(localName = "tag")
+  @XmlElement(name = "tag")
   private List<Tag> tags = null;
 
   /**
@@ -91,6 +98,7 @@ public class Pet {
 
   @JsonProperty("status")
   @JacksonXmlProperty(localName = "status")
+  @XmlElement(name = "status")
   private StatusEnum status = null;
 
   public Pet id(Long id) {

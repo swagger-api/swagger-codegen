@@ -22,15 +22,18 @@ import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import javax.xml.bind.annotation.*;
 
 /**
  * NumberOnly
  */
-
 @JacksonXmlRootElement(localName = "NumberOnly")
+@XmlRootElement(name = "NumberOnly")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class NumberOnly {
   @JsonProperty("JustNumber")
   @JacksonXmlProperty(localName = "JustNumber")
+  @XmlElement(name = "JustNumber")
   private BigDecimal justNumber = null;
 
   public NumberOnly justNumber(BigDecimal justNumber) {

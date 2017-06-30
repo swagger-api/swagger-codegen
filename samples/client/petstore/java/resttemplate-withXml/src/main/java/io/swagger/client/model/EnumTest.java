@@ -22,12 +22,14 @@ import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.OuterEnum;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import javax.xml.bind.annotation.*;
 
 /**
  * EnumTest
  */
-
 @JacksonXmlRootElement(localName = "EnumTest")
+@XmlRootElement(name = "EnumTest")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class EnumTest {
   /**
    * Gets or Sets enumString
@@ -68,6 +70,7 @@ public class EnumTest {
 
   @JsonProperty("enum_string")
   @JacksonXmlProperty(localName = "enum_string")
+  @XmlElement(name = "enum_string")
   private EnumStringEnum enumString = null;
 
   /**
@@ -107,6 +110,7 @@ public class EnumTest {
 
   @JsonProperty("enum_integer")
   @JacksonXmlProperty(localName = "enum_integer")
+  @XmlElement(name = "enum_integer")
   private EnumIntegerEnum enumInteger = null;
 
   /**
@@ -146,10 +150,12 @@ public class EnumTest {
 
   @JsonProperty("enum_number")
   @JacksonXmlProperty(localName = "enum_number")
+  @XmlElement(name = "enum_number")
   private EnumNumberEnum enumNumber = null;
 
   @JsonProperty("outerEnum")
   @JacksonXmlProperty(localName = "outerEnum")
+  @XmlElement(name = "outerEnum")
   private OuterEnum outerEnum = null;
 
   public EnumTest enumString(EnumStringEnum enumString) {

@@ -27,23 +27,28 @@ import java.util.UUID;
 import org.joda.time.DateTime;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import javax.xml.bind.annotation.*;
 
 /**
  * MixedPropertiesAndAdditionalPropertiesClass
  */
-
 @JacksonXmlRootElement(localName = "MixedPropertiesAndAdditionalPropertiesClass")
+@XmlRootElement(name = "MixedPropertiesAndAdditionalPropertiesClass")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class MixedPropertiesAndAdditionalPropertiesClass {
   @JsonProperty("uuid")
   @JacksonXmlProperty(localName = "uuid")
+  @XmlElement(name = "uuid")
   private UUID uuid = null;
 
   @JsonProperty("dateTime")
   @JacksonXmlProperty(localName = "dateTime")
+  @XmlElement(name = "dateTime")
   private DateTime dateTime = null;
 
   @JsonProperty("map")
   @JacksonXmlProperty(localName = "map")
+  @XmlElement(name = "map")
   private Map<String, Animal> map = null;
 
   public MixedPropertiesAndAdditionalPropertiesClass uuid(UUID uuid) {

@@ -23,6 +23,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import javax.xml.bind.annotation.*;
 
 /**
  * Animal
@@ -32,15 +33,18 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
   @JsonSubTypes.Type(value = Dog.class, name = "Dog"),
   @JsonSubTypes.Type(value = Cat.class, name = "Cat"),
 })
-
 @JacksonXmlRootElement(localName = "Animal")
+@XmlRootElement(name = "Animal")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Animal {
   @JsonProperty("className")
   @JacksonXmlProperty(localName = "className")
+  @XmlElement(name = "className")
   private String className = null;
 
   @JsonProperty("color")
   @JacksonXmlProperty(localName = "color")
+  @XmlElement(name = "color")
   private String color = "red";
 
   public Animal className(String className) {

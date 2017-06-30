@@ -21,15 +21,18 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import javax.xml.bind.annotation.*;
 
 /**
  * Client
  */
-
 @JacksonXmlRootElement(localName = "Client")
+@XmlRootElement(name = "Client")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Client {
   @JsonProperty("client")
   @JacksonXmlProperty(localName = "client")
+  @XmlElement(name = "client")
   private String client = null;
 
   public Client client(String client) {

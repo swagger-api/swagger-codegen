@@ -19,12 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import javax.xml.bind.annotation.*;
 
 /**
  * AnimalFarm
  */
-
 @JacksonXmlRootElement(localName = "AnimalFarm")
+@XmlRootElement(name = "AnimalFarm")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class AnimalFarm extends ArrayList<Animal> {
 
   @Override

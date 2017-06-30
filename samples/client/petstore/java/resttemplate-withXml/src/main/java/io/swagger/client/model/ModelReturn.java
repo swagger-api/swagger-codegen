@@ -21,16 +21,19 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import javax.xml.bind.annotation.*;
 
 /**
  * Model for testing reserved words
  */
 @ApiModel(description = "Model for testing reserved words")
-
 @JacksonXmlRootElement(localName = "Return")
+@XmlRootElement(name = "Return")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ModelReturn {
   @JsonProperty("return")
   @JacksonXmlProperty(localName = "return")
+  @XmlElement(name = "return")
   private Integer _return = null;
 
   public ModelReturn _return(Integer _return) {

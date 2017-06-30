@@ -24,15 +24,18 @@ import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import javax.xml.bind.annotation.*;
 
 /**
  * ArrayOfNumberOnly
  */
-
 @JacksonXmlRootElement(localName = "ArrayOfNumberOnly")
+@XmlRootElement(name = "ArrayOfNumberOnly")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ArrayOfNumberOnly {
   @JsonProperty("ArrayNumber")
   @JacksonXmlProperty(localName = "ArrayNumber")
+  @XmlElement(name = "ArrayNumber")
   private List<BigDecimal> arrayNumber = null;
 
   public ArrayOfNumberOnly arrayNumber(List<BigDecimal> arrayNumber) {
