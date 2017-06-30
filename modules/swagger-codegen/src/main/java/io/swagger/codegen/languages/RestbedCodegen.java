@@ -240,10 +240,12 @@ public class RestbedCodegen extends DefaultCodegen implements CodegenConfig {
       String path = new String(op.path);
 
       String[] items = path.split("/", -1);
+      String resourceNameCamelCase = "";
       List<String> splitPath = new ArrayList<String>();
       op.path = "";
       for (String item: items) {
         if (item.matches("^\\{(.*)\\}$")) {
+          resourceNameCamelCase += item.substring(0, item.length()-2);
           item = item.substring(0, item.length()-1);
           item += ": .*}";
         }
