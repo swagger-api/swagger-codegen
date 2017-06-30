@@ -224,11 +224,11 @@
     </dependency>
     {{#withXml}}
 
-    <!-- XML processing: Jackson -->
+    <!-- XML processing: JAXB -->
     <dependency>
-      <groupId>com.fasterxml.jackson.dataformat</groupId>
-      <artifactId>jackson-dataformat-xml</artifactId>
-      <version>${jackson-version}</version>
+      <groupId>org.glassfish.jersey.media</groupId>
+      <artifactId>jersey-media-jaxb</artifactId>
+      <version>${jersey-version}</version>
     </dependency>
 
     {{/withXml}}
