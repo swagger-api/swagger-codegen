@@ -1,0 +1,2 @@
+{{#jackson}}{{#withXml}}
+@JacksonXmlRootElement({{#xmlNamespace}}namespace="{{xmlNamespace}}", {{/xmlNamespace}}localName = "{{#xmlName}}{{xmlName}}{{/xmlName}}{{^xmlName}}{{classname}}{{/xmlName}}"){{/withXml}}{{/jackson}}
