@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.regex.Matcher;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -759,6 +760,19 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public String escapeUnsafeCharacters(String input) {
         return input.replace("=end", "=_end").replace("=begin", "=_begin");
+    }
+
+    @Override
+    public String addRegularExpressionDelimiter(String pattern) {
+        if (StringUtils.isEmpty(pattern)) {
+            return pattern;
+        }
+
+        if (!pattern.matches("^/.*")) {
+            return "/" + pattern.replaceAll("/", Matcher.quoteReplacement("\\/")) + "/";
+        }
+
+        return pattern;
     }
 
 }
