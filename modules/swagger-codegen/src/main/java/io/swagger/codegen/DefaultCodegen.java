@@ -3574,7 +3574,7 @@ public class DefaultCodegen {
      */
     public String addRegularExpressionDelimiter(String pattern) {
         if (pattern != null && !pattern.matches("^/.*")) {
-            return "/" + pattern + "/";
+            return "/" + pattern.replace("/", "\\/") + "/";
         }
         return pattern;
     }
