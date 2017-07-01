@@ -45,8 +45,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     public static final String FULL_JAVA_UTIL = "fullJavaUtil";
     public static final String DEFAULT_LIBRARY = "<default>";
     public static final String DATE_LIBRARY = "dateLibrary";
+    public static final String JAVA8_MODE = "java8";
     public static final String SUPPORT_JAVA6 = "supportJava6";
 
+    protected boolean java8Mode = false;
     protected String dateLibrary = "joda";
     protected String invokerPackage = "io.swagger";
     protected String groupId = "io.swagger";
@@ -148,13 +150,19 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
         CliOption dateLibrary = new CliOption(DATE_LIBRARY, "Option. Date library to use");
         Map<String, String> dateOptions = new HashMap<String, String>();
-        dateOptions.put("java8", "Java 8 native");
+        dateOptions.put("java8", "Java 8 native - note: this also sets \"" + JAVA8_MODE + "\" to true");
         dateOptions.put("java8-localdatetime", "Java 8 using LocalDateTime (for legacy app only)");
         dateOptions.put("joda", "Joda");
         dateOptions.put("legacy", "Legacy java.util.Date");
         dateLibrary.setEnum(dateOptions);
-
         cliOptions.add(dateLibrary);
+
+        CliOption java8Mode = new CliOption(JAVA8_MODE, "Option. Use Java8 classes instead of third party equivalents");
+        Map<String, String> java8ModeOptions = new HashMap<String, String>();
+        java8ModeOptions.put("true", "Use Java 8 classes such as Base64");
+        java8ModeOptions.put("false", "Various third party libraries as needed");
+        java8Mode.setEnum(java8ModeOptions);
+        cliOptions.add(java8Mode);
 
     }
 
@@ -347,6 +355,11 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         importMapping.put("JsonCreator", "com.fasterxml.jackson.annotation.JsonCreator");
         importMapping.put("JsonValue", "com.fasterxml.jackson.annotation.JsonValue");
         importMapping.put("SerializedName", "com.google.gson.annotations.SerializedName");
+        importMapping.put("TypeAdapter", "com.google.gson.TypeAdapter");
+        importMapping.put("JsonAdapter", "com.google.gson.annotations.JsonAdapter");
+        importMapping.put("JsonReader", "com.google.gson.stream.JsonReader");
+        importMapping.put("JsonWriter", "com.google.gson.stream.JsonWriter");
+        importMapping.put("IOException", "java.io.IOException");
         importMapping.put("Objects", "java.util.Objects");
         importMapping.put("StringUtil", invokerPackage + ".StringUtil");
         // import JsonCreator if JsonProperty is imported
@@ -354,8 +367,15 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         importMapping.put("com.fasterxml.jackson.annotation.JsonProperty", "com.fasterxml.jackson.annotation.JsonCreator");
 
         if(additionalProperties.containsKey(DATE_LIBRARY)) {
-            setDateLibrary(additionalProperties.get("dateLibrary").toString());
+            setDateLibrary(additionalProperties.get(DATE_LIBRARY).toString());
             additionalProperties.put(dateLibrary, "true");
+        }
+
+        if(additionalProperties.containsKey(JAVA8_MODE)) {
+            setJava8Mode(Boolean.parseBoolean(additionalProperties.get(JAVA8_MODE).toString()));
+            if ( java8Mode ) {
+                additionalProperties.put("java8", "true");
+            }
         }
 
         if("joda".equals(dateLibrary)) {
@@ -864,11 +884,13 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
                         hasFormParameters = true;
                     }
                 }
-                String defaultContentType = hasFormParameters ? "application/x-www-form-urlencoded" : "application/json";
-                String contentType = operation.getConsumes() == null || operation.getConsumes().isEmpty()
-                        ? defaultContentType : operation.getConsumes().get(0);
+              //only add content-Type if its no a GET-Method
+                if(path.getGet() != null || ! operation.equals(path.getGet())){
+                    String defaultContentType = hasFormParameters ? "application/x-www-form-urlencoded" : "application/json";
+                    String contentType =  operation.getConsumes() == null || operation.getConsumes().isEmpty() ? defaultContentType : operation.getConsumes().get(0);
+                    operation.setVendorExtension("x-contentType", contentType);
+                }
                 String accepts = getAccept(operation);
-                operation.setVendorExtension("x-contentType", contentType);
                 operation.setVendorExtension("x-accepts", accepts);
             }
         }
@@ -952,8 +974,11 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     @Override
     public String toEnumValue(String value, String datatype) {
         if ("Integer".equals(datatype) || "Long".equals(datatype) ||
-            "Float".equals(datatype) || "Double".equals(datatype)) {
+            "Double".equals(datatype)) {
             return value;
+        } else if ("Float".equals(datatype)) {
+            // add f to number, e.g. 3.14 => 3.14f
+            return value + "f";
         } else {
             return "\"" + escapeText(value) + "\"";
         }
@@ -1114,6 +1139,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
     public void setDateLibrary(String library) {
         this.dateLibrary = library;
+    }
+
+    public void setJava8Mode(boolean enabled) {
+        this.java8Mode = enabled;
     }
 
     @Override

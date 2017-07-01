@@ -141,6 +141,8 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
                 defaultValue("default_controller"));
         cliOptions.add(new CliOption(SUPPORT_PYTHON2, "support python2").
                 defaultValue("false"));
+        cliOptions.add(new CliOption("serverPort", "TCP port to listen to in app.run").
+                defaultValue("8080"));
     }
 
     @Override
@@ -431,6 +433,10 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
 
     @Override
     public String toParamName(String name) {
+        // don't do name =removeNonNameElementToCamelCase(name); // this breaks connexion, which does not modify param names before sending them
+        if (reservedWords.contains(name)) {
+            return escapeReservedWord(name);
+        }
         // Param name is already sanitized in swagger spec processing
         return name;
     }

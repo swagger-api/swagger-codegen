@@ -40,7 +40,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.1.1</version>
+                <version>3.1.0</version>
                 <configuration>
                     <webResources>
                         <resource>
@@ -112,7 +112,8 @@
                             <goal>wget</goal>
                         </goals>
                         <configuration>
-                            <url>https://github.com/swagger-api/swagger-ui/archive/master.tar.gz</url>
+                            <url>http://github.com/swagger-api/swagger-ui/archive/master.tar.gz</url>
+
                             <unpack>true</unpack>
                             <skipCache>true</skipCache>
                             <outputDirectory>${project.build.directory}</outputDirectory>

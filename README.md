@@ -1,8 +1,15 @@
 # Swagger Code Generator
 
-[![Build Status](https://img.shields.io/travis/swagger-api/swagger-codegen/master.svg?label=Petstore%20Integration%20Test)](https://travis-ci.org/swagger-api/swagger-codegen)
+- Master: [![Build Status](https://img.shields.io/travis/swagger-api/swagger-codegen/master.svg?label=Petstore%20Integration%20Test)](https://travis-ci.org/swagger-api/swagger-codegen)
 [![Run Status](https://img.shields.io/shippable/5782588a3be4f4faa56c5bea.svg?label=Mustache%20Template%20Test)](https://app.shippable.com/projects/5782588a3be4f4faa56c5bea)
 [![Windows Test](https://ci.appveyor.com/api/projects/status/github/swagger-api/swagger-codegen?branch=master&svg=true&passingText=Windows%20Test%20-%20OK&failingText=Windows%20Test%20-%20Fails)](https://ci.appveyor.com/project/WilliamCheng/swagger-codegen-wh2wu)
+[![Java Test](https://circleci.com/gh/swagger-api/swagger-codegen.svg?style=shield)](https://circleci.com/gh/swagger-api/swagger-codegen)
+- 2.3.0:  [![Build Status](https://img.shields.io/travis/swagger-api/swagger-codegen/2.3.0.svg?label=Petstore%20Integration%20Test)](https://travis-ci.org/swagger-api/swagger-codegen)
+[![Run Status](https://img.shields.io/shippable/5782588a3be4f4faa56c5bea/2.3.0.svg?label=Mustache%20Template%20Test)](https://app.shippable.com/projects/5782588a3be4f4faa56c5bea)
+[![Windows Test](https://ci.appveyor.com/api/projects/status/github/swagger-api/swagger-codegen?branch=2.3.0&svg=true&passingText=Windows%20Test%20-%20OK&failingText=Windows%20Test%20-%20Fails)](https://ci.appveyor.com/project/WilliamCheng/swagger-codegen-wh2wu)
+[![Java Test](https://circleci.com/gh/swagger-api/swagger-codegen.svg?style=shield)](https://circleci.com/gh/swagger-api/swagger-codegen)
+
+
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.swagger/swagger-codegen-project/badge.svg?style=plastic)](https://maven-badges.herokuapp.com/maven-central/io.swagger/swagger-codegen-project)
 [![PR Stats](http://issuestats.com/github/swagger-api/swagger-codegen/badge/pr)](http://issuestats.com/github/swagger-api/swagger-codegen) [![Issue Stats](http://issuestats.com/github/swagger-api/swagger-codegen/badge/issue)](http://issuestats.com/github/swagger-api/swagger-codegen)
 
@@ -17,9 +24,10 @@
 ## Overview
 This is the swagger codegen project, which allows generation of API client libraries (SDK generation), server stubs and documentation automatically given an [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification). Currently, the following languages/frameworks are supported:
 
-- **API clients**: **ActionScript**, **Apex**, **Bash**, **C#** (.net 2.0, 4.0 or later), **C++** (cpprest, Qt5, Tizen), **Clojure**, **Dart**, **Elixir**, **Go**, **Groovy**, **Haskell**, **Java** (Jersey1.x, Jersey2.x, OkHttp, Retrofit1.x, Retrofit2.x, Feign), **Node.js** (ES5, ES6, AngularJS with Google Closure Compiler annotations) **Objective-C**, **Perl**, **PHP**, **Python**, **Ruby**, **Scala**, **Swift** (2.x, 3.x), **Typescript** (Angular1.x, Angular2.x, Fetch, jQuery, Node)
-- **Server stubs**: **C#** (ASP.NET Core, NancyFx), **Erlang**, **Go**, **Haskell**, **Java** (MSF4J, Spring, Undertow, JAX-RS: CDI, CXF, Inflector, RestEasy), **PHP** (Lumen, Slim, Silex, [Zend Expressive](https://github.com/zendframework/zend-expressive)), **Python** (Flask), **NodeJS**, **Ruby** (Sinatra, Rails5), **Scala** ([Finch](https://github.com/finagle/finch), Scalatra)
+- **API clients**: **ActionScript**, **Apex**, **Bash**, **C#** (.net 2.0, 4.0 or later), **C++** (cpprest, Qt5, Tizen), **Clojure**, **Dart**, **Elixir**, **Go**, **Groovy**, **Haskell**, **Java** (Jersey1.x, Jersey2.x, OkHttp, Retrofit1.x, Retrofit2.x, Feign), **Kotlin**, **Node.js** (ES5, ES6, AngularJS with Google Closure Compiler annotations) **Objective-C**, **Perl**, **PHP**, **PowerShell**, **Python**, **Ruby**, **Scala**, **Swift** (2.x, 3.x), **Typescript** (Angular1.x, Angular2.x, Fetch, jQuery, Node)
+- **Server stubs**: **C#** (ASP.NET Core, NancyFx), **C++** (Pistache, Restbed), **Erlang**, **Go**, **Haskell**, **Java** (MSF4J, Spring, Undertow, JAX-RS: CDI, CXF, Inflector, RestEasy, Play Framework), **PHP** (Lumen, Slim, Silex, [Zend Expressive](https://github.com/zendframework/zend-expressive)), **Python** (Flask), **NodeJS**, **Ruby** (Sinatra, Rails5), **Scala** ([Finch](https://github.com/finagle/finch), Scalatra)
 - **API documentation generators**: **HTML**, **Confluence Wiki** 
+- **Configuration files**: [**Apache2**](https://httpd.apache.org/)
 - **Others**: **JMeter**
 
 Check out [OpenAPI-Spec](https://github.com/OAI/OpenAPI-Specification) for additional information about the OpenAPI project.
@@ -258,22 +266,29 @@ NAME
 SYNOPSIS
         swagger-codegen-cli generate
                 [(-a <authorization> | --auth <authorization>)]
-                [--additional-properties <additional properties>]
+                [--additional-properties <additional properties>...]
                 [--api-package <api package>] [--artifact-id <artifact id>]
                 [--artifact-version <artifact version>]
                 [(-c <configuration file> | --config <configuration file>)]
-                [-D <system properties>] [--group-id <group id>]
+                [-D <system properties>...] [--git-repo-id <git repo id>]
+                [--git-user-id <git user id>] [--group-id <group id>]
+                [--http-user-agent <http user agent>]
                 (-i <spec file> | --input-spec <spec file>)
-                [--import-mappings <import mappings>]
-                [--instantiation-types <instantiation types>]
+                [--ignore-file-override <ignore file override location>]
+                [--import-mappings <import mappings>...]
+                [--instantiation-types <instantiation types>...]
                 [--invoker-package <invoker package>]
                 (-l <language> | --lang <language>)
-                [--language-specific-primitives <language specific primitives>]
-                [--library <library>] [--model-package <model package>]
+                [--language-specific-primitives <language specific primitives>...]
+                [--library <library>] [--model-name-prefix <model name prefix>]
+                [--model-name-suffix <model name suffix>]
+                [--model-package <model package>]
                 [(-o <output directory> | --output <output directory>)]
+                [--release-note <release note>] [--remove-operation-id-prefix]
+                [--reserved-words-mappings <reserved word mappings>...]
                 [(-s | --skip-overwrite)]
                 [(-t <template directory> | --template-dir <template directory>)]
-                [--type-mappings <type mappings>] [(-v | --verbose)]
+                [--type-mappings <type mappings>...] [(-v | --verbose)]
 
 OPTIONS
         -a <authorization>, --auth <authorization>
@@ -551,8 +566,13 @@ To specify an import mapping, use the `--import-mappings` argument and specify t
 Or for multiple mappings:
 
 ```
-Pet=my.models.MyPet,Order=my.models.MyOrder
+--import-mappings Pet=my.models.MyPet,Order=my.models.MyOrder
 ```
+or
+```
+--import-mappings Pet=my.models.MyPet --import-mappings Order=my.models.MyOrder
+```
+
 
 ### Validating your OpenAPI Spec
 
@@ -710,6 +730,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Balance Internet](https://www.balanceinternet.com.au/)
 - [beemo](http://www.beemo.eu)
 - [bitly](https://bitly.com)
+- [BeezUP](http://www.beezup.com)
 - [Box](https://box.com)
 - [Bufferfly Network](https://www.butterflynetinc.com/)
 - [Cachet Financial](http://www.cachetfinancial.com/)
@@ -734,6 +755,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [FH Münster - University of Applied Sciences](http://www.fh-muenster.de)
 - [Fotition](https://www.fotition.com/)
 - [Gear Zero Network](https://www.gearzero.ca)
+- [General Electric](https://www.ge.com/)
 - [Germin8](http://www.germin8.com)
 - [GigaSpaces](http://www.gigaspaces.com)
 - [goTransverse](http://www.gotransverse.com/api)
@@ -754,6 +776,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Kubernetes](https://kubernetes.io/)
 - [LANDR Audio](https://www.landr.com/)
 - [Lascaux](http://www.lascaux.it/)
+- [Leanix](http://www.leanix.net/)
 - [Leica Geosystems AG](http://leica-geosystems.com)
 - [LiveAgent](https://www.ladesk.com/)
 - [LXL Tech](http://lxltech.com)
@@ -806,6 +829,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Upwork](http://upwork.com/)
 - [uShip](https://www.uship.com/)
 - [VMware](https://vmware.com/)
+- [Viavi Solutions Inc.](https://www.viavisolutions.com)
 - [W.UP](http://wup.hu/?siteLang=en)
 - [Wealthfront](https://www.wealthfront.com/)
 - [Webever GmbH](https://www.webever.de/)
@@ -834,6 +858,7 @@ Presentations/Videos/Tutorials/Books
 - 2017/04/27 - [Swagger Codegen のPHP実装があまりにアレだったので、ライブラリ自作して公開してみた](http://qiita.com/imunew/items/2e9c472e0097e329f2cd) by [imunew](http://qiita.com/imunew)
 - 2017/05/17 - [Diseño de APIs con OpenAPI](https://www.slideshare.net/pjmolina/diseo-de-apis-con-openapi) by [Pedro J. Molina](https://github.com/pjmolina) @ [JSDayES 2017](http://2017.jsday.es/)
 - 2017/05/22 - [Presentation of the Vert.x-Swagger project](http://vertx.io/blog/presentation-of-the-vert-x-swagger-project/) by [@phiz71](http://github.com/phiz71)
+- 2017/06/21 - [Swagger Presentation (Warsaw Ruby Users Group](https://www.youtube.com/watch?v=uCnnDMFQB8U) by [@rafalpetryka](http://github.com/rafalpetryka)
 
 # Swagger Codegen Core Team
 
@@ -844,13 +869,14 @@ Swagger Codegen core team members are contributors who have been making signific
 |:-------------|:-------------|
 | ActionScript | |
 | C++      |  |  
-| C#      | @jimschubert (2016/05/01) |  |
+| C#      | @jimschubert (2016/05/01) |
 | Clojure | @xhh (2016/05/01) |
 | Dart      |  |  
 | Groovy     |  |  
 | Go     |  @guohuang (2016/05/01) @neilotoole (2016/05/01) |  
 | Java      | @cbornet (2016/05/01) @xhh (2016/05/01) @epaul (2016/06/04) |
 | Java (Spring Cloud) | @cbornet (2016/07/19) |
+| Kotlin      | @jimschubert (2016/05/01) |
 | NodeJS/Javascript | @xhh (2016/05/01) |
 | ObjC      | @mateuszmackowiak (2016/05/09) |
 | Perl      | @wing328 (2016/05/01) |
@@ -893,6 +919,7 @@ Here is a list of template creators:
    * C++ REST: @Danielku15
    * C# (.NET 2.0): @who
    * C# (.NET Standard 1.3 ): @Gronsak
+   * C# (.NET 4.5 refactored): @jim
    * Clojure: @xhh
    * Dart: @yissachar
    * Elixir: @niku
@@ -909,8 +936,10 @@ Here is a list of template creators:
    * Javascript/NodeJS: @jfiala
    * Javascript (Closure-annotated Angular) @achew22
    * JMeter @davidkiss
+   * Kotlin @jimschubert
    * Perl: @wing328
    * PHP (Guzzle): @baartosz
+   * PowerShell: @beatcracker
    * Swift: @tkqubo
    * Swift 3: @hexelon
    * TypeScript (Node):  @mhardorf
@@ -921,6 +950,8 @@ Here is a list of template creators:
  * Server Stubs
    * C# ASP.NET5: @jimschubert
    * C# NancyFX: @mstefaniuk
+   * C++ Pistache: @sebymiano
+   * C++ Restbed: @stkrwork
    * Erlang Server: @galaxie
    * Go Server: @guohuang
    * Haskell Servant: @algas
@@ -940,6 +971,8 @@ Here is a list of template creators:
  * Documentation
    * HTML Doc 2: @jhitchcock
    * Confluence Wiki: @jhitchcock
+ * Configuration
+   * Apache2: @stkrwork
 
 ## How to join the core team
 

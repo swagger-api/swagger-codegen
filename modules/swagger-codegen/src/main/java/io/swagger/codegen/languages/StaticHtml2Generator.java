@@ -1,15 +1,10 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenOperation;
-import io.swagger.codegen.CodegenParameter;
-import io.swagger.codegen.CodegenResponse;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.DefaultCodegen;
-import io.swagger.codegen.SupportingFile;
+import com.samskivert.mustache.Mustache;
+import io.swagger.codegen.*;
 import io.swagger.models.Info;
+import org.yaml.snakeyaml.error.Mark;
+import io.swagger.codegen.utils.Markdown;
 import io.swagger.models.Model;
 import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
@@ -127,6 +122,7 @@ public class StaticHtml2Generator extends DefaultCodegen implements CodegenConfi
                     response.code = "default";
                 }
             }
+            op.formParams = postProcessParameterEnum(op.formParams);
         }
         return objs;
     }
@@ -153,6 +149,8 @@ public class StaticHtml2Generator extends DefaultCodegen implements CodegenConfi
 
         additionalProperties.put("jsProjectName", jsProjectName);
         additionalProperties.put("jsModuleName", jsModuleName);
+
+        preparHtmlForGlobalDescription(swagger);
     }
 
     @Override
@@ -195,6 +193,45 @@ public class StaticHtml2Generator extends DefaultCodegen implements CodegenConfi
         return op;
     }
 
+    /**
+     * Parse Markdown to HTML for the main "Description" attribute
+     *
+     * @param swagger The base object containing the global description through "Info" class
+     * @return Void
+     */
+    private void preparHtmlForGlobalDescription(Swagger swagger) {
+        String currentDescription = swagger.getInfo().getDescription();
+        if (currentDescription != null && !currentDescription.isEmpty()) {
+            Markdown markInstance = new Markdown();
+            swagger.getInfo().setDescription( markInstance.toHtml(currentDescription) );
+        } else {
+            LOGGER.error("Swagger object description is empty [" + swagger.getInfo().getTitle() + "]");
+        }
+    }
+
+    /**
+     * Format to HTML the enums contained in every operations
+     *
+     * @param parameterList The whole parameters contained in one operation
+     * @return String | Html formated enum
+     */
+    public List<CodegenParameter> postProcessParameterEnum(List<CodegenParameter> parameterList) {
+        String enumFormatted = "";
+        for(CodegenParameter parameter : parameterList) {
+            if (parameter.isEnum) {
+                for (int i = 0; i < parameter._enum.size(); i++) {
+                    String spacer = (i == (parameter._enum.size() - 1)) ? " " : ", ";
+
+                    if (parameter._enum.get(i) != null)
+                        enumFormatted += "`" + parameter._enum.get(i) + "`" + spacer;
+                }
+                Markdown markInstance = new Markdown();
+                if (!enumFormatted.isEmpty())
+                    parameter.vendorExtensions.put("x-eumFormatted", markInstance.toHtml(enumFormatted));
+            }
+        }
+        return parameterList;
+    }
 
     private String sanitizePath(String p) {
         //prefer replace a ', instead of a fuLL URL encode for readability
