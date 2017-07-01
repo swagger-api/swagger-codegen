@@ -2,8 +2,8 @@ package io.swagger.api;
 
 import java.math.BigDecimal;
 import io.swagger.model.Client;
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.OffsetDateTime;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import io.swagger.model.OuterComposite;
 
 import io.swagger.annotations.*;
@@ -59,7 +59,7 @@ public interface FakeApiDelegate {
         String string,
         byte[] binary,
         LocalDate date,
-        OffsetDateTime dateTime,
+        DateTime dateTime,
         String password,
         String paramCallback);
 

@@ -2,8 +2,8 @@ package io.swagger.api;
 
 import java.math.BigDecimal;
 import io.swagger.model.Client;
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.OffsetDateTime;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import io.swagger.model.OuterComposite;
 
 import io.swagger.annotations.*;
@@ -80,7 +80,7 @@ public class FakeApiController implements FakeApi {
         @ApiParam(value = "None") @RequestPart(value="string", required=false)  String string,
         @ApiParam(value = "None") @RequestPart(value="binary", required=false)  byte[] binary,
         @ApiParam(value = "None") @RequestPart(value="date", required=false)  LocalDate date,
-        @ApiParam(value = "None") @RequestPart(value="dateTime", required=false)  OffsetDateTime dateTime,
+        @ApiParam(value = "None") @RequestPart(value="dateTime", required=false)  DateTime dateTime,
         @ApiParam(value = "None") @RequestPart(value="password", required=false)  String password,
         @ApiParam(value = "None") @RequestPart(value="callback", required=false)  String paramCallback,
         @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
