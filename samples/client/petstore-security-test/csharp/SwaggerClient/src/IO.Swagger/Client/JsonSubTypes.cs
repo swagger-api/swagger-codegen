@@ -8,17 +8,8 @@ using Newtonsoft.Json.Linq;
 
 namespace JsonSubTypes
 {
-    //  Copyright 2017 Emmanuel Counasse
-    //  
-    //  Licensed under the Apache License, Version 2.0 (the "License");
-    //  you may not use this file except in compliance with the License.
-    //  You may obtain a copy of the License at [apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
-
-    //  Unless required by applicable law or agreed to in writing, software
-    //  distributed under the License is distributed on an "AS IS" BASIS,
-    //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    //  See the License for the specific language governing permissions and
-    //  limitations under the License.
+    //  Copied from project https://github.com/manuc66/JsonSubTypes
+    //  https://raw.githubusercontent.com/manuc66/JsonSubTypes/07403192ea3f4959f6d42f5966ac56ceb0d6095b/JsonSubTypes/JsonSubtypes.cs
 
     public class JsonSubtypes : JsonConverter
     {
@@ -141,7 +132,7 @@ namespace JsonSubTypes
         private static IList CreateCompatibleList(Type targetContainerType, Type elementType)
         {
             IList list;
-            if (targetContainerType.IsArray || targetContainerType.IsAbstract)
+            if (targetContainerType.IsArray || targetContainerType.GetTypeInfo().IsAbstract)
             {
                 list = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(elementType));
             }
@@ -199,10 +190,10 @@ namespace JsonSubTypes
 
         private static Type GetTypeByPropertyPresence(JObject jObject, Type parentType)
         {
-            foreach (var type in parentType.GetCustomAttributes<KnownSubTypeWithPropertyAttribute>())
+            foreach (var type in parentType.GetTypeInfo().GetCustomAttributes<KnownSubTypeWithPropertyAttribute>())
             {
                 JToken ignore;
-                if (jObject.TryGetValue(type.PropertyName, StringComparison.InvariantCulture, out ignore))
+                if (jObject.TryGetValue(type.PropertyName, out ignore))
                 {
                     return type.SubType;
                 }
@@ -231,7 +222,7 @@ namespace JsonSubTypes
             if (typeName == null)
                 return null;
 
-            var insideAssembly = parentType.Assembly;
+            var insideAssembly = parentType.GetTypeInfo().Assembly;
 
             var typeByName = insideAssembly.GetType(typeName);
             if (typeByName == null)
@@ -253,12 +244,12 @@ namespace JsonSubTypes
 
         private static Dictionary<object, Type> GetSubTypeMapping(Type type)
         {
-            return type.GetCustomAttributes<KnownSubTypeAttribute>().ToDictionary(x => x.AssociatedValue, x => x.SubType);
+            return type.GetTypeInfo().GetCustomAttributes<KnownSubTypeAttribute>().ToDictionary(x => x.AssociatedValue, x => x.SubType);
         }
 
         private static object ConvertJsonValueToType(object objectType, Type targetlookupValueType)
         {
-            if (targetlookupValueType.IsEnum)
+            if (targetlookupValueType.GetTypeInfo().IsEnum)
                 return Enum.ToObject(targetlookupValueType, objectType);
 
             return Convert.ChangeType(objectType, targetlookupValueType);
