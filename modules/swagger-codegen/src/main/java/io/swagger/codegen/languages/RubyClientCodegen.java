@@ -761,4 +761,25 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         return input.replace("=end", "=_end").replace("=begin", "=_begin");
     }
 
+    @Override
+    public String toRegularExpression(String pattern) {
+        if (pattern == null) {
+            return pattern;
+        }
+        return escapeUnsafeCharacters(addRegularExpressionDelimiter(pattern));
+    }
+
+    @Override
+    public String addRegularExpressionDelimiter(String pattern) {
+        if (StringUtils.isEmpty(pattern)) {
+            return pattern;
+        }
+
+        if (!pattern.matches("^/.*")) {
+            return "/" + pattern.replaceAll("/", "\\\\/") + "/";
+        }
+
+        return pattern;
+    }
+
 }
