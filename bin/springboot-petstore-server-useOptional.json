@@ -1,3 +1,4 @@
 {
-  "useOptional": true
+    "artifactId": "spring-boot-useoptional",
+    "useOptional": true
 }
