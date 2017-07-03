@@ -107,10 +107,6 @@ dependencies {
     compile "com.fasterxml.jackson.core:jackson-core:$jackson_version"
     compile "com.fasterxml.jackson.core:jackson-annotations:$jackson_version"
     compile "com.fasterxml.jackson.core:jackson-databind:$jackson_version"
-<<<<<<< HEAD
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jackson_version",
-=======
-    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jackson_version"
->>>>>>> 29bde34e68a0dfe8cc980c63a7b4db850b22c421
     testCompile "junit:junit:$junit_version"
 }
