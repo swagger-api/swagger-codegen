@@ -1,0 +1,14 @@
+{{>noteinfo}}
+
+class
+	API_SERIALIZER
+
+
+feature -- Access
+
+	serializer (f: FUNCTION [TUPLE [STRING, ANY],STRING]; a_content_type: STRING; a_type: ANY): STRING
+			-- Generic Object to Content type serializer.
+		do
+			Result := f.item ([a_content_type, a_type])
+		end
+end

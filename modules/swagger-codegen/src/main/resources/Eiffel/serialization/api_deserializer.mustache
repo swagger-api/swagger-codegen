@@ -1,0 +1,13 @@
+{{>noteinfo}}
+
+class
+	API_DESERIALIZER
+
+feature -- Access
+
+	deserializer (f: FUNCTION [TUPLE [STRING, STRING], detachable ANY]; a_content_type: STRING; a_representation: STRING): detachable ANY
+			-- From a given response with a given content type to a generic Object.
+		do
+			Result := f.item ([a_content_type, a_representation])
+		end
+end
