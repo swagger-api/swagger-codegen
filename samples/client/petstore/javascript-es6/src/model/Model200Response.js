@@ -23,7 +23,7 @@ import ApiClient from '../ApiClient';
 * @module model/Model200Response
 * @version 1.0.0
 */
-export default class Model200Response {
+export default class Model200Response{
     /**
     * Constructs a new <code>Model200Response</code>.
     * Model for testing model name starting with number

@@ -23,7 +23,7 @@ import ApiClient from '../ApiClient';
 * @module model/ArrayOfNumberOnly
 * @version 1.0.0
 */
-export default class ArrayOfNumberOnly {
+export default class ArrayOfNumberOnly{
     /**
     * Constructs a new <code>ArrayOfNumberOnly</code>.
     * @alias module:model/ArrayOfNumberOnly

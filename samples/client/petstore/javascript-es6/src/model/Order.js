@@ -23,7 +23,7 @@ import ApiClient from '../ApiClient';
 * @module model/Order
 * @version 1.0.0
 */
-export default class Order {
+export default class Order{
     /**
     * Constructs a new <code>Order</code>.
     * @alias module:model/Order

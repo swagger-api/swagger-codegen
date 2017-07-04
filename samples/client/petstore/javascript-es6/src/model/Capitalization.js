@@ -23,7 +23,7 @@ import ApiClient from '../ApiClient';
 * @module model/Capitalization
 * @version 1.0.0
 */
-export default class Capitalization {
+export default class Capitalization{
     /**
     * Constructs a new <code>Capitalization</code>.
     * @alias module:model/Capitalization

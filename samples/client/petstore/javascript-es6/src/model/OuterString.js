@@ -23,7 +23,7 @@ import ApiClient from '../ApiClient';
 * @module model/OuterString
 * @version 1.0.0
 */
-export default class OuterString {
+export default class OuterString{
     /**
     * Constructs a new <code>OuterString</code>.
     * @alias module:model/OuterString

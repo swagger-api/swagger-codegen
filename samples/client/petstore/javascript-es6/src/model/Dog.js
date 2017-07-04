@@ -24,7 +24,7 @@ import Animal from './Animal';
 * @module model/Dog
 * @version 1.0.0
 */
-export default class Dog {
+export default class Dog{
     /**
     * Constructs a new <code>Dog</code>.
     * @alias module:model/Dog

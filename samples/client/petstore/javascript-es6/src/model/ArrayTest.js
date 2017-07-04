@@ -24,7 +24,7 @@ import ReadOnlyFirst from './ReadOnlyFirst';
 * @module model/ArrayTest
 * @version 1.0.0
 */
-export default class ArrayTest {
+export default class ArrayTest{
     /**
     * Constructs a new <code>ArrayTest</code>.
     * @alias module:model/ArrayTest
