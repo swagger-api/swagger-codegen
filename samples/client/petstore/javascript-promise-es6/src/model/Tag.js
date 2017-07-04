@@ -23,7 +23,7 @@ import ApiClient from '../ApiClient';
 * @module model/Tag
 * @version 1.0.0
 */
-export default class Tag{
+export default class Tag {
     /**
     * Constructs a new <code>Tag</code>.
     * @alias module:model/Tag

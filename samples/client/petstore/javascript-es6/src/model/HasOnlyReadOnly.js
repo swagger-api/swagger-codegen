@@ -23,7 +23,7 @@ import ApiClient from '../ApiClient';
 * @module model/HasOnlyReadOnly
 * @version 1.0.0
 */
-export default class HasOnlyReadOnly{
+export default class HasOnlyReadOnly {
     /**
     * Constructs a new <code>HasOnlyReadOnly</code>.
     * @alias module:model/HasOnlyReadOnly

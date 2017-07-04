@@ -23,7 +23,7 @@ import ApiClient from '../ApiClient';
 * @module model/AdditionalPropertiesClass
 * @version 1.0.0
 */
-export default class AdditionalPropertiesClass{
+export default class AdditionalPropertiesClass {
     /**
     * Constructs a new <code>AdditionalPropertiesClass</code>.
     * @alias module:model/AdditionalPropertiesClass

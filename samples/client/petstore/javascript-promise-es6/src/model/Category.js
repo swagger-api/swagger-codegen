@@ -23,7 +23,7 @@ import ApiClient from '../ApiClient';
 * @module model/Category
 * @version 1.0.0
 */
-export default class Category{
+export default class Category {
     /**
     * Constructs a new <code>Category</code>.
     * @alias module:model/Category

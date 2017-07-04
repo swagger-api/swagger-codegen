@@ -23,7 +23,7 @@ import ApiClient from '../ApiClient';
 * @module model/MapTest
 * @version 1.0.0
 */
-export default class MapTest{
+export default class MapTest {
     /**
     * Constructs a new <code>MapTest</code>.
     * @alias module:model/MapTest

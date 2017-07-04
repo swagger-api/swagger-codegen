@@ -24,7 +24,7 @@ import Animal from './Animal';
 * @module model/MixedPropertiesAndAdditionalPropertiesClass
 * @version 1.0.0
 */
-export default class MixedPropertiesAndAdditionalPropertiesClass{
+export default class MixedPropertiesAndAdditionalPropertiesClass {
     /**
     * Constructs a new <code>MixedPropertiesAndAdditionalPropertiesClass</code>.
     * @alias module:model/MixedPropertiesAndAdditionalPropertiesClass

@@ -23,7 +23,7 @@ import ApiClient from '../ApiClient';
 * @module model/EnumArrays
 * @version 1.0.0
 */
-export default class EnumArrays{
+export default class EnumArrays {
     /**
     * Constructs a new <code>EnumArrays</code>.
     * @alias module:model/EnumArrays

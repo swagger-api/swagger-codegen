@@ -23,7 +23,7 @@ import ApiClient from '../ApiClient';
 * @module model/Name
 * @version 1.0.0
 */
-export default class Name{
+export default class Name {
     /**
     * Constructs a new <code>Name</code>.
     * Model for testing model name same as property name

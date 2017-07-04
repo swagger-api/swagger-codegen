@@ -23,7 +23,7 @@ import ApiClient from '../ApiClient';
 * @module model/Client
 * @version 1.0.0
 */
-export default class Client{
+export default class Client {
     /**
     * Constructs a new <code>Client</code>.
     * @alias module:model/Client

@@ -24,7 +24,7 @@ import OuterEnum from './OuterEnum';
 * @module model/EnumTest
 * @version 1.0.0
 */
-export default class EnumTest{
+export default class EnumTest {
     /**
     * Constructs a new <code>EnumTest</code>.
     * @alias module:model/EnumTest

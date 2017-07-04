@@ -23,7 +23,7 @@ import ApiClient from '../ApiClient';
 * @module model/ModelReturn
 * @version 1.0.0
 */
-export default class ModelReturn{
+export default class ModelReturn {
     /**
     * Constructs a new <code>ModelReturn</code>.
     * Model for testing reserved words

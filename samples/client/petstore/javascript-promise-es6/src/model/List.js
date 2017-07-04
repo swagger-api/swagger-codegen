@@ -23,7 +23,7 @@ import ApiClient from '../ApiClient';
 * @module model/List
 * @version 1.0.0
 */
-export default class List{
+export default class List {
     /**
     * Constructs a new <code>List</code>.
     * @alias module:model/List
