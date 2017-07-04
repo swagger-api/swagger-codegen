@@ -23,7 +23,7 @@ import ApiClient from '../ApiClient';
 * @module model/OuterNumber
 * @version 1.0.0
 */
-export default class OuterNumber {
+export default class OuterNumber{
     /**
     * Constructs a new <code>OuterNumber</code>.
     * @alias module:model/OuterNumber

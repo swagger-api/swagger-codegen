@@ -6,7 +6,7 @@
 * @module {{#invokerPackage}}{{invokerPackage}}/{{/invokerPackage}}{{#modelPackage}}{{modelPackage}}/{{/modelPackage}}{{classname}}
 * @version {{projectVersion}}
 */{{/emitJSDoc}}
-export default class {{classname}}{{#parent}}{{^parentModel}}{{#vendorExtensions.x-isArray}} extends Array {{/vendorExtensions.x-isArray}}{{/parentModel}}{{/parent}}{
+export default class {{classname}} {{#parent}}{{^parentModel}}{{#vendorExtensions.x-isArray}}extends Array {{/vendorExtensions.x-isArray}}{{/parentModel}}{{/parent}}{
     {{#emitJSDoc}}/**
     * Constructs a new <code>{{classname}}</code>.{{#description}}
     * {{description}}{{/description}}

@@ -23,7 +23,7 @@ import ApiClient from '../ApiClient';
 * @module model/OuterBoolean
 * @version 1.0.0
 */
-export default class OuterBoolean {
+export default class OuterBoolean{
     /**
     * Constructs a new <code>OuterBoolean</code>.
     * @alias module:model/OuterBoolean

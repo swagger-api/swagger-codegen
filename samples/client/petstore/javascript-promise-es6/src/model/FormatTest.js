@@ -23,7 +23,7 @@ import ApiClient from '../ApiClient';
 * @module model/FormatTest
 * @version 1.0.0
 */
-export default class FormatTest {
+export default class FormatTest{
     /**
     * Constructs a new <code>FormatTest</code>.
     * @alias module:model/FormatTest

@@ -23,7 +23,7 @@ import ApiClient from '../ApiClient';
 * @module model/ClassModel
 * @version 1.0.0
 */
-export default class ClassModel {
+export default class ClassModel{
     /**
     * Constructs a new <code>ClassModel</code>.
     * Model for testing model with \&quot;_class\&quot; property

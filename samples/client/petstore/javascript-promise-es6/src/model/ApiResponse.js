@@ -23,7 +23,7 @@ import ApiClient from '../ApiClient';
 * @module model/ApiResponse
 * @version 1.0.0
 */
-export default class ApiResponse {
+export default class ApiResponse{
     /**
     * Constructs a new <code>ApiResponse</code>.
     * @alias module:model/ApiResponse

@@ -23,7 +23,7 @@ import ApiClient from '../ApiClient';
 * @module model/User
 * @version 1.0.0
 */
-export default class User {
+export default class User{
     /**
     * Constructs a new <code>User</code>.
     * @alias module:model/User

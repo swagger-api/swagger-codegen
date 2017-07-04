@@ -25,7 +25,7 @@ import Tag from './Tag';
 * @module model/Pet
 * @version 1.0.0
 */
-export default class Pet {
+export default class Pet{
     /**
     * Constructs a new <code>Pet</code>.
     * @alias module:model/Pet

@@ -26,7 +26,7 @@ import OuterString from './OuterString';
 * @module model/OuterComposite
 * @version 1.0.0
 */
-export default class OuterComposite {
+export default class OuterComposite{
     /**
     * Constructs a new <code>OuterComposite</code>.
     * @alias module:model/OuterComposite

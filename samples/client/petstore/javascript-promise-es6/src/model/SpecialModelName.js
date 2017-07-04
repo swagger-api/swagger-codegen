@@ -23,7 +23,7 @@ import ApiClient from '../ApiClient';
 * @module model/SpecialModelName
 * @version 1.0.0
 */
-export default class SpecialModelName {
+export default class SpecialModelName{
     /**
     * Constructs a new <code>SpecialModelName</code>.
     * @alias module:model/SpecialModelName
