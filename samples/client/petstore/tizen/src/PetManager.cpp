@@ -229,8 +229,11 @@ static bool deletePetHelper(char * accessToken,
 	struct curl_slist *headerList = NULL;
 
 	
-	//TODO - should use value of paramname instead. Also check for empty not-required headers
-	headerList = curl_slist_append(headerList, "api_key: apiKey");
+	{
+		string headerString("api_key: ");
+		headerString.append(stringify(&apiKey, "std::string"));
+		headerList = curl_slist_append(headerList, headerString.c_str());
+	}
 
 	string accessHeader = "Authorization: Bearer ";
 	accessHeader.append(accessToken);
