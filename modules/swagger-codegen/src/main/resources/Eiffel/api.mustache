@@ -1,0 +1,62 @@
+{{>noteinfo}}
+{{#operations}}
+
+class
+	{{classname}}
+
+inherit
+
+	ANY
+		redefine
+			default_create
+		select
+			default_create
+		end
+
+	REFACTORING_HELPER
+		rename
+			default_create as default_create_rh
+		end
+
+create
+	default_create, make
+
+feature {NONE} -- Initialization
+
+	default_create
+			-- Initialize {{classname}} with default api_client.
+		do
+			api_client := (create {CONFIGURATION}).default_api_client
+		end
+
+	make (a_client: API_CLIENT)
+			-- Initialize {{classname}} with `api_client' `a_client'.
+		do
+			api_client := a_client
+		end
+
+	api_client: API_CLIENT
+			-- Api client.
+
+feature -- Status Report
+
+	last_error: detachable API_ERROR
+
+
+feature -- API Access
+{{#operation}}
+
+ {{operationId}} {{#hasParams}}({{#allParams}}{{paramName}}: {{{dataType}}} {{#hasMore}}; {{/hasMore}}{{/allParams}}){{/hasParams}}{{#returnType}}: {{{returnType}}}{{/returnType}}{{^returnType}}{{/returnType}}
+		-- {{summary}}
+   		-- {{notes}}
+   		-- {{#allParams}}
+   		-- argument: {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+   		-- {{/allParams}}
+   		-- {{#returnType}}
+   		-- Result {{returnType}}{{/returnType}}
+  	do
+ 	end
+{{/operation}}
+
+end
+{{/operations}}

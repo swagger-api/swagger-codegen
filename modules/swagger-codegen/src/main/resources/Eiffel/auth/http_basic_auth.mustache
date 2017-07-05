@@ -37,8 +37,6 @@ feature -- Access
 
 	apply_to_params(a_query_params: LIST [TUPLE [name:STRING; value:STRING]]; a_header_params: STRING_TABLE [STRING])
    			-- <Precursor>.
-		local
-			l_base64: BASE64
 		do
 			if
 				attached user_name as l_username and then

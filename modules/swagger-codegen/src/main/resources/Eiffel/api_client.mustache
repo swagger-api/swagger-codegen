@@ -200,7 +200,7 @@ feature -- HTTP client: call api
 	call_api (a_path: STRING_8; a_method: STRING_8; a_query_params: LIST [TUPLE [name: STRING; value: STRING]]; a_header_params: STRING_TABLE [STRING];
 				a_body: detachable ANY; a_form_params: STRING_TABLE [STRING]; a_auth_names: ARRAY [STRING];
 				a_custom_serializer: detachable FUNCTION [TUPLE [STRING, ANY], STRING];
-				a_custom_deserializer: detachable FUNCTION [TUPLE [STRING, STRING], detachable ANY] ): API_RESPONSE
+				a_custom_deserializer: detachable FUNCTION [TUPLE [STRING, STRING], detachable ANY] ): API_HTTP_RESPONSE
 			-- Execute an HTTP request with the given options.
 			-- Relative path `a_path'
 			-- Method `a_method'  "GET", "HEAD", "OPTIONS", "POST", "PUT", "PATCH" and "DELETE"
@@ -217,7 +217,6 @@ feature -- HTTP client: call api
 			l_response: HTTP_CLIENT_RESPONSE
 			l_context_executor: HTTP_CLIENT_REQUEST_CONTEXT
 			l_content_type: STRING
-			l_api_serializer: API_SERIALIZER
 			l_error: API_ERROR
 		do
 			    --! TODO remove hardcoded values!!!.

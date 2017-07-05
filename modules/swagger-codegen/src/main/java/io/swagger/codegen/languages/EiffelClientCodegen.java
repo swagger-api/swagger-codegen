@@ -1,18 +1,32 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.*;
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenParameter;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.SupportingFile;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
-import io.swagger.models.parameters.Parameter;
-
-import java.io.File;
-import java.util.*;
-
-import org.apache.commons.lang3.StringUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig {
     static Logger LOGGER = LoggerFactory.getLogger(EiffelClientCodegen.class);
@@ -22,6 +36,7 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
     protected String packageVersion = "1.0.0";
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
+    protected String modelPath = "domain";
 
     protected UUID uuid;
 
@@ -44,8 +59,8 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
         super();
         uuid = UUID.randomUUID();
         outputFolder = "generated-code/Eiffel";
- //       modelTemplateFiles.put("model.mustache", ".e");
-//        apiTemplateFiles.put("api.mustache", ".e");
+        modelTemplateFiles.put("model.mustache", ".e");
+        apiTemplateFiles.put("api.mustache", ".e");
 
  //       modelDocTemplateFiles.put("model_doc.mustache", ".md");
  //       apiDocTemplateFiles.put("api_doc.mustache", ".md");
@@ -73,8 +88,6 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
 
         languageSpecificPrimitives = new HashSet<String>(
             Arrays.asList(
-                "STRING_8",
-                "STRING_32",    
                 "BOOLEAN",
                 "INTEGER_8",
                 "INTEGER_16",
@@ -110,6 +123,7 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
         typeMapping.put("binary", "STRING_32");
         typeMapping.put("ByteArray", "STRING_32");  // ARRAY [NATURAL_8]
         typeMapping.put("object", "ANY");
+        typeMapping.put("map", "STRING_TABLE");
 
         //importMapping = new HashMap<String, String>();
         //importMapping.put("time.Time", "time");
@@ -174,7 +188,7 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("configuration.mustache", "src", "configuration.e"));
         supportingFiles.add(new SupportingFile("api_client.mustache", "src", "api_client.e"));
-        supportingFiles.add(new SupportingFile("api_response.mustache", "src", "api_response.e"));
+        supportingFiles.add(new SupportingFile("api_response.mustache", "src", "api_http_response.e"));
         supportingFiles.add(new SupportingFile("api_error.mustache", "src", "api_error.e"));
         supportingFiles.add(new SupportingFile("ecf.mustache", "", "api_client.ecf"));
         supportingFiles.add(new SupportingFile("auth/authentication.mustache",authFolder, "authentication.e"));
@@ -210,11 +224,11 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
 
     @Override
     public String apiFileFolder() {
-        return outputFolder + File.separator;
+    	 return outputFolder + File.separator + "src" + File.separator + "api";
     }
 
     public String modelFileFolder() {
-        return outputFolder + File.separator;
+        return outputFolder + File.separator + "src" + File.separator + modelPath;
     }
 
     @Override
@@ -223,35 +237,39 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
         name = sanitizeName(name.replaceAll("-", "_"));
 
         // if it's all uppper case, do nothing
-        if (name.matches("^[A-Z_]*$"))
+        if (name.matches("^[A-Z_]*$")) {
             return name;
+        }    
 
         // camelize (lower first character) the variable name
         // pet_id => PetId
         name = camelize(name);
+        name = name.toLowerCase();
 
         // for reserved word or word starting with number, append _
-        if (isReservedWord(name))
+        if (isReservedWord(name)) {
             name = escapeReservedWord(name);
+        }    
 
         // for reserved word or word starting with number, append _
-        if (name.matches("^\\d.*"))
-            name = "Var" + name;
+        if (isReservedWord(name) || name.matches("^\\d.*")) {
+            name = escapeReservedWord(name);
+        }
 
         return name;
     }
 
     @Override
     public String toParamName(String name) {
-        // params should be lowerCamelCase. E.g. "person Person"
-        return toVarName(name);
+        // params should be uppercase. E.g. "person: PERSON"
+        return toVarName(name).toLowerCase();
     }
 
     @Override
     public String toModelName(String name) {
         // camelize the model name
         // phone_number => PhoneNumber
-        return toModelFilename(name);
+        return toModelFilename(name).toUpperCase();
     }
 
     @Override
@@ -265,7 +283,7 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
         }
 
         name = sanitizeName(name);
-
+        
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
             LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + ("model_" + name));
@@ -290,7 +308,13 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
         return underscore(name) + "_api";
     }
 
-
+    @Override
+    public String toApiName(String name) {
+        if (name.length() == 0) {
+            return "DEFAULT_API";
+        }
+        return name.toUpperCase() + "_API";
+    }
 
     /**
      * Overrides postProcessParameter to add a vendor extension "x-exportParamName".
@@ -339,19 +363,20 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
     public String toApiDocFilename(String name) {
         return toApiName(name);
     }
-
+    
+  
     @Override
     public String getTypeDeclaration(Property p) {
         if(p instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) p;
             Property inner = ap.getItems();
-            return "[]" + getTypeDeclaration(inner);
+            return "LIST [" + getTypeDeclaration(inner) + "]";
         }
         else if (p instanceof MapProperty) {
             MapProperty mp = (MapProperty) p;
             Property inner = mp.getAdditionalProperties();
 
-            return getSwaggerType(p) + "[string]" + getTypeDeclaration(inner);
+            return getSwaggerType(p) + "[" + getTypeDeclaration(inner) + "]";
         }
         //return super.getTypeDeclaration(p);
 
@@ -397,7 +422,7 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
             sanitizedOperationId = "call_" + sanitizedOperationId;
         }
 
-        return camelize(sanitizedOperationId);
+        return unCamelize (sanitizedOperationId);
     }
 
     @Override
@@ -408,7 +433,8 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
         List<CodegenOperation> operations = (List<CodegenOperation>) objectMap.get("operation");
         for (CodegenOperation operation : operations) {
             // http method verb conversion (e.g. PUT => Put)
-            operation.httpMethod = camelize(operation.httpMethod.toLowerCase());
+
+        	operation.httpMethod = camelize(operation.httpMethod.toLowerCase());
         }
 
         // remove model imports to avoid error
@@ -517,5 +543,9 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
         customImport.put(key, value);
 
         return customImport;
+    }
+    
+    public String unCamelize (String name){
+    	return  name.replaceAll("(.)(\\p{Upper})", "$1_$2").toLowerCase();
     }
 }

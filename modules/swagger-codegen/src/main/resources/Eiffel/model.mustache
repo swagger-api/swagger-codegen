@@ -1,0 +1,94 @@
+{{>noteinfo}}
+{{#models}}
+{{#model}}
+
+class {{classname}} 
+
+inherit
+
+  ANY
+      redefine
+          out
+      end
+
+feature --Access
+
+{{#vars}}
+    {{#isPrimitiveType}}
+        {{name}}: {{{datatype}}} 
+        {{#description}} -- {{{description}}}  {{/description}}
+    {{/isPrimitiveType}}
+    {{^isPrimitiveType}}
+    {{#isContainer}}
+        {{name}}: detachable {{{datatypeWithEnum}}} 
+        {{#description}} -- {{{description}}}{{/description}}
+		 {{/isContainer}}
+		 {{^isContainer}}
+        {{name}}: detachable {{{datatype}}} 
+        {{#description}} -- {{{description}}}{{/description}}
+		 {{/isContainer}}
+ 	  {{/isPrimitiveType}}
+  {{/vars}}
+
+feature -- Change Element  
+ 
+  {{#vars}}
+        
+        set_{{name}} (a_name: like {{name}})
+            -- Set '{{name}}' with 'a_name'.
+          do
+  			     {{name}} := a_name
+  		    ensure
+  			     {{name}}_set: {{name}} = a_name		
+ 		     end
+
+  {{/vars}}
+
+ feature -- Status Report
+
+      out: STRING
+              -- <Precursor>
+          local
+              l_result: STRING
+          do
+              create l_result.make_empty
+              l_result.append("%Nclass {{classname}}%N");
+              {{#vars}} 
+              {{#isListContainer}}
+              if attached {{name}} as l_{{name}} then
+                across l_{{name}} as ic loop
+                  l_result.append ("%N")
+                  l_result.append (ic.item.out)
+                  l_result.append ("%N")
+                end
+              end 
+              {{/isListContainer}}
+              {{#isMapContainer}}
+              if attached {{name}} as l_{{name}} then
+                  across l_{{name}} as ic loop
+                      l_result.append ("%N")
+                       l_result.append ("key:")
+                       l_result.append (ic.key.out)
+                       l_result.append (" - ")
+                       l_result.append ("val:")
+                       l_result.append (ic.item.out)
+                       l_result.append ("%N")
+                    end
+              end        
+              {{/isMapContainer}}
+              {{^isContainer}}
+              if attached {{name}} as l_{{name}} then
+                 l_result.append ("%N")
+                 l_result.append (l_{{name}}.out)
+                 l_result.append ("%N")    
+              end  
+              {{/isContainer}}
+              {{/vars}}
+
+              Result := l_result
+         end
+
+
+end
+{{/model}}
+{{/models}}
