@@ -1,0 +1,20 @@
+{{>licenseInfo}}
+import { HttpClient } from 'aurelia-http-client';
+
+const BASE_PATH = '{{{basePath}}}'.replace(/\/+$/, '');
+
+export class Api {
+  basePath: string;
+  httpClient: HttpClient;
+
+  constructor(httpClient: HttpClient, basePath: string = BASE_PATH) {
+    this.basePath = basePath;
+    this.httpClient = httpClient;
+  }
+
+  protected ensureParamIsSet<T>(context: string, params: T, paramName: keyof T): void {
+    if (null === params[paramName]) {
+      throw new Error(`Missing required parameter ${paramName} when calling ${context}`);
+    }
+  }
+}
