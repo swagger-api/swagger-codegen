@@ -44,15 +44,18 @@ feature -- Data
 			end
 		end
 
+feature -- Error
+
+	error: detachable API_ERROR
+			-- Internal client error.
+
 feature {NONE} -- Implementation
 
 	response: detachable HTTP_CLIENT_RESPONSE
 			-- Low level response returned by the API call.
 
-	error: detachable API_ERROR
-			-- Internal client error.
-
 	deserializer: detachable FUNCTION [TUPLE [STRING, STRING], detachable ANY]
 			-- function to map a response body with a given content type to the target
 			-- in the domain model.
+
 end

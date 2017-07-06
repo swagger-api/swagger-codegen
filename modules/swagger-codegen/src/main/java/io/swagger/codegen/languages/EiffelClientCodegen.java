@@ -188,6 +188,7 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("configuration.mustache", "src", "configuration.e"));
         supportingFiles.add(new SupportingFile("api_client.mustache", "src", "api_client.e"));
+        supportingFiles.add(new SupportingFile("api_client_request.mustache", "src", "api_client_request.e"));
         supportingFiles.add(new SupportingFile("api_response.mustache", "src", "api_http_response.e"));
         supportingFiles.add(new SupportingFile("api_error.mustache", "src", "api_error.e"));
         supportingFiles.add(new SupportingFile("ecf.mustache", "", "api_client.ecf"));

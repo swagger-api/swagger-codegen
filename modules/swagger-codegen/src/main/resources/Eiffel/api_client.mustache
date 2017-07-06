@@ -123,13 +123,62 @@ feature -- Helper: OAuth Authentication
 
 feature -- Query Parameter Helpers
 
-	parameter_list_to_tuple (a_name: STRING; a_list: LIST [STRING]): LIST [TUPLE [name: STRING; value: STRING]]
+	parameter_to_tuple (a_collection_format, a_name: STRING; a_value: ANY): LIST [TUPLE [name: STRING; value: STRING]]
+			-- A list of tuples with name and valule.
+			-- collectionFormat collection format (e.g. csv, tsv)
+			-- name Name
+			-- value Value
+    	require
+			valid_name: not a_name.is_empty
+		local
+			l_format: STRING
+			l_delimiter: STRING
+			l_value: STRING
 		do
-			create {ARRAYED_LIST [TUPLE [name: STRING; value: STRING]]}Result.make (a_list.count)
-			across a_list as ic loop
-				Result.force ([a_name, ic.item])
+			if attached {LIST [STRING]} a_value as a_list then
+					-- Collection
+				if a_list.is_empty then
+						-- Return an empty list	
+					create {ARRAYED_LIST [TUPLE [name: STRING; value: STRING]]} Result.make (0)
+				else
+						-- collection format: multi, csv, ssv, tsv, pipes.
+					create {ARRAYED_LIST [TUPLE [name: STRING; value: STRING]]}Result.make (a_list.count)
+					if a_collection_format.is_empty then
+						l_format := "csv" -- default: csv
+					else
+						l_format := a_collection_format
+					end
+					if l_format.is_case_insensitive_equal ("multi") then
+						across a_list as ic loop
+							Result.force ([a_name, ic.item])
+						end
+					else
+						if l_format.is_case_insensitive_equal ("csv") then
+							l_delimiter := ","
+						elseif l_format.is_case_insensitive_equal ("ssv") then
+							l_delimiter := " "
+						elseif l_format.is_case_insensitive_equal ("tsv") then
+							l_delimiter := "\t"
+						elseif l_format.is_case_insensitive_equal ("pipes") then
+							l_delimiter := "|"
+						else
+							l_delimiter := ","
+						end
+						across a_list as ic  from create l_value.make_empty
+						loop
+							l_value.append (ic.item)
+							l_value.append (l_delimiter)
+						end
+						l_value.remove_tail (1)
+						Result.force ([a_name,l_value])
+					end
+				end
+			else
+				create {ARRAYED_LIST [TUPLE [name: STRING; value: STRING]]} Result.make (1)
+				Result.force ([a_name,a_value.out])
 			end
 		end
+
 
 feature -- Status Report
 
@@ -194,21 +243,24 @@ feature --Helper: Http Client
 			end
 		end
 
+	url_encode (a_val: STRING): STRING
+			-- Url encode `a_val'
+		do
+			Result := (create {URL_ENCODER}).encoded_string (a_val)
+		end	
+
 feature -- HTTP client: call api
 
-
-	call_api (a_path: STRING_8; a_method: STRING_8; a_query_params: LIST [TUPLE [name: STRING; value: STRING]]; a_header_params: STRING_TABLE [STRING];
-				a_body: detachable ANY; a_form_params: STRING_TABLE [STRING]; a_auth_names: ARRAY [STRING];
-				a_custom_serializer: detachable FUNCTION [TUPLE [STRING, ANY], STRING];
-				a_custom_deserializer: detachable FUNCTION [TUPLE [STRING, STRING], detachable ANY] ): API_HTTP_RESPONSE
+	call_api (a_path: STRING_8; a_method: STRING_8; a_request: API_CLIENT_REQUEST; a_custom_deserializer: detachable FUNCTION [TUPLE [STRING, STRING], detachable ANY] ): API_CLIENT_RESPONSE
 			-- Execute an HTTP request with the given options.
 			-- Relative path `a_path'
 			-- Method `a_method'  "GET", "HEAD", "OPTIONS", "POST", "PUT", "PATCH" and "DELETE"
-			-- The query parameters: `a_query_params'.
-			-- The Header parameters: `a_header_params'.
-			-- The Request Body: `a_body' could be Void, object to be serialized using the serializer function `a_custom_serializer' with a given content_type.
+			-- A request `a_request' wth
+			-- The query parameters: `query_params'.
+			-- The Header parameters: `header_params'.
+			-- The Request Body: `body' could be Void, object to be serialized using the serializer function `serializer' with a given content_type.
 			-- this function will need to be added by the user with the supported content types in the target API class.
-			-- The authentications to apply `a_auth_names'.
+			-- The authentications to apply `auth_names'.
 			-- `a_custom_deserializer': is a deserializer function that will need to be added by the user to map the string response to the target object with
 			-- with a content type.
 
@@ -225,11 +277,11 @@ feature -- HTTP client: call api
 
 				-- create context executor per request.
 			create l_context_executor.make
-			update_params_for_auth (a_auth_names, a_query_params, a_header_params)
-			l_url := build_url (a_path, a_query_params)
-			add_header_params (l_context_executor, a_header_params)
+			update_params_for_auth (a_request.auth_names, a_request.query_params, a_request.header_params)
+			l_url := build_url (a_path, a_request.query_params)
+			add_header_params (l_context_executor, a_request.header_params)
 
-			if attached a_form_params.at ("Content-Type") as ll_content_type  then
+			if attached a_request.header_params.at ("Content-Type") as ll_content_type  then
 				l_content_type := ll_content_type
 			else
 				l_content_type := "application/json"
@@ -238,23 +290,23 @@ feature -- HTTP client: call api
 			if not accepts_request_body (a_method) then
 				-- do nothing
 			elseif l_content_type.is_case_insensitive_equal ("application/x-www-form-urlencoded") then
-				add_form_data (l_context_executor, a_form_params)
+				add_form_data (l_context_executor, a_request.form_params)
 			elseif l_content_type.is_case_insensitive_equal ("multipart/form-data") then
-				-- add_mulipart_data (l_context_executor, a_form_params)
+				-- add_mulipart_data (l_context_executor, a_form_params, l_content_type)
 				-- here we need a way to identify files.
-			elseif a_body = Void then
+			elseif a_request.body = Void then
 				if a_method.is_case_insensitive_equal ("DELETE") then
-					 -- DELETE no need a request body.
+						-- DELETE no need a request body.
 				else
-					-- use an empty request body (for POST, PUT and PATCH)
+						-- use an empty request body (for POST, PUT and PATCH)
 					l_context_executor.set_upload_data ("")
 				end
 			else
-					-- Serialize an object `a_body' to content-type `l_type'
-					-- if not support by default you will need to extend
-					-- the target API with the corresponding implementation.	
-				if attached a_custom_serializer then
-					l_context_executor.set_upload_data((create {API_SERIALIZER}).serializer (a_custom_serializer, l_content_type, a_body))
+				if attached a_request.body as l_body then
+						-- Serialize an object `a_body' to content-type `l_type'
+						-- if not support by default you will need to extend
+						-- the target API with the corresponding implementation.	
+					l_context_executor.set_upload_data((create {API_SERIALIZER}).serializer (agent serializer, l_content_type, l_body))
 				end
 			end
 
@@ -270,6 +322,8 @@ feature -- HTTP client: call api
 			end
 			create Result.make (l_response, l_error, a_custom_deserializer)
 		end
+
+
 
 	build_url (a_path: STRING_8; a_query_params: LIST [TUPLE [name: STRING; value: STRING]]): STRING_8
 			-- Build a relatative url to `base_path' with `a_path' and a list of
@@ -315,15 +369,65 @@ feature -- HTTP client: call api
 			end
 		end
 
-	add_form_data (a_content_executor:HTTP_CLIENT_REQUEST_CONTEXT; a_form_params: STRING_TABLE [STRING])
+	add_form_data (a_content_executor:HTTP_CLIENT_REQUEST_CONTEXT; a_form_params: STRING_TABLE [ANY])
 			-- Set form parameters `a_form_params' to the request context executor `a_content_executor'.
 		do
 				-- form params
 			across a_form_params as ic  loop
-				a_content_executor.add_form_parameter (ic.key, ic.item)
+				if attached {STRING} ic.item as l_item then
+					a_content_executor.add_form_parameter (ic.key, l_item)
+				end
 			end
 		end
 
+	add_multipart_data (a_content_executor:HTTP_CLIENT_REQUEST_CONTEXT; a_form_params: STRING_TABLE [ANY]; a_content_type: STRING)
+			-- Set form parameters `a_form_params' to the request context executor `a_content_executor'.
+		do
+				-- multipart form params
+			across a_form_params as ic  loop
+				if attached {FILE} ic.item as l_item then
+					a_content_executor.add_header ("Content-Type", a_content_type )
+					a_content_executor.set_upload_filename (l_item.path.absolute_path.name)
+					a_content_executor.add_form_parameter (ic.key, l_item.name)
+				end
+			end
+		end
+
+
+feature -- Serializer
+
+	serializer (a_content_type: STRING; a_object: ANY): STRING
+			-- Serializer object `a_object' with content type `a_content_type'.
+			-- Return the serialized object or report an error if
+			-- the serialization failed (ie, not supported, etc).
+		local
+			err: DEVELOPER_EXCEPTION
+		do
+				-- Serialized to be coded by a user.
+				-- Add the support content types
+			create Result.make_empty
+			if a_content_type.is_case_insensitive_equal_general ("application/json") then
+				Result := json_serializer (a_object)
+			else
+					-- Add your new serializer here.
+					--! we have two options
+					--! raise a developer exception.
+					--! media type not supported!!!.
+					--! or we create an object instance of API_ERROR.
+				create err
+				err.set_description ("Content type [" + a_content_type + "] not supported.")
+				err.raise
+			end
+		end
+
+	json_serializer (a_object: ANY): STRING
+			-- Convert object `a_object' to JSON represented as STRING.
+		local
+			l_json: API_JSON_SERIALIZER
+		do
+			Result := l_json.to_json_string (a_object)
+		end
+		
 feature -- HTTP client: Change Element
 
 	set_base_path (a_path: STRING)
