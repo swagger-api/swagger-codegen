@@ -332,6 +332,7 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
                 final String importType = var.datatype.replaceFirst("\\[\\]$", "");
                 final String dataType = extractSimpleName(var.datatype);
                 final boolean isScalarType = typeMapping.containsValue(importType);
+                var.vendorExtensions.put("x-fullType", var.datatype);
                 if (!isScalarType) {
                     var.vendorExtensions.put("x-typeAnnotation", dataType.endsWith("[]") ? "array" : dataType);
                     imports.add(importType);

@@ -13,7 +13,7 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}imple
       * @var array[]
       */
     protected static $_attributes = [{{#vars}}
-        '{{name}}' => ['{{baseName}}', '{{{datatype}}}', {{#dataFormat}}'{{{dataFormat}}}'{{/dataFormat}}{{^dataFormat}}null{{/dataFormat}}, '{{setter}}', '{{getter}}'],{{/vars}}
+        '{{name}}' => ['{{baseName}}', '{{{vendorExtensions.x-fullType}}}', {{#dataFormat}}'{{{dataFormat}}}'{{/dataFormat}}{{^dataFormat}}null{{/dataFormat}}, '{{setter}}', '{{getter}}'],{{/vars}}
     ];
     {{#vars}}{{#isEnum}}{{#allowableValues}}{{#enumVars}}
     const {{enumName}}_{{{name}}} = {{{value}}};
