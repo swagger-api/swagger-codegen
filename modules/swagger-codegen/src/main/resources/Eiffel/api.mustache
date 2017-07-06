@@ -46,55 +46,55 @@ feature -- Status Report
 feature -- API Access
 {{#operation}}
 
- {{operationId}} {{#hasParams}}({{#allParams}}{{paramName}}: {{{dataType}}} {{#hasMore}}; {{/hasMore}}{{/allParams}}){{/hasParams}}{{#returnType}}: detachable {{{returnType}}}{{/returnType}}{{^returnType}}{{/returnType}}
-		-- {{summary}}
-   		-- {{notes}}
-   		-- {{#allParams}}
-   		-- argument: {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
-   		-- {{/allParams}}
-   		-- {{#returnType}}
-   		-- Result {{returnType}}{{/returnType}}
-  	local
-  		l_path: STRING
-  		l_request: API_CLIENT_REQUEST
-  	do
-  		create l_request
-		{{#bodyParam}}l_request.set_body({{paramName}}){{/bodyParam}}
-		l_path := "{{{path}}}"
-		{{#pathParams}}
-		l_path.replace_substring_all ("{"+"{{baseName}}"+"}", api_client.url_encode ({{{paramName}}}.out))
-		{{/pathParams}}
-		{{#queryParams}}
-		l_request.fill_query_params(api_client.parameter_to_tuple("{{#collectionFormat}}{{{collectionFormat}}}{{/collectionFormat}}", "{{baseName}}", {{paramName}}));
-   		{{/queryParams}}
-   		{{#headerParams}}
-      	l_request.add_header({{paramName}}.out,"{{baseName}}");
-    	{{/headerParams}}
-	    {{#formParams}}
-    	l_request.add_form({{paramName}},"{{baseName}}");
-    	{{/formParams}}
+	{{operationId}} {{#hasParams}}({{#allParams}}{{paramName}}: {{{dataType}}} {{#hasMore}}; {{/hasMore}}{{/allParams}}){{/hasParams}}{{#returnType}}: detachable {{{returnType}}}{{/returnType}}{{^returnType}}{{/returnType}}
+			-- {{summary}}
+			-- {{notes}}
+			-- {{#allParams}}
+			-- argument: {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+			-- {{/allParams}}
+			-- {{#returnType}}
+			-- Result {{returnType}}{{/returnType}}
+		local
+  			l_path: STRING
+  			l_request: API_CLIENT_REQUEST
+		do
+			create l_request
+			{{#bodyParam}}l_request.set_body({{paramName}}){{/bodyParam}}
+			l_path := "{{{path}}}"
+			{{#pathParams}}
+			l_path.replace_substring_all ("{"+"{{baseName}}"+"}", api_client.url_encode ({{{paramName}}}.out))
+			{{/pathParams}}
+			{{#queryParams}}
+			l_request.fill_query_params(api_client.parameter_to_tuple("{{#collectionFormat}}{{{collectionFormat}}}{{/collectionFormat}}", "{{baseName}}", {{paramName}}));
+			{{/queryParams}}
+			{{#headerParams}}
+			l_request.add_header({{paramName}}.out,"{{baseName}}");
+			{{/headerParams}}
+			{{#formParams}}
+			l_request.add_form({{paramName}},"{{baseName}}");
+			{{/formParams}}
 
-    	if attached {STRING} api_client.select_header_accept (<<{{#produces}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/produces}}>>)  as l_accept then
-    		l_request.add_header(l_accept,"Accept");
-    	end
-    	l_request.add_header(api_client.select_header_content_type (<<{{#consumes}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/consumes}}>>),"Content-Type")
-    	l_request.set_auth_names (<<{{#authMethods}}"{{name}}"{{#hasMore}}, {{/hasMore}}{{/authMethods}}>>)
-    	l_response := api_client.call_api (l_path, "{{httpMethod}}", l_request, agent deserializer)
-    	{{#returnType}}	
-    	if l_response.has_error then
-	   		last_error := l_response.error
-	   	elseif attached { {{{returnType}}} } l_response.data as l_data then
-	   		Result := l_data
-	   	else
-	   		create last_error.make ("Unknown error: Status response [ " + l_response.status.out + "]")
-	   	end
-	   	{{/returnType}}
-	   	{{^returnType}}
-		if l_response.has_error then
-	   		last_error := l_response.error
-	   	end
-	   	{{/returnType}}
-    end	
+			if attached {STRING} api_client.select_header_accept (<<{{#produces}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/produces}}>>)  as l_accept then
+				l_request.add_header(l_accept,"Accept");
+			end
+			l_request.add_header(api_client.select_header_content_type (<<{{#consumes}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/consumes}}>>),"Content-Type")
+			l_request.set_auth_names (<<{{#authMethods}}"{{name}}"{{#hasMore}}, {{/hasMore}}{{/authMethods}}>>)
+			l_response := api_client.call_api (l_path, "{{httpMethod}}", l_request, agent deserializer)
+			{{#returnType}}	
+			if l_response.has_error then
+				last_error := l_response.error
+			elseif attached { {{{returnType}}} } l_response.data as l_data then
+				Result := l_data
+			else
+				create last_error.make ("Unknown error: Status response [ " + l_response.status.out + "]")
+			end
+			{{/returnType}}
+			{{^returnType}}
+			if l_response.has_error then
+				last_error := l_response.error
+			end
+			{{/returnType}}
+		end	
 {{/operation}}
 
 
