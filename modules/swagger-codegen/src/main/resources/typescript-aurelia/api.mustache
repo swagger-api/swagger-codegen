@@ -54,27 +54,43 @@ export class {{classname}} extends Api {
     const url = `${this.basePath}{{{path}}}`{{#pathParams}}
       .replace(`{${'{{baseName}}'}}`, `${params['{{paramName}}']}`){{/pathParams}};
 
-
     const response = await this.httpClient.createRequest(url)
-      .as{{httpMethod}}(){{#hasQueryParams}}
+      // Set HTTP method
+      .as{{httpMethod}}()
+{{#hasQueryParams}}
       // Set query parameters
       .withParams({ {{#queryParams}}
         '{{baseName}}': params['{{paramName}}'],{{/queryParams}}
-      }){{/hasQueryParams}}{{#bodyParam}}
+      })
+{{/hasQueryParams}}
+{{#hasFormParams}}
+      // Encode form parameters
+      .withHeader('content-type', 'application/x-www-form-urlencoded')
+      .withContent(this.queryString({ {{#formParams}}
+        '{{baseName}}': params['{{paramName}}'],{{/formParams}}
+      }))
+{{/hasFormParams}}
+{{#hasBodyParam}}
+{{#bodyParam}}
+      // Encode body parameter
+      .withHeader('content-type', 'application/json')
       .withContent(JSON.stringify(params['{{paramName}}'] || {}))
-      .withHeader('content-type', 'application/json'){{/bodyParam}}{{#headerParams}}
+{{/bodyParam}}
+{{/hasBodyParam}}
+{{#headerParams}}
       .withHeader('{{baseName}}', params['{{paramName}}']){{/headerParams}}
 {{#authMethods}}
       // Authentication '{{name}}' required
-      {{#isApiKey}}
-      {{#isKeyInHeader}}
+{{#isApiKey}}
+{{#isKeyInHeader}}
       .withHeader('{{keyParamName}}', this.authStorage.get{{name}}())
-      {{/isKeyInHeader}}
-      {{#isKeyInQuery}}
+{{/isKeyInHeader}}
+{{#isKeyInQuery}}
       .withParams({ {{keyParamName}}: this.authStorage.get{{name}}() })
-      {{/isKeyInQuery}}
-      {{/isApiKey}}
+{{/isKeyInQuery}}
+{{/isApiKey}}
 {{/authMethods}}
+      // Send the request
       .send();
 
     if (response.statusCode < 200 || response.statusCode >= 300) {

@@ -21,6 +21,14 @@ export class AuthStorage {
   }
 
   /**
+   * Removes the {{name}} auth method value.
+   */
+  remove{{name}}(): this {
+    this.storage.delete('{{name}}');
+    return this;
+  }
+
+  /**
    * Gets the {{name}} auth method value.
    */
   get{{name}}(): null | string {
