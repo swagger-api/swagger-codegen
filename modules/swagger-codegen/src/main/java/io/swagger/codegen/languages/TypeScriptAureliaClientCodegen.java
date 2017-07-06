@@ -44,6 +44,7 @@ public class TypeScriptAureliaClientCodegen extends AbstractTypeScriptClientCode
 
         // Set supporting files
         supportingFiles.add(new SupportingFile("models.mustache", "", "models.ts"));
+        supportingFiles.add(new SupportingFile("index.ts.mustache", "", "index.ts"));
         supportingFiles.add(new SupportingFile("Api.ts.mustache", "", "Api.ts"));
         supportingFiles.add(new SupportingFile("AuthStorage.ts.mustache", "", "AuthStorage.ts"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
