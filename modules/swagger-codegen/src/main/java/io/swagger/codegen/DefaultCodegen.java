@@ -297,6 +297,10 @@ public class DefaultCodegen {
      * @return the common prefix for naming
      */
     public String findCommonPrefixOfVars(List<Object> vars) {
+        // API-2711 remove this dumb feature. It breaks enums sometimes.
+        // Official fix: https://github.com/swagger-api/swagger-codegen/pull/4331
+        return "";
+        /*
         try {
             String[] listStr = vars.toArray(new String[vars.size()]);
 
@@ -307,6 +311,7 @@ public class DefaultCodegen {
         } catch (ArrayStoreException e) {
             return "";
         }
+        */
     }
     
     /**
