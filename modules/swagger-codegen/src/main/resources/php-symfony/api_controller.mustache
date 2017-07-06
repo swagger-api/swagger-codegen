@@ -57,15 +57,15 @@ class {{controllerName}} extends Controller
     {
         {{#queryParams}}
         // Handle query params
-        ${{paramName}} = $request->query->get('{{paramName}}');
+        ${{paramName}} = $this->fromQuery($request->query->get('{{paramName}}'), '{{dataType}}');
         {{/queryParams}}
         {{#headerParams}}
         // Handle header params
-        ${{paramName}} = $request->headers->get('{{paramName}}');
+        ${{paramName}} =  $this->fromHeader($request->headers->get('{{paramName}}'), '{{dataType}}');
         {{/headerParams}}
         {{#pathParams}}
         // Handle path params
-        ${{paramName}} = $request->attributes->get('{{paramName}}');
+        ${{paramName}} =  $this->fromPath($request->attributes->get('{{paramName}}'), '{{dataType}}');
         {{/pathParams}}
         {{#formParams}}
         {{#isFile}}
@@ -74,7 +74,7 @@ class {{controllerName}} extends Controller
         {{/isFile}}
         {{^isFile}}
         // Handle form params
-        ${{paramName}} = $request->request->get('{{paramName}}');
+        ${{paramName}} = $this->fromForm($request->request->get('{{paramName}}'), '{{dataType}}');
         {{/isFile}}
         {{/formParams}}
         {{#bodyParams}}
