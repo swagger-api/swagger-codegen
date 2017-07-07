@@ -6,47 +6,14 @@ class
 
 inherit
 
-	ANY
-		redefine
-			default_create
-		select
-			default_create
-		end
-
-	REFACTORING_HELPER
-		rename
-			default_create as default_create_rh
-		end
-
-create
-	default_create, make
-
-feature {NONE} -- Initialization
-
-	default_create
-			-- Initialize {{classname}} with default api_client.
-		do
-			api_client := (create {CONFIGURATION}).default_api_client
-		end
-
-	make (a_client: API_CLIENT)
-			-- Initialize {{classname}} with `api_client' `a_client'.
-		do
-			api_client := a_client
-		end
-
-	api_client: API_CLIENT
-			-- Api client.
-
-feature -- Status Report
-
-	last_error: detachable API_ERROR
+    API_I
 
 
 feature -- API Access
+
 {{#operation}}
 
-	{{operationId}} {{#hasParams}}({{#allParams}}{{paramName}}: {{{dataType}}} {{#hasMore}}; {{/hasMore}}{{/allParams}}){{/hasParams}}{{#returnType}}: detachable {{{returnType}}}{{/returnType}}{{^returnType}}{{/returnType}}
+	{{operationId}} {{#hasParams}}({{#allParams}}{{paramName}}: {{#required}}{{{dataType}}}{{/required}}{{^required}} detachable {{{dataType}}}{{/required}} {{#hasMore}}; {{/hasMore}}{{/allParams}}){{/hasParams}}{{#returnType}}: detachable {{{returnType}}}{{/returnType}}{{^returnType}}{{/returnType}}
 			-- {{summary}}
 			-- {{notes}}
 			-- {{#allParams}}
@@ -57,7 +24,9 @@ feature -- API Access
 		local
   			l_path: STRING
   			l_request: API_CLIENT_REQUEST
+  			l_response: API_CLIENT_RESPONSE
 		do
+			reset_error
 			create l_request
 			{{#bodyParam}}l_request.set_body({{paramName}}){{/bodyParam}}
 			l_path := "{{{path}}}"
@@ -68,10 +37,14 @@ feature -- API Access
 			l_request.fill_query_params(api_client.parameter_to_tuple("{{#collectionFormat}}{{{collectionFormat}}}{{/collectionFormat}}", "{{baseName}}", {{paramName}}));
 			{{/queryParams}}
 			{{#headerParams}}
-			l_request.add_header({{paramName}}.out,"{{baseName}}");
+			if attached {{paramName}} as l_{{paramName}} then
+				l_request.add_header(l_{{paramName}}.out,"{{baseName}}");
+			end
 			{{/headerParams}}
 			{{#formParams}}
-			l_request.add_form({{paramName}},"{{baseName}}");
+			if attached {{paramName}} as l_{{paramName}} then
+				l_request.add_form(l_{{paramName}},"{{baseName}}");
+			end
 			{{/formParams}}
 
 			if attached {STRING} api_client.select_header_accept (<<{{#produces}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/produces}}>>)  as l_accept then
@@ -96,7 +69,6 @@ feature -- API Access
 			{{/returnType}}
 		end	
 {{/operation}}
-
 
 feature -- Deserializer
 

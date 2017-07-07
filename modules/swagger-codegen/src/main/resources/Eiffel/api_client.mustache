@@ -135,14 +135,14 @@ feature -- Query Parameter Helpers
 			l_delimiter: STRING
 			l_value: STRING
 		do
-			if attached {LIST [STRING]} a_value as a_list then
+			if attached {LIST [STRING_32]} a_value as a_list then
 					-- Collection
 				if a_list.is_empty then
 						-- Return an empty list	
 					create {ARRAYED_LIST [TUPLE [name: STRING; value: STRING]]} Result.make (0)
 				else
 						-- collection format: multi, csv, ssv, tsv, pipes.
-					create {ARRAYED_LIST [TUPLE [name: STRING; value: STRING]]}Result.make (a_list.count)
+					create {ARRAYED_LIST [TUPLE [name: STRING; value: STRING]]} Result.make (a_list.count)
 					if a_collection_format.is_empty then
 						l_format := "csv" -- default: csv
 					else
@@ -150,7 +150,7 @@ feature -- Query Parameter Helpers
 					end
 					if l_format.is_case_insensitive_equal ("multi") then
 						across a_list as ic loop
-							Result.force ([a_name, ic.item])
+							Result.force ([a_name, ic.item.as_string_8])
 						end
 					else
 						if l_format.is_case_insensitive_equal ("csv") then

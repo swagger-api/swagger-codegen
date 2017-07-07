@@ -18,18 +18,25 @@ feature -- Access
 			create {ARRAYED_LIST [TUPLE [name: STRING; value: STRING]]} query_params.make (0)
 			create header_params.make (0)
 			create form_params.make (0)
+			create auth_names.make_empty
 		end
 
 feature -- Access
 
 	query_params: LIST [TUPLE [name: STRING; value: STRING]]
-		-- List of query parameters as a pair name, value.
+			-- List of query parameters as a pair name, value.
 
 	header_params: STRING_TABLE [STRING]
-		-- table of header parameters.
+			-- table of header parameters.
 
 	form_params: STRING_TABLE [ANY]
-		-- table of form parameters.
+			-- table of form parameters.
+
+	body: detachable ANY
+			--	The request body object.
+
+	auth_names: ARRAY [STRING]
+			-- The authentications to apply	.
 
 feature -- Change Element
 
@@ -52,5 +59,21 @@ feature -- Change Element
 			-- with `key'.
 		do
 			form_params.force (new, key)
-		end		
+		end	
+
+	set_body (a_body: like body)
+			-- Set 	'body' with 'a_body'.
+		do
+			body := a_body
+		ensure
+			body_set: body = a_body	
+		end	
+
+	set_auth_names (a_auth_names: like auth_names)
+			-- Set 'auth_names' with 'a_auth_names'.
+		do
+			auth_names := a_auth_names
+		ensure
+			auth_names_set: auth_names = a_auth_names
+		end	
 end

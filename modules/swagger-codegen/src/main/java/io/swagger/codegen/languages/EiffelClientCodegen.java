@@ -39,6 +39,8 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
     protected String modelPath = "domain";
 
     protected UUID uuid;
+    protected UUID uuidTest;
+    
 
     @Override    
     public CodegenType getTag() {
@@ -58,13 +60,11 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
     public EiffelClientCodegen() {
         super();
         uuid = UUID.randomUUID();
+        uuidTest = UUID.randomUUID();;
         outputFolder = "generated-code/Eiffel";
         modelTemplateFiles.put("model.mustache", ".e");
         apiTemplateFiles.put("api.mustache", ".e");
-
- //       modelDocTemplateFiles.put("model_doc.mustache", ".md");
- //       apiDocTemplateFiles.put("api_doc.mustache", ".md");
-
+        apiTestTemplateFiles.put("test/api_test.mustache", ".e");
         embeddedTemplateDir = templateDir = "Eiffel";
 
         setReservedWordsLowerCase(
@@ -178,28 +178,32 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
         additionalProperties.put(CodegenConstants.PACKAGE_VERSION, packageVersion);
         
         additionalProperties.put("uuid", uuid.toString());
+        additionalProperties.put("uuidTest", uuidTest.toString());
         additionalProperties.put("libraryTarget", libraryTarget);
 
         modelPackage = packageName;
         apiPackage = packageName;
         
-        final String authFolder = ("src/auth");
-        final String serializerFolder = ("src/serialization");
+        final String authFolder = ("src/framework/auth");
+        final String serializerFolder = ("src/framework/serialization");
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
-        supportingFiles.add(new SupportingFile("configuration.mustache", "src", "configuration.e"));
-        supportingFiles.add(new SupportingFile("api_client.mustache", "src", "api_client.e"));
-        supportingFiles.add(new SupportingFile("api_client_request.mustache", "src", "api_client_request.e"));
-        supportingFiles.add(new SupportingFile("api_response.mustache", "src", "api_http_response.e"));
-        supportingFiles.add(new SupportingFile("api_error.mustache", "src", "api_error.e"));
         supportingFiles.add(new SupportingFile("ecf.mustache", "", "api_client.ecf"));
-        supportingFiles.add(new SupportingFile("auth/authentication.mustache",authFolder, "authentication.e"));
-        supportingFiles.add(new SupportingFile("auth/api_key_auth.mustache",authFolder, "api_key_auth.e"));
-        supportingFiles.add(new SupportingFile("auth/http_basic_auth.mustache",authFolder, "http_basic_auth.e"));
-        supportingFiles.add(new SupportingFile("auth/oauth.mustache",authFolder, "oauth.e"));
-        supportingFiles.add(new SupportingFile("serialization/api_deserializer.mustache",serializerFolder, "api_deserializer.e"));
-        supportingFiles.add(new SupportingFile("serialization/api_json_deserializer.mustache",serializerFolder, "api_json_deserializer.e"));
-        supportingFiles.add(new SupportingFile("serialization/api_json_serialization.mustache",serializerFolder, "api_json_serialization.e"));
-        supportingFiles.add(new SupportingFile("serialization/api_serializer.mustache",serializerFolder, "api_serializer.e"));
+        supportingFiles.add(new SupportingFile("test/ecf_test.mustache", "test", "api_test.ecf"));
+        supportingFiles.add(new SupportingFile("test/application.mustache", "test", "application.e"));
+        supportingFiles.add(new SupportingFile("api_client.mustache", "src", "api_client.e"));
+        supportingFiles.add(new SupportingFile("framework/api_i.mustache", "src/framework", "api_i.e"));
+        supportingFiles.add(new SupportingFile("framework/api_client_request.mustache", "src/framework", "api_client_request.e"));
+        supportingFiles.add(new SupportingFile("framework/api_client_response.mustache", "src/framework", "api_client_response.e"));
+        supportingFiles.add(new SupportingFile("framework/api_error.mustache", "src/framework", "api_error.e"));
+        supportingFiles.add(new SupportingFile("framework/configuration.mustache", "src/framework", "configuration.e"));
+        supportingFiles.add(new SupportingFile("framework/auth/authentication.mustache",authFolder, "authentication.e"));
+        supportingFiles.add(new SupportingFile("framework/auth/api_key_auth.mustache",authFolder, "api_key_auth.e"));
+        supportingFiles.add(new SupportingFile("framework/auth/http_basic_auth.mustache",authFolder, "http_basic_auth.e"));
+        supportingFiles.add(new SupportingFile("framework/auth/oauth.mustache",authFolder, "oauth.e"));
+        supportingFiles.add(new SupportingFile("framework/serialization/api_deserializer.mustache",serializerFolder, "api_deserializer.e"));
+        supportingFiles.add(new SupportingFile("framework/serialization/api_json_deserializer.mustache",serializerFolder, "api_json_deserializer.e"));
+        supportingFiles.add(new SupportingFile("framework/serialization/api_json_serializer.mustache",serializerFolder, "api_json_serializer.e"));
+        supportingFiles.add(new SupportingFile("framework/serialization/api_serializer.mustache",serializerFolder, "api_serializer.e"));
         
     }
 
@@ -230,6 +234,10 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
 
     public String modelFileFolder() {
         return outputFolder + File.separator + "src" + File.separator + modelPath;
+    }
+    
+    public String apiTestFileFolder() {
+    	return outputFolder + File.separator + "test" + File.separator + "apis";
     }
 
     @Override
@@ -308,6 +316,12 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
         // e.g. PetApi.go => pet_api.go
         return underscore(name) + "_api";
     }
+    
+    @Override    
+    public String toApiTestFilename(String name) {
+        return toApiName(name).toLowerCase() + "_test";
+    }
+
 
     @Override
     public String toApiName(String name) {

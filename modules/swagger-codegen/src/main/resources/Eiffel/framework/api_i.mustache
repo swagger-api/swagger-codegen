@@ -1,0 +1,29 @@
+{{>noteinfo}}
+
+class API_I
+
+    inherit ANY redefine default_create end
+
+feature {NONE} -- Initialization
+
+    default_create
+            -- Initialize USER_API with default api_client.
+        do
+            api_client := (create {CONFIGURATION}).default_api_client
+        end
+
+    make (a_client: API_CLIENT)
+            -- Initialize USER_API with `api_client' `a_client'.
+        do
+            api_client := a_client
+        end
+
+    api_client: API_CLIENT
+            -- Api client.
+
+feature -- Status Report
+
+    last_error: detachable API_ERROR
+            -- last error if any from the API call.
+
+end
