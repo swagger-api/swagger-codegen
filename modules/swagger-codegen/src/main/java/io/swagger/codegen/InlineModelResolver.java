@@ -191,6 +191,11 @@ public class InlineModelResolver {
         }
     }
 
+    /**
+     * This function fix models that are string (mostly enum). Before this fix, the example
+     * would look something like that in the doc: "\"example from def\""
+     * @param m Model implementation
+     */
     private void fixStringModel(ModelImpl m) {
         if (m.getType() != null && m.getType().equals("string") && m.getExample() != null) {
             String example = m.getExample().toString();
