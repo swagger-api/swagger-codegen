@@ -345,6 +345,10 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
                     imports.add(importType);
                     var.datatype = dataType;
                 }
+
+                if (var.isBoolean) {
+                    var.getter = var.getter.replaceAll("^get", "is");
+                }
             }
         }
 
