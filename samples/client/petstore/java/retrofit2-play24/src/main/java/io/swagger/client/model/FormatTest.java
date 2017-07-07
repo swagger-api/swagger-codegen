@@ -24,6 +24,7 @@ import java.util.UUID;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * FormatTest
@@ -139,6 +140,7 @@ public class FormatTest {
    * @return number
   **/
   @NotNull
+  @Valid
  @DecimalMin("32.1") @DecimalMax("543.2")  @ApiModelProperty(required = true, value = "")
   public BigDecimal getNumber() {
     return number;
@@ -216,7 +218,7 @@ public class FormatTest {
    * @return _byte
   **/
   @NotNull
-  @ApiModelProperty(required = true, value = "")
+ @Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$")  @ApiModelProperty(required = true, value = "")
   public byte[] getByte() {
     return _byte;
   }
@@ -253,6 +255,7 @@ public class FormatTest {
    * @return date
   **/
   @NotNull
+  @Valid
   @ApiModelProperty(required = true, value = "")
   public LocalDate getDate() {
     return date;
@@ -271,6 +274,7 @@ public class FormatTest {
    * Get dateTime
    * @return dateTime
   **/
+  @Valid
   @ApiModelProperty(value = "")
   public DateTime getDateTime() {
     return dateTime;
@@ -289,6 +293,7 @@ public class FormatTest {
    * Get uuid
    * @return uuid
   **/
+  @Valid
   @ApiModelProperty(value = "")
   public UUID getUuid() {
     return uuid;

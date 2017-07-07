@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.InputStream;
+import apimodels.ModelApiResponse;
 import apimodels.Pet;
 
 import play.mvc.Controller;
@@ -22,8 +23,8 @@ import swagger.SwaggerUtils.ApiAction;
 
 public class PetApiController extends Controller {
 
-    private PetApiControllerImp imp;
-    private ObjectMapper mapper;
+    private final PetApiControllerImp imp;
+    private final ObjectMapper mapper;
 
     @Inject
     private PetApiController(PetApiControllerImp imp) {
@@ -36,12 +37,9 @@ public class PetApiController extends Controller {
     public Result addPet() throws Exception {
         JsonNode nodebody = request().body().asJson();
         Pet body;
-        if (nodebody != null) {
-            body = mapper.readValue(nodebody.toString(), Pet.class);
-        
-        } else {
-            body = null;
-        }
+
+        body = mapper.readValue(nodebody.toString(), Pet.class);
+
         imp.addPet(body);
         
         return ok();
@@ -64,14 +62,12 @@ public class PetApiController extends Controller {
 
     @ApiAction
     public Result findPetsByStatus() throws Exception {
-        //TODO: Maybe implement this in the future if we can support collection in the body params: see bug in swagger-play: https://github.com/swagger-api/swagger-play/issues/130
-        //TODO: Tt seems it is not detected that it's a list based on the collectionFormat field?
-        //WIP when both bugs will be fixed
-        //List<Pair> statusPair = SwaggerUtils.parameterToPairs("multi", "status", request().getQueryString("status"));
+        List<String> statusList = SwaggerUtils.parametersToList("csv", "status", request().getQueryString("status"));
         List<String> status = new ArrayList<String>();
-        //for (Pair pair : statusPair) {
-        //    status.add(pair.getValue());
-        //}
+        for (String curParam : statusList) {
+            //noinspection UseBulkOperation
+            status.add(curParam);
+        }
         List<Pet> obj = imp.findPetsByStatus(status);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
@@ -80,14 +76,12 @@ public class PetApiController extends Controller {
 
     @ApiAction
     public Result findPetsByTags() throws Exception {
-        //TODO: Maybe implement this in the future if we can support collection in the body params: see bug in swagger-play: https://github.com/swagger-api/swagger-play/issues/130
-        //TODO: Tt seems it is not detected that it's a list based on the collectionFormat field?
-        //WIP when both bugs will be fixed
-        //List<Pair> tagsPair = SwaggerUtils.parameterToPairs("multi", "tags", request().getQueryString("tags"));
+        List<String> tagsList = SwaggerUtils.parametersToList("csv", "tags", request().getQueryString("tags"));
         List<String> tags = new ArrayList<String>();
-        //for (Pair pair : tagsPair) {
-        //    tags.add(pair.getValue());
-        //}
+        for (String curParam : tagsList) {
+            //noinspection UseBulkOperation
+            tags.add(curParam);
+        }
         List<Pet> obj = imp.findPetsByTags(tags);
         JsonNode result = mapper.valueToTree(obj);
         return ok(result);
@@ -106,20 +100,17 @@ public class PetApiController extends Controller {
     public Result updatePet() throws Exception {
         JsonNode nodebody = request().body().asJson();
         Pet body;
-        if (nodebody != null) {
-            body = mapper.readValue(nodebody.toString(), Pet.class);
-        
-        } else {
-            body = null;
-        }
+
+        body = mapper.readValue(nodebody.toString(), Pet.class);
+
         imp.updatePet(body);
         
         return ok();
     }
 
     @ApiAction
-    public Result updatePetWithForm(String petId) throws Exception {
-        String valuename = ((String[]) request().body().asMultipartFormData().asFormUrlEncoded().get("name"))[0];
+    public Result updatePetWithForm(Long petId) throws Exception {
+        String valuename = (request().body().asMultipartFormData().asFormUrlEncoded().get("name"))[0];
         String name;
         if (valuename != null) {
             name = (String)valuename;
@@ -127,7 +118,7 @@ public class PetApiController extends Controller {
         } else {
             name = "";
         }
-        String valuestatus = ((String[]) request().body().asMultipartFormData().asFormUrlEncoded().get("status"))[0];
+        String valuestatus = (request().body().asMultipartFormData().asFormUrlEncoded().get("status"))[0];
         String status;
         if (valuestatus != null) {
             status = (String)valuestatus;
@@ -142,7 +133,7 @@ public class PetApiController extends Controller {
 
     @ApiAction
     public Result uploadFile(Long petId) throws Exception {
-        String valueadditionalMetadata = ((String[]) request().body().asMultipartFormData().asFormUrlEncoded().get("additionalMetadata"))[0];
+        String valueadditionalMetadata = (request().body().asMultipartFormData().asFormUrlEncoded().get("additionalMetadata"))[0];
         String additionalMetadata;
         if (valueadditionalMetadata != null) {
             additionalMetadata = (String)valueadditionalMetadata;
@@ -151,8 +142,9 @@ public class PetApiController extends Controller {
             additionalMetadata = "";
         }
         Http.MultipartFormData.FilePart file = request().body().asMultipartFormData().getFile("file");
-                imp.uploadFile(petId, additionalMetadata, file);
+                ModelApiResponse obj = imp.uploadFile(petId, additionalMetadata, file);
+        JsonNode result = mapper.valueToTree(obj);
+        return ok(result);
         
-        return ok();
     }
 }

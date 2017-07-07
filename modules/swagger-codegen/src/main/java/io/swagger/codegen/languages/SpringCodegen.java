@@ -4,6 +4,7 @@ import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
 import io.swagger.codegen.*;
 import io.swagger.codegen.languages.features.BeanValidationFeatures;
+import io.swagger.codegen.languages.features.OptionalFeatures;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
@@ -15,7 +16,8 @@ import java.util.*;
 import java.util.regex.Matcher;
 
 
-public class SpringCodegen extends AbstractJavaCodegen implements BeanValidationFeatures {
+public class SpringCodegen extends AbstractJavaCodegen
+        implements BeanValidationFeatures, OptionalFeatures {
     public static final String DEFAULT_LIBRARY = "spring-boot";
     public static final String TITLE = "title";
     public static final String CONFIG_PACKAGE = "configPackage";
@@ -43,6 +45,7 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
     protected boolean useTags = false;
     protected boolean useBeanValidation = true;
     protected boolean implicitHeaders = false;
+    protected boolean useOptional = false;
 
     public SpringCodegen() {
         super();
@@ -72,6 +75,8 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
         cliOptions.add(CliOption.newBoolean(USE_TAGS, "use tags for creating interface and controller classnames"));
         cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
         cliOptions.add(CliOption.newBoolean(IMPLICIT_HEADERS, "Use of @ApiImplicitParams for headers."));
+        cliOptions.add(CliOption.newBoolean(USE_OPTIONAL,
+                "Use Optional container for optional parameters"));
 
         supportedLibraries.put(DEFAULT_LIBRARY, "Spring-boot Server application using the SpringFox integration.");
         supportedLibraries.put(SPRING_MVC_LIBRARY, "Spring-MVC Server application using the SpringFox integration.");
@@ -154,10 +159,13 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
             this.setUseBeanValidation(convertPropertyToBoolean(USE_BEANVALIDATION));
         }
 
+        if (additionalProperties.containsKey(USE_OPTIONAL)) {
+            this.setUseOptional(convertPropertyToBoolean(USE_OPTIONAL));
+        }
+
         if (useBeanValidation) {
             writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
         }
-
 
         if (additionalProperties.containsKey(IMPLICIT_HEADERS)) {
             this.setImplicitHeaders(Boolean.valueOf(additionalProperties.get(IMPLICIT_HEADERS).toString()));
@@ -165,6 +173,10 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
 
         typeMapping.put("file", "Resource");
         importMapping.put("Resource", "org.springframework.core.io.Resource");
+        
+        if (useOptional) {
+            writePropertyBack(USE_OPTIONAL, useOptional);
+        }
 
         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
@@ -384,40 +396,39 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
         Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
         if (operations != null) {
             List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
-            for (CodegenOperation operation : ops) {
+            for (final CodegenOperation operation : ops) {
                 List<CodegenResponse> responses = operation.responses;
                 if (responses != null) {
-                    for (CodegenResponse resp : responses) {
+                    for (final CodegenResponse resp : responses) {
                         if ("0".equals(resp.code)) {
                             resp.code = "200";
                         }
+                        doDataTypeAssignment(resp.dataType, new DataTypeAssigner() {
+                            @Override
+                            public void setReturnType(final String returnType) {
+                                resp.dataType = returnType;
+                            }
+
+                            @Override
+                            public void setReturnContainer(final String returnContainer) {
+                                resp.containerType = returnContainer;
+                            }
+                        });
                     }
                 }
 
-                if (operation.returnType == null) {
-                    operation.returnType = "Void";
-                } else if (operation.returnType.startsWith("List")) {
-                    String rt = operation.returnType;
-                    int end = rt.lastIndexOf(">");
-                    if (end > 0) {
-                        operation.returnType = rt.substring("List<".length(), end).trim();
-                        operation.returnContainer = "List";
+                doDataTypeAssignment(operation.returnType, new DataTypeAssigner() {
+
+                    @Override
+                    public void setReturnType(final String returnType) {
+                        operation.returnType = returnType;
                     }
-                } else if (operation.returnType.startsWith("Map")) {
-                    String rt = operation.returnType;
-                    int end = rt.lastIndexOf(">");
-                    if (end > 0) {
-                        operation.returnType = rt.substring("Map<".length(), end).split(",")[1].trim();
-                        operation.returnContainer = "Map";
+
+                    @Override
+                    public void setReturnContainer(final String returnContainer) {
+                        operation.returnContainer = returnContainer;
                     }
-                } else if (operation.returnType.startsWith("Set")) {
-                    String rt = operation.returnType;
-                    int end = rt.lastIndexOf(">");
-                    if (end > 0) {
-                        operation.returnType = rt.substring("Set<".length(), end).trim();
-                        operation.returnContainer = "Set";
-                    }
-                }
+                });
 
                 if(implicitHeaders){
                     removeHeadersFromAllParams(operation.allParams);
@@ -426,6 +437,41 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
         }
 
         return objs;
+    }
+
+    private interface DataTypeAssigner {
+        void setReturnType(String returnType);
+        void setReturnContainer(String returnContainer);
+    }
+
+    /**
+     *
+     * @param returnType The return type that needs to be converted
+     * @param dataTypeAssigner An object that will assign the data to the respective fields in the model.
+     */
+    private void doDataTypeAssignment(String returnType, DataTypeAssigner dataTypeAssigner) {
+        final String rt = returnType;
+        if (rt == null) {
+            dataTypeAssigner.setReturnType("Void");
+        } else if (rt.startsWith("List")) {
+            int end = rt.lastIndexOf(">");
+            if (end > 0) {
+                dataTypeAssigner.setReturnType(rt.substring("List<".length(), end).trim());
+                dataTypeAssigner.setReturnContainer("List");
+            }
+        } else if (rt.startsWith("Map")) {
+            int end = rt.lastIndexOf(">");
+            if (end > 0) {
+                dataTypeAssigner.setReturnType(rt.substring("Map<".length(), end).split(",")[1].trim());
+                dataTypeAssigner.setReturnContainer("Map");
+            }
+        } else if (rt.startsWith("Set")) {
+            int end = rt.lastIndexOf(">");
+            if (end > 0) {
+                dataTypeAssigner.setReturnType(rt.substring("Set<".length(), end).trim());
+                dataTypeAssigner.setReturnContainer("Set");
+            }
+        }
     }
 
     /**
@@ -579,4 +625,8 @@ public class SpringCodegen extends AbstractJavaCodegen implements BeanValidation
         this.useBeanValidation = useBeanValidation;
     }
 
+    @Override
+    public void setUseOptional(boolean useOptional) {
+        this.useOptional = useOptional;
+    }
 }

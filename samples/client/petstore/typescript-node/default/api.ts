@@ -175,6 +175,10 @@ export class PetApi {
         return this._basePath;
     }
 
+    public setDefaultAuthentication(auth: Authentication) {
+	this.authentications.default = auth;
+    }
+
     public setApiKey(key: PetApiApiKeys, value: string) {
         this.authentications[PetApiApiKeys[key]].apiKey = value;
     }
@@ -421,9 +425,9 @@ export class PetApi {
             json: true,
         };
 
-        this.authentications.petstore_auth.applyToRequest(requestOptions);
-
         this.authentications.api_key.applyToRequest(requestOptions);
+
+        this.authentications.petstore_auth.applyToRequest(requestOptions);
 
         this.authentications.default.applyToRequest(requestOptions);
 
@@ -665,6 +669,10 @@ export class StoreApi {
 
     get basePath() {
         return this._basePath;
+    }
+
+    public setDefaultAuthentication(auth: Authentication) {
+	this.authentications.default = auth;
     }
 
     public setApiKey(key: StoreApiApiKeys, value: string) {
@@ -911,6 +919,10 @@ export class UserApi {
 
     get basePath() {
         return this._basePath;
+    }
+
+    public setDefaultAuthentication(auth: Authentication) {
+	this.authentications.default = auth;
     }
 
     public setApiKey(key: UserApiApiKeys, value: string) {

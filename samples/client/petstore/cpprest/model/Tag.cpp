@@ -21,11 +21,10 @@ namespace model {
 
 Tag::Tag()
 {
-    m_Id = 0;
+    m_Id = 0L;
     m_IdIsSet = false;
     m_Name = U("");
     m_NameIsSet = false;
-    
 }
 
 Tag::~Tag()
@@ -49,7 +48,6 @@ web::json::value Tag::toJson() const
     {
         val[U("name")] = ModelBase::toJson(m_Name);
     }
-    
 
     return val;
 }
@@ -63,9 +61,7 @@ void Tag::fromJson(web::json::value& val)
     if(val.has_field(U("name")))
     {
         setName(ModelBase::stringFromJson(val[U("name")]));
-        
     }
-    
 }
 
 void Tag::toMultipart(std::shared_ptr<MultipartFormData> multipart, const utility::string_t& prefix) const
@@ -85,7 +81,6 @@ void Tag::toMultipart(std::shared_ptr<MultipartFormData> multipart, const utilit
         multipart->add(ModelBase::toHttpContent(namePrefix + U("name"), m_Name));
         
     }
-    
 }
 
 void Tag::fromMultiPart(std::shared_ptr<MultipartFormData> multipart, const utility::string_t& prefix)
@@ -103,16 +98,15 @@ void Tag::fromMultiPart(std::shared_ptr<MultipartFormData> multipart, const util
     if(multipart->hasContent(U("name")))
     {
         setName(ModelBase::stringFromHttpContent(multipart->getContent(U("name"))));
-        
     }
-    
 }
-
 
 int64_t Tag::getId() const
 {
     return m_Id;
 }
+
+
 void Tag::setId(int64_t value)
 {
     m_Id = value;
@@ -122,14 +116,18 @@ bool Tag::idIsSet() const
 {
     return m_IdIsSet;
 }
+
 void Tag::unsetId()
 {
     m_IdIsSet = false;
 }
+
 utility::string_t Tag::getName() const
 {
     return m_Name;
 }
+
+
 void Tag::setName(utility::string_t value)
 {
     m_Name = value;
@@ -139,6 +137,7 @@ bool Tag::nameIsSet() const
 {
     return m_NameIsSet;
 }
+
 void Tag::unsetName()
 {
     m_NameIsSet = false;

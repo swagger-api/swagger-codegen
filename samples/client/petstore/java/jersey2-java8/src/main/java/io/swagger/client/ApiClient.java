@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -437,7 +438,7 @@ public class ApiClient {
    */
   public boolean isJsonMime(String mime) {
     String jsonMime = "(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$";
-    return mime != null && mime.matches(jsonMime);
+    return mime != null && (mime.matches(jsonMime) || mime.equalsIgnoreCase("application/json-patch+json"));
   }
 
   /**
@@ -575,7 +576,7 @@ public class ApiClient {
   public File downloadFileFromResponse(Response response) throws ApiException {
     try {
       File file = prepareDownloadFile(response);
-      Files.copy(response.readEntity(InputStream.class), file.toPath());
+      Files.copy(response.readEntity(InputStream.class), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
       return file;
     } catch (IOException e) {
       throw new ApiException(e);
@@ -670,48 +671,56 @@ public class ApiClient {
 
     Entity<?> entity = serialize(body, formParams, contentType);
 
-    Response response;
+    Response response = null;
 
-    if ("GET".equals(method)) {
-      response = invocationBuilder.get();
-    } else if ("POST".equals(method)) {
-      response = invocationBuilder.post(entity);
-    } else if ("PUT".equals(method)) {
-      response = invocationBuilder.put(entity);
-    } else if ("DELETE".equals(method)) {
-      response = invocationBuilder.delete();
-    } else if ("PATCH".equals(method)) {
-      response = invocationBuilder.header("X-HTTP-Method-Override", "PATCH").post(entity);
-    } else {
-      throw new ApiException(500, "unknown method type " + method);
-    }
-
-    statusCode = response.getStatusInfo().getStatusCode();
-    responseHeaders = buildResponseHeaders(response);
-
-    if (response.getStatus() == Status.NO_CONTENT.getStatusCode()) {
-      return null;
-    } else if (response.getStatusInfo().getFamily() == Status.Family.SUCCESSFUL) {
-      if (returnType == null)
-        return null;
-      else
-        return deserialize(response, returnType);
-    } else {
-      String message = "error";
-      String respBody = null;
-      if (response.hasEntity()) {
-        try {
-          respBody = String.valueOf(response.readEntity(String.class));
-          message = respBody;
-        } catch (RuntimeException e) {
-          // e.printStackTrace();
-        }
+    try {
+      if ("GET".equals(method)) {
+        response = invocationBuilder.get();
+      } else if ("POST".equals(method)) {
+        response = invocationBuilder.post(entity);
+      } else if ("PUT".equals(method)) {
+        response = invocationBuilder.put(entity);
+      } else if ("DELETE".equals(method)) {
+        response = invocationBuilder.delete();
+      } else if ("PATCH".equals(method)) {
+        response = invocationBuilder.header("X-HTTP-Method-Override", "PATCH").post(entity);
+      } else {
+        throw new ApiException(500, "unknown method type " + method);
       }
-      throw new ApiException(
-        response.getStatus(),
-        message,
-        buildResponseHeaders(response),
-        respBody);
+
+      statusCode = response.getStatusInfo().getStatusCode();
+      responseHeaders = buildResponseHeaders(response);
+
+      if (response.getStatus() == Status.NO_CONTENT.getStatusCode()) {
+        return null;
+      } else if (response.getStatusInfo().getFamily() == Status.Family.SUCCESSFUL) {
+        if (returnType == null)
+          return null;
+        else
+          return deserialize(response, returnType);
+      } else {
+        String message = "error";
+        String respBody = null;
+        if (response.hasEntity()) {
+          try {
+            respBody = String.valueOf(response.readEntity(String.class));
+            message = respBody;
+          } catch (RuntimeException e) {
+            // e.printStackTrace();
+          }
+        }
+        throw new ApiException(
+          response.getStatus(),
+          message,
+          buildResponseHeaders(response),
+          respBody);
+      }
+    } finally {
+      try {
+        response.close();
+      } catch (Exception e) {
+        // it's not critical, since the response object is local in method invokeAPI; that's fine, just continue
+      }
     }
   }
 

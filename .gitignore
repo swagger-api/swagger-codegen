@@ -23,6 +23,7 @@ packages/
 .pub
 .packages
 .vagrant/
+.vscode/
 
 .settings
 
@@ -61,6 +62,7 @@ samples/client/petstore/java/hello.txt
 samples/client/petstore/java/okhttp-gson/hello.txt
 samples/client/petstore/java/jersey1/hello.txt
 samples/client/petstore/java/jersey2-java8/hello.txt
+samples/client/petstore/java/jersey2/hello.txt
 samples/client/petstore/android/default/hello.txt
 samples/client/petstore/android/volley/.gradle/
 samples/client/petstore/android/volley/build/
@@ -74,6 +76,9 @@ samples/client/petstore/java/retrofit2/build/
 samples/client/petstore/java/retrofit2rx/build/
 samples/client/petstore/java/default/build/
 samples/client/petstore/scala/build/
+samples/client/petstore/java/resttemplate/hello.txt
+samples/client/petstore/java/retrofit2/hello.txt
+samples/client/petstore/java/feign/hello.txt
 
 #PHP
 samples/client/petstore/php/SwaggerClient-php/composer.lock
@@ -100,11 +105,19 @@ samples/client/petstore/objc/core-data/SwaggerClientTests/SwaggerClient.xcworksp
 samples/client/petstore/objc/core-data/SwaggerClientTests/Podfile.lock
 
 # Swift
-samples/client/petstore/swift/SwaggerClientTests/SwaggerClient.xcodeproj/xcuserdata
-samples/client/petstore/swift/SwaggerClientTests/SwaggerClient.xcworkspace/xcuserdata
-samples/client/petstore/swift/SwaggerClientTests/Pods/Pods.xcodeproj/xcuserdata
-samples/client/petstore/swift/SwaggerClientTests/Pods/Pods.xcodeproj/xcshareddata/xcschemes
+samples/client/petstore/swift/**/SwaggerClientTests/SwaggerClient.xcodeproj/xcuserdata
+samples/client/petstore/swift/**/SwaggerClientTests/SwaggerClient.xcworkspace/xcuserdata
+samples/client/petstore/swift/**/SwaggerClientTests/Pods/
+#samples/client/petstore/swift/**/SwaggerClientTests/Pods/Pods.xcodeproj/xcuserdata
+#samples/client/petstore/swift/**/SwaggerClientTests/Pods/Pods.xcodeproj/xcshareddata/xcschemes
 samples/client/petstore/swift/**/SwaggerClientTests/Podfile.lock 
+# Swift3
+samples/client/petstore/swift3/**/SwaggerClientTests/SwaggerClient.xcodeproj/xcuserdata
+samples/client/petstore/swift3/**/SwaggerClientTests/SwaggerClient.xcworkspace/xcuserdata
+#samples/client/petstore/swift3/**/SwaggerClientTests/Pods/
+#samples/client/petstore/swift3/**/SwaggerClientTests/Pods/Pods.xcodeproj/xcuserdata
+#samples/client/petstore/swift3/**/SwaggerClientTests/Pods/Pods.xcodeproj/xcshareddata/xcschemes
+samples/client/petstore/swift3/**/SwaggerClientTests/Podfile.lock 
 
 # C#
 *.csproj.user
@@ -148,4 +161,3 @@ samples/client/petstore/typescript-node/npm/npm-debug.log
 
 # aspnetcore
 samples/server/petstore/aspnetcore/.vs/
-

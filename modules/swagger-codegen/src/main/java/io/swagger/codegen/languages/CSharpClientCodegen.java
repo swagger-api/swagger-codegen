@@ -188,12 +188,14 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         }
 
         additionalProperties.put(CodegenConstants.API_PACKAGE, apiPackage);
-
         additionalProperties.put(CodegenConstants.MODEL_PACKAGE, modelPackage);
-
         additionalProperties.put("clientPackage", clientPackage);
-
         additionalProperties.put("emitDefaultValue", optionalEmitDefaultValue);
+
+        if (!additionalProperties.containsKey("validatable")) {
+            // default validatable to true if not set
+            additionalProperties.put("validatable", true);
+        }
 
         if (additionalProperties.containsKey(CodegenConstants.DOTNET_FRAMEWORK)) {
             setTargetFramework((String) additionalProperties.get(CodegenConstants.DOTNET_FRAMEWORK));
@@ -209,6 +211,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
             if(additionalProperties.containsKey("supportsAsync")){
                 additionalProperties.remove("supportsAsync");
             }
+            additionalProperties.put("validatable", false);
         } else if (NETSTANDARD.equals(this.targetFramework)){
             setTargetFrameworkNuget("netstandard1.3");
             setSupportsAsync(Boolean.TRUE);
@@ -309,6 +312,8 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
                 clientPackageDir, "ApiResponse.cs"));
         supportingFiles.add(new SupportingFile("ExceptionFactory.mustache",
                 clientPackageDir, "ExceptionFactory.cs"));
+        supportingFiles.add(new SupportingFile("SwaggerDateConverter.mustache",
+                clientPackageDir, "SwaggerDateConverter.cs"));
         if(Boolean.FALSE.equals(this.netStandard) && Boolean.FALSE.equals(this.netCoreProjectFileFlag)) {
             supportingFiles.add(new SupportingFile("compile.mustache", "", "build.bat"));
             supportingFiles.add(new SupportingFile("compile-mono.sh.mustache", "", "build.sh"));
@@ -557,6 +562,9 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         if ("int?".equalsIgnoreCase(datatype) || "long?".equalsIgnoreCase(datatype) ||
             "double?".equalsIgnoreCase(datatype) || "float?".equalsIgnoreCase(datatype)) {
             return value;
+        } else if ("float?".equalsIgnoreCase(datatype)) {
+            // for float in C#, append "f". e.g. 3.14 => 3.14f
+            return value + "f";
         } else {
             return "\"" + escapeText(value) + "\"";
         }

@@ -4,6 +4,7 @@
 // https://github.com/swagger-api/swagger-codegen
 //
 
+import Foundation
 import Alamofire
 
 extension Bool: JSONEncodable {
@@ -66,7 +67,7 @@ extension Data: JSONEncodable {
 
 private let dateFormatter: DateFormatter = {
     let fmt = DateFormatter()
-    fmt.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+    fmt.dateFormat = Configuration.dateFormat
     fmt.locale = Locale(identifier: "en_US_POSIX")
     return fmt
 }()
