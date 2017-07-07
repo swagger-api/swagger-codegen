@@ -98,6 +98,9 @@ public class TypeScriptAureliaClientCodegen extends AbstractTypeScriptClientCode
                     modelImports.add(param.dataType);
                 }
             }
+            if (op.returnBaseType != null && !op.returnTypeIsPrimitive) {
+                modelImports.add(op.returnBaseType);
+            }
         }
 
         objs.put("modelImports", modelImports);
