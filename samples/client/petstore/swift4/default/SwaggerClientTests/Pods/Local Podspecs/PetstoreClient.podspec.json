@@ -16,7 +16,7 @@
   "source_files": "PetstoreClient/Classes/Swaggers/**/*.swift",
   "dependencies": {
     "Alamofire": [
-      "~> 4.0"
+      "~> 4.5"
     ]
   }
 }
