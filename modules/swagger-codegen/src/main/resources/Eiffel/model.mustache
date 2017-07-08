@@ -20,14 +20,14 @@ feature --Access
     {{/isPrimitiveType}}
     {{^isPrimitiveType}}
     {{#isContainer}}
-      {{name}}: detachable {{{datatypeWithEnum}}} 
+    {{name}}: detachable {{{datatypeWithEnum}}} 
       {{#description}}--{{{description}}}{{/description}}
-		 {{/isContainer}}
-		 {{^isContainer}}
-      {{name}}: detachable {{{datatype}}} 
+    {{/isContainer}}
+    {{^isContainer}}
+    {{name}}: detachable {{{datatype}}} 
       {{#description}}--{{{description}}}{{/description}}
-		 {{/isContainer}}
- 	  {{/isPrimitiveType}}
+    {{/isContainer}}
+    {{/isPrimitiveType}}
   {{/vars}}
 
 feature -- Change Element  

@@ -62,9 +62,11 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
         uuid = UUID.randomUUID();
         uuidTest = UUID.randomUUID();;
         outputFolder = "generated-code/Eiffel";
+        modelDocTemplateFiles.put("model_doc.mustache", ".md");
         modelTemplateFiles.put("model.mustache", ".e");
         apiTemplateFiles.put("api.mustache", ".e");
         apiTestTemplateFiles.put("test/api_test.mustache", ".e");
+        apiDocTemplateFiles.put("api_doc.mustache", ".md");
         embeddedTemplateDir = templateDir = "Eiffel";
 
         setReservedWordsLowerCase(
@@ -180,6 +182,9 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
         additionalProperties.put("uuid", uuid.toString());
         additionalProperties.put("uuidTest", uuidTest.toString());
         additionalProperties.put("libraryTarget", libraryTarget);
+        additionalProperties.put("apiDocPath", apiDocPath);
+        additionalProperties.put("modelDocPath", modelDocPath);
+        
 
         modelPackage = packageName;
         apiPackage = packageName;
