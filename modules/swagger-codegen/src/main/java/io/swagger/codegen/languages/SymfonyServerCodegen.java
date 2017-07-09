@@ -66,9 +66,9 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
         setBundleName("SwaggerServer");
         packagePath = "SymfonyBundle-php";
         modelDirName = "Model";
-        docsBasePath = "Resources/docs";
-        apiDocPath = docsBasePath + "/" + apiDirName;
-        modelDocPath = docsBasePath + "/" + modelDirName;
+        docsBasePath = "Resources" + File.separator + "docs";
+        apiDocPath = docsBasePath + File.separator + apiDirName;
+        modelDocPath = docsBasePath + File.separator + modelDirName;
         outputFolder = "generated-code" + File.separator + "php";
         apiTemplateFiles.put("api_controller.mustache", ".php");
         modelTestTemplateFiles.put("model_test.mustache", ".php");
@@ -153,7 +153,7 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
 
 
     public String controllerFileFolder() {
-        return (outputFolder + "/" + toPackagePath(controllerPackage, srcBasePath));
+        return (outputFolder + File.separator + toPackagePath(controllerPackage, srcBasePath));
     }
 
     @Override
@@ -241,13 +241,13 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
         additionalProperties.put("bundleAlias", bundleAlias);
 
         // make api and model src path available in mustache template
-        additionalProperties.put("apiSrcPath", "./" + toSrcPath(apiPackage, srcBasePath));
-        additionalProperties.put("modelSrcPath", "./" + toSrcPath(modelPackage, srcBasePath));
-        additionalProperties.put("testsSrcPath", "./" + toSrcPath(testsPackage, srcBasePath));
-        additionalProperties.put("apiTestsSrcPath", "./" + toSrcPath(apiTestsPackage, srcBasePath));
-        additionalProperties.put("modelTestsSrcPath", "./" + toSrcPath(modelTestsPackage, srcBasePath));
-        additionalProperties.put("apiTestPath", "./" + testsDirName + "/" + apiDirName);
-        additionalProperties.put("modelTestPath", "./" + testsDirName + "/" + modelDirName);
+        additionalProperties.put("apiSrcPath", "." + File.separator + toSrcPath(apiPackage, srcBasePath));
+        additionalProperties.put("modelSrcPath", "." + File.separator + toSrcPath(modelPackage, srcBasePath));
+        additionalProperties.put("testsSrcPath", "." + File.separator + toSrcPath(testsPackage, srcBasePath));
+        additionalProperties.put("apiTestsSrcPath", "." + File.separator + toSrcPath(apiTestsPackage, srcBasePath));
+        additionalProperties.put("modelTestsSrcPath", "." + File.separator + toSrcPath(modelTestsPackage, srcBasePath));
+        additionalProperties.put("apiTestPath", "." + File.separator + testsDirName + File.separator + apiDirName);
+        additionalProperties.put("modelTestPath", "." + File.separator + testsDirName + File.separator + modelDirName);
 
         // make api and model doc path available in mustache template
         additionalProperties.put("apiDocPath", apiDocPath);
@@ -256,15 +256,18 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
         // make test path available in mustache template
         additionalProperties.put("testsDirName", testsDirName);
 
+        final String configDir = getPackagePath() + File.separator + "Resources" + File.separator + "config";
+        final String dependencyInjectionDir = getPackagePath() + File.separator + "DependencyInjection";
+
         supportingFiles.add(new SupportingFile("Controller.mustache", toPackagePath(controllerPackage, srcBasePath), "Controller.php"));
         supportingFiles.add(new SupportingFile("Bundle.mustache", getPackagePath(), bundleClassName + ".php"));
-        supportingFiles.add(new SupportingFile("Extension.mustache", getPackagePath() + "/DependencyInjection", bundleExtensionName + ".php"));
-        supportingFiles.add(new SupportingFile("ApiPass.mustache", getPackagePath() + "/DependencyInjection/Compiler", bundleName + "ApiPass.php"));
+        supportingFiles.add(new SupportingFile("Extension.mustache", dependencyInjectionDir, bundleExtensionName + ".php"));
+        supportingFiles.add(new SupportingFile("ApiPass.mustache", dependencyInjectionDir + File.separator + "Compiler", bundleName + "ApiPass.php"));
         supportingFiles.add(new SupportingFile("ApiServer.mustache", toPackagePath(apiPackage, srcBasePath), "ApiServer.php"));
         supportingFiles.add(new SupportingFile("ModelSerializer.mustache", toPackagePath(modelPackage, srcBasePath), "ModelSerializer.php"));
         supportingFiles.add(new SupportingFile("ModelInterface.mustache", toPackagePath(modelPackage, srcBasePath), "ModelInterface.php"));
-        supportingFiles.add(new SupportingFile("routing.mustache", getPackagePath() + "/Resources/config", "routing.yml"));
-        supportingFiles.add(new SupportingFile("services.mustache", getPackagePath() + "/Resources/config", "services.yml"));
+        supportingFiles.add(new SupportingFile("routing.mustache", configDir, "routing.yml"));
+        supportingFiles.add(new SupportingFile("services.mustache", configDir, "services.yml"));
         supportingFiles.add(new SupportingFile("composer.mustache", getPackagePath(), "composer.json"));
         supportingFiles.add(new SupportingFile("autoload.mustache", getPackagePath(), "autoload.php"));
         supportingFiles.add(new SupportingFile("README.mustache", getPackagePath(), "README.md"));
@@ -367,12 +370,12 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
 
     @Override
     public String apiTestFileFolder() {
-        return (outputFolder + "/" + toPackagePath(apiTestsPackage, srcBasePath));
+        return (outputFolder + File.separator + toPackagePath(apiTestsPackage, srcBasePath));
     }
 
     @Override
     public String modelTestFileFolder() {
-        return (outputFolder + "/" + toPackagePath(modelTestsPackage, srcBasePath));
+        return (outputFolder + File.separator + toPackagePath(modelTestsPackage, srcBasePath));
     }
 
     public void setComposerVendorName(String composerVendorName) {
