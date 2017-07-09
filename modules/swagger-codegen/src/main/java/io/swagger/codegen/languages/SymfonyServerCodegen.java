@@ -441,14 +441,14 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
         if (name.isEmpty()) {
             return "DefaultApiInterface";
         }
-        return initialCaps(name) + "ApiInterface";
+        return camelize(name, false) + "ApiInterface";
     }
 
     protected String toControllerName(String name) {
         if (name.isEmpty()) {
             return "DefaultController";
         }
-        return initialCaps(name) + "Controller";
+        return camelize(name, false) + "Controller";
     }
 
     protected String toSymfonyService(String name) {
