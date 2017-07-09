@@ -16,7 +16,6 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
     @SuppressWarnings("hiding")
     static Logger LOGGER = LoggerFactory.getLogger(SymfonyServerCodegen.class);
 
-    public static final String VARIABLE_NAMING_CONVENTION = "variableNamingConvention";
     public static final String BUNDLE_NAME = "bundleName";
     public static final String COMPOSER_VENDOR_NAME = "composerVendorName";
     public static final String COMPOSER_PROJECT_NAME = "composerProjectName";
@@ -217,16 +216,6 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
             this.setComposerVendorName((String) additionalProperties.get(COMPOSER_VENDOR_NAME));
         } else {
             additionalProperties.put(COMPOSER_VENDOR_NAME, composerVendorName);
-        }
-
-        if (additionalProperties.containsKey(CodegenConstants.ARTIFACT_VERSION)) {
-            this.setArtifactVersion((String) additionalProperties.get(CodegenConstants.ARTIFACT_VERSION));
-        } else {
-            additionalProperties.put(CodegenConstants.ARTIFACT_VERSION, artifactVersion);
-        }
-
-        if (additionalProperties.containsKey(VARIABLE_NAMING_CONVENTION)) {
-            this.setParameterNamingConvention((String) additionalProperties.get(VARIABLE_NAMING_CONVENTION));
         }
 
         additionalProperties.put("escapedInvokerPackage", invokerPackage.replace("\\", "\\\\"));
