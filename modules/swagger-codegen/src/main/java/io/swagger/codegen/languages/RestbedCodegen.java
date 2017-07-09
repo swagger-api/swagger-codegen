@@ -243,17 +243,17 @@ public class RestbedCodegen extends DefaultCodegen implements CodegenConfig {
       String resourceNameCamelCase = "";
       op.path = "";
       for (String item: items) {
-    	if (item.length() > 1) {
-            if (item.matches("^\\{(.*)\\}$")) {
-              String tmpResourceName = item.substring(1, item.length()-1);
-              resourceNameCamelCase += Character.toUpperCase(tmpResourceName.charAt(0)) + tmpResourceName.substring(1);
-              item = item.substring(0, item.length()-1);
-              item += ": .*}";
-            } else {
-            	resourceNameCamelCase +=  Character.toUpperCase(item.charAt(0)) + item.substring(1);
-            }
+        if (item.length() > 1) {
+          if (item.matches("^\\{(.*)\\}$")) { 
+        	String tmpResourceName = item.substring(1, item.length()-1);
+            resourceNameCamelCase += Character.toUpperCase(tmpResourceName.charAt(0)) + tmpResourceName.substring(1);
+            item = item.substring(0, item.length()-1);
+            item += ": .*}";
+          } else {
+          	resourceNameCamelCase +=  Character.toUpperCase(item.charAt(0)) + item.substring(1);
+          }
     	} else if (item.length() == 1) {
-        	resourceNameCamelCase +=  Character.toUpperCase(item.charAt(0));
+    	  resourceNameCamelCase +=  Character.toUpperCase(item.charAt(0));
     	}
         op.path += item + "/";
       }
