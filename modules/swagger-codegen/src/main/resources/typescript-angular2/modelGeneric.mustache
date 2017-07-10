@@ -10,10 +10,11 @@ export class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
      */
     {{/description}}
     {{name}}{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
+    
 {{/vars}}
 
     {{#discriminator}}
-    static discriminator = {{discriminator}};
+    static discriminator = "{{discriminator}}";
     {{/discriminator}}
     {{^discriminator}}
     static discriminator = undefined;
