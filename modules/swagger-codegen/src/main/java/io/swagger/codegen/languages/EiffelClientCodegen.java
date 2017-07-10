@@ -209,6 +209,8 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
         supportingFiles.add(new SupportingFile("framework/serialization/api_json_deserializer.mustache",serializerFolder, "api_json_deserializer.e"));
         supportingFiles.add(new SupportingFile("framework/serialization/api_json_serializer.mustache",serializerFolder, "api_json_serializer.e"));
         supportingFiles.add(new SupportingFile("framework/serialization/api_serializer.mustache",serializerFolder, "api_serializer.e"));
+        supportingFiles.add(new SupportingFile("framework/serialization/json_basic_reflector_deserializer.mustache",serializerFolder, "json_basic_reflector_deserializer.e"));
+        supportingFiles.add(new SupportingFile("framework/serialization/json_type_utilities_ext.mustache",serializerFolder, "json_type_utilities_ext.e"));
         
     }
 

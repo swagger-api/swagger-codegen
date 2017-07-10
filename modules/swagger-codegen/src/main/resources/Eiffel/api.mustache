@@ -52,11 +52,11 @@ feature -- API Access
 			end
 			l_request.add_header(api_client.select_header_content_type (<<{{#consumes}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/consumes}}>>),"Content-Type")
 			l_request.set_auth_names (<<{{#authMethods}}"{{name}}"{{#hasMore}}, {{/hasMore}}{{/authMethods}}>>)
-			l_response := api_client.call_api (l_path, "{{httpMethod}}", l_request, agent deserializer)
+			l_response := api_client.call_api (l_path, "{{httpMethod}}", l_request, {{#returnType}}Void{{/returnType}}{{^returnType}}agent serializer{{/returnType}}, {{#returnType}}agent deserializer{{/returnType}}{{^returnType}}Void{{/returnType}})
 			{{#returnType}}	
 			if l_response.has_error then
 				last_error := l_response.error
-			elseif attached { {{{returnType}}} } l_response.data as l_data then
+			elseif attached { {{{returnType}}} } l_response.data ({ {{{returnType}}} }) as l_data then
 				Result := l_data
 			else
 				create last_error.make ("Unknown error: Status response [ " + l_response.status.out + "]")
@@ -70,26 +70,6 @@ feature -- API Access
 		end	
 {{/operation}}
 
-feature -- Deserializer
-
-	deserializer (a_content_type: STRING; a_representation: STRING): detachable ANY
-			-- Deserialize a representation `a_representation' with content type `a_content_type'.
-			-- Return an object of type target if it's possible.
-		local
-			err: DEVELOPER_EXCEPTION
-		do
-			create err
-			err.set_description ("Deserialization is not supported by default you will need to add it by hand.")
-			err.raise
-		end
-
-feature -- Error
-
-	reset_error
-			-- reset `last_error' to void.
-		do
-			last_error := Void
-		end
 
 end
 {{/operations}}

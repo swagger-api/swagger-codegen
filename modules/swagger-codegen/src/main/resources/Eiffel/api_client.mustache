@@ -251,17 +251,17 @@ feature --Helper: Http Client
 
 feature -- HTTP client: call api
 
-	call_api (a_path: STRING_8; a_method: STRING_8; a_request: API_CLIENT_REQUEST; a_custom_deserializer: detachable FUNCTION [TUPLE [STRING, STRING], detachable ANY] ): API_CLIENT_RESPONSE
+	call_api (a_path: STRING_8; a_method: STRING_8; a_request: API_CLIENT_REQUEST; a_serializer: detachable FUNCTION [TUPLE [STRING, ANY], STRING]; a_deserializer: detachable FUNCTION [TUPLE [STRING, STRING, TYPE [detachable ANY]], detachable ANY] ): API_CLIENT_RESPONSE
 			-- Execute an HTTP request with the given options.
 			-- Relative path `a_path'
 			-- Method `a_method'  "GET", "HEAD", "OPTIONS", "POST", "PUT", "PATCH" and "DELETE"
 			-- A request `a_request' wth
 			-- The query parameters: `query_params'.
 			-- The Header parameters: `header_params'.
-			-- The Request Body: `body' could be Void, object to be serialized using the serializer function `serializer' with a given content_type.
+			-- The Request Body: `body' could be Void, object to be serialized using the serializer function `a_serializer' with a given content_type.
 			-- this function will need to be added by the user with the supported content types in the target API class.
 			-- The authentications to apply `auth_names'.
-			-- `a_custom_deserializer': is a deserializer function that will need to be added by the user to map the string response to the target object with
+			-- `a_deserializer': is a deserializer function that will need to be added by the user to map the string response to the target object with
 			-- with a content type.
 
 		local
@@ -302,12 +302,15 @@ feature -- HTTP client: call api
 					l_context_executor.set_upload_data ("")
 				end
 			else
-				if attached a_request.body as l_body then
+				if
+					attached a_request.body as l_body  and then
+					attached a_serializer as l_custom_serializer
+				then
 						-- Serialize an object `a_body' to content-type `l_type'
 						-- if not support by default you will need to extend
 						-- the target API with the corresponding implementation.	
-					l_context_executor.set_upload_data((create {API_SERIALIZER}).serializer (agent serializer, l_content_type, l_body))
-				end
+					l_context_executor.set_upload_data((create {API_SERIALIZER}).serializer (l_custom_serializer, l_content_type, l_body))
+				end			
 			end
 
 			if
@@ -318,9 +321,9 @@ feature -- HTTP client: call api
 				l_response := execute_post (l_context_executor, l_url, Void)
 			else
 				create l_error.make ("Method [" + a_method + "] not supported")
-				create Result.make (l_response, l_error, a_custom_deserializer)
+				create Result.make (l_response, l_error, a_deserializer)
 			end
-			create Result.make (l_response, l_error, a_custom_deserializer)
+			create Result.make (l_response, l_error, a_deserializer)
 		end
 
 
@@ -393,41 +396,6 @@ feature -- HTTP client: call api
 			end
 		end
 
-
-feature -- Serializer
-
-	serializer (a_content_type: STRING; a_object: ANY): STRING
-			-- Serializer object `a_object' with content type `a_content_type'.
-			-- Return the serialized object or report an error if
-			-- the serialization failed (ie, not supported, etc).
-		local
-			err: DEVELOPER_EXCEPTION
-		do
-				-- Serialized to be coded by a user.
-				-- Add the support content types
-			create Result.make_empty
-			if a_content_type.is_case_insensitive_equal_general ("application/json") then
-				Result := json_serializer (a_object)
-			else
-					-- Add your new serializer here.
-					--! we have two options
-					--! raise a developer exception.
-					--! media type not supported!!!.
-					--! or we create an object instance of API_ERROR.
-				create err
-				err.set_description ("Content type [" + a_content_type + "] not supported.")
-				err.raise
-			end
-		end
-
-	json_serializer (a_object: ANY): STRING
-			-- Convert object `a_object' to JSON represented as STRING.
-		local
-			l_json: API_JSON_SERIALIZER
-		do
-			Result := l_json.to_json_string (a_object)
-		end
-		
 feature -- HTTP client: Change Element
 
 	set_base_path (a_path: STRING)

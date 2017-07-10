@@ -5,9 +5,9 @@ class
 
 feature -- Access
 
-	deserializer (f: FUNCTION [TUPLE [STRING, STRING], detachable ANY]; a_content_type: STRING; a_representation: STRING): detachable ANY
+	deserializer (f: FUNCTION [TUPLE [STRING, STRING, TYPE [detachable ANY]], detachable ANY]; a_content_type: STRING; a_representation: STRING; a_type:TYPE [detachable ANY]): detachable ANY
 			-- From a given response with a given content type to a generic Object.
 		do
-			Result := f.item ([a_content_type, a_representation])
+			Result := f.item ([a_content_type, a_representation, a_type])
 		end
 end
