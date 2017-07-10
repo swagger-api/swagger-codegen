@@ -371,7 +371,7 @@ export class {{classname}} {
             method: {{httpMethod}},
             headers: headers,
 {{#bodyParam}}
-            body: {{paramName}} == null ? '' : ObjectSerializer.serialize(JSON.serialize({{paramName}}, "{{dataType}}")), // https://github.com/angular/angular/issues/10612
+            body: {{paramName}} == null ? '' : JSON.stringify(ObjectSerializer.serialize({{paramName}}, "{{dataType}}")), // https://github.com/angular/angular/issues/10612
 {{/bodyParam}}
 {{#hasFormParams}}
             body: formParams.toString(),
