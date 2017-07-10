@@ -1,0 +1,27 @@
+{{#models}}
+{{#model}}
+import { {{classname}} } from './model/{{{ classFilename }}}';
+{{/model}}
+{{/models}}
+
+export const enumsMap = {
+    {{#models}}
+        {{#model}}
+            {{#hasEnums}}
+                {{#vars}}
+                    {{#isEnum}}
+    "{{datatypeWithEnum}}": {{datatypeWithEnum}},
+                    {{/isEnum}}
+                {{/vars}}
+            {{/hasEnums}}
+        {{/model}}
+    {{/models}}
+}
+
+export const typeMap = {
+    {{#models}}
+        {{#model}}
+    "{{classname}}": {{classname}},
+        {{/model}}
+    {{/models}}
+}

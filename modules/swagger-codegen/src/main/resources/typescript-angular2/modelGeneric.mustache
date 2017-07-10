@@ -1,4 +1,4 @@
-export interface {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
+export class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
 {{#additionalPropertiesType}}
     [key: string]: {{{additionalPropertiesType}}}{{#hasVars}} | any{{/hasVars}};
 
@@ -10,8 +10,34 @@ export interface {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
      */
     {{/description}}
     {{name}}{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
-
 {{/vars}}
+
+    {{#discriminator}}
+    static discriminator = {{discriminator}};
+    {{/discriminator}}
+    {{^discriminator}}
+    static discriminator = undefined;
+    {{/discriminator}}
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {{#vars}}
+        {
+            "name": "{{name}}",
+            "baseName": "{{baseName}}",
+            "type": "{{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}}"
+        }{{#hasMore}},
+        {{/hasMore}}
+        {{/vars}}
+    ];
+
+    static getAttributeTypeMap() {
+        {{#parent}}
+        return super.getAttributeTypeMap().concat({{classname}}.attributeTypeMap);
+        {{/parent}}
+        {{^parent}}
+        return {{classname}}.attributeTypeMap;
+        {{/parent}}
+    }
 }{{#hasEnums}}
 export namespace {{classname}} {
 {{#vars}}
