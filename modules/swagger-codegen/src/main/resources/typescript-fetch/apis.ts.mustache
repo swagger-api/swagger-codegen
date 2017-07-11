@@ -1,0 +1,12 @@
+/* tslint:disable */
+{{>licenseInfo}}
+
+{{#apiInfo}}
+{{#apis}}
+{{#operations}}
+export * from './{{ classFilename }}';
+import { {{ classname }} } from './{{ classFilename }}';
+{{/operations}}
+{{/apis}}
+export const APIS = [{{#apis}}{{#operations}}{{ classname }}{{/operations}}{{^-last}}, {{/-last}}{{/apis}}];
+{{/apiInfo}}

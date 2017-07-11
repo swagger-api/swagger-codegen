@@ -1,21 +1,29 @@
 {
-  "name": "{{#npmName}}{{{npmName}}}{{/npmName}}{{^npmName}}typescript-fetch-api{{/npmName}}",
-  "version": "{{#npmVersion}}{{{npmVersion}}}{{/npmVersion}}{{^npmVersion}}0.0.0{{/npmVersion}}",
+  "name": "{{npmName}}",
+  "version": "{{npmVersion}}",
+  "description": "swagger client for {{npmName}}",
+  "author": "Swagger Codegen Contributors",
+  "keywords": [
+    "swagger-client"
+  ],
   "license": "Unlicense",
-  "main": "./dist/api.js",
-  "browser": "./dist/api.js",
-  "typings": "./dist/api.d.ts",
-  "dependencies": {
-    {{^supportsES6}}"core-js": "^2.4.0",
-    {{/supportsES6}}"isomorphic-fetch": "^2.2.1"
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --outDir dist/",
+    "postinstall": "npm run build"
   },
-  "scripts" : {
-    "prepublish" : "typings install && tsc", 
-    "test": "tslint api.ts"
+  "dependencies": {
+    "isomorphic-fetch": "^2.2.1"
   },
   "devDependencies": {
-    "tslint": "^3.15.1",
-    "typescript": "^1.8.10",
-    "typings": "^1.0.4"
+    "@types/isomorphic-fetch": "0.0.34",
+    "@types/node": "^8.0.9",
+    "typescript": "^2.4.1"
+  }{{#npmRepository}},{{/npmRepository}}
+{{#npmRepository}}
+  "publishConfig":{
+    "registry":"{{npmRepository}}"
   }
+{{/npmRepository}}
 }
