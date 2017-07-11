@@ -36,6 +36,7 @@ io.swagger.codegen.languages.JavaResteasyEapServerCodegen
 io.swagger.codegen.languages.JavaResteasyServerCodegen
 io.swagger.codegen.languages.JavascriptClientCodegen
 io.swagger.codegen.languages.JavascriptClosureAngularClientCodegen
+io.swagger.codegen.languages.JavaVertXServerCodegen
 io.swagger.codegen.languages.KotlinClientCodegen
 io.swagger.codegen.languages.LumenServerCodegen
 io.swagger.codegen.languages.NancyFXServerCodegen
@@ -62,6 +63,7 @@ io.swagger.codegen.languages.StaticHtml2Generator
 io.swagger.codegen.languages.StaticHtmlGenerator
 io.swagger.codegen.languages.SwaggerGenerator
 io.swagger.codegen.languages.SwaggerYamlGenerator
+io.swagger.codegen.languages.Swift4Codegen
 io.swagger.codegen.languages.Swift3Codegen
 io.swagger.codegen.languages.SwiftCodegen
 io.swagger.codegen.languages.TizenClientCodegen
