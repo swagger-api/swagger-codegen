@@ -62,8 +62,7 @@ public class PetApiController extends Controller {
 
     @ApiAction
     public Result findPetsByStatus() throws Exception {
-        Map<String, String[]> queryStrings = request().queryString();
-        List<String> statusList = SwaggerUtils.parametersToList("csv", queryStrings.get("status"));
+        List<String> statusList = SwaggerUtils.parametersToList("csv", request().queryString().get("status"));
         List<String> status = new ArrayList<String>();
         for (String curParam : statusList) {
             //noinspection UseBulkOperation
@@ -77,8 +76,7 @@ public class PetApiController extends Controller {
 
     @ApiAction
     public Result findPetsByTags() throws Exception {
-        Map<String, String[]> queryStrings = request().queryString();
-        List<String> tagsList = SwaggerUtils.parametersToList("csv", queryStrings.get("tags"));
+        List<String> tagsList = SwaggerUtils.parametersToList("csv", request().queryString().get("tags"));
         List<String> tags = new ArrayList<String>();
         for (String curParam : tagsList) {
             //noinspection UseBulkOperation

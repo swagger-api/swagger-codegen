@@ -56,8 +56,7 @@ public class {{classname}}Controller extends Controller {
         {{/bodyParams}}
         {{#queryParams}}
         {{#collectionFormat}}
-        Map<String, String[]> queryStrings = request().queryString();
-        List<String> {{paramName}}List = SwaggerUtils.parametersToList("{{collectionFormat}}", queryStrings.get("{{baseName}}"));
+        List<String> {{paramName}}List = SwaggerUtils.parametersToList("{{collectionFormat}}", request().queryString().get("{{baseName}}"));
         {{{dataType}}} {{paramName}} = new Array{{{dataType}}}();
         for (String curParam : {{paramName}}List) {
             //noinspection UseBulkOperation
