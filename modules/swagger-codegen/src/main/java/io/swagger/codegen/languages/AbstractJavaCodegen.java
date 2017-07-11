@@ -597,9 +597,12 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             }
 
             String typeDeclaration = getTypeDeclaration(ap.getItems());
-            Boolean java8 = (Boolean)additionalProperties.get("java8");
-            if (java8 != null && java8) {
-                typeDeclaration = "";
+            Object java8obj = additionalProperties.get("java8");
+            if (java8obj != null) {
+                Boolean java8 = Boolean.valueOf(java8obj.toString());
+                if (java8 != null && java8) {
+                    typeDeclaration = "";
+                }
             }
 
             return String.format(pattern, typeDeclaration);
@@ -616,9 +619,12 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             }
 
             String typeDeclaration = String.format("String, %s", getTypeDeclaration(ap.getAdditionalProperties()));
-            Boolean java8 = (Boolean)additionalProperties.get("java8");
-            if (java8 != null && java8) {
-                typeDeclaration = "";
+            Object java8obj = additionalProperties.get("java8");
+            if (java8obj != null) {
+                Boolean java8 = Boolean.valueOf(java8obj.toString());
+                if (java8 != null && java8) {
+                    typeDeclaration = "";
+                }
             }
 
             return String.format(pattern, typeDeclaration);
