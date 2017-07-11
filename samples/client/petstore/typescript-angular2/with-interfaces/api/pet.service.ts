@@ -26,6 +26,7 @@ import { Pet } from '../model/pet';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 import { PetServiceInterface }                            from './PetServiceInterface';
+import { ObjectSerializer } from '../types';
 
 
 @Injectable()
@@ -85,7 +86,7 @@ export class PetService implements PetServiceInterface {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json() || {};
+                    return ObjectSerializer.deserialize(response.json(), "") || {};
                 }
             });
     }
@@ -102,7 +103,7 @@ export class PetService implements PetServiceInterface {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json() || {};
+                    return ObjectSerializer.deserialize(response.json(), "") || {};
                 }
             });
     }
@@ -118,7 +119,7 @@ export class PetService implements PetServiceInterface {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json() || {};
+                    return ObjectSerializer.deserialize(response.json(), "Array&lt;Pet&gt;") || {};
                 }
             });
     }
@@ -134,7 +135,7 @@ export class PetService implements PetServiceInterface {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json() || {};
+                    return ObjectSerializer.deserialize(response.json(), "Array&lt;Pet&gt;") || {};
                 }
             });
     }
@@ -150,7 +151,7 @@ export class PetService implements PetServiceInterface {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json() || {};
+                    return ObjectSerializer.deserialize(response.json(), "Pet") || {};
                 }
             });
     }
@@ -166,7 +167,7 @@ export class PetService implements PetServiceInterface {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json() || {};
+                    return ObjectSerializer.deserialize(response.json(), "") || {};
                 }
             });
     }
@@ -184,7 +185,7 @@ export class PetService implements PetServiceInterface {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json() || {};
+                    return ObjectSerializer.deserialize(response.json(), "") || {};
                 }
             });
     }
@@ -202,7 +203,7 @@ export class PetService implements PetServiceInterface {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json() || {};
+                    return ObjectSerializer.deserialize(response.json(), "ApiResponse") || {};
                 }
             });
     }
@@ -245,7 +246,7 @@ export class PetService implements PetServiceInterface {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
             headers: headers,
-            body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
+            body: body == null ? '' : JSON.stringify(ObjectSerializer.serialize(body, "Pet")), // https://github.com/angular/angular/issues/10612
             search: queryParameters,
             withCredentials:this.configuration.withCredentials
         });
@@ -489,7 +490,7 @@ export class PetService implements PetServiceInterface {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Put,
             headers: headers,
-            body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
+            body: body == null ? '' : JSON.stringify(ObjectSerializer.serialize(body, "Pet")), // https://github.com/angular/angular/issues/10612
             search: queryParameters,
             withCredentials:this.configuration.withCredentials
         });

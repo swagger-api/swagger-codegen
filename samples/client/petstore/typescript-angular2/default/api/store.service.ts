@@ -24,6 +24,7 @@ import { Order } from '../model/order';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
+import { ObjectSerializer } from '../types';
 
 
 @Injectable()
@@ -83,7 +84,7 @@ export class StoreService {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json() || {};
+                    return ObjectSerializer.deserialize(response.json(), "") || {};
                 }
             });
     }
@@ -98,7 +99,7 @@ export class StoreService {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json() || {};
+                    return ObjectSerializer.deserialize(response.json(), "{ [key: string]: number; }") || {};
                 }
             });
     }
@@ -114,7 +115,7 @@ export class StoreService {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json() || {};
+                    return ObjectSerializer.deserialize(response.json(), "Order") || {};
                 }
             });
     }
@@ -130,7 +131,7 @@ export class StoreService {
                 if (response.status === 204) {
                     return undefined;
                 } else {
-                    return response.json() || {};
+                    return ObjectSerializer.deserialize(response.json(), "Order") || {};
                 }
             });
     }
@@ -276,7 +277,7 @@ export class StoreService {
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
             headers: headers,
-            body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
+            body: body == null ? '' : JSON.stringify(ObjectSerializer.serialize(body, "Order")), // https://github.com/angular/angular/issues/10612
             search: queryParameters,
             withCredentials:this.configuration.withCredentials
         });

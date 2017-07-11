@@ -13,13 +13,30 @@
 
 
 /**
- * Describes the result of uploading an image resource
+ * A category for a pet
  */
-export interface ApiResponse {
-    code?: number;
+export class Category {
+    id?: number;
 
-    type?: string;
+    name?: string;
 
-    message?: string;
 
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "number"
+        },
+        {
+            "name": "name",
+            "baseName": "name",
+            "type": "string"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return Category.attributeTypeMap;
+    }
 }
+
