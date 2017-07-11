@@ -1,29 +1,37 @@
 package io.swagger.codegen.languages;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
+
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
+
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenParameter;
+import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
 import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.utils.ModelUtils;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
@@ -31,16 +39,20 @@ import io.swagger.models.properties.Property;
 public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig {
     static Logger LOGGER = LoggerFactory.getLogger(EiffelClientCodegen.class);
 
+    
     protected String libraryTarget = "swagger_eiffel_client";
     protected String packageName = "swagger";
     protected String packageVersion = "1.0.0";
-    protected String apiDocPath = "docs/";
-    protected String modelDocPath = "docs/";
+    protected String apiDocPath = "docs";
+    protected String modelDocPath = "docs";
     protected String modelPath = "domain";
 
     protected UUID uuid;
     protected UUID uuidTest;
     
+    private final Set<String> parentModels = new HashSet<>();
+    private final Multimap<String, CodegenModel> childrenByParent = ArrayListMultimap.create();
+
 
     @Override    
     public CodegenType getTag() {
@@ -168,14 +180,14 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
             setPackageVersion("1.0.0");
         }
         
-         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_VERSION)) {
+        if (additionalProperties.containsKey(CodegenConstants.PACKAGE_VERSION)) {
             setPackageVersion((String) additionalProperties.get(CodegenConstants.PACKAGE_VERSION));
         }
         else {
             setPackageVersion("1.0.0");
         }
 
-
+    
         additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
         additionalProperties.put(CodegenConstants.PACKAGE_VERSION, packageVersion);
         
@@ -365,6 +377,18 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
         parameter.vendorExtensions.put("x-exportParamName", sb.toString());
     }
 
+    @Override
+    public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
+        if (!isNullOrEmpty(model.parent)) {
+            parentModels.add(model.parent);
+            if (!childrenByParent.containsEntry(model.parent, model)) {
+                childrenByParent.put(model.parent, model);
+            }
+        }
+        if (!isNullOrEmpty(model.parentSchema)) {
+        	model.parentSchema = model.parentSchema.toLowerCase();
+        }
+    }
 
     @Override
     public String apiDocFileFolder() {
@@ -535,6 +559,40 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
         }
 
         return objs;
+    }
+    
+    @Override
+    public Map<String, Object> postProcessAllModels(final Map<String, Object> models) {
+
+        final Map<String, Object> processed =  super.postProcessAllModels(models);
+        postProcessParentModels(models);
+        return processed;
+    }
+    
+    private void postProcessParentModels(final Map<String, Object> models) {
+        for (final String parent : parentModels) {
+            final CodegenModel parentModel = ModelUtils.getModelByName(parent, models);
+            final Collection<CodegenModel> childrenModels = childrenByParent.get(parent);
+            for (final CodegenModel child : childrenModels) {
+                processParentPropertiesInChildModel(parentModel, child);
+            }
+        }
+    }
+
+    /**
+     * Sets the child property's isInherited flag to true if it is an inherited property
+     */
+    private void processParentPropertiesInChildModel(final CodegenModel parent, final CodegenModel child) {
+        final Map<String, CodegenProperty> childPropertiesByName = new HashMap<>(child.vars.size());
+        for (final CodegenProperty childProperty : child.vars) {
+            childPropertiesByName.put(childProperty.name, childProperty);
+        }
+        for (final CodegenProperty parentProperty : parent.vars) {
+            final CodegenProperty duplicatedByParent = childPropertiesByName.get(parentProperty.name);
+            if (duplicatedByParent != null) {
+                duplicatedByParent.isInherited = true;
+            }
+        }
     }
 
     @Override
