@@ -72,14 +72,14 @@ feature -- Serializer
 feature -- Deserializer
 
 
-	deserializer (a_content_type: STRING; a_representation: STRING; a_type: TYPE [detachable ANY]): detachable ANY
-			-- Deserialize a representation `a_representation' with content type `a_content_type'.
+	deserializer (a_content_type: STRING; a_body: STRING; a_type: TYPE [detachable ANY]): detachable ANY
+			-- Deserialize a representation `a_body' with content type `a_content_type'.
 			-- Return an object of type target if it's possible.
 		local
 			err: DEVELOPER_EXCEPTION
 		do
 			if a_content_type.is_case_insensitive_equal_general ("application/json") then
-				Result := json_deserializer (a_representation, a_type)
+				Result := json_deserializer (a_body, a_type)
 			else
 				create err
 				err.set_description ("Deserialization is not supported by default you will need to add it by hand.")
@@ -88,11 +88,12 @@ feature -- Deserializer
 		end
 
 
-	json_deserializer (a_representation: STRING; a_type: TYPE [detachable ANY]): detachable ANY
+	json_deserializer (a_body: STRING; a_type: TYPE [detachable ANY]): detachable ANY
+			-- Deserialize body 'a_body' to json to the target type 'a_type'.
 		local
 			l_json: API_JSON_DESERIALIZER
 		do
-			Result := l_json.from_json (a_representation, a_type)
+			Result := l_json.from_json (a_body, a_type)
 		end
 
 end

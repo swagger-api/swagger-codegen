@@ -258,8 +258,8 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
         }    
 
         // camelize (lower first character) the variable name
-        // pet_id => PetId
-        name = camelize(name);
+        // pet_id
+        // name = camelize(name);
         name = name.toLowerCase();
 
         // for reserved word or word starting with number, append _
@@ -443,8 +443,10 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
             LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + camelize("call_" + operationId));
             sanitizedOperationId = "call_" + sanitizedOperationId;
         }
+        // method name from updateSomething to update_Something.
+        sanitizedOperationId =  unCamelize (sanitizedOperationId);
 
-        return unCamelize (sanitizedOperationId);
+        return toEiffelFeatureStyle(sanitizedOperationId);
     }
 
     @Override
@@ -569,5 +571,14 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
     
     public String unCamelize (String name){
     	return  name.replaceAll("(.)(\\p{Upper})", "$1_$2").toLowerCase();
+    }
+    
+    public String toEiffelFeatureStyle (String operationId){
+    	if (operationId.startsWith("get_")){
+    		return operationId.substring(4, operationId.length());
+    	} else{
+    		return operationId;
+    	} 
+    		
     }
 }

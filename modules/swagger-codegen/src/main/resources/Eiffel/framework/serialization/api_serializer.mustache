@@ -6,8 +6,8 @@ class
 
 feature -- Access
 
-	serializer (f: FUNCTION [TUPLE [STRING, ANY],STRING]; a_content_type: STRING; a_type: ANY): STRING
-			-- Generic Object to Content type serializer.
+	serializer (f: FUNCTION [TUPLE [content_type:STRING; type:ANY],STRING]; a_content_type: STRING; a_type: ANY): STRING
+			-- Serialize an object of type `a_type' using the content type `a_content_type'.
 		do
 			Result := f.item ([a_content_type, a_type])
 		end
