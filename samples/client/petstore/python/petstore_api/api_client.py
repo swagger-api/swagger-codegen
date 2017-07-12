@@ -499,7 +499,7 @@ class ApiClient(object):
         :param querys: Query parameters tuple list to be updated.
         :param auth_settings: Authentication setting identifiers list.
         """
-        config = Configuration()
+        config = self.configuration
 
         if not auth_settings:
             return
