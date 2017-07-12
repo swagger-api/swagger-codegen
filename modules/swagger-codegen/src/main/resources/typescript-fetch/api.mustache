@@ -1,0 +1,229 @@
+/* tslint:disable */
+{{>licenseInfo}}
+
+import * as IsomorphicFetch                                  from 'isomorphic-fetch';
+import * as url                                              from 'url';
+import * as models                                           from '../model/models';
+import { COLLECTION_FORMATS }                                from '../variables';
+import { Configuration }                                     from '../configuration';
+{{#withInterfaces}}
+import { {{classname}}Interface }                            from './{{classname}}Interface';
+{{/withInterfaces}}
+
+{{#operations}}
+{{#description}}
+/**
+ * {{&description}}
+ */
+{{/description}}
+{{#withInterfaces}}
+export class {{classname}} implements {{classname}}Interface {
+{{/withInterfaces}}
+{{^withInterfaces}}
+export class {{classname}} {
+{{/withInterfaces}}
+
+    protected basePath = '{{{basePath}}}';
+    public defaultHeaders: Headers = new Headers();
+    public configuration: Configuration = new Configuration();
+
+    constructor(protected isomorphicFetch = IsomorphicFetch, basePath?: string, configuration?: Configuration) {
+        if (basePath) {
+            this.basePath = basePath;
+        }
+        if (configuration) {
+            this.configuration = configuration;
+        }
+    }
+
+{{#operation}}
+    /**
+     * {{notes}}
+     {{#summary}}* @summary {{&summary}}{{/summary}}
+     {{#allParams}}* @param {{paramName}} {{description}}
+     {{/allParams}}*/
+    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}extraRequestOptions?: any): Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}> {
+        return this.{{nickname}}WithHttpInfo({{#allParams}}{{paramName}}, {{/allParams}}extraRequestOptions)
+            .then((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else if (response.status >= 200 && response.status < 300) {
+                    return response.json() || {} as any;
+                } else {
+                    throw response;
+                }
+            });
+    }
+
+{{/operation}}
+
+{{#operation}}
+    /**
+     * {{summary}}
+     * {{notes}}
+     {{#allParams}}* @param {{paramName}} {{description}}
+     {{/allParams}}*/
+    public {{nickname}}WithHttpInfo({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}extraRequestOptions?: any): Promise<Response> {
+        const path = '{{{path}}}'{{#pathParams}}
+                    .replace('${' + '{{baseName}}' + '}', String({{paramName}})){{/pathParams}};
+
+        const urlObj = new url.URL(path, this.basePath);
+        const headers = new Headers(this.defaultHeaders);
+{{#hasFormParams}}
+        const formParams = new FormData();
+
+{{/hasFormParams}}
+{{#allParams}}
+{{#required}}
+        // verify required parameter '{{paramName}}' is not null or undefined
+        if ({{paramName}} === null || {{paramName}} === undefined) {
+            throw new Error('Required parameter {{paramName}} was null or undefined when calling {{nickname}}.');
+        }
+{{/required}}
+{{/allParams}}
+{{#queryParams}}
+        {{#isListContainer}}
+        if ({{paramName}}) {
+        {{#isCollectionFormatMulti}}
+            {{paramName}}.forEach((element) => {
+                urlObj.searchParams.append('{{baseName}}', element as any);
+            })
+        {{/isCollectionFormatMulti}}
+        {{^isCollectionFormatMulti}}
+            urlObj.searchParams.set('{{baseName}}', {{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}']));
+        {{/isCollectionFormatMulti}}
+        }
+        {{/isListContainer}}
+        {{^isListContainer}}
+        if ({{paramName}} !== undefined) {
+        {{#isDateTime}}
+            urlObj.searchParams.set('{{baseName}}', ({{paramName}} as any).toISOString());
+        {{/isDateTime}}
+        {{^isDateTime}}
+            {{#isDate}}
+            urlObj.searchParams.set('{{baseName}}', ({{paramName}} as any).toISOString()));
+            {{/isDate}}
+            {{^isDate}}
+            urlObj.searchParams.set('{{baseName}}', {{paramName}} as any);
+            {{/isDate}}
+        {{/isDateTime}}
+        }
+        {{/isListContainer}}
+{{/queryParams}}
+{{#headerParams}}
+        {{#isListContainer}}
+        if ({{paramName}}) {
+            headers.set('{{baseName}}', {{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}']));
+        }
+        {{/isListContainer}}
+        {{^isListContainer}}
+        if ({{paramName}} !== undefined && {{paramName}} !== null) {
+            headers.set('{{baseName}}', String({{paramName}}));
+        }
+        {{/isListContainer}}
+
+{{/headerParams}}
+        // to determine the Content-Type header
+        let consumes = [
+            {{#consumes}}
+            '{{{mediaType}}}'{{#hasMore}},{{/hasMore}}
+            {{/consumes}}
+        ] as string[];
+
+        // to determine the Accept header
+        let produces = [
+            {{#produces}}
+            '{{{mediaType}}}'{{#hasMore}},{{/hasMore}}
+            {{/produces}}
+        ] as string[];
+
+{{#authMethods}}
+        // authentication ({{name}}) required
+{{#isApiKey}}
+{{#isKeyInHeader}}
+        if (this.configuration.apiKey) {
+            if (typeof this.configuration.apiKey === 'function') {
+                headers.set('{{keyParamName}}', this.configuration.apiKey('{{name}}'));
+            } else {
+                headers.set('{{keyParamName}}', this.configuration.apiKey);
+            }
+        }
+
+{{/isKeyInHeader}}
+{{#isKeyInQuery}}
+        if (this.configuration.apiKey) {
+            if (typeof this.configuration.apiKey === 'function') {
+                urlObj.searchParams.set('{{keyParamName}}', this.configuration.apiKey('{{name}}'));
+            } else {
+                urlObj.searchParams.set('{{keyParamName}}', this.configuration.apiKey);
+            }
+        }
+
+{{/isKeyInQuery}}
+{{/isApiKey}}
+{{#isBasic}}
+        // http basic authentication required
+        if (this.configuration.username || this.configuration.password) {
+            headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+
+{{/isBasic}}
+{{#isOAuth}}
+        // oauth required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken('{{name}}')
+                : this.configuration.accessToken;
+            headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+{{/isOAuth}}
+{{/authMethods}}
+{{#hasFormParams}}
+        headers.set('Content-Type', 'application/x-www-form-urlencoded');
+
+{{/hasFormParams}}
+{{#bodyParam}}
+        headers.set('Content-Type', 'application/json');
+
+{{/bodyParam}}
+{{#formParams}}
+        {{#isListContainer}}
+        if ({{paramName}}) {
+        {{#isCollectionFormatMulti}}
+            {{paramName}}.forEach((element) => {
+                formParams.append('{{baseName}}', element as any);
+            })
+        {{/isCollectionFormatMulti}}
+        {{^isCollectionFormatMulti}}
+            formParams.set('{{baseName}}', {{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}']));
+        {{/isCollectionFormatMulti}}
+        }
+        {{/isListContainer}}
+        {{^isListContainer}}
+        if ({{paramName}} !== undefined) {
+            formParams.set('{{baseName}}', {{paramName}} as any);
+        }
+        {{/isListContainer}}
+
+{{/formParams}}
+        let requestOptions = {
+            method: '{{httpMethod}}',
+            headers: headers,
+{{#bodyParam}}
+            body: {{paramName}} == null ? '' : JSON.stringify({{paramName}}),
+{{/bodyParam}}
+{{#hasFormParams}}
+            body: formParams,
+{{/hasFormParams}}
+        } as RequestInit;
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraRequestOptions) {
+            requestOptions = Object.assign(requestOptions, extraRequestOptions);
+        }
+        return this.isomorphicFetch(url.format(urlObj), requestOptions);
+    }
+
+{{/operation}}
+}
+{{/operations}}

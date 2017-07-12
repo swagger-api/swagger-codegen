@@ -1,0 +1,9 @@
+/* tslint:disable */
+{{>licenseInfo}}
+
+export class Configuration {
+    apiKey?: string | ((name: string) => string);
+    username?: string;
+    password?: string;
+    accessToken?: string | ((name: string) => string);
+}
