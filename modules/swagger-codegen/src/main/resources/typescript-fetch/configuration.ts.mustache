@@ -2,8 +2,8 @@
 {{>licenseInfo}}
 
 export class Configuration {
-    apiKey?: string;
+    apiKey?: string | ((name: string) => string);
     username?: string;
     password?: string;
-    accessToken?: string | (() => string);
+    accessToken?: string | ((name: string) => string);
 }

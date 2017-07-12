@@ -142,13 +142,21 @@ export class {{classname}} {
 {{#isApiKey}}
 {{#isKeyInHeader}}
         if (this.configuration.apiKey) {
-            headers.set('{{keyParamName}}', this.configuration.apiKey);
+            if (typeof this.configuration.apiKey === 'function') {
+                headers.set('{{keyParamName}}', this.configuration.apiKey('{{name}}'));
+            } else {
+                headers.set('{{keyParamName}}', this.configuration.apiKey);
+            }
         }
 
 {{/isKeyInHeader}}
 {{#isKeyInQuery}}
         if (this.configuration.apiKey) {
-            urlObj.searchParams.set('{{keyParamName}}', this.configuration.apiKey);
+            if (typeof this.configuration.apiKey === 'function') {
+                urlObj.searchParams.set('{{keyParamName}}', this.configuration.apiKey('{{name}}'));
+            } else {
+                urlObj.searchParams.set('{{keyParamName}}', this.configuration.apiKey);
+            }
         }
 
 {{/isKeyInQuery}}
@@ -164,7 +172,7 @@ export class {{classname}} {
         // oauth required
         if (this.configuration.accessToken) {
             let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
+                ? this.configuration.accessToken('{{name}}')
                 : this.configuration.accessToken;
             headers.set('Authorization', 'Bearer ' + accessToken);
         }
