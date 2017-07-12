@@ -29,9 +29,9 @@ feature --Access
       
     username: detachable STRING_32 
       
-    firstname: detachable STRING_32 
+    first_name: detachable STRING_32 
       
-    lastname: detachable STRING_32 
+    last_name: detachable STRING_32 
       
     email: detachable STRING_32 
       
@@ -39,7 +39,7 @@ feature --Access
       
     phone: detachable STRING_32 
       
-    userstatus: INTEGER_32 
+    user_status: INTEGER_32 
       -- User Status
 
 feature -- Change Element  
@@ -60,20 +60,20 @@ feature -- Change Element
         username_set: username = a_name		
       end
 
-    set_firstname (a_name: like firstname)
-        -- Set 'firstname' with 'a_name'.
+    set_first_name (a_name: like first_name)
+        -- Set 'first_name' with 'a_name'.
       do
-        firstname := a_name
+        first_name := a_name
       ensure
-        firstname_set: firstname = a_name		
+        first_name_set: first_name = a_name		
       end
 
-    set_lastname (a_name: like lastname)
-        -- Set 'lastname' with 'a_name'.
+    set_last_name (a_name: like last_name)
+        -- Set 'last_name' with 'a_name'.
       do
-        lastname := a_name
+        last_name := a_name
       ensure
-        lastname_set: lastname = a_name		
+        last_name_set: last_name = a_name		
       end
 
     set_email (a_name: like email)
@@ -100,12 +100,12 @@ feature -- Change Element
         phone_set: phone = a_name		
       end
 
-    set_userstatus (a_name: like userstatus)
-        -- Set 'userstatus' with 'a_name'.
+    set_user_status (a_name: like user_status)
+        -- Set 'user_status' with 'a_name'.
       do
-        userstatus := a_name
+        user_status := a_name
       ensure
-        userstatus_set: userstatus = a_name		
+        user_status_set: user_status = a_name		
       end
 
 
@@ -126,14 +126,14 @@ feature -- Change Element
           Result.append (l_username.out)
           Result.append ("%N")    
         end  
-        if attached firstname as l_firstname then
+        if attached first_name as l_first_name then
           Result.append ("%N")
-          Result.append (l_firstname.out)
+          Result.append (l_first_name.out)
           Result.append ("%N")    
         end  
-        if attached lastname as l_lastname then
+        if attached last_name as l_last_name then
           Result.append ("%N")
-          Result.append (l_lastname.out)
+          Result.append (l_last_name.out)
           Result.append ("%N")    
         end  
         if attached email as l_email then
@@ -151,9 +151,9 @@ feature -- Change Element
           Result.append (l_phone.out)
           Result.append ("%N")    
         end  
-        if attached userstatus as l_userstatus then
+        if attached user_status as l_user_status then
           Result.append ("%N")
-          Result.append (l_userstatus.out)
+          Result.append (l_user_status.out)
           Result.append ("%N")    
         end  
       end

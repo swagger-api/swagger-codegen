@@ -52,11 +52,11 @@ feature -- API Access
 			end
 		end	
 
-	delete_pet (petid: INTEGER_64; api_key: detachable STRING_32)
+	delete_pet (pet_id: INTEGER_64; api_key: detachable STRING_32)
 			-- Deletes a pet
 			-- 
 			-- 
-			-- argument: petid Pet id to delete (required)
+			-- argument: pet_id Pet id to delete (required)
 			-- 
 			-- argument: api_key  (optional)
 			-- 
@@ -70,7 +70,7 @@ feature -- API Access
 			create l_request
 			
 			l_path := "/pet/{petId}"
-			l_path.replace_substring_all ("{"+"petId"+"}", api_client.url_encode (petid.out))
+			l_path.replace_substring_all ("{"+"petId"+"}", api_client.url_encode (pet_id.out))
 			if attached api_key as l_api_key then
 				l_request.add_header(l_api_key.out,"api_key");
 			end
@@ -154,11 +154,11 @@ feature -- API Access
 			end
 		end	
 
-	pet_by_id (petid: INTEGER_64): detachable PET
+	pet_by_id (pet_id: INTEGER_64): detachable PET
 			-- Find pet by ID
 			-- Returns a single pet
 			-- 
-			-- argument: petid ID of pet to return (required)
+			-- argument: pet_id ID of pet to return (required)
 			-- 
 			-- 
 			-- Result PET
@@ -171,7 +171,7 @@ feature -- API Access
 			create l_request
 			
 			l_path := "/pet/{petId}"
-			l_path.replace_substring_all ("{"+"petId"+"}", api_client.url_encode (petid.out))
+			l_path.replace_substring_all ("{"+"petId"+"}", api_client.url_encode (pet_id.out))
 
 			if attached {STRING} api_client.select_header_accept (<<"application/xml", "application/json">>)  as l_accept then
 				l_request.add_header(l_accept,"Accept");
@@ -216,11 +216,11 @@ feature -- API Access
 			end
 		end	
 
-	update_pet_with_form (petid: INTEGER_64; name: detachable STRING_32; status: detachable STRING_32)
+	update_pet_with_form (pet_id: INTEGER_64; name: detachable STRING_32; status: detachable STRING_32)
 			-- Updates a pet in the store with form data
 			-- 
 			-- 
-			-- argument: petid ID of pet that needs to be updated (required)
+			-- argument: pet_id ID of pet that needs to be updated (required)
 			-- 
 			-- argument: name Updated name of the pet (optional)
 			-- 
@@ -236,7 +236,7 @@ feature -- API Access
 			create l_request
 			
 			l_path := "/pet/{petId}"
-			l_path.replace_substring_all ("{"+"petId"+"}", api_client.url_encode (petid.out))
+			l_path.replace_substring_all ("{"+"petId"+"}", api_client.url_encode (pet_id.out))
 			if attached name as l_name then
 				l_request.add_form(l_name,"name");
 			end
@@ -255,13 +255,13 @@ feature -- API Access
 			end
 		end	
 
-	upload_file (petid: INTEGER_64; additionalmetadata: detachable STRING_32; file: detachable FILE): detachable API_RESPONSE
+	upload_file (pet_id: INTEGER_64; additional_metadata: detachable STRING_32; file: detachable FILE): detachable API_RESPONSE
 			-- uploads an image
 			-- 
 			-- 
-			-- argument: petid ID of pet to update (required)
+			-- argument: pet_id ID of pet to update (required)
 			-- 
-			-- argument: additionalmetadata Additional data to pass to server (optional)
+			-- argument: additional_metadata Additional data to pass to server (optional)
 			-- 
 			-- argument: file file to upload (optional)
 			-- 
@@ -276,9 +276,9 @@ feature -- API Access
 			create l_request
 			
 			l_path := "/pet/{petId}/uploadImage"
-			l_path.replace_substring_all ("{"+"petId"+"}", api_client.url_encode (petid.out))
-			if attached additionalmetadata as l_additionalmetadata then
-				l_request.add_form(l_additionalmetadata,"additionalMetadata");
+			l_path.replace_substring_all ("{"+"petId"+"}", api_client.url_encode (pet_id.out))
+			if attached additional_metadata as l_additional_metadata then
+				l_request.add_form(l_additional_metadata,"additionalMetadata");
 			end
 			if attached file as l_file then
 				l_request.add_form(l_file,"file");

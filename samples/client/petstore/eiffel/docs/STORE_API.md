@@ -11,7 +11,7 @@ Feature | HTTP request | Description
 
 
 # **delete_order**
-> delete_order (orderid: INTEGER_64 )
+> delete_order (order_id: INTEGER_64 )
 	
 
 Delete purchase order by ID
@@ -23,7 +23,7 @@ For valid response try integer IDs with positive integer value. Negative or non-
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **orderid** | **INTEGER_64**| ID of the order that needs to be deleted | 
+ **order_id** | **INTEGER_64**| ID of the order that needs to be deleted | 
 
 ### Return type
 
@@ -68,7 +68,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **order_by_id**
-> order_by_id (orderid: INTEGER_64 ): detachable ORDER
+> order_by_id (order_id: INTEGER_64 ): detachable ORDER
 	
 
 Find purchase order by ID
@@ -80,7 +80,7 @@ For valid response try integer IDs with value >= 1 and <= 10. Other values will 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **orderid** | **INTEGER_64**| ID of pet that needs to be fetched | 
+ **order_id** | **INTEGER_64**| ID of pet that needs to be fetched | 
 
 ### Return type
 

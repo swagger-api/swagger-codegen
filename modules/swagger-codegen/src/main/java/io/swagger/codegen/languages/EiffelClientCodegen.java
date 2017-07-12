@@ -40,7 +40,7 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
     static Logger LOGGER = LoggerFactory.getLogger(EiffelClientCodegen.class);
 
     protected String libraryTarget = "swagger_eiffel_client";
-    protected String packageName = "swagger";
+    protected String packageName = "Eiffel";
     protected String packageVersion = "1.0.0";
     protected String apiDocPath = "docs";
     protected String modelDocPath = "docs";
@@ -96,11 +96,7 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
                         "NATURAL_16", "NATURAL_32", "NATURAL_64", "REAL_32", "REAL_64"));
 
         instantiationTypes.clear();
-        /*
-         * instantiationTypes.put("array", "GoArray");
-         * instantiationTypes.put("map", "GoMap");
-         */
-
+      
         typeMapping.clear();
         typeMapping.put("integer", "INTEGER_32");
         typeMapping.put("long", "INTEGER_64");
@@ -112,19 +108,21 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
         typeMapping.put("UUID", "UUID"); //
         typeMapping.put("date", "DATE");
         typeMapping.put("DateTime", "DATE_TIME");
+        typeMapping.put("date-time", "DATE_TIME");
         typeMapping.put("password", "STRING");
         typeMapping.put("File", "FILE");
         typeMapping.put("file", "FILE");
-        // map binary to string as a workaround
         typeMapping.put("binary", "STRING_32");
-        typeMapping.put("ByteArray", "STRING_32"); // ARRAY [NATURAL_8]
+        typeMapping.put("ByteArray", "ARRAY [NATURAL_8]"); 
         typeMapping.put("object", "ANY");
         typeMapping.put("map", "STRING_TABLE");
+        typeMapping.put("array", "LIST");
+        typeMapping.put("list", "LIST");
 
-        // importMapping = new HashMap<String, String>();
-        // importMapping.put("time.Time", "time");
-        // importMapping.put("*os.File", "os");
-        // importMapping.put("os", "io/ioutil");
+        //instantiationTypes.put("array", "ARRAY");
+        //instantiationTypes.put("list", "ARRAYED_LIST");
+        //instantiationTypes.put("map", "STRING_TABLE");
+
 
         cliOptions.clear();
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "Eiffel Cluster name (convention: lowercase).")
@@ -152,12 +150,6 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
             setPackageName((String) additionalProperties.get(CodegenConstants.PACKAGE_NAME));
         } else {
             setPackageName("swagger");
-        }
-
-        if (additionalProperties.containsKey(CodegenConstants.PACKAGE_VERSION)) {
-            setPackageVersion((String) additionalProperties.get(CodegenConstants.PACKAGE_VERSION));
-        } else {
-            setPackageVersion("1.0.0");
         }
 
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_VERSION)) {
@@ -255,10 +247,9 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
             return name;
         }
 
-        // camelize (lower first character) the variable name
         // pet_id
-        // name = camelize(name);
-        name = name.toLowerCase();
+        // petId  => pet_id
+        name = unCamelize(name);
 
         // for reserved word or word starting with number, append _
         if (isReservedWord(name)) {
@@ -275,14 +266,13 @@ public class EiffelClientCodegen extends DefaultCodegen implements CodegenConfig
 
     @Override
     public String toParamName(String name) {
-        // params should be uppercase. E.g. "person: PERSON"
+        // params should be lowercase. E.g. "person: PERSON"
         return toVarName(name).toLowerCase();
     }
 
     @Override
     public String toModelName(String name) {
-        // camelize the model name
-        // phone_number => PhoneNumber
+        // phone_number => PHONE_NUMBER
         return toModelFilename(name).toUpperCase();
     }
 

@@ -31,7 +31,7 @@ feature --Access
       
     name: detachable STRING_32 
       
-    photourls: detachable LIST [STRING_32] 
+    photo_urls: detachable LIST [STRING_32] 
       
     tags: detachable LIST [TAG] 
       
@@ -64,12 +64,12 @@ feature -- Change Element
         name_set: name = a_name		
       end
 
-    set_photourls (a_name: like photourls)
-        -- Set 'photourls' with 'a_name'.
+    set_photo_urls (a_name: like photo_urls)
+        -- Set 'photo_urls' with 'a_name'.
       do
-        photourls := a_name
+        photo_urls := a_name
       ensure
-        photourls_set: photourls = a_name		
+        photo_urls_set: photo_urls = a_name		
       end
 
     set_tags (a_name: like tags)
@@ -111,8 +111,8 @@ feature -- Change Element
           Result.append (l_name.out)
           Result.append ("%N")    
         end  
-        if attached photourls as l_photourls then
-          across l_photourls as ic loop
+        if attached photo_urls as l_photo_urls then
+          across l_photo_urls as ic loop
             Result.append ("%N")
             Result.append (ic.item.out)
             Result.append ("%N")

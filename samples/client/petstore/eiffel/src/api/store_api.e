@@ -24,11 +24,11 @@ inherit
 feature -- API Access
 
 
-	delete_order (orderid: INTEGER_64)
+	delete_order (order_id: INTEGER_64)
 			-- Delete purchase order by ID
 			-- For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
 			-- 
-			-- argument: orderid ID of the order that needs to be deleted (required)
+			-- argument: order_id ID of the order that needs to be deleted (required)
 			-- 
 			-- 
 		local
@@ -40,7 +40,7 @@ feature -- API Access
 			create l_request
 			
 			l_path := "/store/order/{orderId}"
-			l_path.replace_substring_all ("{"+"orderId"+"}", api_client.url_encode (orderid.out))
+			l_path.replace_substring_all ("{"+"orderId"+"}", api_client.url_encode (order_id.out))
 
 			if attached {STRING} api_client.select_header_accept (<<"application/xml", "application/json">>)  as l_accept then
 				l_request.add_header(l_accept,"Accept");
@@ -84,11 +84,11 @@ feature -- API Access
 			end
 		end	
 
-	order_by_id (orderid: INTEGER_64): detachable ORDER
+	order_by_id (order_id: INTEGER_64): detachable ORDER
 			-- Find purchase order by ID
 			-- For valid response try integer IDs with value &gt;&#x3D; 1 and &lt;&#x3D; 10. Other values will generated exceptions
 			-- 
-			-- argument: orderid ID of pet that needs to be fetched (required)
+			-- argument: order_id ID of pet that needs to be fetched (required)
 			-- 
 			-- 
 			-- Result ORDER
@@ -101,7 +101,7 @@ feature -- API Access
 			create l_request
 			
 			l_path := "/store/order/{orderId}"
-			l_path.replace_substring_all ("{"+"orderId"+"}", api_client.url_encode (orderid.out))
+			l_path.replace_substring_all ("{"+"orderId"+"}", api_client.url_encode (order_id.out))
 
 			if attached {STRING} api_client.select_header_accept (<<"application/xml", "application/json">>)  as l_accept then
 				l_request.add_header(l_accept,"Accept");

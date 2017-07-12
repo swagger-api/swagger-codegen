@@ -27,11 +27,11 @@ feature --Access
 
     id: INTEGER_64 
       
-    petid: INTEGER_64 
+    pet_id: INTEGER_64 
       
     quantity: INTEGER_32 
       
-    shipdate: detachable DATE_TIME 
+    ship_date: detachable DATE_TIME 
       
     status: detachable STRING_32 
       -- Order Status
@@ -48,12 +48,12 @@ feature -- Change Element
         id_set: id = a_name		
       end
 
-    set_petid (a_name: like petid)
-        -- Set 'petid' with 'a_name'.
+    set_pet_id (a_name: like pet_id)
+        -- Set 'pet_id' with 'a_name'.
       do
-        petid := a_name
+        pet_id := a_name
       ensure
-        petid_set: petid = a_name		
+        pet_id_set: pet_id = a_name		
       end
 
     set_quantity (a_name: like quantity)
@@ -64,12 +64,12 @@ feature -- Change Element
         quantity_set: quantity = a_name		
       end
 
-    set_shipdate (a_name: like shipdate)
-        -- Set 'shipdate' with 'a_name'.
+    set_ship_date (a_name: like ship_date)
+        -- Set 'ship_date' with 'a_name'.
       do
-        shipdate := a_name
+        ship_date := a_name
       ensure
-        shipdate_set: shipdate = a_name		
+        ship_date_set: ship_date = a_name		
       end
 
     set_status (a_name: like status)
@@ -101,9 +101,9 @@ feature -- Change Element
           Result.append (l_id.out)
           Result.append ("%N")    
         end  
-        if attached petid as l_petid then
+        if attached pet_id as l_pet_id then
           Result.append ("%N")
-          Result.append (l_petid.out)
+          Result.append (l_pet_id.out)
           Result.append ("%N")    
         end  
         if attached quantity as l_quantity then
@@ -111,9 +111,9 @@ feature -- Change Element
           Result.append (l_quantity.out)
           Result.append ("%N")    
         end  
-        if attached shipdate as l_shipdate then
+        if attached ship_date as l_ship_date then
           Result.append ("%N")
-          Result.append (l_shipdate.out)
+          Result.append (l_ship_date.out)
           Result.append ("%N")    
         end  
         if attached status as l_status then

@@ -45,7 +45,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_pet**
-> delete_pet (petid: INTEGER_64 ; api_key:  detachable STRING_32 )
+> delete_pet (pet_id: INTEGER_64 ; api_key:  detachable STRING_32 )
 	
 
 Deletes a pet
@@ -57,7 +57,7 @@ Deletes a pet
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petid** | **INTEGER_64**| Pet id to delete | 
+ **pet_id** | **INTEGER_64**| Pet id to delete | 
  **api_key** | **STRING_32**|  | [optional] 
 
 ### Return type
@@ -136,7 +136,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **pet_by_id**
-> pet_by_id (petid: INTEGER_64 ): detachable PET
+> pet_by_id (pet_id: INTEGER_64 ): detachable PET
 	
 
 Find pet by ID
@@ -148,7 +148,7 @@ Returns a single pet
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petid** | **INTEGER_64**| ID of pet to return | 
+ **pet_id** | **INTEGER_64**| ID of pet to return | 
 
 ### Return type
 
@@ -196,7 +196,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_pet_with_form**
-> update_pet_with_form (petid: INTEGER_64 ; name:  detachable STRING_32 ; status:  detachable STRING_32 )
+> update_pet_with_form (pet_id: INTEGER_64 ; name:  detachable STRING_32 ; status:  detachable STRING_32 )
 	
 
 Updates a pet in the store with form data
@@ -208,7 +208,7 @@ Updates a pet in the store with form data
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petid** | **INTEGER_64**| ID of pet that needs to be updated | 
+ **pet_id** | **INTEGER_64**| ID of pet that needs to be updated | 
  **name** | **STRING_32**| Updated name of the pet | [optional] 
  **status** | **STRING_32**| Updated status of the pet | [optional] 
 
@@ -228,7 +228,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **upload_file**
-> upload_file (petid: INTEGER_64 ; additionalmetadata:  detachable STRING_32 ; file:  detachable FILE ): detachable API_RESPONSE
+> upload_file (pet_id: INTEGER_64 ; additional_metadata:  detachable STRING_32 ; file:  detachable FILE ): detachable API_RESPONSE
 	
 
 uploads an image
@@ -240,8 +240,8 @@ uploads an image
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petid** | **INTEGER_64**| ID of pet to update | 
- **additionalmetadata** | **STRING_32**| Additional data to pass to server | [optional] 
+ **pet_id** | **INTEGER_64**| ID of pet to update | 
+ **additional_metadata** | **STRING_32**| Additional data to pass to server | [optional] 
  **file** | **FILE**| file to upload | [optional] 
 
 ### Return type
