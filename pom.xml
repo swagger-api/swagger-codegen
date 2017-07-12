@@ -772,6 +772,7 @@
                 <module>samples/client/petstore/python</module>
                 <module>samples/client/petstore/typescript-angular</module>
                 <module>samples/client/petstore/typescript-node/npm</module>
+                <module>samples/client/petstore/typescript-fetch/npm</module>
                 <module>samples/client/petstore/typescript-jquery/npm</module>
                 <module>samples/client/petstore/swift3/default/SwaggerClientTests</module>
                 <module>samples/client/petstore/swift3/promisekit/SwaggerClientTests</module>
