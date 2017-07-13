@@ -10,9 +10,9 @@ set ags=generate -i modules\swagger-codegen\src\test\resources\2_0\petstore.yaml
 java %JAVA_OPTS% -jar %executable% %ags%
 
 echo "Typescript Petstore API client (with interfaces generated)"
-set ags=generate -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -l typescript-angular2 -o samples/client/petstore/typescript-angular2/with-interfaces -D withInterfaces=true
+set ags=generate -i modules\swagger-codegen\src\test\resources\2_0\petstore.yaml -l typescript-angular2 -o samples\client\petstore\typescript-angular2\with-interfaces -D withInterfaces=true
 java %JAVA_OPTS% -jar %executable% %ags%
 
 echo "Typescript Petstore API client (npm setting)"
-set ags=generate -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -l typescript-angular2 -c bin/typescript-petstore-npm.json -o samples/client/petstore/typescript-angular2/npm
+set ags=generate -i modules\swagger-codegen\src\test\resources\2_0\petstore.yaml -l typescript-angular2 -c bin\typescript-petstore-npm.json -o samples\client\petstore\typescript-angular2\npm
 java %JAVA_OPTS% -jar %executable% %ags%
