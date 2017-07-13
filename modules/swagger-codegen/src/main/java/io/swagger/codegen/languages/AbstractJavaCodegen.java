@@ -24,6 +24,7 @@ import io.swagger.codegen.CodegenParameter;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.DefaultCodegen;
 import io.swagger.models.Model;
+import io.swagger.models.ModelImpl;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
@@ -801,6 +802,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     @Override
     public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
         CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
+        fixExtendedPrimitives(codegenModel, allDefinitions);
         if(codegenModel.description != null) {
             codegenModel.imports.add("ApiModel");
         }
@@ -814,6 +816,50 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             codegenModel = AbstractJavaCodegen.reconcileInlineEnums(codegenModel, parentCodegenModel);
         }
         return codegenModel;
+    }
+
+    protected void fixExtendedPrimitives(CodegenModel model, Map<String, Model> allDefinitions){
+        for (CodegenProperty property : model.vars){
+            if(allDefinitions != null && property.complexType != null){
+                ModelImpl pom = (ModelImpl) allDefinitions.get(getRawModelType(property.complexType));
+                if(pom != null){
+                    String fromType = property.complexType;
+                    String toType = typeMapping.get(pom.getType());
+                    if(toType != null && !toType.equals("Object") && languageSpecificPrimitives.contains(toType)){
+                        model.imports.remove(fromType);
+                        if(property.isContainer){
+                            updatePrimitiveCollection(property, fromType, toType);
+                            updatePrimitiveProperty(property.items, fromType, toType);
+                        } else {
+                            updatePrimitiveProperty(property, fromType, toType);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void updatePrimitiveProperty(CodegenProperty property, String fromType, String toType){
+        property.baseType = toType;
+        property.complexType = toType;
+        property.datatype = toType;
+        property.datatypeWithEnum = toType;
+        property.isPrimitiveType = true;
+    }
+
+    private void updatePrimitiveCollection(CodegenProperty property, String fromType, String toType){
+        property.complexType = toType;
+        property.datatype = property.datatype.replace(fromType, toType);
+        property.datatypeWithEnum = property.datatypeWithEnum.replace(fromType, toType);
+        property.defaultValue = property.defaultValue.replace(fromType, toType);
+    }
+
+    private String getRawModelType(String type){
+        if(type.startsWith(modelNamePrefix))
+            type = type.substring(modelNamePrefix.length());
+        if(type.endsWith(modelNameSuffix))
+            type.substring(0, modelNameSuffix.length());
+        return type;
     }
 
     @Override
