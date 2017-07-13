@@ -591,54 +591,6 @@
             </modules>
         </profile>
         <profile>
-            <id>typescript-fetch-client-tests-default</id>
-            <activation>
-                <property>
-                    <name>env</name>
-                    <value>java</value>
-                </property>
-            </activation>
-            <modules>
-                <module>samples/client/petstore/typescript-fetch/tests/default</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>typescript-fetch-client-builds-default</id>
-            <activation>
-                <property>
-                    <name>env</name>
-                    <value>java</value>
-                </property>
-            </activation>
-            <modules>
-                <module>samples/client/petstore/typescript-fetch/builds/default</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>typescript-fetch-client-builds-es6-target</id>
-            <activation>
-                <property>
-                    <name>env</name>
-                    <value>java</value>
-                </property>
-            </activation>
-            <modules>
-                <module>samples/client/petstore/typescript-fetch/builds/es6-target</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>typescript-fetch-client-builds-with-npm-version</id>
-            <activation>
-                <property>
-                    <name>env</name>
-                    <value>java</value>
-                </property>
-            </activation>
-            <modules>
-                <module>samples/client/petstore/typescript-fetch/builds/with-npm-version</module>
-            </modules>
-        </profile>
-        <profile>
             <id>typescript-angular-client</id>
             <activation>
                 <property>
@@ -816,7 +768,6 @@
                 <module>samples/client/petstore/java/retrofit2rx</module>
                 <module>samples/client/petstore/jaxrs-cxf-client</module>
                 <module>samples/client/petstore/java/resttemplate</module>
-                <module>samples/client/petstore/java/resttemplate-withXml</module>
                 <module>samples/client/petstore/ruby</module>
                 <!-- comment out bash as it's failing after switching to CircleCI
                   <module>samples/client/petstore/bash</module> -->
